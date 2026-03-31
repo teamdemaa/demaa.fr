@@ -56,17 +56,6 @@ const localData: ServiceRecord[] = [
     price: "1250 €"
   },
   {
-    id: "5",
-    slug: "strategie-marketing-vente",
-    name: "Stratégie Marketing & Vente",
-    category: "Marketing - Vente",
-    shortDescription: "Construisons les fondations",
-    description: "Beaucoup de TPE font du marketing sans stratégie. Cette prestation repart de zéro avec méthode. On analyse le marché, les concurrents, le positionnement de l'offre, les canaux d'acquisition les plus pertinents et le parcours client de bout en bout. Le livrable est un plan d'action concret : qui cibler, avec quel message, sur quel canal, avec quel budget, dans quel ordre. On intègre aussi la vente : tunnel, script, relances.",
-    tags: ["Marketing", "Vente", "Stratégie"],
-    icon: "Target",
-    price: "950 €"
-  },
-  {
     id: "7",
     slug: "automatisations-taches",
     name: "Automatisation des tâches",
