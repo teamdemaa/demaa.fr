@@ -20,52 +20,54 @@ export default function USPSection() {
   ];
 
   return (
-    <div className="w-full max-w-6xl mx-auto mt-6 md:mt-10 relative group overflow-hidden animate-in fade-in slide-in-from-top-4 duration-700 delay-300">
-      {/* Scroll indicator fades for mobile indicator only if manual scroll possible, but here it's automatic */}
-      <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-[#FFF9F8] via-[#FFF9F8]/60 to-transparent z-10 pointer-events-none md:hidden" />
-      <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[#FFF9F8] via-[#FFF9F8]/60 to-transparent z-10 pointer-events-none md:hidden" />
+    <div className="w-full max-w-6xl mx-auto mt-6 md:mt-10 relative overflow-hidden animate-in fade-in slide-in-from-top-4 duration-700 delay-300 px-6">
+      
+      {/* DESKTOP VIEW: Stable 3-Column Grid */}
+      <div className="hidden md:grid md:grid-cols-3 gap-12 px-8">
+        {usps.map((usp, i) => (
+          <div key={i} className="flex items-center space-x-4 justify-center group">
+            <div className="flex-none w-10 h-10 rounded-full bg-white shadow-sm border border-brand-coral/15 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <usp.icon className="w-4.5 h-4.5 text-brand-coral" />
+            </div>
+            <div className="flex flex-col text-left">
+              <span className="text-sm font-bold text-brand-blue uppercase tracking-widest leading-none">
+                {usp.text}
+              </span>
+              <span className="text-xs text-gray-500 font-normal mt-1.5 leading-tight">
+                {usp.subtext}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
 
-      {/* Marquee container */}
-      <div className="flex flex-row md:grid md:grid-cols-3 gap-10 md:gap-16 px-6 md:px-8 w-max md:w-full animate-marquee-slow md:animate-none">
-        {/* First set of items */}
-        {usps.map((usp, i) => (
-          <div 
-            key={`first-${i}`} 
-            className="flex-none flex items-center space-x-3.5 group md:justify-center md:bg-transparent md:p-0 md:rounded-none md:border-none md:shadow-none mr-4 md:mr-0"
-          >
-            <div className="flex-none w-9 h-9 rounded-full bg-white shadow-sm border border-brand-coral/15 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-              <usp.icon className="w-4.5 h-4.5 text-brand-coral" />
-            </div>
-            <div className="flex flex-col text-left">
-              <span className="text-[11px] md:text-sm font-bold text-brand-blue uppercase tracking-widest leading-none">
-                {usp.text}
-              </span>
-              <span className="text-[10px] md:text-xs text-gray-500 font-normal mt-1.5 leading-tight whitespace-nowrap">
-                {usp.subtext}
-              </span>
-            </div>
-          </div>
-        ))}
+      {/* MOBILE VIEW: Animated Infinite Marquee */}
+      <div className="md:hidden relative">
+        <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-[#FFF9F8] to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-[#FFF9F8] to-transparent z-10 pointer-events-none" />
         
-        {/* Duplicate set of items for seamless loop (mobile only) */}
-        {usps.map((usp, i) => (
-          <div 
-            key={`second-${i}`} 
-            className="flex-none md:hidden flex items-center space-x-3.5 group mr-4"
-          >
-            <div className="flex-none w-9 h-9 rounded-full bg-white shadow-sm border border-brand-coral/15 flex items-center justify-center">
-              <usp.icon className="w-4.5 h-4.5 text-brand-coral" />
+        <div className="flex flex-row overflow-hidden w-max animate-marquee-slow">
+          {/* Loop twice for infinite scroll */}
+          {[1, 2].map((loop) => (
+            <div key={loop} className="flex flex-row space-x-12 pr-12">
+              {usps.map((usp, i) => (
+                <div key={`${loop}-${i}`} className="flex items-center space-x-3.5 whitespace-nowrap">
+                  <div className="flex-none w-9 h-9 rounded-full bg-white border border-brand-coral/15 flex items-center justify-center">
+                    <usp.icon className="w-4.5 h-4.5 text-brand-coral" />
+                  </div>
+                  <div className="flex flex-col text-left">
+                    <span className="text-[11px] font-bold text-brand-blue uppercase tracking-widest leading-none">
+                      {usp.text}
+                    </span>
+                    <span className="text-[10px] text-gray-500 font-normal mt-1 leading-tight">
+                      {usp.subtext}
+                    </span>
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className="flex flex-col text-left">
-              <span className="text-[11px] font-bold text-brand-blue uppercase tracking-widest leading-none">
-                {usp.text}
-              </span>
-              <span className="text-[10px] text-gray-500 font-normal mt-1.5 leading-tight whitespace-nowrap">
-                {usp.subtext}
-              </span>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
