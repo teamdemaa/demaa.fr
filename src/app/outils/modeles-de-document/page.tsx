@@ -55,7 +55,7 @@ export default function TemplatesPage() {
               Nous ajoutons régulièrement de nouvelles ressources. N'hésitez pas à nous suggérer des outils qui pourraient vous aider.
             </p>
             <a 
-               href="mailto:contact@demaa.fr" 
+               href="mailto:team@demaa.fr" 
                className="inline-flex items-center px-6 py-3 bg-brand-blue text-white font-bold text-sm rounded-full hover:bg-brand-coral transition-colors shadow-lg active:scale-95"
             >
               Envoyer une suggestion
