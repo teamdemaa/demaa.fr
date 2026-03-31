@@ -7,7 +7,7 @@ export default function HeroSearch({ onSearch }: { onSearch: (q: string) => void
     <section className="w-full flex flex-col items-center justify-center pt-8 pb-8 md:pt-14 md:pb-12 px-4 text-center bg-[#FFF9F8] border-b border-brand-coral/10">
 
       <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold tracking-tight text-brand-blue mb-4 md:mb-6 leading-tight max-w-4xl mx-auto z-10 relative">
-        Les services clés pour votre entreprise, <span className="text-brand-coral">simplement</span>
+        Les services clés pour <span className="text-brand-coral">gérer</span> votre entreprise, simplement
       </h1>
       
       {/* Big Rounded Searchbar */}
