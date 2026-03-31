@@ -20,7 +20,7 @@ export default function HeroSearch({ onSearch }: { onSearch: (q: string) => void
           type="text" 
           onChange={(e) => onSearch(e.target.value)}
           placeholder="Rechercher un service" 
-          className="peer block w-full pl-10 md:pl-14 pr-4 md:pr-6 py-2.5 md:py-3.5 border-2 border-gray-100 rounded-full text-sm md:text-base focus:ring-4 focus:ring-brand-coral/20 focus:border-brand-coral outline-none transition-all shadow-md placeholder-gray-400 bg-white" 
+          className="peer block w-full pl-10 md:pl-14 pr-4 md:pr-6 py-2.5 md:py-3.5 border-2 border-brand-coral/25 rounded-full text-sm md:text-base focus:ring-4 focus:ring-brand-coral/20 focus:border-brand-coral outline-none transition-all shadow-md placeholder-gray-400 bg-white" 
         />
       </div>
 

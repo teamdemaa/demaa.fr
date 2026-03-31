@@ -87,17 +87,6 @@ const localData: ServiceRecord[] = [
     tags: ["Web", "Design", "SEO"],
     icon: "Laptop",
     price: "750 €"
-  },
-  {
-    id: "8",
-    slug: "recrutement-efficace",
-    name: "Recrutez efficacement",
-    category: "Equipe",
-    shortDescription: "On identifie les profils adaptés",
-    description: "Trouver le bon profil sans y passer des semaines. On rédige l'offre d'emploi, la diffusons sur les jobboards adaptés (Indeed, LinkedIn, Welcome to the Jungle…), trions les candidatures, préqualifions les profils par téléphone et présentons au dirigeant une shortlist de candidats sérieux et vérifiés. Le dirigeant n'a plus qu'à choisir.",
-    tags: ["Recrutement", "RH", "Talents"],
-    icon: "Users",
-    price: "10% du salaire annuel"
   }
 ];
 
