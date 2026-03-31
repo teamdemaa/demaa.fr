@@ -67,6 +67,17 @@ const localData: ServiceRecord[] = [
     price: "950 €"
   },
   {
+    id: "7",
+    slug: "automatisations-taches",
+    name: "Automatisation des tâches",
+    category: "Opérations - Systèmes",
+    shortDescription: "Gagnez des jours par mois",
+    description: "Travailler mieux, pas plus. On identifie les tâches répétitives qui font perdre du temps (relances clients, envoi de factures, mise à jour de tableaux, notifications…) et on les automatise via des plateformes comme Make, Zapier ou n8n. Des process qui tournent seuls et des équipes libérées.",
+    tags: ["Automatisation", "Productivité", "Outils"],
+    icon: "Settings2",
+    price: "Sur devis"
+  },
+  {
     id: "6",
     slug: "site-web",
     name: "Site web",
@@ -76,17 +87,6 @@ const localData: ServiceRecord[] = [
     tags: ["Web", "Design", "SEO"],
     icon: "Laptop",
     price: "750 €"
-  },
-  {
-    id: "7",
-    slug: "automatisations-taches",
-    name: "Automatisations des tâches",
-    category: "Opérations - Systèmes",
-    shortDescription: "Gagnez des jours par mois",
-    description: "Travailler mieux, pas plus. On identifie les tâches répétitives qui font perdre du temps (relances clients, envoi de factures, mise à jour de tableaux, notifications…) et on les automatise via des plateformes comme Make, Zapier ou n8n. Des process qui tournent seuls et des équipes libérées.",
-    tags: ["Automatisation", "Productivité", "Outils"],
-    icon: "Settings2",
-    price: "Sur devis"
   },
   {
     id: "8",

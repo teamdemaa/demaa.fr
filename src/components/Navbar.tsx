@@ -123,6 +123,9 @@ export default function Navbar() {
                   Conversation de 30 minutes avec un spécialiste de la structuration d'entreprise. 
                   Objectifs : vous sentir moins dépassé(e) et vous aider à reprendre le contrôle de votre entreprise.
                 </p>
+                <p className="text-[10px] uppercase tracking-widest text-brand-coral font-bold mt-2">
+                  Gratuit - Par téléphone
+                </p>
               </div>
               <button 
                 onClick={() => setIsModalOpen(false)} 

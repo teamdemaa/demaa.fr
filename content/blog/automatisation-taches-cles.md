@@ -14,4 +14,4 @@ L'intelligence derrière la gestion de votre structure, c'est savoir où attribu
 2. **Synchronisation Asynchrone (Make/Zapier) :** Un nouveau prospect remplit un formulaire ? Il est tagué, ajouté à la base d'emails, reçoit un accusé de réception et votre équipe RH est notifiée sur Slack.
 3. **Relance des impayés :** Créez une boucle qui scanne chaque jour votre compte, détecte les factures échues de plus de 48 heures, et déclenche un magnifique e-mail professionnel et courtois de relance.
 
-Prenez de la hauteur sur votre entreprise, et concentrez-vous sur **l'humain**. Laissez  les *workflows* s'occuper de la paperasse. Vous avez besoin d'aide pour réaliser cette prouesse dans votre société ? Contactez-nous pour une offre sur-mesure.
+Prendre de la hauteur sur votre entreprise, et concentrez-vous sur **l'humain**. Laissez les *workflows* s'occuper de la paperasse. Vous avez besoin d'aide pour réaliser cette prouesse dans votre société ? Contactez-nous pour une offre sur mesure.
