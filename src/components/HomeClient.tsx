@@ -38,24 +38,9 @@ export default function HomeClient({ services, allTags }: { services: ServiceRec
               <ServiceRow title="Finance - Juridique" services={financeServices} />
             )}
 
-            {/* 2. Static Grid for all other categories */}
+            {/* 2. Scrolling Row for Operations & Systems */}
             {otherServices.length > 0 && (
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-between mb-2 pr-2">
-                  <h2 className="text-lg font-light tracking-wide text-brand-blue/80">
-                    Opérations - Systèmes
-                  </h2>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 pt-4">
-                  {otherServices.map(service => (
-                    <ServiceCard 
-                      key={service.id} 
-                      service={service} 
-                      fullWidth 
-                    />
-                  ))}
-                </div>
-              </div>
+              <ServiceRow title="Opérations - Systèmes" services={otherServices} />
             )}
           </>
         )}
