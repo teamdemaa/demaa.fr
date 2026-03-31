@@ -32,7 +32,7 @@ export default function ServiceCard({
           <h3 className="text-lg font-bold text-brand-blue group-hover:text-brand-coral transition-colors leading-tight mb-2">
             {service.name}
           </h3>
-          <p className="text-brand-coral text-xs font-bold mb-2 uppercase tracking-wide">
+          <p className="text-brand-blue/40 text-[10px] font-light mb-1 uppercase tracking-widest">
             {service.category}
           </p>
           <p className="text-gray-500 text-sm line-clamp-2 leading-relaxed mb-3">
