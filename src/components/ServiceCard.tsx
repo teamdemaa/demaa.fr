@@ -43,7 +43,7 @@ export default function ServiceCard({
         </div>
 
         <div className="flex flex-wrap gap-2 mt-4">
-          <span className="px-2.5 py-1 bg-brand-blue/5 text-brand-blue/60 text-[10px] uppercase font-bold tracking-wider rounded-full border border-brand-blue/10">
+          <span className="px-3 py-1 bg-brand-blue/5 text-brand-blue/60 text-[11px] font-medium tracking-wide rounded-full">
             {service.category}
           </span>
         </div>
