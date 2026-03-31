@@ -60,8 +60,8 @@ export default function Footer() {
         <div className="mt-16 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500">
           <p>© {currentYear} Demaa. Tous droits réservés.</p>
           <div className="flex space-x-4 mt-4 sm:mt-0">
-            <Link href="#" className="hover:text-white transition-colors">Mentions légales</Link>
-            <Link href="#" className="hover:text-white transition-colors">Politique de confidentialité</Link>
+            <Link href="/legal" className="hover:text-white transition-colors">Mentions légales</Link>
+            <Link href="/legal" className="hover:text-white transition-colors">Politique de confidentialité</Link>
           </div>
         </div>
       </div>
