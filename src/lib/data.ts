@@ -70,7 +70,7 @@ const localData: ServiceRecord[] = [
     id: "6",
     slug: "site-web",
     name: "Site web",
-    category: "Marketing - Vente",
+    category: "Opérations - Systèmes",
     shortDescription: "5 pages juste l'essentiel pour vos visiteurs",
     description: "Un site vitrine professionnel qui inspire confiance dès le premier regard. On prend en charge le design sur mesure, la rédaction des contenus, l'optimisation pour les moteurs de recherche (SEO), l'hébergement et la configuration du nom de domaine. Le résultat : un site rapide, responsive et conçu pour convertir les visiteurs en contacts.",
     tags: ["Web", "Design", "SEO"],
