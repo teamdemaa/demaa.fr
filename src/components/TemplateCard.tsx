@@ -43,12 +43,8 @@ export default function TemplateCard({
             {template.name}
           </h3>
           
-          <p className="text-gray-500 text-sm leading-relaxed mb-6 italic">
+          <p className="text-gray-500 text-sm leading-relaxed italic">
             "{template.shortDescription}"
-          </p>
-          
-          <p className="text-gray-600 text-sm leading-relaxed flex-1">
-            {template.description}
           </p>
 
           <div className="mt-8 pt-6 border-t border-gray-50 flex items-center justify-between">
