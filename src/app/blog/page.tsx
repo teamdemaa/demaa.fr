@@ -16,11 +16,11 @@ export default function BlogIndexPage() {
     <>
       <Navbar />
       <main className="flex-1 w-full bg-background min-h-[85vh]">
-        <section className="w-full flex flex-col items-center justify-center pt-8 pb-8 md:pt-12 md:pb-10 px-4 text-center bg-brand-coral/5 border-b border-brand-coral/10 mb-12">
-          <h1 className="text-3xl md:text-5xl font-bold text-brand-blue mb-4">
+        <section className="w-full flex flex-col items-center justify-center pt-8 pb-8 md:pt-10 md:pb-8 px-4 text-center bg-white border-b border-gray-100 mb-8">
+          <h1 className="text-2xl md:text-4xl font-bold text-brand-blue mb-3">
             Nos <span className="text-brand-coral">conseils</span> & astuces
           </h1>
-          <p className="text-base md:text-lg text-gray-500 max-w-2xl mx-auto font-medium">
+          <p className="text-sm md:text-base text-gray-500 max-w-2xl mx-auto font-medium">
             Des articles conçus pour vous aider à y voir plus clair dans la gestion de votre activité.
           </p>
         </section>

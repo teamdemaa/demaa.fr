@@ -29,17 +29,17 @@ export default function ToolsDirectoryPage() {
     <>
       <Navbar />
       <main className="flex-1 w-full bg-background min-h-screen pb-20">
-        <section className="w-full flex flex-col items-center justify-center pt-8 pb-8 md:pt-12 md:pb-10 px-4 text-center bg-brand-coral/5 border-b border-brand-coral/10">
-          <h1 className="text-3xl md:text-5xl lg:text-5xl font-bold tracking-tight text-brand-blue mb-4 leading-tight max-w-4xl mx-auto z-10 relative drop-shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+        <section className="w-full flex flex-col items-center justify-center pt-8 pb-8 md:pt-10 md:pb-8 px-4 text-center bg-white border-b border-gray-100">
+          <h1 className="text-2xl md:text-4xl lg:text-4xl font-bold tracking-tight text-brand-blue mb-3 leading-tight max-w-4xl mx-auto z-10 relative">
             L'annuaire des <span className="text-brand-coral">outils gratuits</span>
           </h1>
-          <p className="text-base md:text-lg text-gray-500 max-w-2xl mx-auto font-medium">
+          <p className="text-sm md:text-base text-gray-500 max-w-2xl mx-auto font-medium">
             Une sélection d'outils ultra-simples et gratuits pour faciliter la gestion de votre entreprise au quotidien.
           </p>
         </section>
 
         <div className="mt-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 animate-in fade-in duration-700">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {toolsData.map(tool => (
               <ServiceCard 
                  key={tool.id} 

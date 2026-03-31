@@ -24,11 +24,11 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="sticky top-0 z-40 bg-brand-coral/5 backdrop-blur-md border-b border-brand-coral/10">
+      <nav className="sticky top-0 z-40 bg-white border-b border-gray-100 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between py-2.5 md:py-8 items-center">
+          <div className="flex justify-between py-1.5 md:py-2.5 items-center">
             {/* Logo */}
-            <Link href="/" className="text-2xl sm:text-3xl font-bold tracking-tight text-brand-blue shrink-0">
+            <Link href="/" className="text-lg sm:text-xl font-bold tracking-tight text-brand-blue shrink-0">
               Demaa<span className="text-brand-coral">.</span>
             </Link>
 
@@ -47,10 +47,10 @@ export default function Navbar() {
             <div className="relative">
               <button 
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className={`flex items-center space-x-2 transition-colors text-lg font-semibold ${isActive('/outils') ? 'text-brand-coral' : 'text-brand-blue hover:text-brand-coral'}`}
+                className={`flex items-center space-x-1.5 transition-colors text-[13px] font-bold ${isActive('/outils') ? 'text-brand-coral' : 'text-brand-blue hover:text-brand-coral'}`}
               >
                 <span>Outils</span>
-                <ChevronDown className={`w-5 h-5 pointer-events-none transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-3.5 h-3.5 pointer-events-none transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
               </button>
               
               {isDropdownOpen && (
@@ -75,7 +75,7 @@ export default function Navbar() {
             {/* Conseils Link */}
             <Link 
               href="/blog" 
-              className={`transition-colors text-lg font-semibold ${isActive('/blog') ? 'text-brand-coral underline decoration-2 underline-offset-8' : 'text-brand-blue hover:text-brand-coral'}`}
+              className={`transition-colors text-[13px] font-bold ${isActive('/blog') ? 'text-brand-coral underline decoration-2 underline-offset-4' : 'text-brand-blue hover:text-brand-coral'}`}
             >
               Conseils
             </Link>
@@ -83,10 +83,10 @@ export default function Navbar() {
             {/* Consultation CTA */}
             <button
               onClick={() => setIsModalOpen(true)}
-              className="ml-6 flex flex-col items-center justify-center bg-brand-blue text-white px-6 py-2.5 rounded-full hover:bg-brand-coral transition-all duration-300 transform hover:-translate-y-0.5 shadow-md hover:shadow-lg"
+              className="ml-4 flex flex-col items-center justify-center bg-brand-blue text-white px-5 py-1.5 rounded-full hover:bg-brand-coral transition-all duration-300 transform hover:-translate-y-0.5 shadow-md hover:shadow-lg"
             >
-              <span className="font-bold text-base leading-tight">Consultation Structuration</span>
-              <span className="text-[0.65rem] font-medium text-white/80 mt-0.5 tracking-wider">Gratuit - Par téléphone</span>
+              <span className="font-bold text-xs leading-tight">Consultation Structuration</span>
+              <span className="text-[0.6rem] font-medium text-white/80 mt-0.5 tracking-wider">Gratuit - Par téléphone</span>
             </button>
           </div>
         </div>
