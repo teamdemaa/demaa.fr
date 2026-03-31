@@ -1,15 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { X, Send } from "lucide-react";
+import { createPortal } from "react-dom";
 
 export default function OrderModal({ serviceName }: { serviceName: string }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [formData, setFormData] = useState({
     prenom: "",
     email: "",
     telephone: ""
   });
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,8 +49,8 @@ Merci de me recontacter !`;
         Traitement rapide via WhatsApp
       </p>
 
-      {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-brand-blue/60 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+      {mounted && isOpen && createPortal(
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-brand-blue/60 backdrop-blur-sm p-4 animate-in fade-in duration-200">
           <div className="bg-white rounded-[2rem] w-full max-w-md shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
             
             <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
@@ -52,7 +58,10 @@ Merci de me recontacter !`;
                 <h3 className="text-xl font-bold text-brand-blue">Finaliser la demande</h3>
                 <p className="text-sm text-brand-coral font-medium mt-1 truncate max-w-[250px]">{serviceName}</p>
               </div>
-              <button onClick={() => setIsOpen(false)} className="p-2 bg-white rounded-full hover:bg-gray-100 text-gray-400 transition-colors shadow-sm">
+              <button 
+                onClick={() => setIsOpen(false)} 
+                className="p-2 bg-white rounded-full hover:bg-red-50 text-gray-400 hover:text-red-500 transition-colors shadow-sm focus:outline-none"
+              >
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -82,7 +91,8 @@ Merci de me recontacter !`;
               </div>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );
