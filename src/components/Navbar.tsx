@@ -32,15 +32,6 @@ export default function Navbar() {
               Demaa<span className="text-brand-coral">.</span>
             </Link>
 
-            {/* Mobile Top Bar CTA (Visible only on mobile) */}
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="md:hidden ml-auto shrink-0 flex flex-col items-center justify-center bg-brand-blue text-white px-4 py-1.5 rounded-full shadow-md active:scale-95 transition-transform"
-            >
-              <span className="font-semibold text-[11px] leading-tight whitespace-nowrap">Consultation Structuration</span>
-              <span className="text-[9px] font-medium text-white/70 tracking-wide whitespace-nowrap">Gratuit · Par téléphone</span>
-            </button>
-
             {/* Desktop Links */}
             <div className="hidden md:flex space-x-10 items-center">
             {/* Dropdown */}
@@ -79,15 +70,6 @@ export default function Navbar() {
             >
               Conseils
             </Link>
-
-            {/* Consultation CTA */}
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="ml-4 flex flex-col items-center justify-center bg-brand-blue text-white px-5 py-1.5 rounded-full hover:bg-brand-coral transition-all duration-300 transform hover:-translate-y-0.5 shadow-md hover:shadow-lg"
-            >
-              <span className="font-bold text-xs leading-tight">Consultation Structuration</span>
-              <span className="text-[0.6rem] font-medium text-white/80 mt-0.5 tracking-wider">Gratuit - Par téléphone</span>
-            </button>
           </div>
         </div>
       </div>
