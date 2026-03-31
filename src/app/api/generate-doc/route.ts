@@ -1,14 +1,26 @@
 import Anthropic from "@anthropic-ai/sdk";
 
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY,
-});
-
-export const runtime = "edge";
+// Helper to check key but not crash on load
+const getAnthropic = () => {
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey || apiKey === "YOUR_API_KEY_HERE") {
+    throw new Error("ANTHROPIC_API_KEY is missing or invalid in .env.local");
+  }
+  return new Anthropic({ apiKey });
+};
 
 export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
+
+    if (!messages || !Array.isArray(messages)) {
+      return new Response(JSON.stringify({ error: "Invalid messages format" }), { 
+        status: 400,
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+
+    const anthropic = getAnthropic();
 
     const stream = anthropic.messages.stream({
       model: "claude-3-5-sonnet-20241022",
@@ -35,8 +47,18 @@ Règles :
     });
 
     return new Response(stream.toReadableStream());
-  } catch (error) {
-    console.error("API Error:", error);
-    return new Response(JSON.stringify({ error: "Generation failed" }), { status: 500 });
+  } catch (error: any) {
+    console.error("API Error [generate-doc]:", error.message || error);
+    
+    // Distinguish between missing key and other errors
+    const status = error.message?.includes("ANTHROPIC_API_KEY") ? 401 : 500;
+    const message = error.message?.includes("ANTHROPIC_API_KEY") 
+      ? "Clé API Anthropic manquante" 
+      : "Generation failed";
+
+    return new Response(JSON.stringify({ error: message, details: error.message }), { 
+      status,
+      headers: { "Content-Type": "application/json" }
+    });
   }
 }

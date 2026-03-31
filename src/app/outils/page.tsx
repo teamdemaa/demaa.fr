@@ -3,7 +3,6 @@ import ServiceRow from "@/components/ServiceRow";
 import { ServiceRecord } from "@/lib/data";
 
 const toolsData: ServiceRecord[] = [
-  { id: "t1", slug: "generation-de-document", name: "Génération de document", category: "Automatisation", description: "Générez vos documents professionnels automatiquement sans perdre de temps.", shortDescription: "Documents prêts à l'emploi", tags: ["Doc", "Auto"], icon: "FileText", price: "Gratuit" },
   { id: "t2", slug: "generation-de-qr-code-pour-card", name: "Génération de QR code pour card", category: "Outils visuels", description: "Créez facilement des QR codes optimisés pour vos cartes de visite.", shortDescription: "Pour carte de visite", tags: ["QR", "Card"], icon: "QrCode", price: "Gratuit" },
   { id: "t3", slug: "generation-de-tampon", name: "Génération de Tampon", category: "Outils visuels", description: "Un outil pour concevoir et générer votre tampon d'entreprise virtuel personnalisé.", shortDescription: "Créez votre tampon", tags: ["Design", "Admin"], icon: "Stamp", price: "Gratuit" },
   { id: "t4", slug: "qr-code-pour-avis-client", name: "QR code pour avis client", category: "Marketing", description: "Incitez vos clients à laisser un avis positif avec ce QR code magique.", shortDescription: "Collecte d'avis", tags: ["Avis", "QR"], icon: "Star", price: "Gratuit" },
