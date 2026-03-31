@@ -20,7 +20,7 @@ export default function USPSection() {
   ];
 
   return (
-    <div className="w-full max-w-6xl mx-auto mt-6 md:mt-10 relative overflow-hidden animate-in fade-in slide-in-from-top-4 duration-700 delay-300 px-6">
+    <div className="w-full max-w-6xl mx-auto mt-6 md:mt-10 relative pb-2 animate-in fade-in slide-in-from-top-4 duration-700 delay-300 px-6">
       
       {/* DESKTOP VIEW: Stable 3-Column Grid */}
       <div className="hidden md:grid md:grid-cols-3 gap-12 px-8">

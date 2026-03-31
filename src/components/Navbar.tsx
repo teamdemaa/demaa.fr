@@ -14,7 +14,24 @@ export default function Navbar() {
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+
+    // Global click listener to close dropdown when clicking outside
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      // Close dropdown if it's open and the click is NOT on the dropdown button
+      if (isDropdownOpen && !target.closest('.relative')) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    if (isDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isDropdownOpen]);
 
   const isActive = (path: string) => {
     if (path === "/" && (pathname === "/" || pathname.startsWith("/services"))) return true;
