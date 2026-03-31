@@ -98,17 +98,6 @@ const localData: ServiceRecord[] = [
     tags: ["Recrutement", "RH", "Talents"],
     icon: "Users",
     price: "10% du salaire annuel"
-  },
-  {
-    id: "9",
-    slug: "formation-francais",
-    name: "Formation en français",
-    category: "Equipe",
-    shortDescription: "Meilleure communication interne et clients",
-    description: "On propose des formations au français professionnel, adaptées au secteur d'activité de l'entreprise et au niveau de chaque apprenant débutant, intermédiaire ou avancé, en présentiel ou à distance. Thématiques couvertes : français oral du quotidien, vocabulaire métier, rédaction de documents.",
-    tags: ["Formation", "Communication", "Langues"],
-    icon: "MessageSquare",
-    price: "Sur devis"
   }
 ];
 
