@@ -41,9 +41,9 @@ export default function ServiceRow({ title, services }: { title: string, service
   if (services.length === 0) return null;
 
   return (
-    <div className="mb-10 relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="flex items-center justify-between mb-4 pr-2">
-        <h2 className="text-xl font-bold tracking-tight text-brand-blue">
+    <div className="mb-6 relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="flex items-center justify-between mb-2 pr-2">
+        <h2 className="text-lg font-light tracking-wide text-brand-blue/80">
           {title}
         </h2>
         {/* Mobile Swipe Indicator */}
