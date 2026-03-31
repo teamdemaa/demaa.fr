@@ -49,6 +49,7 @@ export default function Navbar() {
                   <Link href="/outils" className="block px-5 py-3 text-sm text-brand-coral hover:bg-brand-coral/5 font-bold transition-colors border-b border-gray-100 mb-2">
                     Voir tout →
                   </Link>
+                  <Link href="/outils/modeles-de-document" className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors font-bold">Modèle de document</Link>
                   <Link href="/outils/generation-de-qr-code-pour-card" className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors">Génération de QR code pour card</Link>
                   <Link href="/outils/generation-de-tampon" className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors">Génération de Tampon</Link>
                   <Link href="/outils/qr-code-pour-avis-client" className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors">QR code pour avis client</Link>
