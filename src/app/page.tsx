@@ -1,7 +1,6 @@
 import { getServices } from "@/lib/data";
 import Navbar from "@/components/Navbar";
 import HomeClient from "@/components/HomeClient";
-import SocialProof from "@/components/SocialProof";
 
 export default async function Home() {
   const services = await getServices();
@@ -12,7 +11,6 @@ export default async function Home() {
       <Navbar />
       <main className="flex-1 w-full bg-background">
         <HomeClient services={services} allTags={allCategories} />
-        <SocialProof />
       </main>
     </>
   );

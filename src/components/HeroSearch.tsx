@@ -12,7 +12,7 @@ export default function HeroSearch({ onSearch }: { onSearch: (q: string) => void
       </h1>
       
       {/* Big Rounded Searchbar */}
-      <div className="relative w-full max-w-xs sm:max-w-md md:max-w-2xl mx-auto shadow-sm group">
+      <div className="relative w-full max-w-xs sm:max-w-md md:max-w-2xl mx-auto group">
         <div className="absolute inset-y-0 left-0 pl-4 md:pl-6 flex items-center pointer-events-none">
           <Search className="h-5 w-5 md:h-5 md:w-5 text-gray-400 group-focus-within:text-brand-coral transition-colors" />
         </div>
