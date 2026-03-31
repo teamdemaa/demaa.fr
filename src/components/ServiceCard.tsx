@@ -32,10 +32,7 @@ export default function ServiceCard({
           <h3 className="text-lg font-bold text-brand-blue group-hover:text-brand-coral transition-colors leading-tight mb-2">
             {service.name}
           </h3>
-          <p className="text-brand-blue/40 text-[10px] font-light mb-1 uppercase tracking-widest">
-            {service.category}
-          </p>
-          <p className="text-gray-500 text-sm line-clamp-2 leading-relaxed mb-3">
+          <p className="text-gray-500 text-sm line-clamp-2 leading-relaxed mb-3 mt-4">
             {service.description}
           </p>
           {service.price && (
@@ -46,16 +43,9 @@ export default function ServiceCard({
         </div>
 
         <div className="flex flex-wrap gap-2 mt-4">
-          {service.tags.slice(0, 2).map((tag, i) => (
-            <span key={i} className="px-2.5 py-1 bg-gray-50 text-gray-500 text-[10px] uppercase font-bold tracking-tight rounded-full border border-gray-100">
-              {tag}
-            </span>
-          ))}
-          {service.tags.length > 2 && (
-             <span className="px-2.5 py-1 bg-gray-50 text-gray-500 text-[10px] font-bold rounded-full border border-gray-100">
-               +{service.tags.length - 2}
-             </span>
-          )}
+          <span className="px-2.5 py-1 bg-brand-blue/5 text-brand-blue/60 text-[10px] uppercase font-bold tracking-wider rounded-full border border-brand-blue/10">
+            {service.category}
+          </span>
         </div>
       </div>
     </Link>
