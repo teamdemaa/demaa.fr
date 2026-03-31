@@ -4,7 +4,7 @@ import { Search } from "lucide-react";
 
 export default function HeroSearch({ onSearch }: { onSearch: (q: string) => void }) {
   return (
-    <section className="w-full flex flex-col items-center justify-center pt-8 pb-8 md:pt-14 md:pb-12 px-4 text-center bg-white border-b border-gray-100">
+    <section className="w-full flex flex-col items-center justify-center pt-8 pb-8 md:pt-14 md:pb-12 px-4 text-center bg-[#FFF9F8] border-b border-brand-coral/10">
 
       <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold tracking-tight text-brand-blue mb-4 md:mb-6 leading-tight max-w-4xl mx-auto z-10 relative">
         Les services clés pour votre entreprise, <span className="text-brand-coral">simplement</span>

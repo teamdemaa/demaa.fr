@@ -29,7 +29,7 @@ export default function ToolsDirectoryPage() {
     <>
       <Navbar />
       <main className="flex-1 w-full bg-background min-h-screen pb-20">
-        <section className="w-full flex flex-col items-center justify-center pt-8 pb-8 md:pt-10 md:pb-8 px-4 text-center bg-white border-b border-gray-100">
+        <section className="w-full flex flex-col items-center justify-center pt-8 pb-8 md:pt-10 md:pb-8 px-4 text-center bg-[#FFF9F8] border-b border-brand-coral/10">
           <h1 className="text-2xl md:text-4xl lg:text-4xl font-bold tracking-tight text-brand-blue mb-3 leading-tight max-w-4xl mx-auto z-10 relative">
             L'annuaire des <span className="text-brand-coral">outils gratuits</span>
           </h1>
