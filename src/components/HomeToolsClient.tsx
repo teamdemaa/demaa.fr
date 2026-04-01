@@ -35,14 +35,6 @@ export default function HomeToolsClient({
       />
       
       <div className="mt-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-32 animate-in fade-in duration-700">
-        <div className="flex items-center justify-between mb-8 pr-2">
-           <h2 className="text-xl md:text-2xl font-bold tracking-tight text-brand-blue">
-             Tous nos <span className="text-brand-coral">outils gratuits</span>
-           </h2>
-           <span className="text-xs text-gray-500 font-medium bg-gray-100 px-3 py-1 rounded-full">
-             {filteredTools.length} outil{filteredTools.length > 1 ? 's' : ''}
-           </span>
-        </div>
 
         {filteredTools.length === 0 ? (
           <div className="text-center text-gray-400 py-20 text-lg">
