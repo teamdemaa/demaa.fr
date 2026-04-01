@@ -22,6 +22,17 @@ const localData: ServiceRecord[] = [
     icon: "Building",
     price: "600 €"
   },
+  {
+    id: "8",
+    slug: "expert-comptable",
+    name: "Expert comptable",
+    category: "Finance - Juridique",
+    shortDescription: "Comptabilité et fiscalité sans stress",
+    description: "La tenue complète de votre comptabilité par des professionnels. Nous gérons la saisie des pièces, vos déclarations de TVA, le bilan annuel, la liasse fiscale et le compte de résultat. Un accompagnement rigoureux pour garantir la conformité de votre entreprise face à l'administration.",
+    tags: ["Comptabilité", "Bilan", "Fiscalité"],
+    icon: "Calculator",
+    price: "À partir de 250 €"
+  },
   /*
   {
     id: "2",
