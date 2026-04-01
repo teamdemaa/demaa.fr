@@ -51,27 +51,40 @@ export default function Navbar() {
 
             {/* Desktop & Mobile Links */}
             <div className="flex space-x-6 md:space-x-10 items-center">
-              {/* Dropdown */}
+              {/* Standalone Link: Modèles de documents */}
+              <Link 
+                href="/outils/modeles-de-document" 
+                className={`flex items-center space-x-2 transition-colors text-sm md:text-base font-bold ${isActive('/outils/modeles-de-document') ? 'text-brand-coral' : 'text-brand-blue hover:text-brand-coral'}`}
+              >
+                <PenLine className="w-4 h-4 md:w-5 md:h-5 transition-colors" />
+                <span className="whitespace-nowrap">Modèles</span>
+              </Link>
+
+              {/* Dropdown: Outils */}
               <div className="relative">
                 <button 
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className={`flex items-center space-x-2 transition-colors text-sm md:text-base font-bold ${isActive('/nos-services') ? 'text-brand-coral' : 'text-brand-blue hover:text-brand-coral'}`}
+                  className={`flex items-center space-x-2 transition-colors text-sm md:text-base font-bold ${isActive('/outils') && !isActive('/outils/modeles-de-document') ? 'text-brand-coral' : 'text-brand-blue hover:text-brand-coral'}`}
                 >
-                  <Briefcase className="w-4 h-4 md:w-5 md:h-5 transition-colors" />
-                  <span>Services</span>
+                  <Wrench className="w-4 h-4 md:w-5 md:h-5 transition-colors" />
+                  <span>Outils</span>
                   <ChevronDown className={`w-3.5 h-3.5 md:w-4 md:h-4 pointer-events-none transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
                 </button>
                 
                 {isDropdownOpen && (
                   <div className="absolute right-0 md:left-0 top-full mt-4 w-72 bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-gray-100 py-3 animate-in fade-in slide-in-from-top-2 z-50">
-                    <Link href="/nos-services" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-3 text-sm text-brand-coral hover:bg-brand-coral/5 font-bold transition-colors border-b border-gray-100 mb-2">
-                       Voir tous nos services →
+                    <Link href="/outils" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-3 text-sm text-brand-coral hover:bg-brand-coral/5 font-bold transition-colors border-b border-gray-100 mb-2">
+                       Voir tout l'annuaire →
                     </Link>
-                    <Link href="/services/creation-societe" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors">Création de société</Link>
-                    <Link href="/services/previsionnel-financier" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors">Prévisionnel financier</Link>
-                    <Link href="/services/audit-conformite-fiscale" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors">Audit de conformité fiscale</Link>
-                    <Link href="/services/automatisations-taches" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors font-bold">Automatisation des tâches</Link>
-                    <Link href="/services/site-web" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors font-bold">Site web</Link>
+                    <Link href="/outils/generation-de-qr-code-pour-card" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors">Génération de QR code pour card</Link>
+                    <Link href="/outils/generation-de-tampon" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors">Génération de Tampon</Link>
+                    <Link href="/outils/qr-code-pour-avis-client" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors">QR code pour avis client</Link>
+                    <Link href="/outils/creation-de-fiche-google-optimisee" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors">Création de fiche Google optimisée</Link>
+                    <Link href="/outils/signature-email-pro" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors">Signature email pro</Link>
+                    <Link href="/outils/qr-code-commande-rapide" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors">QR code commande rapide</Link>
+                    <Link href="/outils/signez-un-document-electroniquement" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors">Signez un document électroniquement</Link>
+                    <Link href="/outils/generation-de-menu-avec-qr-code" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors">Génération de menu avec QR code</Link>
+                    <Link href="/outils/generation-de-qr-code" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors">Génération de QR code</Link>
                   </div>
                 )}
               </div>
