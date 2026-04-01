@@ -3,6 +3,8 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/Footer";
 
+import { Analytics } from "@vercel/analytics/react";
+
 const poppins = Poppins({
   variable: "--font-poppins",
   weight: ["300", "400", "500", "600", "700"],
@@ -24,6 +26,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-background text-foreground font-sans pb-24 md:pb-0">
         {children}
         <Footer />
+        <Analytics />
       </body>
     </html>
   );
