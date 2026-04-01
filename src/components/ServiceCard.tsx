@@ -29,9 +29,9 @@ export default function ServiceCard({
 
         {/* Improved Trust Badge for Services */}
         {isService && (
-          <div className="absolute top-5 right-5 flex items-center space-x-1.5 px-3 py-1 bg-brand-coral/10 rounded-full border border-brand-coral/15 animate-in fade-in zoom-in duration-500">
-             <Icons.ShieldCheck className="w-3 h-3 text-brand-coral mb-0.5" />
-             <span className="text-[10px] font-bold text-brand-coral tracking-tight whitespace-nowrap">
+          <div className="absolute top-5 right-5 flex items-center space-x-1.5 px-3 py-1 bg-brand-coral/5 rounded-full animate-in fade-in zoom-in duration-500">
+             <Icons.ShieldCheck className="w-3 h-3 text-brand-coral/50 mb-0.5" />
+             <span className="text-[10px] font-normal text-brand-coral/70 tracking-tight whitespace-nowrap">
                Approuvé par Demaa
              </span>
           </div>
