@@ -227,11 +227,7 @@ export default function GoogleProfileOptimizer() {
       </main>
 
       <style jsx global>{`
-        html, body { 
-          overflow: hidden; 
-          height: 100%;
-          margin: 0;
-        }
+        body { overflow: hidden; }
       `}</style>
     </div>
   );
