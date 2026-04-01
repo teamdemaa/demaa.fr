@@ -13,7 +13,7 @@ export default function CustomerReviewQRCode() {
   const [fgColor, setFgColor] = useState("#191b30"); // Brand Blue
   const [starsColor, setStarsColor] = useState("#f39d66"); // Brand Coral
   const [bgColor, setBgColor] = useState("#FFFFFF");
-  const [logoUrl, setLogoUrl] = useState<string | null>("https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_Logo.svg");
+  const [logoUrl, setLogoUrl] = useState<string | null>("/google-icon.svg");
   const [qrSize, setQrSize] = useState(240);
   const [isExporting, setIsExporting] = useState(false);
   
