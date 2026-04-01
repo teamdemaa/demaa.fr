@@ -9,7 +9,7 @@ import { toPng, toJpeg, toSvg } from "html-to-image";
 export default function QRCodeGenerator() {
   const [url, setUrl] = useState("https://demaa.fr");
   const [title, setTitle] = useState("Scannez moi !");
-  const [fgColor, setFgColor] = useState("#0A1D36"); // Brand Blue
+  const [fgColor, setFgColor] = useState("#191b30"); // Brand Blue
   const [bgColor, setBgColor] = useState("#FFFFFF");
   const [logoUrl, setLogoUrl] = useState<string | null>(null);
   const [qrSize, setQrSize] = useState(240);

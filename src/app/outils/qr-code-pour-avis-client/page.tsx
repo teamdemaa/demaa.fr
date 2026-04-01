@@ -10,8 +10,8 @@ export default function CustomerReviewQRCode() {
   const [placeId, setPlaceId] = useState("");
   const [customUrl, setCustomUrl] = useState("https://g.page/r/YOUR_ID/review");
   const [title, setTitle] = useState("Notez-nous 5 étoiles !");
-  const [fgColor, setFgColor] = useState("#0A1D36"); // Demaa Blue
-  const [starsColor, setStarsColor] = useState("#FF6E51"); // Demaa Coral
+  const [fgColor, setFgColor] = useState("#191b30"); // Brand Blue
+  const [starsColor, setStarsColor] = useState("#f39d66"); // Brand Coral
   const [bgColor, setBgColor] = useState("#FFFFFF");
   const [logoUrl, setLogoUrl] = useState<string | null>(null);
   const [qrSize, setQrSize] = useState(240);

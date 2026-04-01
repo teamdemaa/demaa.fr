@@ -10,7 +10,7 @@ export default function WhatsAppQRCodeCard() {
   const [phone, setPhone] = useState("+33600000000");
   const [text, setText] = useState("Bonjour, je souhaite en savoir plus sur vos services !");
   const [title, setTitle] = useState("Carte de Visite QR Code WhatsApp");
-  const [fgColor, setFgColor] = useState("#075E54"); // WhatsApp Dark Green
+  const [fgColor, setFgColor] = useState("#191b30"); // Brand Blue
   const [bgColor, setBgColor] = useState("#FFFFFF");
   const [logoUrl, setLogoUrl] = useState<string | null>("https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg");
   const [qrSize, setQrSize] = useState(240);
