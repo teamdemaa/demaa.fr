@@ -3,12 +3,24 @@
 import { Search } from "lucide-react";
 import USPSection from "./USPSection";
 
-export default function HeroSearch({ onSearch }: { onSearch: (q: string) => void }) {
+export default function HeroSearch({ 
+  onSearch, 
+  title = "Les services clés pour votre entreprise au même endroit",
+  placeholder = "Rechercher un outil"
+}: { 
+  onSearch: (q: string) => void,
+  title?: string,
+  placeholder?: string
+}) {
   return (
     <section className="w-full flex flex-col items-center justify-center pt-8 pb-12 md:pt-14 md:pb-16 px-4 text-center bg-[#FFF9F8] border-b border-brand-coral/10">
 
-      <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight text-brand-blue mb-6 md:mb-8 leading-[1.1] max-w-4xl mx-auto z-10 relative px-2">
-        Les services clés pour <br /> <span className="text-brand-coral">bien gérer votre entreprise</span>
+      <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold tracking-tight text-brand-blue mb-6 md:mb-10 leading-[1.05] max-w-5xl mx-auto z-10 relative px-2">
+        {title.split(' ').map((word, i) => (
+          <span key={i}>
+            {word === "clé" || word === "clés" ? <span className="text-brand-coral">{word} </span> : word + " "}
+          </span>
+        ))}
       </h1>
       
       {/* Big Rounded Searchbar */}
@@ -19,7 +31,7 @@ export default function HeroSearch({ onSearch }: { onSearch: (q: string) => void
         <input 
           type="text" 
           onChange={(e) => onSearch(e.target.value)}
-          placeholder="Rechercher un service" 
+          placeholder={placeholder}
           className="peer block w-full pl-10 md:pl-14 pr-4 md:pr-6 py-2.5 md:py-3.5 border-2 border-brand-coral/25 rounded-full text-sm md:text-base focus:ring-4 focus:ring-brand-coral/20 focus:border-brand-coral outline-none transition-all shadow-md placeholder-gray-400 bg-white" 
         />
       </div>

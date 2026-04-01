@@ -15,15 +15,12 @@ export default async function ServicesPage() {
     <>
       <Navbar />
       <main className="flex-1 w-full bg-background min-h-screen">
-        <div className="pt-8 pb-4 px-4 text-center bg-[#FFF9F8] border-b border-brand-coral/10 mb-8">
-          <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-brand-blue mb-4">
-            Nos <span className="text-brand-coral">Services</span> Clés
-          </h1>
-          <p className="text-gray-500 max-w-2xl mx-auto text-sm md:text-base">
-            Tout ce dont vous avez besoin pour structurer et développer votre entreprise sereinement.
-          </p>
-        </div>
-        <HomeClient services={services} allTags={allCategories} />
+        <HomeClient 
+          services={services} 
+          allTags={allCategories} 
+          title="Vos services experts au même endroit"
+          placeholder="Rechercher un service (compta, juridique...)"
+        />
       </main>
     </>
   );

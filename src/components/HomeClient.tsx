@@ -3,10 +3,19 @@
 import { useState, useMemo } from "react";
 import HeroSearch from "./HeroSearch";
 import ServiceRow from "./ServiceRow";
-import ServiceCard from "./ServiceCard";
 import { ServiceRecord } from "@/lib/data";
 
-export default function HomeClient({ services, allTags }: { services: ServiceRecord[], allTags: string[] }) {
+export default function HomeClient({ 
+  services, 
+  allTags, 
+  title, 
+  placeholder 
+}: { 
+  services: ServiceRecord[], 
+  allTags: string[],
+  title?: string,
+  placeholder?: string
+}) {
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredServices = useMemo(() => {
@@ -24,7 +33,7 @@ export default function HomeClient({ services, allTags }: { services: ServiceRec
 
   return (
     <div className="w-full">
-      <HeroSearch onSearch={setSearchQuery} />
+      <HeroSearch onSearch={setSearchQuery} title={title} placeholder={placeholder} />
       
       <div className="mt-12 space-y-12 animate-in fade-in duration-700 pb-20">
         {filteredServices.length === 0 ? (
