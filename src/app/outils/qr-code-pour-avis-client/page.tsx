@@ -10,7 +10,8 @@ export default function CustomerReviewQRCode() {
   const [placeId, setPlaceId] = useState("");
   const [customUrl, setCustomUrl] = useState("https://g.page/r/YOUR_ID/review");
   const [title, setTitle] = useState("Notez-nous 5 étoiles !");
-  const [fgColor, setFgColor] = useState("#FF6E51"); // Default Demaa Coral
+  const [fgColor, setFgColor] = useState("#0A1D36"); // Demaa Blue
+  const [starsColor, setStarsColor] = useState("#FF6E51"); // Demaa Coral
   const [bgColor, setBgColor] = useState("#FFFFFF");
   const [logoUrl, setLogoUrl] = useState<string | null>(null);
   const [qrSize, setQrSize] = useState(240);
@@ -142,18 +143,26 @@ export default function CustomerReviewQRCode() {
               </div>
               
               <div className="space-y-1.5">
-                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Logo Central</label>
+                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Couleur Étoiles</label>
                 <div className="flex gap-2">
-                  <label className="flex-1 flex items-center justify-center h-9 border-2 border-dashed border-brand-coral/10 rounded-lg cursor-pointer hover:bg-white transition-all group">
-                    <Upload className="w-3.5 h-3.5 text-gray-300 group-hover:text-brand-coral" />
-                    <input type="file" className="hidden" accept="image/*" onChange={handleLogoUpload} />
-                  </label>
-                  {logoUrl && (
-                    <button onClick={() => setLogoUrl(null)} className="p-2.5 bg-red-50 text-red-500 rounded-lg hover:bg-red-100 transition-colors">
-                      <Trash2 className="w-3.5 h-3.5" />
-                    </button>
-                  )}
+                  <input type="color" value={starsColor} onChange={(e) => setStarsColor(e.target.value)} className="w-9 h-9 rounded-lg cursor-pointer border-none p-0 overflow-hidden shrink-0 shadow-sm" />
+                  <div className="px-2 py-1 bg-white border border-brand-coral/10 rounded-lg text-[9px] font-bold text-brand-blue flex-1 flex items-center shadow-sm uppercase tracking-tighter">{starsColor}</div>
                 </div>
+              </div>
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Logo Central</label>
+              <div className="flex gap-2">
+                <label className="flex-1 flex items-center justify-center h-9 border-2 border-dashed border-brand-coral/10 rounded-lg cursor-pointer hover:bg-white transition-all group">
+                  <Upload className="w-3.5 h-3.5 text-gray-300 group-hover:text-brand-coral" />
+                  <input type="file" className="hidden" accept="image/*" onChange={handleLogoUpload} />
+                </label>
+                {logoUrl && (
+                  <button onClick={() => setLogoUrl(null)} className="p-2.5 bg-red-50 text-red-500 rounded-lg hover:bg-red-100 transition-colors">
+                    <Trash2 className="w-3.5 h-3.5" />
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -188,7 +197,7 @@ export default function CustomerReviewQRCode() {
               <div className="text-center space-y-3">
                 <div className="flex justify-center gap-1">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 shrink-0 transition-colors duration-300" style={{ color: fgColor, fill: fgColor }} />
+                    <Star key={i} className="w-5 h-5 shrink-0 transition-colors duration-300" style={{ color: starsColor, fill: starsColor }} />
                   ))}
                 </div>
                 <div className="space-y-1">
