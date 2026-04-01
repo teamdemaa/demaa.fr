@@ -38,10 +38,12 @@ export default function HomeClient({ services, allTags }: { services: ServiceRec
               <ServiceRow title="Finance - Juridique" services={financeServices} />
             )}
 
-            {/* 2. Scrolling Row for Operations & Systems */}
+            {/* 2. Scrolling Row for Operations & Systems (Hidden as requested) */}
+            {/* 
             {otherServices.length > 0 && (
               <ServiceRow title="Opérations - Systèmes" services={otherServices} />
             )}
+            */}
           </>
         )}
       </div>
