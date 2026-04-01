@@ -9,11 +9,11 @@ import { toPng, toJpeg, toSvg } from "html-to-image";
 export default function CustomerReviewQRCode() {
   const [placeId, setPlaceId] = useState("");
   const [customUrl, setCustomUrl] = useState("https://g.page/r/YOUR_ID/review");
-  const [title, setTitle] = useState("Notez-nous 5 étoiles !");
+  const [title, setTitle] = useState("Qu'avez-vous pensé de nous ?");
   const [fgColor, setFgColor] = useState("#191b30"); // Brand Blue
   const [starsColor, setStarsColor] = useState("#f39d66"); // Brand Coral
   const [bgColor, setBgColor] = useState("#FFFFFF");
-  const [logoUrl, setLogoUrl] = useState<string | null>(null);
+  const [logoUrl, setLogoUrl] = useState<string | null>("https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_Logo.svg");
   const [qrSize, setQrSize] = useState(240);
   const [isExporting, setIsExporting] = useState(false);
   
