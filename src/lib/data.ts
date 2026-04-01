@@ -90,3 +90,24 @@ export async function getServiceBySlug(slug: string): Promise<ServiceRecord | nu
   const all = await getServices();
   return all.find(s => s.slug === slug) || null;
 }
+
+export const toolsData: ServiceRecord[] = [
+  { id: "t2", slug: "generation-de-qr-code-pour-card", name: "Génération de QR code pour card", category: "Outils visuels", description: "Créez facilement des QR codes optimisés pour vos cartes de visite.", shortDescription: "Pour carte de visite", tags: ["QR", "Card"], icon: "QrCode", price: "Gratuit" },
+  { id: "t3", slug: "generation-de-tampon", name: "Génération de Tampon", category: "Outils visuels", description: "Un outil pour concevoir et générer votre tampon d'entreprise virtuel personnalisé.", shortDescription: "Créez votre tampon", tags: ["Design", "Admin"], icon: "Stamp", price: "Gratuit" },
+  { id: "t4", slug: "qr-code-pour-avis-client", name: "QR code pour avis client", category: "Marketing", description: "Incitez vos clients à laisser un avis positif avec ce QR code magique.", shortDescription: "Collecte d'avis", tags: ["Avis", "QR"], icon: "Star", price: "Gratuit" },
+  { id: "t5", slug: "creation-de-fiche-google-optimisee", name: "Création de fiche Google", category: "Marketing", description: "Optimisez votre référencement local grâce à une fiche Google parfaitement remplie.", shortDescription: "Boostez votre SEO local", tags: ["Google", "SEO"], icon: "MapPin", price: "Gratuit" },
+  { id: "t6", slug: "signature-email-pro", name: "Signature email pro", category: "Outils visuels", description: "Générez une signature mail esthétique et responsive pour toute votre équipe.", shortDescription: "Emails premium", tags: ["Email", "Pro"], icon: "MailSignature", price: "Gratuit" },
+  { id: "t7", slug: "qr-code-commande-rapide", name: "QR code commande rapide", category: "Vente", description: "Facilitez la commande de vos produits grâce à un QR code menant directement au paiement.", shortDescription: "Vente express", tags: ["Vente", "QR"], icon: "ShoppingCart", price: "Gratuit" },
+  { id: "t8", slug: "signez-un-document-electroniquement", name: "Signez un document", category: "Juridique", description: "Apposez votre signature électronique sur n'importe quel contrat PDF.", shortDescription: "e-Signature légale", tags: ["Signature", "PDF"], icon: "PenTool", price: "Gratuit" },
+  { id: "t9", slug: "generation-de-menu-avec-qr-code", name: "Génération menu QR code", category: "Automatisation", description: "Transformez votre carte de restaurant en menu digital scannable.", shortDescription: "Menu sans contact", tags: ["Restaurant", "QR"], icon: "Utensils", price: "Gratuit" },
+  { id: "t10", slug: "generation-de-qr-code", name: "Génération de QR code", category: "Outils visuels", description: "Créez un simple QR code pointant vers l'URL de votre choix.", shortDescription: "QR code simple", tags: ["QR", "Lien"], icon: "Link", price: "Gratuit" }
+];
+
+export async function getTools(): Promise<ServiceRecord[]> {
+  return new Promise((resolve) => setTimeout(() => resolve(toolsData), 10));
+}
+
+export async function getToolBySlug(slug: string): Promise<ServiceRecord | null> {
+  const all = await getTools();
+  return all.find(t => t.slug === slug) || null;
+}
