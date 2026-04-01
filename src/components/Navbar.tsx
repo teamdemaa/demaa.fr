@@ -51,15 +51,6 @@ export default function Navbar() {
 
             {/* Desktop & Mobile Links */}
             <div className="flex space-x-6 md:space-x-10 items-center">
-              {/* Standalone Link: Modèles de documents */}
-              <Link 
-                href="/outils/modeles-de-document" 
-                className={`flex items-center space-x-2 transition-colors text-sm md:text-base font-bold ${isActive('/outils/modeles-de-document') ? 'text-brand-coral' : 'text-brand-blue hover:text-brand-coral'}`}
-              >
-                <PenLine className="w-4 h-4 md:w-5 md:h-5 transition-colors" />
-                <span className="whitespace-nowrap">Modèles</span>
-              </Link>
-
               {/* Dropdown: Outils */}
               <div className="relative">
                 <button 
@@ -88,6 +79,15 @@ export default function Navbar() {
                   </div>
                 )}
               </div>
+
+              {/* Standalone Link: Modèles de documents */}
+              <Link 
+                href="/outils/modeles-de-document" 
+                className={`flex items-center space-x-2 transition-colors text-sm md:text-base font-bold ${isActive('/outils/modeles-de-document') ? 'text-brand-coral' : 'text-brand-blue hover:text-brand-coral'}`}
+              >
+                <PenLine className="w-4 h-4 md:w-5 md:h-5 transition-colors" />
+                <span className="whitespace-nowrap">Modèles</span>
+              </Link>
 
               {/* Conseils Link hidden for now */}
               {/* 
