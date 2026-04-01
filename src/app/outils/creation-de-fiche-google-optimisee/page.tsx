@@ -147,35 +147,35 @@ export default function GoogleProfileOptimizer() {
 
               <div className="p-8 space-y-6">
                 <div>
-                  <h2 className="text-2xl font-bold text-[#1a0dab] hover:underline cursor-pointer leading-tight mb-1">{name}</h2>
-                  <div className="flex items-center gap-2">
-                    <div className="flex items-center gap-0.5 text-orange-400">
-                      {[...Array(5)].map((_, i) => <Star key={i} className="w-3.5 h-3.5 fill-current" />)}
+                    <h2 className="text-2xl font-bold text-brand-blue hover:underline cursor-pointer leading-tight mb-1">{name}</h2>
+                    <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-0.5 text-orange-400">
+                        {[...Array(5)].map((_, i) => <Star key={i} className="w-3.5 h-3.5 fill-current" />)}
+                      </div>
+                      <span className="text-xs font-medium text-gray-500">5.0 (24 avis)</span>
+                      <span className="text-xs text-gray-300">•</span>
+                      <span className="text-xs font-semibold text-gray-500">{category}</span>
                     </div>
-                    <span className="text-xs font-medium text-gray-500">5.0 (24 avis)</span>
-                    <span className="text-xs text-gray-300">•</span>
-                    <span className="text-xs font-semibold text-gray-500">{category}</span>
                   </div>
-                </div>
-
-                <div className="space-y-3.5 border-y border-gray-50 py-6">
-                  <div className="flex items-start gap-4 group">
-                    <MapPin className="w-4 h-4 text-gray-400 mt-0.5 group-hover:text-blue-500 transition-colors" />
-                    <p className="text-xs text-gray-600 leading-relaxed font-medium">{address}</p>
+  
+                  <div className="space-y-3.5 border-y border-gray-50 py-6">
+                    <div className="flex items-start gap-4 group">
+                      <MapPin className="w-4 h-4 text-gray-400 mt-0.5 group-hover:text-brand-blue transition-colors" />
+                      <p className="text-xs text-gray-600 leading-relaxed font-medium">{address}</p>
+                    </div>
+                    <div className="flex items-center gap-4 group">
+                      <Clock className="w-4 h-4 text-gray-400 group-hover:text-brand-blue transition-colors" />
+                      <p className="text-xs text-gray-600 font-medium">Ouvert ⋅ Ferme à 19:00</p>
+                    </div>
+                    <div className="flex items-center gap-4 group">
+                      <Phone className="w-4 h-4 text-gray-400 group-hover:text-brand-blue transition-colors" />
+                      <p className="text-xs text-brand-blue font-bold">{phone}</p>
+                    </div>
+                    <div className="flex items-center gap-4 group">
+                      <Globe className="w-4 h-4 text-gray-400 group-hover:text-brand-blue transition-colors" />
+                      <p className="text-xs text-brand-blue font-medium truncate">{website}</p>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-4 group">
-                    <Clock className="w-4 h-4 text-gray-400 group-hover:text-blue-500 transition-colors" />
-                    <p className="text-xs text-gray-600 font-medium">Ouvert ⋅ Ferme à 19:00</p>
-                  </div>
-                  <div className="flex items-center gap-4 group">
-                    <Phone className="w-4 h-4 text-gray-400 group-hover:text-blue-500 transition-colors" />
-                    <p className="text-xs text-brand-blue font-bold">{phone}</p>
-                  </div>
-                  <div className="flex items-center gap-4 group">
-                    <Globe className="w-4 h-4 text-gray-400 group-hover:text-blue-500 transition-colors" />
-                    <p className="text-xs text-blue-600 font-medium truncate">{website}</p>
-                  </div>
-                </div>
 
                 <div className="space-y-2">
                   <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">À propos</h3>
