@@ -19,10 +19,10 @@ export default function HeroSearch({
   return (
     <section className="w-full flex flex-col items-center justify-center pt-8 pb-12 md:pt-14 md:pb-16 px-4 text-center bg-[#FFF9F8] border-b border-brand-coral/10">
 
-      <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold tracking-tight text-brand-blue mb-4 md:mb-6 leading-[1.05] max-w-5xl mx-auto z-10 relative px-2">
-        {title.split(' ').map((word, i) => (
-          <span key={i}>
-            {word === "clé" || word === "clés" ? <span className="text-brand-coral">{word} </span> : word + " "}
+      <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight text-brand-blue mb-4 md:mb-6 leading-[1.1] max-w-5xl mx-auto z-10 relative px-2">
+        {title.split(/(clés|gagner du temps au quotidien)/).map((part, i) => (
+          <span key={i} className={part === "clés" || part === "gagner du temps au quotidien" ? "text-brand-coral" : ""}>
+            {part}
           </span>
         ))}
       </h1>
