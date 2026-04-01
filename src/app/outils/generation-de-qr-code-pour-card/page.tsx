@@ -1,0 +1,234 @@
+"use client";
+
+import { useState, useRef, useEffect } from "react";
+import { QRCodeSVG } from "qrcode.react";
+import Navbar from "@/components/Navbar";
+import { Upload, Trash2, Monitor, Share2, Download, MessageSquare, Phone } from "lucide-react";
+import { toPng, toJpeg, toSvg } from "html-to-image";
+
+export default function WhatsAppQRCodeCard() {
+  const [phone, setPhone] = useState("+33600000000");
+  const [text, setText] = useState("Bonjour, je souhaite en savoir plus sur vos services !");
+  const [title, setTitle] = useState("WhatsApp Me");
+  const [fgColor, setFgColor] = useState("#075E54"); // WhatsApp Dark Green
+  const [bgColor, setBgColor] = useState("#FFFFFF");
+  const [logoUrl, setLogoUrl] = useState<string | null>("https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg");
+  const [qrSize, setQrSize] = useState(240);
+  const [isExporting, setIsExporting] = useState(false);
+  
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  // Compute WhatsApp Link
+  const fullUrl = `https://wa.me/${phone.replace(/\D/g, '')}?text=${encodeURIComponent(text)}`;
+
+  // Handle Logo Upload
+  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setLogoUrl(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const exportCard = async (format: 'png' | 'jpeg' | 'svg') => {
+    if (!cardRef.current) return;
+    setIsExporting(true);
+    try {
+      let dataUrl = "";
+      if (format === 'png') {
+        dataUrl = await toPng(cardRef.current, { cacheBust: true, pixelRatio: 3 });
+      } else if (format === 'jpeg') {
+        dataUrl = await toJpeg(cardRef.current, { cacheBust: true, quality: 0.95, pixelRatio: 3 });
+      } else {
+        dataUrl = await toSvg(cardRef.current, { cacheBust: true });
+      }
+      const link = document.createElement("a");
+      link.download = `demaa-whatsapp-card-${format}.${format}`;
+      link.href = dataUrl;
+      link.click();
+    } catch (err) {
+      console.error("Export failed", err);
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
+  const shareQRCode = async () => {
+    if (!cardRef.current) return;
+    try {
+      const dataUrl = await toPng(cardRef.current, { cacheBust: true, pixelRatio: 2 });
+      const blob = await (await fetch(dataUrl)).blob();
+      const file = new File([blob], 'whatsapp-demaa.png', { type: 'image/png' });
+      if (navigator.share && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          files: [file],
+          title: 'Ma Carte de Visite WhatsApp',
+          text: 'Scannez pour me contacter !'
+        });
+      } else {
+        navigator.clipboard.writeText(fullUrl);
+        alert("Lien copié ! (Partage de fichier non supporté sur ce navigateur)");
+      }
+    } catch (err) {
+      console.error("Share failed", err);
+    }
+  };
+
+  return (
+    <div className="h-screen bg-[#FFF9F8] flex flex-col overflow-hidden">
+      <Navbar />
+      
+      <main className="flex-1 flex flex-col md:flex-row w-full overflow-hidden">
+        
+        {/* LEFT PANE: CONFIGURATION */}
+        <div className="w-full md:w-[45%] pl-8 md:pl-20 pr-4 md:pr-12 lg:pr-20 flex flex-col justify-center space-y-7 md:border-r border-brand-coral/5">
+          <div className="space-y-2">
+            <h1 className="text-2xl md:text-3xl font-bold text-brand-blue tracking-tight">
+              Carte de Visite <span className="text-[#25D366]">WhatsApp QR</span>
+            </h1>
+            <p className="text-gray-500 text-xs md:text-sm leading-relaxed max-w-sm">
+              Facilitez la prise de contact directe. Scannez, et le chat s'ouvre !
+            </p>
+          </div>
+
+          <div className="space-y-6">
+            {/* Phone Input */}
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Numéro WhatsApp</label>
+              <div className="relative group">
+                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300">
+                  <Phone className="w-4 h-4" />
+                </div>
+                <input 
+                  type="text" 
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="+33 6..."
+                  className="w-full pl-11 pr-5 py-3 bg-white border-2 border-brand-coral/5 rounded-xl focus:border-brand-coral/30 outline-none transition-all text-brand-blue font-medium text-sm shadow-sm"
+                />
+              </div>
+            </div>
+
+            {/* Auto-message Input */}
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Message automatique</label>
+              <div className="relative group">
+                <div className="absolute left-4 top-4 text-gray-300">
+                  <MessageSquare className="w-4 h-4" />
+                </div>
+                <textarea 
+                  rows={2}
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                  placeholder="Bonjour, je souhaite..."
+                  className="w-full pl-11 pr-5 py-3 bg-white border-2 border-brand-coral/5 rounded-xl focus:border-brand-coral/30 outline-none transition-all text-brand-blue font-medium text-sm shadow-sm resize-none"
+                />
+              </div>
+            </div>
+
+            {/* Title / Description on Card */}
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Titre sur la carte</label>
+              <input 
+                type="text" 
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="Ex: Discutez avec moi"
+                className="w-full px-5 py-3 bg-white border-2 border-brand-coral/5 rounded-xl focus:border-brand-coral/30 outline-none transition-all text-brand-blue font-medium text-sm shadow-sm"
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 pt-1">
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Couleur</label>
+                <div className="flex gap-2">
+                  <input type="color" value={fgColor} onChange={(e) => setFgColor(e.target.value)} className="w-9 h-9 rounded-lg cursor-pointer border-none p-0 overflow-hidden shrink-0 shadow-sm" />
+                  <div className="px-2 py-1 bg-white border border-brand-coral/10 rounded-lg text-[9px] font-bold text-brand-blue flex-1 flex items-center shadow-sm uppercase tracking-tighter">{fgColor}</div>
+                </div>
+              </div>
+              
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Logo Central</label>
+                <div className="flex gap-2">
+                  <label className="flex-1 flex items-center justify-center h-9 border-2 border-dashed border-brand-coral/10 rounded-lg cursor-pointer hover:bg-white transition-all group">
+                    <Upload className="w-3.5 h-3.5 text-gray-300 group-hover:text-brand-coral" />
+                    <input type="file" className="hidden" accept="image/*" onChange={handleLogoUpload} />
+                  </label>
+                  {logoUrl && (
+                    <button onClick={() => setLogoUrl(null)} className="p-2.5 bg-red-50 text-red-500 rounded-lg hover:bg-red-100 transition-colors">
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* RIGHT PANE: LIVE PREVIEW */}
+        <div className="flex-1 bg-white md:bg-transparent flex flex-col items-center justify-center p-4 md:p-8 relative">
+          
+          <div className="scale-[0.8] md:scale-[0.9] lg:scale-100 transition-transform origin-center">
+            {/* THE CARD */}
+            <div 
+              ref={cardRef}
+              className="bg-white rounded-[2rem] p-8 md:p-12 shadow-[0_20px_50px_rgba(10,29,54,0.06)] flex flex-col items-center space-y-8 animate-in fade-in zoom-in-95 duration-500"
+            >
+              <div className="relative p-5 rounded-[1.5rem] bg-white shadow-sm border border-gray-50 flex items-center justify-center">
+                <QRCodeSVG
+                  value={fullUrl}
+                  size={qrSize}
+                  fgColor={fgColor}
+                  bgColor={bgColor}
+                  level="H"
+                  imageSettings={logoUrl ? { src: logoUrl, x: undefined, y: undefined, height: 50, width: 50, excavate: true } : undefined}
+                />
+              </div>
+
+              <div className="text-center space-y-1.5">
+                <h2 className="text-xl md:text-2xl font-bold text-brand-blue">{title || "WhatsApp Me"}</h2>
+                <div className="flex items-center justify-center gap-1.5 text-gray-400 font-medium tracking-tight">
+                  <Phone className="w-3 h-3" />
+                  <span className="text-[10px] md:text-xs">{phone}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Actions */}
+          <div className="w-full max-w-[320px] md:max-w-[400px] mt-6 md:mt-8 space-y-3 px-4">
+            <div className="grid grid-cols-3 gap-2">
+              <button 
+                onClick={() => exportCard('jpeg')} 
+                className="flex flex-col items-center justify-center py-2.5 bg-[#075E54] text-white rounded-xl text-[10px] font-bold hover:bg-[#128C7E] shadow-lg shadow-[#075E54]/10 transition-all active:scale-95"
+              >
+                <Download className="w-3.5 h-3.5 mb-1" />
+                JPEG
+              </button>
+              <button onClick={() => exportCard('png')} className="flex flex-col items-center justify-center py-2.5 border-2 border-[#075E54] text-[#075E54] rounded-xl text-[10px] font-bold hover:bg-[#075E54]/5 transition-all active:scale-95">
+                <Download className="w-3.5 h-3.5 mb-1" />
+                PNG
+              </button>
+              <button onClick={() => exportCard('svg')} className="flex flex-col items-center justify-center py-2.5 border-2 border-[#075E54] text-[#075E54] rounded-xl text-[10px] font-bold hover:bg-[#075E54]/5 transition-all active:scale-95">
+                <Monitor className="w-3.5 h-3.5 mb-1" />
+                SVG
+              </button>
+            </div>
+            
+            <button onClick={shareQRCode} className="w-full flex items-center justify-center gap-2 py-3 bg-[#E1FFEB] text-[#075E54] rounded-xl text-xs font-bold hover:bg-[#D4F8E2] transition-all group">
+              <Share2 className="w-4 h-4 text-[#075E54]/60 group-hover:text-[#075E54] transition-colors" />
+              <span>Partager ma Carte</span>
+            </button>
+          </div>
+        </div>
+      </main>
+
+      <style jsx global>{`
+        body { overflow: hidden; }
+      `}</style>
+    </div>
+  );
+}
