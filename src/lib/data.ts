@@ -22,6 +22,7 @@ const localData: ServiceRecord[] = [
     icon: "Building",
     price: "600 €"
   },
+  /*
   {
     id: "2",
     slug: "fermeture-societe",
@@ -33,6 +34,7 @@ const localData: ServiceRecord[] = [
     icon: "Ban",
     price: "1500 €"
   },
+  */
   {
     id: "3",
     slug: "previsionnel-financier",
