@@ -87,7 +87,7 @@ export default function WhatsAppQRCodeCard() {
         <div className="w-full md:w-[45%] pl-8 md:pl-20 pr-4 md:pr-12 lg:pr-20 flex flex-col justify-center space-y-7 md:border-r border-brand-coral/5">
           <div className="space-y-2">
             <h1 className="text-2xl md:text-3xl font-bold text-brand-blue tracking-tight">
-              Carte de Visite <span className="text-[#25D366]">WhatsApp QR</span>
+              Carte de Visite <span className="text-brand-coral">WhatsApp QR</span>
             </h1>
             <p className="text-gray-500 text-xs md:text-sm leading-relaxed max-w-sm">
               Facilitez la prise de contact directe. Scannez, et le chat s'ouvre !
@@ -203,23 +203,23 @@ export default function WhatsAppQRCodeCard() {
             <div className="grid grid-cols-3 gap-2">
               <button 
                 onClick={() => exportCard('jpeg')} 
-                className="flex flex-col items-center justify-center py-2.5 bg-[#075E54] text-white rounded-xl text-[10px] font-bold hover:bg-[#128C7E] shadow-lg shadow-[#075E54]/10 transition-all active:scale-95"
+                className="flex flex-col items-center justify-center py-2.5 bg-brand-blue text-white rounded-xl text-[10px] font-bold hover:bg-brand-blue/90 shadow-lg shadow-brand-blue/10 transition-all active:scale-95"
               >
                 <Download className="w-3.5 h-3.5 mb-1" />
                 JPEG
               </button>
-              <button onClick={() => exportCard('png')} className="flex flex-col items-center justify-center py-2.5 border-2 border-[#075E54] text-[#075E54] rounded-xl text-[10px] font-bold hover:bg-[#075E54]/5 transition-all active:scale-95">
+              <button onClick={() => exportCard('png')} className="flex flex-col items-center justify-center py-2.5 border-2 border-brand-blue text-brand-blue rounded-xl text-[10px] font-bold hover:bg-brand-blue/5 transition-all active:scale-95">
                 <Download className="w-3.5 h-3.5 mb-1" />
                 PNG
               </button>
-              <button onClick={() => exportCard('svg')} className="flex flex-col items-center justify-center py-2.5 border-2 border-[#075E54] text-[#075E54] rounded-xl text-[10px] font-bold hover:bg-[#075E54]/5 transition-all active:scale-95">
+              <button onClick={() => exportCard('svg')} className="flex flex-col items-center justify-center py-2.5 border-2 border-brand-blue text-brand-blue rounded-xl text-[10px] font-bold hover:bg-brand-blue/5 transition-all active:scale-95">
                 <Monitor className="w-3.5 h-3.5 mb-1" />
                 SVG
               </button>
             </div>
             
-            <button onClick={shareQRCode} className="w-full flex items-center justify-center gap-2 py-3 bg-[#E1FFEB] text-[#075E54] rounded-xl text-xs font-bold hover:bg-[#D4F8E2] transition-all group">
-              <Share2 className="w-4 h-4 text-[#075E54]/60 group-hover:text-[#075E54] transition-colors" />
+            <button onClick={shareQRCode} className="w-full flex items-center justify-center gap-2 py-3 bg-gray-50 text-brand-blue rounded-xl text-xs font-bold hover:bg-gray-100 transition-all group">
+              <Share2 className="w-4 h-4 text-gray-400 group-hover:text-brand-blue transition-colors" />
               <span>Partager ma Carte</span>
             </button>
           </div>
