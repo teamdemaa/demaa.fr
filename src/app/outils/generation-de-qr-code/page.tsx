@@ -86,89 +86,87 @@ export default function QRCodeGenerator() {
       <main className="flex-1 flex flex-col md:flex-row max-w-[1440px] mx-auto w-full">
         
         {/* LEFT PANE: CONFIGURATION */}
-        <div className="w-full md:w-[45%] p-6 md:p-12 lg:p-16 space-y-10 border-r border-brand-coral/5 overflow-y-auto max-h-[calc(100vh-80px)]">
-          <div className="space-y-4">
-            <h1 className="text-3xl md:text-4xl font-bold text-brand-blue tracking-tight">
-              Générateur de <span className="text-brand-coral underline decoration-from-font underline-offset-4 decoration-brand-coral/30">QR Code</span>
+        <div className="w-full md:w-[45%] p-6 md:p-10 lg:p-12 space-y-8 border-r border-brand-coral/5 overflow-hidden">
+          <div className="space-y-3">
+            <h1 className="text-2xl md:text-3xl font-bold text-brand-blue tracking-tight">
+              Générateur de <span className="text-brand-coral">QR Code</span>
             </h1>
-            <p className="text-gray-500 text-sm md:text-base max-w-md leading-relaxed">
-              Créez un QR code personnalisé, professionnel et qui n'expire jamais en quelques secondes.
+            <p className="text-gray-500 text-sm leading-relaxed max-w-sm">
+              Personnalisé, professionnel et permanent.
             </p>
           </div>
 
-          <div className="space-y-8">
+          <div className="space-y-7">
             {/* Input: URL */}
-            <div className="space-y-2.5">
-              <label className="text-xs font-bold uppercase tracking-widest text-brand-blue/60 ml-1">Lien de destination</label>
-              <div className="relative group">
-                <input 
-                  type="url" 
-                  value={url}
-                  onChange={(e) => setUrl(e.target.value)}
-                  placeholder="https://votre-site.com"
-                  className="w-full px-5 py-4 bg-white border-2 border-brand-coral/10 rounded-2xl focus:border-brand-coral focus:ring-4 focus:ring-brand-coral/5 outline-none transition-all shadow-sm text-brand-blue font-medium"
-                />
-              </div>
+            <div className="space-y-2">
+              <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/40 ml-1">Lien de destination</label>
+              <input 
+                type="url" 
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                placeholder="https://votre-site.com"
+                className="w-full px-5 py-3.5 bg-white border-2 border-brand-coral/5 rounded-2xl focus:border-brand-coral/30 focus:ring-4 focus:ring-brand-coral/5 outline-none transition-all text-brand-blue font-medium text-sm shadow-sm"
+              />
             </div>
 
             {/* Input: Titre */}
-            <div className="space-y-2.5">
-              <label className="text-xs font-bold uppercase tracking-widest text-brand-blue/60 ml-1">Message optionnel</label>
+            <div className="space-y-2">
+              <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/40 ml-1">Message (Titre)</label>
               <input 
                 type="text" 
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="Ex: Scannez moi !"
-                className="w-full px-5 py-4 bg-white border-2 border-brand-coral/10 rounded-2xl focus:border-brand-coral focus:ring-4 focus:ring-brand-coral/5 outline-none transition-all shadow-sm text-brand-blue font-medium"
+                className="w-full px-5 py-3.5 bg-white border-2 border-brand-coral/5 rounded-2xl focus:border-brand-coral/30 focus:ring-4 focus:ring-brand-coral/5 outline-none transition-all text-brand-blue font-medium text-sm shadow-sm"
               />
             </div>
 
             {/* Logo Upload */}
-            <div className="space-y-2.5">
-              <label className="text-xs font-bold uppercase tracking-widest text-brand-blue/60 ml-1">Logo au centre</label>
-              <div className="flex items-center gap-4">
-                <label className="flex-1 flex items-center justify-center gap-3 px-5 py-4 border-2 border-dashed border-brand-coral/20 rounded-2xl cursor-pointer hover:bg-white hover:border-brand-coral/40 transition-all group">
-                  <Upload className="w-5 h-5 text-gray-400 group-hover:text-brand-coral" />
-                  <span className="text-sm font-medium text-gray-500 group-hover:text-brand-blue">Ajouter une image</span>
+            <div className="space-y-2">
+              <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/40 ml-1">Logo au centre</label>
+              <div className="flex items-center gap-3">
+                <label className="flex-1 flex items-center justify-center gap-2 px-5 py-3.5 border-2 border-dashed border-brand-coral/10 rounded-2xl cursor-pointer hover:bg-white hover:border-brand-coral/20 transition-all group">
+                  <Upload className="w-4 h-4 text-gray-300 group-hover:text-brand-coral" />
+                  <span className="text-xs font-semibold text-gray-400 group-hover:text-brand-blue">Image facultative</span>
                   <input type="file" className="hidden" accept="image/*" onChange={handleLogoUpload} />
                 </label>
                 {logoUrl && (
                   <button 
                     onClick={() => setLogoUrl(null)}
-                    className="p-4 bg-red-50 text-red-500 rounded-2xl hover:bg-red-100 transition-colors"
+                    className="p-3.5 bg-red-50 text-red-500 rounded-2xl hover:bg-red-100 transition-colors"
                   >
-                    <Trash2 className="w-5 h-5" />
+                    <Trash2 className="w-4 h-4" />
                   </button>
                 )}
               </div>
             </div>
 
             {/* Colors */}
-            <div className="grid grid-cols-2 gap-6">
-              <div className="space-y-2.5">
-                <label className="text-xs font-bold uppercase tracking-widest text-brand-blue/60 ml-1">QR Color</label>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/40 ml-1">Couleur QR</label>
                 <div className="flex gap-2">
                   <input 
                     type="color" 
                     value={fgColor}
                     onChange={(e) => setFgColor(e.target.value)}
-                    className="w-12 h-12 rounded-xl cursor-pointer border-none p-0 overflow-hidden" 
+                    className="w-10 h-10 rounded-xl cursor-pointer border-none p-0 overflow-hidden shrink-0" 
                   />
-                  <div className="px-3 py-2.5 bg-white border-2 border-brand-coral/10 rounded-xl text-sm font-bold text-brand-blue flex-1 flex items-center uppercase">
+                  <div className="px-3 py-2 bg-white border border-brand-coral/10 rounded-xl text-[10px] font-bold text-brand-blue flex-1 flex items-center uppercase tracking-tighter">
                     {fgColor}
                   </div>
                 </div>
               </div>
-              <div className="space-y-2.5">
-                <label className="text-xs font-bold uppercase tracking-widest text-brand-blue/60 ml-1">Fond (BG)</label>
+              <div className="space-y-2">
+                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/40 ml-1">Couleur Fond</label>
                 <div className="flex gap-2">
                   <input 
                     type="color" 
                     value={bgColor}
                     onChange={(e) => setBgColor(e.target.value)}
-                    className="w-12 h-12 rounded-xl cursor-pointer border-none p-0 overflow-hidden" 
+                    className="w-10 h-10 rounded-xl cursor-pointer border-none p-0 overflow-hidden shrink-0" 
                   />
-                  <div className="px-3 py-2.5 bg-white border-2 border-brand-coral/10 rounded-xl text-sm font-bold text-brand-blue flex-1 flex items-center uppercase">
+                  <div className="px-3 py-2 bg-white border border-brand-coral/10 rounded-xl text-[10px] font-bold text-brand-blue flex-1 flex items-center uppercase tracking-tighter">
                     {bgColor}
                   </div>
                 </div>
