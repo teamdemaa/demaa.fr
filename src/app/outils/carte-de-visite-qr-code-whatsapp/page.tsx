@@ -9,7 +9,7 @@ import { toPng, toJpeg, toSvg } from "html-to-image";
 export default function WhatsAppQRCodeCard() {
   const [phone, setPhone] = useState("+33600000000");
   const [text, setText] = useState("Bonjour, je souhaite en savoir plus sur vos services !");
-  const [title, setTitle] = useState("WhatsApp Me");
+  const [title, setTitle] = useState("Carte de Visite QR Code WhatsApp");
   const [fgColor, setFgColor] = useState("#075E54"); // WhatsApp Dark Green
   const [bgColor, setBgColor] = useState("#FFFFFF");
   const [logoUrl, setLogoUrl] = useState<string | null>("https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg");
@@ -87,7 +87,7 @@ export default function WhatsAppQRCodeCard() {
         <div className="w-full md:w-[45%] pl-8 md:pl-20 pr-4 md:pr-12 lg:pr-20 flex flex-col justify-center space-y-7 md:border-r border-brand-coral/5">
           <div className="space-y-2">
             <h1 className="text-2xl md:text-3xl font-bold text-brand-blue tracking-tight">
-              Carte de Visite <span className="text-brand-coral">WhatsApp QR</span>
+              Carte de Visite <span className="text-brand-coral">QR Code WhatsApp</span>
             </h1>
             <p className="text-gray-500 text-xs md:text-sm leading-relaxed max-w-sm">
               Facilitez la prise de contact directe. Scannez, et le chat s'ouvre !
