@@ -48,7 +48,9 @@ export default function ServiceCard({
             {service.description}
           </p>
           {service.price && (
-            <p className="font-bold text-brand-blue text-sm">
+            <p className={`mt-3 ${service.price.toLowerCase().includes('gratuit') 
+              ? "text-[10px] uppercase tracking-[0.1em] text-gray-300 font-medium" 
+              : "text-xs font-bold text-brand-blue/60"}`}>
               {service.price}
             </p>
           )}
