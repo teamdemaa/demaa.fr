@@ -14,7 +14,11 @@ export default async function Home() {
     <>
       <Navbar />
       <main className="flex-1 w-full bg-background">
-        <HomeToolsClient initialTools={tools} />
+        <HomeToolsClient 
+          initialTools={tools} 
+          title="Les outils gratuits pour vous faire gagner du temps au quotidien"
+          placeholder="Rechercher un outil gratuit"
+        />
       </main>
     </>
   );

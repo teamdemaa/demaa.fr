@@ -18,8 +18,8 @@ export default async function ServicesPage() {
         <HomeClient 
           services={services} 
           allTags={allCategories} 
-          title="Vos services experts au même endroit"
-          placeholder="Rechercher un service (compta, juridique...)"
+          title="Les services clés pour votre entreprise au même endroit"
+          placeholder="Rechercher un service"
         />
       </main>
     </>

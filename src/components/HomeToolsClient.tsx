@@ -5,7 +5,15 @@ import HeroSearch from "./HeroSearch";
 import ServiceCard from "./ServiceCard";
 import { ServiceRecord } from "@/lib/data";
 
-export default function HomeToolsClient({ initialTools }: { initialTools: ServiceRecord[] }) {
+export default function HomeToolsClient({ 
+  initialTools,
+  title = "Les outils gratuits pour vous faire gagner du temps au quotidien",
+  placeholder = "Rechercher un outil gratuit"
+}: { 
+  initialTools: ServiceRecord[],
+  title?: string,
+  placeholder?: string
+}) {
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredTools = useMemo(() => {
@@ -19,7 +27,11 @@ export default function HomeToolsClient({ initialTools }: { initialTools: Servic
 
   return (
     <div className="w-full">
-      <HeroSearch onSearch={setSearchQuery} />
+      <HeroSearch 
+        onSearch={setSearchQuery} 
+        title={title} 
+        placeholder={placeholder} 
+      />
       
       <div className="mt-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-32 animate-in fade-in duration-700">
         <div className="flex items-center justify-between mb-8 pr-2">

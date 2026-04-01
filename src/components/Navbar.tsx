@@ -76,7 +76,7 @@ export default function Navbar() {
                     <Link href="/nos-services" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-3 text-sm text-brand-coral hover:bg-brand-coral/5 font-bold transition-colors border-b border-gray-100 mb-2">
                        Voir tout les services →
                     </Link>
-                    <Link href="/services/creation-de-societe" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors font-bold">Création de société</Link>
+                    <Link href="/services/creation-societe" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors font-bold">Création de société</Link>
                     <Link href="/services/previsionnel-financier" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors font-bold">Prévisionnel financier</Link>
                     <Link href="/services/audit-conformite-fiscale" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors">Audit conformité fiscale</Link>
                     <Link href="/services/automatisations-taches" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors">Automatisation des tâches</Link>
