@@ -19,11 +19,23 @@ export default function ServiceCard({
     ? "w-full" 
     : "flex-none w-[85vw] md:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1rem)] snap-always snap-center md:snap-start";
 
+  const isService = baseUrl === "/services";
+  
   return (
     <Link href={`${baseUrl}/${service.slug}`} className={`block group ${widthClasses}`}>
       <div className="w-full h-full min-h-[300px] bg-white rounded-[1.5rem] border border-gray-100 p-6 flex flex-col justify-between shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_12px_45px_rgb(0,0,0,0.08)] transition-all duration-300 transform group-hover:-translate-y-1 overflow-hidden relative">
         {/* Glow effect on hover */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-brand-coral/5 rounded-full blur-2xl -mt-8 -mr-8 transition-opacity opacity-0 group-hover:opacity-100"></div>
+
+        {/* Improved Trust Badge for Services */}
+        {isService && (
+          <div className="absolute top-5 right-5 flex items-center space-x-1.5 px-3 py-1 bg-green-50 rounded-full border border-green-100/50 animate-in fade-in zoom-in duration-500">
+             <Icons.ShieldCheck className="w-3 h-3 text-green-600 mb-0.5" />
+             <span className="text-[10px] font-bold text-green-700 tracking-tight whitespace-nowrap">
+               Approuvé par Demaa
+             </span>
+          </div>
+        )}
 
         <div>
           <div className="w-11 h-11 rounded-xl bg-gray-50 flex items-center justify-center mb-4 group-hover:bg-brand-coral/10 transition-colors">

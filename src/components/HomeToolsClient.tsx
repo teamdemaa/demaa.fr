@@ -30,7 +30,8 @@ export default function HomeToolsClient({
       <HeroSearch 
         onSearch={setSearchQuery} 
         title={title} 
-        placeholder={placeholder} 
+        placeholder={placeholder}
+        showUSP={false}
       />
       
       <div className="mt-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-32 animate-in fade-in duration-700">

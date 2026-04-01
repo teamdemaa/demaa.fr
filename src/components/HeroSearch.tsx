@@ -6,22 +6,32 @@ import USPSection from "./USPSection";
 export default function HeroSearch({ 
   onSearch, 
   title = "Les services clés pour votre entreprise au même endroit",
-  placeholder = "Rechercher un outil"
+  placeholder = "Rechercher un outil",
+  showUSP = true,
+  subtitle
 }: { 
   onSearch: (q: string) => void,
   title?: string,
-  placeholder?: string
+  placeholder?: string,
+  showUSP?: boolean,
+  subtitle?: string
 }) {
   return (
     <section className="w-full flex flex-col items-center justify-center pt-8 pb-12 md:pt-14 md:pb-16 px-4 text-center bg-[#FFF9F8] border-b border-brand-coral/10">
 
-      <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold tracking-tight text-brand-blue mb-6 md:mb-10 leading-[1.05] max-w-5xl mx-auto z-10 relative px-2">
+      <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold tracking-tight text-brand-blue mb-4 md:mb-6 leading-[1.05] max-w-5xl mx-auto z-10 relative px-2">
         {title.split(' ').map((word, i) => (
           <span key={i}>
             {word === "clé" || word === "clés" ? <span className="text-brand-coral">{word} </span> : word + " "}
           </span>
         ))}
       </h1>
+
+      {subtitle && (
+        <p className="text-sm md:text-lg text-gray-500 font-medium mb-8 md:mb-10 max-w-3xl mx-auto animate-in fade-in duration-700">
+          {subtitle}
+        </p>
+      )}
       
       {/* Big Rounded Searchbar */}
       <div className="relative w-full max-w-xs sm:max-w-md md:max-w-2xl mx-auto group">
@@ -36,8 +46,8 @@ export default function HeroSearch({
         />
       </div>
 
-      {/* New USP Section added below search bar */}
-      <USPSection />
+      {/* Conditional USP Section */}
+      {showUSP && <USPSection />}
     </section>
   );
 }

@@ -9,12 +9,16 @@ export default function HomeClient({
   services, 
   allTags, 
   title, 
-  placeholder 
+  placeholder,
+  showUSP = true,
+  subtitle
 }: { 
   services: ServiceRecord[], 
   allTags: string[],
   title?: string,
-  placeholder?: string
+  placeholder?: string,
+  showUSP?: boolean,
+  subtitle?: string
 }) {
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -33,7 +37,13 @@ export default function HomeClient({
 
   return (
     <div className="w-full">
-      <HeroSearch onSearch={setSearchQuery} title={title} placeholder={placeholder} />
+      <HeroSearch 
+        onSearch={setSearchQuery} 
+        title={title} 
+        placeholder={placeholder} 
+        showUSP={showUSP} 
+        subtitle={subtitle}
+      />
       
       <div className="mt-12 space-y-12 animate-in fade-in duration-700 pb-20">
         {filteredServices.length === 0 ? (

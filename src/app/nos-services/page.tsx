@@ -20,6 +20,8 @@ export default async function ServicesPage() {
           allTags={allCategories} 
           title="Les services clés pour votre entreprise au même endroit"
           placeholder="Rechercher un service"
+          showUSP={false}
+          subtitle="Les services proposés par nos partenaires de confiance"
         />
       </main>
     </>
