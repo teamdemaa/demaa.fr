@@ -10,7 +10,7 @@ export default function CustomerReviewQRCode() {
   const [placeId, setPlaceId] = useState("");
   const [customUrl, setCustomUrl] = useState("https://g.page/r/YOUR_ID/review");
   const [title, setTitle] = useState("Notez-nous 5 étoiles !");
-  const [fgColor, setFgColor] = useState("#0A1D36"); // Demaa Blue
+  const [fgColor, setFgColor] = useState("#FF6E51"); // Default Demaa Coral
   const [bgColor, setBgColor] = useState("#FFFFFF");
   const [logoUrl, setLogoUrl] = useState<string | null>(null);
   const [qrSize, setQrSize] = useState(240);
@@ -86,7 +86,7 @@ export default function CustomerReviewQRCode() {
       <main className="flex-1 flex flex-col md:flex-row w-full overflow-hidden">
         
         {/* LEFT PANE: CONFIGURATION */}
-        <div className="w-full md:w-[45%] pl-8 md:pl-20 pr-4 md:pr-12 lg:pr-20 flex flex-col justify-center space-y-7 md:border-r border-brand-coral/5">
+        <div className="w-full md:w-[45%] pl-12 md:pl-24 lg:pl-40 pr-6 flex flex-col justify-center space-y-7 md:border-r border-brand-coral/5">
           <div className="space-y-2">
             <h1 className="text-2xl md:text-3xl font-bold text-brand-blue tracking-tight">
               QR Code <span className="text-brand-coral">Avis Client</span>
@@ -160,7 +160,7 @@ export default function CustomerReviewQRCode() {
         </div>
 
         {/* RIGHT PANE: LIVE PREVIEW */}
-        <div className="flex-1 bg-white md:bg-transparent flex flex-col items-center justify-center p-4 md:p-8 relative">
+        <div className="flex-1 bg-white md:bg-transparent flex flex-col items-center justify-center p-4 md:p-8 pr-12 md:pr-24 lg:pr-40 relative">
           
           <div className="scale-[0.8] md:scale-[0.9] lg:scale-100 transition-transform origin-center">
             {/* THE CARD */}
@@ -185,11 +185,10 @@ export default function CustomerReviewQRCode() {
                 />
               </div>
 
-              {/* Text & Recommendation Visual */}
               <div className="text-center space-y-3">
                 <div className="flex justify-center gap-1">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-[#FFC107] fill-[#FFC107]" />
+                    <Star key={i} className="w-5 h-5 shrink-0 transition-colors duration-300" style={{ color: fgColor, fill: fgColor }} />
                   ))}
                 </div>
                 <div className="space-y-1">

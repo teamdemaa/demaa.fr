@@ -84,7 +84,7 @@ export default function WhatsAppQRCodeCard() {
       <main className="flex-1 flex flex-col md:flex-row w-full overflow-hidden">
         
         {/* LEFT PANE: CONFIGURATION */}
-        <div className="w-full md:w-[45%] pl-8 md:pl-20 pr-4 md:pr-12 lg:pr-20 flex flex-col justify-center space-y-7 md:border-r border-brand-coral/5">
+        <div className="w-full md:w-[45%] pl-12 md:pl-24 lg:pl-40 pr-6 flex flex-col justify-center space-y-7 md:border-r border-brand-coral/5">
           <div className="space-y-2">
             <h1 className="text-2xl md:text-3xl font-bold text-brand-blue tracking-tight">
               Carte de Visite <span className="text-brand-coral">QR Code WhatsApp</span>
@@ -169,7 +169,7 @@ export default function WhatsAppQRCodeCard() {
         </div>
 
         {/* RIGHT PANE: LIVE PREVIEW */}
-        <div className="flex-1 bg-white md:bg-transparent flex flex-col items-center justify-center p-4 md:p-8 relative">
+        <div className="flex-1 bg-white md:bg-transparent flex flex-col items-center justify-center p-4 md:p-8 pr-12 md:pr-24 lg:pr-40 relative">
           
           <div className="scale-[0.8] md:scale-[0.9] lg:scale-100 transition-transform origin-center">
             {/* THE CARD */}
