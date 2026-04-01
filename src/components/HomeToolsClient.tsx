@@ -34,7 +34,7 @@ export default function HomeToolsClient({
         showUSP={false}
       />
       
-      <div className="mt-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-32 animate-in fade-in duration-700">
+      <div className="mt-8 md:mt-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-32 animate-in fade-in duration-700">
 
         {filteredTools.length === 0 ? (
           <div className="text-center text-gray-400 py-20 text-lg">
