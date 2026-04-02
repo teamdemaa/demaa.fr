@@ -42,10 +42,10 @@ export default function GoogleProfileOptimizer() {
   ];
 
   return (
-    <div className="h-screen bg-[#FFF9F8] flex flex-col overflow-hidden">
+    <div className="min-h-screen md:h-screen bg-[#FFF9F8] flex flex-col overflow-y-auto md:overflow-hidden text-[#191b30]">
       <Navbar />
       
-      <main className="flex-1 flex flex-col md:flex-row w-full overflow-hidden">
+      <main className="flex-1 flex flex-col md:flex-row w-full overflow-y-auto md:overflow-hidden">
         
         {/* LEFT PANE: CONFIGURATION */}
         <div className="w-full md:w-[45%] pl-12 md:pl-24 lg:pl-40 pr-6 flex flex-col justify-center space-y-7 md:border-r border-brand-coral/5 overflow-y-auto no-scrollbar py-12">
@@ -125,9 +125,9 @@ export default function GoogleProfileOptimizer() {
         </div>
 
         {/* RIGHT PANE: GOOGLE PREVIEW */}
-        <div className="flex-1 bg-white md:bg-transparent flex flex-col items-center justify-center p-4 md:p-8 pr-12 md:pr-24 lg:pr-40 relative overflow-y-auto no-scrollbar">
+        <div className="flex-1 bg-white md:bg-transparent flex flex-col items-center justify-center p-4 md:p-8 pr-6 md:pr-24 lg:pr-40 relative py-12 md:py-8">
           
-          <div className="w-full max-w-[480px] space-y-8 py-10">
+          <div className="scale-[0.7] sm:scale-[0.8] md:scale-[1] transition-transform origin-center">
             {/* GOOGLE FICHE SIMULATION */}
             <div className="bg-white rounded-2xl shadow-[0_10px_40px_rgba(10,29,54,0.08)] border border-gray-100 overflow-hidden animate-in fade-in zoom-in-95 duration-500">
               {/* Header Bar */}
@@ -227,7 +227,9 @@ export default function GoogleProfileOptimizer() {
       </main>
 
       <style jsx global>{`
-        body { overflow: hidden; }
+        @media (min-width: 768px) {
+          body { overflow: hidden; }
+        }
       `}</style>
     </div>
   );

@@ -22,14 +22,14 @@ export default function StampGenerator() {
   const [siret, setSiret] = useState("123 456 789 00010");
   const [address, setAddress] = useState("123 Rue de Paris, 75001");
   const [capital, setCapital] = useState("SARL au capital de 5 000 €");
-  const [type, setType] = useState<"circle" | "rect">("circle");
-  const [color, setColor] = useState("#0A1D36"); // Demaa Blue by default (Ink style)
+  const [type, setType] = useState<"circle" | "rect">("rect");
+  const [color, setColor] = useState("#191b30"); // Demaa Blue by default
   const [isExporting, setIsExporting] = useState(false);
   
   const stampRef = useRef<HTMLDivElement>(null);
 
   const colors = [
-    { name: "Bleu Encre", hex: "#0A1D36" },
+    { name: "Bleu Demaa", hex: "#191b30" },
     { name: "Rouge", hex: "#e53935" },
     { name: "Noir", hex: "#000000" },
     { name: "Vert", hex: "#2e7d32" },
@@ -57,10 +57,10 @@ export default function StampGenerator() {
   };
 
   return (
-    <div className="h-screen bg-[#FFF9F8] flex flex-col overflow-hidden">
+    <div className="min-h-screen md:h-screen bg-[#FFF9F8] flex flex-col overflow-y-auto md:overflow-hidden">
       <Navbar />
       
-      <main className="flex-1 flex flex-col md:flex-row w-full overflow-hidden">
+      <main className="flex-1 flex flex-col md:flex-row w-full overflow-y-auto md:overflow-hidden">
         
         {/* LEFT PANE: CONFIGURATION */}
         <div className="w-full md:w-[45%] pl-12 md:pl-24 lg:pl-40 pr-6 flex flex-col justify-center space-y-7 md:border-r border-brand-coral/5 overflow-y-auto no-scrollbar py-12">
@@ -136,16 +136,26 @@ export default function StampGenerator() {
               <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1 flex items-center gap-2">
                 <Palette className="w-3 h-3 text-gray-300" /> Couleur de l'encre
               </label>
-              <div className="flex gap-3">
+              <div className="flex items-center gap-3">
                 {colors.map((c) => (
                   <button 
                     key={c.hex}
                     onClick={() => setColor(c.hex)}
-                    className={`w-10 h-10 rounded-full border-4 transition-all ${color === c.hex ? "border-brand-coral scale-110 shadow-lg" : "border-white"}`}
+                    className={`w-10 h-10 rounded-full border-4 transition-all ${color === c.hex ? "border-brand-coral scale-110 shadow-md" : "border-white"}`}
                     style={{ backgroundColor: c.hex }}
                     title={c.name}
                   />
                 ))}
+                {/* Custom Color Picker */}
+                <div className="relative flex items-center gap-2 ml-2 pl-4 border-l border-gray-100">
+                  <input 
+                    type="color" 
+                    value={color} 
+                    onChange={(e) => setColor(e.target.value)}
+                    className="w-10 h-10 rounded-full border-4 border-white cursor-pointer shadow-sm overflow-hidden p-0"
+                  />
+                  <span className="text-[9px] font-bold text-gray-300 uppercase">{color}</span>
+                </div>
               </div>
             </div>
           </div>
@@ -154,7 +164,7 @@ export default function StampGenerator() {
         {/* RIGHT PANE: LIVE PREVIEW */}
         <div className="flex-1 bg-white md:bg-transparent flex flex-col items-center justify-center p-4 md:p-8 pr-12 md:pr-24 lg:pr-40 relative">
           
-          <div className="scale-[0.8] md:scale-[1] transition-transform origin-center">
+          <div className="scale-[0.7] sm:scale-[0.8] md:scale-[1] transition-transform origin-center">
             {/* STAMP CONTAINER */}
             <div 
               ref={stampRef}
@@ -246,7 +256,9 @@ export default function StampGenerator() {
       </main>
 
       <style jsx global>{`
-        body { overflow: hidden; }
+        @media (min-width: 768px) {
+          body { overflow: hidden; }
+        }
       `}</style>
     </div>
   );

@@ -78,10 +78,10 @@ export default function WhatsAppQRCodeCard() {
   };
 
   return (
-    <div className="h-screen bg-[#FFF9F8] flex flex-col overflow-hidden">
+    <div className="min-h-screen md:h-screen bg-[#FFF9F8] flex flex-col overflow-y-auto md:overflow-hidden text-[#191b30]">
       <Navbar />
       
-      <main className="flex-1 flex flex-col md:flex-row w-full overflow-hidden">
+      <main className="flex-1 flex flex-col md:flex-row w-full overflow-y-auto md:overflow-hidden">
         
         {/* LEFT PANE: CONFIGURATION */}
         <div className="w-full md:w-[45%] pl-12 md:pl-24 lg:pl-40 pr-6 flex flex-col justify-center space-y-7 md:border-r border-brand-coral/5">
@@ -169,9 +169,9 @@ export default function WhatsAppQRCodeCard() {
         </div>
 
         {/* RIGHT PANE: LIVE PREVIEW */}
-        <div className="flex-1 bg-white md:bg-transparent flex flex-col items-center justify-center p-4 md:p-8 pr-12 md:pr-24 lg:pr-40 relative">
+        <div className="flex-1 bg-white md:bg-transparent flex flex-col items-center justify-center p-4 md:p-8 pr-6 md:pr-24 lg:pr-40 relative py-12 md:py-8">
           
-          <div className="scale-[0.8] md:scale-[0.9] lg:scale-100 transition-transform origin-center">
+          <div className="scale-[0.8] sm:scale-[0.9] md:scale-[1] transition-transform origin-center">
             {/* THE CARD */}
             <div 
               ref={cardRef}
@@ -227,7 +227,9 @@ export default function WhatsAppQRCodeCard() {
       </main>
 
       <style jsx global>{`
-        body { overflow: hidden; }
+        @media (min-width: 768px) {
+          body { overflow: hidden; }
+        }
       `}</style>
     </div>
   );

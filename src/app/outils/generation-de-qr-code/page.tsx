@@ -79,10 +79,10 @@ export default function QRCodeGenerator() {
   };
 
   return (
-    <div className="h-screen bg-[#FFF9F8] flex flex-col overflow-hidden">
+    <div className="min-h-screen md:h-screen bg-[#FFF9F8] flex flex-col overflow-y-auto md:overflow-hidden text-[#191b30]">
       <Navbar />
       
-      <main className="flex-1 flex flex-col md:flex-row w-full overflow-hidden">
+      <main className="flex-1 flex flex-col md:flex-row w-full overflow-y-auto md:overflow-hidden">
         
         {/* LEFT PANE: CONFIGURATION */}
         <div className="w-full md:w-[45%] pl-12 md:pl-24 lg:pl-40 pr-6 flex flex-col justify-center space-y-7 md:border-r border-brand-coral/5">
@@ -207,7 +207,9 @@ export default function QRCodeGenerator() {
       </main>
 
       <style jsx global>{`
-        body { overflow: hidden; }
+        @media (min-width: 768px) {
+          body { overflow: hidden; }
+        }
       `}</style>
     </div>
   );
