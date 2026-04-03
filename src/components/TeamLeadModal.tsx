@@ -4,28 +4,56 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Send, CheckCircle2, Building2, Briefcase, Mail, BadgePercent } from "lucide-react";
 
-export default function TeamLeadModal({ 
-  isOpen, 
+export default function TeamLeadModal({
+  isOpen,
   onClose,
   title = "Rejoignez la Team Demaa",
   description = "Bénéficiez de Tarifs négociés pour votre activité et d'un accompagnement sur mesure."
-}: { 
-  isOpen: boolean; 
+}: {
+  isOpen: boolean;
   onClose: () => void;
   title?: string;
   description?: string;
 }) {
-  const [isSubmitted, setIsSubmitted] = useState(fal  const [formData, setFormData] = useState({
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [formData, setFormData] = useState({
     company: "",
     sector: "",
     email: ""
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setTimeout(() => {
-      setIsSubmitted(true);
-    }, 800);
+    try {
+      const webhookUrl = process.env.NEXT_PUBLIC_SLACK_WEBHOOK_URL;
+      if (!webhookUrl) throw new Error("Slack webhook URL not configured");
+
+      const payload = {
+        text: `📬 Nouvelle demande Team Demaa`,
+        blocks: [
+          {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text: `*Entreprise* : ${formData.company}\n*Secteur* : ${formData.sector || "_non renseigné_"}\n*Email* : ${formData.email}`
+            }
+          },
+          {
+            type: "context",
+            elements: [{ type: "mrkdwn", text: `⏰ ${new Date().toLocaleString("fr-FR")}` }]
+          }
+        ]
+      };
+
+      await fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+    } catch (err) {
+      console.error("Slack notification failed", err);
+    }
+    setIsSubmitted(true);
   };
 
   return (
@@ -39,7 +67,7 @@ export default function TeamLeadModal({
             onClick={onClose}
             className="fixed inset-0 bg-brand-blue/5 backdrop-blur-[1px] z-[100]"
           />
-          
+
           <div className="fixed inset-0 flex items-center justify-center p-4 z-[101] pointer-events-none">
             <motion.div
               initial={{ scale: 0.98, opacity: 0, y: 10 }}
@@ -47,7 +75,7 @@ export default function TeamLeadModal({
               exit={{ scale: 0.98, opacity: 0, y: 10 }}
               className="bg-white w-full max-w-[310px] rounded-[1.2rem] shadow-[0_10px_30px_rgba(25,27,48,0.06)] overflow-hidden pointer-events-auto relative border border-gray-100/50"
             >
-              <button 
+              <button
                 onClick={onClose}
                 className="absolute top-3.5 right-3.5 p-1 rounded-full hover:bg-gray-50 text-gray-200 hover:text-brand-blue transition-colors z-10"
               >
@@ -61,7 +89,7 @@ export default function TeamLeadModal({
                       <BadgePercent className="w-4 h-4 text-brand-blue/60" />
                     </div>
                     <h2 className="text-[15px] font-black text-brand-blue tracking-tight leading-tight mb-1">
-                       {title}
+                      {title}
                     </h2>
                     <p className="text-[10px] text-gray-400 leading-normal">
                       {description}
@@ -71,7 +99,7 @@ export default function TeamLeadModal({
                   <form onSubmit={handleSubmit} className="space-y-2">
                     <div className="relative group">
                       <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-3 h-3 text-gray-300 group-focus-within:text-brand-blue transition-colors" />
-                      <input 
+                      <input
                         required
                         type="text"
                         placeholder="Nom de l'entreprise"
@@ -83,7 +111,7 @@ export default function TeamLeadModal({
 
                     <div className="relative group">
                       <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 w-3 h-3 text-gray-300 group-focus-within:text-brand-blue transition-colors" />
-                      <input 
+                      <input
                         required
                         type="text"
                         placeholder="Secteur d'activité"
@@ -95,7 +123,7 @@ export default function TeamLeadModal({
 
                     <div className="relative group">
                       <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-3 h-3 text-gray-300 group-focus-within:text-brand-blue transition-colors" />
-                      <input 
+                      <input
                         required
                         type="email"
                         placeholder="votre@email.com"
@@ -105,20 +133,19 @@ export default function TeamLeadModal({
                       />
                     </div>
 
-                    <button 
+                    <button
                       type="submit"
                       className="w-full bg-brand-blue text-white py-2.5 rounded-lg font-black text-[9px] uppercase tracking-[0.2em] flex items-center justify-center gap-2 hover:bg-brand-coral transition-all active:scale-[0.98] mt-4"
                     >
                       REJOINDRE <Send className="w-2 h-2" />
                     </button>
-                    
                     <p className="text-[8px] text-center text-gray-300 mt-3 leading-relaxed font-bold uppercase tracking-widest opacity-40">
                       Privilèges exclusifs Demaa
                     </p>
                   </form>
                 </div>
               ) : (
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0, scale: 0.98 }}
                   animate={{ opacity: 1, scale: 1 }}
                   className="p-8 text-center"
@@ -128,10 +155,10 @@ export default function TeamLeadModal({
                   </div>
                   <h3 className="text-sm font-black text-brand-blue mb-1 tracking-tight">C'est envoyé !</h3>
                   <p className="text-gray-400 text-[10px] leading-relaxed mb-6">
-                    Merci <span className="font-bold text-brand-blue">{formData.company}</span>. <br /> 
+                    Merci <span className="font-bold text-brand-blue">{formData.company}</span>. <br />
                     Nous revenons vers vous.
                   </p>
-                  <button 
+                  <button
                     onClick={onClose}
                     className="px-6 py-1.5 bg-gray-50 text-brand-blue/30 hover:text-brand-blue font-bold text-[9px] uppercase tracking-widest rounded-md hover:bg-gray-100 transition-all"
                   >
@@ -144,8 +171,5 @@ export default function TeamLeadModal({
         </>
       )}
     </AnimatePresence>
-  );
-}
->
   );
 }
