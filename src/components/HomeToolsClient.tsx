@@ -4,107 +4,157 @@ import { useState, useMemo, useEffect } from "react";
 import HeroSearch from "./HeroSearch";
 import ServiceCard from "./ServiceCard";
 import TemplateCard from "./TemplateCard";
-import { Tool, Service, Template, ServiceRecord } from "@/lib/types";
-import { getTools, getServices, getTemplates, searchTools, searchServices, searchTemplates } from "@/lib/api";
+import { Tool, Service, Template, System } from "@/lib/types";
+import { getTemplates } from "@/lib/api";
 import { 
   Wrench, 
-  Briefcase,
   Search,
   FileText,
+  LayoutGrid
 } from "lucide-react";
 import AutoJoinPopup from "./AutoJoinPopup";
+import TagFilters from "./TagFilters";
 
-type TabType = "outils" | "modeles" | "bons-plans";
+type TabType = "systemes" | "outils" | "modeles";
 
 export default function HomeToolsClient({ 
   initialTools,
-  initialServices,
-  title = "Gagnez du temps au quotidien",
+  initialSystems,
   placeholder = "Que cherchez-vous aujourd'hui ?"
 }: { 
   initialTools: Tool[],
   initialServices: Service[],
+  initialSystems: System[],
   title?: string,
   placeholder?: string
 }) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeTab, setActiveTab] = useState<TabType>("outils");
+  const [activeTab, setActiveTab] = useState<TabType>("systemes");
+  const [activeFilter, setActiveFilter] = useState<string | null>(null);
   const [templates, setTemplates] = useState<Template[]>([]);
 
   useEffect(() => {
     getTemplates().then(setTemplates);
   }, []);
 
+  // Reset filter when tab changes
+  useEffect(() => {
+    setActiveFilter(null);
+  }, [activeTab]);
+
+  const availableFilters = useMemo(() => {
+    if (activeTab === "systemes") {
+      return Array.from(new Set(initialSystems.map(s => s.category))).sort();
+    }
+    if (activeTab === "outils") {
+      const allTags = initialTools.flatMap(t => t.tags || []);
+      return Array.from(new Set(allTags)).sort();
+    }
+    return [];
+  }, [activeTab, initialSystems, initialTools]);
+
   const filteredData = useMemo(() => {
     const query = searchQuery.toLowerCase();
     
-    return {
-      tools: initialTools.filter(t => 
-        t.name.toLowerCase().includes(query) || 
-        t.description.toLowerCase().includes(query) ||
-        t.category.toLowerCase().includes(query) ||
-        t.tags.some(tag => tag.toLowerCase().includes(query))
-      ),
-      services: initialServices.filter(s => 
-        s.name.toLowerCase().includes(query) || 
-        s.description.toLowerCase().includes(query) ||
-        s.category.toLowerCase().includes(query) ||
-        s.tags.some(tag => tag.toLowerCase().includes(query))
-      ),
-    };
-  }, [initialTools, initialServices, searchQuery]);
+    let tools = initialTools.filter(t => 
+      t.name.toLowerCase().includes(query) || 
+      t.description.toLowerCase().includes(query) ||
+      t.category.toLowerCase().includes(query) ||
+      t.tags?.some(tag => tag.toLowerCase().includes(query))
+    );
 
-  const currentItems = activeTab === "outils" ? filteredData.tools : 
-                      activeTab === "modeles" ? templates : 
-                      filteredData.services;
+    let systems = initialSystems.filter(s => 
+      s.name.toLowerCase().includes(query) || 
+      s.description.toLowerCase().includes(query) ||
+      s.category.toLowerCase().includes(query) ||
+      s.tags?.some(tag => tag.toLowerCase().includes(query))
+    );
+
+    if (activeFilter) {
+      if (activeTab === "systemes") {
+        systems = systems.filter(s => s.category === activeFilter);
+      } else if (activeTab === "outils") {
+        tools = tools.filter(t => t.tags?.includes(activeFilter));
+      }
+    }
+
+    return { tools, systems };
+  }, [initialTools, initialSystems, searchQuery, activeFilter, activeTab]);
+
+  const currentItems = activeTab === "systemes" ? filteredData.systems :
+                       activeTab === "outils" ? filteredData.tools : 
+                       templates;
 
   const tabs = [
+    { id: "systemes", label: "Systèmes", icon: LayoutGrid },
     { id: "outils", label: "Outils", icon: Wrench },
     { id: "modeles", label: "Modèles", icon: FileText },
-    { id: "bons-plans", label: "Services", icon: Briefcase },
   ];
 
-  // Grouping logic for Services tab sections
-  const sections = useMemo(() => {
-    if (activeTab !== "bons-plans") return null;
-    
-    const categories = ["Finance - Juridique", "Opérations - Systèmes", "Croissance - Ads"];
-    return categories.map(cat => ({
-      title: cat,
-      items: filteredData.services.filter((item: Service) => item.category === cat)
-    })).filter(section => section.items.length > 0);
-  }, [activeTab, filteredData.services]);
+  const tabsComponent = (
+    <div className="w-full max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+      <div className="flex items-center justify-center gap-6 md:gap-32 overflow-x-auto scrollbar-hide no-scrollbar">
+        {tabs.map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id as TabType)}
+            className={`group flex flex-col items-center flex-1 md:flex-none gap-2 pt-2 pb-1 min-w-[80px] md:min-w-[120px] border-b-2 transition-all duration-300 ${
+              activeTab === tab.id 
+                ? "border-brand-blue text-brand-blue opacity-100" 
+                : "border-transparent text-gray-400 opacity-60 hover:opacity-100 hover:text-gray-900"
+            }`}
+          >
+            <tab.icon className={`w-6 h-6 md:w-7 md:h-7 transition-all duration-300 ${activeTab === tab.id ? "text-brand-coral scale-110" : "group-hover:scale-110"}`} />
+            <span className={`text-[11px] md:text-xs font-black uppercase tracking-[0.05em] ${activeTab === tab.id ? "" : "group-hover:text-gray-900"}`}>
+              {tab.label}
+            </span>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+
+  const filtersComponent = availableFilters.length > 0 ? (
+    <div className="w-full max-w-4xl mx-auto px-4 mt-2">
+      <div className="flex overflow-x-auto space-x-2 pb-2 no-scrollbar items-center justify-center">
+        <button 
+          onClick={() => setActiveFilter(null)}
+          className={`whitespace-nowrap rounded-full px-5 py-1.5 text-xs transition-all ${
+            activeFilter === null 
+              ? "bg-brand-blue text-white shadow-md font-medium" 
+              : "bg-brand-coral/10 text-brand-blue/70 font-light hover:bg-brand-coral/20"
+          }`}
+        >
+          Tous
+        </button>
+        
+        {availableFilters.map((filter: string) => (
+          <button
+            key={filter}
+            onClick={() => setActiveFilter(filter)}
+            className={`whitespace-nowrap rounded-full px-5 py-1.5 text-xs transition-all ${
+              activeFilter === filter 
+                ? "bg-brand-blue text-white shadow-md font-medium" 
+                : "bg-brand-coral/10 text-brand-blue/70 font-light hover:bg-brand-coral/20"
+            }`}
+          >
+            {filter}
+          </button>
+        ))}
+      </div>
+    </div>
+  ) : null;
 
   return (
     <div className="w-full">
       <HeroSearch 
         onSearch={setSearchQuery} 
-        rotatingWords={["Outils", "Modèles", "Services"]}
+        rotatingWords={["Systèmes", "Outils", "Modèles"]}
         placeholder={placeholder}
         showUSP={false}
-      >
-        {/* AIRBNB-STYLE TABS INTEGRATED IN HERO */}
-        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-2">
-          <div className="flex items-center justify-center gap-12 md:gap-32 overflow-x-auto scrollbar-hide no-scrollbar">
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id as TabType)}
-                className={`group flex flex-col items-center gap-2 pt-2 pb-4 min-w-[80px] md:min-w-[120px] border-b-[3px] transition-all duration-300 ${
-                  activeTab === tab.id 
-                    ? "border-brand-blue text-brand-blue opacity-100" 
-                    : "border-transparent text-gray-400 opacity-60 hover:opacity-100 hover:text-gray-900"
-                }`}
-              >
-                <tab.icon className={`w-6 h-6 md:w-8 md:h-8 transition-all duration-300 ${activeTab === tab.id ? "text-brand-coral scale-110" : "group-hover:scale-110"}`} />
-                <span className={`text-[11px] md:text-sm font-black uppercase tracking-[0.05em] ${activeTab === tab.id ? "" : "group-hover:text-gray-900"}`}>
-                  {tab.label}
-                </span>
-              </button>
-            ))}
-          </div>
-        </div>
-      </HeroSearch>
+        topSlot={tabsComponent}
+        bottomSlot={filtersComponent}
+      />
 
       <div className="mt-8 md:mt-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-32 animate-in fade-in duration-1000">
         
@@ -128,27 +178,7 @@ export default function HomeToolsClient({
           </div>
         ) : (
           <div className="space-y-20">
-            {activeTab === "bons-plans" && !searchQuery ? (
-              sections?.map((section) => (
-                <div key={section.title} className="animate-in fade-in slide-in-from-bottom-4 duration-700">
-                  <div className="flex items-center gap-4 mb-8">
-                    <h3 className="text-xl md:text-2xl font-black text-brand-blue tracking-tight shrink-0">{section.title}</h3>
-                    <div className="h-px bg-gray-100 w-full" />
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 md:gap-10">
-                    {section.items.map((item: ServiceRecord) => (
-                      <ServiceCard 
-                        key={item.id} 
-                        service={item} 
-                        fullWidth 
-                        baseUrl="/services"
-                        hidePrice={true}
-                      />
-                    ))}
-                  </div>
-                </div>
-              ))
-            ) : activeTab === "modeles" ? (
+            {activeTab === "modeles" ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
                 {(currentItems as Template[]).map((item: Template) => (
                   <TemplateCard 
@@ -159,13 +189,14 @@ export default function HomeToolsClient({
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 md:gap-10">
-                {(activeTab === "outils" ? (currentItems as Tool[]) : (currentItems as ServiceRecord[])).map((item: ServiceRecord) => (
+                {(currentItems as (Tool | System)[]).map((item) => (
                   <ServiceCard 
                     key={item.id} 
+                    //@ts-ignore
                     service={item} 
                     fullWidth 
-                    baseUrl={activeTab === "outils" ? "/outils" : "/services"}
-                    hidePrice={activeTab === "bons-plans"}
+                    baseUrl={activeTab === "outils" ? "/outils" : "/systemes"}
+                    hidePrice={activeTab === "systemes"}
                   />
                 ))}
               </div>

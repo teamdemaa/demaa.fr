@@ -1,8 +1,8 @@
-import { Tool, Service, Template, ContentType } from './types';
+import { Tool, Service, Template, System, ContentType } from './types';
 import { database, searchIndexes } from './database';
 
 // Fonction générique optimisée pour récupérer les données
-export async function getData<T extends Tool | Service | Template>(type: ContentType): Promise<T[]> {
+export async function getData<T extends Tool | Service | Template | System>(type: ContentType): Promise<T[]> {
   return database[type] as T[];
 }
 
@@ -17,6 +17,10 @@ export async function getServices(): Promise<Service[]> {
 
 export async function getTemplates(): Promise<Template[]> {
   return getData<Template>('templates');
+}
+
+export async function getSystems(): Promise<System[]> {
+  return getData<System>('systems');
 }
 
 // Fonctions de recherche optimisées
@@ -55,6 +59,18 @@ export async function searchTemplates(query: string): Promise<Template[]> {
   );
 }
 
+export async function searchSystems(query: string): Promise<System[]> {
+  if (!query) return database.systems;
+  
+  const q = query.toLowerCase();
+  return database.systems.filter(system => 
+    system.name.toLowerCase().includes(q) ||
+    system.description.toLowerCase().includes(q) ||
+    system.category.toLowerCase().includes(q) ||
+    system.tags.some(tag => tag.toLowerCase().includes(q))
+  );
+}
+
 // Fonctions de recherche par slug (compatibilité)
 export async function getToolBySlug(slug: string): Promise<Tool | null> {
   return database.tools.find(tool => tool.slug === slug) || null;
@@ -66,4 +82,8 @@ export async function getServiceBySlug(slug: string): Promise<Service | null> {
 
 export async function getTemplateBySlug(slug: string): Promise<Template | null> {
   return database.templates.find(template => template.slug === slug) || null;
+}
+
+export async function getSystemBySlug(slug: string): Promise<System | null> {
+  return database.systems.find(system => system.slug === slug) || null;
 }

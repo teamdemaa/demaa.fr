@@ -1,4 +1,4 @@
-import { getTools, getServices } from "@/lib/api";
+import { getTools, getServices, getSystems } from "@/lib/api";
 import Navbar from "@/components/Navbar";
 import HomeToolsClient from "@/components/HomeToolsClient";
 
@@ -8,9 +8,10 @@ export const metadata = {
 };
 
 export default async function Home() {
-  const [tools, services] = await Promise.all([
+  const [tools, services, systems] = await Promise.all([
     getTools(),
-    getServices()
+    getServices(),
+    getSystems()
   ]);
 
   return (
@@ -20,6 +21,7 @@ export default async function Home() {
         <HomeToolsClient 
           initialTools={tools} 
           initialServices={services}
+          initialSystems={systems}
           title="Gagnez du temps au quotidien"
           placeholder="Que cherchez-vous aujourd'hui ? (ex: QR code, Compta, SAS...)"
         />

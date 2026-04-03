@@ -1,4 +1,4 @@
-import { Tool, Service, Template } from './types';
+import { Tool, Service, Template, System } from './types';
 
 // Base de données centralisée
 export const database = {
@@ -10,7 +10,7 @@ export const database = {
       category: "Outils visuels",
       description: "Créez facilement des QR codes optimisés pour vos cartes de visite.",
       shortDescription: "Pour carte de visite",
-      tags: ["QR", "Card"],
+      tags: ["QRCode", "Card", "Vente"],
       icon: "QrCode",
       price: "Gratuit"
     },
@@ -32,7 +32,7 @@ export const database = {
       category: "Marketing",
       description: "Incitez vos clients à laisser un avis positif avec ce QR code magique.",
       shortDescription: "Collecte d'avis",
-      tags: ["Avis", "QR"],
+      tags: ["Avis", "QRCode", "Marketing"],
       icon: "Star",
       price: "Gratuit"
     },
@@ -43,7 +43,7 @@ export const database = {
       category: "Marketing",
       description: "Optimisez votre référencement local grâce à une fiche Google parfaitement remplie.",
       shortDescription: "Boostez votre SEO local",
-      tags: ["Google", "SEO"],
+      tags: ["Google", "SEO", "Marketing"],
       icon: "MapPin",
       price: "Gratuit"
     },
@@ -54,7 +54,7 @@ export const database = {
       category: "Outils visuels",
       description: "Générez une signature mail esthétique et responsive pour toute votre équipe.",
       shortDescription: "Emails premium",
-      tags: ["Email", "Pro"],
+      tags: ["Email", "Signature", "Design"],
       icon: "Signature",
       price: "Gratuit"
     },
@@ -65,7 +65,7 @@ export const database = {
       category: "Vente",
       description: "Facilitez la commande de vos produits grâce à un QR code menant directement au paiement.",
       shortDescription: "Vente express",
-      tags: ["Vente", "QR"],
+      tags: ["Vente", "QRCode", "E-commerce"],
       icon: "ShoppingCart",
       price: "Gratuit"
     },
@@ -76,7 +76,7 @@ export const database = {
       category: "Juridique",
       description: "Apposez votre signature électronique sur n'importe quel contrat PDF.",
       shortDescription: "e-Signature légale",
-      tags: ["Signature", "PDF"],
+      tags: ["Signature", "PDF", "Juridique"],
       icon: "PenTool",
       price: "Gratuit"
     },
@@ -87,7 +87,7 @@ export const database = {
       category: "Automatisation",
       description: "Transformez votre carte de restaurant en menu digital scannable.",
       shortDescription: "Menu sans contact",
-      tags: ["Restaurant", "QR"],
+      tags: ["Restaurant", "QRCode", "Digital"],
       icon: "Utensils",
       price: "Gratuit"
     },
@@ -98,7 +98,7 @@ export const database = {
       category: "Outils visuels",
       description: "Créez un simple QR code pointant vers l'URL de votre choix.",
       shortDescription: "QR code simple",
-      tags: ["QR", "Lien"],
+      tags: ["QRCode", "Lien"],
       icon: "Link",
       price: "Gratuit"
     }
@@ -259,14 +259,56 @@ export const database = {
       link: "https://airtable.com/app3fRlYVjiFAnrjW/shraiL72hO4EvQoh2",
       image: "/images/templates/systeme_operationnel.png"
     }
-  ] as Template[]
+  ] as Template[],
+
+  systems: [
+    { id: "s1", slug: "agence-immobiliere", name: "Agence immobilière", category: "Services & Conseil", description: "Optimisez vos mandats et la gestion de vos visites.", tags: ["Immo", "Système"], icon: "Home", price: "Audit Gratuit" },
+    { id: "s2", slug: "agence-marketing", name: "Agence marketing", category: "Agences & Digital", description: "Automatisez votre prospection et le reporting client.", tags: ["Marketing", "Système"], icon: "Megaphone", price: "Audit Gratuit" },
+    { id: "s3", slug: "agence-web", name: "Agence web", category: "Agences & Digital", description: "Structurez votre production technique et vos livrables.", tags: ["Web", "Système"], icon: "Code", price: "Audit Gratuit" },
+    { id: "s4", slug: "artisanat", name: "Artisanat", category: "Artisans & BTP", description: "Suivez vos chantiers et factures sans perdre de temps.", tags: ["Artisan", "Système"], icon: "Hammer", price: "Audit Gratuit" },
+    { id: "s5", slug: "btp", name: "BTP", category: "Artisans & BTP", description: "Gérez vos équipes et vos approvisionnements en temps réel.", tags: ["BTP", "Système"], icon: "Building2", price: "Audit Gratuit" },
+    { id: "s6", slug: "boulangerie", name: "Boulangerie", category: "Commerce & Restauration", description: "Optimisez vos stocks et vos ventes en boutique.", tags: ["Boulangerie", "Système"], icon: "Croissant", price: "Audit Gratuit" },
+    { id: "s7", slug: "coaching", name: "Coaching", category: "Formation & Coaching", description: "Automatisez vos prises de rendez-vous et vos suivis.", tags: ["Coaching", "Système"], icon: "UserCheck", price: "Audit Gratuit" },
+    { id: "s8", slug: "commerce-de-detail", name: "Commerce de détail", category: "Commerce & Restauration", description: "Un système d'inventaire et de fidélisation clients.", tags: ["Retail", "Système"], icon: "Store", price: "Audit Gratuit" },
+    { id: "s9", slug: "conciergerie-airbnb", name: "Conciergerie Airbnb", category: "Services & Conseil", description: "Automatisez les arrivées et le ménage de vos locations.", tags: ["Airbnb", "Système"], icon: "Key", price: "Audit Gratuit" },
+    { id: "s10", slug: "consulting", name: "Consulting", category: "Services & Conseil", description: "Industrialisez votre expertise pour croître sans limite.", tags: ["Consulting", "Système"], icon: "Briefcase", price: "Audit Gratuit" },
+    { id: "s11", slug: "creation-de-contenu", name: "Création de contenu", category: "Agences & Digital", description: "Un workflow de production fluide de l'idée à la publication.", tags: ["Contenu", "Système"], icon: "Camera", price: "Audit Gratuit" },
+    { id: "s12", slug: "demenagement", name: "Déménagement", category: "Services & Conseil", description: "Optimisez vos devis et la planification de vos tournées.", tags: ["Déménagement", "Système"], icon: "Truck", price: "Audit Gratuit" },
+    { id: "s13", slug: "evenementiel", name: "Événementiel", category: "Services & Conseil", description: "Un pilotage de projet rigoureux pour des événements sans stress.", tags: ["Événement", "Système"], icon: "PartyPopper", price: "Audit Gratuit" },
+    { id: "s14", slug: "e-commerce", name: "E-commerce", category: "Commerce & Restauration", description: "Optimisez vos conversions et votre logistique d'expédition.", tags: ["Ecommerce", "Système"], icon: "ShoppingBag", price: "Audit Gratuit" },
+    { id: "s15", slug: "formation-en-ligne", name: "Formation en ligne", category: "Formation & Coaching", description: "Scalez votre transmission de savoir avec un LMS automatisé.", tags: ["Formation", "Système"], icon: "GraduationCap", price: "Audit Gratuit" },
+    { id: "s16", slug: "freelance", name: "Freelance", category: "Services & Conseil", description: "Ne courez plus après vos clients, structurez votre offre.", tags: ["Freelance", "Système"], icon: "Laptop", price: "Audit Gratuit" },
+    { id: "s17", slug: "garage-automobile", name: "Garage automobile", category: "Services & Conseil", description: "Suivez vos réparations et optimisez votre planning atelier.", tags: ["Garage", "Système"], icon: "Wrench", price: "Audit Gratuit" },
+    { id: "s18", slug: "gestion-comptable", name: "Gestion comptable", category: "Services & Conseil", description: "Fluidifiez vos échanges de documents avec vos clients.", tags: ["Compta", "Système"], icon: "Calculator", price: "Audit Gratuit" },
+    { id: "s19", slug: "institut-de-beaute", name: "Institut de beauté", category: "Santé & Beauté", description: "Optimisez vos agendas et vos ventes de produits.", tags: ["Beauté", "Système"], icon: "Flower2", price: "Audit Gratuit" },
+    { id: "s20", slug: "investissement-locatif", name: "Investissement locatif", category: "Services & Conseil", description: "Suivez votre rentabilité et vos travaux en un seul endroit.", tags: ["Immo", "Système"], icon: "Landmark", price: "Audit Gratuit" },
+    { id: "s21", slug: "livraison-dernier-kilometre", name: "Livraison dernier kilomètre", category: "Logistique & Transport", description: "Un système de routage efficace pour vos livreurs.", tags: ["Livraison", "Système"], icon: "Navigation", price: "Audit Gratuit" },
+    { id: "s22", slug: "location-de-materiel", name: "Location de matériel", category: "Services & Conseil", description: "Gérez vos stocks et vos contrats de location.", tags: ["Location", "Système"], icon: "Dolly", price: "Audit Gratuit" },
+    { id: "s23", slug: "maintenance-informatique", name: "Maintenance informatique", category: "Agences & Digital", description: "Un système de ticketing et de maintenance préventive.", tags: ["IT", "Système"], icon: "Cpu", price: "Audit Gratuit" },
+    { id: "s24", slug: "marketplace", name: "Marketplace", category: "Agences & Digital", description: "Structurez vos flux vendeurs et paiements complexes.", tags: ["Marketplace", "Système"], icon: "Layers", price: "Audit Gratuit" },
+    { id: "s25", slug: "media", name: "Média", category: "Agences & Digital", description: "Gérez votre régie publicitaire et vos publications.", tags: ["Média", "Système"], icon: "Newspaper", price: "Audit Gratuit" },
+    { id: "s26", slug: "nettoyage-professionnel", name: "Nettoyage professionnel", category: "Services & Conseil", description: "Contrôlez vos passages et optimisez vos tournées.", tags: ["Nettoyage", "Système"], icon: "Sparkles", price: "Audit Gratuit" },
+    { id: "s27", slug: "organisme-de-formation", name: "Organisme de formation", category: "Formation & Coaching", description: "Simplifiez votre conformité Qualiopi et vos inscriptions.", tags: ["Formation", "Système"], icon: "FileCheck2", price: "Audit Gratuit" },
+    { id: "s28", slug: "photographe-videaste", name: "Photographe / vidéaste", category: "Services & Conseil", description: "Workflows d'édition et galeries clients automatisées.", tags: ["Photo", "Système"], icon: "Aperture", price: "Audit Gratuit" },
+    { id: "s29", slug: "reparation-telephonique", name: "Réparation téléphonique", category: "Services & Conseil", description: "Gérez vos pièces détachées et le suivi client.", tags: ["Reparation", "Système"], icon: "Smartphone", price: "Audit Gratuit" },
+    { id: "s30", slug: "restaurant", name: "Restaurant", category: "Commerce & Restauration", description: "Optimisez vos ratios et simplifiez votre service.", tags: ["Restaurant", "Système"], icon: "Utensils", price: "Audit Gratuit" },
+    { id: "s31", slug: "saas", name: "SaaS", category: "Agences & Digital", description: "Optimisez votre MRR et le support client.", tags: ["SaaS", "Système"], icon: "Cloud", price: "Audit Gratuit" },
+    { id: "s32", slug: "salle-de-sport", name: "Salle de sport", category: "Santé & Beauté", description: "Gérez vos abonnements et vos plannings de cours.", tags: ["Sport", "Système"], icon: "Dumbbell", price: "Audit Gratuit" },
+    { id: "s33", slug: "salon-de-coiffure", name: "Salon de coiffure", category: "Santé & Beauté", description: "Une gestion d'agenda sans failles et des ventes upsell.", tags: ["Coiffure", "Système"], icon: "Scissors", price: "Audit Gratuit" },
+    { id: "s34", slug: "securite-privee", name: "Sécurité privée", category: "Services & Conseil", description: "Planification des agents et rapports d'intervention.", tags: ["Sécurité", "Système"], icon: "Shield", price: "Audit Gratuit" },
+    { id: "s35", slug: "services-a-la-personne", name: "Services à la personne", category: "Services & Conseil", description: "Une coordination d'intervenants pour un service irréprochable.", tags: ["Services", "Système"], icon: "HeartHandshake", price: "Audit Gratuit" },
+    { id: "s36", slug: "traiteur", name: "Traiteur", category: "Commerce & Restauration", description: "Optimisez vos fiches techniques et vos événements.", tags: ["Traiteur", "Système"], icon: "ChefHat", price: "Audit Gratuit" },
+    { id: "s37", slug: "transport-de-marchandise", name: "Transport de marchandise", category: "Logistique & Transport", description: "Un suivi de flotte et de fret en temps réel.", tags: ["Logistique", "Système"], icon: "Box", price: "Audit Gratuit" },
+    { id: "s38", slug: "transport-de-personnes", name: "Transport de personnes", category: "Logistique & Transport", description: "Optimisez vos trajets et votre gestion de chauffeurs.", tags: ["VTC", "Système"], icon: "Car", price: "Audit Gratuit" }
+  ] as System[]
 };
 
 // Index de recherche optimisé
 const searchIndexes = {
   tools: new Map<string, Tool>(),
   services: new Map<string, Service>(),
-  templates: new Map<string, Template>()
+  templates: new Map<string, Template>(),
+  systems: new Map<string, System>()
 };
 
 // Pré-calcul des index de recherche
@@ -283,6 +325,11 @@ Object.entries(database.services).forEach(([key, item]) => {
 Object.entries(database.templates).forEach(([key, item]) => {
   const searchText = `${item.name} ${item.description} ${item.category}`.toLowerCase();
   searchIndexes.templates.set(searchText, item);
+});
+
+Object.entries(database.systems).forEach(([key, item]) => {
+  const searchText = `${item.name} ${item.description} ${item.category}`.toLowerCase();
+  searchIndexes.systems.set(searchText, item);
 });
 
 export { searchIndexes };

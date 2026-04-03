@@ -10,10 +10,12 @@ export default function HeroSearch({
   title,
   animatedWord,
   rotatingWords,
-  placeholder = "Rechercher un outil",
+  placeholder = "Que cherchez-vous aujourd'hui ?",
   showUSP = true,
   subtitle,
-  children
+  children,
+  topSlot,
+  bottomSlot
 }: { 
   onSearch: (q: string) => void,
   title?: string,
@@ -22,7 +24,9 @@ export default function HeroSearch({
   placeholder?: string,
   showUSP?: boolean,
   subtitle?: string,
-  children?: React.ReactNode
+  children?: React.ReactNode,
+  topSlot?: React.ReactNode,
+  bottomSlot?: React.ReactNode
 }) {
   const [index, setIndex] = useState(0);
 
@@ -36,72 +40,36 @@ export default function HeroSearch({
   }, [rotatingWords]);
 
   return (
-    <section className="w-full flex flex-col items-center justify-center pt-8 md:pt-14 px-4 text-center bg-[#FFF9F8] border-b border-brand-blue/5 overflow-hidden">
-
-      <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-brand-blue mb-4 md:mb-6 leading-[1.2] max-w-5xl mx-auto z-10 relative px-2">
-        {rotatingWords ? (
-          <div className="flex flex-col items-center">
-            <div className="flex items-center justify-center gap-x-[0.3em] md:gap-x-[0.4em]">
-               <div className="relative h-[1.14em] overflow-hidden inline-flex items-center justify-end">
-                  {/* Ghost element to reserve space for the longest word */}
-                  <span className="invisible pointer-events-none whitespace-nowrap text-right pr-[0.1em]">
-                    Services
-                  </span>
-                  
-                  <div className="absolute inset-0 flex items-center justify-end">
-                    <AnimatePresence mode="popLayout" initial={false}>
-                      <motion.span
-                        key={rotatingWords[index]}
-                        initial={{ y: "100%", opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        exit={{ y: "-100%", opacity: 0 }}
-                        transition={{ 
-                          duration: 0.6, 
-                          ease: [0.23, 1, 0.32, 1]
-                        }}
-                        className="text-brand-coral relative whitespace-nowrap block text-right pr-[0.1em]"
-                      >
-                        {rotatingWords[index]}
-                      </motion.span>
-                    </AnimatePresence>
-                  </div>
-               </div>
-               <span className="flex-shrink-0 leading-none">pour</span>
-            </div>
-            <div className="basis-full h-0 md:h-2" />
-            <div className="flex flex-wrap items-center justify-center gap-x-[0.3em] md:gap-x-[0.4em]">
-               <span className="flex-shrink-0 leading-none">gagner du temps</span>
-               <span className="flex-shrink-0 leading-none">au quotidien</span>
-            </div>
+    <section className="w-full flex flex-col items-center justify-center pt-8 md:pt-12 px-4 text-center bg-[#FFF9F8] border-b border-brand-blue/5 overflow-hidden">
+      
+      {/* 01. Title Segment (Top) */}
+      <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black tracking-tight text-brand-blue mb-10 md:mb-16 leading-[1.1] max-w-5xl mx-auto z-10 relative px-2">
+        <div className="flex flex-col items-center">
+          <div className="whitespace-nowrap">
+            Faites grandir votre entreprise
           </div>
-        ) : animatedWord ? (
-          <div className="flex flex-wrap items-center justify-center gap-x-3">
-            <span key={animatedWord} className="text-brand-coral inline-block animate-in slide-in-from-bottom-full duration-500 fill-mode-both">
-              {animatedWord}
-            </span>
-            <span>pour</span>
-            <div className="basis-full h-0" />
-            <span className="text-brand-coral">gagner du temps</span>
-            <span>au quotidien</span>
+          <div className="whitespace-nowrap">
+            tout en <span className="text-brand-coral">libérant du temps</span>
           </div>
-        ) : (
-          title?.split(/(Gagnez du temps|au quotidien)/).map((part, i) => (
-            <span key={i} className={part === "Gagnez du temps" ? "text-brand-coral" : ""}>
-              {part}
-            </span>
-          ))
-        )}
+        </div>
       </h1>
 
       {subtitle && (
-        <p className="text-sm md:text-lg text-gray-500 font-medium mb-8 md:mb-10 max-w-3xl mx-auto animate-in fade-in duration-700">
+        <p className="text-sm md:text-lg text-gray-400 font-light mb-8 md:mb-10 max-w-3xl mx-auto animate-in fade-in duration-700">
           {subtitle}
         </p>
       )}
+
+      {/* 02. Tabs Slot (Now below Title) */}
+      {topSlot && (
+        <div className="w-full mb-6 animate-in fade-in slide-in-from-top-4 duration-700">
+          {topSlot}
+        </div>
+      )}
       
-      {/* Big Rounded Searchbar */}
-      <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-0 group mb-4">
-        <div className="max-w-xs sm:max-w-md md:max-w-3xl mx-auto relative">
+      {/* 03. Search Bar Segment */}
+      <div className="relative w-full max-w-7xl mx-auto px-2 sm:px-6 lg:px-0 group mb-6">
+        <div className="w-full sm:max-w-md md:max-w-2xl mx-auto relative px-2">
           <div className="absolute inset-y-0 left-0 pl-4 md:pl-6 flex items-center pointer-events-none">
             <Search className="h-4 w-4 md:h-5 md:w-5 text-gray-400 group-focus-within:text-brand-blue/60 transition-colors" />
           </div>
@@ -109,12 +77,18 @@ export default function HeroSearch({
             type="text" 
             onChange={(e) => onSearch(e.target.value)}
             placeholder={placeholder}
-            className="peer block w-full pl-10 md:pl-14 pr-4 md:pr-6 py-2.5 md:py-3.5 border border-brand-blue/50 rounded-full text-sm md:text-base focus:ring-4 focus:ring-brand-blue/5 focus:border-brand-blue/80 outline-none transition-all shadow-sm focus:shadow-md placeholder-gray-400 bg-white" 
+            className="peer block w-full pl-10 md:pl-14 pr-4 md:pr-6 py-5 border-none rounded-full text-sm md:text-base focus:ring-4 focus:ring-brand-blue/10 outline-none transition-all shadow-sm focus:shadow-md placeholder-gray-300 bg-white" 
           />
         </div>
       </div>
 
-      {/* Tabs / Children slot */}
+      {/* 04. Filters Slot (Bottom of header) */}
+      {bottomSlot && (
+        <div className="w-full pb-8 md:pb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+          {bottomSlot}
+        </div>
+      )}
+
       {children}
 
       {/* Conditional USP Section */}

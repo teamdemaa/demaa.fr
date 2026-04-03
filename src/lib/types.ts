@@ -35,6 +35,16 @@ export interface Template {
   image: string;
 }
 
-export interface ServiceRecord extends Service {}
+export interface System {
+  id: string;
+  slug: string;
+  name: string;
+  category: string;
+  description: string;
+  shortDescription?: string;
+  tags: string[];
+  icon: string;
+  price: string;
+}
 
-export type ContentType = 'tools' | 'services' | 'templates';
+export type ContentType = 'tools' | 'services' | 'templates' | 'systems';

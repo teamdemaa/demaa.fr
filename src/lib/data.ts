@@ -169,11 +169,61 @@ export const toolsData: ServiceRecord[] = [
   { id: "t8", slug: "signez-un-document-electroniquement", name: "Signez un document", category: "Juridique", description: "Apposez votre signature électronique sur n'importe quel contrat PDF.", shortDescription: "e-Signature légale", tags: ["Signature", "PDF"], icon: "PenTool", price: "Gratuit" }
 ];
 
+export const systemsData: ServiceRecord[] = [
+  { id: "s1", slug: "agence-immobiliere", name: "Agence immobilière", category: "Système Sectoriel", description: "Optimisez vos mandats et la gestion de vos visites.", tags: ["Immo", "Système"], icon: "Home", price: "Audit Gratuit" },
+  { id: "s2", slug: "agence-marketing", name: "Agence marketing", category: "Système Sectoriel", description: "Automatisez votre prospection et le reporting client.", tags: ["Marketing", "Système"], icon: "Megaphone", price: "Audit Gratuit" },
+  { id: "s3", slug: "agence-web", name: "Agence web", category: "Système Sectoriel", description: "Structurez votre production technique et vos livrables.", tags: ["Web", "Système"], icon: "Code", price: "Audit Gratuit" },
+  { id: "s4", slug: "artisanat", name: "Artisanat", category: "Système Sectoriel", description: "Suivez vos chantiers et factures sans perdre de temps.", tags: ["Artisan", "Système"], icon: "Hammer", price: "Audit Gratuit" },
+  { id: "s5", slug: "btp", name: "BTP", category: "Système Sectoriel", description: "Gérez vos équipes et vos approvisionnements en temps réel.", tags: ["BTP", "Système"], icon: "Building2", price: "Audit Gratuit" },
+  { id: "s6", slug: "boulangerie", name: "Boulangerie", category: "Système Sectoriel", description: "Optimisez vos stocks et vos ventes en boutique.", tags: ["Boulangerie", "Système"], icon: "Croissant", price: "Audit Gratuit" },
+  { id: "s7", slug: "coaching", name: "Coaching", category: "Système Sectoriel", description: "Automatisez vos prises de rendez-vous et vos suivis.", tags: ["Coaching", "Système"], icon: "UserCheck", price: "Audit Gratuit" },
+  { id: "s8", slug: "commerce-de-detail", name: "Commerce de détail", category: "Système Sectoriel", description: "Un système d'inventaire et de fidélisation clients.", tags: ["Retail", "Système"], icon: "Store", price: "Audit Gratuit" },
+  { id: "s9", slug: "conciergerie-airbnb", name: "Conciergerie Airbnb", category: "Système Sectoriel", description: "Automatisez les arrivées et le ménage de vos locations.", tags: ["Airbnb", "Système"], icon: "Key", price: "Audit Gratuit" },
+  { id: "s10", slug: "consulting", name: "Consulting", category: "Système Sectoriel", description: "Industrialisez votre expertise pour croître sans limite.", tags: ["Consulting", "Système"], icon: "Briefcase", price: "Audit Gratuit" },
+  { id: "s11", slug: "creation-de-contenu", name: "Création de contenu", category: "Système Sectoriel", description: "Un workflow de production fluide de l'idée à la publication.", tags: ["Contenu", "Système"], icon: "Camera", price: "Audit Gratuit" },
+  { id: "s12", slug: "demenagement", name: "Déménagement", category: "Système Sectoriel", description: "Optimisez vos devis et la planification de vos tournées.", tags: ["Déménagement", "Système"], icon: "Truck", price: "Audit Gratuit" },
+  { id: "s13", slug: "evenementiel", name: "Événementiel", category: "Système Sectoriel", description: "Un pilotage de projet rigoureux pour des événements sans stress.", tags: ["Événement", "Système"], icon: "PartyPopper", price: "Audit Gratuit" },
+  { id: "s14", slug: "e-commerce", name: "E-commerce", category: "Système Sectoriel", description: "Optimisez vos conversions et votre logistique d'expédition.", tags: ["Ecommerce", "Système"], icon: "ShoppingBag", price: "Audit Gratuit" },
+  { id: "s15", slug: "formation-en-ligne", name: "Formation en ligne", category: "Système Sectoriel", description: "Scalez votre transmission de savoir avec un LMS automatisé.", tags: ["Formation", "Système"], icon: "GraduationCap", price: "Audit Gratuit" },
+  { id: "s16", slug: "freelance", name: "Freelance", category: "Système Sectoriel", description: "Ne courez plus après vos clients, structurez votre offre.", tags: ["Freelance", "Système"], icon: "Laptop", price: "Audit Gratuit" },
+  { id: "s17", slug: "garage-automobile", name: "Garage automobile", category: "Système Sectoriel", description: "Suivez vos réparations et optimisez votre planning atelier.", tags: ["Garage", "Système"], icon: "Wrench", price: "Audit Gratuit" },
+  { id: "s18", slug: "gestion-comptable", name: "Gestion comptable", category: "Système Sectoriel", description: "Fluidifiez vos échanges de documents avec vos clients.", tags: ["Compta", "Système"], icon: "Calculator", price: "Audit Gratuit" },
+  { id: "s19", slug: "institut-de-beaute", name: "Institut de beauté", category: "Système Sectoriel", description: "Optimisez vos agendas et vos ventes de produits.", tags: ["Beauté", "Système"], icon: "Flower2", price: "Audit Gratuit" },
+  { id: "s20", slug: "investissement-locatif", name: "Investissement locatif", category: "Système Sectoriel", description: "Suivez votre rentabilité et vos travaux en un seul endroit.", tags: ["Immo", "Système"], icon: "Landmark", price: "Audit Gratuit" },
+  { id: "s21", slug: "livraison-dernier-kilometre", name: "Livraison dernier kilomètre", category: "Système Sectoriel", description: "Un système de routage efficace pour vos livreurs.", tags: ["Livraison", "Système"], icon: "Navigation", price: "Audit Gratuit" },
+  { id: "s22", slug: "location-de-materiel", name: "Location de matériel", category: "Système Sectoriel", description: "Gérez vos stocks et vos contrats de location.", tags: ["Location", "Système"], icon: "Dolly", price: "Audit Gratuit" },
+  { id: "s23", slug: "maintenance-informatique", name: "Maintenance informatique", category: "Système Sectoriel", description: "Un système de ticketing et de maintenance préventive.", tags: ["IT", "Système"], icon: "Cpu", price: "Audit Gratuit" },
+  { id: "s24", slug: "marketplace", name: "Marketplace", category: "Système Sectoriel", description: "Structurez vos flux vendeurs et paiements complexes.", tags: ["Marketplace", "Système"], icon: "Layers", price: "Audit Gratuit" },
+  { id: "s25", slug: "media", name: "Média", category: "Système Sectoriel", description: "Gérez votre régie publicitaire et vos publications.", tags: ["Média", "Système"], icon: "Newspaper", price: "Audit Gratuit" },
+  { id: "s26", slug: "nettoyage-professionnel", name: "Nettoyage professionnel", category: "Système Sectoriel", description: "Contrôlez vos passages et optimisez vos tournées.", tags: ["Nettoyage", "Système"], icon: "Sparkles", price: "Audit Gratuit" },
+  { id: "s27", slug: "organisme-de-formation", name: "Organisme de formation", category: "Système Sectoriel", description: "Simplifiez votre conformité Qualiopi et vos inscriptions.", tags: ["Formation", "Système"], icon: "FileCheck2", price: "Audit Gratuit" },
+  { id: "s28", slug: "photographe-videaste", name: "Photographe / vidéaste", category: "Système Sectoriel", description: "Workflows d'édition et galeries clients automatisées.", tags: ["Photo", "Système"], icon: "Aperture", price: "Audit Gratuit" },
+  { id: "s29", slug: "reparation-telephonique", name: "Réparation téléphonique", category: "Système Sectoriel", description: "Gérez vos pièces détachées et le suivi client.", tags: ["Reparation", "Système"], icon: "Smartphone", price: "Audit Gratuit" },
+  { id: "s30", slug: "restaurant", name: "Restaurant", category: "Système Sectoriel", description: "Optimisez vos ratios et simplifiez votre service.", tags: ["Restaurant", "Système"], icon: "Utensils", price: "Audit Gratuit" },
+  { id: "s31", slug: "saas", name: "SaaS", category: "Système Sectoriel", description: "Optimisez votre MRR et le support client.", tags: ["SaaS", "Système"], icon: "Cloud", price: "Audit Gratuit" },
+  { id: "s32", slug: "salle-de-sport", name: "Salle de sport", category: "Système Sectoriel", description: "Gérez vos abonnements et vos plannings de cours.", tags: ["Sport", "Système"], icon: "Dumbbell", price: "Audit Gratuit" },
+  { id: "s33", slug: "salon-de-coiffure", name: "Salon de coiffure", category: "Système Sectoriel", description: "Une gestion d'agenda sans failles et des ventes upsell.", tags: ["Coiffure", "Système"], icon: "Scissors", price: "Audit Gratuit" },
+  { id: "s34", slug: "securite-privee", name: "Sécurité privée", category: "Système Sectoriel", description: "Planification des agents et rapports d'intervention.", tags: ["Sécurité", "Système"], icon: "Shield", price: "Audit Gratuit" },
+  { id: "s35", slug: "services-a-la-personne", name: "Services à la personne", category: "Système Sectoriel", description: "Une coordination d'intervenants pour un service irréprochable.", tags: ["Services", "Système"], icon: "HeartHandshake", price: "Audit Gratuit" },
+  { id: "s36", slug: "traiteur", name: "Traiteur", category: "Système Sectoriel", description: "Optimisez vos fiches techniques et vos événements.", tags: ["Traiteur", "Système"], icon: "ChefHat", price: "Audit Gratuit" },
+  { id: "s37", slug: "transport-de-marchandise", name: "Transport de marchandise", category: "Système Sectoriel", description: "Un suivi de flotte et de fret en temps réel.", tags: ["Logistique", "Système"], icon: "Box", price: "Audit Gratuit" },
+  { id: "s38", slug: "transport-de-personnes", name: "Transport de personnes", category: "Système Sectoriel", description: "Optimisez vos trajets et votre gestion de chauffeurs.", tags: ["VTC", "Système"], icon: "Car", price: "Audit Gratuit" }
+];
+
 export async function getTools(): Promise<ServiceRecord[]> {
   return new Promise((resolve) => setTimeout(() => resolve(toolsData), 10));
+}
+
+export async function getSystems(): Promise<ServiceRecord[]> {
+  return new Promise((resolve) => setTimeout(() => resolve(systemsData), 10));
 }
 
 export async function getToolBySlug(slug: string): Promise<ServiceRecord | null> {
   const all = await getTools();
   return all.find(t => t.slug === slug) || null;
+}
+
+export async function getSystemBySlug(slug: string): Promise<ServiceRecord | null> {
+  const all = await getSystems();
+  return all.find(s => s.slug === slug) || null;
 }
