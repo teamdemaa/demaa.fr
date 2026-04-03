@@ -86,9 +86,9 @@ export default function HomeToolsClient({
                        templates;
 
   const tabs = [
-    { id: "systemes", label: "Systèmes", icon: LayoutGrid },
     { id: "outils", label: "Outils", icon: Wrench },
     { id: "modeles", label: "Modèles", icon: FileText },
+    { id: "systemes", label: "Systèmes", icon: LayoutGrid },
   ];
 
   const tabsComponent = (
