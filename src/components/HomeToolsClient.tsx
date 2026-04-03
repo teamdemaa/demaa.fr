@@ -8,14 +8,10 @@ import { ServiceRecord } from "@/lib/data";
 import { TemplateRecord } from "@/lib/templates";
 import { 
   Wrench, 
-  Briefcase, 
   PenLine, 
-  ArrowRight,
+  Briefcase,
   Search,
-  BadgePercent,
-  ChevronRight
 } from "lucide-react";
-import TeamLeadModal from "./TeamLeadModal";
 import AutoJoinPopup from "./AutoJoinPopup";
 
 type TabType = "outils" | "bons-plans" | "modeles";
@@ -35,7 +31,6 @@ export default function HomeToolsClient({
 }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTab, setActiveTab] = useState<TabType>("outils");
-  const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
 
   const filteredData = useMemo(() => {
     const query = searchQuery.toLowerCase();
@@ -66,10 +61,10 @@ export default function HomeToolsClient({
   const tabs = [
     { id: "outils", label: "Outils", icon: Wrench },
     { id: "modeles", label: "Modèles", icon: PenLine },
-    { id: "bons-plans", label: "Bons Plans", icon: BadgePercent },
+    { id: "bons-plans", label: "Services", icon: Briefcase },
   ];
 
-  // Grouping logic for "Bons Plans" sections
+  // Grouping logic for Services tab sections
   const sections = useMemo(() => {
     if (activeTab !== "bons-plans") return null;
     
@@ -84,7 +79,7 @@ export default function HomeToolsClient({
     <div className="w-full">
       <HeroSearch 
         onSearch={setSearchQuery} 
-        rotatingWords={["Outils", "Modèles", "Bons Plans"]}
+        rotatingWords={["Outils", "Modèles", "Services"]}
         placeholder={placeholder}
         showUSP={false}
       >
@@ -120,39 +115,6 @@ export default function HomeToolsClient({
                 <Search className="w-3.5 h-3.5" />
                 Résultats pour : <span className="text-brand-coral ml-1">"{searchQuery}"</span>
              </div>
-          </div>
-        )}
-
-        {/* Bons Plans Header / CTA (Restored Blue Style) */}
-        {activeTab === "bons-plans" && !searchQuery && (
-          <div className="mb-14">
-            <button 
-              onClick={() => setIsLeadModalOpen(true)}
-              className="w-full group bg-brand-blue p-8 md:p-12 rounded-[3rem] text-left relative overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-brand-blue/20"
-            >
-              <div className="absolute top-0 right-0 w-80 h-80 bg-brand-coral/10 rounded-full blur-[100px] -mr-40 -mt-40 group-hover:bg-brand-coral/20 transition-all duration-700" />
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 relative z-10">
-                <div className="flex items-start md:items-center gap-8">
-                  <div className="w-16 h-16 bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl flex items-center justify-center shrink-0 group-hover:bg-brand-coral group-hover:border-brand-coral transition-all duration-500">
-                    <BadgePercent className="w-8 h-8 text-white" />
-                  </div>
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-3">
-                      <span className="text-white/40 font-black text-[10px] uppercase tracking-[0.3em]">Exclusivité Team Demaa</span>
-                    </div>
-                    <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight leading-tight">
-                      Tarifs négociés pour la Team Demaa
-                    </h2>
-                    <p className="text-white/60 font-medium text-sm md:text-lg max-w-xl">
-                      Rejoignez notre réseau d'entrepreneurs pour débloquer des tarifs préférentiels sur tous nos services partenaires.
-                    </p>
-                  </div>
-                </div>
-                <div className="bg-white/10 hover:bg-brand-coral backdrop-blur-md px-10 py-5 rounded-2xl text-white font-black text-xs uppercase tracking-[0.2em] flex items-center gap-4 transition-all group-hover:gap-6 whitespace-nowrap self-start md:self-center border border-white/5">
-                  Rejoignez nous <ArrowRight className="w-5 h-5" />
-                </div>
-              </div>
-            </button>
           </div>
         )}
 
@@ -210,29 +172,7 @@ export default function HomeToolsClient({
             )}
           </div>
         )}
-
-        {/* Global CTA for Bons Plans in Bons Plans Tab */}
-        {activeTab === "bons-plans" && !searchQuery && (
-          <div className="mt-28 p-12 md:p-24 bg-brand-blue rounded-[4rem] text-center text-white relative overflow-hidden shadow-2xl shadow-brand-blue/30 lg:mt-32">
-             <div className="absolute top-0 left-0 w-full h-full opacity-[0.04] bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] pointer-events-none" />
-             <h3 className="text-3xl md:text-5xl font-black mb-8 relative z-10 tracking-tight leading-tight">Structurons votre entreprise<br className="md:block hidden" /> ensemble.</h3>
-             <p className="text-white/50 max-w-2xl mx-auto mb-14 text-lg md:text-2xl relative z-10 leading-relaxed font-medium">
-               Demaa vous connecte aux meilleurs experts locaux pour lever vos points de blocage opérationnels et financiers.
-             </p>
-             <a 
-               href="/nos-services" 
-               className="inline-flex items-center gap-4 px-12 py-6 bg-brand-coral text-white font-black text-xs md:text-sm uppercase tracking-[0.2em] rounded-full hover:scale-105 transition-all shadow-2xl relative z-10 active:scale-95 group"
-             >
-               Voir l'annuaire complet <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-             </a>
-          </div>
-        )}
       </div>
-
-      <TeamLeadModal 
-        isOpen={isLeadModalOpen} 
-        onClose={() => setIsLeadModalOpen(false)} 
-      />
 
       <AutoJoinPopup />
 

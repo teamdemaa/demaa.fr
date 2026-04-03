@@ -45,7 +45,7 @@ export default function HeroSearch({
                <div className="relative h-[1.14em] overflow-hidden inline-flex items-center justify-end">
                   {/* Ghost element to reserve space for the longest word */}
                   <span className="invisible pointer-events-none whitespace-nowrap text-right pr-[0.1em]">
-                    Bons Plans
+                    Services
                   </span>
                   
                   <div className="absolute inset-0 flex items-center justify-end">
