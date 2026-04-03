@@ -102,6 +102,17 @@ const localData: ServiceRecord[] = [
     price: "Sur devis"
   },
   {
+    id: "13",
+    slug: "montage-video",
+    name: "Montage Vidéo",
+    category: "Croissance - Ads",
+    shortDescription: "Des vidéos qui arrêtent le scroll",
+    description: "Du brief à la livraison, on monte vos contenus pour les réseaux sociaux, la pub et votre site : rythme, sous-titres, habillage graphique et exports aux bons formats. Des coupes qui servent votre message et renforcent votre image de marque, sans prise de tête technique de votre côté.",
+    tags: ["Vidéo", "Social", "Ads"],
+    icon: "Video",
+    price: "Sur devis"
+  },
+  {
     id: "10",
     slug: "publicite-google",
     name: "Publicité Google",

@@ -4,11 +4,14 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Send, CheckCircle2, Building2, Briefcase, Mail, BadgePercent } from "lucide-react";
 
+const DEFAULT_TITLE =
+  "Bénéficier de tarifs négociés de 15 à 30 % :\nServices, Logiciel, Fournisseurs";
+
 export default function TeamLeadModal({
   isOpen,
   onClose,
-  title = "Rejoignez la Team Demaa",
-  description = "Bénéficiez de Tarifs négociés pour votre activité et d'un accompagnement sur mesure."
+  title = DEFAULT_TITLE,
+  description = "Services, logiciel et fournisseurs : laissez vos coordonnées pour recevoir les offres adaptées à votre activité."
 }: {
   isOpen: boolean;
   onClose: () => void;
@@ -29,7 +32,7 @@ export default function TeamLeadModal({
       if (!webhookUrl) throw new Error("Slack webhook URL not configured");
 
       const payload = {
-        text: `📬 Nouvelle demande Team Demaa`,
+        text: `📬 Nouvelle demande — tarifs négociés (15–30 %)`,
         blocks: [
           {
             type: "section",
@@ -73,7 +76,7 @@ export default function TeamLeadModal({
               initial={{ scale: 0.98, opacity: 0, y: 10 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.98, opacity: 0, y: 10 }}
-              className="bg-white w-full max-w-[310px] rounded-[1.2rem] shadow-[0_10px_30px_rgba(25,27,48,0.06)] overflow-hidden pointer-events-auto relative border border-gray-100/50"
+              className="bg-white w-full max-w-[340px] rounded-[1.2rem] shadow-[0_10px_30px_rgba(25,27,48,0.06)] overflow-hidden pointer-events-auto relative border border-gray-100/50"
             >
               <button
                 onClick={onClose}
@@ -88,7 +91,7 @@ export default function TeamLeadModal({
                     <div className="w-8 h-8 bg-brand-blue/5 rounded-lg flex items-center justify-center mx-auto mb-3">
                       <BadgePercent className="w-4 h-4 text-brand-blue/60" />
                     </div>
-                    <h2 className="text-[15px] font-black text-brand-blue tracking-tight leading-tight mb-1">
+                    <h2 className="text-[13px] sm:text-[14px] font-black text-brand-blue tracking-tight leading-snug mb-1 whitespace-pre-line">
                       {title}
                     </h2>
                     <p className="text-[10px] text-gray-400 leading-normal">
@@ -137,10 +140,10 @@ export default function TeamLeadModal({
                       type="submit"
                       className="w-full bg-brand-blue text-white py-2.5 rounded-lg font-black text-[9px] uppercase tracking-[0.2em] flex items-center justify-center gap-2 hover:bg-brand-coral transition-all active:scale-[0.98] mt-4"
                     >
-                      REJOINDRE <Send className="w-2 h-2" />
+                      ENVOYER <Send className="w-2 h-2" />
                     </button>
                     <p className="text-[8px] text-center text-gray-300 mt-3 leading-relaxed font-bold uppercase tracking-widest opacity-40">
-                      Privilèges exclusifs Demaa
+                      Tarifs préférentiels partenaires
                     </p>
                   </form>
                 </div>

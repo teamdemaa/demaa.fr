@@ -3,29 +3,24 @@
 import { useState, useMemo } from "react";
 import HeroSearch from "./HeroSearch";
 import ServiceCard from "./ServiceCard";
-import TemplateCard from "./TemplateCard";
 import { ServiceRecord } from "@/lib/data";
-import { TemplateRecord } from "@/lib/templates";
 import { 
   Wrench, 
-  PenLine, 
   Briefcase,
   Search,
 } from "lucide-react";
 import AutoJoinPopup from "./AutoJoinPopup";
 
-type TabType = "outils" | "bons-plans" | "modeles";
+type TabType = "outils" | "bons-plans";
 
 export default function HomeToolsClient({ 
   initialTools,
   initialServices,
-  initialTemplates,
   title = "Gagnez du temps au quotidien",
   placeholder = "Que cherchez-vous aujourd'hui ?"
 }: { 
   initialTools: ServiceRecord[],
   initialServices: ServiceRecord[],
-  initialTemplates: TemplateRecord[],
   title?: string,
   placeholder?: string
 }) {
@@ -46,21 +41,13 @@ export default function HomeToolsClient({
         s.description.toLowerCase().includes(query) ||
         s.category.toLowerCase().includes(query)
       ),
-      templates: initialTemplates.filter(m => 
-        m.name.toLowerCase().includes(query) || 
-        m.shortDescription?.toLowerCase().includes(query) ||
-        m.category.toLowerCase().includes(query)
-      )
     };
-  }, [initialTools, initialServices, initialTemplates, searchQuery]);
+  }, [initialTools, initialServices, searchQuery]);
 
-  const currentItems = activeTab === "outils" ? filteredData.tools : 
-                       activeTab === "bons-plans" ? filteredData.bonsPlans : 
-                       filteredData.templates;
+  const currentItems = activeTab === "outils" ? filteredData.tools : filteredData.bonsPlans;
 
   const tabs = [
     { id: "outils", label: "Outils", icon: Wrench },
-    { id: "modeles", label: "Modèles", icon: PenLine },
     { id: "bons-plans", label: "Services", icon: Briefcase },
   ];
 
@@ -79,7 +66,7 @@ export default function HomeToolsClient({
     <div className="w-full">
       <HeroSearch 
         onSearch={setSearchQuery} 
-        rotatingWords={["Outils", "Modèles", "Services"]}
+        rotatingWords={["Outils", "Services"]}
         placeholder={placeholder}
         showUSP={false}
       >
@@ -128,16 +115,7 @@ export default function HomeToolsClient({
           </div>
         ) : (
           <div className="space-y-20">
-            {activeTab === "modeles" ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 md:gap-10">
-                {initialTemplates.filter(m => currentItems.map(item => item.id).includes(m.id)).map(template => (
-                  <TemplateCard 
-                    key={template.id} 
-                    template={template} 
-                  />
-                ))}
-              </div>
-            ) : activeTab === "bons-plans" && !searchQuery ? (
+            {activeTab === "bons-plans" && !searchQuery ? (
               sections?.map((section) => (
                 <div key={section.title} className="animate-in fade-in slide-in-from-bottom-4 duration-700">
                   <div className="flex items-center gap-4 mb-8">

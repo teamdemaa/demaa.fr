@@ -1,5 +1,4 @@
 import { getTools, getServices } from "@/lib/data";
-import { templatesData } from "@/lib/templates";
 import Navbar from "@/components/Navbar";
 import HomeToolsClient from "@/components/HomeToolsClient";
 
@@ -21,7 +20,6 @@ export default async function Home() {
         <HomeToolsClient 
           initialTools={tools} 
           initialServices={services}
-          initialTemplates={templatesData}
           title="Gagnez du temps au quotidien"
           placeholder="Que cherchez-vous aujourd'hui ? (ex: QR code, Compta, SAS...)"
         />

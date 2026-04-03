@@ -12,7 +12,7 @@ export default function AutoJoinPopup() {
 
   useEffect(() => {
     // Check if user has already dismissed it in this session
-    const dismissed = sessionStorage.getItem("team_demaa_popup_dismissed");
+    const dismissed = sessionStorage.getItem("tarifs_negocies_popup_dismissed");
     if (dismissed) {
       setHasBeenDismissed(true);
       return;
@@ -31,7 +31,7 @@ export default function AutoJoinPopup() {
     e.stopPropagation();
     setIsVisible(false);
     setHasBeenDismissed(true);
-    sessionStorage.setItem("team_demaa_popup_dismissed", "true");
+    sessionStorage.setItem("tarifs_negocies_popup_dismissed", "true");
   };
 
   const handleOpenModal = () => {
@@ -70,10 +70,10 @@ export default function AutoJoinPopup() {
                 </div>
                 <div className="space-y-2">
                   <h4 className="text-sm font-black text-brand-blue leading-tight tracking-tight uppercase">
-                    Tarifs négociés
+                    15 à 30&nbsp;% négociés
                   </h4>
                   <p className="text-xs text-gray-500 leading-relaxed font-medium">
-                    Rejoignez la <span className="text-brand-blue font-bold">Team Demaa</span> pour bénéficier de tarifs négociés pour votre activité.
+                    Services, logiciel et fournisseurs : tarifs négociés pour votre activité. Une demande suffit.
                   </p>
                   <div className="flex items-center gap-2 text-[10px] font-black text-brand-coral uppercase tracking-widest pt-1">
                     Découvrir <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
@@ -88,8 +88,6 @@ export default function AutoJoinPopup() {
       <TeamLeadModal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
-        title="Rejoignez la Team Demaa"
-        description="Bénéficiez de Tarifs négociés pour votre activité et d'un accompagnement sur mesure pour vos projets."
       />
     </>
   );
