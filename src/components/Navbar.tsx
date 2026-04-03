@@ -5,6 +5,7 @@ import { ChevronDown, X, Briefcase, Wrench, PenLine, Menu as MenuIcon } from "lu
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { usePathname } from "next/navigation";
+import ConsultationForm from "./ConsultationForm";
 
 export default function Navbar({ minimal = false }: { minimal?: boolean }) {
   const pathname = usePathname();
@@ -156,17 +157,16 @@ export default function Navbar({ minimal = false }: { minimal?: boolean }) {
       </nav>
 
 
-      {/* Fillout Modal Component */}
+      {/* Consultation Modal — Native Form (replaces Fillout iframe) */}
       {mounted && isModalOpen && createPortal(
         <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-brand-blue/60 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-          <div className="bg-white rounded-[2rem] w-full max-w-2xl h-[75vh] md:h-[650px] shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200 relative flex flex-col">
+          <div className="bg-white rounded-[2rem] w-full max-w-lg shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200 relative flex flex-col">
             
             <div className="p-6 border-b border-gray-100 flex justify-between items-start bg-white z-10 rounded-t-[2rem]">
               <div className="pr-8">
                 <h3 className="font-bold text-brand-blue text-xl">Consultation de Structuration</h3>
-                <p className="text-xs md:text-sm text-gray-500 mt-1.5 leading-relaxed leading-snug">
-                  Conversation de 30 minutes avec un spécialiste de la structuration d'entreprise. 
-                  Objectifs : vous sentir moins dépassé(e) et vous aider à reprendre le contrôle de votre entreprise.
+                <p className="text-xs md:text-sm text-gray-500 mt-1.5 leading-relaxed">
+                  Conversation de 30 minutes avec un spécialiste de la structuration d'entreprise.
                 </p>
                 <p className="text-[10px] uppercase tracking-widest text-brand-coral font-bold mt-2">
                   Gratuit - Par téléphone
@@ -180,13 +180,7 @@ export default function Navbar({ minimal = false }: { minimal?: boolean }) {
               </button>
             </div>
             
-            <div className="flex-1 w-full bg-gray-50">
-              <iframe 
-                src="https://teamdemaa.fillout.com/t/4QP8VeqUAaus" 
-                className="w-full h-full border-none"
-                title="Formulaire consultation"
-              />
-            </div>
+            <ConsultationForm onSuccess={() => setIsModalOpen(false)} />
 
           </div>
         </div>,

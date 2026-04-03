@@ -28,33 +28,13 @@ export default function TeamLeadModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const webhookUrl = process.env.NEXT_PUBLIC_SLACK_WEBHOOK_URL;
-      if (!webhookUrl) throw new Error("Slack webhook URL not configured");
-
-      const payload = {
-        text: `📬 Nouvelle demande — tarifs négociés (15–30 %)`,
-        blocks: [
-          {
-            type: "section",
-            text: {
-              type: "mrkdwn",
-              text: `*Entreprise* : ${formData.company}\n*Secteur* : ${formData.sector || "_non renseigné_"}\n*Email* : ${formData.email}`
-            }
-          },
-          {
-            type: "context",
-            elements: [{ type: "mrkdwn", text: `⏰ ${new Date().toLocaleString("fr-FR")}` }]
-          }
-        ]
-      };
-
-      await fetch(webhookUrl, {
+      await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
+        body: JSON.stringify({ ...formData, source: "Modal Team Demaa" })
       });
     } catch (err) {
-      console.error("Slack notification failed", err);
+      console.error("Lead submission failed", err);
     }
     setIsSubmitted(true);
   };
