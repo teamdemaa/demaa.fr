@@ -45,10 +45,10 @@ export default function HeroSearch({
       {/* 01. Title Segment (Top) */}
       <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black tracking-tight text-brand-blue mb-10 md:mb-16 leading-[1.1] max-w-5xl mx-auto z-10 relative px-2">
         <div className="flex flex-col items-center">
-          <div className="whitespace-nowrap">
+          <div>
             Faites grandir votre entreprise
           </div>
-          <div className="whitespace-nowrap">
+          <div>
             tout en <span className="text-brand-coral">libérant du temps</span>
           </div>
         </div>
