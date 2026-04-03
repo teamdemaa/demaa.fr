@@ -1,17 +1,20 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import HeroSearch from "./HeroSearch";
 import ServiceCard from "./ServiceCard";
-import { ServiceRecord } from "@/lib/data";
+import TemplateCard from "./TemplateCard";
+import { Tool, Service, Template, ServiceRecord } from "@/lib/types";
+import { getTools, getServices, getTemplates, searchTools, searchServices, searchTemplates } from "@/lib/api";
 import { 
   Wrench, 
   Briefcase,
   Search,
+  FileText,
 } from "lucide-react";
 import AutoJoinPopup from "./AutoJoinPopup";
 
-type TabType = "outils" | "bons-plans";
+type TabType = "outils" | "modeles" | "bons-plans";
 
 export default function HomeToolsClient({ 
   initialTools,
@@ -19,13 +22,18 @@ export default function HomeToolsClient({
   title = "Gagnez du temps au quotidien",
   placeholder = "Que cherchez-vous aujourd'hui ?"
 }: { 
-  initialTools: ServiceRecord[],
-  initialServices: ServiceRecord[],
+  initialTools: Tool[],
+  initialServices: Service[],
   title?: string,
   placeholder?: string
 }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTab, setActiveTab] = useState<TabType>("outils");
+  const [templates, setTemplates] = useState<Template[]>([]);
+
+  useEffect(() => {
+    getTemplates().then(setTemplates);
+  }, []);
 
   const filteredData = useMemo(() => {
     const query = searchQuery.toLowerCase();
@@ -34,20 +42,25 @@ export default function HomeToolsClient({
       tools: initialTools.filter(t => 
         t.name.toLowerCase().includes(query) || 
         t.description.toLowerCase().includes(query) ||
-        t.category.toLowerCase().includes(query)
+        t.category.toLowerCase().includes(query) ||
+        t.tags.some(tag => tag.toLowerCase().includes(query))
       ),
-      bonsPlans: initialServices.filter(s => 
+      services: initialServices.filter(s => 
         s.name.toLowerCase().includes(query) || 
         s.description.toLowerCase().includes(query) ||
-        s.category.toLowerCase().includes(query)
+        s.category.toLowerCase().includes(query) ||
+        s.tags.some(tag => tag.toLowerCase().includes(query))
       ),
     };
   }, [initialTools, initialServices, searchQuery]);
 
-  const currentItems = activeTab === "outils" ? filteredData.tools : filteredData.bonsPlans;
+  const currentItems = activeTab === "outils" ? filteredData.tools : 
+                      activeTab === "modeles" ? templates : 
+                      filteredData.services;
 
   const tabs = [
     { id: "outils", label: "Outils", icon: Wrench },
+    { id: "modeles", label: "Modèles", icon: FileText },
     { id: "bons-plans", label: "Services", icon: Briefcase },
   ];
 
@@ -58,15 +71,15 @@ export default function HomeToolsClient({
     const categories = ["Finance - Juridique", "Opérations - Systèmes", "Croissance - Ads"];
     return categories.map(cat => ({
       title: cat,
-      items: filteredData.bonsPlans.filter(item => item.category === cat)
+      items: filteredData.services.filter((item: Service) => item.category === cat)
     })).filter(section => section.items.length > 0);
-  }, [activeTab, filteredData.bonsPlans]);
+  }, [activeTab, filteredData.services]);
 
   return (
     <div className="w-full">
       <HeroSearch 
         onSearch={setSearchQuery} 
-        rotatingWords={["Outils", "Services"]}
+        rotatingWords={["Outils", "Modèles", "Services"]}
         placeholder={placeholder}
         showUSP={false}
       >
@@ -123,10 +136,10 @@ export default function HomeToolsClient({
                     <div className="h-px bg-gray-100 w-full" />
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 md:gap-10">
-                    {section.items.map(item => (
+                    {section.items.map((item: ServiceRecord) => (
                       <ServiceCard 
                         key={item.id} 
-                        service={item as ServiceRecord} 
+                        service={item} 
                         fullWidth 
                         baseUrl="/services"
                         hidePrice={true}
@@ -135,12 +148,21 @@ export default function HomeToolsClient({
                   </div>
                 </div>
               ))
+            ) : activeTab === "modeles" ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+                {(currentItems as Template[]).map((item: Template) => (
+                  <TemplateCard 
+                    key={item.id} 
+                    template={item} 
+                  />
+                ))}
+              </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 md:gap-10">
-                {currentItems.map(item => (
+                {(activeTab === "outils" ? (currentItems as Tool[]) : (currentItems as ServiceRecord[])).map((item: ServiceRecord) => (
                   <ServiceCard 
                     key={item.id} 
-                    service={item as ServiceRecord} 
+                    service={item} 
                     fullWidth 
                     baseUrl={activeTab === "outils" ? "/outils" : "/services"}
                     hidePrice={activeTab === "bons-plans"}

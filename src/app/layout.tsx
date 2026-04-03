@@ -14,6 +14,7 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "Demaa - Annuaire d'outils et de services",
   description: "Demaa est un annuaire SEO-friendly ultra-minimaliste pour trouver les meilleurs outils et services.",
+  metadataBase: new URL('https://demaa.fr'),
 };
 
 export default function RootLayout({

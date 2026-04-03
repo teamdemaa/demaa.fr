@@ -18,6 +18,9 @@ export default function AutoJoinPopup() {
       return;
     }
 
+    // Popup disabled - never show
+    return;
+
     const timer = setTimeout(() => {
       if (!hasBeenDismissed) {
         setIsVisible(true);

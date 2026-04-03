@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Interdire les URLs de préproduction Vercel
+User-agent: *
+Disallow: /*-projects.vercel.app
+
+# Sitemap
+Sitemap: https://demaa.fr/sitemap.xml

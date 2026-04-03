@@ -1,4 +1,4 @@
-import { getTools, getServices } from "@/lib/data";
+import { getTools, getServices } from "@/lib/api";
 import Navbar from "@/components/Navbar";
 import HomeToolsClient from "@/components/HomeToolsClient";
 

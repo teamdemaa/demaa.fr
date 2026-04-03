@@ -1,16 +1,31 @@
 import type { MetadataRoute } from "next";
-import { getServices, toolsData } from "@/lib/data";
+import { getServices, getTools } from "@/lib/api";
 import { getAllPosts } from "@/lib/blog";
 
 function getBaseUrl(): string {
+  // Priorité absolue au domaine principal
+  const productionDomain = "https://demaa.fr";
+  
+  // Forcer le domaine principal si NEXT_PUBLIC_SITE_URL est défini
   const fromEnv = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
-  if (fromEnv) return fromEnv;
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
-  return "https://demaa.fr";
+  if (fromEnv && !fromEnv.includes('vercel.app')) {
+    return fromEnv;
+  }
+  
+  // En production, toujours utiliser le domaine principal
+  if (process.env.VERCEL_URL) {
+    return productionDomain;
+  }
+  
+  // Fallback développement
+  return fromEnv || "http://localhost:3000";
 }
 
+/** Pages sous `/outils/*` présentes en fichiers mais à exclure du sitemap */
+const OUTILS_EXCLUDED_SLUGS = ["generation-de-document", "modeles-de-document"] as const;
+
 /** Pages sous `/outils/*` présentes en fichiers mais absentes de `toolsData`. */
-const OUTILS_EXTRA_SLUGS = ["generation-de-document", "modeles-de-document"] as const;
+const OUTILS_EXTRA_SLUGS = [] as const;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = getBaseUrl();
@@ -31,11 +46,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
+  const tools = await getTools();
   const outilSlugs = new Set<string>([
-    ...toolsData.map((t) => t.slug),
+    ...tools.map((t) => t.slug),
     ...OUTILS_EXTRA_SLUGS,
   ]);
-  const outilEntries: MetadataRoute.Sitemap = [...outilSlugs].map((slug) => ({
+  
+  // Filtrer les slugs exclus
+  const filteredOutilSlugs = [...outilSlugs].filter(slug => 
+    !OUTILS_EXCLUDED_SLUGS.includes(slug as any)
+  );
+  
+  const outilEntries: MetadataRoute.Sitemap = filteredOutilSlugs.map((slug) => ({
     url: `${base}/outils/${slug}`,
     lastModified: now,
     changeFrequency: "monthly" as const,
