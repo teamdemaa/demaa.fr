@@ -84,7 +84,7 @@ export default function HeroSearch({
 
       {/* 04. Filters Slot (Bottom of header) */}
       {bottomSlot && (
-        <div className="w-full pb-8 md:pb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <div className="w-full pb-4 md:pb-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
           {bottomSlot}
         </div>
       )}

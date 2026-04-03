@@ -156,7 +156,7 @@ export default function HomeToolsClient({
         bottomSlot={filtersComponent}
       />
 
-      <div className="mt-8 md:mt-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-32 animate-in fade-in duration-1000">
+      <div className="mt-4 md:mt-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-32 animate-in fade-in duration-1000">
         
         {/* Active Tab Helper (Subtle Search results only) */}
         {searchQuery && (
