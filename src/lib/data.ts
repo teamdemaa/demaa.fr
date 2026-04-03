@@ -89,6 +89,50 @@ const localData: ServiceRecord[] = [
     tags: ["Web", "Design", "SEO"],
     icon: "Laptop",
     price: "750 €"
+  },
+  {
+    id: "9",
+    slug: "marketing-vente",
+    name: "Système Marketing & Vente",
+    category: "Croissance - Ads",
+    shortDescription: "Attirer et convertir en automatique",
+    description: "Une machine à transformer les prospects en clients. On conçoit votre tunnel de vente complet : aimant à prospects, pages de capture, séquences email automatisées et intégration CRM. Un système clé en main pour que votre équipe commerciale se concentre uniquement sur les rendez-vous qualifiés.",
+    tags: ["Marketing", "Vente", "Tunnel"],
+    icon: "Target",
+    price: "Sur devis"
+  },
+  {
+    id: "10",
+    slug: "publicite-google",
+    name: "Publicité Google",
+    category: "Croissance - Ads",
+    shortDescription: "Apparaissez en haut des recherches",
+    description: "Ciblez les clients qui vous cherchent activement. Nous créons et gérons vos campagnes Google Search, Shopping et Display. Optimisation maximale du coût par clic (CPC) et du retour sur investissement publicitaire (ROAS). Ne perdez plus un centime en diffusion inutile.",
+    tags: ["Google Ads", "Search", "SEA"],
+    icon: "Search",
+    price: "Frais de gestion %"
+  },
+  {
+    id: "11",
+    slug: "publicite-facebook",
+    name: "Publicité Facebook",
+    category: "Croissance - Ads",
+    shortDescription: "Le réseau social n°1 pour convertir",
+    description: "Exploitez la puissance de l'algorithme Meta. Création de visuels percutants, micro-ciblage d'audience et gestion de campagnes Facebook & Instagram. Idéal pour bâtir une notoriété massive ou générer des ventes directes sur un catalogue produit.",
+    tags: ["Facebook", "Instagram", "Meta"],
+    icon: "Share2",
+    price: "Frais de gestion %"
+  },
+  {
+    id: "12",
+    slug: "publicite-tiktok",
+    name: "Publicité Tiktok",
+    category: "Croissance - Ads",
+    shortDescription: "Captez l'attention de la nouvelle génération",
+    description: "Le levier le plus puissant du moment. On vous accompagne sur la création de contenus natifs 'User Generated Content' (UGC) et le pilotage de vos TikTok Ads. Profitez de coûts d'acquisition encore très bas pour développer vos ventes rapidement.",
+    tags: ["TikTok", "UGC", "Viral"],
+    icon: "Music",
+    price: "Frais de gestion %"
   }
 ];
 
@@ -107,10 +151,10 @@ export const toolsData: ServiceRecord[] = [
   { id: "t3", slug: "generation-de-tampon", name: "Génération de Tampon", category: "Outils visuels", description: "Un outil pour concevoir et générer votre tampon d'entreprise virtuel personnalisé.", shortDescription: "Créez votre tampon", tags: ["Design", "Admin"], icon: "Stamp", price: "Gratuit" },
   { id: "t4", slug: "qr-code-pour-avis-client", name: "QR code pour avis client", category: "Marketing", description: "Incitez vos clients à laisser un avis positif avec ce QR code magique.", shortDescription: "Collecte d'avis", tags: ["Avis", "QR"], icon: "Star", price: "Gratuit" },
   { id: "t5", slug: "creation-de-fiche-google-optimisee", name: "Création de fiche Google", category: "Marketing", description: "Optimisez votre référencement local grâce à une fiche Google parfaitement remplie.", shortDescription: "Boostez votre SEO local", tags: ["Google", "SEO"], icon: "MapPin", price: "Gratuit" },
-  { id: "t6", slug: "signature-email-pro", name: "Signature email pro", category: "Outils visuels", description: "Générez une signature mail esthétique et responsive pour toute votre équipe.", shortDescription: "Emails premium", tags: ["Email", "Pro"], icon: "MailSignature", price: "Gratuit" },
+  { id: "t6", slug: "signature-pro", name: "Signature email pro", category: "Outils visuels", description: "Générez une signature mail esthétique et responsive pour toute votre équipe.", shortDescription: "Emails premium", tags: ["Email", "Pro"], icon: "Signature", price: "Gratuit" },
   { id: "t7", slug: "qr-code-commande-rapide", name: "QR code commande rapide", category: "Vente", description: "Facilitez la commande de vos produits grâce à un QR code menant directement au paiement.", shortDescription: "Vente express", tags: ["Vente", "QR"], icon: "ShoppingCart", price: "Gratuit" },
   { id: "t8", slug: "signez-un-document-electroniquement", name: "Signez un document", category: "Juridique", description: "Apposez votre signature électronique sur n'importe quel contrat PDF.", shortDescription: "e-Signature légale", tags: ["Signature", "PDF"], icon: "PenTool", price: "Gratuit" },
-  { id: "t9", slug: "generation-de-menu-avec-qr-code", name: "Génération menu QR code", category: "Automatisation", description: "Transformez votre carte de restaurant en menu digital scannable.", shortDescription: "Menu sans contact", tags: ["Restaurant", "QR"], icon: "Utensils", price: "Gratuit" },
+  { id: "t9", slug: "generation-de-menu-qr-code", name: "Génération menu QR code", category: "Automatisation", description: "Transformez votre carte de restaurant en menu digital scannable.", shortDescription: "Menu sans contact", tags: ["Restaurant", "QR"], icon: "Utensils", price: "Gratuit" },
   { id: "t10", slug: "generation-de-qr-code", name: "Génération de QR code", category: "Outils visuels", description: "Créez un simple QR code pointant vers l'URL de votre choix.", shortDescription: "QR code simple", tags: ["QR", "Lien"], icon: "Link", price: "Gratuit" }
 ];
 

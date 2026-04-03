@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { usePathname } from "next/navigation";
 
-export default function Navbar() {
+export default function Navbar({ minimal = false }: { minimal?: boolean }) {
   const pathname = usePathname();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -69,55 +69,57 @@ export default function Navbar() {
             </Link>
 
             {/* Mobile Menu Toggle Button */}
-            <button 
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 text-brand-blue hover:text-brand-coral transition-colors z-50"
-            >
-              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
-            </button>
-
-            {/* Desktop Navigation Links */}
-            <div className="hidden md:flex space-x-8 md:space-x-12 items-center">
-              {/* Standalone Link: Modèles */}
-              <Link 
-                href="/outils/modeles-de-document" 
-                className={`flex items-center space-x-2 transition-colors text-base font-bold ${isActive('/outils/modeles-de-document') ? 'text-brand-coral' : 'text-brand-blue hover:text-brand-coral'}`}
-              >
-                <PenLine className="w-5 h-5 transition-colors" />
-                <span className="whitespace-nowrap">Modèles</span>
-              </Link>
-
-              {/* Dropdown: Services */}
-              <div className="relative">
+            {/* Toggle Button & Desktop Links (Hidden in minimal mode) */}
+            {!minimal && (
+              <>
                 <button 
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className={`flex items-center space-x-2 transition-colors text-base font-bold ${(isActive('/services') || isActive('/nos-services')) && !isActive('/outils/modeles-de-document') ? 'text-brand-coral' : 'text-brand-blue hover:text-brand-coral'}`}
+                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                  className="md:hidden p-2 text-brand-blue hover:text-brand-coral transition-colors z-50"
                 >
-                  <Briefcase className="w-5 h-5 transition-colors" />
-                  <span>Services</span>
-                  <ChevronDown className={`w-4 h-4 pointer-events-none transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                  {isMobileMenuOpen ? <X className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
                 </button>
-                
-                {isDropdownOpen && (
-                  <div className="absolute right-0 md:left-0 top-full mt-4 w-72 bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-gray-100 py-3 animate-in fade-in slide-in-from-top-2 z-50">
-                    <Link href="/nos-services" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-3 text-sm text-brand-coral hover:bg-brand-coral/5 font-bold transition-colors border-b border-gray-100 mb-2">
-                       Voir tout les services →
-                    </Link>
-                    <Link href="/services/creation-societe" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors font-bold">Création de société</Link>
-                    <Link href="/services/previsionnel-financier" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors font-bold">Prévisionnel financier</Link>
-                    <Link href="/services/expert-comptable" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors font-bold">Expert comptable</Link>
-                    <Link href="/services/audit-conformite-fiscale" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors">Audit conformité fiscale</Link>
-                    <Link href="/services/automatisations-taches" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors">Automatisation des tâches</Link>
-                    <Link href="/services/site-web" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors">Site web Vitrine</Link>
+
+                <div className="hidden md:flex space-x-8 md:space-x-12 items-center">
+                  <Link 
+                    href="/outils/modeles-de-document" 
+                    className={`flex items-center space-x-2 transition-colors text-base font-bold ${isActive('/outils/modeles-de-document') ? 'text-brand-coral' : 'text-brand-blue hover:text-brand-coral'}`}
+                  >
+                    <PenLine className="w-5 h-5 transition-colors" />
+                    <span className="whitespace-nowrap">Modèles</span>
+                  </Link>
+
+                  <div className="relative">
+                    <button 
+                      onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                      className={`flex items-center space-x-2 transition-colors text-base font-bold ${(isActive('/services') || isActive('/nos-services')) && !isActive('/outils/modeles-de-document') ? 'text-brand-coral' : 'text-brand-blue hover:text-brand-coral'}`}
+                    >
+                      <Briefcase className="w-5 h-5 transition-colors" />
+                      <span>Services</span>
+                      <ChevronDown className={`w-4 h-4 pointer-events-none transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                    </button>
+                    
+                    {isDropdownOpen && (
+                      <div className="absolute right-0 md:left-0 top-full mt-4 w-72 bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-gray-100 py-3 animate-in fade-in slide-in-from-top-2 z-50">
+                        <Link href="/nos-services" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-3 text-sm text-brand-coral hover:bg-brand-coral/5 font-bold transition-colors border-b border-gray-100 mb-2">
+                           Voir tout les services →
+                        </Link>
+                        <Link href="/services/creation-societe" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors font-bold">Création de société</Link>
+                        <Link href="/services/previsionnel-financier" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors font-bold">Prévisionnel financier</Link>
+                        <Link href="/services/expert-comptable" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors font-bold">Expert comptable</Link>
+                        <Link href="/services/audit-conformite-fiscale" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors">Audit conformité fiscale</Link>
+                        <Link href="/services/automatisations-taches" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors">Automatisation des tâches</Link>
+                        <Link href="/services/site-web" onClick={() => setIsDropdownOpen(false)} className="block px-5 py-2.5 text-sm text-brand-blue hover:bg-gray-50 transition-colors">Site web Vitrine</Link>
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-            </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
 
         {/* Mobile Menu Overlay */}
-        {isMobileMenuOpen && (
+        {!minimal && isMobileMenuOpen && (
           <div className="fixed inset-0 top-0 bg-white z-40 md:hidden animate-in fade-in slide-in-from-top duration-300 flex flex-col pt-24 px-6 overflow-y-auto">
             <div className="space-y-6 flex flex-col items-center text-center">
               <Link 

@@ -23,7 +23,7 @@ export default function ServiceCard({
   
   return (
     <Link href={`${baseUrl}/${service.slug}`} className={`block group ${widthClasses}`}>
-      <div className="w-full h-full min-h-[300px] bg-white rounded-[1.5rem] border border-gray-100 p-6 flex flex-col justify-between shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_12px_45px_rgb(0,0,0,0.08)] transition-all duration-300 transform group-hover:-translate-y-1 overflow-hidden relative">
+      <div className="w-full h-full bg-white rounded-2xl border border-gray-100 p-5 flex flex-col justify-between shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300 transform group-hover:-translate-y-1 overflow-hidden relative">
         {/* Glow effect on hover */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-brand-coral/5 rounded-full blur-2xl -mt-8 -mr-8 transition-opacity opacity-0 group-hover:opacity-100"></div>
 

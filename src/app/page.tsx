@@ -1,4 +1,5 @@
-import { getTools } from "@/lib/data";
+import { getTools, getServices } from "@/lib/data";
+import { templatesData } from "@/lib/templates";
 import Navbar from "@/components/Navbar";
 import HomeToolsClient from "@/components/HomeToolsClient";
 
@@ -8,16 +9,21 @@ export const metadata = {
 };
 
 export default async function Home() {
-  const tools = await getTools();
+  const [tools, services] = await Promise.all([
+    getTools(),
+    getServices()
+  ]);
 
   return (
     <>
-      <Navbar />
+      <Navbar minimal={true} />
       <main className="flex-1 w-full bg-background">
         <HomeToolsClient 
           initialTools={tools} 
-          title="Les outils gratuits pour vous faire gagner du temps au quotidien"
-          placeholder="Rechercher un outil gratuit"
+          initialServices={services}
+          initialTemplates={templatesData}
+          title="Gagnez du temps au quotidien"
+          placeholder="Que cherchez-vous aujourd'hui ? (ex: QR code, Compta, SAS...)"
         />
       </main>
     </>
