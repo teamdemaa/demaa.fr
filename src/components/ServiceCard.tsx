@@ -5,11 +5,13 @@ import * as Icons from "lucide-react";
 export default function ServiceCard({ 
   service, 
   fullWidth = false,
-  baseUrl = "/services"
+  baseUrl = "/services",
+  hidePrice = false
 }: { 
   service: ServiceRecord, 
   fullWidth?: boolean,
-  baseUrl?: string
+  baseUrl?: string,
+  hidePrice?: boolean
 }) {
   // Try to find the icon from lucide-react dynamically, or fallback to 'Box'
   // @ts-ignore
@@ -19,7 +21,7 @@ export default function ServiceCard({
     ? "w-full" 
     : "flex-none w-[85vw] md:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1rem)] snap-always snap-center md:snap-start";
 
-  const isService = baseUrl === "/services";
+  const isService = baseUrl === "/services" || baseUrl === "/bons-plans";
   
   return (
     <Link href={`${baseUrl}/${service.slug}`} className={`block group ${widthClasses}`}>
@@ -47,7 +49,7 @@ export default function ServiceCard({
           <p className="text-gray-500 text-sm line-clamp-2 leading-relaxed mb-3 mt-4">
             {service.description}
           </p>
-          {service.price && (
+          {service.price && !hidePrice && (
             <p className={`mt-3 ${service.price.toLowerCase().includes('gratuit') 
               ? "text-[10px] uppercase tracking-[0.1em] text-gray-300 font-medium" 
               : "text-xs font-bold text-brand-blue/60"}`}>

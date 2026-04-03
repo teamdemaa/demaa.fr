@@ -40,35 +40,47 @@ export default function HeroSearch({
 
       <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-brand-blue mb-4 md:mb-6 leading-[1.2] max-w-5xl mx-auto z-10 relative px-2">
         {rotatingWords ? (
-          <motion.div layout className="flex flex-wrap items-center justify-center gap-x-[0.3em] md:gap-x-[0.4em]">
-             <motion.div layout className="relative h-[1.1em] overflow-hidden inline-flex items-center justify-center">
-                <AnimatePresence mode="popLayout" initial={false}>
-                  <motion.span
-                    key={rotatingWords[index]}
-                    layout
-                    initial={{ y: 40, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -40, opacity: 0 }}
-                    transition={{ 
-                      duration: 0.5, 
-                      ease: [0.23, 1, 0.32, 1]
-                    }}
-                    className="text-brand-coral relative whitespace-nowrap block"
-                  >
-                    {rotatingWords[index]}
-                  </motion.span>
-                </AnimatePresence>
-             </motion.div>
-             <motion.span layout className="flex-shrink-0 leading-none">pour</motion.span>
-             <motion.span layout className="flex-shrink-0 leading-none">gagner du temps</motion.span>
-             <motion.span layout className="flex-shrink-0 leading-none">au quotidien</motion.span>
-          </motion.div>
+          <div className="flex flex-col items-center">
+            <div className="flex items-center justify-center gap-x-[0.3em] md:gap-x-[0.4em]">
+               <div className="relative h-[1.14em] overflow-hidden inline-flex items-center justify-end">
+                  {/* Ghost element to reserve space for the longest word */}
+                  <span className="invisible pointer-events-none whitespace-nowrap text-right pr-[0.1em]">
+                    Bons Plans
+                  </span>
+                  
+                  <div className="absolute inset-0 flex items-center justify-end">
+                    <AnimatePresence mode="popLayout" initial={false}>
+                      <motion.span
+                        key={rotatingWords[index]}
+                        initial={{ y: "100%", opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: "-100%", opacity: 0 }}
+                        transition={{ 
+                          duration: 0.6, 
+                          ease: [0.23, 1, 0.32, 1]
+                        }}
+                        className="text-brand-coral relative whitespace-nowrap block text-right pr-[0.1em]"
+                      >
+                        {rotatingWords[index]}
+                      </motion.span>
+                    </AnimatePresence>
+                  </div>
+               </div>
+               <span className="flex-shrink-0 leading-none">pour</span>
+            </div>
+            <div className="basis-full h-0 md:h-2" />
+            <div className="flex flex-wrap items-center justify-center gap-x-[0.3em] md:gap-x-[0.4em]">
+               <span className="flex-shrink-0 leading-none">gagner du temps</span>
+               <span className="flex-shrink-0 leading-none">au quotidien</span>
+            </div>
+          </div>
         ) : animatedWord ? (
           <div className="flex flex-wrap items-center justify-center gap-x-3">
             <span key={animatedWord} className="text-brand-coral inline-block animate-in slide-in-from-bottom-full duration-500 fill-mode-both">
               {animatedWord}
             </span>
             <span>pour</span>
+            <div className="basis-full h-0" />
             <span className="text-brand-coral">gagner du temps</span>
             <span>au quotidien</span>
           </div>

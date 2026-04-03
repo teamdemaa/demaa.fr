@@ -11,10 +11,14 @@ import {
   Briefcase, 
   PenLine, 
   ArrowRight,
-  Search
+  Search,
+  BadgePercent,
+  ChevronRight
 } from "lucide-react";
+import TeamLeadModal from "./TeamLeadModal";
+import AutoJoinPopup from "./AutoJoinPopup";
 
-type TabType = "outils" | "services" | "modeles";
+type TabType = "outils" | "bons-plans" | "modeles";
 
 export default function HomeToolsClient({ 
   initialTools,
@@ -31,6 +35,7 @@ export default function HomeToolsClient({
 }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTab, setActiveTab] = useState<TabType>("outils");
+  const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
 
   const filteredData = useMemo(() => {
     const query = searchQuery.toLowerCase();
@@ -41,7 +46,7 @@ export default function HomeToolsClient({
         t.description.toLowerCase().includes(query) ||
         t.category.toLowerCase().includes(query)
       ),
-      services: initialServices.filter(s => 
+      bonsPlans: initialServices.filter(s => 
         s.name.toLowerCase().includes(query) || 
         s.description.toLowerCase().includes(query) ||
         s.category.toLowerCase().includes(query)
@@ -55,20 +60,31 @@ export default function HomeToolsClient({
   }, [initialTools, initialServices, initialTemplates, searchQuery]);
 
   const currentItems = activeTab === "outils" ? filteredData.tools : 
-                       activeTab === "services" ? filteredData.services : 
+                       activeTab === "bons-plans" ? filteredData.bonsPlans : 
                        filteredData.templates;
 
   const tabs = [
     { id: "outils", label: "Outils", icon: Wrench },
     { id: "modeles", label: "Modèles", icon: PenLine },
-    { id: "services", label: "Services", icon: Briefcase },
+    { id: "bons-plans", label: "Bons Plans", icon: BadgePercent },
   ];
+
+  // Grouping logic for "Bons Plans" sections
+  const sections = useMemo(() => {
+    if (activeTab !== "bons-plans") return null;
+    
+    const categories = ["Finance - Juridique", "Opérations - Systèmes", "Croissance - Ads"];
+    return categories.map(cat => ({
+      title: cat,
+      items: filteredData.bonsPlans.filter(item => item.category === cat)
+    })).filter(section => section.items.length > 0);
+  }, [activeTab, filteredData.bonsPlans]);
 
   return (
     <div className="w-full">
       <HeroSearch 
         onSearch={setSearchQuery} 
-        rotatingWords={["Outils", "Modèles", "Services"]}
+        rotatingWords={["Outils", "Modèles", "Bons Plans"]}
         placeholder={placeholder}
         showUSP={false}
       >
@@ -107,6 +123,39 @@ export default function HomeToolsClient({
           </div>
         )}
 
+        {/* Bons Plans Header / CTA (Restored Blue Style) */}
+        {activeTab === "bons-plans" && !searchQuery && (
+          <div className="mb-14">
+            <button 
+              onClick={() => setIsLeadModalOpen(true)}
+              className="w-full group bg-brand-blue p-8 md:p-12 rounded-[3rem] text-left relative overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-brand-blue/20"
+            >
+              <div className="absolute top-0 right-0 w-80 h-80 bg-brand-coral/10 rounded-full blur-[100px] -mr-40 -mt-40 group-hover:bg-brand-coral/20 transition-all duration-700" />
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 relative z-10">
+                <div className="flex items-start md:items-center gap-8">
+                  <div className="w-16 h-16 bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl flex items-center justify-center shrink-0 group-hover:bg-brand-coral group-hover:border-brand-coral transition-all duration-500">
+                    <BadgePercent className="w-8 h-8 text-white" />
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-3">
+                      <span className="text-white/40 font-black text-[10px] uppercase tracking-[0.3em]">Exclusivité Team Demaa</span>
+                    </div>
+                    <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight leading-tight">
+                      Tarifs négociés pour la Team Demaa
+                    </h2>
+                    <p className="text-white/60 font-medium text-sm md:text-lg max-w-xl">
+                      Rejoignez notre réseau d'entrepreneurs pour débloquer des tarifs préférentiels sur tous nos services partenaires.
+                    </p>
+                  </div>
+                </div>
+                <div className="bg-white/10 hover:bg-brand-coral backdrop-blur-md px-10 py-5 rounded-2xl text-white font-black text-xs uppercase tracking-[0.2em] flex items-center gap-4 transition-all group-hover:gap-6 whitespace-nowrap self-start md:self-center border border-white/5">
+                  Rejoignez nous <ArrowRight className="w-5 h-5" />
+                </div>
+              </div>
+            </button>
+          </div>
+        )}
+
         {currentItems.length === 0 ? (
           <div className="text-center py-32 bg-gray-50/50 rounded-[3rem] border-2 border-dashed border-gray-100 mb-20 animate-in fade-in duration-700">
             <div className="w-20 h-20 bg-white rounded-3xl shadow-sm flex items-center justify-center mx-auto mb-6">
@@ -116,29 +165,54 @@ export default function HomeToolsClient({
             <p className="text-sm text-gray-300 mt-3 max-w-xs mx-auto">Essayez d'ajuster vos mots-clés ou l'onglet sélectionné.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 md:gap-10">
+          <div className="space-y-20">
             {activeTab === "modeles" ? (
-              initialTemplates.filter(m => currentItems.map(item => item.id).includes(m.id)).map(template => (
-                <TemplateCard 
-                  key={template.id} 
-                  template={template} 
-                />
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 md:gap-10">
+                {initialTemplates.filter(m => currentItems.map(item => item.id).includes(m.id)).map(template => (
+                  <TemplateCard 
+                    key={template.id} 
+                    template={template} 
+                  />
+                ))}
+              </div>
+            ) : activeTab === "bons-plans" && !searchQuery ? (
+              sections?.map((section) => (
+                <div key={section.title} className="animate-in fade-in slide-in-from-bottom-4 duration-700">
+                  <div className="flex items-center gap-4 mb-8">
+                    <h3 className="text-xl md:text-2xl font-black text-brand-blue tracking-tight shrink-0">{section.title}</h3>
+                    <div className="h-px bg-gray-100 w-full" />
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 md:gap-10">
+                    {section.items.map(item => (
+                      <ServiceCard 
+                        key={item.id} 
+                        service={item as ServiceRecord} 
+                        fullWidth 
+                        baseUrl="/services"
+                        hidePrice={true}
+                      />
+                    ))}
+                  </div>
+                </div>
               ))
             ) : (
-              currentItems.map(item => (
-                <ServiceCard 
-                  key={item.id} 
-                  service={item as ServiceRecord} 
-                  fullWidth 
-                  baseUrl={activeTab === "outils" ? "/outils" : "/services"}
-                />
-              ))
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 md:gap-10">
+                {currentItems.map(item => (
+                  <ServiceCard 
+                    key={item.id} 
+                    service={item as ServiceRecord} 
+                    fullWidth 
+                    baseUrl={activeTab === "outils" ? "/outils" : "/services"}
+                    hidePrice={activeTab === "bons-plans"}
+                  />
+                ))}
+              </div>
             )}
           </div>
         )}
 
-        {/* Global CTA for Services in Services Tab */}
-        {activeTab === "services" && !searchQuery && (
+        {/* Global CTA for Bons Plans in Bons Plans Tab */}
+        {activeTab === "bons-plans" && !searchQuery && (
           <div className="mt-28 p-12 md:p-24 bg-brand-blue rounded-[4rem] text-center text-white relative overflow-hidden shadow-2xl shadow-brand-blue/30 lg:mt-32">
              <div className="absolute top-0 left-0 w-full h-full opacity-[0.04] bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] pointer-events-none" />
              <h3 className="text-3xl md:text-5xl font-black mb-8 relative z-10 tracking-tight leading-tight">Structurons votre entreprise<br className="md:block hidden" /> ensemble.</h3>
@@ -154,6 +228,13 @@ export default function HomeToolsClient({
           </div>
         )}
       </div>
+
+      <TeamLeadModal 
+        isOpen={isLeadModalOpen} 
+        onClose={() => setIsLeadModalOpen(false)} 
+      />
+
+      <AutoJoinPopup />
 
       <style jsx global>{`
         .scrollbar-hide::-webkit-scrollbar {
