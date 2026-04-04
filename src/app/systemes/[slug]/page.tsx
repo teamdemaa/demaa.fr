@@ -130,8 +130,8 @@ export default async function SystemDetailPage(
             <div className="md:col-span-1">
               <div className="sticky top-28 bg-white border border-gray-100 rounded-3xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.06)]">
                  <div className="mb-6 pb-6 border-b border-gray-100">
-                   <div className="text-sm font-medium text-gray-400 mb-1 uppercase tracking-tight">Accompagnement</div>
-                   <span className="text-3xl font-bold text-brand-blue">Audit de Flux</span>
+                   <div className="text-sm font-medium text-gray-400 mb-1 uppercase tracking-tight">État des lieux</div>
+                   <span className="text-3xl font-bold text-brand-blue">Audit</span>
                    <div className="text-brand-coral font-bold mt-1">Offert</div>
                  </div>
                  
