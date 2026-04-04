@@ -43,13 +43,13 @@ export default function HeroSearch({
     <section className="w-full flex flex-col items-center justify-center pt-8 md:pt-12 px-4 text-center bg-[#FFF9F8] border-b border-brand-blue/5 overflow-hidden">
       
       {/* 01. Title Segment (Top) */}
-      <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black tracking-tight text-brand-blue mb-10 md:mb-16 leading-[1.1] max-w-5xl mx-auto z-10 relative px-2">
+      <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-brand-blue mb-10 md:mb-16 leading-[1.1] max-w-5xl mx-auto z-10 relative px-2 text-center">
         <div className="flex flex-col items-center">
           <div>
-            Faites grandir votre entreprise
+            Faites grandir votre entreprise tout en
           </div>
-          <div>
-            tout en <span className="text-brand-coral">libérant du temps</span>
+          <div className="text-brand-coral">
+            libérant du temps
           </div>
         </div>
       </h1>

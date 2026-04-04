@@ -5,6 +5,8 @@ import Navbar from "@/components/Navbar";
 import * as Icons from "lucide-react";
 import OrderModal from "@/components/OrderModal";
 
+import Link from "next/link";
+
 export async function generateMetadata(
   props: { params: Promise<{ slug: string }> }
 ): Promise<Metadata> {
@@ -38,9 +40,18 @@ export default async function ServiceDetailPage(
 
   return (
     <>
-      <Navbar />
+      <Navbar minimal={true} />
       <main className="flex-1 w-full bg-background min-h-screen pb-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 animate-in slide-in-from-bottom-4 duration-500">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 animate-in slide-in-from-bottom-4 duration-500">
+          
+          {/* Back Link */}
+          <Link 
+            href="/" 
+            className="inline-flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-brand-coral transition-colors mb-8 group"
+          >
+            <Icons.ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            Hub de ressources
+          </Link>
           
           {/* Header Section */}
           <div className="flex flex-col mb-10 pb-10 border-b border-gray-100">

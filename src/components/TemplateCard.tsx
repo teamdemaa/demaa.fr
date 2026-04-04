@@ -24,12 +24,6 @@ export default function TemplateCard({
           />
           <div className="absolute inset-0 bg-brand-blue/0 group-hover:bg-brand-blue/5 transition-colors duration-300" />
           
-          {/* External Link Indicator */}
-          <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm p-2 rounded-full shadow-sm opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0 duration-300">
-            <svg className="w-3.5 h-3.5 text-brand-coral" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-            </svg>
-          </div>
         </div>
 
         {/* Content */}
@@ -48,12 +42,12 @@ export default function TemplateCard({
             "{template.shortDescription}"
           </p>
 
-          <div className="mt-6 pt-5 border-t border-gray-50 flex items-center justify-between">
-            <span className="text-[10px] font-bold text-brand-blue uppercase tracking-widest group-hover:text-brand-coral transition-colors flex items-center gap-2">
-              Accéder <ArrowRight className="w-3 h-3" />
+          <div className="mt-auto pt-6 flex items-center justify-between">
+            <span className="text-[10px] font-bold text-brand-blue/40 uppercase tracking-widest group-hover:text-brand-coral transition-colors">
+              Modèle gratuit
             </span>
-            <div className="w-7 h-7 rounded-full bg-brand-blue/5 flex items-center justify-center group-hover:bg-brand-coral/10 transition-colors">
-               <ChevronRight className="w-3.5 h-3.5 text-brand-blue group-hover:text-brand-coral" />
+            <div className="w-10 h-10 rounded-full bg-brand-blue/5 flex items-center justify-center group-hover:bg-brand-coral group-hover:text-white transition-all duration-300 shadow-sm group-hover:shadow-lg group-hover:shadow-brand-coral/20">
+               <ArrowRight className="w-5 h-5" />
             </div>
           </div>
         </div>

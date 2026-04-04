@@ -29,7 +29,7 @@ export default function HomeToolsClient({
   placeholder?: string
 }) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeTab, setActiveTab] = useState<TabType>("systemes");
+  const [activeTab, setActiveTab] = useState<TabType>("outils");
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
   const [templates, setTemplates] = useState<Template[]>([]);
 
@@ -50,8 +50,11 @@ export default function HomeToolsClient({
       const allTags = initialTools.flatMap(t => t.tags || []);
       return Array.from(new Set(allTags)).sort();
     }
+    if (activeTab === "modeles") {
+      return Array.from(new Set(templates.map(t => t.category))).sort();
+    }
     return [];
-  }, [activeTab, initialSystems, initialTools]);
+  }, [activeTab, initialSystems, initialTools, templates]);
 
   const filteredData = useMemo(() => {
     const query = searchQuery.toLowerCase();
@@ -70,20 +73,28 @@ export default function HomeToolsClient({
       s.tags?.some(tag => tag.toLowerCase().includes(query))
     );
 
+    let filteredTemplates = templates.filter(t => 
+      t.name.toLowerCase().includes(query) || 
+      t.description.toLowerCase().includes(query) ||
+      t.category.toLowerCase().includes(query)
+    );
+
     if (activeFilter) {
       if (activeTab === "systemes") {
         systems = systems.filter(s => s.category === activeFilter);
       } else if (activeTab === "outils") {
         tools = tools.filter(t => t.tags?.includes(activeFilter));
+      } else if (activeTab === "modeles") {
+        filteredTemplates = filteredTemplates.filter(t => t.category === activeFilter);
       }
     }
 
-    return { tools, systems };
-  }, [initialTools, initialSystems, searchQuery, activeFilter, activeTab]);
+    return { tools, systems, templates: filteredTemplates };
+  }, [initialTools, initialSystems, templates, searchQuery, activeFilter, activeTab]);
 
   const currentItems = activeTab === "systemes" ? filteredData.systems :
                        activeTab === "outils" ? filteredData.tools : 
-                       templates;
+                       filteredData.templates;
 
   const tabs = [
     { id: "outils", label: "Outils", icon: Wrench },

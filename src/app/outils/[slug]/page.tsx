@@ -10,6 +10,9 @@ function formatSlugToTitle(slug: string) {
   return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
+
 export default function OutilPage(
   props: { params: Promise<{ slug: string }> }
 ) {
@@ -19,8 +22,19 @@ export default function OutilPage(
 
   return (
     <>
-      <Navbar />
-      <main className="flex-1 w-full bg-background min-h-[85vh] flex flex-col items-center justify-center px-4">
+      <Navbar minimal={true} />
+      <main className="flex-1 w-full bg-background min-h-[85vh] flex flex-col items-center justify-center px-4 relative">
+        {/* Back Link */}
+        <div className="absolute top-8 left-8 hidden md:block">
+          <Link 
+            href="/" 
+            className="inline-flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-brand-coral transition-colors group"
+          >
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            Hub de ressources
+          </Link>
+        </div>
+
         <div className="text-center max-w-2xl animate-in slide-in-from-bottom-6 duration-700">
           <div className="w-24 h-24 bg-brand-coral/10 rounded-[2.5rem] flex items-center justify-center mx-auto mb-10 shadow-lg shadow-brand-coral/5 group hover:scale-105 transition-transform duration-500">
              <span className="text-4xl transform group-hover:rotate-12 transition-transform">🛠️</span>
