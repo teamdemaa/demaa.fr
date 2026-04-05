@@ -3,16 +3,13 @@
 import { useState, useRef } from "react";
 import Navbar from "@/components/Navbar";
 import { 
-  PenTool, 
   Download, 
   Palette, 
   Calendar, 
   User, 
   Briefcase,
-  CheckCircle2,
   FileText,
-  ShieldCheck,
-  RotateCcw
+  ShieldCheck
 } from "lucide-react";
 import { toPng } from "html-to-image";
 
@@ -63,7 +60,7 @@ export default function SignDocument() {
               <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Nom du signataire</label>
               <div className="relative">
                 <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
-                <input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} className="w-full pl-11 pr-5 py-3 bg-white border-2 border-brand-coral/5 rounded-xl focus:border-brand-coral/30 outline-none text-xs font-semibold shadow-sm" />
+                <input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} className="demaa-input demaa-input-with-icon text-xs" />
               </div>
             </div>
 
@@ -71,7 +68,7 @@ export default function SignDocument() {
               <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Fonction / Titre</label>
               <div className="relative">
                 <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
-                <input type="text" value={role} onChange={(e) => setRole(e.target.value)} className="w-full pl-11 pr-5 py-3 bg-white border-2 border-brand-coral/5 rounded-xl focus:border-brand-coral/30 outline-none text-xs font-semibold shadow-sm" />
+                <input type="text" value={role} onChange={(e) => setRole(e.target.value)} className="demaa-input demaa-input-with-icon text-xs" />
               </div>
             </div>
 
@@ -79,13 +76,13 @@ export default function SignDocument() {
               <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Date de signature</label>
               <div className="relative">
                 <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
-                <input type="text" value={date} onChange={(e) => setDate(e.target.value)} className="w-full pl-11 pr-5 py-3 bg-white border-2 border-brand-coral/5 rounded-xl focus:border-brand-coral/30 outline-none text-xs font-semibold shadow-sm" />
+                <input type="text" value={date} onChange={(e) => setDate(e.target.value)} className="demaa-input demaa-input-with-icon text-xs" />
               </div>
             </div>
 
             <div className="space-y-2.5 pt-2">
               <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1 flex items-center gap-2">
-                <Palette className="w-3 h-3 text-gray-300" /> Couleur de l'encre
+                <Palette className="w-3 h-3 text-gray-300" /> Couleur de l&apos;encre
               </label>
               <div className="flex items-center gap-3">
                 {["#003399", "#000000", "#191b30", "#dc2626"].map((c) => (

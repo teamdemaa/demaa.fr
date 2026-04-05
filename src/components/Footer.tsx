@@ -31,7 +31,7 @@ export default function Footer() {
                 <Link href="/blog" className="text-gray-400 hover:text-brand-coral transition-colors text-sm">Conseils & Astuces</Link>
               </li>
               <li>
-                <Link href="/outils/modeles-de-document" className="text-gray-400 hover:text-brand-coral transition-colors text-sm">Le Kit du Dirigeant Organisé</Link>
+                <Link href="/outils/kit-du-dirigeant-organise" className="text-gray-400 hover:text-brand-coral transition-colors text-sm">Le Kit du Dirigeant Organisé</Link>
               </li>
               <li>
                 <Link href="#" className="text-gray-400 hover:text-brand-coral transition-colors text-sm">Nous contacter</Link>

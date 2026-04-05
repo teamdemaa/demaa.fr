@@ -30,7 +30,7 @@ export default function HeroSearch({
     >
       
       {title ? (
-        <div className="pt-5 md:pt-6 mb-8 md:mb-10 w-full">
+        <div className="pt-8 md:pt-10 mb-8 md:mb-10 w-full">
           {title}
         </div>
       ) : (
@@ -63,7 +63,7 @@ export default function HeroSearch({
             type="text" 
             onChange={(e) => onSearch(e.target.value)}
             placeholder={placeholder}
-            className="peer block w-full pl-10 md:pl-14 pr-4 md:pr-6 py-5 border-none rounded-full text-sm md:text-base focus:ring-4 focus:ring-brand-blue/10 outline-none transition-all shadow-sm focus:shadow-md placeholder-gray-300 bg-white" 
+            className="peer block w-full pl-10 md:pl-14 pr-4 md:pr-6 py-5 rounded-full text-sm md:text-base outline-none transition-all bg-white demaa-input border-none focus:shadow-md" 
           />
         </div>
       </div>

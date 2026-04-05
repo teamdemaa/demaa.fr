@@ -5,11 +5,9 @@ import Navbar from "@/components/Navbar";
 import { 
   Utensils, 
   Pizza, 
-  Coffee, 
   Download, 
   Palette, 
   Type, 
-  Smartphone,
   CheckCircle2,
   Zap,
   Clock,
@@ -75,7 +73,7 @@ export default function FastFoodQRCode() {
                 <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Nom du Fast-Food</label>
                 <div className="relative">
                   <Beef className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
-                  <input type="text" value={restaurantName} onChange={(e) => setRestaurantName(e.target.value)} className="w-full pl-11 pr-5 py-3 bg-white border-2 border-brand-coral/5 rounded-xl focus:border-brand-coral/30 outline-none text-xs font-semibold shadow-sm" />
+                  <input type="text" value={restaurantName} onChange={(e) => setRestaurantName(e.target.value)} className="demaa-input demaa-input-with-icon text-xs" />
                 </div>
               </div>
 
@@ -83,15 +81,15 @@ export default function FastFoodQRCode() {
                 <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Lien de commande / Paiement</label>
                 <div className="relative">
                   <Zap className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
-                  <input type="text" value={orderUrl} onChange={(e) => setOrderUrl(e.target.value)} className="w-full pl-11 pr-5 py-3 bg-white border-2 border-brand-coral/5 rounded-xl focus:border-brand-coral/30 outline-none text-xs font-semibold shadow-sm" />
+                  <input type="text" value={orderUrl} onChange={(e) => setOrderUrl(e.target.value)} className="demaa-input demaa-input-with-icon text-xs" />
                 </div>
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Appel à l'action</label>
+                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Appel à l&apos;action</label>
                 <div className="relative">
                   <Type className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
-                  <input type="text" value={ctaText} onChange={(e) => setCtaText(e.target.value)} className="w-full pl-11 pr-5 py-3 bg-white border-2 border-brand-coral/5 rounded-xl focus:border-brand-coral/30 outline-none text-xs font-semibold shadow-sm" />
+                  <input type="text" value={ctaText} onChange={(e) => setCtaText(e.target.value)} className="demaa-input demaa-input-with-icon text-xs" />
                 </div>
               </div>
             </div>

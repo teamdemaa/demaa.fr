@@ -10,7 +10,6 @@ import {
   ExternalLink, 
   Palette, 
   Type, 
-  Camera, 
   ChefHat,
   Smartphone,
   CheckCircle2
@@ -72,10 +71,10 @@ export default function MenuQRCode() {
             {/* Form Inputs */}
             <div className="space-y-4">
               <div className="space-y-1.5">
-                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Nom de l'établissement</label>
+                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Nom de l&apos;établissement</label>
                 <div className="relative">
                   <ChefHat className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
-                  <input type="text" value={restaurantName} onChange={(e) => setRestaurantName(e.target.value)} className="w-full pl-11 pr-5 py-3 bg-white border-2 border-brand-coral/5 rounded-xl focus:border-brand-coral/30 outline-none text-xs font-semibold shadow-sm" />
+                  <input type="text" value={restaurantName} onChange={(e) => setRestaurantName(e.target.value)} className="demaa-input demaa-input-with-icon text-xs" />
                 </div>
               </div>
 
@@ -83,15 +82,15 @@ export default function MenuQRCode() {
                 <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Lien du Menu (URL ou PDF)</label>
                 <div className="relative">
                   <ExternalLink className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
-                  <input type="text" value={menuUrl} onChange={(e) => setMenuUrl(e.target.value)} className="w-full pl-11 pr-5 py-3 bg-white border-2 border-brand-coral/5 rounded-xl focus:border-brand-coral/30 outline-none text-xs font-semibold shadow-sm" />
+                  <input type="text" value={menuUrl} onChange={(e) => setMenuUrl(e.target.value)} className="demaa-input demaa-input-with-icon text-xs" />
                 </div>
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Appel à l'action</label>
+                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Appel à l&apos;action</label>
                 <div className="relative">
                   <Type className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
-                  <input type="text" value={ctaText} onChange={(e) => setCtaText(e.target.value)} className="w-full pl-11 pr-5 py-3 bg-white border-2 border-brand-coral/5 rounded-xl focus:border-brand-coral/30 outline-none text-xs font-semibold shadow-sm" />
+                  <input type="text" value={ctaText} onChange={(e) => setCtaText(e.target.value)} className="demaa-input demaa-input-with-icon text-xs" />
                 </div>
               </div>
             </div>

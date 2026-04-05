@@ -1,6 +1,8 @@
 "use client";
 
-import { useState, useRef } from "react";
+import Image from "next/image";
+import { Inter, Montserrat, Nunito, Poppins } from "next/font/google";
+import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import { 
   User, 
@@ -12,8 +14,50 @@ import {
   Copy, 
   CheckCircle2, 
   Pencil,
-  Camera
+  Camera,
+  ChevronDown
 } from "lucide-react";
+
+const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
+const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
+const montserrat = Montserrat({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
+const nunito = Nunito({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
+
+const FONT_OPTIONS = [
+  {
+    key: "poppins",
+    label: "Poppins",
+    stack: "'Poppins', Arial, sans-serif",
+    className: poppins.className,
+  },
+  {
+    key: "inter",
+    label: "Inter",
+    stack: "'Inter', Arial, sans-serif",
+    className: inter.className,
+  },
+  {
+    key: "montserrat",
+    label: "Montserrat",
+    stack: "'Montserrat', Arial, sans-serif",
+    className: montserrat.className,
+  },
+  {
+    key: "nunito",
+    label: "Nunito",
+    stack: "'Nunito', Arial, sans-serif",
+    className: nunito.className,
+  },
+] as const;
+
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
 
 export default function SignaturePro() {
   const [name, setName] = useState("Jean Dupont");
@@ -22,21 +66,199 @@ export default function SignaturePro() {
   const [phone, setPhone] = useState("+33 6 12 34 56 78");
   const [email, setEmail] = useState("jean.dupont@demaa.fr");
   const [website, setWebsite] = useState("www.demaa.fr");
-  const [address, setAddress] = useState("123 Rue de la République, 75001 Paris");
+  const [address, setAddress] = useState("");
   const [linkedin, setLinkedin] = useState("");
   const [logo, setLogo] = useState<string | null>(null);
+  const [signatureMode, setSignatureMode] = useState<"with-image" | "text-only">("with-image");
   const [primaryColor, setPrimaryColor] = useState("#191b30");
   const [accentColor, setAccentColor] = useState("#f39d66");
+  const [fontKey, setFontKey] = useState<(typeof FONT_OPTIONS)[number]["key"]>("poppins");
   const [copied, setCopied] = useState(false);
-  
-  const signatureRef = useRef<HTMLDivElement>(null);
+
+  const displayName = name.trim();
+  const displayTitle = title.trim();
+  const displayCompany = company.trim();
+  const displayPhone = phone.trim();
+  const displayEmail = email.trim();
+  const displayWebsite = website.trim();
+  const displayAddress = address.trim();
+  const displayLinkedin = linkedin.trim();
+  const selectedFont = FONT_OPTIONS.find((option) => option.key === fontKey) ?? FONT_OPTIONS[0];
+
+  const buildSignatureHtml = () => {
+    const safeName = escapeHtml(displayName || "Jean Dupont");
+    const safeTitle = escapeHtml(displayTitle || "Directeur Commercial");
+    const safeCompany = displayCompany ? escapeHtml(displayCompany) : "";
+    const safePhone = displayPhone ? escapeHtml(displayPhone) : "";
+    const safeEmail = displayEmail ? escapeHtml(displayEmail) : "";
+    const safeWebsite = displayWebsite ? escapeHtml(displayWebsite) : "";
+    const safeAddress = displayAddress ? escapeHtml(displayAddress) : "";
+    const safeLinkedin = displayLinkedin ? escapeHtml(displayLinkedin) : "";
+    const normalizedWebsiteHref = displayWebsite
+      ? displayWebsite.startsWith("http")
+        ? displayWebsite
+        : `https://${displayWebsite}`
+      : "";
+
+    const rows = [
+      safeCompany
+        ? `
+          <tr>
+            <td style="padding:0 0 8px 0;font-size:14px;line-height:20px;color:${primaryColor};font-weight:700;">
+              ${safeCompany}
+            </td>
+          </tr>`
+        : "",
+      safePhone
+        ? `
+          <tr>
+            <td style="padding:0 0 8px 0;font-size:14px;line-height:20px;color:#5b6475;">
+              <a href="tel:${escapeHtml(displayPhone)}" style="color:#5b6475;text-decoration:none;">${safePhone}</a>
+            </td>
+          </tr>`
+        : "",
+      safeEmail
+        ? `
+          <tr>
+            <td style="padding:0 0 8px 0;font-size:14px;line-height:20px;color:#5b6475;">
+              <a href="mailto:${escapeHtml(displayEmail)}" style="color:${primaryColor};text-decoration:none;">${safeEmail}</a>
+            </td>
+          </tr>`
+        : "",
+      safeWebsite
+        ? `
+          <tr>
+            <td style="padding:0 0 8px 0;font-size:14px;line-height:20px;color:#5b6475;">
+              <a href="${escapeHtml(normalizedWebsiteHref)}" style="color:${primaryColor};text-decoration:none;">${safeWebsite}</a>
+            </td>
+          </tr>`
+        : "",
+      safeAddress
+        ? `
+          <tr>
+            <td style="padding:0;font-size:14px;line-height:20px;color:#5b6475;">
+              ${safeAddress}
+            </td>
+          </tr>`
+        : "",
+    ]
+      .filter(Boolean)
+      .join("");
+
+    const linkedinBlock = safeLinkedin
+      ? `
+        <tr>
+          <td colspan="2" style="padding-top:14px;">
+            <a href="${safeLinkedin}" style="display:inline-block;background:${primaryColor};color:#ffffff;text-decoration:none;font-size:11px;line-height:11px;font-weight:700;padding:8px 12px;border-radius:999px;">
+              LinkedIn
+            </a>
+          </td>
+        </tr>`
+      : "";
+
+    const logoBlock = logo
+      ? `
+        <img
+          src="${logo}"
+          alt="Logo"
+          width="72"
+          height="72"
+          style="display:block;width:72px;max-width:72px;height:72px;max-height:72px;object-fit:contain;border:0;outline:none;text-decoration:none;"
+        />`
+      : `
+        <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+          <tr>
+            <td
+              width="72"
+              height="72"
+              align="center"
+              valign="middle"
+              style="width:72px;height:72px;background:${primaryColor};color:#ffffff;font-size:18px;line-height:18px;font-weight:700;border-radius:10px;"
+            >
+              D
+            </td>
+          </tr>
+        </table>`;
+
+    if (signatureMode === "text-only") {
+      return `
+        <table
+          cellpadding="0"
+          cellspacing="0"
+          border="0"
+          role="presentation"
+          style="border-collapse:collapse;font-family:${selectedFont.stack};font-size:14px;line-height:1.45;color:${primaryColor};width:auto;max-width:560px;"
+        >
+          <tr>
+            <td style="vertical-align:top;">
+              <div style="font-size:18px;line-height:24px;font-weight:700;color:${primaryColor};margin:0 0 2px 0;padding:0;">
+                ${safeName}
+              </div>
+              <div style="font-size:14px;line-height:20px;font-weight:400;color:${accentColor};margin:0 0 4px 0;padding:0;">
+                ${safeTitle}
+              </div>
+            </td>
+            <td style="width:24px;"></td>
+            <td style="vertical-align:top;border-left:2px solid ${accentColor};padding-left:18px;">
+              <table cellpadding="0" cellspacing="0" border="0" role="presentation" style="border-collapse:collapse;">
+                ${rows}
+                ${linkedinBlock}
+              </table>
+            </td>
+          </tr>
+        </table>
+      `.trim();
+    }
+
+    return `
+      <table
+        cellpadding="0"
+        cellspacing="0"
+        border="0"
+        role="presentation"
+        style="border-collapse:collapse;font-family:${selectedFont.stack};font-size:14px;line-height:1.45;color:${primaryColor};width:auto;max-width:560px;"
+      >
+        <tr>
+          <td width="96" style="width:96px;padding-right:24px;vertical-align:top;border-right:2px solid ${accentColor};">
+            <div style="width:72px;text-align:center;">
+              ${logoBlock}
+            </div>
+          </td>
+          <td style="padding-left:18px;vertical-align:top;">
+            <div style="font-size:18px;line-height:24px;font-weight:700;color:${primaryColor};margin:0 0 2px 0;padding:0;">
+              ${safeName}
+            </div>
+            <div style="font-size:14px;line-height:20px;font-weight:400;color:${primaryColor};margin:0 0 12px 0;padding:0;">
+              ${safeTitle}
+            </div>
+            <table cellpadding="0" cellspacing="0" border="0" role="presentation" style="border-collapse:collapse;">
+              ${rows}
+              ${linkedinBlock}
+            </table>
+          </td>
+        </tr>
+      </table>
+    `.trim();
+  };
+
+  const buildSignatureText = () => {
+    const rows = [
+      displayName || "Jean Dupont",
+      displayTitle || "Directeur Commercial",
+      displayCompany,
+      displayPhone,
+      displayEmail,
+      displayWebsite,
+      displayAddress,
+      displayLinkedin,
+    ].filter(Boolean);
+
+    return rows.join("\n");
+  };
 
   const copyToClipboard = async () => {
-    if (!signatureRef.current) return;
-    
-    // Create rich HTML content for clipboard
-    const htmlContent = signatureRef.current.innerHTML;
-    const textContent = signatureRef.current.innerText;
+    const htmlContent = buildSignatureHtml();
+    const textContent = buildSignatureText();
 
     try {
       const type = "text/html";
@@ -119,13 +341,13 @@ export default function SignaturePro() {
   ].filter((row) => row.value);
 
   return (
-    <div className="min-h-screen md:h-screen bg-[#FFF9F8] flex flex-col overflow-y-auto md:overflow-hidden text-[#191b30]">
+    <div className="min-h-screen md:h-screen bg-[#FFF9F8] flex flex-col overflow-y-auto md:overflow-hidden text-[#191b30] soft-scroll">
       <Navbar />
       
-      <main className="flex-1 flex flex-col md:flex-row w-full overflow-y-auto md:overflow-hidden">
+      <main className="flex-1 flex flex-col md:flex-row w-full overflow-y-auto md:overflow-hidden soft-scroll">
         
         {/* LEFT PANE: CONFIGURATION */}
-        <div className="w-full md:w-[45%] pl-12 md:pl-24 lg:pl-40 pr-6 flex flex-col justify-center space-y-7 md:border-r border-brand-coral/5 py-12">
+        <div className="w-full md:w-[45%] pl-12 md:pl-24 lg:pl-40 pr-6 flex flex-col justify-center space-y-7 md:border-r border-brand-coral/5 py-12 soft-scroll">
           <div className="space-y-2">
             <h1 className="text-2xl md:text-3xl font-bold text-brand-blue tracking-tight">
               Signature <span className="text-brand-coral">Mail Pro</span>
@@ -135,116 +357,158 @@ export default function SignaturePro() {
             </p>
           </div>
 
-          <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-3">
+            <div className="grid grid-cols-2 gap-3">
+              <div className="col-span-2">
+                <div className="inline-flex items-center gap-1 p-1 bg-white border border-brand-coral/10 rounded-xl shadow-[0_4px_12px_rgba(16,24,40,0.04)]">
+                  <button
+                    type="button"
+                    onClick={() => setSignatureMode("with-image")}
+                    className={`px-3 py-2 rounded-lg text-xs font-semibold transition-colors ${
+                      signatureMode === "with-image"
+                        ? "bg-brand-blue text-white"
+                        : "text-gray-400 hover:text-brand-blue"
+                    }`}
+                  >
+                    Avec image
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSignatureMode("text-only")}
+                    className={`px-3 py-2 rounded-lg text-xs font-semibold transition-colors ${
+                      signatureMode === "text-only"
+                        ? "bg-brand-blue text-white"
+                        : "text-gray-400 hover:text-brand-blue"
+                    }`}
+                  >
+                    Sans image
+                  </button>
+                </div>
+              </div>
               <div className="space-y-1.5">
-                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Nom complet</label>
                 <div className="relative">
                   <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
-                  <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="w-full pl-11 pr-5 py-3 bg-white border-2 border-brand-coral/5 rounded-xl focus:border-brand-coral/30 outline-none text-xs font-semibold shadow-sm" />
+                  <input type="text" aria-label="Nom complet" placeholder="Nom complet" value={name} onChange={(e) => setName(e.target.value)} className="w-full pl-11 pr-5 py-3 bg-white border border-brand-coral/10 rounded-xl focus:border-brand-coral/30 outline-none text-xs font-medium shadow-[0_4px_12px_rgba(16,24,40,0.04)] placeholder:text-brand-blue/25 placeholder:font-medium" />
                 </div>
               </div>
               <div className="space-y-1.5">
-                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Poste occupé</label>
                 <div className="relative">
                   <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
-                  <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} className="w-full pl-11 pr-5 py-3 bg-white border-2 border-brand-coral/5 rounded-xl focus:border-brand-coral/30 outline-none text-xs font-semibold shadow-sm" />
+                  <input type="text" aria-label="Poste occupé" placeholder="Poste occupé" value={title} onChange={(e) => setTitle(e.target.value)} className="w-full pl-11 pr-5 py-3 bg-white border border-brand-coral/10 rounded-xl focus:border-brand-coral/30 outline-none text-xs font-medium shadow-[0_4px_12px_rgba(16,24,40,0.04)] placeholder:text-brand-blue/25 placeholder:font-medium" />
                 </div>
               </div>
             </div>
 
-            <div className="space-y-1.5">
-              <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Nom de l&apos;entreprise</label>
-              <div className="relative">
-                <div className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-coral font-black text-[10px] flex items-center justify-center border border-brand-coral rounded-sm italic">D</div>
-                <input type="text" value={company} onChange={(e) => setCompany(e.target.value)} className="w-full pl-11 pr-5 py-3 bg-white border-2 border-brand-coral/5 rounded-xl focus:border-brand-coral/30 outline-none text-xs font-semibold shadow-sm" />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Téléphone</label>
+                <div className="relative">
+                  <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
+                  <input type="text" aria-label="Nom de l'entreprise" placeholder="Nom de l'entreprise" value={company} onChange={(e) => setCompany(e.target.value)} className="w-full pl-11 pr-5 py-3 bg-white border border-brand-coral/10 rounded-xl focus:border-brand-coral/30 outline-none text-xs font-medium shadow-[0_4px_12px_rgba(16,24,40,0.04)] placeholder:text-brand-blue/25 placeholder:font-medium" />
+                </div>
+              </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1.5">
                 <div className="relative">
                   <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
-                  <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full pl-11 pr-5 py-3 bg-white border-2 border-brand-coral/5 rounded-xl focus:border-brand-coral/30 outline-none text-xs font-semibold shadow-sm" />
+                  <input type="text" aria-label="Téléphone" placeholder="Téléphone" value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full pl-11 pr-5 py-3 bg-white border border-brand-coral/10 rounded-xl focus:border-brand-coral/30 outline-none text-xs font-medium shadow-[0_4px_12px_rgba(16,24,40,0.04)] placeholder:text-brand-blue/25 placeholder:font-medium" />
                 </div>
               </div>
               <div className="space-y-1.5">
-                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Email pro</label>
                 <div className="relative">
                   <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
-                  <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full pl-11 pr-5 py-3 bg-white border-2 border-brand-coral/5 rounded-xl focus:border-brand-coral/30 outline-none text-xs font-semibold shadow-sm" />
+                  <input type="email" aria-label="Email pro" placeholder="Email pro" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full pl-11 pr-5 py-3 bg-white border border-brand-coral/10 rounded-xl focus:border-brand-coral/30 outline-none text-xs font-medium shadow-[0_4px_12px_rgba(16,24,40,0.04)] placeholder:text-brand-blue/25 placeholder:font-medium" />
                 </div>
               </div>
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Adresse physique</label>
               <div className="relative">
                 <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
-                <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} className="w-full pl-11 pr-5 py-3 bg-white border-2 border-brand-coral/5 rounded-xl focus:border-brand-coral/30 outline-none text-xs font-semibold shadow-sm" />
+                <input type="text" aria-label="Adresse physique" placeholder="Adresse physique" value={address} onChange={(e) => setAddress(e.target.value)} className="w-full pl-11 pr-5 py-3 bg-white border border-brand-coral/10 rounded-xl focus:border-brand-coral/30 outline-none text-xs font-medium shadow-[0_4px_12px_rgba(16,24,40,0.04)] placeholder:text-brand-blue/25 placeholder:font-medium" />
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3">
               <div className="space-y-1.5">
-                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Site web</label>
                 <div className="relative">
                   <Globe className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
-                  <input type="text" value={website} onChange={(e) => setWebsite(e.target.value)} className="w-full pl-11 pr-5 py-3 bg-white border-2 border-brand-coral/5 rounded-xl focus:border-brand-coral/30 outline-none text-xs font-semibold shadow-sm" />
+                  <input type="text" aria-label="Site web" placeholder="Site web" value={website} onChange={(e) => setWebsite(e.target.value)} className="w-full pl-11 pr-5 py-3 bg-white border border-brand-coral/10 rounded-xl focus:border-brand-coral/30 outline-none text-xs font-medium shadow-[0_4px_12px_rgba(16,24,40,0.04)] placeholder:text-brand-blue/25 placeholder:font-medium" />
                 </div>
               </div>
               <div className="space-y-1.5">
-                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">LinkedIn (optionnel)</label>
                 <div className="relative">
                   <Globe className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
-                  <input type="text" value={linkedin} onChange={(e) => setLinkedin(e.target.value)} className="w-full pl-11 pr-5 py-3 bg-white border-2 border-brand-coral/5 rounded-xl focus:border-brand-coral/30 outline-none text-xs font-semibold shadow-sm" />
+                  <input type="text" aria-label="LinkedIn" placeholder="LinkedIn (optionnel)" value={linkedin} onChange={(e) => setLinkedin(e.target.value)} className="w-full pl-11 pr-5 py-3 bg-white border border-brand-coral/10 rounded-xl focus:border-brand-coral/30 outline-none text-xs font-medium shadow-[0_4px_12px_rgba(16,24,40,0.04)] placeholder:text-brand-blue/25 placeholder:font-medium" />
                 </div>
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-[minmax(0,0.95fr)_minmax(0,0.95fr)_minmax(0,1.25fr)]">
               <div className="space-y-1.5">
-                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Couleur principale</label>
-                <div className="flex items-center gap-3 bg-white border-2 border-brand-coral/5 rounded-xl px-4 py-3 shadow-sm">
+                <div className="flex items-center justify-between gap-3 bg-white border border-brand-coral/10 rounded-xl px-4 py-3 shadow-[0_4px_12px_rgba(16,24,40,0.04)]">
                   <input
                     type="color"
                     value={primaryColor}
                     onChange={(e) => setPrimaryColor(e.target.value)}
+                    aria-label="Couleur principale"
                     className="w-8 h-8 rounded-lg border-0 bg-transparent cursor-pointer"
                   />
-                  <span className="text-xs font-semibold text-gray-500">{primaryColor}</span>
+                  <span className="text-xs font-semibold tracking-[0.02em] text-gray-500">{primaryColor}</span>
                 </div>
               </div>
               <div className="space-y-1.5">
-                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Couleur d&apos;accent</label>
-                <div className="flex items-center gap-3 bg-white border-2 border-brand-coral/5 rounded-xl px-4 py-3 shadow-sm">
+                <div className="flex items-center justify-between gap-3 bg-white border border-brand-coral/10 rounded-xl px-4 py-3 shadow-[0_4px_12px_rgba(16,24,40,0.04)]">
                   <input
                     type="color"
                     value={accentColor}
                     onChange={(e) => setAccentColor(e.target.value)}
+                    aria-label="Couleur d'accent"
                     className="w-8 h-8 rounded-lg border-0 bg-transparent cursor-pointer"
                   />
-                  <span className="text-xs font-semibold text-gray-500">{accentColor}</span>
+                  <span className="text-xs font-semibold tracking-[0.02em] text-gray-500">{accentColor}</span>
+                </div>
+              </div>
+              <div className="space-y-1.5">
+                <div className="relative flex items-center gap-3 bg-white border border-brand-coral/10 rounded-xl px-4 py-3 shadow-[0_4px_12px_rgba(16,24,40,0.04)]">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-coral/8 text-[11px] font-semibold text-brand-coral">
+                    Aa
+                  </div>
+                  <select
+                    value={fontKey}
+                    onChange={(e) => setFontKey(e.target.value as (typeof FONT_OPTIONS)[number]["key"])}
+                    aria-label="Police"
+                    className={`appearance-none bg-transparent pr-8 text-[15px] font-semibold text-brand-blue outline-none w-full ${selectedFont.className}`}
+                  >
+                    {FONT_OPTIONS.map((option) => (
+                      <option key={option.key} value={option.key}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-brand-blue/45" />
                 </div>
               </div>
             </div>
 
-            <div className="space-y-1.5 pt-2">
-              <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Logo / Image (Optionnel)</label>
-              <div className="flex items-center gap-4">
-                <label className="flex-1 flex items-center justify-center gap-2 py-3 px-4 bg-white border-2 border-dashed border-brand-coral/20 rounded-xl hover:border-brand-coral/40 cursor-pointer transition-all">
+            {signatureMode === "with-image" && (
+              <div className="space-y-1.5 pt-1">
+                <div className="flex items-center gap-4">
+                <label className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 bg-white border border-dashed border-brand-coral/20 rounded-xl hover:border-brand-coral/40 cursor-pointer transition-all shadow-[0_4px_12px_rgba(16,24,40,0.04)]">
                   <Camera className="w-4 h-4 text-brand-coral" />
-                  <span className="text-xs font-bold text-gray-500 uppercase tracking-tight">Charger une image</span>
+                  <span className="text-xs font-bold text-gray-500">Logo / image (optionnel)</span>
                   <input type="file" accept="image/*" onChange={handleLogoUpload} className="hidden" />
                 </label>
                 {logo && (
-                  <button onClick={() => setLogo(null)} className="w-10 h-10 flex items-center justify-center text-red-500 bg-red-50 rounded-xl hover:bg-red-100 transition-colors">
+                  <button
+                    onClick={() => setLogo(null)}
+                    className="w-10 h-10 flex items-center justify-center text-brand-coral bg-brand-coral/10 rounded-xl hover:bg-brand-coral/15 transition-colors"
+                  >
                     <CheckCircle2 className="w-5 h-5" />
                   </button>
                 )}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
 
@@ -263,81 +527,158 @@ export default function SignaturePro() {
 
               {/* RENDERED SIGNATURE (Copy Target) */}
               <div 
-                ref={signatureRef}
                 className="bg-white p-4"
-                style={{ fontFamily: "Arial, Helvetica, sans-serif", fontSize: "14px", lineHeight: "1.5" }}
+                style={{ fontFamily: selectedFont.stack, fontSize: "14px", lineHeight: "1.5" }}
               >
-                <table cellPadding="0" cellSpacing="0" style={{ verticalAlign: "-webkit-baseline-middle", fontSize: "14px", fontFamily: "Arial, sans-serif" }}>
+                <table cellPadding="0" cellSpacing="0" style={{ verticalAlign: "-webkit-baseline-middle", fontSize: "14px", fontFamily: selectedFont.stack }}>
                   <tbody>
-                    <tr>
-                      <td style={{ verticalAlign: "top", paddingRight: "25px", borderRight: `2px solid ${accentColor}` }}>
-                        <div style={{ width: "80px", textAlign: "center" }}>
-                          {logo ? (
-                            <img src={logo} alt="Logo" style={{ maxWidth: "80px", maxHeight: "80px", objectFit: "contain" }} />
-                          ) : (
-                            <span style={{ fontSize: "28px", fontWeight: "bold", color: primaryColor, fontStyle: "italic" }}>D</span>
+                    {signatureMode === "with-image" ? (
+                      <tr>
+                        <td style={{ verticalAlign: "top", paddingRight: "25px", borderRight: `2px solid ${accentColor}` }}>
+                          <div style={{ width: "80px", textAlign: "center" }}>
+                            {logo ? (
+                              <Image src={logo} alt="Logo" width={72} height={72} unoptimized style={{ width: "72px", height: "72px", objectFit: "contain" }} />
+                            ) : (
+                              <div
+                                style={{
+                                  width: "72px",
+                                  height: "72px",
+                                  borderRadius: "12px",
+                                  backgroundColor: primaryColor,
+                                  color: "#ffffff",
+                                  display: "inline-flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  fontSize: "18px",
+                                  fontWeight: "700",
+                                }}
+                              >
+                                D
+                              </div>
+                            )}
+                          </div>
+                        </td>
+                        <td style={{ verticalAlign: "top", paddingLeft: "15px" }}>
+                          {name.trim() && (
+                            <h3 style={{ margin: "0", fontSize: "18px", color: primaryColor, fontWeight: "bold" }}>
+                              {name.trim()}
+                            </h3>
                           )}
-                        </div>
-                      </td>
-                      <td style={{ verticalAlign: "top", paddingLeft: "15px" }}>
-                        {name.trim() && (
-                          <h3 style={{ margin: "0", fontSize: "18px", color: primaryColor, fontWeight: "bold" }}>
-                            {name.trim()}
-                          </h3>
-                        )}
-                        {title.trim() && (
-                          <p style={{ margin: "2px 0 12px 0", fontSize: "14px", color: accentColor, fontWeight: "bold" }}>
-                            {title.trim()}
-                          </p>
-                        )}
-                        
-                        <table cellPadding="0" cellSpacing="0" style={{ verticalAlign: "-webkit-baseline-middle", fontSize: "13px", color: "#666" }}>
-                          <tbody>
-                            {infoRows.map((row) => (
-                              <tr key={row.key} style={{ height: "24px" }}>
-                                <td style={{ paddingRight: "10px", verticalAlign: "middle" }}>
-                                  <span
+                          {title.trim() && (
+                            <p style={{ margin: "2px 0 12px 0", fontSize: "14px", color: accentColor, fontWeight: 400 }}>
+                              {title.trim()}
+                            </p>
+                          )}
+                          
+                          <table cellPadding="0" cellSpacing="0" style={{ verticalAlign: "-webkit-baseline-middle", fontSize: "13px", color: "#666" }}>
+                            <tbody>
+                              {infoRows.map((row) => (
+                                <tr key={row.key} style={{ height: "24px" }}>
+                                  <td style={{ paddingRight: "10px", verticalAlign: "middle" }}>
+                                    <span
+                                      style={{
+                                        width: "22px",
+                                        height: "22px",
+                                        display: "inline-flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        borderRadius: "999px",
+                                        backgroundColor: `${accentColor}14`,
+                                      }}
+                                    >
+                                      {row.icon}
+                                    </span>
+                                  </td>
+                                  <td
                                     style={{
-                                      width: "22px",
-                                      height: "22px",
-                                      display: "inline-flex",
-                                      alignItems: "center",
-                                      justifyContent: "center",
-                                      borderRadius: "999px",
-                                      backgroundColor: `${accentColor}14`,
+                                      color: row.strong ? primaryColor : "#5b6475",
+                                      fontWeight: row.strong ? 700 : 400,
                                     }}
                                   >
-                                    {row.icon}
-                                  </span>
-                                </td>
-                                <td
-                                  style={{
-                                    color: row.strong ? primaryColor : "#5b6475",
-                                    fontWeight: row.strong ? 700 : 400,
-                                  }}
-                                >
-                                  {row.href ? (
-                                    <a href={row.href} style={{ color: primaryColor, textDecoration: "none" }}>
-                                      {row.value}
-                                    </a>
-                                  ) : (
-                                    row.value
-                                  )}
-                                </td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                        
-                        {linkedin.trim() && (
-                          <div style={{ marginTop: "15px" }}>
-                            <a href={linkedin} style={{ backgroundColor: primaryColor, color: "#fff", padding: "5px 12px", borderRadius: "14px", textDecoration: "none", fontSize: "10px", fontWeight: "bold" }}>
-                              LinkedIn
-                            </a>
-                          </div>
-                        )}
-                      </td>
-                    </tr>
+                                    {row.href ? (
+                                      <a href={row.href} style={{ color: primaryColor, textDecoration: "none" }}>
+                                        {row.value}
+                                      </a>
+                                    ) : (
+                                      row.value
+                                    )}
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                          
+                          {linkedin.trim() && (
+                            <div style={{ marginTop: "15px" }}>
+                              <a href={linkedin} style={{ backgroundColor: primaryColor, color: "#fff", padding: "5px 12px", borderRadius: "14px", textDecoration: "none", fontSize: "10px", fontWeight: "bold" }}>
+                                LinkedIn
+                              </a>
+                            </div>
+                          )}
+                        </td>
+                      </tr>
+                    ) : (
+                      <tr>
+                        <td style={{ verticalAlign: "top", paddingRight: "22px" }}>
+                          {name.trim() && (
+                            <h3 style={{ margin: "0", fontSize: "18px", color: primaryColor, fontWeight: "bold" }}>
+                              {name.trim()}
+                            </h3>
+                          )}
+                          {title.trim() && (
+                            <p style={{ margin: "2px 0 4px 0", fontSize: "14px", color: primaryColor, fontWeight: 400 }}>
+                              {title.trim()}
+                            </p>
+                          )}
+                        </td>
+                        <td style={{ verticalAlign: "top", paddingLeft: "18px", borderLeft: `2px solid ${accentColor}` }}>
+                          <table cellPadding="0" cellSpacing="0" style={{ verticalAlign: "-webkit-baseline-middle", fontSize: "13px", color: "#666" }}>
+                            <tbody>
+                              {infoRows.map((row) => (
+                                <tr key={row.key} style={{ height: "24px" }}>
+                                  <td style={{ paddingRight: "10px", verticalAlign: "middle" }}>
+                                    <span
+                                      style={{
+                                        width: "22px",
+                                        height: "22px",
+                                        display: "inline-flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        borderRadius: "999px",
+                                        backgroundColor: `${accentColor}14`,
+                                      }}
+                                    >
+                                      {row.icon}
+                                    </span>
+                                  </td>
+                                  <td
+                                    style={{
+                                      color: row.strong ? primaryColor : "#5b6475",
+                                      fontWeight: row.strong ? 700 : 400,
+                                    }}
+                                  >
+                                    {row.href ? (
+                                      <a href={row.href} style={{ color: primaryColor, textDecoration: "none" }}>
+                                        {row.value}
+                                      </a>
+                                    ) : (
+                                      row.value
+                                    )}
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                          {linkedin.trim() && (
+                            <div style={{ marginTop: "15px" }}>
+                              <a href={linkedin} style={{ backgroundColor: primaryColor, color: "#fff", padding: "5px 12px", borderRadius: "14px", textDecoration: "none", fontSize: "10px", fontWeight: "bold" }}>
+                                LinkedIn
+                              </a>
+                            </div>
+                          )}
+                        </td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
               </div>

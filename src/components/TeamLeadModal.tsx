@@ -51,7 +51,7 @@ export default function TeamLeadModal({
             className="fixed inset-0 bg-brand-blue/5 backdrop-blur-[1px] z-[100]"
           />
 
-          <div className="fixed inset-0 flex items-center justify-center p-4 z-[101] pointer-events-none">
+          <div className="fixed inset-0 flex items-center justify-center p-4 z-[101] pointer-events-none soft-scroll overflow-y-auto">
             <motion.div
               initial={{ scale: 0.98, opacity: 0, y: 10 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -86,7 +86,7 @@ export default function TeamLeadModal({
                         required
                         type="text"
                         placeholder="Nom de l'entreprise"
-                        className="w-full pl-8 pr-3 py-2 bg-gray-50/30 border border-gray-100 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-blue/10 focus:border-brand-blue/20 transition-all text-brand-blue text-[11px] font-medium placeholder:text-gray-200"
+                        className="demaa-input text-[11px] pl-8 pr-3 py-2.5 rounded-lg shadow-none"
                         value={formData.company}
                         onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                       />
@@ -98,7 +98,7 @@ export default function TeamLeadModal({
                         required
                         type="text"
                         placeholder="Secteur d'activité"
-                        className="w-full pl-8 pr-3 py-2 bg-gray-50/30 border border-gray-100 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-blue/10 focus:border-brand-blue/20 transition-all text-brand-blue text-[11px] font-medium placeholder:text-gray-200"
+                        className="demaa-input text-[11px] pl-8 pr-3 py-2.5 rounded-lg shadow-none"
                         value={formData.sector}
                         onChange={(e) => setFormData({ ...formData, sector: e.target.value })}
                       />
@@ -110,7 +110,7 @@ export default function TeamLeadModal({
                         required
                         type="email"
                         placeholder="votre@email.com"
-                        className="w-full pl-8 pr-3 py-2 bg-gray-50/30 border border-gray-100 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-blue/10 focus:border-brand-blue/20 transition-all text-brand-blue text-[11px] font-medium placeholder:text-gray-200"
+                        className="demaa-input text-[11px] pl-8 pr-3 py-2.5 rounded-lg shadow-none"
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       />
@@ -136,7 +136,7 @@ export default function TeamLeadModal({
                   <div className="w-9 h-9 bg-green-50 rounded-xl flex items-center justify-center mx-auto mb-4">
                     <CheckCircle2 className="w-4 h-4 text-green-500" />
                   </div>
-                  <h3 className="text-sm font-black text-brand-blue mb-1 tracking-tight">C'est envoyé !</h3>
+                  <h3 className="text-sm font-black text-brand-blue mb-1 tracking-tight">C&apos;est envoyé !</h3>
                   <p className="text-gray-400 text-[10px] leading-relaxed mb-6">
                     Merci <span className="font-bold text-brand-blue">{formData.company}</span>. <br />
                     Nous revenons vers vous.

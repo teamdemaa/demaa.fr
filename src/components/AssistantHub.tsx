@@ -552,7 +552,7 @@ export default function AssistantHub() {
                     Demander un audit (offert)
                   </h3>
                   <p className="text-gray-500 mt-2">
-                    Réservez un échange pour confier la mise en place à l&apos;équipe Demaa.
+                    Réservez un échange identifier les opportunités d&apos;automatiser et gagner des heures par semaines.
                   </p>
                 </div>
 

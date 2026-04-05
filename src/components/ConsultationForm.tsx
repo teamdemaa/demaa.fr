@@ -61,7 +61,7 @@ export default function ConsultationForm({ onSuccess }: { onSuccess?: () => void
             required
             type="text"
             placeholder="Prénom & Nom"
-            className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blue/10 focus:border-brand-blue/30 transition-all text-brand-blue text-sm font-medium placeholder:text-gray-300"
+            className="demaa-input demaa-input-with-icon"
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           />
@@ -72,7 +72,7 @@ export default function ConsultationForm({ onSuccess }: { onSuccess?: () => void
           <input
             type="text"
             placeholder="Nom d'entreprise"
-            className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blue/10 focus:border-brand-blue/30 transition-all text-brand-blue text-sm font-medium placeholder:text-gray-300"
+            className="demaa-input demaa-input-with-icon"
             value={formData.company}
             onChange={(e) => setFormData({ ...formData, company: e.target.value })}
           />
@@ -85,7 +85,7 @@ export default function ConsultationForm({ onSuccess }: { onSuccess?: () => void
           required
           type="email"
           placeholder="votre@email.com"
-          className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blue/10 focus:border-brand-blue/30 transition-all text-brand-blue text-sm font-medium placeholder:text-gray-300"
+          className="demaa-input demaa-input-with-icon"
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
         />
@@ -97,7 +97,7 @@ export default function ConsultationForm({ onSuccess }: { onSuccess?: () => void
           required
           type="tel"
           placeholder="06 XX XX XX XX"
-          className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blue/10 focus:border-brand-blue/30 transition-all text-brand-blue text-sm font-medium placeholder:text-gray-300"
+          className="demaa-input demaa-input-with-icon"
           value={formData.phone}
           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
         />
@@ -108,7 +108,7 @@ export default function ConsultationForm({ onSuccess }: { onSuccess?: () => void
         <textarea
           placeholder="Décrivez brièvement votre situation (optionnel)"
           rows={3}
-          className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blue/10 focus:border-brand-blue/30 transition-all text-brand-blue text-sm font-medium placeholder:text-gray-300 resize-none"
+          className="demaa-textarea demaa-input-with-icon"
           value={formData.sector}
           onChange={(e) => setFormData({ ...formData, sector: e.target.value })}
         />

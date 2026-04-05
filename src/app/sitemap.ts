@@ -25,11 +25,12 @@ function getBaseUrl(): string {
 const OUTILS_EXCLUDED_SLUGS = ["generation-de-document", "modeles-de-document"] as const;
 
 /** Pages sous `/outils/*` présentes en fichiers mais absentes de `toolsData`. */
-const OUTILS_EXTRA_SLUGS = [] as const;
+const OUTILS_EXTRA_SLUGS = ["kit-du-dirigeant-organise"] as const;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = getBaseUrl();
   const now = new Date();
+  const excludedOutilSlugs = new Set<string>(OUTILS_EXCLUDED_SLUGS);
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: base, lastModified: now, changeFrequency: "weekly", priority: 1 },
@@ -53,9 +54,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ]);
   
   // Filtrer les slugs exclus
-  const filteredOutilSlugs = [...outilSlugs].filter(slug => 
-    !OUTILS_EXCLUDED_SLUGS.includes(slug as any)
-  );
+  const filteredOutilSlugs = [...outilSlugs].filter((slug) => !excludedOutilSlugs.has(slug));
   
   const outilEntries: MetadataRoute.Sitemap = filteredOutilSlugs.map((slug) => ({
     url: `${base}/outils/${slug}`,

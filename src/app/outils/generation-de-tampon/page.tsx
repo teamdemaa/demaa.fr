@@ -12,8 +12,7 @@ import {
   Building2, 
   Hash, 
   Palette,
-  CheckCircle2,
-  Share2
+  CheckCircle2
 } from "lucide-react";
 import { toPng, toSvg } from "html-to-image";
 
@@ -98,10 +97,10 @@ export default function StampGenerator() {
             {/* Inputs */}
             <div className="space-y-4">
               <div className="space-y-1.5">
-                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Nom de l'entreprise</label>
+                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Nom de l&apos;entreprise</label>
                 <div className="relative">
                   <Type className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
-                  <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="w-full pl-11 pr-5 py-3 bg-white border-2 border-brand-coral/5 rounded-xl focus:border-brand-coral/30 outline-none text-sm font-medium shadow-sm" />
+                  <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="demaa-input demaa-input-with-icon" />
                 </div>
               </div>
 
@@ -109,7 +108,7 @@ export default function StampGenerator() {
                 <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Informations Légales (Capital/Statut)</label>
                 <div className="relative">
                   <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
-                  <input type="text" value={capital} onChange={(e) => setCapital(e.target.value)} className="w-full pl-11 pr-5 py-3 bg-white border-2 border-brand-coral/5 rounded-xl focus:border-brand-coral/30 outline-none text-sm font-medium shadow-sm" />
+                  <input type="text" value={capital} onChange={(e) => setCapital(e.target.value)} className="demaa-input demaa-input-with-icon" />
                 </div>
               </div>
 
@@ -118,14 +117,14 @@ export default function StampGenerator() {
                   <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">SIRET / SIREN</label>
                   <div className="relative">
                     <Hash className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
-                    <input type="text" value={siret} onChange={(e) => setSiret(e.target.value)} className="w-full pl-11 pr-5 py-3 bg-white border-2 border-brand-coral/5 rounded-xl focus:border-brand-coral/30 outline-none text-sm font-medium shadow-sm" />
+                    <input type="text" value={siret} onChange={(e) => setSiret(e.target.value)} className="demaa-input demaa-input-with-icon" />
                   </div>
                 </div>
                 <div className="space-y-1.5">
                   <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Adresse</label>
                   <div className="relative">
                     <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
-                    <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} className="w-full pl-11 pr-5 py-3 bg-white border-2 border-brand-coral/5 rounded-xl focus:border-brand-coral/30 outline-none text-sm font-medium shadow-sm" />
+                    <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} className="demaa-input demaa-input-with-icon" />
                   </div>
                 </div>
               </div>
@@ -134,7 +133,7 @@ export default function StampGenerator() {
             {/* Colors */}
             <div className="space-y-2.5">
               <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1 flex items-center gap-2">
-                <Palette className="w-3 h-3 text-gray-300" /> Couleur de l'encre
+                <Palette className="w-3 h-3 text-gray-300" /> Couleur de l&apos;encre
               </label>
               <div className="flex items-center gap-3">
                 {colors.map((c) => (

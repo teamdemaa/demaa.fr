@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { X, CheckCircle2, Loader2, Send } from "lucide-react";
 import { createPortal } from "react-dom";
 
@@ -13,13 +13,8 @@ export default function SubscriptionModal({
   isOpen: boolean,
   onClose: () => void
 }) {
-  const [mounted, setMounted] = useState(false);
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,12 +30,12 @@ export default function SubscriptionModal({
       
       setStatus("success");
       setEmail("");
-    } catch (err) {
+    } catch {
       setStatus("error");
     }
   };
 
-  if (!mounted || !isOpen) return null;
+  if (typeof document === "undefined" || !isOpen) return null;
 
   return createPortal(
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
@@ -69,7 +64,7 @@ export default function SubscriptionModal({
               <div className="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-6">
                 <CheckCircle2 className="w-10 h-10 text-emerald-500" />
               </div>
-              <h3 className="text-2xl font-bold text-brand-blue mb-3">C'est noté !</h3>
+              <h3 className="text-2xl font-bold text-brand-blue mb-3">C&apos;est noté !</h3>
               <p className="text-gray-500 leading-relaxed mb-8">
                 Merci ! On vous prévient sur <span className="font-bold text-brand-blue">{email || "votre email"}</span> dès que <span className="text-brand-coral font-medium">{toolName}</span> est prêt.
               </p>
@@ -98,7 +93,7 @@ export default function SubscriptionModal({
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="votre@email.com"
-                    className="w-full px-6 py-4 bg-gray-50 border-2 border-transparent focus:border-brand-coral focus:bg-white rounded-2xl outline-none transition-all text-brand-blue font-medium placeholder:text-gray-300"
+                    className="demaa-input px-6 py-4 rounded-2xl"
                     disabled={status === "loading"}
                   />
                 </div>
@@ -116,7 +111,7 @@ export default function SubscriptionModal({
                 </button>
                 
                 <p className="text-[10px] text-gray-400 mt-4 uppercase tracking-widest font-bold">
-                  ⚡️ Promis, pas de spam
+                  Promis, pas de spam
                 </p>
               </form>
             </>

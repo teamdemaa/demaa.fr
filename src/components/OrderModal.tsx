@@ -1,21 +1,16 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { X, Send } from "lucide-react";
 import { createPortal } from "react-dom";
 
 export default function OrderModal({ serviceName }: { serviceName: string }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const [formData, setFormData] = useState({
     prenom: "",
     email: "",
     telephone: ""
   });
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,8 +44,8 @@ Merci de me recontacter !`;
         Traitement rapide via WhatsApp
       </p>
 
-      {mounted && isOpen && createPortal(
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-brand-blue/60 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+      {typeof document !== "undefined" && isOpen && createPortal(
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-brand-blue/60 backdrop-blur-sm p-4 animate-in fade-in duration-200 soft-scroll overflow-y-auto">
           <div className="bg-white rounded-[2rem] w-full max-w-md shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
             
             <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
@@ -69,15 +64,15 @@ Merci de me recontacter !`;
             <form onSubmit={handleSubmit} className="p-8 space-y-5">
               <div>
                 <label className="block text-sm font-semibold text-brand-blue mb-1.5">Prénom</label>
-                <input required type="text" value={formData.prenom} onChange={e => setFormData({...formData, prenom: e.target.value})} className="w-full px-4 py-3 bg-white border-2 border-gray-100 rounded-xl focus:ring-4 focus:ring-brand-coral/10 focus:border-brand-coral outline-none transition-all text-brand-blue font-medium placeholder-gray-300" placeholder="Votre prénom" />
+                <input required type="text" value={formData.prenom} onChange={e => setFormData({...formData, prenom: e.target.value})} className="demaa-input" placeholder="Votre prénom" />
               </div>
               <div>
                 <label className="block text-sm font-semibold text-brand-blue mb-1.5">Email</label>
-                <input required type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="w-full px-4 py-3 bg-white border-2 border-gray-100 rounded-xl focus:ring-4 focus:ring-brand-coral/10 focus:border-brand-coral outline-none transition-all text-brand-blue font-medium placeholder-gray-300" placeholder="votre@email.com" />
+                <input required type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="demaa-input" placeholder="votre@email.com" />
               </div>
               <div>
                 <label className="block text-sm font-semibold text-brand-blue mb-1.5">Téléphone</label>
-                <input required type="tel" value={formData.telephone} onChange={e => setFormData({...formData, telephone: e.target.value})} className="w-full px-4 py-3 bg-white border-2 border-gray-100 rounded-xl focus:ring-4 focus:ring-brand-coral/10 focus:border-brand-coral outline-none transition-all text-brand-blue font-medium placeholder-gray-300" placeholder="06 12 34 56 78" />
+                <input required type="tel" value={formData.telephone} onChange={e => setFormData({...formData, telephone: e.target.value})} className="demaa-input" placeholder="06 12 34 56 78" />
               </div>
               
               <div className="pt-4">
@@ -86,7 +81,7 @@ Merci de me recontacter !`;
                   Envoyer via WhatsApp
                 </button>
                 <p className="text-center text-xs text-gray-400 mt-5">
-                   Vous allez être redirigé vers l'application WhatsApp pour valider l'envoi de façon sécurisée.
+                   Vous allez être redirigé vers l&apos;application WhatsApp pour valider l&apos;envoi de façon sécurisée.
                 </p>
               </div>
             </form>

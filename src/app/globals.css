@@ -8,6 +8,48 @@
   --font-sans: var(--font-poppins);
 }
 
+@layer components {
+  .demaa-input {
+    @apply w-full bg-white border border-brand-coral/10 rounded-xl outline-none text-sm text-brand-blue font-medium placeholder:text-brand-blue/25 placeholder:font-medium transition-all;
+    @apply px-4 py-3.5 shadow-[0_4px_12px_rgba(16,24,40,0.04)] focus:border-brand-coral/30 focus:ring-2 focus:ring-brand-blue/10;
+  }
+
+  .demaa-input-with-icon {
+    @apply pl-11 pr-5;
+  }
+
+  .demaa-textarea {
+    @apply w-full bg-white border border-brand-coral/10 rounded-xl outline-none text-sm text-brand-blue font-medium placeholder:text-brand-blue/25 placeholder:font-medium transition-all resize-none;
+    @apply px-4 py-3.5 shadow-[0_4px_12px_rgba(16,24,40,0.04)] focus:border-brand-coral/30 focus:ring-2 focus:ring-brand-blue/10;
+  }
+
+  .soft-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(25, 27, 48, 0.18) transparent;
+  }
+
+  .soft-scroll::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  .soft-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .soft-scroll::-webkit-scrollbar-thumb {
+    background: rgba(25, 27, 48, 0.14);
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
+  .soft-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(25, 27, 48, 0.22);
+    background-clip: padding-box;
+  }
+}
+
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar {
     display: none;
@@ -36,4 +78,21 @@ body {
   color: var(--color-foreground);
   font-family: var(--font-sans), Arial, sans-serif;
   overflow-x: clip;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(25, 27, 48, 0.18) transparent;
+}
+
+body::-webkit-scrollbar {
+  width: 10px;
+}
+
+body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: rgba(25, 27, 48, 0.14);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
 }
