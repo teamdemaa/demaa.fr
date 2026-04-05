@@ -27,16 +27,16 @@ export default async function OutilsGratuitsPage() {
           />
 
           <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-            <div className="rounded-[2.5rem] border border-brand-blue/10 bg-white px-6 py-16 md:px-12 md:py-20 text-center shadow-[0_20px_60px_rgba(10,29,54,0.04)]">
-              <h2 className="text-2xl md:text-4xl font-black tracking-tight text-brand-blue">
+            <div className="mt-20 p-8 md:p-12 bg-brand-blue/5 rounded-[2.5rem] border border-brand-blue/5 text-center">
+              <h2 className="text-xl font-bold text-brand-blue mb-4">
                 Besoin d&apos;un outil spécifique ?
               </h2>
-              <p className="mt-5 max-w-3xl mx-auto text-sm md:text-lg text-gray-500 leading-relaxed">
-                Nous ajoutons régulièrement de nouveaux outils. Suggérez-nous un besoin concret, et nous verrons comment le transformer en ressource utile pour les petites entreprises.
+              <p className="text-gray-500 text-sm max-w-lg mx-auto mb-8">
+                Nous ajoutons régulièrement de nouveaux outils. N&apos;hésitez pas à nous suggérer les ressources qui vous seraient utiles.
               </p>
               <a
                 href="mailto:team@demaa.fr?subject=Suggestion%20d%27outil%20Demaa"
-                className="mt-10 inline-flex items-center justify-center rounded-full bg-brand-blue px-8 py-4 text-sm font-bold text-white shadow-[0_14px_30px_rgba(25,27,48,0.16)] transition-colors hover:bg-brand-blue/95 active:scale-[0.98]"
+                className="inline-flex items-center px-6 py-3 bg-brand-blue text-white font-bold text-sm rounded-full hover:bg-brand-coral transition-colors shadow-lg active:scale-95"
               >
                 Suggérer un outil
               </a>

@@ -153,6 +153,45 @@ function mergeTranscript(baseText: string, transcript: string) {
   return `${trimmedBase} ${trimmedTranscript}`;
 }
 
+function buildHoursRecap(actions: ActionPlanItem[]) {
+  let minMinutes = 0;
+  let maxMinutes = 0;
+
+  actions.forEach((action) => {
+    const text = action.time_gain.toLowerCase().replace(/,/g, ".");
+    const numbers = Array.from(text.matchAll(/\d+(?:\.\d+)?/g)).map((match) =>
+      Number.parseFloat(match[0])
+    );
+
+    if (numbers.length === 0) return;
+
+    const isMinutes = text.includes("minute");
+    const factor = isMinutes ? 1 : 60;
+    const low = numbers[0] * factor;
+    const high = (numbers[1] ?? numbers[0]) * factor;
+
+    minMinutes += low;
+    maxMinutes += high;
+  });
+
+  if (maxMinutes === 0) {
+    return "Gain estimé par semaine : plusieurs heures à récupérer";
+  }
+
+  const formatHours = (minutes: number) => {
+    const hours = minutes / 60;
+    if (hours < 1) return `${Math.round(minutes)} min`;
+    if (Number.isInteger(hours)) return `${hours}h`;
+    return `${hours.toFixed(1).replace(".", ",")}h`;
+  };
+
+  if (Math.round(minMinutes) === Math.round(maxMinutes)) {
+    return `Gain estimé par semaine : ${formatHours(maxMinutes)}`;
+  }
+
+  return `Gain estimé par semaine : ${formatHours(minMinutes)} à ${formatHours(maxMinutes)}`;
+}
+
 async function persistGeneration(input: {
   email: string;
   prompt: string;
@@ -650,6 +689,9 @@ export default function AssistantHub() {
                 Décrivez ce qui vous <span className="text-brand-coral">prend du temps</span>{" "}et
                 votre secteur d&apos;activité.
               </h1>
+              <p className="text-sm md:text-base text-gray-500 font-medium">
+                Je vous dirai combien d&apos;heures vous pouvez gagner et surtout comment.
+              </p>
             </div>
 
             <form onSubmit={handleSubmit} className="w-full max-w-3xl relative group mt-6">
@@ -773,6 +815,9 @@ export default function AssistantHub() {
 
             <div ref={pdfContentRef} className="space-y-6">
               <div className="space-y-2">
+                <div className="inline-flex items-center rounded-full bg-brand-coral/10 px-4 py-2 text-[11px] font-black uppercase tracking-[0.16em] text-brand-coral">
+                  {buildHoursRecap(result.actions)}
+                </div>
                 <h2 className="text-2xl md:text-3xl font-black text-brand-blue tracking-tight">
                   Votre plan d&apos;action
                 </h2>
