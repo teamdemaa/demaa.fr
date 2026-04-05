@@ -87,7 +87,7 @@ async function getOrCreateLeadId(email: string) {
   const normalizedEmail = email.trim().toLowerCase();
   const existingLead = database
     .prepare("SELECT id FROM leads WHERE email = ?")
-    .get(normalizedEmail);
+    .get(normalizedEmail) as LeadRow | undefined;
 
   if (existingLead?.id) {
     return existingLead.id;

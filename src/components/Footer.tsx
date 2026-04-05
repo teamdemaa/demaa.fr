@@ -14,7 +14,7 @@ export default function Footer() {
               Demaa<span className="text-brand-coral">.</span>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
-              L'annuaire de services et outils nouvelle génération. Ultra-minimaliste, fiable et pensé pour propulser votre entreprise.
+              L&apos;annuaire de services et outils nouvelle génération. Ultra-minimaliste, fiable et pensé pour propulser votre entreprise.
             </p>
           </div>
 
@@ -31,7 +31,7 @@ export default function Footer() {
                 <Link href="/blog" className="text-gray-400 hover:text-brand-coral transition-colors text-sm">Conseils & Astuces</Link>
               </li>
               <li>
-                <Link href="/outils/modeles-de-document" className="text-gray-400 hover:text-brand-coral transition-colors text-sm">Modèles de documents</Link>
+                <Link href="/outils/modeles-de-document" className="text-gray-400 hover:text-brand-coral transition-colors text-sm">Le Kit du Dirigeant Organisé</Link>
               </li>
               <li>
                 <Link href="#" className="text-gray-400 hover:text-brand-coral transition-colors text-sm">Nous contacter</Link>

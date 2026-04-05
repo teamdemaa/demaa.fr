@@ -11,10 +11,7 @@ import {
   MapPin, 
   Copy, 
   CheckCircle2, 
-  ExternalLink,
-  Share2,
   Pencil,
-  Signature,
   Camera
 } from "lucide-react";
 
@@ -28,6 +25,8 @@ export default function SignaturePro() {
   const [address, setAddress] = useState("123 Rue de la République, 75001 Paris");
   const [linkedin, setLinkedin] = useState("");
   const [logo, setLogo] = useState<string | null>(null);
+  const [primaryColor, setPrimaryColor] = useState("#191b30");
+  const [accentColor, setAccentColor] = useState("#f39d66");
   const [copied, setCopied] = useState(false);
   
   const signatureRef = useRef<HTMLDivElement>(null);
@@ -62,6 +61,62 @@ export default function SignaturePro() {
       reader.readAsDataURL(file);
     }
   };
+
+  const infoRows = [
+    {
+      key: "company",
+      value: company.trim(),
+      href: null,
+      icon: (
+        <Briefcase
+          className="w-3.5 h-3.5"
+          style={{ color: accentColor }}
+          strokeWidth={1.8}
+        />
+      ),
+      strong: true,
+    },
+    {
+      key: "phone",
+      value: phone.trim(),
+      href: phone.trim() ? `tel:${phone.trim()}` : null,
+      icon: (
+        <Phone className="w-3.5 h-3.5" style={{ color: accentColor }} strokeWidth={1.8} />
+      ),
+      strong: false,
+    },
+    {
+      key: "email",
+      value: email.trim(),
+      href: email.trim() ? `mailto:${email.trim()}` : null,
+      icon: (
+        <Mail className="w-3.5 h-3.5" style={{ color: accentColor }} strokeWidth={1.8} />
+      ),
+      strong: false,
+    },
+    {
+      key: "website",
+      value: website.trim(),
+      href: website.trim()
+        ? website.startsWith("http")
+          ? website.trim()
+          : `https://${website.trim()}`
+        : null,
+      icon: (
+        <Globe className="w-3.5 h-3.5" style={{ color: accentColor }} strokeWidth={1.8} />
+      ),
+      strong: false,
+    },
+    {
+      key: "address",
+      value: address.trim(),
+      href: null,
+      icon: (
+        <MapPin className="w-3.5 h-3.5" style={{ color: accentColor }} strokeWidth={1.8} />
+      ),
+      strong: false,
+    },
+  ].filter((row) => row.value);
 
   return (
     <div className="min-h-screen md:h-screen bg-[#FFF9F8] flex flex-col overflow-y-auto md:overflow-hidden text-[#191b30]">
@@ -99,7 +154,7 @@ export default function SignaturePro() {
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Nom de l'entreprise</label>
+              <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Nom de l&apos;entreprise</label>
               <div className="relative">
                 <div className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-coral font-black text-[10px] flex items-center justify-center border border-brand-coral rounded-sm italic">D</div>
                 <input type="text" value={company} onChange={(e) => setCompany(e.target.value)} className="w-full pl-11 pr-5 py-3 bg-white border-2 border-brand-coral/5 rounded-xl focus:border-brand-coral/30 outline-none text-xs font-semibold shadow-sm" />
@@ -128,6 +183,50 @@ export default function SignaturePro() {
               <div className="relative">
                 <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
                 <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} className="w-full pl-11 pr-5 py-3 bg-white border-2 border-brand-coral/5 rounded-xl focus:border-brand-coral/30 outline-none text-xs font-semibold shadow-sm" />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Site web</label>
+                <div className="relative">
+                  <Globe className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
+                  <input type="text" value={website} onChange={(e) => setWebsite(e.target.value)} className="w-full pl-11 pr-5 py-3 bg-white border-2 border-brand-coral/5 rounded-xl focus:border-brand-coral/30 outline-none text-xs font-semibold shadow-sm" />
+                </div>
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">LinkedIn (optionnel)</label>
+                <div className="relative">
+                  <Globe className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
+                  <input type="text" value={linkedin} onChange={(e) => setLinkedin(e.target.value)} className="w-full pl-11 pr-5 py-3 bg-white border-2 border-brand-coral/5 rounded-xl focus:border-brand-coral/30 outline-none text-xs font-semibold shadow-sm" />
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Couleur principale</label>
+                <div className="flex items-center gap-3 bg-white border-2 border-brand-coral/5 rounded-xl px-4 py-3 shadow-sm">
+                  <input
+                    type="color"
+                    value={primaryColor}
+                    onChange={(e) => setPrimaryColor(e.target.value)}
+                    className="w-8 h-8 rounded-lg border-0 bg-transparent cursor-pointer"
+                  />
+                  <span className="text-xs font-semibold text-gray-500">{primaryColor}</span>
+                </div>
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Couleur d&apos;accent</label>
+                <div className="flex items-center gap-3 bg-white border-2 border-brand-coral/5 rounded-xl px-4 py-3 shadow-sm">
+                  <input
+                    type="color"
+                    value={accentColor}
+                    onChange={(e) => setAccentColor(e.target.value)}
+                    className="w-8 h-8 rounded-lg border-0 bg-transparent cursor-pointer"
+                  />
+                  <span className="text-xs font-semibold text-gray-500">{accentColor}</span>
+                </div>
               </div>
             </div>
 
@@ -171,44 +270,69 @@ export default function SignaturePro() {
                 <table cellPadding="0" cellSpacing="0" style={{ verticalAlign: "-webkit-baseline-middle", fontSize: "14px", fontFamily: "Arial, sans-serif" }}>
                   <tbody>
                     <tr>
-                      <td style={{ verticalAlign: "top", paddingRight: "25px", borderRight: "2px solid #f39d66" }}>
+                      <td style={{ verticalAlign: "top", paddingRight: "25px", borderRight: `2px solid ${accentColor}` }}>
                         <div style={{ width: "80px", textAlign: "center" }}>
                           {logo ? (
                             <img src={logo} alt="Logo" style={{ maxWidth: "80px", maxHeight: "80px", objectFit: "contain" }} />
                           ) : (
-                            <span style={{ fontSize: "28px", fontWeight: "bold", color: "#191b30", fontStyle: "italic" }}>D</span>
+                            <span style={{ fontSize: "28px", fontWeight: "bold", color: primaryColor, fontStyle: "italic" }}>D</span>
                           )}
                         </div>
                       </td>
                       <td style={{ verticalAlign: "top", paddingLeft: "15px" }}>
-                        <h3 style={{ margin: "0", fontSize: "18px", color: "#191b30", fontWeight: "bold" }}>{name || "Votre Nom"}</h3>
-                        <p style={{ margin: "2px 0 12px 0", fontSize: "14px", color: "#f39d66", fontWeight: "bold" }}>{title || "Votre Poste"}</p>
+                        {name.trim() && (
+                          <h3 style={{ margin: "0", fontSize: "18px", color: primaryColor, fontWeight: "bold" }}>
+                            {name.trim()}
+                          </h3>
+                        )}
+                        {title.trim() && (
+                          <p style={{ margin: "2px 0 12px 0", fontSize: "14px", color: accentColor, fontWeight: "bold" }}>
+                            {title.trim()}
+                          </p>
+                        )}
                         
                         <table cellPadding="0" cellSpacing="0" style={{ verticalAlign: "-webkit-baseline-middle", fontSize: "13px", color: "#666" }}>
                           <tbody>
-                            <tr style={{ height: "22px" }}>
-                              <td style={{ paddingRight: "10px" }}>🏢</td>
-                              <td style={{ fontWeight: "bold", color: "#333" }}>{company || "Demaa"}</td>
-                            </tr>
-                            <tr style={{ height: "22px" }}>
-                              <td style={{ paddingRight: "10px" }}>📞</td>
-                              <td>{phone || "+33 6 00 00 00 00"}</td>
-                            </tr>
-                            <tr style={{ height: "22px" }}>
-                              <td style={{ paddingRight: "10px" }}>✉️</td>
-                              <td><a href={`mailto:${email}`} style={{ color: "#191b30", textDecoration: "none" }}>{email || "contact@demaa.fr"}</a></td>
-                            </tr>
-                            <tr style={{ height: "22px" }}>
-                              <td style={{ paddingRight: "10px" }}>📍</td>
-                              <td style={{ opacity: 0.8 }}>{address}</td>
-                            </tr>
+                            {infoRows.map((row) => (
+                              <tr key={row.key} style={{ height: "24px" }}>
+                                <td style={{ paddingRight: "10px", verticalAlign: "middle" }}>
+                                  <span
+                                    style={{
+                                      width: "22px",
+                                      height: "22px",
+                                      display: "inline-flex",
+                                      alignItems: "center",
+                                      justifyContent: "center",
+                                      borderRadius: "999px",
+                                      backgroundColor: `${accentColor}14`,
+                                    }}
+                                  >
+                                    {row.icon}
+                                  </span>
+                                </td>
+                                <td
+                                  style={{
+                                    color: row.strong ? primaryColor : "#5b6475",
+                                    fontWeight: row.strong ? 700 : 400,
+                                  }}
+                                >
+                                  {row.href ? (
+                                    <a href={row.href} style={{ color: primaryColor, textDecoration: "none" }}>
+                                      {row.value}
+                                    </a>
+                                  ) : (
+                                    row.value
+                                  )}
+                                </td>
+                              </tr>
+                            ))}
                           </tbody>
                         </table>
                         
-                        {linkedin && (
+                        {linkedin.trim() && (
                           <div style={{ marginTop: "15px" }}>
-                            <a href={linkedin} style={{ backgroundColor: "#191b30", color: "#fff", padding: "4px 12px", borderRadius: "14px", textDecoration: "none", fontSize: "10px", fontWeight: "bold" }}>
-                              🔗 LINKEDIN
+                            <a href={linkedin} style={{ backgroundColor: primaryColor, color: "#fff", padding: "5px 12px", borderRadius: "14px", textDecoration: "none", fontSize: "10px", fontWeight: "bold" }}>
+                              LinkedIn
                             </a>
                           </div>
                         )}
