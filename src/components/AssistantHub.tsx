@@ -175,7 +175,7 @@ function buildHoursRecap(actions: ActionPlanItem[]) {
   });
 
   if (maxMinutes === 0) {
-    return "Gain estimé par semaine : plusieurs heures à récupérer";
+    return "Gain estimé par semaine : plusieurs heures à récupérer (estimation)";
   }
 
   const formatHours = (minutes: number) => {
@@ -186,10 +186,21 @@ function buildHoursRecap(actions: ActionPlanItem[]) {
   };
 
   if (Math.round(minMinutes) === Math.round(maxMinutes)) {
-    return `Gain estimé par semaine : ${formatHours(maxMinutes)}`;
+    return `Gain estimé par semaine : ${formatHours(maxMinutes)} (estimation)`;
   }
 
-  return `Gain estimé par semaine : ${formatHours(minMinutes)} à ${formatHours(maxMinutes)}`;
+  return `Gain estimé par semaine : ${formatHours(minMinutes)} à ${formatHours(maxMinutes)} (estimation)`;
+}
+
+function withEstimationLabel(value: string) {
+  const trimmedValue = value.trim();
+  if (!trimmedValue) return trimmedValue;
+  if (trimmedValue.toLowerCase().includes("estimation")) return trimmedValue;
+
+  const mentionsTime = /(\d|\bheures?\b|\bh\b|\bminutes?\b|\bmin\b)/i.test(trimmedValue);
+  if (!mentionsTime) return trimmedValue;
+
+  return `${trimmedValue} (estimation)`;
 }
 
 async function persistGeneration(input: {
@@ -869,7 +880,7 @@ export default function AssistantHub() {
                             Gain estimé
                           </div>
                           <div className="text-sm md:text-[15px] font-medium text-gray-400 leading-relaxed">
-                            {action.time_gain}
+                            {withEstimationLabel(action.time_gain)}
                           </div>
                         </div>
                       </div>

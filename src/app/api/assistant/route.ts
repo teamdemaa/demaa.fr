@@ -49,7 +49,7 @@ For each action:
 
 Important:
 - Every time gain must be written with a weekly time frame.
-- Use formats like "1 à 2 heures par semaine", "3 heures par semaine", or "30 minutes par semaine".
+- Use formats like "1 à 2 heures par semaine (estimation)", "3 heures par semaine (estimation)", or "30 minutes par semaine (estimation)".
 - Do not use "par dossier", "par client", "par mois", or vague time gains without a clear weekly frame.
 
 The result must feel concrete, calm, and operational.
@@ -115,7 +115,7 @@ const ACTION_PLAN_SCHEMA = {
           },
           time_gain: {
             type: "string",
-            description: "Estimated time saved per week in simple French. Example: 1 à 2 heures par semaine.",
+            description: "Estimated time saved per week in simple French. Example: 1 à 2 heures par semaine (estimation).",
           },
         },
         required: ["title", "why", "how", "tool", "effort", "time_gain"],
@@ -157,7 +157,7 @@ function normalizeAction(action: unknown, index: number): ActionPlanItem {
     ),
     tool: getString(rawAction.tool, "Google Sheets"),
     effort: normalizeEffort(rawAction.effort),
-    time_gain: getString(rawAction.time_gain, "1 à 2 heures par semaine"),
+    time_gain: getString(rawAction.time_gain, "1 à 2 heures par semaine (estimation)"),
   };
 }
 
@@ -178,7 +178,7 @@ function normalizeAssistantPlan(payload: unknown): AssistantPlan {
           how: "Créer une petite routine claire et automatisée pour éviter les oublis.",
           tool: "Google Sheets",
           effort: actions.length < 2 ? "facile" : "moyen",
-          time_gain: "1 heure par semaine",
+          time_gain: "1 heure par semaine (estimation)",
         },
         actions.length
       )
