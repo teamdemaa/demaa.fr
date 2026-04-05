@@ -63,6 +63,12 @@ interface SpeechRecognitionWindow extends Window {
   webkitSpeechRecognition?: new () => SpeechRecognitionInstance;
 }
 
+interface GenerationLimitState {
+  count: number;
+  remaining: number;
+  limitReached: boolean;
+}
+
 const LOADING_QUOTES = [
   {
     text: "Ce qui se mesure s'améliore.",
@@ -81,6 +87,8 @@ const LOADING_QUOTES = [
     author: "Olivier Rebiere",
   },
 ];
+
+const MAX_GENERATIONS_PER_USER = 3;
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
@@ -150,11 +158,36 @@ async function persistGeneration(input: {
   prompt: string;
   result: AIResponse;
 }) {
-  await fetch("/api/generations", {
+  const response = await fetch("/api/generations", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(input),
   });
+
+  const data = await response.json().catch(() => null);
+
+  if (!response.ok) {
+    throw new Error(
+      typeof data?.error === "string"
+        ? data.error
+        : "Impossible d'enregistrer cette génération."
+    );
+  }
+}
+
+async function fetchGenerationLimit(email: string): Promise<GenerationLimitState> {
+  const response = await fetch(`/api/generations?email=${encodeURIComponent(email)}`);
+  const data = await response.json();
+
+  if (!response.ok || data.error) {
+    throw new Error(data.error || "Impossible de verifier la limite de generations.");
+  }
+
+  return {
+    count: typeof data.count === "number" ? data.count : 0,
+    remaining: typeof data.remaining === "number" ? data.remaining : MAX_GENERATIONS_PER_USER,
+    limitReached: Boolean(data.limitReached),
+  };
 }
 
 export default function AssistantHub() {
@@ -173,6 +206,8 @@ export default function AssistantHub() {
   const [showDelegationModal, setShowDelegationModal] = useState(false);
   const [hasUnlockedPlan, setHasUnlockedPlan] = useState(false);
   const [activeQuoteIndex, setActiveQuoteIndex] = useState(0);
+  const [generationCount, setGenerationCount] = useState(0);
+  const [generationLimitReached, setGenerationLimitReached] = useState(false);
 
   useEffect(() => {
     const savedEmail = window.localStorage.getItem("demaa_assistant_email");
@@ -186,6 +221,20 @@ export default function AssistantHub() {
       setHasUnlockedPlan(true);
     }
   }, []);
+
+  useEffect(() => {
+    if (!emailValue.trim() || !isValidEmail(emailValue.trim())) return;
+
+    void (async () => {
+      try {
+        const limitState = await fetchGenerationLimit(emailValue.trim());
+        setGenerationCount(limitState.count);
+        setGenerationLimitReached(limitState.limitReached);
+      } catch (limitError) {
+        console.error("Generation limit fetch error:", limitError);
+      }
+    })();
+  }, [emailValue]);
 
   useEffect(() => {
     if (!isLoading) return;
@@ -261,6 +310,11 @@ export default function AssistantHub() {
     e.preventDefault();
     if (!inputValue.trim()) return;
 
+    if (generationLimitReached) {
+      setShowDelegationModal(true);
+      return;
+    }
+
     speechRecognitionRef.current?.stop();
 
     setIsLoading(true);
@@ -288,6 +342,10 @@ export default function AssistantHub() {
             prompt: inputValue,
             result: normalizedResult,
           });
+
+          const limitState = await fetchGenerationLimit(emailValue.trim());
+          setGenerationCount(limitState.count);
+          setGenerationLimitReached(limitState.limitReached);
         }
 
         setResult(normalizedResult);
@@ -337,6 +395,10 @@ export default function AssistantHub() {
           result: pendingResult,
         });
       }
+
+      const limitState = await fetchGenerationLimit(trimmedEmail);
+      setGenerationCount(limitState.count);
+      setGenerationLimitReached(limitState.limitReached);
     } catch (leadError) {
       console.error("Lead capture error:", leadError);
     }
@@ -487,7 +549,7 @@ export default function AssistantHub() {
 
                 <div className="px-3 pt-2 pb-4 md:px-4">
                   <h3 className="text-2xl font-black text-brand-blue tracking-tight">
-                    Déléguer la mise en place
+                    Demander un audit (offert)
                   </h3>
                   <p className="text-gray-500 mt-2">
                     Réservez un échange pour confier la mise en place à l&apos;équipe Demaa.
@@ -497,7 +559,7 @@ export default function AssistantHub() {
                 <div className="overflow-hidden rounded-[1.5rem] border border-gray-100 bg-gray-50">
                   <iframe
                     src="https://teamdemaa.fillout.com/t/4QP8VeqUAaus"
-                    title="Déléguer la mise en place"
+                    title="Demander un audit (offert)"
                     className="w-full h-[62vh] min-h-[520px] bg-white"
                   />
                 </div>
@@ -613,10 +675,10 @@ export default function AssistantHub() {
                   <button
                     type="button"
                     onClick={toggleVoiceInput}
-                    disabled={isLoading}
+                    disabled={isLoading || generationLimitReached}
                     aria-label={isRecording ? "Arrêter la note vocale" : "Démarrer la note vocale"}
                     className={`flex items-center justify-center w-12 h-12 rounded-full transition-all duration-300 ${
-                      isLoading
+                      isLoading || generationLimitReached
                         ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                         : isRecording
                           ? "bg-brand-coral text-white"
@@ -626,19 +688,50 @@ export default function AssistantHub() {
                     <Mic className="w-4 h-4" />
                   </button>
                   <button
-                    type="submit"
-                    disabled={isLoading || !inputValue.trim()}
-                    aria-label={isLoading ? "Analyse en cours" : "Générer mon plan"}
-                    className={`flex items-center justify-center w-14 h-14 rounded-full transition-all duration-300 ${
-                      isLoading || !inputValue.trim()
-                        ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                        : "bg-brand-blue text-white hover:bg-brand-coral"
+                    type={generationLimitReached ? "button" : "submit"}
+                    onClick={() => {
+                      if (generationLimitReached) {
+                        setShowDelegationModal(true);
+                      }
+                    }}
+                    disabled={generationLimitReached ? false : isLoading || !inputValue.trim()}
+                    aria-label={
+                      generationLimitReached
+                        ? "Demander un audit (offert)"
+                        : isLoading
+                          ? "Analyse en cours"
+                          : "Générer mon plan"
+                    }
+                    className={`flex items-center justify-center h-14 rounded-full transition-all duration-300 ${
+                      generationLimitReached ? "px-5" : "w-14"
+                    } ${
+                      generationLimitReached
+                        ? "bg-brand-blue text-white hover:bg-brand-coral"
+                        : isLoading || !inputValue.trim()
+                          ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                          : "bg-brand-blue text-white hover:bg-brand-coral"
                     }`}
                   >
-                    <Send className="w-5 h-5" />
+                    {generationLimitReached ? (
+                      <span className="text-sm font-black whitespace-nowrap">
+                        Demander un audit (offert)
+                      </span>
+                    ) : (
+                      <Send className="w-5 h-5" />
+                    )}
                   </button>
                 </div>
               </div>
+
+              {hasUnlockedPlan && emailValue.trim() && (
+                <div className="mt-4 text-sm text-gray-400 font-medium">
+                  {generationLimitReached
+                    ? "Vous avez atteint 3 plans sur cette adresse email."
+                    : `${Math.max(0, MAX_GENERATIONS_PER_USER - generationCount)} plan${
+                        Math.max(0, MAX_GENERATIONS_PER_USER - generationCount) > 1 ? "s" : ""
+                      } restant${Math.max(0, MAX_GENERATIONS_PER_USER - generationCount) > 1 ? "s" : ""}.`}
+                </div>
+              )}
 
               {error && (
                 <div className="mt-6 flex items-center gap-2 text-red-500 bg-red-50 px-6 py-4 rounded-2xl border border-red-100 text-sm font-bold animate-in slide-in-from-top-2">
@@ -674,7 +767,7 @@ export default function AssistantHub() {
                 onClick={() => setShowDelegationModal(true)}
                 className="flex items-center justify-center gap-2 px-4 py-3 bg-brand-blue text-white rounded-2xl font-black text-sm whitespace-nowrap hover:bg-brand-coral transition-all"
               >
-                Déléguer la mise en place
+                Demander un audit (offert)
               </button>
             </div>
 

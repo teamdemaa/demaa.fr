@@ -10,13 +10,17 @@ interface CacheRow {
   result_json: string;
 }
 
+interface CountRow {
+  count: number;
+}
+
 interface RunResult {
   lastInsertRowid?: number | bigint;
 }
 
 interface Statement {
   run: (...params: Array<string | null>) => RunResult;
-  get: (...params: Array<string | null>) => LeadRow | CacheRow | undefined;
+  get: (...params: Array<string | null>) => LeadRow | CacheRow | CountRow | undefined;
 }
 
 interface DatabaseLike {
@@ -114,6 +118,23 @@ export async function saveGeneration(input: GenerationInput) {
       JSON.stringify(input.result),
       new Date().toISOString()
     );
+}
+
+export async function getGenerationCountByEmail(email: string) {
+  const database = await getDatabase();
+  const normalizedEmail = email.trim().toLowerCase();
+  const countRow = database
+    .prepare(
+      `
+        SELECT COUNT(g.id) AS count
+        FROM generations g
+        INNER JOIN leads l ON l.id = g.lead_id
+        WHERE l.email = ?
+      `
+    )
+    .get(normalizedEmail) as CountRow | undefined;
+
+  return Number(countRow?.count ?? 0);
 }
 
 function getPromptKey(prompt: string) {
