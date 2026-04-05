@@ -1,15 +1,11 @@
 "use client";
 
 import { Search } from "lucide-react";
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import USPSection from "./USPSection";
 
 export default function HeroSearch({ 
   onSearch, 
   title,
-  animatedWord,
-  rotatingWords,
   placeholder = "Que cherchez-vous aujourd'hui ?",
   showUSP = true,
   subtitle,
@@ -18,40 +14,36 @@ export default function HeroSearch({
   bottomSlot
 }: { 
   onSearch: (q: string) => void,
-  title?: string,
-  animatedWord?: string,
-  rotatingWords?: string[],
+  title?: React.ReactNode,
   placeholder?: string,
   showUSP?: boolean,
-  subtitle?: string,
+  subtitle?: React.ReactNode,
   children?: React.ReactNode,
   topSlot?: React.ReactNode,
   bottomSlot?: React.ReactNode
 }) {
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    if (rotatingWords && rotatingWords.length > 0) {
-      const interval = setInterval(() => {
-        setIndex((prev) => (prev + 1) % rotatingWords.length);
-      }, 3500); // 3.5 seconds for readability
-      return () => clearInterval(interval);
-    }
-  }, [rotatingWords]);
-
   return (
-    <section className="w-full flex flex-col items-center justify-center pt-8 md:pt-12 px-4 text-center bg-[#FFF9F8] border-b border-brand-blue/5 overflow-hidden">
+    <section
+      className={`w-full flex flex-col items-center justify-center px-4 text-center bg-[#FFF9F8] border-b border-brand-blue/5 overflow-hidden ${
+        title ? "pt-0 -mt-px" : "pt-8 md:pt-12"
+      }`}
+    >
       
-      {/* 01. Title Segment (Top) */}
-      <h1 className="text-4xl md:text-5xl lg:text-[52px] font-black tracking-tight text-brand-blue mb-10 md:mb-16 leading-[1.1] w-full max-w-none mx-auto z-10 relative px-2 text-center">
-        <span className="md:block md:whitespace-nowrap">Faites grandir votre entreprise tout en </span>
-        <span className="text-brand-coral md:block md:whitespace-nowrap">libérant du temps</span>
-      </h1>
+      {title ? (
+        <div className="pt-5 md:pt-6 mb-8 md:mb-10 w-full">
+          {title}
+        </div>
+      ) : (
+        <h1 className="text-4xl md:text-5xl lg:text-[52px] font-black tracking-tight text-brand-blue mb-10 md:mb-16 leading-[1.1] w-full max-w-none mx-auto z-10 relative px-2 text-center">
+          <span className="block md:whitespace-nowrap">Automatiser pour se </span>
+          <span className="text-brand-coral block md:whitespace-nowrap">libérer du temps</span>
+        </h1>
+      )}
 
       {subtitle && (
-        <p className="text-sm md:text-lg text-gray-400 font-light mb-8 md:mb-10 max-w-3xl mx-auto animate-in fade-in duration-700">
+        <div className="text-sm md:text-lg text-gray-400 font-light mb-8 md:mb-10 max-w-3xl mx-auto animate-in fade-in duration-700">
           {subtitle}
-        </p>
+        </div>
       )}
 
       {/* 02. Tabs Slot (Now below Title) */}

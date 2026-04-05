@@ -31,6 +31,9 @@ export default function Footer() {
                 <Link href="/blog" className="text-gray-400 hover:text-brand-coral transition-colors text-sm">Conseils & Astuces</Link>
               </li>
               <li>
+                <Link href="/outils/modeles-de-document" className="text-gray-400 hover:text-brand-coral transition-colors text-sm">Modèles de documents</Link>
+              </li>
+              <li>
                 <Link href="#" className="text-gray-400 hover:text-brand-coral transition-colors text-sm">Nous contacter</Link>
               </li>
             </ul>

@@ -1,30 +1,17 @@
-import { getTools, getServices, getSystems } from "@/lib/api";
 import Navbar from "@/components/Navbar";
-import HomeToolsClient from "@/components/HomeToolsClient";
+import AssistantHub from "@/components/AssistantHub";
 
 export const metadata = {
-  title: "Demaa - Outils Gratuits pour Entrepreneurs",
-  description: "Simplifiez votre gestion quotidienne avec nos outils gratuits : QR codes, tampons, signatures et plus encore.",
+  title: "Demaa - Votre Assistant Stratégique en Automatisation",
+  description: "Expliquez votre problématique business et recevez un plan d'actions concret sur 5 piliers pour automatiser votre entreprise.",
 };
 
-export default async function Home() {
-  const [tools, services, systems] = await Promise.all([
-    getTools(),
-    getServices(),
-    getSystems()
-  ]);
-
+export default function Home() {
   return (
     <>
-      <Navbar minimal={true} />
-      <main className="flex-1 w-full bg-background">
-        <HomeToolsClient 
-          initialTools={tools} 
-          initialServices={services}
-          initialSystems={systems}
-          title="Gagnez du temps au quotidien"
-          placeholder="Que cherchez-vous aujourd'hui ? (ex: QR code, Compta, SAS...)"
-        />
+      <Navbar />
+      <main className="flex-1 w-full bg-[#FFF9F8] min-h-screen">
+        <AssistantHub />
       </main>
     </>
   );
