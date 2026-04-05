@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
-    const { company, sector, email, source } = await request.json();
+    const { company, sector, email, phone, name, source } = await request.json();
 
     if (!company || !email) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
@@ -20,8 +20,8 @@ export async function POST(request: Request) {
         {
           type: "section",
           text: {
-            type: "mrkdwn",
-            text: `*Entreprise* : ${company}\n*Secteur* : ${sector || "_non renseigné_"}\n*Email* : ${email}\n*Source* : ${source || "Modal"}`
+          type: "mrkdwn",
+            text: `*Entreprise* : ${company}\n*Nom* : ${name || "_non renseigné_"}\n*Secteur* : ${sector || "_non renseigné_"}\n*Email* : ${email}\n*Téléphone* : ${phone || "_non renseigné_"}\n*Source* : ${source || "Modal"}`
           }
         },
         {
