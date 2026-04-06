@@ -45,8 +45,14 @@ Merci de me recontacter !`;
       </p>
 
       {typeof document !== "undefined" && isOpen && createPortal(
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-brand-blue/60 backdrop-blur-sm p-4 animate-in fade-in duration-200 soft-scroll overflow-y-auto">
-          <div className="bg-white rounded-[2rem] w-full max-w-md shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
+        <div
+          onClick={() => setIsOpen(false)}
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-brand-blue/60 backdrop-blur-sm p-4 animate-in fade-in duration-200 soft-scroll overflow-y-auto"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="bg-white rounded-[2rem] w-full max-w-md shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200"
+          >
             
             <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
               <div>

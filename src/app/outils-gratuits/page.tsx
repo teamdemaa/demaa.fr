@@ -22,6 +22,7 @@ export default async function OutilsGratuitsPage() {
               </h1>
             }
             subtitle="Une sélection d'outils pragmatiques pour automatiser vos tâches quotidiennes sans frais."
+            filterMode="tools-groups"
             initialTools={tools} 
             placeholder="Rechercher un outil spécifique..."
           />

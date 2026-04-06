@@ -7,23 +7,64 @@ import { Tool } from "@/lib/types";
 import { Search } from "lucide-react";
 import AutoJoinPopup from "./AutoJoinPopup";
 
+type ToolFilterGroup = {
+  label: string;
+  matches: (tool: Tool) => boolean;
+};
+
 export default function HomeToolsClient({ 
   initialTools,
   title,
   subtitle,
+  filterMode = "tags",
 }: { 
   initialTools: Tool[],
   title?: React.ReactNode,
   subtitle?: React.ReactNode,
-  placeholder?: string
+  placeholder?: string,
+  filterMode?: "tags" | "tools-groups"
 }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
 
+  const toolFilterGroups = useMemo<ToolFilterGroup[]>(() => {
+    if (filterMode !== "tools-groups") return [];
+
+    return [
+      {
+        label: "QR Code",
+        matches: (tool) =>
+          tool.slug.includes("qr-code") ||
+          tool.tags?.some((tag) => tag.toLowerCase() === "qr"),
+      },
+      {
+        label: "Visibilité locale",
+        matches: (tool) =>
+          tool.slug.includes("fiche-google") ||
+          tool.tags?.some((tag) =>
+            ["google", "seo", "avis"].includes(tag.toLowerCase())
+          ),
+      },
+      {
+        label: "Signature & documents",
+        matches: (tool) =>
+          ["signature-pro", "signez-un-document-electroniquement"].includes(tool.slug),
+      },
+      {
+        label: "Image & admin",
+        matches: (tool) => ["generation-de-tampon"].includes(tool.slug),
+      },
+    ];
+  }, [filterMode]);
+
   const availableFilters = useMemo(() => {
+    if (filterMode === "tools-groups") {
+      return toolFilterGroups.map((group) => group.label);
+    }
+
     const allTags = initialTools.flatMap(t => t.tags || []);
     return Array.from(new Set(allTags)).sort();
-  }, [initialTools]);
+  }, [filterMode, initialTools, toolFilterGroups]);
 
   const filteredData = useMemo(() => {
     const query = searchQuery.toLowerCase();
@@ -36,11 +77,18 @@ export default function HomeToolsClient({
     );
 
     if (activeFilter) {
-      tools = tools.filter(t => t.tags?.includes(activeFilter));
+      if (filterMode === "tools-groups") {
+        const selectedGroup = toolFilterGroups.find((group) => group.label === activeFilter);
+        if (selectedGroup) {
+          tools = tools.filter((tool) => selectedGroup.matches(tool));
+        }
+      } else {
+        tools = tools.filter(t => t.tags?.includes(activeFilter));
+      }
     }
 
     return tools;
-  }, [initialTools, searchQuery, activeFilter]);
+  }, [activeFilter, filterMode, initialTools, searchQuery, toolFilterGroups]);
 
   const currentItems = filteredData;
 

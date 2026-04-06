@@ -5,8 +5,12 @@ import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, FileText, MessageCircle, Mic, Sparkles, Wrench, X } from "lucide-react";
 
-const STRIPE_URL_10_CREDITS = "";
-const STRIPE_URL_20_CREDITS = "";
+const STRIPE_URL_10_CREDITS =
+  process.env.NEXT_PUBLIC_STRIPE_URL_10_CREDITS?.trim() ||
+  "https://buy.stripe.com/14A8wIdb49lBa4Sev36Na03";
+const STRIPE_URL_20_CREDITS =
+  process.env.NEXT_PUBLIC_STRIPE_URL_20_CREDITS?.trim() ||
+  "https://buy.stripe.com/6oU14gc7041ha4S2Ml6Na04";
 
 type OfferKey = "free" | "pack10" | "pack20" | null;
 
@@ -158,7 +162,7 @@ export default function DelegationPricingModal({
 
   const handlePaidOffer = (url: string) => {
     if (!url) return;
-    window.open(url, "_blank", "noopener,noreferrer");
+    window.location.assign(url);
   };
 
   const toggleVoiceInput = () => {

@@ -42,11 +42,14 @@ export default function SubscriptionModal({
       {/* Backdrop */}
       <div 
         className="absolute inset-0 bg-brand-blue/40 backdrop-blur-md animate-in fade-in duration-300"
-        onClick={status === "success" ? onClose : undefined}
+        onClick={onClose}
       />
       
       {/* Modal Content */}
-      <div className="relative bg-white rounded-[2.5rem] w-full max-w-md shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300 border border-white/20">
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="relative bg-white rounded-[2.5rem] w-full max-w-md shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300 border border-white/20"
+      >
         
         {/* Header */}
         <div className="p-6 flex justify-end">
