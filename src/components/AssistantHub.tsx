@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   AlertCircle,
   ChevronRight,
@@ -241,6 +242,7 @@ async function fetchGenerationLimit(email: string): Promise<GenerationLimitState
 }
 
 export default function AssistantHub() {
+  const router = useRouter();
   const pdfContentRef = useRef<HTMLDivElement>(null);
   const speechRecognitionRef = useRef<SpeechRecognitionInstance | null>(null);
   const speechBaseTextRef = useRef("");
@@ -253,7 +255,6 @@ export default function AssistantHub() {
   const [error, setError] = useState<string | null>(null);
   const [emailError, setEmailError] = useState<string | null>(null);
   const [showEmailModal, setShowEmailModal] = useState(false);
-  const [showDelegationModal, setShowDelegationModal] = useState(false);
   const [hasUnlockedPlan, setHasUnlockedPlan] = useState(false);
   const [activeQuoteIndex, setActiveQuoteIndex] = useState(0);
   const [generationCount, setGenerationCount] = useState(0);
@@ -361,7 +362,7 @@ export default function AssistantHub() {
     if (!inputValue.trim()) return;
 
     if (generationLimitReached) {
-      setShowDelegationModal(true);
+      router.push("/deleguer-mes-automatisations");
       return;
     }
 
@@ -575,56 +576,12 @@ export default function AssistantHub() {
       </AnimatePresence>
 
       <AnimatePresence>
-        {showDelegationModal && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-brand-blue/55 backdrop-blur-sm px-4"
-          >
-            <div className="h-full w-full flex items-center justify-center">
-              <motion.div
-                initial={{ opacity: 0, y: 16, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 16, scale: 0.98 }}
-                className="w-full max-w-3xl bg-white rounded-[2rem] p-4 md:p-5 shadow-[0_30px_80px_rgba(21,36,69,0.18)] border border-black/5 relative"
-              >
-                <button
-                  onClick={() => setShowDelegationModal(false)}
-                  className="absolute top-5 right-5 z-10 text-gray-300 hover:text-brand-blue transition-colors"
-                  aria-label="Fermer"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-
-                <div className="px-3 pt-2 pb-4 md:px-4">
-                  <h3 className="text-2xl font-black text-brand-blue tracking-tight">
-                    Demander un audit (offert)
-                  </h3>
-                  <p className="text-gray-500 mt-2">
-                    Réservez un échange identifier les opportunités d&apos;automatiser et gagner des heures par semaines.
-                  </p>
-                </div>
-
-                <div className="overflow-hidden rounded-[1.5rem] border border-gray-100 bg-gray-50">
-                  <iframe
-                    src="https://teamdemaa.fillout.com/t/4QP8VeqUAaus"
-                    title="Demander un audit (offert)"
-                    className="w-full h-[62vh] min-h-[520px] bg-white"
-                  />
-                </div>
-              </motion.div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence>
         {showEmailModal && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            onClick={closeModal}
             className="fixed inset-0 z-50 bg-brand-blue/55 backdrop-blur-sm px-4"
           >
             <div className="h-full w-full flex items-center justify-center">
@@ -632,6 +589,7 @@ export default function AssistantHub() {
                 initial={{ opacity: 0, y: 16, scale: 0.98 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 16, scale: 0.98 }}
+                onClick={(e) => e.stopPropagation()}
                 className="w-full max-w-md bg-white rounded-[2rem] p-7 md:p-8 shadow-[0_30px_80px_rgba(21,36,69,0.18)] border border-black/5 relative"
               >
                 {!pendingResult && (
@@ -697,10 +655,11 @@ export default function AssistantHub() {
           >
             <div className="space-y-3">
               <h1 className="text-4xl md:text-5xl font-black text-brand-blue tracking-tight leading-[1.05]">
-                Décrivez ce qui vous <span className="text-brand-coral">prend du temps</span>{" "}et
-                votre secteur d&apos;activité.
+                Décrivez les tâches qui vous
+                <br className="hidden md:block" />
+                <span className="text-brand-coral"> prennent du temps</span>
               </h1>
-              <p className="text-sm md:text-base text-gray-500 font-medium">
+              <p className="text-sm md:text-base text-gray-500 font-light">
                 Je vous dirai combien d&apos;heures vous pouvez gagner et surtout comment.
               </p>
             </div>
@@ -720,7 +679,7 @@ export default function AssistantHub() {
                     }
                   }}
                   placeholder="Ex: Je suis courtier en assurance et je passe trop de temps sur les devis, les relances et le suivi client..."
-                  className="w-full h-36 p-7 pr-40 text-lg resize-none focus:outline-none bg-transparent placeholder:text-gray-300 font-medium leading-relaxed"
+                  className="w-full h-36 p-7 pr-40 text-lg resize-none focus:outline-none bg-transparent placeholder:text-sm md:placeholder:text-base placeholder:text-gray-300 placeholder:font-light font-normal leading-relaxed"
                   disabled={isLoading}
                 />
 
@@ -740,44 +699,37 @@ export default function AssistantHub() {
                   >
                     <Mic className="w-4 h-4" />
                   </button>
-                  <button
-                    type={generationLimitReached ? "button" : "submit"}
-                    onClick={() => {
-                      if (generationLimitReached) {
-                        setShowDelegationModal(true);
-                      }
-                    }}
-                    disabled={generationLimitReached ? false : isLoading || !inputValue.trim()}
-                    aria-label={
-                      generationLimitReached
-                        ? "Demander un audit (offert)"
-                        : isLoading
-                          ? "Analyse en cours"
-                          : "Générer mon plan"
-                    }
-                    className={`flex items-center justify-center h-14 rounded-full transition-all duration-300 ${
-                      generationLimitReached ? "px-5" : "w-14"
-                    } ${
-                      generationLimitReached
-                        ? "bg-brand-blue text-white hover:bg-brand-coral"
-                        : isLoading || !inputValue.trim()
+                  {!generationLimitReached && (
+                    <button
+                      type="submit"
+                      disabled={isLoading || !inputValue.trim()}
+                      aria-label={isLoading ? "Analyse en cours" : "Générer mon plan"}
+                      className={`flex items-center justify-center h-14 w-14 rounded-full transition-all duration-300 ${
+                        isLoading || !inputValue.trim()
                           ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                           : "bg-brand-blue text-white hover:bg-brand-coral"
-                    }`}
-                  >
-                    {generationLimitReached ? (
-                      <span className="text-sm font-black whitespace-nowrap">
-                        Demander un audit (offert)
-                      </span>
-                    ) : (
+                      }`}
+                    >
                       <Send className="w-5 h-5" />
-                    )}
-                  </button>
+                    </button>
+                  )}
                 </div>
               </div>
 
+              {generationLimitReached && (
+                <div className="mt-4 flex justify-center">
+                  <button
+                    type="button"
+                    onClick={() => router.push("/deleguer-mes-automatisations")}
+                    className="inline-flex items-center justify-center rounded-full bg-brand-blue px-7 py-3.5 text-sm font-black text-white transition-all hover:bg-brand-coral"
+                  >
+                    Déléguer mes automatisations
+                  </button>
+                </div>
+              )}
+
               {hasUnlockedPlan && emailValue.trim() && (
-                <div className="mt-4 text-sm text-gray-400 font-medium">
+                <div className="mt-4 text-sm text-gray-400 font-light">
                   {generationLimitReached
                     ? "Vous avez atteint 3 plans sur cette adresse email."
                     : `${Math.max(0, MAX_GENERATIONS_PER_USER - generationCount)} plan${
@@ -817,10 +769,10 @@ export default function AssistantHub() {
                 Export PDF
               </button>
               <button
-                onClick={() => setShowDelegationModal(true)}
-                className="flex items-center justify-center gap-2 px-4 py-3 bg-brand-blue text-white rounded-2xl font-black text-sm whitespace-nowrap hover:bg-brand-coral transition-all"
+                onClick={() => router.push("/deleguer-mes-automatisations")}
+                className="inline-flex items-center justify-center gap-2 px-4 py-3 bg-brand-blue text-white rounded-xl font-black text-sm whitespace-nowrap hover:bg-brand-coral transition-all"
               >
-                Demander un audit (offert)
+                Déléguer mes automatisations
               </button>
             </div>
 
