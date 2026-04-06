@@ -20,16 +20,21 @@ function getOfferLabel(amountTotal: number | null | undefined) {
   return "Offre Demaa";
 }
 
-export async function GET(request: Request) {
-  const secretKey = process.env.STRIPE_SECRET_KEY;
+function getStripeSecretKey(sessionId: string) {
+  const isTestSession = sessionId.startsWith("cs_test_");
 
-  if (!secretKey) {
-    return NextResponse.json(
-      { error: "STRIPE_SECRET_KEY is missing." },
-      { status: 500 }
+  if (isTestSession) {
+    return (
+      process.env.STRIPE_SECRET_KEY_TEST ||
+      process.env.STRIPE_TEST_SECRET_KEY ||
+      null
     );
   }
 
+  return process.env.STRIPE_SECRET_KEY || null;
+}
+
+export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const sessionId = searchParams.get("session_id");
 
@@ -37,6 +42,19 @@ export async function GET(request: Request) {
     return NextResponse.json(
       { error: "session_id is required." },
       { status: 400 }
+    );
+  }
+
+  const secretKey = getStripeSecretKey(sessionId);
+
+  if (!secretKey) {
+    return NextResponse.json(
+      {
+        error: sessionId.startsWith("cs_test_")
+          ? "La clé Stripe test est manquante. Ajoutez STRIPE_SECRET_KEY_TEST dans Vercel."
+          : "STRIPE_SECRET_KEY is missing.",
+      },
+      { status: 500 }
     );
   }
 

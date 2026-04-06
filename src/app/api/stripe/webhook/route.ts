@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 export const runtime = "nodejs";
 
 type StripeEvent = {
+  livemode?: boolean;
   type?: string;
   data?: {
     object?: {
@@ -103,11 +104,20 @@ async function sendConfirmationEmail(input: {
   }
 }
 
+function verifyStripeSignatureWithSecrets(
+  payload: string,
+  signatureHeader: string,
+  secrets: Array<string | undefined>
+) {
+  return secrets
+    .filter((secret): secret is string => Boolean(secret))
+    .some((secret) => verifyStripeSignature(payload, signatureHeader, secret));
+}
+
 export async function POST(request: Request) {
-  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
   const signature = request.headers.get("stripe-signature");
 
-  if (!webhookSecret || !signature) {
+  if (!signature) {
     return NextResponse.json(
       { error: "Stripe webhook is not configured." },
       { status: 400 }
@@ -116,7 +126,13 @@ export async function POST(request: Request) {
 
   const payload = await request.text();
 
-  if (!verifyStripeSignature(payload, signature, webhookSecret)) {
+  const isValidSignature = verifyStripeSignatureWithSecrets(payload, signature, [
+    process.env.STRIPE_WEBHOOK_SECRET,
+    process.env.STRIPE_WEBHOOK_SECRET_TEST,
+    process.env.STRIPE_TEST_WEBHOOK_SECRET,
+  ]);
+
+  if (!isValidSignature) {
     return NextResponse.json(
       { error: "Invalid Stripe signature." },
       { status: 400 }
