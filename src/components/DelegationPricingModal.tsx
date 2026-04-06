@@ -268,25 +268,25 @@ export default function DelegationPricingModal({
       icon: Sparkles,
       title: "Sans abonnement",
       description:
-        "Vous achetez des crédits quand vous en avez besoin, rien de plus.",
+        "Vous avancez à votre rythme. Vous achetez seulement ce dont vous avez besoin.",
     },
     {
       icon: FileText,
-      title: "Tout est documenté",
+      title: "Documentation claire",
       description:
-        "Chaque automatisation livrée est documentée, pour reprendre ou modifier à tout moment.",
+        "Chaque automatisation livrée est expliquée pour que vous gardiez la main et puissiez la faire évoluer plus tard.",
     },
     {
       icon: Wrench,
-      title: "Pannes couvertes",
+      title: "Support si ça casse",
       description:
-        "Si ça tombe en panne après livraison, on répare sans débiter de crédit.",
+        "Si une automatisation tombe en panne après livraison, on corrige sans vous redébiter.",
     },
     {
       icon: MessageCircle,
-      title: "Suivi agile sur WhatsApp",
+      title: "Un seul interlocuteur",
       description:
-        "Un seul interlocuteur, disponible et réactif du début à la fin.",
+        "Vous échangez directement avec quelqu'un qui suit votre sujet du début à la fin, notamment sur WhatsApp.",
     },
   ];
 
@@ -324,6 +324,27 @@ export default function DelegationPricingModal({
         "Un nouveau client signé -> contrat généré -> accès créés -> onboarding déclenché -> suivi automatique sur 30 jours",
         "Les données de suivi de plusieurs missions centralisées -> tableau de bord mis à jour -> rapport mensuel envoyé automatiquement",
       ],
+    },
+  ] as const;
+
+  const processSteps = [
+    {
+      step: "01",
+      title: "On liste ce qui vous fait perdre du temps",
+      description:
+        "On repère les tâches répétitives, les relances, les copier-coller, les oublis et les allers-retours qui reviennent chaque semaine.",
+    },
+    {
+      step: "02",
+      title: "On dessine la bonne solution",
+      description:
+        "On structure les étapes, on choisit les bons outils et on garde seulement ce qui est vraiment utile pour votre façon de travailler.",
+    },
+    {
+      step: "03",
+      title: "On met en place, on teste, puis on ajuste",
+      description:
+        "On implémente le système, on le teste dans des conditions réelles et on prévoit 2 ajustements pour l'affiner si besoin.",
     },
   ] as const;
 
@@ -420,13 +441,44 @@ export default function DelegationPricingModal({
             </div>
           </section>
 
+          <section className="space-y-8 md:space-y-10">
+            <div className="space-y-2">
+              <h2 className="text-[2rem] font-black tracking-tight text-brand-blue md:text-[2.9rem]">
+                Comment ça marche ?
+              </h2>
+              <p className="max-w-3xl text-sm leading-relaxed text-gray-500 md:text-base">
+                On avance simplement, avec vous, pour construire quelque chose d&apos;utile dès le départ. Pas une usine à gaz. Pas un système impossible à reprendre.
+              </p>
+            </div>
+
+            <div className="grid gap-4 lg:grid-cols-3">
+              {processSteps.map((item) => (
+                <div
+                  key={item.step}
+                  className="rounded-[1.75rem] border border-black/5 bg-white px-5 py-6 md:px-6"
+                >
+                  <div className="text-[0.78rem] font-black tracking-[0.22em] text-brand-coral">
+                    {item.step}
+                  </div>
+                  <div className="mt-3 text-[1.1rem] font-semibold tracking-tight text-brand-blue">
+                    {item.title}
+                  </div>
+                  <p className="mt-3 text-sm leading-relaxed text-gray-500">
+                    {item.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+          </section>
+
           <section className="space-y-8 rounded-[2rem] bg-brand-coral/6 px-5 py-6 md:space-y-10 md:px-7 md:py-8">
             <div className="space-y-2">
               <h2 className="text-[2rem] font-black tracking-tight text-brand-blue md:text-[2.9rem]">
-              Comprendre les crédits
+              De quoi dépend le niveau d&apos;accompagnement ?
               </h2>
               <p className="max-w-4xl text-sm leading-relaxed text-gray-500 md:text-base">
-                Ce n&apos;est pas le nombre d&apos;étapes qui compte, c&apos;est la complexité de votre process. Un process simple avec 3 étapes reste à 2 crédits.
+                Toutes les automatisations ne demandent pas le même travail. Certaines sont très simples à mettre en place. D&apos;autres demandent plus d&apos;outils, plus de logique ou plus de vérifications.
               </p>
             </div>
             <div className="space-y-3">
@@ -479,15 +531,18 @@ export default function DelegationPricingModal({
                 );
               })}
             </div>
+            <p className="text-center text-sm leading-relaxed text-gray-600">
+              Le plus simple reste de nous décrire ce que vous faites aujourd&apos;hui. On vous aide ensuite à estimer ce qu&apos;il faut vraiment.
+            </p>
           </section>
 
           <section className="space-y-8 md:space-y-10">
             <div className="space-y-2">
               <h2 className="text-[2rem] font-black tracking-tight text-brand-blue md:text-[2.9rem]">
-              Ce qui est inclus dans chaque pack
+              Ce qu&apos;on prend en charge avec vous
               </h2>
               <p className="max-w-3xl text-sm leading-relaxed text-gray-500 md:text-base">
-                Vous gardez un accompagnement clair, une documentation propre et un cadre simple pour faire avancer vos automatisations sans friction.
+                L&apos;idée n&apos;est pas juste d&apos;automatiser une tâche. L&apos;idée, c&apos;est que ça tourne bien, que ce soit clair, et que vous sachiez où vous mettez les pieds.
               </p>
             </div>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">

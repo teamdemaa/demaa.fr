@@ -9,12 +9,17 @@ import {
   FileSpreadsheet,
   Mail,
   Mic,
+  MessageCircle,
   Send,
+  Sparkles,
+  FileText,
+  Wrench,
   X,
 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { toPng } from "html-to-image";
 import jsPDF from "jspdf";
+import DelegationPricingModal from "./DelegationPricingModal";
 
 interface ActionPlanItem {
   title: string;
@@ -90,6 +95,101 @@ const LOADING_QUOTES = [
 ];
 
 const MAX_GENERATIONS_PER_USER = 3;
+
+const HOME_STEPS = [
+  {
+    step: "01",
+    title: "On liste ce qui vous fait perdre du temps",
+    description:
+      "On repère les tâches répétitives, les relances, les copier-coller, les oublis et les allers-retours qui reviennent chaque semaine.",
+  },
+  {
+    step: "02",
+    title: "On dessine la bonne solution",
+    description:
+      "On structure les étapes, on choisit les bons outils et on garde seulement ce qui est vraiment utile pour votre façon de travailler.",
+  },
+  {
+    step: "03",
+    title: "On met en place, on teste, puis on ajuste",
+    description:
+      "On implémente le système, on le teste dans des conditions réelles et on prévoit 2 ajustements pour l'affiner si besoin.",
+  },
+] as const;
+
+const HOME_INCLUDED_ITEMS = [
+  {
+    icon: Sparkles,
+    title: "Sans abonnement",
+    description: "Vous avancez à votre rythme. Vous achetez seulement ce dont vous avez besoin.",
+  },
+  {
+    icon: FileText,
+    title: "Documentation claire",
+    description:
+      "Chaque automatisation livrée est expliquée pour que vous gardiez la main et puissiez la faire évoluer plus tard.",
+  },
+  {
+    icon: Wrench,
+    title: "Support si ça casse",
+    description:
+      "Si une automatisation tombe en panne après livraison, on corrige sans vous redébiter.",
+  },
+  {
+    icon: MessageCircle,
+    title: "Un seul interlocuteur",
+    description:
+      "Vous échangez directement avec quelqu'un qui suit votre sujet du début à la fin, notamment sur WhatsApp.",
+  },
+] as const;
+
+const HOME_COMPLEXITY_LEVELS = [
+  {
+    title: "Besoin simple",
+    description:
+      "Par exemple : envoyer une alerte WhatsApp quand un formulaire est rempli, relancer un rendez-vous automatiquement, ou ajouter des réponses dans un tableau de suivi.",
+  },
+  {
+    title: "Besoin intermédiaire",
+    description:
+      "Par exemple : qualifier un prospect, l'envoyer dans le bon outil, générer un devis, ou déclencher plusieurs actions dans le bon ordre.",
+  },
+  {
+    title: "Besoin plus complet",
+    description:
+      "Par exemple : construire un parcours de bout en bout avec plusieurs outils, plusieurs étapes, des conditions, des documents ou des relances automatiques.",
+  },
+] as const;
+
+const HOME_OFFERS = [
+  {
+    badge: "2 crédits offerts",
+    title: "Tester gratuitement",
+    description:
+      "2 crédits offerts pour cadrer votre besoin et lancer une première automatisation simple.",
+    cta: "Tester gratuitement",
+    action: "modal" as const,
+    featured: true,
+  },
+  {
+    badge: "10 crédits",
+    title: "Pack de départ",
+    description:
+      "Pour commencer à structurer plusieurs tâches sans vous engager dans un abonnement.",
+    cta: "Voir l'offre",
+    action: "link" as const,
+    href: "/deleguer-mes-automatisations",
+  },
+  {
+    badge: "20 crédits",
+    title: "Pack intensif",
+    description:
+      "Pour les activités qui ont déjà plusieurs sujets à automatiser et veulent avancer plus vite.",
+    cta: "Voir l'offre",
+    action: "link" as const,
+    href: "/deleguer-mes-automatisations",
+  },
+] as const;
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
@@ -244,6 +344,7 @@ async function fetchGenerationLimit(email: string): Promise<GenerationLimitState
 export default function AssistantHub() {
   const router = useRouter();
   const pdfContentRef = useRef<HTMLDivElement>(null);
+  const homeTextareaRef = useRef<HTMLTextAreaElement>(null);
   const speechRecognitionRef = useRef<SpeechRecognitionInstance | null>(null);
   const speechBaseTextRef = useRef("");
   const [inputValue, setInputValue] = useState("");
@@ -255,6 +356,7 @@ export default function AssistantHub() {
   const [error, setError] = useState<string | null>(null);
   const [emailError, setEmailError] = useState<string | null>(null);
   const [showEmailModal, setShowEmailModal] = useState(false);
+  const [showFreeTrialModal, setShowFreeTrialModal] = useState(false);
   const [hasUnlockedPlan, setHasUnlockedPlan] = useState(false);
   const [activeQuoteIndex, setActiveQuoteIndex] = useState(0);
   const [generationCount, setGenerationCount] = useState(0);
@@ -537,6 +639,13 @@ export default function AssistantHub() {
     URL.revokeObjectURL(url);
   };
 
+  const focusHomeChat = () => {
+    homeTextareaRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    window.setTimeout(() => {
+      homeTextareaRef.current?.focus();
+    }, 250);
+  };
+
   return (
     <div className="max-w-5xl mx-auto px-4 py-12">
       <AnimatePresence>
@@ -572,6 +681,16 @@ export default function AssistantHub() {
               </div>
             </div>
           </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {showFreeTrialModal && (
+          <DelegationPricingModal
+            isOpen={showFreeTrialModal}
+            onClose={() => setShowFreeTrialModal(false)}
+            initialOffer="free"
+          />
         )}
       </AnimatePresence>
 
@@ -651,100 +770,272 @@ export default function AssistantHub() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="flex flex-col items-center text-center space-y-7 mt-8 md:mt-12"
+            className="mt-8 space-y-16 md:mt-12 md:space-y-24"
           >
-            <div className="space-y-3">
-              <h1 className="text-4xl md:text-5xl font-black text-brand-blue tracking-tight leading-[1.05]">
-                Décrivez les tâches qui vous
-                <br className="hidden md:block" />
-                <span className="text-brand-coral"> prennent du temps</span>
-              </h1>
-              <p className="text-sm md:text-base text-gray-500 font-light">
-                Je vous dirai combien d&apos;heures vous pouvez gagner et surtout comment.
-              </p>
-            </div>
-
-            <form onSubmit={handleSubmit} className="w-full max-w-3xl relative group mt-6">
-              <div className="relative overflow-hidden bg-white rounded-[2rem] shadow-[0_10px_30px_rgba(34,48,84,0.05)] border border-black/5 transition-all duration-300 group-focus-within:shadow-[0_16px_40px_rgba(34,48,84,0.08)] group-focus-within:border-brand-blue/10">
-                <textarea
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" && !e.shiftKey) {
-                      e.preventDefault();
-
-                      if (!isLoading && inputValue.trim()) {
-                        void handleSubmit(e as unknown as React.FormEvent);
-                      }
-                    }
-                  }}
-                  placeholder="Ex: Je suis courtier en assurance et je passe trop de temps sur les devis, les relances et le suivi client..."
-                  className="w-full h-36 p-7 pr-40 text-lg resize-none focus:outline-none bg-transparent placeholder:text-sm md:placeholder:text-base placeholder:text-gray-300 placeholder:font-light font-normal leading-relaxed"
-                  disabled={isLoading}
-                />
-
-                <div className="absolute bottom-6 right-6 flex items-center gap-3">
-                  <button
-                    type="button"
-                    onClick={toggleVoiceInput}
-                    disabled={isLoading || generationLimitReached}
-                    aria-label={isRecording ? "Arrêter la note vocale" : "Démarrer la note vocale"}
-                    className={`flex items-center justify-center w-12 h-12 rounded-full transition-all duration-300 ${
-                      isLoading || generationLimitReached
-                        ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                        : isRecording
-                          ? "bg-brand-coral text-white"
-                          : "bg-gray-100 text-brand-blue hover:bg-gray-200"
-                    }`}
-                  >
-                    <Mic className="w-4 h-4" />
-                  </button>
-                  {!generationLimitReached && (
-                    <button
-                      type="submit"
-                      disabled={isLoading || !inputValue.trim()}
-                      aria-label={isLoading ? "Analyse en cours" : "Générer mon plan"}
-                      className={`flex items-center justify-center h-14 w-14 rounded-full transition-all duration-300 ${
-                        isLoading || !inputValue.trim()
-                          ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                          : "bg-brand-blue text-white hover:bg-brand-coral"
-                      }`}
-                    >
-                      <Send className="w-5 h-5" />
-                    </button>
-                  )}
-                </div>
+            <section className="flex flex-col items-center text-center space-y-7">
+              <div className="space-y-4">
+                <h1 className="text-4xl font-black text-brand-blue tracking-tight leading-[1.02] md:text-5xl lg:text-[3.85rem]">
+                  Vous avez déjà assez à gérer.
+                  <br className="hidden md:block" />
+                  <span className="text-brand-coral"> Le reste, on peut l&apos;automatiser.</span>
+                </h1>
+                <p className="mx-auto max-w-3xl text-sm leading-relaxed text-gray-500 md:text-lg md:leading-relaxed">
+                  On identifie avec vous ce qui vous fait perdre du temps, puis on met en place des automatisations simples, utiles et adaptées à votre façon de travailler.
+                </p>
               </div>
 
-              {generationLimitReached && (
-                <div className="mt-4 flex justify-center">
+              <form onSubmit={handleSubmit} className="relative mt-4 w-full max-w-4xl group">
+                <div className="relative overflow-hidden rounded-[2rem] border border-black/5 bg-white shadow-[0_10px_30px_rgba(34,48,84,0.05)] transition-all duration-300 group-focus-within:border-brand-blue/10 group-focus-within:shadow-[0_16px_40px_rgba(34,48,84,0.08)]">
+                  <textarea
+                    ref={homeTextareaRef}
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" && !e.shiftKey) {
+                        e.preventDefault();
+
+                        if (!isLoading && inputValue.trim()) {
+                          void handleSubmit(e as unknown as React.FormEvent);
+                        }
+                      }
+                    }}
+                    placeholder="Décrivez les tâches qui vous prennent du temps"
+                    className="h-36 w-full resize-none bg-transparent p-7 pr-7 text-lg font-normal leading-relaxed placeholder:text-base placeholder:font-light placeholder:text-gray-300 focus:outline-none md:pr-56"
+                    disabled={isLoading}
+                  />
+
+                  <div className="flex flex-col gap-3 border-t border-black/5 px-5 py-4 md:absolute md:bottom-6 md:right-6 md:border-t-0 md:bg-transparent md:p-0">
+                    <div className="flex items-center justify-end gap-3">
+                      <button
+                        type="button"
+                        onClick={toggleVoiceInput}
+                        disabled={isLoading || generationLimitReached}
+                        aria-label={isRecording ? "Arrêter la note vocale" : "Démarrer la note vocale"}
+                        className={`flex h-11 w-11 items-center justify-center rounded-full transition-all duration-300 ${
+                          isLoading || generationLimitReached
+                            ? "cursor-not-allowed bg-gray-100 text-gray-400"
+                            : isRecording
+                              ? "bg-brand-coral text-white"
+                              : "bg-gray-100 text-brand-blue hover:bg-gray-200"
+                        }`}
+                      >
+                        <Mic className="h-4 w-4" />
+                      </button>
+
+                      {!generationLimitReached && (
+                        <button
+                          type="submit"
+                          disabled={isLoading || !inputValue.trim()}
+                          aria-label={isLoading ? "Analyse en cours" : "Estimer les heures à gagner"}
+                          className={`inline-flex h-11 items-center justify-center gap-2 rounded-full px-5 text-sm font-black transition-all duration-300 md:h-12 md:px-6 ${
+                            isLoading || !inputValue.trim()
+                              ? "cursor-not-allowed bg-gray-100 text-gray-400"
+                              : "bg-brand-blue text-white hover:bg-brand-coral"
+                          }`}
+                        >
+                          <span>Estimer les heures à gagner</span>
+                          <Send className="h-4 w-4" />
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-4 text-sm text-gray-400 font-light">
+                  Réponse rapide, sans jargon, avec des pistes concrètes selon votre activité.
+                </div>
+
+                {generationLimitReached && (
+                  <div className="mt-4 flex justify-center">
+                    <button
+                      type="button"
+                      onClick={() => router.push("/deleguer-mes-automatisations")}
+                      className="inline-flex items-center justify-center rounded-full bg-brand-blue px-7 py-3.5 text-sm font-black text-white transition-all hover:bg-brand-coral"
+                    >
+                      Déléguer mes automatisations
+                    </button>
+                  </div>
+                )}
+
+                {hasUnlockedPlan && emailValue.trim() && (
+                  <div className="mt-4 text-sm text-gray-400 font-light">
+                    {generationLimitReached
+                      ? "Vous avez atteint 3 plans sur cette adresse email."
+                      : `${Math.max(0, MAX_GENERATIONS_PER_USER - generationCount)} plan${
+                          Math.max(0, MAX_GENERATIONS_PER_USER - generationCount) > 1 ? "s" : ""
+                        } restant${Math.max(0, MAX_GENERATIONS_PER_USER - generationCount) > 1 ? "s" : ""}.`}
+                  </div>
+                )}
+
+                {error && (
+                  <div className="mt-6 flex items-center gap-2 rounded-2xl border border-red-100 bg-red-50 px-6 py-4 text-sm font-bold text-red-500 animate-in slide-in-from-top-2">
+                    <AlertCircle className="w-5 h-5" />
+                    {error}
+                  </div>
+                )}
+              </form>
+            </section>
+
+            <section className="space-y-8 md:space-y-10">
+              <div className="space-y-2 text-center">
+                <h2 className="text-[2rem] font-black tracking-tight text-brand-blue md:text-[2.9rem]">
+                  Comment ça marche ?
+                </h2>
+                <p className="mx-auto max-w-3xl text-sm leading-relaxed text-gray-500 md:text-base">
+                  On avance simplement, avec vous, pour construire quelque chose d&apos;utile dès le départ. Pas une usine à gaz. Pas un système impossible à reprendre.
+                </p>
+              </div>
+
+              <div className="grid gap-4 lg:grid-cols-3">
+                {HOME_STEPS.map((item) => (
+                  <div
+                    key={item.step}
+                    className="rounded-[1.75rem] border border-black/5 bg-white px-5 py-6 md:px-6"
+                  >
+                    <div className="text-[0.78rem] font-black tracking-[0.22em] text-brand-coral">
+                      {item.step}
+                    </div>
+                    <div className="mt-3 text-[1.1rem] font-semibold tracking-tight text-brand-blue">
+                      {item.title}
+                    </div>
+                    <p className="mt-3 text-sm leading-relaxed text-gray-500">
+                      {item.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section className="space-y-8 md:space-y-10">
+              <div className="space-y-2 text-center">
+                <h2 className="text-[2rem] font-black tracking-tight text-brand-blue md:text-[2.9rem]">
+                  Ce qu&apos;on prend en charge avec vous
+                </h2>
+                <p className="mx-auto max-w-3xl text-sm leading-relaxed text-gray-500 md:text-base">
+                  L&apos;idée n&apos;est pas juste d&apos;automatiser une tâche. L&apos;idée, c&apos;est que ça tourne bien, que ce soit clair, et que vous sachiez où vous mettez les pieds.
+                </p>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                {HOME_INCLUDED_ITEMS.map((item) => {
+                  const Icon = item.icon;
+
+                  return (
+                    <div
+                      key={item.title}
+                      className="rounded-[1.5rem] border border-black/5 bg-brand-blue/5 px-5 py-5 text-left"
+                    >
+                      <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-2xl bg-white text-brand-coral shadow-[0_4px_10px_rgba(16,24,40,0.04)]">
+                        <Icon className="h-4 w-4" />
+                      </div>
+                      <div className="text-base font-semibold text-brand-blue">{item.title}</div>
+                      <p className="mt-2 text-sm leading-relaxed text-gray-500">
+                        {item.description}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+
+            <section className="space-y-8 rounded-[2rem] bg-brand-coral/6 px-5 py-6 md:space-y-10 md:px-7 md:py-8">
+              <div className="space-y-2 text-center">
+                <h2 className="text-[2rem] font-black tracking-tight text-brand-blue md:text-[2.9rem]">
+                  De quoi dépend le niveau d&apos;accompagnement ?
+                </h2>
+                <p className="mx-auto max-w-4xl text-sm leading-relaxed text-gray-500 md:text-base">
+                  Toutes les automatisations ne demandent pas le même travail. Certaines sont très simples à mettre en place. D&apos;autres demandent plus d&apos;outils, plus de logique ou plus de vérifications.
+                </p>
+              </div>
+
+              <div className="grid gap-4 lg:grid-cols-3">
+                {HOME_COMPLEXITY_LEVELS.map((item) => (
+                  <div
+                    key={item.title}
+                    className="rounded-[1.5rem] border border-black/5 bg-white px-5 py-5 text-left"
+                  >
+                    <div className="text-base font-semibold tracking-tight text-brand-blue">
+                      {item.title}
+                    </div>
+                    <p className="mt-3 text-sm leading-relaxed text-gray-500">
+                      {item.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              <p className="text-center text-sm leading-relaxed text-gray-600">
+                Le plus simple reste de nous décrire ce que vous faites aujourd&apos;hui. On vous aide ensuite à estimer ce qu&apos;il faut vraiment.
+              </p>
+            </section>
+
+            <section className="space-y-8 md:space-y-10">
+              <div className="space-y-2 text-center">
+                <h2 className="text-[2rem] font-black tracking-tight text-brand-blue md:text-[2.9rem]">
+                  Choisissez la façon de démarrer
+                </h2>
+                <p className="mx-auto max-w-3xl text-sm leading-relaxed text-gray-500 md:text-base">
+                  Vous pouvez commencer petit pour tester, ou prendre plus de marge si vous avez déjà plusieurs besoins à automatiser.
+                </p>
+              </div>
+
+              <div className="grid gap-6 xl:grid-cols-3">
+                {HOME_OFFERS.map((offer) => (
+                  <div
+                    key={offer.title}
+                    className={`grid h-full grid-rows-[auto_auto_1fr_auto] rounded-[1.75rem] border p-6 md:p-7 ${
+                      offer.featured
+                        ? "border-brand-coral/15 bg-brand-coral/5"
+                        : "border-black/5 bg-white"
+                    }`}
+                  >
+                    <div className="text-[11px] font-black uppercase tracking-[0.18em] text-gray-400">
+                      {offer.badge}
+                    </div>
+                    <div className="mt-4 min-h-[4rem] space-y-1.5">
+                      <div className="text-[1.2rem] leading-[1.08] font-semibold tracking-tight text-brand-blue">
+                        {offer.title}
+                      </div>
+                      <p className="text-[0.92rem] font-light leading-relaxed text-gray-500">
+                        {offer.description}
+                      </p>
+                    </div>
+                    <div className="mt-5" />
+                    <button
+                      type="button"
+                      onClick={() =>
+                        offer.action === "modal"
+                          ? setShowFreeTrialModal(true)
+                          : router.push(offer.href)
+                      }
+                      className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-brand-blue px-5 py-3 text-sm font-black text-white transition-colors hover:bg-brand-coral"
+                    >
+                      {offer.cta}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section className="rounded-[2rem] border border-black/5 bg-white px-6 py-10 text-center md:px-10 md:py-14">
+              <div className="mx-auto max-w-3xl space-y-4">
+                <h2 className="text-[2rem] font-black tracking-tight text-brand-blue md:text-[2.9rem]">
+                  Commencez par ce qui vous prend le plus d&apos;énergie
+                </h2>
+                <p className="text-sm leading-relaxed text-gray-500 md:text-base">
+                  Décrivez vos tâches répétitives, vos relances, vos copier-coller ou vos suivis manuels. On vous aide à voir ce qui peut être automatisé et combien de temps vous pourriez récupérer.
+                </p>
+                <div className="pt-2">
                   <button
                     type="button"
-                    onClick={() => router.push("/deleguer-mes-automatisations")}
-                    className="inline-flex items-center justify-center rounded-full bg-brand-blue px-7 py-3.5 text-sm font-black text-white transition-all hover:bg-brand-coral"
+                    onClick={focusHomeChat}
+                    className="inline-flex items-center justify-center rounded-full bg-brand-blue px-7 py-3.5 text-sm font-black text-white transition-colors hover:bg-brand-coral"
                   >
-                    Déléguer mes automatisations
+                    Estimer les heures à gagner
                   </button>
                 </div>
-              )}
-
-              {hasUnlockedPlan && emailValue.trim() && (
-                <div className="mt-4 text-sm text-gray-400 font-light">
-                  {generationLimitReached
-                    ? "Vous avez atteint 3 plans sur cette adresse email."
-                    : `${Math.max(0, MAX_GENERATIONS_PER_USER - generationCount)} plan${
-                        Math.max(0, MAX_GENERATIONS_PER_USER - generationCount) > 1 ? "s" : ""
-                      } restant${Math.max(0, MAX_GENERATIONS_PER_USER - generationCount) > 1 ? "s" : ""}.`}
-                </div>
-              )}
-
-              {error && (
-                <div className="mt-6 flex items-center gap-2 text-red-500 bg-red-50 px-6 py-4 rounded-2xl border border-red-100 text-sm font-bold animate-in slide-in-from-top-2">
-                  <AlertCircle className="w-5 h-5" />
-                  {error}
-                </div>
-              )}
-            </form>
+              </div>
+            </section>
           </motion.div>
         ) : (
           <motion.div

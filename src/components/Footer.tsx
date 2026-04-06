@@ -14,7 +14,7 @@ export default function Footer() {
               Demaa<span className="text-brand-coral">.</span>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
-              L&apos;annuaire de services et outils nouvelle génération. Ultra-minimaliste, fiable et pensé pour propulser votre entreprise.
+              Vous avez déjà assez à gérer. Le reste, on peut l&apos;automatiser.
             </p>
           </div>
 
