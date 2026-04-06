@@ -14,7 +14,7 @@ export default function Footer() {
               Demaa<span className="text-brand-coral">.</span>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
-              Vous avez déjà assez à gérer. Le reste, on peut l&apos;automatiser.
+              On vous aide à enlever les tâches qui vous ralentissent, pour que votre activité avance plus simplement.
             </p>
           </div>
 
