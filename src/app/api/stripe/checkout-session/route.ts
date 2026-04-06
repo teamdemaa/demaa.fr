@@ -14,6 +14,14 @@ type StripeCheckoutSession = {
   } | null;
 };
 
+type StripeErrorResponse = {
+  error?: {
+    message?: string;
+    code?: string;
+    type?: string;
+  };
+};
+
 function getOfferLabel(amountTotal: number | null | undefined) {
   if (amountTotal === 65000) return "Pack de départ - 10 crédits";
   if (amountTotal === 98000) return "Pack intensif - 20 crédits";
@@ -69,11 +77,30 @@ export async function GET(request: Request) {
   );
 
   if (!stripeResponse.ok) {
-    const body = await stripeResponse.text().catch(() => "");
-    console.error("Stripe session lookup error:", stripeResponse.status, body);
+    const rawBody = await stripeResponse.text().catch(() => "");
+    let parsedBody: StripeErrorResponse | null = null;
+
+    try {
+      parsedBody = rawBody ? (JSON.parse(rawBody) as StripeErrorResponse) : null;
+    } catch {
+      parsedBody = null;
+    }
+
+    const stripeMessage =
+      parsedBody?.error?.message ||
+      parsedBody?.error?.code ||
+      parsedBody?.error?.type ||
+      rawBody ||
+      null;
+
+    console.error("Stripe session lookup error:", stripeResponse.status, stripeMessage);
 
     return NextResponse.json(
-      { error: "Impossible de verifier cette session Stripe." },
+      {
+        error: stripeMessage
+          ? `Impossible de verifier cette session Stripe. ${stripeMessage}`
+          : "Impossible de verifier cette session Stripe.",
+      },
       { status: 502 }
     );
   }
