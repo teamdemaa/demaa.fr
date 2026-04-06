@@ -32,7 +32,7 @@ export default function SuccessPageClient({
       setVerification({
         status: "error",
         message:
-          "Impossible de verifier votre paiement. Merci d'utiliser le lien de retour Stripe.",
+          "Impossible de vérifier votre paiement. Merci d'utiliser le lien de retour Stripe.",
       });
       return;
     }
@@ -57,7 +57,7 @@ export default function SuccessPageClient({
         if (!response.ok || !payload?.paid) {
           throw new Error(
             payload?.error ||
-              "Le paiement n'a pas pu etre verifie. Merci de contacter Demaa."
+              "Le paiement n'a pas pu être vérifié. Merci de contacter Demaa."
           );
         }
 
@@ -74,7 +74,7 @@ export default function SuccessPageClient({
           message:
             error instanceof Error
               ? error.message
-              : "Le paiement n'a pas pu etre verifie. Merci de contacter Demaa.",
+              : "Le paiement n'a pas pu être vérifié. Merci de contacter Demaa.",
         });
       }
     })();
@@ -92,7 +92,7 @@ export default function SuccessPageClient({
                   <LoaderCircle className="h-6 w-6 animate-spin" />
                 </div>
                 <h1 className="text-3xl font-black tracking-tight text-brand-blue md:text-4xl">
-                  Verification du paiement
+                  Vérification du paiement
                 </h1>
                 <p className="text-sm leading-relaxed text-gray-500 md:text-base">
                   Nous confirmons votre paiement avant d&apos;ouvrir la prise de rendez-vous.
@@ -106,16 +106,16 @@ export default function SuccessPageClient({
                   <CheckCircle2 className="h-7 w-7" />
                 </div>
                 <h1 className="text-3xl font-black tracking-tight text-brand-blue md:text-4xl">
-                  Paiement confirme
+                  Paiement confirmé
                 </h1>
                 <p className="text-sm leading-relaxed text-gray-500 md:text-base">
                   {verification.name ? `Merci ${verification.name}, ` : ""}
-                  votre paiement pour <strong>{verification.offerLabel}</strong> a bien ete valide.
+                  votre paiement pour <strong>{verification.offerLabel}</strong> a bien été validé.
                 </p>
                 <p className="text-sm leading-relaxed text-gray-500 md:text-base">
                   {verification.email
-                    ? `Un email de confirmation va etre envoye a ${verification.email}.`
-                    : "Vous pouvez maintenant reserver votre rendez-vous."}
+                    ? `Un email de confirmation a été déclenché pour ${verification.email}.`
+                    : "Vous pouvez maintenant réserver votre rendez-vous."}
                 </p>
                 <div className="pt-2">
                   <button
@@ -133,7 +133,7 @@ export default function SuccessPageClient({
             {verification.status === "error" && (
               <div className="space-y-4">
                 <h1 className="text-3xl font-black tracking-tight text-brand-blue md:text-4xl">
-                  Verification impossible
+                  Vérification impossible
                 </h1>
                 <p className="text-sm leading-relaxed text-red-500 md:text-base">
                   {verification.message}
@@ -171,10 +171,10 @@ export default function SuccessPageClient({
 
                   <div className="border-b border-black/5 px-6 py-5 md:px-8">
                     <h2 className="text-2xl font-black tracking-tight text-brand-blue">
-                      Reserver votre rendez-vous
+                      Réserver votre rendez-vous
                     </h2>
                     <p className="mt-2 text-sm leading-relaxed text-gray-500 md:text-base">
-                      Choisissez un creneau pour lancer votre automatisation avec l&apos;equipe Demaa.
+                      Choisissez un créneau pour lancer votre automatisation avec l&apos;équipe Demaa.
                     </p>
                   </div>
 

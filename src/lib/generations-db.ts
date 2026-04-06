@@ -14,13 +14,20 @@ interface CountRow {
   count: number;
 }
 
+interface PaymentRow {
+  stripe_session_id: string;
+  email_sent_at: string | null;
+}
+
 interface RunResult {
   lastInsertRowid?: number | bigint;
 }
 
 interface Statement {
-  run: (...params: Array<string | null>) => RunResult;
-  get: (...params: Array<string | null>) => LeadRow | CacheRow | CountRow | undefined;
+  run: (...params: Array<string | number | null>) => RunResult;
+  get: (
+    ...params: Array<string | number | null>
+  ) => LeadRow | CacheRow | CountRow | PaymentRow | undefined;
 }
 
 interface DatabaseLike {
@@ -33,6 +40,19 @@ interface GenerationInput {
   prompt: string;
   result: unknown;
   sector?: string;
+}
+
+interface StripePaymentInput {
+  stripeSessionId: string;
+  stripeEventId: string;
+  email?: string | null;
+  customerName?: string | null;
+  amountTotal?: number | null;
+  currency?: string | null;
+  offerLabel: string;
+  livemode: boolean;
+  paymentStatus?: string | null;
+  checkoutStatus?: string | null;
 }
 
 let databasePromise: Promise<DatabaseLike> | null = null;
@@ -72,6 +92,25 @@ async function getDatabase() {
           prompt_text TEXT NOT NULL,
           result_json TEXT NOT NULL,
           created_at TEXT NOT NULL
+        );
+      `);
+
+      database.exec(`
+        CREATE TABLE IF NOT EXISTS stripe_payments (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          stripe_session_id TEXT NOT NULL UNIQUE,
+          stripe_event_id TEXT NOT NULL UNIQUE,
+          email TEXT,
+          customer_name TEXT,
+          amount_total INTEGER,
+          currency TEXT,
+          offer_label TEXT NOT NULL,
+          livemode INTEGER NOT NULL DEFAULT 0,
+          payment_status TEXT,
+          checkout_status TEXT,
+          email_sent_at TEXT,
+          created_at TEXT NOT NULL,
+          updated_at TEXT NOT NULL
         );
       `);
 
@@ -174,4 +213,83 @@ export async function saveAssistantPlanCache(prompt: string, result: unknown) {
       `
     )
     .run(getPromptKey(prompt), prompt, JSON.stringify(result), now);
+}
+
+export async function upsertConfirmedStripePayment(input: StripePaymentInput) {
+  const database = await getDatabase();
+  const now = new Date().toISOString();
+
+  database
+    .prepare(
+      `
+        INSERT INTO stripe_payments (
+          stripe_session_id,
+          stripe_event_id,
+          email,
+          customer_name,
+          amount_total,
+          currency,
+          offer_label,
+          livemode,
+          payment_status,
+          checkout_status,
+          created_at,
+          updated_at
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(stripe_session_id) DO UPDATE SET
+          stripe_event_id = excluded.stripe_event_id,
+          email = excluded.email,
+          customer_name = excluded.customer_name,
+          amount_total = excluded.amount_total,
+          currency = excluded.currency,
+          offer_label = excluded.offer_label,
+          livemode = excluded.livemode,
+          payment_status = excluded.payment_status,
+          checkout_status = excluded.checkout_status,
+          updated_at = excluded.updated_at
+      `
+    )
+    .run(
+      input.stripeSessionId,
+      input.stripeEventId,
+      input.email?.trim().toLowerCase() || null,
+      input.customerName?.trim() || null,
+      input.amountTotal ?? null,
+      input.currency?.trim().toLowerCase() || null,
+      input.offerLabel,
+      input.livemode ? 1 : 0,
+      input.paymentStatus?.trim() || null,
+      input.checkoutStatus?.trim() || null,
+      now,
+      now
+    );
+}
+
+export async function getStripePaymentBySessionId(sessionId: string) {
+  const database = await getDatabase();
+
+  return database
+    .prepare(
+      `
+        SELECT stripe_session_id, email_sent_at
+        FROM stripe_payments
+        WHERE stripe_session_id = ?
+      `
+    )
+    .get(sessionId) as PaymentRow | undefined;
+}
+
+export async function markStripePaymentEmailSent(sessionId: string) {
+  const database = await getDatabase();
+
+  database
+    .prepare(
+      `
+        UPDATE stripe_payments
+        SET email_sent_at = ?, updated_at = ?
+        WHERE stripe_session_id = ?
+      `
+    )
+    .run(new Date().toISOString(), new Date().toISOString(), sessionId);
 }

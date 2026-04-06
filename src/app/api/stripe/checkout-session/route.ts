@@ -98,8 +98,8 @@ export async function GET(request: Request) {
     return NextResponse.json(
       {
         error: stripeMessage
-          ? `Impossible de verifier cette session Stripe. ${stripeMessage}`
-          : "Impossible de verifier cette session Stripe.",
+          ? `Impossible de vérifier cette session Stripe. ${stripeMessage}`
+          : "Impossible de vérifier cette session Stripe.",
       },
       { status: 502 }
     );
