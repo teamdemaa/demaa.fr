@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { Inter, Montserrat, Nunito, Poppins } from "next/font/google";
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import { 
@@ -18,35 +17,30 @@ import {
   ChevronDown
 } from "lucide-react";
 
-const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
-const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
-const montserrat = Montserrat({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
-const nunito = Nunito({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
-
 const FONT_OPTIONS = [
   {
     key: "poppins",
     label: "Poppins",
     stack: "'Poppins', Arial, sans-serif",
-    className: poppins.className,
+    className: "",
   },
   {
     key: "inter",
     label: "Inter",
     stack: "'Inter', Arial, sans-serif",
-    className: inter.className,
+    className: "",
   },
   {
     key: "montserrat",
     label: "Montserrat",
     stack: "'Montserrat', Arial, sans-serif",
-    className: montserrat.className,
+    className: "",
   },
   {
     key: "nunito",
     label: "Nunito",
     stack: "'Nunito', Arial, sans-serif",
-    className: nunito.className,
+    className: "",
   },
 ] as const;
 

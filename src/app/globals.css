@@ -5,7 +5,7 @@
   --color-brand-coral: #f39d66;
   --color-background: #ffffff;
   --color-foreground: #191b30;
-  --font-sans: var(--font-poppins);
+  --font-sans: "Poppins", "Avenir Next", "Avenir", "Segoe UI", Arial, sans-serif;
 }
 
 @layer components {

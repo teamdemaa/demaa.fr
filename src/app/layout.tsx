@@ -1,15 +1,8 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/Footer";
 
 import { Analytics } from "@vercel/analytics/next";
-
-const poppins = Poppins({
-  variable: "--font-poppins",
-  weight: ["300", "400", "500", "600", "700"],
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Demaa - Annuaire d'outils et de services",
@@ -23,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className={`${poppins.variable} h-full antialiased`}>
+    <html lang="fr" className="h-full antialiased">
       <body className="min-h-full flex flex-col bg-background text-foreground font-sans pb-24 md:pb-0">
         {children}
         <Footer />
