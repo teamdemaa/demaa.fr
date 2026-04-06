@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getServices, getTools } from "@/lib/api";
+import { getTools } from "@/lib/api";
 import { getAllPosts } from "@/lib/blog";
 
 function getBaseUrl(): string {
@@ -35,17 +35,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: base, lastModified: now, changeFrequency: "weekly", priority: 1 },
     { url: `${base}/blog`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${base}/legal`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
-    { url: `${base}/nos-services`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
+    { url: `${base}/outils-gratuits`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${base}/deleguer-mes-automatisations`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${base}/mentions-legales`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
+    { url: `${base}/politique-de-confidentialite`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
+    { url: `${base}/politique-de-cookies`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
+    { url: `${base}/cgv`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
   ];
-
-  const services = await getServices();
-  const serviceEntries: MetadataRoute.Sitemap = services.map((s) => ({
-    url: `${base}/services/${s.slug}`,
-    lastModified: now,
-    changeFrequency: "monthly" as const,
-    priority: 0.8,
-  }));
 
   const tools = await getTools();
   const outilSlugs = new Set<string>([
@@ -71,5 +67,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...serviceEntries, ...outilEntries, ...blogEntries];
+  return [...staticRoutes, ...outilEntries, ...blogEntries];
 }
