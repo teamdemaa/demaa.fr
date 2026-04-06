@@ -161,7 +161,17 @@ const HOME_COMPLEXITY_LEVELS = [
   },
 ] as const;
 
-const HOME_OFFERS = [
+type HomeOffer = {
+  badge: string;
+  title: string;
+  description: string;
+  cta: string;
+  action: "modal" | "link";
+  featured?: boolean;
+  href?: string;
+};
+
+const HOME_OFFERS: readonly HomeOffer[] = [
   {
     badge: "2 crédits offerts",
     title: "Tester gratuitement",
@@ -1006,7 +1016,7 @@ export default function AssistantHub() {
                       onClick={() =>
                         offer.action === "modal"
                           ? setShowFreeTrialModal(true)
-                          : router.push(offer.href)
+                          : offer.href && router.push(offer.href)
                       }
                       className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-brand-blue px-5 py-3 text-sm font-black text-white transition-colors hover:bg-brand-coral"
                     >
