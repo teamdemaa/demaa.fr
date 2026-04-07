@@ -1,3 +1,4 @@
+@import url("https://api.fontshare.com/v2/css?f[]=gambetta@300,400&display=swap");
 @import "tailwindcss";
 
 @theme inline {
@@ -9,6 +10,20 @@
 }
 
 @layer components {
+  .demaa-section-title {
+    font-family: "Gambetta", Georgia, serif;
+    font-style: italic;
+    font-weight: 300;
+    font-synthesis: none;
+  }
+
+  .demaa-hero-title {
+    font-family: "Gambetta", Georgia, serif;
+    font-style: italic;
+    font-weight: 300;
+    font-synthesis: none;
+  }
+
   .demaa-input {
     @apply w-full bg-white border border-brand-coral/10 rounded-xl outline-none text-sm text-brand-blue font-medium placeholder:text-brand-blue/25 placeholder:font-medium transition-all;
     @apply px-4 py-3.5 shadow-[0_4px_12px_rgba(16,24,40,0.04)] focus:border-brand-coral/30 focus:ring-2 focus:ring-brand-blue/10;

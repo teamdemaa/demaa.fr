@@ -100,7 +100,7 @@ export default function HomeToolsClient({
           className={`whitespace-nowrap rounded-full px-5 py-1.5 text-xs transition-all ${
             activeFilter === null 
               ? "bg-brand-blue text-white shadow-md font-medium" 
-              : "bg-brand-coral/10 text-brand-blue/70 font-light hover:bg-brand-coral/20"
+              : "bg-[#FFF3EF] text-brand-blue/70 font-light hover:bg-brand-coral/20"
           }`}
         >
           Tous
@@ -113,7 +113,7 @@ export default function HomeToolsClient({
             className={`whitespace-nowrap rounded-full px-5 py-1.5 text-xs transition-all ${
               activeFilter === filter 
                 ? "bg-brand-blue text-white shadow-md font-medium" 
-                : "bg-brand-coral/10 text-brand-blue/70 font-light hover:bg-brand-coral/20"
+                : "bg-[#FFF3EF] text-brand-blue/70 font-light hover:bg-brand-coral/20"
             }`}
           >
             {filter}

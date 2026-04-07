@@ -425,7 +425,7 @@ export default function DelegationPricingModal({
                       : handlePaidOffer(offer.stripeUrl || "")
                   }
                     disabled={offer.key !== "free" && !offer.stripeUrl}
-                    className={`mt-4 inline-flex w-full items-center justify-center rounded-full px-5 py-3 text-sm font-black transition-colors ${
+                    className={`mt-4 inline-flex w-full items-center justify-center rounded-full px-5 py-3 text-sm font-medium transition-colors ${
                       offer.featured
                         ? "bg-brand-blue text-white hover:bg-brand-coral"
                         : offer.stripeUrl
@@ -572,15 +572,14 @@ export default function DelegationPricingModal({
       )}
 
       {selectedOffer === "free" && (
-        <div className={`space-y-6 ${embedded ? "max-w-3xl" : ""}`}>
-          <div className={`space-y-2 ${embedded ? "max-w-2xl" : "max-w-xl pr-10"}`}>
+        <div className={`${embedded ? "max-w-3xl space-y-6" : "space-y-4"}`}>
+          <div className={`space-y-1.5 ${embedded ? "max-w-2xl" : "max-w-4xl pr-10"}`}>
             {!embedded && (
               <div className="inline-flex items-center gap-2 rounded-full bg-brand-coral/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-brand-coral">
-                <Sparkles className="h-3.5 w-3.5" />
                 2 crédits offerts
               </div>
             )}
-            <h3 className="text-[2rem] font-black tracking-tight text-brand-blue md:text-[2.4rem]">
+            <h3 className="demaa-section-title text-[2.35rem] tracking-tight text-brand-blue md:text-[2.9rem]">
               Tester une automatisation simple
             </h3>
             <p className="text-sm leading-relaxed text-gray-500 md:text-base">
@@ -589,7 +588,7 @@ export default function DelegationPricingModal({
           </div>
 
           {!isSubmitted ? (
-            <form onSubmit={handleFreeCreditSubmit} className="max-w-3xl space-y-3">
+            <form onSubmit={handleFreeCreditSubmit} className="max-w-3xl space-y-2.5">
               <div className="grid gap-3 md:grid-cols-2">
                 <input
                   required
@@ -597,7 +596,7 @@ export default function DelegationPricingModal({
                   placeholder="Nom"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="demaa-input h-12 rounded-2xl border border-brand-blue/10 px-4 text-sm font-medium shadow-none"
+                  className="demaa-input h-11 rounded-2xl border border-brand-blue/10 px-4 text-sm font-medium shadow-none"
                 />
                 <input
                   required
@@ -605,7 +604,7 @@ export default function DelegationPricingModal({
                   placeholder="Entreprise"
                   value={formData.company}
                   onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                  className="demaa-input h-12 rounded-2xl border border-brand-blue/10 px-4 text-sm font-medium shadow-none"
+                  className="demaa-input h-11 rounded-2xl border border-brand-blue/10 px-4 text-sm font-medium shadow-none"
                 />
               </div>
 
@@ -616,7 +615,7 @@ export default function DelegationPricingModal({
                   placeholder="Email pro"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="demaa-input h-12 rounded-2xl border border-brand-blue/10 px-4 text-sm font-medium shadow-none"
+                  className="demaa-input h-11 rounded-2xl border border-brand-blue/10 px-4 text-sm font-medium shadow-none"
                 />
                 <input
                   required
@@ -624,7 +623,7 @@ export default function DelegationPricingModal({
                   placeholder="Téléphone / WhatsApp"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="demaa-input h-12 rounded-2xl border border-brand-blue/10 px-4 text-sm font-medium shadow-none"
+                  className="demaa-input h-11 rounded-2xl border border-brand-blue/10 px-4 text-sm font-medium shadow-none"
                 />
               </div>
 
@@ -634,7 +633,7 @@ export default function DelegationPricingModal({
                   placeholder="Secteur d'activité"
                   value={formData.sector}
                   onChange={(e) => setFormData({ ...formData, sector: e.target.value })}
-                  className="demaa-input h-12 rounded-2xl border border-brand-blue/10 px-4 text-sm font-medium shadow-none"
+                  className="demaa-input h-11 rounded-2xl border border-brand-blue/10 px-4 text-sm font-medium shadow-none"
                 />
                 <input
                   type="text"
@@ -643,7 +642,7 @@ export default function DelegationPricingModal({
                   onChange={(e) =>
                     setFormData({ ...formData, toolPreferences: e.target.value })
                   }
-                  className="demaa-input h-12 rounded-2xl border border-brand-blue/10 px-4 text-sm font-medium shadow-none"
+                  className="demaa-input h-11 rounded-2xl border border-brand-blue/10 px-4 text-sm font-medium shadow-none"
                 />
               </div>
 
@@ -655,7 +654,7 @@ export default function DelegationPricingModal({
                   onChange={(e) =>
                     setFormData({ ...formData, automationNeed: e.target.value })
                   }
-                  className="demaa-textarea min-h-[120px] w-full rounded-[1.5rem] border border-brand-blue/10 px-4 py-3.5 pr-14 text-sm font-medium shadow-none"
+                  className="demaa-textarea min-h-[92px] w-full rounded-[1.5rem] border border-brand-blue/10 px-4 py-3.5 pr-14 text-sm font-medium shadow-none"
                 />
                 <button
                   type="button"
@@ -677,11 +676,11 @@ export default function DelegationPricingModal({
                 </div>
               )}
 
-              <div className="pt-1">
+              <div>
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="inline-flex items-center justify-center rounded-full bg-brand-blue px-6 py-3.5 text-sm font-black text-white transition-colors hover:bg-brand-coral"
+                  className="inline-flex items-center justify-center rounded-full bg-brand-blue px-6 py-3.5 text-sm font-medium text-white transition-colors hover:bg-brand-coral"
                 >
                   {isSubmitting
                     ? "Envoi en cours..."
@@ -720,7 +719,7 @@ export default function DelegationPricingModal({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={resetAndClose}
-          className="fixed inset-0 z-50 bg-brand-blue/50 backdrop-blur-sm px-5 py-8 md:px-8 md:py-10"
+          className="fixed inset-0 z-50 bg-brand-blue/50 backdrop-blur-sm px-5 py-4 md:px-8 md:py-5"
         >
           <div className="flex h-full w-full items-center justify-center">
             <motion.div
@@ -730,7 +729,7 @@ export default function DelegationPricingModal({
               onClick={(e) => e.stopPropagation()}
               className={`relative w-full overflow-y-auto soft-scroll rounded-[2rem] border border-black/5 bg-white p-5 shadow-[0_30px_80px_rgba(21,36,69,0.18)] md:p-6 ${
                 selectedOffer === "free"
-                  ? "max-h-[calc(100vh-6rem)] max-w-4xl"
+                  ? "max-h-[calc(100vh-2.5rem)] max-w-4xl"
                   : "max-h-[calc(100vh-6rem)] max-w-[68rem]"
               }`}
             >

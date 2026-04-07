@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Wrench } from "lucide-react";
 
 export default function Navbar({ minimal = false }: { minimal?: boolean }) {
   const pathname = usePathname();
@@ -29,16 +28,21 @@ export default function Navbar({ minimal = false }: { minimal?: boolean }) {
             <div className="flex items-center gap-3 md:gap-5">
               <Link
                 href="/outils-gratuits"
-                className="group flex items-center space-x-2 text-[13px] md:text-[15px] text-brand-blue hover:text-brand-coral transition-all duration-300 font-medium"
+                className="text-[13px] md:text-[15px] text-brand-blue hover:text-brand-coral transition-all duration-300 font-medium whitespace-nowrap"
               >
-                <Wrench className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" />
-                <span className="hidden sm:inline">Outils Gratuits</span>
-                <span className="sm:hidden">Outils</span>
+                <span className="hidden sm:inline">Annuaire des outils</span>
+                <span className="sm:hidden">Annuaire</span>
               </Link>
 
               <Link
-                href="/deleguer-mes-automatisations"
-                className="inline-flex items-center rounded-full border border-brand-blue/12 bg-white/50 px-4 py-2 text-xs md:text-sm font-bold text-brand-blue transition-colors hover:border-brand-coral/25 hover:text-brand-coral whitespace-nowrap"
+                href="/#pricing"
+                className="inline-flex items-center rounded-full border border-brand-blue/12 bg-transparent px-5 py-3 text-xs md:text-sm font-medium text-brand-blue transition-colors hover:border-brand-coral/25 hover:text-brand-coral whitespace-nowrap"
+                onClick={(event) => {
+                  if (pathname === "/") {
+                    event.preventDefault();
+                    window.dispatchEvent(new Event("demaa:navigate-pricing"));
+                  }
+                }}
               >
                 <span className="hidden sm:inline">Déléguer mes automatisations</span>
                 <span className="sm:hidden">Déléguer</span>

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   AlertCircle,
+  ChevronDown,
   ChevronRight,
   Download,
   FileSpreadsheet,
@@ -20,6 +21,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import { toPng } from "html-to-image";
 import jsPDF from "jspdf";
 import DelegationPricingModal from "./DelegationPricingModal";
+
+const STRIPE_URL_10_CREDITS =
+  process.env.NEXT_PUBLIC_STRIPE_URL_10_CREDITS?.trim() ||
+  "https://buy.stripe.com/14A8wIdb49lBa4Sev36Na03";
+const STRIPE_URL_20_CREDITS =
+  process.env.NEXT_PUBLIC_STRIPE_URL_20_CREDITS?.trim() ||
+  "https://buy.stripe.com/6oU14gc7041ha4S2Ml6Na04";
 
 interface ActionPlanItem {
   title: string;
@@ -143,28 +151,90 @@ const HOME_INCLUDED_ITEMS = [
   },
 ] as const;
 
-const HOME_COMPLEXITY_LEVELS = [
+const HOME_CREDIT_EXAMPLES = [
   {
-    title: "Besoin simple",
-    description:
-      "Par exemple : envoyer une alerte WhatsApp quand un formulaire est rempli, relancer un rendez-vous automatiquement, ou ajouter des réponses dans un tableau de suivi.",
+    title: "Process simple",
+    credits: "2 crédits",
+    subtitle: "Des étapes basiques, un seul outil ou deux outils qui se parlent.",
+    items: [
+      "Un prospect remplit votre formulaire de contact -> vous recevez une alerte sur WhatsApp",
+      "Un rendez-vous est pris en ligne -> un rappel est envoyé automatiquement au client la veille",
+      "Un client répond à un questionnaire -> ses réponses sont ajoutées à votre tableau de suivi",
+      "Une mission est terminée -> le client reçoit automatiquement un email de demande d'avis",
+    ],
   },
   {
-    title: "Besoin intermédiaire",
-    description:
-      "Par exemple : qualifier un prospect, l'envoyer dans le bon outil, générer un devis, ou déclencher plusieurs actions dans le bon ordre.",
+    title: "Process intermédiaire",
+    credits: "3 - 4 crédits",
+    subtitle: "Plusieurs outils connectés, des conditions ou des données à transformer.",
+    items: [
+      "Un prospect remplit un formulaire -> qualifié selon ses réponses -> ajouté au CRM -> email de prise de contact envoyé",
+      "Un brief client rempli -> devis généré automatiquement -> envoyé pour validation -> archivé",
+      "Une intervention terminée -> rapport d'intervention généré -> envoyé au client -> copie stockée dans le Drive",
+      "Un nouveau collaborateur rejoint -> accès créés -> email de bienvenue -> tâches d'onboarding assignées",
+    ],
   },
   {
-    title: "Besoin plus complet",
-    description:
-      "Par exemple : construire un parcours de bout en bout avec plusieurs outils, plusieurs étapes, des conditions, des documents ou des relances automatiques.",
+    title: "Process complet",
+    credits: "5 crédits et plus",
+    subtitle:
+      "Un flux de bout en bout, plusieurs outils, des données volumineuses ou de la logique conditionnelle.",
+    items: [
+      "Un prospect arrive -> qualifié -> ajouté au CRM -> séquence de nurturing -> relance automatique -> alerte si pas de réponse",
+      "Un formulaire métier rempli -> document généré automatiquement -> envoyé pour signature électronique -> stocké dans le Drive",
+      "Un nouveau client signé -> contrat généré -> accès créés -> onboarding déclenché -> suivi automatique sur 30 jours",
+      "Les données de suivi de plusieurs missions centralisées -> tableau de bord mis à jour -> rapport mensuel envoyé automatiquement",
+    ],
+  },
+] as const;
+
+const HOME_TRANSFORMATION_EXAMPLES = [
+  {
+    process: "Suivi des leads entrants",
+    context:
+      "Les prospects arrivent de partout - formulaire, Instagram, email - et tombent dans le vide.",
+    before:
+      "Aucune centralisation, pas de suivi, relances oubliées, clients perdus sans s'en rendre compte",
+    after:
+      "Toutes les sources centralisées, réponse automatique immédiate, relance déclenchée si pas de retour sous 48h",
+  },
+  {
+    process: "Onboarding client",
+    context:
+      "La première impression après la signature est souvent chaotique - des emails dans le désordre, des docs oubliés.",
+    before:
+      "Infos envoyées en plusieurs fois, contrat par email, accès donnés à la main, premier contact raté",
+    after:
+      "Dès la signature : email de bienvenue, documents, accès et premier RDV envoyés automatiquement en une séquence",
+  },
+  {
+    process: "Rapports clients",
+    context:
+      "La valeur du travail reste invisible si on ne la montre pas. Les clients qui partent, c'est souvent pour ça.",
+    before:
+      "Le client ne sait pas ce qu'on a fait, tout doit être réexpliqué à chaque appel, la relation s'érode",
+    after:
+      "Rapport mensuel généré et envoyé automatiquement : heures, livrables, résultats - sans y penser",
+  },
+  {
+    process: "Relances impayés",
+    context:
+      "On évite de relancer par gêne, on oublie, et la trésorerie en souffre en silence.",
+    before:
+      "Factures en retard détectées trop tard, relances écrites à la main, argent perdu par inaction",
+    after:
+      "Relance automatique à J+5, J+15, J+30 avec le bon ton - sans jamais avoir à y penser",
   },
 ] as const;
 
 type HomeOffer = {
   badge: string;
   title: string;
+  subtitle: string;
   description: string;
+  bullets: string[];
+  price: string;
+  unit: string;
   cta: string;
   action: "modal" | "link";
   featured?: boolean;
@@ -175,8 +245,17 @@ const HOME_OFFERS: readonly HomeOffer[] = [
   {
     badge: "2 crédits offerts",
     title: "Tester gratuitement",
+    subtitle: "Première automatisation",
     description:
       "2 crédits offerts pour cadrer votre besoin et lancer une première automatisation simple.",
+    bullets: [
+      "2 crédits offerts, sans engagement",
+      "On cadre votre besoin ensemble",
+      "On livre une première automatisation",
+      "Pour valider avant d'aller plus loin",
+    ],
+    price: "Gratuit",
+    unit: "",
     cta: "Tester gratuitement",
     action: "modal" as const,
     featured: true,
@@ -184,20 +263,36 @@ const HOME_OFFERS: readonly HomeOffer[] = [
   {
     badge: "10 crédits",
     title: "Pack de départ",
+    subtitle: "10 crédits à utiliser comme vous voulez",
     description:
       "Pour commencer à structurer plusieurs tâches sans vous engager dans un abonnement.",
-    cta: "Voir l'offre",
+    bullets: [
+      "Simple ou complexe, vous choisissez",
+      "2 crédits = une automatisation simple",
+      "Une automatisation complexe en consomme plus",
+    ],
+    price: "650€",
+    unit: "65€ / crédit",
+    cta: "Choisir 10 crédits",
     action: "link" as const,
-    href: "/deleguer-mes-automatisations",
+    href: STRIPE_URL_10_CREDITS,
   },
   {
     badge: "20 crédits",
     title: "Pack intensif",
+    subtitle: "20 crédits à utiliser comme vous voulez",
     description:
       "Pour les activités qui ont déjà plusieurs sujets à automatiser et veulent avancer plus vite.",
-    cta: "Voir l'offre",
+    bullets: [
+      "Simple ou complexe, vous choisissez",
+      "Le prix par crédit le plus bas",
+      "Idéal si vous avez beaucoup à automatiser",
+    ],
+    price: "980€",
+    unit: "49€ / crédit",
+    cta: "Choisir 20 crédits",
     action: "link" as const,
-    href: "/deleguer-mes-automatisations",
+    href: STRIPE_URL_20_CREDITS,
   },
 ] as const;
 
@@ -262,6 +357,19 @@ function mergeTranscript(baseText: string, transcript: string) {
   if (!trimmedTranscript) return trimmedBase;
 
   return `${trimmedBase} ${trimmedTranscript}`;
+}
+
+function navigateToHref(router: ReturnType<typeof useRouter>, href: string) {
+  if (href.startsWith("http")) {
+    window.location.href = href;
+    return;
+  }
+
+  router.push(href);
+}
+
+function navigateToPricing() {
+  window.dispatchEvent(new Event("demaa:navigate-pricing"));
 }
 
 function buildHoursRecap(actions: ActionPlanItem[]) {
@@ -369,8 +477,43 @@ export default function AssistantHub() {
   const [showFreeTrialModal, setShowFreeTrialModal] = useState(false);
   const [hasUnlockedPlan, setHasUnlockedPlan] = useState(false);
   const [activeQuoteIndex, setActiveQuoteIndex] = useState(0);
+  const [openHomeCreditExample, setOpenHomeCreditExample] = useState(1);
   const [generationCount, setGenerationCount] = useState(0);
   const [generationLimitReached, setGenerationLimitReached] = useState(false);
+
+  useEffect(() => {
+    const scrollToPricing = () => {
+      window.setTimeout(() => {
+        document.getElementById("pricing")?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }, 120);
+    };
+
+    const handlePricingNavigation = () => {
+      speechRecognitionRef.current?.stop();
+      setIsLoading(false);
+      setIsRecording(false);
+      setResult(null);
+      setPendingResult(null);
+      setError(null);
+      setEmailError(null);
+      setShowEmailModal(false);
+      window.history.pushState(null, "", "/#pricing");
+      scrollToPricing();
+    };
+
+    window.addEventListener("demaa:navigate-pricing", handlePricingNavigation);
+
+    if (window.location.hash === "#pricing") {
+      scrollToPricing();
+    }
+
+    return () => {
+      window.removeEventListener("demaa:navigate-pricing", handlePricingNavigation);
+    };
+  }, []);
 
   useEffect(() => {
     const savedEmail = window.localStorage.getItem("demaa_assistant_email");
@@ -474,7 +617,7 @@ export default function AssistantHub() {
     if (!inputValue.trim()) return;
 
     if (generationLimitReached) {
-      router.push("/deleguer-mes-automatisations");
+      navigateToPricing();
       return;
     }
 
@@ -657,7 +800,9 @@ export default function AssistantHub() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-12">
+    <div className="relative mx-auto max-w-6xl overflow-hidden px-4 py-12 md:py-[4.25rem]">
+      <div className="pointer-events-none absolute left-1/2 top-10 -z-10 h-80 w-80 -translate-x-1/2 rounded-full bg-brand-coral/10 blur-3xl" />
+      <div className="pointer-events-none absolute right-4 top-[38rem] -z-10 h-72 w-72 rounded-full bg-brand-blue/5 blur-3xl" />
       <AnimatePresence>
         {isLoading && (
           <motion.div
@@ -679,7 +824,7 @@ export default function AssistantHub() {
                       transition={{ duration: 0.9, ease: "easeOut" }}
                       className="space-y-5"
                     >
-                      <p className="text-xl md:text-[2.2rem] font-black tracking-tight leading-[1.12] text-white">
+                      <p className="demaa-section-title text-2xl leading-[1.08] tracking-tight text-white md:text-[2.8rem]">
                         {LOADING_QUOTES[activeQuoteIndex].text}
                       </p>
                       <p className="text-xs md:text-sm uppercase tracking-[0.2em] text-white/55">
@@ -780,11 +925,11 @@ export default function AssistantHub() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="mt-8 space-y-16 md:mt-12 md:space-y-24"
+            className="mt-8 space-y-20 md:mt-12 md:space-y-32"
           >
             <section className="flex flex-col items-center text-center space-y-7">
               <div className="space-y-4">
-                <h1 className="text-4xl font-black text-brand-blue tracking-tight leading-[1.02] md:text-5xl lg:text-[3.85rem]">
+                <h1 className="demaa-hero-title text-[3rem] text-brand-blue tracking-tight leading-[0.98] md:text-[4.05rem] lg:text-[5rem]">
                   Vous avez déjà assez à gérer.
                   <br className="hidden md:block" />
                   <span className="text-brand-coral"> Le reste, on peut l&apos;automatiser.</span>
@@ -837,7 +982,7 @@ export default function AssistantHub() {
                           type="submit"
                           disabled={isLoading || !inputValue.trim()}
                           aria-label={isLoading ? "Analyse en cours" : "Estimer les heures à gagner"}
-                          className={`inline-flex h-11 items-center justify-center gap-2 rounded-full px-5 text-sm font-black transition-all duration-300 md:h-12 md:px-6 ${
+                          className={`inline-flex h-11 items-center justify-center gap-2 rounded-full px-5 text-sm font-medium transition-all duration-300 md:h-12 md:px-6 ${
                             isLoading || !inputValue.trim()
                               ? "cursor-not-allowed bg-gray-100 text-gray-400"
                               : "bg-brand-blue text-white hover:bg-brand-coral"
@@ -851,16 +996,12 @@ export default function AssistantHub() {
                   </div>
                 </div>
 
-                <div className="mt-4 text-sm text-gray-400 font-light">
-                  Réponse rapide, sans jargon, avec des pistes concrètes selon votre activité.
-                </div>
-
                 {generationLimitReached && (
                   <div className="mt-4 flex justify-center">
                     <button
                       type="button"
-                      onClick={() => router.push("/deleguer-mes-automatisations")}
-                      className="inline-flex items-center justify-center rounded-full bg-brand-blue px-7 py-3.5 text-sm font-black text-white transition-all hover:bg-brand-coral"
+                      onClick={navigateToPricing}
+                      className="inline-flex items-center justify-center rounded-full bg-brand-blue px-7 py-3.5 text-sm font-medium text-white transition-all hover:bg-brand-coral"
                     >
                       Déléguer mes automatisations
                     </button>
@@ -886,21 +1027,21 @@ export default function AssistantHub() {
               </form>
             </section>
 
-            <section className="space-y-8 md:space-y-10">
-              <div className="space-y-2 text-center">
-                <h2 className="text-[2rem] font-black tracking-tight text-brand-blue md:text-[2.9rem]">
-                  Comment ça marche ?
+            <section className="space-y-10 md:space-y-12">
+              <div className="mx-auto max-w-3xl space-y-4 text-center">
+                <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-brand-blue md:text-[4.2rem]">
+                  On commence par remettre les choses à plat
                 </h2>
-                <p className="mx-auto max-w-3xl text-sm leading-relaxed text-gray-500 md:text-base">
+                <p className="text-sm leading-relaxed text-gray-500 md:text-base">
                   On avance simplement, avec vous, pour construire quelque chose d&apos;utile dès le départ. Pas une usine à gaz. Pas un système impossible à reprendre.
                 </p>
               </div>
 
-              <div className="grid gap-4 lg:grid-cols-3">
+              <div className="grid gap-5 lg:grid-cols-3">
                 {HOME_STEPS.map((item) => (
                   <div
                     key={item.step}
-                    className="rounded-[1.75rem] border border-black/5 bg-white px-5 py-6 md:px-6"
+                    className="rounded-[1.75rem] border border-black/5 bg-white/90 px-5 py-6 shadow-[0_18px_50px_rgba(21,36,69,0.05)] md:px-6"
                   >
                     <div className="text-[0.78rem] font-black tracking-[0.22em] text-brand-coral">
                       {item.step}
@@ -916,24 +1057,211 @@ export default function AssistantHub() {
               </div>
             </section>
 
-            <section className="space-y-8 md:space-y-10">
-              <div className="space-y-2 text-center">
-                <h2 className="text-[2rem] font-black tracking-tight text-brand-blue md:text-[2.9rem]">
-                  Ce qu&apos;on prend en charge avec vous
+            <section className="space-y-10 md:space-y-12">
+              <div className="mx-auto max-w-3xl space-y-4 text-center">
+                <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-brand-blue md:text-[4.2rem]">
+                  Les tâches évitées deviennent des systèmes qui tournent
                 </h2>
-                <p className="mx-auto max-w-3xl text-sm leading-relaxed text-gray-500 md:text-base">
+                <p className="text-sm leading-relaxed text-gray-500 md:text-base">
+                  Ce sont souvent ces petits trous dans le quotidien qui coûtent le plus cher : un lead non relancé, un client mal onboardé, un rapport oublié. Voilà ce que ça donne quand on les structure.
+                </p>
+              </div>
+
+              <div className="overflow-hidden rounded-[2rem] border border-brand-blue/10 bg-white shadow-[0_12px_34px_rgba(21,36,69,0.025)]">
+                <div className="hidden grid-cols-[1.05fr_1.25fr_1.25fr] gap-5 bg-brand-blue/[0.025] px-6 py-5 text-sm font-medium md:grid">
+                  <div className="text-brand-blue">Processus</div>
+                  <div className="text-brand-coral">Aujourd&apos;hui</div>
+                  <div className="text-brand-blue">Une fois automatisé</div>
+                </div>
+
+                <div>
+                  {HOME_TRANSFORMATION_EXAMPLES.map((item) => (
+                    <div
+                      key={item.process}
+                      className="grid gap-5 px-5 py-7 text-left transition-colors hover:bg-brand-blue/[0.018] md:grid-cols-[1.05fr_1.25fr_1.25fr] md:px-6 md:py-8"
+                    >
+                      <div>
+                        <h3 className="text-lg font-medium leading-snug text-brand-blue md:text-xl">
+                          {item.process}
+                        </h3>
+                        <p className="mt-3 text-sm leading-relaxed text-gray-500 md:text-[0.95rem]">
+                          {item.context}
+                        </p>
+                      </div>
+
+                      <div className="rounded-[1.25rem] border border-brand-coral/15 bg-brand-coral/[0.045] px-4 py-4 md:rounded-none md:border-0 md:bg-transparent md:px-0 md:py-0">
+                        <div className="mb-2 text-[0.72rem] font-black uppercase tracking-[0.18em] text-brand-coral md:hidden">
+                          Aujourd&apos;hui
+                        </div>
+                        <p className="text-sm font-light leading-relaxed text-brand-coral md:text-base">
+                          {item.before}
+                        </p>
+                      </div>
+
+                      <div className="rounded-[1.25rem] border border-brand-blue/10 bg-brand-blue/[0.035] px-4 py-4 md:rounded-none md:border-0 md:bg-transparent md:px-0 md:py-0">
+                        <div className="mb-2 text-[0.72rem] font-black uppercase tracking-[0.18em] text-brand-blue md:hidden">
+                          Une fois automatisé
+                        </div>
+                        <p className="text-sm font-light leading-relaxed text-brand-blue md:text-base">
+                          {item.after}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            <section id="pricing" className="scroll-mt-24 space-y-10 md:space-y-12">
+              <div className="mx-auto max-w-3xl space-y-4 text-center">
+                <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-brand-blue md:text-[4.2rem]">
+                  Vous choisissez votre point de départ
+                </h2>
+                <p className="text-sm leading-relaxed text-gray-500 md:text-base">
+                  Vous pouvez commencer petit pour tester, ou prendre plus de marge si vous avez déjà plusieurs besoins à automatiser.
+                </p>
+              </div>
+
+              <div className="grid gap-6 xl:grid-cols-3">
+                {HOME_OFFERS.map((offer) => (
+                  <div
+                    key={offer.title}
+                    className={`grid h-full grid-rows-[auto_auto_1fr_auto_auto] rounded-[1.75rem] border p-6 shadow-[0_18px_50px_rgba(21,36,69,0.045)] md:p-7 ${
+                      offer.featured
+                        ? "border-brand-coral/10 bg-[#FFF3EF]"
+                        : "border-black/5 bg-white/90"
+                    }`}
+                  >
+                    <div className="text-[11px] font-black uppercase tracking-[0.18em] text-gray-400">
+                      {offer.badge}
+                    </div>
+                    <div className="mt-4 min-h-[4.9rem] space-y-1.5">
+                      <div className="text-[1.2rem] leading-[1.08] font-semibold tracking-tight text-brand-blue">
+                        {offer.title}
+                      </div>
+                      <div className="text-[0.92rem] font-light text-gray-400">
+                        {offer.subtitle}
+                      </div>
+                    </div>
+                    <div className="mt-5 space-y-3">
+                      {offer.bullets.map((bullet) => (
+                        <div key={bullet} className="grid grid-cols-[0.75rem_1fr] items-start gap-x-3">
+                          <span className="mt-[0.42rem] h-2.5 w-2.5 rounded-full bg-brand-coral/45" />
+                          <p className="m-0 text-[0.82rem] font-light leading-relaxed text-gray-500">
+                            {bullet}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-5 border-t border-black/5 pt-4">
+                      <div className="grid min-h-[3rem] items-center gap-2 sm:grid-cols-[auto_1fr]">
+                        <div className="demaa-section-title text-[1.85rem] leading-none tracking-tight text-brand-blue">
+                          {offer.price}
+                        </div>
+                        <div className="text-[0.9rem] font-medium text-gray-400 sm:text-left">
+                          {offer.unit}
+                        </div>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        offer.action === "modal"
+                          ? setShowFreeTrialModal(true)
+                          : offer.href && navigateToHref(router, offer.href)
+                      }
+                      className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-brand-blue px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-brand-coral"
+                    >
+                      {offer.cta}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section className="space-y-10 rounded-[2.25rem] border border-brand-coral/10 bg-brand-coral/6 px-5 py-8 md:space-y-12 md:px-8 md:py-10">
+              <div className="mx-auto max-w-4xl space-y-4 text-center">
+                <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-brand-blue md:text-[4.2rem]">
+                  De quoi dépend le niveau d&apos;accompagnement ?
+                </h2>
+                <p className="text-sm leading-relaxed text-gray-500 md:text-base">
+                  Toutes les automatisations ne demandent pas le même travail. Certaines sont très simples à mettre en place. D&apos;autres demandent plus d&apos;outils, plus de logique ou plus de vérifications.
+                </p>
+              </div>
+
+              <div className="mx-auto max-w-5xl space-y-3">
+                {HOME_CREDIT_EXAMPLES.map((example, index) => {
+                  const isOpen = openHomeCreditExample === index;
+
+                  return (
+                    <div
+                      key={example.title}
+                      className="overflow-hidden rounded-[1.5rem] border border-black/5 bg-white text-left shadow-[0_14px_38px_rgba(21,36,69,0.035)]"
+                    >
+                      <button
+                        type="button"
+                        onClick={() => setOpenHomeCreditExample(isOpen ? -1 : index)}
+                        className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left md:px-6"
+                      >
+                        <div className="flex flex-wrap items-center gap-3">
+                          <div className="text-base font-medium tracking-tight text-brand-blue md:text-lg">
+                            {example.title}
+                          </div>
+                          <div className="inline-flex items-center rounded-full bg-[#FFF3EF] px-3 py-1 text-sm font-medium text-brand-coral">
+                            {example.credits}
+                          </div>
+                        </div>
+                        <ChevronDown
+                          className={`h-4 w-4 shrink-0 text-brand-blue/45 transition-transform ${
+                            isOpen ? "rotate-180" : ""
+                          }`}
+                        />
+                      </button>
+
+                      {isOpen && (
+                        <div className="border-t border-black/5 px-5 py-4 md:px-6">
+                          <p className="mb-4 text-sm font-light leading-relaxed text-gray-500">
+                            {example.subtitle}
+                          </p>
+                          <div className="space-y-3">
+                            {example.items.map((item) => (
+                              <div
+                                key={item}
+                                className="grid grid-cols-[0.75rem_1fr] items-start gap-x-3"
+                              >
+                                <span className="mt-[0.42rem] h-2.5 w-2.5 rounded-full bg-brand-coral/45" />
+                                <p className="m-0 text-[0.92rem] font-light leading-relaxed text-gray-500">
+                                  {item}
+                                </p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+
+            <section className="space-y-10 md:space-y-12">
+              <div className="mx-auto max-w-3xl space-y-4 text-center">
+                <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-brand-blue md:text-[4.2rem]">
+                  Vous gardez la main, même quand on automatise
+                </h2>
+                <p className="text-sm leading-relaxed text-gray-500 md:text-base">
                   L&apos;idée n&apos;est pas juste d&apos;automatiser une tâche. L&apos;idée, c&apos;est que ça tourne bien, que ce soit clair, et que vous sachiez où vous mettez les pieds.
                 </p>
               </div>
 
-              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
                 {HOME_INCLUDED_ITEMS.map((item) => {
                   const Icon = item.icon;
 
                   return (
                     <div
                       key={item.title}
-                      className="rounded-[1.5rem] border border-black/5 bg-brand-blue/5 px-5 py-5 text-left"
+                      className="rounded-[1.5rem] border border-black/5 bg-white/85 px-5 py-5 text-left shadow-[0_16px_45px_rgba(21,36,69,0.045)]"
                     >
                       <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-2xl bg-white text-brand-coral shadow-[0_4px_10px_rgba(16,24,40,0.04)]">
                         <Icon className="h-4 w-4" />
@@ -948,89 +1276,10 @@ export default function AssistantHub() {
               </div>
             </section>
 
-            <section className="space-y-8 rounded-[2rem] bg-brand-coral/6 px-5 py-6 md:space-y-10 md:px-7 md:py-8">
-              <div className="space-y-2 text-center">
-                <h2 className="text-[2rem] font-black tracking-tight text-brand-blue md:text-[2.9rem]">
-                  De quoi dépend le niveau d&apos;accompagnement ?
-                </h2>
-                <p className="mx-auto max-w-4xl text-sm leading-relaxed text-gray-500 md:text-base">
-                  Toutes les automatisations ne demandent pas le même travail. Certaines sont très simples à mettre en place. D&apos;autres demandent plus d&apos;outils, plus de logique ou plus de vérifications.
-                </p>
-              </div>
-
-              <div className="grid gap-4 lg:grid-cols-3">
-                {HOME_COMPLEXITY_LEVELS.map((item) => (
-                  <div
-                    key={item.title}
-                    className="rounded-[1.5rem] border border-black/5 bg-white px-5 py-5 text-left"
-                  >
-                    <div className="text-base font-semibold tracking-tight text-brand-blue">
-                      {item.title}
-                    </div>
-                    <p className="mt-3 text-sm leading-relaxed text-gray-500">
-                      {item.description}
-                    </p>
-                  </div>
-                ))}
-              </div>
-
-              <p className="text-center text-sm leading-relaxed text-gray-600">
-                Le plus simple reste de nous décrire ce que vous faites aujourd&apos;hui. On vous aide ensuite à estimer ce qu&apos;il faut vraiment.
-              </p>
-            </section>
-
-            <section className="space-y-8 md:space-y-10">
-              <div className="space-y-2 text-center">
-                <h2 className="text-[2rem] font-black tracking-tight text-brand-blue md:text-[2.9rem]">
-                  Choisissez la façon de démarrer
-                </h2>
-                <p className="mx-auto max-w-3xl text-sm leading-relaxed text-gray-500 md:text-base">
-                  Vous pouvez commencer petit pour tester, ou prendre plus de marge si vous avez déjà plusieurs besoins à automatiser.
-                </p>
-              </div>
-
-              <div className="grid gap-6 xl:grid-cols-3">
-                {HOME_OFFERS.map((offer) => (
-                  <div
-                    key={offer.title}
-                    className={`grid h-full grid-rows-[auto_auto_1fr_auto] rounded-[1.75rem] border p-6 md:p-7 ${
-                      offer.featured
-                        ? "border-brand-coral/15 bg-brand-coral/5"
-                        : "border-black/5 bg-white"
-                    }`}
-                  >
-                    <div className="text-[11px] font-black uppercase tracking-[0.18em] text-gray-400">
-                      {offer.badge}
-                    </div>
-                    <div className="mt-4 min-h-[4rem] space-y-1.5">
-                      <div className="text-[1.2rem] leading-[1.08] font-semibold tracking-tight text-brand-blue">
-                        {offer.title}
-                      </div>
-                      <p className="text-[0.92rem] font-light leading-relaxed text-gray-500">
-                        {offer.description}
-                      </p>
-                    </div>
-                    <div className="mt-5" />
-                    <button
-                      type="button"
-                      onClick={() =>
-                        offer.action === "modal"
-                          ? setShowFreeTrialModal(true)
-                          : offer.href && router.push(offer.href)
-                      }
-                      className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-brand-blue px-5 py-3 text-sm font-black text-white transition-colors hover:bg-brand-coral"
-                    >
-                      {offer.cta}
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            <section className="rounded-[2rem] border border-black/5 bg-white px-6 py-10 text-center md:px-10 md:py-14">
+            <section className="rounded-[2.25rem] border border-black/5 bg-white px-6 py-12 text-center shadow-[0_24px_70px_rgba(21,36,69,0.055)] md:px-10 md:py-16">
               <div className="mx-auto max-w-3xl space-y-4">
-                <h2 className="text-[2rem] font-black tracking-tight text-brand-blue md:text-[2.9rem]">
-                  Commencez par ce qui vous prend le plus d&apos;énergie
+                <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-brand-blue md:text-[4.2rem]">
+                  Commencez par la tâche qui vous épuise le plus
                 </h2>
                 <p className="text-sm leading-relaxed text-gray-500 md:text-base">
                   Décrivez vos tâches répétitives, vos relances, vos copier-coller ou vos suivis manuels. On vous aide à voir ce qui peut être automatisé et combien de temps vous pourriez récupérer.
@@ -1039,7 +1288,7 @@ export default function AssistantHub() {
                   <button
                     type="button"
                     onClick={focusHomeChat}
-                    className="inline-flex items-center justify-center rounded-full bg-brand-blue px-7 py-3.5 text-sm font-black text-white transition-colors hover:bg-brand-coral"
+                    className="inline-flex items-center justify-center rounded-full bg-brand-blue px-7 py-3.5 text-sm font-medium text-white transition-colors hover:bg-brand-coral"
                   >
                     Estimer les heures à gagner
                   </button>
@@ -1054,37 +1303,38 @@ export default function AssistantHub() {
             animate={{ opacity: 1, scale: 1 }}
             className="space-y-6"
           >
-            <div className="flex flex-wrap justify-end gap-2">
-              <button
-                onClick={generateCSV}
-                className="flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 text-brand-blue rounded-2xl font-black text-sm whitespace-nowrap hover:bg-gray-200 transition-all"
-              >
-                <FileSpreadsheet className="w-4 h-4" />
-                Export Excel
-              </button>
-              <button
-                onClick={generatePDF}
-                className="flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 text-brand-blue rounded-2xl font-black text-sm whitespace-nowrap hover:bg-gray-200 transition-all"
-              >
-                <Download className="w-4 h-4" />
-                Export PDF
-              </button>
-              <button
-                onClick={() => router.push("/deleguer-mes-automatisations")}
-                className="inline-flex items-center justify-center gap-2 px-4 py-3 bg-brand-blue text-white rounded-xl font-black text-sm whitespace-nowrap hover:bg-brand-coral transition-all"
-              >
-                Déléguer mes automatisations
-              </button>
-            </div>
-
             <div ref={pdfContentRef} className="space-y-6">
               <div className="space-y-2">
-                <div className="inline-flex items-center rounded-full bg-brand-coral/10 px-4 py-2 text-[11px] font-black uppercase tracking-[0.16em] text-brand-coral">
-                  {buildHoursRecap(result.actions)}
+                <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                  <div className="space-y-2">
+                    <div className="inline-flex items-center rounded-full bg-brand-coral/10 px-4 py-2 text-[11px] font-black uppercase tracking-[0.16em] text-brand-coral">
+                      {buildHoursRecap(result.actions)}
+                    </div>
+                    <h2 className="demaa-section-title text-[2.45rem] tracking-tight text-brand-blue md:text-[4.05rem]">
+                      Votre plan d&apos;action
+                    </h2>
+                  </div>
+                  <div className="flex shrink-0 items-center gap-2 md:pt-4">
+                    <button
+                      type="button"
+                      onClick={generateCSV}
+                      aria-label="Exporter en Excel"
+                      title="Exporter en Excel"
+                      className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gray-100 text-brand-blue transition-all hover:bg-gray-200"
+                    >
+                      <FileSpreadsheet className="h-5 w-5" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={generatePDF}
+                      aria-label="Exporter en PDF"
+                      title="Exporter en PDF"
+                      className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gray-100 text-brand-blue transition-all hover:bg-gray-200"
+                    >
+                      <Download className="h-5 w-5" />
+                    </button>
+                  </div>
                 </div>
-                <h2 className="text-2xl md:text-3xl font-black text-brand-blue tracking-tight">
-                  Votre plan d&apos;action
-                </h2>
                 <p className="text-sm md:text-base text-brand-blue/80 font-semibold leading-relaxed">
                   {result.goal}
                 </p>
@@ -1101,11 +1351,11 @@ export default function AssistantHub() {
                     className="bg-white rounded-[2rem] border border-gray-100 p-6 md:p-7 shadow-[0_8px_24px_rgba(0,0,0,0.02)]"
                   >
                     <div className="flex items-start gap-4 min-w-0">
-                      <div className="w-11 h-11 rounded-2xl bg-brand-blue text-white flex items-center justify-center font-black text-sm shrink-0">
+                      <div className="w-11 h-11 rounded-2xl bg-brand-blue text-white flex items-center justify-center font-medium text-sm shrink-0">
                         {String(index + 1).padStart(2, "0")}
                       </div>
                       <div className="space-y-3 min-w-0">
-                        <h3 className="text-2xl font-black text-brand-blue tracking-tight">
+                        <h3 className="text-2xl font-medium text-brand-blue tracking-tight">
                           {action.title}
                         </h3>
                       </div>

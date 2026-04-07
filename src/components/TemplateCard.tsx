@@ -29,7 +29,7 @@ export default function TemplateCard({
         {/* Content */}
         <div className="p-5 md:p-6 flex-1 flex flex-col">
           <div className="mb-3">
-            <span className="px-2.5 py-0.5 bg-brand-coral/5 text-brand-coral text-[9px] font-bold uppercase tracking-widest rounded-full border border-brand-coral/10">
+            <span className="px-2.5 py-0.5 bg-[#FFF3EF] text-brand-coral text-[9px] font-bold uppercase tracking-widest rounded-full border border-brand-coral/10">
               {template.category}
             </span>
           </div>
