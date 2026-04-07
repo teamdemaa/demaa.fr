@@ -31,6 +31,13 @@ interface StripePaymentInput {
   checkoutStatus?: string | null;
 }
 
+interface StripeCreditGrantInput {
+  stripeSessionId: string;
+  email: string;
+  credits: number;
+  offerLabel: string;
+}
+
 function getPrivateKey() {
   return process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n");
 }
@@ -219,4 +226,91 @@ export async function markStripePaymentEmailSent(sessionId: string) {
     },
     { merge: true }
   );
+}
+
+export async function grantStripePaymentCredits(input: StripeCreditGrantInput) {
+  const credits = Number(input.credits);
+
+  if (!Number.isFinite(credits) || credits <= 0) {
+    return { granted: false, reason: "invalid_credits" };
+  }
+
+  const database = getDatabase();
+  const now = new Date().toISOString();
+  const email = normalizeEmail(input.email);
+  const userCreditRef = database.collection("user_credits").doc(getStableKey(email));
+  const creditTransactionRef = database
+    .collection("credit_transactions")
+    .doc(`stripe_${input.stripeSessionId}`);
+
+  let granted = false;
+
+  await database.runTransaction(async (transaction) => {
+    const creditTransactionDoc = await transaction.get(creditTransactionRef);
+
+    if (creditTransactionDoc.exists) {
+      return;
+    }
+
+    const userCreditDoc = await transaction.get(userCreditRef);
+    const currentBalance = Number(userCreditDoc.data()?.balance ?? 0);
+    const nextBalance = (Number.isFinite(currentBalance) ? currentBalance : 0) + credits;
+
+    transaction.set(
+      userCreditRef,
+      {
+        email,
+        balance: nextBalance,
+        created_at: userCreditDoc.exists ? userCreditDoc.data()?.created_at || now : now,
+        updated_at: now,
+      },
+      { merge: true }
+    );
+
+    transaction.set(creditTransactionRef, {
+      email,
+      amount: credits,
+      balance_after: nextBalance,
+      direction: "credit",
+      reason: "stripe_purchase",
+      stripe_session_id: input.stripeSessionId,
+      offer_label: input.offerLabel,
+      created_at: now,
+    });
+
+    transaction.set(
+      database.collection("stripe_payments").doc(input.stripeSessionId),
+      {
+        credits_granted: credits,
+        credits_granted_at: now,
+        updated_at: now,
+      },
+      { merge: true }
+    );
+
+    granted = true;
+  });
+
+  return {
+    granted,
+    credits,
+    reason: granted ? "granted" : "already_granted",
+  };
+}
+
+export async function getCreditBalanceByEmail(email: string) {
+  const database = getDatabase();
+  const normalizedEmail = normalizeEmail(email);
+  const userCreditDoc = await database
+    .collection("user_credits")
+    .doc(getStableKey(normalizedEmail))
+    .get();
+
+  if (!userCreditDoc.exists) {
+    return 0;
+  }
+
+  const balance = Number(userCreditDoc.data()?.balance ?? 0);
+
+  return Number.isFinite(balance) ? balance : 0;
 }

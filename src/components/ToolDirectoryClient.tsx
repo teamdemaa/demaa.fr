@@ -49,7 +49,7 @@ export default function ToolDirectoryClient() {
           <h1 className="demaa-section-title text-4xl tracking-tight text-brand-blue md:text-5xl">
             Annuaire Outils
           </h1>
-          <p className="mx-auto mt-2 max-w-2xl text-sm font-light leading-relaxed text-gray-400">
+          <p className="mx-auto mt-2 max-w-2xl text-sm font-normal leading-relaxed text-gray-600">
             Les outils utiles aux TPE, classés par secteur et usage.
           </p>
 
@@ -60,7 +60,7 @@ export default function ToolDirectoryClient() {
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.target.value)}
                 placeholder="Rechercher un outil, un usage, un secteur..."
-                className="w-full rounded-full bg-white py-3 pl-10 pr-5 text-sm font-light text-brand-blue outline-none transition placeholder:text-brand-blue/25"
+                className="w-full rounded-full bg-white py-3 pl-10 pr-5 text-sm font-normal text-brand-blue outline-none transition placeholder:text-brand-blue/40"
               />
             </div>
           </div>
@@ -106,7 +106,7 @@ export default function ToolDirectoryClient() {
 
       <section className="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8 md:py-7">
         <div className="flex items-center justify-between gap-4 pb-5">
-          <p className="text-sm font-light text-gray-400">
+          <p className="text-sm font-normal text-gray-500">
             <span className="font-semibold text-brand-blue">{filteredTools.length}</span>{" "}
             outils trouvés
           </p>
@@ -128,7 +128,7 @@ export default function ToolDirectoryClient() {
         {filteredTools.length === 0 ? (
           <div className="rounded-[2rem] border border-dashed border-brand-blue/10 bg-white p-10 text-center">
             <h2 className="text-xl font-bold text-brand-blue">Aucun outil trouvé</h2>
-            <p className="mt-3 text-sm font-light text-gray-400">
+            <p className="mt-3 text-sm font-normal text-gray-500">
               Essayez un autre secteur, une autre catégorie ou un mot-clé plus large.
             </p>
           </div>
@@ -153,11 +153,11 @@ export default function ToolDirectoryClient() {
                   </div>
                 </div>
 
-                <p className="mt-3 text-sm font-light leading-relaxed text-gray-500">
+                <p className="mt-3 text-sm font-normal leading-relaxed text-gray-600">
                   {tool.description}
                 </p>
 
-                <p className="mt-2 text-xs font-light leading-relaxed text-brand-blue/50">
+                <p className="mt-2 text-xs font-normal leading-relaxed text-brand-blue/65">
                   {tool.bestFor}
                 </p>
 
@@ -165,20 +165,20 @@ export default function ToolDirectoryClient() {
                   {tool.sectors.slice(0, 2).map((sector) => (
                     <span
                       key={sector}
-                      className="rounded-full bg-[#FFF3EF] px-2.5 py-1 text-[10px] font-light text-brand-blue/70"
+                      className="rounded-full bg-[#FFF3EF] px-2.5 py-1 text-[10px] font-normal text-brand-blue/75"
                     >
                       {sector}
                     </span>
                   ))}
                   {tool.sectors.length > 2 && (
-                    <span className="rounded-full bg-brand-blue/5 px-2.5 py-1 text-[10px] font-light text-brand-blue/50">
+                    <span className="rounded-full bg-brand-blue/5 px-2.5 py-1 text-[10px] font-normal text-brand-blue/65">
                       +{tool.sectors.length - 2}
                     </span>
                   )}
                   {tool.tags.slice(0, 2).map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full bg-[#FFF3EF] px-2.5 py-1 text-[10px] font-light text-brand-blue/55"
+                      className="rounded-full bg-[#FFF3EF] px-2.5 py-1 text-[10px] font-normal text-brand-blue/70"
                     >
                       {tag}
                     </span>

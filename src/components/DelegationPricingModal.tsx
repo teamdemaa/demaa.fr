@@ -351,7 +351,7 @@ export default function DelegationPricingModal({
               <h2 className="text-[2rem] font-black tracking-tight text-brand-blue md:text-[2.9rem]">
                 Choisissez votre formule
               </h2>
-              <p className="mx-auto max-w-4xl text-sm leading-relaxed text-gray-500 md:text-base">
+              <p className="mx-auto max-w-4xl text-sm leading-relaxed text-gray-600 md:text-base">
                 Les crédits sont votre monnaie. Choisissez selon combien d&apos;automatisations vous voulez, plus vous prenez de crédits, moins chaque crédit coûte.
               </p>
             </div>
@@ -375,7 +375,7 @@ export default function DelegationPricingModal({
                     <div className="text-[1.2rem] leading-[1.08] font-semibold tracking-tight text-brand-blue">
                       {offer.title}
                     </div>
-                    <div className="text-[0.92rem] font-light text-gray-400">
+                    <div className="text-[0.92rem] font-normal text-gray-500">
                       {offer.subtitle}
                     </div>
                   </div>
@@ -383,7 +383,7 @@ export default function DelegationPricingModal({
                     {offer.bullets.map((bullet) => (
                       <div key={bullet} className="grid grid-cols-[0.75rem_1fr] items-start gap-x-3">
                         <span className="mt-[0.42rem] h-2.5 w-2.5 rounded-full bg-brand-coral/65" />
-                        <p className="m-0 text-[0.82rem] font-light leading-relaxed text-gray-500">
+                        <p className="m-0 text-[0.82rem] font-normal leading-relaxed text-gray-600">
                           {bullet}
                         </p>
                       </div>
@@ -394,7 +394,7 @@ export default function DelegationPricingModal({
                       <div className="text-[1.85rem] leading-none font-black tracking-tight text-brand-blue">
                         {offer.price}
                       </div>
-                      <div className="text-[0.9rem] font-medium text-gray-400 sm:text-left">
+                      <div className="text-[0.9rem] font-medium text-gray-500 sm:text-left">
                         {offer.unit}
                       </div>
                     </div>
@@ -428,7 +428,7 @@ export default function DelegationPricingModal({
               <h2 className="text-[2rem] font-black tracking-tight text-brand-blue md:text-[2.9rem]">
                 Comment ça marche ?
               </h2>
-              <p className="max-w-3xl text-sm leading-relaxed text-gray-500 md:text-base">
+              <p className="max-w-3xl text-sm leading-relaxed text-gray-600 md:text-base">
                 On avance simplement, avec vous, pour construire quelque chose d&apos;utile dès le départ. Pas une usine à gaz. Pas un système impossible à reprendre.
               </p>
             </div>
@@ -445,7 +445,7 @@ export default function DelegationPricingModal({
                   <div className="mt-3 text-[1.1rem] font-semibold tracking-tight text-brand-blue">
                     {item.title}
                   </div>
-                  <p className="mt-3 text-sm leading-relaxed text-gray-500">
+                  <p className="mt-3 text-sm leading-relaxed text-gray-600">
                     {item.description}
                   </p>
                 </div>
@@ -459,7 +459,7 @@ export default function DelegationPricingModal({
               <h2 className="text-[2rem] font-black tracking-tight text-brand-blue md:text-[2.9rem]">
               De quoi dépend le niveau d&apos;accompagnement ?
               </h2>
-              <p className="max-w-4xl text-sm leading-relaxed text-gray-500 md:text-base">
+              <p className="max-w-4xl text-sm leading-relaxed text-gray-600 md:text-base">
                 Toutes les automatisations ne demandent pas le même travail. Certaines sont très simples à mettre en place. D&apos;autres demandent plus d&apos;outils, plus de logique ou plus de vérifications.
               </p>
             </div>
@@ -494,14 +494,14 @@ export default function DelegationPricingModal({
 
                     {isOpen && (
                       <div className="border-t border-black/5 px-5 py-4">
-                        <p className="mb-4 text-sm font-light leading-relaxed text-gray-500">
+                        <p className="mb-4 text-sm font-normal leading-relaxed text-gray-600">
                           {example.subtitle}
                         </p>
                         <div className="space-y-3">
                           {example.items.map((item) => (
                             <div key={item} className="grid grid-cols-[0.75rem_1fr] items-start gap-x-3">
                               <span className="mt-[0.42rem] h-2.5 w-2.5 rounded-full bg-brand-coral/75" />
-                              <p className="m-0 text-[0.92rem] font-light leading-relaxed text-gray-500">
+                              <p className="m-0 text-[0.92rem] font-normal leading-relaxed text-gray-600">
                                 {item}
                               </p>
                             </div>

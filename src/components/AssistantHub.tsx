@@ -376,7 +376,14 @@ function navigateToHref(router: ReturnType<typeof useRouter>, href: string) {
 }
 
 function navigateToPricing() {
-  window.dispatchEvent(new Event("demaa:open-free-trial"));
+  const pricingSection = document.getElementById("pricing");
+
+  if (pricingSection) {
+    pricingSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    return;
+  }
+
+  window.location.href = "/#pricing";
 }
 
 function buildHoursRecap(actions: ActionPlanItem[]) {
@@ -951,7 +958,7 @@ export default function AssistantHub() {
                       }
                     }}
                     placeholder="Décrivez les tâches qui vous prennent du temps"
-                    className="h-36 w-full resize-none bg-transparent p-7 pr-7 text-lg font-normal leading-relaxed placeholder:text-base placeholder:font-light placeholder:text-gray-300 focus:outline-none md:pr-56"
+                    className="h-36 w-full resize-none bg-transparent p-7 pr-7 text-lg font-normal leading-relaxed placeholder:text-base placeholder:font-normal placeholder:text-gray-400 focus:outline-none md:pr-56"
                     disabled={isLoading}
                   />
 
@@ -1005,7 +1012,7 @@ export default function AssistantHub() {
                 )}
 
                 {hasUnlockedPlan && emailValue.trim() && (
-                  <div className="mt-4 text-sm text-gray-400 font-light">
+                  <div className="mt-4 text-sm font-normal text-gray-500">
                     {generationLimitReached
                       ? "Vous avez atteint 3 plans sur cette adresse email."
                       : `${Math.max(0, MAX_GENERATIONS_PER_USER - generationCount)} plan${
@@ -1028,7 +1035,7 @@ export default function AssistantHub() {
                 <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-brand-blue md:text-[4.2rem]">
                   On commence par remettre les choses à plat
                 </h2>
-                <p className="text-sm leading-relaxed text-gray-500 md:text-base">
+                <p className="text-sm leading-relaxed text-gray-600 md:text-base">
                   On avance simplement, avec vous, pour construire quelque chose d&apos;utile dès le départ. Pas une usine à gaz. Pas un système impossible à reprendre.
                 </p>
               </div>
@@ -1045,7 +1052,7 @@ export default function AssistantHub() {
                     <div className="mt-3 text-[1.1rem] font-semibold tracking-tight text-brand-blue">
                       {item.title}
                     </div>
-                    <p className="mt-3 text-sm leading-relaxed text-gray-500">
+                    <p className="mt-3 text-sm leading-relaxed text-gray-600">
                       {item.description}
                     </p>
                   </div>
@@ -1058,7 +1065,7 @@ export default function AssistantHub() {
                 <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-brand-blue md:text-[4.2rem]">
                   Les tâches évitées deviennent des systèmes qui tournent
                 </h2>
-                <p className="text-sm leading-relaxed text-gray-500 md:text-base">
+                <p className="text-sm leading-relaxed text-gray-600 md:text-base">
                   Ce sont souvent ces petits trous dans le quotidien qui coûtent le plus cher : un lead non relancé, un client mal onboardé, un rapport oublié. Voilà ce que ça donne quand on les structure.
                 </p>
               </div>
@@ -1080,7 +1087,7 @@ export default function AssistantHub() {
                         <h3 className="text-lg font-medium leading-snug text-brand-blue md:text-xl">
                           {item.process}
                         </h3>
-                        <p className="mt-3 text-sm leading-relaxed text-gray-500 md:text-[0.95rem]">
+                        <p className="mt-3 text-sm leading-relaxed text-gray-600 md:text-[0.95rem]">
                           {item.context}
                         </p>
                       </div>
@@ -1089,7 +1096,7 @@ export default function AssistantHub() {
                         <div className="mb-2 text-[0.72rem] font-black uppercase tracking-[0.18em] text-brand-coral md:hidden">
                           Aujourd&apos;hui
                         </div>
-                        <p className="text-sm font-light leading-relaxed text-brand-coral md:text-base">
+                        <p className="text-sm font-normal leading-relaxed text-brand-coral/90 md:text-base">
                           {item.before}
                         </p>
                       </div>
@@ -1098,7 +1105,7 @@ export default function AssistantHub() {
                         <div className="mb-2 text-[0.72rem] font-black uppercase tracking-[0.18em] text-brand-blue md:hidden">
                           Une fois automatisé
                         </div>
-                        <p className="text-sm font-light leading-relaxed text-brand-blue md:text-base">
+                        <p className="text-sm font-normal leading-relaxed text-brand-blue/80 md:text-base">
                           {item.after}
                         </p>
                       </div>
@@ -1113,7 +1120,7 @@ export default function AssistantHub() {
                 <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-brand-blue md:text-[4.2rem]">
                   Vous choisissez votre point de départ
                 </h2>
-                <p className="text-sm leading-relaxed text-gray-500 md:text-base">
+                <p className="text-sm leading-relaxed text-gray-600 md:text-base">
                   Vous pouvez commencer petit pour tester, ou prendre plus de marge si vous avez déjà plusieurs besoins à automatiser.
                 </p>
               </div>
@@ -1135,7 +1142,7 @@ export default function AssistantHub() {
                       <div className="text-[1.2rem] leading-[1.08] font-semibold tracking-tight text-brand-blue">
                         {offer.title}
                       </div>
-                      <div className="text-[0.92rem] font-light text-gray-400">
+                      <div className="text-[0.92rem] font-normal text-gray-500">
                         {offer.subtitle}
                       </div>
                     </div>
@@ -1143,7 +1150,7 @@ export default function AssistantHub() {
                       {offer.bullets.map((bullet) => (
                         <div key={bullet} className="grid grid-cols-[0.75rem_1fr] items-start gap-x-3">
                           <span className="mt-[0.42rem] h-2.5 w-2.5 rounded-full bg-brand-coral/45" />
-                          <p className="m-0 text-[0.82rem] font-light leading-relaxed text-gray-500">
+                          <p className="m-0 text-[0.82rem] font-normal leading-relaxed text-gray-600">
                             {bullet}
                           </p>
                         </div>
@@ -1154,7 +1161,7 @@ export default function AssistantHub() {
                         <div className="demaa-section-title text-[1.85rem] leading-none tracking-tight text-brand-blue">
                           {offer.price}
                         </div>
-                        <div className="text-[0.9rem] font-medium text-gray-400 sm:text-left">
+                        <div className="text-[0.9rem] font-medium text-gray-500 sm:text-left">
                           {offer.unit}
                         </div>
                       </div>
@@ -1180,7 +1187,7 @@ export default function AssistantHub() {
                 <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-brand-blue md:text-[4.2rem]">
                   De quoi dépend le niveau d&apos;accompagnement ?
                 </h2>
-                <p className="text-sm leading-relaxed text-gray-500 md:text-base">
+                <p className="text-sm leading-relaxed text-gray-600 md:text-base">
                   Toutes les automatisations ne demandent pas le même travail. Certaines sont très simples à mettre en place. D&apos;autres demandent plus d&apos;outils, plus de logique ou plus de vérifications.
                 </p>
               </div>
@@ -1216,7 +1223,7 @@ export default function AssistantHub() {
 
                       {isOpen && (
                         <div className="border-t border-black/5 px-5 py-4 md:px-6">
-                          <p className="mb-4 text-sm font-light leading-relaxed text-gray-500">
+                          <p className="mb-4 text-sm font-normal leading-relaxed text-gray-600">
                             {example.subtitle}
                           </p>
                           <div className="space-y-3">
@@ -1226,7 +1233,7 @@ export default function AssistantHub() {
                                 className="grid grid-cols-[0.75rem_1fr] items-start gap-x-3"
                               >
                                 <span className="mt-[0.42rem] h-2.5 w-2.5 rounded-full bg-brand-coral/45" />
-                                <p className="m-0 text-[0.92rem] font-light leading-relaxed text-gray-500">
+                                <p className="m-0 text-[0.92rem] font-normal leading-relaxed text-gray-600">
                                   {item}
                                 </p>
                               </div>
@@ -1245,7 +1252,7 @@ export default function AssistantHub() {
                 <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-brand-blue md:text-[4.2rem]">
                   Vous gardez la main, même quand on automatise
                 </h2>
-                <p className="text-sm leading-relaxed text-gray-500 md:text-base">
+                <p className="text-sm leading-relaxed text-gray-600 md:text-base">
                   L&apos;idée n&apos;est pas juste d&apos;automatiser une tâche. L&apos;idée, c&apos;est que ça tourne bien, que ce soit clair, et que vous sachiez où vous mettez les pieds.
                 </p>
               </div>
@@ -1263,7 +1270,7 @@ export default function AssistantHub() {
                         <Icon className="h-4 w-4" />
                       </div>
                       <div className="text-base font-semibold text-brand-blue">{item.title}</div>
-                      <p className="mt-2 text-sm leading-relaxed text-gray-500">
+                      <p className="mt-2 text-sm leading-relaxed text-gray-600">
                         {item.description}
                       </p>
                     </div>
@@ -1277,7 +1284,7 @@ export default function AssistantHub() {
                 <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-brand-blue md:text-[4.2rem]">
                   Commencez par la tâche qui vous épuise le plus
                 </h2>
-                <p className="text-sm leading-relaxed text-gray-500 md:text-base">
+                <p className="text-sm leading-relaxed text-gray-600 md:text-base">
                   Décrivez vos tâches répétitives, vos relances, vos copier-coller ou vos suivis manuels. On vous aide à voir ce qui peut être automatisé et combien de temps vous pourriez récupérer.
                 </p>
                 <div className="pt-2">

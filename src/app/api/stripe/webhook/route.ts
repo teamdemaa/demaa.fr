@@ -1,6 +1,7 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { NextResponse } from "next/server";
 import {
+  grantStripePaymentCredits,
   getStripePaymentBySessionId,
   markStripePaymentEmailSent,
   upsertConfirmedStripePayment,
@@ -32,6 +33,12 @@ function getOfferLabel(amountTotal: number | null | undefined) {
   if (amountTotal === 65000) return "Automate - 10 crédits";
   if (amountTotal === 98000) return "Maestro - 20 crédits";
   return "Offre Demaa";
+}
+
+function getOfferCredits(amountTotal: number | null | undefined) {
+  if (amountTotal === 65000) return 10;
+  if (amountTotal === 98000) return 20;
+  return 0;
 }
 
 function verifyStripeSignature(
@@ -197,6 +204,7 @@ export async function POST(request: Request) {
     const name = session?.customer_details?.name || null;
     const amountTotal = session?.amount_total ?? null;
     const offerLabel = getOfferLabel(amountTotal);
+    const offerCredits = getOfferCredits(amountTotal);
 
     if (!event.id || !sessionId) {
       console.error("[stripe-webhook] checkout.session.completed missing ids", {
@@ -230,6 +238,23 @@ export async function POST(request: Request) {
         paymentStatus: session?.payment_status ?? null,
         checkoutStatus: session?.status ?? null,
       });
+
+      if (email && offerCredits > 0) {
+        const creditGrant = await grantStripePaymentCredits({
+          stripeSessionId: sessionId,
+          email,
+          credits: offerCredits,
+          offerLabel,
+        });
+
+        console.info("[stripe-webhook] Credit grant result", {
+          eventId: event.id,
+          sessionId,
+          email,
+          credits: offerCredits,
+          result: creditGrant.reason,
+        });
+      }
 
       const storedPayment = await getStripePaymentBySessionId(sessionId);
 

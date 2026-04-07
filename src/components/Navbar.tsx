@@ -27,7 +27,7 @@ export default function Navbar({ minimal = false }: { minimal?: boolean }) {
           {!minimal && (
             <div className="flex items-center gap-3 md:gap-5">
               <Link
-                href="/outils-gratuits"
+                href="/annuaire-outils"
                 className="text-[13px] md:text-[15px] text-brand-blue hover:text-brand-coral transition-all duration-300 font-medium whitespace-nowrap"
               >
                 <span className="hidden sm:inline">Annuaire des outils</span>
@@ -35,12 +35,14 @@ export default function Navbar({ minimal = false }: { minimal?: boolean }) {
               </Link>
 
               <Link
-                href="/?delegation=free"
+                href="/#pricing"
                 className="inline-flex items-center rounded-full border border-brand-blue/12 bg-transparent px-5 py-3 text-xs md:text-sm font-medium text-brand-blue transition-colors hover:border-brand-coral/25 hover:text-brand-coral whitespace-nowrap"
                 onClick={(event) => {
                   if (pathname === "/") {
                     event.preventDefault();
-                    window.dispatchEvent(new Event("demaa:open-free-trial"));
+                    document
+                      .getElementById("pricing")
+                      ?.scrollIntoView({ behavior: "smooth", block: "start" });
                   }
                 }}
               >
