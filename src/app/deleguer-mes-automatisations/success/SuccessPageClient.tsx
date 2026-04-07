@@ -114,7 +114,7 @@ export default function SuccessPageClient({
                 </p>
                 <p className="text-sm leading-relaxed text-gray-500 md:text-base">
                   {verification.email
-                    ? `Un email de confirmation a été déclenché pour ${verification.email}.`
+                    ? `Le reçu de paiement Stripe a été envoyé à ${verification.email}.`
                     : "Vous pouvez maintenant réserver votre rendez-vous."}
                 </p>
                 <div className="pt-2">

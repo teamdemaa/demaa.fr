@@ -9,6 +9,7 @@ interface CacheRow {
 interface PaymentRow {
   stripe_session_id: string;
   email_sent_at: string | null;
+  slack_notified_at?: string | null;
 }
 
 interface GenerationInput {
@@ -219,16 +220,17 @@ export async function getStripePaymentBySessionId(sessionId: string) {
   return {
     stripe_session_id: payment?.stripe_session_id || sessionId,
     email_sent_at: payment?.email_sent_at || null,
+    slack_notified_at: payment?.slack_notified_at || null,
   };
 }
 
-export async function markStripePaymentEmailSent(sessionId: string) {
+export async function markStripePaymentSlackNotified(sessionId: string) {
   const database = getDatabase();
   const now = new Date().toISOString();
 
   await database.collection("stripe_payments").doc(sessionId).set(
     {
-      email_sent_at: now,
+      slack_notified_at: now,
       updated_at: now,
     },
     { merge: true }

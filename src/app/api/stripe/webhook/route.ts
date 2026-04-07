@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import {
   grantStripePaymentCredits,
   getStripePaymentBySessionId,
-  markStripePaymentEmailSent,
+  markStripePaymentSlackNotified,
   upsertConfirmedStripePayment,
 } from "@/lib/generations-db";
 
@@ -73,87 +73,60 @@ function verifyStripeSignature(
   });
 }
 
-async function sendConfirmationEmail(input: {
-  to: string;
+async function sendPaymentSlackNotification(input: {
+  amountTotal: number | null;
+  currency: string | null;
+  email: string | null;
+  livemode: boolean;
   name?: string | null;
   offerLabel: string;
+  sessionId: string;
 }) {
-  const resendApiKey = process.env.RESEND_API_KEY;
-  const fromEmail = process.env.RESEND_FROM_EMAIL;
-  const templateId =
-    process.env.RESEND_PAYMENT_TEMPLATE_ID?.trim() ||
-    "b6eb8ed4-5d20-41dc-b4ca-47e0ff3a7fe0";
+  const webhookUrl = process.env.SLACK_WEBHOOK_URL;
 
-  if (!resendApiKey || !fromEmail) {
-    throw new Error("Resend is not configured. Missing RESEND_API_KEY or RESEND_FROM_EMAIL.");
+  if (!webhookUrl) {
+    throw new Error("Slack is not configured. Missing SLACK_WEBHOOK_URL.");
   }
 
-  const html = `
-    <div style="font-family: Arial, sans-serif; color: #191b30; line-height: 1.6;">
-      <h1 style="font-size: 24px; margin-bottom: 12px;">Paiement bien reçu</h1>
-      <p>Bonjour ${input.name || ""},</p>
-      <p>Votre paiement pour <strong>${input.offerLabel}</strong> a bien été confirmé.</p>
-      <p>Vous pouvez maintenant réserver votre créneau ici :</p>
-      <p>
-        <a href="https://teamdemaa.fillout.com/t/4QP8VeqUAaus" style="display:inline-block;background:#191b30;color:#ffffff;text-decoration:none;padding:12px 18px;border-radius:999px;">
-          Prendre rendez-vous
-        </a>
-      </p>
-      <p>À très vite,<br />Demaa</p>
-    </div>
-  `;
+  const amount =
+    typeof input.amountTotal === "number"
+      ? `${(input.amountTotal / 100).toLocaleString("fr-FR", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })} ${(input.currency || "eur").toUpperCase()}`
+      : "_non renseigné_";
 
-  const templatePayload = {
-    from: fromEmail,
-    to: [input.to],
-    subject: `Paiement confirmé - ${input.offerLabel}`,
-    template: {
-      id: templateId,
-      variables: {
-        Credit: input.offerLabel,
-        credit: input.offerLabel,
-        OFFER_LABEL: input.offerLabel,
-        FIRST_NAME: input.name || "",
-        first_name: input.name || "",
-        BOOKING_URL: "https://teamdemaa.fillout.com/t/4QP8VeqUAaus",
-        booking_url: "https://teamdemaa.fillout.com/t/4QP8VeqUAaus",
-      },
-    },
-  };
-
-  const templateResponse = await fetch("https://api.resend.com/emails", {
+  const slackResponse = await fetch(webhookUrl, {
     method: "POST",
-    headers: {
-      Authorization: `Bearer ${resendApiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(templatePayload),
-  });
-
-  if (templateResponse.ok) {
-    return;
-  }
-
-  const templateBody = await templateResponse.text().catch(() => "");
-  console.error("Resend template email error:", templateResponse.status, templateBody);
-
-  const fallbackResponse = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${resendApiKey}`,
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      from: fromEmail,
-      to: [input.to],
-      subject: `Paiement confirmé - ${input.offerLabel}`,
-      html,
+      text: "💳 Nouveau paiement Demaa confirmé",
+      blocks: [
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: `*Paiement confirmé*\n*Offre* : ${input.offerLabel}\n*Montant* : ${amount}\n*Nom* : ${input.name || "_non renseigné_"}\n*Email* : ${input.email || "_non renseigné_"}\n*Session Stripe* : ${input.sessionId}\n*Mode* : ${input.livemode ? "Live" : "Test"}`,
+          },
+        },
+        {
+          type: "context",
+          elements: [
+            {
+              type: "mrkdwn",
+              text: `⏰ ${new Date().toLocaleString("fr-FR", {
+                timeZone: "Europe/Paris",
+              })}`,
+            },
+          ],
+        },
+      ],
     }),
   });
 
-  if (!fallbackResponse.ok) {
-    const body = await fallbackResponse.text().catch(() => "");
-    throw new Error(`Resend error ${fallbackResponse.status}: ${body || "unknown error"}`);
+  if (!slackResponse.ok) {
+    const body = await slackResponse.text().catch(() => "");
+    throw new Error(`Slack error ${slackResponse.status}: ${body || "unknown error"}`);
   }
 }
 
@@ -258,32 +231,28 @@ export async function POST(request: Request) {
 
       const storedPayment = await getStripePaymentBySessionId(sessionId);
 
-      if (!email) {
-        console.warn("[stripe-webhook] No customer email found, skipping confirmation email", {
+      if (storedPayment?.slack_notified_at) {
+        console.info("[stripe-webhook] Slack payment notification already sent for session", {
           eventId: event.id,
           sessionId,
+          slackNotifiedAt: storedPayment.slack_notified_at,
         });
-        return NextResponse.json({ received: true, emailSent: false });
+        return NextResponse.json({ received: true, slackNotified: true, duplicate: true });
       }
 
-      if (storedPayment?.email_sent_at) {
-        console.info("[stripe-webhook] Confirmation email already sent for session", {
-          eventId: event.id,
-          sessionId,
-          emailSentAt: storedPayment.email_sent_at,
-        });
-        return NextResponse.json({ received: true, emailSent: true, duplicate: true });
-      }
-
-      await sendConfirmationEmail({
-        to: email,
+      await sendPaymentSlackNotification({
+        amountTotal,
+        currency: session?.currency ?? null,
+        email,
+        livemode: Boolean(event.livemode),
         name,
         offerLabel,
+        sessionId,
       });
 
-      await markStripePaymentEmailSent(sessionId);
+      await markStripePaymentSlackNotified(sessionId);
 
-      console.info("[stripe-webhook] Confirmation email sent", {
+      console.info("[stripe-webhook] Slack payment notification sent", {
         eventId: event.id,
         sessionId,
         email,
