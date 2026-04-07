@@ -58,6 +58,7 @@ export default function PolitiqueConfidentialitePage() {
               <li>numéro de téléphone / WhatsApp ;</li>
               <li>nom d&apos;entreprise ;</li>
               <li>secteur d&apos;activité ;</li>
+              <li>données d&apos;inscription à la newsletter : prénom, secteur d&apos;activité et adresse email ;</li>
               <li>contenu de votre demande, besoin métier, préférences outils et informations transmises dans les formulaires ;</li>
               <li>contenu saisi dans l&apos;assistant IA et plans générés ;</li>
               <li>données techniques liées à la navigation et à la mesure d&apos;audience ;</li>
@@ -69,6 +70,7 @@ export default function PolitiqueConfidentialitePage() {
             <ul className="list-disc space-y-2 pl-5">
               <li><strong>Répondre à vos demandes, devis, audits et demandes d&apos;automatisation :</strong> exécution de mesures précontractuelles prises à votre demande.</li>
               <li><strong>Gérer les formulaires de contact, rappels et échanges commerciaux :</strong> intérêt légitime et, selon les cas, mesures précontractuelles.</li>
+              <li><strong>Envoyer la newsletter Demaa :</strong> consentement, avec possibilité de se désinscrire à tout moment.</li>
               <li><strong>Fournir l&apos;assistant IA et enregistrer vos générations :</strong> exécution du service demandé et intérêt légitime d&apos;amélioration et de suivi.</li>
               <li><strong>Gérer les listes d&apos;attente ou demandes d&apos;information sur un outil :</strong> consentement ou intérêt légitime selon le contexte de la demande.</li>
               <li><strong>Mesure d&apos;audience, sécurité et maintenance :</strong> intérêt légitime, et consentement si la réglementation l&apos;impose pour certains traceurs.</li>
@@ -91,6 +93,7 @@ export default function PolitiqueConfidentialitePage() {
           <PrivacySection title="5. Durée de conservation">
             <ul className="list-disc space-y-2 pl-5">
               <li><strong>Demandes commerciales et de contact :</strong> jusqu&apos;à 3 ans à compter du dernier échange utile, sauf obligation légale contraire.</li>
+              <li><strong>Newsletter :</strong> jusqu&apos;à votre désinscription ou retrait de consentement.</li>
               <li><strong>Générations de l&apos;assistant IA et historique associé :</strong> pendant la durée nécessaire au service et au suivi commercial, puis suppression ou anonymisation.</li>
               <li><strong>Données conservées localement dans votre navigateur :</strong> jusqu&apos;à suppression manuelle ou effacement par votre navigateur.</li>
               <li><strong>Données techniques de sécurité et journaux :</strong> pendant la durée nécessaire à l&apos;exploitation et à la sécurité du site.</li>

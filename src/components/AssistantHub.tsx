@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   AlertCircle,
-  BadgeCheck,
   Check,
   ChevronDown,
   ChevronRight,
@@ -16,9 +15,7 @@ import {
   Send,
   Sparkles,
   FileText,
-  SquareCheck,
   Wrench,
-  Workflow,
   X,
 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -279,27 +276,6 @@ type HomeOffer = {
   featured?: boolean;
   href?: string;
 };
-
-function HandDrawnStepIllustration({ index }: { index: number }) {
-  const illustrations = [
-    { icon: SquareCheck, label: "Checklist des tâches à clarifier" },
-    { icon: Workflow, label: "Workflow de solution" },
-    { icon: BadgeCheck, label: "Process testé et validé" },
-  ] as const;
-  const illustration = illustrations[index] ?? illustrations[0];
-  const Icon = illustration.icon;
-
-  return (
-    <div className="mb-7 flex h-24 items-center justify-center rounded-[1rem] border border-white/70 bg-white text-brand-coral shadow-[0_10px_22px_rgba(0,0,0,0.06)]">
-      <Icon
-        aria-label={illustration.label}
-        role="img"
-        className="h-9 w-9"
-        strokeWidth={1.65}
-      />
-    </div>
-  );
-}
 
 const HOME_OFFERS: readonly HomeOffer[] = [
   {
@@ -1112,15 +1088,14 @@ export default function AssistantHub() {
                   </p>
                 </div>
 
-                <div className="grid gap-5 lg:grid-cols-3">
+                <div className="mx-auto grid max-w-6xl gap-5 lg:grid-cols-3">
                   {HOME_STEPS.map((item, index) => (
                     <div
                       key={item.step}
                       className="rounded-[1.75rem] border border-white/10 bg-white/[0.045] px-5 py-7 shadow-[0_10px_22px_rgba(0,0,0,0.08)] md:px-6 md:py-8"
                     >
-                      <HandDrawnStepIllustration index={index} />
-                      <div className="text-[0.78rem] font-black tracking-[0.22em] text-brand-coral">
-                        {item.step}
+                      <div className="mb-7 flex h-14 w-14 items-center justify-center rounded-full border border-brand-coral/25 bg-[#FFF9F8] text-lg font-semibold text-brand-coral">
+                        {index + 1}
                       </div>
                       <div className="mt-3 text-[1.1rem] font-semibold tracking-tight text-white">
                         {item.title}
@@ -1306,7 +1281,7 @@ export default function AssistantHub() {
             <motion.section {...SECTION_REVEAL} className="space-y-10 rounded-[2.25rem] border border-white/10 bg-brand-blue px-5 py-8 md:space-y-12 md:px-8 md:py-10">
               <div className="mx-auto max-w-4xl space-y-4 text-center">
                 <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-white md:text-[4.2rem]">
-                  De quoi dépend le niveau d&apos;accompagnement ?
+                  Comment fonctionne<br /> les crédits ?
                 </h2>
                 <p className="text-sm leading-relaxed text-white/65 md:text-base">
                   Toutes les automatisations ne demandent pas le même travail. Certaines sont très simples à mettre en place. D&apos;autres demandent plus d&apos;outils, plus de logique ou plus de vérifications.

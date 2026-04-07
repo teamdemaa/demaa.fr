@@ -38,6 +38,13 @@ interface StripeCreditGrantInput {
   offerLabel: string;
 }
 
+interface NewsletterSubscriberInput {
+  firstName: string;
+  sector: string;
+  email: string;
+  source?: string;
+}
+
 function getPrivateKey() {
   return process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n");
 }
@@ -313,4 +320,31 @@ export async function getCreditBalanceByEmail(email: string) {
   const balance = Number(userCreditDoc.data()?.balance ?? 0);
 
   return Number.isFinite(balance) ? balance : 0;
+}
+
+export async function saveNewsletterSubscriber(input: NewsletterSubscriberInput) {
+  const database = getDatabase();
+  const now = new Date().toISOString();
+  const email = normalizeEmail(input.email);
+  const subscriberRef = database.collection("abonnes").doc(getStableKey(email));
+
+  await database.runTransaction(async (transaction) => {
+    const subscriberDoc = await transaction.get(subscriberRef);
+
+    transaction.set(
+      subscriberRef,
+      {
+        email,
+        first_name: input.firstName.trim(),
+        sector: input.sector.trim(),
+        source: input.source?.trim() || "newsletter",
+        status: "subscribed",
+        created_at: subscriberDoc.exists ? subscriberDoc.data()?.created_at || now : now,
+        updated_at: now,
+      },
+      { merge: true }
+    );
+  });
+
+  return { email };
 }

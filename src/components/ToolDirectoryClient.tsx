@@ -8,16 +8,37 @@ import {
   toolDirectorySectors,
 } from "@/lib/tool-directory";
 
-export default function ToolDirectoryClient() {
+function getValidFilters(sector?: string, category?: string) {
+  if (category && toolDirectoryCategories.includes(category)) {
+    return { sector: "Tous", category };
+  }
+
+  if (sector && toolDirectorySectors.includes(sector)) {
+    return { sector, category: "Tous" };
+  }
+
+  return { sector: "Tous", category: "Tous" };
+}
+
+type ToolDirectoryClientProps = {
+  initialCategory?: string;
+  initialSector?: string;
+};
+
+export default function ToolDirectoryClient({
+  initialCategory,
+  initialSector,
+}: ToolDirectoryClientProps) {
+  const initialFilters = getValidFilters(initialSector, initialCategory);
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeSector, setActiveSector] = useState("Tous");
-  const [activeCategory, setActiveCategory] = useState("Tous");
+  const [activeSector, setActiveSector] = useState(initialFilters.sector);
+  const [activeCategory, setActiveCategory] = useState(initialFilters.category);
 
   const filteredTools = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
-    const sectorNames = toolDirectorySectors.filter((sector) => sector !== "Tous");
 
     return toolDirectory.filter((tool) => {
+      const isTransverseTool = tool.sectors.length > 2;
       const matchesSearch =
         !query ||
         tool.name.toLowerCase().includes(query) ||
@@ -28,17 +49,13 @@ export default function ToolDirectoryClient() {
         tool.category.toLowerCase().includes(query);
 
       const matchesSector =
-        activeSector === "Tous" || tool.sectors.includes(activeSector);
+        activeSector === "Tous" ||
+        (tool.sectors.includes(activeSector) && !isTransverseTool);
 
       const matchesCategory =
         activeCategory === "Tous" || tool.category === activeCategory;
 
-      const isSectorSpecific =
-        activeSector === "Tous" ||
-        tool.category === "Outils métier" ||
-        !sectorNames.every((sector) => tool.sectors.includes(sector));
-
-      return matchesSearch && matchesSector && matchesCategory && isSectorSpecific;
+      return matchesSearch && matchesSector && matchesCategory;
     });
   }, [activeCategory, activeSector, searchQuery]);
 
@@ -162,19 +179,20 @@ export default function ToolDirectoryClient() {
                 </p>
 
                 <div className="mt-3 flex flex-wrap gap-2">
-                  {tool.sectors.slice(0, 2).map((sector) => (
-                    <span
-                      key={sector}
-                      className="rounded-full bg-[#FFF3EF] px-2.5 py-1 text-[10px] font-normal text-brand-blue/75"
-                    >
-                      {sector}
-                    </span>
-                  ))}
-                  {tool.sectors.length > 2 && (
-                    <span className="rounded-full bg-brand-blue/5 px-2.5 py-1 text-[10px] font-normal text-brand-blue/65">
-                      +{tool.sectors.length - 2}
-                    </span>
-                  )}
+                  {(tool.sectors.length > 2 ? ["Transverse"] : tool.sectors)
+                    .slice(0, 2)
+                    .map((sector) => (
+                      <span
+                        key={sector}
+                        className={`rounded-full px-2.5 py-1 text-[10px] font-normal ${
+                          sector === "Transverse"
+                            ? "bg-brand-blue/5 text-brand-blue/65"
+                            : "bg-[#FFF3EF] text-brand-blue/75"
+                        }`}
+                      >
+                        {sector}
+                      </span>
+                    ))}
                   {tool.tags.slice(0, 2).map((tag) => (
                     <span
                       key={tag}
