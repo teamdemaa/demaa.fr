@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, FileText, MessageCircle, Mic, Sparkles, Wrench, X } from "lucide-react";
 
@@ -58,7 +57,6 @@ export default function DelegationPricingModal({
   embedded?: boolean;
   initialOffer?: OfferKey;
 }) {
-  const router = useRouter();
   const [selectedOffer, setSelectedOffer] = useState<OfferKey>(initialOffer);
   const [openCreditExample, setOpenCreditExample] = useState<number>(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -68,11 +66,8 @@ export default function DelegationPricingModal({
   const speechRecognitionRef = useRef<SpeechRecognitionInstance | null>(null);
   const [formData, setFormData] = useState({
     name: "",
-    company: "",
     email: "",
     phone: "",
-    sector: "",
-    toolPreferences: "",
     automationNeed: "",
   });
 
@@ -85,23 +80,13 @@ export default function DelegationPricingModal({
   const resetAndClose = () => {
     speechRecognitionRef.current?.stop();
     setIsRecording(false);
-    setSelectedOffer(null);
     setIsSubmitted(false);
     setSubmitError(null);
     onClose();
   };
 
-  const goBackToOffers = () => {
-    speechRecognitionRef.current?.stop();
-    setIsRecording(false);
-    setSelectedOffer(null);
-    setIsSubmitted(false);
-    setSubmitError(null);
-  };
-
   const validateFreeCreditForm = () => {
     if (!formData.name.trim()) return "Merci d'indiquer votre nom.";
-    if (!formData.company.trim()) return "Merci d'indiquer votre entreprise.";
     if (!formData.email.trim()) return "Merci d'indiquer votre email pro.";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
       return "Merci d'indiquer un email valide.";
@@ -133,7 +118,6 @@ export default function DelegationPricingModal({
           ...formData,
           offer: "2 crédits offerts",
           details: formData.automationNeed,
-          toolPreferences: formData.toolPreferences,
           source: embedded ? "Delegation page free credit" : "Delegation modal free credit",
         }),
       });
@@ -234,7 +218,7 @@ export default function DelegationPricingModal({
     {
       key: "pack10" as const,
       badge: "10 crédits",
-      title: "Pack de départ",
+      title: "Automate",
       subtitle: "10 crédits à utiliser comme vous voulez",
       bullets: [
         "Simple ou complexe, vous choisissez",
@@ -249,7 +233,7 @@ export default function DelegationPricingModal({
     {
       key: "pack20" as const,
       badge: "20 crédits",
-      title: "Pack intensif",
+      title: "Maestro",
       subtitle: "20 crédits à utiliser comme vous voulez",
       bullets: [
         "Simple ou complexe, vous choisissez",
@@ -352,9 +336,9 @@ export default function DelegationPricingModal({
     <>
       {!embedded && (
         <button
-          onClick={selectedOffer === "free" ? goBackToOffers : resetAndClose}
+          onClick={resetAndClose}
           className="absolute right-5 top-5 z-10 text-gray-300 transition-colors hover:text-brand-blue"
-          aria-label={selectedOffer === "free" ? "Retour aux offres" : "Fermer"}
+          aria-label="Fermer"
         >
           <X className="h-5 w-5" />
         </button>
@@ -419,9 +403,7 @@ export default function DelegationPricingModal({
                     type="button"
                   onClick={() =>
                     offer.key === "free"
-                      ? embedded
-                        ? router.push("/deleguer-mes-automatisations/test-gratuit")
-                        : setSelectedOffer("free")
+                      ? setSelectedOffer("free")
                       : handlePaidOffer(offer.stripeUrl || "")
                   }
                     disabled={offer.key !== "free" && !offer.stripeUrl}
@@ -572,8 +554,8 @@ export default function DelegationPricingModal({
       )}
 
       {selectedOffer === "free" && (
-        <div className={`${embedded ? "max-w-3xl space-y-6" : "space-y-4"}`}>
-          <div className={`space-y-1.5 ${embedded ? "max-w-2xl" : "max-w-4xl pr-10"}`}>
+        <div className={`${embedded ? "max-w-2xl space-y-6" : "space-y-4"}`}>
+          <div className={`space-y-1.5 ${embedded ? "max-w-2xl" : "max-w-2xl pr-10"}`}>
             {!embedded && (
               <div className="inline-flex items-center gap-2 rounded-full bg-brand-coral/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-brand-coral">
                 2 crédits offerts
@@ -588,61 +570,31 @@ export default function DelegationPricingModal({
           </div>
 
           {!isSubmitted ? (
-            <form onSubmit={handleFreeCreditSubmit} className="max-w-3xl space-y-2.5">
-              <div className="grid gap-3 md:grid-cols-2">
+            <form onSubmit={handleFreeCreditSubmit} className="max-w-2xl space-y-2.5">
+              <div className="flex flex-col gap-3">
                 <input
                   required
                   type="text"
                   placeholder="Nom"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="demaa-input h-11 rounded-2xl border border-brand-blue/10 px-4 text-sm font-medium shadow-none"
+                  className="demaa-input h-11 w-full rounded-2xl border border-brand-blue/10 px-4 text-sm font-medium shadow-none"
                 />
-                <input
-                  required
-                  type="text"
-                  placeholder="Entreprise"
-                  value={formData.company}
-                  onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                  className="demaa-input h-11 rounded-2xl border border-brand-blue/10 px-4 text-sm font-medium shadow-none"
-                />
-              </div>
-
-              <div className="grid gap-3 md:grid-cols-2">
                 <input
                   required
                   type="email"
                   placeholder="Email pro"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="demaa-input h-11 rounded-2xl border border-brand-blue/10 px-4 text-sm font-medium shadow-none"
+                  className="demaa-input h-11 w-full rounded-2xl border border-brand-blue/10 px-4 text-sm font-medium shadow-none"
                 />
                 <input
                   required
                   type="tel"
-                  placeholder="Téléphone / WhatsApp"
+                  placeholder="Numéro WhatsApp"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="demaa-input h-11 rounded-2xl border border-brand-blue/10 px-4 text-sm font-medium shadow-none"
-                />
-              </div>
-
-              <div className="grid gap-3 md:grid-cols-2">
-                <input
-                  type="text"
-                  placeholder="Secteur d'activité"
-                  value={formData.sector}
-                  onChange={(e) => setFormData({ ...formData, sector: e.target.value })}
-                  className="demaa-input h-11 rounded-2xl border border-brand-blue/10 px-4 text-sm font-medium shadow-none"
-                />
-                <input
-                  type="text"
-                  placeholder="Préférences outils (facultatif)"
-                  value={formData.toolPreferences}
-                  onChange={(e) =>
-                    setFormData({ ...formData, toolPreferences: e.target.value })
-                  }
-                  className="demaa-input h-11 rounded-2xl border border-brand-blue/10 px-4 text-sm font-medium shadow-none"
+                  className="demaa-input h-11 w-full rounded-2xl border border-brand-blue/10 px-4 text-sm font-medium shadow-none"
                 />
               </div>
 
@@ -729,7 +681,7 @@ export default function DelegationPricingModal({
               onClick={(e) => e.stopPropagation()}
               className={`relative w-full overflow-y-auto soft-scroll rounded-[2rem] border border-black/5 bg-white p-5 shadow-[0_30px_80px_rgba(21,36,69,0.18)] md:p-6 ${
                 selectedOffer === "free"
-                  ? "max-h-[calc(100vh-2.5rem)] max-w-4xl"
+                  ? "max-h-[calc(100vh-2.5rem)] max-w-3xl"
                   : "max-h-[calc(100vh-6rem)] max-w-[68rem]"
               }`}
             >

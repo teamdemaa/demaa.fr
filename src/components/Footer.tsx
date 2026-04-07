@@ -13,7 +13,7 @@ export default function Footer() {
             <Link href="/" className="text-3xl font-bold tracking-tight text-white block">
               Demaa<span className="text-brand-coral">.</span>
             </Link>
-            <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
+            <p className="demaa-section-title max-w-xs text-lg leading-snug text-gray-400">
               On vous aide à enlever les tâches qui vous ralentissent, pour que votre activité avance plus simplement.
             </p>
           </div>

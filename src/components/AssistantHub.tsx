@@ -29,6 +29,13 @@ const STRIPE_URL_20_CREDITS =
   process.env.NEXT_PUBLIC_STRIPE_URL_20_CREDITS?.trim() ||
   "https://buy.stripe.com/6oU14gc7041ha4S2Ml6Na04";
 
+const SECTION_REVEAL = {
+  initial: { opacity: 0, y: 18 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, amount: 0.16 },
+  transition: { duration: 0.72, ease: "easeOut" },
+} as const;
+
 interface ActionPlanItem {
   title: string;
   why: string;
@@ -262,7 +269,7 @@ const HOME_OFFERS: readonly HomeOffer[] = [
   },
   {
     badge: "10 crédits",
-    title: "Pack de départ",
+    title: "Automate",
     subtitle: "10 crédits à utiliser comme vous voulez",
     description:
       "Pour commencer à structurer plusieurs tâches sans vous engager dans un abonnement.",
@@ -279,7 +286,7 @@ const HOME_OFFERS: readonly HomeOffer[] = [
   },
   {
     badge: "20 crédits",
-    title: "Pack intensif",
+    title: "Maestro",
     subtitle: "20 crédits à utiliser comme vous voulez",
     description:
       "Pour les activités qui ont déjà plusieurs sujets à automatiser et veulent avancer plus vite.",
@@ -369,7 +376,7 @@ function navigateToHref(router: ReturnType<typeof useRouter>, href: string) {
 }
 
 function navigateToPricing() {
-  window.dispatchEvent(new Event("demaa:navigate-pricing"));
+  window.dispatchEvent(new Event("demaa:open-free-trial"));
 }
 
 function buildHoursRecap(actions: ActionPlanItem[]) {
@@ -482,36 +489,25 @@ export default function AssistantHub() {
   const [generationLimitReached, setGenerationLimitReached] = useState(false);
 
   useEffect(() => {
-    const scrollToPricing = () => {
-      window.setTimeout(() => {
-        document.getElementById("pricing")?.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      }, 120);
-    };
-
-    const handlePricingNavigation = () => {
+    const openFreeTrialModal = () => {
       speechRecognitionRef.current?.stop();
       setIsLoading(false);
       setIsRecording(false);
-      setResult(null);
-      setPendingResult(null);
       setError(null);
       setEmailError(null);
       setShowEmailModal(false);
-      window.history.pushState(null, "", "/#pricing");
-      scrollToPricing();
+      setShowFreeTrialModal(true);
     };
 
-    window.addEventListener("demaa:navigate-pricing", handlePricingNavigation);
+    window.addEventListener("demaa:open-free-trial", openFreeTrialModal);
 
-    if (window.location.hash === "#pricing") {
-      scrollToPricing();
+    if (new URLSearchParams(window.location.search).get("delegation") === "free") {
+      window.history.replaceState(null, "", "/");
+      openFreeTrialModal();
     }
 
     return () => {
-      window.removeEventListener("demaa:navigate-pricing", handlePricingNavigation);
+      window.removeEventListener("demaa:open-free-trial", openFreeTrialModal);
     };
   }, []);
 
@@ -927,7 +923,7 @@ export default function AssistantHub() {
             exit={{ opacity: 0, scale: 0.95 }}
             className="mt-8 space-y-20 md:mt-12 md:space-y-32"
           >
-            <section className="flex flex-col items-center text-center space-y-7">
+            <motion.section {...SECTION_REVEAL} className="flex flex-col items-center text-center space-y-7">
               <div className="space-y-4">
                 <h1 className="demaa-hero-title text-[3rem] text-brand-blue tracking-tight leading-[0.98] md:text-[4.05rem] lg:text-[5rem]">
                   Vous avez déjà assez à gérer.
@@ -1025,9 +1021,9 @@ export default function AssistantHub() {
                   </div>
                 )}
               </form>
-            </section>
+            </motion.section>
 
-            <section className="space-y-10 md:space-y-12">
+            <motion.section {...SECTION_REVEAL} className="space-y-10 md:space-y-12">
               <div className="mx-auto max-w-3xl space-y-4 text-center">
                 <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-brand-blue md:text-[4.2rem]">
                   On commence par remettre les choses à plat
@@ -1041,7 +1037,7 @@ export default function AssistantHub() {
                 {HOME_STEPS.map((item) => (
                   <div
                     key={item.step}
-                    className="rounded-[1.75rem] border border-black/5 bg-white/90 px-5 py-6 shadow-[0_18px_50px_rgba(21,36,69,0.05)] md:px-6"
+                    className="rounded-[1.75rem] border border-black/5 bg-white/90 px-5 py-6 shadow-[0_8px_18px_rgba(25,27,48,0.018)] md:px-6"
                   >
                     <div className="text-[0.78rem] font-black tracking-[0.22em] text-brand-coral">
                       {item.step}
@@ -1055,9 +1051,9 @@ export default function AssistantHub() {
                   </div>
                 ))}
               </div>
-            </section>
+            </motion.section>
 
-            <section className="space-y-10 md:space-y-12">
+            <motion.section {...SECTION_REVEAL} className="space-y-10 md:space-y-12">
               <div className="mx-auto max-w-3xl space-y-4 text-center">
                 <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-brand-blue md:text-[4.2rem]">
                   Les tâches évitées deviennent des systèmes qui tournent
@@ -1067,7 +1063,7 @@ export default function AssistantHub() {
                 </p>
               </div>
 
-              <div className="overflow-hidden rounded-[2rem] border border-brand-blue/10 bg-white shadow-[0_12px_34px_rgba(21,36,69,0.025)]">
+              <div className="overflow-hidden rounded-[2rem] border border-brand-blue/10 bg-white shadow-[0_8px_18px_rgba(25,27,48,0.016)]">
                 <div className="hidden grid-cols-[1.05fr_1.25fr_1.25fr] gap-5 bg-brand-blue/[0.025] px-6 py-5 text-sm font-medium md:grid">
                   <div className="text-brand-blue">Processus</div>
                   <div className="text-brand-coral">Aujourd&apos;hui</div>
@@ -1110,9 +1106,9 @@ export default function AssistantHub() {
                   ))}
                 </div>
               </div>
-            </section>
+            </motion.section>
 
-            <section id="pricing" className="scroll-mt-24 space-y-10 md:space-y-12">
+            <motion.section {...SECTION_REVEAL} id="pricing" className="scroll-mt-24 space-y-10 md:space-y-12">
               <div className="mx-auto max-w-3xl space-y-4 text-center">
                 <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-brand-blue md:text-[4.2rem]">
                   Vous choisissez votre point de départ
@@ -1126,7 +1122,7 @@ export default function AssistantHub() {
                 {HOME_OFFERS.map((offer) => (
                   <div
                     key={offer.title}
-                    className={`grid h-full grid-rows-[auto_auto_1fr_auto_auto] rounded-[1.75rem] border p-6 shadow-[0_18px_50px_rgba(21,36,69,0.045)] md:p-7 ${
+                    className={`grid h-full grid-rows-[auto_auto_1fr_auto_auto] rounded-[1.75rem] border p-6 shadow-[0_8px_18px_rgba(25,27,48,0.018)] md:p-7 ${
                       offer.featured
                         ? "border-brand-coral/10 bg-[#FFF3EF]"
                         : "border-black/5 bg-white/90"
@@ -1177,9 +1173,9 @@ export default function AssistantHub() {
                   </div>
                 ))}
               </div>
-            </section>
+            </motion.section>
 
-            <section className="space-y-10 rounded-[2.25rem] border border-brand-coral/10 bg-brand-coral/6 px-5 py-8 md:space-y-12 md:px-8 md:py-10">
+            <motion.section {...SECTION_REVEAL} className="space-y-10 rounded-[2.25rem] border border-brand-coral/10 bg-brand-coral/6 px-5 py-8 md:space-y-12 md:px-8 md:py-10">
               <div className="mx-auto max-w-4xl space-y-4 text-center">
                 <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-brand-blue md:text-[4.2rem]">
                   De quoi dépend le niveau d&apos;accompagnement ?
@@ -1196,7 +1192,7 @@ export default function AssistantHub() {
                   return (
                     <div
                       key={example.title}
-                      className="overflow-hidden rounded-[1.5rem] border border-black/5 bg-white text-left shadow-[0_14px_38px_rgba(21,36,69,0.035)]"
+                      className="overflow-hidden rounded-[1.5rem] border border-black/5 bg-white text-left shadow-[0_8px_18px_rgba(25,27,48,0.016)]"
                     >
                       <button
                         type="button"
@@ -1242,9 +1238,9 @@ export default function AssistantHub() {
                   );
                 })}
               </div>
-            </section>
+            </motion.section>
 
-            <section className="space-y-10 md:space-y-12">
+            <motion.section {...SECTION_REVEAL} className="space-y-10 md:space-y-12">
               <div className="mx-auto max-w-3xl space-y-4 text-center">
                 <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-brand-blue md:text-[4.2rem]">
                   Vous gardez la main, même quand on automatise
@@ -1261,7 +1257,7 @@ export default function AssistantHub() {
                   return (
                     <div
                       key={item.title}
-                      className="rounded-[1.5rem] border border-black/5 bg-white/85 px-5 py-5 text-left shadow-[0_16px_45px_rgba(21,36,69,0.045)]"
+                      className="rounded-[1.5rem] border border-black/5 bg-white/85 px-5 py-5 text-left shadow-[0_8px_18px_rgba(25,27,48,0.016)]"
                     >
                       <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-2xl bg-white text-brand-coral shadow-[0_4px_10px_rgba(16,24,40,0.04)]">
                         <Icon className="h-4 w-4" />
@@ -1274,9 +1270,9 @@ export default function AssistantHub() {
                   );
                 })}
               </div>
-            </section>
+            </motion.section>
 
-            <section className="rounded-[2.25rem] border border-black/5 bg-white px-6 py-12 text-center shadow-[0_24px_70px_rgba(21,36,69,0.055)] md:px-10 md:py-16">
+            <motion.section {...SECTION_REVEAL} className="rounded-[2.25rem] border border-black/5 bg-white px-6 py-12 text-center shadow-[0_8px_18px_rgba(25,27,48,0.016)] md:px-10 md:py-16">
               <div className="mx-auto max-w-3xl space-y-4">
                 <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-brand-blue md:text-[4.2rem]">
                   Commencez par la tâche qui vous épuise le plus
@@ -1294,7 +1290,7 @@ export default function AssistantHub() {
                   </button>
                 </div>
               </div>
-            </section>
+            </motion.section>
           </motion.div>
         ) : (
           <motion.div

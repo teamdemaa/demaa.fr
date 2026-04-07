@@ -29,8 +29,8 @@ type StripeEvent = {
 };
 
 function getOfferLabel(amountTotal: number | null | undefined) {
-  if (amountTotal === 65000) return "Pack de départ - 10 crédits";
-  if (amountTotal === 98000) return "Pack intensif - 20 crédits";
+  if (amountTotal === 65000) return "Automate - 10 crédits";
+  if (amountTotal === 98000) return "Maestro - 20 crédits";
   return "Offre Demaa";
 }
 

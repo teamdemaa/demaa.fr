@@ -2,6 +2,19 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+Configure the server-side Firebase credentials before using API routes that write
+leads, generations, assistant cache, or Stripe payment confirmations:
+
+```bash
+FIREBASE_PROJECT_ID=your-project-id
+FIREBASE_CLIENT_EMAIL=firebase-adminsdk-xxxxx@your-project-id.iam.gserviceaccount.com
+FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
+```
+
+You can also provide the full service account JSON as `FIREBASE_SERVICE_ACCOUNT_KEY`
+instead of the three variables above. Do not prefix these variables with
+`NEXT_PUBLIC_`; they must stay server-side only.
+
 First, run the development server:
 
 ```bash

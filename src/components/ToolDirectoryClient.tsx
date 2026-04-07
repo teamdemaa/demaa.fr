@@ -15,6 +15,7 @@ export default function ToolDirectoryClient() {
 
   const filteredTools = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
+    const sectorNames = toolDirectorySectors.filter((sector) => sector !== "Tous");
 
     return toolDirectory.filter((tool) => {
       const matchesSearch =
@@ -32,7 +33,12 @@ export default function ToolDirectoryClient() {
       const matchesCategory =
         activeCategory === "Tous" || tool.category === activeCategory;
 
-      return matchesSearch && matchesSector && matchesCategory;
+      const isSectorSpecific =
+        activeSector === "Tous" ||
+        tool.category === "Outils métier" ||
+        !sectorNames.every((sector) => tool.sectors.includes(sector));
+
+      return matchesSearch && matchesSector && matchesCategory && isSectorSpecific;
     });
   }, [activeCategory, activeSector, searchQuery]);
 

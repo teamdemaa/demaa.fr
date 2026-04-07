@@ -35,12 +35,12 @@ export default function Navbar({ minimal = false }: { minimal?: boolean }) {
               </Link>
 
               <Link
-                href="/#pricing"
+                href="/?delegation=free"
                 className="inline-flex items-center rounded-full border border-brand-blue/12 bg-transparent px-5 py-3 text-xs md:text-sm font-medium text-brand-blue transition-colors hover:border-brand-coral/25 hover:text-brand-coral whitespace-nowrap"
                 onClick={(event) => {
                   if (pathname === "/") {
                     event.preventDefault();
-                    window.dispatchEvent(new Event("demaa:navigate-pricing"));
+                    window.dispatchEvent(new Event("demaa:open-free-trial"));
                   }
                 }}
               >
