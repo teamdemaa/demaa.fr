@@ -31,7 +31,7 @@ export default function Navbar({ minimal = false }: { minimal?: boolean }) {
                 className="text-[13px] md:text-[15px] text-brand-blue hover:text-brand-coral transition-all duration-300 font-medium whitespace-nowrap"
               >
                 <span className="hidden sm:inline">Annuaire des outils</span>
-                <span className="sm:hidden">Annuaire</span>
+                <span className="sm:hidden">Annuaire Outils</span>
               </Link>
 
               <Link
@@ -47,7 +47,7 @@ export default function Navbar({ minimal = false }: { minimal?: boolean }) {
                 }}
               >
                 <span className="hidden sm:inline">Déléguer mes automatisations</span>
-                <span className="sm:hidden">Déléguer</span>
+                <span className="sm:hidden">Déléguer mes automatisations</span>
               </Link>
             </div>
           )}
