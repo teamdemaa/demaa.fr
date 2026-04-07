@@ -5,15 +5,14 @@ import { usePathname } from "next/navigation";
 
 export default function Navbar({ minimal = false }: { minimal?: boolean }) {
   const pathname = usePathname();
-
   return (
-    <nav className="sticky top-0 z-40 bg-[#FFF9F8] border-b border-brand-coral/10 py-1">
+    <nav className="sticky top-0 z-40 border-b border-brand-coral/10 bg-[#FFF9F8] py-1">
       <div className="max-w-6xl mx-auto px-4 md:px-6 lg:pl-14 lg:pr-28">
         <div className="flex justify-between py-3 md:py-4 items-center">
           <Link
             href="/"
             aria-label="Retour à l'accueil"
-            className="inline-flex items-center text-xl sm:text-2xl font-bold tracking-tight text-brand-blue shrink-0 z-50 cursor-pointer"
+            className="inline-flex items-center text-xl sm:text-2xl font-medium tracking-tight text-brand-blue shrink-0 z-50 cursor-pointer"
             onClick={(event) => {
               if (pathname === "/") {
                 event.preventDefault();
@@ -30,7 +29,7 @@ export default function Navbar({ minimal = false }: { minimal?: boolean }) {
                 href="/annuaire-outils"
                 className="text-[13px] md:text-[15px] text-brand-blue hover:text-brand-coral transition-all duration-300 font-medium whitespace-nowrap"
               >
-                <span className="hidden sm:inline">Annuaire des outils</span>
+                <span className="hidden sm:inline">Annuaire Outils</span>
                 <span className="sm:hidden">Annuaire Outils</span>
               </Link>
 

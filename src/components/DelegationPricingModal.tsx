@@ -294,7 +294,7 @@ export default function DelegationPricingModal({
         "Un prospect remplit un formulaire -> qualifié selon ses réponses -> ajouté au CRM -> email de prise de contact envoyé",
         "Un brief client rempli -> devis généré automatiquement -> envoyé pour validation -> archivé",
         "Une intervention terminée -> rapport d'intervention généré -> envoyé au client -> copie stockée dans le Drive",
-        "Un nouveau collaborateur rejoint -> accès créés -> email de bienvenue -> tâches d'onboarding assignées",
+        "Un nouveau collaborateur rejoint -> accès créés -> email de bienvenue -> tâches d'intégration assignées",
       ],
     },
     {
@@ -305,7 +305,7 @@ export default function DelegationPricingModal({
       items: [
         "Un prospect arrive -> qualifié -> ajouté au CRM -> séquence de nurturing -> relance automatique -> alerte si pas de réponse",
         "Un formulaire métier rempli -> document généré automatiquement -> envoyé pour signature électronique -> stocké dans le Drive",
-        "Un nouveau client signé -> contrat généré -> accès créés -> onboarding déclenché -> suivi automatique sur 30 jours",
+        "Un nouveau client signé -> contrat généré -> accès créés -> intégration déclenchée -> suivi automatique sur 30 jours",
         "Les données de suivi de plusieurs missions centralisées -> tableau de bord mis à jour -> rapport mensuel envoyé automatiquement",
       ],
     },

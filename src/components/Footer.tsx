@@ -10,7 +10,7 @@ export default function Footer() {
           
           {/* Brand Info */}
           <div className="space-y-4">
-            <Link href="/" className="text-3xl font-bold tracking-tight text-white block">
+            <Link href="/" className="text-3xl font-medium tracking-tight text-white block">
               Demaa<span className="text-brand-coral">.</span>
             </Link>
             <p className="demaa-section-title max-w-xs text-lg leading-snug text-gray-400">

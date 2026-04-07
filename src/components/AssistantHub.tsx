@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   AlertCircle,
+  BadgeCheck,
+  Check,
   ChevronDown,
   ChevronRight,
   Download,
@@ -14,7 +16,9 @@ import {
   Send,
   Sparkles,
   FileText,
+  SquareCheck,
   Wrench,
+  Workflow,
   X,
 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -35,6 +39,14 @@ const SECTION_REVEAL = {
   viewport: { once: true, amount: 0.16 },
   transition: { duration: 0.72, ease: "easeOut" },
 } as const;
+
+const CHAT_PLACEHOLDER_EXAMPLES = [
+  "Je perds du temps à relancer mes prospects après un formulaire",
+  "Je fais mes devis à la main et j’oublie parfois de relancer",
+  "Je veux automatiser l’intégration quand un client signe",
+  "Je dois envoyer un rapport client chaque mois",
+  "Je recopie les infos entre WhatsApp, Excel et mon CRM",
+] as const;
 
 interface ActionPlanItem {
   title: string;
@@ -178,7 +190,7 @@ const HOME_CREDIT_EXAMPLES = [
       "Un prospect remplit un formulaire -> qualifié selon ses réponses -> ajouté au CRM -> email de prise de contact envoyé",
       "Un brief client rempli -> devis généré automatiquement -> envoyé pour validation -> archivé",
       "Une intervention terminée -> rapport d'intervention généré -> envoyé au client -> copie stockée dans le Drive",
-      "Un nouveau collaborateur rejoint -> accès créés -> email de bienvenue -> tâches d'onboarding assignées",
+      "Un nouveau collaborateur rejoint -> accès créés -> email de bienvenue -> tâches d'intégration assignées",
     ],
   },
   {
@@ -189,7 +201,7 @@ const HOME_CREDIT_EXAMPLES = [
     items: [
       "Un prospect arrive -> qualifié -> ajouté au CRM -> séquence de nurturing -> relance automatique -> alerte si pas de réponse",
       "Un formulaire métier rempli -> document généré automatiquement -> envoyé pour signature électronique -> stocké dans le Drive",
-      "Un nouveau client signé -> contrat généré -> accès créés -> onboarding déclenché -> suivi automatique sur 30 jours",
+      "Un nouveau client signé -> contrat généré -> accès créés -> intégration déclenchée -> suivi automatique sur 30 jours",
       "Les données de suivi de plusieurs missions centralisées -> tableau de bord mis à jour -> rapport mensuel envoyé automatiquement",
     ],
   },
@@ -204,15 +216,25 @@ const HOME_TRANSFORMATION_EXAMPLES = [
       "Aucune centralisation, pas de suivi, relances oubliées, clients perdus sans s'en rendre compte",
     after:
       "Toutes les sources centralisées, réponse automatique immédiate, relance déclenchée si pas de retour sous 48h",
+    afterItems: [
+      "Toutes les sources centralisées",
+      "Réponse automatique immédiate",
+      "Relance si pas de retour sous 48h",
+    ],
   },
   {
-    process: "Onboarding client",
+    process: "Intégration client",
     context:
       "La première impression après la signature est souvent chaotique - des emails dans le désordre, des docs oubliés.",
     before:
       "Infos envoyées en plusieurs fois, contrat par email, accès donnés à la main, premier contact raté",
     after:
       "Dès la signature : email de bienvenue, documents, accès et premier RDV envoyés automatiquement en une séquence",
+    afterItems: [
+      "Email de bienvenue envoyé dès la signature",
+      "Documents et accès transmis automatiquement",
+      "Premier RDV déclenché en séquence",
+    ],
   },
   {
     process: "Rapports clients",
@@ -222,6 +244,11 @@ const HOME_TRANSFORMATION_EXAMPLES = [
       "Le client ne sait pas ce qu'on a fait, tout doit être réexpliqué à chaque appel, la relation s'érode",
     after:
       "Rapport mensuel généré et envoyé automatiquement : heures, livrables, résultats - sans y penser",
+    afterItems: [
+      "Rapport mensuel généré automatiquement",
+      "Heures, livrables et résultats envoyés",
+      "Suivi fait sans y penser",
+    ],
   },
   {
     process: "Relances impayés",
@@ -231,6 +258,11 @@ const HOME_TRANSFORMATION_EXAMPLES = [
       "Factures en retard détectées trop tard, relances écrites à la main, argent perdu par inaction",
     after:
       "Relance automatique à J+5, J+15, J+30 avec le bon ton - sans jamais avoir à y penser",
+    afterItems: [
+      "Relance automatique à J+5, J+15, J+30",
+      "Ton adapté à chaque relance",
+      "Plus d'argent perdu par oubli",
+    ],
   },
 ] as const;
 
@@ -247,6 +279,27 @@ type HomeOffer = {
   featured?: boolean;
   href?: string;
 };
+
+function HandDrawnStepIllustration({ index }: { index: number }) {
+  const illustrations = [
+    { icon: SquareCheck, label: "Checklist des tâches à clarifier" },
+    { icon: Workflow, label: "Workflow de solution" },
+    { icon: BadgeCheck, label: "Process testé et validé" },
+  ] as const;
+  const illustration = illustrations[index] ?? illustrations[0];
+  const Icon = illustration.icon;
+
+  return (
+    <div className="mb-7 flex h-24 items-center justify-center rounded-[1rem] border border-white/70 bg-white text-brand-coral shadow-[0_10px_22px_rgba(0,0,0,0.06)]">
+      <Icon
+        aria-label={illustration.label}
+        role="img"
+        className="h-9 w-9"
+        strokeWidth={1.65}
+      />
+    </div>
+  );
+}
 
 const HOME_OFFERS: readonly HomeOffer[] = [
   {
@@ -386,45 +439,6 @@ function navigateToPricing() {
   window.location.href = "/#pricing";
 }
 
-function buildHoursRecap(actions: ActionPlanItem[]) {
-  let minMinutes = 0;
-  let maxMinutes = 0;
-
-  actions.forEach((action) => {
-    const text = action.time_gain.toLowerCase().replace(/,/g, ".");
-    const numbers = Array.from(text.matchAll(/\d+(?:\.\d+)?/g)).map((match) =>
-      Number.parseFloat(match[0])
-    );
-
-    if (numbers.length === 0) return;
-
-    const isMinutes = text.includes("minute");
-    const factor = isMinutes ? 1 : 60;
-    const low = numbers[0] * factor;
-    const high = (numbers[1] ?? numbers[0]) * factor;
-
-    minMinutes += low;
-    maxMinutes += high;
-  });
-
-  if (maxMinutes === 0) {
-    return "Gain estimé par semaine : plusieurs heures à récupérer (estimation)";
-  }
-
-  const formatHours = (minutes: number) => {
-    const hours = minutes / 60;
-    if (hours < 1) return `${Math.round(minutes)} min`;
-    if (Number.isInteger(hours)) return `${hours}h`;
-    return `${hours.toFixed(1).replace(".", ",")}h`;
-  };
-
-  if (Math.round(minMinutes) === Math.round(maxMinutes)) {
-    return `Gain estimé par semaine : ${formatHours(maxMinutes)} (estimation)`;
-  }
-
-  return `Gain estimé par semaine : ${formatHours(minMinutes)} à ${formatHours(maxMinutes)} (estimation)`;
-}
-
 function withEstimationLabel(value: string) {
   const trimmedValue = value.trim();
   if (!trimmedValue) return trimmedValue;
@@ -491,9 +505,46 @@ export default function AssistantHub() {
   const [showFreeTrialModal, setShowFreeTrialModal] = useState(false);
   const [hasUnlockedPlan, setHasUnlockedPlan] = useState(false);
   const [activeQuoteIndex, setActiveQuoteIndex] = useState(0);
-  const [openHomeCreditExample, setOpenHomeCreditExample] = useState(1);
+  const [placeholderExampleIndex, setPlaceholderExampleIndex] = useState(0);
+  const [animatedPlaceholder, setAnimatedPlaceholder] = useState("");
+  const [openHomeCreditExample, setOpenHomeCreditExample] = useState<number | null>(null);
   const [generationCount, setGenerationCount] = useState(0);
   const [generationLimitReached, setGenerationLimitReached] = useState(false);
+
+  useEffect(() => {
+    if (inputValue || isLoading) return;
+
+    const currentExample = CHAT_PLACEHOLDER_EXAMPLES[placeholderExampleIndex];
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (prefersReducedMotion) {
+      setAnimatedPlaceholder(currentExample);
+      const timeoutId = window.setTimeout(() => {
+        setPlaceholderExampleIndex(
+          (currentIndex) => (currentIndex + 1) % CHAT_PLACEHOLDER_EXAMPLES.length
+        );
+      }, 3600);
+
+      return () => window.clearTimeout(timeoutId);
+    }
+
+    const timeoutId = window.setTimeout(
+      () => {
+        if (animatedPlaceholder.length < currentExample.length) {
+          setAnimatedPlaceholder(currentExample.slice(0, animatedPlaceholder.length + 1));
+          return;
+        }
+
+        setAnimatedPlaceholder("");
+        setPlaceholderExampleIndex(
+          (currentIndex) => (currentIndex + 1) % CHAT_PLACEHOLDER_EXAMPLES.length
+        );
+      },
+      animatedPlaceholder.length < currentExample.length ? 34 : 2400
+    );
+
+    return () => window.clearTimeout(timeoutId);
+  }, [animatedPlaceholder, inputValue, isLoading, placeholderExampleIndex]);
 
   useEffect(() => {
     const openFreeTrialModal = () => {
@@ -803,7 +854,7 @@ export default function AssistantHub() {
   };
 
   return (
-    <div className="relative mx-auto max-w-6xl overflow-hidden px-4 py-12 md:py-[4.25rem]">
+    <div className="relative mx-auto max-w-6xl overflow-visible px-4 pb-12 pt-0 md:pb-[4.25rem] md:pt-0">
       <div className="pointer-events-none absolute left-1/2 top-10 -z-10 h-80 w-80 -translate-x-1/2 rounded-full bg-brand-coral/10 blur-3xl" />
       <div className="pointer-events-none absolute right-4 top-[38rem] -z-10 h-72 w-72 rounded-full bg-brand-blue/5 blur-3xl" />
       <AnimatePresence>
@@ -928,18 +979,18 @@ export default function AssistantHub() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="mt-8 space-y-20 md:mt-12 md:space-y-32"
+            className="mt-0 md:mt-0"
           >
-            <motion.section {...SECTION_REVEAL} className="flex flex-col items-center text-center space-y-7">
+            <motion.section
+              {...SECTION_REVEAL}
+              className="ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] flex min-h-[calc(100svh-5rem)] w-screen flex-col items-center justify-center bg-[#FFF9F8] px-4 py-10 text-center space-y-7 md:min-h-[calc(100svh-5.75rem)] md:px-8 md:py-14"
+            >
               <div className="space-y-4">
                 <h1 className="demaa-hero-title text-[3rem] text-brand-blue tracking-tight leading-[0.98] md:text-[4.05rem] lg:text-[5rem]">
                   Vous avez déjà assez à gérer.
                   <br className="hidden md:block" />
                   <span className="text-brand-coral"> Le reste, on peut l&apos;automatiser.</span>
                 </h1>
-                <p className="mx-auto max-w-3xl text-sm leading-relaxed text-gray-500 md:text-lg md:leading-relaxed">
-                  On identifie avec vous ce qui vous fait perdre du temps, puis on met en place des automatisations simples, utiles et adaptées à votre façon de travailler.
-                </p>
               </div>
 
               <form onSubmit={handleSubmit} className="relative mt-4 w-full max-w-4xl group">
@@ -957,10 +1008,25 @@ export default function AssistantHub() {
                         }
                       }
                     }}
-                    placeholder="Décrivez les tâches qui vous prennent du temps"
-                    className="h-36 w-full resize-none bg-transparent p-7 pr-7 text-lg font-normal leading-relaxed placeholder:text-base placeholder:font-normal placeholder:text-gray-400 focus:outline-none md:pr-56"
+                    aria-label="Décrivez les tâches qui vous prennent du temps"
+                    placeholder=""
+                    className="h-36 w-full resize-none bg-transparent p-7 pr-7 text-lg font-normal leading-relaxed focus:outline-none md:pr-56"
                     disabled={isLoading}
                   />
+
+                  {!inputValue && (
+                    <div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute left-7 top-7 pr-7 text-left text-base font-normal leading-relaxed text-gray-400 md:pr-56"
+                    >
+                      {animatedPlaceholder}
+                      <motion.span
+                        animate={{ opacity: [1, 1, 0, 0] }}
+                        transition={{ duration: 0.9, repeat: Infinity, ease: "linear" }}
+                        className="ml-0.5 inline-block h-[1em] w-px translate-y-[0.16em] bg-gray-400"
+                      />
+                    </div>
+                  )}
 
                   <div className="flex flex-col gap-3 border-t border-black/5 px-5 py-4 md:absolute md:bottom-6 md:right-6 md:border-t-0 md:bg-transparent md:p-0">
                     <div className="flex items-center justify-end gap-3">
@@ -984,14 +1050,14 @@ export default function AssistantHub() {
                         <button
                           type="submit"
                           disabled={isLoading || !inputValue.trim()}
-                          aria-label={isLoading ? "Analyse en cours" : "Estimer les heures à gagner"}
+                          aria-label={isLoading ? "Analyse en cours" : "Voir mon plan d'action"}
                           className={`inline-flex h-11 items-center justify-center gap-2 rounded-full px-5 text-sm font-medium transition-all duration-300 md:h-12 md:px-6 ${
                             isLoading || !inputValue.trim()
                               ? "cursor-not-allowed bg-gray-100 text-gray-400"
                               : "bg-brand-blue text-white hover:bg-brand-coral"
                           }`}
                         >
-                          <span>Estimer les heures à gagner</span>
+                          <span>Voir mon plan d&apos;action</span>
                           <Send className="h-4 w-4" />
                         </button>
                       )}
@@ -1030,37 +1096,45 @@ export default function AssistantHub() {
               </form>
             </motion.section>
 
-            <motion.section {...SECTION_REVEAL} className="space-y-10 md:space-y-12">
-              <div className="mx-auto max-w-3xl space-y-4 text-center">
-                <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-brand-blue md:text-[4.2rem]">
-                  On commence par remettre les choses à plat
-                </h2>
-                <p className="text-sm leading-relaxed text-gray-600 md:text-base">
-                  On avance simplement, avec vous, pour construire quelque chose d&apos;utile dès le départ. Pas une usine à gaz. Pas un système impossible à reprendre.
-                </p>
-              </div>
+            <motion.section
+              {...SECTION_REVEAL}
+              className="ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] w-screen bg-brand-blue px-4 py-20 md:py-24"
+            >
+              <div className="mx-auto max-w-[92rem] space-y-10 md:space-y-12">
+                <div className="mx-auto max-w-3xl space-y-4 text-center">
+                  <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-white md:text-[4.2rem]">
+                    On commence par remettre
+                    <br />
+                    les choses à plat
+                  </h2>
+                  <p className="text-sm leading-relaxed text-white/65 md:text-base">
+                    On avance simplement, avec vous, pour construire quelque chose d&apos;utile dès le départ. Pas une usine à gaz. Pas un système impossible à reprendre.
+                  </p>
+                </div>
 
-              <div className="grid gap-5 lg:grid-cols-3">
-                {HOME_STEPS.map((item) => (
-                  <div
-                    key={item.step}
-                    className="rounded-[1.75rem] border border-black/5 bg-white/90 px-5 py-6 shadow-[0_8px_18px_rgba(25,27,48,0.018)] md:px-6"
-                  >
-                    <div className="text-[0.78rem] font-black tracking-[0.22em] text-brand-coral">
-                      {item.step}
+                <div className="grid gap-5 lg:grid-cols-3">
+                  {HOME_STEPS.map((item, index) => (
+                    <div
+                      key={item.step}
+                      className="rounded-[1.75rem] border border-white/10 bg-white/[0.045] px-5 py-7 shadow-[0_10px_22px_rgba(0,0,0,0.08)] md:px-6 md:py-8"
+                    >
+                      <HandDrawnStepIllustration index={index} />
+                      <div className="text-[0.78rem] font-black tracking-[0.22em] text-brand-coral">
+                        {item.step}
+                      </div>
+                      <div className="mt-3 text-[1.1rem] font-semibold tracking-tight text-white">
+                        {item.title}
+                      </div>
+                      <p className="mt-3 text-sm leading-relaxed text-white/62">
+                        {item.description}
+                      </p>
                     </div>
-                    <div className="mt-3 text-[1.1rem] font-semibold tracking-tight text-brand-blue">
-                      {item.title}
-                    </div>
-                    <p className="mt-3 text-sm leading-relaxed text-gray-600">
-                      {item.description}
-                    </p>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </motion.section>
 
-            <motion.section {...SECTION_REVEAL} className="space-y-10 md:space-y-12">
+            <motion.section {...SECTION_REVEAL} className="space-y-10 border-b border-brand-blue/8 py-[100px] md:space-y-12">
               <div className="mx-auto max-w-3xl space-y-4 text-center">
                 <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-brand-blue md:text-[4.2rem]">
                   Les tâches évitées deviennent des systèmes qui tournent
@@ -1070,44 +1144,89 @@ export default function AssistantHub() {
                 </p>
               </div>
 
-              <div className="overflow-hidden rounded-[2rem] border border-brand-blue/10 bg-white shadow-[0_8px_18px_rgba(25,27,48,0.016)]">
-                <div className="hidden grid-cols-[1.05fr_1.25fr_1.25fr] gap-5 bg-brand-blue/[0.025] px-6 py-5 text-sm font-medium md:grid">
-                  <div className="text-brand-blue">Processus</div>
-                  <div className="text-brand-coral">Aujourd&apos;hui</div>
-                  <div className="text-brand-blue">Une fois automatisé</div>
+              <div className="grid gap-4 md:hidden">
+                {HOME_TRANSFORMATION_EXAMPLES.map((item) => (
+                  <div
+                    key={item.process}
+                    className="rounded-[1.75rem] border border-brand-blue/10 bg-white px-5 py-6 text-left shadow-[0_8px_18px_rgba(25,27,48,0.016)]"
+                  >
+                    <h3 className="text-lg font-semibold leading-snug text-brand-blue">
+                      {item.process}
+                    </h3>
+
+                    <div className="mt-5 space-y-2 rounded-[1.25rem] bg-brand-blue/[0.035] px-4 py-4">
+                      <div className="text-[0.72rem] font-medium uppercase tracking-[0.18em] text-brand-blue">
+                        Aujourd&apos;hui
+                      </div>
+                      <p className="text-sm leading-relaxed text-brand-blue/70">
+                        {item.context}
+                      </p>
+                    </div>
+
+                    <div className="mt-3 rounded-[1.25rem] bg-[#FFF3EF] px-4 py-4">
+                      <div className="mb-3 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-brand-coral">
+                        Une fois automatisé
+                      </div>
+                      <ul className="space-y-2.5">
+                        {item.afterItems.map((afterItem) => (
+                          <li key={afterItem} className="flex items-start gap-2.5">
+                            <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white text-brand-coral">
+                              <Check className="h-3.5 w-3.5" />
+                            </span>
+                            <span className="text-sm font-normal leading-relaxed text-brand-blue/75">
+                              {afterItem}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mx-auto hidden w-full max-w-5xl overflow-hidden rounded-[2rem] border border-brand-blue/10 bg-white shadow-[0_8px_18px_rgba(25,27,48,0.016)] md:block">
+                <div className="hidden grid-cols-2 bg-brand-blue/[0.045] text-center text-sm font-medium md:grid">
+                  <div className="px-7 py-4 text-brand-blue">Aujourd&apos;hui</div>
+                  <div className="bg-[#FFEAE2] px-7 py-4 text-brand-blue">Une fois automatisé</div>
                 </div>
 
                 <div>
                   {HOME_TRANSFORMATION_EXAMPLES.map((item) => (
                     <div
                       key={item.process}
-                      className="grid gap-5 px-5 py-7 text-left transition-colors hover:bg-brand-blue/[0.018] md:grid-cols-[1.05fr_1.25fr_1.25fr] md:px-6 md:py-8"
+                      className="grid gap-5 px-5 py-6 text-left transition-colors hover:bg-brand-blue/[0.018] md:grid-cols-2 md:gap-0 md:px-0 md:py-0"
                     >
-                      <div>
-                        <h3 className="text-lg font-medium leading-snug text-brand-blue md:text-xl">
+                      <div className="rounded-[1.25rem] border border-brand-blue/10 bg-brand-blue/[0.035] px-4 py-4 md:rounded-none md:border-0 md:bg-transparent md:px-7 md:py-6">
+                        <div className="mb-2 text-[0.72rem] font-black uppercase tracking-[0.18em] text-brand-blue md:hidden">
+                          Aujourd&apos;hui
+                        </div>
+                        <h3 className="w-full text-lg font-semibold leading-snug text-brand-blue">
                           {item.process}
                         </h3>
-                        <p className="mt-3 text-sm leading-relaxed text-gray-600 md:text-[0.95rem]">
+                        <p className="mt-2 text-sm leading-relaxed text-brand-blue/75 md:text-[0.92rem]">
                           {item.context}
                         </p>
                       </div>
 
-                      <div className="rounded-[1.25rem] border border-brand-coral/15 bg-brand-coral/[0.045] px-4 py-4 md:rounded-none md:border-0 md:bg-transparent md:px-0 md:py-0">
-                        <div className="mb-2 text-[0.72rem] font-black uppercase tracking-[0.18em] text-brand-coral md:hidden">
-                          Aujourd&apos;hui
-                        </div>
-                        <p className="text-sm font-normal leading-relaxed text-brand-coral/90 md:text-base">
-                          {item.before}
-                        </p>
-                      </div>
-
-                      <div className="rounded-[1.25rem] border border-brand-blue/10 bg-brand-blue/[0.035] px-4 py-4 md:rounded-none md:border-0 md:bg-transparent md:px-0 md:py-0">
+                      <div className="rounded-[1.25rem] border border-brand-blue/10 bg-brand-blue/[0.035] px-4 py-4 text-left md:rounded-none md:border-0 md:bg-[#FFF3EF] md:px-7 md:py-6">
                         <div className="mb-2 text-[0.72rem] font-black uppercase tracking-[0.18em] text-brand-blue md:hidden">
                           Une fois automatisé
                         </div>
-                        <p className="text-sm font-normal leading-relaxed text-brand-blue/80 md:text-base">
-                          {item.after}
-                        </p>
+                        <ul className="space-y-2.5 md:max-w-md">
+                          {item.afterItems.map((afterItem) => (
+                            <li
+                              key={afterItem}
+                              className="flex items-start gap-2.5"
+                            >
+                              <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-coral/10 text-brand-coral">
+                                <Check className="h-3.5 w-3.5" />
+                              </span>
+                              <span className="text-sm font-normal leading-relaxed text-brand-blue/75 md:text-left md:text-[0.95rem]">
+                                {afterItem}
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
                     </div>
                   ))}
@@ -1115,10 +1234,12 @@ export default function AssistantHub() {
               </div>
             </motion.section>
 
-            <motion.section {...SECTION_REVEAL} id="pricing" className="scroll-mt-24 space-y-10 md:space-y-12">
+            <motion.section {...SECTION_REVEAL} id="pricing" className="scroll-mt-24 space-y-10 py-[100px] md:space-y-12">
               <div className="mx-auto max-w-3xl space-y-4 text-center">
                 <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-brand-blue md:text-[4.2rem]">
-                  Vous choisissez votre point de départ
+                  Vous choisissez votre point
+                  <br />
+                  de départ
                 </h2>
                 <p className="text-sm leading-relaxed text-gray-600 md:text-base">
                   Vous pouvez commencer petit pour tester, ou prendre plus de marge si vous avez déjà plusieurs besoins à automatiser.
@@ -1182,12 +1303,12 @@ export default function AssistantHub() {
               </div>
             </motion.section>
 
-            <motion.section {...SECTION_REVEAL} className="space-y-10 rounded-[2.25rem] border border-brand-coral/10 bg-brand-coral/6 px-5 py-8 md:space-y-12 md:px-8 md:py-10">
+            <motion.section {...SECTION_REVEAL} className="space-y-10 rounded-[2.25rem] border border-white/10 bg-brand-blue px-5 py-8 md:space-y-12 md:px-8 md:py-10">
               <div className="mx-auto max-w-4xl space-y-4 text-center">
-                <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-brand-blue md:text-[4.2rem]">
+                <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-white md:text-[4.2rem]">
                   De quoi dépend le niveau d&apos;accompagnement ?
                 </h2>
-                <p className="text-sm leading-relaxed text-gray-600 md:text-base">
+                <p className="text-sm leading-relaxed text-white/65 md:text-base">
                   Toutes les automatisations ne demandent pas le même travail. Certaines sont très simples à mettre en place. D&apos;autres demandent plus d&apos;outils, plus de logique ou plus de vérifications.
                 </p>
               </div>
@@ -1247,7 +1368,7 @@ export default function AssistantHub() {
               </div>
             </motion.section>
 
-            <motion.section {...SECTION_REVEAL} className="space-y-10 md:space-y-12">
+            <motion.section {...SECTION_REVEAL} className="space-y-10 py-[100px] md:space-y-12">
               <div className="mx-auto max-w-3xl space-y-4 text-center">
                 <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-brand-blue md:text-[4.2rem]">
                   Vous gardez la main, même quand on automatise
@@ -1282,7 +1403,9 @@ export default function AssistantHub() {
             <motion.section {...SECTION_REVEAL} className="rounded-[2.25rem] border border-black/5 bg-white px-6 py-12 text-center shadow-[0_8px_18px_rgba(25,27,48,0.016)] md:px-10 md:py-16">
               <div className="mx-auto max-w-3xl space-y-4">
                 <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-brand-blue md:text-[4.2rem]">
-                  Commencez par la tâche qui vous épuise le plus
+                  Commencez par la tâche
+                  <br />
+                  qui vous épuise le plus
                 </h2>
                 <p className="text-sm leading-relaxed text-gray-600 md:text-base">
                   Décrivez vos tâches répétitives, vos relances, vos copier-coller ou vos suivis manuels. On vous aide à voir ce qui peut être automatisé et combien de temps vous pourriez récupérer.
@@ -1310,9 +1433,6 @@ export default function AssistantHub() {
               <div className="space-y-2">
                 <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                   <div className="space-y-2">
-                    <div className="inline-flex items-center rounded-full bg-brand-coral/10 px-4 py-2 text-[11px] font-black uppercase tracking-[0.16em] text-brand-coral">
-                      {buildHoursRecap(result.actions)}
-                    </div>
                     <h2 className="demaa-section-title text-[2.45rem] tracking-tight text-brand-blue md:text-[4.05rem]">
                       Votre plan d&apos;action
                     </h2>
