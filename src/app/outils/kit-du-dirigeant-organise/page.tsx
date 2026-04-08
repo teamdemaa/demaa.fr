@@ -17,7 +17,7 @@ export default function OrganizedLeaderKitPage() {
           <div className="inline-flex items-center px-3 py-1 bg-brand-coral/10 text-brand-coral text-[10px] font-bold uppercase tracking-widest rounded-full mb-6">
             Ressources téléchargeables
           </div>
-          <h1 className="text-3xl md:text-5xl lg:text-5xl font-bold tracking-tight text-brand-blue mb-4 leading-tight max-w-4xl mx-auto z-10 relative">
+          <h1 className="font-display text-3xl italic font-normal md:text-5xl lg:text-5xl tracking-tight text-brand-blue mb-4 leading-tight max-w-4xl mx-auto z-10 relative">
             Le Kit du Dirigeant Organisé
           </h1>
           <p className="text-sm md:text-lg text-gray-500 max-w-2xl mx-auto font-medium leading-relaxed px-4">
@@ -26,24 +26,6 @@ export default function OrganizedLeaderKitPage() {
         </section>
 
         <div className="mt-12 md:mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 animate-in fade-in slide-in-from-bottom-4 duration-1000">
-          <div className="flex items-center justify-between mb-10 border-b border-gray-50 pb-6">
-            <h2 className="text-lg font-bold text-brand-blue flex items-center gap-2">
-              <span className="w-2 h-2 bg-brand-coral rounded-full"></span>
-              Ressources essentielles ({templatesData.length})
-            </h2>
-            <div className="hidden md:flex gap-1 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-              Lien externe{" "}
-              <svg className="w-3 h-3 translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                />
-              </svg>
-            </div>
-          </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
             {templatesData.map((template) => (
               <TemplateCard key={template.id} template={template} />
