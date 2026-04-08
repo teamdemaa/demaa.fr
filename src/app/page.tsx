@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import AssistantHub from "@/components/AssistantHub";
+import NewsletterPrompt from "@/components/NewsletterPrompt";
 
 export const metadata = {
   title: "Demaa - Votre Assistant Stratégique en Automatisation",
@@ -13,6 +14,7 @@ export default function Home() {
       <main className="flex-1 w-full bg-[#FFF9F8] min-h-screen">
         <AssistantHub />
       </main>
+      <NewsletterPrompt />
     </>
   );
 }

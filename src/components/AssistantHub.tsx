@@ -22,6 +22,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { toPng } from "html-to-image";
 import jsPDF from "jspdf";
 import DelegationPricingModal from "./DelegationPricingModal";
+import NewsletterForm from "./NewsletterForm";
 
 const STRIPE_URL_10_CREDITS =
   process.env.NEXT_PUBLIC_STRIPE_URL_10_CREDITS?.trim() ||
@@ -1375,7 +1376,7 @@ export default function AssistantHub() {
               </div>
             </motion.section>
 
-            <motion.section {...SECTION_REVEAL} className="rounded-[2.25rem] border border-black/5 bg-white px-6 py-12 text-center shadow-[0_8px_18px_rgba(25,27,48,0.016)] md:px-10 md:py-16">
+            <motion.section {...SECTION_REVEAL} className="rounded-[2.25rem] border border-brand-coral/10 bg-[#FFF3EF] px-6 py-12 text-center shadow-[0_8px_18px_rgba(25,27,48,0.016)] md:px-10 md:py-16">
               <div className="mx-auto max-w-3xl space-y-4">
                 <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-brand-blue md:text-[4.2rem]">
                   Commencez par la tâche
@@ -1393,6 +1394,27 @@ export default function AssistantHub() {
                   >
                     Estimer les heures à gagner
                   </button>
+                </div>
+              </div>
+            </motion.section>
+
+            <motion.section
+              {...SECTION_REVEAL}
+              className="ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] w-screen bg-[#FFF9F8] px-6 py-10 md:px-10 md:py-12"
+            >
+              <div className="mx-auto grid max-w-5xl items-center gap-8 md:grid-cols-[0.9fr_0.7fr] md:gap-10">
+                <div className="text-left">
+                  <h2 className="demaa-section-title text-[2rem] leading-[0.98] tracking-tight text-brand-blue md:text-[3rem]">
+                    Des idées simples pour mieux structurer votre activité
+                  </h2>
+                  <p className="mt-4 max-w-lg text-sm leading-relaxed text-gray-600 md:text-base">
+                    Recevez des exemples concrets, des outils utiles et des pistes adaptées à votre
+                    secteur, sans jargon ni usine à gaz.
+                  </p>
+                </div>
+
+                <div className="w-full max-w-md text-left md:ml-auto">
+                  <NewsletterForm source="newsletter_home_section" />
                 </div>
               </div>
             </motion.section>
