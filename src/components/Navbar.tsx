@@ -26,11 +26,11 @@ export default function Navbar({ minimal = false }: { minimal?: boolean }) {
           {!minimal && (
             <div className="flex items-center gap-3 md:gap-5">
               <Link
-                href="/annuaire-outils"
+                href="/annuaire-logiciels"
                 className="text-[13px] md:text-[15px] text-brand-blue hover:text-brand-coral transition-all duration-300 font-medium whitespace-nowrap"
               >
-                <span className="hidden sm:inline">Annuaire Outils</span>
-                <span className="sm:hidden">Annuaire Outils</span>
+                <span className="hidden sm:inline">Annuaire Logiciels</span>
+                <span className="sm:hidden">Annuaire Logiciels</span>
               </Link>
 
               <Link

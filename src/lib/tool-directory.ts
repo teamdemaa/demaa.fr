@@ -9,6 +9,15 @@ export type ToolDirectoryItem = {
   pricingHint: string;
 };
 
+export function getToolDirectorySlug(tool: Pick<ToolDirectoryItem, "name">): string {
+  return tool.name
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 export const toolDirectorySectors = [
   "Tous",
   "Services & conseil",
@@ -994,3 +1003,7 @@ export const toolDirectory: ToolDirectoryItem[] = [
     pricingHint: "Freemium",
   },
 ];
+
+export function getToolDirectoryItemBySlug(slug: string): ToolDirectoryItem | null {
+  return toolDirectory.find((tool) => getToolDirectorySlug(tool) === slug) ?? null;
+}

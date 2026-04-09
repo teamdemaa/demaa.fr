@@ -17,8 +17,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className="h-full antialiased">
-      <body className="min-h-full flex flex-col bg-background text-foreground font-sans pb-24 md:pb-0">
+    <html suppressHydrationWarning lang="fr" className="h-full antialiased">
+      <body
+        suppressHydrationWarning
+        className="min-h-full flex flex-col bg-background text-foreground font-sans pb-24 md:pb-0"
+      >
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-V1V4EX55K6"
           strategy="afterInteractive"

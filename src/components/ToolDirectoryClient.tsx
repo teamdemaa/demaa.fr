@@ -1,19 +1,21 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import Link from "next/link";
+import { useMemo, useState, type ReactNode } from "react";
 import { Search } from "lucide-react";
-import {
-  toolDirectory,
-  toolDirectoryCategories,
-  toolDirectorySectors,
-} from "@/lib/tool-directory";
+import type { ToolDirectoryItem } from "@/lib/tool-directory";
 
-function getValidFilters(sector?: string, category?: string) {
-  if (category && toolDirectoryCategories.includes(category)) {
+function getValidFilters(
+  sectors: string[],
+  categories: string[],
+  sector?: string,
+  category?: string,
+) {
+  if (category && categories.includes(category)) {
     return { sector: "Tous", category };
   }
 
-  if (sector && toolDirectorySectors.includes(sector)) {
+  if (sector && sectors.includes(sector)) {
     return { sector, category: "Tous" };
   }
 
@@ -21,15 +23,38 @@ function getValidFilters(sector?: string, category?: string) {
 }
 
 type ToolDirectoryClientProps = {
+  title?: string;
+  description?: string;
+  searchPlaceholder?: string;
+  resultLabel?: string;
+  items: ToolDirectoryItem[];
+  sectors: string[];
+  categories: string[];
   initialCategory?: string;
   initialSector?: string;
+  hideTransverseOnSector?: boolean;
+  externalLinks?: boolean;
 };
 
 export default function ToolDirectoryClient({
+  title = "Annuaire Logiciels",
+  description = "Les principaux logiciels utiles aux TPE, classés par secteur et usage.",
+  searchPlaceholder = "Rechercher un outil, un usage, un secteur...",
+  resultLabel = "logiciels trouvés",
+  items,
+  sectors,
+  categories,
   initialCategory,
   initialSector,
+  hideTransverseOnSector = true,
+  externalLinks = true,
 }: ToolDirectoryClientProps) {
-  const initialFilters = getValidFilters(initialSector, initialCategory);
+  const initialFilters = getValidFilters(
+    sectors,
+    categories,
+    initialSector,
+    initialCategory,
+  );
   const [searchQuery, setSearchQuery] = useState("");
   const [activeSector, setActiveSector] = useState(initialFilters.sector);
   const [activeCategory, setActiveCategory] = useState(initialFilters.category);
@@ -37,7 +62,7 @@ export default function ToolDirectoryClient({
   const filteredTools = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
 
-    return toolDirectory.filter((tool) => {
+    return items.filter((tool) => {
       const isTransverseTool = tool.sectors.length > 2;
       const matchesSearch =
         !query ||
@@ -50,24 +75,25 @@ export default function ToolDirectoryClient({
 
       const matchesSector =
         activeSector === "Tous" ||
-        (tool.sectors.includes(activeSector) && !isTransverseTool);
+        (tool.sectors.includes(activeSector) &&
+          (!hideTransverseOnSector || !isTransverseTool));
 
       const matchesCategory =
         activeCategory === "Tous" || tool.category === activeCategory;
 
       return matchesSearch && matchesSector && matchesCategory;
     });
-  }, [activeCategory, activeSector, searchQuery]);
+  }, [activeCategory, activeSector, hideTransverseOnSector, items, searchQuery]);
 
   return (
     <div className="w-full">
       <section className="w-full border-b border-brand-blue/5 bg-[#FFF9F8] px-4 pb-5 pt-8 md:pt-10">
         <div className="mx-auto max-w-5xl text-center">
           <h1 className="demaa-section-title text-4xl tracking-tight text-brand-blue md:text-5xl">
-            Annuaire Outils
+            {title}
           </h1>
           <p className="mx-auto mt-2 max-w-2xl text-sm font-normal leading-relaxed text-gray-600">
-            Les outils utiles aux TPE, classés par secteur et usage.
+            {description}
           </p>
 
           <div className="mx-auto mt-5 max-w-2xl rounded-full border border-brand-blue/5 bg-white p-1.5 shadow-[0_10px_30px_rgba(25,27,48,0.035)]">
@@ -76,7 +102,7 @@ export default function ToolDirectoryClient({
               <input
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.target.value)}
-                placeholder="Rechercher un outil, un usage, un secteur..."
+                placeholder={searchPlaceholder}
                 className="w-full rounded-full bg-white py-3 pl-10 pr-5 text-sm font-normal text-brand-blue outline-none transition placeholder:text-brand-blue/40"
               />
             </div>
@@ -91,7 +117,7 @@ export default function ToolDirectoryClient({
                 setActiveCategory("Tous");
               }}
             />
-            {toolDirectorySectors
+            {sectors
               .filter((sector) => sector !== "Tous")
               .map((sector) => (
                 <FilterChip
@@ -104,7 +130,7 @@ export default function ToolDirectoryClient({
                   }}
                 />
               ))}
-            {toolDirectoryCategories
+            {categories
               .filter((category) => category !== "Tous")
               .map((category) => (
                 <FilterChip
@@ -125,7 +151,7 @@ export default function ToolDirectoryClient({
         <div className="flex items-center justify-between gap-4 pb-5">
           <p className="text-sm font-normal text-gray-500">
             <span className="font-semibold text-brand-blue">{filteredTools.length}</span>{" "}
-            outils trouvés
+            {resultLabel}
           </p>
           {(activeSector !== "Tous" || activeCategory !== "Tous" || searchQuery) && (
             <button
@@ -152,12 +178,10 @@ export default function ToolDirectoryClient({
         ) : (
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
             {filteredTools.map((tool) => (
-              <a
+              <ToolCard
                 key={tool.name}
+                externalLinks={externalLinks}
                 href={tool.url}
-                target="_blank"
-                rel="noreferrer"
-                className="group flex h-full flex-col rounded-[1.25rem] border border-brand-blue/8 bg-white p-4 shadow-[0_8px_24px_rgba(25,27,48,0.025)] transition hover:-translate-y-0.5 hover:border-brand-coral/25 hover:shadow-[0_16px_42px_rgba(25,27,48,0.06)]"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div>
@@ -208,12 +232,39 @@ export default function ToolDirectoryClient({
                     {tool.pricingHint}
                   </span>
                 </div>
-              </a>
+              </ToolCard>
             ))}
           </div>
         )}
       </section>
     </div>
+  );
+}
+
+function ToolCard({
+  externalLinks,
+  href,
+  children,
+}: {
+  externalLinks: boolean;
+  href: string;
+  children: ReactNode;
+}) {
+  const className =
+    "group flex h-full flex-col rounded-[1.25rem] border border-brand-blue/8 bg-white p-4 shadow-[0_8px_24px_rgba(25,27,48,0.025)] transition hover:-translate-y-0.5 hover:border-brand-coral/25 hover:shadow-[0_16px_42px_rgba(25,27,48,0.06)]";
+
+  if (externalLinks) {
+    return (
+      <a href={href} target="_blank" rel="noreferrer" className={className}>
+        {children}
+      </a>
+    );
+  }
+
+  return (
+    <Link href={href} className={className}>
+      {children}
+    </Link>
   );
 }
 

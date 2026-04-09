@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getAllPosts } from "@/lib/blog";
+import { getToolDirectorySlug, toolDirectory } from "@/lib/tool-directory";
 
 function getBaseUrl(): string {
   // Priorité absolue au domaine principal
@@ -27,7 +28,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: base, lastModified: now, changeFrequency: "weekly", priority: 1 },
     { url: `${base}/blog`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${base}/annuaire-outils`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${base}/annuaire-logiciels`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${base}/outils-gratuits`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
     { url: `${base}/newsletter`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     { url: `${base}/mentions-legales`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
     { url: `${base}/politique-de-confidentialite`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
@@ -43,5 +45,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...blogEntries];
+  const logicielsEntries: MetadataRoute.Sitemap = toolDirectory.map((tool) => ({
+    url: `${base}/annuaire-logiciels/${getToolDirectorySlug(tool)}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  return [...staticRoutes, ...blogEntries, ...logicielsEntries];
 }

@@ -2,26 +2,27 @@ import Link from "next/link";
 
 const resourcesLinks = [
   { label: "Le Kit du Dirigeant Organisé", href: "/outils/kit-du-dirigeant-organise" },
-  { label: "L'annuaire des outils", href: "/annuaire-outils" },
+  { label: "L'annuaire des logiciels", href: "/annuaire-logiciels" },
+  { label: "Outils Gratuits", href: "/outils-gratuits" },
   { label: "Newsletter", href: "/newsletter" },
 ];
 
 const sectorLinks = [
-  { label: "Outils Services & conseil", href: "/annuaire-outils?secteur=Services%20%26%20conseil" },
-  { label: "Outils Commerce local", href: "/annuaire-outils?secteur=Commerce%20local" },
-  { label: "Outils Restaurant", href: "/annuaire-outils?secteur=Restauration" },
-  { label: "Outils BTP", href: "/annuaire-outils?secteur=Artisanat%20%26%20BTP" },
-  { label: "Outils Immobilier", href: "/annuaire-outils?secteur=Immobilier" },
-  { label: "Outils Santé & bien-être", href: "/annuaire-outils?secteur=Sant%C3%A9%20%26%20bien-%C3%AAtre" },
+  { label: "Logiciels Services & conseil", href: "/annuaire-logiciels?secteur=Services%20%26%20conseil" },
+  { label: "Logiciels Commerce local", href: "/annuaire-logiciels?secteur=Commerce%20local" },
+  { label: "Logiciels Restaurant", href: "/annuaire-logiciels?secteur=Restauration" },
+  { label: "Logiciels BTP", href: "/annuaire-logiciels?secteur=Artisanat%20%26%20BTP" },
+  { label: "Logiciels Immobilier", href: "/annuaire-logiciels?secteur=Immobilier" },
+  { label: "Logiciels Santé & bien-être", href: "/annuaire-logiciels?secteur=Sant%C3%A9%20%26%20bien-%C3%AAtre" },
 ];
 
 const categoryLinks = [
-  { label: "Outils CRM & ventes", href: "/annuaire-outils?categorie=CRM%20%26%20ventes" },
-  { label: "Outils Marketing", href: "/annuaire-outils?categorie=Marketing%20%26%20visibilit%C3%A9" },
-  { label: "Outils Automatisation", href: "/annuaire-outils?categorie=Automatisation" },
-  { label: "Outils Finance & paiement", href: "/annuaire-outils?categorie=Finance%20%26%20paiement" },
-  { label: "Outils métier", href: "/annuaire-outils?categorie=Outils%20m%C3%A9tier" },
-  { label: "Outils IA bureautique", href: "/annuaire-outils?categorie=IA%20bureautique" },
+  { label: "Logiciels CRM & ventes", href: "/annuaire-logiciels?categorie=CRM%20%26%20ventes" },
+  { label: "Logiciels Marketing", href: "/annuaire-logiciels?categorie=Marketing%20%26%20visibilit%C3%A9" },
+  { label: "Logiciels Automatisation", href: "/annuaire-logiciels?categorie=Automatisation" },
+  { label: "Logiciels Finance & paiement", href: "/annuaire-logiciels?categorie=Finance%20%26%20paiement" },
+  { label: "Logiciels métier", href: "/annuaire-logiciels?categorie=Outils%20m%C3%A9tier" },
+  { label: "Logiciels IA bureautique", href: "/annuaire-logiciels?categorie=IA%20bureautique" },
 ];
 
 export default function Footer() {
