@@ -2,27 +2,27 @@ import Link from "next/link";
 
 const resourcesLinks = [
   { label: "Le Kit du Dirigeant Organisé", href: "/outils/kit-du-dirigeant-organise" },
-  { label: "L'annuaire des logiciels", href: "/annuaire-logiciels" },
+  { label: "L'annuaire des logiciels", href: "/" },
   { label: "Outils Gratuits", href: "/outils-gratuits" },
   { label: "Newsletter", href: "/newsletter" },
 ];
 
 const sectorLinks = [
-  { label: "Logiciels Services & conseil", href: "/annuaire-logiciels?secteur=Services%20%26%20conseil" },
-  { label: "Logiciels Commerce local", href: "/annuaire-logiciels?secteur=Commerce%20local" },
-  { label: "Logiciels Restaurant", href: "/annuaire-logiciels?secteur=Restauration" },
-  { label: "Logiciels BTP", href: "/annuaire-logiciels?secteur=Artisanat%20%26%20BTP" },
-  { label: "Logiciels Immobilier", href: "/annuaire-logiciels?secteur=Immobilier" },
-  { label: "Logiciels Santé & bien-être", href: "/annuaire-logiciels?secteur=Sant%C3%A9%20%26%20bien-%C3%AAtre" },
+  { label: "Logiciels Services & conseil", href: "/?secteur=Services%20%26%20conseil" },
+  { label: "Logiciels Commerce local", href: "/?secteur=Commerce%20local" },
+  { label: "Logiciels Restaurant", href: "/?secteur=Restauration" },
+  { label: "Logiciels BTP", href: "/?secteur=Artisanat%20%26%20BTP" },
+  { label: "Logiciels Immobilier", href: "/?secteur=Immobilier" },
+  { label: "Logiciels Santé & bien-être", href: "/?secteur=Sant%C3%A9%20%26%20bien-%C3%AAtre" },
 ];
 
 const categoryLinks = [
-  { label: "Logiciels CRM & ventes", href: "/annuaire-logiciels?categorie=CRM%20%26%20ventes" },
-  { label: "Logiciels Marketing", href: "/annuaire-logiciels?categorie=Marketing%20%26%20visibilit%C3%A9" },
-  { label: "Logiciels Automatisation", href: "/annuaire-logiciels?categorie=Automatisation" },
-  { label: "Logiciels Finance & paiement", href: "/annuaire-logiciels?categorie=Finance%20%26%20paiement" },
-  { label: "Logiciels métier", href: "/annuaire-logiciels?categorie=Outils%20m%C3%A9tier" },
-  { label: "Logiciels IA bureautique", href: "/annuaire-logiciels?categorie=IA%20bureautique" },
+  { label: "Logiciels CRM & ventes", href: "/?categorie=CRM%20%26%20ventes" },
+  { label: "Logiciels Marketing", href: "/?categorie=Marketing%20%26%20visibilit%C3%A9" },
+  { label: "Logiciels Automatisation", href: "/?categorie=Automatisation" },
+  { label: "Logiciels Finance & paiement", href: "/?categorie=Finance%20%26%20paiement" },
+  { label: "Logiciels métier", href: "/?categorie=Outils%20m%C3%A9tier" },
+  { label: "Logiciels IA bureautique", href: "/?categorie=IA%20bureautique" },
 ];
 
 export default function Footer() {
@@ -50,10 +50,10 @@ export default function Footer() {
             </h3>
             <ul className="space-y-3">
               <li>
-                <Link href="/" className={linkClass}>Accueil</Link>
+                <Link href="/" className={linkClass}>Annuaire logiciels</Link>
               </li>
               <li>
-                <Link href="/#pricing" className={linkClass}>Déléguer mes automatisations</Link>
+                <Link href="/automatiser-mes-taches" className={linkClass}>Automatiser mes tâches</Link>
               </li>
               <li>
                 <Link href="mailto:team@demaa.fr" className={linkClass}>Nous contacter</Link>

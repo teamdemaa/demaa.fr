@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
 
 export default function DeleguerMesAutomatisationsPage() {
-  redirect("/#pricing");
+  redirect("/automatiser-mes-taches");
 }

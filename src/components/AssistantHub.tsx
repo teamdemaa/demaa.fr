@@ -406,14 +406,7 @@ function navigateToHref(router: ReturnType<typeof useRouter>, href: string) {
 }
 
 function navigateToPricing() {
-  const pricingSection = document.getElementById("pricing");
-
-  if (pricingSection) {
-    pricingSection.scrollIntoView({ behavior: "smooth", block: "start" });
-    return;
-  }
-
-  window.location.href = "/#pricing";
+  window.location.href = "/automatiser-mes-taches";
 }
 
 function withEstimationLabel(value: string) {

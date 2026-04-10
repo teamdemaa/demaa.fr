@@ -26,27 +26,19 @@ export default function Navbar({ minimal = false }: { minimal?: boolean }) {
           {!minimal && (
             <div className="flex items-center gap-3 md:gap-5">
               <Link
-                href="/annuaire-logiciels"
+                href="/outils-gratuits"
                 className="text-[13px] md:text-[15px] text-brand-blue hover:text-brand-coral transition-all duration-300 font-medium whitespace-nowrap"
               >
-                <span className="hidden sm:inline">Annuaire Logiciels</span>
-                <span className="sm:hidden">Annuaire Logiciels</span>
+                <span className="hidden sm:inline">Outils Gratuit</span>
+                <span className="sm:hidden">Outils Gratuit</span>
               </Link>
 
               <Link
-                href="/#pricing"
+                href="/automatiser-mes-taches"
                 className="inline-flex items-center rounded-full border border-brand-blue/12 bg-transparent px-5 py-3 text-xs md:text-sm font-medium text-brand-blue transition-colors hover:border-brand-coral/25 hover:text-brand-coral whitespace-nowrap"
-                onClick={(event) => {
-                  if (pathname === "/") {
-                    event.preventDefault();
-                    document
-                      .getElementById("pricing")
-                      ?.scrollIntoView({ behavior: "smooth", block: "start" });
-                  }
-                }}
               >
-                <span className="hidden sm:inline">Déléguer mes automatisations</span>
-                <span className="sm:hidden">Déléguer mes automatisations</span>
+                <span className="hidden sm:inline">Automatiser mes tâches</span>
+                <span className="sm:hidden">Automatiser mes tâches</span>
               </Link>
             </div>
           )}

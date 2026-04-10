@@ -23,5 +23,5 @@ export default async function AnnuaireOutilsRedirectPage({
   if (categorie) nextParams.set("categorie", categorie);
 
   const query = nextParams.toString();
-  permanentRedirect(query ? `/annuaire-logiciels?${query}` : "/annuaire-logiciels");
+  permanentRedirect(query ? `/?${query}` : "/");
 }
