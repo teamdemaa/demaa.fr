@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { ChevronRight, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import type { System } from "@/lib/types";
 import type { OperationalSystemDetail, SystemPillar } from "@/lib/system-operations";
 
@@ -162,16 +162,13 @@ export default function SystemsCatalogClient({
                   }}
                   className="group flex h-full cursor-pointer flex-col rounded-[1.25rem] border border-brand-blue/8 bg-white p-4 text-left shadow-[0_8px_24px_rgba(25,27,48,0.025)] transition hover:-translate-y-0.5 hover:border-brand-coral/25 hover:shadow-[0_16px_42px_rgba(25,27,48,0.06)]"
                 >
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-brand-coral">
-                        {detail?.sectorLabel ?? "Système opérationnel"}
-                      </p>
-                      <h2 className="mt-1.5 text-lg font-bold tracking-tight text-brand-blue">
-                        {system.name}
-                      </h2>
-                    </div>
-                    <ChevronRight className="h-5 w-5 text-brand-blue/30" />
+                  <div>
+                    <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-brand-coral">
+                      {detail?.sectorLabel ?? "Système opérationnel"}
+                    </p>
+                    <h2 className="mt-1.5 text-lg font-bold tracking-tight text-brand-blue">
+                      {system.name}
+                    </h2>
                   </div>
 
                   <p className="mt-3 text-sm font-normal leading-relaxed text-gray-600">
@@ -282,44 +279,46 @@ export default function SystemsCatalogClient({
             </div>
 
             {activeTab === "processus" ? (
-              <div className="mt-6 grid gap-4 xl:grid-cols-5">
-                {PILLARS.map((pillar) => {
-                  const pillarCards = detail.processes.filter(
-                    (process) => process.pillar === pillar
-                  );
+              <div className="mt-6 overflow-x-auto pb-2 soft-scroll">
+                <div className="flex min-w-max gap-4">
+                  {PILLARS.map((pillar) => {
+                    const pillarCards = detail.processes.filter(
+                      (process) => process.pillar === pillar
+                    );
 
-                  return (
-                    <div
-                      key={pillar}
-                      className="rounded-[1.75rem] border border-brand-blue/8 bg-white p-4"
-                    >
-                      <h3 className="text-sm font-semibold text-brand-blue">{pillar}</h3>
-                      <div className="mt-4 space-y-3">
-                        {pillarCards.length > 0 ? (
-                          pillarCards.map((process) => (
-                            <article
-                              key={process.title}
-                              className="rounded-[1.25rem] border border-brand-blue/6 bg-[#FFF9F8] p-3"
-                            >
-                              <h4 className="text-sm font-semibold leading-snug text-brand-blue">
-                                {process.title}
-                              </h4>
-                              <p className="mt-2 text-xs leading-relaxed text-gray-600">
-                                {process.description}
+                    return (
+                      <div
+                        key={pillar}
+                        className="w-[18rem] shrink-0 rounded-[1.75rem] bg-white p-4 shadow-[0_8px_24px_rgba(25,27,48,0.025)]"
+                      >
+                        <h3 className="text-sm font-semibold text-brand-blue">{pillar}</h3>
+                        <div className="mt-4 space-y-3">
+                          {pillarCards.length > 0 ? (
+                            pillarCards.map((process) => (
+                              <article
+                                key={process.title}
+                                className="rounded-[1.25rem] bg-[#FFF9F8] p-3 shadow-[0_4px_12px_rgba(25,27,48,0.02)]"
+                              >
+                                <h4 className="text-sm font-semibold leading-snug text-brand-blue">
+                                  {process.title}
+                                </h4>
+                                <p className="mt-2 text-xs leading-relaxed text-gray-600">
+                                  {process.description}
+                                </p>
+                              </article>
+                            ))
+                          ) : (
+                            <div className="rounded-[1.25rem] bg-[#FFF9F8] p-3">
+                              <p className="text-xs leading-relaxed text-gray-500">
+                                Pas de process prioritaire ajouté pour ce pilier.
                               </p>
-                            </article>
-                          ))
-                        ) : (
-                          <div className="rounded-[1.25rem] border border-dashed border-brand-blue/10 bg-[#FFF9F8] p-3">
-                            <p className="text-xs leading-relaxed text-gray-500">
-                              Pas de process prioritaire ajouté pour ce pilier.
-                            </p>
-                          </div>
-                        )}
+                            </div>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+                </div>
               </div>
             ) : (
               <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
