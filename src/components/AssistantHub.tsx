@@ -23,6 +23,10 @@ import { toPng } from "html-to-image";
 import jsPDF from "jspdf";
 import DelegationPricingModal from "./DelegationPricingModal";
 import NewsletterForm from "./NewsletterForm";
+import SystemsCatalogClient from "./SystemsCatalogClient";
+import SystemSetupModal from "./SystemSetupModal";
+import type { System } from "@/lib/types";
+import type { OperationalSystemDetail } from "@/lib/system-operations";
 
 const STRIPE_URL_10_CREDITS =
   process.env.NEXT_PUBLIC_STRIPE_URL_10_CREDITS?.trim() ||
@@ -60,6 +64,12 @@ interface AIResponse {
   goal: string;
   actions: ActionPlanItem[];
 }
+
+type AssistantHubProps = {
+  systems: System[];
+  detailsBySlug: Record<string, OperationalSystemDetail>;
+  mode?: "landing" | "tool";
+};
 
 interface SpeechRecognitionAlternativeLike {
   transcript: string;
@@ -406,7 +416,7 @@ function navigateToHref(router: ReturnType<typeof useRouter>, href: string) {
 }
 
 function navigateToPricing() {
-  window.location.href = "/automatiser-mes-taches";
+  window.location.href = "/";
 }
 
 function withEstimationLabel(value: string) {
@@ -457,7 +467,11 @@ async function fetchGenerationLimit(email: string): Promise<GenerationLimitState
   };
 }
 
-export default function AssistantHub() {
+export default function AssistantHub({
+  systems,
+  detailsBySlug,
+  mode = "landing",
+}: AssistantHubProps) {
   const router = useRouter();
   const pdfContentRef = useRef<HTMLDivElement>(null);
   const homeTextareaRef = useRef<HTMLTextAreaElement>(null);
@@ -473,6 +487,7 @@ export default function AssistantHub() {
   const [emailError, setEmailError] = useState<string | null>(null);
   const [showEmailModal, setShowEmailModal] = useState(false);
   const [showFreeTrialModal, setShowFreeTrialModal] = useState(false);
+  const [showSystemSetupModal, setShowSystemSetupModal] = useState(false);
   const [hasUnlockedPlan, setHasUnlockedPlan] = useState(false);
   const [activeQuoteIndex, setActiveQuoteIndex] = useState(0);
   const [placeholderExampleIndex, setPlaceholderExampleIndex] = useState(0);
@@ -816,13 +831,6 @@ export default function AssistantHub() {
     URL.revokeObjectURL(url);
   };
 
-  const focusHomeChat = () => {
-    homeTextareaRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-    window.setTimeout(() => {
-      homeTextareaRef.current?.focus();
-    }, 250);
-  };
-
   return (
     <div className="relative mx-auto max-w-6xl overflow-visible px-4 pb-12 pt-0 md:pb-[4.25rem] md:pt-0">
       <div className="pointer-events-none absolute left-1/2 top-10 -z-10 h-80 w-80 -translate-x-1/2 rounded-full bg-brand-coral/10 blur-3xl" />
@@ -869,6 +877,15 @@ export default function AssistantHub() {
             isOpen={showFreeTrialModal}
             onClose={() => setShowFreeTrialModal(false)}
             initialOffer="free"
+          />
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {showSystemSetupModal && (
+          <SystemSetupModal
+            isOpen={showSystemSetupModal}
+            onClose={() => setShowSystemSetupModal(false)}
           />
         )}
       </AnimatePresence>
@@ -959,11 +976,27 @@ export default function AssistantHub() {
                 <h1 className="demaa-hero-title text-[3rem] text-brand-blue tracking-tight leading-[0.98] md:text-[4.05rem] lg:text-[5rem]">
                   Vous avez déjà assez à gérer.
                   <br className="hidden md:block" />
-                  <span className="text-brand-coral"> Le reste, on peut l&apos;automatiser.</span>
+                  <span className="text-brand-coral"> Le reste, il s&apos;automatise.</span>
                 </h1>
               </div>
 
-              <form onSubmit={handleSubmit} className="relative mt-4 w-full max-w-4xl group">
+              {mode === "landing" ? (
+                <div className="w-full max-w-6xl">
+                  <SystemsCatalogClient
+                    systems={systems}
+                    detailsBySlug={detailsBySlug}
+                    showIntro={false}
+                    pageSize={8}
+                  />
+                </div>
+              ) : null}
+
+              {mode === "tool" ? (
+                <form
+                  id="plan-action-chat"
+                  onSubmit={handleSubmit}
+                  className="relative mt-4 w-full max-w-4xl group"
+                >
                 <div className="relative overflow-hidden rounded-[2rem] border border-black/5 bg-white shadow-[0_10px_30px_rgba(34,48,84,0.05)] transition-all duration-300 group-focus-within:border-brand-blue/10 group-focus-within:shadow-[0_16px_40px_rgba(34,48,84,0.08)]">
                   <textarea
                     ref={homeTextareaRef}
@@ -1063,7 +1096,8 @@ export default function AssistantHub() {
                     {error}
                   </div>
                 )}
-              </form>
+                </form>
+              ) : null}
             </motion.section>
 
             <motion.section
@@ -1099,6 +1133,16 @@ export default function AssistantHub() {
                       </p>
                     </div>
                   ))}
+                </div>
+
+                <div className="flex justify-center pt-2 md:pt-4">
+                  <button
+                    type="button"
+                    onClick={() => setShowSystemSetupModal(true)}
+                    className="inline-flex items-center justify-center rounded-full border border-white/12 bg-white px-7 py-3.5 text-sm font-medium text-brand-blue shadow-[0_10px_24px_rgba(0,0,0,0.08)] transition hover:-translate-y-0.5 hover:bg-[#FFF3EF] hover:text-brand-blue"
+                  >
+                    Demander un Audit Systèmes
+                  </button>
                 </div>
               </div>
             </motion.section>
@@ -1203,7 +1247,7 @@ export default function AssistantHub() {
               </div>
             </motion.section>
 
-            <motion.section {...SECTION_REVEAL} id="pricing" className="scroll-mt-24 space-y-10 py-[100px] md:space-y-12">
+            <motion.section {...SECTION_REVEAL} id="pricing" className="hidden scroll-mt-24 space-y-10 py-[100px] md:space-y-12">
               <div className="mx-auto max-w-3xl space-y-4 text-center">
                 <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-brand-blue md:text-[4.2rem]">
                   Vous choisissez votre point
@@ -1272,7 +1316,7 @@ export default function AssistantHub() {
               </div>
             </motion.section>
 
-            <motion.section {...SECTION_REVEAL} className="space-y-10 rounded-[2.25rem] border border-white/10 bg-brand-blue px-5 py-8 md:space-y-12 md:px-8 md:py-10">
+            <motion.section {...SECTION_REVEAL} className="hidden space-y-10 rounded-[2.25rem] border border-white/10 bg-brand-blue px-5 py-8 md:space-y-12 md:px-8 md:py-10">
               <div className="mx-auto max-w-4xl space-y-4 text-center">
                 <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-white md:text-[4.2rem]">
                   Comment fonctionne<br /> les crédits ?
@@ -1370,7 +1414,7 @@ export default function AssistantHub() {
             </motion.section>
 
             <motion.section {...SECTION_REVEAL} className="rounded-[2.25rem] border border-brand-coral/10 bg-[#FFF3EF] px-6 py-12 text-center shadow-[0_8px_18px_rgba(25,27,48,0.016)] md:px-10 md:py-16">
-              <div className="mx-auto max-w-3xl space-y-4">
+              <div className="mx-auto max-w-4xl space-y-4">
                 <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-brand-blue md:text-[4.2rem]">
                   Commencez par la tâche
                   <br />
@@ -1379,15 +1423,111 @@ export default function AssistantHub() {
                 <p className="text-sm leading-relaxed text-gray-600 md:text-base">
                   Décrivez vos tâches répétitives, vos relances, vos copier-coller ou vos suivis manuels. On vous aide à voir ce qui peut être automatisé et combien de temps vous pourriez récupérer.
                 </p>
-                <div className="pt-2">
-                  <button
-                    type="button"
-                    onClick={focusHomeChat}
-                    className="inline-flex items-center justify-center rounded-full bg-brand-blue px-7 py-3.5 text-sm font-medium text-white transition-colors hover:bg-brand-coral"
-                  >
-                    Estimer les heures à gagner
-                  </button>
-                </div>
+                <form
+                  id="plan-action-chat"
+                  onSubmit={handleSubmit}
+                  className="relative mx-auto mt-6 w-full max-w-4xl group"
+                >
+                  <div className="relative overflow-hidden rounded-[2rem] border border-black/5 bg-white shadow-[0_10px_30px_rgba(34,48,84,0.05)] transition-all duration-300 group-focus-within:border-brand-blue/10 group-focus-within:shadow-[0_16px_40px_rgba(34,48,84,0.08)]">
+                    <textarea
+                      ref={homeTextareaRef}
+                      value={inputValue}
+                      onChange={(e) => setInputValue(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" && !e.shiftKey) {
+                          e.preventDefault();
+
+                          if (!isLoading && inputValue.trim()) {
+                            void handleSubmit(e as unknown as React.FormEvent);
+                          }
+                        }
+                      }}
+                      aria-label="Décrivez les tâches qui vous prennent du temps"
+                      placeholder=""
+                      className="h-36 w-full resize-none bg-transparent p-7 pr-7 text-left text-lg font-normal leading-relaxed focus:outline-none md:pr-56"
+                      disabled={isLoading}
+                    />
+
+                    {!inputValue && (
+                      <div
+                        aria-hidden="true"
+                        className="pointer-events-none absolute left-7 top-7 pr-7 text-left text-base font-normal leading-relaxed text-gray-400 md:pr-56"
+                      >
+                        {animatedPlaceholder}
+                        <motion.span
+                          animate={{ opacity: [1, 1, 0, 0] }}
+                          transition={{ duration: 0.9, repeat: Infinity, ease: "linear" }}
+                          className="ml-0.5 inline-block h-[1em] w-px translate-y-[0.16em] bg-gray-400"
+                        />
+                      </div>
+                    )}
+
+                    <div className="flex flex-col gap-3 border-t border-black/5 px-5 py-4 md:absolute md:bottom-6 md:right-6 md:border-t-0 md:bg-transparent md:p-0">
+                      <div className="flex items-center justify-end gap-3">
+                        <button
+                          type="button"
+                          onClick={toggleVoiceInput}
+                          disabled={isLoading || generationLimitReached}
+                          aria-label={isRecording ? "Arrêter la note vocale" : "Démarrer la note vocale"}
+                          className={`flex h-11 w-11 items-center justify-center rounded-full transition-all duration-300 ${
+                            isLoading || generationLimitReached
+                              ? "cursor-not-allowed bg-gray-100 text-gray-400"
+                              : isRecording
+                                ? "bg-brand-coral text-white"
+                                : "bg-gray-100 text-brand-blue hover:bg-gray-200"
+                          }`}
+                        >
+                          <Mic className="h-4 w-4" />
+                        </button>
+
+                        {!generationLimitReached && (
+                          <button
+                            type="submit"
+                            disabled={isLoading || !inputValue.trim()}
+                            aria-label={isLoading ? "Analyse en cours" : "Voir mon plan d'action"}
+                            className={`inline-flex h-11 items-center justify-center gap-2 rounded-full px-5 text-sm font-medium transition-all duration-300 md:h-12 md:px-6 ${
+                              isLoading || !inputValue.trim()
+                                ? "cursor-not-allowed bg-gray-100 text-gray-400"
+                                : "bg-brand-blue text-white hover:bg-brand-coral"
+                            }`}
+                          >
+                            <span>Voir mon plan d&apos;action</span>
+                            <Send className="h-4 w-4" />
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {generationLimitReached && (
+                    <div className="mt-4 flex justify-center">
+                      <button
+                        type="button"
+                        onClick={navigateToPricing}
+                        className="inline-flex items-center justify-center rounded-full bg-brand-blue px-7 py-3.5 text-sm font-medium text-white transition-all hover:bg-brand-coral"
+                      >
+                        Déléguer mes automatisations
+                      </button>
+                    </div>
+                  )}
+
+                  {hasUnlockedPlan && emailValue.trim() && (
+                    <div className="mt-4 text-sm font-normal text-gray-500">
+                      {generationLimitReached
+                        ? "Vous avez atteint 3 plans sur cette adresse email."
+                        : `${Math.max(0, MAX_GENERATIONS_PER_USER - generationCount)} plan${
+                            Math.max(0, MAX_GENERATIONS_PER_USER - generationCount) > 1 ? "s" : ""
+                          } restant${Math.max(0, MAX_GENERATIONS_PER_USER - generationCount) > 1 ? "s" : ""}.`}
+                    </div>
+                  )}
+
+                  {error && (
+                    <div className="mt-6 flex items-center gap-2 rounded-2xl border border-red-100 bg-red-50 px-6 py-4 text-sm font-bold text-red-500 animate-in slide-in-from-top-2">
+                      <AlertCircle className="w-5 h-5" />
+                      {error}
+                    </div>
+                  )}
+                </form>
               </div>
             </motion.section>
 

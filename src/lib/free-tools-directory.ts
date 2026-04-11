@@ -13,11 +13,14 @@ export const freeToolsDirectorySectors = [
 
 export const freeToolsDirectoryCategories = [
   "Tous",
+  "Organisation & IA",
   "QR Code",
   "Visibilité locale",
   "Signature & documents",
   "Identité & admin",
 ];
+
+const customFreeTools: ToolDirectoryItem[] = [];
 
 const freeToolMappings: Record<
   string,
@@ -79,19 +82,22 @@ const freeToolMappings: Record<
   },
 };
 
-export const freeToolsDirectory: ToolDirectoryItem[] = toolsData
-  .filter((tool) => tool.price === "Gratuit")
-  .map((tool) => {
-    const mapped = freeToolMappings[tool.slug];
+export const freeToolsDirectory: ToolDirectoryItem[] = [
+  ...customFreeTools,
+  ...toolsData
+    .filter((tool) => tool.price === "Gratuit")
+    .map((tool) => {
+      const mapped = freeToolMappings[tool.slug];
 
-    return {
-      name: tool.name,
-      url: `/outils/${tool.slug}`,
-      category: mapped?.category ?? "Identité & admin",
-      sectors: mapped?.sectors ?? ["Services & conseil"],
-      description: tool.description,
-      tags: mapped?.tags ?? tool.tags,
-      bestFor: mapped?.bestFor ?? tool.shortDescription ?? tool.description,
-      pricingHint: "Gratuit",
-    };
-  });
+      return {
+        name: tool.name,
+        url: `/outils/${tool.slug}`,
+        category: mapped?.category ?? "Identité & admin",
+        sectors: mapped?.sectors ?? ["Services & conseil"],
+        description: tool.description,
+        tags: mapped?.tags ?? tool.tags,
+        bestFor: mapped?.bestFor ?? tool.shortDescription ?? tool.description,
+        pricingHint: "Gratuit",
+      };
+    }),
+];

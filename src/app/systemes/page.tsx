@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
 
-export default function DeleguerMesAutomatisationsPage() {
+export default function SystemesPage() {
   redirect("/");
 }
