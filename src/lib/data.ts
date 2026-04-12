@@ -74,7 +74,7 @@ const localData: ServiceRecord[] = [
     name: "Automatisation des tâches",
     category: "Opérations - Systèmes",
     shortDescription: "Gagnez des jours par mois",
-    description: "Travailler mieux, pas plus. On identifie les tâches répétitives qui font perdre du temps (relances clients, envoi de factures, mise à jour de tableaux, notifications…) et on les automatise via des plateformes comme Make, Zapier ou n8n. Des process qui tournent seuls et des équipes libérées.",
+    description: "Travailler mieux, pas plus. On identifie les tâches répétitives qui font perdre du temps (relances clients, envoi de factures, mise à jour de tableaux, notifications…) et on les automatise via des plateformes comme Make, Zapier ou n8n. Des processus qui tournent seuls et des équipes libérées.",
     tags: ["Automatisation", "Productivité", "Outils"],
     icon: "Settings2",
     price: "Sur devis"
@@ -137,7 +137,7 @@ const localData: ServiceRecord[] = [
   {
     id: "12",
     slug: "publicite-tiktok",
-    name: "Publicité Tiktok",
+    name: "Publicité TikTok",
     category: "Croissance - Ads",
     shortDescription: "Captez l'attention de la nouvelle génération",
     description: "Le levier le plus puissant du moment. On vous accompagne sur la création de contenus natifs 'User Generated Content' (UGC) et le pilotage de vos TikTok Ads. Profitez de coûts d'acquisition encore très bas pour développer vos ventes rapidement.",
@@ -219,7 +219,7 @@ export const systemsData: ServiceRecord[] = [
   { id: "s26", slug: "nettoyage-professionnel", name: "Nettoyage professionnel", category: "Système Sectoriel", description: "Contrôlez vos passages et optimisez vos tournées.", tags: ["Nettoyage", "Système"], icon: "Sparkles", price: "" },
   { id: "s27", slug: "organisme-de-formation", name: "Organisme de formation", category: "Système Sectoriel", description: "Simplifiez votre conformité Qualiopi et vos inscriptions.", tags: ["Formation", "Système"], icon: "FileCheck2", price: "" },
   { id: "s28", slug: "photographe-videaste", name: "Photographe / vidéaste", category: "Système Sectoriel", description: "Workflows d'édition et galeries clients automatisées.", tags: ["Photo", "Système"], icon: "Aperture", price: "" },
-  { id: "s29", slug: "reparation-telephonique", name: "Réparation téléphonique", category: "Système Sectoriel", description: "Gérez vos pièces détachées et le suivi client.", tags: ["Reparation", "Système"], icon: "Smartphone", price: "" },
+  { id: "s29", slug: "reparation-telephonique", name: "Réparation téléphonique", category: "Système Sectoriel", description: "Gérez vos pièces détachées et le suivi client.", tags: ["Réparation", "Système"], icon: "Smartphone", price: "" },
   { id: "s30", slug: "restaurant", name: "Restaurant", category: "Système Sectoriel", description: "Optimisez vos ratios et simplifiez votre service.", tags: ["Restaurant", "Système"], icon: "Utensils", price: "" },
   { id: "s31", slug: "saas", name: "SaaS", category: "Système Sectoriel", description: "Optimisez votre MRR et le support client.", tags: ["SaaS", "Système"], icon: "Cloud", price: "" },
   { id: "s32", slug: "salle-de-sport", name: "Salle de sport", category: "Système Sectoriel", description: "Gérez vos abonnements et vos plannings de cours.", tags: ["Sport", "Système"], icon: "Dumbbell", price: "" },

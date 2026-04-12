@@ -76,7 +76,7 @@ export default function AutoJoinPopup() {
                     15 à 30&nbsp;% négociés
                   </h4>
                   <p className="text-xs text-gray-500 leading-relaxed font-medium">
-                    Services, logiciel et fournisseurs : tarifs négociés pour votre activité. Une demande suffit.
+                    Services, logiciels et fournisseurs : tarifs négociés pour votre activité. Une demande suffit.
                   </p>
                   <div className="flex items-center gap-2 text-[10px] font-black text-brand-coral uppercase tracking-widest pt-1">
                     Découvrir <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />

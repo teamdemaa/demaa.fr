@@ -50,7 +50,7 @@ export default function Footer() {
             </h3>
             <ul className="space-y-3">
               <li>
-                <Link href="/annuaire-logiciel" className={linkClass}>Annuaire logiciels</Link>
+                <Link href="/annuaire-logiciel" className={linkClass}>Annuaire des logiciels</Link>
               </li>
               <li>
                 <Link href="/" className={linkClass}>Automatiser mes tâches</Link>

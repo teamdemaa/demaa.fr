@@ -180,7 +180,7 @@ const HOME_INCLUDED_ITEMS = [
 
 const HOME_CREDIT_EXAMPLES = [
   {
-    title: "Process simple",
+    title: "Processus simple",
     credits: "2 crédits",
     subtitle: "Des étapes basiques, un seul outil ou deux outils qui se parlent.",
     items: [
@@ -191,7 +191,7 @@ const HOME_CREDIT_EXAMPLES = [
     ],
   },
   {
-    title: "Process intermédiaire",
+    title: "Processus intermédiaire",
     credits: "3 - 4 crédits",
     subtitle: "Plusieurs outils connectés, des conditions ou des données à transformer.",
     items: [
@@ -202,7 +202,7 @@ const HOME_CREDIT_EXAMPLES = [
     ],
   },
   {
-    title: "Process complet",
+    title: "Processus complet",
     credits: "5 crédits et plus",
     subtitle:
       "Un flux de bout en bout, plusieurs outils, des données volumineuses ou de la logique conditionnelle.",

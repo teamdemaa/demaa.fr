@@ -565,7 +565,7 @@ export default function DelegationPricingModal({
               Tester une automatisation simple
             </h3>
             <p className="text-sm leading-relaxed text-gray-500 md:text-base">
-              Décrivez votre besoin. Vous recevrez ensuite un message sur WhatsApp pour cadrer le process à automatiser.
+              Décrivez votre besoin. Vous recevrez ensuite un message sur WhatsApp pour cadrer le processus à automatiser.
             </p>
           </div>
 

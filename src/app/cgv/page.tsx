@@ -76,9 +76,9 @@ export default function CgvPage() {
               Les crédits d&apos;automatisation constituent une unité commerciale permettant de cadrer et réaliser des automatisations selon leur niveau de complexité.
             </p>
             <ul className="list-disc space-y-2 pl-5">
-              <li>un process simple peut représenter environ <strong>2 crédits</strong> ;</li>
-              <li>un process intermédiaire peut représenter environ <strong>3 à 4 crédits</strong> ;</li>
-              <li>un process complet ou plus dense peut nécessiter <strong>5 crédits et plus</strong>.</li>
+              <li>un processus simple peut représenter environ <strong>2 crédits</strong> ;</li>
+              <li>un processus intermédiaire peut représenter environ <strong>3 à 4 crédits</strong> ;</li>
+              <li>un processus complet ou plus dense peut nécessiter <strong>5 crédits et plus</strong>.</li>
             </ul>
             <p>
               Le nombre exact de crédits consommés dépend du cadrage réel de la mission, de la densité des données, des outils à connecter et du niveau de logique métier demandé.

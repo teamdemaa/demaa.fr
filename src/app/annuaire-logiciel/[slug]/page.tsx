@@ -57,7 +57,7 @@ export default async function LogicielDetailPage({
             className="group inline-flex items-center gap-2 text-sm font-medium text-gray-400 transition-colors hover:text-brand-coral"
           >
             <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-            Revenir à l&apos;annuaire logiciels
+            Revenir à l&apos;annuaire des logiciels
           </Link>
 
           <section className="mt-8 rounded-[2rem] border border-brand-blue/8 bg-[#FFF9F8] px-6 py-8 sm:px-8 sm:py-10">

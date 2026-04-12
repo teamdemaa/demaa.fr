@@ -124,7 +124,7 @@ export function buildOperationalSystemDetail(system: System): OperationalSystemD
 
   return {
     sectorLabel: sector,
-    editorialSubtitle: `Les process essentiels à structurer pour ${system.name.toLowerCase()}.`,
+    editorialSubtitle: `Les processus essentiels à structurer pour ${system.name.toLowerCase()}.`,
     imageTitle: system.name,
     imageSubtitle: `Aperçu du système opérationnel pour ${system.name.toLowerCase()}`,
     processes,

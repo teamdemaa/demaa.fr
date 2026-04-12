@@ -11,7 +11,7 @@ export default function TeamLeadModal({
   isOpen,
   onClose,
   title = DEFAULT_TITLE,
-  description = "Services, logiciel et fournisseurs : laissez vos coordonnées pour recevoir les offres adaptées à votre activité."
+  description = "Services, logiciels et fournisseurs : laissez vos coordonnées pour recevoir les offres adaptées à votre activité."
 }: {
   isOpen: boolean;
   onClose: () => void;

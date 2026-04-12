@@ -94,11 +94,11 @@ export default function SystemsCatalogClient({
                 Systèmes opérationnels
               </p>
               <h1 className="mt-3 demaa-section-title text-4xl tracking-tight text-brand-blue md:text-5xl">
-                Les process essentiels par secteur d&apos;activité
+                Les processus essentiels par secteur d&apos;activité
               </h1>
               <p className="mt-4 max-w-2xl text-base leading-relaxed text-gray-600">
                 Un catalogue de secteurs pour voir les systèmes à mettre en place,
-                les process prioritaires et les outils les plus utiles.
+                les processus prioritaires et les outils les plus utiles.
               </p>
             </div>
           ) : null}
@@ -113,7 +113,7 @@ export default function SystemsCatalogClient({
                     setSearchQuery(event.target.value);
                     setCurrentPage(1);
                   }}
-                  placeholder="Rechercher un secteur, un process, un système..."
+                  placeholder="Rechercher un secteur, un processus, un système..."
                   className="w-full rounded-full bg-white py-3 pl-10 pr-5 text-sm font-normal text-brand-blue outline-none transition placeholder:text-brand-blue/40"
                 />
               </div>
@@ -144,7 +144,7 @@ export default function SystemsCatalogClient({
 
           <div className="mt-6 px-4 py-2 md:py-3">
             <p className="max-w-3xl text-left text-base italic font-normal leading-relaxed text-brand-blue/80 md:text-[1.15rem]">
-              Choissiez votre secteur d&apos;activité et consultez les process et outils
+              Choisissez votre secteur d&apos;activité et consultez les processus et les outils
             </p>
           </div>
 
@@ -310,7 +310,7 @@ export default function SystemsCatalogClient({
                           ) : (
                             <div className="rounded-[1.25rem] bg-[#FFF9F8] p-3">
                               <p className="text-xs leading-relaxed text-gray-500">
-                                Pas de process prioritaire ajouté pour ce pilier.
+                                Pas de processus prioritaire ajouté pour ce pilier.
                               </p>
                             </div>
                           )}
