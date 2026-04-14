@@ -1,8 +1,13 @@
 import { Tool, Service, Template, System, ContentType } from './types';
 import { database, searchIndexes } from './database';
+import { enterpriseToSystem, getEnterpriseBySlug, getEnterpriseSystems } from './enterprise-annuaire';
 
 // Fonction générique optimisée pour récupérer les données
 export async function getData<T extends Tool | Service | Template | System>(type: ContentType): Promise<T[]> {
+  if (type === 'systems') {
+    return (await getEnterpriseSystems()) as T[];
+  }
+
   return database[type] as T[];
 }
 
@@ -20,7 +25,7 @@ export async function getTemplates(): Promise<Template[]> {
 }
 
 export async function getSystems(): Promise<System[]> {
-  return getData<System>('systems');
+  return getEnterpriseSystems();
 }
 
 // Fonctions de recherche optimisées
@@ -60,10 +65,12 @@ export async function searchTemplates(query: string): Promise<Template[]> {
 }
 
 export async function searchSystems(query: string): Promise<System[]> {
-  if (!query) return database.systems;
-  
+  const systems = await getEnterpriseSystems();
+
+  if (!query) return systems;
+
   const q = query.toLowerCase();
-  return database.systems.filter(system => 
+  return systems.filter(system => 
     system.name.toLowerCase().includes(q) ||
     system.description.toLowerCase().includes(q) ||
     system.category.toLowerCase().includes(q) ||
@@ -85,5 +92,7 @@ export async function getTemplateBySlug(slug: string): Promise<Template | null> 
 }
 
 export async function getSystemBySlug(slug: string): Promise<System | null> {
-  return database.systems.find(system => system.slug === slug) || null;
+  const enterprise = await getEnterpriseBySlug(slug);
+
+  return enterprise ? enterpriseToSystem(enterprise) : null;
 }

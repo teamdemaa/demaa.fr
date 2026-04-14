@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Link from "next/link";
 import { Search } from "lucide-react";
 import type { System } from "@/lib/types";
 import type { OperationalSystemDetail, SystemPillar } from "@/lib/system-operations";
@@ -91,14 +90,14 @@ export default function SystemsCatalogClient({
           {showIntro ? (
             <div className="max-w-3xl">
               <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-coral">
-                Systèmes opérationnels
+                Entreprises & systèmes
               </p>
               <h1 className="mt-3 demaa-section-title text-4xl tracking-tight text-brand-blue md:text-5xl">
-                Les processus essentiels par secteur d&apos;activité
+                Les processus essentiels par entreprise
               </h1>
               <p className="mt-4 max-w-2xl text-base leading-relaxed text-gray-600">
-                Un catalogue de secteurs pour voir les systèmes à mettre en place,
-                les processus prioritaires et les outils les plus utiles.
+                Un catalogue d&apos;entreprises pour voir les systèmes à mettre en place,
+                les processus prioritaires et les outils métiers les plus utiles.
               </p>
             </div>
           ) : null}
@@ -113,7 +112,7 @@ export default function SystemsCatalogClient({
                     setSearchQuery(event.target.value);
                     setCurrentPage(1);
                   }}
-                  placeholder="Rechercher un secteur, un processus, un système..."
+                  placeholder="Rechercher une entreprise, un processus, un outil..."
                   className="w-full rounded-full bg-white py-3 pl-10 pr-5 text-sm font-normal text-brand-blue outline-none transition placeholder:text-brand-blue/40"
                 />
               </div>
@@ -144,7 +143,7 @@ export default function SystemsCatalogClient({
 
           <div className="mt-6 px-4 py-2 md:py-3">
             <p className="max-w-3xl text-left text-base italic font-normal leading-relaxed text-brand-blue/80 md:text-[1.15rem]">
-              Choisissez votre secteur d&apos;activité et consultez les processus et les outils
+              Choisissez votre entreprise et consultez les processus et les outils
             </p>
           </div>
 
@@ -173,9 +172,6 @@ export default function SystemsCatalogClient({
 
                   <p className="mt-3 text-sm font-normal leading-relaxed text-gray-600">
                     {detail?.editorialSubtitle ?? system.description}
-                  </p>
-                  <p className="mt-2 text-xs font-normal leading-relaxed text-brand-blue/65">
-                    {system.description}
                   </p>
 
                   <div className="mt-4 flex flex-wrap gap-2">
@@ -280,7 +276,7 @@ export default function SystemsCatalogClient({
 
             {activeTab === "processus" ? (
               <div className="mt-6 overflow-x-auto pb-2 soft-scroll">
-                <div className="flex min-w-max gap-4">
+                <div className="mx-auto flex min-w-max justify-center gap-4">
                   {PILLARS.map((pillar) => {
                     const pillarCards = detail.processes.filter(
                       (process) => process.pillar === pillar
@@ -297,19 +293,19 @@ export default function SystemsCatalogClient({
                             pillarCards.map((process) => (
                               <article
                                 key={process.title}
-                                className="rounded-[1.25rem] bg-[#FFF9F8] p-3 shadow-[0_4px_12px_rgba(25,27,48,0.02)]"
+                                className="rounded-[1.25rem] border border-brand-blue/8 bg-transparent p-3 text-left shadow-none"
                               >
-                                <h4 className="text-sm font-semibold leading-snug text-brand-blue">
+                                <h4 className="text-left text-sm font-semibold leading-snug text-brand-blue">
                                   {process.title}
                                 </h4>
-                                <p className="mt-2 text-xs leading-relaxed text-gray-600">
+                                <p className="mt-2 text-left text-xs leading-relaxed text-gray-600">
                                   {process.description}
                                 </p>
                               </article>
                             ))
                           ) : (
-                            <div className="rounded-[1.25rem] bg-[#FFF9F8] p-3">
-                              <p className="text-xs leading-relaxed text-gray-500">
+                            <div className="rounded-[1.25rem] border border-brand-blue/8 bg-transparent p-3">
+                              <p className="text-left text-xs leading-relaxed text-gray-500">
                                 Pas de processus prioritaire ajouté pour ce pilier.
                               </p>
                             </div>
@@ -323,33 +319,33 @@ export default function SystemsCatalogClient({
             ) : (
               <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                 {detail.tools.map((tool) => (
-                  <Link
+                  <article
                     key={tool.name}
-                    href={tool.detailUrl}
                     className="rounded-[1.75rem] border border-brand-blue/8 bg-white p-5 text-left transition hover:-translate-y-0.5 hover:border-brand-coral/20 hover:shadow-[0_16px_40px_rgba(25,27,48,0.05)]"
                   >
-                    <div>
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-brand-coral">
-                        {tool.category}
-                      </p>
-                      <h3 className="mt-2 text-lg font-semibold text-brand-blue">
-                        {tool.name}
-                      </h3>
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-brand-coral">
+                          {tool.type}
+                        </p>
+                        <h3 className="mt-2 text-lg font-semibold text-brand-blue">
+                          {tool.name}
+                        </h3>
+                      </div>
+                      <span
+                        className={`rounded-full px-3 py-1 text-[10px] font-medium ${
+                          tool.priority === "Principal"
+                            ? "bg-brand-blue text-white"
+                            : "bg-[#FFF3EF] text-brand-blue/75"
+                        }`}
+                      >
+                        {tool.priority}
+                      </span>
                     </div>
                     <p className="mt-3 text-sm leading-relaxed text-gray-600">
-                      {tool.description}
+                      {tool.usage}
                     </p>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {tool.tags.slice(0, 2).map((tag) => (
-                        <span
-                          key={tag}
-                          className="rounded-full bg-[#FFF3EF] px-3 py-1 text-[11px] font-medium text-brand-blue/70"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </Link>
+                  </article>
                 ))}
               </div>
             )}

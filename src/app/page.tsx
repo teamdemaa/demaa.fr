@@ -11,11 +11,15 @@ export const metadata: Metadata = {
     "Décrivez vos tâches répétitives et identifiez les systèmes utiles pour automatiser ce qui vous ralentit.",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   const systems = await getSystems();
   const detailsBySlug = Object.fromEntries(
-    systems.map((system) => [system.slug, buildOperationalSystemDetail(system)])
-  );
+    await Promise.all(
+      systems.map(async (system) => [system.slug, await buildOperationalSystemDetail(system)] as const)
+    )
+  ) as Record<string, Awaited<ReturnType<typeof buildOperationalSystemDetail>>>;
 
   return (
     <>

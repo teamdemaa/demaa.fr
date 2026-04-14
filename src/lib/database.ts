@@ -1,4 +1,5 @@
 import { Tool, Service, Template, System } from './types';
+import { enterpriseCatalog } from './enterprise-annuaire';
 
 // Base de données centralisée
 export const database = {
@@ -261,46 +262,16 @@ export const database = {
     }
   ] as Template[],
 
-  systems: [
-    { id: "s1", slug: "agence-immobiliere", name: "Agence immobilière", category: "Services & Conseil", description: "Optimisez vos mandats et la gestion de vos visites.", tags: ["Immo", "Système"], icon: "Home", price: "" },
-    { id: "s2", slug: "agence-marketing", name: "Agence marketing", category: "Agences & Digital", description: "Automatisez votre prospection et le reporting client.", tags: ["Marketing", "Système"], icon: "Megaphone", price: "" },
-    { id: "s3", slug: "agence-web", name: "Agence web", category: "Agences & Digital", description: "Structurez votre production technique et vos livrables.", tags: ["Web", "Système"], icon: "Code", price: "" },
-    { id: "s4", slug: "artisanat", name: "Artisanat", category: "Artisans & BTP", description: "Suivez vos chantiers et factures sans perdre de temps.", tags: ["Artisan", "Système"], icon: "Hammer", price: "" },
-    { id: "s5", slug: "btp", name: "BTP", category: "Artisans & BTP", description: "Gérez vos équipes et vos approvisionnements en temps réel.", tags: ["BTP", "Système"], icon: "Building2", price: "" },
-    { id: "s6", slug: "boulangerie", name: "Boulangerie", category: "Commerce & Restauration", description: "Optimisez vos stocks et vos ventes en boutique.", tags: ["Boulangerie", "Système"], icon: "Croissant", price: "" },
-    { id: "s7", slug: "coaching", name: "Coaching", category: "Formation & Coaching", description: "Automatisez vos prises de rendez-vous et vos suivis.", tags: ["Coaching", "Système"], icon: "UserCheck", price: "" },
-    { id: "s8", slug: "commerce-de-detail", name: "Commerce de détail", category: "Commerce & Restauration", description: "Un système d'inventaire et de fidélisation clients.", tags: ["Retail", "Système"], icon: "Store", price: "" },
-    { id: "s9", slug: "conciergerie-airbnb", name: "Conciergerie Airbnb", category: "Services & Conseil", description: "Automatisez les arrivées et le ménage de vos locations.", tags: ["Airbnb", "Système"], icon: "Key", price: "" },
-    { id: "s10", slug: "consulting", name: "Consulting", category: "Services & Conseil", description: "Industrialisez votre expertise pour croître sans limite.", tags: ["Consulting", "Système"], icon: "Briefcase", price: "" },
-    { id: "s11", slug: "creation-de-contenu", name: "Création de contenu", category: "Agences & Digital", description: "Un workflow de production fluide de l'idée à la publication.", tags: ["Contenu", "Système"], icon: "Camera", price: "" },
-    { id: "s12", slug: "demenagement", name: "Déménagement", category: "Services & Conseil", description: "Optimisez vos devis et la planification de vos tournées.", tags: ["Déménagement", "Système"], icon: "Truck", price: "" },
-    { id: "s13", slug: "evenementiel", name: "Événementiel", category: "Services & Conseil", description: "Un pilotage de projet rigoureux pour des événements sans stress.", tags: ["Événement", "Système"], icon: "PartyPopper", price: "" },
-    { id: "s14", slug: "e-commerce", name: "E-commerce", category: "Commerce & Restauration", description: "Optimisez vos conversions et votre logistique d'expédition.", tags: ["Ecommerce", "Système"], icon: "ShoppingBag", price: "" },
-    { id: "s15", slug: "formation-en-ligne", name: "Formation en ligne", category: "Formation & Coaching", description: "Scalez votre transmission de savoir avec un LMS automatisé.", tags: ["Formation", "Système"], icon: "GraduationCap", price: "" },
-    { id: "s16", slug: "freelance", name: "Freelance", category: "Services & Conseil", description: "Ne courez plus après vos clients, structurez votre offre.", tags: ["Freelance", "Système"], icon: "Laptop", price: "" },
-    { id: "s17", slug: "garage-automobile", name: "Garage automobile", category: "Services & Conseil", description: "Suivez vos réparations et optimisez votre planning atelier.", tags: ["Garage", "Système"], icon: "Wrench", price: "" },
-    { id: "s18", slug: "gestion-comptable", name: "Gestion comptable", category: "Services & Conseil", description: "Fluidifiez vos échanges de documents avec vos clients.", tags: ["Compta", "Système"], icon: "Calculator", price: "" },
-    { id: "s19", slug: "institut-de-beaute", name: "Institut de beauté", category: "Santé & Beauté", description: "Optimisez vos agendas et vos ventes de produits.", tags: ["Beauté", "Système"], icon: "Flower2", price: "" },
-    { id: "s20", slug: "investissement-locatif", name: "Investissement locatif", category: "Services & Conseil", description: "Suivez votre rentabilité et vos travaux en un seul endroit.", tags: ["Immo", "Système"], icon: "Landmark", price: "" },
-    { id: "s21", slug: "livraison-dernier-kilometre", name: "Livraison dernier kilomètre", category: "Logistique & Transport", description: "Un système de routage efficace pour vos livreurs.", tags: ["Livraison", "Système"], icon: "Navigation", price: "" },
-    { id: "s22", slug: "location-de-materiel", name: "Location de matériel", category: "Services & Conseil", description: "Gérez vos stocks et vos contrats de location.", tags: ["Location", "Système"], icon: "Dolly", price: "" },
-    { id: "s23", slug: "maintenance-informatique", name: "Maintenance informatique", category: "Agences & Digital", description: "Un système de ticketing et de maintenance préventive.", tags: ["IT", "Système"], icon: "Cpu", price: "" },
-    { id: "s24", slug: "marketplace", name: "Marketplace", category: "Agences & Digital", description: "Structurez vos flux vendeurs et paiements complexes.", tags: ["Marketplace", "Système"], icon: "Layers", price: "" },
-    { id: "s25", slug: "media", name: "Média", category: "Agences & Digital", description: "Gérez votre régie publicitaire et vos publications.", tags: ["Média", "Système"], icon: "Newspaper", price: "" },
-    { id: "s26", slug: "nettoyage-professionnel", name: "Nettoyage professionnel", category: "Services & Conseil", description: "Contrôlez vos passages et optimisez vos tournées.", tags: ["Nettoyage", "Système"], icon: "Sparkles", price: "" },
-    { id: "s27", slug: "organisme-de-formation", name: "Organisme de formation", category: "Formation & Coaching", description: "Simplifiez votre conformité Qualiopi et vos inscriptions.", tags: ["Formation", "Système"], icon: "FileCheck2", price: "" },
-    { id: "s28", slug: "photographe-videaste", name: "Photographe / vidéaste", category: "Services & Conseil", description: "Workflows d'édition et galeries clients automatisées.", tags: ["Photo", "Système"], icon: "Aperture", price: "" },
-    { id: "s29", slug: "reparation-telephonique", name: "Réparation téléphonique", category: "Services & Conseil", description: "Gérez vos pièces détachées et le suivi client.", tags: ["Réparation", "Système"], icon: "Smartphone", price: "" },
-    { id: "s30", slug: "restaurant", name: "Restaurant", category: "Commerce & Restauration", description: "Optimisez vos ratios et simplifiez votre service.", tags: ["Restaurant", "Système"], icon: "Utensils", price: "" },
-    { id: "s31", slug: "saas", name: "SaaS", category: "Agences & Digital", description: "Optimisez votre MRR et le support client.", tags: ["SaaS", "Système"], icon: "Cloud", price: "" },
-    { id: "s32", slug: "salle-de-sport", name: "Salle de sport", category: "Santé & Beauté", description: "Gérez vos abonnements et vos plannings de cours.", tags: ["Sport", "Système"], icon: "Dumbbell", price: "" },
-    { id: "s33", slug: "salon-de-coiffure", name: "Salon de coiffure", category: "Santé & Beauté", description: "Une gestion d'agenda sans failles et des ventes upsell.", tags: ["Coiffure", "Système"], icon: "Scissors", price: "" },
-    { id: "s34", slug: "securite-privee", name: "Sécurité privée", category: "Services & Conseil", description: "Planification des agents et rapports d'intervention.", tags: ["Sécurité", "Système"], icon: "Shield", price: "" },
-    { id: "s35", slug: "services-a-la-personne", name: "Services à la personne", category: "Services & Conseil", description: "Une coordination d'intervenants pour un service irréprochable.", tags: ["Services", "Système"], icon: "HeartHandshake", price: "" },
-    { id: "s36", slug: "traiteur", name: "Traiteur", category: "Commerce & Restauration", description: "Optimisez vos fiches techniques et vos événements.", tags: ["Traiteur", "Système"], icon: "ChefHat", price: "" },
-    { id: "s37", slug: "transport-de-marchandise", name: "Transport de marchandise", category: "Logistique & Transport", description: "Un suivi de flotte et de fret en temps réel.", tags: ["Logistique", "Système"], icon: "Box", price: "" },
-    { id: "s38", slug: "transport-de-personnes", name: "Transport de personnes", category: "Logistique & Transport", description: "Optimisez vos trajets et votre gestion de chauffeurs.", tags: ["VTC", "Système"], icon: "Car", price: "" }
-  ] as System[]
+  systems: enterpriseCatalog.map((enterprise) => ({
+    id: enterprise.id,
+    slug: enterprise.slug,
+    name: enterprise.name,
+    category: enterprise.category,
+    description: enterprise.description,
+    tags: enterprise.tags,
+    icon: enterprise.icon,
+    price: enterprise.price,
+  })) as System[]
 };
 
 // Index de recherche optimisé
