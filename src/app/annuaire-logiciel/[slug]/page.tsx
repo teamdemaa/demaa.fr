@@ -54,13 +54,13 @@ export default async function LogicielDetailPage({
         <div className="mx-auto max-w-5xl px-4 pb-16 pt-8 sm:px-6 lg:px-8">
           <Link
             href="/annuaire-logiciel"
-            className="group inline-flex items-center gap-2 text-sm font-medium text-gray-400 transition-colors hover:text-brand-coral"
+            className="group inline-flex items-center gap-2 text-sm font-medium text-gray-400 transition-colors hover:text-neutral-700"
           >
             <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
             Revenir à l&apos;annuaire des logiciels
           </Link>
 
-          <section className="mt-8 rounded-[2rem] border border-brand-blue/8 bg-[#FFF9F8] px-6 py-8 sm:px-8 sm:py-10">
+          <section className="mt-8 rounded-[2rem] border border-brand-blue/8 bg-[#ffffff] px-6 py-8 sm:px-8 sm:py-10">
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-coral">
               {tool.category}
             </p>
@@ -83,7 +83,7 @@ export default async function LogicielDetailPage({
               {tool.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="rounded-full bg-brand-coral/10 px-3 py-1.5 text-xs font-medium text-brand-coral"
+                  className="rounded-full bg-neutral-100 px-3 py-1.5 text-xs font-medium text-brand-coral"
                 >
                   {tag}
                 </span>

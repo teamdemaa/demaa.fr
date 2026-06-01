@@ -125,7 +125,7 @@ export default function DocGeneratorPage() {
                 </button>
                 <button 
                   onClick={() => downloadPDF("Document_Juridique", parts[0].trim())}
-                  className="p-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 text-brand-coral transition-colors shadow-sm"
+                  className="p-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 text-neutral-700 transition-colors shadow-sm"
                   title="Télécharger PDF"
                 >
                   <FileDown className="w-4 h-4" />
@@ -155,7 +155,7 @@ export default function DocGeneratorPage() {
             {/* Header */}
             <div className="p-4 border-b border-gray-50 bg-white flex justify-between items-center px-6">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-brand-coral/10 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-lg bg-neutral-100 flex items-center justify-center">
                   <Bot className="w-5 h-5 text-brand-coral" />
                 </div>
                 <h1 className="font-bold text-brand-blue">Assistant Juridique IA</h1>
@@ -177,7 +177,7 @@ export default function DocGeneratorPage() {
               {messages.map((m, i) => (
                 <div key={i} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"} animate-in fade-in slide-in-from-bottom-2 duration-300`}>
                   <div className={`flex gap-3 max-w-[85%] ${m.role === "user" ? "flex-row-reverse" : "flex-row"}`}>
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-1 shadow-sm ${m.role === "user" ? "bg-brand-blue" : "bg-gray-100"}`}>
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-1 shadow-sm ${m.role === "user" ? "bg-brand-blue" : "bg-white"}`}>
                       {m.role === "user" ? <User className="w-4 h-4 text-white" /> : <Bot className="w-4 h-4 text-brand-blue" />}
                     </div>
                     <div className={`p-4 rounded-2xl text-sm leading-relaxed ${m.role === "user" ? "bg-brand-blue text-white rounded-tr-none shadow-md" : "bg-white border border-gray-100 text-brand-blue rounded-tl-none shadow-sm"}`}>
@@ -189,7 +189,7 @@ export default function DocGeneratorPage() {
               {isLoading && (
                 <div className="flex justify-start animate-in fade-in">
                   <div className="flex gap-3 max-w-[85%]">
-                    <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center shrink-0 shadow-sm">
+                    <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shrink-0 shadow-sm">
                       <Bot className="w-4 h-4 text-brand-blue" />
                     </div>
                     <div className="p-4 rounded-2xl bg-gray-50 border border-gray-100 rounded-tl-none flex items-center gap-1">

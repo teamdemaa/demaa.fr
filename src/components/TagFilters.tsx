@@ -10,13 +10,13 @@ export default function TagFilters({
   onSelectTag: (tag: string | null) => void;
 }) {
   return (
-    <div className="w-full bg-brand-coral/5 backdrop-blur-md sticky top-20 z-40 border-b border-brand-coral/10 py-3">
+    <div className="w-full bg-white backdrop-blur-md sticky top-20 z-40 border-b border-brand-coral/10 py-3">
       <div className="w-full max-w-2xl mx-auto px-4">
         <div className="flex overflow-x-auto space-x-3 pb-2 pt-2 no-scrollbar items-center">
           <button 
             onClick={() => onSelectTag(null)}
             className={`whitespace-nowrap rounded-full px-5 py-2 font-medium transition-all ${
-              selectedTag === null ? "bg-brand-blue text-white shadow-md scale-105" : "bg-[#FFF3EF] text-gray-600 hover:bg-brand-coral/20"
+              selectedTag === null ? "bg-brand-blue text-white shadow-md scale-105" : "bg-neutral-100 text-gray-600 hover:bg-neutral-200"
             }`}
           >
             Tous
@@ -27,7 +27,7 @@ export default function TagFilters({
               key={tag}
               onClick={() => onSelectTag(tag)}
               className={`whitespace-nowrap rounded-full px-5 py-2 font-medium transition-all ${
-                selectedTag === tag ? "bg-brand-blue text-white shadow-md scale-105" : "bg-[#FFF3EF] text-gray-600 hover:bg-brand-coral/20 hover:text-brand-blue"
+                selectedTag === tag ? "bg-brand-blue text-white shadow-md scale-105" : "bg-neutral-100 text-gray-600 hover:bg-neutral-200 hover:text-brand-blue"
               }`}
             >
               {tag}

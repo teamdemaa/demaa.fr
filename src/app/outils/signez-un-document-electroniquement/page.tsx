@@ -39,7 +39,7 @@ export default function SignDocument() {
   };
 
   return (
-    <div className="min-h-screen md:h-screen bg-[#FFF9F8] flex flex-col overflow-y-auto md:overflow-hidden text-[#191b30]">
+    <div className="min-h-screen md:h-screen bg-[#ffffff] flex flex-col overflow-y-auto md:overflow-hidden text-[#141414]">
       <Navbar />
       
       <main className="flex-1 flex flex-col md:flex-row w-full overflow-y-auto md:overflow-hidden">
@@ -85,7 +85,7 @@ export default function SignDocument() {
                 <Palette className="w-3 h-3 text-gray-300" /> Couleur de l&apos;encre
               </label>
               <div className="flex items-center gap-3">
-                {["#003399", "#000000", "#191b30", "#dc2626"].map((c) => (
+                {["#003399", "#000000", "#141414", "#dc2626"].map((c) => (
                   <button 
                     key={c}
                     onClick={() => setInkColor(c)}
@@ -108,7 +108,7 @@ export default function SignDocument() {
               className="bg-white/10 p-8 md:p-12 w-full min-h-[220px] flex flex-col items-start justify-center relative overflow-hidden group select-none"
             >
                {/* Reference lines (not exported if transparent, but here for UI) */}
-               <div className="w-full border-b-2 border-[#191b30]/10 mb-6 italic text-[10px] text-gray-300 uppercase tracking-widest">Zone de signature certifiée</div>
+               <div className="w-full border-b-2 border-[#141414]/10 mb-6 italic text-[10px] text-gray-300 uppercase tracking-widest">Zone de signature certifiée</div>
                
                <div className="space-y-1 relative z-10">
                   <div 

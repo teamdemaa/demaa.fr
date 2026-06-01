@@ -81,14 +81,14 @@ export default function SuccessPageClient({
   }, [sessionId]);
 
   return (
-    <div className="min-h-screen bg-[#FFF9F8]">
+    <div className="min-h-screen bg-[#ffffff]">
       <Navbar />
       <main className="px-4 pb-20 pt-8 md:px-6 md:pb-28 md:pt-12">
         <div className="mx-auto max-w-4xl">
           <div className="rounded-[2rem] border border-black/5 bg-white px-6 py-10 text-center shadow-[0_20px_60px_rgba(21,36,69,0.06)] md:px-10 md:py-14">
             {verification.status === "loading" && (
               <div className="space-y-4">
-                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-brand-coral/10 text-brand-coral">
+                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-neutral-100 text-neutral-700">
                   <LoaderCircle className="h-6 w-6 animate-spin" />
                 </div>
                 <h1 className="text-3xl font-black tracking-tight text-brand-blue md:text-4xl">

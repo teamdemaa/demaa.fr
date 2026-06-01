@@ -112,7 +112,7 @@ export default function SystemSetupModal({
       onClick={handleClose}
     >
       <div
-        className="w-full max-w-xl rounded-[2rem] border border-brand-blue/8 bg-[#FFF9F8] p-6 shadow-[0_30px_80px_rgba(25,27,48,0.18)] md:p-8"
+        className="w-full max-w-xl rounded-[2rem] border border-brand-blue/8 bg-[#ffffff] p-6 shadow-[0_30px_80px_rgba(20,20,20,0.18)] md:p-8"
         onClick={(event) => event.stopPropagation()}
       >
         <div className="flex items-start justify-between gap-4">
@@ -131,7 +131,7 @@ export default function SystemSetupModal({
           <button
             type="button"
             onClick={handleClose}
-            className="rounded-full border border-brand-blue/10 bg-white p-2 text-brand-blue transition hover:border-brand-coral/20 hover:text-brand-coral"
+            className="rounded-full border border-brand-blue/10 bg-white p-2 text-brand-blue transition hover:border-brand-coral/20 hover:text-neutral-700"
             aria-label="Fermer la fenêtre"
           >
             <X className="h-4 w-4" />

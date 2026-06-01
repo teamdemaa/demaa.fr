@@ -22,13 +22,13 @@ export default function StampGenerator() {
   const [address, setAddress] = useState("123 Rue de Paris, 75001");
   const [capital, setCapital] = useState("SARL au capital de 5 000 €");
   const [type, setType] = useState<"circle" | "rect">("rect");
-  const [color, setColor] = useState("#191b30"); // Demaa Blue by default
+  const [color, setColor] = useState("#141414"); // Demaa Blue by default
   const [isExporting, setIsExporting] = useState(false);
   
   const stampRef = useRef<HTMLDivElement>(null);
 
   const colors = [
-    { name: "Bleu Demaa", hex: "#191b30" },
+    { name: "Bleu Demaa", hex: "#141414" },
     { name: "Rouge", hex: "#e53935" },
     { name: "Noir", hex: "#000000" },
     { name: "Vert", hex: "#2e7d32" },
@@ -56,7 +56,7 @@ export default function StampGenerator() {
   };
 
   return (
-    <div className="min-h-screen md:h-screen bg-[#FFF9F8] flex flex-col overflow-y-auto md:overflow-hidden">
+    <div className="min-h-screen md:h-screen bg-[#ffffff] flex flex-col overflow-y-auto md:overflow-hidden">
       <Navbar />
       
       <main className="flex-1 flex flex-col md:flex-row w-full overflow-y-auto md:overflow-hidden">
@@ -79,14 +79,14 @@ export default function StampGenerator() {
               <div className="flex gap-3">
                 <button 
                   onClick={() => setType("circle")}
-                  className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl border-2 transition-all ${type === "circle" ? "border-brand-coral bg-brand-coral/5 text-brand-coral" : "border-gray-50 bg-white text-gray-400 hover:border-gray-100"}`}
+                  className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl border-2 transition-all ${type === "circle" ? "border-brand-coral bg-neutral-100 text-neutral-700" : "border-gray-50 bg-white text-gray-400 hover:border-gray-100"}`}
                 >
                   <Circle className="w-4 h-4" />
                   <span className="text-xs font-bold uppercase tracking-tight">Circulaire</span>
                 </button>
                 <button 
                   onClick={() => setType("rect")}
-                  className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl border-2 transition-all ${type === "rect" ? "border-brand-coral bg-brand-coral/5 text-brand-coral" : "border-gray-50 bg-white text-gray-400 hover:border-gray-100"}`}
+                  className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl border-2 transition-all ${type === "rect" ? "border-brand-coral bg-neutral-100 text-neutral-700" : "border-gray-50 bg-white text-gray-400 hover:border-gray-100"}`}
                 >
                   <Square className="w-4 h-4" />
                   <span className="text-xs font-bold uppercase tracking-tight">Rectangulaire</span>
@@ -237,7 +237,7 @@ export default function StampGenerator() {
               <button 
                 onClick={() => exportStamp('svg')} 
                 disabled={isExporting}
-                className="flex items-center justify-center gap-2 py-4 border-2 border-brand-blue text-brand-blue rounded-2xl text-[11px] font-bold hover:bg-brand-blue/5 transition-all active:scale-95 disabled:opacity-50"
+                className="flex items-center justify-center gap-2 py-4 border-2 border-brand-blue text-brand-blue rounded-2xl text-[11px] font-bold hover:bg-white transition-all active:scale-95 disabled:opacity-50"
               >
                 <RotateCw className="w-4 h-4" />
                 DÉTAILS VECTORIELS (SVG)

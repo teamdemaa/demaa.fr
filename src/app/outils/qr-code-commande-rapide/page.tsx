@@ -50,7 +50,7 @@ export default function FastFoodQRCode() {
   };
 
   return (
-    <div className="min-h-screen md:h-screen bg-[#FFF9F8] flex flex-col overflow-y-auto md:overflow-hidden text-[#191b30]">
+    <div className="min-h-screen md:h-screen bg-[#ffffff] flex flex-col overflow-y-auto md:overflow-hidden text-[#141414]">
       <Navbar />
       
       <main className="flex-1 flex flex-col md:flex-row w-full overflow-y-auto md:overflow-hidden">
@@ -98,9 +98,9 @@ export default function FastFoodQRCode() {
             <div className="space-y-2.5">
               <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Icône Cuisine</label>
               <div className="flex gap-3">
-                <button onClick={() => setIcon("burger")} className={`flex-1 flex items-center justify-center py-3 rounded-xl border-2 transition-all ${icon === "burger" ? "border-brand-coral bg-brand-coral/5 text-brand-coral" : "border-white bg-white text-gray-400 opacity-60"}`}><Clock className="w-4 h-4" /></button>
-                <button onClick={() => setIcon("pizza")} className={`flex-1 flex items-center justify-center py-3 rounded-xl border-2 transition-all ${icon === "pizza" ? "border-brand-coral bg-brand-coral/5 text-brand-coral" : "border-white bg-white text-gray-400 opacity-60"}`}><Pizza className="w-4 h-4" /></button>
-                <button onClick={() => setIcon("fries")} className={`flex-1 flex items-center justify-center py-3 rounded-xl border-2 transition-all ${icon === "fries" ? "border-brand-coral bg-brand-coral/5 text-brand-coral" : "border-white bg-white text-gray-400 opacity-60"}`}><Utensils className="w-4 h-4" /></button>
+                <button onClick={() => setIcon("burger")} className={`flex-1 flex items-center justify-center py-3 rounded-xl border-2 transition-all ${icon === "burger" ? "border-brand-coral bg-neutral-100 text-neutral-700" : "border-white bg-white text-gray-400 opacity-60"}`}><Clock className="w-4 h-4" /></button>
+                <button onClick={() => setIcon("pizza")} className={`flex-1 flex items-center justify-center py-3 rounded-xl border-2 transition-all ${icon === "pizza" ? "border-brand-coral bg-neutral-100 text-neutral-700" : "border-white bg-white text-gray-400 opacity-60"}`}><Pizza className="w-4 h-4" /></button>
+                <button onClick={() => setIcon("fries")} className={`flex-1 flex items-center justify-center py-3 rounded-xl border-2 transition-all ${icon === "fries" ? "border-brand-coral bg-neutral-100 text-neutral-700" : "border-white bg-white text-gray-400 opacity-60"}`}><Utensils className="w-4 h-4" /></button>
               </div>
             </div>
 
@@ -138,7 +138,7 @@ export default function FastFoodQRCode() {
               style={{ borderColor: color }}
             >
                <div className="relative z-10 w-full">
-                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-full mb-4 bg-[#FFF9F8]" style={{ color }}>
+                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-full mb-4 bg-[#ffffff]" style={{ color }}>
                     {icon === "burger" ? <Clock className="w-6 h-6" /> : icon === "pizza" ? <Pizza className="w-6 h-6" /> : <Utensils className="w-6 h-6" />}
                   </div>
                   <h2 className="text-2xl font-black uppercase tracking-tight mb-1" style={{ color }}>{restaurantName}</h2>

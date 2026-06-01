@@ -24,7 +24,7 @@ export default function HeroSearch({
 }) {
   return (
     <section
-      className={`w-full flex flex-col items-center justify-center px-4 text-center bg-[#FFF9F8] border-b border-brand-blue/5 overflow-hidden ${
+      className={`w-full flex flex-col items-center justify-center px-4 text-center bg-[#ffffff] border-b border-brand-blue/5 overflow-hidden ${
         title ? "pt-0 -mt-px" : "pt-8 md:pt-12"
       }`}
     >

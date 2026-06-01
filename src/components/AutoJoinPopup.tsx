@@ -55,14 +55,14 @@ export default function AutoJoinPopup() {
           >
             <div 
               onClick={handleOpenModal}
-              className="bg-white border border-gray-100 rounded-[2.5rem] p-6 shadow-[0_20px_50px_rgba(25,27,48,0.15)] cursor-pointer group hover:shadow-[0_30px_60px_rgba(25,27,48,0.2)] transition-all duration-500 relative overflow-hidden"
+              className="bg-white border border-gray-100 rounded-[2.5rem] p-6 shadow-[0_20px_50px_rgba(20,20,20,0.15)] cursor-pointer group hover:shadow-[0_30px_60px_rgba(20,20,20,0.2)] transition-all duration-500 relative overflow-hidden"
             >
               {/* Subtle background glow */}
-              <div className="absolute top-0 right-0 w-32 h-32 bg-brand-coral/5 rounded-full blur-2xl -mr-10 -mt-10 group-hover:bg-brand-coral/10 transition-colors" />
+              <div className="absolute top-0 right-0 w-32 h-32 bg-white rounded-full blur-2xl -mr-10 -mt-10 group-hover:bg-neutral-100 transition-colors" />
               
               <button 
                 onClick={handleDismiss}
-                className="absolute top-4 right-4 p-1 rounded-full hover:bg-gray-100 text-gray-400 transition-colors z-10"
+                className="absolute top-4 right-4 p-1 rounded-full hover:bg-white text-gray-400 transition-colors z-10"
               >
                 <X className="w-4 h-4" />
               </button>

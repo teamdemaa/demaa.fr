@@ -11,7 +11,7 @@ export default function Navbar({ minimal = false }: { minimal?: boolean }) {
 
   return (
     <>
-      <nav className="sticky top-0 z-40 border-b border-brand-coral/10 bg-[#FFF9F8] py-1">
+      <nav className="sticky top-0 z-40 border-b border-brand-coral/10 bg-[#ffffff] py-1">
         <div className="max-w-6xl mx-auto px-4 md:px-6 lg:pl-14 lg:pr-28">
           <div className="flex justify-between py-3 md:py-4 items-center">
             <Link
@@ -33,7 +33,7 @@ export default function Navbar({ minimal = false }: { minimal?: boolean }) {
                 <button
                   type="button"
                   onClick={() => setIsSystemModalOpen(true)}
-                  className="inline-flex items-center rounded-full border border-brand-blue/12 bg-transparent px-5 py-3 text-xs md:text-sm font-medium text-brand-blue transition-colors hover:border-brand-coral/25 hover:text-brand-coral whitespace-nowrap"
+                  className="inline-flex items-center rounded-full border border-brand-blue/12 bg-transparent px-5 py-3 text-xs md:text-sm font-medium text-brand-blue transition-colors hover:border-brand-coral/25 hover:text-neutral-700 whitespace-nowrap"
                 >
                   <span className="hidden sm:inline">Demander un audit Systèmes</span>
                   <span className="sm:hidden">Audit Systèmes</span>

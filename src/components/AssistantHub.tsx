@@ -775,7 +775,7 @@ export default function AssistantHub({
       const dataUrl = await toPng(node, {
         cacheBust: true,
         pixelRatio: 2,
-        backgroundColor: "#fff9f8",
+        backgroundColor: "#ffffff",
       });
 
       const doc = new jsPDF({ unit: "mm", format: "a4" });
@@ -833,19 +833,19 @@ export default function AssistantHub({
 
   return (
     <div className="relative mx-auto max-w-6xl overflow-visible px-4 pb-12 pt-0 md:pb-[4.25rem] md:pt-0">
-      <div className="pointer-events-none absolute left-1/2 top-10 -z-10 h-80 w-80 -translate-x-1/2 rounded-full bg-brand-coral/10 blur-3xl" />
-      <div className="pointer-events-none absolute right-4 top-[38rem] -z-10 h-72 w-72 rounded-full bg-brand-blue/5 blur-3xl" />
+      <div className="pointer-events-none absolute left-1/2 top-10 -z-10 h-80 w-80 -translate-x-1/2 rounded-full bg-neutral-100 blur-3xl" />
+      <div className="pointer-events-none absolute right-4 top-[38rem] -z-10 h-72 w-72 rounded-full bg-white blur-3xl" />
       <AnimatePresence>
         {isLoading && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 bg-brand-blue backdrop-blur-sm"
+            className="fixed inset-0 z-40 bg-white backdrop-blur-sm"
           >
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.06),transparent_38%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(0,0,0,0.045),transparent_38%)]" />
             <div className="relative h-full w-full flex items-center justify-center px-6">
-              <div className="max-w-2xl text-center text-white">
+              <div className="max-w-2xl text-center text-neutral-950">
                 <div className="min-h-[170px] flex items-center justify-center">
                   <AnimatePresence mode="wait">
                     <motion.div
@@ -856,10 +856,10 @@ export default function AssistantHub({
                       transition={{ duration: 0.9, ease: "easeOut" }}
                       className="space-y-5"
                     >
-                      <p className="demaa-section-title text-2xl leading-[1.08] tracking-tight text-white md:text-[2.8rem]">
+                      <p className="demaa-section-title text-2xl leading-[1.08] tracking-tight text-neutral-950 md:text-[2.8rem]">
                         {LOADING_QUOTES[activeQuoteIndex].text}
                       </p>
-                      <p className="text-xs md:text-sm uppercase tracking-[0.2em] text-white/55">
+                      <p className="text-xs uppercase tracking-[0.2em] text-neutral-500 md:text-sm">
                         {LOADING_QUOTES[activeQuoteIndex].author}
                       </p>
                     </motion.div>
@@ -897,7 +897,7 @@ export default function AssistantHub({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={closeModal}
-            className="fixed inset-0 z-50 bg-brand-blue/55 backdrop-blur-sm px-4"
+            className="fixed inset-0 z-50 bg-white5 backdrop-blur-sm px-4"
           >
             <div className="h-full w-full flex items-center justify-center">
               <motion.div
@@ -918,7 +918,7 @@ export default function AssistantHub({
                 )}
 
                 <div className="space-y-4">
-                  <div className="w-12 h-12 rounded-2xl bg-brand-coral/10 text-brand-coral flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-2xl bg-neutral-100 text-neutral-700 flex items-center justify-center">
                     <Mail className="w-5 h-5" />
                   </div>
                   <div className="space-y-2">
@@ -970,7 +970,7 @@ export default function AssistantHub({
           >
             <motion.section
               {...SECTION_REVEAL}
-              className="ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] flex min-h-[calc(100svh-5rem)] w-screen flex-col items-center justify-center bg-[#FFF9F8] px-4 py-10 text-center space-y-7 md:min-h-[calc(100svh-5.75rem)] md:px-8 md:py-14"
+              className="ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] flex min-h-[calc(100svh-5rem)] w-screen flex-col items-center justify-center bg-[#ffffff] px-4 py-10 text-center space-y-7 md:min-h-[calc(100svh-5.75rem)] md:px-8 md:py-14"
             >
               <div className="space-y-4">
                 <h1 className="demaa-hero-title text-[3rem] text-brand-blue tracking-tight leading-[0.98] md:text-[4.05rem] lg:text-[5rem]">
@@ -1040,10 +1040,10 @@ export default function AssistantHub({
                         aria-label={isRecording ? "Arrêter la note vocale" : "Démarrer la note vocale"}
                         className={`flex h-11 w-11 items-center justify-center rounded-full transition-all duration-300 ${
                           isLoading || generationLimitReached
-                            ? "cursor-not-allowed bg-gray-100 text-gray-400"
+                            ? "cursor-not-allowed bg-white text-gray-400"
                             : isRecording
                               ? "bg-brand-coral text-white"
-                              : "bg-gray-100 text-brand-blue hover:bg-gray-200"
+                              : "bg-white text-brand-blue hover:bg-neutral-100"
                         }`}
                       >
                         <Mic className="h-4 w-4" />
@@ -1056,7 +1056,7 @@ export default function AssistantHub({
                           aria-label={isLoading ? "Analyse en cours" : "Voir mon plan d'action"}
                           className={`inline-flex h-11 items-center justify-center gap-2 rounded-full px-5 text-sm font-medium transition-all duration-300 md:h-12 md:px-6 ${
                             isLoading || !inputValue.trim()
-                              ? "cursor-not-allowed bg-gray-100 text-gray-400"
+                              ? "cursor-not-allowed bg-white text-gray-400"
                               : "bg-brand-blue text-white hover:bg-brand-coral"
                           }`}
                         >
@@ -1102,16 +1102,16 @@ export default function AssistantHub({
 
             <motion.section
               {...SECTION_REVEAL}
-              className="ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] w-screen bg-brand-blue px-4 py-20 md:py-24"
-            >
-              <div className="mx-auto max-w-[92rem] space-y-10 md:space-y-12">
-                <div className="mx-auto max-w-3xl space-y-4 text-center">
-                  <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-white md:text-[4.2rem]">
+            className="ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] w-screen border-y border-neutral-200 bg-white px-4 py-20 md:py-24"
+          >
+            <div className="mx-auto max-w-[92rem] space-y-10 md:space-y-12">
+              <div className="mx-auto max-w-3xl space-y-4 text-center">
+                  <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-neutral-950 md:text-[4.2rem]">
                     On commence par remettre
                     <br />
                     les choses à plat
                   </h2>
-                  <p className="text-sm leading-relaxed text-white/65 md:text-base">
+                  <p className="text-sm leading-relaxed text-neutral-600 md:text-base">
                     On avance simplement, avec vous, pour construire quelque chose d&apos;utile dès le départ. Pas une usine à gaz. Pas un système impossible à reprendre.
                   </p>
                 </div>
@@ -1120,15 +1120,15 @@ export default function AssistantHub({
                   {HOME_STEPS.map((item, index) => (
                     <div
                       key={item.step}
-                      className="rounded-[1.75rem] border border-white/10 bg-white/[0.045] px-5 py-7 shadow-[0_10px_22px_rgba(0,0,0,0.08)] md:px-6 md:py-8"
+                      className="rounded-[1.75rem] border border-neutral-200 bg-white px-5 py-7 shadow-[0_10px_22px_rgba(0,0,0,0.035)] md:px-6 md:py-8"
                     >
-                      <div className="mb-7 flex h-14 w-14 items-center justify-center rounded-full border border-brand-coral/25 bg-[#FFF9F8] text-lg font-semibold text-brand-coral">
+                      <div className="mb-7 flex h-14 w-14 items-center justify-center rounded-full border border-neutral-200 bg-white text-lg font-semibold text-neutral-600">
                         {index + 1}
                       </div>
-                      <div className="mt-3 text-[1.1rem] font-semibold tracking-tight text-white">
+                      <div className="mt-3 text-[1.1rem] font-semibold tracking-tight text-neutral-950">
                         {item.title}
                       </div>
-                      <p className="mt-3 text-sm leading-relaxed text-white/62">
+                      <p className="mt-3 text-sm leading-relaxed text-neutral-600">
                         {item.description}
                       </p>
                     </div>
@@ -1139,7 +1139,7 @@ export default function AssistantHub({
                   <button
                     type="button"
                     onClick={() => setShowSystemSetupModal(true)}
-                    className="inline-flex items-center justify-center rounded-full border border-white/12 bg-white px-7 py-3.5 text-sm font-medium text-brand-blue shadow-[0_10px_24px_rgba(0,0,0,0.08)] transition hover:-translate-y-0.5 hover:bg-[#FFF3EF] hover:text-brand-blue"
+                    className="inline-flex items-center justify-center rounded-full border border-white/12 bg-white px-7 py-3.5 text-sm font-medium text-brand-blue shadow-[0_10px_24px_rgba(0,0,0,0.08)] transition hover:-translate-y-0.5 hover:bg-[#fcfcfc] hover:text-brand-blue"
                   >
                     Demander un Audit Systèmes
                   </button>
@@ -1161,13 +1161,13 @@ export default function AssistantHub({
                 {HOME_TRANSFORMATION_EXAMPLES.map((item) => (
                   <div
                     key={item.process}
-                    className="rounded-[1.75rem] border border-brand-blue/10 bg-white px-5 py-6 text-left shadow-[0_8px_18px_rgba(25,27,48,0.016)]"
+                    className="rounded-[1.75rem] border border-brand-blue/10 bg-white px-5 py-6 text-left shadow-[0_8px_18px_rgba(20,20,20,0.016)]"
                   >
                     <h3 className="text-lg font-semibold leading-snug text-brand-blue">
                       {item.process}
                     </h3>
 
-                    <div className="mt-5 space-y-2 rounded-[1.25rem] bg-brand-blue/[0.035] px-4 py-4">
+                    <div className="mt-5 space-y-2 rounded-[1.25rem] bg-white px-4 py-4">
                       <div className="text-[0.72rem] font-medium uppercase tracking-[0.18em] text-brand-blue">
                         Aujourd&apos;hui
                       </div>
@@ -1176,14 +1176,14 @@ export default function AssistantHub({
                       </p>
                     </div>
 
-                    <div className="mt-3 rounded-[1.25rem] bg-[#FFF3EF] px-4 py-4">
+                    <div className="mt-3 rounded-[1.25rem] bg-[#fcfcfc] px-4 py-4">
                       <div className="mb-3 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-brand-coral">
                         Une fois automatisé
                       </div>
                       <ul className="space-y-2.5">
                         {item.afterItems.map((afterItem) => (
                           <li key={afterItem} className="flex items-start gap-2.5">
-                            <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white text-brand-coral">
+                            <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-neutral-100 text-neutral-700">
                               <Check className="h-3.5 w-3.5" />
                             </span>
                             <span className="text-sm font-normal leading-relaxed text-brand-blue/75">
@@ -1197,8 +1197,8 @@ export default function AssistantHub({
                 ))}
               </div>
 
-              <div className="mx-auto hidden w-full max-w-5xl overflow-hidden rounded-[2rem] border border-brand-blue/10 bg-white shadow-[0_8px_18px_rgba(25,27,48,0.016)] md:block">
-                <div className="hidden grid-cols-2 bg-brand-blue/[0.045] text-center text-sm font-medium md:grid">
+              <div className="mx-auto hidden w-full max-w-5xl overflow-hidden rounded-[2rem] border border-brand-blue/10 bg-white shadow-[0_8px_18px_rgba(20,20,20,0.016)] md:block">
+                <div className="hidden grid-cols-2 bg-white text-center text-sm font-medium md:grid">
                   <div className="px-7 py-4 text-brand-blue">Aujourd&apos;hui</div>
                   <div className="bg-[#FFEAE2] px-7 py-4 text-brand-blue">Une fois automatisé</div>
                 </div>
@@ -1209,7 +1209,7 @@ export default function AssistantHub({
                       key={item.process}
                       className="grid gap-5 px-5 py-6 text-left transition-colors hover:bg-brand-blue/[0.018] md:grid-cols-2 md:gap-0 md:px-0 md:py-0"
                     >
-                      <div className="rounded-[1.25rem] border border-brand-blue/10 bg-brand-blue/[0.035] px-4 py-4 md:rounded-none md:border-0 md:bg-transparent md:px-7 md:py-6">
+                      <div className="rounded-[1.25rem] border border-brand-blue/10 bg-white px-4 py-4 md:rounded-none md:border-0 md:bg-transparent md:px-7 md:py-6">
                         <div className="mb-2 text-[0.72rem] font-black uppercase tracking-[0.18em] text-brand-blue md:hidden">
                           Aujourd&apos;hui
                         </div>
@@ -1221,7 +1221,7 @@ export default function AssistantHub({
                         </p>
                       </div>
 
-                      <div className="rounded-[1.25rem] border border-brand-blue/10 bg-brand-blue/[0.035] px-4 py-4 text-left md:rounded-none md:border-0 md:bg-[#FFF3EF] md:px-7 md:py-6">
+                      <div className="rounded-[1.25rem] border border-brand-blue/10 bg-white px-4 py-4 text-left md:rounded-none md:border-0 md:bg-[#fcfcfc] md:px-7 md:py-6">
                         <div className="mb-2 text-[0.72rem] font-black uppercase tracking-[0.18em] text-brand-blue md:hidden">
                           Une fois automatisé
                         </div>
@@ -1231,7 +1231,7 @@ export default function AssistantHub({
                               key={afterItem}
                               className="flex items-start gap-2.5"
                             >
-                              <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-coral/10 text-brand-coral">
+                              <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-neutral-100 text-neutral-700">
                                 <Check className="h-3.5 w-3.5" />
                               </span>
                               <span className="text-sm font-normal leading-relaxed text-brand-blue/75 md:text-left md:text-[0.95rem]">
@@ -1263,9 +1263,9 @@ export default function AssistantHub({
                 {HOME_OFFERS.map((offer) => (
                   <div
                     key={offer.title}
-                    className={`grid h-full grid-rows-[auto_auto_1fr_auto_auto] rounded-[1.75rem] border p-6 shadow-[0_8px_18px_rgba(25,27,48,0.018)] md:p-7 ${
+                    className={`grid h-full grid-rows-[auto_auto_1fr_auto_auto] rounded-[1.75rem] border p-6 shadow-[0_8px_18px_rgba(20,20,20,0.018)] md:p-7 ${
                       offer.featured
-                        ? "border-brand-coral/10 bg-[#FFF3EF]"
+                        ? "border-brand-coral/10 bg-[#fcfcfc]"
                         : "border-black/5 bg-white/90"
                     }`}
                   >
@@ -1316,12 +1316,12 @@ export default function AssistantHub({
               </div>
             </motion.section>
 
-            <motion.section {...SECTION_REVEAL} className="hidden space-y-10 rounded-[2.25rem] border border-white/10 bg-brand-blue px-5 py-8 md:space-y-12 md:px-8 md:py-10">
+            <motion.section {...SECTION_REVEAL} className="hidden space-y-10 rounded-[2.25rem] border border-neutral-200 bg-white px-5 py-8 md:space-y-12 md:px-8 md:py-10">
               <div className="mx-auto max-w-4xl space-y-4 text-center">
-                <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-white md:text-[4.2rem]">
+                <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-neutral-950 md:text-[4.2rem]">
                   Comment fonctionne<br /> les crédits ?
                 </h2>
-                <p className="text-sm leading-relaxed text-white/65 md:text-base">
+                <p className="text-sm leading-relaxed text-neutral-600 md:text-base">
                   Toutes les automatisations ne demandent pas le même travail. Certaines sont très simples à mettre en place. D&apos;autres demandent plus d&apos;outils, plus de logique ou plus de vérifications.
                 </p>
               </div>
@@ -1333,7 +1333,7 @@ export default function AssistantHub({
                   return (
                     <div
                       key={example.title}
-                      className="overflow-hidden rounded-[1.5rem] border border-black/5 bg-white text-left shadow-[0_8px_18px_rgba(25,27,48,0.016)]"
+                      className="overflow-hidden rounded-[1.5rem] border border-black/5 bg-white text-left shadow-[0_8px_18px_rgba(20,20,20,0.016)]"
                     >
                       <button
                         type="button"
@@ -1344,7 +1344,7 @@ export default function AssistantHub({
                           <div className="text-base font-medium tracking-tight text-brand-blue md:text-lg">
                             {example.title}
                           </div>
-                          <div className="inline-flex items-center rounded-full bg-[#FFF3EF] px-3 py-1 text-sm font-medium text-brand-coral">
+                          <div className="inline-flex items-center rounded-full bg-[#fcfcfc] px-3 py-1 text-sm font-medium text-brand-coral">
                             {example.credits}
                           </div>
                         </div>
@@ -1398,9 +1398,9 @@ export default function AssistantHub({
                   return (
                     <div
                       key={item.title}
-                      className="rounded-[1.5rem] border border-black/5 bg-white/85 px-5 py-5 text-left shadow-[0_8px_18px_rgba(25,27,48,0.016)]"
+                      className="rounded-[1.5rem] border border-black/5 bg-white/85 px-5 py-5 text-left shadow-[0_8px_18px_rgba(20,20,20,0.016)]"
                     >
-                      <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-2xl bg-white text-brand-coral shadow-[0_4px_10px_rgba(16,24,40,0.04)]">
+                      <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-2xl bg-neutral-100 text-neutral-700 shadow-[0_4px_10px_rgba(16,24,40,0.04)]">
                         <Icon className="h-4 w-4" />
                       </div>
                       <div className="text-base font-semibold text-brand-blue">{item.title}</div>
@@ -1413,7 +1413,7 @@ export default function AssistantHub({
               </div>
             </motion.section>
 
-            <motion.section {...SECTION_REVEAL} className="rounded-[2.25rem] border border-brand-coral/10 bg-[#FFF3EF] px-6 py-12 text-center shadow-[0_8px_18px_rgba(25,27,48,0.016)] md:px-10 md:py-16">
+            <motion.section {...SECTION_REVEAL} className="rounded-[2.25rem] border border-brand-coral/10 bg-[#fcfcfc] px-6 py-12 text-center shadow-[0_8px_18px_rgba(20,20,20,0.016)] md:px-10 md:py-16">
               <div className="mx-auto max-w-4xl space-y-4">
                 <h2 className="demaa-section-title text-[2.6rem] leading-[0.98] tracking-tight text-brand-blue md:text-[4.2rem]">
                   Commencez par la tâche
@@ -1471,10 +1471,10 @@ export default function AssistantHub({
                           aria-label={isRecording ? "Arrêter la note vocale" : "Démarrer la note vocale"}
                           className={`flex h-11 w-11 items-center justify-center rounded-full transition-all duration-300 ${
                             isLoading || generationLimitReached
-                              ? "cursor-not-allowed bg-gray-100 text-gray-400"
+                              ? "cursor-not-allowed bg-white text-gray-400"
                               : isRecording
                                 ? "bg-brand-coral text-white"
-                                : "bg-gray-100 text-brand-blue hover:bg-gray-200"
+                                : "bg-white text-brand-blue hover:bg-neutral-100"
                           }`}
                         >
                           <Mic className="h-4 w-4" />
@@ -1487,7 +1487,7 @@ export default function AssistantHub({
                             aria-label={isLoading ? "Analyse en cours" : "Voir mon plan d'action"}
                             className={`inline-flex h-11 items-center justify-center gap-2 rounded-full px-5 text-sm font-medium transition-all duration-300 md:h-12 md:px-6 ${
                               isLoading || !inputValue.trim()
-                                ? "cursor-not-allowed bg-gray-100 text-gray-400"
+                                ? "cursor-not-allowed bg-white text-gray-400"
                                 : "bg-brand-blue text-white hover:bg-brand-coral"
                             }`}
                           >
@@ -1533,7 +1533,7 @@ export default function AssistantHub({
 
             <motion.section
               {...SECTION_REVEAL}
-              className="ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] w-screen bg-[#FFF9F8] px-6 py-10 md:px-10 md:py-12"
+              className="ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] w-screen bg-[#ffffff] px-6 py-10 md:px-10 md:py-12"
             >
               <div className="mx-auto grid max-w-5xl items-center gap-8 md:grid-cols-[0.9fr_0.7fr] md:gap-10">
                 <div className="text-left">
@@ -1573,7 +1573,7 @@ export default function AssistantHub({
                       onClick={generateCSV}
                       aria-label="Exporter en Excel"
                       title="Exporter en Excel"
-                      className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gray-100 text-brand-blue transition-all hover:bg-gray-200"
+                      className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-brand-blue transition-all hover:bg-neutral-100"
                     >
                       <FileSpreadsheet className="h-5 w-5" />
                     </button>
@@ -1582,7 +1582,7 @@ export default function AssistantHub({
                       onClick={generatePDF}
                       aria-label="Exporter en PDF"
                       title="Exporter en PDF"
-                      className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gray-100 text-brand-blue transition-all hover:bg-gray-200"
+                      className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-brand-blue transition-all hover:bg-neutral-100"
                     >
                       <Download className="h-5 w-5" />
                     </button>
@@ -1615,7 +1615,7 @@ export default function AssistantHub({
                     </div>
 
                     <div className="mt-6 grid grid-cols-1 lg:grid-cols-[1.45fr_0.8fr] gap-4">
-                      <div className="rounded-[1.5rem] bg-[#FFF9F8] border border-brand-coral/10 p-5">
+                      <div className="rounded-[1.5rem] bg-[#ffffff] border border-brand-coral/10 p-5">
                         <div className="text-[11px] font-black uppercase tracking-[0.18em] text-brand-coral mb-3">
                           Mise en place
                         </div>

@@ -23,7 +23,7 @@ export default async function PlanActionAutomatisationPage() {
   return (
     <>
       <Navbar />
-      <main className="flex-1 w-full bg-[#FFF9F8] min-h-screen">
+      <main className="flex-1 w-full bg-[#ffffff] min-h-screen">
         <AssistantHub systems={systems} detailsBySlug={detailsBySlug} mode="tool" />
       </main>
       <NewsletterPrompt />

@@ -10,7 +10,7 @@ export default function WhatsAppQRCodeCard() {
   const [phone, setPhone] = useState("+33600000000");
   const [text, setText] = useState("Bonjour, je souhaite en savoir plus sur vos services !");
   const [title, setTitle] = useState("Carte de Visite QR Code WhatsApp");
-  const [fgColor, setFgColor] = useState("#191b30"); // Brand Blue
+  const [fgColor, setFgColor] = useState("#141414"); // Brand Blue
   const [bgColor, setBgColor] = useState("#FFFFFF");
   const [logoUrl, setLogoUrl] = useState<string | null>("/whatsapp-icon.svg");
   const [qrSize, setQrSize] = useState(240);
@@ -78,7 +78,7 @@ export default function WhatsAppQRCodeCard() {
   };
 
   return (
-    <div className="min-h-screen md:h-screen bg-[#FFF9F8] flex flex-col overflow-y-auto md:overflow-hidden text-[#191b30]">
+    <div className="min-h-screen md:h-screen bg-[#ffffff] flex flex-col overflow-y-auto md:overflow-hidden text-[#141414]">
       <Navbar />
       
       <main className="flex-1 flex flex-col md:flex-row w-full overflow-y-auto md:overflow-hidden">
@@ -154,7 +154,7 @@ export default function WhatsAppQRCodeCard() {
                 <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Logo Central</label>
                 <div className="flex gap-2">
                   <label className="flex-1 flex items-center justify-center h-9 border-2 border-dashed border-brand-coral/10 rounded-lg cursor-pointer hover:bg-white transition-all group">
-                    <Upload className="w-3.5 h-3.5 text-gray-300 group-hover:text-brand-coral" />
+                    <Upload className="w-3.5 h-3.5 text-gray-300 group-hover:text-neutral-700" />
                     <input type="file" className="hidden" accept="image/*" onChange={handleLogoUpload} />
                   </label>
                   {logoUrl && (
@@ -208,17 +208,17 @@ export default function WhatsAppQRCodeCard() {
                 <Download className="w-3.5 h-3.5 mb-1" />
                 JPEG
               </button>
-              <button onClick={() => exportCard('png')} className="flex flex-col items-center justify-center py-2.5 border-2 border-brand-blue text-brand-blue rounded-xl text-[10px] font-bold hover:bg-brand-blue/5 transition-all active:scale-95">
+              <button onClick={() => exportCard('png')} className="flex flex-col items-center justify-center py-2.5 border-2 border-brand-blue text-brand-blue rounded-xl text-[10px] font-bold hover:bg-white transition-all active:scale-95">
                 <Download className="w-3.5 h-3.5 mb-1" />
                 PNG
               </button>
-              <button onClick={() => exportCard('svg')} className="flex flex-col items-center justify-center py-2.5 border-2 border-brand-blue text-brand-blue rounded-xl text-[10px] font-bold hover:bg-brand-blue/5 transition-all active:scale-95">
+              <button onClick={() => exportCard('svg')} className="flex flex-col items-center justify-center py-2.5 border-2 border-brand-blue text-brand-blue rounded-xl text-[10px] font-bold hover:bg-white transition-all active:scale-95">
                 <Monitor className="w-3.5 h-3.5 mb-1" />
                 SVG
               </button>
             </div>
             
-            <button onClick={shareQRCode} className="w-full flex items-center justify-center gap-2 py-3 bg-gray-50 text-brand-blue rounded-xl text-xs font-bold hover:bg-gray-100 transition-all group">
+            <button onClick={shareQRCode} className="w-full flex items-center justify-center gap-2 py-3 bg-gray-50 text-brand-blue rounded-xl text-xs font-bold hover:bg-white transition-all group">
               <Share2 className="w-4 h-4 text-gray-400 group-hover:text-brand-blue transition-colors" />
               <span>Partager ma Carte</span>
             </button>

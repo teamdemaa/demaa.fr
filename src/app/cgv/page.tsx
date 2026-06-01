@@ -26,8 +26,8 @@ export default function CgvPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-[#FFF9F8] pb-20">
-        <section className="border-b border-brand-coral/10 bg-brand-coral/5 px-4 pb-12 pt-16 text-center md:pb-14 md:pt-20">
+      <main className="min-h-screen bg-[#ffffff] pb-20">
+        <section className="border-b border-brand-coral/10 bg-white px-4 pb-12 pt-16 text-center md:pb-14 md:pt-20">
           <h1 className="text-4xl font-black tracking-tight text-brand-blue md:text-5xl">
             Conditions générales de <span className="text-brand-coral">vente</span>
           </h1>

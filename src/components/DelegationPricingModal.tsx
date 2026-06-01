@@ -364,7 +364,7 @@ export default function DelegationPricingModal({
                     embedded ? "p-6 md:p-7" : "p-5"
                   } ${
                     offer.featured
-                      ? "border-brand-coral/15 bg-brand-coral/5"
+                      ? "border-brand-coral/15 bg-white"
                       : "border-black/5 bg-white"
                   }`}
                 >
@@ -412,7 +412,7 @@ export default function DelegationPricingModal({
                         ? "bg-brand-blue text-white hover:bg-brand-coral"
                         : offer.stripeUrl
                           ? "bg-brand-blue text-white hover:bg-brand-coral"
-                          : "bg-gray-100 text-gray-400 cursor-not-allowed"
+                          : "bg-white text-gray-400 cursor-not-allowed"
                     }`}
                   >
                     {offer.cta}
@@ -481,7 +481,7 @@ export default function DelegationPricingModal({
                         <div className="text-base font-semibold tracking-tight text-brand-blue">
                           {example.title}
                         </div>
-                        <div className="inline-flex items-center rounded-full bg-brand-coral/10 px-3 py-1 text-sm font-semibold text-brand-coral">
+                        <div className="inline-flex items-center rounded-full bg-neutral-100 px-3 py-1 text-sm font-semibold text-brand-coral">
                           {example.credits}
                         </div>
                       </div>
@@ -534,9 +534,9 @@ export default function DelegationPricingModal({
                 return (
                   <div
                     key={item.title}
-                    className="rounded-[1.5rem] border border-black/5 bg-brand-blue/5 px-5 py-5"
+                    className="rounded-[1.5rem] border border-black/5 bg-white px-5 py-5"
                   >
-                    <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-2xl bg-white text-brand-coral shadow-[0_4px_10px_rgba(16,24,40,0.04)]">
+                    <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-2xl bg-neutral-100 text-neutral-700 shadow-[0_4px_10px_rgba(16,24,40,0.04)]">
                       <Icon className="h-4 w-4" />
                     </div>
                     <div className="text-base font-semibold text-brand-blue">
@@ -557,7 +557,7 @@ export default function DelegationPricingModal({
         <div className={`${embedded ? "max-w-2xl space-y-6" : "space-y-4"}`}>
           <div className={`space-y-1.5 ${embedded ? "max-w-2xl" : "max-w-2xl pr-10"}`}>
             {!embedded && (
-              <div className="inline-flex items-center gap-2 rounded-full bg-brand-coral/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-brand-coral">
+              <div className="inline-flex items-center gap-2 rounded-full bg-neutral-100 px-3 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-brand-coral">
                 2 crédits offerts
               </div>
             )}
@@ -615,7 +615,7 @@ export default function DelegationPricingModal({
                   className={`absolute bottom-3.5 right-3.5 inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors ${
                     isRecording
                       ? "bg-brand-coral text-white"
-                      : "bg-gray-100 text-brand-blue hover:bg-gray-200"
+                      : "bg-white text-brand-blue hover:bg-neutral-100"
                   }`}
                 >
                   <Mic className="h-4 w-4" />
@@ -641,7 +641,7 @@ export default function DelegationPricingModal({
               </div>
             </form>
           ) : (
-            <div className="rounded-[1.5rem] border border-brand-coral/15 bg-[#FFF9F8] px-6 py-12 text-center">
+            <div className="rounded-[1.5rem] border border-brand-coral/15 bg-[#ffffff] px-6 py-12 text-center">
               <div className="text-2xl font-black text-brand-blue">C&apos;est envoyé</div>
               <p className="mt-3 text-sm leading-relaxed text-gray-500">
                 Vous allez être recontacté sur WhatsApp pour cadrer les détails de votre première automatisation.
@@ -671,7 +671,7 @@ export default function DelegationPricingModal({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={resetAndClose}
-          className="fixed inset-0 z-50 bg-brand-blue/50 backdrop-blur-sm px-5 py-4 md:px-8 md:py-5"
+          className="fixed inset-0 z-50 bg-white0 backdrop-blur-sm px-5 py-4 md:px-8 md:py-5"
         >
           <div className="flex h-full w-full items-center justify-center">
             <motion.div

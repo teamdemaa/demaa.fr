@@ -9,7 +9,7 @@ import { toPng, toJpeg, toSvg } from "html-to-image";
 export default function QRCodeGenerator() {
   const [url, setUrl] = useState("https://demaa.fr");
   const [title, setTitle] = useState("Scannez moi !");
-  const [fgColor, setFgColor] = useState("#191b30"); // Brand Blue
+  const [fgColor, setFgColor] = useState("#141414"); // Brand Blue
   const [bgColor, setBgColor] = useState("#FFFFFF");
   const [logoUrl, setLogoUrl] = useState<string | null>(null);
   const [qrSize, setQrSize] = useState(240);
@@ -79,13 +79,13 @@ export default function QRCodeGenerator() {
   };
 
   return (
-    <div className="min-h-screen md:h-screen bg-[#FFF9F8] flex flex-col overflow-y-auto md:overflow-hidden text-[#191b30]">
+    <div className="min-h-screen bg-[#ffffff] flex flex-col overflow-y-auto text-[#141414]">
       <Navbar />
       
-      <main className="flex-1 flex flex-col md:flex-row w-full overflow-y-auto md:overflow-hidden">
+      <main className="flex-1 flex flex-col md:flex-row w-full overflow-y-auto">
         
         {/* LEFT PANE: CONFIGURATION */}
-        <div className="w-full md:w-[45%] pl-12 md:pl-24 lg:pl-40 pr-6 flex flex-col justify-center space-y-7 md:border-r border-brand-coral/5">
+        <div className="w-full md:w-[45%] pl-12 md:pl-24 lg:pl-40 pr-6 flex flex-col justify-center space-y-7 py-10 md:border-r border-brand-coral/5">
           <div className="space-y-2">
             <h1 className="text-2xl md:text-3xl font-bold text-brand-blue tracking-tight">
               Générateur de <span className="text-brand-coral">QR Code</span>
@@ -122,7 +122,7 @@ export default function QRCodeGenerator() {
               <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Logo au centre</label>
               <div className="flex items-center gap-3">
                 <label className="flex-1 flex items-center justify-center gap-2 px-5 py-3 border-2 border-dashed border-brand-coral/10 rounded-xl cursor-pointer hover:bg-white hover:border-brand-coral/20 transition-all group">
-                  <Upload className="w-4 h-4 text-gray-300 group-hover:text-brand-coral" />
+                  <Upload className="w-4 h-4 text-gray-300 group-hover:text-neutral-700" />
                   <span className="text-xs font-semibold text-gray-400 group-hover:text-brand-blue">Image facultative</span>
                   <input type="file" className="hidden" accept="image/*" onChange={handleLogoUpload} />
                 </label>
@@ -188,29 +188,23 @@ export default function QRCodeGenerator() {
                 <Download className="w-3.5 h-3.5 mb-1" />
                 JPEG
               </button>
-              <button onClick={() => exportCard('png')} className="flex flex-col items-center justify-center py-2.5 border-2 border-brand-blue text-brand-blue rounded-xl text-[10px] font-bold hover:bg-brand-blue/5 transition-all active:scale-95">
+              <button onClick={() => exportCard('png')} className="flex flex-col items-center justify-center py-2.5 border-2 border-brand-blue text-brand-blue rounded-xl text-[10px] font-bold hover:bg-white transition-all active:scale-95">
                 <Download className="w-3.5 h-3.5 mb-1" />
                 PNG
               </button>
-              <button onClick={() => exportCard('svg')} className="flex flex-col items-center justify-center py-2.5 border-2 border-brand-blue text-brand-blue rounded-xl text-[10px] font-bold hover:bg-brand-blue/5 transition-all active:scale-95">
+              <button onClick={() => exportCard('svg')} className="flex flex-col items-center justify-center py-2.5 border-2 border-brand-blue text-brand-blue rounded-xl text-[10px] font-bold hover:bg-white transition-all active:scale-95">
                 <Monitor className="w-3.5 h-3.5 mb-1" />
                 SVG
               </button>
             </div>
             
-            <button onClick={shareQRCode} className="w-full flex items-center justify-center gap-2 py-3 bg-gray-50 text-brand-blue rounded-xl text-xs font-bold hover:bg-gray-100 transition-all group">
+            <button onClick={shareQRCode} className="w-full flex items-center justify-center gap-2 py-3 bg-gray-50 text-brand-blue rounded-xl text-xs font-bold hover:bg-white transition-all group">
               <Share2 className="w-4 h-4 text-gray-400 group-hover:text-brand-blue transition-colors" />
               <span>Partager le QR Code</span>
             </button>
           </div>
         </div>
       </main>
-
-      <style jsx global>{`
-        @media (min-width: 768px) {
-          body { overflow: hidden; }
-        }
-      `}</style>
     </div>
   );
 }

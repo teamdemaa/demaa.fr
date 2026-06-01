@@ -48,7 +48,7 @@ export default function TeamLeadModal({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-brand-blue/5 backdrop-blur-[1px] z-[100]"
+            className="fixed inset-0 bg-white backdrop-blur-[1px] z-[100]"
           />
 
           <div className="fixed inset-0 flex items-center justify-center p-4 z-[101] pointer-events-none soft-scroll overflow-y-auto">
@@ -56,7 +56,7 @@ export default function TeamLeadModal({
               initial={{ scale: 0.98, opacity: 0, y: 10 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.98, opacity: 0, y: 10 }}
-              className="bg-white w-full max-w-[340px] rounded-[1.2rem] shadow-[0_10px_30px_rgba(25,27,48,0.06)] overflow-hidden pointer-events-auto relative border border-gray-100/50"
+              className="bg-white w-full max-w-[340px] rounded-[1.2rem] shadow-[0_10px_30px_rgba(20,20,20,0.06)] overflow-hidden pointer-events-auto relative border border-gray-100/50"
             >
               <button
                 onClick={onClose}
@@ -68,7 +68,7 @@ export default function TeamLeadModal({
               {!isSubmitted ? (
                 <div className="p-6">
                   <div className="mb-5 text-center px-2">
-                    <div className="w-8 h-8 bg-brand-blue/5 rounded-lg flex items-center justify-center mx-auto mb-3">
+                    <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center mx-auto mb-3">
                       <BadgePercent className="w-4 h-4 text-brand-blue/60" />
                     </div>
                     <h2 className="text-[13px] sm:text-[14px] font-black text-brand-blue tracking-tight leading-snug mb-1 whitespace-pre-line">
@@ -143,7 +143,7 @@ export default function TeamLeadModal({
                   </p>
                   <button
                     onClick={onClose}
-                    className="px-6 py-1.5 bg-gray-50 text-brand-blue/30 hover:text-brand-blue font-bold text-[9px] uppercase tracking-widest rounded-md hover:bg-gray-100 transition-all"
+                    className="px-6 py-1.5 bg-gray-50 text-brand-blue/30 hover:text-brand-blue font-bold text-[9px] uppercase tracking-widest rounded-md hover:bg-white transition-all"
                   >
                     OK
                   </button>

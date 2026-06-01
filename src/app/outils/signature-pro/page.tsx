@@ -64,8 +64,8 @@ export default function SignaturePro() {
   const [linkedin, setLinkedin] = useState("");
   const [logo, setLogo] = useState<string | null>(null);
   const [signatureMode, setSignatureMode] = useState<"with-image" | "text-only">("with-image");
-  const [primaryColor, setPrimaryColor] = useState("#191b30");
-  const [accentColor, setAccentColor] = useState("#f39d66");
+  const [primaryColor, setPrimaryColor] = useState("#141414");
+  const [accentColor, setAccentColor] = useState("#6b7280");
   const [fontKey, setFontKey] = useState<(typeof FONT_OPTIONS)[number]["key"]>("poppins");
   const [copied, setCopied] = useState(false);
 
@@ -335,7 +335,7 @@ export default function SignaturePro() {
   ].filter((row) => row.value);
 
   return (
-    <div className="min-h-screen md:h-screen bg-[#FFF9F8] flex flex-col overflow-y-auto md:overflow-hidden text-[#191b30] soft-scroll">
+    <div className="min-h-screen md:h-screen bg-[#ffffff] flex flex-col overflow-y-auto md:overflow-hidden text-[#141414] soft-scroll">
       <Navbar />
       
       <main className="flex-1 flex flex-col md:flex-row w-full overflow-y-auto md:overflow-hidden soft-scroll">
@@ -495,7 +495,7 @@ export default function SignaturePro() {
                 {logo && (
                   <button
                     onClick={() => setLogo(null)}
-                    className="w-10 h-10 flex items-center justify-center text-brand-coral bg-brand-coral/10 rounded-xl hover:bg-brand-coral/15 transition-colors"
+                    className="w-10 h-10 flex items-center justify-center text-neutral-700 bg-neutral-100 rounded-xl hover:bg-neutral-200 transition-colors"
                   >
                     <CheckCircle2 className="w-5 h-5" />
                   </button>
@@ -690,7 +690,7 @@ export default function SignaturePro() {
               </button>
               
               <div className="flex items-center gap-4 p-5 bg-white/40 backdrop-blur-md rounded-2xl border border-brand-coral/10">
-                <div className="w-10 h-10 rounded-full bg-brand-coral/10 flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center shrink-0">
                   <Pencil className="w-5 h-5 text-brand-coral" />
                 </div>
                 <p className="text-xs text-brand-blue/70 leading-relaxed font-medium">

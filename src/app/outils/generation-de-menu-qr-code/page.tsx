@@ -21,14 +21,14 @@ export default function MenuQRCode() {
   const [restaurantName, setRestaurantName] = useState("Le Petit Bistro");
   const [menuUrl, setMenuUrl] = useState("https://demaa.fr/menu-exemple");
   const [ctaText, setCtaText] = useState("Scannez pour la carte");
-  const [color, setColor] = useState("#191b30"); // Demaa Blue by default
+  const [color, setColor] = useState("#141414"); // Demaa Blue by default
   const [icon, setIcon] = useState<"dish" | "wine" | "coffee">("dish");
   const [isExporting, setIsExporting] = useState(false);
   
   const designRef = useRef<HTMLDivElement>(null);
 
   const colors = [
-    { name: "Bleu Demaa", hex: "#191b30" },
+    { name: "Bleu Demaa", hex: "#141414" },
     { name: "Vert Olive", hex: "#556b2f" },
     { name: "Terracotta", hex: "#e2725b" },
     { name: "Noir Profond", hex: "#000000" },
@@ -51,7 +51,7 @@ export default function MenuQRCode() {
   };
 
   return (
-    <div className="min-h-screen md:h-screen bg-[#FFF9F8] flex flex-col overflow-y-auto md:overflow-hidden text-[#191b30]">
+    <div className="min-h-screen md:h-screen bg-[#ffffff] flex flex-col overflow-y-auto md:overflow-hidden text-[#141414]">
       <Navbar />
       
       <main className="flex-1 flex flex-col md:flex-row w-full overflow-y-auto md:overflow-hidden">
@@ -99,9 +99,9 @@ export default function MenuQRCode() {
             <div className="space-y-2.5">
               <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Icône au centre</label>
               <div className="flex gap-3">
-                <button onClick={() => setIcon("dish")} className={`flex-1 flex items-center justify-center py-3 rounded-xl border-2 transition-all ${icon === "dish" ? "border-brand-coral bg-brand-coral/5 text-brand-coral" : "border-white bg-white text-gray-400 opacity-60"}`}><UtensilsCrossed className="w-4 h-4" /></button>
-                <button onClick={() => setIcon("wine")} className={`flex-1 flex items-center justify-center py-3 rounded-xl border-2 transition-all ${icon === "wine" ? "border-brand-coral bg-brand-coral/5 text-brand-coral" : "border-white bg-white text-gray-400 opacity-60"}`}><Wine className="w-4 h-4" /></button>
-                <button onClick={() => setIcon("coffee")} className={`flex-1 flex items-center justify-center py-3 rounded-xl border-2 transition-all ${icon === "coffee" ? "border-brand-coral bg-brand-coral/5 text-brand-coral" : "border-white bg-white text-gray-400 opacity-60"}`}><Coffee className="w-4 h-4" /></button>
+                <button onClick={() => setIcon("dish")} className={`flex-1 flex items-center justify-center py-3 rounded-xl border-2 transition-all ${icon === "dish" ? "border-brand-coral bg-neutral-100 text-neutral-700" : "border-white bg-white text-gray-400 opacity-60"}`}><UtensilsCrossed className="w-4 h-4" /></button>
+                <button onClick={() => setIcon("wine")} className={`flex-1 flex items-center justify-center py-3 rounded-xl border-2 transition-all ${icon === "wine" ? "border-brand-coral bg-neutral-100 text-neutral-700" : "border-white bg-white text-gray-400 opacity-60"}`}><Wine className="w-4 h-4" /></button>
+                <button onClick={() => setIcon("coffee")} className={`flex-1 flex items-center justify-center py-3 rounded-xl border-2 transition-all ${icon === "coffee" ? "border-brand-coral bg-neutral-100 text-neutral-700" : "border-white bg-white text-gray-400 opacity-60"}`}><Coffee className="w-4 h-4" /></button>
               </div>
             </div>
 

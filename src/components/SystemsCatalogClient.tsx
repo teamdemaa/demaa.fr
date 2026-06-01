@@ -281,7 +281,7 @@ export default function SystemsCatalogClient({
       <section
         className={
           showIntro
-            ? "w-full border-b border-brand-blue/5 bg-[#FFF9F8]/70 px-4 pb-12 pt-14 md:pb-16 md:pt-24"
+            ? "w-full border-b border-brand-blue/5 bg-[#ffffff]/70 px-4 pb-12 pt-14 md:pb-16 md:pt-24"
             : "w-full"
         }
       >
@@ -303,7 +303,7 @@ export default function SystemsCatalogClient({
 
           <div className={showIntro ? "mt-10" : ""}>
             {showSearchBar ? (
-              <div className="mx-auto max-w-4xl rounded-full border border-brand-blue/5 bg-white p-1.5 shadow-[0_10px_30px_rgba(25,27,48,0.035)]">
+              <div className="mx-auto max-w-4xl rounded-full border border-brand-blue/5 bg-white p-1.5 shadow-[0_10px_30px_rgba(20,20,20,0.035)]">
                 <div className="relative">
                   <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-300" />
                   <input
@@ -316,7 +316,7 @@ export default function SystemsCatalogClient({
               </div>
             ) : null}
 
-            <div className={`mx-auto max-w-4xl overflow-x-auto pb-2 soft-scroll ${showSearchBar ? "mt-5" : "mt-0"}`}>
+            <div className={`mx-auto max-w-4xl overflow-x-auto pb-3 soft-scroll ${showSearchBar ? "mt-5" : "mt-1"}`}>
               <div className="flex min-w-max justify-center gap-2 px-1">
                 {sectors.map((sector) => (
                   <button
@@ -328,7 +328,7 @@ export default function SystemsCatalogClient({
                     className={`whitespace-nowrap rounded-full px-4 py-2 text-xs transition ${
                       activeSector === sector
                         ? "bg-brand-blue text-white shadow-sm"
-                        : "bg-[#FFF3EF] text-brand-blue/65 hover:bg-brand-coral/15"
+                        : "bg-neutral-100 text-brand-blue/65 hover:bg-neutral-200"
                     }`}
                   >
                     {sector}
@@ -346,14 +346,14 @@ export default function SystemsCatalogClient({
               </p>
             </div>
           ) : (
-            <div className="mt-8 space-y-10">
+            <div className="mt-10 space-y-12 md:mt-12 md:space-y-14">
               {systemSections.map((section) => (
                 <section key={section.title}>
-                  <h2 className="demaa-section-title mb-4 text-3xl tracking-tight text-brand-blue md:text-4xl">
+                  <h2 className="demaa-section-title mb-5 text-3xl tracking-tight text-brand-blue md:mb-6 md:text-4xl">
                     {section.title}
                   </h2>
-                  <div className="-mx-4 overflow-x-auto px-4 pb-3 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-                    <div className="flex gap-4">
+                  <div className="-mx-4 overflow-x-auto px-4 pb-4 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+                    <div className="flex gap-5">
                       {section.systems.map((system) => {
                         const detail = detailsBySlug[system.slug];
                         const Icon = getSystemIcon(system);
@@ -366,9 +366,9 @@ export default function SystemsCatalogClient({
                               setSelectedSlug(system.slug);
                               setActiveTab("processus");
                             }}
-                            className="group flex min-h-[11rem] flex-[0_0_calc(50%-0.5rem)] cursor-pointer flex-col rounded-[1.15rem] border border-brand-blue/8 bg-white p-5 text-left shadow-[0_8px_24px_rgba(25,27,48,0.025)] transition hover:-translate-y-0.5 hover:border-brand-coral/25 hover:shadow-[0_16px_42px_rgba(25,27,48,0.06)] md:flex-[0_0_calc(25%-0.75rem)]"
+                            className="group flex min-h-[12rem] flex-[0_0_calc(50%-0.625rem)] cursor-pointer flex-col rounded-[1.15rem] border border-brand-blue/8 bg-white p-6 text-left shadow-[0_8px_24px_rgba(20,20,20,0.025)] transition hover:-translate-y-0.5 hover:border-brand-coral/25 hover:shadow-[0_16px_42px_rgba(20,20,20,0.06)] md:flex-[0_0_calc(25%-0.9375rem)]"
                           >
-                            <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#FFF3EF] text-brand-coral transition group-hover:bg-brand-coral group-hover:text-white">
+                            <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-neutral-100 text-neutral-700 transition group-hover:bg-neutral-200 group-hover:text-neutral-950">
                               <Icon className="h-4 w-4" />
                             </span>
                             <h3 className="mt-4 line-clamp-2 text-lg font-semibold leading-tight tracking-tight text-brand-blue">
@@ -395,7 +395,7 @@ export default function SystemsCatalogClient({
           onClick={() => setSelectedSlug(null)}
         >
           <div
-            className="max-h-[92vh] w-full max-w-7xl overflow-y-auto rounded-[1.25rem] bg-[#FFF9F8] p-6 shadow-[0_30px_80px_rgba(25,27,48,0.18)] md:p-8"
+            className="max-h-[92vh] w-full max-w-7xl overflow-y-auto rounded-[1.25rem] bg-[#ffffff] p-6 shadow-[0_30px_80px_rgba(20,20,20,0.18)] md:p-8"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="flex flex-col items-start justify-between gap-4 md:flex-row">
@@ -414,14 +414,14 @@ export default function SystemsCatalogClient({
                 <button
                   type="button"
                   onClick={() => setIsSystemSetupModalOpen(true)}
-                  className="rounded-full border border-brand-blue/10 bg-white px-4 py-2 text-sm font-medium text-brand-blue transition hover:border-brand-coral/20 hover:text-brand-coral"
+                  className="rounded-full border border-brand-blue/10 bg-white px-4 py-2 text-sm font-medium text-brand-blue transition hover:border-brand-coral/20 hover:text-neutral-700"
                 >
                   Demander un audit Systèmes
                 </button>
                 <button
                   type="button"
                   onClick={() => setSelectedSlug(null)}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-brand-blue/10 bg-white text-brand-blue transition hover:border-brand-coral/20 hover:text-brand-coral"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-brand-blue/10 bg-white text-brand-blue transition hover:border-brand-coral/20 hover:text-neutral-700"
                   aria-label="Fermer"
                 >
                   <X className="h-4 w-4" />
@@ -465,7 +465,7 @@ export default function SystemsCatalogClient({
                     return (
                       <div
                         key={pillar}
-                        className="w-[18rem] shrink-0 rounded-[1.75rem] bg-white p-4 shadow-[0_8px_24px_rgba(25,27,48,0.025)]"
+                        className="w-[18rem] shrink-0 rounded-[1.75rem] bg-white p-4 shadow-[0_8px_24px_rgba(20,20,20,0.025)]"
                       >
                         <h3 className="text-sm font-semibold text-brand-blue">{pillar}</h3>
                         <div className="mt-4 space-y-3">
@@ -501,7 +501,7 @@ export default function SystemsCatalogClient({
                 {detail.tools.map((tool) => (
                   <article
                     key={tool.name}
-                    className="rounded-[1.75rem] border border-brand-blue/8 bg-white p-5 text-left transition hover:-translate-y-0.5 hover:border-brand-coral/20 hover:shadow-[0_16px_40px_rgba(25,27,48,0.05)]"
+                    className="rounded-[1.75rem] border border-brand-blue/8 bg-white p-5 text-left transition hover:-translate-y-0.5 hover:border-brand-coral/20 hover:shadow-[0_16px_40px_rgba(20,20,20,0.05)]"
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div>
@@ -516,7 +516,7 @@ export default function SystemsCatalogClient({
                         className={`rounded-full px-3 py-1 text-[10px] font-medium ${
                           tool.priority === "Principal"
                             ? "bg-brand-blue text-white"
-                            : "bg-[#FFF3EF] text-brand-blue/75"
+                            : "bg-neutral-100 text-brand-blue/75"
                         }`}
                       >
                         {tool.priority}

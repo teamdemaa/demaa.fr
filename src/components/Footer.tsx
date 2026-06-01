@@ -27,19 +27,19 @@ const categoryLinks = [
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
-  const linkClass = "text-sm text-gray-400 transition-colors hover:text-brand-coral";
+  const linkClass = "text-sm text-neutral-500 transition-colors hover:text-neutral-950";
 
   return (
-    <footer className="bg-brand-blue text-white py-16 mt-auto">
+    <footer className="mt-auto border-t border-neutral-200 bg-white py-16 text-neutral-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-5">
           
           {/* Brand Info */}
           <div className="space-y-4">
-            <Link href="/" className="text-3xl font-medium tracking-tight text-white block">
-              Demaa<span className="text-brand-coral">.</span>
+            <Link href="/" className="block text-3xl font-medium tracking-tight text-neutral-950">
+              Demaa<span className="text-neutral-400">.</span>
             </Link>
-            <p className="demaa-section-title max-w-xs text-lg leading-snug text-gray-400">
+            <p className="demaa-section-title max-w-xs text-lg leading-snug text-neutral-500">
               On vous aide à enlever les tâches qui vous ralentissent, pour que votre activité avance plus simplement.
             </p>
           </div>

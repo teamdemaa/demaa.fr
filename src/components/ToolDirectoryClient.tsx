@@ -260,7 +260,7 @@ export default function ToolDirectoryClient({
 
   return (
     <div className="w-full">
-      <section className={`w-full border-b border-brand-blue/5 bg-[#FFF9F8] px-4 pb-5 ${showHeader ? "pt-8 md:pt-10" : "pt-0"}`}>
+      <section className={`w-full border-b border-brand-blue/5 bg-[#ffffff] px-4 pb-5 ${showHeader ? "pt-8 md:pt-10" : "pt-0"}`}>
         <div className="mx-auto max-w-5xl text-center">
           {showHeader ? (
             <>
@@ -274,7 +274,7 @@ export default function ToolDirectoryClient({
           ) : null}
 
           {showSearchBar ? (
-            <div className={`mx-auto max-w-4xl rounded-full border border-brand-blue/5 bg-white p-1.5 shadow-[0_10px_30px_rgba(25,27,48,0.035)] ${showHeader ? "mt-5" : "mt-0"}`}>
+            <div className={`mx-auto max-w-4xl rounded-full border border-brand-blue/5 bg-white p-1.5 shadow-[0_10px_30px_rgba(20,20,20,0.035)] ${showHeader ? "mt-5" : "mt-0"}`}>
               <div className="relative">
                 <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-300" />
                 <input
@@ -341,7 +341,7 @@ export default function ToolDirectoryClient({
                 setActiveSector("Tous");
                 setActiveCategory("Tous");
               }}
-              className="text-xs font-medium text-brand-coral transition hover:text-brand-blue"
+              className="text-xs font-medium text-neutral-700 transition hover:text-brand-blue"
             >
               Réinitialiser
             </button>
@@ -396,8 +396,8 @@ export default function ToolDirectoryClient({
                         key={sector}
                         className={`rounded-full px-2.5 py-1 text-[10px] font-normal ${
                           sector === "Transverse"
-                            ? "bg-brand-blue/5 text-brand-blue/65"
-                            : "bg-[#FFF3EF] text-brand-blue/75"
+                            ? "bg-white text-brand-blue/65"
+                            : "bg-neutral-100 text-brand-blue/75"
                         }`}
                       >
                         {sector}
@@ -406,7 +406,7 @@ export default function ToolDirectoryClient({
                   {tool.tags.slice(0, 2).map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full bg-[#FFF3EF] px-2.5 py-1 text-[10px] font-normal text-brand-blue/70"
+                      className="rounded-full bg-neutral-100 px-2.5 py-1 text-[10px] font-normal text-brand-blue/70"
                     >
                       {tag}
                     </span>
@@ -506,7 +506,7 @@ function SquareToolCard({
   externalLinks: boolean;
 }) {
   const className =
-    "group flex min-h-[10rem] flex-[0_0_calc(50%-0.5rem)] flex-col rounded-[1.15rem] border border-brand-blue/8 bg-white p-5 text-left shadow-[0_8px_24px_rgba(25,27,48,0.025)] transition hover:-translate-y-0.5 hover:border-brand-coral/25 hover:shadow-[0_16px_42px_rgba(25,27,48,0.06)] md:flex-[0_0_calc(25%-0.75rem)]";
+    "group flex min-h-[10rem] flex-[0_0_calc(50%-0.5rem)] flex-col rounded-[1.15rem] border border-brand-blue/8 bg-white p-5 text-left shadow-[0_8px_24px_rgba(20,20,20,0.025)] transition hover:-translate-y-0.5 hover:border-brand-coral/25 hover:shadow-[0_16px_42px_rgba(20,20,20,0.06)] md:flex-[0_0_calc(25%-0.75rem)]";
 
   const content = (
     <>
@@ -549,7 +549,7 @@ function ToolCard({
   children: ReactNode;
 }) {
   const className =
-    "group flex h-full flex-col rounded-[1.25rem] border border-brand-blue/8 bg-white p-4 shadow-[0_8px_24px_rgba(25,27,48,0.025)] transition hover:-translate-y-0.5 hover:border-brand-coral/25 hover:shadow-[0_16px_42px_rgba(25,27,48,0.06)]";
+    "group flex h-full flex-col rounded-[1.25rem] border border-brand-blue/8 bg-white p-4 shadow-[0_8px_24px_rgba(20,20,20,0.025)] transition hover:-translate-y-0.5 hover:border-brand-coral/25 hover:shadow-[0_16px_42px_rgba(20,20,20,0.06)]";
 
   if (externalLinks) {
     return (
@@ -582,7 +582,7 @@ function FilterChip({
       className={`whitespace-nowrap rounded-full px-4 py-2 text-xs transition ${
         isActive
           ? "bg-brand-blue text-white shadow-sm"
-          : "bg-[#FFF3EF] text-brand-blue/65 hover:bg-brand-coral/15"
+          : "bg-neutral-100 text-brand-blue/65 hover:bg-neutral-200"
       }`}
     >
       {label}

@@ -47,7 +47,7 @@ export default function NewsletterPrompt() {
   }
 
   return (
-    <div className="fixed bottom-4 right-4 z-40 w-[calc(100vw-2rem)] max-w-[360px] rounded-[1.75rem] border border-brand-blue/10 bg-[#FFF3EF]/98 p-4 shadow-[0_18px_50px_rgba(25,27,48,0.10)] backdrop-blur-sm md:bottom-6 md:right-6">
+    <div className="fixed bottom-4 right-4 z-40 w-[calc(100vw-2rem)] max-w-[360px] rounded-[1.75rem] border border-brand-blue/10 bg-[#fcfcfc]/98 p-4 shadow-[0_18px_50px_rgba(20,20,20,0.10)] backdrop-blur-sm md:bottom-6 md:right-6">
       <button
         type="button"
         onClick={handleClose}

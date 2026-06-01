@@ -36,7 +36,7 @@ export default async function BlogPostPage(
       <main className="flex-1 w-full bg-background min-h-[85vh] py-16 px-4">
         <article className="max-w-3xl mx-auto animate-in slide-in-from-bottom-4 duration-500">
           
-          <Link href="/blog" className="inline-flex items-center text-brand-blue hover:text-brand-coral font-medium mb-10 transition-colors">
+          <Link href="/blog" className="inline-flex items-center text-brand-blue hover:text-neutral-700 font-medium mb-10 transition-colors">
             <ArrowLeft className="w-4 h-4 mr-2" />
             Retour aux articles
           </Link>

@@ -13,8 +13,8 @@ export default function OrganizedLeaderKitPage() {
     <>
       <Navbar />
       <main className="flex-1 w-full bg-background min-h-screen pb-24">
-        <section className="w-full flex flex-col items-center justify-center pt-10 pb-12 md:pt-16 md:pb-16 px-4 text-center bg-[#FFF9F8] border-b border-brand-coral/10">
-          <div className="inline-flex items-center px-3 py-1 bg-brand-coral/10 text-brand-coral text-[10px] font-bold uppercase tracking-widest rounded-full mb-6">
+        <section className="w-full flex flex-col items-center justify-center pt-10 pb-12 md:pt-16 md:pb-16 px-4 text-center bg-[#ffffff] border-b border-brand-coral/10">
+          <div className="inline-flex items-center px-3 py-1 bg-neutral-100 text-neutral-700 text-[10px] font-bold uppercase tracking-widest rounded-full mb-6">
             Ressources téléchargeables
           </div>
           <h1 className="font-display text-3xl italic font-normal md:text-5xl lg:text-5xl tracking-tight text-brand-blue mb-4 leading-tight max-w-4xl mx-auto z-10 relative">
@@ -32,7 +32,7 @@ export default function OrganizedLeaderKitPage() {
             ))}
           </div>
 
-          <div className="mt-20 p-8 md:p-12 bg-brand-blue/5 rounded-[2.5rem] border border-brand-blue/5 text-center">
+          <div className="mt-20 p-8 md:p-12 bg-white rounded-[2.5rem] border border-brand-blue/5 text-center">
             <h3 className="text-xl font-bold text-brand-blue mb-4">Besoin d&apos;un document spécifique ?</h3>
             <p className="text-gray-500 text-sm max-w-lg mx-auto mb-8">
               Nous ajoutons régulièrement de nouvelles ressources. N&apos;hésitez pas à nous suggérer les documents qui vous seraient utiles.

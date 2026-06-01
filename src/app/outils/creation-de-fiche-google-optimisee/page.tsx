@@ -42,7 +42,7 @@ export default function GoogleProfileOptimizer() {
   ];
 
   return (
-    <div className="min-h-screen md:h-screen bg-[#FFF9F8] flex flex-col overflow-y-auto md:overflow-hidden text-[#191b30]">
+    <div className="min-h-screen md:h-screen bg-[#ffffff] flex flex-col overflow-y-auto md:overflow-hidden text-[#141414]">
       <Navbar />
       
       <main className="flex-1 flex flex-col md:flex-row w-full overflow-y-auto md:overflow-hidden">
@@ -215,7 +215,7 @@ export default function GoogleProfileOptimizer() {
                   </div>
                 ))}
               </div>
-              <div className="p-4 bg-brand-coral/5 rounded-xl border border-brand-coral/10 flex items-start gap-4">
+              <div className="p-4 bg-white rounded-xl border border-brand-coral/10 flex items-start gap-4">
                 <Info className="w-5 h-5 text-brand-coral shrink-0 mt-0.5" />
                 <p className="text-[10px] text-brand-blue/70 leading-relaxed italic">
                   <strong>Astuce SEO :</strong> Incluez votre ville principale dès les premiers mots de votre description pour un meilleur impact local.

@@ -43,8 +43,8 @@ export default function USPSection() {
 
       {/* MOBILE VIEW: Animated Infinite Marquee */}
       <div className="md:hidden relative">
-        <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-[#FFF9F8] to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-[#FFF9F8] to-transparent z-10 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-[#ffffff] to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-[#ffffff] to-transparent z-10 pointer-events-none" />
         
         <div className="flex flex-row overflow-hidden w-max animate-marquee-slow">
           {/* Loop twice for infinite scroll */}

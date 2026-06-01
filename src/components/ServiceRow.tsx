@@ -49,7 +49,7 @@ export default function ServiceRow({ title, services }: { title: string, service
         {/* Mobile Swipe Indicator */}
         {showRightArrow && (
           <div 
-            className="flex md:hidden items-center justify-center w-10 h-10 rounded-full bg-brand-coral/10 text-brand-coral animate-pulse shrink-0" 
+            className="flex md:hidden items-center justify-center w-10 h-10 rounded-full bg-neutral-100 text-neutral-700 animate-pulse shrink-0" 
           >
             <ChevronRight className="w-5 h-5 ml-0.5" />
           </div>
@@ -60,7 +60,7 @@ export default function ServiceRow({ title, services }: { title: string, service
       {showLeftArrow && (
         <button 
           onClick={scrollLeft}
-          className="absolute -left-5 top-1/2 -translate-y-1/2 z-10 w-14 h-14 bg-brand-coral/10 rounded-full text-brand-coral hover:bg-brand-coral/20 hover:scale-105 transition-all hidden md:flex items-center justify-center shadow-sm"
+          className="absolute -left-5 top-1/2 -translate-y-1/2 z-10 w-14 h-14 bg-neutral-100 rounded-full text-neutral-700 hover:bg-neutral-100 hover:scale-105 transition-all hidden md:flex items-center justify-center shadow-sm"
         >
           <ChevronLeft className="w-8 h-8 mr-0.5" />
         </button>
@@ -69,7 +69,7 @@ export default function ServiceRow({ title, services }: { title: string, service
       {showRightArrow && (
         <button 
           onClick={scrollRight}
-          className="absolute -right-5 top-1/2 -translate-y-1/2 z-10 w-14 h-14 bg-brand-coral/10 rounded-full text-brand-coral hover:bg-brand-coral/20 hover:scale-105 transition-all hidden md:flex items-center justify-center shadow-sm"
+          className="absolute -right-5 top-1/2 -translate-y-1/2 z-10 w-14 h-14 bg-neutral-100 rounded-full text-neutral-700 hover:bg-neutral-100 hover:scale-105 transition-all hidden md:flex items-center justify-center shadow-sm"
         >
           <ChevronRight className="w-8 h-8 ml-0.5" />
         </button>

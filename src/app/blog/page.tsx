@@ -16,7 +16,7 @@ export default function BlogIndexPage() {
     <>
       <Navbar />
       <main className="flex-1 w-full bg-background min-h-[85vh]">
-        <section className="w-full flex flex-col items-center justify-center pt-8 pb-8 md:pt-10 md:pb-8 px-4 text-center bg-[#FFF9F8] border-b border-brand-coral/10 mb-8">
+        <section className="w-full flex flex-col items-center justify-center pt-8 pb-8 md:pt-10 md:pb-8 px-4 text-center bg-[#ffffff] border-b border-brand-coral/10 mb-8">
           <h1 className="text-2xl md:text-4xl font-bold text-brand-blue mb-3">
             Nos <span className="text-brand-coral">conseils</span> & astuces
           </h1>
@@ -42,7 +42,7 @@ export default function BlogIndexPage() {
                          <BookOpen className="w-4 h-4" />
                          <span>{new Date(post.date).toLocaleDateString("fr-FR", { year: "numeric", month: "long", day: "numeric" })}</span>
                       </div>
-                      <h2 className="text-2xl font-semibold text-brand-blue group-hover:text-brand-coral transition-colors mb-2">
+                      <h2 className="text-2xl font-semibold text-brand-blue group-hover:text-neutral-700 transition-colors mb-2">
                         {post.title}
                       </h2>
                       <p className="text-gray-500 leading-relaxed max-w-2xl">
@@ -50,7 +50,7 @@ export default function BlogIndexPage() {
                       </p>
                     </div>
                     
-                    <div className="hidden sm:flex w-12 h-12 rounded-full bg-gray-50 items-center justify-center text-brand-blue group-hover:bg-brand-coral/10 group-hover:text-brand-coral transition-colors shrink-0">
+                    <div className="hidden sm:flex w-12 h-12 rounded-full bg-gray-50 items-center justify-center text-brand-blue group-hover:bg-neutral-100 group-hover:text-neutral-700 transition-colors shrink-0">
                       <ArrowRight className="w-5 h-5" />
                     </div>
                   </div>

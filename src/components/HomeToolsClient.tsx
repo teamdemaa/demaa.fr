@@ -100,7 +100,7 @@ export default function HomeToolsClient({
           className={`whitespace-nowrap rounded-full px-5 py-1.5 text-xs transition-all ${
             activeFilter === null 
               ? "bg-brand-blue text-white shadow-md font-medium" 
-              : "bg-[#FFF3EF] text-brand-blue/70 font-light hover:bg-brand-coral/20"
+              : "bg-[#fcfcfc] text-brand-blue/70 font-light hover:bg-neutral-100"
           }`}
         >
           Tous
@@ -113,7 +113,7 @@ export default function HomeToolsClient({
             className={`whitespace-nowrap rounded-full px-5 py-1.5 text-xs transition-all ${
               activeFilter === filter 
                 ? "bg-brand-blue text-white shadow-md font-medium" 
-                : "bg-[#FFF3EF] text-brand-blue/70 font-light hover:bg-brand-coral/20"
+                : "bg-[#fcfcfc] text-brand-blue/70 font-light hover:bg-neutral-100"
             }`}
           >
             {filter}
@@ -139,7 +139,7 @@ export default function HomeToolsClient({
         {/* Search results helper */}
         {searchQuery && (
           <div className="mb-10 pb-6 border-b border-gray-100/50">
-             <div className="flex items-center gap-2 px-6 py-3 bg-brand-blue/5 rounded-full w-fit text-xs font-bold text-brand-blue uppercase tracking-widest">
+             <div className="flex items-center gap-2 px-6 py-3 bg-white rounded-full w-fit text-xs font-bold text-brand-blue uppercase tracking-widest">
                 <Search className="w-3.5 h-3.5" />
                 Résultats pour : <span className="text-brand-coral ml-1">&quot;{searchQuery}&quot;</span>
              </div>

@@ -14,7 +14,7 @@ export default function AppleIcon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#FFF9F8",
+          background: "#ffffff",
           fontWeight: 700,
           fontSize: 112,
           fontFamily:
@@ -22,8 +22,8 @@ export default function AppleIcon() {
           letterSpacing: "-0.05em",
         }}
       >
-        <span style={{ color: "#191b30" }}>D</span>
-        <span style={{ color: "#f39d66" }}>.</span>
+        <span style={{ color: "#141414" }}>D</span>
+        <span style={{ color: "#6b7280" }}>.</span>
       </div>
     ),
     { ...size }

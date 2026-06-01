@@ -28,7 +28,7 @@ export default function OutilPage(
         <div className="absolute top-8 left-8 hidden md:block">
           <Link 
             href="/" 
-            className="inline-flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-brand-coral transition-colors group"
+            className="inline-flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-neutral-700 transition-colors group"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
             Hub de ressources
@@ -36,7 +36,7 @@ export default function OutilPage(
         </div>
 
         <div className="text-center max-w-2xl animate-in slide-in-from-bottom-6 duration-700">
-          <div className="w-24 h-24 bg-brand-coral/10 rounded-[2.5rem] flex items-center justify-center mx-auto mb-10 shadow-lg shadow-brand-coral/5 group hover:scale-105 transition-transform duration-500">
+          <div className="w-24 h-24 bg-neutral-100 rounded-[2.5rem] flex items-center justify-center mx-auto mb-10 shadow-lg shadow-brand-coral/5 group hover:scale-105 transition-transform duration-500">
              <span className="text-4xl transform group-hover:rotate-12 transition-transform">🛠️</span>
           </div>
           <p className="text-[10px] font-bold text-brand-coral uppercase tracking-[0.2em] mb-4">

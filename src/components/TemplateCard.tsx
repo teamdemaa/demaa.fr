@@ -22,19 +22,19 @@ export default function TemplateCard({
             alt={template.name}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           />
-          <div className="absolute inset-0 bg-brand-blue/0 group-hover:bg-brand-blue/5 transition-colors duration-300" />
+          <div className="absolute inset-0 bg-brand-blue/0 group-hover:bg-white transition-colors duration-300" />
           
         </div>
 
         {/* Content */}
         <div className="p-5 md:p-6 flex-1 flex flex-col">
           <div className="mb-3">
-            <span className="px-2.5 py-0.5 bg-[#FFF3EF] text-brand-coral text-[9px] font-bold uppercase tracking-widest rounded-full border border-brand-coral/10">
+            <span className="px-2.5 py-0.5 bg-neutral-100 text-neutral-700 text-[9px] font-bold uppercase tracking-widest rounded-full border border-brand-coral/10">
               {template.category}
             </span>
           </div>
           
-          <h3 className="text-lg font-bold text-brand-blue group-hover:text-brand-coral transition-colors mb-2 leading-tight">
+          <h3 className="text-lg font-bold text-brand-blue group-hover:text-neutral-700 transition-colors mb-2 leading-tight">
             {template.name}
           </h3>
           
@@ -43,10 +43,10 @@ export default function TemplateCard({
           </p>
 
           <div className="mt-auto pt-6 flex items-center justify-between">
-            <span className="text-[10px] font-bold text-brand-blue/40 uppercase tracking-widest group-hover:text-brand-coral transition-colors">
+            <span className="text-[10px] font-bold text-brand-blue/40 uppercase tracking-widest group-hover:text-neutral-700 transition-colors">
               Modèle gratuit
             </span>
-            <div className="w-10 h-10 rounded-full bg-brand-blue/5 flex items-center justify-center group-hover:bg-brand-coral group-hover:text-white transition-all duration-300 shadow-sm group-hover:shadow-lg group-hover:shadow-brand-coral/20">
+            <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center group-hover:bg-neutral-200 group-hover:text-neutral-950 transition-all duration-300 shadow-sm group-hover:shadow-lg group-hover:shadow-neutral-200">
                <ArrowRight className="w-5 h-5" />
             </div>
           </div>
