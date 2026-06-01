@@ -30,14 +30,6 @@ export default function Navbar({ minimal = false }: { minimal?: boolean }) {
 
             {!minimal && (
               <div className="flex items-center gap-3 md:gap-5">
-                <Link
-                  href="/outils-gratuits"
-                  className="text-[13px] md:text-[15px] text-brand-blue hover:text-brand-coral transition-all duration-300 font-medium whitespace-nowrap"
-                >
-                  <span className="hidden sm:inline">Outils Gratuits</span>
-                  <span className="sm:hidden">Outils Gratuits</span>
-                </Link>
-
                 <button
                   type="button"
                   onClick={() => setIsSystemModalOpen(true)}

@@ -1,10 +1,4 @@
-import Navbar from "@/components/Navbar";
-import ToolDirectoryClient from "@/components/ToolDirectoryClient";
-import {
-  freeToolsDirectory,
-  freeToolsDirectoryCategories,
-  freeToolsDirectorySectors,
-} from "@/lib/free-tools-directory";
+import { redirect } from "next/navigation";
 
 export const metadata = {
   title: "Outils Gratuits - Demaa",
@@ -27,28 +21,17 @@ export default async function OutilsGratuitsPage({
   searchParams,
 }: OutilsGratuitsPageProps) {
   const params = await searchParams;
-  const initialCategory = getParamValue(params.categorie);
-  const initialSector = getParamValue(params.secteur);
+  const query = new URLSearchParams({ tab: "boite-a-outils" });
+  const category = getParamValue(params.categorie);
+  const sector = getParamValue(params.secteur);
 
-  return (
-    <>
-      <Navbar />
-      <main className="flex-1 w-full bg-background animate-in fade-in duration-700">
-        <ToolDirectoryClient
-          key={`${initialSector ?? "tous"}-${initialCategory ?? "tous"}`}
-          title="Outils Gratuits"
-          description="Les outils gratuits créés par Demaa pour faire avancer l'activité plus vite."
-          searchPlaceholder="Rechercher un outil gratuit, un usage, un secteur..."
-          resultLabel="outils gratuits trouvés"
-          items={freeToolsDirectory}
-          sectors={freeToolsDirectorySectors}
-          categories={freeToolsDirectoryCategories}
-          initialCategory={initialCategory}
-          initialSector={initialSector}
-          hideTransverseOnSector={false}
-          externalLinks={false}
-        />
-      </main>
-    </>
-  );
+  if (category) {
+    query.set("categorie", category);
+  }
+
+  if (sector) {
+    query.set("secteur", sector);
+  }
+
+  redirect(`/?${query.toString()}`);
 }

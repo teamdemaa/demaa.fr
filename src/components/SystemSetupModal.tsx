@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 
 type SystemSetupModalProps = {
   isOpen: boolean;
   onClose: () => void;
+  initialSector?: string;
 };
 
 const INITIAL_FORM = {
@@ -18,11 +19,21 @@ const INITIAL_FORM = {
 export default function SystemSetupModal({
   isOpen,
   onClose,
+  initialSector,
 }: SystemSetupModalProps) {
   const [formData, setFormData] = useState(INITIAL_FORM);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    setFormData((current) => ({
+      ...current,
+      sector: initialSector ?? "",
+    }));
+  }, [initialSector, isOpen]);
 
   if (!isOpen) return null;
 

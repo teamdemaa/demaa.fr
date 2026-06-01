@@ -1,9 +1,14 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
-import AssistantHub from "@/components/AssistantHub";
+import HomeTabsClient from "@/components/HomeTabsClient";
 import NewsletterPrompt from "@/components/NewsletterPrompt";
 import { getSystems } from "@/lib/api";
 import { buildOperationalSystemDetail } from "@/lib/system-operations";
+import {
+  freeToolsDirectory,
+  freeToolsDirectoryCategories,
+  freeToolsDirectorySectors,
+} from "@/lib/free-tools-directory";
 
 export const metadata: Metadata = {
   title: "Automatiser mes tâches - Demaa",
@@ -13,7 +18,23 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
-export default async function HomePage() {
+type HomePageProps = {
+  searchParams: Promise<{
+    tab?: string | string[];
+    secteur?: string | string[];
+    categorie?: string | string[];
+  }>;
+};
+
+function getParamValue(value?: string | string[]) {
+  return Array.isArray(value) ? value[0] : value;
+}
+
+export default async function HomePage({ searchParams }: HomePageProps) {
+  const params = await searchParams;
+  const initialTab = getParamValue(params.tab);
+  const initialCategory = getParamValue(params.categorie);
+  const initialSector = getParamValue(params.secteur);
   const systems = await getSystems();
   const detailsBySlug = Object.fromEntries(
     await Promise.all(
@@ -24,8 +45,17 @@ export default async function HomePage() {
   return (
     <>
       <Navbar />
-      <main className="flex-1 w-full bg-[#FFF9F8] min-h-screen">
-        <AssistantHub systems={systems} detailsBySlug={detailsBySlug} />
+      <main className="flex-1 w-full bg-white min-h-screen">
+        <HomeTabsClient
+          systems={systems}
+          detailsBySlug={detailsBySlug}
+          tools={freeToolsDirectory}
+          toolSectors={freeToolsDirectorySectors}
+          toolCategories={freeToolsDirectoryCategories}
+          initialTab={initialTab}
+          initialCategory={initialCategory}
+          initialSector={initialSector}
+        />
       </main>
       <NewsletterPrompt />
     </>

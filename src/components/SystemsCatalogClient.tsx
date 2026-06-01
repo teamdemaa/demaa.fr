@@ -1,7 +1,53 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Search } from "lucide-react";
+import {
+  Aperture,
+  BadgeCheck,
+  BookOpenCheck,
+  Box,
+  BriefcaseBusiness,
+  Building2,
+  Calculator,
+  Camera,
+  Car,
+  ChefHat,
+  Cloud,
+  Code2,
+  ClipboardCheck,
+  Cpu,
+  Dumbbell,
+  Factory,
+  FileText,
+  Flower2,
+  Gavel,
+  GraduationCap,
+  Hammer,
+  HeartHandshake,
+  Home,
+  KeyRound,
+  Landmark,
+  Layers,
+  Megaphone,
+  Navigation,
+  Newspaper,
+  PartyPopper,
+  PenTool,
+  Scissors,
+  Search,
+  Shield,
+  ShoppingBag,
+  Smartphone,
+  Sparkles,
+  Store,
+  Truck,
+  UserCheck,
+  Video,
+  Wrench,
+  X,
+  type LucideIcon,
+} from "lucide-react";
+import SystemSetupModal from "@/components/SystemSetupModal";
 import type { System } from "@/lib/types";
 import type { OperationalSystemDetail, SystemPillar } from "@/lib/system-operations";
 
@@ -10,6 +56,9 @@ type SystemsCatalogClientProps = {
   detailsBySlug: Record<string, OperationalSystemDetail>;
   showIntro?: boolean;
   pageSize?: number;
+  searchQuery?: string;
+  onSearchQueryChange?: (value: string) => void;
+  showSearchBar?: boolean;
 };
 
 const PILLARS: SystemPillar[] = [
@@ -20,17 +69,149 @@ const PILLARS: SystemPillar[] = [
   "Équipe",
 ];
 
+const systemIcons: Record<string, LucideIcon> = {
+  Aperture,
+  Box,
+  Briefcase: BriefcaseBusiness,
+  Building2,
+  Calculator,
+  Camera,
+  Car,
+  ChefHat,
+  Cloud,
+  Code: Code2,
+  ClipboardCheck,
+  Cpu,
+  Croissant: Store,
+  Dolly: Truck,
+  Dumbbell,
+  Factory,
+  FileCheck2: BookOpenCheck,
+  FileText,
+  Flower2,
+  Gavel,
+  GraduationCap,
+  Hammer,
+  HeartHandshake,
+  Home,
+  Key: KeyRound,
+  Landmark,
+  Laptop: BriefcaseBusiness,
+  Layers,
+  Megaphone,
+  Navigation,
+  Newspaper,
+  PartyPopper,
+  PenTool,
+  Scissors,
+  Shield,
+  ShoppingBag,
+  Smartphone,
+  Sparkles,
+  Store,
+  Truck,
+  UserCheck,
+  Utensils: ChefHat,
+  Video,
+  Wrench,
+};
+
+const activityIcons: Record<string, LucideIcon> = {
+  "cabinet-comptable": Calculator,
+  "cabinet-d-avocat": Gavel,
+  "cabinet-de-conseil": BriefcaseBusiness,
+  "agence-marketing": Megaphone,
+  freelance: BriefcaseBusiness,
+  "agence-de-recrutement": UserCheck,
+  "agence-web": Code2,
+  "creation-de-contenu": Camera,
+  saas: Cloud,
+  "maintenance-informatique": Cpu,
+  btp: Building2,
+  artisanat: Hammer,
+  "agence-immobiliere": Home,
+  "investissement-locatif": Landmark,
+  "gestion-patrimoine": Landmark,
+  "courtier-assurance": Shield,
+  demenagement: Truck,
+  "livraison-dernier-kilometre": Navigation,
+  "transport-de-marchandise": Box,
+  "transport-de-personnes": Car,
+  restaurant: ChefHat,
+  boulangerie: Store,
+  traiteur: ChefHat,
+  "commerce-de-detail": Store,
+  "e-commerce": ShoppingBag,
+  "institut-de-beaute": Flower2,
+  "salon-de-coiffure": Scissors,
+  "salle-de-sport": Dumbbell,
+  "services-a-la-personne": HeartHandshake,
+  "formation-en-ligne": GraduationCap,
+  "organisme-de-formation": BookOpenCheck,
+  evenementiel: PartyPopper,
+  "photographe-videaste": Aperture,
+  media: Newspaper,
+  "nettoyage-professionnel": Sparkles,
+  "reparation-telephonique": Smartphone,
+  "garage-automobile": Wrench,
+  marketplace: Layers,
+  "location-de-materiel": ClipboardCheck,
+  "securite-privee": Shield,
+  "industrie-production": Factory,
+};
+
+function getSystemIcon(system: System): LucideIcon {
+  const slugIcon = activityIcons[system.slug];
+
+  if (slugIcon) {
+    return slugIcon;
+  }
+
+  const normalizedName = system.name
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+
+  if (normalizedName.includes("comptable")) return Calculator;
+  if (normalizedName.includes("avocat")) return Gavel;
+  if (normalizedName.includes("marketing")) return Megaphone;
+  if (normalizedName.includes("recrutement")) return UserCheck;
+  if (normalizedName.includes("web")) return Code2;
+  if (normalizedName.includes("contenu")) return Camera;
+  if (normalizedName.includes("formation")) return GraduationCap;
+  if (normalizedName.includes("restaurant")) return ChefHat;
+  if (normalizedName.includes("coiffure")) return Scissors;
+  if (normalizedName.includes("beaute")) return Flower2;
+  if (normalizedName.includes("transport")) return Truck;
+  if (normalizedName.includes("immobilier")) return Home;
+  if (normalizedName.includes("patrimoine")) return Landmark;
+
+  const icon = system.icon;
+  return systemIcons[icon] ?? BadgeCheck;
+}
+
 export default function SystemsCatalogClient({
   systems,
   detailsBySlug,
   showIntro = true,
-  pageSize = 8,
+  searchQuery: controlledSearchQuery,
+  onSearchQueryChange,
+  showSearchBar = true,
 }: SystemsCatalogClientProps) {
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<"processus" | "outils">("processus");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [internalSearchQuery, setInternalSearchQuery] = useState("");
   const [activeSector, setActiveSector] = useState("Tous");
-  const [currentPage, setCurrentPage] = useState(1);
+  const [isSystemSetupModalOpen, setIsSystemSetupModalOpen] = useState(false);
+  const searchQuery = controlledSearchQuery ?? internalSearchQuery;
+
+  function updateSearchQuery(value: string) {
+    if (onSearchQueryChange) {
+      onSearchQueryChange(value);
+    } else {
+      setInternalSearchQuery(value);
+    }
+  }
 
   const sectors = useMemo(
     () => [
@@ -65,11 +246,29 @@ export default function SystemsCatalogClient({
     });
   }, [activeSector, detailsBySlug, searchQuery, systems]);
 
-  const totalPages = Math.max(1, Math.ceil(filteredSystems.length / pageSize));
-  const visibleSystems = filteredSystems.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize
-  );
+  const systemSections = useMemo(() => {
+    const sections = filteredSystems.reduce<Array<{ index: number; title: string; systems: System[] }>>(
+      (currentSections, system) => {
+        const title = detailsBySlug[system.slug]?.sectorLabel ?? "Autres systèmes";
+        const section = currentSections.find((current) => current.title === title);
+
+        if (section) {
+          section.systems.push(system);
+        } else {
+          currentSections.push({ index: currentSections.length, title, systems: [system] });
+        }
+
+        return currentSections;
+      },
+      []
+    );
+
+    return sections.sort((first, second) => {
+      const byCount = second.systems.length - first.systems.length;
+
+      return byCount || first.index - second.index;
+    });
+  }, [detailsBySlug, filteredSystems]);
 
   const selectedSystem = useMemo(
     () => systems.find((system) => system.slug === selectedSlug) ?? null,
@@ -82,7 +281,7 @@ export default function SystemsCatalogClient({
       <section
         className={
           showIntro
-            ? "w-full border-b border-brand-blue/5 bg-[#FFF9F8] px-4 pb-12 pt-14 md:pb-16 md:pt-24"
+            ? "w-full border-b border-brand-blue/5 bg-[#FFF9F8]/70 px-4 pb-12 pt-14 md:pb-16 md:pt-24"
             : "w-full"
         }
       >
@@ -103,22 +302,21 @@ export default function SystemsCatalogClient({
           ) : null}
 
           <div className={showIntro ? "mt-10" : ""}>
-            <div className="mx-auto max-w-4xl rounded-full border border-brand-blue/5 bg-white p-1.5 shadow-[0_10px_30px_rgba(25,27,48,0.035)]">
-              <div className="relative">
-                <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-300" />
-                <input
-                  value={searchQuery}
-                  onChange={(event) => {
-                    setSearchQuery(event.target.value);
-                    setCurrentPage(1);
-                  }}
-                  placeholder="Rechercher une entreprise, un processus, un outil..."
-                  className="w-full rounded-full bg-white py-3 pl-10 pr-5 text-sm font-normal text-brand-blue outline-none transition placeholder:text-brand-blue/40"
-                />
+            {showSearchBar ? (
+              <div className="mx-auto max-w-4xl rounded-full border border-brand-blue/5 bg-white p-1.5 shadow-[0_10px_30px_rgba(25,27,48,0.035)]">
+                <div className="relative">
+                  <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-300" />
+                  <input
+                    value={searchQuery}
+                    onChange={(event) => updateSearchQuery(event.target.value)}
+                    placeholder="Rechercher une entreprise, un processus, un outil..."
+                    className="w-full rounded-full bg-white py-3 pl-10 pr-5 text-sm font-normal text-brand-blue outline-none transition placeholder:text-brand-blue/40"
+                  />
+                </div>
               </div>
-            </div>
+            ) : null}
 
-            <div className="mx-auto mt-5 max-w-4xl overflow-x-auto pb-2 soft-scroll">
+            <div className={`mx-auto max-w-4xl overflow-x-auto pb-2 soft-scroll ${showSearchBar ? "mt-5" : "mt-0"}`}>
               <div className="flex min-w-max justify-center gap-2 px-1">
                 {sectors.map((sector) => (
                   <button
@@ -126,7 +324,6 @@ export default function SystemsCatalogClient({
                     type="button"
                     onClick={() => {
                       setActiveSector(sector);
-                      setCurrentPage(1);
                     }}
                     className={`whitespace-nowrap rounded-full px-4 py-2 text-xs transition ${
                       activeSector === sector
@@ -141,81 +338,54 @@ export default function SystemsCatalogClient({
             </div>
           </div>
 
-          <div className="mt-8 px-4 py-2 md:mt-10 md:py-4">
-            <p className="max-w-3xl text-left text-base italic font-normal leading-relaxed text-brand-blue/80 md:text-[1.15rem]">
-              Choisissez votre entreprise et consultez les processus et les outils
-            </p>
-          </div>
-
-          <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-            {visibleSystems.map((system) => {
-              const detail = detailsBySlug[system.slug];
-
-              return (
-                <button
-                  key={system.id}
-                  type="button"
-                  onClick={() => {
-                    setSelectedSlug(system.slug);
-                    setActiveTab("processus");
-                  }}
-                  className="group flex h-full cursor-pointer flex-col rounded-[1.25rem] border border-brand-blue/8 bg-white p-5 text-left shadow-[0_8px_24px_rgba(25,27,48,0.025)] transition hover:-translate-y-0.5 hover:border-brand-coral/25 hover:shadow-[0_16px_42px_rgba(25,27,48,0.06)] md:p-6"
-                >
-                  <div>
-                    <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-brand-coral">
-                      {detail?.sectorLabel ?? "Système opérationnel"}
-                    </p>
-                    <h2 className="mt-1.5 text-lg font-bold tracking-tight text-brand-blue">
-                      {system.name}
-                    </h2>
-                  </div>
-
-                  <p className="mt-4 text-sm font-normal leading-relaxed text-gray-600">
-                    {detail?.editorialSubtitle ?? system.description}
-                  </p>
-
-                  <div className="mt-5 flex flex-wrap gap-2">
-                    {[detail?.sectorLabel, ...system.tags]
-                      .filter(Boolean)
-                      .slice(0, 2)
-                      .map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-full bg-[#FFF3EF] px-2.5 py-1 text-[10px] font-normal text-brand-blue/70"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                </button>
-              );
-            })}
-          </div>
-
-          {totalPages > 1 ? (
-            <div className="mt-6 flex items-center justify-center gap-3">
-              <button
-                type="button"
-                onClick={() => setCurrentPage((page) => Math.max(1, page - 1))}
-                disabled={currentPage === 1}
-                className="rounded-full border border-brand-blue/10 bg-white px-4 py-2 text-sm font-medium text-brand-blue transition disabled:cursor-not-allowed disabled:opacity-35"
-              >
-                Précédent
-              </button>
-              <span className="text-sm text-brand-blue/65">
-                Page {currentPage} / {totalPages}
-              </span>
-              <button
-                type="button"
-                onClick={() => setCurrentPage((page) => Math.min(totalPages, page + 1))}
-                disabled={currentPage === totalPages}
-                className="rounded-full border border-brand-blue/10 bg-white px-4 py-2 text-sm font-medium text-brand-blue transition disabled:cursor-not-allowed disabled:opacity-35"
-              >
-                Suivant
-              </button>
+          {systemSections.length === 0 ? (
+            <div className="mt-8 rounded-[1.25rem] border border-dashed border-brand-blue/10 bg-white p-10 text-center">
+              <h2 className="text-xl font-bold text-brand-blue">Aucun système trouvé</h2>
+              <p className="mt-3 text-sm font-normal text-gray-500">
+                Essayez un autre mot-clé ou un secteur plus large.
+              </p>
             </div>
-          ) : null}
+          ) : (
+            <div className="mt-8 space-y-10">
+              {systemSections.map((section) => (
+                <section key={section.title}>
+                  <h2 className="demaa-section-title mb-4 text-3xl tracking-tight text-brand-blue md:text-4xl">
+                    {section.title}
+                  </h2>
+                  <div className="-mx-4 overflow-x-auto px-4 pb-3 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+                    <div className="flex gap-4">
+                      {section.systems.map((system) => {
+                        const detail = detailsBySlug[system.slug];
+                        const Icon = getSystemIcon(system);
+
+                        return (
+                          <button
+                            key={system.id}
+                            type="button"
+                            onClick={() => {
+                              setSelectedSlug(system.slug);
+                              setActiveTab("processus");
+                            }}
+                            className="group flex min-h-[11rem] flex-[0_0_calc(50%-0.5rem)] cursor-pointer flex-col rounded-[1.15rem] border border-brand-blue/8 bg-white p-5 text-left shadow-[0_8px_24px_rgba(25,27,48,0.025)] transition hover:-translate-y-0.5 hover:border-brand-coral/25 hover:shadow-[0_16px_42px_rgba(25,27,48,0.06)] md:flex-[0_0_calc(25%-0.75rem)]"
+                          >
+                            <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#FFF3EF] text-brand-coral transition group-hover:bg-brand-coral group-hover:text-white">
+                              <Icon className="h-4 w-4" />
+                            </span>
+                            <h3 className="mt-4 line-clamp-2 text-lg font-semibold leading-tight tracking-tight text-brand-blue">
+                              {system.name}
+                            </h3>
+                            <p className="mt-3 line-clamp-3 text-sm font-normal leading-relaxed text-gray-600">
+                              {detail?.editorialSubtitle ?? system.description}
+                            </p>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </section>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -228,7 +398,7 @@ export default function SystemsCatalogClient({
             className="max-h-[92vh] w-full max-w-7xl overflow-y-auto rounded-[1.25rem] bg-[#FFF9F8] p-6 shadow-[0_30px_80px_rgba(25,27,48,0.18)] md:p-8"
             onClick={(event) => event.stopPropagation()}
           >
-            <div className="flex items-start justify-between gap-4">
+            <div className="flex flex-col items-start justify-between gap-4 md:flex-row">
               <div className="flex-1 text-left">
                 <p className="text-left text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-coral">
                   {selectedSystem.name}
@@ -240,13 +410,23 @@ export default function SystemsCatalogClient({
                   {selectedSystem.description}
                 </p>
               </div>
-              <button
-                type="button"
-                onClick={() => setSelectedSlug(null)}
-                className="rounded-full border border-brand-blue/10 bg-white px-4 py-2 text-sm font-medium text-brand-blue transition hover:border-brand-coral/20 hover:text-brand-coral"
-              >
-                Fermer
-              </button>
+              <div className="flex shrink-0 items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setIsSystemSetupModalOpen(true)}
+                  className="rounded-full border border-brand-blue/10 bg-white px-4 py-2 text-sm font-medium text-brand-blue transition hover:border-brand-coral/20 hover:text-brand-coral"
+                >
+                  Demander un audit Systèmes
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSelectedSlug(null)}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-brand-blue/10 bg-white text-brand-blue transition hover:border-brand-coral/20 hover:text-brand-coral"
+                  aria-label="Fermer"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
             </div>
 
             <div className="mt-6 flex items-center gap-2">
@@ -352,6 +532,12 @@ export default function SystemsCatalogClient({
           </div>
         </div>
       ) : null}
+
+      <SystemSetupModal
+        isOpen={isSystemSetupModalOpen}
+        onClose={() => setIsSystemSetupModalOpen(false)}
+        initialSector={selectedSystem?.name ?? detail?.sectorLabel}
+      />
     </>
   );
 }
