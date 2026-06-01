@@ -182,6 +182,22 @@ export default function ToolDirectoryClient({
   const [activeSector, setActiveSector] = useState(initialFilters.sector);
   const [activeCategory, setActiveCategory] = useState(initialFilters.category);
   const searchQuery = controlledSearchQuery ?? internalSearchQuery;
+  const toolboxSectors = useMemo(
+    () => [
+      ...sectors,
+      ...otherTools.flatMap((tool) => tool.sectors),
+    ].filter((sector, index, list) => list.indexOf(sector) === index),
+    [sectors]
+  );
+  const toolboxCategories = useMemo(
+    () => [
+      ...categories,
+      ...otherTools.map((tool) => tool.category),
+    ].filter((category, index, list) => list.indexOf(category) === index),
+    [categories]
+  );
+  const visibleSectors = variant === "toolbox" ? toolboxSectors : sectors;
+  const visibleCategories = variant === "toolbox" ? toolboxCategories : categories;
 
   function updateSearchQuery(value: string) {
     if (onSearchQueryChange) {
@@ -221,17 +237,26 @@ export default function ToolDirectoryClient({
     const query = searchQuery.trim().toLowerCase();
 
     return otherTools.filter((tool) => {
-      return (
+      const matchesSector =
+        activeSector === "Tous" || tool.sectors.includes(activeSector);
+      const matchesCategory =
+        activeCategory === "Tous" || tool.category === activeCategory;
+      const matchesSearch =
         !query ||
         tool.name.toLowerCase().includes(query) ||
         tool.description.toLowerCase().includes(query) ||
         tool.bestFor.toLowerCase().includes(query) ||
         tool.tags.some((tag) => tag.toLowerCase().includes(query)) ||
         tool.sectors.some((sector) => sector.toLowerCase().includes(query)) ||
-        tool.category.toLowerCase().includes(query)
+        tool.category.toLowerCase().includes(query);
+
+      return (
+        matchesSearch &&
+        matchesSector &&
+        matchesCategory
       );
     });
-  }, [searchQuery]);
+  }, [activeCategory, activeSector, searchQuery]);
 
   return (
     <div className="w-full">
@@ -262,7 +287,7 @@ export default function ToolDirectoryClient({
             </div>
           ) : null}
 
-          {variant === "directory" ? (
+          {variant === "directory" || variant === "toolbox" ? (
             <div className={`mx-auto flex max-w-4xl gap-2 overflow-x-auto pb-2 soft-scroll ${showSearchBar || showHeader ? "mt-3" : "mt-0"}`}>
               <FilterChip
                 label="Tous"
@@ -272,7 +297,7 @@ export default function ToolDirectoryClient({
                   setActiveCategory("Tous");
                 }}
               />
-              {sectors
+              {visibleSectors
                 .filter((sector) => sector !== "Tous")
                 .map((sector) => (
                   <FilterChip
@@ -285,8 +310,11 @@ export default function ToolDirectoryClient({
                     }}
                   />
                 ))}
-              {categories
-                .filter((category) => category !== "Tous")
+              {visibleCategories
+                .filter(
+                  (category) =>
+                    category !== "Tous" && !visibleSectors.includes(category)
+                )
                 .map((category) => (
                   <FilterChip
                     key={category}

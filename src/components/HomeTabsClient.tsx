@@ -77,6 +77,7 @@ export default function HomeTabsClient({
 }: HomeTabsClientProps) {
   const [activeTab, setActiveTab] = useState<HomeTab>(() => getInitialTab(initialTab));
   const [searchQuery, setSearchQuery] = useState("");
+  const showHubSearch = activeTab === "academy";
 
   const searchPlaceholder = useMemo(() => {
     if (activeTab === "boite-a-outils") {
@@ -166,17 +167,19 @@ export default function HomeTabsClient({
 
           <div className="mx-auto w-full max-w-4xl">
             <TabBar activeTab={activeTab} onSelect={selectTab} />
-            <div className="mt-3 rounded-full border border-brand-blue/5 bg-white p-1.5 shadow-[0_10px_30px_rgba(25,27,48,0.035)]">
-              <div className="relative">
-                <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-300" />
-                <input
-                  value={searchQuery}
-                  onChange={(event) => setSearchQuery(event.target.value)}
-                  placeholder={searchPlaceholder}
-                  className="w-full rounded-full bg-white py-3 pl-10 pr-5 text-sm font-normal text-brand-blue outline-none transition placeholder:text-brand-blue/40"
-                />
+            {showHubSearch ? (
+              <div className="mt-3 rounded-full border border-brand-blue/5 bg-white p-1.5 shadow-[0_10px_30px_rgba(25,27,48,0.035)]">
+                <div className="relative">
+                  <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-300" />
+                  <input
+                    value={searchQuery}
+                    onChange={(event) => setSearchQuery(event.target.value)}
+                    placeholder={searchPlaceholder}
+                    className="w-full rounded-full bg-white py-3 pl-10 pr-5 text-sm font-normal text-brand-blue outline-none transition placeholder:text-brand-blue/40"
+                  />
+                </div>
               </div>
-            </div>
+            ) : null}
           </div>
         </div>
       </section>
