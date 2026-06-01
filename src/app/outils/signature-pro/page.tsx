@@ -487,7 +487,7 @@ export default function SignaturePro() {
             {signatureMode === "with-image" && (
               <div className="space-y-1.5 pt-1">
                 <div className="flex items-center gap-4">
-                <label className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 bg-white border border-dashed border-brand-coral/20 rounded-xl hover:border-brand-coral/40 cursor-pointer transition-all shadow-[0_4px_12px_rgba(16,24,40,0.04)]">
+                <label className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 bg-white border border-dashed border-brand-coral/20 rounded-xl hover:border-neutral-300 cursor-pointer transition-all shadow-[0_4px_12px_rgba(16,24,40,0.04)]">
                   <Camera className="w-4 h-4 text-brand-coral" />
                   <span className="text-xs font-bold text-gray-500">Logo / image (optionnel)</span>
                   <input type="file" accept="image/*" onChange={handleLogoUpload} className="hidden" />

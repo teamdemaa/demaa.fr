@@ -121,7 +121,7 @@ export default function QRCodeGenerator() {
             <div className="space-y-1.5">
               <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Logo au centre</label>
               <div className="flex items-center gap-3">
-                <label className="flex-1 flex items-center justify-center gap-2 px-5 py-3 border-2 border-dashed border-brand-coral/10 rounded-xl cursor-pointer hover:bg-white hover:border-brand-coral/20 transition-all group">
+                <label className="flex-1 flex items-center justify-center gap-2 px-5 py-3 border-2 border-dashed border-brand-coral/10 rounded-xl cursor-pointer hover:bg-white hover:border-neutral-300 transition-all group">
                   <Upload className="w-4 h-4 text-gray-300 group-hover:text-neutral-700" />
                   <span className="text-xs font-semibold text-gray-400 group-hover:text-brand-blue">Image facultative</span>
                   <input type="file" className="hidden" accept="image/*" onChange={handleLogoUpload} />

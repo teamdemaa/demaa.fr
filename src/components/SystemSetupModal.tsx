@@ -131,7 +131,7 @@ export default function SystemSetupModal({
           <button
             type="button"
             onClick={handleClose}
-            className="rounded-full border border-brand-blue/10 bg-white p-2 text-brand-blue transition hover:border-brand-coral/20 hover:text-neutral-700"
+            className="rounded-full border border-brand-blue/10 bg-white p-2 text-brand-blue transition hover:border-neutral-300 hover:text-neutral-700"
             aria-label="Fermer la fenêtre"
           >
             <X className="h-4 w-4" />

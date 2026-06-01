@@ -282,10 +282,10 @@ export default function SystemsCatalogClient({
         className={
           showIntro
             ? "w-full border-b border-brand-blue/5 bg-[#ffffff]/70 px-4 pb-12 pt-14 md:pb-16 md:pt-24"
-            : "w-full"
+            : "w-full pb-20 md:pb-24"
         }
       >
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           {showIntro ? (
             <div className="max-w-3xl">
               <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-coral">
@@ -301,7 +301,7 @@ export default function SystemsCatalogClient({
             </div>
           ) : null}
 
-          <div className={showIntro ? "mt-10" : ""}>
+          <div className={showIntro ? "mt-10" : "border-b border-brand-blue/5 pb-7 pt-4 md:pt-0"}>
             {showSearchBar ? (
               <div className="mx-auto max-w-4xl rounded-full border border-brand-blue/5 bg-white p-1.5 shadow-[0_10px_30px_rgba(20,20,20,0.035)]">
                 <div className="relative">
@@ -346,14 +346,14 @@ export default function SystemsCatalogClient({
               </p>
             </div>
           ) : (
-            <div className="mt-10 space-y-12 md:mt-12 md:space-y-14">
+            <div className="mt-10 space-y-10 md:mt-12">
               {systemSections.map((section) => (
                 <section key={section.title}>
-                  <h2 className="demaa-section-title mb-5 text-3xl tracking-tight text-brand-blue md:mb-6 md:text-4xl">
+                  <h2 className="demaa-section-title mb-4 text-3xl tracking-tight text-brand-blue md:text-4xl">
                     {section.title}
                   </h2>
-                  <div className="-mx-4 overflow-x-auto px-4 pb-4 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-                    <div className="flex gap-5">
+                  <div className="-mx-4 overflow-x-auto px-4 pb-4 pt-2 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+                    <div className="flex gap-4">
                       {section.systems.map((system) => {
                         const detail = detailsBySlug[system.slug];
                         const Icon = getSystemIcon(system);
@@ -366,7 +366,7 @@ export default function SystemsCatalogClient({
                               setSelectedSlug(system.slug);
                               setActiveTab("processus");
                             }}
-                            className="group flex min-h-[12rem] flex-[0_0_calc(50%-0.625rem)] cursor-pointer flex-col rounded-[1.15rem] border border-brand-blue/8 bg-white p-6 text-left shadow-[0_8px_24px_rgba(20,20,20,0.025)] transition hover:-translate-y-0.5 hover:border-brand-coral/25 hover:shadow-[0_16px_42px_rgba(20,20,20,0.06)] md:flex-[0_0_calc(25%-0.9375rem)]"
+                            className="group flex min-h-[10rem] flex-[0_0_calc(50%-0.5rem)] cursor-pointer flex-col rounded-[1.15rem] border border-brand-blue/8 bg-white p-5 text-left shadow-[0_8px_24px_rgba(20,20,20,0.025)] transition hover:-translate-y-0.5 hover:border-neutral-300 hover:shadow-[0_16px_42px_rgba(20,20,20,0.06)] md:flex-[0_0_calc(25%-0.75rem)]"
                           >
                             <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-neutral-100 text-neutral-700 transition group-hover:bg-neutral-200 group-hover:text-neutral-950">
                               <Icon className="h-4 w-4" />
@@ -414,14 +414,14 @@ export default function SystemsCatalogClient({
                 <button
                   type="button"
                   onClick={() => setIsSystemSetupModalOpen(true)}
-                  className="rounded-full border border-brand-blue/10 bg-white px-4 py-2 text-sm font-medium text-brand-blue transition hover:border-brand-coral/20 hover:text-neutral-700"
+                  className="rounded-full border border-brand-blue/10 bg-white px-4 py-2 text-sm font-medium text-brand-blue transition hover:border-neutral-300 hover:text-neutral-700"
                 >
                   Demander un audit Systèmes
                 </button>
                 <button
                   type="button"
                   onClick={() => setSelectedSlug(null)}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-brand-blue/10 bg-white text-brand-blue transition hover:border-brand-coral/20 hover:text-neutral-700"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-brand-blue/10 bg-white text-brand-blue transition hover:border-neutral-300 hover:text-neutral-700"
                   aria-label="Fermer"
                 >
                   <X className="h-4 w-4" />
@@ -501,7 +501,7 @@ export default function SystemsCatalogClient({
                 {detail.tools.map((tool) => (
                   <article
                     key={tool.name}
-                    className="rounded-[1.75rem] border border-brand-blue/8 bg-white p-5 text-left transition hover:-translate-y-0.5 hover:border-brand-coral/20 hover:shadow-[0_16px_40px_rgba(20,20,20,0.05)]"
+                    className="rounded-[1.75rem] border border-brand-blue/8 bg-white p-5 text-left transition hover:-translate-y-0.5 hover:border-neutral-300 hover:shadow-[0_16px_40px_rgba(20,20,20,0.05)]"
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div>

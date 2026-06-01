@@ -40,7 +40,7 @@ export default function Footer() {
               Demaa<span className="text-neutral-400">.</span>
             </Link>
             <p className="demaa-section-title max-w-xs text-lg leading-snug text-neutral-500">
-              On vous aide à enlever les tâches qui vous ralentissent, pour que votre activité avance plus simplement.
+              Utiliser les systèmes à votre avantage pour alléger la charge, libérer du temps et avancer avec plus de sérénité.
             </p>
           </div>
 

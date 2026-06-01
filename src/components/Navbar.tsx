@@ -33,7 +33,7 @@ export default function Navbar({ minimal = false }: { minimal?: boolean }) {
                 <button
                   type="button"
                   onClick={() => setIsSystemModalOpen(true)}
-                  className="inline-flex items-center rounded-full border border-brand-blue/12 bg-transparent px-5 py-3 text-xs md:text-sm font-medium text-brand-blue transition-colors hover:border-brand-coral/25 hover:text-neutral-700 whitespace-nowrap"
+                  className="inline-flex items-center rounded-full border border-brand-blue/12 bg-transparent px-5 py-3 text-xs md:text-sm font-medium text-brand-blue transition-colors hover:border-neutral-300 hover:text-neutral-700 whitespace-nowrap"
                 >
                   <span className="hidden sm:inline">Demander un audit Systèmes</span>
                   <span className="sm:hidden">Audit Systèmes</span>
