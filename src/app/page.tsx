@@ -9,6 +9,7 @@ import {
   freeToolsDirectoryCategories,
   freeToolsDirectorySectors,
 } from "@/lib/free-tools-directory";
+import { getUnifiedToolDirectoryMeta } from "@/lib/tool-directory-firestore";
 
 export const metadata: Metadata = {
   title: "Automatiser mes tâches - Demaa",
@@ -36,6 +37,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   const initialCategory = getParamValue(params.categorie);
   const initialSector = getParamValue(params.secteur);
   const systems = await getSystems();
+  const toolDirectoryMeta = await getUnifiedToolDirectoryMeta();
   const detailsBySlug = Object.fromEntries(
     await Promise.all(
       systems.map(async (system) => [system.slug, await buildOperationalSystemDetail(system)] as const)
@@ -50,8 +52,12 @@ export default async function HomePage({ searchParams }: HomePageProps) {
           systems={systems}
           detailsBySlug={detailsBySlug}
           tools={freeToolsDirectory}
+          otherTools={toolDirectoryMeta.toolboxTools}
           toolSectors={freeToolsDirectorySectors}
-          toolCategories={freeToolsDirectoryCategories}
+          toolCategories={[
+            ...freeToolsDirectoryCategories,
+            ...toolDirectoryMeta.categories.filter((category) => category !== "Tous"),
+          ].filter((category, index, list) => list.indexOf(category) === index)}
           initialTab={initialTab}
           initialCategory={initialCategory}
           initialSector={initialSector}

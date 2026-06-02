@@ -1,0 +1,1131 @@
+{
+  "tools": [
+    {
+      "slug": "google-workspace",
+      "name": "Google Workspace",
+      "url": "https://workspace.google.com/",
+      "category": "Gestion & équipe",
+      "sectors": [
+        "Services & conseil",
+        "Commerce local",
+        "E-commerce",
+        "Restauration",
+        "Artisanat & BTP",
+        "Santé & bien-être",
+        "Immobilier",
+        "Éducation & formation",
+        "Associations & événements"
+      ],
+      "description": "Email pro, Drive, Docs, Sheets et agenda partagé pour structurer l’activité.",
+      "tags": [
+        "Email pro",
+        "Drive",
+        "Agenda",
+        "Documents"
+      ],
+      "bestFor": "Centraliser les fichiers, les échanges et les suivis simples.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "microsoft-365",
+      "name": "Microsoft 365",
+      "url": "https://www.microsoft.com/microsoft-365/business",
+      "category": "Gestion & équipe",
+      "sectors": [
+        "Services & conseil",
+        "Commerce local",
+        "Artisanat & BTP",
+        "Immobilier"
+      ],
+      "description": "Suite bureautique complète avec Outlook, Excel, Teams, Word et OneDrive.",
+      "tags": [
+        "Outlook",
+        "Excel",
+        "Teams",
+        "Documents"
+      ],
+      "bestFor": "Garder Excel et Outlook au centre de l’organisation.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": false
+    },
+    {
+      "slug": "notion",
+      "name": "Notion",
+      "url": "https://www.notion.com/",
+      "category": "Gestion & équipe",
+      "sectors": [
+        "Services & conseil",
+        "E-commerce",
+        "Éducation & formation",
+        "Associations & événements"
+      ],
+      "description": "Espace simple pour documenter les processus, suivre les projets et créer une base interne.",
+      "tags": [
+        "Documentation",
+        "Process",
+        "Projet"
+      ],
+      "bestFor": "Créer un mini système interne sans logiciel métier lourd.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "airtable",
+      "name": "Airtable",
+      "url": "https://www.airtable.com/",
+      "category": "Gestion & équipe",
+      "sectors": [
+        "Services & conseil",
+        "Commerce local",
+        "E-commerce",
+        "Artisanat & BTP",
+        "Immobilier",
+        "Associations & événements"
+      ],
+      "description": "Base de suivi visuelle pour leads, commandes, contenus, dossiers ou inventaires.",
+      "tags": [
+        "Base de données",
+        "Suivi",
+        "Tableau"
+      ],
+      "bestFor": "Structurer un suivi plus propre qu’un tableur classique.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "figma",
+      "name": "Figma",
+      "url": "https://www.figma.com/",
+      "category": "Création contenu",
+      "sectors": [
+        "Services & conseil",
+        "E-commerce",
+        "Éducation & formation"
+      ],
+      "description": "Design collaboratif pour maquettes, interfaces, visuels et prototypes.",
+      "tags": [
+        "Design",
+        "Prototype",
+        "Collaboration"
+      ],
+      "bestFor": "Créer et valider des interfaces ou supports visuels.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "canva",
+      "name": "Canva",
+      "url": "https://www.canva.com/",
+      "category": "Création contenu",
+      "sectors": [
+        "Services & conseil",
+        "Commerce local",
+        "E-commerce",
+        "Restauration",
+        "Artisanat & BTP",
+        "Santé & bien-être",
+        "Immobilier",
+        "Éducation & formation",
+        "Associations & événements"
+      ],
+      "description": "Création simple de visuels, présentations, documents et supports marketing.",
+      "tags": [
+        "Design",
+        "Présentation",
+        "Contenu"
+      ],
+      "bestFor": "Produire des supports propres sans dépendre d’un studio.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "chatgpt",
+      "name": "ChatGPT",
+      "url": "https://chatgpt.com/",
+      "category": "IA bureautique",
+      "sectors": [
+        "Services & conseil",
+        "Commerce local",
+        "E-commerce",
+        "Restauration",
+        "Artisanat & BTP",
+        "Santé & bien-être",
+        "Immobilier",
+        "Éducation & formation",
+        "Associations & événements"
+      ],
+      "description": "Assistant IA pour rédiger, structurer, analyser et accélérer le travail quotidien.",
+      "tags": [
+        "IA",
+        "Rédaction",
+        "Analyse"
+      ],
+      "bestFor": "Gagner du temps sur la réflexion et la production de contenus.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "claude",
+      "name": "Claude",
+      "url": "https://claude.ai/",
+      "category": "IA bureautique",
+      "sectors": [
+        "Services & conseil",
+        "Commerce local",
+        "E-commerce",
+        "Restauration",
+        "Artisanat & BTP",
+        "Santé & bien-être",
+        "Immobilier",
+        "Éducation & formation",
+        "Associations & événements"
+      ],
+      "description": "Assistant IA utile pour les textes longs, synthèses, analyses et documents structurés.",
+      "tags": [
+        "IA",
+        "Synthèse",
+        "Documents"
+      ],
+      "bestFor": "Clarifier des sujets complexes et produire des livrables plus propres.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "codex",
+      "name": "Codex",
+      "url": "https://openai.com/codex/",
+      "category": "IA dev",
+      "sectors": [
+        "Services & conseil",
+        "E-commerce",
+        "Éducation & formation"
+      ],
+      "description": "Assistant de développement pour créer, corriger et faire évoluer du code.",
+      "tags": [
+        "IA",
+        "Code",
+        "Développement"
+      ],
+      "bestFor": "Accélérer les chantiers techniques et les prototypes.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "claude-code",
+      "name": "Claude Code",
+      "url": "https://www.anthropic.com/claude-code",
+      "category": "IA dev",
+      "sectors": [
+        "Services & conseil",
+        "E-commerce",
+        "Éducation & formation"
+      ],
+      "description": "Assistant de code en terminal pour travailler sur des projets logiciels.",
+      "tags": [
+        "IA",
+        "Code",
+        "Terminal"
+      ],
+      "bestFor": "Avancer plus vite sur les projets techniques.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "make",
+      "name": "Make",
+      "url": "https://www.make.com/",
+      "category": "Automatisation",
+      "sectors": [
+        "Services & conseil",
+        "Commerce local",
+        "E-commerce",
+        "Restauration",
+        "Artisanat & BTP",
+        "Santé & bien-être",
+        "Immobilier",
+        "Éducation & formation",
+        "Associations & événements"
+      ],
+      "description": "Automatisation visuelle entre formulaires, CRM, emails, fichiers et tableaux de suivi.",
+      "tags": [
+        "No-code",
+        "Workflow",
+        "Automatisation"
+      ],
+      "bestFor": "Créer des automatisations lisibles et sur mesure pour TPE.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "zapier",
+      "name": "Zapier",
+      "url": "https://zapier.com/fr/",
+      "category": "Automatisation",
+      "sectors": [
+        "Services & conseil",
+        "E-commerce",
+        "Commerce local",
+        "Éducation & formation"
+      ],
+      "description": "Connecte rapidement des applications pour automatiser des tâches répétitives.",
+      "tags": [
+        "No-code",
+        "Connecteurs",
+        "Automatisation"
+      ],
+      "bestFor": "Automatiser vite quand les outils sont déjà compatibles.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": false
+    },
+    {
+      "slug": "fillout",
+      "name": "Fillout",
+      "url": "https://www.fillout.com/",
+      "category": "Formulaires & collecte",
+      "sectors": [
+        "Services & conseil",
+        "Commerce local",
+        "E-commerce",
+        "Artisanat & BTP",
+        "Santé & bien-être",
+        "Immobilier"
+      ],
+      "description": "Formulaires modernes pour capter une demande, qualifier un lead ou collecter des informations.",
+      "tags": [
+        "Formulaire",
+        "Lead",
+        "Qualification"
+      ],
+      "bestFor": "Créer des formulaires propres et faciles à brancher.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "tally",
+      "name": "Tally",
+      "url": "https://tally.so/",
+      "category": "Formulaires & collecte",
+      "sectors": [
+        "Services & conseil",
+        "Commerce local",
+        "Artisanat & BTP",
+        "Associations & événements",
+        "Éducation & formation"
+      ],
+      "description": "Formulaires simples et rapides pour demandes, brief client ou inscription.",
+      "tags": [
+        "Formulaire",
+        "Brief",
+        "Collecte"
+      ],
+      "bestFor": "Remplacer un email libre par un formulaire clair.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "qonto",
+      "name": "Qonto",
+      "url": "https://qonto.com/",
+      "category": "Finance & paiement",
+      "sectors": [
+        "Services & conseil",
+        "Commerce local",
+        "E-commerce",
+        "Restauration",
+        "Artisanat & BTP",
+        "Santé & bien-être",
+        "Immobilier",
+        "Éducation & formation",
+        "Associations & événements"
+      ],
+      "description": "Compte pro, cartes, virements et suivi des dépenses d’entreprise.",
+      "tags": [
+        "Banque",
+        "Compte pro",
+        "Dépenses"
+      ],
+      "bestFor": "Gérer les finances courantes d’une entreprise.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "revolut-business",
+      "name": "Revolut Business",
+      "url": "https://www.revolut.com/business/",
+      "category": "Finance & paiement",
+      "sectors": [
+        "Services & conseil",
+        "Commerce local",
+        "E-commerce",
+        "Restauration",
+        "Artisanat & BTP",
+        "Santé & bien-être",
+        "Immobilier",
+        "Éducation & formation",
+        "Associations & événements"
+      ],
+      "description": "Compte business, paiements internationaux, cartes et dépenses d’équipe.",
+      "tags": [
+        "Banque",
+        "International",
+        "Cartes"
+      ],
+      "bestFor": "Gérer les paiements et dépenses avec plus de souplesse.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "pennylane",
+      "name": "Pennylane",
+      "url": "https://www.pennylane.com/",
+      "category": "Finance & paiement",
+      "sectors": [
+        "Services & conseil",
+        "Commerce local",
+        "E-commerce",
+        "Artisanat & BTP"
+      ],
+      "description": "Comptabilité, facturation et pilotage financier pour les entreprises.",
+      "tags": [
+        "Comptabilité",
+        "Finance",
+        "Facturation"
+      ],
+      "bestFor": "Centraliser la gestion financière et comptable.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "tiimora",
+      "name": "Tiimora",
+      "url": "https://tiimora.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "Outil métier pour structurer les opérations des cabinets comptables.",
+      "tags": [
+        "Cabinet",
+        "Process",
+        "Pilotage"
+      ],
+      "bestFor": "Piloter les opérations et les processus d’un cabinet.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "cegid",
+      "name": "Cegid",
+      "url": "https://www.cegid.com/fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil",
+        "Commerce local",
+        "Artisanat & BTP"
+      ],
+      "description": "Solutions de gestion, comptabilité, paie et métiers pour les entreprises.",
+      "tags": [
+        "Comptabilité",
+        "Paie",
+        "Gestion"
+      ],
+      "bestFor": "Structurer une gestion plus robuste quand l’activité grandit.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "tiime",
+      "name": "Tiime",
+      "url": "https://www.tiime.fr/",
+      "category": "Finance & paiement",
+      "sectors": [
+        "Services & conseil",
+        "Commerce local",
+        "E-commerce"
+      ],
+      "description": "Facturation, notes de frais, compte pro et outils comptables simples.",
+      "tags": [
+        "Facturation",
+        "Comptabilité",
+        "Dépenses"
+      ],
+      "bestFor": "Simplifier la gestion administrative et comptable.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "dext",
+      "name": "Dext",
+      "url": "https://dext.com/fr/",
+      "category": "Finance & paiement",
+      "sectors": [
+        "Services & conseil",
+        "Commerce local",
+        "Artisanat & BTP"
+      ],
+      "description": "Collecte et traitement de justificatifs comptables pour gagner du temps.",
+      "tags": [
+        "Justificatifs",
+        "Comptabilité",
+        "Automatisation"
+      ],
+      "bestFor": "Réduire la saisie et sécuriser les pièces comptables.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "regate",
+      "name": "Regate",
+      "url": "https://www.regate.io/",
+      "category": "Finance & paiement",
+      "sectors": [
+        "Services & conseil",
+        "Commerce local",
+        "E-commerce"
+      ],
+      "description": "Gestion fournisseurs, paiements, factures et workflows financiers.",
+      "tags": [
+        "Paiement",
+        "Factures",
+        "Validation"
+      ],
+      "bestFor": "Mieux cadrer les dépenses et validations financières.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "silae",
+      "name": "Silae",
+      "url": "https://www.silae.fr/",
+      "category": "RH & planning",
+      "sectors": [
+        "Services & conseil",
+        "Commerce local",
+        "Artisanat & BTP"
+      ],
+      "description": "Solution de paie et gestion RH pour entreprises et cabinets.",
+      "tags": [
+        "Paie",
+        "RH",
+        "Social"
+      ],
+      "bestFor": "Structurer la paie et les obligations sociales.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "swile",
+      "name": "Swile",
+      "url": "https://www.swile.co/",
+      "category": "RH & planning",
+      "sectors": [
+        "Services & conseil",
+        "Commerce local",
+        "E-commerce",
+        "Restauration",
+        "Artisanat & BTP",
+        "Santé & bien-être",
+        "Immobilier",
+        "Éducation & formation",
+        "Associations & événements"
+      ],
+      "description": "Avantages salariés, titres-restaurants et expérience collaborateur.",
+      "tags": [
+        "Avantages",
+        "Équipe",
+        "RH"
+      ],
+      "bestFor": "Mettre en place des avantages simples pour l’équipe.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "alan",
+      "name": "Alan",
+      "url": "https://alan.com/",
+      "category": "RH & planning",
+      "sectors": [
+        "Services & conseil",
+        "Commerce local",
+        "E-commerce",
+        "Restauration",
+        "Artisanat & BTP",
+        "Santé & bien-être",
+        "Immobilier",
+        "Éducation & formation",
+        "Associations & événements"
+      ],
+      "description": "Mutuelle santé et services de prévention pour les équipes.",
+      "tags": [
+        "Mutuelle",
+        "Santé",
+        "RH"
+      ],
+      "bestFor": "Proposer une couverture santé claire et simple.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "obat",
+      "name": "Obat",
+      "url": "https://www.obat.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Artisanat & BTP"
+      ],
+      "description": "Devis, factures et suivi commercial pour les professionnels du bâtiment.",
+      "tags": [
+        "Devis",
+        "Facture",
+        "BTP"
+      ],
+      "bestFor": "Gérer les devis et la facturation d’une activité BTP.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "vertuoza",
+      "name": "Vertuoza",
+      "url": "https://www.vertuoza.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Artisanat & BTP"
+      ],
+      "description": "Gestion commerciale, chantier et planning pour entreprises du bâtiment.",
+      "tags": [
+        "Chantier",
+        "Planning",
+        "BTP"
+      ],
+      "bestFor": "Suivre les chantiers et la rentabilité plus facilement.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "planity",
+      "name": "Planity",
+      "url": "https://www.planity.com/",
+      "category": "Caisse & réservation",
+      "sectors": [
+        "Santé & bien-être",
+        "Commerce local"
+      ],
+      "description": "Réservation en ligne et gestion d’agenda pour les métiers de la beauté.",
+      "tags": [
+        "Agenda",
+        "Réservation",
+        "Beauté"
+      ],
+      "bestFor": "Remplir le planning et simplifier la prise de rendez-vous.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "fresha",
+      "name": "Fresha",
+      "url": "https://www.fresha.com/",
+      "category": "Caisse & réservation",
+      "sectors": [
+        "Santé & bien-être",
+        "Commerce local"
+      ],
+      "description": "Planning, réservation, caisse et gestion client pour salons et instituts.",
+      "tags": [
+        "Agenda",
+        "Caisse",
+        "Clients"
+      ],
+      "bestFor": "Gérer rendez-vous, encaissements et clients au même endroit.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "square",
+      "name": "Square",
+      "url": "https://squareup.com/",
+      "category": "Caisse & réservation",
+      "sectors": [
+        "Commerce local",
+        "Restauration",
+        "Santé & bien-être"
+      ],
+      "description": "Solutions de caisse, paiement et gestion commerciale.",
+      "tags": [
+        "Caisse",
+        "Paiement",
+        "Commerce"
+      ],
+      "bestFor": "Encaisser et suivre les ventes au quotidien.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "lightspeed",
+      "name": "Lightspeed",
+      "url": "https://www.lightspeedhq.fr/",
+      "category": "Caisse & réservation",
+      "sectors": [
+        "Commerce local",
+        "Restauration"
+      ],
+      "description": "Caisse, inventaire, commandes et pilotage pour commerces et restaurants.",
+      "tags": [
+        "Caisse",
+        "Stock",
+        "Restaurant"
+      ],
+      "bestFor": "Structurer les ventes et le suivi opérationnel.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "zenchef",
+      "name": "Zenchef",
+      "url": "https://www.zenchef.com/",
+      "category": "Caisse & réservation",
+      "sectors": [
+        "Restauration"
+      ],
+      "description": "Réservations, gestion de salle et relation client pour restaurants.",
+      "tags": [
+        "Réservation",
+        "Restaurant",
+        "Clients"
+      ],
+      "bestFor": "Mieux gérer les réservations et l’expérience client.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "deliverect",
+      "name": "Deliverect",
+      "url": "https://www.deliverect.com/",
+      "category": "Caisse & réservation",
+      "sectors": [
+        "Restauration",
+        "E-commerce"
+      ],
+      "description": "Centralisation des commandes de livraison et connexion aux plateformes.",
+      "tags": [
+        "Livraison",
+        "Commandes",
+        "Restaurant"
+      ],
+      "bestFor": "Fluidifier la vente à emporter et la livraison.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "shopify",
+      "name": "Shopify",
+      "url": "https://www.shopify.com/",
+      "category": "Site & e-commerce",
+      "sectors": [
+        "E-commerce",
+        "Commerce local"
+      ],
+      "description": "Plateforme e-commerce pour vendre en ligne et gérer les commandes.",
+      "tags": [
+        "Boutique",
+        "Commande",
+        "Vente en ligne"
+      ],
+      "bestFor": "Lancer et structurer une boutique en ligne.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "prestashop",
+      "name": "PrestaShop",
+      "url": "https://prestashop.com/",
+      "category": "Site & e-commerce",
+      "sectors": [
+        "E-commerce"
+      ],
+      "description": "Plateforme e-commerce open source pour boutiques en ligne.",
+      "tags": [
+        "Boutique",
+        "Open source",
+        "E-commerce"
+      ],
+      "bestFor": "Construire une boutique avec plus de contrôle technique.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": false
+    },
+    {
+      "slug": "gorgias",
+      "name": "Gorgias",
+      "url": "https://www.gorgias.com/",
+      "category": "CRM & ventes",
+      "sectors": [
+        "E-commerce"
+      ],
+      "description": "Support client pensé pour les boutiques e-commerce.",
+      "tags": [
+        "Support",
+        "E-commerce",
+        "Clients"
+      ],
+      "bestFor": "Centraliser les demandes client et commandes.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "klaviyo",
+      "name": "Klaviyo",
+      "url": "https://www.klaviyo.com/",
+      "category": "Marketing & visibilité",
+      "sectors": [
+        "E-commerce"
+      ],
+      "description": "Emailing et marketing automation pour e-commerce.",
+      "tags": [
+        "Emailing",
+        "Automation",
+        "E-commerce"
+      ],
+      "bestFor": "Relancer les clients et mieux exploiter la donnée boutique.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "metricool",
+      "name": "Metricool",
+      "url": "https://metricool.com/fr/",
+      "category": "Marketing & visibilité",
+      "sectors": [
+        "Services & conseil",
+        "Commerce local",
+        "E-commerce",
+        "Restauration",
+        "Santé & bien-être"
+      ],
+      "description": "Planification, analyse et suivi des réseaux sociaux.",
+      "tags": [
+        "Réseaux sociaux",
+        "Planning",
+        "Analytics"
+      ],
+      "bestFor": "Programmer les contenus et mesurer la visibilité.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "buffer",
+      "name": "Buffer",
+      "url": "https://buffer.com/",
+      "category": "Marketing & visibilité",
+      "sectors": [
+        "Services & conseil",
+        "Commerce local",
+        "E-commerce"
+      ],
+      "description": "Planification simple de publications sur les réseaux sociaux.",
+      "tags": [
+        "Réseaux sociaux",
+        "Planning",
+        "Contenu"
+      ],
+      "bestFor": "Programmer les contenus sans outil complexe.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": false
+    },
+    {
+      "slug": "webflow",
+      "name": "Webflow",
+      "url": "https://webflow.com/",
+      "category": "Site & e-commerce",
+      "sectors": [
+        "Services & conseil",
+        "E-commerce",
+        "Éducation & formation"
+      ],
+      "description": "Création de sites web visuels avec un rendu professionnel.",
+      "tags": [
+        "Site web",
+        "No-code",
+        "Design"
+      ],
+      "bestFor": "Créer un site propre avec plus de liberté visuelle.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "framer",
+      "name": "Framer",
+      "url": "https://www.framer.com/",
+      "category": "Site & e-commerce",
+      "sectors": [
+        "Services & conseil",
+        "E-commerce",
+        "Éducation & formation"
+      ],
+      "description": "Création rapide de sites modernes et pages de présentation.",
+      "tags": [
+        "Site web",
+        "Design",
+        "No-code"
+      ],
+      "bestFor": "Lancer une page claire et élégante rapidement.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "recruitee",
+      "name": "Recruitee",
+      "url": "https://recruitee.com/fr",
+      "category": "RH & planning",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "ATS simple pour gérer recrutements, candidats et étapes d’entretien.",
+      "tags": [
+        "Recrutement",
+        "Candidats",
+        "ATS"
+      ],
+      "bestFor": "Structurer le recrutement sans perdre les candidatures.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "malt",
+      "name": "Malt",
+      "url": "https://www.malt.fr/",
+      "category": "CRM & ventes",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "Plateforme pour freelances et entreprises qui cherchent des missions ou compétences.",
+      "tags": [
+        "Freelance",
+        "Mission",
+        "Prospection"
+      ],
+      "bestFor": "Trouver des missions ou renforcer une équipe ponctuellement.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "pipedrive",
+      "name": "Pipedrive",
+      "url": "https://www.pipedrive.com/fr",
+      "category": "CRM & ventes",
+      "sectors": [
+        "Services & conseil",
+        "Commerce local",
+        "Immobilier"
+      ],
+      "description": "CRM visuel pour suivre prospects, opportunités et relances commerciales.",
+      "tags": [
+        "CRM",
+        "Ventes",
+        "Relance"
+      ],
+      "bestFor": "Ne plus perdre les opportunités commerciales.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "apimo",
+      "name": "Apimo",
+      "url": "https://apimo.pro/",
+      "category": "Outils métier",
+      "sectors": [
+        "Immobilier"
+      ],
+      "description": "Logiciel immobilier pour mandats, biens, diffusion et relation client.",
+      "tags": [
+        "Immobilier",
+        "Mandats",
+        "Biens"
+      ],
+      "bestFor": "Structurer une agence immobilière et ses biens.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "guesty",
+      "name": "Guesty",
+      "url": "https://www.guesty.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Immobilier"
+      ],
+      "description": "Gestion de locations courte durée, calendriers, messages et opérations.",
+      "tags": [
+        "Location courte durée",
+        "Planning",
+        "Messages"
+      ],
+      "bestFor": "Centraliser la gestion des logements et réservations.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "dashdoc",
+      "name": "Dashdoc",
+      "url": "https://www.dashdoc.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Artisanat & BTP",
+        "Commerce local"
+      ],
+      "description": "Gestion des opérations transport, documents et suivi de livraisons.",
+      "tags": [
+        "Transport",
+        "Planning",
+        "Documents"
+      ],
+      "bestFor": "Structurer les flux et documents transport.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "geotab",
+      "name": "Geotab",
+      "url": "https://www.geotab.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Commerce local"
+      ],
+      "description": "Gestion de flotte, télématique et suivi des véhicules.",
+      "tags": [
+        "Flotte",
+        "Véhicules",
+        "Suivi"
+      ],
+      "bestFor": "Suivre les véhicules et améliorer les opérations terrain.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "digiforma",
+      "name": "Digiforma",
+      "url": "https://www.digiforma.com/",
+      "category": "Formation",
+      "sectors": [
+        "Éducation & formation"
+      ],
+      "description": "Gestion administrative, commerciale et pédagogique des organismes de formation.",
+      "tags": [
+        "Formation",
+        "Qualiopi",
+        "Administration"
+      ],
+      "bestFor": "Structurer les formations et obligations associées.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "kajabi",
+      "name": "Kajabi",
+      "url": "https://kajabi.com/",
+      "category": "Formation",
+      "sectors": [
+        "Éducation & formation",
+        "E-commerce"
+      ],
+      "description": "Plateforme pour vendre formations, contenus et programmes en ligne.",
+      "tags": [
+        "Formation en ligne",
+        "Vente",
+        "Contenu"
+      ],
+      "bestFor": "Commercialiser une offre de formation en ligne.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "odoo",
+      "name": "Odoo",
+      "url": "https://www.odoo.com/fr_FR",
+      "category": "Gestion & équipe",
+      "sectors": [
+        "Commerce local",
+        "E-commerce",
+        "Artisanat & BTP"
+      ],
+      "description": "Suite modulaire pour CRM, ventes, stock, facturation, production et opérations.",
+      "tags": [
+        "ERP",
+        "Stock",
+        "Facturation"
+      ],
+      "bestFor": "Centraliser plusieurs briques métier dans un seul système.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "katana",
+      "name": "Katana",
+      "url": "https://katanamrp.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Artisanat & BTP"
+      ],
+      "description": "MRP simple pour production, stock, commandes et fabrication.",
+      "tags": [
+        "Production",
+        "Stock",
+        "MRP"
+      ],
+      "bestFor": "Piloter une petite production avec plus de visibilité.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    }
+  ]
+}

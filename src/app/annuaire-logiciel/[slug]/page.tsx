@@ -4,10 +4,10 @@ import { ArrowLeft, ArrowUpRight, CheckCircle2 } from "lucide-react";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import {
-  getToolDirectoryItemBySlug,
   getToolDirectorySlug,
   toolDirectory,
 } from "@/lib/tool-directory";
+import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
 
 type LogicielDetailPageProps = {
   params: Promise<{ slug: string }>;
@@ -23,7 +23,8 @@ export async function generateMetadata({
   params,
 }: LogicielDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const tool = getToolDirectoryItemBySlug(slug);
+  const tools = await getUnifiedToolDirectory();
+  const tool = tools.find((item) => getToolDirectorySlug(item) === slug);
 
   if (!tool) {
     return {
@@ -41,7 +42,8 @@ export default async function LogicielDetailPage({
   params,
 }: LogicielDetailPageProps) {
   const { slug } = await params;
-  const tool = getToolDirectoryItemBySlug(slug);
+  const tools = await getUnifiedToolDirectory();
+  const tool = tools.find((item) => getToolDirectorySlug(item) === slug);
 
   if (!tool) {
     notFound();

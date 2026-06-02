@@ -10,7 +10,12 @@ export type EnterpriseTool = {
   name: string;
   type: string;
   usage: string;
-  priority: string;
+  url?: string;
+};
+
+export type EnterpriseToolReference = {
+  slug: string;
+  usage?: string;
 };
 
 export type EnterpriseProcess = {
@@ -36,7 +41,8 @@ export type EnterpriseDefinition = {
   processes?: EnterpriseProcess[];
   operationProcesses?: EnterpriseProcess[];
   processExamples?: Record<string, string>;
-  tools: EnterpriseTool[];
+  tools?: EnterpriseTool[];
+  toolRefs?: EnterpriseToolReference[];
 };
 
 type EnterpriseAnnuairePayload = {
@@ -118,6 +124,7 @@ function mergeEnterpriseFallback(
       ? enterprise.processExamples
       : fallback?.processExamples ?? {},
     tools: enterprise.tools?.length ? enterprise.tools : fallback?.tools ?? [],
+    toolRefs: enterprise.toolRefs?.length ? enterprise.toolRefs : fallback?.toolRefs ?? [],
   };
 }
 

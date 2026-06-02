@@ -18,51 +18,7 @@
       "imageTitle": "Cabinet comptable",
       "imageSubtitle": "Aperçu du système opérationnel pour cabinet comptable",
       "processes": [],
-      "tools": [
-        {
-          "name": "Pennylane",
-          "type": "Outil métier",
-          "usage": "Pré-comptabilité, facturation, banque, collaboration client",
-          "priority": "Principal"
-        },
-        {
-          "name": "Cegid Loop",
-          "type": "Outil métier",
-          "usage": "Production comptable et cabinet",
-          "priority": "Principal"
-        },
-        {
-          "name": "ACD",
-          "type": "Outil métier",
-          "usage": "Production comptable et dossier client",
-          "priority": "Principal"
-        },
-        {
-          "name": "Cegid Conciliator",
-          "type": "Outil métier",
-          "usage": "Automatisation des flux et rapprochements",
-          "priority": "Secondaire"
-        },
-        {
-          "name": "Cegid Quadra Plus",
-          "type": "Outil métier",
-          "usage": "Gestion cabinet et production",
-          "priority": "Secondaire"
-        },
-        {
-          "name": "Dext",
-          "type": "Outil métier",
-          "usage": "Collecte et extraction des pièces",
-          "priority": "Secondaire"
-        }
-      ],
       "operationProcesses": [
-        {
-          "pillar": "Opérations",
-          "title": "Veille fiscale",
-          "description": "Suivre les évolutions réglementaires qui impactent les dossiers clients et les échéances du cabinet.",
-          "examples": "Exemple : alertes TVA, échéances sociales, nouveautés fiscales, clients concernés."
-        },
         {
           "pillar": "Opérations",
           "title": "Production comptable",
@@ -80,6 +36,12 @@
           "title": "Juridique courant",
           "description": "Suivre les formalités juridiques récurrentes liées aux sociétés accompagnées.",
           "examples": "Exemple : approbation des comptes, PV, modifications statutaires, pièces à récupérer."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Veille fiscale",
+          "description": "Suivre les évolutions réglementaires qui impactent les dossiers clients et les échéances du cabinet.",
+          "examples": "Exemple : alertes TVA, échéances sociales, nouveautés fiscales, clients concernés."
         },
         {
           "pillar": "Opérations",
@@ -107,7 +69,69 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "pennylane",
+          "usage": "Centraliser la gestion financière et comptable."
+        },
+        {
+          "slug": "tiimora",
+          "usage": "Piloter les opérations et les processus d’un cabinet."
+        },
+        {
+          "slug": "cegid",
+          "usage": "Structurer une gestion plus robuste quand l’activité grandit."
+        },
+        {
+          "slug": "tiime",
+          "usage": "Simplifier la gestion administrative et comptable."
+        },
+        {
+          "slug": "dext",
+          "usage": "Réduire la saisie et sécuriser les pièces comptables."
+        },
+        {
+          "slug": "regate",
+          "usage": "Mieux cadrer les dépenses et validations financières."
+        },
+        {
+          "slug": "silae",
+          "usage": "Structurer la paie et les obligations sociales."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        },
+        {
+          "slug": "revolut-business",
+          "usage": "Gérer les paiements et dépenses avec plus de souplesse."
+        },
+        {
+          "slug": "swile",
+          "usage": "Mettre en place des avantages simples pour l’équipe."
+        },
+        {
+          "slug": "alan",
+          "usage": "Proposer une couverture santé claire et simple."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "claude",
+          "usage": "Clarifier des sujets complexes et produire des livrables plus propres."
+        }
+      ]
     },
     {
       "id": "e2",
@@ -127,26 +151,6 @@
       "imageTitle": "Cabinet d’avocat",
       "imageSubtitle": "Aperçu du système opérationnel pour cabinet d’avocat",
       "processes": [],
-      "tools": [
-        {
-          "name": "Secib",
-          "type": "Outil métier",
-          "usage": "Gestion du cabinet, dossiers, temps, facturation",
-          "priority": "Principal"
-        },
-        {
-          "name": "Jarvis Legal",
-          "type": "Outil métier",
-          "usage": "Automatisation documentaire et juridique",
-          "priority": "Secondaire"
-        },
-        {
-          "name": "LegaLife",
-          "type": "Outil métier",
-          "usage": "Génération de documents juridiques",
-          "priority": "Secondaire"
-        }
-      ],
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -186,7 +190,25 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
     },
     {
       "id": "e3",
@@ -206,26 +228,6 @@
       "imageTitle": "Cabinet de conseil",
       "imageSubtitle": "Aperçu du système opérationnel pour cabinet de conseil",
       "processes": [],
-      "tools": [
-        {
-          "name": "Bonsai",
-          "type": "Outil métier",
-          "usage": "Devis, contrats, suivi temps, facturation",
-          "priority": "Principal"
-        },
-        {
-          "name": "Teamleader Orbit",
-          "type": "Outil métier",
-          "usage": "CRM léger, suivi missions et facturation",
-          "priority": "Principal"
-        },
-        {
-          "name": "Harvest",
-          "type": "Outil métier",
-          "usage": "Suivi du temps et rentabilité mission",
-          "priority": "Secondaire"
-        }
-      ],
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -247,15 +249,15 @@
         },
         {
           "pillar": "Opérations",
-          "title": "Suivi client",
-          "description": "Suivre les échanges, décisions, demandes et points ouverts avec le client.",
-          "examples": "Exemple : compte-rendu, décisions, prochaines actions, relances."
-        },
-        {
-          "pillar": "Opérations",
           "title": "Livrables",
           "description": "Organiser la relecture, la validation, la livraison finale et l’archivage de la mission.",
           "examples": "Exemple : version finale, validation interne, envoi client, dossier archivé."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Suivi client",
+          "description": "Suivre les échanges, décisions, demandes et points ouverts avec le client.",
+          "examples": "Exemple : compte-rendu, décisions, prochaines actions, relances."
         },
         {
           "pillar": "Opérations",
@@ -277,7 +279,25 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
     },
     {
       "id": "e4",
@@ -297,32 +317,6 @@
       "imageTitle": "Agence marketing",
       "imageSubtitle": "Aperçu du système opérationnel pour agence marketing",
       "processes": [],
-      "tools": [
-        {
-          "name": "Teamleader Orbit",
-          "type": "Outil métier",
-          "usage": "CRM, offres, projets et facturation",
-          "priority": "Principal"
-        },
-        {
-          "name": "Canva",
-          "type": "Outil métier",
-          "usage": "Création rapide des supports marketing",
-          "priority": "Principal"
-        },
-        {
-          "name": "Framer",
-          "type": "Outil métier",
-          "usage": "Landing pages et sites de campagne",
-          "priority": "Secondaire"
-        },
-        {
-          "name": "Buffer",
-          "type": "Outil métier",
-          "usage": "Programmation des publications",
-          "priority": "Secondaire"
-        }
-      ],
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -368,7 +362,49 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "airtable",
+          "usage": "Structurer un suivi plus propre qu’un tableur classique."
+        },
+        {
+          "slug": "notion",
+          "usage": "Créer un mini système interne sans logiciel métier lourd."
+        },
+        {
+          "slug": "figma",
+          "usage": "Créer et valider des interfaces ou supports visuels."
+        },
+        {
+          "slug": "codex",
+          "usage": "Accélérer les chantiers techniques et les prototypes."
+        },
+        {
+          "slug": "claude-code",
+          "usage": "Avancer plus vite sur les projets techniques."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "claude",
+          "usage": "Clarifier des sujets complexes et produire des livrables plus propres."
+        },
+        {
+          "slug": "metricool",
+          "usage": "Programmer les contenus et mesurer la visibilité."
+        }
+      ]
     },
     {
       "id": "e5",
@@ -388,26 +424,6 @@
       "imageTitle": "Freelance",
       "imageSubtitle": "Aperçu du système opérationnel pour freelance",
       "processes": [],
-      "tools": [
-        {
-          "name": "Bonsai",
-          "type": "Outil métier",
-          "usage": "Propositions, contrats, factures, temps",
-          "priority": "Principal"
-        },
-        {
-          "name": "Malt",
-          "type": "Outil métier",
-          "usage": "Acquisition de missions freelance",
-          "priority": "Secondaire"
-        },
-        {
-          "name": "Pipedrive",
-          "type": "Outil métier",
-          "usage": "Suivi commercial simple",
-          "priority": "Secondaire"
-        }
-      ],
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -453,7 +469,25 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
     },
     {
       "id": "e6",
@@ -473,26 +507,6 @@
       "imageTitle": "Agence de recrutement",
       "imageSubtitle": "Aperçu du système opérationnel pour agence de recrutement",
       "processes": [],
-      "tools": [
-        {
-          "name": "Bullhorn",
-          "type": "Outil métier",
-          "usage": "CRM recrutement et gestion agence",
-          "priority": "Principal"
-        },
-        {
-          "name": "Recruitee",
-          "type": "Outil métier",
-          "usage": "Sourcing, ATS et recrutement collaboratif",
-          "priority": "Principal"
-        },
-        {
-          "name": "Vincere",
-          "type": "Outil métier",
-          "usage": "Gestion d’agence de recrutement",
-          "priority": "Secondaire"
-        }
-      ],
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -538,7 +552,25 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
     },
     {
       "id": "e7",
@@ -558,32 +590,6 @@
       "imageTitle": "Agence web",
       "imageSubtitle": "Aperçu du système opérationnel pour agence web",
       "processes": [],
-      "tools": [
-        {
-          "name": "Webflow",
-          "type": "Outil métier",
-          "usage": "Conception et publication de sites",
-          "priority": "Principal"
-        },
-        {
-          "name": "Framer",
-          "type": "Outil métier",
-          "usage": "Sites marketing rapides et performants",
-          "priority": "Principal"
-        },
-        {
-          "name": "Figma",
-          "type": "Outil métier",
-          "usage": "Maquettes et design système",
-          "priority": "Secondaire"
-        },
-        {
-          "name": "Notion",
-          "type": "Outil métier",
-          "usage": "Documentation et suivi projet",
-          "priority": "Secondaire"
-        }
-      ],
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -629,7 +635,53 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "webflow",
+          "usage": "Créer un site propre avec plus de liberté visuelle."
+        },
+        {
+          "slug": "framer",
+          "usage": "Lancer une page claire et élégante rapidement."
+        },
+        {
+          "slug": "figma",
+          "usage": "Créer et valider des interfaces ou supports visuels."
+        },
+        {
+          "slug": "notion",
+          "usage": "Créer un mini système interne sans logiciel métier lourd."
+        },
+        {
+          "slug": "airtable",
+          "usage": "Structurer un suivi plus propre qu’un tableur classique."
+        },
+        {
+          "slug": "codex",
+          "usage": "Accélérer les chantiers techniques et les prototypes."
+        },
+        {
+          "slug": "claude-code",
+          "usage": "Avancer plus vite sur les projets techniques."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "claude",
+          "usage": "Clarifier des sujets complexes et produire des livrables plus propres."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
     },
     {
       "id": "e8",
@@ -649,32 +701,6 @@
       "imageTitle": "Création de contenu",
       "imageSubtitle": "Aperçu du système opérationnel pour création de contenu",
       "processes": [],
-      "tools": [
-        {
-          "name": "Canva",
-          "type": "Outil métier",
-          "usage": "Création visuelle rapide",
-          "priority": "Principal"
-        },
-        {
-          "name": "Adobe Premiere Pro",
-          "type": "Outil métier",
-          "usage": "Montage vidéo pro",
-          "priority": "Principal"
-        },
-        {
-          "name": "Adobe Express",
-          "type": "Outil métier",
-          "usage": "Création de contenus rapides",
-          "priority": "Secondaire"
-        },
-        {
-          "name": "Frame.io",
-          "type": "Outil métier",
-          "usage": "Validation et review de vidéos",
-          "priority": "Secondaire"
-        }
-      ],
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -726,7 +752,41 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "figma",
+          "usage": "Créer et valider des interfaces ou supports visuels."
+        },
+        {
+          "slug": "metricool",
+          "usage": "Programmer les contenus et mesurer la visibilité."
+        },
+        {
+          "slug": "buffer",
+          "usage": "Programmer les contenus sans outil complexe."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "claude",
+          "usage": "Clarifier des sujets complexes et produire des livrables plus propres."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
     },
     {
       "id": "e9",
@@ -746,32 +806,6 @@
       "imageTitle": "Marketplace",
       "imageSubtitle": "Aperçu du système opérationnel pour marketplace",
       "processes": [],
-      "tools": [
-        {
-          "name": "Stripe Billing",
-          "type": "Outil métier",
-          "usage": "Abonnements, paiements, commissions",
-          "priority": "Principal"
-        },
-        {
-          "name": "Gorgias",
-          "type": "Outil métier",
-          "usage": "Support client et gestion des tickets",
-          "priority": "Principal"
-        },
-        {
-          "name": "Pendo",
-          "type": "Outil métier",
-          "usage": "Adoption produit et analytics",
-          "priority": "Secondaire"
-        },
-        {
-          "name": "Shopify",
-          "type": "Outil métier",
-          "usage": "Si la marketplace intègre une brique e-commerce",
-          "priority": "Secondaire"
-        }
-      ],
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -781,15 +815,15 @@
         },
         {
           "pillar": "Opérations",
-          "title": "Modération",
-          "description": "Contrôler les annonces, contenus et vendeurs pour maintenir la qualité de la plateforme.",
-          "examples": "Exemple : annonce à valider, signalement, règle enfreinte, décision."
-        },
-        {
-          "pillar": "Opérations",
           "title": "Commandes",
           "description": "Suivre les commandes, paiements, confirmations et étapes de traitement.",
           "examples": "Exemple : commande reçue, vendeur notifié, paiement confirmé, statut client."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Modération",
+          "description": "Contrôler les annonces, contenus et vendeurs pour maintenir la qualité de la plateforme.",
+          "examples": "Exemple : annonce à valider, signalement, règle enfreinte, décision."
         },
         {
           "pillar": "Opérations",
@@ -823,7 +857,25 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
     },
     {
       "id": "e10",
@@ -843,32 +895,6 @@
       "imageTitle": "Média",
       "imageSubtitle": "Aperçu du système opérationnel pour média",
       "processes": [],
-      "tools": [
-        {
-          "name": "Canva",
-          "type": "Outil métier",
-          "usage": "Visuels et déclinaisons rapides",
-          "priority": "Principal"
-        },
-        {
-          "name": "Adobe Premiere Pro",
-          "type": "Outil métier",
-          "usage": "Montage vidéo",
-          "priority": "Principal"
-        },
-        {
-          "name": "Frame.io",
-          "type": "Outil métier",
-          "usage": "Validation éditoriale vidéo",
-          "priority": "Secondaire"
-        },
-        {
-          "name": "Buffer",
-          "type": "Outil métier",
-          "usage": "Planification de diffusion",
-          "priority": "Secondaire"
-        }
-      ],
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -920,7 +946,25 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
     },
     {
       "id": "e11",
@@ -940,38 +984,18 @@
       "imageTitle": "SaaS",
       "imageSubtitle": "Aperçu du système opérationnel pour saas",
       "processes": [],
-      "tools": [
-        {
-          "name": "Stripe Billing",
-          "type": "Outil métier",
-          "usage": "Facturation récurrente et abonnements",
-          "priority": "Principal"
-        },
-        {
-          "name": "Zendesk",
-          "type": "Outil métier",
-          "usage": "Support client",
-          "priority": "Principal"
-        },
-        {
-          "name": "Pendo",
-          "type": "Outil métier",
-          "usage": "Product analytics et adoption",
-          "priority": "Principal"
-        },
-        {
-          "name": "Intercom",
-          "type": "Outil métier",
-          "usage": "Onboarding et support conversationnel",
-          "priority": "Secondaire"
-        }
-      ],
       "operationProcesses": [
         {
           "pillar": "Opérations",
           "title": "Onboarding client",
           "description": "Accompagner la configuration initiale du compte, des accès et des paramètres clés.",
           "examples": "Exemple : compte créé, accès envoyés, intégrations, checklist onboarding."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Usage & adoption",
+          "description": "Mesurer l’utilisation du produit et détecter les comptes à accompagner.",
+          "examples": "Exemple : activation, usage fonctionnalité, compte inactif, relance."
         },
         {
           "pillar": "Opérations",
@@ -993,12 +1017,6 @@
         },
         {
           "pillar": "Opérations",
-          "title": "Usage & adoption",
-          "description": "Mesurer l’utilisation du produit et détecter les comptes à accompagner.",
-          "examples": "Exemple : activation, usage fonctionnalité, compte inactif, relance."
-        },
-        {
-          "pillar": "Opérations",
           "title": "Qualité & process",
           "description": "Standardiser les contrôles produit et les étapes de support récurrentes.",
           "examples": "Exemple : checklist QA, SLA support, procédure incident, validation release."
@@ -1017,7 +1035,25 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
     },
     {
       "id": "e12",
@@ -1037,44 +1073,6 @@
       "imageTitle": "Batiment",
       "imageSubtitle": "Aperçu du système opérationnel pour batiment",
       "processes": [],
-      "tools": [
-        {
-          "name": "Obat",
-          "type": "Outil métier",
-          "usage": "Devis, facturation, suivi de chantier",
-          "priority": "Principal"
-        },
-        {
-          "name": "Batappli",
-          "type": "Outil métier",
-          "usage": "Devis, factures, situations de travaux",
-          "priority": "Principal"
-        },
-        {
-          "name": "Vertuoza",
-          "type": "Outil métier",
-          "usage": "Gestion chantier et planning",
-          "priority": "Principal"
-        },
-        {
-          "name": "Extrabat",
-          "type": "Outil métier",
-          "usage": "Gestion artisan, planning et chantier",
-          "priority": "Principal"
-        },
-        {
-          "name": "Costructor",
-          "type": "Outil métier",
-          "usage": "Chantiers, devis, suivi opérationnel",
-          "priority": "Secondaire"
-        },
-        {
-          "name": "Sage Batigest",
-          "type": "Outil métier",
-          "usage": "Gestion commerciale BTP",
-          "priority": "Secondaire"
-        }
-      ],
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -1102,15 +1100,15 @@
         },
         {
           "pillar": "Opérations",
-          "title": "Incidents & litiges",
-          "description": "Centraliser les imprévus, réserves, réclamations et décisions chantier.",
-          "examples": "Exemple : incident, photo, impact, responsable, résolution."
-        },
-        {
-          "pillar": "Opérations",
           "title": "Suivi client",
           "description": "Suivre les demandes client, comptes-rendus, validations et relances.",
           "examples": "Exemple : CR chantier, choix client, validation, relance."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Incidents & litiges",
+          "description": "Centraliser les imprévus, réserves, réclamations et décisions chantier.",
+          "examples": "Exemple : incident, photo, impact, responsable, résolution."
         },
         {
           "pillar": "Opérations",
@@ -1132,7 +1130,37 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "obat",
+          "usage": "Gérer les devis et la facturation d’une activité BTP."
+        },
+        {
+          "slug": "vertuoza",
+          "usage": "Suivre les chantiers et la rentabilité plus facilement."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        },
+        {
+          "slug": "revolut-business",
+          "usage": "Gérer les paiements et dépenses avec plus de souplesse."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        }
+      ]
     },
     {
       "id": "e13",
@@ -1152,26 +1180,6 @@
       "imageTitle": "Nettoyage professionnel",
       "imageSubtitle": "Aperçu du système opérationnel pour nettoyage professionnel",
       "processes": [],
-      "tools": [
-        {
-          "name": "Swept",
-          "type": "Outil métier",
-          "usage": "Planning, qualité et gestion des équipes terrain",
-          "priority": "Principal"
-        },
-        {
-          "name": "Janitorial Manager",
-          "type": "Outil métier",
-          "usage": "Opérations et contrôle qualité nettoyage",
-          "priority": "Principal"
-        },
-        {
-          "name": "Jobber",
-          "type": "Outil métier",
-          "usage": "Interventions terrain et dispatch",
-          "priority": "Secondaire"
-        }
-      ],
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -1193,15 +1201,15 @@
         },
         {
           "pillar": "Opérations",
-          "title": "Imprévus",
-          "description": "Gérer les absences, remplacements, anomalies et ajustements terrain.",
-          "examples": "Exemple : agent absent, remplaçant, incident site, nouvelle affectation."
-        },
-        {
-          "pillar": "Opérations",
           "title": "Compte-rendu client",
           "description": "Remonter les informations utiles au client et garder une trace des demandes.",
           "examples": "Exemple : rapport intervention, anomalie, demande client, relance."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Imprévus",
+          "description": "Gérer les absences, remplacements, anomalies et ajustements terrain.",
+          "examples": "Exemple : agent absent, remplaçant, incident site, nouvelle affectation."
         },
         {
           "pillar": "Opérations",
@@ -1223,7 +1231,25 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
     },
     {
       "id": "e14",
@@ -1243,26 +1269,6 @@
       "imageTitle": "Agence immobilière",
       "imageSubtitle": "Aperçu du système opérationnel pour agence immobilière",
       "processes": [],
-      "tools": [
-        {
-          "name": "Apimo",
-          "type": "Outil métier",
-          "usage": "Mandats, diffusion et gestion immobilière",
-          "priority": "Principal"
-        },
-        {
-          "name": "Netty",
-          "type": "Outil métier",
-          "usage": "Gestion d’agence immobilière",
-          "priority": "Principal"
-        },
-        {
-          "name": "Hektor",
-          "type": "Outil métier",
-          "usage": "Transactions, mandats et suivi commercial",
-          "priority": "Secondaire"
-        }
-      ],
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -1314,7 +1320,25 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
     },
     {
       "id": "e15",
@@ -1334,32 +1358,6 @@
       "imageTitle": "Conciergerie Airbnb",
       "imageSubtitle": "Aperçu du système opérationnel pour conciergerie airbnb",
       "processes": [],
-      "tools": [
-        {
-          "name": "Guesty",
-          "type": "Outil métier",
-          "usage": "Gestion des locations courte durée",
-          "priority": "Principal"
-        },
-        {
-          "name": "Hostaway",
-          "type": "Outil métier",
-          "usage": "Automatisation et channel manager",
-          "priority": "Principal"
-        },
-        {
-          "name": "Properly",
-          "type": "Outil métier",
-          "usage": "Checklists ménage et contrôle qualité",
-          "priority": "Secondaire"
-        },
-        {
-          "name": "TIDY",
-          "type": "Outil métier",
-          "usage": "Coordination du ménage et des équipes",
-          "priority": "Secondaire"
-        }
-      ],
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -1411,7 +1409,25 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
     },
     {
       "id": "e16",
@@ -1431,26 +1447,6 @@
       "imageTitle": "Investissement immobilier",
       "imageSubtitle": "Aperçu du système opérationnel pour investissement immobilier",
       "processes": [],
-      "tools": [
-        {
-          "name": "Affinity",
-          "type": "Outil métier",
-          "usage": "Relation investisseurs et deal flow",
-          "priority": "Principal"
-        },
-        {
-          "name": "Visible",
-          "type": "Outil métier",
-          "usage": "Reporting investisseurs",
-          "priority": "Principal"
-        },
-        {
-          "name": "Juniper Square",
-          "type": "Outil métier",
-          "usage": "Gestion investisseurs et reporting",
-          "priority": "Secondaire"
-        }
-      ],
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -1502,7 +1498,25 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
     },
     {
       "id": "e17",
@@ -1522,26 +1536,6 @@
       "imageTitle": "Investissement financier",
       "imageSubtitle": "Aperçu du système opérationnel pour investissement financier",
       "processes": [],
-      "tools": [
-        {
-          "name": "Affinity",
-          "type": "Outil métier",
-          "usage": "Suivi du réseau et des opportunités",
-          "priority": "Principal"
-        },
-        {
-          "name": "Visible",
-          "type": "Outil métier",
-          "usage": "Reporting et communication investisseurs",
-          "priority": "Principal"
-        },
-        {
-          "name": "Carta",
-          "type": "Outil métier",
-          "usage": "Gestion de portefeuille et equity",
-          "priority": "Secondaire"
-        }
-      ],
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -1593,7 +1587,25 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
     },
     {
       "id": "e18",
@@ -1613,26 +1625,6 @@
       "imageTitle": "Investissement entreprise",
       "imageSubtitle": "Aperçu du système opérationnel pour investissement entreprise",
       "processes": [],
-      "tools": [
-        {
-          "name": "Affinity",
-          "type": "Outil métier",
-          "usage": "Deal sourcing et relation investisseurs",
-          "priority": "Principal"
-        },
-        {
-          "name": "Visible",
-          "type": "Outil métier",
-          "usage": "Reporting de portefeuille",
-          "priority": "Principal"
-        },
-        {
-          "name": "DealCloud",
-          "type": "Outil métier",
-          "usage": "Deal management et pipeline d’investissement",
-          "priority": "Secondaire"
-        }
-      ],
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -1684,7 +1676,25 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
     },
     {
       "id": "e19",
@@ -1704,26 +1714,6 @@
       "imageTitle": "Déménagement",
       "imageSubtitle": "Aperçu du système opérationnel pour déménagement",
       "processes": [],
-      "tools": [
-        {
-          "name": "Routific",
-          "type": "Outil métier",
-          "usage": "Optimisation de tournées et planification",
-          "priority": "Principal"
-        },
-        {
-          "name": "Onfleet",
-          "type": "Outil métier",
-          "usage": "Dispatch et suivi des missions",
-          "priority": "Principal"
-        },
-        {
-          "name": "Geotab",
-          "type": "Outil métier",
-          "usage": "Suivi flotte et véhicules",
-          "priority": "Secondaire"
-        }
-      ],
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -1745,15 +1735,15 @@
         },
         {
           "pillar": "Opérations",
-          "title": "Incidents & litiges",
-          "description": "Gérer les dommages, réclamations, preuves et décisions d’indemnisation.",
-          "examples": "Exemple : photo casse, déclaration, responsable, résolution."
-        },
-        {
-          "pillar": "Opérations",
           "title": "Suivi client",
           "description": "Centraliser les demandes client, changements et relances avant intervention.",
           "examples": "Exemple : volume modifié, accès, ascenseur, relance devis."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Incidents & litiges",
+          "description": "Gérer les dommages, réclamations, preuves et décisions d’indemnisation.",
+          "examples": "Exemple : photo casse, déclaration, responsable, résolution."
         },
         {
           "pillar": "Opérations",
@@ -1775,7 +1765,25 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
     },
     {
       "id": "e20",
@@ -1795,26 +1803,6 @@
       "imageTitle": "Livraison dernier kilomètre",
       "imageSubtitle": "Aperçu du système opérationnel pour livraison dernier kilomètre",
       "processes": [],
-      "tools": [
-        {
-          "name": "Onfleet",
-          "type": "Outil métier",
-          "usage": "Dispatch et suivi livraison",
-          "priority": "Principal"
-        },
-        {
-          "name": "Shipday",
-          "type": "Outil métier",
-          "usage": "Gestion des livraisons",
-          "priority": "Principal"
-        },
-        {
-          "name": "Routific",
-          "type": "Outil métier",
-          "usage": "Optimisation des tournées",
-          "priority": "Secondaire"
-        }
-      ],
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -1836,15 +1824,15 @@
         },
         {
           "pillar": "Opérations",
-          "title": "Incidents & retours",
-          "description": "Gérer les échecs de livraison, litiges, retours et réclamations.",
-          "examples": "Exemple : absent, colis abîmé, retour dépôt, remboursement."
-        },
-        {
-          "pillar": "Opérations",
           "title": "Suivi client",
           "description": "Centraliser les demandes expéditeur ou destinataire et les relances.",
           "examples": "Exemple : changement adresse, demande statut, relance livreur."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Incidents & retours",
+          "description": "Gérer les échecs de livraison, litiges, retours et réclamations.",
+          "examples": "Exemple : absent, colis abîmé, retour dépôt, remboursement."
         },
         {
           "pillar": "Opérations",
@@ -1866,7 +1854,25 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
     },
     {
       "id": "e21",
@@ -1886,26 +1892,6 @@
       "imageTitle": "Transport de marchandise",
       "imageSubtitle": "Aperçu du système opérationnel pour transport de marchandise",
       "processes": [],
-      "tools": [
-        {
-          "name": "Trimble TMS",
-          "type": "Outil métier",
-          "usage": "Transport management system",
-          "priority": "Principal"
-        },
-        {
-          "name": "Geotab",
-          "type": "Outil métier",
-          "usage": "Fleet management et suivi véhicules",
-          "priority": "Principal"
-        },
-        {
-          "name": "Onfleet",
-          "type": "Outil métier",
-          "usage": "Dispatch et coordination",
-          "priority": "Secondaire"
-        }
-      ],
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -1927,15 +1913,15 @@
         },
         {
           "pillar": "Opérations",
-          "title": "Incidents & litiges",
-          "description": "Gérer avaries, retards, réclamations et dossiers de preuve.",
-          "examples": "Exemple : marchandise abîmée, photo, réserve, résolution."
-        },
-        {
-          "pillar": "Opérations",
           "title": "Suivi client",
           "description": "Centraliser les demandes, changements et informations transmises aux clients.",
           "examples": "Exemple : demande tracking, changement horaire, relance, réponse."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Incidents & litiges",
+          "description": "Gérer avaries, retards, réclamations et dossiers de preuve.",
+          "examples": "Exemple : marchandise abîmée, photo, réserve, résolution."
         },
         {
           "pillar": "Opérations",
@@ -1957,7 +1943,25 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
     },
     {
       "id": "e22",
@@ -1977,20 +1981,6 @@
       "imageTitle": "Transport de personnes",
       "imageSubtitle": "Aperçu du système opérationnel pour transport de personnes",
       "processes": [],
-      "tools": [
-        {
-          "name": "Geotab",
-          "type": "Outil métier",
-          "usage": "Gestion de flotte et sécurité",
-          "priority": "Principal"
-        },
-        {
-          "name": "Trimble TMS",
-          "type": "Outil métier",
-          "usage": "Exploitation transport",
-          "priority": "Principal"
-        }
-      ],
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -2036,7 +2026,25 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
     },
     {
       "id": "e23",
@@ -2056,26 +2064,6 @@
       "imageTitle": "Restaurant",
       "imageSubtitle": "Aperçu du système opérationnel pour restaurant",
       "processes": [],
-      "tools": [
-        {
-          "name": "Zenchef",
-          "type": "Outil métier",
-          "usage": "Réservations, tables et paiements",
-          "priority": "Principal"
-        },
-        {
-          "name": "Lightspeed Restaurant",
-          "type": "Outil métier",
-          "usage": "Caisse, salle et encaissement",
-          "priority": "Principal"
-        },
-        {
-          "name": "Deliverect",
-          "type": "Outil métier",
-          "usage": "Commandes et livraison multi-canaux",
-          "priority": "Secondaire"
-        }
-      ],
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -2121,7 +2109,25 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
     },
     {
       "id": "e24",
@@ -2141,26 +2147,6 @@
       "imageTitle": "Fast-food",
       "imageSubtitle": "Aperçu du système opérationnel pour fast-food",
       "processes": [],
-      "tools": [
-        {
-          "name": "Lightspeed Restaurant",
-          "type": "Outil métier",
-          "usage": "Encaissement et exploitation point de vente",
-          "priority": "Principal"
-        },
-        {
-          "name": "Deliverect",
-          "type": "Outil métier",
-          "usage": "Commandes en ligne et agrégation delivery",
-          "priority": "Principal"
-        },
-        {
-          "name": "Shipday",
-          "type": "Outil métier",
-          "usage": "Livraison et dispatch",
-          "priority": "Secondaire"
-        }
-      ],
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -2206,7 +2192,25 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
     },
     {
       "id": "e25",
@@ -2226,38 +2230,18 @@
       "imageTitle": "Traiteur",
       "imageSubtitle": "Aperçu du système opérationnel pour traiteur",
       "processes": [],
-      "tools": [
-        {
-          "name": "Deliverect",
-          "type": "Outil métier",
-          "usage": "Gestion des commandes",
-          "priority": "Principal"
-        },
-        {
-          "name": "Lightspeed Restaurant",
-          "type": "Outil métier",
-          "usage": "Caisse et opérations",
-          "priority": "Principal"
-        },
-        {
-          "name": "Shipday",
-          "type": "Outil métier",
-          "usage": "Livraison et tournées",
-          "priority": "Secondaire"
-        }
-      ],
       "operationProcesses": [
-        {
-          "pillar": "Opérations",
-          "title": "Production événement",
-          "description": "Planifier les prestations, menus, volumes et préparations.",
-          "examples": "Exemple : événement, nombre convives, menu, production, livraison."
-        },
         {
           "pillar": "Opérations",
           "title": "Achats & fournisseurs",
           "description": "Suivre les achats, fournisseurs et besoins spécifiques par prestation.",
           "examples": "Exemple : ingrédient, quantité, fournisseur, date limite."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Production événement",
+          "description": "Planifier les prestations, menus, volumes et préparations.",
+          "examples": "Exemple : événement, nombre convives, menu, production, livraison."
         },
         {
           "pillar": "Opérations",
@@ -2291,7 +2275,25 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
     },
     {
       "id": "e26",
@@ -2311,26 +2313,6 @@
       "imageTitle": "Dark kitchen",
       "imageSubtitle": "Aperçu du système opérationnel pour dark kitchen",
       "processes": [],
-      "tools": [
-        {
-          "name": "Deliverect",
-          "type": "Outil métier",
-          "usage": "Agrégation des commandes et delivery",
-          "priority": "Principal"
-        },
-        {
-          "name": "Shipday",
-          "type": "Outil métier",
-          "usage": "Livraison et routage",
-          "priority": "Principal"
-        },
-        {
-          "name": "Lightspeed Restaurant",
-          "type": "Outil métier",
-          "usage": "Encaissement et pilotage",
-          "priority": "Secondaire"
-        }
-      ],
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -2376,7 +2358,25 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
     },
     {
       "id": "e27",
@@ -2396,38 +2396,18 @@
       "imageTitle": "Boulangerie",
       "imageSubtitle": "Aperçu du système opérationnel pour boulangerie",
       "processes": [],
-      "tools": [
-        {
-          "name": "Lightspeed Retail",
-          "type": "Outil métier",
-          "usage": "Caisse, stock et vente",
-          "priority": "Principal"
-        },
-        {
-          "name": "Cegid Retail",
-          "type": "Outil métier",
-          "usage": "Point de vente et pilotage retail",
-          "priority": "Principal"
-        },
-        {
-          "name": "Shopify POS",
-          "type": "Outil métier",
-          "usage": "Vente omnicanale",
-          "priority": "Secondaire"
-        }
-      ],
       "operationProcesses": [
-        {
-          "pillar": "Opérations",
-          "title": "Production",
-          "description": "Planifier les fournées, préparations et volumes à produire.",
-          "examples": "Exemple : planning fournée, quantités, invendus, responsable."
-        },
         {
           "pillar": "Opérations",
           "title": "Achats & matières",
           "description": "Suivre les matières premières, fournisseurs et réassorts.",
           "examples": "Exemple : farine, levain, emballage, seuil, commande."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Production",
+          "description": "Planifier les fournées, préparations et volumes à produire.",
+          "examples": "Exemple : planning fournée, quantités, invendus, responsable."
         },
         {
           "pillar": "Opérations",
@@ -2461,7 +2441,25 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
     },
     {
       "id": "e28",
@@ -2481,26 +2479,6 @@
       "imageTitle": "Commerce de détail",
       "imageSubtitle": "Aperçu du système opérationnel pour commerce de détail",
       "processes": [],
-      "tools": [
-        {
-          "name": "Lightspeed Retail",
-          "type": "Outil métier",
-          "usage": "Caisse, stock et ventes",
-          "priority": "Principal"
-        },
-        {
-          "name": "Cegid Retail",
-          "type": "Outil métier",
-          "usage": "Pilotage commerce",
-          "priority": "Principal"
-        },
-        {
-          "name": "Shopify POS",
-          "type": "Outil métier",
-          "usage": "Omnicanal",
-          "priority": "Secondaire"
-        }
-      ],
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -2546,7 +2524,25 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
     },
     {
       "id": "e29",
@@ -2566,32 +2562,6 @@
       "imageTitle": "E-commerce",
       "imageSubtitle": "Aperçu du système opérationnel pour e-commerce",
       "processes": [],
-      "tools": [
-        {
-          "name": "Shopify",
-          "type": "Outil métier",
-          "usage": "Boutique en ligne et paiements",
-          "priority": "Principal"
-        },
-        {
-          "name": "PrestaShop",
-          "type": "Outil métier",
-          "usage": "E-commerce français personnalisable",
-          "priority": "Principal"
-        },
-        {
-          "name": "Gorgias",
-          "type": "Outil métier",
-          "usage": "Support client e-commerce",
-          "priority": "Secondaire"
-        },
-        {
-          "name": "Klaviyo",
-          "type": "Outil métier",
-          "usage": "Email/SMS e-commerce",
-          "priority": "Secondaire"
-        }
-      ],
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -2637,7 +2607,25 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
     },
     {
       "id": "e30",
@@ -2657,20 +2645,6 @@
       "imageTitle": "Institut de beauté",
       "imageSubtitle": "Aperçu du système opérationnel pour institut de beauté",
       "processes": [],
-      "tools": [
-        {
-          "name": "Planity",
-          "type": "Outil métier",
-          "usage": "Réservation, caisse et planning",
-          "priority": "Principal"
-        },
-        {
-          "name": "Fresha",
-          "type": "Outil métier",
-          "usage": "Booking et gestion salon",
-          "priority": "Principal"
-        }
-      ],
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -2716,7 +2690,41 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "planity",
+          "usage": "Remplir le planning et simplifier la prise de rendez-vous."
+        },
+        {
+          "slug": "fresha",
+          "usage": "Gérer rendez-vous, encaissements et clients au même endroit."
+        },
+        {
+          "slug": "square",
+          "usage": "Encaisser et suivre les ventes au quotidien."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "metricool",
+          "usage": "Programmer les contenus et mesurer la visibilité."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        }
+      ]
     },
     {
       "id": "e31",
@@ -2736,20 +2744,6 @@
       "imageTitle": "Salon de coiffure",
       "imageSubtitle": "Aperçu du système opérationnel pour salon de coiffure",
       "processes": [],
-      "tools": [
-        {
-          "name": "Planity",
-          "type": "Outil métier",
-          "usage": "Réservation, planning et encaissement",
-          "priority": "Principal"
-        },
-        {
-          "name": "Fresha",
-          "type": "Outil métier",
-          "usage": "Booking et gestion du salon",
-          "priority": "Principal"
-        }
-      ],
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -2795,7 +2789,41 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "planity",
+          "usage": "Remplir le planning et simplifier la prise de rendez-vous."
+        },
+        {
+          "slug": "fresha",
+          "usage": "Gérer rendez-vous, encaissements et clients au même endroit."
+        },
+        {
+          "slug": "square",
+          "usage": "Encaisser et suivre les ventes au quotidien."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "metricool",
+          "usage": "Programmer les contenus et mesurer la visibilité."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        }
+      ]
     },
     {
       "id": "e32",
@@ -2815,20 +2843,6 @@
       "imageTitle": "Esthétique",
       "imageSubtitle": "Aperçu du système opérationnel pour esthétique",
       "processes": [],
-      "tools": [
-        {
-          "name": "Planity",
-          "type": "Outil métier",
-          "usage": "Réservation et gestion des rendez-vous",
-          "priority": "Principal"
-        },
-        {
-          "name": "Fresha",
-          "type": "Outil métier",
-          "usage": "Booking et gestion client",
-          "priority": "Principal"
-        }
-      ],
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -2874,7 +2888,41 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "planity",
+          "usage": "Remplir le planning et simplifier la prise de rendez-vous."
+        },
+        {
+          "slug": "fresha",
+          "usage": "Gérer rendez-vous, encaissements et clients au même endroit."
+        },
+        {
+          "slug": "square",
+          "usage": "Encaisser et suivre les ventes au quotidien."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "metricool",
+          "usage": "Programmer les contenus et mesurer la visibilité."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        }
+      ]
     },
     {
       "id": "e33",
@@ -2894,20 +2942,6 @@
       "imageTitle": "Services à la personne",
       "imageSubtitle": "Aperçu du système opérationnel pour services à la personne",
       "processes": [],
-      "tools": [
-        {
-          "name": "Ogust",
-          "type": "Outil métier",
-          "usage": "Planification et gestion des prestations à domicile",
-          "priority": "Principal"
-        },
-        {
-          "name": "Zen Planner",
-          "type": "Outil métier",
-          "usage": "Planning et gestion de services",
-          "priority": "Secondaire"
-        }
-      ],
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -2953,7 +2987,25 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
     },
     {
       "id": "e34",
@@ -2973,26 +3025,18 @@
       "imageTitle": "Organisme de formation",
       "imageSubtitle": "Aperçu du système opérationnel pour organisme de formation",
       "processes": [],
-      "tools": [
-        {
-          "name": "Digiforma",
-          "type": "Outil métier",
-          "usage": "Gestion des formations, sessions et facturation",
-          "priority": "Principal"
-        },
-        {
-          "name": "360Learning",
-          "type": "Outil métier",
-          "usage": "Learning management et collaboration",
-          "priority": "Secondaire"
-        }
-      ],
       "operationProcesses": [
         {
           "pillar": "Opérations",
           "title": "Ingénierie pédagogique",
           "description": "Structurer les programmes, objectifs, supports et parcours de formation.",
           "examples": "Exemple : objectif pédagogique, module, support, prérequis."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Contrats & suivi client",
+          "description": "Centraliser contrats, abonnements, demandes client et relances.",
+          "examples": "Exemple : convention, facture, renouvellement, demande entreprise."
         },
         {
           "pillar": "Opérations",
@@ -3014,12 +3058,6 @@
         },
         {
           "pillar": "Opérations",
-          "title": "Contrats & suivi client",
-          "description": "Centraliser contrats, abonnements, demandes client et relances.",
-          "examples": "Exemple : convention, facture, renouvellement, demande entreprise."
-        },
-        {
-          "pillar": "Opérations",
           "title": "Qualité & process",
           "description": "Standardiser les contrôles pour livrer des formations traçables.",
           "examples": "Exemple : checklist session, documents obligatoires, archive, audit."
@@ -3038,7 +3076,25 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
     },
     {
       "id": "e35",
@@ -3058,26 +3114,6 @@
       "imageTitle": "Formation en ligne",
       "imageSubtitle": "Aperçu du système opérationnel pour formation en ligne",
       "processes": [],
-      "tools": [
-        {
-          "name": "Digiforma",
-          "type": "Outil métier",
-          "usage": "Gestion des parcours, sessions et facturation",
-          "priority": "Principal"
-        },
-        {
-          "name": "Kajabi",
-          "type": "Outil métier",
-          "usage": "Vente de formations en ligne",
-          "priority": "Secondaire"
-        },
-        {
-          "name": "Thinkific",
-          "type": "Outil métier",
-          "usage": "Hébergement et diffusion de cours",
-          "priority": "Secondaire"
-        }
-      ],
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -3129,7 +3165,25 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
     },
     {
       "id": "e36",
@@ -3149,26 +3203,6 @@
       "imageTitle": "Production & Industrie",
       "imageSubtitle": "Aperçu du système opérationnel pour production & industrie",
       "processes": [],
-      "tools": [
-        {
-          "name": "MRPeasy",
-          "type": "Outil métier",
-          "usage": "Planification, stock, MRP et production",
-          "priority": "Principal"
-        },
-        {
-          "name": "Odoo",
-          "type": "Outil métier",
-          "usage": "ERP production et opérations",
-          "priority": "Principal"
-        },
-        {
-          "name": "Katana",
-          "type": "Outil métier",
-          "usage": "Pilotage de fabrication et inventaires",
-          "priority": "Secondaire"
-        }
-      ],
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -3184,15 +3218,15 @@
         },
         {
           "pillar": "Opérations",
-          "title": "Qualité & normes",
-          "description": "Contrôler la qualité, les normes de production et les écarts.",
-          "examples": "Exemple : contrôle lot, non-conformité, mesure, action corrective."
-        },
-        {
-          "pillar": "Opérations",
           "title": "Maintenance",
           "description": "Suivre les équipements, maintenances préventives et pannes.",
           "examples": "Exemple : machine, intervention, panne, pièce, prochaine maintenance."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Qualité & normes",
+          "description": "Contrôler la qualité, les normes de production et les écarts.",
+          "examples": "Exemple : contrôle lot, non-conformité, mesure, action corrective."
         },
         {
           "pillar": "Opérations",
@@ -3220,7 +3254,25 @@
         "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
         "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
         "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
-      }
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
     }
   ]
 }

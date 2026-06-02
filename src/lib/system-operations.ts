@@ -1,6 +1,12 @@
 import type { System } from "@/lib/types";
-import { getEnterpriseBySlug, type EnterpriseTool } from "@/lib/enterprise-annuaire";
+import {
+  getEnterpriseBySlug,
+  type EnterpriseTool,
+  type EnterpriseToolReference,
+} from "@/lib/enterprise-annuaire";
 import { getSystemProcessTemplates, type SystemPillar } from "@/lib/system-process-templates";
+import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
+import { getToolDirectorySlug, type ToolDirectoryItem } from "@/lib/tool-directory";
 
 export type { SystemPillar };
 
@@ -28,9 +34,39 @@ function normalizePillar(pillar: string): SystemPillar {
   return pillar as SystemPillar;
 }
 
+function resolveEnterpriseTools(
+  enterpriseTools: EnterpriseToolReference[] | undefined,
+  fallbackTools: EnterpriseTool[] | undefined,
+  toolDirectory: ToolDirectoryItem[],
+): EnterpriseTool[] {
+  const toolsBySlug = Object.fromEntries(toolDirectory.map((tool) => [getToolDirectorySlug(tool), tool]));
+
+  if (enterpriseTools?.length) {
+    const resolvedTools: EnterpriseTool[] = [];
+
+    for (const toolRef of enterpriseTools) {
+      const tool = toolsBySlug[toolRef.slug];
+
+      if (tool) {
+        resolvedTools.push({
+          name: tool.name,
+          type: tool.category,
+          usage: toolRef.usage || tool.bestFor,
+          url: tool.url,
+        });
+      }
+    }
+
+    return resolvedTools;
+  }
+
+  return fallbackTools ?? [];
+}
+
 export async function buildOperationalSystemDetail(system: System): Promise<OperationalSystemDetail> {
   const enterprise = await getEnterpriseBySlug(system.slug);
   const templates = await getSystemProcessTemplates();
+  const toolDirectory = await getUnifiedToolDirectory();
 
   if (enterprise) {
     const operationSource =
@@ -58,7 +94,7 @@ export async function buildOperationalSystemDetail(system: System): Promise<Oper
       imageTitle: enterprise.imageTitle,
       imageSubtitle: enterprise.imageSubtitle,
       processes: [...sharedProcesses, ...operationProcesses],
-      tools: enterprise.tools,
+      tools: resolveEnterpriseTools(enterprise.toolRefs, enterprise.tools, toolDirectory),
     };
   }
 

@@ -508,24 +508,13 @@ export default function SystemsCatalogClient({
                     key={tool.name}
                     className="rounded-[1.75rem] border border-brand-blue/8 bg-white p-5 text-left transition hover:-translate-y-0.5 hover:border-neutral-300 hover:shadow-[0_16px_40px_rgba(20,20,20,0.05)]"
                   >
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-brand-coral">
-                          {tool.type}
-                        </p>
-                        <h3 className="mt-2 text-lg font-semibold text-brand-blue">
-                          {tool.name}
-                        </h3>
-                      </div>
-                      <span
-                        className={`rounded-full px-3 py-1 text-[10px] font-medium ${
-                          tool.priority === "Principal"
-                            ? "bg-brand-blue text-white"
-                            : "bg-neutral-100 text-brand-blue/75"
-                        }`}
-                      >
-                        {tool.priority}
-                      </span>
+                    <div>
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-neutral-500">
+                        {tool.type}
+                      </p>
+                      <h3 className="mt-2 text-lg font-semibold text-brand-blue">
+                        {tool.name}
+                      </h3>
                     </div>
                     <p className="mt-3 text-sm leading-relaxed text-gray-600">
                       {tool.usage}

@@ -1,18 +1,16 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import ToolDirectoryClient from "@/components/ToolDirectoryClient";
-import {
-  getToolDirectorySlug,
-  toolDirectory,
-  toolDirectoryCategories,
-  toolDirectorySectors,
-} from "@/lib/tool-directory";
+import { getToolDirectorySlug } from "@/lib/tool-directory";
+import { getUnifiedToolDirectoryMeta } from "@/lib/tool-directory-firestore";
 
 export const metadata: Metadata = {
   title: "Annuaire Logiciels - Demaa",
   description:
     "Découvrez les principaux logiciels utiles aux TPE, classés par secteur d'activité et catégorie : CRM, automatisation, finance, marketing et outils métier.",
 };
+
+export const dynamic = "force-dynamic";
 
 type AnnuaireLogicielPageProps = {
   searchParams: Promise<{
@@ -31,7 +29,8 @@ export default async function AnnuaireLogicielPage({
   const params = await searchParams;
   const initialCategory = getParamValue(params.categorie);
   const initialSector = getParamValue(params.secteur);
-  const softwareDirectoryItems = toolDirectory.map((tool) => ({
+  const toolDirectoryMeta = await getUnifiedToolDirectoryMeta();
+  const softwareDirectoryItems = toolDirectoryMeta.tools.map((tool) => ({
     ...tool,
     url: `/annuaire-logiciel/${getToolDirectorySlug(tool)}`,
   }));
@@ -45,10 +44,9 @@ export default async function AnnuaireLogicielPage({
           title="Annuaire Logiciels"
           description="Les principaux logiciels utiles aux TPE, classés par secteur et usage."
           searchPlaceholder="Rechercher un logiciel, un usage, un secteur..."
-          resultLabel="logiciels trouvés"
           items={softwareDirectoryItems}
-          sectors={toolDirectorySectors}
-          categories={toolDirectoryCategories}
+          sectors={toolDirectoryMeta.sectors}
+          categories={toolDirectoryMeta.categories}
           initialCategory={initialCategory}
           initialSector={initialSector}
           hideTransverseOnSector

@@ -26,8 +26,8 @@ type ToolDirectoryClientProps = {
   title?: string;
   description?: string;
   searchPlaceholder?: string;
-  resultLabel?: string;
   items: ToolDirectoryItem[];
+  secondaryItems?: ToolDirectoryItem[];
   sectors: string[];
   categories: string[];
   initialCategory?: string;
@@ -41,125 +41,12 @@ type ToolDirectoryClientProps = {
   variant?: "directory" | "toolbox";
 };
 
-const otherTools: ToolDirectoryItem[] = [
-  {
-    name: "Tiimora",
-    url: "https://tiimora.com/",
-    category: "Cabinet comptable",
-    sectors: ["Cabinet comptable"],
-    description: "Un outil métier pensé pour structurer les cabinets comptables.",
-    tags: ["Comptabilité", "Cabinet", "Métier"],
-    bestFor: "Piloter les opérations et les processus d'un cabinet comptable.",
-    pricingHint: "Métier",
-  },
-  {
-    name: "Pennylane",
-    url: "https://www.pennylane.com/",
-    category: "Transverse",
-    sectors: ["Transverse"],
-    description: "Comptabilité, facturation et pilotage financier pour les entreprises.",
-    tags: ["Comptabilité", "Finance", "Facturation"],
-    bestFor: "Centraliser la gestion financière et comptable.",
-    pricingHint: "Payant",
-  },
-  {
-    name: "Obat",
-    url: "https://www.obat.fr/",
-    category: "BTP",
-    sectors: ["BTP"],
-    description: "Devis, factures et suivi commercial pour les professionnels du bâtiment.",
-    tags: ["Devis", "Facture", "BTP"],
-    bestFor: "Gérer les devis et la facturation d'une activité BTP.",
-    pricingHint: "Payant",
-  },
-  {
-    name: "Planity",
-    url: "https://www.planity.com/",
-    category: "Esthétique",
-    sectors: ["Esthétique"],
-    description: "Réservation en ligne et gestion d'agenda pour les métiers de la beauté.",
-    tags: ["Agenda", "Réservation", "Beauté"],
-    bestFor: "Remplir un planning et simplifier la prise de rendez-vous.",
-    pricingHint: "Payant",
-  },
-  {
-    name: "Dashdoc",
-    url: "https://www.dashdoc.com/",
-    category: "Transport",
-    sectors: ["Transport"],
-    description: "Gestion des opérations transport, documents et suivi de livraisons.",
-    tags: ["Transport", "Planning", "Documents"],
-    bestFor: "Structurer les flux et documents transport.",
-    pricingHint: "Payant",
-  },
-  {
-    name: "Square",
-    url: "https://squareup.com/",
-    category: "Caisse",
-    sectors: ["Caisse"],
-    description: "Solutions de caisse, paiement et gestion commerciale.",
-    tags: ["Caisse", "Paiement", "Commerce"],
-    bestFor: "Encaisser et suivre les ventes au quotidien.",
-    pricingHint: "Payant",
-  },
-  {
-    name: "Shopify",
-    url: "https://www.shopify.com/",
-    category: "E-commerce",
-    sectors: ["E-commerce"],
-    description: "Plateforme e-commerce pour vendre en ligne et gérer les commandes.",
-    tags: ["Boutique", "Commande", "Vente en ligne"],
-    bestFor: "Lancer et structurer une boutique en ligne.",
-    pricingHint: "Payant",
-  },
-  {
-    name: "Qonto",
-    url: "https://qonto.com/",
-    category: "Banque",
-    sectors: ["Banque"],
-    description: "Compte pro, cartes, virements et suivi des dépenses d'entreprise.",
-    tags: ["Banque", "Compte pro", "Dépenses"],
-    bestFor: "Gérer les finances courantes d'une entreprise.",
-    pricingHint: "Payant",
-  },
-  {
-    name: "Revolut",
-    url: "https://www.revolut.com/business/",
-    category: "Banque",
-    sectors: ["Banque"],
-    description: "Compte business, paiements internationaux et cartes d'équipe.",
-    tags: ["Banque", "International", "Cartes"],
-    bestFor: "Gérer les paiements et dépenses internationales.",
-    pricingHint: "Payant",
-  },
-  {
-    name: "Swile",
-    url: "https://www.swile.co/",
-    category: "Équipe",
-    sectors: ["Équipe"],
-    description: "Avantages salariés, titres-restaurants et expérience collaborateur.",
-    tags: ["RH", "Avantages", "Équipe"],
-    bestFor: "Structurer les avantages et dépenses d'équipe.",
-    pricingHint: "Payant",
-  },
-  {
-    name: "Alan",
-    url: "https://alan.com/",
-    category: "Mutuelle",
-    sectors: ["Mutuelle"],
-    description: "Mutuelle santé et services de prévention pour les équipes.",
-    tags: ["Santé", "Mutuelle", "RH"],
-    bestFor: "Mettre en place une couverture santé simple pour l'équipe.",
-    pricingHint: "Payant",
-  },
-];
-
 export default function ToolDirectoryClient({
   title = "Annuaire Logiciels",
   description = "Les principaux logiciels utiles aux TPE, classés par secteur et usage.",
   searchPlaceholder = "Rechercher un outil, un usage, un secteur...",
-  resultLabel = "logiciels trouvés",
   items,
+  secondaryItems = [],
   sectors,
   categories,
   initialCategory,
@@ -185,16 +72,16 @@ export default function ToolDirectoryClient({
   const toolboxSectors = useMemo(
     () => [
       ...sectors,
-      ...otherTools.flatMap((tool) => tool.sectors),
+      ...secondaryItems.flatMap((tool) => tool.sectors),
     ].filter((sector, index, list) => list.indexOf(sector) === index),
-    [sectors]
+    [secondaryItems, sectors]
   );
   const toolboxCategories = useMemo(
     () => [
       ...categories,
-      ...otherTools.map((tool) => tool.category),
+      ...secondaryItems.map((tool) => tool.category),
     ].filter((category, index, list) => list.indexOf(category) === index),
-    [categories]
+    [categories, secondaryItems]
   );
   const visibleSectors = variant === "toolbox" ? toolboxSectors : sectors;
   const visibleCategories = variant === "toolbox" ? toolboxCategories : categories;
@@ -236,7 +123,7 @@ export default function ToolDirectoryClient({
   const filteredOtherTools = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
 
-    return otherTools.filter((tool) => {
+    return secondaryItems.filter((tool) => {
       const matchesSector =
         activeSector === "Tous" || tool.sectors.includes(activeSector);
       const matchesCategory =
@@ -256,7 +143,7 @@ export default function ToolDirectoryClient({
         matchesCategory
       );
     });
-  }, [activeCategory, activeSector, searchQuery]);
+  }, [activeCategory, activeSector, searchQuery, secondaryItems]);
 
   return (
     <div className="w-full">

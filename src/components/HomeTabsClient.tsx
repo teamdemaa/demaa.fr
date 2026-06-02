@@ -23,6 +23,7 @@ type HomeTabsClientProps = {
   systems: System[];
   detailsBySlug: Record<string, OperationalSystemDetail>;
   tools: ToolDirectoryItem[];
+  otherTools: ToolDirectoryItem[];
   toolSectors: string[];
   toolCategories: string[];
   initialTab?: string;
@@ -106,6 +107,7 @@ export default function HomeTabsClient({
   systems,
   detailsBySlug,
   tools,
+  otherTools,
   toolSectors,
   toolCategories,
   initialTab,
@@ -123,8 +125,8 @@ export default function HomeTabsClient({
           title="Boîte à outils"
           description="Les outils gratuits créés par Demaa pour faire avancer l'activité plus vite."
           searchPlaceholder="Rechercher un outil gratuit, un usage, un secteur..."
-          resultLabel="outils gratuits trouvés"
           items={tools}
+          secondaryItems={otherTools}
           sectors={toolSectors}
           categories={toolCategories}
           initialCategory={initialCategory}
@@ -164,6 +166,7 @@ export default function HomeTabsClient({
     toolCategories,
     toolSectors,
     tools,
+    otherTools,
     searchQuery,
   ]);
 
