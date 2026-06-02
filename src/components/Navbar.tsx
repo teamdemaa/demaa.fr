@@ -19,7 +19,7 @@ export default function Navbar({ minimal = false }: { minimal?: boolean }) {
               aria-label="Retour à l'accueil"
               className="inline-flex items-center text-xl sm:text-2xl font-medium tracking-tight text-brand-blue shrink-0 z-50 cursor-pointer"
               onClick={(event) => {
-                if (pathname === "/") {
+                if (pathname === "/" && window.location.search) {
                   event.preventDefault();
                   window.location.assign("/");
                 }
@@ -30,6 +30,13 @@ export default function Navbar({ minimal = false }: { minimal?: boolean }) {
 
             {!minimal && (
               <div className="flex items-center gap-3 md:gap-5">
+                <Link
+                  href="/assistant"
+                  className="inline-flex whitespace-nowrap text-xs font-medium text-brand-blue transition-colors hover:text-brand-coral md:text-sm"
+                >
+                  <span className="hidden sm:inline">J&apos;ai besoin d&apos;un assistant</span>
+                  <span className="sm:hidden">Assistant</span>
+                </Link>
                 <button
                   type="button"
                   onClick={() => setIsSystemModalOpen(true)}

@@ -404,7 +404,7 @@ export default function SystemsCatalogClient({
                   {selectedSystem.name}
                 </p>
                 <h2 className="mt-2 text-3xl font-semibold tracking-tight text-brand-blue md:text-4xl">
-                  {`Système ${selectedSystem.name}`}
+                  {selectedSystem.name}
                 </h2>
                 <p className="mt-3 max-w-3xl text-base leading-relaxed text-gray-600">
                   {selectedSystem.description}
@@ -465,24 +465,24 @@ export default function SystemsCatalogClient({
                     return (
                       <div
                         key={pillar}
-                        className="w-[18rem] shrink-0 rounded-[1.75rem] bg-white p-4 shadow-[0_8px_24px_rgba(20,20,20,0.025)]"
+                        className="w-[18rem] shrink-0 rounded-[1.75rem] border border-neutral-200/80 bg-white p-4 shadow-[0_8px_24px_rgba(20,20,20,0.025)]"
                       >
-                        <h3 className="text-sm font-semibold text-brand-blue">{pillar}</h3>
+                        <h3 className="demaa-section-title text-xl text-brand-blue">{pillar}</h3>
                         <div className="mt-4 space-y-3">
                           {pillarCards.length > 0 ? (
                             pillarCards.map((process) => (
                               <article
                                 key={process.title}
-                                className="rounded-[1.25rem] border border-brand-blue/8 bg-transparent p-3 text-left shadow-none"
+                                className="rounded-[1.25rem] bg-neutral-50/90 p-3 text-left shadow-none"
                               >
                                 <h4 className="text-left text-sm font-semibold leading-snug text-brand-blue">
                                   {process.title}
                                 </h4>
-                                <p className="mt-2 text-left text-xs leading-relaxed text-gray-600">
+                                <p className="mt-2 text-left text-xs leading-relaxed text-neutral-700">
                                   {process.description}
                                 </p>
                                 {process.examples ? (
-                                  <p className="mt-3 border-l-2 border-neutral-300 bg-neutral-50/80 py-2 pl-3 text-left text-xs leading-relaxed text-neutral-700">
+                                  <p className="mt-3 text-left text-xs italic leading-relaxed text-neutral-400">
                                     {process.examples}
                                   </p>
                                 ) : null}

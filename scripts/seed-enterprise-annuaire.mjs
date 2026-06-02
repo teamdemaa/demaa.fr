@@ -118,7 +118,7 @@ async function main() {
     await docRef.set(
       {
         ...template,
-        sort_order: index,
+        sort_order: typeof template.sort_order === "number" ? template.sort_order : index,
         updated_at: now,
       },
       { merge: true }

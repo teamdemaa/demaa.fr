@@ -15,6 +15,7 @@ export type SystemProcessTemplate = {
   pillar: Exclude<SystemPillar, "Opérations">;
   title: string;
   description: string;
+  sort_order?: number;
 };
 
 type SystemProcessTemplatesPayload = {
@@ -25,6 +26,33 @@ const SYSTEM_PROCESS_TEMPLATES_COLLECTION = "system_process_templates";
 const processTemplates = rawProcessTemplates as SystemProcessTemplatesPayload;
 
 export const fallbackSystemProcessTemplates = processTemplates.templates;
+
+const PILLAR_ORDER: Record<SystemProcessTemplate["pillar"], number> = {
+  Stratégie: 1,
+  "Marketing & Vente": 2,
+  "Finance & administration": 3,
+  Équipe: 4,
+};
+
+function sortProcessTemplates(templates: SystemProcessTemplate[]): SystemProcessTemplate[] {
+  return [...templates].sort((left, right) => {
+    const leftOrder = typeof left.sort_order === "number" ? left.sort_order : Number.POSITIVE_INFINITY;
+    const rightOrder = typeof right.sort_order === "number" ? right.sort_order : Number.POSITIVE_INFINITY;
+
+    if (leftOrder !== rightOrder) {
+      return leftOrder - rightOrder;
+    }
+
+    const leftPillarOrder = PILLAR_ORDER[left.pillar] ?? Number.POSITIVE_INFINITY;
+    const rightPillarOrder = PILLAR_ORDER[right.pillar] ?? Number.POSITIVE_INFINITY;
+
+    if (leftPillarOrder !== rightPillarOrder) {
+      return leftPillarOrder - rightPillarOrder;
+    }
+
+    return left.title.localeCompare(right.title, "fr");
+  });
+}
 
 function normalizeTemplate(data: unknown): SystemProcessTemplate | null {
   const template = data as Partial<SystemProcessTemplate>;
@@ -38,6 +66,7 @@ function normalizeTemplate(data: unknown): SystemProcessTemplate | null {
     pillar: template.pillar,
     title: template.title,
     description: template.description,
+    sort_order: typeof template.sort_order === "number" ? template.sort_order : undefined,
   };
 }
 
@@ -47,15 +76,15 @@ export async function getSystemProcessTemplates(): Promise<SystemProcessTemplate
     const snapshot = await firestore.collection(SYSTEM_PROCESS_TEMPLATES_COLLECTION).get();
 
     if (snapshot.empty) {
-      return fallbackSystemProcessTemplates;
+      return sortProcessTemplates(fallbackSystemProcessTemplates);
     }
 
     const templates = snapshot.docs
       .map((doc) => normalizeTemplate({ id: doc.id, ...doc.data() }))
       .filter((template): template is SystemProcessTemplate => Boolean(template));
 
-    return templates.length ? templates : fallbackSystemProcessTemplates;
+    return sortProcessTemplates(templates.length ? templates : fallbackSystemProcessTemplates);
   } catch {
-    return fallbackSystemProcessTemplates;
+    return sortProcessTemplates(fallbackSystemProcessTemplates);
   }
 }

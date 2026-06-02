@@ -4,73 +4,85 @@
       "id": "strategie.positionnement",
       "pillar": "Stratégie",
       "title": "Positionnement",
-      "description": "Positionnement pour clarifier la cible, la proposition de valeur et la place de l’entreprise sur son marché."
+      "description": "Positionnement pour clarifier la cible, la proposition de valeur et la place de l’entreprise sur son marché.",
+      "sort_order": 1
     },
     {
       "id": "strategie.objectifs",
       "pillar": "Stratégie",
       "title": "Objectifs annuels & trimestriels",
-      "description": "Objectifs annuels & trimestriels pour définir une feuille de route claire, prioriser les efforts et suivre les avancées."
+      "description": "Objectifs annuels & trimestriels pour définir une feuille de route claire, prioriser les efforts et suivre les avancées.",
+      "sort_order": 2
     },
     {
       "id": "strategie.plan-action",
       "pillar": "Stratégie",
       "title": "Plan d'action concret",
-      "description": "Plan d’action concret pour transformer les priorités en actions suivies, avec des responsables, des échéances et des résultats mesurables."
+      "description": "Plan d’action concret pour transformer les priorités en actions suivies, avec des responsables, des échéances et des résultats mesurables.",
+      "sort_order": 3
     },
     {
       "id": "marketing.confiance",
       "pillar": "Marketing & Vente",
       "title": "Construire la confiance",
-      "description": "Construire la confiance pour attirer des prospects, démontrer son expertise et rendre l’entreprise plus crédible."
+      "description": "Construire la confiance pour attirer des prospects, démontrer son expertise et rendre l’entreprise plus crédible.",
+      "sort_order": 4
     },
     {
       "id": "marketing.decision",
       "pillar": "Marketing & Vente",
       "title": "Accompagner la décision",
-      "description": "Accompagner la décision pour répondre aux besoins du prospect, lever les hésitations et faciliter son passage à l’action."
+      "description": "Accompagner la décision pour répondre aux besoins du prospect, lever les hésitations et faciliter son passage à l’action.",
+      "sort_order": 5
     },
     {
       "id": "marketing.lien",
       "pillar": "Marketing & Vente",
       "title": "Maintenir le lien",
-      "description": "Maintenir le lien pour fidéliser les clients, nourrir la relation et créer des opportunités dans la durée."
-    },
-    {
-      "id": "finance.pilotage",
-      "pillar": "Finance & administration",
-      "title": "Pilotage financier & rentabilité",
-      "description": "Pilotage financier & rentabilité pour suivre les performances de l’entreprise, maîtriser la trésorerie et orienter les décisions stratégiques."
+      "description": "Maintenir le lien pour fidéliser les clients, nourrir la relation et créer des opportunités dans la durée.",
+      "sort_order": 6
     },
     {
       "id": "finance.facturation",
       "pillar": "Finance & administration",
       "title": "Facturation & gestion des encaissements",
-      "description": "Facturation & gestion des encaissements pour sécuriser les revenus, accélérer les paiements et limiter les retards de règlement."
+      "description": "Facturation & gestion des encaissements pour sécuriser les revenus, accélérer les paiements et limiter les retards de règlement.",
+      "sort_order": 7
+    },
+    {
+      "id": "finance.pilotage",
+      "pillar": "Finance & administration",
+      "title": "Pilotage financier & rentabilité",
+      "description": "Pilotage financier & rentabilité pour suivre les performances de l’entreprise, maîtriser la trésorerie et orienter les décisions stratégiques.",
+      "sort_order": 8
     },
     {
       "id": "finance.conformite",
       "pillar": "Finance & administration",
       "title": "Conformité & gestion des risques",
-      "description": "Conformité & gestion des risques pour garantir le respect des obligations comptables, fiscales, sociales et juridiques de l’entreprise."
+      "description": "Conformité & gestion des risques pour garantir le respect des obligations comptables, fiscales, sociales et juridiques de l’entreprise.",
+      "sort_order": 9
     },
     {
       "id": "equipe.recrutement",
       "pillar": "Équipe",
       "title": "Recrutement & intégration",
-      "description": "Recrutement & intégration pour attirer les bons profils, structurer leur arrivée et clarifier leur rôle dans l’entreprise."
+      "description": "Recrutement & intégration pour attirer les bons profils, structurer leur arrivée et clarifier leur rôle dans l’entreprise.",
+      "sort_order": 10
     },
     {
       "id": "equipe.rh",
       "pillar": "Équipe",
       "title": "Gestion RH & développement des compétences",
-      "description": "Gestion RH & développement des compétences pour organiser l’équipe, accompagner sa progression et anticiper les besoins futurs."
+      "description": "Gestion RH & développement des compétences pour organiser l’équipe, accompagner sa progression et anticiper les besoins futurs.",
+      "sort_order": 11
     },
     {
       "id": "equipe.culture",
       "pillar": "Équipe",
       "title": "Culture & engagement",
-      "description": "Culture & engagement pour fédérer les collaborateurs autour de valeurs communes et renforcer la cohésion de l’équipe."
+      "description": "Culture & engagement pour fédérer les collaborateurs autour de valeurs communes et renforcer la cohésion de l’équipe.",
+      "sort_order": 12
     }
   ]
 }
