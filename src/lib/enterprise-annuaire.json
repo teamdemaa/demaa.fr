@@ -57,18 +57,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemples : recommandations, networking, événements, contenu expert, témoignages clients, partenariats.",
-        "marketing.decision": "Exemples : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemples : suivi régulier, newsletter, alertes réglementaires, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : spécialisation, typologie client, offre récurrente, promesse, preuves.",
+        "strategie.objectifs": "Exemple : missions signées, taux de transformation, marge par mission, charge planning.",
+        "strategie.plan-action": "Exemple : prospection ciblée, livrables, relances, échéances mission, responsables.",
+        "marketing.confiance": "Exemple : recommandations, contenu expert, événements, témoignages clients, partenariats.",
+        "marketing.decision": "Exemple : rendez-vous découverte, diagnostic, lettre de mission, devis, calendrier d’accompagnement.",
+        "marketing.lien": "Exemple : suivi régulier, alertes réglementaires, bilans, enquêtes, événements clients.",
+        "finance.pilotage": "Exemple : rentabilité par mission, temps passé, chiffre d’affaires, trésorerie, prévisionnel.",
+        "finance.facturation": "Exemple : devis accepté, acompte, facture de mission, relances, suivi des règlements.",
+        "finance.conformite": "Exemple : déclarations, lettres de mission, RGPD, obligations sociales, dossier permanent.",
+        "equipe.recrutement": "Exemple : collaborateurs, alternants, gestionnaires paie, onboarding dossier, accès outils.",
+        "equipe.rh": "Exemple : charge par collaborateur, période fiscale, congés, formation, qualité dossier.",
+        "equipe.culture": "Exemple : standards de livraison, méthodes, rituels, communication client, retours d’expérience."
       },
       "toolRefs": [
         {
@@ -178,18 +178,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : offre de service, client idéal, spécialisation, promesse, preuves.",
+        "strategie.objectifs": "Exemple : missions signées, taux de transformation, marge par mission, charge planning.",
+        "strategie.plan-action": "Exemple : prospection ciblée, livrables, relances, échéances mission, responsables.",
+        "marketing.confiance": "Exemple : recommandations, cas clients, contenu expert, événements, partenariats.",
+        "marketing.decision": "Exemple : rendez-vous découverte, diagnostic, proposition, devis, calendrier de mission.",
+        "marketing.lien": "Exemple : points clients, newsletter utile, alertes, bilans, enquêtes de satisfaction.",
+        "finance.pilotage": "Exemple : rentabilité par mission, temps passé, chiffre d’affaires, trésorerie, prévisionnel.",
+        "finance.facturation": "Exemple : devis accepté, acompte, facture de mission, relances, suivi des règlements.",
+        "finance.conformite": "Exemple : contrat, lettre de mission, assurance, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : besoin de consultant, brief de poste, entretiens, onboarding, accès dossiers.",
+        "equipe.rh": "Exemple : charge par personne, compétences, congés, formation, points de suivi.",
+        "equipe.culture": "Exemple : standards de livraison, méthodes, rituels, communication client, retours d’expérience."
       },
       "toolRefs": [
         {
@@ -267,18 +267,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : offre de service, client idéal, spécialisation, promesse, preuves.",
+        "strategie.objectifs": "Exemple : missions signées, taux de transformation, marge par mission, charge planning.",
+        "strategie.plan-action": "Exemple : prospection ciblée, livrables, relances, échéances mission, responsables.",
+        "marketing.confiance": "Exemple : recommandations, cas clients, contenu expert, événements, partenariats.",
+        "marketing.decision": "Exemple : rendez-vous découverte, diagnostic, proposition, devis, calendrier de mission.",
+        "marketing.lien": "Exemple : points clients, newsletter utile, alertes, bilans, enquêtes de satisfaction.",
+        "finance.pilotage": "Exemple : rentabilité par mission, temps passé, chiffre d’affaires, trésorerie, prévisionnel.",
+        "finance.facturation": "Exemple : devis accepté, acompte, facture de mission, relances, suivi des règlements.",
+        "finance.conformite": "Exemple : contrat, lettre de mission, assurance, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : besoin de consultant, brief de poste, entretiens, onboarding, accès dossiers.",
+        "equipe.rh": "Exemple : charge par personne, compétences, congés, formation, points de suivi.",
+        "equipe.culture": "Exemple : standards de livraison, méthodes, rituels, communication client, retours d’expérience."
       },
       "toolRefs": [
         {
@@ -350,18 +350,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : offre digitale, cible, niveau d’accompagnement, différenciation, preuves.",
+        "strategie.objectifs": "Exemple : projets signés, marge, délais, satisfaction client, charge équipe.",
+        "strategie.plan-action": "Exemple : roadmap projet, production, validations, mise en ligne, suivi client.",
+        "marketing.confiance": "Exemple : portfolio, cas clients, démos, avis, contenus, partenariats.",
+        "marketing.decision": "Exemple : brief, audit, maquette, devis, planning, périmètre validé.",
+        "marketing.lien": "Exemple : support, maintenance, bilan projet, newsletter, nouvelles demandes.",
+        "finance.pilotage": "Exemple : marge par projet, temps passé, abonnements, trésorerie, prévisions.",
+        "finance.facturation": "Exemple : acompte, jalons, facture finale, relances, suivi des paiements.",
+        "finance.conformite": "Exemple : contrat, droits d’usage, RGPD, licences, conditions de maintenance.",
+        "equipe.recrutement": "Exemple : designers, développeurs, freelances, onboarding projet, accès outils.",
+        "equipe.rh": "Exemple : charge projet, compétences, congés, revues, montée en compétence.",
+        "equipe.culture": "Exemple : standards design, documentation, rituels projet, retours qualité."
       },
       "toolRefs": [
         {
@@ -457,18 +457,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : expertise, cible, offre packagée, promesse, preuves de résultat.",
+        "strategie.objectifs": "Exemple : missions idéales, revenu mensuel, temps disponible, taux de transformation.",
+        "strategie.plan-action": "Exemple : prospection, devis, production, relances, créneaux de travail.",
+        "marketing.confiance": "Exemple : portfolio, recommandations, témoignages, contenus, présence LinkedIn.",
+        "marketing.decision": "Exemple : appel découverte, périmètre clair, devis, délai, prochaines étapes.",
+        "marketing.lien": "Exemple : suivi client, bilan mission, relance douce, recommandation, offre récurrente.",
+        "finance.pilotage": "Exemple : revenu mensuel, charges, trésorerie, temps facturable, marge.",
+        "finance.facturation": "Exemple : devis, acompte, facture, relance, paiement reçu.",
+        "finance.conformite": "Exemple : statut, assurances, déclarations, contrats, justificatifs.",
+        "equipe.recrutement": "Exemple : partenaires, sous-traitants, assistant, brief, accès partagés.",
+        "equipe.rh": "Exemple : planning personnel, charge, formation, disponibilité, limites de capacité.",
+        "equipe.culture": "Exemple : méthode de travail, règles client, qualité attendue, documentation."
       },
       "toolRefs": [
         {
@@ -540,18 +540,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : offre de service, client idéal, spécialisation, promesse, preuves.",
+        "strategie.objectifs": "Exemple : missions signées, taux de transformation, marge par mission, charge planning.",
+        "strategie.plan-action": "Exemple : prospection ciblée, livrables, relances, échéances mission, responsables.",
+        "marketing.confiance": "Exemple : recommandations, cas clients, contenu expert, événements, partenariats.",
+        "marketing.decision": "Exemple : brief de poste, shortlist, méthode de sourcing, honoraires, calendrier.",
+        "marketing.lien": "Exemple : suivi candidats, points client, vivier, bilan recrutement, nouvelles missions.",
+        "finance.pilotage": "Exemple : rentabilité par mission, temps passé, chiffre d’affaires, trésorerie, prévisionnel.",
+        "finance.facturation": "Exemple : devis accepté, acompte, facture de mission, relances, suivi des règlements.",
+        "finance.conformite": "Exemple : contrat, lettre de mission, assurance, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : consultants, chargé de sourcing, onboarding CRM, méthode d’entretien.",
+        "equipe.rh": "Exemple : charge par personne, compétences, congés, formation, points de suivi.",
+        "equipe.culture": "Exemple : standards de livraison, méthodes, rituels, communication client, retours d’expérience."
       },
       "toolRefs": [
         {
@@ -623,18 +623,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : offre digitale, cible, niveau d’accompagnement, différenciation, preuves.",
+        "strategie.objectifs": "Exemple : projets signés, marge, délais, satisfaction client, charge équipe.",
+        "strategie.plan-action": "Exemple : roadmap projet, production, validations, mise en ligne, suivi client.",
+        "marketing.confiance": "Exemple : portfolio, cas clients, démos, avis, contenus, partenariats.",
+        "marketing.decision": "Exemple : brief, audit, maquette, devis, planning, périmètre validé.",
+        "marketing.lien": "Exemple : support, maintenance, bilan projet, newsletter, nouvelles demandes.",
+        "finance.pilotage": "Exemple : marge par projet, temps passé, abonnements, trésorerie, prévisions.",
+        "finance.facturation": "Exemple : acompte, jalons, facture finale, relances, suivi des paiements.",
+        "finance.conformite": "Exemple : contrat, droits d’usage, RGPD, licences, conditions de maintenance.",
+        "equipe.recrutement": "Exemple : designers, développeurs, freelances, onboarding projet, accès outils.",
+        "equipe.rh": "Exemple : charge projet, compétences, congés, revues, montée en compétence.",
+        "equipe.culture": "Exemple : standards design, documentation, rituels projet, retours qualité."
       },
       "toolRefs": [
         {
@@ -740,18 +740,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : formats, cible, style créatif, plateformes, promesse de contenu.",
+        "strategie.objectifs": "Exemple : contenus produits, vues, engagement, clients signés, marge.",
+        "strategie.plan-action": "Exemple : briefs, tournage, montage, validation, publication, analyse performance.",
+        "marketing.confiance": "Exemple : portfolio, cas clients, démos, avis, contenus, partenariats.",
+        "marketing.decision": "Exemple : brief créatif, formats, devis, calendrier, validation, diffusion.",
+        "marketing.lien": "Exemple : bilan contenu, nouvelles idées, calendrier éditorial, retours, formats récurrents.",
+        "finance.pilotage": "Exemple : marge par projet, temps passé, abonnements, trésorerie, prévisions.",
+        "finance.facturation": "Exemple : acompte, jalons, facture finale, relances, suivi des paiements.",
+        "finance.conformite": "Exemple : droits d’image, droits musicaux, contrats, licences, RGPD, autorisations.",
+        "equipe.recrutement": "Exemple : créateurs, monteurs, graphistes, freelances, accès aux briefs.",
+        "equipe.rh": "Exemple : planning production, validations, charge créative, formation outils.",
+        "equipe.culture": "Exemple : ligne créative, qualité visuelle, respect des briefs, rythme de publication."
       },
       "toolRefs": [
         {
@@ -845,18 +845,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : offre vendeurs, cible acheteurs, catégorie, commission, niveau de confiance.",
+        "strategie.objectifs": "Exemple : vendeurs actifs, commandes, commissions, litiges, satisfaction acheteurs.",
+        "strategie.plan-action": "Exemple : recrutement vendeurs, onboarding, modération, campagnes, support, litiges.",
+        "marketing.confiance": "Exemple : vendeurs vérifiés, avis, garanties, règles claires, support réactif.",
+        "marketing.decision": "Exemple : fiche offre, prix, disponibilité, frais, paiement, garanties.",
+        "marketing.lien": "Exemple : suivi commande, relance vendeurs, avis, offres, résolution litiges.",
+        "finance.pilotage": "Exemple : commissions, volume de commandes, remboursements, litiges, trésorerie.",
+        "finance.facturation": "Exemple : commissions, reversements vendeurs, remboursements, factures, rapprochements.",
+        "finance.conformite": "Exemple : CGU vendeurs, KYC, TVA, litiges, RGPD, règles de commission.",
+        "equipe.recrutement": "Exemple : support vendeurs, opérations, modération, onboarding outil, règles qualité.",
+        "equipe.rh": "Exemple : charge support, modération, suivi litiges, formation règles marketplace.",
+        "equipe.culture": "Exemple : transparence, qualité vendeur, réactivité support, suivi des litiges."
       },
       "toolRefs": [
         {
@@ -934,18 +934,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : audience cible, ligne éditoriale, formats, ton, modèle économique.",
+        "strategie.objectifs": "Exemple : audience, abonnés, revenus, publications, engagement, rétention.",
+        "strategie.plan-action": "Exemple : calendrier éditorial, production, diffusion, partenariats, analyse audience.",
+        "marketing.confiance": "Exemple : portfolio, cas clients, démos, avis, contenus, partenariats.",
+        "marketing.decision": "Exemple : abonnement, offre éditoriale, sponsoring, newsletter, accès au contenu.",
+        "marketing.lien": "Exemple : newsletter, communauté, retours lecteurs, contenus récurrents, offres abonnés.",
+        "finance.pilotage": "Exemple : marge par projet, temps passé, abonnements, trésorerie, prévisions.",
+        "finance.facturation": "Exemple : acompte, jalons, facture finale, relances, suivi des paiements.",
+        "finance.conformite": "Exemple : droits d’auteur, contrats, RGPD, licences, mentions légales, sources.",
+        "equipe.recrutement": "Exemple : rédacteurs, monteurs, community managers, pigistes, accès éditoriaux.",
+        "equipe.rh": "Exemple : planning éditorial, charge production, validations, formation outils.",
+        "equipe.culture": "Exemple : ligne éditoriale, rythme de publication, rigueur, qualité des sources."
       },
       "toolRefs": [
         {
@@ -1023,18 +1023,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : client cible, problème résolu, promesse produit, pricing, intégrations.",
+        "strategie.objectifs": "Exemple : MRR, activation, churn, conversion essai, tickets support.",
+        "strategie.plan-action": "Exemple : acquisition, essai, onboarding, roadmap, support, rétention.",
+        "marketing.confiance": "Exemple : démo produit, cas clients, sécurité, intégrations, avis utilisateurs.",
+        "marketing.decision": "Exemple : essai, démo, onboarding, plan tarifaire, intégration, support.",
+        "marketing.lien": "Exemple : activation, usage produit, support, newsletter produit, renouvellement.",
+        "finance.pilotage": "Exemple : MRR, churn, coût acquisition, marge, trésorerie, expansion.",
+        "finance.facturation": "Exemple : abonnements, renouvellements, upgrades, remboursements, impayés.",
+        "finance.conformite": "Exemple : CGU, DPA, RGPD, sécurité, contrats, facturation récurrente.",
+        "equipe.recrutement": "Exemple : développeurs, support client, product, onboarding outil, accès produit.",
+        "equipe.rh": "Exemple : charge support, roadmap, qualité produit, formation, rituels équipe.",
+        "equipe.culture": "Exemple : écoute utilisateur, qualité produit, documentation, réactivité support."
       },
       "toolRefs": [
         {
@@ -1118,18 +1118,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : type de chantier, zone, niveau de finition, garanties, spécialité.",
+        "strategie.objectifs": "Exemple : chantiers signés, marge, délais, taux d’occupation, satisfaction client.",
+        "strategie.plan-action": "Exemple : visites, devis, planning chantier, achats, coordination sous-traitants.",
+        "marketing.confiance": "Exemple : photos chantiers, avis clients, assurances, garanties, recommandations.",
+        "marketing.decision": "Exemple : visite chantier, devis détaillé, délais, matériaux, acompte, garanties.",
+        "marketing.lien": "Exemple : suivi chantier, photos d’avancement, SAV, entretien, recommandations.",
+        "finance.pilotage": "Exemple : marge chantier, achats, main-d’œuvre, acomptes, trésorerie.",
+        "finance.facturation": "Exemple : devis signé, acompte, situations, facture finale, relances.",
+        "finance.conformite": "Exemple : décennale, devis, sécurité chantier, contrats, attestations, normes.",
+        "equipe.recrutement": "Exemple : ouvriers, apprentis, sous-traitants, habilitations, accueil chantier.",
+        "equipe.rh": "Exemple : planning équipes, habilitations, sécurité, congés, compétences chantier.",
+        "equipe.culture": "Exemple : sécurité, ponctualité, propreté chantier, qualité de finition, communication."
       },
       "toolRefs": [
         {
@@ -1219,18 +1219,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : zones desservies, délais, types de flux, niveau de service.",
+        "strategie.objectifs": "Exemple : tournées, taux de livraison, retards, coûts, satisfaction client.",
+        "strategie.plan-action": "Exemple : planning, affectation, véhicules, documents, suivi incidents.",
+        "marketing.confiance": "Exemple : délais tenus, suivi, avis clients, assurances, références.",
+        "marketing.decision": "Exemple : zone, tarif, délai, volume, créneau, suivi de livraison.",
+        "marketing.lien": "Exemple : notifications, compte-rendu, suivi litiges, offres récurrentes, bilans.",
+        "finance.pilotage": "Exemple : coût tournée, carburant, parc, marge, trésorerie.",
+        "finance.facturation": "Exemple : bons de livraison, factures, frais, relances, rapprochement bancaire.",
+        "finance.conformite": "Exemple : assurances, licences, temps de conduite, sécurité, documents transport.",
+        "equipe.recrutement": "Exemple : chauffeurs, manutentionnaires, formation sécurité, prise en main tournée.",
+        "equipe.rh": "Exemple : plannings, repos, habilitations, suivi conduite, formation.",
+        "equipe.culture": "Exemple : ponctualité, sécurité, communication client, soin du matériel."
       },
       "toolRefs": [
         {
@@ -1308,18 +1308,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : zone, type de biens, mandats visés, promesse, différenciation.",
+        "strategie.objectifs": "Exemple : mandats signés, visites, offres, taux de transformation, honoraires.",
+        "strategie.plan-action": "Exemple : prospection, estimations, photos, visites, relances, suivi vendeur.",
+        "marketing.confiance": "Exemple : avis vendeurs, biens vendus, connaissance locale, photos, recommandations.",
+        "marketing.decision": "Exemple : estimation, mandat, dossier vendeur, plan de diffusion, compte-rendu visites.",
+        "marketing.lien": "Exemple : suivi vendeur, alertes acquéreurs, bilans visites, relances, recommandations.",
+        "finance.pilotage": "Exemple : honoraires, mandats actifs, pipeline, charges, trésorerie.",
+        "finance.facturation": "Exemple : honoraires, factures, commissions, rétrocessions, paiements.",
+        "finance.conformite": "Exemple : mandats, diagnostics, RGPD, registre, assurances, obligations légales.",
+        "equipe.recrutement": "Exemple : agents, assistants, partenaires, onboarding, accès mandats.",
+        "equipe.rh": "Exemple : objectifs, secteurs, planning visites, formation, suivi activité.",
+        "equipe.culture": "Exemple : transparence, réactivité, qualité de suivi, standards de visite."
       },
       "toolRefs": [
         {
@@ -1341,19 +1341,407 @@
       ]
     },
     {
+      "id": "e55",
+      "slug": "syndic",
+      "name": "Syndic",
+      "category": "Système opérationnel",
+      "description": "Centralisez copropriétés, assemblées, travaux et demandes résidents.",
+      "tags": [
+        "Immobilier",
+        "Copropriété",
+        "Système"
+      ],
+      "icon": "Building2",
+      "price": "Sur devis",
+      "sectorLabel": "Immobilier",
+      "editorialSubtitle": "Structurez la gestion des copropriétés, les assemblées et le suivi des demandes.",
+      "imageTitle": "Syndic",
+      "imageSubtitle": "Aperçu du système opérationnel pour syndic",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Copropriétés & lots",
+          "description": "Centraliser les immeubles, lots, contacts et informations clés de chaque copropriété.",
+          "examples": "Exemple : immeuble, lots, copropriétaires, prestataires, documents."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Assemblées générales",
+          "description": "Préparer, suivre et archiver les assemblées générales et décisions votées.",
+          "examples": "Exemple : convocation, ordre du jour, votes, PV, résolutions."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Appels de fonds",
+          "description": "Suivre les appels de fonds, paiements, relances et situations comptables.",
+          "examples": "Exemple : budget, appel trimestriel, règlement, impayé, relance."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Travaux & incidents",
+          "description": "Piloter les demandes, devis, interventions, sinistres et travaux votés.",
+          "examples": "Exemple : fuite, devis, entreprise, intervention, suivi résident."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Communication résidents",
+          "description": "Centraliser les messages, demandes et informations envoyées aux copropriétaires.",
+          "examples": "Exemple : demande résident, note immeuble, relance, annonce travaux."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Qualité & conformité",
+          "description": "Sécuriser les obligations, archives et contrôles récurrents de gestion.",
+          "examples": "Exemple : carnet d’entretien, contrats, assurances, diagnostics, archives."
+        }
+      ],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : taille de portefeuille, type de copropriétés, réactivité, transparence.",
+        "strategie.objectifs": "Exemple : copropriétés gérées, impayés, délais de réponse, travaux suivis, satisfaction.",
+        "strategie.plan-action": "Exemple : AG, appels de fonds, suivi travaux, relances, communication résidents.",
+        "marketing.confiance": "Exemple : avis copropriétaires, transparence, références immeubles, réactivité, méthode.",
+        "marketing.decision": "Exemple : audit de copropriété, proposition de gestion, honoraires, reprise dossier, planning.",
+        "marketing.lien": "Exemple : information résidents, bilans AG, suivi travaux, alertes, réponses aux demandes.",
+        "finance.pilotage": "Exemple : budget copropriété, impayés, trésorerie, travaux, honoraires.",
+        "finance.facturation": "Exemple : appels de fonds, honoraires, relances, paiements, rapprochements.",
+        "finance.conformite": "Exemple : AG, PV, contrats, assurances, carnet d’entretien, obligations copropriété.",
+        "equipe.recrutement": "Exemple : gestionnaires, assistants, comptables copropriété, onboarding portefeuille, accès dossiers.",
+        "equipe.rh": "Exemple : charge par gestionnaire, urgences, formation copropriété, planning AG, suivi qualité.",
+        "equipe.culture": "Exemple : transparence, réactivité, rigueur documentaire, qualité de réponse, suivi terrain."
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "apimo",
+          "usage": "Structurer une agence immobilière et ses biens."
+        },
+        {
+          "slug": "pipedrive",
+          "usage": "Ne plus perdre les opportunités commerciales."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        }
+      ]
+    },
+    {
+      "id": "e56",
+      "slug": "gestion-locative",
+      "name": "Gestion locative",
+      "category": "Système opérationnel",
+      "description": "Centralisez biens, locataires, loyers, incidents et documents locatifs.",
+      "tags": [
+        "Immobilier",
+        "Location",
+        "Système"
+      ],
+      "icon": "KeyRound",
+      "price": "Sur devis",
+      "sectorLabel": "Immobilier",
+      "editorialSubtitle": "Structurez la gestion des biens loués, des loyers et du suivi locataire.",
+      "imageTitle": "Gestion locative",
+      "imageSubtitle": "Aperçu du système opérationnel pour gestion locative",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Biens & mandats",
+          "description": "Centraliser les biens, mandats, propriétaires et informations de gestion.",
+          "examples": "Exemple : bien, propriétaire, mandat, loyer, charges, documents."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Mise en location",
+          "description": "Piloter l’annonce, les visites, les dossiers candidats et la signature du bail.",
+          "examples": "Exemple : annonce, visite, dossier, solvabilité, bail, état des lieux."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Loyers & quittances",
+          "description": "Suivre les loyers, quittances, révisions, paiements et relances.",
+          "examples": "Exemple : loyer reçu, quittance, indexation, impayé, relance."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Maintenance & incidents",
+          "description": "Gérer les demandes locataires, sinistres, devis et interventions.",
+          "examples": "Exemple : panne, fuite, devis, artisan, intervention, clôture."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Départs & relocation",
+          "description": "Organiser les préavis, états des lieux, retenues et remise en location.",
+          "examples": "Exemple : préavis, état des lieux, dépôt, travaux, nouvelle annonce."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Qualité & conformité",
+          "description": "Sécuriser les documents obligatoires et les contrôles de gestion locative.",
+          "examples": "Exemple : DPE, bail, assurance, diagnostics, RGPD, archives."
+        }
+      ],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : type de biens, zone, propriétaires ciblés, niveau de service, réactivité.",
+        "strategie.objectifs": "Exemple : biens gérés, vacance locative, impayés, délais relocation, satisfaction propriétaires.",
+        "strategie.plan-action": "Exemple : annonces, visites, baux, loyers, incidents, relances propriétaires.",
+        "marketing.confiance": "Exemple : avis propriétaires, taux d’occupation, méthode de suivi, transparence, réactivité.",
+        "marketing.decision": "Exemple : mandat de gestion, estimation loyer, honoraires, garanties, calendrier de mise en location.",
+        "marketing.lien": "Exemple : reporting propriétaire, quittances, alertes impayés, suivi travaux, bilans locatifs.",
+        "finance.pilotage": "Exemple : loyers encaissés, impayés, vacance, travaux, honoraires de gestion.",
+        "finance.facturation": "Exemple : quittances, honoraires, régularisation charges, relances, reversements propriétaire.",
+        "finance.conformite": "Exemple : bail, diagnostics, assurance, encadrement loyer, RGPD, état des lieux.",
+        "equipe.recrutement": "Exemple : gestionnaires locatifs, assistants, partenaires travaux, onboarding biens, accès dossiers.",
+        "equipe.rh": "Exemple : charge portefeuille, urgences locataires, formation juridique, planning visites.",
+        "equipe.culture": "Exemple : réactivité, clarté propriétaire, suivi locataire, rigueur documentaire, qualité de service."
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "apimo",
+          "usage": "Structurer une agence immobilière et ses biens."
+        },
+        {
+          "slug": "pipedrive",
+          "usage": "Ne plus perdre les opportunités commerciales."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        }
+      ]
+    },
+    {
+      "id": "e57",
+      "slug": "marchand-de-biens",
+      "name": "Marchand de biens",
+      "category": "Système opérationnel",
+      "description": "Suivez sourcing, acquisition, travaux, revente et rentabilité des opérations.",
+      "tags": [
+        "Immobilier",
+        "Opérations",
+        "Système"
+      ],
+      "icon": "Landmark",
+      "price": "Sur devis",
+      "sectorLabel": "Immobilier",
+      "editorialSubtitle": "Structurez les opérations d’achat-revente, travaux et suivi de marge.",
+      "imageTitle": "Marchand de biens",
+      "imageSubtitle": "Aperçu du système opérationnel pour marchand de biens",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Sourcing opérations",
+          "description": "Identifier, qualifier et suivre les opportunités d’achat-revente.",
+          "examples": "Exemple : bien repéré, vendeur, prix, marge cible, statut."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Analyse & montage",
+          "description": "Évaluer travaux, fiscalité, financement, risques et scénario de sortie.",
+          "examples": "Exemple : coût travaux, financement, fiscalité, marge, planning."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Acquisition",
+          "description": "Coordonner offre, compromis, financement, notaire et conditions suspensives.",
+          "examples": "Exemple : offre, compromis, banque, notaire, signature."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Travaux & valorisation",
+          "description": "Piloter les travaux, prestataires, budget, délais et qualité de finition.",
+          "examples": "Exemple : devis, chantier, budget, retard, réception travaux."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Revente",
+          "description": "Organiser la commercialisation, visites, offres, négociation et signature.",
+          "examples": "Exemple : annonce, visite, offre, compromis vente, signature."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Qualité & rentabilité",
+          "description": "Comparer les opérations et capitaliser sur les marges réelles.",
+          "examples": "Exemple : marge finale, écart budget, délai, retour d’expérience."
+        }
+      ],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : zone, typologie d’opérations, marge cible, réseau sourcing, niveau de travaux.",
+        "strategie.objectifs": "Exemple : opérations signées, marge nette, délai de revente, budget travaux, risque.",
+        "strategie.plan-action": "Exemple : sourcing, analyse, financement, travaux, commercialisation, arbitrage.",
+        "marketing.confiance": "Exemple : opérations réalisées, qualité rénovation, réseau notaires, photos avant/après, références.",
+        "marketing.decision": "Exemple : dossier d’opération, marge prévisionnelle, financement, planning travaux, scénario de sortie.",
+        "marketing.lien": "Exemple : suivi investisseurs, avancement travaux, reporting, nouvelles opportunités, bilan opération.",
+        "finance.pilotage": "Exemple : marge nette, coût travaux, frais financiers, délai de portage, trésorerie.",
+        "finance.facturation": "Exemple : appels artisans, factures travaux, frais notaire, paiements, rapprochements.",
+        "finance.conformite": "Exemple : compromis, notaire, urbanisme, assurances, fiscalité, garanties travaux.",
+        "equipe.recrutement": "Exemple : artisans, maître d’œuvre, partenaires sourcing, commercialisateur, accès dossier.",
+        "equipe.rh": "Exemple : coordination chantier, charge opérations, points travaux, suivi prestataires.",
+        "equipe.culture": "Exemple : discipline d’analyse, contrôle marge, qualité travaux, réactivité, documentation."
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "apimo",
+          "usage": "Structurer une agence immobilière et ses biens."
+        },
+        {
+          "slug": "pipedrive",
+          "usage": "Ne plus perdre les opportunités commerciales."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        }
+      ]
+    },
+    {
+      "id": "e58",
+      "slug": "investissement-locatif",
+      "name": "Investissement locatif",
+      "category": "Système opérationnel",
+      "description": "Suivez acquisition, financement, mise en location et performance locative.",
+      "tags": [
+        "Immobilier",
+        "Location",
+        "Patrimoine"
+      ],
+      "icon": "Home",
+      "price": "Sur devis",
+      "sectorLabel": "Immobilier",
+      "editorialSubtitle": "Structurez vos biens locatifs, les loyers, la rentabilité et les arbitrages.",
+      "imageTitle": "Investissement locatif",
+      "imageSubtitle": "Aperçu du système opérationnel pour investissement locatif",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Sourcing biens",
+          "description": "Rechercher et présélectionner les biens adaptés à la stratégie locative.",
+          "examples": "Exemple : zone, prix, loyer estimé, rendement, potentiel travaux."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Analyse rentabilité",
+          "description": "Calculer cash-flow, financement, fiscalité, travaux et scénario de détention.",
+          "examples": "Exemple : mensualité, charges, fiscalité, travaux, cash-flow."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Acquisition & financement",
+          "description": "Suivre offre, banque, notaire, assurance et documents d’achat.",
+          "examples": "Exemple : offre, compromis, prêt, assurance, signature."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Mise en location",
+          "description": "Organiser annonce, sélection locataire, bail, état des lieux et entrée.",
+          "examples": "Exemple : annonce, dossier candidat, bail, dépôt, état des lieux."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Suivi locatif",
+          "description": "Piloter loyers, travaux, incidents, vacance et relation locataire.",
+          "examples": "Exemple : loyer, impayé, réparation, préavis, relocation."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Performance & arbitrage",
+          "description": "Suivre la performance réelle et décider de conserver, refinancer ou vendre.",
+          "examples": "Exemple : rendement réel, valorisation, fiscalité, refinancement, vente."
+        }
+      ],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : zone, type de bien, stratégie fiscale, rendement cible, horizon de détention.",
+        "strategie.objectifs": "Exemple : biens acquis, cash-flow, rendement, vacance, valorisation, dette.",
+        "strategie.plan-action": "Exemple : recherche, analyse, financement, travaux, location, suivi performance.",
+        "marketing.confiance": "Exemple : dossier investisseur, hypothèses claires, photos, chiffres, risques identifiés.",
+        "marketing.decision": "Exemple : analyse de rentabilité, offre, financement, travaux, bail, scénario de sortie.",
+        "marketing.lien": "Exemple : reporting locatif, suivi loyers, incidents, arbitrages, bilan annuel.",
+        "finance.pilotage": "Exemple : cash-flow, rendement net, charges, vacance, travaux, fiscalité.",
+        "finance.facturation": "Exemple : loyers, charges, quittances, travaux, intérêts, rapprochements.",
+        "finance.conformite": "Exemple : bail, diagnostics, fiscalité, assurance, déclarations, documents locatifs.",
+        "equipe.recrutement": "Exemple : courtier, notaire, artisans, gestionnaire locatif, accès dossier.",
+        "equipe.rh": "Exemple : suivi partenaires, planning travaux, points gestion, responsabilités par bien.",
+        "equipe.culture": "Exemple : rigueur d’analyse, suivi chiffres, anticipation travaux, documentation, discipline."
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "apimo",
+          "usage": "Structurer une agence immobilière et ses biens."
+        },
+        {
+          "slug": "pipedrive",
+          "usage": "Ne plus perdre les opportunités commerciales."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        }
+      ]
+    },
+    {
       "id": "e15",
       "slug": "conciergerie-airbnb",
       "name": "Conciergerie Airbnb",
       "category": "Système opérationnel",
-      "description": "Centralisez mandats, visites et suivi des occupants.",
+      "description": "Centralisez réservations, arrivées, ménage et suivi voyageurs.",
       "tags": [
-        "Immobilier",
-        "Actifs",
+        "Tourisme",
+        "Réservation",
         "Système"
       ],
       "icon": "Home",
       "price": "",
-      "sectorLabel": "Immobilier",
+      "sectorLabel": "Hébergement & tourisme",
       "editorialSubtitle": "Coordonnez réservations, ménage et arrivées sans chaos.",
       "imageTitle": "Conciergerie Airbnb",
       "imageSubtitle": "Aperçu du système opérationnel pour conciergerie airbnb",
@@ -1397,18 +1785,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : clientèle cible, standing, services, saisonnalité, expérience séjour.",
+        "strategie.objectifs": "Exemple : taux d’occupation, prix moyen, avis, marge, réservations directes.",
+        "strategie.plan-action": "Exemple : calendrier tarifs, ménage, accueil, communication, suivi avis.",
+        "marketing.confiance": "Exemple : avis voyageurs, photos chambres, services, propreté, localisation.",
+        "marketing.decision": "Exemple : disponibilités, tarifs, conditions, réservation simple, options séjour.",
+        "marketing.lien": "Exemple : message avant séjour, avis après départ, offres retour, recommandations.",
+        "finance.pilotage": "Exemple : taux d’occupation, revenu par chambre, charges, trésorerie, saisonnalité.",
+        "finance.facturation": "Exemple : réservations, acomptes, taxes, factures, paiements, remboursements.",
+        "finance.conformite": "Exemple : taxe de séjour, sécurité, affichages, RGPD, contrats, assurances.",
+        "equipe.recrutement": "Exemple : accueil, ménage, extras, onboarding, standards de service.",
+        "equipe.rh": "Exemple : planning ménage, réception, congés, formation, saisonniers.",
+        "equipe.culture": "Exemple : accueil, propreté, réactivité, discrétion, qualité du séjour."
       },
       "toolRefs": [
         {
@@ -1486,18 +1874,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : thèse d’investissement, cible, ticket, horizon, niveau de risque.",
+        "strategie.objectifs": "Exemple : opportunités analysées, rendement, risque, allocation, arbitrages.",
+        "strategie.plan-action": "Exemple : sourcing, analyse, décision, suivi, reporting, arbitrage.",
+        "marketing.confiance": "Exemple : track record, reporting, transparence, partenaires, notes d’analyse.",
+        "marketing.decision": "Exemple : note d’investissement, scénarios, risques, ticket, calendrier, validation.",
+        "marketing.lien": "Exemple : reporting, points investisseurs, alertes, arbitrages, bilans périodiques.",
+        "finance.pilotage": "Exemple : rendement, liquidité, frais, risque, allocation, trésorerie.",
+        "finance.facturation": "Exemple : appels de fonds, frais, honoraires, distributions, rapprochements.",
+        "finance.conformite": "Exemple : KYC, documentation, contrats, fiscalité, obligations réglementaires.",
+        "equipe.recrutement": "Exemple : analystes, partenaires, experts, accès dossiers, méthode d’analyse.",
+        "equipe.rh": "Exemple : répartition dossiers, revues, formation, comité, suivi des décisions.",
+        "equipe.culture": "Exemple : discipline d’analyse, transparence, gestion du risque, qualité du reporting."
       },
       "toolRefs": [
         {
@@ -1575,18 +1963,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : thèse d’investissement, cible, ticket, horizon, niveau de risque.",
+        "strategie.objectifs": "Exemple : opportunités analysées, rendement, risque, allocation, arbitrages.",
+        "strategie.plan-action": "Exemple : sourcing, analyse, décision, suivi, reporting, arbitrage.",
+        "marketing.confiance": "Exemple : track record, reporting, transparence, partenaires, notes d’analyse.",
+        "marketing.decision": "Exemple : note d’investissement, scénarios, risques, ticket, calendrier, validation.",
+        "marketing.lien": "Exemple : reporting, points investisseurs, alertes, arbitrages, bilans périodiques.",
+        "finance.pilotage": "Exemple : rendement, liquidité, frais, risque, allocation, trésorerie.",
+        "finance.facturation": "Exemple : appels de fonds, frais, honoraires, distributions, rapprochements.",
+        "finance.conformite": "Exemple : KYC, documentation, contrats, fiscalité, obligations réglementaires.",
+        "equipe.recrutement": "Exemple : analystes, partenaires, experts, accès dossiers, méthode d’analyse.",
+        "equipe.rh": "Exemple : répartition dossiers, revues, formation, comité, suivi des décisions.",
+        "equipe.culture": "Exemple : discipline d’analyse, transparence, gestion du risque, qualité du reporting."
       },
       "toolRefs": [
         {
@@ -1664,18 +2052,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : thèse d’investissement, cible, ticket, horizon, niveau de risque.",
+        "strategie.objectifs": "Exemple : opportunités analysées, rendement, risque, allocation, arbitrages.",
+        "strategie.plan-action": "Exemple : sourcing, analyse, décision, suivi, reporting, arbitrage.",
+        "marketing.confiance": "Exemple : track record, reporting, transparence, partenaires, notes d’analyse.",
+        "marketing.decision": "Exemple : note d’investissement, scénarios, risques, ticket, calendrier, validation.",
+        "marketing.lien": "Exemple : reporting, points investisseurs, alertes, arbitrages, bilans périodiques.",
+        "finance.pilotage": "Exemple : rendement, liquidité, frais, risque, allocation, trésorerie.",
+        "finance.facturation": "Exemple : appels de fonds, frais, honoraires, distributions, rapprochements.",
+        "finance.conformite": "Exemple : KYC, documentation, contrats, fiscalité, obligations réglementaires.",
+        "equipe.recrutement": "Exemple : analystes, partenaires, experts, accès dossiers, méthode d’analyse.",
+        "equipe.rh": "Exemple : répartition dossiers, revues, formation, comité, suivi des décisions.",
+        "equipe.culture": "Exemple : discipline d’analyse, transparence, gestion du risque, qualité du reporting."
       },
       "toolRefs": [
         {
@@ -1753,18 +2141,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : zones desservies, délais, types de flux, niveau de service.",
+        "strategie.objectifs": "Exemple : tournées, taux de livraison, retards, coûts, satisfaction client.",
+        "strategie.plan-action": "Exemple : planning, affectation, véhicules, documents, suivi incidents.",
+        "marketing.confiance": "Exemple : délais tenus, suivi, avis clients, assurances, références.",
+        "marketing.decision": "Exemple : zone, tarif, délai, volume, créneau, suivi de livraison.",
+        "marketing.lien": "Exemple : notifications, compte-rendu, suivi litiges, offres récurrentes, bilans.",
+        "finance.pilotage": "Exemple : coût tournée, carburant, parc, marge, trésorerie.",
+        "finance.facturation": "Exemple : bons de livraison, factures, frais, relances, rapprochement bancaire.",
+        "finance.conformite": "Exemple : assurances, licences, temps de conduite, sécurité, documents transport.",
+        "equipe.recrutement": "Exemple : chauffeurs, manutentionnaires, formation sécurité, prise en main tournée.",
+        "equipe.rh": "Exemple : plannings, repos, habilitations, suivi conduite, formation.",
+        "equipe.culture": "Exemple : ponctualité, sécurité, communication client, soin du matériel."
       },
       "toolRefs": [
         {
@@ -1842,18 +2230,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : zones desservies, délais, types de flux, niveau de service.",
+        "strategie.objectifs": "Exemple : tournées, taux de livraison, retards, coûts, satisfaction client.",
+        "strategie.plan-action": "Exemple : planning, affectation, véhicules, documents, suivi incidents.",
+        "marketing.confiance": "Exemple : délais tenus, suivi, avis clients, assurances, références.",
+        "marketing.decision": "Exemple : zone, tarif, délai, volume, créneau, suivi de livraison.",
+        "marketing.lien": "Exemple : notifications, compte-rendu, suivi litiges, offres récurrentes, bilans.",
+        "finance.pilotage": "Exemple : coût tournée, carburant, parc, marge, trésorerie.",
+        "finance.facturation": "Exemple : bons de livraison, factures, frais, relances, rapprochement bancaire.",
+        "finance.conformite": "Exemple : assurances, licences, temps de conduite, sécurité, documents transport.",
+        "equipe.recrutement": "Exemple : chauffeurs, manutentionnaires, formation sécurité, prise en main tournée.",
+        "equipe.rh": "Exemple : plannings, repos, habilitations, suivi conduite, formation.",
+        "equipe.culture": "Exemple : ponctualité, sécurité, communication client, soin du matériel."
       },
       "toolRefs": [
         {
@@ -1931,18 +2319,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : zones desservies, délais, types de flux, niveau de service.",
+        "strategie.objectifs": "Exemple : tournées, taux de livraison, retards, coûts, satisfaction client.",
+        "strategie.plan-action": "Exemple : planning, affectation, véhicules, documents, suivi incidents.",
+        "marketing.confiance": "Exemple : délais tenus, suivi, avis clients, assurances, références.",
+        "marketing.decision": "Exemple : zone, tarif, délai, volume, créneau, suivi de livraison.",
+        "marketing.lien": "Exemple : notifications, compte-rendu, suivi litiges, offres récurrentes, bilans.",
+        "finance.pilotage": "Exemple : coût tournée, carburant, parc, marge, trésorerie.",
+        "finance.facturation": "Exemple : bons de livraison, factures, frais, relances, rapprochement bancaire.",
+        "finance.conformite": "Exemple : assurances, licences, temps de conduite, sécurité, documents transport.",
+        "equipe.recrutement": "Exemple : chauffeurs, manutentionnaires, formation sécurité, prise en main tournée.",
+        "equipe.rh": "Exemple : plannings, repos, habilitations, suivi conduite, formation.",
+        "equipe.culture": "Exemple : ponctualité, sécurité, communication client, soin du matériel."
       },
       "toolRefs": [
         {
@@ -2014,18 +2402,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : zones desservies, délais, types de flux, niveau de service.",
+        "strategie.objectifs": "Exemple : tournées, taux de livraison, retards, coûts, satisfaction client.",
+        "strategie.plan-action": "Exemple : planning, affectation, véhicules, documents, suivi incidents.",
+        "marketing.confiance": "Exemple : délais tenus, suivi, avis clients, assurances, références.",
+        "marketing.decision": "Exemple : zone, tarif, délai, volume, créneau, suivi de livraison.",
+        "marketing.lien": "Exemple : notifications, compte-rendu, suivi litiges, offres récurrentes, bilans.",
+        "finance.pilotage": "Exemple : coût tournée, carburant, parc, marge, trésorerie.",
+        "finance.facturation": "Exemple : bons de livraison, factures, frais, relances, rapprochement bancaire.",
+        "finance.conformite": "Exemple : assurances, licences, temps de conduite, sécurité, documents transport.",
+        "equipe.recrutement": "Exemple : chauffeurs, manutentionnaires, formation sécurité, prise en main tournée.",
+        "equipe.rh": "Exemple : plannings, repos, habilitations, suivi conduite, formation.",
+        "equipe.culture": "Exemple : ponctualité, sécurité, communication client, soin du matériel."
       },
       "toolRefs": [
         {
@@ -2097,18 +2485,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : concept, carte, prix, emplacement, expérience client, différenciation.",
+        "strategie.objectifs": "Exemple : ticket moyen, nombre de couverts, marge, avis clients, rotation.",
+        "strategie.plan-action": "Exemple : achats, planning équipe, lancement d’offre, communication locale, suivi marge.",
+        "marketing.confiance": "Exemple : avis Google, photos des plats, hygiène visible, bouche-à-oreille, réseaux locaux.",
+        "marketing.decision": "Exemple : menu lisible, réservation, formule midi, commande rapide, livraison.",
+        "marketing.lien": "Exemple : fidélité, offres régulières, avis après passage, SMS, événements locaux.",
+        "finance.pilotage": "Exemple : ticket moyen, marge matière, masse salariale, trésorerie, pertes.",
+        "finance.facturation": "Exemple : caisse, tickets, paiements, remises, rapprochement bancaire.",
+        "finance.conformite": "Exemple : HACCP, TVA, caisse, affichages obligatoires, contrats, assurances.",
+        "equipe.recrutement": "Exemple : profils salle/cuisine, essais, planning d’intégration, procédures de service.",
+        "equipe.rh": "Exemple : planning, horaires, congés, formation hygiène, polyvalence.",
+        "equipe.culture": "Exemple : accueil, rythme de service, standards propreté, communication équipe."
       },
       "toolRefs": [
         {
@@ -2180,18 +2568,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : concept, carte, prix, emplacement, expérience client, différenciation.",
+        "strategie.objectifs": "Exemple : commandes, ticket moyen, temps de service, marge, avis clients.",
+        "strategie.plan-action": "Exemple : achats, planning équipe, lancement d’offre, communication locale, suivi marge.",
+        "marketing.confiance": "Exemple : avis Google, photos des plats, hygiène visible, bouche-à-oreille, réseaux locaux.",
+        "marketing.decision": "Exemple : menu clair, formule midi, borne/caisse rapide, click & collect, livraison.",
+        "marketing.lien": "Exemple : carte fidélité, offres récurrentes, avis après commande, promotions locales.",
+        "finance.pilotage": "Exemple : ticket moyen, temps de service, marge produit, pertes, ventes par créneau.",
+        "finance.facturation": "Exemple : caisse, tickets, paiements, remises, rapprochement bancaire.",
+        "finance.conformite": "Exemple : HACCP, TVA, caisse, affichages obligatoires, contrats, assurances.",
+        "equipe.recrutement": "Exemple : profils salle/cuisine, essais, planning d’intégration, procédures de service.",
+        "equipe.rh": "Exemple : planning, horaires, congés, formation hygiène, polyvalence.",
+        "equipe.culture": "Exemple : accueil, rythme de service, standards propreté, communication équipe."
       },
       "toolRefs": [
         {
@@ -2263,18 +2651,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : concept, carte, prix, emplacement, expérience client, différenciation.",
+        "strategie.objectifs": "Exemple : ticket moyen, nombre de couverts, marge, avis clients, rotation.",
+        "strategie.plan-action": "Exemple : achats, planning équipe, lancement d’offre, communication locale, suivi marge.",
+        "marketing.confiance": "Exemple : avis Google, photos des plats, hygiène visible, bouche-à-oreille, réseaux locaux.",
+        "marketing.decision": "Exemple : demande événement, menu proposé, devis, acompte, logistique, dégustation.",
+        "marketing.lien": "Exemple : suivi après événement, photos, recommandations, offres entreprises, relances saisonnières.",
+        "finance.pilotage": "Exemple : ticket moyen, marge matière, masse salariale, trésorerie, pertes.",
+        "finance.facturation": "Exemple : caisse, tickets, paiements, remises, rapprochement bancaire.",
+        "finance.conformite": "Exemple : HACCP, TVA, caisse, affichages obligatoires, contrats, assurances.",
+        "equipe.recrutement": "Exemple : profils salle/cuisine, essais, planning d’intégration, procédures de service.",
+        "equipe.rh": "Exemple : planning, horaires, congés, formation hygiène, polyvalence.",
+        "equipe.culture": "Exemple : accueil, rythme de service, standards propreté, communication équipe."
       },
       "toolRefs": [
         {
@@ -2346,18 +2734,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : concept, carte, prix, emplacement, expérience client, différenciation.",
+        "strategie.objectifs": "Exemple : ticket moyen, nombre de couverts, marge, avis clients, rotation.",
+        "strategie.plan-action": "Exemple : achats, planning équipe, lancement d’offre, communication locale, suivi marge.",
+        "marketing.confiance": "Exemple : avis Google, photos des plats, hygiène visible, bouche-à-oreille, réseaux locaux.",
+        "marketing.decision": "Exemple : menu plateforme, photos plats, délai annoncé, offres livraison, notes clients.",
+        "marketing.lien": "Exemple : promos plateforme, avis après commande, relance client, nouveaux menus.",
+        "finance.pilotage": "Exemple : ticket moyen, marge matière, masse salariale, trésorerie, pertes.",
+        "finance.facturation": "Exemple : caisse, tickets, paiements, remises, rapprochement bancaire.",
+        "finance.conformite": "Exemple : HACCP, TVA, caisse, affichages obligatoires, contrats, assurances.",
+        "equipe.recrutement": "Exemple : profils salle/cuisine, essais, planning d’intégration, procédures de service.",
+        "equipe.rh": "Exemple : planning, horaires, congés, formation hygiène, polyvalence.",
+        "equipe.culture": "Exemple : accueil, rythme de service, standards propreté, communication équipe."
       },
       "toolRefs": [
         {
@@ -2429,18 +2817,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : concept, carte, prix, emplacement, expérience client, différenciation.",
+        "strategie.objectifs": "Exemple : ticket moyen, nombre de couverts, marge, avis clients, rotation.",
+        "strategie.plan-action": "Exemple : achats, planning équipe, lancement d’offre, communication locale, suivi marge.",
+        "marketing.confiance": "Exemple : avis Google, photos des plats, hygiène visible, bouche-à-oreille, réseaux locaux.",
+        "marketing.decision": "Exemple : vitrine, disponibilité produits, formule déjeuner, commande spéciale, paiement rapide.",
+        "marketing.lien": "Exemple : fidélité, nouveautés, offres du jour, commandes récurrentes, réseaux locaux.",
+        "finance.pilotage": "Exemple : ticket moyen, marge matière, masse salariale, trésorerie, pertes.",
+        "finance.facturation": "Exemple : caisse, tickets, paiements, remises, rapprochement bancaire.",
+        "finance.conformite": "Exemple : HACCP, TVA, caisse, affichages obligatoires, contrats, assurances.",
+        "equipe.recrutement": "Exemple : profils salle/cuisine, essais, planning d’intégration, procédures de service.",
+        "equipe.rh": "Exemple : planning, horaires, congés, formation hygiène, polyvalence.",
+        "equipe.culture": "Exemple : accueil, rythme de service, standards propreté, communication équipe."
       },
       "toolRefs": [
         {
@@ -2512,18 +2900,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : assortiment, clientèle, prix, emplacement, expérience boutique.",
+        "strategie.objectifs": "Exemple : panier moyen, fréquentation, marge, stock, taux de fidélité.",
+        "strategie.plan-action": "Exemple : vitrines, achats, animations, promotions, suivi des ventes.",
+        "marketing.confiance": "Exemple : vitrine, avis Google, photos produits, conseil vendeur, présence locale.",
+        "marketing.decision": "Exemple : disponibilité produit, conseil, prix clair, paiement rapide, retour simple.",
+        "marketing.lien": "Exemple : carte fidélité, nouveautés, offres saisonnières, SMS, réseaux sociaux.",
+        "finance.pilotage": "Exemple : panier moyen, marge, stock dormant, trésorerie, ventes par rayon.",
+        "finance.facturation": "Exemple : caisse, tickets, paiements, avoirs, rapprochement bancaire.",
+        "finance.conformite": "Exemple : caisse, TVA, affichages, garanties, contrats, inventaire.",
+        "equipe.recrutement": "Exemple : vendeurs, saisonniers, formation caisse, accueil, ouverture boutique.",
+        "equipe.rh": "Exemple : planning, congés, objectifs boutique, polyvalence, formation vente.",
+        "equipe.culture": "Exemple : accueil, conseil, tenue de rayon, esprit boutique, standards client."
       },
       "toolRefs": [
         {
@@ -2595,18 +2983,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : catalogue, cible, promesse livraison, prix, expérience d’achat.",
+        "strategie.objectifs": "Exemple : chiffre d’affaires, conversion, panier moyen, marge, retours.",
+        "strategie.plan-action": "Exemple : fiches produits, acquisition, stock, email, livraison, service client.",
+        "marketing.confiance": "Exemple : avis produits, photos, garanties, livraison claire, retours simples.",
+        "marketing.decision": "Exemple : fiche produit, panier, livraison, paiement, code promo, retours.",
+        "marketing.lien": "Exemple : email post-achat, relance panier, nouveautés, fidélité, avis produit.",
+        "finance.pilotage": "Exemple : panier moyen, marge produit, coût acquisition, stock, trésorerie.",
+        "finance.facturation": "Exemple : commandes, paiements, remboursements, avoirs, rapprochement bancaire.",
+        "finance.conformite": "Exemple : CGV, TVA, factures, RGPD, retours, remboursements, garanties.",
+        "equipe.recrutement": "Exemple : préparateurs, support client, freelances marketing, accès boutique, procédures.",
+        "equipe.rh": "Exemple : pics de commandes, support client, préparation, congés, formation outils.",
+        "equipe.culture": "Exemple : rapidité, soin colis, clarté client, qualité support, suivi des retours."
       },
       "toolRefs": [
         {
@@ -2678,18 +3066,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : prestations, clientèle, prix, expérience, spécialité, zone.",
+        "strategie.objectifs": "Exemple : taux de remplissage, panier moyen, réachat, avis, marge prestation.",
+        "strategie.plan-action": "Exemple : planning, offres saisonnières, stocks, communication, formation technique.",
+        "marketing.confiance": "Exemple : avant/après, avis Google, photos, hygiène, recommandations, réseaux sociaux.",
+        "marketing.decision": "Exemple : réservation simple, prestations claires, tarifs, disponibilités, forfaits.",
+        "marketing.lien": "Exemple : rappels rendez-vous, fidélité, offres anniversaire, conseils après prestation.",
+        "finance.pilotage": "Exemple : panier moyen, taux de remplissage, marge produits, charges, trésorerie.",
+        "finance.facturation": "Exemple : caisse, paiements, forfaits, cartes cadeaux, rapprochement bancaire.",
+        "finance.conformite": "Exemple : hygiène, affichage tarifs, contrats, assurance, RGPD clients.",
+        "equipe.recrutement": "Exemple : praticiens, coiffeurs, apprentis, essais, protocole d’accueil.",
+        "equipe.rh": "Exemple : planning cabines, congés, formation technique, objectifs, polyvalence.",
+        "equipe.culture": "Exemple : accueil, propreté, conseil client, ponctualité, standards de prestation."
       },
       "toolRefs": [
         {
@@ -2777,18 +3165,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : prestations, clientèle, prix, expérience, spécialité, zone.",
+        "strategie.objectifs": "Exemple : taux de remplissage, panier moyen, réachat, avis, marge prestation.",
+        "strategie.plan-action": "Exemple : planning, offres saisonnières, stocks, communication, formation technique.",
+        "marketing.confiance": "Exemple : avant/après, avis Google, photos, hygiène, recommandations, réseaux sociaux.",
+        "marketing.decision": "Exemple : réservation simple, prestations claires, tarifs, disponibilités, forfaits.",
+        "marketing.lien": "Exemple : rappels rendez-vous, fidélité, offres anniversaire, conseils après prestation.",
+        "finance.pilotage": "Exemple : panier moyen, taux de remplissage, marge produits, charges, trésorerie.",
+        "finance.facturation": "Exemple : caisse, paiements, forfaits, cartes cadeaux, rapprochement bancaire.",
+        "finance.conformite": "Exemple : hygiène, affichage tarifs, contrats, assurance, RGPD clients.",
+        "equipe.recrutement": "Exemple : praticiens, coiffeurs, apprentis, essais, protocole d’accueil.",
+        "equipe.rh": "Exemple : planning cabines, congés, formation technique, objectifs, polyvalence.",
+        "equipe.culture": "Exemple : accueil, propreté, conseil client, ponctualité, standards de prestation."
       },
       "toolRefs": [
         {
@@ -2876,18 +3264,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : prestations, clientèle, prix, expérience, spécialité, zone.",
+        "strategie.objectifs": "Exemple : taux de remplissage, panier moyen, réachat, avis, marge prestation.",
+        "strategie.plan-action": "Exemple : planning, offres saisonnières, stocks, communication, formation technique.",
+        "marketing.confiance": "Exemple : avant/après, avis Google, photos, hygiène, recommandations, réseaux sociaux.",
+        "marketing.decision": "Exemple : réservation simple, prestations claires, tarifs, disponibilités, forfaits.",
+        "marketing.lien": "Exemple : rappels rendez-vous, fidélité, offres anniversaire, conseils après prestation.",
+        "finance.pilotage": "Exemple : panier moyen, taux de remplissage, marge produits, charges, trésorerie.",
+        "finance.facturation": "Exemple : caisse, paiements, forfaits, cartes cadeaux, rapprochement bancaire.",
+        "finance.conformite": "Exemple : hygiène, affichage tarifs, contrats, assurance, RGPD clients.",
+        "equipe.recrutement": "Exemple : praticiens, coiffeurs, apprentis, essais, protocole d’accueil.",
+        "equipe.rh": "Exemple : planning cabines, congés, formation technique, objectifs, polyvalence.",
+        "equipe.culture": "Exemple : accueil, propreté, conseil client, ponctualité, standards de prestation."
       },
       "toolRefs": [
         {
@@ -2975,18 +3363,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : spécialités, patientèle, zone, parcours de soin, disponibilité.",
+        "strategie.objectifs": "Exemple : rendez-vous, délais d’attente, qualité de suivi, équilibre planning.",
+        "strategie.plan-action": "Exemple : plages de consultation, rappels, coordination, documents patients.",
+        "marketing.confiance": "Exemple : informations pratiques, recommandations, spécialités, cadre d’accueil, clarté du parcours.",
+        "marketing.decision": "Exemple : prise de rendez-vous, délais, documents à préparer, tarifs, accès au cabinet.",
+        "marketing.lien": "Exemple : rappels, suivi patient, documents utiles, messages de prévention, coordination.",
+        "finance.pilotage": "Exemple : actes réalisés, taux de remplissage, charges, trésorerie, impayés.",
+        "finance.facturation": "Exemple : feuilles de soin, règlements, rejets, relances, rapprochement bancaire.",
+        "finance.conformite": "Exemple : secret médical, RGPD santé, dossiers patients, affichages, assurances.",
+        "equipe.recrutement": "Exemple : secrétariat, remplaçants, collaborateurs, accès planning, procédures cabinet.",
+        "equipe.rh": "Exemple : planning, remplacements, coordination, formation, continuité de service.",
+        "equipe.culture": "Exemple : confidentialité, accueil patient, ponctualité, coordination, qualité de suivi."
       },
       "toolRefs": [
         {
@@ -3064,18 +3452,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : public cible, format, promesse pédagogique, niveau, certification.",
+        "strategie.objectifs": "Exemple : inscriptions, taux de complétion, satisfaction, marge, renouvellement.",
+        "strategie.plan-action": "Exemple : programme, calendrier, intervenants, communication, suivi apprenants.",
+        "marketing.confiance": "Exemple : programme détaillé, avis apprenants, résultats, extraits, références.",
+        "marketing.decision": "Exemple : objectif de formation, prérequis, programme, tarif, financement, inscription.",
+        "marketing.lien": "Exemple : relances apprenants, communauté, ressources, certificat, nouvelles sessions.",
+        "finance.pilotage": "Exemple : inscriptions, taux de remplissage, coût intervenant, marge, trésorerie.",
+        "finance.facturation": "Exemple : convention, acompte, facture, prise en charge, relance.",
+        "finance.conformite": "Exemple : Qualiopi, conventions, feuilles d’émargement, évaluations, RGPD.",
+        "equipe.recrutement": "Exemple : formateurs, intervenants, onboarding, supports, accès plateforme.",
+        "equipe.rh": "Exemple : planning formateurs, qualité pédagogique, formation interne, retours.",
+        "equipe.culture": "Exemple : pédagogie claire, ponctualité, suivi apprenant, amélioration continue."
       },
       "toolRefs": [
         {
@@ -3153,18 +3541,18 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : public cible, format, promesse pédagogique, niveau, certification.",
+        "strategie.objectifs": "Exemple : inscriptions, taux de complétion, satisfaction, marge, renouvellement.",
+        "strategie.plan-action": "Exemple : programme, calendrier, intervenants, communication, suivi apprenants.",
+        "marketing.confiance": "Exemple : programme détaillé, avis apprenants, résultats, extraits, références.",
+        "marketing.decision": "Exemple : objectif de formation, prérequis, programme, tarif, financement, inscription.",
+        "marketing.lien": "Exemple : relances apprenants, communauté, ressources, certificat, nouvelles sessions.",
+        "finance.pilotage": "Exemple : inscriptions, taux de remplissage, coût intervenant, marge, trésorerie.",
+        "finance.facturation": "Exemple : convention, acompte, facture, prise en charge, relance.",
+        "finance.conformite": "Exemple : Qualiopi, conventions, feuilles d’émargement, évaluations, RGPD.",
+        "equipe.recrutement": "Exemple : formateurs, intervenants, onboarding, supports, accès plateforme.",
+        "equipe.rh": "Exemple : planning formateurs, qualité pédagogique, formation interne, retours.",
+        "equipe.culture": "Exemple : pédagogie claire, ponctualité, suivi apprenant, amélioration continue."
       },
       "toolRefs": [
         {
@@ -3242,18 +3630,1584 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : offre, cible, promesse, différenciation.",
-        "strategie.objectifs": "Exemple : objectifs annuels, priorités trimestrielles, indicateurs, revues.",
-        "strategie.plan-action": "Exemple : actions prioritaires, responsables, échéances, suivi des résultats.",
-        "marketing.confiance": "Exemple : recommandations, networking, contenu expert, témoignages, partenariats.",
-        "marketing.decision": "Exemple : rendez-vous découverte, audit, proposition commerciale, démonstration, devis personnalisé.",
-        "marketing.lien": "Exemple : suivi régulier, newsletter, alertes, enquêtes de satisfaction, événements clients.",
-        "finance.pilotage": "Exemple : tableau de bord, suivi du chiffre d’affaires, prévisions de trésorerie.",
-        "finance.facturation": "Exemple : émission de factures, relances automatiques, suivi des impayés.",
-        "finance.conformite": "Exemple : déclarations fiscales, contrats de travail, conformité réglementaire.",
-        "equipe.recrutement": "Exemple : publication d’offres, entretiens, parcours d’onboarding.",
-        "equipe.rh": "Exemple : suivi des congés, entretiens annuels, plan de formation.",
-        "equipe.culture": "Exemple : charte d’entreprise, communication interne, événements d’équipe."
+        "strategie.positionnement": "Exemple : gamme, capacité, qualité, délais, marchés servis, différenciation.",
+        "strategie.objectifs": "Exemple : volumes, marge, rebuts, délais, stock, satisfaction client.",
+        "strategie.plan-action": "Exemple : planning production, achats, maintenance, contrôle qualité, livraisons.",
+        "marketing.confiance": "Exemple : références, certifications, qualité, délais tenus, démonstrations.",
+        "marketing.decision": "Exemple : cahier des charges, prototype, devis, délai, capacité, conditions.",
+        "marketing.lien": "Exemple : suivi commande, SAV, réassort, reporting qualité, amélioration produit.",
+        "finance.pilotage": "Exemple : coût de revient, stock, marge, rebuts, trésorerie, capacité.",
+        "finance.facturation": "Exemple : devis, commandes, acomptes, factures, relances, avoirs.",
+        "finance.conformite": "Exemple : normes, sécurité, traçabilité, contrats, assurances, documents qualité.",
+        "equipe.recrutement": "Exemple : opérateurs, techniciens, formation poste, sécurité, procédures.",
+        "equipe.rh": "Exemple : planning ateliers, polyvalence, sécurité, maintenance, compétences.",
+        "equipe.culture": "Exemple : sécurité, qualité, respect des délais, amélioration continue, discipline atelier."
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
+    },
+    {
+      "id": "e37",
+      "slug": "plomberie-chauffage",
+      "name": "Plomberie & chauffage",
+      "category": "Système opérationnel",
+      "description": "Pilotez dépannages, devis, chantiers et interventions techniques.",
+      "tags": [
+        "BTP",
+        "Intervention",
+        "Système"
+      ],
+      "icon": "Wrench",
+      "price": "",
+      "sectorLabel": "BTP & services techniques",
+      "editorialSubtitle": "Gardez les urgences, devis et interventions sous contrôle.",
+      "imageTitle": "Plomberie & chauffage",
+      "imageSubtitle": "Aperçu du système opérationnel pour plomberie & chauffage",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Demandes & urgences",
+          "description": "Qualifier les demandes client, urgences, disponibilités et informations terrain.",
+          "examples": "Exemple : fuite, panne chaudière, adresse, urgence, créneau proposé."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Devis & acomptes",
+          "description": "Suivre les devis, validations, acomptes et relances avant intervention.",
+          "examples": "Exemple : devis envoyé, accord client, acompte reçu, relance."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Planning interventions",
+          "description": "Planifier les tournées, techniciens, créneaux et contraintes d’accès.",
+          "examples": "Exemple : technicien, adresse, matériel, accès, prochain créneau."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Pièces & matériel",
+          "description": "Suivre les pièces, consommables, fournisseurs et commandes nécessaires.",
+          "examples": "Exemple : pièce chaudière, raccord, fournisseur, délai, stock."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Suivi client",
+          "description": "Centraliser comptes-rendus, photos, réserves et prochaines actions.",
+          "examples": "Exemple : intervention terminée, photo, réserve, facture, avis client."
+        }
+      ],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : type de chantier, zone, niveau de finition, garanties, spécialité.",
+        "strategie.objectifs": "Exemple : chantiers signés, marge, délais, taux d’occupation, satisfaction client.",
+        "strategie.plan-action": "Exemple : visites, devis, planning chantier, achats, coordination sous-traitants.",
+        "marketing.confiance": "Exemple : photos chantiers, avis clients, assurances, garanties, recommandations.",
+        "marketing.decision": "Exemple : visite chantier, devis détaillé, délais, matériaux, acompte, garanties.",
+        "marketing.lien": "Exemple : suivi chantier, photos d’avancement, SAV, entretien, recommandations.",
+        "finance.pilotage": "Exemple : marge chantier, achats, main-d’œuvre, acomptes, trésorerie.",
+        "finance.facturation": "Exemple : devis signé, acompte, situations, facture finale, relances.",
+        "finance.conformite": "Exemple : décennale, devis, sécurité chantier, contrats, attestations, normes.",
+        "equipe.recrutement": "Exemple : ouvriers, apprentis, sous-traitants, habilitations, accueil chantier.",
+        "equipe.rh": "Exemple : planning équipes, habilitations, sécurité, congés, compétences chantier.",
+        "equipe.culture": "Exemple : sécurité, ponctualité, propreté chantier, qualité de finition, communication."
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "obat",
+          "usage": "Gérer les devis et la facturation d’une activité BTP."
+        },
+        {
+          "slug": "vertuoza",
+          "usage": "Suivre les chantiers et la rentabilité plus facilement."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        }
+      ]
+    },
+    {
+      "id": "e38",
+      "slug": "electricite-generale",
+      "name": "Électricité générale",
+      "category": "Système opérationnel",
+      "description": "Structurez dépannages, mises aux normes, devis et chantiers électriques.",
+      "tags": [
+        "BTP",
+        "Intervention",
+        "Système"
+      ],
+      "icon": "Wrench",
+      "price": "",
+      "sectorLabel": "BTP & services techniques",
+      "editorialSubtitle": "Pilotez interventions, conformité et suivi client sans perdre le fil.",
+      "imageTitle": "Électricité générale",
+      "imageSubtitle": "Aperçu du système opérationnel pour électricité générale",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Diagnostic",
+          "description": "Qualifier les pannes, installations, contraintes et risques avant intervention.",
+          "examples": "Exemple : panne, tableau, puissance, photos, urgence."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Devis & travaux",
+          "description": "Suivre les devis, validations, matériel et étapes de réalisation.",
+          "examples": "Exemple : mise aux normes, devis signé, matériel commandé, étape chantier."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Planning terrain",
+          "description": "Organiser les interventions, techniciens et créneaux client.",
+          "examples": "Exemple : adresse, technicien, durée, accès, rappel."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Conformité",
+          "description": "Sécuriser les contrôles, normes et documents utiles.",
+          "examples": "Exemple : contrôle, attestation, réserve, validation."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "SAV",
+          "description": "Suivre les retours client, garanties, réserves et actions correctives.",
+          "examples": "Exemple : retour panne, garantie, photo, résolution."
+        }
+      ],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : type de chantier, zone, niveau de finition, garanties, spécialité.",
+        "strategie.objectifs": "Exemple : chantiers signés, marge, délais, taux d’occupation, satisfaction client.",
+        "strategie.plan-action": "Exemple : visites, devis, planning chantier, achats, coordination sous-traitants.",
+        "marketing.confiance": "Exemple : photos chantiers, avis clients, assurances, garanties, recommandations.",
+        "marketing.decision": "Exemple : visite chantier, devis détaillé, délais, matériaux, acompte, garanties.",
+        "marketing.lien": "Exemple : suivi chantier, photos d’avancement, SAV, entretien, recommandations.",
+        "finance.pilotage": "Exemple : marge chantier, achats, main-d’œuvre, acomptes, trésorerie.",
+        "finance.facturation": "Exemple : devis signé, acompte, situations, facture finale, relances.",
+        "finance.conformite": "Exemple : décennale, devis, sécurité chantier, contrats, attestations, normes.",
+        "equipe.recrutement": "Exemple : ouvriers, apprentis, sous-traitants, habilitations, accueil chantier.",
+        "equipe.rh": "Exemple : planning équipes, habilitations, sécurité, congés, compétences chantier.",
+        "equipe.culture": "Exemple : sécurité, ponctualité, propreté chantier, qualité de finition, communication."
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "obat",
+          "usage": "Gérer les devis et la facturation d’une activité BTP."
+        },
+        {
+          "slug": "vertuoza",
+          "usage": "Suivre les chantiers et la rentabilité plus facilement."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        }
+      ]
+    },
+    {
+      "id": "e39",
+      "slug": "renovation-interieur",
+      "name": "Rénovation intérieur",
+      "category": "Système opérationnel",
+      "description": "Organisez devis, chantiers, matériaux et finitions pour les travaux intérieurs.",
+      "tags": [
+        "BTP",
+        "Chantier",
+        "Système"
+      ],
+      "icon": "Hammer",
+      "price": "",
+      "sectorLabel": "BTP & services techniques",
+      "editorialSubtitle": "Cadrez les chantiers intérieurs, choix client et finitions sans friction.",
+      "imageTitle": "Rénovation intérieur",
+      "imageSubtitle": "Aperçu du système opérationnel pour rénovation intérieur",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Cadrage chantier",
+          "description": "Clarifier les pièces, travaux, contraintes, choix client et planning.",
+          "examples": "Exemple : cuisine, peinture, sol, date souhaitée, contrainte."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Devis & options",
+          "description": "Suivre les devis, variantes, validations et acomptes.",
+          "examples": "Exemple : option sol, peinture, devis signé, acompte."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Matériaux",
+          "description": "Piloter achats, livraisons, quantités et ruptures possibles.",
+          "examples": "Exemple : peinture, parquet, fournisseur, livraison, manquant."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Suivi travaux",
+          "description": "Suivre les étapes, photos, réserves et validations client.",
+          "examples": "Exemple : préparation, pose, finition, photo, réserve."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Réception",
+          "description": "Formaliser la fin de chantier, réserves, facture et avis client.",
+          "examples": "Exemple : réception signée, réserve levée, solde, avis."
+        }
+      ],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : type de chantier, zone, niveau de finition, garanties, spécialité.",
+        "strategie.objectifs": "Exemple : chantiers signés, marge, délais, taux d’occupation, satisfaction client.",
+        "strategie.plan-action": "Exemple : visites, devis, planning chantier, achats, coordination sous-traitants.",
+        "marketing.confiance": "Exemple : photos chantiers, avis clients, assurances, garanties, recommandations.",
+        "marketing.decision": "Exemple : visite chantier, devis détaillé, délais, matériaux, acompte, garanties.",
+        "marketing.lien": "Exemple : suivi chantier, photos d’avancement, SAV, entretien, recommandations.",
+        "finance.pilotage": "Exemple : marge chantier, achats, main-d’œuvre, acomptes, trésorerie.",
+        "finance.facturation": "Exemple : devis signé, acompte, situations, facture finale, relances.",
+        "finance.conformite": "Exemple : décennale, devis, sécurité chantier, contrats, attestations, normes.",
+        "equipe.recrutement": "Exemple : ouvriers, apprentis, sous-traitants, habilitations, accueil chantier.",
+        "equipe.rh": "Exemple : planning équipes, habilitations, sécurité, congés, compétences chantier.",
+        "equipe.culture": "Exemple : sécurité, ponctualité, propreté chantier, qualité de finition, communication."
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "obat",
+          "usage": "Gérer les devis et la facturation d’une activité BTP."
+        },
+        {
+          "slug": "vertuoza",
+          "usage": "Suivre les chantiers et la rentabilité plus facilement."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        }
+      ]
+    },
+    {
+      "id": "e40",
+      "slug": "menuiserie-agencement",
+      "name": "Menuiserie & agencement",
+      "category": "Système opérationnel",
+      "description": "Pilotez prises de cotes, fabrication, pose et suivi client.",
+      "tags": [
+        "BTP",
+        "Atelier",
+        "Système"
+      ],
+      "icon": "Hammer",
+      "price": "",
+      "sectorLabel": "BTP & services techniques",
+      "editorialSubtitle": "Reliez devis, atelier, pose et validations client dans un même suivi.",
+      "imageTitle": "Menuiserie & agencement",
+      "imageSubtitle": "Aperçu du système opérationnel pour menuiserie & agencement",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Prise de cotes",
+          "description": "Centraliser mesures, plans, photos et contraintes de pose.",
+          "examples": "Exemple : dimensions, plan, essence, mur, accès."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Devis & validation",
+          "description": "Suivre les variantes, matériaux, délais et accords client.",
+          "examples": "Exemple : placard, escalier, bois, devis signé."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Fabrication",
+          "description": "Organiser atelier, achats, étapes et contrôles qualité.",
+          "examples": "Exemple : découpe, assemblage, finition, contrôle."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Pose",
+          "description": "Planifier pose, équipe, accès et réserves éventuelles.",
+          "examples": "Exemple : créneau, poseur, adresse, réserve."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "SAV",
+          "description": "Suivre ajustements, retouches, garanties et satisfaction client.",
+          "examples": "Exemple : réglage, retouche, garantie, avis."
+        }
+      ],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : type de chantier, zone, niveau de finition, garanties, spécialité.",
+        "strategie.objectifs": "Exemple : chantiers signés, marge, délais, taux d’occupation, satisfaction client.",
+        "strategie.plan-action": "Exemple : visites, devis, planning chantier, achats, coordination sous-traitants.",
+        "marketing.confiance": "Exemple : photos chantiers, avis clients, assurances, garanties, recommandations.",
+        "marketing.decision": "Exemple : visite chantier, devis détaillé, délais, matériaux, acompte, garanties.",
+        "marketing.lien": "Exemple : suivi chantier, photos d’avancement, SAV, entretien, recommandations.",
+        "finance.pilotage": "Exemple : marge chantier, achats, main-d’œuvre, acomptes, trésorerie.",
+        "finance.facturation": "Exemple : devis signé, acompte, situations, facture finale, relances.",
+        "finance.conformite": "Exemple : décennale, devis, sécurité chantier, contrats, attestations, normes.",
+        "equipe.recrutement": "Exemple : ouvriers, apprentis, sous-traitants, habilitations, accueil chantier.",
+        "equipe.rh": "Exemple : planning équipes, habilitations, sécurité, congés, compétences chantier.",
+        "equipe.culture": "Exemple : sécurité, ponctualité, propreté chantier, qualité de finition, communication."
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "obat",
+          "usage": "Gérer les devis et la facturation d’une activité BTP."
+        },
+        {
+          "slug": "vertuoza",
+          "usage": "Suivre les chantiers et la rentabilité plus facilement."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        }
+      ]
+    },
+    {
+      "id": "e41",
+      "slug": "maconnerie-gros-oeuvre",
+      "name": "Maçonnerie & gros œuvre",
+      "category": "Système opérationnel",
+      "description": "Structurez les chantiers lourds, approvisionnements et coordination terrain.",
+      "tags": [
+        "BTP",
+        "Chantier",
+        "Système"
+      ],
+      "icon": "Building2",
+      "price": "",
+      "sectorLabel": "BTP & services techniques",
+      "editorialSubtitle": "Gardez planning, matériaux et sous-traitants alignés sur chaque chantier.",
+      "imageTitle": "Maçonnerie & gros œuvre",
+      "imageSubtitle": "Aperçu du système opérationnel pour maçonnerie & gros œuvre",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Préparation chantier",
+          "description": "Cadrer plans, accès, contraintes, sécurité et jalons.",
+          "examples": "Exemple : plan, accès camion, fondation, jalon, sécurité."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Approvisionnement",
+          "description": "Suivre matériaux, livraisons, fournisseurs et ruptures.",
+          "examples": "Exemple : béton, parpaing, livraison, quantité, retard."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Planning équipes",
+          "description": "Coordonner équipes, sous-traitants et séquences chantier.",
+          "examples": "Exemple : équipe, sous-traitant, étape, météo, retard."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Sécurité & conformité",
+          "description": "Garder les documents, contrôles et obligations à jour.",
+          "examples": "Exemple : assurance, contrôle, réserve, conformité."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Réception",
+          "description": "Suivre réserves, levées, facturation et clôture chantier.",
+          "examples": "Exemple : réserve, photo, action, facture, solde."
+        }
+      ],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : type de chantier, zone, niveau de finition, garanties, spécialité.",
+        "strategie.objectifs": "Exemple : chantiers signés, marge, délais, taux d’occupation, satisfaction client.",
+        "strategie.plan-action": "Exemple : visites, devis, planning chantier, achats, coordination sous-traitants.",
+        "marketing.confiance": "Exemple : photos chantiers, avis clients, assurances, garanties, recommandations.",
+        "marketing.decision": "Exemple : visite chantier, devis détaillé, délais, matériaux, acompte, garanties.",
+        "marketing.lien": "Exemple : suivi chantier, photos d’avancement, SAV, entretien, recommandations.",
+        "finance.pilotage": "Exemple : marge chantier, achats, main-d’œuvre, acomptes, trésorerie.",
+        "finance.facturation": "Exemple : devis signé, acompte, situations, facture finale, relances.",
+        "finance.conformite": "Exemple : décennale, devis, sécurité chantier, contrats, attestations, normes.",
+        "equipe.recrutement": "Exemple : ouvriers, apprentis, sous-traitants, habilitations, accueil chantier.",
+        "equipe.rh": "Exemple : planning équipes, habilitations, sécurité, congés, compétences chantier.",
+        "equipe.culture": "Exemple : sécurité, ponctualité, propreté chantier, qualité de finition, communication."
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "obat",
+          "usage": "Gérer les devis et la facturation d’une activité BTP."
+        },
+        {
+          "slug": "vertuoza",
+          "usage": "Suivre les chantiers et la rentabilité plus facilement."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        }
+      ]
+    },
+    {
+      "id": "e42",
+      "slug": "paysagiste",
+      "name": "Paysagiste",
+      "category": "Système opérationnel",
+      "description": "Organisez devis, tournées, chantiers extérieurs et entretien récurrent.",
+      "tags": [
+        "Terrain",
+        "Service",
+        "Système"
+      ],
+      "icon": "Sparkles",
+      "price": "",
+      "sectorLabel": "BTP & services techniques",
+      "editorialSubtitle": "Planifiez chantiers, entretien et matériel sans perdre les demandes client.",
+      "imageTitle": "Paysagiste",
+      "imageSubtitle": "Aperçu du système opérationnel pour paysagiste",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Demandes client",
+          "description": "Qualifier les besoins, surfaces, contraintes et photos terrain.",
+          "examples": "Exemple : jardin, terrasse, haie, photo, accès."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Devis & contrats",
+          "description": "Suivre devis ponctuels, contrats d’entretien et relances.",
+          "examples": "Exemple : entretien mensuel, devis signé, relance."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Planning tournées",
+          "description": "Organiser équipes, météo, créneaux et zones géographiques.",
+          "examples": "Exemple : tournée, équipe, météo, client, durée."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Matériel & végétaux",
+          "description": "Suivre matériel, consommables, végétaux et achats.",
+          "examples": "Exemple : tondeuse, plants, terreau, fournisseur."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Suivi qualité",
+          "description": "Centraliser photos, retours client, réserves et prochaines visites.",
+          "examples": "Exemple : photo après intervention, remarque, prochaine tonte."
+        }
+      ],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : type de chantier, zone, niveau de finition, garanties, spécialité.",
+        "strategie.objectifs": "Exemple : chantiers signés, marge, délais, taux d’occupation, satisfaction client.",
+        "strategie.plan-action": "Exemple : visites, devis, planning chantier, achats, coordination sous-traitants.",
+        "marketing.confiance": "Exemple : photos chantiers, avis clients, assurances, garanties, recommandations.",
+        "marketing.decision": "Exemple : visite chantier, devis détaillé, délais, matériaux, acompte, garanties.",
+        "marketing.lien": "Exemple : suivi chantier, photos d’avancement, SAV, entretien, recommandations.",
+        "finance.pilotage": "Exemple : marge chantier, achats, main-d’œuvre, acomptes, trésorerie.",
+        "finance.facturation": "Exemple : devis signé, acompte, situations, facture finale, relances.",
+        "finance.conformite": "Exemple : décennale, devis, sécurité chantier, contrats, attestations, normes.",
+        "equipe.recrutement": "Exemple : ouvriers, apprentis, sous-traitants, habilitations, accueil chantier.",
+        "equipe.rh": "Exemple : planning équipes, habilitations, sécurité, congés, compétences chantier.",
+        "equipe.culture": "Exemple : sécurité, ponctualité, propreté chantier, qualité de finition, communication."
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "obat",
+          "usage": "Gérer les devis et la facturation d’une activité BTP."
+        },
+        {
+          "slug": "vertuoza",
+          "usage": "Suivre les chantiers et la rentabilité plus facilement."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        }
+      ]
+    },
+    {
+      "id": "e43",
+      "slug": "garage-automobile",
+      "name": "Garage automobile",
+      "category": "Système opérationnel",
+      "description": "Pilotez rendez-vous, diagnostics, pièces, réparations et facturation.",
+      "tags": [
+        "Auto",
+        "Réparation",
+        "Système"
+      ],
+      "icon": "Car",
+      "price": "",
+      "sectorLabel": "Automobile & réparation",
+      "editorialSubtitle": "Gardez rendez-vous, pièces et réparations alignés du diagnostic à la facture.",
+      "imageTitle": "Garage automobile",
+      "imageSubtitle": "Aperçu du système opérationnel pour garage automobile",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Prise de rendez-vous",
+          "description": "Qualifier véhicule, panne, disponibilité et urgence client.",
+          "examples": "Exemple : modèle, kilométrage, voyant, créneau, urgence."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Diagnostic",
+          "description": "Suivre contrôles, devis, accord client et priorités de réparation.",
+          "examples": "Exemple : diagnostic, devis, accord, priorité."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Pièces",
+          "description": "Piloter commandes, fournisseurs, délais et stocks atelier.",
+          "examples": "Exemple : pièce, référence, fournisseur, livraison."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Atelier",
+          "description": "Organiser mécaniciens, ponts, tâches et statuts de réparation.",
+          "examples": "Exemple : pont, mécanicien, tâche, statut, retard."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Restitution",
+          "description": "Suivre contrôle final, facture, paiement et avis client.",
+          "examples": "Exemple : véhicule prêt, facture, paiement, avis."
+        }
+      ],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : spécialité, marques, zone, délais, niveau de service, garanties.",
+        "strategie.objectifs": "Exemple : véhicules traités, panier moyen, marge pièces, délais, avis clients.",
+        "strategie.plan-action": "Exemple : planning atelier, pièces, devis, restitution, suivi client.",
+        "marketing.confiance": "Exemple : avis clients, photos réparations, garanties, transparence devis, recommandations.",
+        "marketing.decision": "Exemple : diagnostic, devis, délai, disponibilité pièces, véhicule de courtoisie.",
+        "marketing.lien": "Exemple : rappels entretien, contrôle, suivi réparation, fidélité, avis après passage.",
+        "finance.pilotage": "Exemple : marge pièces, heures facturées, stock, trésorerie, panier moyen.",
+        "finance.facturation": "Exemple : ordre de réparation, devis, facture, acompte, relance.",
+        "finance.conformite": "Exemple : ordre de réparation, garanties, déchets, sécurité, assurances.",
+        "equipe.recrutement": "Exemple : mécaniciens, carrossiers, apprentis, habilitations, prise en main atelier.",
+        "equipe.rh": "Exemple : planning atelier, formation technique, sécurité, congés, polyvalence.",
+        "equipe.culture": "Exemple : transparence, propreté atelier, sécurité, qualité réparation, ponctualité."
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
+    },
+    {
+      "id": "e44",
+      "slug": "carrosserie",
+      "name": "Carrosserie",
+      "category": "Système opérationnel",
+      "description": "Structurez sinistres, devis, pièces, travaux et relations assurance.",
+      "tags": [
+        "Auto",
+        "Réparation",
+        "Système"
+      ],
+      "icon": "Car",
+      "price": "",
+      "sectorLabel": "Automobile & réparation",
+      "editorialSubtitle": "Suivez sinistres, accords assurance et avancement atelier sans friction.",
+      "imageTitle": "Carrosserie",
+      "imageSubtitle": "Aperçu du système opérationnel pour carrosserie",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Dossier sinistre",
+          "description": "Centraliser photos, constat, assurance, expert et coordonnées client.",
+          "examples": "Exemple : photo choc, constat, expert, assurance."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Devis & accord",
+          "description": "Suivre devis, accord client, accord assurance et franchise.",
+          "examples": "Exemple : devis envoyé, accord expert, franchise."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Pièces & peinture",
+          "description": "Piloter pièces, teintes, fournisseurs et délais.",
+          "examples": "Exemple : pare-chocs, teinte, fournisseur, délai."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Planning atelier",
+          "description": "Organiser réparation, peinture, séchage et contrôle qualité.",
+          "examples": "Exemple : démontage, peinture, remontage, contrôle."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Livraison véhicule",
+          "description": "Suivre restitution, paiement, documents et satisfaction client.",
+          "examples": "Exemple : véhicule prêt, facture, règlement, avis."
+        }
+      ],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : spécialité, marques, zone, délais, niveau de service, garanties.",
+        "strategie.objectifs": "Exemple : véhicules traités, panier moyen, marge pièces, délais, avis clients.",
+        "strategie.plan-action": "Exemple : planning atelier, pièces, devis, restitution, suivi client.",
+        "marketing.confiance": "Exemple : avis clients, photos réparations, garanties, transparence devis, recommandations.",
+        "marketing.decision": "Exemple : diagnostic, devis, délai, disponibilité pièces, véhicule de courtoisie.",
+        "marketing.lien": "Exemple : rappels entretien, contrôle, suivi réparation, fidélité, avis après passage.",
+        "finance.pilotage": "Exemple : marge pièces, heures facturées, stock, trésorerie, panier moyen.",
+        "finance.facturation": "Exemple : ordre de réparation, devis, facture, acompte, relance.",
+        "finance.conformite": "Exemple : ordre de réparation, garanties, déchets, sécurité, assurances.",
+        "equipe.recrutement": "Exemple : mécaniciens, carrossiers, apprentis, habilitations, prise en main atelier.",
+        "equipe.rh": "Exemple : planning atelier, formation technique, sécurité, congés, polyvalence.",
+        "equipe.culture": "Exemple : transparence, propreté atelier, sécurité, qualité réparation, ponctualité."
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
+    },
+    {
+      "id": "e45",
+      "slug": "commerce-alimentaire",
+      "name": "Commerce alimentaire",
+      "category": "Système opérationnel",
+      "description": "Pilotez stocks frais, commandes, caisse et hygiène au quotidien.",
+      "tags": [
+        "Retail",
+        "Alimentaire",
+        "Système"
+      ],
+      "icon": "Store",
+      "price": "",
+      "sectorLabel": "Commerce & retail",
+      "editorialSubtitle": "Gardez les produits, fournisseurs et routines magasin sous contrôle.",
+      "imageTitle": "Commerce alimentaire",
+      "imageSubtitle": "Aperçu du système opérationnel pour commerce alimentaire",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Stocks frais",
+          "description": "Suivre stocks, DLC, pertes et ruptures sur les produits sensibles.",
+          "examples": "Exemple : DLC, lot, perte, seuil, rupture."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Commandes fournisseurs",
+          "description": "Organiser commandes, réceptions, écarts et litiges fournisseurs.",
+          "examples": "Exemple : commande, réception, écart, fournisseur."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Caisse & clôture",
+          "description": "Piloter encaissements, clôtures et écarts de caisse.",
+          "examples": "Exemple : ticket, caisse, écart, clôture."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Hygiène",
+          "description": "Garder les contrôles hygiène, températures et nettoyage à jour.",
+          "examples": "Exemple : température frigo, nettoyage, traçabilité."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Client & fidélité",
+          "description": "Suivre demandes, commandes spéciales et fidélisation locale.",
+          "examples": "Exemple : commande client, carte fidélité, avis."
+        }
+      ],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : assortiment, clientèle, prix, emplacement, expérience boutique.",
+        "strategie.objectifs": "Exemple : panier moyen, fréquentation, marge, stock, taux de fidélité.",
+        "strategie.plan-action": "Exemple : vitrines, achats, animations, promotions, suivi des ventes.",
+        "marketing.confiance": "Exemple : vitrine, avis Google, photos produits, conseil vendeur, présence locale.",
+        "marketing.decision": "Exemple : fraîcheur, disponibilité, prix clair, conseil, paiement rapide.",
+        "marketing.lien": "Exemple : carte fidélité, nouveautés, offres saisonnières, SMS, réseaux sociaux.",
+        "finance.pilotage": "Exemple : panier moyen, marge, stock dormant, trésorerie, ventes par rayon.",
+        "finance.facturation": "Exemple : caisse, tickets, paiements, avoirs, rapprochement bancaire.",
+        "finance.conformite": "Exemple : traçabilité, hygiène, caisse, TVA, affichage prix, inventaire.",
+        "equipe.recrutement": "Exemple : vendeurs, saisonniers, formation caisse, accueil, ouverture boutique.",
+        "equipe.rh": "Exemple : planning, congés, objectifs boutique, polyvalence, formation vente.",
+        "equipe.culture": "Exemple : accueil, conseil, tenue de rayon, esprit boutique, standards client."
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
+    },
+    {
+      "id": "e46",
+      "slug": "boutique-specialisee",
+      "name": "Boutique spécialisée",
+      "category": "Système opérationnel",
+      "description": "Structurez stocks, fournisseurs, conseil client et ventes magasin.",
+      "tags": [
+        "Retail",
+        "Vente",
+        "Système"
+      ],
+      "icon": "Store",
+      "price": "",
+      "sectorLabel": "Commerce & retail",
+      "editorialSubtitle": "Pilotez assortiment, stock et expérience client dans une boutique claire.",
+      "imageTitle": "Boutique spécialisée",
+      "imageSubtitle": "Aperçu du système opérationnel pour boutique spécialisée",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Assortiment",
+          "description": "Suivre références, collections, nouveautés et produits à sortir.",
+          "examples": "Exemple : référence, collection, nouveauté, fin de série."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Stocks & achats",
+          "description": "Piloter commandes, réceptions, seuils et ruptures.",
+          "examples": "Exemple : seuil, fournisseur, réception, rupture."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Vente conseil",
+          "description": "Centraliser demandes client, réservations et commandes spéciales.",
+          "examples": "Exemple : réservation, conseil, commande client."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Caisse & retours",
+          "description": "Suivre encaissements, retours, avoirs et litiges.",
+          "examples": "Exemple : retour, avoir, paiement, réclamation."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Routines magasin",
+          "description": "Standardiser ouverture, merchandising, rangement et fermeture.",
+          "examples": "Exemple : checklist ouverture, rayon, vitrine, fermeture."
+        }
+      ],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : assortiment, clientèle, prix, emplacement, expérience boutique.",
+        "strategie.objectifs": "Exemple : panier moyen, fréquentation, marge, stock, taux de fidélité.",
+        "strategie.plan-action": "Exemple : vitrines, achats, animations, promotions, suivi des ventes.",
+        "marketing.confiance": "Exemple : vitrine, avis Google, photos produits, conseil vendeur, présence locale.",
+        "marketing.decision": "Exemple : disponibilité produit, conseil, prix clair, paiement rapide, retour simple.",
+        "marketing.lien": "Exemple : carte fidélité, nouveautés, offres saisonnières, SMS, réseaux sociaux.",
+        "finance.pilotage": "Exemple : panier moyen, marge, stock dormant, trésorerie, ventes par rayon.",
+        "finance.facturation": "Exemple : caisse, tickets, paiements, avoirs, rapprochement bancaire.",
+        "finance.conformite": "Exemple : caisse, TVA, affichages, garanties, contrats, inventaire.",
+        "equipe.recrutement": "Exemple : vendeurs, saisonniers, formation caisse, accueil, ouverture boutique.",
+        "equipe.rh": "Exemple : planning, congés, objectifs boutique, polyvalence, formation vente.",
+        "equipe.culture": "Exemple : accueil, conseil, tenue de rayon, esprit boutique, standards client."
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
+    },
+    {
+      "id": "e47",
+      "slug": "tabac-presse-point-relais",
+      "name": "Tabac / presse / point relais",
+      "category": "Système opérationnel",
+      "description": "Organisez flux clients, caisse, stocks réglementés et colis.",
+      "tags": [
+        "Retail",
+        "Proximité",
+        "Système"
+      ],
+      "icon": "Newspaper",
+      "price": "",
+      "sectorLabel": "Commerce & retail",
+      "editorialSubtitle": "Tenez caisse, stocks et services de proximité sans confusion.",
+      "imageTitle": "Tabac / presse / point relais",
+      "imageSubtitle": "Aperçu du système opérationnel pour tabac presse point relais",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Flux client",
+          "description": "Organiser les pics, files, services rapides et demandes récurrentes.",
+          "examples": "Exemple : tabac, presse, colis, paiement, file."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Stocks réglementés",
+          "description": "Suivre stocks, commandes, seuils et produits sensibles.",
+          "examples": "Exemple : cartouche, presse, seuil, commande."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Point relais",
+          "description": "Piloter réception, stockage, remise et anomalies colis.",
+          "examples": "Exemple : colis reçu, client, anomalie, retour."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Caisse",
+          "description": "Suivre clôture, écarts, dépôts et moyens de paiement.",
+          "examples": "Exemple : caisse, écart, dépôt, clôture."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Routines boutique",
+          "description": "Standardiser ouverture, fermeture, sécurité et contrôles.",
+          "examples": "Exemple : ouverture, coffre, rangement, fermeture."
+        }
+      ],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : assortiment, clientèle, prix, emplacement, expérience boutique.",
+        "strategie.objectifs": "Exemple : panier moyen, fréquentation, marge, stock, taux de fidélité.",
+        "strategie.plan-action": "Exemple : vitrines, achats, animations, promotions, suivi des ventes.",
+        "marketing.confiance": "Exemple : vitrine, avis Google, photos produits, conseil vendeur, présence locale.",
+        "marketing.decision": "Exemple : horaires, services disponibles, file rapide, point relais, paiement.",
+        "marketing.lien": "Exemple : habitués, services récurrents, nouveautés, affichage local, fidélité.",
+        "finance.pilotage": "Exemple : panier moyen, marge, stock dormant, trésorerie, ventes par rayon.",
+        "finance.facturation": "Exemple : caisse, tickets, paiements, avoirs, rapprochement bancaire.",
+        "finance.conformite": "Exemple : caisse, TVA, affichages, garanties, contrats, inventaire.",
+        "equipe.recrutement": "Exemple : vendeurs, saisonniers, formation caisse, accueil, ouverture boutique.",
+        "equipe.rh": "Exemple : planning, congés, objectifs boutique, polyvalence, formation vente.",
+        "equipe.culture": "Exemple : accueil, conseil, tenue de rayon, esprit boutique, standards client."
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
+    },
+    {
+      "id": "e48",
+      "slug": "bar-cafe",
+      "name": "Bar / café",
+      "category": "Système opérationnel",
+      "description": "Pilotez service, stocks, caisse, équipes et routines d’ouverture.",
+      "tags": [
+        "Restauration",
+        "Service",
+        "Système"
+      ],
+      "icon": "ChefHat",
+      "price": "",
+      "sectorLabel": "Restauration",
+      "editorialSubtitle": "Gardez stocks, service et caisse alignés du matin à la fermeture.",
+      "imageTitle": "Bar / café",
+      "imageSubtitle": "Aperçu du système opérationnel pour bar / café",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Stocks boissons",
+          "description": "Suivre boissons, consommables, commandes et ruptures.",
+          "examples": "Exemple : café, bière, sirop, seuil, livraison."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Service",
+          "description": "Organiser salle, terrasse, commandes et demandes client.",
+          "examples": "Exemple : terrasse, commande, table, remarque client."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Caisse",
+          "description": "Piloter encaissements, clôture et écarts de caisse.",
+          "examples": "Exemple : ticket, paiement, écart, clôture."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Planning équipe",
+          "description": "Suivre shifts, remplacements et pics d’activité.",
+          "examples": "Exemple : shift matin, extra, remplacement, événement."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Hygiène & ouverture",
+          "description": "Standardiser nettoyage, ouverture, fermeture et contrôles.",
+          "examples": "Exemple : nettoyage, frigo, terrasse, fermeture."
+        }
+      ],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : concept, carte, prix, emplacement, expérience client, différenciation.",
+        "strategie.objectifs": "Exemple : ticket moyen, nombre de couverts, marge, avis clients, rotation.",
+        "strategie.plan-action": "Exemple : achats, planning équipe, lancement d’offre, communication locale, suivi marge.",
+        "marketing.confiance": "Exemple : avis Google, photos des plats, hygiène visible, bouche-à-oreille, réseaux locaux.",
+        "marketing.decision": "Exemple : carte lisible, happy hour, ambiance, horaires, réservation de groupe.",
+        "marketing.lien": "Exemple : soirées, fidélité, avis après passage, habitués, réseaux locaux.",
+        "finance.pilotage": "Exemple : ticket moyen, marge matière, masse salariale, trésorerie, pertes.",
+        "finance.facturation": "Exemple : caisse, tickets, paiements, remises, rapprochement bancaire.",
+        "finance.conformite": "Exemple : HACCP, TVA, caisse, affichages obligatoires, contrats, assurances.",
+        "equipe.recrutement": "Exemple : profils salle/cuisine, essais, planning d’intégration, procédures de service.",
+        "equipe.rh": "Exemple : planning, horaires, congés, formation hygiène, polyvalence.",
+        "equipe.culture": "Exemple : accueil, rythme de service, standards propreté, communication équipe."
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
+    },
+    {
+      "id": "e49",
+      "slug": "hotel-hebergement-independant",
+      "name": "Hôtel & hébergement indépendant",
+      "category": "Système opérationnel",
+      "description": "Structurez réservations, chambres, ménage, arrivées et avis clients.",
+      "tags": [
+        "Tourisme",
+        "Réservation",
+        "Système"
+      ],
+      "icon": "Home",
+      "price": "",
+      "sectorLabel": "Hébergement & tourisme",
+      "editorialSubtitle": "Pilotez réservations, chambres et expérience client sans perte d’information.",
+      "imageTitle": "Hôtel & hébergement indépendant",
+      "imageSubtitle": "Aperçu du système opérationnel pour hôtel & hébergement indépendant",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Réservations",
+          "description": "Suivre demandes, disponibilités, acomptes et confirmations.",
+          "examples": "Exemple : chambre, dates, acompte, confirmation."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Arrivées & départs",
+          "description": "Organiser check-in, check-out, consignes et demandes spécifiques.",
+          "examples": "Exemple : arrivée tardive, clé, petit-déjeuner, départ."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Ménage & chambres",
+          "description": "Piloter chambres à préparer, linge, incidents et contrôles.",
+          "examples": "Exemple : chambre prête, linge, anomalie, contrôle."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Maintenance",
+          "description": "Suivre petits travaux, équipements, pannes et priorités.",
+          "examples": "Exemple : serrure, douche, chauffage, action."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Avis & relation client",
+          "description": "Centraliser retours, avis, réclamations et relances.",
+          "examples": "Exemple : avis Google, réclamation, geste, relance."
+        }
+      ],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : clientèle cible, standing, services, saisonnalité, expérience séjour.",
+        "strategie.objectifs": "Exemple : taux d’occupation, prix moyen, avis, marge, réservations directes.",
+        "strategie.plan-action": "Exemple : calendrier tarifs, ménage, accueil, communication, suivi avis.",
+        "marketing.confiance": "Exemple : avis voyageurs, photos chambres, services, propreté, localisation.",
+        "marketing.decision": "Exemple : disponibilités, tarifs, conditions, réservation simple, options séjour.",
+        "marketing.lien": "Exemple : message avant séjour, avis après départ, offres retour, recommandations.",
+        "finance.pilotage": "Exemple : taux d’occupation, revenu par chambre, charges, trésorerie, saisonnalité.",
+        "finance.facturation": "Exemple : réservations, acomptes, taxes, factures, paiements, remboursements.",
+        "finance.conformite": "Exemple : taxe de séjour, sécurité, affichages, RGPD, contrats, assurances.",
+        "equipe.recrutement": "Exemple : accueil, ménage, extras, onboarding, standards de service.",
+        "equipe.rh": "Exemple : planning ménage, réception, congés, formation, saisonniers.",
+        "equipe.culture": "Exemple : accueil, propreté, réactivité, discrétion, qualité du séjour."
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
+    },
+    {
+      "id": "e50",
+      "slug": "cabinet-medical",
+      "name": "Cabinet médical",
+      "category": "Système opérationnel",
+      "description": "Organisez rendez-vous, documents, secrétariat et suivi administratif.",
+      "tags": [
+        "Santé",
+        "RDV",
+        "Système"
+      ],
+      "icon": "HeartHandshake",
+      "price": "",
+      "sectorLabel": "Santé, bien-être & esthétique",
+      "editorialSubtitle": "Gardez agenda, documents et demandes patients dans un cadre clair.",
+      "imageTitle": "Cabinet médical",
+      "imageSubtitle": "Aperçu du système opérationnel pour cabinet médical",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Agenda patients",
+          "description": "Gérer rendez-vous, annulations, urgences et disponibilités.",
+          "examples": "Exemple : consultation, créneau, annulation, urgence."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Documents",
+          "description": "Suivre documents administratifs, courriers et pièces à récupérer.",
+          "examples": "Exemple : ordonnance, courrier, compte-rendu, pièce."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Secrétariat",
+          "description": "Centraliser appels, demandes, rappels et messages patients.",
+          "examples": "Exemple : appel, demande, rappel, message."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Facturation",
+          "description": "Suivre règlements, impayés, rejets et justificatifs.",
+          "examples": "Exemple : règlement, rejet, relance, justificatif."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Qualité & confidentialité",
+          "description": "Garder les routines, accès et informations sensibles sous contrôle.",
+          "examples": "Exemple : accès dossier, consentement, confidentialité."
+        }
+      ],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : spécialités, patientèle, zone, parcours de soin, disponibilité.",
+        "strategie.objectifs": "Exemple : rendez-vous, délais d’attente, qualité de suivi, équilibre planning.",
+        "strategie.plan-action": "Exemple : plages de consultation, rappels, coordination, documents patients.",
+        "marketing.confiance": "Exemple : informations pratiques, orientation confrères, spécialités, délais, accès cabinet.",
+        "marketing.decision": "Exemple : prise de rendez-vous, motif, documents à apporter, horaires, accès.",
+        "marketing.lien": "Exemple : rappels, suivi patient, documents utiles, messages de prévention, coordination.",
+        "finance.pilotage": "Exemple : actes réalisés, taux de remplissage, charges, trésorerie, impayés.",
+        "finance.facturation": "Exemple : feuilles de soin, règlements, rejets, relances, rapprochement bancaire.",
+        "finance.conformite": "Exemple : secret médical, RGPD santé, dossiers patients, affichages, assurances.",
+        "equipe.recrutement": "Exemple : secrétariat, remplaçants, assistants, accès planning, procédures cabinet.",
+        "equipe.rh": "Exemple : planning, remplacements, coordination, formation, continuité de service.",
+        "equipe.culture": "Exemple : confidentialité, accueil patient, ponctualité, coordination, qualité de suivi."
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "planity",
+          "usage": "Remplir le planning et simplifier la prise de rendez-vous."
+        },
+        {
+          "slug": "fresha",
+          "usage": "Gérer rendez-vous, encaissements et clients au même endroit."
+        },
+        {
+          "slug": "square",
+          "usage": "Encaisser et suivre les ventes au quotidien."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        }
+      ]
+    },
+    {
+      "id": "e51",
+      "slug": "cabinet-paramedical",
+      "name": "Cabinet paramédical",
+      "category": "Système opérationnel",
+      "description": "Structurez rendez-vous, séances, suivis patients et facturation.",
+      "tags": [
+        "Santé",
+        "RDV",
+        "Système"
+      ],
+      "icon": "HeartHandshake",
+      "price": "",
+      "sectorLabel": "Santé, bien-être & esthétique",
+      "editorialSubtitle": "Pilotez agenda, séances et suivi patient sans charge administrative inutile.",
+      "imageTitle": "Cabinet paramédical",
+      "imageSubtitle": "Aperçu du système opérationnel pour cabinet paramédical",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Planning séances",
+          "description": "Organiser rendez-vous, durées, salles et praticiens.",
+          "examples": "Exemple : séance, patient, salle, praticien, durée."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Suivi patient",
+          "description": "Centraliser objectifs, notes, rappels et prochaines séances.",
+          "examples": "Exemple : objectif, note, exercice, prochain RDV."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Documents",
+          "description": "Suivre prescriptions, comptes-rendus, justificatifs et pièces.",
+          "examples": "Exemple : ordonnance, compte-rendu, justificatif."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Facturation",
+          "description": "Piloter règlements, rejets, impayés et relances.",
+          "examples": "Exemple : facture, règlement, rejet, relance."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Routines cabinet",
+          "description": "Standardiser accueil, hygiène, matériel et fermeture.",
+          "examples": "Exemple : accueil, désinfection, matériel, fermeture."
+        }
+      ],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : spécialités, patientèle, zone, parcours de soin, disponibilité.",
+        "strategie.objectifs": "Exemple : rendez-vous, délais d’attente, qualité de suivi, équilibre planning.",
+        "strategie.plan-action": "Exemple : plages de consultation, rappels, coordination, documents patients.",
+        "marketing.confiance": "Exemple : informations pratiques, recommandations, spécialités, cadre d’accueil, clarté du parcours.",
+        "marketing.decision": "Exemple : prise de rendez-vous, délais, documents à préparer, tarifs, accès au cabinet.",
+        "marketing.lien": "Exemple : rappels, suivi patient, documents utiles, messages de prévention, coordination.",
+        "finance.pilotage": "Exemple : actes réalisés, taux de remplissage, charges, trésorerie, impayés.",
+        "finance.facturation": "Exemple : feuilles de soin, règlements, rejets, relances, rapprochement bancaire.",
+        "finance.conformite": "Exemple : secret médical, RGPD santé, dossiers patients, affichages, assurances.",
+        "equipe.recrutement": "Exemple : secrétariat, remplaçants, collaborateurs, accès planning, procédures cabinet.",
+        "equipe.rh": "Exemple : planning, remplacements, coordination, formation, continuité de service.",
+        "equipe.culture": "Exemple : confidentialité, accueil patient, ponctualité, coordination, qualité de suivi."
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "planity",
+          "usage": "Remplir le planning et simplifier la prise de rendez-vous."
+        },
+        {
+          "slug": "fresha",
+          "usage": "Gérer rendez-vous, encaissements et clients au même endroit."
+        },
+        {
+          "slug": "square",
+          "usage": "Encaisser et suivre les ventes au quotidien."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        }
+      ]
+    },
+    {
+      "id": "e52",
+      "slug": "infirmier-liberal",
+      "name": "Infirmier libéral",
+      "category": "Système opérationnel",
+      "description": "Planifiez tournées, soins, prescriptions et suivi patient à domicile.",
+      "tags": [
+        "Santé",
+        "Terrain",
+        "Système"
+      ],
+      "icon": "HeartHandshake",
+      "price": "",
+      "sectorLabel": "Santé, bien-être & esthétique",
+      "editorialSubtitle": "Gardez tournées, soins et documents patients sous contrôle.",
+      "imageTitle": "Infirmier libéral",
+      "imageSubtitle": "Aperçu du système opérationnel pour infirmier libéral",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Tournées",
+          "description": "Planifier patients, adresses, horaires et priorités de soins.",
+          "examples": "Exemple : patient, adresse, soin, horaire, priorité."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Prescriptions",
+          "description": "Suivre ordonnances, validités, renouvellements et pièces manquantes.",
+          "examples": "Exemple : ordonnance, date, renouvellement, pièce."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Soins & observations",
+          "description": "Centraliser soins réalisés, observations et alertes.",
+          "examples": "Exemple : pansement, injection, observation, alerte."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Matériel",
+          "description": "Suivre consommables, stocks et matériel nécessaire aux tournées.",
+          "examples": "Exemple : compresses, seringues, stock, réassort."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Facturation",
+          "description": "Piloter actes, règlements, rejets et relances administratives.",
+          "examples": "Exemple : acte, facturation, rejet, relance."
+        }
+      ],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : spécialités, patientèle, zone, parcours de soin, disponibilité.",
+        "strategie.objectifs": "Exemple : tournées, continuité des soins, temps de trajet, équilibre planning, facturation.",
+        "strategie.plan-action": "Exemple : plages de consultation, rappels, coordination, documents patients.",
+        "marketing.confiance": "Exemple : coordination médicale, recommandations, disponibilité, secteur, clarté des soins.",
+        "marketing.decision": "Exemple : ordonnance, zone de tournée, disponibilité, documents patient, prise en charge.",
+        "marketing.lien": "Exemple : rappels, suivi patient, documents utiles, messages de prévention, coordination.",
+        "finance.pilotage": "Exemple : actes réalisés, taux de remplissage, charges, trésorerie, impayés.",
+        "finance.facturation": "Exemple : feuilles de soin, règlements, rejets, relances, rapprochement bancaire.",
+        "finance.conformite": "Exemple : secret médical, RGPD santé, dossiers patients, affichages, assurances.",
+        "equipe.recrutement": "Exemple : remplaçants, binôme, transmission, accès tournée, protocoles de soin.",
+        "equipe.rh": "Exemple : planning tournées, remplacements, repos, transmissions, continuité des soins.",
+        "equipe.culture": "Exemple : confidentialité, accueil patient, ponctualité, coordination, qualité de suivi."
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
+    },
+    {
+      "id": "e53",
+      "slug": "aide-a-domicile-menage",
+      "name": "Aide à domicile & ménage",
+      "category": "Système opérationnel",
+      "description": "Coordonnez bénéficiaires, intervenants, plannings et remplacements.",
+      "tags": [
+        "Particuliers",
+        "Service",
+        "Système"
+      ],
+      "icon": "Home",
+      "price": "",
+      "sectorLabel": "Services aux particuliers",
+      "editorialSubtitle": "Gardez les plannings, consignes et remplacements sans perte d’information.",
+      "imageTitle": "Aide à domicile & ménage",
+      "imageSubtitle": "Aperçu du système opérationnel pour aide à domicile & ménage",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Planning interventions",
+          "description": "Planifier bénéficiaires, intervenants, horaires et zones.",
+          "examples": "Exemple : bénéficiaire, intervenant, créneau, zone."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Consignes",
+          "description": "Centraliser accès, clés, habitudes, matériel et points sensibles.",
+          "examples": "Exemple : clé, accès, produit, consigne, alerte."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Remplacements",
+          "description": "Gérer absences, remplacements et changements de planning.",
+          "examples": "Exemple : absence, remplaçant, client prévenu."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Suivi qualité",
+          "description": "Suivre retours client, incidents, réclamations et actions correctives.",
+          "examples": "Exemple : retard, oubli, réclamation, correction."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Facturation",
+          "description": "Piloter heures réalisées, validations, factures et paiements.",
+          "examples": "Exemple : heures, validation, facture, paiement."
+        }
+      ],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : spécialités, patientèle, zone, parcours de soin, disponibilité.",
+        "strategie.objectifs": "Exemple : rendez-vous, délais d’attente, qualité de suivi, équilibre planning.",
+        "strategie.plan-action": "Exemple : plages de consultation, rappels, coordination, documents patients.",
+        "marketing.confiance": "Exemple : informations pratiques, recommandations, spécialités, cadre d’accueil, clarté du parcours.",
+        "marketing.decision": "Exemple : besoin à domicile, fréquence, devis, planning, intervenant, conditions.",
+        "marketing.lien": "Exemple : suivi bénéficiaire, points famille, ajustements planning, qualité, renouvellement.",
+        "finance.pilotage": "Exemple : actes réalisés, taux de remplissage, charges, trésorerie, impayés.",
+        "finance.facturation": "Exemple : feuilles de soin, règlements, rejets, relances, rapprochement bancaire.",
+        "finance.conformite": "Exemple : secret médical, RGPD santé, dossiers patients, affichages, assurances.",
+        "equipe.recrutement": "Exemple : intervenants, références, intégration, consignes domicile, zones d’intervention.",
+        "equipe.rh": "Exemple : planning, remplacements, coordination, formation, continuité de service.",
+        "equipe.culture": "Exemple : confidentialité, accueil patient, ponctualité, coordination, qualité de suivi."
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Produire des supports propres sans dépendre d’un studio."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
+    },
+    {
+      "id": "e54",
+      "slug": "reparation-informatique-mobile",
+      "name": "Réparation informatique & mobile",
+      "category": "Système opérationnel",
+      "description": "Structurez diagnostics, devis, pièces, réparations et SAV.",
+      "tags": [
+        "Réparation",
+        "Service",
+        "Système"
+      ],
+      "icon": "Smartphone",
+      "price": "",
+      "sectorLabel": "Services aux particuliers",
+      "editorialSubtitle": "Suivez chaque appareil du dépôt client jusqu’à la restitution.",
+      "imageTitle": "Réparation informatique & mobile",
+      "imageSubtitle": "Aperçu du système opérationnel pour réparation informatique & mobile",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Dépôt & diagnostic",
+          "description": "Qualifier appareil, panne, accessoires, urgence et état initial.",
+          "examples": "Exemple : téléphone, PC, panne, accessoire, état."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Devis & accord",
+          "description": "Suivre diagnostic, prix, accord client et délais.",
+          "examples": "Exemple : devis, accord, délai, acompte."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Pièces",
+          "description": "Piloter pièces, fournisseurs, compatibilité et livraison.",
+          "examples": "Exemple : écran, batterie, référence, livraison."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Réparation",
+          "description": "Organiser tâches, techniciens, tests et statuts.",
+          "examples": "Exemple : technicien, test, statut, blocage."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Restitution & SAV",
+          "description": "Suivre paiement, restitution, garantie et retours client.",
+          "examples": "Exemple : paiement, restitution, garantie, retour."
+        }
+      ],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : assortiment, clientèle, prix, emplacement, expérience boutique.",
+        "strategie.objectifs": "Exemple : panier moyen, fréquentation, marge, stock, taux de fidélité.",
+        "strategie.plan-action": "Exemple : vitrines, achats, animations, promotions, suivi des ventes.",
+        "marketing.confiance": "Exemple : vitrine, avis Google, photos produits, conseil vendeur, présence locale.",
+        "marketing.decision": "Exemple : diagnostic, devis, délai, garantie réparation, disponibilité pièces.",
+        "marketing.lien": "Exemple : suivi réparation, conseils d’usage, garantie, avis client, accessoires.",
+        "finance.pilotage": "Exemple : panier moyen, marge, stock dormant, trésorerie, ventes par rayon.",
+        "finance.facturation": "Exemple : caisse, tickets, paiements, avoirs, rapprochement bancaire.",
+        "finance.conformite": "Exemple : caisse, TVA, affichages, garanties, contrats, inventaire.",
+        "equipe.recrutement": "Exemple : vendeurs, saisonniers, formation caisse, accueil, ouverture boutique.",
+        "equipe.rh": "Exemple : planning, congés, objectifs boutique, polyvalence, formation vente.",
+        "equipe.culture": "Exemple : accueil, conseil, tenue de rayon, esprit boutique, standards client."
       },
       "toolRefs": [
         {
