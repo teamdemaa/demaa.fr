@@ -1,0 +1,76 @@
+{
+  "templates": [
+    {
+      "id": "strategie.positionnement",
+      "pillar": "Stratégie",
+      "title": "Positionnement",
+      "description": "Positionnement pour clarifier la cible, la proposition de valeur et la place de l’entreprise sur son marché."
+    },
+    {
+      "id": "strategie.objectifs",
+      "pillar": "Stratégie",
+      "title": "Objectifs annuels & trimestriels",
+      "description": "Objectifs annuels & trimestriels pour définir une feuille de route claire, prioriser les efforts et suivre les avancées."
+    },
+    {
+      "id": "strategie.plan-action",
+      "pillar": "Stratégie",
+      "title": "Plan d'action concret",
+      "description": "Plan d’action concret pour transformer les priorités en actions suivies, avec des responsables, des échéances et des résultats mesurables."
+    },
+    {
+      "id": "marketing.confiance",
+      "pillar": "Marketing & Vente",
+      "title": "Construire la confiance",
+      "description": "Construire la confiance pour attirer des prospects, démontrer son expertise et rendre l’entreprise plus crédible."
+    },
+    {
+      "id": "marketing.decision",
+      "pillar": "Marketing & Vente",
+      "title": "Accompagner la décision",
+      "description": "Accompagner la décision pour répondre aux besoins du prospect, lever les hésitations et faciliter son passage à l’action."
+    },
+    {
+      "id": "marketing.lien",
+      "pillar": "Marketing & Vente",
+      "title": "Maintenir le lien",
+      "description": "Maintenir le lien pour fidéliser les clients, nourrir la relation et créer des opportunités dans la durée."
+    },
+    {
+      "id": "finance.pilotage",
+      "pillar": "Finance & administration",
+      "title": "Pilotage financier & rentabilité",
+      "description": "Pilotage financier & rentabilité pour suivre les performances de l’entreprise, maîtriser la trésorerie et orienter les décisions stratégiques."
+    },
+    {
+      "id": "finance.facturation",
+      "pillar": "Finance & administration",
+      "title": "Facturation & gestion des encaissements",
+      "description": "Facturation & gestion des encaissements pour sécuriser les revenus, accélérer les paiements et limiter les retards de règlement."
+    },
+    {
+      "id": "finance.conformite",
+      "pillar": "Finance & administration",
+      "title": "Conformité & gestion des risques",
+      "description": "Conformité & gestion des risques pour garantir le respect des obligations comptables, fiscales, sociales et juridiques de l’entreprise."
+    },
+    {
+      "id": "equipe.recrutement",
+      "pillar": "Équipe",
+      "title": "Recrutement & intégration",
+      "description": "Recrutement & intégration pour attirer les bons profils, structurer leur arrivée et clarifier leur rôle dans l’entreprise."
+    },
+    {
+      "id": "equipe.rh",
+      "pillar": "Équipe",
+      "title": "Gestion RH & développement des compétences",
+      "description": "Gestion RH & développement des compétences pour organiser l’équipe, accompagner sa progression et anticiper les besoins futurs."
+    },
+    {
+      "id": "equipe.culture",
+      "pillar": "Équipe",
+      "title": "Culture & engagement",
+      "description": "Culture & engagement pour fédérer les collaborateurs autour de valeurs communes et renforcer la cohésion de l’équipe."
+    }
+  ]
+}

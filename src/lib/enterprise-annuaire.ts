@@ -2,6 +2,7 @@ import "server-only";
 
 import { getAdminFirestore } from "./firebase-admin";
 import type { DocumentData } from "firebase-admin/firestore";
+import type { SystemPillar } from "./system-process-templates";
 import type { System } from "./types";
 import rawEnterpriseAnnuaire from "./enterprise-annuaire.json";
 
@@ -13,9 +14,10 @@ export type EnterpriseTool = {
 };
 
 export type EnterpriseProcess = {
-  pillar: "Stratégie" | "Marketing & Vente" | "Opérations" | "Finance & Juridique" | "Équipe";
+  pillar: SystemPillar | "Finance & Juridique";
   title: string;
   description: string;
+  examples?: string;
 };
 
 export type EnterpriseDefinition = {
@@ -31,7 +33,9 @@ export type EnterpriseDefinition = {
   editorialSubtitle: string;
   imageTitle: string;
   imageSubtitle: string;
-  processes: EnterpriseProcess[];
+  processes?: EnterpriseProcess[];
+  operationProcesses?: EnterpriseProcess[];
+  processExamples?: Record<string, string>;
   tools: EnterpriseTool[];
 };
 
@@ -107,8 +111,27 @@ function mergeEnterpriseFallback(
     imageSubtitle:
       enterprise.imageSubtitle || fallback?.imageSubtitle || `Aperçu du système opérationnel pour ${enterprise.name || fallback?.name || enterprise.slug}`,
     processes: enterprise.processes?.length ? enterprise.processes : fallback?.processes ?? [],
+    operationProcesses: enterprise.operationProcesses?.length
+      ? enterprise.operationProcesses
+      : fallback?.operationProcesses ?? [],
+    processExamples: Object.keys(enterprise.processExamples ?? {}).length
+      ? enterprise.processExamples
+      : fallback?.processExamples ?? {},
     tools: enterprise.tools?.length ? enterprise.tools : fallback?.tools ?? [],
   };
+}
+
+function stripFirestoreMetadata({
+  sort_order,
+  created_at,
+  updated_at,
+  ...enterprise
+}: EnterpriseFirestoreDocument): EnterpriseDefinition {
+  void sort_order;
+  void created_at;
+  void updated_at;
+
+  return enterprise;
 }
 
 function fallbackEnterpriseCatalog() {
@@ -143,9 +166,7 @@ export async function getEnterpriseCatalog(): Promise<EnterpriseDefinition[]> {
       return left.name.localeCompare(right.name, "fr");
     });
 
-    return enterprises.map(({ sort_order: _sortOrder, created_at: _createdAt, updated_at: _updatedAt, ...enterprise }) =>
-      mergeEnterpriseFallback(enterprise)
-    );
+    return enterprises.map((enterprise) => mergeEnterpriseFallback(stripFirestoreMetadata(enterprise)));
   } catch {
     return fallbackEnterpriseCatalog();
   }
@@ -166,8 +187,7 @@ export async function getEnterpriseBySlug(slug: string): Promise<EnterpriseDefin
       const enterprise = normalizeEnterpriseDocument(doc.data());
 
       if (enterprise) {
-        const { sort_order: _sortOrder, created_at: _createdAt, updated_at: _updatedAt, ...rest } = enterprise;
-        return mergeEnterpriseFallback(rest);
+        return mergeEnterpriseFallback(stripFirestoreMetadata(enterprise));
       }
     }
   } catch {

@@ -6,6 +6,7 @@ import { getFirestore } from "firebase-admin/firestore";
 
 const currentDir = dirname(fileURLToPath(import.meta.url));
 const enterpriseAnnuairePath = resolve(currentDir, "../src/lib/enterprise-annuaire.json");
+const processTemplatesPath = resolve(currentDir, "../src/lib/system-process-templates.json");
 
 function loadEnvFile(path) {
   if (!fs.existsSync(path)) {
@@ -76,16 +77,42 @@ function loadEnterpriseAnnuaire() {
   return payload.enterprises;
 }
 
+function loadSystemProcessTemplates() {
+  const raw = fs.readFileSync(processTemplatesPath, "utf8");
+  const payload = JSON.parse(raw);
+
+  if (!Array.isArray(payload?.templates)) {
+    throw new Error("Invalid system process templates payload");
+  }
+
+  return payload.templates;
+}
+
 async function main() {
   loadEnvFile(resolve(currentDir, "../.env.local"));
 
   const enterprises = loadEnterpriseAnnuaire();
+  const templates = loadSystemProcessTemplates();
   const firestore = getFirestoreDb();
-  const collection = firestore.collection("enterprise_annuaire");
+  const enterpriseCollection = firestore.collection("enterprise_annuaire");
+  const templateCollection = firestore.collection("system_process_templates");
   const now = new Date().toISOString();
 
+  for (const [index, template] of templates.entries()) {
+    const docRef = templateCollection.doc(template.id);
+
+    await docRef.set(
+      {
+        ...template,
+        sort_order: index,
+        updated_at: now,
+      },
+      { merge: true }
+    );
+  }
+
   for (const [index, enterprise] of enterprises.entries()) {
-    const docRef = collection.doc(enterprise.slug);
+    const docRef = enterpriseCollection.doc(enterprise.slug);
 
     await docRef.set(
       {
@@ -101,8 +128,11 @@ async function main() {
   console.log(
     JSON.stringify(
       {
-        migrated: enterprises.length,
-        collection: "enterprise_annuaire",
+        migrated: {
+          enterprises: enterprises.length,
+          templates: templates.length,
+        },
+        collections: ["system_process_templates", "enterprise_annuaire"],
       },
       null,
       2

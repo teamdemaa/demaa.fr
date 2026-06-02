@@ -65,7 +65,7 @@ const PILLARS: SystemPillar[] = [
   "Stratégie",
   "Marketing & Vente",
   "Opérations",
-  "Finance & Juridique",
+  "Finance & administration",
   "Équipe",
 ];
 
@@ -395,7 +395,7 @@ export default function SystemsCatalogClient({
           onClick={() => setSelectedSlug(null)}
         >
           <div
-            className="max-h-[92vh] w-full max-w-7xl overflow-y-auto rounded-[1.25rem] bg-[#ffffff] p-6 shadow-[0_30px_80px_rgba(20,20,20,0.18)] md:p-8"
+            className="relative max-h-[92vh] w-full max-w-7xl overflow-y-auto rounded-[1.25rem] bg-[#ffffff] p-6 pt-14 shadow-[0_30px_80px_rgba(20,20,20,0.18)] md:p-8"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="flex flex-col items-start justify-between gap-4 md:flex-row">
@@ -421,7 +421,7 @@ export default function SystemsCatalogClient({
                 <button
                   type="button"
                   onClick={() => setSelectedSlug(null)}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-brand-blue/10 bg-white text-brand-blue transition hover:border-neutral-300 hover:text-neutral-700"
+                  className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-brand-blue/10 bg-white text-brand-blue transition hover:border-neutral-300 hover:text-neutral-700 md:static"
                   aria-label="Fermer"
                 >
                   <X className="h-4 w-4" />
@@ -481,6 +481,11 @@ export default function SystemsCatalogClient({
                                 <p className="mt-2 text-left text-xs leading-relaxed text-gray-600">
                                   {process.description}
                                 </p>
+                                {process.examples ? (
+                                  <p className="mt-3 border-l-2 border-neutral-300 bg-neutral-50/80 py-2 pl-3 text-left text-xs leading-relaxed text-neutral-700">
+                                    {process.examples}
+                                  </p>
+                                ) : null}
                               </article>
                             ))
                           ) : (
