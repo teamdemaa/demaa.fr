@@ -12,6 +12,17 @@ type StripeCheckoutSession = {
     email?: string | null;
     name?: string | null;
   } | null;
+  custom_fields?: Array<{
+    key?: string | null;
+    text?: {
+      value?: string | null;
+    } | null;
+  }> | null;
+  metadata?: {
+    credits?: string | null;
+    offer_label?: string | null;
+    offer_type?: string | null;
+  } | null;
 };
 
 type StripeErrorResponse = {
@@ -22,7 +33,21 @@ type StripeErrorResponse = {
   };
 };
 
-function getOfferLabel(amountTotal: number | null | undefined) {
+function getCustomFieldValue(
+  customFields: StripeCheckoutSession["custom_fields"],
+  key: string
+) {
+  return (
+    customFields?.find((field) => field.key === key)?.text?.value?.trim() ||
+    null
+  );
+}
+
+function getOfferLabel(session: StripeCheckoutSession) {
+  if (session.metadata?.offer_label) return session.metadata.offer_label;
+
+  const amountTotal = session.amount_total;
+
   if (amountTotal === 65000) return "Automate - 10 crédits";
   if (amountTotal === 98000) return "Maestro - 20 crédits";
   return "Offre Demaa";
@@ -71,6 +96,7 @@ export async function GET(request: Request) {
     {
       headers: {
         Authorization: `Bearer ${secretKey}`,
+        "Stripe-Version": "2026-02-25.clover",
       },
       cache: "no-store",
     }
@@ -110,6 +136,9 @@ export async function GET(request: Request) {
     session.customer_details?.email || session.customer_email || null;
   const name = session.customer_details?.name || null;
   const amountTotal = session.amount_total ?? null;
+  const firstName = getCustomFieldValue(session.custom_fields, "first_name");
+  const lastName = getCustomFieldValue(session.custom_fields, "last_name");
+  const credits = session.metadata?.credits ? Number(session.metadata.credits) : null;
 
   return NextResponse.json({
     paid:
@@ -119,8 +148,12 @@ export async function GET(request: Request) {
     status: session.status ?? null,
     email,
     name,
+    firstName,
+    lastName,
     amountTotal,
     currency: session.currency ?? "eur",
-    offerLabel: getOfferLabel(amountTotal),
+    credits: Number.isFinite(credits) ? credits : null,
+    offerType: session.metadata?.offer_type ?? null,
+    offerLabel: getOfferLabel(session),
   });
 }

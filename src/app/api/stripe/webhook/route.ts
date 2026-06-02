@@ -25,11 +25,27 @@ type StripeEvent = {
         email?: string | null;
         name?: string | null;
       } | null;
+      metadata?: {
+        credits?: string | null;
+        offer_label?: string | null;
+        offer_type?: string | null;
+      } | null;
     };
   };
 };
 
-function getOfferLabel(amountTotal: number | null | undefined) {
+type StripeSessionMetadata = NonNullable<
+  NonNullable<NonNullable<StripeEvent["data"]>["object"]>["metadata"]
+>;
+
+function getOfferLabel(input: {
+  amountTotal: number | null | undefined;
+  metadata?: StripeSessionMetadata | null;
+}) {
+  if (input.metadata?.offer_label) return input.metadata.offer_label;
+
+  const amountTotal = input.amountTotal;
+
   if (amountTotal === 65000) return "Automate - 10 crédits";
   if (amountTotal === 98000) return "Maestro - 20 crédits";
   return "Offre Demaa";
@@ -176,7 +192,10 @@ export async function POST(request: Request) {
       session?.customer_details?.email || session?.customer_email || null;
     const name = session?.customer_details?.name || null;
     const amountTotal = session?.amount_total ?? null;
-    const offerLabel = getOfferLabel(amountTotal);
+    const offerLabel = getOfferLabel({
+      amountTotal,
+      metadata: session?.metadata,
+    });
     const offerCredits = getOfferCredits(amountTotal);
 
     if (!event.id || !sessionId) {
