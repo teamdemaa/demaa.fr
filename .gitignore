@@ -20,6 +20,11 @@
 # production
 /build
 /data
+/tmp/
+
+# local working files
+Outils_metier_*.xlsx
+Processus_TPE_*.xlsx
 
 # misc
 .DS_Store

@@ -1,11 +1,23 @@
 import Navbar from "@/components/Navbar";
 import { templatesData } from "@/lib/templates";
 import TemplateCard from "@/components/TemplateCard";
+import ToolSeoSection from "@/components/ToolSeoSection";
+import { freeToolSeo } from "@/lib/free-tool-seo";
+
+const seo = freeToolSeo["kit-du-dirigeant-organise"];
 
 export const metadata = {
-  title: "Le Kit du Dirigeant Organisé - Demaa",
-  description:
-    "Les documents essentiels pour cadrer votre activité, gagner du temps et organiser votre entreprise plus sereinement.",
+  title: seo.metaTitle,
+  description: seo.metaDescription,
+  alternates: {
+    canonical: seo.path,
+  },
+  openGraph: {
+    title: seo.metaTitle,
+    description: seo.metaDescription,
+    url: seo.path,
+    type: "website",
+  },
 };
 
 export default function OrganizedLeaderKitPage() {
@@ -45,6 +57,7 @@ export default function OrganizedLeaderKitPage() {
             </a>
           </div>
         </div>
+        <ToolSeoSection tool={seo} />
       </main>
     </>
   );
