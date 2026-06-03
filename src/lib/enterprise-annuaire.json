@@ -14,7 +14,6 @@
       "icon": "Briefcase",
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
-      "editorialSubtitle": "Sécurisez la compta, les relances et la conformité sans perdre de temps.",
       "imageTitle": "Cabinet comptable",
       "imageSubtitle": "Aperçu du système opérationnel pour cabinet comptable",
       "processes": [],
@@ -147,7 +146,6 @@
       "icon": "Briefcase",
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
-      "editorialSubtitle": "Gardez vos dossiers, échéances et actes sous contrôle.",
       "imageTitle": "Cabinet d’avocat",
       "imageSubtitle": "Aperçu du système opérationnel pour cabinet d’avocat",
       "processes": [],
@@ -224,7 +222,6 @@
       "icon": "Briefcase",
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
-      "editorialSubtitle": "Cadrez chaque mission, livrez plus vite et suivez la rentabilité.",
       "imageTitle": "Cabinet de conseil",
       "imageSubtitle": "Aperçu du système opérationnel pour cabinet de conseil",
       "processes": [],
@@ -313,7 +310,6 @@
       "icon": "Briefcase",
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
-      "editorialSubtitle": "Pilotez vos campagnes, vos clients et vos livrables au même endroit.",
       "imageTitle": "Agence marketing",
       "imageSubtitle": "Aperçu du système opérationnel pour agence marketing",
       "processes": [],
@@ -420,7 +416,6 @@
       "icon": "Briefcase",
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
-      "editorialSubtitle": "Structurez votre offre pour vendre, produire et relancer sans friction.",
       "imageTitle": "Freelance",
       "imageSubtitle": "Aperçu du système opérationnel pour freelance",
       "processes": [],
@@ -503,7 +498,6 @@
       "icon": "Briefcase",
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
-      "editorialSubtitle": "Centralisez les candidatures, les relances et le suivi des placements.",
       "imageTitle": "Agence de recrutement",
       "imageSubtitle": "Aperçu du système opérationnel pour agence de recrutement",
       "processes": [],
@@ -586,7 +580,6 @@
       "icon": "Code2",
       "price": "",
       "sectorLabel": "Tech & Digital",
-      "editorialSubtitle": "Organisez la production web, les validations et la livraison client.",
       "imageTitle": "Agence web",
       "imageSubtitle": "Aperçu du système opérationnel pour agence web",
       "processes": [],
@@ -697,7 +690,6 @@
       "icon": "Code2",
       "price": "",
       "sectorLabel": "Tech & Digital",
-      "editorialSubtitle": "Cadrez le brief, produisez vite et publiez sans ralentir le rythme.",
       "imageTitle": "Création de contenu",
       "imageSubtitle": "Aperçu du système opérationnel pour création de contenu",
       "processes": [],
@@ -802,7 +794,6 @@
       "icon": "Code2",
       "price": "",
       "sectorLabel": "Tech & Digital",
-      "editorialSubtitle": "Gardez les vendeurs, les commandes et les litiges sous contrôle.",
       "imageTitle": "Marketplace",
       "imageSubtitle": "Aperçu du système opérationnel pour marketplace",
       "processes": [],
@@ -891,7 +882,6 @@
       "icon": "Code2",
       "price": "",
       "sectorLabel": "Tech & Digital",
-      "editorialSubtitle": "Orchestrez l’édition, la diffusion et le suivi de l’audience.",
       "imageTitle": "Média",
       "imageSubtitle": "Aperçu du système opérationnel pour média",
       "processes": [],
@@ -980,7 +970,6 @@
       "icon": "Code2",
       "price": "",
       "sectorLabel": "Tech & Digital",
-      "editorialSubtitle": "Suivez l’adoption, le support et la facturation sans dispersion.",
       "imageTitle": "SaaS",
       "imageSubtitle": "Aperçu du système opérationnel pour saas",
       "processes": [],
@@ -1058,7 +1047,7 @@
     {
       "id": "e12",
       "slug": "batiment",
-      "name": "Batiment",
+      "name": "Bâtiment",
       "category": "Système opérationnel",
       "description": "Gardez devis, chantiers, équipes et marge visibles sans courir après l’information terrain.",
       "tags": [
@@ -1069,9 +1058,8 @@
       "icon": "Wrench",
       "price": "",
       "sectorLabel": "BTP & services techniques",
-      "editorialSubtitle": "Pilotez chantier, devis et suivi terrain dans un seul flux.",
-      "imageTitle": "Batiment",
-      "imageSubtitle": "Aperçu du système opérationnel pour batiment",
+      "imageTitle": "Bâtiment",
+      "imageSubtitle": "Aperçu du système opérationnel pour bâtiment",
       "processes": [],
       "operationProcesses": [
         {
@@ -1176,7 +1164,6 @@
       "icon": "Wrench",
       "price": "",
       "sectorLabel": "BTP & services techniques",
-      "editorialSubtitle": "Planifiez les passages et contrôlez la qualité sur le terrain.",
       "imageTitle": "Nettoyage professionnel",
       "imageSubtitle": "Aperçu du système opérationnel pour nettoyage professionnel",
       "processes": [],
@@ -1265,7 +1252,6 @@
       "icon": "Home",
       "price": "",
       "sectorLabel": "Immobilier",
-      "editorialSubtitle": "Suivez mandats, visites et signatures sans perdre le fil.",
       "imageTitle": "Agence immobilière",
       "imageSubtitle": "Aperçu du système opérationnel pour agence immobilière",
       "processes": [],
@@ -1354,7 +1340,6 @@
       "icon": "Building2",
       "price": "Sur devis",
       "sectorLabel": "Immobilier",
-      "editorialSubtitle": "Structurez la gestion des copropriétés, les assemblées et le suivi des demandes.",
       "imageTitle": "Syndic",
       "imageSubtitle": "Aperçu du système opérationnel pour syndic",
       "processes": [],
@@ -1451,7 +1436,6 @@
       "icon": "KeyRound",
       "price": "Sur devis",
       "sectorLabel": "Immobilier",
-      "editorialSubtitle": "Structurez la gestion des biens loués, des loyers et du suivi locataire.",
       "imageTitle": "Gestion locative",
       "imageSubtitle": "Aperçu du système opérationnel pour gestion locative",
       "processes": [],
@@ -1548,7 +1532,6 @@
       "icon": "Landmark",
       "price": "Sur devis",
       "sectorLabel": "Immobilier",
-      "editorialSubtitle": "Structurez les opérations d’achat-revente, travaux et suivi de marge.",
       "imageTitle": "Marchand de biens",
       "imageSubtitle": "Aperçu du système opérationnel pour marchand de biens",
       "processes": [],
@@ -1645,7 +1628,6 @@
       "icon": "Home",
       "price": "Sur devis",
       "sectorLabel": "Immobilier",
-      "editorialSubtitle": "Structurez vos biens locatifs, les loyers, la rentabilité et les arbitrages.",
       "imageTitle": "Investissement locatif",
       "imageSubtitle": "Aperçu du système opérationnel pour investissement locatif",
       "processes": [],
@@ -1742,7 +1724,6 @@
       "icon": "Home",
       "price": "",
       "sectorLabel": "Hébergement & tourisme",
-      "editorialSubtitle": "Coordonnez réservations, ménage et arrivées sans chaos.",
       "imageTitle": "Conciergerie Airbnb",
       "imageSubtitle": "Aperçu du système opérationnel pour conciergerie airbnb",
       "processes": [],
@@ -1831,7 +1812,6 @@
       "icon": "Landmark",
       "price": "",
       "sectorLabel": "Patrimoine",
-      "editorialSubtitle": "Suivez vos biens, vos travaux et votre rentabilité en un coup d’œil.",
       "imageTitle": "Investissement immobilier",
       "imageSubtitle": "Aperçu du système opérationnel pour investissement immobilier",
       "processes": [],
@@ -1920,7 +1900,6 @@
       "icon": "Landmark",
       "price": "",
       "sectorLabel": "Patrimoine",
-      "editorialSubtitle": "Pilotez vos allocations, vos arbitrages et votre performance.",
       "imageTitle": "Investissement financier",
       "imageSubtitle": "Aperçu du système opérationnel pour investissement financier",
       "processes": [],
@@ -2009,7 +1988,6 @@
       "icon": "Landmark",
       "price": "",
       "sectorLabel": "Patrimoine",
-      "editorialSubtitle": "Sélectionnez, suivez et valorisez vos participations avec méthode.",
       "imageTitle": "Investissement entreprise",
       "imageSubtitle": "Aperçu du système opérationnel pour investissement entreprise",
       "processes": [],
@@ -2098,7 +2076,6 @@
       "icon": "Truck",
       "price": "",
       "sectorLabel": "Mobilité & logistique",
-      "editorialSubtitle": "Organisez les tournées, les équipes et les délais sans approximation.",
       "imageTitle": "Déménagement",
       "imageSubtitle": "Aperçu du système opérationnel pour déménagement",
       "processes": [],
@@ -2187,7 +2164,6 @@
       "icon": "Truck",
       "price": "",
       "sectorLabel": "Mobilité & logistique",
-      "editorialSubtitle": "Sécurisez les tournées et les délais jusqu’à la livraison finale.",
       "imageTitle": "Livraison dernier kilomètre",
       "imageSubtitle": "Aperçu du système opérationnel pour livraison dernier kilomètre",
       "processes": [],
@@ -2265,7 +2241,7 @@
     {
       "id": "e21",
       "slug": "transport-de-marchandise",
-      "name": "Transport de marchandise",
+      "name": "Transport de marchandises",
       "category": "Système opérationnel",
       "description": "Alignez flotte, fret et rentabilité sans perdre la trace des expéditions.",
       "tags": [
@@ -2276,9 +2252,8 @@
       "icon": "Truck",
       "price": "",
       "sectorLabel": "Mobilité & logistique",
-      "editorialSubtitle": "Coordonnez flotte, fret et suivi des expéditions en temps réel.",
-      "imageTitle": "Transport de marchandise",
-      "imageSubtitle": "Aperçu du système opérationnel pour transport de marchandise",
+      "imageTitle": "Transport de marchandises",
+      "imageSubtitle": "Aperçu du système opérationnel pour transport de marchandises",
       "processes": [],
       "operationProcesses": [
         {
@@ -2365,7 +2340,6 @@
       "icon": "Truck",
       "price": "",
       "sectorLabel": "Mobilité & logistique",
-      "editorialSubtitle": "Planifiez les trajets et les chauffeurs avec plus de visibilité.",
       "imageTitle": "Transport de personnes",
       "imageSubtitle": "Aperçu du système opérationnel pour transport de personnes",
       "processes": [],
@@ -2448,7 +2422,6 @@
       "icon": "Utensils",
       "price": "",
       "sectorLabel": "Restauration",
-      "editorialSubtitle": "Fluidifiez réservation, service et encaissement au quotidien.",
       "imageTitle": "Restaurant",
       "imageSubtitle": "Aperçu du système opérationnel pour restaurant",
       "processes": [],
@@ -2531,7 +2504,6 @@
       "icon": "Utensils",
       "price": "",
       "sectorLabel": "Restauration",
-      "editorialSubtitle": "Accélérez commande, préparation et livraison sans perdre en qualité.",
       "imageTitle": "Fast-food",
       "imageSubtitle": "Aperçu du système opérationnel pour fast-food",
       "processes": [],
@@ -2614,7 +2586,6 @@
       "icon": "Utensils",
       "price": "",
       "sectorLabel": "Restauration",
-      "editorialSubtitle": "Gérez les commandes, la production et les événements sans oubli.",
       "imageTitle": "Traiteur",
       "imageSubtitle": "Aperçu du système opérationnel pour traiteur",
       "processes": [],
@@ -2697,7 +2668,6 @@
       "icon": "Utensils",
       "price": "",
       "sectorLabel": "Restauration",
-      "editorialSubtitle": "Orchestrez les commandes, la cuisine et la livraison en continu.",
       "imageTitle": "Dark kitchen",
       "imageSubtitle": "Aperçu du système opérationnel pour dark kitchen",
       "processes": [],
@@ -2780,7 +2750,6 @@
       "icon": "Store",
       "price": "",
       "sectorLabel": "Commerce & retail",
-      "editorialSubtitle": "Pilotez stock, caisse et ventes boutique sans rupture.",
       "imageTitle": "Boulangerie",
       "imageSubtitle": "Aperçu du système opérationnel pour boulangerie",
       "processes": [],
@@ -2863,7 +2832,6 @@
       "icon": "Store",
       "price": "",
       "sectorLabel": "Commerce & retail",
-      "editorialSubtitle": "Gardez le stock, la caisse et la fidélité clients alignés.",
       "imageTitle": "Commerce de détail",
       "imageSubtitle": "Aperçu du système opérationnel pour commerce de détail",
       "processes": [],
@@ -2946,7 +2914,6 @@
       "icon": "Store",
       "price": "",
       "sectorLabel": "Commerce & retail",
-      "editorialSubtitle": "Centralisez boutique, support et expédition dans un flux clair.",
       "imageTitle": "E-commerce",
       "imageSubtitle": "Aperçu du système opérationnel pour e-commerce",
       "processes": [],
@@ -3029,7 +2996,6 @@
       "icon": "HeartHandshake",
       "price": "",
       "sectorLabel": "Santé, bien-être & esthétique",
-      "editorialSubtitle": "Remplissez l’agenda et vendez plus de prestations simplement.",
       "imageTitle": "Institut de beauté",
       "imageSubtitle": "Aperçu du système opérationnel pour institut de beauté",
       "processes": [],
@@ -3128,7 +3094,6 @@
       "icon": "HeartHandshake",
       "price": "",
       "sectorLabel": "Santé, bien-être & esthétique",
-      "editorialSubtitle": "Gérez rendez-vous, encaissements et ventes additionnelles sans stress.",
       "imageTitle": "Salon de coiffure",
       "imageSubtitle": "Aperçu du système opérationnel pour salon de coiffure",
       "processes": [],
@@ -3227,7 +3192,6 @@
       "icon": "HeartHandshake",
       "price": "",
       "sectorLabel": "Santé, bien-être & esthétique",
-      "editorialSubtitle": "Organisez les rendez-vous et les prestations sans trous d’agenda.",
       "imageTitle": "Esthétique",
       "imageSubtitle": "Aperçu du système opérationnel pour esthétique",
       "processes": [],
@@ -3326,7 +3290,6 @@
       "icon": "UserCheck",
       "price": "",
       "sectorLabel": "Services aux particuliers",
-      "editorialSubtitle": "Coordonnez intervenants, demandes et rendez-vous sans perte d’info.",
       "imageTitle": "Services à la personne",
       "imageSubtitle": "Aperçu du système opérationnel pour services à la personne",
       "processes": [],
@@ -3409,7 +3372,6 @@
       "icon": "GraduationCap",
       "price": "",
       "sectorLabel": "Éducation & formation",
-      "editorialSubtitle": "Suivez sessions, documents et conformité sans lourdeur.",
       "imageTitle": "Organisme de formation",
       "imageSubtitle": "Aperçu du système opérationnel pour organisme de formation",
       "processes": [],
@@ -3498,7 +3460,6 @@
       "icon": "GraduationCap",
       "price": "",
       "sectorLabel": "Éducation & formation",
-      "editorialSubtitle": "Vendez vos parcours et suivez les apprenants au même endroit.",
       "imageTitle": "Formation en ligne",
       "imageSubtitle": "Aperçu du système opérationnel pour formation en ligne",
       "processes": [],
@@ -3587,7 +3548,6 @@
       "icon": "Factory",
       "price": "",
       "sectorLabel": "Industrie & production",
-      "editorialSubtitle": "Pilotez production, stock et flux atelier avec méthode.",
       "imageTitle": "Production & Industrie",
       "imageSubtitle": "Aperçu du système opérationnel pour production & industrie",
       "processes": [],
@@ -3676,7 +3636,6 @@
       "icon": "Wrench",
       "price": "",
       "sectorLabel": "BTP & services techniques",
-      "editorialSubtitle": "Gardez les urgences, devis et interventions sous contrôle.",
       "imageTitle": "Plomberie & chauffage",
       "imageSubtitle": "Aperçu du système opérationnel pour plomberie & chauffage",
       "processes": [],
@@ -3767,7 +3726,6 @@
       "icon": "Wrench",
       "price": "",
       "sectorLabel": "BTP & services techniques",
-      "editorialSubtitle": "Pilotez interventions, conformité et suivi client sans perdre le fil.",
       "imageTitle": "Électricité générale",
       "imageSubtitle": "Aperçu du système opérationnel pour électricité générale",
       "processes": [],
@@ -3847,7 +3805,7 @@
     {
       "id": "e39",
       "slug": "renovation-interieur",
-      "name": "Rénovation intérieur",
+      "name": "Rénovation intérieure",
       "category": "Système opérationnel",
       "description": "Gardez clients, choix, chantiers et marge alignés sans multiplier les allers-retours.",
       "tags": [
@@ -3858,9 +3816,8 @@
       "icon": "Hammer",
       "price": "",
       "sectorLabel": "BTP & services techniques",
-      "editorialSubtitle": "Cadrez les chantiers intérieurs, choix client et finitions sans friction.",
-      "imageTitle": "Rénovation intérieur",
-      "imageSubtitle": "Aperçu du système opérationnel pour rénovation intérieur",
+      "imageTitle": "Rénovation intérieure",
+      "imageSubtitle": "Aperçu du système opérationnel pour rénovation intérieure",
       "processes": [],
       "operationProcesses": [
         {
@@ -3949,7 +3906,6 @@
       "icon": "Hammer",
       "price": "",
       "sectorLabel": "BTP & services techniques",
-      "editorialSubtitle": "Reliez devis, atelier, pose et validations client dans un même suivi.",
       "imageTitle": "Menuiserie & agencement",
       "imageSubtitle": "Aperçu du système opérationnel pour menuiserie & agencement",
       "processes": [],
@@ -4040,7 +3996,6 @@
       "icon": "Building2",
       "price": "",
       "sectorLabel": "BTP & services techniques",
-      "editorialSubtitle": "Gardez planning, matériaux et sous-traitants alignés sur chaque chantier.",
       "imageTitle": "Maçonnerie & gros œuvre",
       "imageSubtitle": "Aperçu du système opérationnel pour maçonnerie & gros œuvre",
       "processes": [],
@@ -4131,7 +4086,6 @@
       "icon": "Sparkles",
       "price": "",
       "sectorLabel": "BTP & services techniques",
-      "editorialSubtitle": "Planifiez chantiers, entretien et matériel sans perdre les demandes client.",
       "imageTitle": "Paysagiste",
       "imageSubtitle": "Aperçu du système opérationnel pour paysagiste",
       "processes": [],
@@ -4222,7 +4176,6 @@
       "icon": "Car",
       "price": "",
       "sectorLabel": "Automobile & réparation",
-      "editorialSubtitle": "Gardez rendez-vous, pièces et réparations alignés du diagnostic à la facture.",
       "imageTitle": "Garage automobile",
       "imageSubtitle": "Aperçu du système opérationnel pour garage automobile",
       "processes": [],
@@ -4305,7 +4258,6 @@
       "icon": "Car",
       "price": "",
       "sectorLabel": "Automobile & réparation",
-      "editorialSubtitle": "Suivez sinistres, accords assurance et avancement atelier sans friction.",
       "imageTitle": "Carrosserie",
       "imageSubtitle": "Aperçu du système opérationnel pour carrosserie",
       "processes": [],
@@ -4388,7 +4340,6 @@
       "icon": "Store",
       "price": "",
       "sectorLabel": "Commerce & retail",
-      "editorialSubtitle": "Gardez les produits, fournisseurs et routines magasin sous contrôle.",
       "imageTitle": "Commerce alimentaire",
       "imageSubtitle": "Aperçu du système opérationnel pour commerce alimentaire",
       "processes": [],
@@ -4471,7 +4422,6 @@
       "icon": "Store",
       "price": "",
       "sectorLabel": "Commerce & retail",
-      "editorialSubtitle": "Pilotez assortiment, stock et expérience client dans une boutique claire.",
       "imageTitle": "Boutique spécialisée",
       "imageSubtitle": "Aperçu du système opérationnel pour boutique spécialisée",
       "processes": [],
@@ -4554,7 +4504,6 @@
       "icon": "Newspaper",
       "price": "",
       "sectorLabel": "Commerce & retail",
-      "editorialSubtitle": "Tenez caisse, stocks et services de proximité sans confusion.",
       "imageTitle": "Tabac / presse / point relais",
       "imageSubtitle": "Aperçu du système opérationnel pour tabac presse point relais",
       "processes": [],
@@ -4637,7 +4586,6 @@
       "icon": "ChefHat",
       "price": "",
       "sectorLabel": "Restauration",
-      "editorialSubtitle": "Gardez stocks, service et caisse alignés du matin à la fermeture.",
       "imageTitle": "Bar / café",
       "imageSubtitle": "Aperçu du système opérationnel pour bar / café",
       "processes": [],
@@ -4720,7 +4668,6 @@
       "icon": "Home",
       "price": "",
       "sectorLabel": "Hébergement & tourisme",
-      "editorialSubtitle": "Pilotez réservations, chambres et expérience client sans perte d’information.",
       "imageTitle": "Hôtel & hébergement indépendant",
       "imageSubtitle": "Aperçu du système opérationnel pour hôtel & hébergement indépendant",
       "processes": [],
@@ -4772,20 +4719,24 @@
       },
       "toolRefs": [
         {
+          "slug": "guesty",
+          "usage": "Centraliser réservations, calendrier, messages voyageurs et opérations terrain."
+        },
+        {
           "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "usage": "Centraliser procédures, documents internes et suivis d’exploitation."
         },
         {
           "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
-        },
-        {
-          "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+          "usage": "Créer des supports d’accueil, menus, affichages et contenus de présentation."
         },
         {
           "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Suivre paiements, dépenses et trésorerie."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur les messages voyageurs, réponses avis et procédures."
         }
       ]
     },
@@ -4803,7 +4754,6 @@
       "icon": "HeartHandshake",
       "price": "",
       "sectorLabel": "Santé, bien-être & esthétique",
-      "editorialSubtitle": "Gardez agenda, documents et demandes patients dans un cadre clair.",
       "imageTitle": "Cabinet médical",
       "imageSubtitle": "Aperçu du système opérationnel pour cabinet médical",
       "processes": [],
@@ -4898,7 +4848,6 @@
       "icon": "HeartHandshake",
       "price": "",
       "sectorLabel": "Santé, bien-être & esthétique",
-      "editorialSubtitle": "Pilotez agenda, séances et suivi patient sans charge administrative inutile.",
       "imageTitle": "Cabinet paramédical",
       "imageSubtitle": "Aperçu du système opérationnel pour cabinet paramédical",
       "processes": [],
@@ -4993,7 +4942,6 @@
       "icon": "HeartHandshake",
       "price": "",
       "sectorLabel": "Santé, bien-être & esthétique",
-      "editorialSubtitle": "Gardez tournées, soins et documents patients sous contrôle.",
       "imageTitle": "Infirmier libéral",
       "imageSubtitle": "Aperçu du système opérationnel pour infirmier libéral",
       "processes": [],
@@ -5076,7 +5024,6 @@
       "icon": "Home",
       "price": "",
       "sectorLabel": "Services aux particuliers",
-      "editorialSubtitle": "Gardez les plannings, consignes et remplacements sans perte d’information.",
       "imageTitle": "Aide à domicile & ménage",
       "imageSubtitle": "Aperçu du système opérationnel pour aide à domicile & ménage",
       "processes": [],
@@ -5128,20 +5075,24 @@
       },
       "toolRefs": [
         {
+          "slug": "ogust",
+          "usage": "Gérer plannings, interventions, remplacements, bénéficiaires et administratif."
+        },
+        {
           "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
-        },
-        {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
-        },
-        {
-          "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+          "usage": "Centraliser consignes, documents et suivis internes."
         },
         {
           "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Suivre paiements, salaires, charges et dépenses courantes."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer messages clients, consignes et procédures simples."
+        },
+        {
+          "slug": "canva",
+          "usage": "Créer des supports d’accueil, fiches pratiques et communication locale."
         }
       ]
     },
@@ -5159,7 +5110,6 @@
       "icon": "Smartphone",
       "price": "",
       "sectorLabel": "Services aux particuliers",
-      "editorialSubtitle": "Suivez chaque appareil du dépôt client jusqu’à la restitution.",
       "imageTitle": "Réparation informatique & mobile",
       "imageSubtitle": "Aperçu du système opérationnel pour réparation informatique & mobile",
       "processes": [],
@@ -5211,20 +5161,24 @@
       },
       "toolRefs": [
         {
+          "slug": "repairdesk",
+          "usage": "Suivre diagnostics, tickets de réparation, pièces, clients et notifications."
+        },
+        {
+          "slug": "square",
+          "usage": "Encaisser en boutique et suivre les ventes de services ou accessoires."
+        },
+        {
           "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
-        },
-        {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
-        },
-        {
-          "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+          "usage": "Centraliser devis, suivis clients et documents internes."
         },
         {
           "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Suivre achats de pièces, encaissements et dépenses courantes."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer diagnostics vulgarisés, messages client et procédures SAV."
         }
       ]
     },
@@ -5242,7 +5196,6 @@
       "icon": "Home",
       "price": "",
       "sectorLabel": "BTP & services techniques",
-      "editorialSubtitle": "Reliez conception, validations client, artisans et suivi chantier dans un cadre clair.",
       "imageTitle": "Architecte / maître d’œuvre",
       "imageSubtitle": "Aperçu du système opérationnel pour architecte / maître d’œuvre",
       "processes": [],
@@ -5294,20 +5247,24 @@
       },
       "toolRefs": [
         {
+          "slug": "archipad",
+          "usage": "Suivre réunions, réserves, photos, plans et comptes rendus de chantier."
+        },
+        {
           "slug": "google-workspace",
           "usage": "Centraliser les fichiers, plans, comptes rendus et échanges."
         },
         {
-          "slug": "canva",
-          "usage": "Préparer des supports de présentation lisibles pour les clients."
+          "slug": "qonto",
+          "usage": "Suivre les honoraires, dépenses projet et règlements."
         },
         {
           "slug": "chatgpt",
           "usage": "Gagner du temps sur les comptes rendus, synthèses et relances."
         },
         {
-          "slug": "qonto",
-          "usage": "Suivre les honoraires, dépenses projet et règlements."
+          "slug": "canva",
+          "usage": "Préparer des supports de présentation lisibles pour les clients."
         }
       ]
     },
@@ -5325,7 +5282,6 @@
       "icon": "Shield",
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
-      "editorialSubtitle": "Suivez chaque dossier du premier contact jusqu’à l’accord, sans perdre les relances.",
       "imageTitle": "Courtier crédit / assurance",
       "imageSubtitle": "Aperçu du système opérationnel pour courtier crédit / assurance",
       "processes": [],
@@ -5377,20 +5333,28 @@
       },
       "toolRefs": [
         {
+          "slug": "kiilt",
+          "usage": "Structurer les dossiers de crédit, pièces, relances et partenaires bancaires."
+        },
+        {
+          "slug": "lya",
+          "usage": "Piloter portefeuille assurance, conformité, contrats et suivi client."
+        },
+        {
+          "slug": "pipedrive",
+          "usage": "Suivre les opportunités, relances et apporteurs d’affaires."
+        },
+        {
           "slug": "google-workspace",
           "usage": "Centraliser pièces, suivis et échanges de dossier."
         },
         {
-          "slug": "chatgpt",
-          "usage": "Préparer des synthèses, emails de relance et explications client."
-        },
-        {
-          "slug": "canva",
-          "usage": "Préparer des supports clairs pour expliquer les options et rassurer les clients."
-        },
-        {
           "slug": "qonto",
           "usage": "Suivre les encaissements et dépenses courantes."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer des synthèses, emails de relance et explications client."
         }
       ]
     },
@@ -5408,7 +5372,6 @@
       "icon": "Car",
       "price": "",
       "sectorLabel": "Éducation & formation",
-      "editorialSubtitle": "Pilotez plannings, élèves et examens avec une vision claire de l’activité.",
       "imageTitle": "Auto-école",
       "imageSubtitle": "Aperçu du système opérationnel pour auto-école",
       "processes": [],
@@ -5460,8 +5423,16 @@
       },
       "toolRefs": [
         {
+          "slug": "kopilo",
+          "usage": "Centraliser planning de conduite, dossiers élèves, moniteurs et examens."
+        },
+        {
           "slug": "google-workspace",
-          "usage": "Centraliser planning, documents élèves et suivis internes."
+          "usage": "Centraliser documents élèves, suivis internes et fichiers administratifs."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre paiements, forfaits et dépenses courantes."
         },
         {
           "slug": "chatgpt",
@@ -5470,10 +5441,6 @@
         {
           "slug": "canva",
           "usage": "Créer des supports locaux et contenus pédagogiques simples."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Suivre paiements, forfaits et dépenses courantes."
         }
       ]
     },
@@ -5491,7 +5458,6 @@
       "icon": "Aperture",
       "price": "",
       "sectorLabel": "Tech & Digital",
-      "editorialSubtitle": "Cadrez chaque mission du brief à la livraison finale, sans perdre les relances.",
       "imageTitle": "Photographe / vidéaste",
       "imageSubtitle": "Aperçu du système opérationnel pour photographe / vidéaste",
       "processes": [],
@@ -5543,20 +5509,24 @@
       },
       "toolRefs": [
         {
+          "slug": "picstudio",
+          "usage": "Gérer prospects, devis, contrats, galeries, livraisons et paiements."
+        },
+        {
           "slug": "google-workspace",
-          "usage": "Centraliser briefs, devis, validations et suivis client."
+          "usage": "Centraliser briefs, fichiers, validations et suivis client."
         },
         {
           "slug": "canva",
           "usage": "Préparer des supports commerciaux et contenus de présentation."
         },
         {
-          "slug": "chatgpt",
-          "usage": "Gagner du temps sur les propositions, emails et scripts."
-        },
-        {
           "slug": "qonto",
           "usage": "Suivre acomptes, soldes et dépenses de mission."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur les propositions, emails et scripts."
         }
       ]
     },
@@ -5574,7 +5544,6 @@
       "icon": "PartyPopper",
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
-      "editorialSubtitle": "Structurez chaque événement du brief au bilan, avec moins d’oublis et plus de visibilité.",
       "imageTitle": "Événementiel",
       "imageSubtitle": "Aperçu du système opérationnel pour événementiel",
       "processes": [],
@@ -5626,6 +5595,10 @@
       },
       "toolRefs": [
         {
+          "slug": "weezevent",
+          "usage": "Gérer billetterie, inscriptions, contrôle d’accès, cashless et emailing."
+        },
+        {
           "slug": "google-workspace",
           "usage": "Centraliser rétroplannings, briefs, devis et validations."
         },
@@ -5634,12 +5607,12 @@
           "usage": "Préparer propositions, supports client et contenus événementiels."
         },
         {
-          "slug": "chatgpt",
-          "usage": "Gagner du temps sur les briefs, synthèses et plans d’action."
-        },
-        {
           "slug": "qonto",
           "usage": "Suivre acomptes, dépenses prestataires et trésorerie."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur les briefs, synthèses et plans d’action."
         }
       ]
     },
@@ -5657,7 +5630,6 @@
       "icon": "Dumbbell",
       "price": "",
       "sectorLabel": "Santé, bien-être & esthétique",
-      "editorialSubtitle": "Pilotez adhérents, cours, coachs et revenus récurrents dans un même suivi.",
       "imageTitle": "Salle de sport",
       "imageSubtitle": "Aperçu du système opérationnel pour salle de sport",
       "processes": [],
@@ -5709,12 +5681,12 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser plannings, suivis adhérents et procédures internes."
+          "slug": "gesfit",
+          "usage": "Piloter adhésions, planning de cours, réservations, caisse et suivi des membres."
         },
         {
-          "slug": "chatgpt",
-          "usage": "Gagner du temps sur les messages adhérents, relances et idées d’animation."
+          "slug": "google-workspace",
+          "usage": "Centraliser plannings, suivis adhérents et procédures internes."
         },
         {
           "slug": "canva",
@@ -5723,6 +5695,2682 @@
         {
           "slug": "qonto",
           "usage": "Suivre abonnements, dépenses et trésorerie."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur les messages adhérents, relances et idées d’animation."
+        }
+      ]
+    },
+    {
+      "id": "e65",
+      "category": "Système opérationnel",
+      "price": "",
+      "imageTitle": "Dentiste",
+      "imageSubtitle": "Aperçu du système opérationnel pour dentiste",
+      "processes": [],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : cible, zone, niveau de service, spécialité, promesse, preuves.",
+        "strategie.objectifs": "Exemple : chiffre d’affaires, marge, volume, satisfaction, délai moyen.",
+        "strategie.plan-action": "Exemple : priorités, actions, responsables, échéances, indicateurs.",
+        "marketing.confiance": "Exemple : avis clients, références, réalisations, pédagogie, preuves de sérieux.",
+        "marketing.decision": "Exemple : premier contact, diagnostic, devis, disponibilité, prochaine étape.",
+        "marketing.lien": "Exemple : relance, suivi, message utile, recommandation, fidélisation.",
+        "finance.pilotage": "Exemple : marge, trésorerie, coûts, panier moyen, rentabilité par prestation.",
+        "finance.facturation": "Exemple : devis, acompte, facture, paiement, relance, avoir.",
+        "finance.conformite": "Exemple : contrats, assurances, obligations métier, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : besoin, profil, intégration, accès outils, passation.",
+        "equipe.rh": "Exemple : planning, charge, absences, compétences, objectifs.",
+        "equipe.culture": "Exemple : qualité, ponctualité, clarté client, rigueur, entraide."
+      },
+      "slug": "dentiste",
+      "name": "Dentiste",
+      "sectorLabel": "Santé, bien-être & esthétique",
+      "icon": "HeartHandshake",
+      "tags": [
+        "Santé",
+        "Rendez-vous",
+        "Système"
+      ],
+      "description": "Gardez patients, soins, devis et rappels alignés sans saturer le cabinet.",
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Agenda patients",
+          "description": "Organiser consultations, urgences, créneaux longs et rappels.",
+          "examples": "Exemple : contrôle, urgence, détartrage, soin long, rappel."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Plans de traitement",
+          "description": "Suivre diagnostics, devis, acceptations et étapes de soins.",
+          "examples": "Exemple : radio, devis, consentement, prochaine séance, reste à faire."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Documents & consentements",
+          "description": "Centraliser documents patients, consentements et informations administratives.",
+          "examples": "Exemple : fiche patient, consentement, mutuelle, historique, ordonnance."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Stérilisation & matériel",
+          "description": "Suivre routines, consommables, maintenance et traçabilité interne.",
+          "examples": "Exemple : instrument, lot, stock, maintenance, contrôle."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Facturation & relances",
+          "description": "Piloter paiements, prises en charge, impayés et rappels.",
+          "examples": "Exemple : acompte, facture, mutuelle, solde, relance."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "doctolib",
+          "usage": "Structurer rendez-vous, rappels patients et disponibilités du cabinet."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser documents internes, procédures et suivis simples."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre dépenses, paiements et trésorerie du cabinet."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer messages patients, consignes et contenus pédagogiques."
+        }
+      ]
+    },
+    {
+      "id": "e66",
+      "category": "Système opérationnel",
+      "price": "",
+      "imageTitle": "Pharmacie",
+      "imageSubtitle": "Aperçu du système opérationnel pour pharmacie",
+      "processes": [],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : cible, zone, niveau de service, spécialité, promesse, preuves.",
+        "strategie.objectifs": "Exemple : chiffre d’affaires, marge, volume, satisfaction, délai moyen.",
+        "strategie.plan-action": "Exemple : priorités, actions, responsables, échéances, indicateurs.",
+        "marketing.confiance": "Exemple : avis clients, références, réalisations, pédagogie, preuves de sérieux.",
+        "marketing.decision": "Exemple : premier contact, diagnostic, devis, disponibilité, prochaine étape.",
+        "marketing.lien": "Exemple : relance, suivi, message utile, recommandation, fidélisation.",
+        "finance.pilotage": "Exemple : marge, trésorerie, coûts, panier moyen, rentabilité par prestation.",
+        "finance.facturation": "Exemple : devis, acompte, facture, paiement, relance, avoir.",
+        "finance.conformite": "Exemple : contrats, assurances, obligations métier, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : besoin, profil, intégration, accès outils, passation.",
+        "equipe.rh": "Exemple : planning, charge, absences, compétences, objectifs.",
+        "equipe.culture": "Exemple : qualité, ponctualité, clarté client, rigueur, entraide."
+      },
+      "slug": "pharmacie",
+      "name": "Pharmacie",
+      "sectorLabel": "Santé, bien-être & esthétique",
+      "icon": "Store",
+      "tags": [
+        "Santé",
+        "Stock",
+        "Système"
+      ],
+      "description": "Gardez stock, comptoir, équipe et obligations santé sous contrôle au quotidien.",
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Comptoir",
+          "description": "Fluidifier accueil, délivrance, conseil et files d’attente.",
+          "examples": "Exemple : ordonnance, conseil, attente, préparation, suivi."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Stock & commandes",
+          "description": "Suivre ruptures, réassorts, produits sensibles et fournisseurs.",
+          "examples": "Exemple : seuil, commande, réception, péremption, rupture."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Missions santé",
+          "description": "Organiser vaccinations, entretiens, dépistages et rendez-vous.",
+          "examples": "Exemple : créneau, consentement, acte, suivi, rappel."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Équipe & planning",
+          "description": "Coordonner titulaires, préparateurs, absences et rotations.",
+          "examples": "Exemple : planning, comptoir, back-office, remplacement, pause."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Conformité officine",
+          "description": "Sécuriser documents, traçabilité, sérialisation et procédures.",
+          "examples": "Exemple : lot, registre, procédure, contrôle, archivage."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "visiopharm",
+          "usage": "Gérer comptoir, stock, documents santé et suivi de l’officine."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser procédures, plannings et documents internes."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre dépenses courantes et pilotage financier."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer procédures internes, messages et supports d’équipe."
+        }
+      ]
+    },
+    {
+      "id": "e67",
+      "category": "Système opérationnel",
+      "price": "",
+      "imageTitle": "Notaire",
+      "imageSubtitle": "Aperçu du système opérationnel pour notaire",
+      "processes": [],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : cible, zone, niveau de service, spécialité, promesse, preuves.",
+        "strategie.objectifs": "Exemple : chiffre d’affaires, marge, volume, satisfaction, délai moyen.",
+        "strategie.plan-action": "Exemple : priorités, actions, responsables, échéances, indicateurs.",
+        "marketing.confiance": "Exemple : avis clients, références, réalisations, pédagogie, preuves de sérieux.",
+        "marketing.decision": "Exemple : premier contact, diagnostic, devis, disponibilité, prochaine étape.",
+        "marketing.lien": "Exemple : relance, suivi, message utile, recommandation, fidélisation.",
+        "finance.pilotage": "Exemple : marge, trésorerie, coûts, panier moyen, rentabilité par prestation.",
+        "finance.facturation": "Exemple : devis, acompte, facture, paiement, relance, avoir.",
+        "finance.conformite": "Exemple : contrats, assurances, obligations métier, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : besoin, profil, intégration, accès outils, passation.",
+        "equipe.rh": "Exemple : planning, charge, absences, compétences, objectifs.",
+        "equipe.culture": "Exemple : qualité, ponctualité, clarté client, rigueur, entraide."
+      },
+      "slug": "notaire",
+      "name": "Notaire",
+      "sectorLabel": "Conseil & services aux entreprises",
+      "icon": "Gavel",
+      "tags": [
+        "Juridique",
+        "Dossiers",
+        "Système"
+      ],
+      "description": "Gardez actes, pièces, échéances et clients visibles sans perdre le fil des dossiers.",
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Ouverture dossier",
+          "description": "Qualifier le dossier, les parties, les pièces et les échéances.",
+          "examples": "Exemple : vente, succession, identité, pièces, calendrier."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Actes & formalités",
+          "description": "Suivre rédaction, relecture, signature et formalités postérieures.",
+          "examples": "Exemple : projet, validation, signature, dépôt, publication."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Pièces & relances",
+          "description": "Centraliser documents manquants, relances et réponses attendues.",
+          "examples": "Exemple : état civil, titre, procuration, relance, reçu."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Comptabilité dossier",
+          "description": "Piloter provisions, taxes, frais, virements et soldes.",
+          "examples": "Exemple : provision, frais, taxe, solde, virement."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Relation client",
+          "description": "Donner de la visibilité aux clients sur avancement et prochaines étapes.",
+          "examples": "Exemple : étape, question, blocage, rendez-vous, clôture."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "genapi",
+          "usage": "Piloter dossiers, actes, formalités et comptabilité d’une étude notariale."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser documents de travail, échanges et suivis internes."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre dépenses de structure et pilotage financier."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer synthèses, emails et explications client non sensibles."
+        }
+      ]
+    },
+    {
+      "id": "e68",
+      "category": "Système opérationnel",
+      "price": "",
+      "imageTitle": "Vétérinaire",
+      "imageSubtitle": "Aperçu du système opérationnel pour vétérinaire",
+      "processes": [],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : cible, zone, niveau de service, spécialité, promesse, preuves.",
+        "strategie.objectifs": "Exemple : chiffre d’affaires, marge, volume, satisfaction, délai moyen.",
+        "strategie.plan-action": "Exemple : priorités, actions, responsables, échéances, indicateurs.",
+        "marketing.confiance": "Exemple : avis clients, références, réalisations, pédagogie, preuves de sérieux.",
+        "marketing.decision": "Exemple : premier contact, diagnostic, devis, disponibilité, prochaine étape.",
+        "marketing.lien": "Exemple : relance, suivi, message utile, recommandation, fidélisation.",
+        "finance.pilotage": "Exemple : marge, trésorerie, coûts, panier moyen, rentabilité par prestation.",
+        "finance.facturation": "Exemple : devis, acompte, facture, paiement, relance, avoir.",
+        "finance.conformite": "Exemple : contrats, assurances, obligations métier, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : besoin, profil, intégration, accès outils, passation.",
+        "equipe.rh": "Exemple : planning, charge, absences, compétences, objectifs.",
+        "equipe.culture": "Exemple : qualité, ponctualité, clarté client, rigueur, entraide."
+      },
+      "slug": "veterinaire",
+      "name": "Vétérinaire",
+      "sectorLabel": "Santé, bien-être & esthétique",
+      "icon": "HeartHandshake",
+      "tags": [
+        "Santé",
+        "Animaux",
+        "Système"
+      ],
+      "description": "Gardez rendez-vous, dossiers animaux, soins et stock visibles dans la clinique.",
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Agenda clinique",
+          "description": "Organiser consultations, urgences, chirurgies et rappels.",
+          "examples": "Exemple : vaccin, urgence, chirurgie, contrôle, rappel."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Dossiers animaux",
+          "description": "Suivre historique, traitements, examens et observations.",
+          "examples": "Exemple : animal, propriétaire, symptôme, acte, ordonnance."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Hospitalisation & soins",
+          "description": "Coordonner soins, consignes, surveillance et sorties.",
+          "examples": "Exemple : box, soin, alimentation, observation, sortie."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Stock médical",
+          "description": "Suivre médicaments, consommables, commandes et péremptions.",
+          "examples": "Exemple : produit, lot, seuil, commande, péremption."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Facturation",
+          "description": "Suivre devis, paiements, impayés et documents remis.",
+          "examples": "Exemple : devis, acompte, facture, règlement, relance."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "vetup",
+          "usage": "Centraliser rendez-vous, dossiers animaux, actes, stock et facturation."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Structurer procédures internes et documents d’équipe."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre dépenses, encaissements et trésorerie."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer consignes propriétaires, rappels et supports pédagogiques."
+        }
+      ]
+    },
+    {
+      "id": "e69",
+      "category": "Système opérationnel",
+      "price": "",
+      "imageTitle": "Agence de voyage",
+      "imageSubtitle": "Aperçu du système opérationnel pour agence de voyage",
+      "processes": [],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : cible, zone, niveau de service, spécialité, promesse, preuves.",
+        "strategie.objectifs": "Exemple : chiffre d’affaires, marge, volume, satisfaction, délai moyen.",
+        "strategie.plan-action": "Exemple : priorités, actions, responsables, échéances, indicateurs.",
+        "marketing.confiance": "Exemple : avis clients, références, réalisations, pédagogie, preuves de sérieux.",
+        "marketing.decision": "Exemple : premier contact, diagnostic, devis, disponibilité, prochaine étape.",
+        "marketing.lien": "Exemple : relance, suivi, message utile, recommandation, fidélisation.",
+        "finance.pilotage": "Exemple : marge, trésorerie, coûts, panier moyen, rentabilité par prestation.",
+        "finance.facturation": "Exemple : devis, acompte, facture, paiement, relance, avoir.",
+        "finance.conformite": "Exemple : contrats, assurances, obligations métier, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : besoin, profil, intégration, accès outils, passation.",
+        "equipe.rh": "Exemple : planning, charge, absences, compétences, objectifs.",
+        "equipe.culture": "Exemple : qualité, ponctualité, clarté client, rigueur, entraide."
+      },
+      "slug": "agence-de-voyage",
+      "name": "Agence de voyage",
+      "sectorLabel": "Hébergement & tourisme",
+      "icon": "Navigation",
+      "tags": [
+        "Tourisme",
+        "Réservation",
+        "Système"
+      ],
+      "description": "Gardez offres, dossiers voyageurs, fournisseurs et paiements alignés sans dispersion.",
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Qualification voyage",
+          "description": "Comprendre destination, budget, dates, contraintes et préférences.",
+          "examples": "Exemple : destination, budget, dates, voyageurs, envies."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Offres & devis",
+          "description": "Préparer propositions, options, disponibilités et arbitrages.",
+          "examples": "Exemple : vol, hôtel, circuit, option, devis."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Réservations",
+          "description": "Suivre confirmations, acomptes, documents et échéances fournisseurs.",
+          "examples": "Exemple : booking, acompte, confirmation, voucher, solde."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Documents voyageurs",
+          "description": "Centraliser passeports, assurances, visas, convocations et informations.",
+          "examples": "Exemple : passeport, visa, assurance, carnet, départ."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "SAV voyage",
+          "description": "Gérer modifications, incidents, retours et fidélisation.",
+          "examples": "Exemple : changement, annulation, incident, retour, relance."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "orchestra-travel",
+          "usage": "Structurer offres, réservations, dossiers voyageurs et production touristique."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser documents voyageurs, devis et échanges."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre acomptes, soldes, frais et trésorerie."
+        },
+        {
+          "slug": "canva",
+          "usage": "Créer carnets de voyage, supports et contenus de présentation."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer propositions, itinéraires et messages clients."
+        }
+      ]
+    },
+    {
+      "id": "e70",
+      "category": "Système opérationnel",
+      "price": "",
+      "imageTitle": "Opticien",
+      "imageSubtitle": "Aperçu du système opérationnel pour opticien",
+      "processes": [],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : cible, zone, niveau de service, spécialité, promesse, preuves.",
+        "strategie.objectifs": "Exemple : chiffre d’affaires, marge, volume, satisfaction, délai moyen.",
+        "strategie.plan-action": "Exemple : priorités, actions, responsables, échéances, indicateurs.",
+        "marketing.confiance": "Exemple : avis clients, références, réalisations, pédagogie, preuves de sérieux.",
+        "marketing.decision": "Exemple : premier contact, diagnostic, devis, disponibilité, prochaine étape.",
+        "marketing.lien": "Exemple : relance, suivi, message utile, recommandation, fidélisation.",
+        "finance.pilotage": "Exemple : marge, trésorerie, coûts, panier moyen, rentabilité par prestation.",
+        "finance.facturation": "Exemple : devis, acompte, facture, paiement, relance, avoir.",
+        "finance.conformite": "Exemple : contrats, assurances, obligations métier, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : besoin, profil, intégration, accès outils, passation.",
+        "equipe.rh": "Exemple : planning, charge, absences, compétences, objectifs.",
+        "equipe.culture": "Exemple : qualité, ponctualité, clarté client, rigueur, entraide."
+      },
+      "slug": "opticien",
+      "name": "Opticien",
+      "sectorLabel": "Santé, bien-être & esthétique",
+      "icon": "Store",
+      "tags": [
+        "Santé",
+        "Commerce",
+        "Système"
+      ],
+      "description": "Gardez clients, verres, montures, mutuelles et commandes visibles en boutique.",
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Accueil client",
+          "description": "Qualifier besoin, ordonnance, correction, budget et style.",
+          "examples": "Exemple : ordonnance, usage, budget, mutuelle, choix."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Devis & tiers payant",
+          "description": "Suivre devis, mutuelles, prises en charge et restes à payer.",
+          "examples": "Exemple : devis, mutuelle, accord, acompte, solde."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Commandes verres",
+          "description": "Piloter commandes, délais, montages et contrôles qualité.",
+          "examples": "Exemple : verre, monture, commande, réception, montage."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Stock montures",
+          "description": "Suivre assortiment, réassort, rotation et fournisseurs.",
+          "examples": "Exemple : marque, modèle, stock, réassort, retour."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "SAV & fidélité",
+          "description": "Gérer ajustements, garanties, renouvellements et rappels.",
+          "examples": "Exemple : ajustage, casse, garantie, rappel, avis."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "winoptics",
+          "usage": "Suivre clients, verres, montures, mutuelles, commandes et ventes."
+        },
+        {
+          "slug": "square",
+          "usage": "Encaisser et suivre les ventes boutique."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser documents internes et suivis simples."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre achats, ventes et dépenses courantes."
+        }
+      ]
+    },
+    {
+      "id": "e71",
+      "category": "Système opérationnel",
+      "price": "",
+      "imageTitle": "Pisciniste",
+      "imageSubtitle": "Aperçu du système opérationnel pour pisciniste",
+      "processes": [],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : cible, zone, niveau de service, spécialité, promesse, preuves.",
+        "strategie.objectifs": "Exemple : chiffre d’affaires, marge, volume, satisfaction, délai moyen.",
+        "strategie.plan-action": "Exemple : priorités, actions, responsables, échéances, indicateurs.",
+        "marketing.confiance": "Exemple : avis clients, références, réalisations, pédagogie, preuves de sérieux.",
+        "marketing.decision": "Exemple : premier contact, diagnostic, devis, disponibilité, prochaine étape.",
+        "marketing.lien": "Exemple : relance, suivi, message utile, recommandation, fidélisation.",
+        "finance.pilotage": "Exemple : marge, trésorerie, coûts, panier moyen, rentabilité par prestation.",
+        "finance.facturation": "Exemple : devis, acompte, facture, paiement, relance, avoir.",
+        "finance.conformite": "Exemple : contrats, assurances, obligations métier, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : besoin, profil, intégration, accès outils, passation.",
+        "equipe.rh": "Exemple : planning, charge, absences, compétences, objectifs.",
+        "equipe.culture": "Exemple : qualité, ponctualité, clarté client, rigueur, entraide."
+      },
+      "slug": "pisciniste",
+      "name": "Pisciniste",
+      "sectorLabel": "BTP & services techniques",
+      "icon": "Wrench",
+      "tags": [
+        "BTP",
+        "SAV",
+        "Système"
+      ],
+      "description": "Gardez devis, chantiers, entretiens et SAV piscine visibles malgré la saisonnalité.",
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Demandes client",
+          "description": "Qualifier projet, bassin, équipement, urgence et saison.",
+          "examples": "Exemple : construction, rénovation, entretien, panne, zone."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Devis & options",
+          "description": "Suivre offres, variantes, validations et acomptes.",
+          "examples": "Exemple : devis, pompe, liner, option, acompte."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Chantiers piscine",
+          "description": "Piloter planning, étapes, fournisseurs et contraintes terrain.",
+          "examples": "Exemple : terrassement, pose, raccordement, météo, contrôle."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Contrats d’entretien",
+          "description": "Organiser passages, traitements, consommables et relances saisonnières.",
+          "examples": "Exemple : ouverture, hivernage, chlore, passage, rapport."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "SAV & pièces",
+          "description": "Suivre pannes, diagnostics, pièces, interventions et garanties.",
+          "examples": "Exemple : pompe, fuite, pièce, garantie, retour."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "extrabat",
+          "usage": "Gérer devis, contrats d’entretien, interventions, SAV et saisonnalité."
+        },
+        {
+          "slug": "obat",
+          "usage": "Gérer devis et factures de travaux."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser photos, documents chantier et suivis clients."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre acomptes, achats et trésorerie."
+        }
+      ]
+    },
+    {
+      "id": "e72",
+      "category": "Système opérationnel",
+      "price": "",
+      "imageTitle": "Diagnostiqueur immobilier",
+      "imageSubtitle": "Aperçu du système opérationnel pour diagnostiqueur immobilier",
+      "processes": [],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : cible, zone, niveau de service, spécialité, promesse, preuves.",
+        "strategie.objectifs": "Exemple : chiffre d’affaires, marge, volume, satisfaction, délai moyen.",
+        "strategie.plan-action": "Exemple : priorités, actions, responsables, échéances, indicateurs.",
+        "marketing.confiance": "Exemple : avis clients, références, réalisations, pédagogie, preuves de sérieux.",
+        "marketing.decision": "Exemple : premier contact, diagnostic, devis, disponibilité, prochaine étape.",
+        "marketing.lien": "Exemple : relance, suivi, message utile, recommandation, fidélisation.",
+        "finance.pilotage": "Exemple : marge, trésorerie, coûts, panier moyen, rentabilité par prestation.",
+        "finance.facturation": "Exemple : devis, acompte, facture, paiement, relance, avoir.",
+        "finance.conformite": "Exemple : contrats, assurances, obligations métier, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : besoin, profil, intégration, accès outils, passation.",
+        "equipe.rh": "Exemple : planning, charge, absences, compétences, objectifs.",
+        "equipe.culture": "Exemple : qualité, ponctualité, clarté client, rigueur, entraide."
+      },
+      "slug": "diagnostiqueur-immobilier",
+      "name": "Diagnostiqueur immobilier",
+      "sectorLabel": "Immobilier",
+      "icon": "ClipboardCheck",
+      "tags": [
+        "Immobilier",
+        "Diagnostic",
+        "Système"
+      ],
+      "description": "Gardez rendez-vous, diagnostics, rapports et conformité alignés du terrain à l’envoi.",
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Prise de mission",
+          "description": "Qualifier bien, diagnostics requis, urgence et accès.",
+          "examples": "Exemple : DPE, amiante, gaz, électricité, clé."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Planning terrain",
+          "description": "Organiser tournées, temps d’intervention et documents à préparer.",
+          "examples": "Exemple : adresse, créneau, accès, matériel, trajet."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Relevés & mesures",
+          "description": "Collecter mesures, photos, observations et justificatifs.",
+          "examples": "Exemple : surface, compteur, photo, anomalie, note."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Rapports",
+          "description": "Produire, contrôler et transmettre les rapports réglementaires.",
+          "examples": "Exemple : rapport, contrôle, signature, envoi, archive."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Facturation",
+          "description": "Suivre devis, paiement, relance et rentabilité par intervention.",
+          "examples": "Exemple : devis, facture, paiement, impayé, marge."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "liciel",
+          "usage": "Produire diagnostics, rapports, mesures terrain et suivis réglementaires."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser photos, documents et suivis simples."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre paiements, frais de déplacement et trésorerie."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer messages clients et synthèses non réglementaires."
+        }
+      ]
+    },
+    {
+      "id": "e73",
+      "category": "Système opérationnel",
+      "price": "",
+      "imageTitle": "Fleuriste",
+      "imageSubtitle": "Aperçu du système opérationnel pour fleuriste",
+      "processes": [],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : cible, zone, niveau de service, spécialité, promesse, preuves.",
+        "strategie.objectifs": "Exemple : chiffre d’affaires, marge, volume, satisfaction, délai moyen.",
+        "strategie.plan-action": "Exemple : priorités, actions, responsables, échéances, indicateurs.",
+        "marketing.confiance": "Exemple : avis clients, références, réalisations, pédagogie, preuves de sérieux.",
+        "marketing.decision": "Exemple : premier contact, diagnostic, devis, disponibilité, prochaine étape.",
+        "marketing.lien": "Exemple : relance, suivi, message utile, recommandation, fidélisation.",
+        "finance.pilotage": "Exemple : marge, trésorerie, coûts, panier moyen, rentabilité par prestation.",
+        "finance.facturation": "Exemple : devis, acompte, facture, paiement, relance, avoir.",
+        "finance.conformite": "Exemple : contrats, assurances, obligations métier, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : besoin, profil, intégration, accès outils, passation.",
+        "equipe.rh": "Exemple : planning, charge, absences, compétences, objectifs.",
+        "equipe.culture": "Exemple : qualité, ponctualité, clarté client, rigueur, entraide."
+      },
+      "slug": "fleuriste",
+      "name": "Fleuriste",
+      "sectorLabel": "Commerce & retail",
+      "icon": "Flower2",
+      "tags": [
+        "Commerce",
+        "Stock",
+        "Système"
+      ],
+      "description": "Gardez commandes, stock frais, livraisons et pics saisonniers visibles en boutique.",
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Commandes client",
+          "description": "Suivre demandes, compositions, événements et délais.",
+          "examples": "Exemple : bouquet, mariage, deuil, livraison, message."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Stock frais",
+          "description": "Piloter arrivages, rotation, pertes et réassorts.",
+          "examples": "Exemple : fleurs, plante, arrivage, perte, réassort."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Production boutique",
+          "description": "Organiser compositions, priorités, emballage et préparation.",
+          "examples": "Exemple : commande, composition, emballage, horaire, retrait."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Livraisons",
+          "description": "Coordonner adresses, créneaux, messages et confirmations.",
+          "examples": "Exemple : adresse, créneau, livreur, message, confirmation."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Saisonnalité",
+          "description": "Préparer fêtes, stocks, renforts et offres saisonnières.",
+          "examples": "Exemple : Saint-Valentin, fête des mères, Toussaint, planning, stock."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "fleuracompta",
+          "usage": "Encaisser, facturer et suivre l’activité quotidienne d’un fleuriste."
+        },
+        {
+          "slug": "square",
+          "usage": "Encaisser en boutique et suivre les ventes."
+        },
+        {
+          "slug": "canva",
+          "usage": "Créer visuels, offres saisonnières et supports boutique."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre achats fournisseurs, caisse et dépenses."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer messages clients, fiches produits et contenus locaux."
+        }
+      ]
+    },
+    {
+      "id": "e74",
+      "category": "Système opérationnel",
+      "price": "",
+      "imageTitle": "Pressing",
+      "imageSubtitle": "Aperçu du système opérationnel pour pressing",
+      "processes": [],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : cible, zone, niveau de service, spécialité, promesse, preuves.",
+        "strategie.objectifs": "Exemple : chiffre d’affaires, marge, volume, satisfaction, délai moyen.",
+        "strategie.plan-action": "Exemple : priorités, actions, responsables, échéances, indicateurs.",
+        "marketing.confiance": "Exemple : avis clients, références, réalisations, pédagogie, preuves de sérieux.",
+        "marketing.decision": "Exemple : premier contact, diagnostic, devis, disponibilité, prochaine étape.",
+        "marketing.lien": "Exemple : relance, suivi, message utile, recommandation, fidélisation.",
+        "finance.pilotage": "Exemple : marge, trésorerie, coûts, panier moyen, rentabilité par prestation.",
+        "finance.facturation": "Exemple : devis, acompte, facture, paiement, relance, avoir.",
+        "finance.conformite": "Exemple : contrats, assurances, obligations métier, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : besoin, profil, intégration, accès outils, passation.",
+        "equipe.rh": "Exemple : planning, charge, absences, compétences, objectifs.",
+        "equipe.culture": "Exemple : qualité, ponctualité, clarté client, rigueur, entraide."
+      },
+      "slug": "pressing",
+      "name": "Pressing",
+      "sectorLabel": "Services aux particuliers",
+      "icon": "Store",
+      "tags": [
+        "Service local",
+        "Caisse",
+        "Système"
+      ],
+      "description": "Gardez dépôts, traitements, délais et clients visibles sans perdre une pièce.",
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Dépôt client",
+          "description": "Enregistrer pièces, état, délai, prix et consignes.",
+          "examples": "Exemple : manteau, tache, délai, ticket, consigne."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Traitement",
+          "description": "Suivre nettoyage, repassage, retouches et contrôles.",
+          "examples": "Exemple : lavage, détachage, repassage, contrôle, prêt."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Restitution",
+          "description": "Gérer retraits, paiements, retards et pièces non récupérées.",
+          "examples": "Exemple : ticket, retrait, paiement, relance, litige."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Qualité & litiges",
+          "description": "Tracer incidents, réclamations, photos et décisions.",
+          "examples": "Exemple : tache, accroc, photo, geste, résolution."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Caisse & planning",
+          "description": "Suivre ventes, charge atelier, horaires et priorités.",
+          "examples": "Exemple : caisse, urgence, planning, fermeture, priorité."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "xinaya",
+          "usage": "Suivre dépôts, traitements, délais, livraisons, caisse et clients."
+        },
+        {
+          "slug": "square",
+          "usage": "Encaisser et suivre les ventes quotidiennes."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser procédures, photos et documents internes."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre caisse, dépenses et trésorerie."
+        }
+      ]
+    },
+    {
+      "id": "e75",
+      "category": "Système opérationnel",
+      "price": "",
+      "imageTitle": "Food truck",
+      "imageSubtitle": "Aperçu du système opérationnel pour food truck",
+      "processes": [],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : cible, zone, niveau de service, spécialité, promesse, preuves.",
+        "strategie.objectifs": "Exemple : chiffre d’affaires, marge, volume, satisfaction, délai moyen.",
+        "strategie.plan-action": "Exemple : priorités, actions, responsables, échéances, indicateurs.",
+        "marketing.confiance": "Exemple : avis clients, références, réalisations, pédagogie, preuves de sérieux.",
+        "marketing.decision": "Exemple : premier contact, diagnostic, devis, disponibilité, prochaine étape.",
+        "marketing.lien": "Exemple : relance, suivi, message utile, recommandation, fidélisation.",
+        "finance.pilotage": "Exemple : marge, trésorerie, coûts, panier moyen, rentabilité par prestation.",
+        "finance.facturation": "Exemple : devis, acompte, facture, paiement, relance, avoir.",
+        "finance.conformite": "Exemple : contrats, assurances, obligations métier, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : besoin, profil, intégration, accès outils, passation.",
+        "equipe.rh": "Exemple : planning, charge, absences, compétences, objectifs.",
+        "equipe.culture": "Exemple : qualité, ponctualité, clarté client, rigueur, entraide."
+      },
+      "slug": "food-truck",
+      "name": "Food truck",
+      "sectorLabel": "Restauration",
+      "icon": "Truck",
+      "tags": [
+        "Restauration",
+        "Mobilité",
+        "Système"
+      ],
+      "description": "Gardez emplacements, stock, service et autorisations alignés malgré les déplacements.",
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Emplacements",
+          "description": "Planifier marchés, événements, autorisations et contraintes terrain.",
+          "examples": "Exemple : marché, festival, autorisation, branchement, horaire."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Stock mobile",
+          "description": "Préparer achats, chargement, pertes et réassorts.",
+          "examples": "Exemple : ingrédient, stock, glacière, rupture, retour."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Service",
+          "description": "Piloter rush, commandes, encaissements et préparation.",
+          "examples": "Exemple : commande, ticket, cuisine, attente, paiement."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Hygiène & sécurité",
+          "description": "Suivre températures, nettoyage, traçabilité et obligations.",
+          "examples": "Exemple : frigo, HACCP, nettoyage, contrôle, registre."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Rentabilité tournée",
+          "description": "Analyser ventes, coûts, marge et performance par emplacement.",
+          "examples": "Exemple : CA, coût, emplacement, météo, marge."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "nomad-caisse",
+          "usage": "Gérer commandes comptoir, cuisine, stock et canaux de vente en mobilité."
+        },
+        {
+          "slug": "square",
+          "usage": "Encaisser rapidement sur place."
+        },
+        {
+          "slug": "canva",
+          "usage": "Créer menus, affichages et communication locale."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre achats, recettes et trésorerie."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer menus, messages événementiels et réponses clients."
+        }
+      ]
+    },
+    {
+      "id": "e76",
+      "category": "Système opérationnel",
+      "price": "",
+      "imageTitle": "Consultant indépendant",
+      "imageSubtitle": "Aperçu du système opérationnel pour consultant indépendant",
+      "processes": [],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : cible, zone, niveau de service, spécialité, promesse, preuves.",
+        "strategie.objectifs": "Exemple : chiffre d’affaires, marge, volume, satisfaction, délai moyen.",
+        "strategie.plan-action": "Exemple : priorités, actions, responsables, échéances, indicateurs.",
+        "marketing.confiance": "Exemple : avis clients, références, réalisations, pédagogie, preuves de sérieux.",
+        "marketing.decision": "Exemple : premier contact, diagnostic, devis, disponibilité, prochaine étape.",
+        "marketing.lien": "Exemple : relance, suivi, message utile, recommandation, fidélisation.",
+        "finance.pilotage": "Exemple : marge, trésorerie, coûts, panier moyen, rentabilité par prestation.",
+        "finance.facturation": "Exemple : devis, acompte, facture, paiement, relance, avoir.",
+        "finance.conformite": "Exemple : contrats, assurances, obligations métier, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : besoin, profil, intégration, accès outils, passation.",
+        "equipe.rh": "Exemple : planning, charge, absences, compétences, objectifs.",
+        "equipe.culture": "Exemple : qualité, ponctualité, clarté client, rigueur, entraide."
+      },
+      "slug": "consultant-independant",
+      "name": "Consultant indépendant",
+      "sectorLabel": "Conseil & services aux entreprises",
+      "icon": "Briefcase",
+      "tags": [
+        "Conseil",
+        "Mission",
+        "Système"
+      ],
+      "description": "Gardez missions, livrables, relances et rentabilité visibles sans vous disperser.",
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Prospection",
+          "description": "Suivre prospects, besoins, décideurs et prochaines actions.",
+          "examples": "Exemple : lead, besoin, décideur, appel, relance."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Cadrage mission",
+          "description": "Clarifier périmètre, objectifs, livrables et conditions.",
+          "examples": "Exemple : diagnostic, périmètre, livrable, délai, budget."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Production",
+          "description": "Piloter analyses, ateliers, livrables et validations.",
+          "examples": "Exemple : atelier, note, analyse, version, validation."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Suivi client",
+          "description": "Centraliser échanges, décisions, risques et prochaines étapes.",
+          "examples": "Exemple : compte rendu, décision, blocage, action, échéance."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Rentabilité",
+          "description": "Suivre temps, marge, facturation et charge.",
+          "examples": "Exemple : jour vendu, temps passé, acompte, facture, marge."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "notion",
+          "usage": "Structurer livrables, bases de connaissances et suivis de mission."
+        },
+        {
+          "slug": "pipedrive",
+          "usage": "Suivre prospects, opportunités et relances commerciales."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser documents client, agenda et fichiers."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre facturation, dépenses et trésorerie."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Accélérer synthèses, plans, emails et livrables."
+        }
+      ]
+    },
+    {
+      "id": "e77",
+      "category": "Système opérationnel",
+      "price": "",
+      "imageTitle": "Cabinet d’assurance",
+      "imageSubtitle": "Aperçu du système opérationnel pour cabinet d’assurance",
+      "processes": [],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : cible, zone, niveau de service, spécialité, promesse, preuves.",
+        "strategie.objectifs": "Exemple : chiffre d’affaires, marge, volume, satisfaction, délai moyen.",
+        "strategie.plan-action": "Exemple : priorités, actions, responsables, échéances, indicateurs.",
+        "marketing.confiance": "Exemple : avis clients, références, réalisations, pédagogie, preuves de sérieux.",
+        "marketing.decision": "Exemple : premier contact, diagnostic, devis, disponibilité, prochaine étape.",
+        "marketing.lien": "Exemple : relance, suivi, message utile, recommandation, fidélisation.",
+        "finance.pilotage": "Exemple : marge, trésorerie, coûts, panier moyen, rentabilité par prestation.",
+        "finance.facturation": "Exemple : devis, acompte, facture, paiement, relance, avoir.",
+        "finance.conformite": "Exemple : contrats, assurances, obligations métier, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : besoin, profil, intégration, accès outils, passation.",
+        "equipe.rh": "Exemple : planning, charge, absences, compétences, objectifs.",
+        "equipe.culture": "Exemple : qualité, ponctualité, clarté client, rigueur, entraide."
+      },
+      "slug": "cabinet-assurance",
+      "name": "Cabinet d’assurance",
+      "sectorLabel": "Conseil & services aux entreprises",
+      "icon": "Shield",
+      "tags": [
+        "Assurance",
+        "Contrats",
+        "Système"
+      ],
+      "description": "Gardez portefeuille, contrats, sinistres et renouvellements visibles sans perdre les échéances.",
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Prospects & assurés",
+          "description": "Centraliser contacts, besoins, contrats et historique.",
+          "examples": "Exemple : prospect, assuré, besoin, contrat, interaction."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Devis & souscription",
+          "description": "Suivre recueil de besoin, propositions, pièces et signature.",
+          "examples": "Exemple : besoin, devis, pièce, accord, signature."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Contrats",
+          "description": "Piloter renouvellements, avenants, résiliations et garanties.",
+          "examples": "Exemple : échéance, avenant, garantie, résiliation, relance."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Sinistres",
+          "description": "Suivre déclaration, pièces, compagnie, indemnisation et clôture.",
+          "examples": "Exemple : sinistre, pièce, expert, statut, clôture."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Conformité",
+          "description": "Tracer devoir de conseil, réclamations, RGPD et obligations.",
+          "examples": "Exemple : DDA, conseil, réclamation, preuve, archive."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "lya",
+          "usage": "Piloter portefeuille assurance, conformité, contrats et suivi client."
+        },
+        {
+          "slug": "pipedrive",
+          "usage": "Suivre opportunités, relances et renouvellements."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser pièces, documents et échanges internes."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre dépenses et pilotage financier du cabinet."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer synthèses, messages clients et explications pédagogiques."
+        }
+      ]
+    },
+    {
+      "id": "e78",
+      "category": "Système opérationnel",
+      "price": "",
+      "imageTitle": "VTC",
+      "imageSubtitle": "Aperçu du système opérationnel pour vtc",
+      "processes": [],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : cible, zone, niveau de service, spécialité, promesse, preuves.",
+        "strategie.objectifs": "Exemple : chiffre d’affaires, marge, volume, satisfaction, délai moyen.",
+        "strategie.plan-action": "Exemple : priorités, actions, responsables, échéances, indicateurs.",
+        "marketing.confiance": "Exemple : avis clients, références, réalisations, pédagogie, preuves de sérieux.",
+        "marketing.decision": "Exemple : premier contact, diagnostic, devis, disponibilité, prochaine étape.",
+        "marketing.lien": "Exemple : relance, suivi, message utile, recommandation, fidélisation.",
+        "finance.pilotage": "Exemple : marge, trésorerie, coûts, panier moyen, rentabilité par prestation.",
+        "finance.facturation": "Exemple : devis, acompte, facture, paiement, relance, avoir.",
+        "finance.conformite": "Exemple : contrats, assurances, obligations métier, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : besoin, profil, intégration, accès outils, passation.",
+        "equipe.rh": "Exemple : planning, charge, absences, compétences, objectifs.",
+        "equipe.culture": "Exemple : qualité, ponctualité, clarté client, rigueur, entraide."
+      },
+      "slug": "vtc",
+      "name": "VTC",
+      "sectorLabel": "Mobilité & logistique",
+      "icon": "Car",
+      "tags": [
+        "Transport",
+        "Planning",
+        "Système"
+      ],
+      "description": "Gardez courses, clients, chauffeurs et rentabilité visibles sans subir les imprévus.",
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Réservations",
+          "description": "Suivre demandes, horaires, trajets et confirmations.",
+          "examples": "Exemple : client, départ, arrivée, horaire, confirmation."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Courses",
+          "description": "Piloter affectation, statut, temps d’attente et incidents.",
+          "examples": "Exemple : chauffeur, course, retard, attente, terminé."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Chauffeurs",
+          "description": "Suivre disponibilité, commissions, documents et performance.",
+          "examples": "Exemple : chauffeur, planning, commission, document, note."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Véhicules",
+          "description": "Gérer entretien, assurance, contrôle et disponibilité.",
+          "examples": "Exemple : véhicule, contrôle, assurance, panne, nettoyage."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Facturation",
+          "description": "Suivre devis, paiements, commissions et rentabilité.",
+          "examples": "Exemple : devis, facture, paiement, commission, marge."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "vtc-gestion",
+          "usage": "Suivre chauffeurs, courses, commissions, déductions et montants nets."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser plannings, documents et suivis clients."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre encaissements, dépenses véhicule et trésorerie."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer messages clients, réponses avis et procédures."
+        }
+      ]
+    },
+    {
+      "id": "e79",
+      "category": "Système opérationnel",
+      "price": "",
+      "imageTitle": "Coach professionnel",
+      "imageSubtitle": "Aperçu du système opérationnel pour coach professionnel",
+      "processes": [],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : cible, zone, niveau de service, spécialité, promesse, preuves.",
+        "strategie.objectifs": "Exemple : chiffre d’affaires, marge, volume, satisfaction, délai moyen.",
+        "strategie.plan-action": "Exemple : priorités, actions, responsables, échéances, indicateurs.",
+        "marketing.confiance": "Exemple : avis clients, références, réalisations, pédagogie, preuves de sérieux.",
+        "marketing.decision": "Exemple : premier contact, diagnostic, devis, disponibilité, prochaine étape.",
+        "marketing.lien": "Exemple : relance, suivi, message utile, recommandation, fidélisation.",
+        "finance.pilotage": "Exemple : marge, trésorerie, coûts, panier moyen, rentabilité par prestation.",
+        "finance.facturation": "Exemple : devis, acompte, facture, paiement, relance, avoir.",
+        "finance.conformite": "Exemple : contrats, assurances, obligations métier, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : besoin, profil, intégration, accès outils, passation.",
+        "equipe.rh": "Exemple : planning, charge, absences, compétences, objectifs.",
+        "equipe.culture": "Exemple : qualité, ponctualité, clarté client, rigueur, entraide."
+      },
+      "slug": "coach-professionnel",
+      "name": "Coach professionnel",
+      "sectorLabel": "Conseil & services aux entreprises",
+      "icon": "UserCheck",
+      "tags": [
+        "Coaching",
+        "Accompagnement",
+        "Système"
+      ],
+      "description": "Gardez clients, objectifs, séances et progression visibles sans perdre le cadre.",
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Qualification",
+          "description": "Clarifier besoin, objectif, contexte et format d’accompagnement.",
+          "examples": "Exemple : objectif, contexte, urgence, format, budget."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Parcours client",
+          "description": "Structurer séances, étapes, objectifs et engagements.",
+          "examples": "Exemple : séance, objectif, exercice, action, bilan."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Notes & suivi",
+          "description": "Centraliser notes, décisions, actions et progression.",
+          "examples": "Exemple : note, action, blocage, progrès, prochaine étape."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Rendez-vous",
+          "description": "Organiser disponibilités, rappels, reports et présence.",
+          "examples": "Exemple : créneau, rappel, report, absence, confirmation."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Facturation",
+          "description": "Suivre forfaits, séances réalisées, paiements et renouvellements.",
+          "examples": "Exemple : forfait, séance, facture, paiement, renouvellement."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "cognito-app",
+          "usage": "Gérer clients, séances, notes, objectifs et communications d’accompagnement."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser documents, agenda et supports clients."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre paiements, abonnements et dépenses."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer trames, exercices, synthèses et emails."
+        },
+        {
+          "slug": "canva",
+          "usage": "Créer supports d’accompagnement et documents visuels."
+        }
+      ]
+    },
+    {
+      "id": "e80",
+      "category": "Système opérationnel",
+      "price": "",
+      "imageTitle": "Coach sportif",
+      "imageSubtitle": "Aperçu du système opérationnel pour coach sportif",
+      "processes": [],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : cible, zone, niveau de service, spécialité, promesse, preuves.",
+        "strategie.objectifs": "Exemple : chiffre d’affaires, marge, volume, satisfaction, délai moyen.",
+        "strategie.plan-action": "Exemple : priorités, actions, responsables, échéances, indicateurs.",
+        "marketing.confiance": "Exemple : avis clients, références, réalisations, pédagogie, preuves de sérieux.",
+        "marketing.decision": "Exemple : premier contact, diagnostic, devis, disponibilité, prochaine étape.",
+        "marketing.lien": "Exemple : relance, suivi, message utile, recommandation, fidélisation.",
+        "finance.pilotage": "Exemple : marge, trésorerie, coûts, panier moyen, rentabilité par prestation.",
+        "finance.facturation": "Exemple : devis, acompte, facture, paiement, relance, avoir.",
+        "finance.conformite": "Exemple : contrats, assurances, obligations métier, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : besoin, profil, intégration, accès outils, passation.",
+        "equipe.rh": "Exemple : planning, charge, absences, compétences, objectifs.",
+        "equipe.culture": "Exemple : qualité, ponctualité, clarté client, rigueur, entraide."
+      },
+      "slug": "coach-sportif",
+      "name": "Coach sportif",
+      "sectorLabel": "Santé, bien-être & esthétique",
+      "icon": "Dumbbell",
+      "tags": [
+        "Sport",
+        "Coaching",
+        "Système"
+      ],
+      "description": "Gardez clients, séances, programmes et paiements visibles sans perdre le suivi terrain.",
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Bilan client",
+          "description": "Qualifier objectifs, niveau, contraintes et disponibilité.",
+          "examples": "Exemple : objectif, niveau, blessure, planning, mesure."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Programmes",
+          "description": "Créer séances, exercices, progression et adaptations.",
+          "examples": "Exemple : exercice, charge, série, progression, adaptation."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Planning séances",
+          "description": "Organiser créneaux, reports, présence et rappels.",
+          "examples": "Exemple : créneau, lieu, report, rappel, présence."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Suivi progrès",
+          "description": "Suivre mesures, performances, ressentis et objectifs.",
+          "examples": "Exemple : poids, performance, ressenti, photo, objectif."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Paiements",
+          "description": "Piloter forfaits, abonnements, séances et renouvellements.",
+          "examples": "Exemple : forfait, séance, paiement, impayé, renouvellement."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "maliora",
+          "usage": "Créer des programmes, suivre les progrès, gérer clients et facturation."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser agenda, fichiers clients et supports."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre paiements, abonnements et dépenses."
+        },
+        {
+          "slug": "canva",
+          "usage": "Créer supports, challenges et contenus de communication."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer programmes, messages clients et idées d’animation."
+        }
+      ]
+    },
+    {
+      "id": "e81",
+      "category": "Système opérationnel",
+      "price": "",
+      "imageTitle": "Laverie automatique",
+      "imageSubtitle": "Aperçu du système opérationnel pour laverie automatique",
+      "processes": [],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : cible, zone, niveau de service, spécialité, promesse, preuves.",
+        "strategie.objectifs": "Exemple : chiffre d’affaires, marge, volume, satisfaction, délai moyen.",
+        "strategie.plan-action": "Exemple : priorités, actions, responsables, échéances, indicateurs.",
+        "marketing.confiance": "Exemple : avis clients, références, réalisations, pédagogie, preuves de sérieux.",
+        "marketing.decision": "Exemple : premier contact, diagnostic, devis, disponibilité, prochaine étape.",
+        "marketing.lien": "Exemple : relance, suivi, message utile, recommandation, fidélisation.",
+        "finance.pilotage": "Exemple : marge, trésorerie, coûts, panier moyen, rentabilité par prestation.",
+        "finance.facturation": "Exemple : devis, acompte, facture, paiement, relance, avoir.",
+        "finance.conformite": "Exemple : contrats, assurances, obligations métier, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : besoin, profil, intégration, accès outils, passation.",
+        "equipe.rh": "Exemple : planning, charge, absences, compétences, objectifs.",
+        "equipe.culture": "Exemple : qualité, ponctualité, clarté client, rigueur, entraide."
+      },
+      "slug": "laverie-automatique",
+      "name": "Laverie automatique",
+      "sectorLabel": "Services aux particuliers",
+      "icon": "Store",
+      "tags": [
+        "Service local",
+        "Maintenance",
+        "Système"
+      ],
+      "description": "Gardez machines, paiements, maintenance et incidents visibles sans présence permanente.",
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Machines",
+          "description": "Suivre état, disponibilité, pannes et cycles d’entretien.",
+          "examples": "Exemple : machine, panne, filtre, nettoyage, contrôle."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Paiements",
+          "description": "Piloter encaissements, anomalies, remboursements et suivi caisse.",
+          "examples": "Exemple : terminal, paiement, remboursement, anomalie, journal."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Maintenance",
+          "description": "Organiser interventions, pièces, prestataires et contrôles.",
+          "examples": "Exemple : panne, technicien, pièce, réparation, test."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Propreté",
+          "description": "Planifier nettoyage, consommables et rondes.",
+          "examples": "Exemple : passage, sol, lessive, poubelle, contrôle."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Incidents client",
+          "description": "Gérer réclamations, objets oubliés, blocages et messages.",
+          "examples": "Exemple : linge bloqué, appel, remboursement, objet, clôture."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "square",
+          "usage": "Suivre paiements et ventes de services complémentaires."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser rondes, incidents, procédures et documents."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre encaissements, dépenses machines et trésorerie."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer affichages, réponses clients et procédures."
+        },
+        {
+          "slug": "canva",
+          "usage": "Créer affichages clairs pour consignes et tarifs."
+        }
+      ]
+    },
+    {
+      "id": "e82",
+      "category": "Système opérationnel",
+      "price": "",
+      "imageTitle": "Entreprise de sécurité",
+      "imageSubtitle": "Aperçu du système opérationnel pour entreprise de sécurité",
+      "processes": [],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : cible, zone, niveau de service, spécialité, promesse, preuves.",
+        "strategie.objectifs": "Exemple : chiffre d’affaires, marge, volume, satisfaction, délai moyen.",
+        "strategie.plan-action": "Exemple : priorités, actions, responsables, échéances, indicateurs.",
+        "marketing.confiance": "Exemple : avis clients, références, réalisations, pédagogie, preuves de sérieux.",
+        "marketing.decision": "Exemple : premier contact, diagnostic, devis, disponibilité, prochaine étape.",
+        "marketing.lien": "Exemple : relance, suivi, message utile, recommandation, fidélisation.",
+        "finance.pilotage": "Exemple : marge, trésorerie, coûts, panier moyen, rentabilité par prestation.",
+        "finance.facturation": "Exemple : devis, acompte, facture, paiement, relance, avoir.",
+        "finance.conformite": "Exemple : contrats, assurances, obligations métier, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : besoin, profil, intégration, accès outils, passation.",
+        "equipe.rh": "Exemple : planning, charge, absences, compétences, objectifs.",
+        "equipe.culture": "Exemple : qualité, ponctualité, clarté client, rigueur, entraide."
+      },
+      "slug": "entreprise-de-securite",
+      "name": "Entreprise de sécurité",
+      "sectorLabel": "Services aux particuliers",
+      "icon": "Shield",
+      "tags": [
+        "Sécurité",
+        "Planning",
+        "Système"
+      ],
+      "description": "Gardez agents, sites, vacations et incidents visibles sans perdre la main courante.",
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Sites client",
+          "description": "Centraliser contrats, consignes, accès et risques par site.",
+          "examples": "Exemple : site, consigne, accès, risque, contact."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Planning agents",
+          "description": "Organiser vacations, remplacements, heures et disponibilités.",
+          "examples": "Exemple : agent, vacation, remplacement, absence, heure."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Main courante",
+          "description": "Tracer rondes, incidents, événements et transmissions.",
+          "examples": "Exemple : ronde, incident, heure, photo, transmission."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Conformité agents",
+          "description": "Suivre cartes, habilitations, tenues et documents.",
+          "examples": "Exemple : carte pro, habilitation, uniforme, document, échéance."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Facturation client",
+          "description": "Suivre prestations, heures, avenants et litiges.",
+          "examples": "Exemple : heure, facture, avenant, litige, validation."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser plannings, consignes, documents et suivis clients."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre paie, charges, dépenses et trésorerie."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer procédures, comptes rendus et messages clients."
+        },
+        {
+          "slug": "canva",
+          "usage": "Créer supports internes, consignes et documents terrain."
+        }
+      ]
+    },
+    {
+      "id": "e83",
+      "category": "Système opérationnel",
+      "price": "",
+      "imageTitle": "Association",
+      "imageSubtitle": "Aperçu du système opérationnel pour association",
+      "processes": [],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : cible, zone, niveau de service, spécialité, promesse, preuves.",
+        "strategie.objectifs": "Exemple : chiffre d’affaires, marge, volume, satisfaction, délai moyen.",
+        "strategie.plan-action": "Exemple : priorités, actions, responsables, échéances, indicateurs.",
+        "marketing.confiance": "Exemple : avis clients, références, réalisations, pédagogie, preuves de sérieux.",
+        "marketing.decision": "Exemple : premier contact, diagnostic, devis, disponibilité, prochaine étape.",
+        "marketing.lien": "Exemple : relance, suivi, message utile, recommandation, fidélisation.",
+        "finance.pilotage": "Exemple : marge, trésorerie, coûts, panier moyen, rentabilité par prestation.",
+        "finance.facturation": "Exemple : devis, acompte, facture, paiement, relance, avoir.",
+        "finance.conformite": "Exemple : contrats, assurances, obligations métier, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : besoin, profil, intégration, accès outils, passation.",
+        "equipe.rh": "Exemple : planning, charge, absences, compétences, objectifs.",
+        "equipe.culture": "Exemple : qualité, ponctualité, clarté client, rigueur, entraide."
+      },
+      "slug": "association",
+      "name": "Association",
+      "sectorLabel": "Associations & événements",
+      "icon": "HeartHandshake",
+      "tags": [
+        "Association",
+        "Membres",
+        "Système"
+      ],
+      "description": "Gardez membres, adhésions, événements et finances visibles sans alourdir les bénévoles.",
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Membres",
+          "description": "Suivre adhérents, statuts, coordonnées et renouvellements.",
+          "examples": "Exemple : membre, adhésion, cotisation, renouvellement, famille."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Événements",
+          "description": "Organiser inscriptions, présences, billetterie et bénévoles.",
+          "examples": "Exemple : événement, inscription, bénévole, présence, billet."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Dons & cotisations",
+          "description": "Piloter paiements, reçus, relances et campagnes.",
+          "examples": "Exemple : don, cotisation, reçu, relance, campagne."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Communication",
+          "description": "Centraliser emails, annonces, documents et décisions.",
+          "examples": "Exemple : newsletter, annonce, document, vote, compte rendu."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Administration",
+          "description": "Suivre bureau, assemblées, comptes rendus et obligations.",
+          "examples": "Exemple : AG, bureau, PV, budget, archive."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "assotools",
+          "usage": "Gérer membres, adhésions, dons, événements et communication associative."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser documents, comptes rendus et fichiers partagés."
+        },
+        {
+          "slug": "canva",
+          "usage": "Créer affiches, visuels et supports événementiels."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre dépenses, cotisations et trésorerie."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer emails, comptes rendus et documents internes."
+        }
+      ]
+    },
+    {
+      "id": "e84",
+      "category": "Système opérationnel",
+      "price": "",
+      "imageTitle": "Couvreur",
+      "imageSubtitle": "Aperçu du système opérationnel pour couvreur",
+      "processes": [],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : cible, zone, niveau de service, spécialité, promesse, preuves.",
+        "strategie.objectifs": "Exemple : chiffre d’affaires, marge, volume, satisfaction, délai moyen.",
+        "strategie.plan-action": "Exemple : priorités, actions, responsables, échéances, indicateurs.",
+        "marketing.confiance": "Exemple : avis clients, références, réalisations, pédagogie, preuves de sérieux.",
+        "marketing.decision": "Exemple : premier contact, diagnostic, devis, disponibilité, prochaine étape.",
+        "marketing.lien": "Exemple : relance, suivi, message utile, recommandation, fidélisation.",
+        "finance.pilotage": "Exemple : marge, trésorerie, coûts, panier moyen, rentabilité par prestation.",
+        "finance.facturation": "Exemple : devis, acompte, facture, paiement, relance, avoir.",
+        "finance.conformite": "Exemple : contrats, assurances, obligations métier, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : besoin, profil, intégration, accès outils, passation.",
+        "equipe.rh": "Exemple : planning, charge, absences, compétences, objectifs.",
+        "equipe.culture": "Exemple : qualité, ponctualité, clarté client, rigueur, entraide."
+      },
+      "slug": "couvreur",
+      "name": "Couvreur",
+      "sectorLabel": "BTP & services techniques",
+      "icon": "Hammer",
+      "tags": [
+        "BTP",
+        "Chantier",
+        "Système"
+      ],
+      "description": "Gardez urgences, devis, chantiers et sécurité toiture visibles sans perdre les priorités.",
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Demandes & urgences",
+          "description": "Qualifier fuite, intervention, accès, météo et risque.",
+          "examples": "Exemple : fuite, toiture, urgence, accès, météo."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Diagnostic toiture",
+          "description": "Suivre visite, photos, mesures, causes et recommandations.",
+          "examples": "Exemple : tuile, zinguerie, isolation, photo, mesure."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Devis & matériaux",
+          "description": "Piloter chiffrage, variantes, commandes et acompte.",
+          "examples": "Exemple : devis, tuile, zinc, échafaudage, acompte."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Planning chantier",
+          "description": "Organiser équipes, sécurité, météo, sous-traitants et réception.",
+          "examples": "Exemple : équipe, météo, sécurité, étape, réception."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "SAV & garanties",
+          "description": "Suivre réserves, reprises, garanties et retours client.",
+          "examples": "Exemple : réserve, reprise, garantie, photo, clôture."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "obat",
+          "usage": "Gérer devis et factures pour les travaux de couverture."
+        },
+        {
+          "slug": "vertuoza",
+          "usage": "Suivre chantiers, planning et rentabilité."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser photos, documents chantier et échanges."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre achats matériaux, acomptes et trésorerie."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer comptes rendus, messages client et procédures."
+        }
+      ]
+    },
+    {
+      "id": "e85",
+      "category": "Système opérationnel",
+      "price": "",
+      "imageTitle": "Peintre en bâtiment",
+      "imageSubtitle": "Aperçu du système opérationnel pour peintre en bâtiment",
+      "processes": [],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : cible, zone, spécialité, niveau de service, promesse, preuves.",
+        "strategie.objectifs": "Exemple : chiffre d’affaires, marge, volume, satisfaction, délai moyen.",
+        "strategie.plan-action": "Exemple : priorités, actions, responsables, échéances, indicateurs.",
+        "marketing.confiance": "Exemple : avis clients, références, réalisations, pédagogie, preuves de sérieux.",
+        "marketing.decision": "Exemple : premier contact, diagnostic, devis, disponibilité, prochaine étape.",
+        "marketing.lien": "Exemple : relance, suivi, message utile, recommandation, fidélisation.",
+        "finance.pilotage": "Exemple : marge, trésorerie, coûts, panier moyen, rentabilité par prestation.",
+        "finance.facturation": "Exemple : devis, acompte, facture, paiement, relance, avoir.",
+        "finance.conformite": "Exemple : contrats, assurances, obligations métier, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : besoin, profil, intégration, accès outils, passation.",
+        "equipe.rh": "Exemple : planning, charge, absences, compétences, objectifs.",
+        "equipe.culture": "Exemple : qualité, ponctualité, clarté client, rigueur, entraide."
+      },
+      "slug": "peintre-en-batiment",
+      "name": "Peintre en bâtiment",
+      "sectorLabel": "BTP & services techniques",
+      "icon": "Paintbrush",
+      "tags": [
+        "BTP",
+        "Chantier",
+        "Système"
+      ],
+      "description": "Gardez devis, chantiers, teintes et finitions visibles sans perdre les demandes client.",
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Demandes client",
+          "description": "Qualifier surface, support, état, délai et niveau de finition.",
+          "examples": "Exemple : mur, façade, plafond, état, délai."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Devis & métrés",
+          "description": "Chiffrer surfaces, préparation, fournitures, temps et options.",
+          "examples": "Exemple : m², enduit, peinture, protection, option."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Préparation chantier",
+          "description": "Organiser protection, ponçage, réparations et accès.",
+          "examples": "Exemple : bâche, ponçage, fissure, accès, nettoyage."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Application & finitions",
+          "description": "Suivre couches, séchage, retouches et validation client.",
+          "examples": "Exemple : couche, teinte, séchage, retouche, réception."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "SAV",
+          "description": "Tracer reprises, réserves, photos et garanties.",
+          "examples": "Exemple : défaut, photo, reprise, garantie, clôture."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "obat",
+          "usage": "Gérer devis, métrés et factures de chantier."
+        },
+        {
+          "slug": "vertuoza",
+          "usage": "Suivre planning, avancement et rentabilité des chantiers."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser photos, devis et échanges client."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre acomptes, achats peinture et trésorerie."
+        }
+      ]
+    },
+    {
+      "id": "e86",
+      "category": "Système opérationnel",
+      "price": "",
+      "imageTitle": "Carreleur",
+      "imageSubtitle": "Aperçu du système opérationnel pour carreleur",
+      "processes": [],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : cible, zone, spécialité, niveau de service, promesse, preuves.",
+        "strategie.objectifs": "Exemple : chiffre d’affaires, marge, volume, satisfaction, délai moyen.",
+        "strategie.plan-action": "Exemple : priorités, actions, responsables, échéances, indicateurs.",
+        "marketing.confiance": "Exemple : avis clients, références, réalisations, pédagogie, preuves de sérieux.",
+        "marketing.decision": "Exemple : premier contact, diagnostic, devis, disponibilité, prochaine étape.",
+        "marketing.lien": "Exemple : relance, suivi, message utile, recommandation, fidélisation.",
+        "finance.pilotage": "Exemple : marge, trésorerie, coûts, panier moyen, rentabilité par prestation.",
+        "finance.facturation": "Exemple : devis, acompte, facture, paiement, relance, avoir.",
+        "finance.conformite": "Exemple : contrats, assurances, obligations métier, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : besoin, profil, intégration, accès outils, passation.",
+        "equipe.rh": "Exemple : planning, charge, absences, compétences, objectifs.",
+        "equipe.culture": "Exemple : qualité, ponctualité, clarté client, rigueur, entraide."
+      },
+      "slug": "carreleur",
+      "name": "Carreleur",
+      "sectorLabel": "BTP & services techniques",
+      "icon": "Grid2X2",
+      "tags": [
+        "BTP",
+        "Chantier",
+        "Système"
+      ],
+      "description": "Gardez métrés, matériaux, poses et réserves alignés du devis à la réception.",
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Prise de cotes",
+          "description": "Relever surfaces, supports, contraintes et calepinage.",
+          "examples": "Exemple : m², support, pente, découpe, joint."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Devis & matériaux",
+          "description": "Suivre choix carrelage, colle, joints, plinthes et options.",
+          "examples": "Exemple : format, colle, joint, plinthe, seuil."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Préparation support",
+          "description": "Piloter ragréage, étanchéité, nettoyage et validations.",
+          "examples": "Exemple : support, ragréage, SPEC, pente, contrôle."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Pose",
+          "description": "Organiser planning, découpes, alignements et contrôles.",
+          "examples": "Exemple : pose, coupe, niveau, joint, nettoyage."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Réception",
+          "description": "Suivre réserves, retouches, photos et clôture.",
+          "examples": "Exemple : réserve, retouche, photo, validation, solde."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "obat",
+          "usage": "Gérer devis, matériaux et facturation."
+        },
+        {
+          "slug": "vertuoza",
+          "usage": "Suivre planning chantier, pose et rentabilité."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser photos, plans et échanges client."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre achats matériaux, acomptes et dépenses."
+        }
+      ]
+    },
+    {
+      "id": "e87",
+      "category": "Système opérationnel",
+      "price": "",
+      "imageTitle": "Climatisation",
+      "imageSubtitle": "Aperçu du système opérationnel pour climatisation",
+      "processes": [],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : cible, zone, spécialité, niveau de service, promesse, preuves.",
+        "strategie.objectifs": "Exemple : chiffre d’affaires, marge, volume, satisfaction, délai moyen.",
+        "strategie.plan-action": "Exemple : priorités, actions, responsables, échéances, indicateurs.",
+        "marketing.confiance": "Exemple : avis clients, références, réalisations, pédagogie, preuves de sérieux.",
+        "marketing.decision": "Exemple : premier contact, diagnostic, devis, disponibilité, prochaine étape.",
+        "marketing.lien": "Exemple : relance, suivi, message utile, recommandation, fidélisation.",
+        "finance.pilotage": "Exemple : marge, trésorerie, coûts, panier moyen, rentabilité par prestation.",
+        "finance.facturation": "Exemple : devis, acompte, facture, paiement, relance, avoir.",
+        "finance.conformite": "Exemple : contrats, assurances, obligations métier, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : besoin, profil, intégration, accès outils, passation.",
+        "equipe.rh": "Exemple : planning, charge, absences, compétences, objectifs.",
+        "equipe.culture": "Exemple : qualité, ponctualité, clarté client, rigueur, entraide."
+      },
+      "slug": "climatisation",
+      "name": "Climatisation",
+      "sectorLabel": "BTP & services techniques",
+      "icon": "Cloud",
+      "tags": [
+        "BTP",
+        "Installation",
+        "Système"
+      ],
+      "description": "Gardez diagnostics, installations, entretiens et SAV climatisation visibles au quotidien.",
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Diagnostic",
+          "description": "Qualifier besoin, surface, contraintes, accès et puissance.",
+          "examples": "Exemple : pièce, surface, unité, accès, puissance."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Devis & matériel",
+          "description": "Suivre choix équipements, options, disponibilité et acompte.",
+          "examples": "Exemple : split, groupe, option, stock, acompte."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Installation",
+          "description": "Planifier pose, raccordement, mise en service et contrôles.",
+          "examples": "Exemple : unité, liaison, perçage, test, mise en service."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Entretien",
+          "description": "Organiser contrats, passages, filtres et rappels.",
+          "examples": "Exemple : contrat, filtre, nettoyage, rappel, rapport."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "SAV",
+          "description": "Suivre pannes, pièces, garanties et interventions.",
+          "examples": "Exemple : fuite, panne, pièce, garantie, retour."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "obat",
+          "usage": "Gérer devis, contrats d’entretien et factures."
+        },
+        {
+          "slug": "vertuoza",
+          "usage": "Suivre interventions, planning et rentabilité."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser rapports, photos et documents client."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre achats matériel, acomptes et trésorerie."
+        }
+      ]
+    },
+    {
+      "id": "e88",
+      "category": "Système opérationnel",
+      "price": "",
+      "imageTitle": "Serrurier",
+      "imageSubtitle": "Aperçu du système opérationnel pour serrurier",
+      "processes": [],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : cible, zone, spécialité, niveau de service, promesse, preuves.",
+        "strategie.objectifs": "Exemple : chiffre d’affaires, marge, volume, satisfaction, délai moyen.",
+        "strategie.plan-action": "Exemple : priorités, actions, responsables, échéances, indicateurs.",
+        "marketing.confiance": "Exemple : avis clients, références, réalisations, pédagogie, preuves de sérieux.",
+        "marketing.decision": "Exemple : premier contact, diagnostic, devis, disponibilité, prochaine étape.",
+        "marketing.lien": "Exemple : relance, suivi, message utile, recommandation, fidélisation.",
+        "finance.pilotage": "Exemple : marge, trésorerie, coûts, panier moyen, rentabilité par prestation.",
+        "finance.facturation": "Exemple : devis, acompte, facture, paiement, relance, avoir.",
+        "finance.conformite": "Exemple : contrats, assurances, obligations métier, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : besoin, profil, intégration, accès outils, passation.",
+        "equipe.rh": "Exemple : planning, charge, absences, compétences, objectifs.",
+        "equipe.culture": "Exemple : qualité, ponctualité, clarté client, rigueur, entraide."
+      },
+      "slug": "serrurier",
+      "name": "Serrurier",
+      "sectorLabel": "BTP & services techniques",
+      "icon": "Key",
+      "tags": [
+        "Dépannage",
+        "BTP",
+        "Système"
+      ],
+      "description": "Gardez urgences, devis, interventions et pièces visibles sans perdre les priorités terrain.",
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Appels & urgences",
+          "description": "Qualifier demande, adresse, niveau d’urgence et accès.",
+          "examples": "Exemple : porte, clé, urgence, adresse, accès."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Diagnostic",
+          "description": "Identifier serrure, cause, options et risques.",
+          "examples": "Exemple : cylindre, blindage, casse, ouverture, remplacement."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Devis & accord",
+          "description": "Suivre prix, accord client, acompte et conditions.",
+          "examples": "Exemple : devis, accord, acompte, pièce, délai."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Intervention",
+          "description": "Piloter déplacement, pièce, pose, test et validation.",
+          "examples": "Exemple : technicien, cylindre, pose, test, photo."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "SAV & litiges",
+          "description": "Tracer réclamations, reprises, garanties et justificatifs.",
+          "examples": "Exemple : garantie, litige, photo, retour, clôture."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "obat",
+          "usage": "Gérer devis et factures d’intervention."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser demandes, photos, documents et suivis."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre encaissements, achats pièces et dépenses."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer messages clients, consignes et réponses SAV."
+        }
+      ]
+    },
+    {
+      "id": "e89",
+      "category": "Système opérationnel",
+      "price": "",
+      "imageTitle": "Caviste",
+      "imageSubtitle": "Aperçu du système opérationnel pour caviste",
+      "processes": [],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : cible, zone, spécialité, niveau de service, promesse, preuves.",
+        "strategie.objectifs": "Exemple : chiffre d’affaires, marge, volume, satisfaction, délai moyen.",
+        "strategie.plan-action": "Exemple : priorités, actions, responsables, échéances, indicateurs.",
+        "marketing.confiance": "Exemple : avis clients, références, réalisations, pédagogie, preuves de sérieux.",
+        "marketing.decision": "Exemple : premier contact, diagnostic, devis, disponibilité, prochaine étape.",
+        "marketing.lien": "Exemple : relance, suivi, message utile, recommandation, fidélisation.",
+        "finance.pilotage": "Exemple : marge, trésorerie, coûts, panier moyen, rentabilité par prestation.",
+        "finance.facturation": "Exemple : devis, acompte, facture, paiement, relance, avoir.",
+        "finance.conformite": "Exemple : contrats, assurances, obligations métier, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : besoin, profil, intégration, accès outils, passation.",
+        "equipe.rh": "Exemple : planning, charge, absences, compétences, objectifs.",
+        "equipe.culture": "Exemple : qualité, ponctualité, clarté client, rigueur, entraide."
+      },
+      "slug": "caviste",
+      "name": "Caviste",
+      "sectorLabel": "Commerce & retail",
+      "icon": "Store",
+      "tags": [
+        "Commerce",
+        "Stock",
+        "Système"
+      ],
+      "description": "Gardez références, stock, dégustations et ventes visibles sans perdre la rotation cave.",
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Catalogue cave",
+          "description": "Structurer vins, millésimes, domaines, prix et conseils.",
+          "examples": "Exemple : domaine, millésime, cépage, prix, note."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Stock & réassort",
+          "description": "Suivre réceptions, seuils, inventaires et ruptures.",
+          "examples": "Exemple : carton, seuil, réception, inventaire, rupture."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Vente conseil",
+          "description": "Centraliser préférences client, recommandations et paniers.",
+          "examples": "Exemple : client, goût, budget, occasion, conseil."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Dégustations",
+          "description": "Organiser événements, invitations, stocks et retours.",
+          "examples": "Exemple : soirée, inscription, stock, dégustation, relance."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Caisse & marge",
+          "description": "Piloter encaissements, remises, marges et performance.",
+          "examples": "Exemple : vente, remise, marge, panier, clôture."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "wino",
+          "usage": "Gérer caisse, stock, inventaire, réceptions et références de cave."
+        },
+        {
+          "slug": "canva",
+          "usage": "Créer affiches, cartes, offres et contenus événementiels."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre achats fournisseurs, caisse et dépenses."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer fiches produits, messages clients et idées de dégustation."
+        }
+      ]
+    },
+    {
+      "id": "e90",
+      "category": "Système opérationnel",
+      "price": "",
+      "imageTitle": "Librairie",
+      "imageSubtitle": "Aperçu du système opérationnel pour librairie",
+      "processes": [],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : cible, zone, spécialité, niveau de service, promesse, preuves.",
+        "strategie.objectifs": "Exemple : chiffre d’affaires, marge, volume, satisfaction, délai moyen.",
+        "strategie.plan-action": "Exemple : priorités, actions, responsables, échéances, indicateurs.",
+        "marketing.confiance": "Exemple : avis clients, références, réalisations, pédagogie, preuves de sérieux.",
+        "marketing.decision": "Exemple : premier contact, diagnostic, devis, disponibilité, prochaine étape.",
+        "marketing.lien": "Exemple : relance, suivi, message utile, recommandation, fidélisation.",
+        "finance.pilotage": "Exemple : marge, trésorerie, coûts, panier moyen, rentabilité par prestation.",
+        "finance.facturation": "Exemple : devis, acompte, facture, paiement, relance, avoir.",
+        "finance.conformite": "Exemple : contrats, assurances, obligations métier, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : besoin, profil, intégration, accès outils, passation.",
+        "equipe.rh": "Exemple : planning, charge, absences, compétences, objectifs.",
+        "equipe.culture": "Exemple : qualité, ponctualité, clarté client, rigueur, entraide."
+      },
+      "slug": "librairie",
+      "name": "Librairie",
+      "sectorLabel": "Commerce & retail",
+      "icon": "BookOpen",
+      "tags": [
+        "Commerce",
+        "Livre",
+        "Système"
+      ],
+      "description": "Gardez catalogue, commandes, stock et animations visibles sans perdre les demandes lecteurs.",
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Catalogue",
+          "description": "Suivre titres, ISBN, éditeurs, disponibilité et rayons.",
+          "examples": "Exemple : ISBN, auteur, éditeur, rayon, dispo."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Commandes clients",
+          "description": "Gérer réservations, commandes spéciales, arrivages et relances.",
+          "examples": "Exemple : commande, client, fournisseur, arrivée, relance."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Stock & réassort",
+          "description": "Piloter rotation, retours, nouveautés et inventaires.",
+          "examples": "Exemple : nouveauté, retour, inventaire, rupture, réassort."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Caisse",
+          "description": "Suivre ventes, remises, fidélité et clôture.",
+          "examples": "Exemple : vente, remise, fidélité, ticket, clôture."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Animations",
+          "description": "Organiser signatures, clubs, vitrines et communication.",
+          "examples": "Exemple : auteur, inscription, vitrine, affiche, relance."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "booknroll",
+          "usage": "Gérer catalogue, ventes, stocks, commandes et références ISBN."
+        },
+        {
+          "slug": "canva",
+          "usage": "Créer affiches, vitrines, visuels et supports d’animation."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre achats éditeurs, caisse et trésorerie."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer recommandations, newsletters et contenus de librairie."
+        }
+      ]
+    },
+    {
+      "id": "e91",
+      "category": "Système opérationnel",
+      "price": "",
+      "imageTitle": "Ostéopathe",
+      "imageSubtitle": "Aperçu du système opérationnel pour ostéopathe",
+      "processes": [],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : cible, zone, spécialité, niveau de service, promesse, preuves.",
+        "strategie.objectifs": "Exemple : chiffre d’affaires, marge, volume, satisfaction, délai moyen.",
+        "strategie.plan-action": "Exemple : priorités, actions, responsables, échéances, indicateurs.",
+        "marketing.confiance": "Exemple : avis clients, références, réalisations, pédagogie, preuves de sérieux.",
+        "marketing.decision": "Exemple : premier contact, diagnostic, devis, disponibilité, prochaine étape.",
+        "marketing.lien": "Exemple : relance, suivi, message utile, recommandation, fidélisation.",
+        "finance.pilotage": "Exemple : marge, trésorerie, coûts, panier moyen, rentabilité par prestation.",
+        "finance.facturation": "Exemple : devis, acompte, facture, paiement, relance, avoir.",
+        "finance.conformite": "Exemple : contrats, assurances, obligations métier, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : besoin, profil, intégration, accès outils, passation.",
+        "equipe.rh": "Exemple : planning, charge, absences, compétences, objectifs.",
+        "equipe.culture": "Exemple : qualité, ponctualité, clarté client, rigueur, entraide."
+      },
+      "slug": "osteopathe",
+      "name": "Ostéopathe",
+      "sectorLabel": "Santé, bien-être & esthétique",
+      "icon": "HeartHandshake",
+      "tags": [
+        "Santé",
+        "Rendez-vous",
+        "Système"
+      ],
+      "description": "Gardez rendez-vous, dossiers patients, suivis et paiements visibles sans alourdir le cabinet.",
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Agenda patients",
+          "description": "Organiser consultations, rappels, reports et disponibilités.",
+          "examples": "Exemple : consultation, rappel, report, créneau, absence."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Dossier patient",
+          "description": "Suivre motif, antécédents, observations et recommandations.",
+          "examples": "Exemple : motif, antécédent, observation, conseil, suivi."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Parcours de soin",
+          "description": "Planifier séances, objectifs, évolution et prochaines étapes.",
+          "examples": "Exemple : séance, objectif, progrès, douleur, prochaine visite."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Communication",
+          "description": "Préparer consignes, rappels et messages utiles.",
+          "examples": "Exemple : exercice, repos, rappel, prévention, email."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Facturation",
+          "description": "Suivre paiements, reçus et attestations.",
+          "examples": "Exemple : paiement, reçu, facture, mutuelle, relance."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "doctolib",
+          "usage": "Structurer agenda, prise de rendez-vous et rappels patients."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser documents internes et supports patients."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre paiements, dépenses et trésorerie."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer messages, consignes et contenus pédagogiques."
+        }
+      ]
+    },
+    {
+      "id": "e92",
+      "category": "Système opérationnel",
+      "price": "",
+      "imageTitle": "Psychologue",
+      "imageSubtitle": "Aperçu du système opérationnel pour psychologue",
+      "processes": [],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : cible, zone, spécialité, niveau de service, promesse, preuves.",
+        "strategie.objectifs": "Exemple : chiffre d’affaires, marge, volume, satisfaction, délai moyen.",
+        "strategie.plan-action": "Exemple : priorités, actions, responsables, échéances, indicateurs.",
+        "marketing.confiance": "Exemple : avis clients, références, réalisations, pédagogie, preuves de sérieux.",
+        "marketing.decision": "Exemple : premier contact, diagnostic, devis, disponibilité, prochaine étape.",
+        "marketing.lien": "Exemple : relance, suivi, message utile, recommandation, fidélisation.",
+        "finance.pilotage": "Exemple : marge, trésorerie, coûts, panier moyen, rentabilité par prestation.",
+        "finance.facturation": "Exemple : devis, acompte, facture, paiement, relance, avoir.",
+        "finance.conformite": "Exemple : contrats, assurances, obligations métier, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : besoin, profil, intégration, accès outils, passation.",
+        "equipe.rh": "Exemple : planning, charge, absences, compétences, objectifs.",
+        "equipe.culture": "Exemple : qualité, ponctualité, clarté client, rigueur, entraide."
+      },
+      "slug": "psychologue",
+      "name": "Psychologue",
+      "sectorLabel": "Santé, bien-être & esthétique",
+      "icon": "HeartHandshake",
+      "tags": [
+        "Santé",
+        "Accompagnement",
+        "Système"
+      ],
+      "description": "Gardez rendez-vous, suivis, notes et cadre administratif visibles sans perdre le fil.",
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Agenda patients",
+          "description": "Organiser séances, reports, listes d’attente et rappels.",
+          "examples": "Exemple : séance, report, liste, rappel, urgence."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Suivi patient",
+          "description": "Structurer objectifs, notes, étapes et points de vigilance.",
+          "examples": "Exemple : objectif, note, évolution, vigilance, prochaine séance."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Cadre & consentement",
+          "description": "Suivre informations, consentements, limites et documents utiles.",
+          "examples": "Exemple : cadre, consentement, contact, document, confidentialité."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Téléconsultation",
+          "description": "Organiser séances à distance, liens, paiements et confirmations.",
+          "examples": "Exemple : lien, confirmation, paiement, absence, report."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Facturation",
+          "description": "Suivre paiements, reçus, impayés et attestations.",
+          "examples": "Exemple : paiement, reçu, facture, relance, attestation."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "doctolib",
+          "usage": "Structurer rendez-vous, rappels patients et visibilité du cabinet."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser documents internes et supports non sensibles."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre paiements, dépenses et trésorerie."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer contenus pédagogiques généraux et messages administratifs."
+        }
+      ]
+    },
+    {
+      "id": "e93",
+      "category": "Système opérationnel",
+      "price": "",
+      "imageTitle": "Crèche",
+      "imageSubtitle": "Aperçu du système opérationnel pour crèche",
+      "processes": [],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : cible, zone, spécialité, niveau de service, promesse, preuves.",
+        "strategie.objectifs": "Exemple : chiffre d’affaires, marge, volume, satisfaction, délai moyen.",
+        "strategie.plan-action": "Exemple : priorités, actions, responsables, échéances, indicateurs.",
+        "marketing.confiance": "Exemple : avis clients, références, réalisations, pédagogie, preuves de sérieux.",
+        "marketing.decision": "Exemple : premier contact, diagnostic, devis, disponibilité, prochaine étape.",
+        "marketing.lien": "Exemple : relance, suivi, message utile, recommandation, fidélisation.",
+        "finance.pilotage": "Exemple : marge, trésorerie, coûts, panier moyen, rentabilité par prestation.",
+        "finance.facturation": "Exemple : devis, acompte, facture, paiement, relance, avoir.",
+        "finance.conformite": "Exemple : contrats, assurances, obligations métier, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : besoin, profil, intégration, accès outils, passation.",
+        "equipe.rh": "Exemple : planning, charge, absences, compétences, objectifs.",
+        "equipe.culture": "Exemple : qualité, ponctualité, clarté client, rigueur, entraide."
+      },
+      "slug": "creche",
+      "name": "Crèche",
+      "sectorLabel": "Éducation & formation",
+      "icon": "HeartHandshake",
+      "tags": [
+        "Petite enfance",
+        "Familles",
+        "Système"
+      ],
+      "description": "Gardez enfants, familles, équipe, transmissions et facturation visibles sans surcharger la structure.",
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Préinscriptions",
+          "description": "Suivre demandes, places, critères, documents et réponses.",
+          "examples": "Exemple : famille, place, âge, dossier, réponse."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Présences enfants",
+          "description": "Organiser accueils, absences, horaires et adaptations.",
+          "examples": "Exemple : arrivée, absence, adaptation, horaire, groupe."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Transmissions",
+          "description": "Centraliser repas, sommeil, soins, photos et messages familles.",
+          "examples": "Exemple : repas, sieste, soin, photo, message."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Planning équipe",
+          "description": "Gérer horaires, ratios, remplacements et congés.",
+          "examples": "Exemple : équipe, ratio, absence, remplacement, congé."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Facturation",
+          "description": "Piloter contrats, présences, factures et paiements.",
+          "examples": "Exemple : contrat, présence, facture, prélèvement, relance."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "meeko",
+          "usage": "Gérer enfants, familles, préinscriptions, planning, transmissions et facturation."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser documents, procédures et fichiers internes."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre dépenses, salaires, facturation et trésorerie."
+        },
+        {
+          "slug": "canva",
+          "usage": "Créer supports familles, affichages et documents d’accueil."
+        }
+      ]
+    },
+    {
+      "id": "e94",
+      "category": "Système opérationnel",
+      "price": "",
+      "imageTitle": "Gestionnaire de patrimoine",
+      "imageSubtitle": "Aperçu du système opérationnel pour gestionnaire de patrimoine",
+      "processes": [],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : cible, zone, spécialité, niveau de service, promesse, preuves.",
+        "strategie.objectifs": "Exemple : chiffre d’affaires, marge, volume, satisfaction, délai moyen.",
+        "strategie.plan-action": "Exemple : priorités, actions, responsables, échéances, indicateurs.",
+        "marketing.confiance": "Exemple : avis clients, références, réalisations, pédagogie, preuves de sérieux.",
+        "marketing.decision": "Exemple : premier contact, diagnostic, devis, disponibilité, prochaine étape.",
+        "marketing.lien": "Exemple : relance, suivi, message utile, recommandation, fidélisation.",
+        "finance.pilotage": "Exemple : marge, trésorerie, coûts, panier moyen, rentabilité par prestation.",
+        "finance.facturation": "Exemple : devis, acompte, facture, paiement, relance, avoir.",
+        "finance.conformite": "Exemple : contrats, assurances, obligations métier, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : besoin, profil, intégration, accès outils, passation.",
+        "equipe.rh": "Exemple : planning, charge, absences, compétences, objectifs.",
+        "equipe.culture": "Exemple : qualité, ponctualité, clarté client, rigueur, entraide."
+      },
+      "slug": "gestionnaire-de-patrimoine",
+      "name": "Gestionnaire de patrimoine",
+      "sectorLabel": "Patrimoine",
+      "icon": "Landmark",
+      "tags": [
+        "Patrimoine",
+        "Conseil",
+        "Système"
+      ],
+      "description": "Gardez bilans, allocations, clients et conformité visibles sans disperser les dossiers.",
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Qualification client",
+          "description": "Comprendre situation, objectifs, horizon, risque et contraintes.",
+          "examples": "Exemple : revenu, patrimoine, horizon, risque, objectif."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Bilan patrimonial",
+          "description": "Centraliser actifs, passifs, fiscalité et documents.",
+          "examples": "Exemple : immobilier, assurance vie, crédit, impôt, pièce."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Préconisations",
+          "description": "Construire allocations, scénarios, arbitrages et supports de décision.",
+          "examples": "Exemple : allocation, scénario, arbitrage, rendement, risque."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Suivi client",
+          "description": "Piloter revues, relances, changements de situation et opportunités.",
+          "examples": "Exemple : revue, relance, naissance, vente, arbitrage."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Conformité",
+          "description": "Tracer KYC, devoir de conseil, documents et preuves.",
+          "examples": "Exemple : KYC, profil, conseil, signature, archive."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "harvest-patrimoine",
+          "usage": "Structurer bilan patrimonial, simulations, allocations et dossiers clients."
+        },
+        {
+          "slug": "pipedrive",
+          "usage": "Suivre prospects, clients, revues et relances."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser documents, échanges et suivis."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre dépenses et pilotage financier du cabinet."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer synthèses et explications pédagogiques non sensibles."
+        }
+      ]
+    },
+    {
+      "id": "e95",
+      "category": "Système opérationnel",
+      "price": "",
+      "imageTitle": "Chasseur immobilier",
+      "imageSubtitle": "Aperçu du système opérationnel pour chasseur immobilier",
+      "processes": [],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : cible, zone, spécialité, niveau de service, promesse, preuves.",
+        "strategie.objectifs": "Exemple : chiffre d’affaires, marge, volume, satisfaction, délai moyen.",
+        "strategie.plan-action": "Exemple : priorités, actions, responsables, échéances, indicateurs.",
+        "marketing.confiance": "Exemple : avis clients, références, réalisations, pédagogie, preuves de sérieux.",
+        "marketing.decision": "Exemple : premier contact, diagnostic, devis, disponibilité, prochaine étape.",
+        "marketing.lien": "Exemple : relance, suivi, message utile, recommandation, fidélisation.",
+        "finance.pilotage": "Exemple : marge, trésorerie, coûts, panier moyen, rentabilité par prestation.",
+        "finance.facturation": "Exemple : devis, acompte, facture, paiement, relance, avoir.",
+        "finance.conformite": "Exemple : contrats, assurances, obligations métier, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : besoin, profil, intégration, accès outils, passation.",
+        "equipe.rh": "Exemple : planning, charge, absences, compétences, objectifs.",
+        "equipe.culture": "Exemple : qualité, ponctualité, clarté client, rigueur, entraide."
+      },
+      "slug": "chasseur-immobilier",
+      "name": "Chasseur immobilier",
+      "sectorLabel": "Immobilier",
+      "icon": "Home",
+      "tags": [
+        "Immobilier",
+        "Recherche",
+        "Système"
+      ],
+      "description": "Gardez mandats, recherches, visites et négociations visibles sans perdre les critères client.",
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Mandat client",
+          "description": "Qualifier budget, critères, zone, urgence et contraintes.",
+          "examples": "Exemple : budget, zone, surface, délai, contrainte."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Sourcing biens",
+          "description": "Suivre annonces, off-market, contacts et opportunités.",
+          "examples": "Exemple : bien, source, contact, statut, relance."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Analyse & sélection",
+          "description": "Comparer biens, prix, travaux, risques et adéquation.",
+          "examples": "Exemple : prix, travaux, risque, score, shortlist."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Visites",
+          "description": "Organiser visites, comptes rendus, photos et décisions.",
+          "examples": "Exemple : visite, photo, retour, décision, prochaine étape."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Négociation & signature",
+          "description": "Piloter offre, compromis, financement et commission.",
+          "examples": "Exemple : offre, négociation, compromis, banque, commission."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "apimo",
+          "usage": "Structurer biens, mandats, contacts et suivi immobilier."
+        },
+        {
+          "slug": "pipedrive",
+          "usage": "Suivre prospects, mandats et étapes commerciales."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser dossiers, photos et comptes rendus."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre commissions, dépenses et trésorerie."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer synthèses, comparatifs et messages client."
+        }
+      ]
+    },
+    {
+      "id": "e96",
+      "category": "Système opérationnel",
+      "price": "",
+      "imageTitle": "Géomètre",
+      "imageSubtitle": "Aperçu du système opérationnel pour géomètre",
+      "processes": [],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : cible, zone, spécialité, niveau de service, promesse, preuves.",
+        "strategie.objectifs": "Exemple : chiffre d’affaires, marge, volume, satisfaction, délai moyen.",
+        "strategie.plan-action": "Exemple : priorités, actions, responsables, échéances, indicateurs.",
+        "marketing.confiance": "Exemple : avis clients, références, réalisations, pédagogie, preuves de sérieux.",
+        "marketing.decision": "Exemple : premier contact, diagnostic, devis, disponibilité, prochaine étape.",
+        "marketing.lien": "Exemple : relance, suivi, message utile, recommandation, fidélisation.",
+        "finance.pilotage": "Exemple : marge, trésorerie, coûts, panier moyen, rentabilité par prestation.",
+        "finance.facturation": "Exemple : devis, acompte, facture, paiement, relance, avoir.",
+        "finance.conformite": "Exemple : contrats, assurances, obligations métier, RGPD, documents légaux.",
+        "equipe.recrutement": "Exemple : besoin, profil, intégration, accès outils, passation.",
+        "equipe.rh": "Exemple : planning, charge, absences, compétences, objectifs.",
+        "equipe.culture": "Exemple : qualité, ponctualité, clarté client, rigueur, entraide."
+      },
+      "slug": "geometre",
+      "name": "Géomètre",
+      "sectorLabel": "BTP & services techniques",
+      "icon": "Map",
+      "tags": [
+        "Foncier",
+        "Terrain",
+        "Système"
+      ],
+      "description": "Gardez missions, relevés, plans et dossiers fonciers visibles du terrain à la livraison.",
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Demande client",
+          "description": "Qualifier terrain, objectif, urgence, documents et contraintes.",
+          "examples": "Exemple : bornage, division, plan, document, délai."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Préparation mission",
+          "description": "Centraliser cadastre, archives, accès et matériel terrain.",
+          "examples": "Exemple : parcelle, cadastre, archive, GPS, accès."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Relevés terrain",
+          "description": "Suivre mesures, points, photos, observations et incidents.",
+          "examples": "Exemple : point, limite, photo, obstacle, mesure."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Plans & livrables",
+          "description": "Produire plans, documents, contrôles et versions.",
+          "examples": "Exemple : plan, version, contrôle, signature, envoi."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Dossier foncier",
+          "description": "Piloter bornage, échanges parties, dépôts et archivage.",
+          "examples": "Exemple : voisin, PV, dépôt, archive, validation."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "geofoncier",
+          "usage": "Consulter données foncières, dossiers, parcelles et informations cadastrales."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser plans, photos, documents et échanges."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre facturation, déplacements et dépenses."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer messages client et synthèses non réglementaires."
         }
       ]
     }

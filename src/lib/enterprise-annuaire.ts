@@ -36,7 +36,6 @@ export type EnterpriseDefinition = {
   icon: string;
   price: string;
   sectorLabel: string;
-  editorialSubtitle: string;
   imageTitle: string;
   imageSubtitle: string;
   processes?: EnterpriseProcess[];
@@ -112,8 +111,6 @@ function mergeEnterpriseFallback(
     icon: enterprise.icon || fallback?.icon || "Briefcase",
     price: enterprise.price ?? fallback?.price ?? "",
     sectorLabel: enterprise.sectorLabel || fallback?.sectorLabel || "Services & conseil",
-    editorialSubtitle:
-      enterprise.editorialSubtitle || fallback?.editorialSubtitle || `Aperçu du système opérationnel pour ${enterprise.name || fallback?.name || enterprise.slug}`,
     imageTitle: enterprise.imageTitle || fallback?.imageTitle || enterprise.name || enterprise.slug,
     imageSubtitle:
       enterprise.imageSubtitle || fallback?.imageSubtitle || `Aperçu du système opérationnel pour ${enterprise.name || fallback?.name || enterprise.slug}`,

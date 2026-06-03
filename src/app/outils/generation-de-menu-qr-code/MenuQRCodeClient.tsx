@@ -79,7 +79,7 @@ export default function MenuQRCode() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Lien du Menu (URL ou PDF)</label>
+                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Lien du menu (URL ou PDF)</label>
                 <div className="relative">
                   <ExternalLink className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
                   <input type="text" value={menuUrl} onChange={(e) => setMenuUrl(e.target.value)} className="demaa-input demaa-input-with-icon text-xs" />
@@ -177,7 +177,7 @@ export default function MenuQRCode() {
               className="w-full flex items-center justify-center gap-3 py-5 bg-brand-blue text-white rounded-3xl text-sm font-bold hover:bg-brand-blue/95 shadow-2xl shadow-brand-blue/20 transition-all active:scale-95 disabled:opacity-50"
             >
               <Download className="w-5 h-5" />
-              {isExporting ? "Chargement..." : "TÉLÉCHARGER LE SCANNER (PNG)"}
+              {isExporting ? "Chargement..." : "TÉLÉCHARGER LE QR CODE (PNG)"}
             </button>
             
             <div className="flex items-center gap-3 p-4 bg-white/40 backdrop-blur-md rounded-2xl border border-brand-coral/10">

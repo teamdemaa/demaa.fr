@@ -204,7 +204,7 @@ export async function POST(request: Request) {
         type: "section",
         text: {
           type: "mrkdwn",
-          text: `*Nouvelle demande assistant*\n*Offre* : ${offerLabel}\n*Montant* : ${getAmountLabel(session)}\n*Credits* : ${credits ?? "_non renseigné_"}\n*Nom* : ${customerName || "_non renseigné_"}\n*Email* : ${email || "_non renseigné_"}\n*WhatsApp* : ${whatsappPhone || "_non renseigné_"}\n*Taches a deleguer* :\n${tasks}\n*Action admin* : contacter le client sous 24h\n*Session Stripe* : ${sessionId}\n*Mode* : ${session.livemode ? "Live" : "Test"}`,
+            text: `*Nouvelle demande assistant*\n*Offre* : ${offerLabel}\n*Montant* : ${getAmountLabel(session)}\n*Crédits* : ${credits ?? "_non renseigné_"}\n*Nom* : ${customerName || "_non renseigné_"}\n*Email* : ${email || "_non renseigné_"}\n*WhatsApp* : ${whatsappPhone || "_non renseigné_"}\n*Tâches à déléguer* :\n${tasks}\n*Action admin* : contacter le client sous 24h\n*Session Stripe* : ${sessionId}\n*Mode* : ${session.livemode ? "Live" : "Test"}`,
         },
       },
       {

@@ -175,7 +175,7 @@ export default function FastFoodQRCode() {
               className="w-full flex items-center justify-center gap-3 py-5 bg-brand-blue text-white rounded-3xl text-sm font-bold hover:bg-brand-blue/95 shadow-2xl shadow-brand-blue/20 transition-all active:scale-95 disabled:opacity-50"
             >
               <Download className="w-5 h-5" />
-              {isExporting ? "Chargement..." : "TÉLÉCHARGER LE SCANNER (PNG)"}
+              {isExporting ? "Chargement..." : "TÉLÉCHARGER LE QR CODE (PNG)"}
             </button>
             
             <div className="flex items-center gap-3 p-4 bg-white/40 backdrop-blur-md rounded-2xl border border-brand-coral/10">

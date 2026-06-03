@@ -25,7 +25,6 @@ export type SystemProcessCard = {
 
 export type OperationalSystemDetail = {
   sectorLabel: string;
-  editorialSubtitle: string;
   imageTitle: string;
   imageSubtitle: string;
   processes: SystemProcessCard[];
@@ -118,7 +117,6 @@ function buildOperationalSystemDetailFromSources(
 
     return {
       sectorLabel: enterprise.sectorLabel,
-      editorialSubtitle: enterprise.editorialSubtitle,
       imageTitle: enterprise.imageTitle,
       imageSubtitle: enterprise.imageSubtitle,
       processes: [...sharedProcesses, ...operationProcesses],
@@ -128,7 +126,6 @@ function buildOperationalSystemDetailFromSources(
 
   return {
     sectorLabel: "Services & conseil",
-    editorialSubtitle: `Les processus essentiels à structurer pour ${system.name.toLowerCase()}.`,
     imageTitle: system.name,
     imageSubtitle: `Aperçu du système opérationnel pour ${system.name.toLowerCase()}`,
     processes: templates.map((template) => ({ ...template })),

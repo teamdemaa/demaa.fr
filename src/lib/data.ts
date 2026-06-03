@@ -227,7 +227,7 @@ export const systemsData: ServiceRecord[] = [
   { id: "s34", slug: "securite-privee", name: "Sécurité privée", category: "Système Sectoriel", description: "Planification des agents et rapports d'intervention.", tags: ["Sécurité", "Système"], icon: "Shield", price: "" },
   { id: "s35", slug: "services-a-la-personne", name: "Services à la personne", category: "Système Sectoriel", description: "Une coordination d'intervenants pour un service irréprochable.", tags: ["Services", "Système"], icon: "HeartHandshake", price: "" },
   { id: "s36", slug: "traiteur", name: "Traiteur", category: "Système Sectoriel", description: "Optimisez vos fiches techniques et vos événements.", tags: ["Traiteur", "Système"], icon: "ChefHat", price: "" },
-  { id: "s37", slug: "transport-de-marchandise", name: "Transport de marchandise", category: "Système Sectoriel", description: "Un suivi de flotte et de fret en temps réel.", tags: ["Logistique", "Système"], icon: "Box", price: "" },
+  { id: "s37", slug: "transport-de-marchandise", name: "Transport de marchandises", category: "Système Sectoriel", description: "Un suivi de flotte et de fret en temps réel.", tags: ["Logistique", "Système"], icon: "Box", price: "" },
   { id: "s38", slug: "transport-de-personnes", name: "Transport de personnes", category: "Système Sectoriel", description: "Optimisez vos trajets et votre gestion de chauffeurs.", tags: ["VTC", "Système"], icon: "Car", price: "" }
 ];
 

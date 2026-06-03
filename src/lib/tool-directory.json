@@ -993,18 +993,19 @@
     {
       "slug": "guesty",
       "name": "Guesty",
-      "url": "https://www.guesty.com/",
+      "url": "https://www.guesty.com/fr/",
       "category": "Outils métier",
       "sectors": [
-        "Immobilier"
+        "Immobilier",
+        "Hébergement & tourisme"
       ],
-      "description": "Gestion de locations courte durée, calendriers, messages et opérations.",
+      "description": "Gestion de locations courte durée, réservations, calendriers, messages et opérations.",
       "tags": [
         "Location courte durée",
         "Planning",
         "Messages"
       ],
-      "bestFor": "Centraliser la gestion des logements et réservations.",
+      "bestFor": "Centraliser logements, réservations, messages voyageurs et opérations terrain.",
       "pricingHint": "Payant",
       "status": "active",
       "toolbox": true
@@ -1123,6 +1124,570 @@
         "MRP"
       ],
       "bestFor": "Piloter une petite production avec plus de visibilité.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "archipad",
+      "name": "Archipad",
+      "url": "https://archipad.com/fr/logiciel-suivi-chantier/",
+      "category": "Outils métier",
+      "sectors": [
+        "Artisanat & BTP",
+        "Immobilier"
+      ],
+      "description": "Application de suivi de chantier pour architectes, maîtres d’œuvre et professionnels du BTP.",
+      "tags": [
+        "Chantier",
+        "Réserves",
+        "Comptes rendus"
+      ],
+      "bestFor": "Suivre réunions, réserves, photos et comptes rendus de chantier.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "kopilo",
+      "name": "Kopilo",
+      "url": "https://www.kopilo.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Éducation & formation"
+      ],
+      "description": "Logiciel tout-en-un pour gérer planning, élèves, moniteurs et documents d’auto-école.",
+      "tags": [
+        "Auto-école",
+        "Planning",
+        "Élèves"
+      ],
+      "bestFor": "Centraliser planning de conduite, dossiers élèves et suivi pédagogique.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "lya",
+      "name": "Lya",
+      "url": "https://www.lyaprotect.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "CRM et logiciel de gestion pour courtiers, mutuelles et agents d’assurance.",
+      "tags": [
+        "Assurance",
+        "CRM",
+        "Conformité"
+      ],
+      "bestFor": "Suivre portefeuille, contrats, conformité et relation client assurance.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "kiilt",
+      "name": "Kiilt",
+      "url": "https://kiilt.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil",
+        "Immobilier"
+      ],
+      "description": "Logiciel SaaS pour courtiers en crédit immobilier et professionnels IOBSP.",
+      "tags": [
+        "Crédit",
+        "Courtier",
+        "Dossier"
+      ],
+      "bestFor": "Structurer les dossiers de financement, pièces, relances et partenaires bancaires.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "picstudio",
+      "name": "PicStudio",
+      "url": "https://piccloud.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil",
+        "Associations & événements"
+      ],
+      "description": "CRM français pour photographes professionnels avec devis, contrats, galeries et facturation.",
+      "tags": [
+        "Photographe",
+        "CRM",
+        "Galeries"
+      ],
+      "bestFor": "Gérer prospects, réservations, contrats, galeries client et paiements.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "weezevent",
+      "name": "Weezevent",
+      "url": "https://weezevent.com/fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Associations & événements"
+      ],
+      "description": "Solution événementielle pour billetterie, inscriptions, contrôle d’accès, cashless et emailing.",
+      "tags": [
+        "Billetterie",
+        "Événement",
+        "Cashless"
+      ],
+      "bestFor": "Gérer inscriptions, billets, accès et communication événementielle.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "gesfit",
+      "name": "Gesfit",
+      "url": "https://gesfit.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Santé & bien-être"
+      ],
+      "description": "Logiciel de gestion pour clubs de sport avec abonnements, planning, caisse et réservations.",
+      "tags": [
+        "Salle de sport",
+        "Abonnements",
+        "Planning"
+      ],
+      "bestFor": "Piloter adhésions, cours, réservations, caisse et suivi des membres.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "ogust",
+      "name": "Ogust",
+      "url": "https://ogust.com/logiciel-services-a-la-personne/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services aux particuliers"
+      ],
+      "description": "Logiciel métier pour services à la personne : planning, interventions, administratif et finances.",
+      "tags": [
+        "Services à la personne",
+        "Planning",
+        "Interventions"
+      ],
+      "bestFor": "Gérer interventions, remplacements, bénéficiaires et obligations administratives.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "repairdesk",
+      "name": "RepairDesk",
+      "url": "https://www.repairdesk.co/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services aux particuliers",
+        "Commerce local"
+      ],
+      "description": "Logiciel de caisse et gestion pour ateliers de réparation mobile, informatique et électronique.",
+      "tags": [
+        "Réparation",
+        "Caisse",
+        "Tickets"
+      ],
+      "bestFor": "Suivre diagnostics, tickets de réparation, pièces, clients et notifications.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "doctolib",
+      "name": "Doctolib",
+      "url": "https://info.doctolib.fr/chirurgien-dentiste/",
+      "category": "Outils métier",
+      "sectors": [
+        "Santé & bien-être"
+      ],
+      "description": "Prise de rendez-vous, agenda et gestion patient pour professionnels de santé.",
+      "tags": [
+        "Rendez-vous",
+        "Patients",
+        "Santé"
+      ],
+      "bestFor": "Structurer les rendez-vous, rappels patients et disponibilités du cabinet.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "visiopharm",
+      "name": "VisioPharm",
+      "url": "https://www.visiopharm.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Santé & bien-être",
+        "Commerce local"
+      ],
+      "description": "Logiciel de gestion de pharmacie d’officine pour sécuriser le parcours patient.",
+      "tags": [
+        "Pharmacie",
+        "Officine",
+        "Stock"
+      ],
+      "bestFor": "Gérer comptoir, stock, documents santé et suivi de l’officine.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "genapi",
+      "name": "Genapi",
+      "url": "https://www.genapi.septeo.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil",
+        "Immobilier"
+      ],
+      "description": "Suite logicielle pour études notariales : actes, comptabilité, dossiers et relation client.",
+      "tags": [
+        "Notaire",
+        "Actes",
+        "Dossiers"
+      ],
+      "bestFor": "Piloter dossiers, actes, formalités et comptabilité d’une étude notariale.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "vetup",
+      "name": "Vetup",
+      "url": "https://www.vetup.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Santé & bien-être"
+      ],
+      "description": "Logiciel vétérinaire en ligne pour gérer clinique, clients, animaux et facturation.",
+      "tags": [
+        "Vétérinaire",
+        "Animaux",
+        "Clinique"
+      ],
+      "bestFor": "Centraliser rendez-vous, dossiers animaux, actes, stock et facturation.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "orchestra-travel",
+      "name": "Orchestra",
+      "url": "https://www.orchestra.eu/",
+      "category": "Outils métier",
+      "sectors": [
+        "Hébergement & tourisme"
+      ],
+      "description": "Plateforme logicielle pour les acteurs du tourisme de loisir.",
+      "tags": [
+        "Voyage",
+        "Tourisme",
+        "Réservation"
+      ],
+      "bestFor": "Structurer offres, réservations, dossiers voyageurs et production touristique.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "winoptics",
+      "name": "WinOptics",
+      "url": "https://winoptics.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Santé & bien-être",
+        "Commerce local"
+      ],
+      "description": "Logiciel de gestion pour opticiens et magasins d’optique.",
+      "tags": [
+        "Opticien",
+        "Stock",
+        "Clients"
+      ],
+      "bestFor": "Suivre clients, verres, montures, mutuelles, commandes et ventes.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "extrabat",
+      "name": "Extrabat",
+      "url": "https://www.extrabat.com/piscine/",
+      "category": "Outils métier",
+      "sectors": [
+        "Artisanat & BTP"
+      ],
+      "description": "CRM et logiciel de gestion pour piscinistes : devis, chantiers, SAV et entretien.",
+      "tags": [
+        "Piscine",
+        "SAV",
+        "Chantier"
+      ],
+      "bestFor": "Gérer devis, contrats d’entretien, interventions, SAV et saisonnalité.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "liciel",
+      "name": "LICIEL",
+      "url": "https://www.liciel.fr/logiciel.html",
+      "category": "Outils métier",
+      "sectors": [
+        "Immobilier",
+        "Artisanat & BTP"
+      ],
+      "description": "Suite logicielle pour diagnostiqueurs immobiliers et rapports réglementaires.",
+      "tags": [
+        "Diagnostic",
+        "DPE",
+        "Rapports"
+      ],
+      "bestFor": "Produire diagnostics, rapports, mesures terrain et suivis réglementaires.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "fleuracompta",
+      "name": "Fleuracompta",
+      "url": "https://fleuracompta.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Commerce local"
+      ],
+      "description": "Logiciel de caisse et facturation pensé pour les fleuristes.",
+      "tags": [
+        "Fleuriste",
+        "Caisse",
+        "Facturation"
+      ],
+      "bestFor": "Encaisser, facturer et suivre l’activité quotidienne d’un fleuriste.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "xinaya",
+      "name": "Xinaya",
+      "url": "https://www.xinaya.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services aux particuliers",
+        "Commerce local"
+      ],
+      "description": "Logiciel de gestion pour pressings et blanchisseries.",
+      "tags": [
+        "Pressing",
+        "Linge",
+        "Caisse"
+      ],
+      "bestFor": "Suivre dépôts, traitements, délais, livraisons, caisse et clients.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "nomad-caisse",
+      "name": "Nomad",
+      "url": "https://www.nomadcaisse.fr/",
+      "category": "Caisse & réservation",
+      "sectors": [
+        "Restauration"
+      ],
+      "description": "Logiciel de caisse pour food trucks avec click and collect et commande en ligne.",
+      "tags": [
+        "Food truck",
+        "Caisse",
+        "Commandes"
+      ],
+      "bestFor": "Gérer commandes comptoir, cuisine, stock et canaux de vente en mobilité.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "vtc-gestion",
+      "name": "VTC Gestion",
+      "url": "https://www.vtcgestion.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Commerce local"
+      ],
+      "description": "Plateforme de gestion pour chauffeurs VTC et sociétés de transport.",
+      "tags": [
+        "VTC",
+        "Chauffeurs",
+        "Commissions"
+      ],
+      "bestFor": "Suivre chauffeurs, courses, commissions, déductions et montants nets.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "cognito-app",
+      "name": "Cognito App",
+      "url": "https://www.cognito-app.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil",
+        "Santé & bien-être"
+      ],
+      "description": "Plateforme de gestion pour coachs, praticiens et métiers de l’accompagnement.",
+      "tags": [
+        "Coaching",
+        "Clients",
+        "Rendez-vous"
+      ],
+      "bestFor": "Gérer clients, séances, notes, objectifs et communications d’accompagnement.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "maliora",
+      "name": "Maliora",
+      "url": "https://www.maliora.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Santé & bien-être"
+      ],
+      "description": "Plateforme tout-en-un pour coachs sportifs : clients, programmes, nutrition et facturation.",
+      "tags": [
+        "Coach sportif",
+        "Programmes",
+        "Suivi"
+      ],
+      "bestFor": "Créer des programmes, suivre les progrès, gérer clients et facturation.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "assotools",
+      "name": "AssoTools",
+      "url": "https://www.assotools.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Associations & événements"
+      ],
+      "description": "Logiciel en ligne pour associations, fondations, clubs et alumni.",
+      "tags": [
+        "Association",
+        "Adhésions",
+        "Dons"
+      ],
+      "bestFor": "Gérer membres, adhésions, dons, événements et communication associative.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "wino",
+      "name": "Wino",
+      "url": "https://wino.fr/",
+      "category": "Caisse & réservation",
+      "sectors": [
+        "Commerce local"
+      ],
+      "description": "Logiciel de caisse et gestion de stock pensé pour cavistes et épiceries fines.",
+      "tags": [
+        "Caviste",
+        "Caisse",
+        "Stock"
+      ],
+      "bestFor": "Gérer caisse, stock, inventaire, réceptions et références de cave.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "booknroll",
+      "name": "Book’n Roll",
+      "url": "https://www.booknroll.net/",
+      "category": "Caisse & réservation",
+      "sectors": [
+        "Commerce local"
+      ],
+      "description": "Logiciel de caisse et gestion pour librairies, avec stock, notices et intégrations métier.",
+      "tags": [
+        "Librairie",
+        "Caisse",
+        "Stock"
+      ],
+      "bestFor": "Gérer catalogue, ventes, stocks, commandes et références ISBN.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "meeko",
+      "name": "Meeko",
+      "url": "https://www.meeko.pro/",
+      "category": "Outils métier",
+      "sectors": [
+        "Éducation & formation",
+        "Services aux particuliers"
+      ],
+      "description": "Logiciel de gestion et communication pour crèches et structures petite enfance.",
+      "tags": [
+        "Crèche",
+        "Parents",
+        "Planning"
+      ],
+      "bestFor": "Gérer enfants, familles, préinscriptions, planning, transmissions et facturation.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "harvest-patrimoine",
+      "name": "Harvest",
+      "url": "https://www.harvest.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil",
+        "Patrimoine"
+      ],
+      "description": "Solutions digitales pour les professionnels du patrimoine et de la finance.",
+      "tags": [
+        "Patrimoine",
+        "Finance",
+        "Conseil"
+      ],
+      "bestFor": "Structurer bilan patrimonial, simulations, allocations et dossiers clients.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "geofoncier",
+      "name": "Géofoncier",
+      "url": "https://www.geofoncier.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Immobilier",
+        "Artisanat & BTP"
+      ],
+      "description": "Portail foncier de référence pour géomètres-experts et acteurs du foncier.",
+      "tags": [
+        "Foncier",
+        "Géomètre",
+        "Parcelle"
+      ],
+      "bestFor": "Consulter données foncières, dossiers, parcelles et informations cadastrales.",
       "pricingHint": "Payant",
       "status": "active",
       "toolbox": true

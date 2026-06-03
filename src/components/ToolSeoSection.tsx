@@ -94,7 +94,7 @@ export default function ToolSeoSection({ tool }: ToolSeoSectionProps) {
         <div className="space-y-7">
           <div>
             <h3 className="text-sm font-semibold text-brand-blue">
-              Questions frequentes
+              Questions fréquentes
             </h3>
             <div className="mt-3 divide-y divide-brand-blue/8 rounded-lg border border-brand-blue/8">
               {tool.faqs.map((faq) => (
@@ -110,7 +110,7 @@ export default function ToolSeoSection({ tool }: ToolSeoSectionProps) {
 
           <div>
             <h3 className="text-sm font-semibold text-brand-blue">
-              Outils lies
+              Outils liés
             </h3>
             <div className="mt-3 flex flex-wrap gap-2">
               {tool.related.map((link) => (

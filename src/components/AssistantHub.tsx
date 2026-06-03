@@ -108,15 +108,15 @@ const LOADING_QUOTES = [
     author: "Peter Drucker",
   },
   {
-    text: "Si vous ne pouvez pas decrire ce que vous faites comme un processus, c'est que vous ne le maitrisez pas.",
+    text: "Si vous ne pouvez pas décrire ce que vous faites comme un processus, c'est que vous ne le maîtrisez pas.",
     author: "W. Edwards Deming",
   },
   {
-    text: "On ne subit pas son entreprise quand on met en place les bons systemes.",
+    text: "On ne subit pas son entreprise quand on met en place les bons systèmes.",
     author: "Demaa",
   },
   {
-    text: "La simplicite consiste a faire en sorte que l'essentiel soit evident.",
+    text: "La simplicité consiste à faire en sorte que l'essentiel soit évident.",
     author: "Olivier Rebiere",
   },
 ];

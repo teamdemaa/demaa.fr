@@ -239,8 +239,7 @@ export default function SystemsCatalogClient({
         system.name.toLowerCase().includes(query) ||
         system.description.toLowerCase().includes(query) ||
         system.tags.some((tag) => tag.toLowerCase().includes(query)) ||
-        sectorLabel.toLowerCase().includes(query) ||
-        detail?.editorialSubtitle.toLowerCase().includes(query);
+        sectorLabel.toLowerCase().includes(query);
 
       const matchesSector = activeSector === "Tous" || sectorLabel === activeSector;
 
@@ -359,7 +358,6 @@ export default function SystemsCatalogClient({
                   <div className="-mx-4 overflow-x-auto px-4 pb-4 pt-2 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
                     <div className="flex gap-4">
                       {section.systems.map((system) => {
-                        const detail = detailsBySlug[system.slug];
                         const Icon = getSystemIcon(system);
 
                         return (
@@ -379,7 +377,7 @@ export default function SystemsCatalogClient({
                               {system.name}
                             </h3>
                             <p className="mt-3 line-clamp-3 text-sm font-normal leading-relaxed text-gray-600">
-                              {detail?.editorialSubtitle ?? system.description}
+                              {system.description}
                             </p>
                           </button>
                         );
