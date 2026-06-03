@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 const resourcesLinks = [
-  { label: "Le Kit du Dirigeant Organisé", href: "/outils/kit-du-dirigeant-organise" },
   { label: "L'annuaire des logiciels", href: "/annuaire-logiciel" },
   { label: "Outils Gratuits", href: "/outils-gratuits" },
   { label: "Newsletter", href: "/newsletter" },
