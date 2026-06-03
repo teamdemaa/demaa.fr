@@ -6,6 +6,10 @@ import {
   freeToolsDirectoryCategories,
   freeToolsDirectorySectors,
 } from "@/lib/free-tools-directory";
+import {
+  getToolDirectoryInitialFilters,
+  type ToolDirectorySearchParams,
+} from "@/lib/tool-directory-page";
 
 export const metadata: Metadata = {
   title: "Outils Gratuits - Demaa",
@@ -14,22 +18,13 @@ export const metadata: Metadata = {
 };
 
 type OutilsGratuitsPageProps = {
-  searchParams: Promise<{
-    secteur?: string | string[];
-    categorie?: string | string[];
-  }>;
+  searchParams: ToolDirectorySearchParams;
 };
-
-function getParamValue(value?: string | string[]) {
-  return Array.isArray(value) ? value[0] : value;
-}
 
 export default async function OutilsGratuitsPage({
   searchParams,
 }: OutilsGratuitsPageProps) {
-  const params = await searchParams;
-  const initialCategory = getParamValue(params.categorie);
-  const initialSector = getParamValue(params.secteur);
+  const { initialCategory, initialSector } = await getToolDirectoryInitialFilters(searchParams);
 
   return (
     <>

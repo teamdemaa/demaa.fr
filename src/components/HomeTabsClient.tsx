@@ -205,7 +205,6 @@ export default function HomeTabsClient({
         systems={systems}
         detailsBySlug={detailsBySlug}
         showIntro={false}
-        pageSize={8}
         searchQuery={searchQuery}
         onSearchQueryChange={setSearchQuery}
         showSearchBar={false}

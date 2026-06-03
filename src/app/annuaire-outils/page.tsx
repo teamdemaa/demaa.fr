@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import ToolDirectoryClient from "@/components/ToolDirectoryClient";
-import { getToolDirectorySlug } from "@/lib/tool-directory";
+import {
+  getToolDirectoryFilterValues,
+  getToolDirectoryInitialFilters,
+  type ToolDirectorySearchParams,
+  withInternalSoftwareUrls,
+} from "@/lib/tool-directory-page";
 import { getUnifiedToolDirectoryMeta } from "@/lib/tool-directory-firestore";
 
 export const metadata: Metadata = {
@@ -13,29 +18,16 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 type AnnuaireOutilsPageProps = {
-  searchParams: Promise<{
-    secteur?: string | string[];
-    categorie?: string | string[];
-  }>;
+  searchParams: ToolDirectorySearchParams;
 };
-
-function getParamValue(value?: string | string[]) {
-  return Array.isArray(value) ? value[0] : value;
-}
 
 export default async function AnnuaireOutilsPage({
   searchParams,
 }: AnnuaireOutilsPageProps) {
-  const params = await searchParams;
-  const initialCategory = getParamValue(params.categorie);
-  const initialSector = getParamValue(params.secteur);
+  const { initialCategory, initialSector } = await getToolDirectoryInitialFilters(searchParams);
   const toolDirectoryMeta = await getUnifiedToolDirectoryMeta();
-  const toolboxTools = toolDirectoryMeta.toolboxTools.map((tool) => ({
-    ...tool,
-    url: `/annuaire-logiciel/${getToolDirectorySlug(tool)}`,
-  }));
-  const sectors = ["Tous", ...Array.from(new Set(toolboxTools.flatMap((tool) => tool.sectors)))];
-  const categories = ["Tous", ...Array.from(new Set(toolboxTools.map((tool) => tool.category)))];
+  const toolboxTools = withInternalSoftwareUrls(toolDirectoryMeta.toolboxTools);
+  const { sectors, categories } = getToolDirectoryFilterValues(toolboxTools);
 
   return (
     <>

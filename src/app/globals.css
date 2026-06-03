@@ -10,6 +10,13 @@
 }
 
 @layer components {
+  .demaa-brand-logo {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 300;
+    font-synthesis: none;
+  }
+
   .demaa-section-title {
     font-family: var(--font-serif);
     font-style: italic;

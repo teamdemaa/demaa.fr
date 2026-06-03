@@ -931,7 +931,6 @@ export default function AssistantHub({
                     systems={systems}
                     detailsBySlug={detailsBySlug}
                     showIntro={false}
-                    pageSize={8}
                   />
                 </div>
               ) : null}

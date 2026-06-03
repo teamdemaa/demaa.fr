@@ -175,7 +175,8 @@ export async function getEnterpriseCatalog(): Promise<EnterpriseDefinition[]> {
     });
 
     return enterprises.map((enterprise) => mergeEnterpriseFallback(stripFirestoreMetadata(enterprise)));
-  } catch {
+  } catch (error) {
+    console.warn("[enterprise-annuaire] Firestore unavailable, using JSON fallback.", error);
     return fallbackEnterpriseCatalog();
   }
 }
@@ -198,8 +199,8 @@ export async function getEnterpriseBySlug(slug: string): Promise<EnterpriseDefin
         return mergeEnterpriseFallback(stripFirestoreMetadata(enterprise));
       }
     }
-  } catch {
-    // Fallback handled below.
+  } catch (error) {
+    console.warn(`[enterprise-annuaire] Firestore lookup failed for "${normalizedSlug}", using JSON fallback.`, error);
   }
 
   return enterpriseCatalogBySlug[normalizedSlug] ?? null;

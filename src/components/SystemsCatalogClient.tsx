@@ -56,7 +56,6 @@ type SystemsCatalogClientProps = {
   systems: System[];
   detailsBySlug: Record<string, OperationalSystemDetail>;
   showIntro?: boolean;
-  pageSize?: number;
   searchQuery?: string;
   onSearchQueryChange?: (value: string) => void;
   showSearchBar?: boolean;

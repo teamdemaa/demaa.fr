@@ -35,8 +35,8 @@ export default function Footer() {
           
           {/* Brand Info */}
           <div className="space-y-4">
-            <Link href="/" className="block text-3xl font-medium tracking-tight text-neutral-950">
-              Demaa<span className="text-neutral-400">.</span>
+            <Link href="/" className="demaa-brand-logo block text-3xl tracking-tight text-neutral-950">
+              Demaa
             </Link>
             <p className="demaa-section-title max-w-xs text-lg leading-snug text-neutral-500">
               Utiliser les systèmes à votre avantage pour alléger la charge, libérer du temps et avancer avec plus de sérénité.

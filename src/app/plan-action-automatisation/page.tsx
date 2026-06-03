@@ -1,8 +1,9 @@
 import Navbar from "@/components/Navbar";
 import AssistantHub from "@/components/AssistantHub";
 import NewsletterPrompt from "@/components/NewsletterPrompt";
-import { getSystems } from "@/lib/api";
-import { buildOperationalSystemDetail } from "@/lib/system-operations";
+import { enterpriseToSystem, getEnterpriseCatalog } from "@/lib/enterprise-annuaire";
+import { buildOperationalSystemDetails } from "@/lib/system-operations";
+import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
 
 export const metadata = {
   title: "Plan d'action automatisation - Demaa",
@@ -13,12 +14,12 @@ export const metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function PlanActionAutomatisationPage() {
-  const systems = await getSystems();
-  const detailsBySlug = Object.fromEntries(
-    await Promise.all(
-      systems.map(async (system) => [system.slug, await buildOperationalSystemDetail(system)] as const)
-    )
-  ) as Record<string, Awaited<ReturnType<typeof buildOperationalSystemDetail>>>;
+  const [enterprises, toolDirectory] = await Promise.all([
+    getEnterpriseCatalog(),
+    getUnifiedToolDirectory(),
+  ]);
+  const systems = enterprises.map(enterpriseToSystem);
+  const detailsBySlug = await buildOperationalSystemDetails(systems, enterprises, toolDirectory);
 
   return (
     <>
