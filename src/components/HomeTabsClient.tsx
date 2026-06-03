@@ -299,6 +299,13 @@ function AcademyPlaceholder() {
       </section>
 
       <section className="mx-auto w-full max-w-6xl px-4 pb-16 pt-8 md:pt-10">
+        <div className="mb-4 flex items-center justify-between gap-4">
+          <h2 className="demaa-section-title text-3xl tracking-tight text-brand-blue md:text-4xl">
+            Ressources Academy
+          </h2>
+          <ScrollHintIcon />
+        </div>
+
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {filteredCarousels.map((carousel) => (
             <AcademyCarouselCard
@@ -405,6 +412,17 @@ function AcademyPlaceholder() {
         ) : null}
       </section>
     </>
+  );
+}
+
+function ScrollHintIcon() {
+  return (
+    <span
+      aria-hidden="true"
+      className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-brand-blue/10 bg-white/85 text-brand-blue/55 shadow-[0_8px_24px_rgba(20,20,20,0.08)] backdrop-blur-sm"
+    >
+      <ChevronRight className="h-4 w-4" />
+    </span>
   );
 }
 

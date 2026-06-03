@@ -12,6 +12,7 @@ import {
   Camera,
   Car,
   ChefHat,
+  ChevronRight,
   Cloud,
   Code2,
   ClipboardCheck,
@@ -349,9 +350,12 @@ export default function SystemsCatalogClient({
             <div className="mt-10 space-y-10 md:mt-12">
               {systemSections.map((section) => (
                 <section key={section.title}>
-                  <h2 className="demaa-section-title mb-4 text-3xl tracking-tight text-brand-blue md:text-4xl">
-                    {section.title}
-                  </h2>
+                  <div className="mb-4 flex items-center justify-between gap-4">
+                    <h2 className="demaa-section-title text-3xl tracking-tight text-brand-blue md:text-4xl">
+                      {section.title}
+                    </h2>
+                    <ScrollHintIcon />
+                  </div>
                   <div className="-mx-4 overflow-x-auto px-4 pb-4 pt-2 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
                     <div className="flex gap-4">
                       {section.systems.map((system) => {
@@ -533,5 +537,16 @@ export default function SystemsCatalogClient({
         initialSector={selectedSystem?.name ?? detail?.sectorLabel}
       />
     </>
+  );
+}
+
+function ScrollHintIcon() {
+  return (
+    <span
+      aria-hidden="true"
+      className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-brand-blue/10 bg-white/85 text-brand-blue/55 shadow-[0_8px_24px_rgba(20,20,20,0.08)] backdrop-blur-sm"
+    >
+      <ChevronRight className="h-4 w-4" />
+    </span>
   );
 }
