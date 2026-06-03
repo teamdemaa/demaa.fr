@@ -147,7 +147,7 @@ export default function ToolDirectoryClient({
 
   return (
     <div className="w-full">
-      <section className={`w-full border-b border-brand-blue/5 bg-[#ffffff] px-4 pb-5 ${showHeader ? "pt-8 md:pt-10" : "pt-0"}`}>
+      <section className={`w-full border-b border-brand-blue/5 bg-[#ffffff] px-4 pb-4 md:pb-5 ${showHeader ? "pt-8 md:pt-10" : "pt-1"}`}>
         <div className="mx-auto max-w-5xl text-center">
           {showHeader ? (
             <>
@@ -163,12 +163,12 @@ export default function ToolDirectoryClient({
           {showSearchBar ? (
             <div className={`mx-auto max-w-4xl rounded-full border border-brand-blue/5 bg-white p-1.5 shadow-[0_10px_30px_rgba(20,20,20,0.035)] ${showHeader ? "mt-5" : "mt-0"}`}>
               <div className="relative">
-                <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-300" />
+                <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-300 md:left-5 md:h-5 md:w-5" />
                 <input
                   value={searchQuery}
                   onChange={(event) => updateSearchQuery(event.target.value)}
                   placeholder={searchPlaceholder}
-                  className="w-full rounded-full bg-white py-3 pl-10 pr-5 text-sm font-normal text-brand-blue outline-none transition placeholder:text-brand-blue/40"
+                  className="w-full rounded-full bg-white py-3.5 pl-10 pr-5 text-sm font-normal text-brand-blue outline-none transition placeholder:text-brand-blue/40 md:py-4 md:pl-12 md:text-base"
                 />
               </div>
             </div>
@@ -176,7 +176,7 @@ export default function ToolDirectoryClient({
 
           {variant === "directory" || variant === "toolbox" ? (
             <HorizontalScrollArea
-              outerClassName={`mx-auto max-w-4xl ${showSearchBar || showHeader ? "mt-3" : "mt-0"}`}
+              outerClassName={`mx-auto max-w-4xl ${showSearchBar || showHeader ? "mt-3" : "mt-2"}`}
               scrollClassName="flex gap-2 overflow-x-auto pb-2 soft-scroll"
               showHint={false}
             >
@@ -557,7 +557,7 @@ function FilterChip({
     <button
       type="button"
       onClick={onClick}
-      className={`whitespace-nowrap rounded-full px-4 py-2 text-xs transition ${
+      className={`min-h-10 whitespace-nowrap rounded-full px-4 py-2 text-xs transition md:min-h-12 md:px-5 md:text-sm ${
         isActive
           ? "bg-brand-blue text-white shadow-sm"
           : "bg-neutral-100 text-brand-blue/65 hover:bg-neutral-200"

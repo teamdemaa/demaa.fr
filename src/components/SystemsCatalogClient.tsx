@@ -302,22 +302,22 @@ export default function SystemsCatalogClient({
             </div>
           ) : null}
 
-          <div className={showIntro ? "mt-10" : "border-b border-brand-blue/5 pb-7 pt-4 md:pt-0"}>
+          <div className={showIntro ? "mt-10" : "border-b border-brand-blue/5 pb-5 pt-3 md:pb-6 md:pt-1"}>
             {showSearchBar ? (
               <div className="mx-auto max-w-4xl rounded-full border border-brand-blue/5 bg-white p-1.5 shadow-[0_10px_30px_rgba(20,20,20,0.035)]">
                 <div className="relative">
-                  <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-300" />
+                  <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-300 md:left-5 md:h-5 md:w-5" />
                   <input
                     value={searchQuery}
                     onChange={(event) => updateSearchQuery(event.target.value)}
                     placeholder="Rechercher une entreprise, un processus, un outil..."
-                    className="w-full rounded-full bg-white py-3 pl-10 pr-5 text-sm font-normal text-brand-blue outline-none transition placeholder:text-brand-blue/40"
+                    className="w-full rounded-full bg-white py-3.5 pl-10 pr-5 text-sm font-normal text-brand-blue outline-none transition placeholder:text-brand-blue/40 md:py-4 md:pl-12 md:text-base"
                   />
                 </div>
               </div>
             ) : null}
 
-            <div className={`mx-auto max-w-4xl overflow-x-auto pb-3 soft-scroll ${showSearchBar ? "mt-5" : "mt-1"}`}>
+            <div className={`mx-auto max-w-4xl overflow-x-auto pb-2 soft-scroll ${showSearchBar ? "mt-5" : "mt-2"}`}>
               <div className="flex min-w-max justify-center gap-2 px-1">
                 {sectors.map((sector) => (
                   <button
@@ -326,7 +326,7 @@ export default function SystemsCatalogClient({
                     onClick={() => {
                       setActiveSector(sector);
                     }}
-                    className={`whitespace-nowrap rounded-full px-4 py-2 text-xs transition ${
+                    className={`min-h-10 whitespace-nowrap rounded-full px-4 py-2 text-xs transition md:min-h-12 md:px-5 md:text-sm ${
                       activeSector === sector
                         ? "bg-brand-blue text-white shadow-sm"
                         : "bg-neutral-100 text-brand-blue/65 hover:bg-neutral-200"
