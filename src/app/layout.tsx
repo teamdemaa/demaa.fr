@@ -37,14 +37,14 @@ const satoshi = localFont({
 const gambetta = localFont({
   src: [
     {
-      path: "./fonts/gambetta-light.woff2",
+      path: "./fonts/gambetta-light-italic.woff2",
       weight: "300",
-      style: "normal",
+      style: "italic",
     },
     {
-      path: "./fonts/gambetta-regular.woff2",
+      path: "./fonts/gambetta-regular-italic.woff2",
       weight: "400",
-      style: "normal",
+      style: "italic",
     },
   ],
   variable: "--font-gambetta",
