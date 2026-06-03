@@ -62,7 +62,8 @@ const academyCarousels: AcademyCarousel[] = [
     title: "Maîtriser les obligations et les finances de son entreprise",
     category: "Obligations",
     resourceLabel: "Accéder au modèle",
-    resourceHref: "/outils/modeles-de-document",
+    resourceHref:
+      "https://www.canva.com/design/DAHDpfMys10/_MTXI4EYctriq9Mn9eEhRA/view?utm_content=DAHDpfMys10&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h1664f1e785",
     slides: [
       "/images/academy/obligations-0.png",
       "/images/academy/obligations-1.png",
@@ -73,7 +74,8 @@ const academyCarousels: AcademyCarousel[] = [
     title: "Construire un budget prévisionnel pour être dans l'anticipation",
     category: "Trésorerie",
     resourceLabel: "Accéder au modèle",
-    resourceHref: "/outils/modeles-de-document",
+    resourceHref:
+      "https://docs.google.com/spreadsheets/d/1-7IDhGAtwNQJtZDYYvhDvM3VHfHVeGwOMTFKdAQuIOE/edit?usp=sharing",
     slides: [
       "/images/academy/budget-0.png",
       "/images/academy/budget-1.png",
@@ -85,7 +87,7 @@ const academyCarousels: AcademyCarousel[] = [
     title: "Comment organiser son entreprise au quotidien et concrètement",
     category: "Organisation",
     resourceLabel: "Accéder au modèle",
-    resourceHref: "/outils/modeles-de-document",
+    resourceHref: "https://airtable.com/app3fRlYVjiFAnrjW/shraiL72hO4EvQoh2",
     slides: [
       "/images/academy/organisation-0.png",
       "/images/academy/organisation-1.png",
@@ -390,6 +392,8 @@ function AcademyPlaceholder() {
 
                 <a
                   href={selectedCarousel.resourceHref}
+                  target="_blank"
+                  rel="noreferrer"
                   className="inline-flex items-center justify-center gap-2 rounded-full border border-brand-blue/10 bg-white px-4 py-2 text-sm font-medium text-brand-blue transition hover:bg-[#fcfcfc]"
                 >
                   <FileText className="h-4 w-4" />
@@ -412,6 +416,7 @@ function AcademyCarouselCard({
   onOpen: (carousel: AcademyCarousel) => void;
 }) {
   const [isPreviewing, setIsPreviewing] = useState(false);
+  const [hasLoadedPreview, setHasLoadedPreview] = useState(false);
   const [previewSlide, setPreviewSlide] = useState(0);
 
   useEffect(() => {
@@ -424,6 +429,11 @@ function AcademyCarouselCard({
     return () => window.clearInterval(interval);
   }, [carousel.slides.length, isPreviewing]);
 
+  function startPreview() {
+    setHasLoadedPreview(true);
+    setIsPreviewing(true);
+  }
+
   function stopPreview() {
     setIsPreviewing(false);
     setPreviewSlide(0);
@@ -433,21 +443,27 @@ function AcademyCarouselCard({
     <button
       type="button"
       onClick={() => onOpen(carousel)}
-      onMouseEnter={() => setIsPreviewing(true)}
+      onMouseEnter={startPreview}
       onMouseLeave={stopPreview}
-      onFocus={() => setIsPreviewing(true)}
+      onFocus={startPreview}
       onBlur={stopPreview}
       className="group overflow-hidden rounded-[1.25rem] border border-brand-blue/8 bg-white text-left shadow-[0_8px_24px_rgba(20,20,20,0.025)] transition hover:-translate-y-0.5 hover:border-brand-blue/14 hover:shadow-[0_16px_42px_rgba(20,20,20,0.055)]"
     >
       <div className="relative aspect-[16/10] overflow-hidden bg-[#fcfcfc]">
-        <Image
-          key={carousel.slides[previewSlide]}
-          src={carousel.slides[previewSlide]}
-          alt=""
-          fill
-          sizes="(min-width: 768px) 33vw, 100vw"
-          className="animate-in fade-in duration-700 object-cover transition-transform group-hover:scale-[1.012]"
-        />
+        {carousel.slides.map((slide, index) =>
+          index === 0 || hasLoadedPreview ? (
+            <Image
+              key={slide}
+              src={slide}
+              alt=""
+              fill
+              sizes="(min-width: 1024px) 352px, (min-width: 768px) 33vw, calc(100vw - 32px)"
+              className={`object-cover transition-[opacity,transform] duration-700 ease-out group-hover:scale-[1.012] ${
+                previewSlide === index ? "opacity-100" : "opacity-0"
+              }`}
+            />
+          ) : null
+        )}
         {carousel.slides.length > 1 ? (
           <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 items-center gap-1.5 rounded-full bg-white/75 px-2 py-1 shadow-[0_4px_14px_rgba(20,20,20,0.08)] backdrop-blur-sm">
             {carousel.slides.map((slide, index) => (
