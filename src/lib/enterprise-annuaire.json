@@ -5,7 +5,7 @@
       "slug": "cabinet-comptable",
       "name": "Cabinet comptable",
       "category": "Système opérationnel",
-      "description": "Structurez vos offres, vos dossiers et vos relances sans friction.",
+      "description": "Gardez production, échéances et relation client sous contrôle sans tout porter mentalement.",
       "tags": [
         "Conseil",
         "B2B",
@@ -138,7 +138,7 @@
       "slug": "cabinet-davocat",
       "name": "Cabinet d’avocat",
       "category": "Système opérationnel",
-      "description": "Structurez vos offres, vos dossiers et vos relances sans friction.",
+      "description": "Clarifiez dossiers, priorités et échéances pour sécuriser le cabinet au quotidien.",
       "tags": [
         "Conseil",
         "B2B",
@@ -215,7 +215,7 @@
       "slug": "cabinet-de-conseil",
       "name": "Cabinet de conseil",
       "category": "Système opérationnel",
-      "description": "Structurez vos offres, vos dossiers et vos relances sans friction.",
+      "description": "Gardez missions, livrables et rentabilité visibles sans dépendre de votre mémoire.",
       "tags": [
         "Conseil",
         "B2B",
@@ -304,7 +304,7 @@
       "slug": "agence-marketing",
       "name": "Agence marketing",
       "category": "Système opérationnel",
-      "description": "Structurez vos offres, vos dossiers et vos relances sans friction.",
+      "description": "Alignez acquisition, production et suivi client pour diriger l’agence avec plus de recul.",
       "tags": [
         "Conseil",
         "B2B",
@@ -411,7 +411,7 @@
       "slug": "freelance",
       "name": "Freelance",
       "category": "Système opérationnel",
-      "description": "Structurez vos offres, vos dossiers et vos relances sans friction.",
+      "description": "Transformez votre activité en système clair pour vendre, produire et respirer davantage.",
       "tags": [
         "Conseil",
         "B2B",
@@ -494,7 +494,7 @@
       "slug": "agence-de-recrutement",
       "name": "Agence de recrutement",
       "category": "Système opérationnel",
-      "description": "Structurez vos offres, vos dossiers et vos relances sans friction.",
+      "description": "Gardez candidats, clients et placements visibles sans perdre les bonnes opportunités.",
       "tags": [
         "Conseil",
         "B2B",
@@ -577,7 +577,7 @@
       "slug": "agence-web",
       "name": "Agence web",
       "category": "Système opérationnel",
-      "description": "Clarifiez la production, le support et la livraison de vos projets.",
+      "description": "Reliez ventes, production, support et rentabilité pour garder chaque projet sous contrôle.",
       "tags": [
         "Tech",
         "Digital",
@@ -688,7 +688,7 @@
       "slug": "creation-de-contenu",
       "name": "Création de contenu",
       "category": "Système opérationnel",
-      "description": "Clarifiez la production, le support et la livraison de vos projets.",
+      "description": "Cadrez idées, production et revenus pour publier régulièrement sans vous disperser.",
       "tags": [
         "Tech",
         "Digital",
@@ -793,7 +793,7 @@
       "slug": "marketplace",
       "name": "Marketplace",
       "category": "Système opérationnel",
-      "description": "Clarifiez la production, le support et la livraison de vos projets.",
+      "description": "Gardez vendeurs, commandes, paiements et litiges visibles avant que le support ne déborde.",
       "tags": [
         "Tech",
         "Digital",
@@ -882,7 +882,7 @@
       "slug": "media",
       "name": "Média",
       "category": "Système opérationnel",
-      "description": "Clarifiez la production, le support et la livraison de vos projets.",
+      "description": "Alignez édition, audience et revenus pour tenir le rythme sans piloter à l’instinct.",
       "tags": [
         "Tech",
         "Digital",
@@ -971,7 +971,7 @@
       "slug": "saas",
       "name": "SaaS",
       "category": "Système opérationnel",
-      "description": "Clarifiez la production, le support et la livraison de vos projets.",
+      "description": "Suivez acquisition, produit, support et revenus pour faire grandir le SaaS avec méthode.",
       "tags": [
         "Tech",
         "Digital",
@@ -1060,7 +1060,7 @@
       "slug": "batiment",
       "name": "Batiment",
       "category": "Système opérationnel",
-      "description": "Pilotez chantiers, interventions et contrôle terrain en temps réel.",
+      "description": "Gardez devis, chantiers, équipes et marge visibles sans courir après l’information terrain.",
       "tags": [
         "BTP",
         "Terrain",
@@ -1167,7 +1167,7 @@
       "slug": "nettoyage-professionnel",
       "name": "Nettoyage professionnel",
       "category": "Système opérationnel",
-      "description": "Pilotez chantiers, interventions et contrôle terrain en temps réel.",
+      "description": "Coordonnez équipes, passages et qualité client sans avoir chaque détail en tête.",
       "tags": [
         "BTP",
         "Terrain",
@@ -1256,7 +1256,7 @@
       "slug": "agence-immobiliere",
       "name": "Agence immobilière",
       "category": "Système opérationnel",
-      "description": "Centralisez mandats, visites et suivi des occupants.",
+      "description": "Gardez mandats, prospects et signatures sous contrôle sans perdre le fil commercial.",
       "tags": [
         "Immobilier",
         "Actifs",
@@ -1345,7 +1345,7 @@
       "slug": "syndic",
       "name": "Syndic",
       "category": "Système opérationnel",
-      "description": "Centralisez copropriétés, assemblées, travaux et demandes résidents.",
+      "description": "Tenez copropriétés, urgences et décisions visibles sans subir la pression permanente.",
       "tags": [
         "Immobilier",
         "Copropriété",
@@ -1442,7 +1442,7 @@
       "slug": "gestion-locative",
       "name": "Gestion locative",
       "category": "Système opérationnel",
-      "description": "Centralisez biens, locataires, loyers, incidents et documents locatifs.",
+      "description": "Gardez loyers, incidents et documents locatifs clairs sans multiplier les relances.",
       "tags": [
         "Immobilier",
         "Location",
@@ -1539,7 +1539,7 @@
       "slug": "marchand-de-biens",
       "name": "Marchand de biens",
       "category": "Système opérationnel",
-      "description": "Suivez sourcing, acquisition, travaux, revente et rentabilité des opérations.",
+      "description": "Suivez chaque opération de l’achat à la revente sans perdre la vision de marge.",
       "tags": [
         "Immobilier",
         "Opérations",
@@ -1636,7 +1636,7 @@
       "slug": "investissement-locatif",
       "name": "Investissement locatif",
       "category": "Système opérationnel",
-      "description": "Suivez acquisition, financement, mise en location et performance locative.",
+      "description": "Gardez financement, location et rentabilité visibles pour décider sans flou.",
       "tags": [
         "Immobilier",
         "Location",
@@ -1733,7 +1733,7 @@
       "slug": "conciergerie-airbnb",
       "name": "Conciergerie Airbnb",
       "category": "Système opérationnel",
-      "description": "Centralisez réservations, arrivées, ménage et suivi voyageurs.",
+      "description": "Gardez réservations, ménage et voyageurs alignés sans gérer chaque urgence vous-même.",
       "tags": [
         "Tourisme",
         "Réservation",
@@ -1822,7 +1822,7 @@
       "slug": "investissement-immobilier",
       "name": "Investissement immobilier",
       "category": "Système opérationnel",
-      "description": "Suivez vos investissements, la performance et les arbitrages.",
+      "description": "Gardez vos biens, travaux et rendements visibles pour arbitrer avec plus de sérénité.",
       "tags": [
         "Patrimoine",
         "Investissement",
@@ -1911,7 +1911,7 @@
       "slug": "investissement-financier",
       "name": "Investissement financier",
       "category": "Système opérationnel",
-      "description": "Suivez vos investissements, la performance et les arbitrages.",
+      "description": "Clarifiez allocations, risques et décisions pour piloter votre patrimoine sans bruit inutile.",
       "tags": [
         "Patrimoine",
         "Investissement",
@@ -2000,7 +2000,7 @@
       "slug": "investissement-entreprise",
       "name": "Investissement entreprise",
       "category": "Système opérationnel",
-      "description": "Suivez vos investissements, la performance et les arbitrages.",
+      "description": "Suivez participations, performance et décisions clés sans perdre la vision d’ensemble.",
       "tags": [
         "Patrimoine",
         "Investissement",
@@ -2089,7 +2089,7 @@
       "slug": "demenagement",
       "name": "Déménagement",
       "category": "Système opérationnel",
-      "description": "Organisez tournées, flottes et délais sans perte d’information.",
+      "description": "Gardez devis, équipes et planning alignés sans stress le jour des déménagements.",
       "tags": [
         "Logistique",
         "Transport",
@@ -2178,7 +2178,7 @@
       "slug": "livraison-dernier-kilometre",
       "name": "Livraison dernier kilomètre",
       "category": "Système opérationnel",
-      "description": "Organisez tournées, flottes et délais sans perte d’information.",
+      "description": "Gardez tournées, délais et incidents visibles sans surveiller chaque livraison à la main.",
       "tags": [
         "Logistique",
         "Transport",
@@ -2267,7 +2267,7 @@
       "slug": "transport-de-marchandise",
       "name": "Transport de marchandise",
       "category": "Système opérationnel",
-      "description": "Organisez tournées, flottes et délais sans perte d’information.",
+      "description": "Alignez flotte, fret et rentabilité sans perdre la trace des expéditions.",
       "tags": [
         "Logistique",
         "Transport",
@@ -2356,7 +2356,7 @@
       "slug": "transport-de-personnes",
       "name": "Transport de personnes",
       "category": "Système opérationnel",
-      "description": "Organisez tournées, flottes et délais sans perte d’information.",
+      "description": "Gardez chauffeurs, trajets et demandes clients clairs sans piloter dans l’urgence.",
       "tags": [
         "Logistique",
         "Transport",
@@ -2439,7 +2439,7 @@
       "slug": "restaurant",
       "name": "Restaurant",
       "category": "Système opérationnel",
-      "description": "Fluidifiez la prise de commande, le service et la livraison.",
+      "description": "Tenez vos marges, votre qualité de service et votre équipe dans un rythme maîtrisé.",
       "tags": [
         "Restauration",
         "Service",
@@ -2522,7 +2522,7 @@
       "slug": "fast-food",
       "name": "Fast-food",
       "category": "Système opérationnel",
-      "description": "Fluidifiez la prise de commande, le service et la livraison.",
+      "description": "Gardez commandes, équipe et rentabilité alignées même pendant les rushs.",
       "tags": [
         "Restauration",
         "Service",
@@ -2605,7 +2605,7 @@
       "slug": "traiteur",
       "name": "Traiteur",
       "category": "Système opérationnel",
-      "description": "Fluidifiez la prise de commande, le service et la livraison.",
+      "description": "Structurez vos demandes, vos événements et votre rentabilité sans dépendre de votre mémoire.",
       "tags": [
         "Restauration",
         "Service",
@@ -2688,7 +2688,7 @@
       "slug": "dark-kitchen",
       "name": "Dark kitchen",
       "category": "Système opérationnel",
-      "description": "Fluidifiez la prise de commande, le service et la livraison.",
+      "description": "Gardez commandes, cuisine et livraison visibles sans subir le rythme des plateformes.",
       "tags": [
         "Restauration",
         "Service",
@@ -2771,7 +2771,7 @@
       "slug": "boulangerie",
       "name": "Boulangerie",
       "category": "Système opérationnel",
-      "description": "Pilotez vos ventes, vos stocks et votre expérience client.",
+      "description": "Gardez une boulangerie rentable, régulière et bien organisée, sans tout porter au quotidien.",
       "tags": [
         "Retail",
         "Vente",
@@ -2854,7 +2854,7 @@
       "slug": "commerce-de-detail",
       "name": "Commerce de détail",
       "category": "Système opérationnel",
-      "description": "Pilotez vos ventes, vos stocks et votre expérience client.",
+      "description": "Gardez stock, ventes et équipe alignés pour diriger le magasin avec plus de recul.",
       "tags": [
         "Retail",
         "Vente",
@@ -2937,7 +2937,7 @@
       "slug": "e-commerce",
       "name": "E-commerce",
       "category": "Système opérationnel",
-      "description": "Pilotez vos ventes, vos stocks et votre expérience client.",
+      "description": "Reliez boutique, commandes, support et rentabilité sans vous disperser entre les outils.",
       "tags": [
         "Retail",
         "Vente",
@@ -3020,7 +3020,7 @@
       "slug": "institut-de-beaute",
       "name": "Institut de beauté",
       "category": "Système opérationnel",
-      "description": "Gérez les rendez-vous, les prestations et la fidélisation.",
+      "description": "Remplissez l’agenda, fidélisez les clientes et suivez la rentabilité sans charge mentale.",
       "tags": [
         "Bien-être",
         "RDV",
@@ -3119,7 +3119,7 @@
       "slug": "salon-de-coiffure",
       "name": "Salon de coiffure",
       "category": "Système opérationnel",
-      "description": "Gérez les rendez-vous, les prestations et la fidélisation.",
+      "description": "Gardez agenda, équipe et ventes visibles pour faire tourner le salon avec régularité.",
       "tags": [
         "Bien-être",
         "RDV",
@@ -3218,7 +3218,7 @@
       "slug": "esthetique",
       "name": "Esthétique",
       "category": "Système opérationnel",
-      "description": "Gérez les rendez-vous, les prestations et la fidélisation.",
+      "description": "Structurez rendez-vous, prestations et relances pour développer l’activité avec sérénité.",
       "tags": [
         "Bien-être",
         "RDV",
@@ -3317,7 +3317,7 @@
       "slug": "services-a-la-personne",
       "name": "Services à la personne",
       "category": "Système opérationnel",
-      "description": "Coordonnez les demandes, les intervenants et les rendez-vous.",
+      "description": "Gardez demandes, intervenants et familles alignés sans tout coordonner dans votre tête.",
       "tags": [
         "Particuliers",
         "Service",
@@ -3400,7 +3400,7 @@
       "slug": "organisme-de-formation",
       "name": "Organisme de formation",
       "category": "Système opérationnel",
-      "description": "Organisez les parcours, les sessions et le suivi des apprenants.",
+      "description": "Reliez ventes, sessions, documents et conformité pour gérer l’organisme sans surcharge.",
       "tags": [
         "Formation",
         "Apprenants",
@@ -3489,7 +3489,7 @@
       "slug": "formation-en-ligne",
       "name": "Formation en ligne",
       "category": "Système opérationnel",
-      "description": "Organisez les parcours, les sessions et le suivi des apprenants.",
+      "description": "Gardez ventes, apprenants et contenus alignés sans disperser votre énergie.",
       "tags": [
         "Formation",
         "Apprenants",
@@ -3578,7 +3578,7 @@
       "slug": "production-industrie",
       "name": "Production & Industrie",
       "category": "Système opérationnel",
-      "description": "Structurez la production, les stocks et les flux atelier.",
+      "description": "Gardez production, stocks et priorités visibles pour diriger l’atelier sans pilotage permanent.",
       "tags": [
         "Industrie",
         "Production",
@@ -3667,7 +3667,7 @@
       "slug": "plomberie-chauffage",
       "name": "Plomberie & chauffage",
       "category": "Système opérationnel",
-      "description": "Pilotez dépannages, devis, chantiers et interventions techniques.",
+      "description": "Gardez urgences, devis et chantiers sous contrôle sans courir après chaque intervention.",
       "tags": [
         "BTP",
         "Intervention",
@@ -3758,7 +3758,7 @@
       "slug": "electricite-generale",
       "name": "Électricité générale",
       "category": "Système opérationnel",
-      "description": "Structurez dépannages, mises aux normes, devis et chantiers électriques.",
+      "description": "Alignez urgences, conformité, devis et équipes sans perdre la vision des chantiers.",
       "tags": [
         "BTP",
         "Intervention",
@@ -3849,7 +3849,7 @@
       "slug": "renovation-interieur",
       "name": "Rénovation intérieur",
       "category": "Système opérationnel",
-      "description": "Organisez devis, chantiers, matériaux et finitions pour les travaux intérieurs.",
+      "description": "Gardez clients, choix, chantiers et marge alignés sans multiplier les allers-retours.",
       "tags": [
         "BTP",
         "Chantier",
@@ -3940,7 +3940,7 @@
       "slug": "menuiserie-agencement",
       "name": "Menuiserie & agencement",
       "category": "Système opérationnel",
-      "description": "Pilotez prises de cotes, fabrication, pose et suivi client.",
+      "description": "Reliez devis, atelier, pose et validations client sans tout garder en tête.",
       "tags": [
         "BTP",
         "Atelier",
@@ -4031,7 +4031,7 @@
       "slug": "maconnerie-gros-oeuvre",
       "name": "Maçonnerie & gros œuvre",
       "category": "Système opérationnel",
-      "description": "Structurez les chantiers lourds, approvisionnements et coordination terrain.",
+      "description": "Gardez planning, matériaux et sous-traitants visibles pour sécuriser chaque chantier.",
       "tags": [
         "BTP",
         "Chantier",
@@ -4122,7 +4122,7 @@
       "slug": "paysagiste",
       "name": "Paysagiste",
       "category": "Système opérationnel",
-      "description": "Organisez devis, tournées, chantiers extérieurs et entretien récurrent.",
+      "description": "Gardez devis, équipes et entretiens récurrents alignés sans perdre les demandes client.",
       "tags": [
         "Terrain",
         "Service",
@@ -4213,7 +4213,7 @@
       "slug": "garage-automobile",
       "name": "Garage automobile",
       "category": "Système opérationnel",
-      "description": "Pilotez rendez-vous, diagnostics, pièces, réparations et facturation.",
+      "description": "Gardez atelier, clients, pièces et rentabilité visibles du premier contact à la facture.",
       "tags": [
         "Auto",
         "Réparation",
@@ -4296,7 +4296,7 @@
       "slug": "carrosserie",
       "name": "Carrosserie",
       "category": "Système opérationnel",
-      "description": "Structurez sinistres, devis, pièces, travaux et relations assurance.",
+      "description": "Suivez sinistres, accords et travaux sans laisser les dossiers bloquer l’atelier.",
       "tags": [
         "Auto",
         "Réparation",
@@ -4379,7 +4379,7 @@
       "slug": "commerce-alimentaire",
       "name": "Commerce alimentaire",
       "category": "Système opérationnel",
-      "description": "Pilotez stocks frais, commandes, caisse et hygiène au quotidien.",
+      "description": "Gardez produits, caisse, fournisseurs et marge alignés sans subir les urgences du frais.",
       "tags": [
         "Retail",
         "Alimentaire",
@@ -4462,7 +4462,7 @@
       "slug": "boutique-specialisee",
       "name": "Boutique spécialisée",
       "category": "Système opérationnel",
-      "description": "Structurez stocks, fournisseurs, conseil client et ventes magasin.",
+      "description": "Gardez assortiment, conseil client et rentabilité visibles pour diriger la boutique sereinement.",
       "tags": [
         "Retail",
         "Vente",
@@ -4545,7 +4545,7 @@
       "slug": "tabac-presse-point-relais",
       "name": "Tabac / presse / point relais",
       "category": "Système opérationnel",
-      "description": "Organisez flux clients, caisse, stocks réglementés et colis.",
+      "description": "Gardez caisse, stocks et services de proximité clairs malgré le flux permanent.",
       "tags": [
         "Retail",
         "Proximité",
@@ -4628,7 +4628,7 @@
       "slug": "bar-cafe",
       "name": "Bar / café",
       "category": "Système opérationnel",
-      "description": "Pilotez service, stocks, caisse, équipes et routines d’ouverture.",
+      "description": "Gardez service, caisse, équipe et marge alignés du matin à la fermeture.",
       "tags": [
         "Restauration",
         "Service",
@@ -4711,7 +4711,7 @@
       "slug": "hotel-hebergement-independant",
       "name": "Hôtel & hébergement indépendant",
       "category": "Système opérationnel",
-      "description": "Structurez réservations, chambres, ménage, arrivées et avis clients.",
+      "description": "Gardez réservations, chambres et avis clients visibles sans subir les pics d’activité.",
       "tags": [
         "Tourisme",
         "Réservation",
@@ -4794,7 +4794,7 @@
       "slug": "cabinet-medical",
       "name": "Cabinet médical",
       "category": "Système opérationnel",
-      "description": "Organisez rendez-vous, documents, secrétariat et suivi administratif.",
+      "description": "Gardez agenda, documents et demandes patients clairs sans alourdir le cabinet.",
       "tags": [
         "Santé",
         "RDV",
@@ -4889,7 +4889,7 @@
       "slug": "cabinet-paramedical",
       "name": "Cabinet paramédical",
       "category": "Système opérationnel",
-      "description": "Structurez rendez-vous, séances, suivis patients et facturation.",
+      "description": "Gardez séances, suivis et facturation visibles sans surcharge administrative inutile.",
       "tags": [
         "Santé",
         "RDV",
@@ -4984,7 +4984,7 @@
       "slug": "infirmier-liberal",
       "name": "Infirmier libéral",
       "category": "Système opérationnel",
-      "description": "Planifiez tournées, soins, prescriptions et suivi patient à domicile.",
+      "description": "Gardez tournées, soins et documents patients sous contrôle sans épuiser votre organisation.",
       "tags": [
         "Santé",
         "Terrain",
@@ -5067,7 +5067,7 @@
       "slug": "aide-a-domicile-menage",
       "name": "Aide à domicile & ménage",
       "category": "Système opérationnel",
-      "description": "Coordonnez bénéficiaires, intervenants, plannings et remplacements.",
+      "description": "Gardez bénéficiaires, plannings et remplacements alignés sans gérer chaque imprévu à chaud.",
       "tags": [
         "Particuliers",
         "Service",
@@ -5150,7 +5150,7 @@
       "slug": "reparation-informatique-mobile",
       "name": "Réparation informatique & mobile",
       "category": "Système opérationnel",
-      "description": "Structurez diagnostics, devis, pièces, réparations et SAV.",
+      "description": "Suivez chaque appareil, client et réparation sans perdre la maîtrise du SAV.",
       "tags": [
         "Réparation",
         "Service",
@@ -5225,6 +5225,504 @@
         {
           "slug": "qonto",
           "usage": "Gérer les finances courantes d’une entreprise."
+        }
+      ]
+    },
+    {
+      "id": "e59",
+      "slug": "architecte-maitre-oeuvre",
+      "name": "Architecte / maître d’œuvre",
+      "category": "Système opérationnel",
+      "description": "Gardez clients, plans, artisans et marges visibles sans porter chaque chantier dans votre tête.",
+      "tags": [
+        "BTP",
+        "Projet",
+        "Système"
+      ],
+      "icon": "Home",
+      "price": "",
+      "sectorLabel": "BTP & services techniques",
+      "editorialSubtitle": "Reliez conception, validations client, artisans et suivi chantier dans un cadre clair.",
+      "imageTitle": "Architecte / maître d’œuvre",
+      "imageSubtitle": "Aperçu du système opérationnel pour architecte / maître d’œuvre",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Brief & faisabilité",
+          "description": "Qualifier le projet, le budget, les contraintes et les attentes client.",
+          "examples": "Exemple : surface, budget, contraintes, calendrier, priorité."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Plans & validations",
+          "description": "Suivre versions de plans, retours client et validations clés.",
+          "examples": "Exemple : esquisse, APS, APD, retour client, validation."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Artisans & devis",
+          "description": "Coordonner consultations, devis, arbitrages et choix des entreprises.",
+          "examples": "Exemple : lot, artisan, devis, relance, accord."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Suivi chantier",
+          "description": "Piloter avancement, réunions, comptes rendus et points bloquants.",
+          "examples": "Exemple : réunion, réserve, retard, décision, responsable."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Réception & réserves",
+          "description": "Suivre réception, réserves, levées et clôture administrative.",
+          "examples": "Exemple : réserve, correction, photo, validation, solde."
+        }
+      ],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : rénovation, neuf, haut de gamme, particuliers, professionnels, zone.",
+        "strategie.objectifs": "Exemple : projets signés, marge par chantier, délais, satisfaction client.",
+        "strategie.plan-action": "Exemple : prospection, consultations artisans, validations, planning chantier.",
+        "marketing.confiance": "Exemple : réalisations, avant/après, avis clients, réseau artisans, références.",
+        "marketing.decision": "Exemple : rendez-vous découverte, faisabilité, budget, proposition, étapes du projet.",
+        "marketing.lien": "Exemple : points d’avancement, photos chantier, comptes rendus, suivi après réception.",
+        "finance.pilotage": "Exemple : marge par projet, honoraires, reste à facturer, trésorerie, retards.",
+        "finance.facturation": "Exemple : acompte, facture d’honoraires, échéancier, relance, solde.",
+        "finance.conformite": "Exemple : contrats, assurances, permis, autorisations, RGPD, obligations administratives.",
+        "equipe.recrutement": "Exemple : dessinateur, assistant projet, réseau artisans, partenaires techniques.",
+        "equipe.rh": "Exemple : charge projet, planning, compétences, passation, coordination terrain.",
+        "equipe.culture": "Exemple : rigueur, clarté client, qualité de suivi, respect des délais."
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, plans, comptes rendus et échanges."
+        },
+        {
+          "slug": "canva",
+          "usage": "Préparer des supports de présentation lisibles pour les clients."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur les comptes rendus, synthèses et relances."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre les honoraires, dépenses projet et règlements."
+        }
+      ]
+    },
+    {
+      "id": "e60",
+      "slug": "courtier-credit-assurance",
+      "name": "Courtier crédit / assurance",
+      "category": "Système opérationnel",
+      "description": "Gardez dossiers, pièces, partenaires et relances visibles sans laisser filer les opportunités.",
+      "tags": [
+        "Finance",
+        "Conseil",
+        "Système"
+      ],
+      "icon": "Shield",
+      "price": "",
+      "sectorLabel": "Conseil & services aux entreprises",
+      "editorialSubtitle": "Suivez chaque dossier du premier contact jusqu’à l’accord, sans perdre les relances.",
+      "imageTitle": "Courtier crédit / assurance",
+      "imageSubtitle": "Aperçu du système opérationnel pour courtier crédit / assurance",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Qualification",
+          "description": "Qualifier besoin, profil, urgence, budget et faisabilité du dossier.",
+          "examples": "Exemple : projet, revenus, garanties, échéance, faisabilité."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Pièces dossier",
+          "description": "Suivre les documents reçus, manquants et à relancer.",
+          "examples": "Exemple : pièce identité, avis, bulletins, justificatif, relance."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Partenaires",
+          "description": "Piloter les envois, retours banques ou assureurs et conditions proposées.",
+          "examples": "Exemple : banque, assureur, taux, garantie, réponse."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Suivi client",
+          "description": "Centraliser avancement, questions client et prochaines actions.",
+          "examples": "Exemple : appel, statut, blocage, action, échéance."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Accord & commission",
+          "description": "Suivre accord, signature, décaissement et rémunération.",
+          "examples": "Exemple : accord, mandat, signature, commission, facture."
+        }
+      ],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : immobilier, assurance pro, particuliers, indépendants, spécialisation.",
+        "strategie.objectifs": "Exemple : dossiers qualifiés, taux de transformation, commissions, délai moyen.",
+        "strategie.plan-action": "Exemple : apporteurs, relances, suivi banques, priorisation des dossiers.",
+        "marketing.confiance": "Exemple : avis clients, pédagogie, partenariats, transparence, résultats obtenus.",
+        "marketing.decision": "Exemple : diagnostic, simulation, mandat, pièces nécessaires, prochaine étape.",
+        "marketing.lien": "Exemple : relance annuelle, renégociation, nouvelles garanties, recommandation client.",
+        "finance.pilotage": "Exemple : commissions attendues, dossiers en cours, encaissements, trésorerie.",
+        "finance.facturation": "Exemple : mandat, facture commission, règlement partenaire, relance.",
+        "finance.conformite": "Exemple : mandat, devoir de conseil, KYC, RGPD, ORIAS, justificatifs.",
+        "equipe.recrutement": "Exemple : assistants dossier, conseillers, apporteurs, onboarding process.",
+        "equipe.rh": "Exemple : portefeuille, charge dossier, objectifs, formation produits.",
+        "equipe.culture": "Exemple : clarté client, réactivité, confidentialité, rigueur documentaire."
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser pièces, suivis et échanges de dossier."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer des synthèses, emails de relance et explications client."
+        },
+        {
+          "slug": "canva",
+          "usage": "Préparer des supports clairs pour expliquer les options et rassurer les clients."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre les encaissements et dépenses courantes."
+        }
+      ]
+    },
+    {
+      "id": "e61",
+      "slug": "auto-ecole",
+      "name": "Auto-école",
+      "category": "Système opérationnel",
+      "description": "Gardez élèves, moniteurs, heures et examens alignés sans subir les changements de planning.",
+      "tags": [
+        "Formation",
+        "Planning",
+        "Système"
+      ],
+      "icon": "Car",
+      "price": "",
+      "sectorLabel": "Éducation & formation",
+      "editorialSubtitle": "Pilotez plannings, élèves et examens avec une vision claire de l’activité.",
+      "imageTitle": "Auto-école",
+      "imageSubtitle": "Aperçu du système opérationnel pour auto-école",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Inscriptions",
+          "description": "Suivre prospects, inscriptions, documents et formules choisies.",
+          "examples": "Exemple : dossier, formule, acompte, pièces, accès."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Planning conduite",
+          "description": "Organiser heures, moniteurs, véhicules et disponibilités élèves.",
+          "examples": "Exemple : élève, moniteur, véhicule, créneau, annulation."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Progression élèves",
+          "description": "Suivre niveau, heures réalisées, difficultés et prochaines étapes.",
+          "examples": "Exemple : compétence, heure, commentaire, objectif, validation."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Examens",
+          "description": "Piloter places d’examen, convocations, résultats et reprises.",
+          "examples": "Exemple : date, place, convocation, résultat, nouvelle date."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Véhicules & incidents",
+          "description": "Suivre entretien, sinistres, disponibilités et documents véhicules.",
+          "examples": "Exemple : véhicule, entretien, assurance, panne, remplacement."
+        }
+      ],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : permis B, conduite accompagnée, moto, intensif, zone.",
+        "strategie.objectifs": "Exemple : inscriptions, heures vendues, taux de réussite, remplissage planning.",
+        "strategie.plan-action": "Exemple : campagnes locales, créneaux moniteurs, examens, relances élèves.",
+        "marketing.confiance": "Exemple : taux de réussite, avis Google, pédagogie, proximité, transparence prix.",
+        "marketing.decision": "Exemple : formule, financement, évaluation départ, disponibilité, inscription.",
+        "marketing.lien": "Exemple : rappels, progression, relance examens, parrainage, avis après réussite.",
+        "finance.pilotage": "Exemple : heures vendues, marge moniteur, impayés, trésorerie, examens.",
+        "finance.facturation": "Exemple : forfait, heures supplémentaires, paiement, relance, remboursement.",
+        "finance.conformite": "Exemple : contrats, agrément, assurances, documents élèves, RGPD.",
+        "equipe.recrutement": "Exemple : moniteurs, accueil, intégration, disponibilité, zones.",
+        "equipe.rh": "Exemple : planning moniteurs, absences, véhicules, formation, charge.",
+        "equipe.culture": "Exemple : pédagogie, ponctualité, sécurité, suivi élève, communication."
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser planning, documents élèves et suivis internes."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur les messages élèves, rappels et contenus pédagogiques."
+        },
+        {
+          "slug": "canva",
+          "usage": "Créer des supports locaux et contenus pédagogiques simples."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre paiements, forfaits et dépenses courantes."
+        }
+      ]
+    },
+    {
+      "id": "e62",
+      "slug": "photographe-videaste",
+      "name": "Photographe / vidéaste",
+      "category": "Système opérationnel",
+      "description": "Gardez prospects, shootings, livraisons et paiements visibles sans vous disperser entre les projets.",
+      "tags": [
+        "Créatif",
+        "Projet",
+        "Système"
+      ],
+      "icon": "Aperture",
+      "price": "",
+      "sectorLabel": "Tech & Digital",
+      "editorialSubtitle": "Cadrez chaque mission du brief à la livraison finale, sans perdre les relances.",
+      "imageTitle": "Photographe / vidéaste",
+      "imageSubtitle": "Aperçu du système opérationnel pour photographe / vidéaste",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Brief client",
+          "description": "Qualifier objectif, format, lieu, contraintes et livrables attendus.",
+          "examples": "Exemple : brief, date, lieu, format, livrable."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Devis & réservation",
+          "description": "Suivre proposition, acompte, confirmation et conditions de mission.",
+          "examples": "Exemple : devis, acompte, contrat, date, option."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Production",
+          "description": "Organiser shooting, matériel, équipe, accès et déroulé.",
+          "examples": "Exemple : matériel, assistant, planning, autorisation, lieu."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Post-production",
+          "description": "Piloter tri, retouche, montage, versions et validations client.",
+          "examples": "Exemple : sélection, retouche, montage, version, retour."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Livraison & droits",
+          "description": "Suivre galeries, fichiers, licences, factures et retours client.",
+          "examples": "Exemple : galerie, lien, licence, facture, avis."
+        }
+      ],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : mariage, entreprise, immobilier, contenu social, premium.",
+        "strategie.objectifs": "Exemple : missions signées, panier moyen, marge, délais de livraison.",
+        "strategie.plan-action": "Exemple : prospection, portfolio, offres, relances, calendrier de production.",
+        "marketing.confiance": "Exemple : portfolio, avant/après, avis, coulisses, recommandations.",
+        "marketing.decision": "Exemple : brief, devis, disponibilités, formule, acompte, contrat.",
+        "marketing.lien": "Exemple : relance anniversaire, livraison, upsell, recommandation, avis client.",
+        "finance.pilotage": "Exemple : marge par mission, temps passé, acompte, solde, trésorerie.",
+        "finance.facturation": "Exemple : devis, acompte, facture, droits d’usage, relance.",
+        "finance.conformite": "Exemple : contrat, autorisation image, droits, assurances, RGPD.",
+        "equipe.recrutement": "Exemple : assistants, monteurs, freelances, partenaires, onboarding brief.",
+        "equipe.rh": "Exemple : planning production, charge retouche, prestataires, délais.",
+        "equipe.culture": "Exemple : qualité créative, ponctualité, clarté client, respect des livrables."
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser briefs, devis, validations et suivis client."
+        },
+        {
+          "slug": "canva",
+          "usage": "Préparer des supports commerciaux et contenus de présentation."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur les propositions, emails et scripts."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre acomptes, soldes et dépenses de mission."
+        }
+      ]
+    },
+    {
+      "id": "e63",
+      "slug": "evenementiel",
+      "name": "Événementiel",
+      "category": "Système opérationnel",
+      "description": "Gardez clients, prestataires, budget et planning alignés sans tout vérifier jusqu’au jour J.",
+      "tags": [
+        "Événement",
+        "Projet",
+        "Système"
+      ],
+      "icon": "PartyPopper",
+      "price": "",
+      "sectorLabel": "Conseil & services aux entreprises",
+      "editorialSubtitle": "Structurez chaque événement du brief au bilan, avec moins d’oublis et plus de visibilité.",
+      "imageTitle": "Événementiel",
+      "imageSubtitle": "Aperçu du système opérationnel pour événementiel",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Brief & cadrage",
+          "description": "Qualifier objectif, public, budget, date, lieu et contraintes.",
+          "examples": "Exemple : objectif, invités, budget, lieu, contrainte."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Budget & devis",
+          "description": "Suivre budget prévisionnel, postes, devis et arbitrages client.",
+          "examples": "Exemple : poste, devis, budget, marge, validation."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Prestataires",
+          "description": "Coordonner prestataires, contrats, échéances et livrables.",
+          "examples": "Exemple : traiteur, lieu, technique, contrat, acompte."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Planning jour J",
+          "description": "Piloter déroulé, responsables, horaires et points de contrôle.",
+          "examples": "Exemple : conducteur, horaire, responsable, check, alerte."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Bilan & relance",
+          "description": "Suivre retours, facturation, bilan client et opportunités futures.",
+          "examples": "Exemple : retour, facture, photos, bilan, relance."
+        }
+      ],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : corporate, mariage, culturel, lancement produit, premium.",
+        "strategie.objectifs": "Exemple : événements signés, marge par projet, satisfaction, récurrence.",
+        "strategie.plan-action": "Exemple : prospection, prestataires, rétroplanning, validations, bilan.",
+        "marketing.confiance": "Exemple : références, photos, avis, partenaires, cas clients.",
+        "marketing.decision": "Exemple : brief, proposition, budget, lieu, calendrier, acompte.",
+        "marketing.lien": "Exemple : suivi post-événement, recommandations, offres récurrentes, relances saisonnières.",
+        "finance.pilotage": "Exemple : marge événement, acomptes, coûts prestataires, trésorerie.",
+        "finance.facturation": "Exemple : devis, acompte, facture finale, paiement prestataire, relance.",
+        "finance.conformite": "Exemple : contrats, assurances, autorisations, sécurité, RGPD, droits image.",
+        "equipe.recrutement": "Exemple : chefs de projet, régisseurs, extras, prestataires, brief terrain.",
+        "equipe.rh": "Exemple : planning équipe, astreintes, charge projet, passation, coordination.",
+        "equipe.culture": "Exemple : anticipation, précision, calme, sens client, gestion imprévus."
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser rétroplannings, briefs, devis et validations."
+        },
+        {
+          "slug": "canva",
+          "usage": "Préparer propositions, supports client et contenus événementiels."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur les briefs, synthèses et plans d’action."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre acomptes, dépenses prestataires et trésorerie."
+        }
+      ]
+    },
+    {
+      "id": "e64",
+      "slug": "salle-de-sport",
+      "name": "Salle de sport",
+      "category": "Système opérationnel",
+      "description": "Gardez abonnements, planning, équipe et fidélisation visibles sans subir les creux d’activité.",
+      "tags": [
+        "Sport",
+        "Abonnement",
+        "Système"
+      ],
+      "icon": "Dumbbell",
+      "price": "",
+      "sectorLabel": "Santé, bien-être & esthétique",
+      "editorialSubtitle": "Pilotez adhérents, cours, coachs et revenus récurrents dans un même suivi.",
+      "imageTitle": "Salle de sport",
+      "imageSubtitle": "Aperçu du système opérationnel pour salle de sport",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Adhésions",
+          "description": "Suivre prospects, inscriptions, formules, renouvellements et résiliations.",
+          "examples": "Exemple : prospect, formule, engagement, renouvellement, départ."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Planning cours",
+          "description": "Organiser cours, coachs, salles, capacités et réservations.",
+          "examples": "Exemple : cours, coach, créneau, capacité, réservation."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Suivi adhérents",
+          "description": "Repérer baisse de fréquentation, besoins, objectifs et relances.",
+          "examples": "Exemple : absence, objectif, bilan, relance, programme."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Équipe & coachs",
+          "description": "Coordonner coachs, remplacements, missions et standards d’accueil.",
+          "examples": "Exemple : coach, remplacement, brief, accueil, consigne."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Équipement & locaux",
+          "description": "Suivre matériel, maintenance, incidents et propreté des espaces.",
+          "examples": "Exemple : machine, panne, nettoyage, contrôle, réparation."
+        }
+      ],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : fitness, coaching, premium, low-cost, cours collectifs, zone.",
+        "strategie.objectifs": "Exemple : abonnements actifs, churn, taux de remplissage, panier moyen.",
+        "strategie.plan-action": "Exemple : campagnes locales, nouveaux cours, relances, offres saisonnières.",
+        "marketing.confiance": "Exemple : avis Google, transformations clients, coachs, ambiance, équipements.",
+        "marketing.decision": "Exemple : essai gratuit, visite, formule, engagement, offre de lancement.",
+        "marketing.lien": "Exemple : relance absence, suivi objectif, challenge, newsletter, renouvellement.",
+        "finance.pilotage": "Exemple : MRR, churn, remplissage cours, masse salariale, trésorerie.",
+        "finance.facturation": "Exemple : abonnement, prélèvement, impayé, relance, résiliation.",
+        "finance.conformite": "Exemple : contrats, CGV, assurances, sécurité, RGPD, affichages obligatoires.",
+        "equipe.recrutement": "Exemple : coachs, accueil, profils vente, intégration, certifications.",
+        "equipe.rh": "Exemple : planning coachs, remplacements, objectifs, formation, charge.",
+        "equipe.culture": "Exemple : énergie, accueil, propreté, motivation adhérents, esprit club."
+      },
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser plannings, suivis adhérents et procédures internes."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Gagner du temps sur les messages adhérents, relances et idées d’animation."
+        },
+        {
+          "slug": "canva",
+          "usage": "Créer des supports pour offres, challenges et communication locale."
+        },
+        {
+          "slug": "qonto",
+          "usage": "Suivre abonnements, dépenses et trésorerie."
         }
       ]
     }
