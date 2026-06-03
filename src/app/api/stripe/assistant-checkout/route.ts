@@ -72,6 +72,16 @@ function getStripeSecretKey() {
   );
 }
 
+function getStripePublishableKey() {
+  return (
+    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ||
+    process.env.STRIPE_PUBLISHABLE_KEY ||
+    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_TEST ||
+    process.env.STRIPE_PUBLISHABLE_KEY_TEST ||
+    null
+  );
+}
+
 function getBaseUrl(request: Request) {
   const requestOrigin = new URL(request.url).origin;
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
@@ -96,6 +106,7 @@ export async function POST(request: Request) {
   }
 
   const secretKey = getStripeSecretKey();
+  const publishableKey = getStripePublishableKey();
 
   if (!secretKey) {
     return NextResponse.json(
@@ -107,11 +118,21 @@ export async function POST(request: Request) {
     );
   }
 
+  if (!publishableKey) {
+    return NextResponse.json(
+      {
+        error:
+          "Stripe Checkout intégré n'est pas encore configuré. Ajoutez STRIPE_PUBLISHABLE_KEY ou STRIPE_PUBLISHABLE_KEY_TEST.",
+      },
+      { status: 500 }
+    );
+  }
+
   const baseUrl = getBaseUrl(request);
   const checkoutParams = new URLSearchParams({
     mode: "payment",
-    success_url: `${baseUrl}${offer.successPath}?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${baseUrl}${offer.cancelPath}`,
+    ui_mode: "embedded",
+    return_url: `${baseUrl}${offer.successPath}?session_id={CHECKOUT_SESSION_ID}`,
     "line_items[0][quantity]": "1",
     "line_items[0][price_data][currency]": "eur",
     "line_items[0][price_data][unit_amount]": String(offer.unitAmount),
@@ -129,6 +150,11 @@ export async function POST(request: Request) {
     "custom_fields[1][label][type]": "custom",
     "custom_fields[1][label][custom]": "Nom",
     "custom_fields[1][type]": "text",
+    "custom_fields[2][key]": "whatsapp_phone",
+    "custom_fields[2][label][type]": "custom",
+    "custom_fields[2][label][custom]": "Téléphone WhatsApp",
+    "custom_fields[2][optional]": "false",
+    "custom_fields[2][type]": "text",
     billing_address_collection: "auto",
   });
 
@@ -165,17 +191,21 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: stripeMessage }, { status: 502 });
   }
 
-  const session = (await stripeResponse.json()) as { id?: string; url?: string | null };
+  const session = (await stripeResponse.json()) as {
+    client_secret?: string | null;
+    id?: string;
+  };
 
-  if (!session.url) {
+  if (!session.client_secret) {
     return NextResponse.json(
-      { error: "Stripe n'a pas retourné d'URL de paiement." },
+      { error: "Stripe n'a pas retourné de client secret Checkout." },
       { status: 502 }
     );
   }
 
   return NextResponse.json({
     id: session.id ?? null,
-    url: session.url,
+    clientSecret: session.client_secret,
+    publishableKey,
   });
 }

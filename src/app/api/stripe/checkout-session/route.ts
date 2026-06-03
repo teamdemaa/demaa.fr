@@ -133,6 +133,7 @@ export async function GET(request: Request) {
   const amountTotal = session.amount_total ?? null;
   const firstName = getCustomFieldValue(session.custom_fields, "first_name");
   const lastName = getCustomFieldValue(session.custom_fields, "last_name");
+  const whatsappPhone = getCustomFieldValue(session.custom_fields, "whatsapp_phone");
   const credits = session.metadata?.credits ? Number(session.metadata.credits) : null;
 
   return NextResponse.json({
@@ -145,6 +146,7 @@ export async function GET(request: Request) {
     name,
     firstName,
     lastName,
+    whatsappPhone,
     amountTotal,
     currency: session.currency ?? "eur",
     credits: Number.isFinite(credits) ? credits : null,

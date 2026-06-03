@@ -11,6 +11,10 @@ interface PaymentRow {
   slack_notified_at?: string | null;
 }
 
+interface AssistantDelegationRequestRow {
+  slack_notified_at?: string | null;
+}
+
 interface GenerationInput {
   email: string;
   prompt: string;
@@ -208,6 +212,24 @@ export async function markStripePaymentSlackNotified(sessionId: string) {
     },
     { merge: true }
   );
+}
+
+export async function getAssistantDelegationRequestBySessionId(sessionId: string) {
+  const database = getAdminFirestore();
+  const requestDoc = await database
+    .collection("assistant_delegation_requests")
+    .doc(sessionId)
+    .get();
+
+  if (!requestDoc.exists) {
+    return undefined;
+  }
+
+  const request = requestDoc.data() as AssistantDelegationRequestRow | undefined;
+
+  return {
+    slack_notified_at: request?.slack_notified_at || null,
+  };
 }
 
 export async function saveAssistantDelegationRequest(

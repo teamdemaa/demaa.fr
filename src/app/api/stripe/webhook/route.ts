@@ -2,8 +2,6 @@ import { createHmac, timingSafeEqual } from "node:crypto";
 import { NextResponse } from "next/server";
 import {
   grantStripePaymentCredits,
-  getStripePaymentBySessionId,
-  markStripePaymentSlackNotified,
   upsertConfirmedStripePayment,
 } from "@/lib/generations-db";
 
@@ -25,6 +23,12 @@ type StripeEvent = {
         email?: string | null;
         name?: string | null;
       } | null;
+      custom_fields?: Array<{
+        key?: string | null;
+        text?: {
+          value?: string | null;
+        } | null;
+      }> | null;
       metadata?: {
         credits?: string | null;
         offer_label?: string | null;
@@ -50,6 +54,18 @@ function getOfferCredits(metadata?: StripeSessionMetadata | null) {
   const credits = Number(metadata?.credits);
 
   return Number.isFinite(credits) && credits > 0 ? credits : 0;
+}
+
+function getCustomFieldValue(
+  customFields: NonNullable<
+    NonNullable<NonNullable<StripeEvent["data"]>["object"]>["custom_fields"]
+  > | null | undefined,
+  key: string
+) {
+  return (
+    customFields?.find((field) => field.key === key)?.text?.value?.trim() ||
+    null
+  );
 }
 
 function verifyStripeSignature(
@@ -82,63 +98,6 @@ function verifyStripeSignature(
 
     return timingSafeEqual(expected, received);
   });
-}
-
-async function sendPaymentSlackNotification(input: {
-  amountTotal: number | null;
-  currency: string | null;
-  email: string | null;
-  livemode: boolean;
-  name?: string | null;
-  offerLabel: string;
-  sessionId: string;
-}) {
-  const webhookUrl = process.env.SLACK_WEBHOOK_URL;
-
-  if (!webhookUrl) {
-    throw new Error("Slack is not configured. Missing SLACK_WEBHOOK_URL.");
-  }
-
-  const amount =
-    typeof input.amountTotal === "number"
-      ? `${(input.amountTotal / 100).toLocaleString("fr-FR", {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        })} ${(input.currency || "eur").toUpperCase()}`
-      : "_non renseigné_";
-
-  const slackResponse = await fetch(webhookUrl, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      text: "💳 Nouveau paiement Demaa confirmé",
-      blocks: [
-        {
-          type: "section",
-          text: {
-            type: "mrkdwn",
-            text: `*Paiement confirmé*\n*Offre* : ${input.offerLabel}\n*Montant* : ${amount}\n*Nom* : ${input.name || "_non renseigné_"}\n*Email* : ${input.email || "_non renseigné_"}\n*Session Stripe* : ${input.sessionId}\n*Mode* : ${input.livemode ? "Live" : "Test"}`,
-          },
-        },
-        {
-          type: "context",
-          elements: [
-            {
-              type: "mrkdwn",
-              text: `⏰ ${new Date().toLocaleString("fr-FR", {
-                timeZone: "Europe/Paris",
-              })}`,
-            },
-          ],
-        },
-      ],
-    }),
-  });
-
-  if (!slackResponse.ok) {
-    const body = await slackResponse.text().catch(() => "");
-    throw new Error(`Slack error ${slackResponse.status}: ${body || "unknown error"}`);
-  }
 }
 
 function verifyStripeSignatureWithSecrets(
@@ -187,6 +146,7 @@ export async function POST(request: Request) {
       session?.customer_details?.email || session?.customer_email || null;
     const name = session?.customer_details?.name || null;
     const amountTotal = session?.amount_total ?? null;
+    const whatsappPhone = getCustomFieldValue(session?.custom_fields, "whatsapp_phone");
     const offerLabel = getOfferLabel({
       amountTotal,
       metadata: session?.metadata,
@@ -210,6 +170,7 @@ export async function POST(request: Request) {
         sessionId,
         livemode: Boolean(event.livemode),
         email,
+        whatsappPhone,
         amountTotal,
       });
 
@@ -243,30 +204,7 @@ export async function POST(request: Request) {
         });
       }
 
-      const storedPayment = await getStripePaymentBySessionId(sessionId);
-
-      if (storedPayment?.slack_notified_at) {
-        console.info("[stripe-webhook] Slack payment notification already sent for session", {
-          eventId: event.id,
-          sessionId,
-          slackNotifiedAt: storedPayment.slack_notified_at,
-        });
-        return NextResponse.json({ received: true, slackNotified: true, duplicate: true });
-      }
-
-      await sendPaymentSlackNotification({
-        amountTotal,
-        currency: session?.currency ?? null,
-        email,
-        livemode: Boolean(event.livemode),
-        name,
-        offerLabel,
-        sessionId,
-      });
-
-      await markStripePaymentSlackNotified(sessionId);
-
-      console.info("[stripe-webhook] Slack payment notification sent", {
+      console.info("[stripe-webhook] Payment stored and credits handled", {
         eventId: event.id,
         sessionId,
         email,

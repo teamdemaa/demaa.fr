@@ -60,14 +60,14 @@ const assistantFaqJsonLd = {
 export const metadata: Metadata = {
   title: "Assistant à la demande pour TPE - Demaa",
   description:
-    "Déléguez vos tâches opérationnelles avec des crédits assistant : facturation, contenu, prospection, subventions, appels d'offres et suivi administratif.",
+    "Déléguez vos tâches opérationnelles depuis WhatsApp avec des crédits assistant : facturation, contenu, prospection, subventions et suivi administratif.",
   alternates: {
     canonical: "/assistant",
   },
   openGraph: {
     title: "Assistant à la demande pour TPE - Demaa",
     description:
-      "Déléguez vos tâches opérationnelles avec des crédits assistant : facturation, contenu, prospection, subventions, appels d'offres et suivi administratif.",
+      "Déléguez vos tâches opérationnelles depuis WhatsApp avec des crédits assistant : facturation, contenu, prospection, subventions et suivi administratif.",
     url: "/assistant",
     siteName: "Demaa",
     locale: "fr_FR",

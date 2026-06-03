@@ -1,14 +1,17 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { loadStripe } from "@stripe/stripe-js";
 import {
   Check,
   ChevronDown,
   FileCheck2,
   HandCoins,
   Megaphone,
+  MessageCircle,
   ReceiptText,
   Search,
+  X,
 } from "lucide-react";
 
 const CREDIT_OPTIONS = [
@@ -19,6 +22,13 @@ const CREDIT_OPTIONS = [
 ] as const;
 
 type CreditAmount = (typeof CREDIT_OPTIONS)[number]["credits"];
+
+type EmbeddedCheckoutState = {
+  clientSecret: string;
+  credits: CreditAmount;
+  publishableKey: string;
+  sessionId: string | null;
+};
 
 const ASSISTANT_USES = [
   {
@@ -73,6 +83,12 @@ const STEPS = [
   },
 ] as const;
 
+const WHATSAPP_FLOW = [
+  "Vous envoyez vos tâches, documents ou consignes directement dans la conversation.",
+  "On clarifie ce qui manque, puis on priorise les actions les plus utiles.",
+  "Vous suivez l'avancement simplement, sans créer un nouvel outil de gestion.",
+] as const;
+
 const FAQ_ITEMS = [
   {
     question: "Est-ce un abonnement ?",
@@ -118,9 +134,12 @@ export default function AssistantCreditsClient() {
   const [selectedCredits, setSelectedCredits] = useState<CreditAmount>(CREDIT_OPTIONS[0].credits);
   const [isCreditMenuOpen, setIsCreditMenuOpen] = useState(false);
   const [isStartingCheckout, setIsStartingCheckout] = useState(false);
+  const [embeddedCheckout, setEmbeddedCheckout] = useState<EmbeddedCheckoutState | null>(null);
+  const [isEmbeddedCheckoutLoading, setIsEmbeddedCheckoutLoading] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const [openUseIndex, setOpenUseIndex] = useState<number | null>(0);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+  const embeddedCheckoutRef = useRef<{ destroy: () => void } | null>(null);
 
   const selectedOption = useMemo(
     () => CREDIT_OPTIONS.find((option) => option.credits === selectedCredits) ?? CREDIT_OPTIONS[0],
@@ -139,17 +158,28 @@ export default function AssistantCreditsClient() {
       });
 
       const payload = (await response.json().catch(() => null)) as
-        | { error?: string; url?: string }
+        | {
+            clientSecret?: string;
+            error?: string;
+            id?: string | null;
+            publishableKey?: string;
+          }
         | null;
 
-      if (!response.ok || !payload?.url) {
+      if (!response.ok || !payload?.clientSecret || !payload.publishableKey) {
         throw new Error(
           payload?.error ||
             "Impossible de créer le paiement Stripe pour le moment."
         );
       }
 
-      window.location.assign(payload.url);
+      setEmbeddedCheckout({
+        clientSecret: payload.clientSecret,
+        credits: selectedOption.credits,
+        publishableKey: payload.publishableKey,
+        sessionId: payload.id ?? null,
+      });
+      setIsStartingCheckout(false);
     } catch (error) {
       setCheckoutError(
         error instanceof Error
@@ -160,26 +190,127 @@ export default function AssistantCreditsClient() {
     }
   };
 
+  const closeEmbeddedCheckout = () => {
+    embeddedCheckoutRef.current?.destroy();
+    embeddedCheckoutRef.current = null;
+    setEmbeddedCheckout(null);
+    setIsEmbeddedCheckoutLoading(false);
+  };
+
+  useEffect(() => {
+    if (!embeddedCheckout) return undefined;
+
+    let isActive = true;
+    const containerId = "assistant-embedded-checkout";
+
+    setCheckoutError(null);
+    setIsEmbeddedCheckoutLoading(true);
+
+    void (async () => {
+      try {
+        const stripe = await loadStripe(embeddedCheckout.publishableKey);
+
+        if (!stripe) {
+          throw new Error("Impossible de charger Stripe Checkout.");
+        }
+
+        const checkout = await stripe.createEmbeddedCheckoutPage({
+          clientSecret: embeddedCheckout.clientSecret,
+          onComplete: () => {
+            if (embeddedCheckout.sessionId) {
+              window.location.assign(
+                `/assistant/success?session_id=${encodeURIComponent(embeddedCheckout.sessionId)}`
+              );
+            }
+          },
+        });
+
+        if (!isActive) {
+          checkout.destroy();
+          return;
+        }
+
+        embeddedCheckoutRef.current?.destroy();
+        embeddedCheckoutRef.current = checkout;
+        checkout.mount(`#${containerId}`);
+        setIsEmbeddedCheckoutLoading(false);
+      } catch (error) {
+        setCheckoutError(
+          error instanceof Error
+            ? error.message
+            : "Impossible d'afficher le paiement Stripe pour le moment."
+        );
+        setEmbeddedCheckout(null);
+        setIsEmbeddedCheckoutLoading(false);
+      }
+    })();
+
+    return () => {
+      isActive = false;
+      embeddedCheckoutRef.current?.destroy();
+      embeddedCheckoutRef.current = null;
+    };
+  }, [embeddedCheckout]);
+
   const selectedFacturationHours = Math.floor(selectedCredits / 25);
 
   return (
     <div className="min-h-screen bg-white text-brand-blue">
+      {embeddedCheckout ? (
+        <div
+          className="fixed inset-0 z-50 overflow-y-auto bg-brand-blue/45 px-4 py-6 backdrop-blur-sm md:px-8 md:py-10"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Paiement Stripe pour ${formatCredits(embeddedCheckout.credits)}`}
+        >
+          <div className="mx-auto min-h-full w-full max-w-3xl">
+            <div className="relative overflow-hidden rounded-[1.25rem] bg-white shadow-[0_30px_80px_rgba(21,36,69,0.18)]">
+              <div className="flex items-center justify-between gap-4 border-b border-black/5 px-5 py-4 md:px-6">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-brand-coral">
+                    Paiement sécurisé
+                  </p>
+                  <h2 className="mt-1 text-lg font-semibold text-brand-blue">
+                    {formatCredits(embeddedCheckout.credits)}
+                  </h2>
+                </div>
+                <button
+                  type="button"
+                  onClick={closeEmbeddedCheckout}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-neutral-100 text-brand-blue transition hover:bg-neutral-200"
+                  aria-label="Fermer le paiement"
+                >
+                  <X className="h-5 w-5" aria-hidden="true" />
+                </button>
+              </div>
+              <div className="min-h-[680px] px-2 py-4 md:px-4">
+                {isEmbeddedCheckoutLoading ? (
+                  <div className="flex min-h-[560px] items-center justify-center text-sm font-medium text-gray-500">
+                    Chargement du paiement...
+                  </div>
+                ) : null}
+                <div id="assistant-embedded-checkout" />
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : null}
       <section className="mx-auto w-full max-w-6xl px-4 pb-20 pt-20 md:px-8 md:pb-32 md:pt-28">
         <div className="mx-auto max-w-5xl text-center">
           <h1 className="demaa-hero-title text-[3rem] leading-[0.98] tracking-tight text-brand-blue md:text-[5rem]">
             Déléguez ce qui vous ralentit.
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-gray-600 md:text-lg">
-            Des crédits pour confier les tâches opérationnelles qui prennent du
-            temps : factures, contenus, prospection, dossiers, suivi
-            administratif et préparation de documents.
+            Confiez-nous les tâches opérationnelles qui prennent du temps :
+            factures, contenus, prospection, dossiers, suivi administratif et
+            préparation de documents, le tout depuis WhatsApp.
           </p>
           <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <a
               href="#pricing"
               className="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-brand-blue px-6 text-sm font-medium text-white transition hover:bg-brand-coral sm:w-auto"
             >
-              Choisir mes crédits
+              Déléguer une première tâche
             </a>
             <a
               href="#deleguer"
@@ -193,7 +324,7 @@ export default function AssistantCreditsClient() {
         <section className="mx-auto mt-24 max-w-5xl md:mt-32">
           <div className="max-w-2xl">
             <h2 className="text-2xl font-semibold tracking-tight text-brand-blue md:text-3xl">
-              Un renfort simple, quand vous en avez besoin.
+              Votre Assistant, un renfort simple, quand vous en avez besoin.
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-gray-600 md:text-base">
               Vous choisissez vos crédits, vous confiez les tâches à traiter,
@@ -208,6 +339,34 @@ export default function AssistantCreditsClient() {
               <p className="mt-2 text-sm leading-relaxed text-gray-600">{step.description}</p>
             </div>
           ))}
+          </div>
+        </section>
+
+        <section className="mx-auto mt-28 max-w-5xl md:mt-36">
+          <div className="grid gap-8 bg-neutral-50 px-5 py-8 md:grid-cols-[0.9fr_1.1fr] md:px-8 md:py-10">
+            <div>
+              <div className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-brand-blue">
+                <MessageCircle className="h-5 w-5" aria-hidden="true" />
+              </div>
+              <h2 className="mt-5 text-2xl font-semibold tracking-tight text-brand-blue md:text-3xl">
+                Tout se passe sur WhatsApp.
+              </h2>
+              <p className="mt-3 text-sm leading-relaxed text-gray-600 md:text-base">
+                Vous gardez un canal simple pour cadrer les demandes, envoyer les
+                éléments utiles et valider les prochaines actions.
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              {WHATSAPP_FLOW.map((item, index) => (
+                <div key={item} className="flex gap-3 bg-white px-4 py-4">
+                  <span className="mt-0.5 text-xs font-semibold text-brand-coral">
+                    0{index + 1}
+                  </span>
+                  <p className="text-sm leading-relaxed text-gray-600">{item}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -412,7 +571,7 @@ export default function AssistantCreditsClient() {
             href="#pricing"
             className="mt-6 inline-flex rounded-full bg-brand-blue px-6 py-3 text-sm font-medium text-white transition hover:bg-brand-coral"
           >
-            Choisir mes crédits
+            Déléguer une première tâche
           </a>
         </section>
       </section>
