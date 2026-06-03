@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { sendSlackMessage, SlackMessageError } from "@/lib/slack";
 
 export async function POST(request: Request) {
   try {
@@ -9,18 +10,6 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { error: "Merci de renseigner les champs obligatoires avant l'envoi." },
         { status: 400 }
-      );
-    }
-
-    const webhookUrl = process.env.SLACK_WEBHOOK_URL;
-    if (!webhookUrl) {
-      console.error("SLACK_WEBHOOK_URL not set");
-      return NextResponse.json(
-        {
-          error:
-            "Le formulaire est temporairement indisponible. Merci de réessayer dans quelques minutes.",
-        },
-        { status: 500 }
       );
     }
 
@@ -41,24 +30,7 @@ export async function POST(request: Request) {
       ]
     };
 
-    const slackResponse = await fetch(webhookUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-
-    if (!slackResponse.ok) {
-      const slackBody = await slackResponse.text().catch(() => "");
-      console.error("Slack webhook error:", slackResponse.status, slackBody);
-
-      return NextResponse.json(
-        {
-          error:
-            "Impossible d'envoyer votre demande pour le moment. Merci de réessayer dans quelques minutes.",
-        },
-        { status: 502 }
-      );
-    }
+    await sendSlackMessage(payload);
 
     return NextResponse.json({ ok: true });
   } catch (e: unknown) {
@@ -68,7 +40,7 @@ export async function POST(request: Request) {
         error:
           "Une erreur est survenue pendant l'envoi. Merci de réessayer dans quelques minutes.",
       },
-      { status: 500 }
+      { status: e instanceof SlackMessageError ? e.statusCode : 500 }
     );
   }
 }

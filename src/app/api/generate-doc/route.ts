@@ -47,16 +47,17 @@ Règles :
     });
 
     return new Response(stream.toReadableStream());
-  } catch (error: any) {
-    console.error("API Error [generate-doc]:", error.message || error);
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error("API Error [generate-doc]:", errorMessage);
     
     // Distinguish between missing key and other errors
-    const status = error.message?.includes("ANTHROPIC_API_KEY") ? 401 : 500;
-    const message = error.message?.includes("ANTHROPIC_API_KEY") 
+    const status = errorMessage.includes("ANTHROPIC_API_KEY") ? 401 : 500;
+    const message = errorMessage.includes("ANTHROPIC_API_KEY") 
       ? "Clé API Anthropic manquante" 
       : "Generation failed";
 
-    return new Response(JSON.stringify({ error: message, details: error.message }), { 
+    return new Response(JSON.stringify({ error: message, details: errorMessage }), { 
       status,
       headers: { "Content-Type": "application/json" }
     });

@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import Navbar from "@/components/Navbar";
-import { Copy, Download, Upload, Trash2, Smartphone, Monitor, Share2 } from "lucide-react";
+import { Download, Upload, Trash2, Monitor, Share2 } from "lucide-react";
 import { toPng, toJpeg, toSvg } from "html-to-image";
 
 export default function QRCodeGenerator() {
@@ -12,8 +12,7 @@ export default function QRCodeGenerator() {
   const [fgColor, setFgColor] = useState("#141414"); // Brand Blue
   const [bgColor, setBgColor] = useState("#FFFFFF");
   const [logoUrl, setLogoUrl] = useState<string | null>(null);
-  const [qrSize, setQrSize] = useState(240);
-  const [isExporting, setIsExporting] = useState(false);
+  const qrSize = 240;
   
   const cardRef = useRef<HTMLDivElement>(null);
   const qrRef = useRef<SVGSVGElement>(null);
@@ -32,8 +31,6 @@ export default function QRCodeGenerator() {
 
   const exportCard = async (format: 'png' | 'jpeg' | 'svg') => {
     if (!cardRef.current) return;
-    setIsExporting(true);
-    
     try {
       let dataUrl = "";
       if (format === 'png') {
@@ -50,8 +47,6 @@ export default function QRCodeGenerator() {
       link.click();
     } catch (err) {
       console.error("Export failed", err);
-    } finally {
-      setIsExporting(false);
     }
   };
 

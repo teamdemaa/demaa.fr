@@ -1,5 +1,6 @@
 import { TemplateRecord } from "@/lib/templates";
-import { ArrowRight, ChevronRight } from "lucide-react";
+import Image from "next/image";
+import { ArrowRight } from "lucide-react";
 
 export default function TemplateCard({ 
   template 
@@ -17,9 +18,11 @@ export default function TemplateCard({
         
         {/* Image Preview Container */}
         <div className="relative aspect-video overflow-hidden bg-gray-50 border-b border-gray-100">
-          <img 
+          <Image
             src={template.image} 
             alt={template.name}
+            fill
+            sizes="(max-width: 768px) 100vw, 33vw"
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           />
           <div className="absolute inset-0 bg-brand-blue/0 group-hover:bg-white transition-colors duration-300" />
@@ -39,7 +42,7 @@ export default function TemplateCard({
           </h3>
           
           <p className="text-gray-400 text-[13px] leading-relaxed italic line-clamp-2">
-            "{template.shortDescription}"
+            &ldquo;{template.shortDescription}&rdquo;
           </p>
 
           <div className="mt-auto pt-6 flex items-center justify-between">

@@ -283,22 +283,22 @@ const searchIndexes = {
 };
 
 // Pré-calcul des index de recherche
-Object.entries(database.tools).forEach(([key, item]) => {
+Object.values(database.tools).forEach((item) => {
   const searchText = `${item.name} ${item.description} ${item.category}`.toLowerCase();
   searchIndexes.tools.set(searchText, item);
 });
 
-Object.entries(database.services).forEach(([key, item]) => {
+Object.values(database.services).forEach((item) => {
   const searchText = `${item.name} ${item.description} ${item.category}`.toLowerCase();
   searchIndexes.services.set(searchText, item);
 });
 
-Object.entries(database.templates).forEach(([key, item]) => {
+Object.values(database.templates).forEach((item) => {
   const searchText = `${item.name} ${item.description} ${item.category}`.toLowerCase();
   searchIndexes.templates.set(searchText, item);
 });
 
-Object.entries(database.systems).forEach(([key, item]) => {
+Object.values(database.systems).forEach((item) => {
   const searchText = `${item.name} ${item.description} ${item.category}`.toLowerCase();
   searchIndexes.systems.set(searchText, item);
 });

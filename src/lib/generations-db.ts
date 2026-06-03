@@ -1,6 +1,5 @@
 import { createHash } from "node:crypto";
-import { getApps, initializeApp, cert, applicationDefault } from "firebase-admin/app";
-import { getFirestore } from "firebase-admin/firestore";
+import { getAdminFirestore } from "./firebase-admin";
 
 interface CacheRow {
   result_json?: string;
@@ -46,41 +45,15 @@ interface NewsletterSubscriberInput {
   source?: string;
 }
 
-function getPrivateKey() {
-  return process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n");
-}
-
-function getFirebaseCredential() {
-  const serviceAccountKey = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
-
-  if (serviceAccountKey) {
-    return cert(JSON.parse(serviceAccountKey));
-  }
-
-  const projectId = process.env.FIREBASE_PROJECT_ID;
-  const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
-  const privateKey = getPrivateKey();
-
-  if (projectId && clientEmail && privateKey) {
-    return cert({
-      projectId,
-      clientEmail,
-      privateKey,
-    });
-  }
-
-  return applicationDefault();
-}
-
-function getDatabase() {
-  if (!getApps().length) {
-    initializeApp({
-      credential: getFirebaseCredential(),
-      projectId: process.env.FIREBASE_PROJECT_ID,
-    });
-  }
-
-  return getFirestore();
+interface AssistantDelegationRequestInput {
+  stripeSessionId: string;
+  email?: string | null;
+  customerName?: string | null;
+  whatsappPhone?: string | null;
+  offerLabel: string;
+  credits?: number | null;
+  tasks: string;
+  livemode: boolean;
 }
 
 function normalizeEmail(email: string) {
@@ -96,7 +69,7 @@ function getPromptKey(prompt: string) {
 }
 
 async function saveLead(email: string, now: string) {
-  const database = getDatabase();
+  const database = getAdminFirestore();
   const normalizedEmail = normalizeEmail(email);
   const leadRef = database.collection("leads").doc(getStableKey(normalizedEmail));
 
@@ -116,7 +89,7 @@ async function saveLead(email: string, now: string) {
 }
 
 export async function saveGeneration(input: GenerationInput) {
-  const database = getDatabase();
+  const database = getAdminFirestore();
   const now = new Date().toISOString();
   const email = normalizeEmail(input.email);
 
@@ -132,7 +105,7 @@ export async function saveGeneration(input: GenerationInput) {
 }
 
 export async function getGenerationCountByEmail(email: string) {
-  const database = getDatabase();
+  const database = getAdminFirestore();
   const snapshot = await database
     .collection("generations")
     .where("email", "==", normalizeEmail(email))
@@ -142,7 +115,7 @@ export async function getGenerationCountByEmail(email: string) {
 }
 
 export async function getCachedAssistantPlan(prompt: string) {
-  const database = getDatabase();
+  const database = getAdminFirestore();
   const cacheDoc = await database
     .collection("assistant_plan_cache")
     .doc(getPromptKey(prompt))
@@ -166,7 +139,7 @@ export async function getCachedAssistantPlan(prompt: string) {
 }
 
 export async function saveAssistantPlanCache(prompt: string, result: unknown) {
-  const database = getDatabase();
+  const database = getAdminFirestore();
   const now = new Date().toISOString();
 
   await database.collection("assistant_plan_cache").doc(getPromptKey(prompt)).set({
@@ -179,7 +152,7 @@ export async function saveAssistantPlanCache(prompt: string, result: unknown) {
 }
 
 export async function upsertConfirmedStripePayment(input: StripePaymentInput) {
-  const database = getDatabase();
+  const database = getAdminFirestore();
   const now = new Date().toISOString();
   const paymentRef = database.collection("stripe_payments").doc(input.stripeSessionId);
 
@@ -208,7 +181,7 @@ export async function upsertConfirmedStripePayment(input: StripePaymentInput) {
 }
 
 export async function getStripePaymentBySessionId(sessionId: string) {
-  const database = getDatabase();
+  const database = getAdminFirestore();
   const paymentDoc = await database.collection("stripe_payments").doc(sessionId).get();
 
   if (!paymentDoc.exists) {
@@ -225,7 +198,7 @@ export async function getStripePaymentBySessionId(sessionId: string) {
 }
 
 export async function markStripePaymentSlackNotified(sessionId: string) {
-  const database = getDatabase();
+  const database = getAdminFirestore();
   const now = new Date().toISOString();
 
   await database.collection("stripe_payments").doc(sessionId).set(
@@ -237,6 +210,49 @@ export async function markStripePaymentSlackNotified(sessionId: string) {
   );
 }
 
+export async function saveAssistantDelegationRequest(
+  input: AssistantDelegationRequestInput
+) {
+  const database = getAdminFirestore();
+  const now = new Date().toISOString();
+  const requestRef = database
+    .collection("assistant_delegation_requests")
+    .doc(input.stripeSessionId);
+
+  await database.runTransaction(async (transaction) => {
+    const requestDoc = await transaction.get(requestRef);
+
+    transaction.set(
+      requestRef,
+      {
+        stripe_session_id: input.stripeSessionId,
+        email: input.email?.trim().toLowerCase() || null,
+        customer_name: input.customerName?.trim() || null,
+        whatsapp_phone: input.whatsappPhone?.trim() || null,
+        offer_label: input.offerLabel,
+        credits: input.credits ?? null,
+        tasks: input.tasks.trim(),
+        livemode: input.livemode,
+        slack_notified_at: now,
+        created_at: requestDoc.exists ? requestDoc.data()?.created_at || now : now,
+        updated_at: now,
+      },
+      { merge: true }
+    );
+
+    transaction.set(
+      database.collection("stripe_payments").doc(input.stripeSessionId),
+      {
+        assistant_tasks: input.tasks.trim(),
+        assistant_tasks_submitted_at: now,
+        slack_notified_at: now,
+        updated_at: now,
+      },
+      { merge: true }
+    );
+  });
+}
+
 export async function grantStripePaymentCredits(input: StripeCreditGrantInput) {
   const credits = Number(input.credits);
 
@@ -244,7 +260,7 @@ export async function grantStripePaymentCredits(input: StripeCreditGrantInput) {
     return { granted: false, reason: "invalid_credits" };
   }
 
-  const database = getDatabase();
+  const database = getAdminFirestore();
   const now = new Date().toISOString();
   const email = normalizeEmail(input.email);
   const userCreditRef = database.collection("user_credits").doc(getStableKey(email));
@@ -308,7 +324,7 @@ export async function grantStripePaymentCredits(input: StripeCreditGrantInput) {
 }
 
 export async function getCreditBalanceByEmail(email: string) {
-  const database = getDatabase();
+  const database = getAdminFirestore();
   const normalizedEmail = normalizeEmail(email);
   const userCreditDoc = await database
     .collection("user_credits")
@@ -325,7 +341,7 @@ export async function getCreditBalanceByEmail(email: string) {
 }
 
 export async function saveNewsletterSubscriber(input: NewsletterSubscriberInput) {
-  const database = getDatabase();
+  const database = getAdminFirestore();
   const now = new Date().toISOString();
   const email = normalizeEmail(input.email);
   const subscriberRef = database.collection("abonnes").doc(getStableKey(email));

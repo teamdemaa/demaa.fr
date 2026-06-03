@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import Navbar from "@/components/Navbar";
 import { Upload, Trash2, Monitor, Share2, Download, Star, MapPin } from "lucide-react";
@@ -12,10 +12,9 @@ export default function CustomerReviewQRCode() {
   const [title, setTitle] = useState("Qu'avez-vous pensé de nous ?");
   const [fgColor, setFgColor] = useState("#141414"); // Brand Blue
   const [starsColor, setStarsColor] = useState("#6b7280"); // Brand Coral
-  const [bgColor, setBgColor] = useState("#FFFFFF");
+  const bgColor = "#FFFFFF";
   const [logoUrl, setLogoUrl] = useState<string | null>("/google-icon.svg");
-  const [qrSize, setQrSize] = useState(240);
-  const [isExporting, setIsExporting] = useState(false);
+  const qrSize = 240;
   
   const cardRef = useRef<HTMLDivElement>(null);
 
@@ -38,7 +37,6 @@ export default function CustomerReviewQRCode() {
 
   const exportCard = async (format: 'png' | 'jpeg' | 'svg') => {
     if (!cardRef.current) return;
-    setIsExporting(true);
     try {
       let dataUrl = "";
       if (format === 'png') {
@@ -54,8 +52,6 @@ export default function CustomerReviewQRCode() {
       link.click();
     } catch (err) {
       console.error("Export failed", err);
-    } finally {
-      setIsExporting(false);
     }
   };
 
@@ -123,7 +119,7 @@ export default function CustomerReviewQRCode() {
 
             {/* Title / Incitation */}
             <div className="space-y-1.5">
-              <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Message d'incitation</label>
+              <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Message d&apos;incitation</label>
               <input 
                 type="text" 
                 value={title}

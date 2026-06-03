@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import Navbar from "@/components/Navbar";
 import { Upload, Trash2, Monitor, Share2, Download, MessageSquare, Phone } from "lucide-react";
@@ -11,10 +11,9 @@ export default function WhatsAppQRCodeCard() {
   const [text, setText] = useState("Bonjour, je souhaite en savoir plus sur vos services !");
   const [title, setTitle] = useState("Carte de Visite QR Code WhatsApp");
   const [fgColor, setFgColor] = useState("#141414"); // Brand Blue
-  const [bgColor, setBgColor] = useState("#FFFFFF");
+  const bgColor = "#FFFFFF";
   const [logoUrl, setLogoUrl] = useState<string | null>("/whatsapp-icon.svg");
-  const [qrSize, setQrSize] = useState(240);
-  const [isExporting, setIsExporting] = useState(false);
+  const qrSize = 240;
   
   const cardRef = useRef<HTMLDivElement>(null);
 
@@ -35,7 +34,6 @@ export default function WhatsAppQRCodeCard() {
 
   const exportCard = async (format: 'png' | 'jpeg' | 'svg') => {
     if (!cardRef.current) return;
-    setIsExporting(true);
     try {
       let dataUrl = "";
       if (format === 'png') {
@@ -51,8 +49,6 @@ export default function WhatsAppQRCodeCard() {
       link.click();
     } catch (err) {
       console.error("Export failed", err);
-    } finally {
-      setIsExporting(false);
     }
   };
 
@@ -90,7 +86,7 @@ export default function WhatsAppQRCodeCard() {
               Carte de Visite <span className="text-brand-coral">QR Code WhatsApp</span>
             </h1>
             <p className="text-gray-500 text-xs md:text-sm leading-relaxed max-w-sm">
-              Facilitez la prise de contact directe. Scannez, et le chat s'ouvre !
+              Facilitez la prise de contact directe. Scannez, et le chat s&apos;ouvre !
             </p>
           </div>
 

@@ -1,5 +1,5 @@
 import { Tool, Service, Template, System, ContentType } from './types';
-import { database, searchIndexes } from './database';
+import { database } from './database';
 import { enterpriseToSystem, getEnterpriseBySlug, getEnterpriseSystems } from './enterprise-annuaire';
 
 // Fonction générique optimisée pour récupérer les données

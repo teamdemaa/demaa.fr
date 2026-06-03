@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
+import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import { 
-  Search, 
   MapPin, 
   Phone, 
   Globe, 
@@ -11,8 +11,6 @@ import {
   Star, 
   Copy, 
   CheckCircle2, 
-  AlertCircle,
-  ExternalLink,
   Info
 } from "lucide-react";
 
@@ -22,7 +20,7 @@ export default function GoogleProfileOptimizer() {
   const [address, setAddress] = useState("123 Rue de la Réussite, 75001 Paris");
   const [description, setDescription] = useState("Ma description optimisée pour le SEO local...");
   const [phone, setPhone] = useState("01 23 45 67 89");
-  const [website, setWebsite] = useState("www.mon-entreprise.fr");
+  const [website] = useState("www.mon-entreprise.fr");
   const [copied, setCopied] = useState(false);
 
   const DESC_LIMIT = 750;
@@ -61,7 +59,7 @@ export default function GoogleProfileOptimizer() {
           <div className="space-y-5">
             {/* Business Name */}
             <div className="space-y-1.5">
-              <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Nom de l'établissement</label>
+              <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Nom de l&apos;établissement</label>
               <input 
                 type="text" 
                 value={name}
@@ -134,7 +132,7 @@ export default function GoogleProfileOptimizer() {
               <div className="bg-gray-50 border-b border-gray-100 px-6 py-3 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center shadow-sm">
-                    <img src="/google-icon.svg" alt="G" className="w-3.5 h-3.5" />
+                    <Image src="/google-icon.svg" alt="G" width={14} height={14} className="h-3.5 w-3.5" />
                   </div>
                   <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Aperçu fiche établissement</span>
                 </div>
@@ -180,7 +178,7 @@ export default function GoogleProfileOptimizer() {
                 <div className="space-y-2">
                   <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">À propos</h3>
                   <p className="text-[11px] text-gray-500 leading-relaxed italic">
-                    {description || "Saisissez une description pour voir l'aperçu..."}
+                    {description || "Saisissez une description pour voir l&apos;aperçu..."}
                   </p>
                 </div>
               </div>
@@ -201,7 +199,7 @@ export default function GoogleProfileOptimizer() {
             <div className="space-y-4 px-2">
               <h4 className="text-xs font-bold text-brand-blue flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-brand-coral" />
-                Score d'optimisation (Checklist)
+                Score d&apos;optimisation (Checklist)
               </h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {checklist.map((item, idx) => (

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ServiceRecord } from "@/lib/data";
 import * as Icons from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 export default function ServiceCard({ 
   service, 
@@ -13,9 +14,8 @@ export default function ServiceCard({
   baseUrl?: string,
   hidePrice?: boolean
 }) {
-  // Try to find the icon from lucide-react dynamically, or fallback to 'Box'
-  // @ts-ignore
-  const IconComponent = Icons[service.icon] || Icons.Box;
+  const iconMap = Icons as unknown as Record<string, LucideIcon>;
+  const IconComponent = iconMap[service.icon] || Icons.Box;
 
   const widthClasses = fullWidth 
     ? "w-full" 

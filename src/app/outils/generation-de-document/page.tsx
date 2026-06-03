@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Navbar from "@/components/Navbar";
-import { Send, Copy, FileDown, Loader2, User, Bot, Trash2 } from "lucide-react";
+import { Send, Copy, FileDown, User, Bot, Trash2 } from "lucide-react";
 
 interface Message {
   role: "user" | "assistant";

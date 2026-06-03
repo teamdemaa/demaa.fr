@@ -7,14 +7,12 @@ import { ServiceRecord } from "@/lib/data";
 
 export default function HomeClient({ 
   services, 
-  allTags, 
   title, 
   placeholder,
   showUSP = true,
   subtitle
 }: { 
   services: ServiceRecord[], 
-  allTags: string[],
   title?: string,
   placeholder?: string,
   showUSP?: boolean,
