@@ -31,9 +31,10 @@ export default function Navbar({ minimal = false }: { minimal?: boolean }) {
 
               <Link
                 href="/assistant"
-                className="inline-flex items-center whitespace-nowrap text-xs font-medium text-brand-blue transition-colors hover:text-neutral-700 md:text-sm"
+                className="inline-flex min-h-10 items-center justify-center whitespace-nowrap rounded-full border border-brand-blue/10 bg-white px-4 text-xs font-medium text-brand-blue transition-colors hover:border-neutral-300 hover:text-neutral-700 sm:px-5 md:text-sm"
               >
-                J&apos;ai besoin d&apos;un Assistant
+                <span className="hidden sm:inline">J&apos;ai besoin d&apos;un Assistant</span>
+                <span className="sm:hidden">Assistant</span>
               </Link>
             </>
           )}

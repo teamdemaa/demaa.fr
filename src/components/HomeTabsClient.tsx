@@ -165,10 +165,10 @@ export default function HomeTabsClient({
   const heroCopy = tabHeroCopy[activeTab];
   const searchPlaceholder =
     activeTab === "systemes"
-      ? "Rechercher une entreprise, un processus, un outil..."
+      ? "Rechercher votre activité"
       : activeTab === "outils"
-        ? "Rechercher un outil gratuit, un usage, un secteur..."
-        : "Rechercher une ressource, un thème...";
+        ? "Rechercher un outil"
+        : "Rechercher un sujet";
 
   const tabContent = useMemo(() => {
     if (activeTab === "outils") {
@@ -177,7 +177,7 @@ export default function HomeTabsClient({
           key={`${initialSector ?? "tous"}-${initialCategory ?? "tous"}`}
           title="Outils"
           description="Les outils gratuits créés par Demaa pour faire avancer l'activité plus vite."
-          searchPlaceholder="Rechercher un outil gratuit, un usage, un secteur..."
+          searchPlaceholder="Rechercher un outil"
           items={tools}
           secondaryItems={otherTools}
           sectors={toolSectors}
