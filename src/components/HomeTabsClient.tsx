@@ -8,6 +8,7 @@ import {
   ChevronLeft,
   ChevronRight,
   FileText,
+  Search,
   Wrench,
   X,
 } from "lucide-react";
@@ -118,6 +119,12 @@ export default function HomeTabsClient({
 }: HomeTabsClientProps) {
   const [activeTab, setActiveTab] = useState<HomeTab>(() => getInitialTab(initialTab));
   const [searchQuery, setSearchQuery] = useState("");
+  const searchPlaceholder =
+    activeTab === "systemes"
+      ? "Rechercher une entreprise, un processus, un outil..."
+      : activeTab === "boite-a-outils"
+        ? "Rechercher un outil gratuit, un usage, un secteur..."
+        : "Rechercher une ressource, un thème...";
 
   const tabContent = useMemo(() => {
     if (activeTab === "boite-a-outils") {
@@ -145,7 +152,7 @@ export default function HomeTabsClient({
     }
 
     if (activeTab === "academy") {
-      return <AcademyPlaceholder />;
+      return <AcademyPlaceholder searchQuery={searchQuery} />;
     }
 
     return (
@@ -182,10 +189,10 @@ export default function HomeTabsClient({
 
   return (
     <>
-      <section className="ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] w-screen bg-[#ffffff]/70 px-4 pb-6 pt-16 text-center md:px-8 md:pb-8 md:pt-20">
-        <div className="mx-auto max-w-6xl space-y-7">
+      <section className="ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] w-screen bg-[#ffffff]/70 px-4 pb-4 pt-10 text-center md:px-8 md:pb-5 md:pt-14">
+        <div className="mx-auto max-w-6xl space-y-5 md:space-y-6">
           <div className="mx-auto max-w-5xl">
-            <h1 className="demaa-hero-title text-[3rem] text-brand-blue tracking-tight leading-[0.98] md:text-[4.05rem] lg:text-[5rem]">
+            <h1 className="demaa-hero-title text-[1.75rem] text-brand-blue tracking-tight leading-[0.98] sm:text-[3rem] md:text-[4.05rem] lg:text-[5rem]">
               <span className="text-neutral-400">Structurez</span>{" "}
               <span>Mieux</span>
             </h1>
@@ -194,10 +201,42 @@ export default function HomeTabsClient({
           <div className="mx-auto w-full max-w-4xl">
             <TabBar activeTab={activeTab} onSelect={selectTab} />
           </div>
+
+          <SearchBar
+            value={searchQuery}
+            placeholder={searchPlaceholder}
+            onChange={setSearchQuery}
+          />
         </div>
       </section>
       {tabContent}
     </>
+  );
+}
+
+function SearchBar({
+  value,
+  placeholder,
+  onChange,
+}: {
+  value: string;
+  placeholder: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <div className="mx-auto w-full max-w-4xl rounded-full border border-brand-blue/5 bg-white p-1.5 shadow-[0_10px_30px_rgba(20,20,20,0.035)]">
+      <div className="relative">
+        <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-300 md:left-5 md:h-5 md:w-5" />
+        <input
+          type="search"
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          placeholder={placeholder}
+          aria-label={placeholder}
+          className="w-full rounded-full bg-white py-3.5 pl-10 pr-5 text-sm font-normal text-brand-blue outline-none transition placeholder:text-brand-blue/40 md:py-4 md:pl-12 md:text-base"
+        />
+      </div>
+    </div>
   );
 }
 
@@ -209,7 +248,7 @@ function TabBar({
   onSelect: (tab: HomeTab) => void;
 }) {
   return (
-    <div className="mx-auto flex max-w-4xl gap-1.5 overflow-x-auto rounded-full border border-brand-blue/5 bg-white p-[0.45rem] shadow-[0_10px_30px_rgba(20,20,20,0.035)] soft-scroll sm:gap-2">
+    <div className="mx-auto flex max-w-4xl gap-1.5 overflow-x-auto rounded-full border border-brand-blue/5 bg-white p-1.5 shadow-[0_10px_30px_rgba(20,20,20,0.035)] soft-scroll sm:gap-2 md:p-2">
       {tabs.map((tab) => {
         const Icon = tab.icon;
         const isActive = activeTab === tab.id;
@@ -219,7 +258,7 @@ function TabBar({
             key={tab.id}
             type="button"
             onClick={() => onSelect(tab.id)}
-            className={`inline-flex min-h-[2.875rem] min-w-0 flex-1 items-center justify-center gap-1 rounded-full px-2 text-[12px] font-medium transition sm:gap-2 sm:px-4 sm:text-sm ${
+            className={`inline-flex min-h-12 min-w-0 flex-1 items-center justify-center gap-1 rounded-full px-2 text-[12px] font-medium transition sm:min-h-14 sm:gap-2 sm:px-4 sm:text-sm md:min-h-[3.75rem] md:text-base ${
               isActive
                 ? "bg-brand-blue text-white shadow-sm"
                 : "text-brand-blue/70 hover:bg-[#fcfcfc] hover:text-neutral-700"
@@ -234,7 +273,7 @@ function TabBar({
   );
 }
 
-function AcademyPlaceholder() {
+function AcademyPlaceholder({ searchQuery }: { searchQuery: string }) {
   const [selectedCarousel, setSelectedCarousel] = useState<AcademyCarousel | null>(null);
   const [activeSlide, setActiveSlide] = useState(0);
   const [activeCategory, setActiveCategory] = useState("Tous");
@@ -243,9 +282,17 @@ function AcademyPlaceholder() {
     []
   );
 
-  const filteredCarousels = academyCarousels.filter(
-    (carousel) => activeCategory === "Tous" || carousel.category === activeCategory
-  );
+  const filteredCarousels = academyCarousels.filter((carousel) => {
+    const query = searchQuery.trim().toLowerCase();
+    const matchesCategory = activeCategory === "Tous" || carousel.category === activeCategory;
+    const matchesSearch =
+      !query ||
+      carousel.title.toLowerCase().includes(query) ||
+      carousel.category.toLowerCase().includes(query) ||
+      carousel.resourceLabel.toLowerCase().includes(query);
+
+    return matchesCategory && matchesSearch;
+  });
 
   function openCarousel(carousel: AcademyCarousel) {
     setSelectedCarousel(carousel);
@@ -275,16 +322,16 @@ function AcademyPlaceholder() {
 
   return (
     <>
-      <section className="w-full border-b border-brand-blue/5 bg-[#ffffff] px-4 pb-7 pt-4 md:pb-8 md:pt-0">
+      <section className="w-full border-b border-brand-blue/5 bg-[#ffffff] px-4 pb-5 pt-3 md:pb-6 md:pt-1">
         <div className="mx-auto max-w-6xl">
-          <div className="mx-auto max-w-4xl overflow-x-auto pb-3 soft-scroll">
+          <div className="mx-auto max-w-4xl overflow-x-auto pb-2 soft-scroll">
             <div className="flex min-w-max justify-center gap-2 px-1">
               {categories.map((category) => (
                 <button
                   key={category}
                   type="button"
                   onClick={() => setActiveCategory(category)}
-                  className={`whitespace-nowrap rounded-full px-4 py-2 text-xs transition ${
+                  className={`min-h-10 whitespace-nowrap rounded-full px-4 py-2 text-xs transition md:min-h-12 md:px-5 md:text-sm ${
                     activeCategory === category
                       ? "bg-brand-blue text-white shadow-sm"
                       : "bg-neutral-100 text-brand-blue/65 hover:bg-neutral-200"
