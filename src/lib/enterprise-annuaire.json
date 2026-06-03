@@ -65,7 +65,7 @@
         "marketing.lien": "Exemple : suivi régulier, alertes réglementaires, bilans, enquêtes, événements clients.",
         "finance.pilotage": "Exemple : rentabilité par mission, temps passé, chiffre d’affaires, trésorerie, prévisionnel.",
         "finance.facturation": "Exemple : devis accepté, acompte, facture de mission, relances, suivi des règlements.",
-        "finance.conformite": "Exemple : déclarations, lettres de mission, RGPD, obligations sociales, dossier permanent.",
+        "finance.conformite": "Exemple : déclarations fiscales et sociales, lettres de mission, TVA, RGPD, dossier permanent, échéances légales.",
         "equipe.recrutement": "Exemple : collaborateurs, alternants, gestionnaires paie, onboarding dossier, accès outils.",
         "equipe.rh": "Exemple : charge par collaborateur, période fiscale, congés, formation, qualité dossier.",
         "equipe.culture": "Exemple : standards de livraison, méthodes, rituels, communication client, retours d’expérience."
@@ -186,7 +186,7 @@
         "marketing.lien": "Exemple : points clients, newsletter utile, alertes, bilans, enquêtes de satisfaction.",
         "finance.pilotage": "Exemple : rentabilité par mission, temps passé, chiffre d’affaires, trésorerie, prévisionnel.",
         "finance.facturation": "Exemple : devis accepté, acompte, facture de mission, relances, suivi des règlements.",
-        "finance.conformite": "Exemple : contrat, lettre de mission, assurance, RGPD, documents légaux.",
+        "finance.conformite": "Exemple : lettres de mission, contrats clients, assurances, RGPD, factures, documents légaux.",
         "equipe.recrutement": "Exemple : besoin de consultant, brief de poste, entretiens, onboarding, accès dossiers.",
         "equipe.rh": "Exemple : charge par personne, compétences, congés, formation, points de suivi.",
         "equipe.culture": "Exemple : standards de livraison, méthodes, rituels, communication client, retours d’expérience."
@@ -275,7 +275,7 @@
         "marketing.lien": "Exemple : points clients, newsletter utile, alertes, bilans, enquêtes de satisfaction.",
         "finance.pilotage": "Exemple : rentabilité par mission, temps passé, chiffre d’affaires, trésorerie, prévisionnel.",
         "finance.facturation": "Exemple : devis accepté, acompte, facture de mission, relances, suivi des règlements.",
-        "finance.conformite": "Exemple : contrat, lettre de mission, assurance, RGPD, documents légaux.",
+        "finance.conformite": "Exemple : lettres de mission, contrats clients, assurances, RGPD, factures, documents légaux.",
         "equipe.recrutement": "Exemple : besoin de consultant, brief de poste, entretiens, onboarding, accès dossiers.",
         "equipe.rh": "Exemple : charge par personne, compétences, congés, formation, points de suivi.",
         "equipe.culture": "Exemple : standards de livraison, méthodes, rituels, communication client, retours d’expérience."
@@ -358,7 +358,7 @@
         "marketing.lien": "Exemple : support, maintenance, bilan projet, newsletter, nouvelles demandes.",
         "finance.pilotage": "Exemple : marge par projet, temps passé, abonnements, trésorerie, prévisions.",
         "finance.facturation": "Exemple : acompte, jalons, facture finale, relances, suivi des paiements.",
-        "finance.conformite": "Exemple : contrat, droits d’usage, RGPD, licences, conditions de maintenance.",
+        "finance.conformite": "Exemple : contrats clients, droits d’usage, RGPD, TVA, factures, assurances, licences logicielles.",
         "equipe.recrutement": "Exemple : designers, développeurs, freelances, onboarding projet, accès outils.",
         "equipe.rh": "Exemple : charge projet, compétences, congés, revues, montée en compétence.",
         "equipe.culture": "Exemple : standards design, documentation, rituels projet, retours qualité."
@@ -465,7 +465,7 @@
         "marketing.lien": "Exemple : suivi client, bilan mission, relance douce, recommandation, offre récurrente.",
         "finance.pilotage": "Exemple : revenu mensuel, charges, trésorerie, temps facturable, marge.",
         "finance.facturation": "Exemple : devis, acompte, facture, relance, paiement reçu.",
-        "finance.conformite": "Exemple : statut, assurances, déclarations, contrats, justificatifs.",
+        "finance.conformite": "Exemple : statut, déclarations, TVA, assurances, contrats, factures, justificatifs.",
         "equipe.recrutement": "Exemple : partenaires, sous-traitants, assistant, brief, accès partagés.",
         "equipe.rh": "Exemple : planning personnel, charge, formation, disponibilité, limites de capacité.",
         "equipe.culture": "Exemple : méthode de travail, règles client, qualité attendue, documentation."
@@ -548,7 +548,7 @@
         "marketing.lien": "Exemple : suivi candidats, points client, vivier, bilan recrutement, nouvelles missions.",
         "finance.pilotage": "Exemple : rentabilité par mission, temps passé, chiffre d’affaires, trésorerie, prévisionnel.",
         "finance.facturation": "Exemple : devis accepté, acompte, facture de mission, relances, suivi des règlements.",
-        "finance.conformite": "Exemple : contrat, lettre de mission, assurance, RGPD, documents légaux.",
+        "finance.conformite": "Exemple : lettres de mission, contrats clients, assurances, RGPD, factures, documents légaux.",
         "equipe.recrutement": "Exemple : consultants, chargé de sourcing, onboarding CRM, méthode d’entretien.",
         "equipe.rh": "Exemple : charge par personne, compétences, congés, formation, points de suivi.",
         "equipe.culture": "Exemple : standards de livraison, méthodes, rituels, communication client, retours d’expérience."
@@ -631,7 +631,7 @@
         "marketing.lien": "Exemple : support, maintenance, bilan projet, newsletter, nouvelles demandes.",
         "finance.pilotage": "Exemple : marge par projet, temps passé, abonnements, trésorerie, prévisions.",
         "finance.facturation": "Exemple : acompte, jalons, facture finale, relances, suivi des paiements.",
-        "finance.conformite": "Exemple : contrat, droits d’usage, RGPD, licences, conditions de maintenance.",
+        "finance.conformite": "Exemple : contrats clients, droits d’usage, RGPD, TVA, factures, assurances, licences logicielles.",
         "equipe.recrutement": "Exemple : designers, développeurs, freelances, onboarding projet, accès outils.",
         "equipe.rh": "Exemple : charge projet, compétences, congés, revues, montée en compétence.",
         "equipe.culture": "Exemple : standards design, documentation, rituels projet, retours qualité."
@@ -748,7 +748,7 @@
         "marketing.lien": "Exemple : bilan contenu, nouvelles idées, calendrier éditorial, retours, formats récurrents.",
         "finance.pilotage": "Exemple : marge par projet, temps passé, abonnements, trésorerie, prévisions.",
         "finance.facturation": "Exemple : acompte, jalons, facture finale, relances, suivi des paiements.",
-        "finance.conformite": "Exemple : droits d’image, droits musicaux, contrats, licences, RGPD, autorisations.",
+        "finance.conformite": "Exemple : contrats, autorisations, propriété intellectuelle, RGPD, factures, TVA.",
         "equipe.recrutement": "Exemple : créateurs, monteurs, graphistes, freelances, accès aux briefs.",
         "equipe.rh": "Exemple : planning production, validations, charge créative, formation outils.",
         "equipe.culture": "Exemple : ligne créative, qualité visuelle, respect des briefs, rythme de publication."
@@ -853,7 +853,7 @@
         "marketing.lien": "Exemple : suivi commande, relance vendeurs, avis, offres, résolution litiges.",
         "finance.pilotage": "Exemple : commissions, volume de commandes, remboursements, litiges, trésorerie.",
         "finance.facturation": "Exemple : commissions, reversements vendeurs, remboursements, factures, rapprochements.",
-        "finance.conformite": "Exemple : CGU vendeurs, KYC, TVA, litiges, RGPD, règles de commission.",
+        "finance.conformite": "Exemple : CGU/CGV, TVA, factures, KYC vendeurs, RGPD, contrats de commission.",
         "equipe.recrutement": "Exemple : support vendeurs, opérations, modération, onboarding outil, règles qualité.",
         "equipe.rh": "Exemple : charge support, modération, suivi litiges, formation règles marketplace.",
         "equipe.culture": "Exemple : transparence, qualité vendeur, réactivité support, suivi des litiges."
@@ -942,7 +942,7 @@
         "marketing.lien": "Exemple : newsletter, communauté, retours lecteurs, contenus récurrents, offres abonnés.",
         "finance.pilotage": "Exemple : marge par projet, temps passé, abonnements, trésorerie, prévisions.",
         "finance.facturation": "Exemple : acompte, jalons, facture finale, relances, suivi des paiements.",
-        "finance.conformite": "Exemple : droits d’auteur, contrats, RGPD, licences, mentions légales, sources.",
+        "finance.conformite": "Exemple : contrats, propriété intellectuelle, mentions légales, RGPD, factures, TVA.",
         "equipe.recrutement": "Exemple : rédacteurs, monteurs, community managers, pigistes, accès éditoriaux.",
         "equipe.rh": "Exemple : planning éditorial, charge production, validations, formation outils.",
         "equipe.culture": "Exemple : ligne éditoriale, rythme de publication, rigueur, qualité des sources."
@@ -1031,7 +1031,7 @@
         "marketing.lien": "Exemple : activation, usage produit, support, newsletter produit, renouvellement.",
         "finance.pilotage": "Exemple : MRR, churn, coût acquisition, marge, trésorerie, expansion.",
         "finance.facturation": "Exemple : abonnements, renouvellements, upgrades, remboursements, impayés.",
-        "finance.conformite": "Exemple : CGU, DPA, RGPD, sécurité, contrats, facturation récurrente.",
+        "finance.conformite": "Exemple : CGU/CGV, DPA, RGPD, contrats, TVA, facturation récurrente, assurances.",
         "equipe.recrutement": "Exemple : développeurs, support client, product, onboarding outil, accès produit.",
         "equipe.rh": "Exemple : charge support, roadmap, qualité produit, formation, rituels équipe.",
         "equipe.culture": "Exemple : écoute utilisateur, qualité produit, documentation, réactivité support."
@@ -1126,7 +1126,7 @@
         "marketing.lien": "Exemple : suivi chantier, photos d’avancement, SAV, entretien, recommandations.",
         "finance.pilotage": "Exemple : marge chantier, achats, main-d’œuvre, acomptes, trésorerie.",
         "finance.facturation": "Exemple : devis signé, acompte, situations, facture finale, relances.",
-        "finance.conformite": "Exemple : décennale, devis, sécurité chantier, contrats, attestations, normes.",
+        "finance.conformite": "Exemple : décennale, devis signés, contrats, attestations d’assurance, factures, acomptes, garanties administratives.",
         "equipe.recrutement": "Exemple : ouvriers, apprentis, sous-traitants, habilitations, accueil chantier.",
         "equipe.rh": "Exemple : planning équipes, habilitations, sécurité, congés, compétences chantier.",
         "equipe.culture": "Exemple : sécurité, ponctualité, propreté chantier, qualité de finition, communication."
@@ -1227,7 +1227,7 @@
         "marketing.lien": "Exemple : notifications, compte-rendu, suivi litiges, offres récurrentes, bilans.",
         "finance.pilotage": "Exemple : coût tournée, carburant, parc, marge, trésorerie.",
         "finance.facturation": "Exemple : bons de livraison, factures, frais, relances, rapprochement bancaire.",
-        "finance.conformite": "Exemple : assurances, licences, temps de conduite, sécurité, documents transport.",
+        "finance.conformite": "Exemple : contrats clients, assurances, documents sociaux, justificatifs d’intervention, RGPD, factures, obligations employeur.",
         "equipe.recrutement": "Exemple : chauffeurs, manutentionnaires, formation sécurité, prise en main tournée.",
         "equipe.rh": "Exemple : plannings, repos, habilitations, suivi conduite, formation.",
         "equipe.culture": "Exemple : ponctualité, sécurité, communication client, soin du matériel."
@@ -1316,7 +1316,7 @@
         "marketing.lien": "Exemple : suivi vendeur, alertes acquéreurs, bilans visites, relances, recommandations.",
         "finance.pilotage": "Exemple : honoraires, mandats actifs, pipeline, charges, trésorerie.",
         "finance.facturation": "Exemple : honoraires, factures, commissions, rétrocessions, paiements.",
-        "finance.conformite": "Exemple : mandats, diagnostics, RGPD, registre, assurances, obligations légales.",
+        "finance.conformite": "Exemple : mandats, registre, assurances, RGPD, factures d’honoraires, obligations légales.",
         "equipe.recrutement": "Exemple : agents, assistants, partenaires, onboarding, accès mandats.",
         "equipe.rh": "Exemple : objectifs, secteurs, planning visites, formation, suivi activité.",
         "equipe.culture": "Exemple : transparence, réactivité, qualité de suivi, standards de visite."
@@ -1405,7 +1405,7 @@
         "marketing.lien": "Exemple : information résidents, bilans AG, suivi travaux, alertes, réponses aux demandes.",
         "finance.pilotage": "Exemple : budget copropriété, impayés, trésorerie, travaux, honoraires.",
         "finance.facturation": "Exemple : appels de fonds, honoraires, relances, paiements, rapprochements.",
-        "finance.conformite": "Exemple : AG, PV, contrats, assurances, carnet d’entretien, obligations copropriété.",
+        "finance.conformite": "Exemple : contrats, appels de fonds, assurances, RGPD, documents d’AG, obligations copropriété.",
         "equipe.recrutement": "Exemple : gestionnaires, assistants, comptables copropriété, onboarding portefeuille, accès dossiers.",
         "equipe.rh": "Exemple : charge par gestionnaire, urgences, formation copropriété, planning AG, suivi qualité.",
         "equipe.culture": "Exemple : transparence, réactivité, rigueur documentaire, qualité de réponse, suivi terrain."
@@ -1502,7 +1502,7 @@
         "marketing.lien": "Exemple : reporting propriétaire, quittances, alertes impayés, suivi travaux, bilans locatifs.",
         "finance.pilotage": "Exemple : loyers encaissés, impayés, vacance, travaux, honoraires de gestion.",
         "finance.facturation": "Exemple : quittances, honoraires, régularisation charges, relances, reversements propriétaire.",
-        "finance.conformite": "Exemple : bail, diagnostics, assurance, encadrement loyer, RGPD, état des lieux.",
+        "finance.conformite": "Exemple : baux, quittances, assurances, fiscalité, RGPD, documents locatifs.",
         "equipe.recrutement": "Exemple : gestionnaires locatifs, assistants, partenaires travaux, onboarding biens, accès dossiers.",
         "equipe.rh": "Exemple : charge portefeuille, urgences locataires, formation juridique, planning visites.",
         "equipe.culture": "Exemple : réactivité, clarté propriétaire, suivi locataire, rigueur documentaire, qualité de service."
@@ -1599,7 +1599,7 @@
         "marketing.lien": "Exemple : suivi investisseurs, avancement travaux, reporting, nouvelles opportunités, bilan opération.",
         "finance.pilotage": "Exemple : marge nette, coût travaux, frais financiers, délai de portage, trésorerie.",
         "finance.facturation": "Exemple : appels artisans, factures travaux, frais notaire, paiements, rapprochements.",
-        "finance.conformite": "Exemple : compromis, notaire, urbanisme, assurances, fiscalité, garanties travaux.",
+        "finance.conformite": "Exemple : compromis, actes notariés, fiscalité, assurances, factures travaux, garanties administratives.",
         "equipe.recrutement": "Exemple : artisans, maître d’œuvre, partenaires sourcing, commercialisateur, accès dossier.",
         "equipe.rh": "Exemple : coordination chantier, charge opérations, points travaux, suivi prestataires.",
         "equipe.culture": "Exemple : discipline d’analyse, contrôle marge, qualité travaux, réactivité, documentation."
@@ -1696,7 +1696,7 @@
         "marketing.lien": "Exemple : reporting locatif, suivi loyers, incidents, arbitrages, bilan annuel.",
         "finance.pilotage": "Exemple : cash-flow, rendement net, charges, vacance, travaux, fiscalité.",
         "finance.facturation": "Exemple : loyers, charges, quittances, travaux, intérêts, rapprochements.",
-        "finance.conformite": "Exemple : bail, diagnostics, fiscalité, assurance, déclarations, documents locatifs.",
+        "finance.conformite": "Exemple : baux, quittances, fiscalité, assurance, déclarations, documents locatifs.",
         "equipe.recrutement": "Exemple : courtier, notaire, artisans, gestionnaire locatif, accès dossier.",
         "equipe.rh": "Exemple : suivi partenaires, planning travaux, points gestion, responsabilités par bien.",
         "equipe.culture": "Exemple : rigueur d’analyse, suivi chiffres, anticipation travaux, documentation, discipline."
@@ -1793,7 +1793,7 @@
         "marketing.lien": "Exemple : message avant séjour, avis après départ, offres retour, recommandations.",
         "finance.pilotage": "Exemple : taux d’occupation, revenu par chambre, charges, trésorerie, saisonnalité.",
         "finance.facturation": "Exemple : réservations, acomptes, taxes, factures, paiements, remboursements.",
-        "finance.conformite": "Exemple : taxe de séjour, sécurité, affichages, RGPD, contrats, assurances.",
+        "finance.conformite": "Exemple : taxe de séjour, contrats, assurances, RGPD, factures, déclarations.",
         "equipe.recrutement": "Exemple : accueil, ménage, extras, onboarding, standards de service.",
         "equipe.rh": "Exemple : planning ménage, réception, congés, formation, saisonniers.",
         "equipe.culture": "Exemple : accueil, propreté, réactivité, discrétion, qualité du séjour."
@@ -1882,7 +1882,7 @@
         "marketing.lien": "Exemple : reporting, points investisseurs, alertes, arbitrages, bilans périodiques.",
         "finance.pilotage": "Exemple : rendement, liquidité, frais, risque, allocation, trésorerie.",
         "finance.facturation": "Exemple : appels de fonds, frais, honoraires, distributions, rapprochements.",
-        "finance.conformite": "Exemple : KYC, documentation, contrats, fiscalité, obligations réglementaires.",
+        "finance.conformite": "Exemple : KYC, contrats, fiscalité, reporting réglementaire, justificatifs, obligations déclaratives.",
         "equipe.recrutement": "Exemple : analystes, partenaires, experts, accès dossiers, méthode d’analyse.",
         "equipe.rh": "Exemple : répartition dossiers, revues, formation, comité, suivi des décisions.",
         "equipe.culture": "Exemple : discipline d’analyse, transparence, gestion du risque, qualité du reporting."
@@ -1971,7 +1971,7 @@
         "marketing.lien": "Exemple : reporting, points investisseurs, alertes, arbitrages, bilans périodiques.",
         "finance.pilotage": "Exemple : rendement, liquidité, frais, risque, allocation, trésorerie.",
         "finance.facturation": "Exemple : appels de fonds, frais, honoraires, distributions, rapprochements.",
-        "finance.conformite": "Exemple : KYC, documentation, contrats, fiscalité, obligations réglementaires.",
+        "finance.conformite": "Exemple : KYC, contrats, fiscalité, reporting réglementaire, justificatifs, obligations déclaratives.",
         "equipe.recrutement": "Exemple : analystes, partenaires, experts, accès dossiers, méthode d’analyse.",
         "equipe.rh": "Exemple : répartition dossiers, revues, formation, comité, suivi des décisions.",
         "equipe.culture": "Exemple : discipline d’analyse, transparence, gestion du risque, qualité du reporting."
@@ -2060,7 +2060,7 @@
         "marketing.lien": "Exemple : reporting, points investisseurs, alertes, arbitrages, bilans périodiques.",
         "finance.pilotage": "Exemple : rendement, liquidité, frais, risque, allocation, trésorerie.",
         "finance.facturation": "Exemple : appels de fonds, frais, honoraires, distributions, rapprochements.",
-        "finance.conformite": "Exemple : KYC, documentation, contrats, fiscalité, obligations réglementaires.",
+        "finance.conformite": "Exemple : KYC, contrats, fiscalité, reporting réglementaire, justificatifs, obligations déclaratives.",
         "equipe.recrutement": "Exemple : analystes, partenaires, experts, accès dossiers, méthode d’analyse.",
         "equipe.rh": "Exemple : répartition dossiers, revues, formation, comité, suivi des décisions.",
         "equipe.culture": "Exemple : discipline d’analyse, transparence, gestion du risque, qualité du reporting."
@@ -2149,7 +2149,7 @@
         "marketing.lien": "Exemple : notifications, compte-rendu, suivi litiges, offres récurrentes, bilans.",
         "finance.pilotage": "Exemple : coût tournée, carburant, parc, marge, trésorerie.",
         "finance.facturation": "Exemple : bons de livraison, factures, frais, relances, rapprochement bancaire.",
-        "finance.conformite": "Exemple : assurances, licences, temps de conduite, sécurité, documents transport.",
+        "finance.conformite": "Exemple : licences administratives, assurances, contrats clients, factures, TVA, obligations sociales.",
         "equipe.recrutement": "Exemple : chauffeurs, manutentionnaires, formation sécurité, prise en main tournée.",
         "equipe.rh": "Exemple : plannings, repos, habilitations, suivi conduite, formation.",
         "equipe.culture": "Exemple : ponctualité, sécurité, communication client, soin du matériel."
@@ -2238,7 +2238,7 @@
         "marketing.lien": "Exemple : notifications, compte-rendu, suivi litiges, offres récurrentes, bilans.",
         "finance.pilotage": "Exemple : coût tournée, carburant, parc, marge, trésorerie.",
         "finance.facturation": "Exemple : bons de livraison, factures, frais, relances, rapprochement bancaire.",
-        "finance.conformite": "Exemple : assurances, licences, temps de conduite, sécurité, documents transport.",
+        "finance.conformite": "Exemple : licences administratives, assurances, contrats clients, factures, TVA, obligations sociales.",
         "equipe.recrutement": "Exemple : chauffeurs, manutentionnaires, formation sécurité, prise en main tournée.",
         "equipe.rh": "Exemple : plannings, repos, habilitations, suivi conduite, formation.",
         "equipe.culture": "Exemple : ponctualité, sécurité, communication client, soin du matériel."
@@ -2327,7 +2327,7 @@
         "marketing.lien": "Exemple : notifications, compte-rendu, suivi litiges, offres récurrentes, bilans.",
         "finance.pilotage": "Exemple : coût tournée, carburant, parc, marge, trésorerie.",
         "finance.facturation": "Exemple : bons de livraison, factures, frais, relances, rapprochement bancaire.",
-        "finance.conformite": "Exemple : assurances, licences, temps de conduite, sécurité, documents transport.",
+        "finance.conformite": "Exemple : licences administratives, assurances, contrats clients, factures, TVA, obligations sociales.",
         "equipe.recrutement": "Exemple : chauffeurs, manutentionnaires, formation sécurité, prise en main tournée.",
         "equipe.rh": "Exemple : plannings, repos, habilitations, suivi conduite, formation.",
         "equipe.culture": "Exemple : ponctualité, sécurité, communication client, soin du matériel."
@@ -2410,7 +2410,7 @@
         "marketing.lien": "Exemple : notifications, compte-rendu, suivi litiges, offres récurrentes, bilans.",
         "finance.pilotage": "Exemple : coût tournée, carburant, parc, marge, trésorerie.",
         "finance.facturation": "Exemple : bons de livraison, factures, frais, relances, rapprochement bancaire.",
-        "finance.conformite": "Exemple : assurances, licences, temps de conduite, sécurité, documents transport.",
+        "finance.conformite": "Exemple : licences administratives, assurances, contrats clients, factures, TVA, obligations sociales.",
         "equipe.recrutement": "Exemple : chauffeurs, manutentionnaires, formation sécurité, prise en main tournée.",
         "equipe.rh": "Exemple : plannings, repos, habilitations, suivi conduite, formation.",
         "equipe.culture": "Exemple : ponctualité, sécurité, communication client, soin du matériel."
@@ -2493,7 +2493,7 @@
         "marketing.lien": "Exemple : fidélité, offres régulières, avis après passage, SMS, événements locaux.",
         "finance.pilotage": "Exemple : ticket moyen, marge matière, masse salariale, trésorerie, pertes.",
         "finance.facturation": "Exemple : caisse, tickets, paiements, remises, rapprochement bancaire.",
-        "finance.conformite": "Exemple : HACCP, TVA, caisse, affichages obligatoires, contrats, assurances.",
+        "finance.conformite": "Exemple : TVA, caisse, tickets, factures fournisseurs, contrats, assurances, obligations sociales.",
         "equipe.recrutement": "Exemple : profils salle/cuisine, essais, planning d’intégration, procédures de service.",
         "equipe.rh": "Exemple : planning, horaires, congés, formation hygiène, polyvalence.",
         "equipe.culture": "Exemple : accueil, rythme de service, standards propreté, communication équipe."
@@ -2576,7 +2576,7 @@
         "marketing.lien": "Exemple : carte fidélité, offres récurrentes, avis après commande, promotions locales.",
         "finance.pilotage": "Exemple : ticket moyen, temps de service, marge produit, pertes, ventes par créneau.",
         "finance.facturation": "Exemple : caisse, tickets, paiements, remises, rapprochement bancaire.",
-        "finance.conformite": "Exemple : HACCP, TVA, caisse, affichages obligatoires, contrats, assurances.",
+        "finance.conformite": "Exemple : TVA, caisse, tickets, factures fournisseurs, contrats, assurances, obligations sociales.",
         "equipe.recrutement": "Exemple : profils salle/cuisine, essais, planning d’intégration, procédures de service.",
         "equipe.rh": "Exemple : planning, horaires, congés, formation hygiène, polyvalence.",
         "equipe.culture": "Exemple : accueil, rythme de service, standards propreté, communication équipe."
@@ -2659,7 +2659,7 @@
         "marketing.lien": "Exemple : suivi après événement, photos, recommandations, offres entreprises, relances saisonnières.",
         "finance.pilotage": "Exemple : ticket moyen, marge matière, masse salariale, trésorerie, pertes.",
         "finance.facturation": "Exemple : caisse, tickets, paiements, remises, rapprochement bancaire.",
-        "finance.conformite": "Exemple : HACCP, TVA, caisse, affichages obligatoires, contrats, assurances.",
+        "finance.conformite": "Exemple : TVA, caisse, tickets, factures fournisseurs, contrats, assurances, obligations sociales.",
         "equipe.recrutement": "Exemple : profils salle/cuisine, essais, planning d’intégration, procédures de service.",
         "equipe.rh": "Exemple : planning, horaires, congés, formation hygiène, polyvalence.",
         "equipe.culture": "Exemple : accueil, rythme de service, standards propreté, communication équipe."
@@ -2742,7 +2742,7 @@
         "marketing.lien": "Exemple : promos plateforme, avis après commande, relance client, nouveaux menus.",
         "finance.pilotage": "Exemple : ticket moyen, marge matière, masse salariale, trésorerie, pertes.",
         "finance.facturation": "Exemple : caisse, tickets, paiements, remises, rapprochement bancaire.",
-        "finance.conformite": "Exemple : HACCP, TVA, caisse, affichages obligatoires, contrats, assurances.",
+        "finance.conformite": "Exemple : TVA, caisse, tickets, factures fournisseurs, contrats, assurances, obligations sociales.",
         "equipe.recrutement": "Exemple : profils salle/cuisine, essais, planning d’intégration, procédures de service.",
         "equipe.rh": "Exemple : planning, horaires, congés, formation hygiène, polyvalence.",
         "equipe.culture": "Exemple : accueil, rythme de service, standards propreté, communication équipe."
@@ -2825,7 +2825,7 @@
         "marketing.lien": "Exemple : fidélité, nouveautés, offres du jour, commandes récurrentes, réseaux locaux.",
         "finance.pilotage": "Exemple : ticket moyen, marge matière, masse salariale, trésorerie, pertes.",
         "finance.facturation": "Exemple : caisse, tickets, paiements, remises, rapprochement bancaire.",
-        "finance.conformite": "Exemple : HACCP, TVA, caisse, affichages obligatoires, contrats, assurances.",
+        "finance.conformite": "Exemple : TVA, caisse, tickets, factures fournisseurs, contrats, assurances, obligations sociales.",
         "equipe.recrutement": "Exemple : profils salle/cuisine, essais, planning d’intégration, procédures de service.",
         "equipe.rh": "Exemple : planning, horaires, congés, formation hygiène, polyvalence.",
         "equipe.culture": "Exemple : accueil, rythme de service, standards propreté, communication équipe."
@@ -2908,7 +2908,7 @@
         "marketing.lien": "Exemple : carte fidélité, nouveautés, offres saisonnières, SMS, réseaux sociaux.",
         "finance.pilotage": "Exemple : panier moyen, marge, stock dormant, trésorerie, ventes par rayon.",
         "finance.facturation": "Exemple : caisse, tickets, paiements, avoirs, rapprochement bancaire.",
-        "finance.conformite": "Exemple : caisse, TVA, affichages, garanties, contrats, inventaire.",
+        "finance.conformite": "Exemple : TVA, caisse, tickets, factures, garanties légales, CGV, contrats fournisseurs, assurances.",
         "equipe.recrutement": "Exemple : vendeurs, saisonniers, formation caisse, accueil, ouverture boutique.",
         "equipe.rh": "Exemple : planning, congés, objectifs boutique, polyvalence, formation vente.",
         "equipe.culture": "Exemple : accueil, conseil, tenue de rayon, esprit boutique, standards client."
@@ -2991,7 +2991,7 @@
         "marketing.lien": "Exemple : email post-achat, relance panier, nouveautés, fidélité, avis produit.",
         "finance.pilotage": "Exemple : panier moyen, marge produit, coût acquisition, stock, trésorerie.",
         "finance.facturation": "Exemple : commandes, paiements, remboursements, avoirs, rapprochement bancaire.",
-        "finance.conformite": "Exemple : CGV, TVA, factures, RGPD, retours, remboursements, garanties.",
+        "finance.conformite": "Exemple : CGV, TVA, factures, RGPD, retours et remboursements, garanties légales.",
         "equipe.recrutement": "Exemple : préparateurs, support client, freelances marketing, accès boutique, procédures.",
         "equipe.rh": "Exemple : pics de commandes, support client, préparation, congés, formation outils.",
         "equipe.culture": "Exemple : rapidité, soin colis, clarté client, qualité support, suivi des retours."
@@ -3074,7 +3074,7 @@
         "marketing.lien": "Exemple : rappels rendez-vous, fidélité, offres anniversaire, conseils après prestation.",
         "finance.pilotage": "Exemple : panier moyen, taux de remplissage, marge produits, charges, trésorerie.",
         "finance.facturation": "Exemple : caisse, paiements, forfaits, cartes cadeaux, rapprochement bancaire.",
-        "finance.conformite": "Exemple : hygiène, affichage tarifs, contrats, assurance, RGPD clients.",
+        "finance.conformite": "Exemple : TVA, caisse, factures, contrats, assurance, RGPD clients, tarifs publiés.",
         "equipe.recrutement": "Exemple : praticiens, coiffeurs, apprentis, essais, protocole d’accueil.",
         "equipe.rh": "Exemple : planning cabines, congés, formation technique, objectifs, polyvalence.",
         "equipe.culture": "Exemple : accueil, propreté, conseil client, ponctualité, standards de prestation."
@@ -3173,7 +3173,7 @@
         "marketing.lien": "Exemple : rappels rendez-vous, fidélité, offres anniversaire, conseils après prestation.",
         "finance.pilotage": "Exemple : panier moyen, taux de remplissage, marge produits, charges, trésorerie.",
         "finance.facturation": "Exemple : caisse, paiements, forfaits, cartes cadeaux, rapprochement bancaire.",
-        "finance.conformite": "Exemple : hygiène, affichage tarifs, contrats, assurance, RGPD clients.",
+        "finance.conformite": "Exemple : TVA, caisse, factures, contrats, assurance, RGPD clients, tarifs publiés.",
         "equipe.recrutement": "Exemple : praticiens, coiffeurs, apprentis, essais, protocole d’accueil.",
         "equipe.rh": "Exemple : planning cabines, congés, formation technique, objectifs, polyvalence.",
         "equipe.culture": "Exemple : accueil, propreté, conseil client, ponctualité, standards de prestation."
@@ -3272,7 +3272,7 @@
         "marketing.lien": "Exemple : rappels rendez-vous, fidélité, offres anniversaire, conseils après prestation.",
         "finance.pilotage": "Exemple : panier moyen, taux de remplissage, marge produits, charges, trésorerie.",
         "finance.facturation": "Exemple : caisse, paiements, forfaits, cartes cadeaux, rapprochement bancaire.",
-        "finance.conformite": "Exemple : hygiène, affichage tarifs, contrats, assurance, RGPD clients.",
+        "finance.conformite": "Exemple : TVA, caisse, factures, contrats, assurance, RGPD clients, tarifs publiés.",
         "equipe.recrutement": "Exemple : praticiens, coiffeurs, apprentis, essais, protocole d’accueil.",
         "equipe.rh": "Exemple : planning cabines, congés, formation technique, objectifs, polyvalence.",
         "equipe.culture": "Exemple : accueil, propreté, conseil client, ponctualité, standards de prestation."
@@ -3371,7 +3371,7 @@
         "marketing.lien": "Exemple : rappels, suivi patient, documents utiles, messages de prévention, coordination.",
         "finance.pilotage": "Exemple : actes réalisés, taux de remplissage, charges, trésorerie, impayés.",
         "finance.facturation": "Exemple : feuilles de soin, règlements, rejets, relances, rapprochement bancaire.",
-        "finance.conformite": "Exemple : secret médical, RGPD santé, dossiers patients, affichages, assurances.",
+        "finance.conformite": "Exemple : contrats de prestation, assurances, justificatifs SAP, factures, RGPD, obligations sociales.",
         "equipe.recrutement": "Exemple : secrétariat, remplaçants, collaborateurs, accès planning, procédures cabinet.",
         "equipe.rh": "Exemple : planning, remplacements, coordination, formation, continuité de service.",
         "equipe.culture": "Exemple : confidentialité, accueil patient, ponctualité, coordination, qualité de suivi."
@@ -3460,7 +3460,7 @@
         "marketing.lien": "Exemple : relances apprenants, communauté, ressources, certificat, nouvelles sessions.",
         "finance.pilotage": "Exemple : inscriptions, taux de remplissage, coût intervenant, marge, trésorerie.",
         "finance.facturation": "Exemple : convention, acompte, facture, prise en charge, relance.",
-        "finance.conformite": "Exemple : Qualiopi, conventions, feuilles d’émargement, évaluations, RGPD.",
+        "finance.conformite": "Exemple : conventions, factures, règlements, TVA ou exonération, RGPD, contrats formateurs, justificatifs administratifs.",
         "equipe.recrutement": "Exemple : formateurs, intervenants, onboarding, supports, accès plateforme.",
         "equipe.rh": "Exemple : planning formateurs, qualité pédagogique, formation interne, retours.",
         "equipe.culture": "Exemple : pédagogie claire, ponctualité, suivi apprenant, amélioration continue."
@@ -3549,7 +3549,7 @@
         "marketing.lien": "Exemple : relances apprenants, communauté, ressources, certificat, nouvelles sessions.",
         "finance.pilotage": "Exemple : inscriptions, taux de remplissage, coût intervenant, marge, trésorerie.",
         "finance.facturation": "Exemple : convention, acompte, facture, prise en charge, relance.",
-        "finance.conformite": "Exemple : Qualiopi, conventions, feuilles d’émargement, évaluations, RGPD.",
+        "finance.conformite": "Exemple : conventions, factures, règlements, TVA ou exonération, RGPD, contrats formateurs, justificatifs administratifs.",
         "equipe.recrutement": "Exemple : formateurs, intervenants, onboarding, supports, accès plateforme.",
         "equipe.rh": "Exemple : planning formateurs, qualité pédagogique, formation interne, retours.",
         "equipe.culture": "Exemple : pédagogie claire, ponctualité, suivi apprenant, amélioration continue."
@@ -3638,7 +3638,7 @@
         "marketing.lien": "Exemple : suivi commande, SAV, réassort, reporting qualité, amélioration produit.",
         "finance.pilotage": "Exemple : coût de revient, stock, marge, rebuts, trésorerie, capacité.",
         "finance.facturation": "Exemple : devis, commandes, acomptes, factures, relances, avoirs.",
-        "finance.conformite": "Exemple : normes, sécurité, traçabilité, contrats, assurances, documents qualité.",
+        "finance.conformite": "Exemple : contrats, assurances, factures, TVA, certificats administratifs, justificatifs, obligations sociales.",
         "equipe.recrutement": "Exemple : opérateurs, techniciens, formation poste, sécurité, procédures.",
         "equipe.rh": "Exemple : planning ateliers, polyvalence, sécurité, maintenance, compétences.",
         "equipe.culture": "Exemple : sécurité, qualité, respect des délais, amélioration continue, discipline atelier."
@@ -3721,7 +3721,7 @@
         "marketing.lien": "Exemple : suivi chantier, photos d’avancement, SAV, entretien, recommandations.",
         "finance.pilotage": "Exemple : marge chantier, achats, main-d’œuvre, acomptes, trésorerie.",
         "finance.facturation": "Exemple : devis signé, acompte, situations, facture finale, relances.",
-        "finance.conformite": "Exemple : décennale, devis, sécurité chantier, contrats, attestations, normes.",
+        "finance.conformite": "Exemple : décennale, devis signés, contrats, attestations d’assurance, factures, acomptes, garanties administratives.",
         "equipe.recrutement": "Exemple : ouvriers, apprentis, sous-traitants, habilitations, accueil chantier.",
         "equipe.rh": "Exemple : planning équipes, habilitations, sécurité, congés, compétences chantier.",
         "equipe.culture": "Exemple : sécurité, ponctualité, propreté chantier, qualité de finition, communication."
@@ -3812,7 +3812,7 @@
         "marketing.lien": "Exemple : suivi chantier, photos d’avancement, SAV, entretien, recommandations.",
         "finance.pilotage": "Exemple : marge chantier, achats, main-d’œuvre, acomptes, trésorerie.",
         "finance.facturation": "Exemple : devis signé, acompte, situations, facture finale, relances.",
-        "finance.conformite": "Exemple : décennale, devis, sécurité chantier, contrats, attestations, normes.",
+        "finance.conformite": "Exemple : décennale, devis signés, contrats, attestations d’assurance, factures, acomptes, garanties administratives.",
         "equipe.recrutement": "Exemple : ouvriers, apprentis, sous-traitants, habilitations, accueil chantier.",
         "equipe.rh": "Exemple : planning équipes, habilitations, sécurité, congés, compétences chantier.",
         "equipe.culture": "Exemple : sécurité, ponctualité, propreté chantier, qualité de finition, communication."
@@ -3903,7 +3903,7 @@
         "marketing.lien": "Exemple : suivi chantier, photos d’avancement, SAV, entretien, recommandations.",
         "finance.pilotage": "Exemple : marge chantier, achats, main-d’œuvre, acomptes, trésorerie.",
         "finance.facturation": "Exemple : devis signé, acompte, situations, facture finale, relances.",
-        "finance.conformite": "Exemple : décennale, devis, sécurité chantier, contrats, attestations, normes.",
+        "finance.conformite": "Exemple : décennale, devis signés, contrats, attestations d’assurance, factures, acomptes, garanties administratives.",
         "equipe.recrutement": "Exemple : ouvriers, apprentis, sous-traitants, habilitations, accueil chantier.",
         "equipe.rh": "Exemple : planning équipes, habilitations, sécurité, congés, compétences chantier.",
         "equipe.culture": "Exemple : sécurité, ponctualité, propreté chantier, qualité de finition, communication."
@@ -3994,7 +3994,7 @@
         "marketing.lien": "Exemple : suivi chantier, photos d’avancement, SAV, entretien, recommandations.",
         "finance.pilotage": "Exemple : marge chantier, achats, main-d’œuvre, acomptes, trésorerie.",
         "finance.facturation": "Exemple : devis signé, acompte, situations, facture finale, relances.",
-        "finance.conformite": "Exemple : décennale, devis, sécurité chantier, contrats, attestations, normes.",
+        "finance.conformite": "Exemple : décennale, devis signés, contrats, attestations d’assurance, factures, acomptes, garanties administratives.",
         "equipe.recrutement": "Exemple : ouvriers, apprentis, sous-traitants, habilitations, accueil chantier.",
         "equipe.rh": "Exemple : planning équipes, habilitations, sécurité, congés, compétences chantier.",
         "equipe.culture": "Exemple : sécurité, ponctualité, propreté chantier, qualité de finition, communication."
@@ -4085,7 +4085,7 @@
         "marketing.lien": "Exemple : suivi chantier, photos d’avancement, SAV, entretien, recommandations.",
         "finance.pilotage": "Exemple : marge chantier, achats, main-d’œuvre, acomptes, trésorerie.",
         "finance.facturation": "Exemple : devis signé, acompte, situations, facture finale, relances.",
-        "finance.conformite": "Exemple : décennale, devis, sécurité chantier, contrats, attestations, normes.",
+        "finance.conformite": "Exemple : décennale, devis signés, contrats, attestations d’assurance, factures, acomptes, garanties administratives.",
         "equipe.recrutement": "Exemple : ouvriers, apprentis, sous-traitants, habilitations, accueil chantier.",
         "equipe.rh": "Exemple : planning équipes, habilitations, sécurité, congés, compétences chantier.",
         "equipe.culture": "Exemple : sécurité, ponctualité, propreté chantier, qualité de finition, communication."
@@ -4176,7 +4176,7 @@
         "marketing.lien": "Exemple : suivi chantier, photos d’avancement, SAV, entretien, recommandations.",
         "finance.pilotage": "Exemple : marge chantier, achats, main-d’œuvre, acomptes, trésorerie.",
         "finance.facturation": "Exemple : devis signé, acompte, situations, facture finale, relances.",
-        "finance.conformite": "Exemple : décennale, devis, sécurité chantier, contrats, attestations, normes.",
+        "finance.conformite": "Exemple : assurances professionnelles, devis signés, contrats d’entretien, factures, acomptes, garanties administratives.",
         "equipe.recrutement": "Exemple : ouvriers, apprentis, sous-traitants, habilitations, accueil chantier.",
         "equipe.rh": "Exemple : planning équipes, habilitations, sécurité, congés, compétences chantier.",
         "equipe.culture": "Exemple : sécurité, ponctualité, propreté chantier, qualité de finition, communication."
@@ -4267,7 +4267,7 @@
         "marketing.lien": "Exemple : rappels entretien, contrôle, suivi réparation, fidélité, avis après passage.",
         "finance.pilotage": "Exemple : marge pièces, heures facturées, stock, trésorerie, panier moyen.",
         "finance.facturation": "Exemple : ordre de réparation, devis, facture, acompte, relance.",
-        "finance.conformite": "Exemple : ordre de réparation, garanties, déchets, sécurité, assurances.",
+        "finance.conformite": "Exemple : ordres de réparation, garanties légales, assurances, devis, factures, TVA, documents client.",
         "equipe.recrutement": "Exemple : mécaniciens, carrossiers, apprentis, habilitations, prise en main atelier.",
         "equipe.rh": "Exemple : planning atelier, formation technique, sécurité, congés, polyvalence.",
         "equipe.culture": "Exemple : transparence, propreté atelier, sécurité, qualité réparation, ponctualité."
@@ -4350,7 +4350,7 @@
         "marketing.lien": "Exemple : rappels entretien, contrôle, suivi réparation, fidélité, avis après passage.",
         "finance.pilotage": "Exemple : marge pièces, heures facturées, stock, trésorerie, panier moyen.",
         "finance.facturation": "Exemple : ordre de réparation, devis, facture, acompte, relance.",
-        "finance.conformite": "Exemple : ordre de réparation, garanties, déchets, sécurité, assurances.",
+        "finance.conformite": "Exemple : ordres de réparation, garanties légales, assurances, devis, factures, TVA, documents client.",
         "equipe.recrutement": "Exemple : mécaniciens, carrossiers, apprentis, habilitations, prise en main atelier.",
         "equipe.rh": "Exemple : planning atelier, formation technique, sécurité, congés, polyvalence.",
         "equipe.culture": "Exemple : transparence, propreté atelier, sécurité, qualité réparation, ponctualité."
@@ -4433,7 +4433,7 @@
         "marketing.lien": "Exemple : carte fidélité, nouveautés, offres saisonnières, SMS, réseaux sociaux.",
         "finance.pilotage": "Exemple : panier moyen, marge, stock dormant, trésorerie, ventes par rayon.",
         "finance.facturation": "Exemple : caisse, tickets, paiements, avoirs, rapprochement bancaire.",
-        "finance.conformite": "Exemple : traçabilité, hygiène, caisse, TVA, affichage prix, inventaire.",
+        "finance.conformite": "Exemple : TVA, caisse, tickets, factures fournisseurs, garanties légales, assurances, obligations sociales.",
         "equipe.recrutement": "Exemple : vendeurs, saisonniers, formation caisse, accueil, ouverture boutique.",
         "equipe.rh": "Exemple : planning, congés, objectifs boutique, polyvalence, formation vente.",
         "equipe.culture": "Exemple : accueil, conseil, tenue de rayon, esprit boutique, standards client."
@@ -4516,7 +4516,7 @@
         "marketing.lien": "Exemple : carte fidélité, nouveautés, offres saisonnières, SMS, réseaux sociaux.",
         "finance.pilotage": "Exemple : panier moyen, marge, stock dormant, trésorerie, ventes par rayon.",
         "finance.facturation": "Exemple : caisse, tickets, paiements, avoirs, rapprochement bancaire.",
-        "finance.conformite": "Exemple : caisse, TVA, affichages, garanties, contrats, inventaire.",
+        "finance.conformite": "Exemple : TVA, caisse, tickets, factures, garanties légales, CGV, contrats fournisseurs, assurances.",
         "equipe.recrutement": "Exemple : vendeurs, saisonniers, formation caisse, accueil, ouverture boutique.",
         "equipe.rh": "Exemple : planning, congés, objectifs boutique, polyvalence, formation vente.",
         "equipe.culture": "Exemple : accueil, conseil, tenue de rayon, esprit boutique, standards client."
@@ -4599,7 +4599,7 @@
         "marketing.lien": "Exemple : habitués, services récurrents, nouveautés, affichage local, fidélité.",
         "finance.pilotage": "Exemple : panier moyen, marge, stock dormant, trésorerie, ventes par rayon.",
         "finance.facturation": "Exemple : caisse, tickets, paiements, avoirs, rapprochement bancaire.",
-        "finance.conformite": "Exemple : caisse, TVA, affichages, garanties, contrats, inventaire.",
+        "finance.conformite": "Exemple : TVA, caisse, tickets, factures, contrats fournisseurs, assurances, obligations administratives.",
         "equipe.recrutement": "Exemple : vendeurs, saisonniers, formation caisse, accueil, ouverture boutique.",
         "equipe.rh": "Exemple : planning, congés, objectifs boutique, polyvalence, formation vente.",
         "equipe.culture": "Exemple : accueil, conseil, tenue de rayon, esprit boutique, standards client."
@@ -4682,7 +4682,7 @@
         "marketing.lien": "Exemple : soirées, fidélité, avis après passage, habitués, réseaux locaux.",
         "finance.pilotage": "Exemple : ticket moyen, marge matière, masse salariale, trésorerie, pertes.",
         "finance.facturation": "Exemple : caisse, tickets, paiements, remises, rapprochement bancaire.",
-        "finance.conformite": "Exemple : HACCP, TVA, caisse, affichages obligatoires, contrats, assurances.",
+        "finance.conformite": "Exemple : TVA, caisse, tickets, factures fournisseurs, contrats, assurances, obligations sociales.",
         "equipe.recrutement": "Exemple : profils salle/cuisine, essais, planning d’intégration, procédures de service.",
         "equipe.rh": "Exemple : planning, horaires, congés, formation hygiène, polyvalence.",
         "equipe.culture": "Exemple : accueil, rythme de service, standards propreté, communication équipe."
@@ -4765,7 +4765,7 @@
         "marketing.lien": "Exemple : message avant séjour, avis après départ, offres retour, recommandations.",
         "finance.pilotage": "Exemple : taux d’occupation, revenu par chambre, charges, trésorerie, saisonnalité.",
         "finance.facturation": "Exemple : réservations, acomptes, taxes, factures, paiements, remboursements.",
-        "finance.conformite": "Exemple : taxe de séjour, sécurité, affichages, RGPD, contrats, assurances.",
+        "finance.conformite": "Exemple : taxe de séjour, contrats, assurances, RGPD, factures, déclarations.",
         "equipe.recrutement": "Exemple : accueil, ménage, extras, onboarding, standards de service.",
         "equipe.rh": "Exemple : planning ménage, réception, congés, formation, saisonniers.",
         "equipe.culture": "Exemple : accueil, propreté, réactivité, discrétion, qualité du séjour."
@@ -4848,7 +4848,7 @@
         "marketing.lien": "Exemple : rappels, suivi patient, documents utiles, messages de prévention, coordination.",
         "finance.pilotage": "Exemple : actes réalisés, taux de remplissage, charges, trésorerie, impayés.",
         "finance.facturation": "Exemple : feuilles de soin, règlements, rejets, relances, rapprochement bancaire.",
-        "finance.conformite": "Exemple : secret médical, RGPD santé, dossiers patients, affichages, assurances.",
+        "finance.conformite": "Exemple : facturation, règlements, rejets, justificatifs, assurance professionnelle, RGPD, documents administratifs.",
         "equipe.recrutement": "Exemple : secrétariat, remplaçants, assistants, accès planning, procédures cabinet.",
         "equipe.rh": "Exemple : planning, remplacements, coordination, formation, continuité de service.",
         "equipe.culture": "Exemple : confidentialité, accueil patient, ponctualité, coordination, qualité de suivi."
@@ -4943,7 +4943,7 @@
         "marketing.lien": "Exemple : rappels, suivi patient, documents utiles, messages de prévention, coordination.",
         "finance.pilotage": "Exemple : actes réalisés, taux de remplissage, charges, trésorerie, impayés.",
         "finance.facturation": "Exemple : feuilles de soin, règlements, rejets, relances, rapprochement bancaire.",
-        "finance.conformite": "Exemple : secret médical, RGPD santé, dossiers patients, affichages, assurances.",
+        "finance.conformite": "Exemple : facturation, règlements, rejets, justificatifs, assurance professionnelle, RGPD, documents administratifs.",
         "equipe.recrutement": "Exemple : secrétariat, remplaçants, collaborateurs, accès planning, procédures cabinet.",
         "equipe.rh": "Exemple : planning, remplacements, coordination, formation, continuité de service.",
         "equipe.culture": "Exemple : confidentialité, accueil patient, ponctualité, coordination, qualité de suivi."
@@ -5038,7 +5038,7 @@
         "marketing.lien": "Exemple : rappels, suivi patient, documents utiles, messages de prévention, coordination.",
         "finance.pilotage": "Exemple : actes réalisés, taux de remplissage, charges, trésorerie, impayés.",
         "finance.facturation": "Exemple : feuilles de soin, règlements, rejets, relances, rapprochement bancaire.",
-        "finance.conformite": "Exemple : secret médical, RGPD santé, dossiers patients, affichages, assurances.",
+        "finance.conformite": "Exemple : facturation, règlements, rejets, justificatifs, assurance professionnelle, RGPD, documents administratifs.",
         "equipe.recrutement": "Exemple : remplaçants, binôme, transmission, accès tournée, protocoles de soin.",
         "equipe.rh": "Exemple : planning tournées, remplacements, repos, transmissions, continuité des soins.",
         "equipe.culture": "Exemple : confidentialité, accueil patient, ponctualité, coordination, qualité de suivi."
@@ -5121,7 +5121,7 @@
         "marketing.lien": "Exemple : suivi bénéficiaire, points famille, ajustements planning, qualité, renouvellement.",
         "finance.pilotage": "Exemple : actes réalisés, taux de remplissage, charges, trésorerie, impayés.",
         "finance.facturation": "Exemple : feuilles de soin, règlements, rejets, relances, rapprochement bancaire.",
-        "finance.conformite": "Exemple : secret médical, RGPD santé, dossiers patients, affichages, assurances.",
+        "finance.conformite": "Exemple : contrats de prestation, assurances, justificatifs SAP, factures, RGPD, obligations sociales.",
         "equipe.recrutement": "Exemple : intervenants, références, intégration, consignes domicile, zones d’intervention.",
         "equipe.rh": "Exemple : planning, remplacements, coordination, formation, continuité de service.",
         "equipe.culture": "Exemple : confidentialité, accueil patient, ponctualité, coordination, qualité de suivi."
@@ -5204,7 +5204,7 @@
         "marketing.lien": "Exemple : suivi réparation, conseils d’usage, garantie, avis client, accessoires.",
         "finance.pilotage": "Exemple : panier moyen, marge, stock dormant, trésorerie, ventes par rayon.",
         "finance.facturation": "Exemple : caisse, tickets, paiements, avoirs, rapprochement bancaire.",
-        "finance.conformite": "Exemple : caisse, TVA, affichages, garanties, contrats, inventaire.",
+        "finance.conformite": "Exemple : TVA, caisse, devis, factures, garanties légales, contrats, assurances.",
         "equipe.recrutement": "Exemple : vendeurs, saisonniers, formation caisse, accueil, ouverture boutique.",
         "equipe.rh": "Exemple : planning, congés, objectifs boutique, polyvalence, formation vente.",
         "equipe.culture": "Exemple : accueil, conseil, tenue de rayon, esprit boutique, standards client."
