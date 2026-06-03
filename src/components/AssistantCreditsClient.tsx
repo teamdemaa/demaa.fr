@@ -301,20 +301,20 @@ export default function AssistantCreditsClient() {
             Déléguez ce qui vous ralentit.
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-gray-600 md:text-lg">
-            Confiez-nous les tâches opérationnelles qui prennent du temps :
-            factures, contenus, prospection, dossiers, suivi administratif et
-            préparation de documents, le tout depuis WhatsApp.
+            Confiez-nous les tâches qui vous prennent la tête : factures,
+            contenus, prospection, suivi administratif, le tout depuis
+            WhatsApp.
           </p>
-          <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <div className="mt-9 flex flex-row flex-wrap items-center justify-center gap-1.5 sm:gap-3">
             <a
               href="#pricing"
-              className="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-brand-blue px-6 text-sm font-medium text-white transition hover:bg-brand-coral sm:w-auto"
+              className="inline-flex min-h-10 w-auto items-center justify-center rounded-full bg-brand-blue px-3 text-[11px] font-medium text-white transition hover:bg-brand-coral sm:min-h-12 sm:px-6 sm:text-sm"
             >
               Déléguer une première tâche
             </a>
             <a
               href="#deleguer"
-              className="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-neutral-100 px-6 text-sm font-medium text-brand-blue transition hover:bg-neutral-200 sm:w-auto"
+              className="inline-flex min-h-10 w-auto items-center justify-center rounded-full bg-neutral-100 px-3 text-[11px] font-medium text-brand-blue transition hover:bg-neutral-200 sm:min-h-12 sm:px-6 sm:text-sm"
             >
               Voir ce que je peux déléguer
             </a>

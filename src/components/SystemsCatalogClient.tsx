@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import {
   Aperture,
@@ -12,7 +13,6 @@ import {
   Camera,
   Car,
   ChefHat,
-  ChevronRight,
   Cloud,
   Code2,
   ClipboardCheck,
@@ -60,6 +60,7 @@ type SystemsCatalogClientProps = {
   searchQuery?: string;
   onSearchQueryChange?: (value: string) => void;
   showSearchBar?: boolean;
+  initialSelectedSlug?: string;
 };
 
 const PILLARS: SystemPillar[] = [
@@ -198,8 +199,9 @@ export default function SystemsCatalogClient({
   searchQuery: controlledSearchQuery,
   onSearchQueryChange,
   showSearchBar = true,
+  initialSelectedSlug,
 }: SystemsCatalogClientProps) {
-  const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
+  const [selectedSlug, setSelectedSlug] = useState<string | null>(initialSelectedSlug ?? null);
   const [activeTab, setActiveTab] = useState<"processus" | "outils">("processus");
   const [internalSearchQuery, setInternalSearchQuery] = useState("");
   const [activeSector, setActiveSector] = useState("Tous");
@@ -302,7 +304,7 @@ export default function SystemsCatalogClient({
             </div>
           ) : null}
 
-          <div className={showIntro ? "mt-10" : "border-b border-brand-blue/5 pb-5 pt-3 md:pb-6 md:pt-1"}>
+          <div className={showIntro ? "mt-10" : "border-b border-brand-blue/5 pb-4 pt-2 md:pb-5 md:pt-0"}>
             {showSearchBar ? (
               <div className="mx-auto max-w-4xl rounded-full border border-brand-blue/5 bg-white p-1.5 shadow-[0_10px_30px_rgba(20,20,20,0.035)]">
                 <div className="relative">
@@ -317,7 +319,7 @@ export default function SystemsCatalogClient({
               </div>
             ) : null}
 
-            <div className={`mx-auto max-w-4xl overflow-x-auto pb-2 soft-scroll ${showSearchBar ? "mt-5" : "mt-2"}`}>
+            <div className={`mx-auto max-w-4xl overflow-x-auto pb-2 soft-scroll ${showSearchBar ? "mt-3" : "mt-1"}`}>
               <div className="flex min-w-max justify-center gap-2 px-1">
                 {sectors.map((sector) => (
                   <button
@@ -326,7 +328,7 @@ export default function SystemsCatalogClient({
                     onClick={() => {
                       setActiveSector(sector);
                     }}
-                    className={`min-h-10 whitespace-nowrap rounded-full px-4 py-2 text-xs transition md:min-h-12 md:px-5 md:text-sm ${
+                    className={`min-h-9 whitespace-nowrap rounded-full px-3.5 py-1.5 text-xs transition md:min-h-10 md:px-4 md:text-sm ${
                       activeSector === sector
                         ? "bg-brand-blue text-white shadow-sm"
                         : "bg-neutral-100 text-brand-blue/65 hover:bg-neutral-200"
@@ -347,14 +349,13 @@ export default function SystemsCatalogClient({
               </p>
             </div>
           ) : (
-            <div className="mt-10 space-y-10 md:mt-12">
+            <div className="mt-8 space-y-8 md:mt-10 md:space-y-9">
               {systemSections.map((section) => (
                 <section key={section.title}>
-                  <div className="mb-4 flex items-center justify-between gap-4">
-                    <h2 className="demaa-section-title text-3xl tracking-tight text-brand-blue md:text-4xl">
+                  <div className="mb-3">
+                    <h2 className="demaa-section-title text-2xl tracking-tight text-brand-blue/85 md:text-3xl">
                       {section.title}
                     </h2>
-                    <ScrollHintIcon />
                   </div>
                   <div className="-mx-4 overflow-x-auto px-4 pb-4 pt-2 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
                     <div className="flex gap-4">
@@ -507,24 +508,43 @@ export default function SystemsCatalogClient({
               </div>
             ) : (
               <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                {detail.tools.map((tool) => (
-                  <article
-                    key={tool.name}
-                    className="rounded-[1.75rem] border border-brand-blue/8 bg-white p-5 text-left transition hover:-translate-y-0.5 hover:border-neutral-300 hover:shadow-[0_16px_40px_rgba(20,20,20,0.05)]"
-                  >
-                    <div>
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-neutral-500">
-                        {tool.type}
+                {detail.tools.map((tool) => {
+                  const content = (
+                    <>
+                      <div>
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-neutral-500">
+                          {tool.type}
+                        </p>
+                        <h3 className="mt-2 text-lg font-semibold text-brand-blue">
+                          {tool.name}
+                        </h3>
+                      </div>
+                      <p className="mt-3 text-sm leading-relaxed text-gray-600">
+                        {tool.usage}
                       </p>
-                      <h3 className="mt-2 text-lg font-semibold text-brand-blue">
-                        {tool.name}
-                      </h3>
-                    </div>
-                    <p className="mt-3 text-sm leading-relaxed text-gray-600">
-                      {tool.usage}
-                    </p>
-                  </article>
-                ))}
+                    </>
+                  );
+                  const className =
+                    "block rounded-[1.75rem] border border-brand-blue/8 bg-white p-5 text-left transition hover:-translate-y-0.5 hover:border-neutral-300 hover:shadow-[0_16px_40px_rgba(20,20,20,0.05)]";
+
+                  if (!tool.slug) {
+                    return (
+                      <article key={tool.name} className={className}>
+                        {content}
+                      </article>
+                    );
+                  }
+
+                  return (
+                    <Link
+                      key={tool.name}
+                      href={`/annuaire-logiciel/${tool.slug}`}
+                      className={className}
+                    >
+                      {content}
+                    </Link>
+                  );
+                })}
               </div>
             )}
           </div>
@@ -537,16 +557,5 @@ export default function SystemsCatalogClient({
         initialSector={selectedSystem?.name ?? detail?.sectorLabel}
       />
     </>
-  );
-}
-
-function ScrollHintIcon() {
-  return (
-    <span
-      aria-hidden="true"
-      className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-brand-blue/10 bg-white/85 text-brand-blue/55 shadow-[0_8px_24px_rgba(20,20,20,0.08)] backdrop-blur-sm"
-    >
-      <ChevronRight className="h-4 w-4" />
-    </span>
   );
 }

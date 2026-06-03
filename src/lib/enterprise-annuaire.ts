@@ -7,6 +7,7 @@ import type { System } from "./types";
 import rawEnterpriseAnnuaire from "./enterprise-annuaire.json";
 
 export type EnterpriseTool = {
+  slug?: string;
   name: string;
   type: string;
   usage: string;

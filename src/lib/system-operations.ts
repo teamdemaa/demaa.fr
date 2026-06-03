@@ -1,10 +1,16 @@
 import type { System } from "@/lib/types";
 import {
+  getEnterpriseCatalog,
   getEnterpriseBySlug,
+  type EnterpriseDefinition,
   type EnterpriseTool,
   type EnterpriseToolReference,
 } from "@/lib/enterprise-annuaire";
-import { getSystemProcessTemplates, type SystemPillar } from "@/lib/system-process-templates";
+import {
+  getSystemProcessTemplates,
+  type SystemPillar,
+  type SystemProcessTemplate,
+} from "@/lib/system-process-templates";
 import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
 import { getToolDirectorySlug, type ToolDirectoryItem } from "@/lib/tool-directory";
 
@@ -24,6 +30,12 @@ export type OperationalSystemDetail = {
   imageSubtitle: string;
   processes: SystemProcessCard[];
   tools: EnterpriseTool[];
+};
+
+type OperationalSystemDetailSources = {
+  enterprisesBySlug: Record<string, EnterpriseDefinition>;
+  templates: SystemProcessTemplate[];
+  toolDirectory: ToolDirectoryItem[];
 };
 
 function normalizePillar(pillar: string): SystemPillar {
@@ -49,6 +61,7 @@ function resolveEnterpriseTools(
 
       if (tool) {
         resolvedTools.push({
+          slug: getToolDirectorySlug(tool),
           name: tool.name,
           type: tool.category,
           usage: toolRef.usage || tool.bestFor,
@@ -67,6 +80,21 @@ export async function buildOperationalSystemDetail(system: System): Promise<Oper
   const enterprise = await getEnterpriseBySlug(system.slug);
   const templates = await getSystemProcessTemplates();
   const toolDirectory = await getUnifiedToolDirectory();
+
+  return buildOperationalSystemDetailFromSources(system, {
+    enterprisesBySlug: enterprise ? { [system.slug]: enterprise } : {},
+    templates,
+    toolDirectory,
+  });
+}
+
+function buildOperationalSystemDetailFromSources(
+  system: System,
+  sources: OperationalSystemDetailSources,
+): OperationalSystemDetail {
+  const enterprise = sources.enterprisesBySlug[system.slug] ?? null;
+  const templates = sources.templates;
+  const toolDirectory = sources.toolDirectory;
 
   if (enterprise) {
     const operationSource =
@@ -106,4 +134,27 @@ export async function buildOperationalSystemDetail(system: System): Promise<Oper
     processes: templates.map((template) => ({ ...template })),
     tools: [],
   };
+}
+
+export async function buildOperationalSystemDetails(
+  systems: System[],
+  enterpriseCatalog?: EnterpriseDefinition[],
+  loadedToolDirectory?: ToolDirectoryItem[],
+): Promise<Record<string, OperationalSystemDetail>> {
+  const [enterprises, templates, toolDirectory] = await Promise.all([
+    enterpriseCatalog ? Promise.resolve(enterpriseCatalog) : getEnterpriseCatalog(),
+    getSystemProcessTemplates(),
+    loadedToolDirectory ? Promise.resolve(loadedToolDirectory) : getUnifiedToolDirectory(),
+  ]);
+  const sources: OperationalSystemDetailSources = {
+    enterprisesBySlug: Object.fromEntries(
+      enterprises.map((enterprise) => [enterprise.slug, enterprise])
+    ),
+    templates,
+    toolDirectory,
+  };
+
+  return Object.fromEntries(
+    systems.map((system) => [system.slug, buildOperationalSystemDetailFromSources(system, sources)])
+  );
 }

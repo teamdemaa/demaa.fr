@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
-import { ChevronRight, Search } from "lucide-react";
+import { useMemo, useState, type ReactNode } from "react";
+import { Search } from "lucide-react";
 import type { ToolDirectoryItem } from "@/lib/tool-directory";
 
 function getValidFilters(
@@ -176,9 +176,8 @@ export default function ToolDirectoryClient({
 
           {variant === "directory" || variant === "toolbox" ? (
             <HorizontalScrollArea
-              outerClassName={`mx-auto max-w-4xl ${showSearchBar || showHeader ? "mt-3" : "mt-2"}`}
+              outerClassName={`mx-auto max-w-4xl ${showSearchBar || showHeader ? "mt-3" : "mt-1"}`}
               scrollClassName="flex gap-2 overflow-x-auto pb-2 soft-scroll"
-              showHint={false}
             >
               <FilterChip
                 label="Tous"
@@ -349,7 +348,6 @@ function ToolboxSections({
             viewAllHref="/outils-gratuits"
             outerClassName="-mx-4 sm:-mx-6 lg:-mx-8"
             scrollClassName="overflow-x-auto px-4 pb-3 soft-scroll sm:px-6 lg:px-8"
-            showHint={false}
           >
             <div className="flex gap-4">
               {freeTools.map((tool) => (
@@ -371,14 +369,13 @@ function ToolboxSections({
             viewAllHref="/annuaire-outils"
             outerClassName="-mx-4 sm:-mx-6 lg:-mx-8"
             scrollClassName="overflow-x-auto px-4 pb-3 soft-scroll sm:px-6 lg:px-8"
-            showHint={false}
           >
             <div className="flex gap-4">
               {otherTools.map((tool) => (
                 <SquareToolCard
                   key={tool.name}
                   tool={tool}
-                  externalLinks
+                  externalLinks={externalLinks}
                 />
               ))}
             </div>
@@ -391,23 +388,11 @@ function ToolboxSections({
 
 function SectionTitle({ title }: { title: string }) {
   return (
-    <div className="mb-4 flex items-center justify-between gap-4">
-      <h2 className="demaa-section-title text-3xl tracking-tight text-brand-blue md:text-4xl">
+    <div className="mb-3">
+      <h2 className="demaa-section-title text-2xl tracking-tight text-brand-blue/85 md:text-3xl">
         {title}
       </h2>
-      <ScrollHintIcon />
     </div>
-  );
-}
-
-function ScrollHintIcon() {
-  return (
-    <span
-      aria-hidden="true"
-      className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-brand-blue/10 bg-white/85 text-brand-blue/55 shadow-[0_8px_24px_rgba(20,20,20,0.08)] backdrop-blur-sm"
-    >
-      <ChevronRight className="h-4 w-4" />
-    </span>
   );
 }
 
@@ -417,50 +402,19 @@ function HorizontalScrollArea({
   viewAllLabel = "Voir tout",
   outerClassName = "",
   scrollClassName = "",
-  showHint = true,
 }: {
   children: ReactNode;
   viewAllHref?: string;
   viewAllLabel?: string;
   outerClassName?: string;
   scrollClassName?: string;
-  showHint?: boolean;
 }) {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [showRightHint, setShowRightHint] = useState(false);
-
-  const updateScrollHint = useCallback(() => {
-    const element = scrollRef.current;
-    if (!element) return;
-
-    const maxScrollLeft = element.scrollWidth - element.clientWidth;
-    setShowRightHint(maxScrollLeft > 1 && element.scrollLeft < maxScrollLeft - 1);
-  }, []);
-
-  useEffect(() => {
-    const frame = window.requestAnimationFrame(updateScrollHint);
-    window.addEventListener("resize", updateScrollHint);
-
-    return () => {
-      window.cancelAnimationFrame(frame);
-      window.removeEventListener("resize", updateScrollHint);
-    };
-  }, [updateScrollHint, children]);
-
   return (
     <div className={outerClassName}>
       <div className="relative">
-        <div ref={scrollRef} onScroll={updateScrollHint} className={scrollClassName}>
+        <div className={scrollClassName}>
           {children}
         </div>
-        {showHint && showRightHint ? (
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute right-4 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-brand-blue/10 bg-white/85 text-brand-blue/55 shadow-[0_8px_24px_rgba(20,20,20,0.08)] backdrop-blur-sm sm:right-6 lg:right-8"
-          >
-            <ChevronRight className="h-4 w-4" />
-          </div>
-        ) : null}
       </div>
       {viewAllHref ? (
         <div className="mt-1 flex justify-end px-4 sm:px-6 lg:px-8">
@@ -557,7 +511,7 @@ function FilterChip({
     <button
       type="button"
       onClick={onClick}
-      className={`min-h-10 whitespace-nowrap rounded-full px-4 py-2 text-xs transition md:min-h-12 md:px-5 md:text-sm ${
+      className={`min-h-9 whitespace-nowrap rounded-full px-3.5 py-1.5 text-xs transition md:min-h-10 md:px-4 md:text-sm ${
         isActive
           ? "bg-brand-blue text-white shadow-sm"
           : "bg-neutral-100 text-brand-blue/65 hover:bg-neutral-200"

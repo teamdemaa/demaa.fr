@@ -18,7 +18,7 @@ import type { System } from "@/lib/types";
 import type { OperationalSystemDetail } from "@/lib/system-operations";
 import type { ToolDirectoryItem } from "@/lib/tool-directory";
 
-type HomeTab = "systemes" | "boite-a-outils" | "academy";
+type HomeTab = "systemes" | "outils" | "academy";
 
 type HomeTabsClientProps = {
   systems: System[];
@@ -30,6 +30,7 @@ type HomeTabsClientProps = {
   initialTab?: string;
   initialCategory?: string;
   initialSector?: string;
+  initialSystem?: string;
 };
 
 const tabs = [
@@ -39,8 +40,8 @@ const tabs = [
     icon: Boxes,
   },
   {
-    id: "boite-a-outils",
-    label: "Boîte à outils",
+    id: "outils",
+    label: "Outils",
     icon: Wrench,
   },
   {
@@ -49,6 +50,34 @@ const tabs = [
     icon: BookOpen,
   },
 ] as const;
+
+const tabHeroCopy: Record<
+  HomeTab,
+  {
+    breakAfterMuted?: boolean;
+    breakBeforeMuted?: boolean;
+    muted?: string;
+    mutedAfter?: boolean;
+    strong: string;
+  }
+> = {
+  systemes: {
+    muted: "Pour que votre entreprise",
+    strong: "ne repose pas que sur vous",
+    breakAfterMuted: true,
+  },
+  outils: {
+    muted: "au quotidien",
+    strong: "Libérez du temps",
+    breakBeforeMuted: true,
+    mutedAfter: true,
+  },
+  academy: {
+    muted: "Maîtrisez les bases de la",
+    strong: "gestion d'entreprise",
+    breakAfterMuted: true,
+  },
+};
 
 type AcademyCarousel = {
   title: string;
@@ -99,11 +128,22 @@ const academyCarousels: AcademyCarousel[] = [
 ];
 
 function getInitialTab(tab?: string): HomeTab {
-  if (tab === "boite-a-outils" || tab === "academy" || tab === "systemes") {
+  if (tab === "boite-a-outils" || tab === "outils") {
+    return "outils";
+  }
+
+  if (tab === "academy" || tab === "systemes") {
     return tab;
   }
 
   return "systemes";
+}
+
+function getTabPath(tab: HomeTab) {
+  if (tab === "outils") return "/outils";
+  if (tab === "academy") return "/academy";
+
+  return "/";
 }
 
 export default function HomeTabsClient({
@@ -116,22 +156,26 @@ export default function HomeTabsClient({
   initialTab,
   initialCategory,
   initialSector,
+  initialSystem,
 }: HomeTabsClientProps) {
-  const [activeTab, setActiveTab] = useState<HomeTab>(() => getInitialTab(initialTab));
+  const [activeTab, setActiveTab] = useState<HomeTab>(() =>
+    initialSystem ? "systemes" : getInitialTab(initialTab)
+  );
   const [searchQuery, setSearchQuery] = useState("");
+  const heroCopy = tabHeroCopy[activeTab];
   const searchPlaceholder =
     activeTab === "systemes"
       ? "Rechercher une entreprise, un processus, un outil..."
-      : activeTab === "boite-a-outils"
+      : activeTab === "outils"
         ? "Rechercher un outil gratuit, un usage, un secteur..."
         : "Rechercher une ressource, un thème...";
 
   const tabContent = useMemo(() => {
-    if (activeTab === "boite-a-outils") {
+    if (activeTab === "outils") {
       return (
         <ToolDirectoryClient
           key={`${initialSector ?? "tous"}-${initialCategory ?? "tous"}`}
-          title="Boîte à outils"
+          title="Outils"
           description="Les outils gratuits créés par Demaa pour faire avancer l'activité plus vite."
           searchPlaceholder="Rechercher un outil gratuit, un usage, un secteur..."
           items={tools}
@@ -157,6 +201,7 @@ export default function HomeTabsClient({
 
     return (
       <SystemsCatalogClient
+        key={`systems-${initialSystem ?? "none"}`}
         systems={systems}
         detailsBySlug={detailsBySlug}
         showIntro={false}
@@ -164,6 +209,7 @@ export default function HomeTabsClient({
         searchQuery={searchQuery}
         onSearchQueryChange={setSearchQuery}
         showSearchBar={false}
+        initialSelectedSlug={initialSystem}
       />
     );
   }, [
@@ -171,6 +217,7 @@ export default function HomeTabsClient({
     detailsBySlug,
     initialCategory,
     initialSector,
+    initialSystem,
     systems,
     toolCategories,
     toolSectors,
@@ -182,9 +229,7 @@ export default function HomeTabsClient({
   function selectTab(tab: HomeTab) {
     setActiveTab(tab);
     setSearchQuery("");
-    const params = new URLSearchParams(window.location.search);
-    params.set("tab", tab);
-    window.history.replaceState(null, "", `/?${params.toString()}`);
+    window.history.replaceState(null, "", getTabPath(tab));
   }
 
   return (
@@ -192,14 +237,21 @@ export default function HomeTabsClient({
       <section className="ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] w-screen bg-[#ffffff]/70 px-4 pb-4 pt-10 text-center md:px-8 md:pb-5 md:pt-14">
         <div className="mx-auto max-w-6xl space-y-5 md:space-y-6">
           <div className="mx-auto max-w-5xl">
-            <h1 className="demaa-hero-title text-[1.75rem] text-brand-blue tracking-tight leading-[0.98] sm:text-[3rem] md:text-[4.05rem] lg:text-[5rem]">
-              <span className="text-neutral-400">Structurez</span>{" "}
-              <span>Mieux</span>
+            <h1 className="demaa-hero-title text-[2.24rem] text-brand-blue tracking-tight leading-[0.98] sm:text-[2.75rem] md:text-[3.75rem] lg:text-[4.5rem]">
+              {heroCopy.muted && !heroCopy.mutedAfter ? (
+                <>
+                  <span className="text-neutral-400">{heroCopy.muted}</span>
+                  {heroCopy.breakAfterMuted ? <br /> : " "}
+                </>
+              ) : null}
+              <span>{heroCopy.strong}</span>
+              {heroCopy.muted && heroCopy.mutedAfter ? (
+                <>
+                  {heroCopy.breakBeforeMuted ? <br /> : " "}
+                  <span className="text-neutral-400">{heroCopy.muted}</span>
+                </>
+              ) : null}
             </h1>
-          </div>
-
-          <div className="mx-auto w-full max-w-4xl">
-            <TabBar activeTab={activeTab} onSelect={selectTab} />
           </div>
 
           <SearchBar
@@ -210,6 +262,8 @@ export default function HomeTabsClient({
         </div>
       </section>
       {tabContent}
+      <div className="h-24 md:hidden" aria-hidden="true" />
+      <MobileTabBar activeTab={activeTab} onSelect={selectTab} />
     </>
   );
 }
@@ -240,7 +294,7 @@ function SearchBar({
   );
 }
 
-function TabBar({
+function MobileTabBar({
   activeTab,
   onSelect,
 }: {
@@ -248,28 +302,34 @@ function TabBar({
   onSelect: (tab: HomeTab) => void;
 }) {
   return (
-    <div className="mx-auto flex max-w-4xl gap-1.5 overflow-x-auto rounded-full border border-brand-blue/5 bg-white p-1 shadow-[0_10px_30px_rgba(20,20,20,0.035)] soft-scroll sm:gap-2">
-      {tabs.map((tab) => {
-        const Icon = tab.icon;
-        const isActive = activeTab === tab.id;
+    <nav
+      className="fixed inset-x-0 bottom-0 z-40 px-4 pb-[calc(env(safe-area-inset-bottom)+0.875rem)] md:hidden"
+      aria-label="Navigation principale mobile"
+    >
+      <div className="mx-auto grid max-w-md grid-cols-3 gap-1 rounded-full border border-brand-blue/5 bg-white/95 p-1.5 shadow-[0_-8px_28px_rgba(20,20,20,0.07)] backdrop-blur">
+        {tabs.map((tab) => {
+          const Icon = tab.icon;
+          const isActive = activeTab === tab.id;
 
-        return (
-          <button
-            key={tab.id}
-            type="button"
-            onClick={() => onSelect(tab.id)}
-            className={`inline-flex min-h-10 min-w-0 flex-1 items-center justify-center gap-1 rounded-full px-2 text-[12px] font-medium transition sm:min-h-11 sm:gap-2 sm:px-4 sm:text-sm md:min-h-[3.25rem] md:text-base ${
-              isActive
-                ? "bg-brand-blue text-white shadow-sm"
-                : "text-brand-blue/70 hover:bg-[#fcfcfc] hover:text-neutral-700"
-            }`}
-          >
-            <Icon className="h-4 w-4 shrink-0" />
-            <span className="whitespace-nowrap">{tab.label}</span>
-          </button>
-        );
-      })}
-    </div>
+          return (
+            <button
+              key={tab.id}
+              type="button"
+              onClick={() => onSelect(tab.id)}
+              aria-current={isActive ? "page" : undefined}
+              className={`flex min-h-11 items-center justify-center gap-1.5 rounded-full px-2 text-[11px] font-medium transition ${
+                isActive
+                  ? "bg-brand-blue/[0.07] text-brand-blue"
+                  : "text-brand-blue/65 hover:bg-neutral-100 hover:text-brand-blue"
+              }`}
+            >
+              <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
+              <span className="whitespace-nowrap">{tab.label}</span>
+            </button>
+          );
+        })}
+      </div>
+    </nav>
   );
 }
 
@@ -322,7 +382,7 @@ function AcademyPlaceholder({ searchQuery }: { searchQuery: string }) {
 
   return (
     <>
-      <section className="w-full border-b border-brand-blue/5 bg-[#ffffff] px-4 pb-5 pt-3 md:pb-6 md:pt-1">
+      <section className="w-full border-b border-brand-blue/5 bg-[#ffffff] px-4 pb-4 pt-2 md:pb-5 md:pt-0">
         <div className="mx-auto max-w-6xl">
           <div className="mx-auto max-w-4xl overflow-x-auto pb-2 soft-scroll">
             <div className="flex min-w-max justify-center gap-2 px-1">
@@ -331,7 +391,7 @@ function AcademyPlaceholder({ searchQuery }: { searchQuery: string }) {
                   key={category}
                   type="button"
                   onClick={() => setActiveCategory(category)}
-                  className={`min-h-9 whitespace-nowrap rounded-full px-4 py-1.5 text-xs transition md:min-h-10 md:px-5 md:text-sm ${
+                  className={`min-h-9 whitespace-nowrap rounded-full px-3.5 py-1.5 text-xs transition md:min-h-10 md:px-4 md:text-sm ${
                     activeCategory === category
                       ? "bg-brand-blue text-white shadow-sm"
                       : "bg-neutral-100 text-brand-blue/65 hover:bg-neutral-200"
@@ -346,11 +406,10 @@ function AcademyPlaceholder({ searchQuery }: { searchQuery: string }) {
       </section>
 
       <section className="mx-auto w-full max-w-6xl px-4 pb-16 pt-8 md:pt-10">
-        <div className="mb-4 flex items-center justify-between gap-4">
-          <h2 className="demaa-section-title text-3xl tracking-tight text-brand-blue md:text-4xl">
+        <div className="mb-3">
+          <h2 className="demaa-section-title text-2xl tracking-tight text-brand-blue/85 md:text-3xl">
             Ressources Academy
           </h2>
-          <ScrollHintIcon />
         </div>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
@@ -459,17 +518,6 @@ function AcademyPlaceholder({ searchQuery }: { searchQuery: string }) {
         ) : null}
       </section>
     </>
-  );
-}
-
-function ScrollHintIcon() {
-  return (
-    <span
-      aria-hidden="true"
-      className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-brand-blue/10 bg-white/85 text-brand-blue/55 shadow-[0_8px_24px_rgba(20,20,20,0.08)] backdrop-blur-sm"
-    >
-      <ChevronRight className="h-4 w-4" />
-    </span>
   );
 }
 
