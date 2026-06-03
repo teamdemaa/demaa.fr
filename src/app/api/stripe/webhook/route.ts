@@ -43,18 +43,13 @@ function getOfferLabel(input: {
   metadata?: StripeSessionMetadata | null;
 }) {
   if (input.metadata?.offer_label) return input.metadata.offer_label;
-
-  const amountTotal = input.amountTotal;
-
-  if (amountTotal === 65000) return "Automate - 10 crédits";
-  if (amountTotal === 98000) return "Maestro - 20 crédits";
   return "Offre Demaa";
 }
 
-function getOfferCredits(amountTotal: number | null | undefined) {
-  if (amountTotal === 65000) return 10;
-  if (amountTotal === 98000) return 20;
-  return 0;
+function getOfferCredits(metadata?: StripeSessionMetadata | null) {
+  const credits = Number(metadata?.credits);
+
+  return Number.isFinite(credits) && credits > 0 ? credits : 0;
 }
 
 function verifyStripeSignature(
@@ -196,7 +191,7 @@ export async function POST(request: Request) {
       amountTotal,
       metadata: session?.metadata,
     });
-    const offerCredits = getOfferCredits(amountTotal);
+    const offerCredits = getOfferCredits(session?.metadata);
 
     if (!event.id || !sessionId) {
       console.error("[stripe-webhook] checkout.session.completed missing ids", {

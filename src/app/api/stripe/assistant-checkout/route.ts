@@ -2,9 +2,50 @@ import { NextResponse } from "next/server";
 
 export const runtime = "nodejs";
 
-const ASSISTANT_CREDITS = [250, 500, 750, 1000] as const;
+const CHECKOUT_OFFERS = [
+  {
+    credits: 250,
+    unitAmount: 25000,
+    offerType: "assistant",
+    offerLabel: "250 crédits assistant",
+    productName: "250 crédits assistant Demaa",
+    productDescription: "Crédits pour déléguer des tâches opérationnelles avec Demaa.",
+    successPath: "/assistant/success",
+    cancelPath: "/assistant#pricing",
+  },
+  {
+    credits: 500,
+    unitAmount: 50000,
+    offerType: "assistant",
+    offerLabel: "500 crédits assistant",
+    productName: "500 crédits assistant Demaa",
+    productDescription: "Crédits pour déléguer des tâches opérationnelles avec Demaa.",
+    successPath: "/assistant/success",
+    cancelPath: "/assistant#pricing",
+  },
+  {
+    credits: 750,
+    unitAmount: 75000,
+    offerType: "assistant",
+    offerLabel: "750 crédits assistant",
+    productName: "750 crédits assistant Demaa",
+    productDescription: "Crédits pour déléguer des tâches opérationnelles avec Demaa.",
+    successPath: "/assistant/success",
+    cancelPath: "/assistant#pricing",
+  },
+  {
+    credits: 1000,
+    unitAmount: 100000,
+    offerType: "assistant",
+    offerLabel: "1000 crédits assistant",
+    productName: "1000 crédits assistant Demaa",
+    productDescription: "Crédits pour déléguer des tâches opérationnelles avec Demaa.",
+    successPath: "/assistant/success",
+    cancelPath: "/assistant#pricing",
+  },
+] as const;
 
-type AssistantCredits = (typeof ASSISTANT_CREDITS)[number];
+type CheckoutOffer = (typeof CHECKOUT_OFFERS)[number];
 
 type CheckoutRequestBody = {
   credits?: unknown;
@@ -18,11 +59,8 @@ type StripeErrorResponse = {
   };
 };
 
-function isAssistantCredits(value: unknown): value is AssistantCredits {
-  return (
-    typeof value === "number" &&
-    ASSISTANT_CREDITS.includes(value as AssistantCredits)
-  );
+function getCheckoutOffer(credits: number): CheckoutOffer | null {
+  return CHECKOUT_OFFERS.find((offer) => offer.credits === credits) ?? null;
 }
 
 function getStripeSecretKey() {
@@ -48,8 +86,9 @@ function getBaseUrl(request: Request) {
 export async function POST(request: Request) {
   const body = (await request.json().catch(() => null)) as CheckoutRequestBody | null;
   const credits = Number(body?.credits);
+  const offer = Number.isFinite(credits) ? getCheckoutOffer(credits) : null;
 
-  if (!isAssistantCredits(credits)) {
+  if (!offer) {
     return NextResponse.json(
       { error: "Merci de choisir un montant de crédits valide." },
       { status: 400 }
@@ -71,17 +110,17 @@ export async function POST(request: Request) {
   const baseUrl = getBaseUrl(request);
   const checkoutParams = new URLSearchParams({
     mode: "payment",
-    success_url: `${baseUrl}/assistant/success?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${baseUrl}/assistant#pricing`,
+    success_url: `${baseUrl}${offer.successPath}?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${baseUrl}${offer.cancelPath}`,
     "line_items[0][quantity]": "1",
     "line_items[0][price_data][currency]": "eur",
-    "line_items[0][price_data][unit_amount]": String(credits * 100),
-    "line_items[0][price_data][product_data][name]": `${credits} crédits assistant Demaa`,
+    "line_items[0][price_data][unit_amount]": String(offer.unitAmount),
+    "line_items[0][price_data][product_data][name]": offer.productName,
     "line_items[0][price_data][product_data][description]":
-      "Crédits pour déléguer des tâches opérationnelles avec Demaa.",
-    "metadata[offer_type]": "assistant",
-    "metadata[credits]": String(credits),
-    "metadata[offer_label]": `${credits} crédits assistant`,
+      offer.productDescription,
+    "metadata[offer_type]": offer.offerType,
+    "metadata[credits]": String(offer.credits),
+    "metadata[offer_label]": offer.offerLabel,
     "custom_fields[0][key]": "first_name",
     "custom_fields[0][label][type]": "custom",
     "custom_fields[0][label][custom]": "Prénom",

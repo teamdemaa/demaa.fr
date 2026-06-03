@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 import {
   AlertCircle,
   Check,
@@ -27,13 +26,6 @@ import SystemsCatalogClient from "./SystemsCatalogClient";
 import SystemSetupModal from "./SystemSetupModal";
 import type { System } from "@/lib/types";
 import type { OperationalSystemDetail } from "@/lib/system-operations";
-
-const STRIPE_URL_10_CREDITS =
-  process.env.NEXT_PUBLIC_STRIPE_URL_10_CREDITS?.trim() ||
-  "https://buy.stripe.com/14A8wIdb49lBa4Sev36Na03";
-const STRIPE_URL_20_CREDITS =
-  process.env.NEXT_PUBLIC_STRIPE_URL_20_CREDITS?.trim() ||
-  "https://buy.stripe.com/6oU14gc7041ha4S2Ml6Na04";
 
 const SECTION_REVEAL = {
   initial: { opacity: 0, y: 18 },
@@ -283,9 +275,7 @@ type HomeOffer = {
   price: string;
   unit: string;
   cta: string;
-  action: "modal" | "link";
   featured?: boolean;
-  href?: string;
 };
 
 const HOME_OFFERS: readonly HomeOffer[] = [
@@ -304,42 +294,7 @@ const HOME_OFFERS: readonly HomeOffer[] = [
     price: "Gratuit",
     unit: "",
     cta: "Tester gratuitement",
-    action: "modal" as const,
     featured: true,
-  },
-  {
-    badge: "10 crédits",
-    title: "Automate",
-    subtitle: "10 crédits à utiliser comme vous voulez",
-    description:
-      "Pour commencer à structurer plusieurs tâches sans vous engager dans un abonnement.",
-    bullets: [
-      "Simple ou complexe, vous choisissez",
-      "2 crédits = une automatisation simple",
-      "Une automatisation complexe en consomme plus",
-    ],
-    price: "650€",
-    unit: "65€ / crédit",
-    cta: "Choisir 10 crédits",
-    action: "link" as const,
-    href: STRIPE_URL_10_CREDITS,
-  },
-  {
-    badge: "20 crédits",
-    title: "Maestro",
-    subtitle: "20 crédits à utiliser comme vous voulez",
-    description:
-      "Pour les activités qui ont déjà plusieurs sujets à automatiser et veulent avancer plus vite.",
-    bullets: [
-      "Simple ou complexe, vous choisissez",
-      "Le prix par crédit le plus bas",
-      "Idéal si vous avez beaucoup à automatiser",
-    ],
-    price: "980€",
-    unit: "49€ / crédit",
-    cta: "Choisir 20 crédits",
-    action: "link" as const,
-    href: STRIPE_URL_20_CREDITS,
   },
 ] as const;
 
@@ -406,15 +361,6 @@ function mergeTranscript(baseText: string, transcript: string) {
   return `${trimmedBase} ${trimmedTranscript}`;
 }
 
-function navigateToHref(router: ReturnType<typeof useRouter>, href: string) {
-  if (href.startsWith("http")) {
-    window.location.href = href;
-    return;
-  }
-
-  router.push(href);
-}
-
 function navigateToPricing() {
   window.location.href = "/";
 }
@@ -472,7 +418,6 @@ export default function AssistantHub({
   detailsBySlug,
   mode = "landing",
 }: AssistantHubProps) {
-  const router = useRouter();
   const pdfContentRef = useRef<HTMLDivElement>(null);
   const homeTextareaRef = useRef<HTMLTextAreaElement>(null);
   const speechRecognitionRef = useRef<SpeechRecognitionInstance | null>(null);
@@ -1302,11 +1247,7 @@ export default function AssistantHub({
                     </div>
                     <button
                       type="button"
-                      onClick={() =>
-                        offer.action === "modal"
-                          ? setShowFreeTrialModal(true)
-                          : offer.href && navigateToHref(router, offer.href)
-                      }
+                      onClick={() => setShowFreeTrialModal(true)}
                       className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-brand-blue px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-brand-coral"
                     >
                       {offer.cta}

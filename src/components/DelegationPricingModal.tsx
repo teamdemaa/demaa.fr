@@ -4,14 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, FileText, MessageCircle, Mic, Sparkles, Wrench, X } from "lucide-react";
 
-const STRIPE_URL_10_CREDITS =
-  process.env.NEXT_PUBLIC_STRIPE_URL_10_CREDITS?.trim() ||
-  "https://buy.stripe.com/14A8wIdb49lBa4Sev36Na03";
-const STRIPE_URL_20_CREDITS =
-  process.env.NEXT_PUBLIC_STRIPE_URL_20_CREDITS?.trim() ||
-  "https://buy.stripe.com/6oU14gc7041ha4S2Ml6Na04";
-
-type OfferKey = "free" | "pack10" | "pack20" | null;
+type OfferKey = "free" | null;
 
 interface SpeechRecognitionAlternativeLike {
   transcript: string;
@@ -144,11 +137,6 @@ export default function DelegationPricingModal({
     }
   };
 
-  const handlePaidOffer = (url: string) => {
-    if (!url) return;
-    window.location.assign(url);
-  };
-
   const toggleVoiceInput = () => {
     if (typeof window === "undefined") return;
 
@@ -214,36 +202,6 @@ export default function DelegationPricingModal({
       unit: "",
       cta: "Tester gratuitement",
       featured: true,
-    },
-    {
-      key: "pack10" as const,
-      badge: "10 crédits",
-      title: "Automate",
-      subtitle: "10 crédits à utiliser comme vous voulez",
-      bullets: [
-        "Simple ou complexe, vous choisissez",
-        "2 crédits = une automatisation simple",
-        "Une automatisation complexe en consomme plus",
-      ],
-      price: "650€",
-      unit: "65€ / crédit",
-      cta: STRIPE_URL_10_CREDITS ? "Choisir 10 crédits" : "Bientôt dispo",
-      stripeUrl: STRIPE_URL_10_CREDITS,
-    },
-    {
-      key: "pack20" as const,
-      badge: "20 crédits",
-      title: "Maestro",
-      subtitle: "20 crédits à utiliser comme vous voulez",
-      bullets: [
-        "Simple ou complexe, vous choisissez",
-        "Le prix par crédit le plus bas",
-        "Idéal si vous avez beaucoup à automatiser",
-      ],
-      price: "980€",
-      unit: "49€ / crédit",
-      cta: STRIPE_URL_20_CREDITS ? "Choisir 20 crédits" : "Bientôt dispo",
-      stripeUrl: STRIPE_URL_20_CREDITS,
     },
   ];
 
@@ -401,18 +359,11 @@ export default function DelegationPricingModal({
                   </div>
                   <button
                     type="button"
-                  onClick={() =>
-                    offer.key === "free"
-                      ? setSelectedOffer("free")
-                      : handlePaidOffer(offer.stripeUrl || "")
-                  }
-                    disabled={offer.key !== "free" && !offer.stripeUrl}
+                    onClick={() => setSelectedOffer("free")}
                     className={`mt-4 inline-flex w-full items-center justify-center rounded-full px-5 py-3 text-sm font-medium transition-colors ${
                       offer.featured
                         ? "bg-brand-blue text-white hover:bg-brand-coral"
-                        : offer.stripeUrl
-                          ? "bg-brand-blue text-white hover:bg-brand-coral"
-                          : "bg-white text-gray-400 cursor-not-allowed"
+                        : "bg-brand-blue text-white hover:bg-brand-coral"
                     }`}
                   >
                     {offer.cta}

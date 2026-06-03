@@ -45,11 +45,6 @@ function getCustomFieldValue(
 
 function getOfferLabel(session: StripeCheckoutSession) {
   if (session.metadata?.offer_label) return session.metadata.offer_label;
-
-  const amountTotal = session.amount_total;
-
-  if (amountTotal === 65000) return "Automate - 10 crédits";
-  if (amountTotal === 98000) return "Maestro - 20 crédits";
   return "Offre Demaa";
 }
 
