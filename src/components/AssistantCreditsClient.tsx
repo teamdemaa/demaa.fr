@@ -255,7 +255,7 @@ export default function AssistantCreditsClient() {
   const selectedFacturationHours = Math.floor(selectedCredits / 25);
 
   return (
-    <div className="min-h-screen bg-white text-brand-blue">
+    <div className="min-h-screen bg-dema-cream text-brand-blue">
       {embeddedCheckout ? (
         <div
           className="fixed inset-0 z-50 overflow-y-auto bg-brand-blue/45 px-4 py-6 backdrop-blur-sm md:px-8 md:py-10"
@@ -264,10 +264,10 @@ export default function AssistantCreditsClient() {
           aria-label={`Paiement Stripe pour ${formatCredits(embeddedCheckout.credits)}`}
         >
           <div className="mx-auto min-h-full w-full max-w-3xl">
-            <div className="relative overflow-hidden rounded-[1.25rem] bg-white shadow-[0_30px_80px_rgba(21,36,69,0.18)]">
-              <div className="flex items-center justify-between gap-4 border-b border-black/5 px-5 py-4 md:px-6">
+            <div className="relative overflow-hidden rounded-[1.25rem] border border-dema-line bg-dema-paper shadow-[0_24px_60px_rgba(23,35,29,0.14)]">
+              <div className="flex items-center justify-between gap-4 border-b border-dema-line px-5 py-4 md:px-6">
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-brand-coral">
+                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-dema-forest">
                     Paiement sécurisé
                   </p>
                   <h2 className="mt-1 text-lg font-semibold text-brand-blue">
@@ -277,7 +277,7 @@ export default function AssistantCreditsClient() {
                 <button
                   type="button"
                   onClick={closeEmbeddedCheckout}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-neutral-100 text-brand-blue transition hover:bg-neutral-200"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition hover:bg-[#ebeee9]"
                   aria-label="Fermer le paiement"
                 >
                   <X className="h-5 w-5" aria-hidden="true" />
@@ -285,7 +285,7 @@ export default function AssistantCreditsClient() {
               </div>
               <div className="min-h-[680px] px-2 py-4 md:px-4">
                 {isEmbeddedCheckoutLoading ? (
-                  <div className="flex min-h-[560px] items-center justify-center text-sm font-medium text-gray-500">
+                  <div className="flex min-h-[560px] items-center justify-center text-sm font-medium text-dema-muted">
                     Chargement du paiement...
                   </div>
                 ) : null}
@@ -300,7 +300,7 @@ export default function AssistantCreditsClient() {
           <h1 className="demaa-hero-title text-[3rem] leading-[0.98] tracking-tight text-brand-blue md:text-[5rem]">
             Déléguez ce qui vous ralentit.
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-gray-600 md:text-lg">
+          <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-dema-muted md:text-lg">
             Confiez-nous les tâches qui vous prennent la tête : factures,
             contenus, prospection, suivi administratif, le tout depuis
             WhatsApp.
@@ -308,13 +308,13 @@ export default function AssistantCreditsClient() {
           <div className="mt-9 flex flex-row flex-wrap items-center justify-center gap-1.5 sm:gap-3">
             <a
               href="#pricing"
-              className="inline-flex min-h-10 w-auto items-center justify-center rounded-full bg-brand-blue px-3 text-[11px] font-medium text-white transition hover:bg-brand-coral sm:min-h-12 sm:px-6 sm:text-sm"
+              className="inline-flex min-h-10 w-auto items-center justify-center rounded-full bg-dema-forest px-3 text-[11px] font-medium text-dema-paper transition hover:bg-[#284f3a] sm:min-h-12 sm:px-6 sm:text-sm"
             >
               Déléguer une première tâche
             </a>
             <a
               href="#deleguer"
-              className="inline-flex min-h-10 w-auto items-center justify-center rounded-full bg-neutral-100 px-3 text-[11px] font-medium text-brand-blue transition hover:bg-neutral-200 sm:min-h-12 sm:px-6 sm:text-sm"
+              className="inline-flex min-h-10 w-auto items-center justify-center rounded-full bg-dema-sage px-3 text-[11px] font-medium text-brand-blue/72 transition hover:bg-[#ebeee9] hover:text-brand-blue sm:min-h-12 sm:px-6 sm:text-sm"
             >
               Voir ce que je peux déléguer
             </a>
@@ -326,32 +326,32 @@ export default function AssistantCreditsClient() {
             <h2 className="text-2xl font-semibold tracking-tight text-brand-blue md:text-3xl">
               Votre Assistant, un renfort simple, quand vous en avez besoin.
             </h2>
-            <p className="mt-3 text-sm leading-relaxed text-gray-600 md:text-base">
+            <p className="mt-3 text-sm leading-relaxed text-dema-muted md:text-base">
               Vous choisissez vos crédits, vous confiez les tâches à traiter,
               puis on avance par priorité avec un suivi clair.
             </p>
           </div>
           <div className="mt-10 grid gap-5 md:grid-cols-3">
           {STEPS.map((step, index) => (
-            <div key={step.title} className="bg-neutral-50 px-5 py-6">
-              <p className="text-xs font-semibold text-brand-coral">0{index + 1}</p>
+            <div key={step.title} className="demaa-card rounded-[1.15rem] px-5 py-6">
+              <p className="text-xs font-semibold text-dema-forest">0{index + 1}</p>
               <h2 className="mt-4 text-base font-semibold text-brand-blue">{step.title}</h2>
-              <p className="mt-2 text-sm leading-relaxed text-gray-600">{step.description}</p>
+              <p className="mt-2 text-sm leading-relaxed text-dema-muted">{step.description}</p>
             </div>
           ))}
           </div>
         </section>
 
         <section className="mx-auto mt-28 max-w-5xl md:mt-36">
-          <div className="grid gap-8 bg-neutral-50 px-5 py-8 md:grid-cols-[0.9fr_1.1fr] md:px-8 md:py-10">
+          <div className="demaa-surface grid gap-8 rounded-[1.25rem] px-5 py-8 md:grid-cols-[0.9fr_1.1fr] md:px-8 md:py-10">
             <div>
-              <div className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-brand-blue">
+              <div className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
                 <MessageCircle className="h-5 w-5" aria-hidden="true" />
               </div>
               <h2 className="mt-5 text-2xl font-semibold tracking-tight text-brand-blue md:text-3xl">
                 Tout se passe sur WhatsApp.
               </h2>
-              <p className="mt-3 text-sm leading-relaxed text-gray-600 md:text-base">
+              <p className="mt-3 text-sm leading-relaxed text-dema-muted md:text-base">
                 Vous gardez un canal simple pour cadrer les demandes, envoyer les
                 éléments utiles et valider les prochaines actions.
               </p>
@@ -359,11 +359,11 @@ export default function AssistantCreditsClient() {
 
             <div className="space-y-3">
               {WHATSAPP_FLOW.map((item, index) => (
-                <div key={item} className="flex gap-3 bg-white px-4 py-4">
-                  <span className="mt-0.5 text-xs font-semibold text-brand-coral">
+                <div key={item} className="flex gap-3 rounded-[1rem] border border-dema-line/70 bg-dema-paper px-4 py-4">
+                  <span className="mt-0.5 text-xs font-semibold text-dema-forest">
                     0{index + 1}
                   </span>
-                  <p className="text-sm leading-relaxed text-gray-600">{item}</p>
+                  <p className="text-sm leading-relaxed text-dema-muted">{item}</p>
                 </div>
               ))}
             </div>
@@ -375,7 +375,7 @@ export default function AssistantCreditsClient() {
             <h2 className="text-2xl font-semibold tracking-tight text-brand-blue md:text-3xl">
               Ce que vous pouvez nous confier.
             </h2>
-            <p className="mt-4 text-sm leading-relaxed text-gray-600 md:text-base">
+            <p className="mt-4 text-sm leading-relaxed text-dema-muted md:text-base">
               On commence par les sujets qui vous font perdre du temps ou qui
               restent trop souvent en attente.
             </p>
@@ -387,7 +387,7 @@ export default function AssistantCreditsClient() {
               const UseIcon = item.icon;
 
               return (
-                <div key={item.title} className="bg-white">
+                <div key={item.title} className="border-b border-dema-line/70 bg-transparent last:border-b-0">
                   <button
                     type="button"
                     onClick={() => setOpenUseIndex(isOpen ? null : index)}
@@ -395,7 +395,7 @@ export default function AssistantCreditsClient() {
                     aria-expanded={isOpen}
                   >
                     <span className="flex min-w-0 items-center gap-3">
-                      <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-neutral-50 text-brand-blue">
+                      <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
                         <UseIcon className="h-4 w-4" aria-hidden="true" />
                       </span>
                       <span className="text-base font-semibold text-brand-blue">
@@ -403,11 +403,11 @@ export default function AssistantCreditsClient() {
                       </span>
                     </span>
                     <span className="flex items-center gap-3">
-                      <span className="hidden text-sm font-medium text-brand-coral sm:inline">
+                      <span className="hidden text-sm font-medium text-dema-forest sm:inline">
                         {item.rate}
                       </span>
                       <ChevronDown
-                        className={`h-5 w-5 shrink-0 text-brand-blue transition-transform ${
+                        className={`h-5 w-5 shrink-0 text-dema-forest transition-transform ${
                           isOpen ? "rotate-180" : ""
                         }`}
                       />
@@ -416,10 +416,10 @@ export default function AssistantCreditsClient() {
 
                   {isOpen ? (
                     <div className="pb-4">
-                      <p className="text-sm font-medium text-brand-coral sm:hidden">
+                      <p className="text-sm font-medium text-dema-forest sm:hidden">
                         {item.rate}
                       </p>
-                      <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                      <p className="mt-2 text-sm leading-relaxed text-dema-muted">
                         {item.description}
                       </p>
                     </div>
@@ -430,15 +430,15 @@ export default function AssistantCreditsClient() {
           </div>
         </section>
 
-        <section id="pricing" className="mx-auto mt-28 max-w-3xl bg-neutral-50 px-5 py-10 md:mt-36 md:px-8 md:py-12">
+        <section id="pricing" className="demaa-surface mx-auto mt-28 max-w-3xl rounded-[1.25rem] px-5 py-10 md:mt-36 md:px-8 md:py-12">
           <div className="mx-auto max-w-2xl text-center">
-            <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-coral">
+            <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
               Assistant à la demande
             </p>
             <h2 className="text-2xl font-semibold tracking-tight text-brand-blue md:text-3xl">
               Choisissez vos crédits.
             </h2>
-            <p className="mt-3 text-sm leading-relaxed text-gray-600 md:text-base">
+            <p className="mt-3 text-sm leading-relaxed text-dema-muted md:text-base">
               1 crédit = 1 €. Vous achetez vos crédits, puis vous les utilisez
               selon vos besoins.
             </p>
@@ -448,7 +448,7 @@ export default function AssistantCreditsClient() {
             <button
               type="button"
               onClick={() => setIsCreditMenuOpen((isOpen) => !isOpen)}
-              className="flex min-h-14 w-full items-center justify-between rounded-[0.9rem] bg-white px-4 text-left text-lg font-medium text-neutral-950 shadow-[0_10px_30px_rgba(20,20,20,0.06)] transition hover:bg-neutral-50"
+              className="flex min-h-14 w-full items-center justify-between rounded-[0.9rem] border border-dema-line bg-dema-paper px-4 text-left text-base font-normal text-brand-blue shadow-[0_6px_18px_rgba(23,35,29,0.024)] transition hover:bg-dema-sage/45"
               aria-expanded={isCreditMenuOpen}
             >
               <span>
@@ -460,7 +460,7 @@ export default function AssistantCreditsClient() {
             </button>
 
             {isCreditMenuOpen ? (
-              <div className="mt-3 overflow-hidden rounded-[0.9rem] bg-white py-3 shadow-[0_18px_34px_rgba(20,20,20,0.10)]">
+              <div className="mt-3 overflow-hidden rounded-[0.9rem] border border-dema-line bg-dema-paper py-3 shadow-[0_16px_32px_rgba(23,35,29,0.07)]">
                 {CREDIT_OPTIONS.map((option) => {
                   const isSelected = option.credits === selectedCredits;
 
@@ -472,10 +472,10 @@ export default function AssistantCreditsClient() {
                         setSelectedCredits(option.credits);
                         setIsCreditMenuOpen(false);
                       }}
-                      className={`flex w-full items-center justify-between px-5 py-3 text-left text-lg transition ${
+                      className={`flex w-full items-center justify-between px-5 py-3 text-left text-base transition ${
                         isSelected
-                          ? "font-semibold text-brand-coral"
-                          : "font-medium text-neutral-950 hover:bg-neutral-50"
+                          ? "font-semibold text-dema-forest"
+                          : "font-normal text-brand-blue hover:bg-dema-sage/50"
                       }`}
                     >
                       <span>
@@ -488,7 +488,7 @@ export default function AssistantCreditsClient() {
               </div>
             ) : null}
 
-            <p className="mt-5 text-center text-sm font-medium text-neutral-950">
+            <p className="mt-5 text-center text-sm font-medium text-brand-blue">
               1 crédit assistant = 1 €
             </p>
 
@@ -496,7 +496,7 @@ export default function AssistantCreditsClient() {
               type="button"
               onClick={handlePayment}
               disabled={isStartingCheckout}
-              className="mt-7 inline-flex w-full items-center justify-center rounded-full bg-brand-blue px-5 py-3 text-sm font-medium text-white transition hover:bg-brand-coral disabled:cursor-not-allowed disabled:opacity-60"
+              className="mt-7 inline-flex w-full items-center justify-center rounded-full bg-dema-forest px-5 py-3 text-sm font-medium text-dema-paper transition hover:bg-[#284f3a] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isStartingCheckout
                 ? "Ouverture du paiement..."
@@ -507,7 +507,7 @@ export default function AssistantCreditsClient() {
                 {checkoutError}
               </p>
             ) : null}
-            <p className="mx-auto mt-4 max-w-md text-center text-xs leading-relaxed text-gray-500">
+            <p className="mx-auto mt-4 max-w-md text-center text-xs leading-relaxed text-dema-muted">
               Exemple : {formatCredits(selectedCredits)} peuvent couvrir jusqu&apos;à{" "}
               {selectedFacturationHours}h de facturation, ou être répartis entre
               plusieurs tâches.
@@ -520,7 +520,7 @@ export default function AssistantCreditsClient() {
             <h2 className="text-2xl font-semibold tracking-tight text-brand-blue md:text-3xl">
               Les questions avant de démarrer.
             </h2>
-            <p className="mt-3 text-sm leading-relaxed text-gray-600 md:text-base">
+            <p className="mt-3 text-sm leading-relaxed text-dema-muted md:text-base">
               Le but : vous faire gagner du temps sans abonnement lourd, sans
               recrutement, et sans complexité.
             </p>
@@ -531,7 +531,7 @@ export default function AssistantCreditsClient() {
               const isOpen = openFaqIndex === index;
 
               return (
-                <div key={item.question} className="bg-neutral-50 px-5">
+                <div key={item.question} className="rounded-[1rem] border border-dema-line/70 bg-dema-paper px-5">
                   <button
                     type="button"
                     onClick={() => setOpenFaqIndex(isOpen ? null : index)}
@@ -542,14 +542,14 @@ export default function AssistantCreditsClient() {
                       {item.question}
                     </span>
                     <ChevronDown
-                      className={`h-5 w-5 shrink-0 text-brand-blue transition-transform ${
+                      className={`h-5 w-5 shrink-0 text-dema-forest transition-transform ${
                         isOpen ? "rotate-180" : ""
                       }`}
                     />
                   </button>
 
                   {isOpen ? (
-                    <p className="pb-4 text-sm leading-relaxed text-gray-600">
+                    <p className="pb-4 text-sm leading-relaxed text-dema-muted">
                       {item.answer}
                     </p>
                   ) : null}
@@ -563,13 +563,13 @@ export default function AssistantCreditsClient() {
           <h2 className="text-2xl font-semibold tracking-tight text-brand-blue md:text-3xl">
             Déléguez une première tâche cette semaine.
           </h2>
-          <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-gray-600 md:text-base">
+          <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-dema-muted md:text-base">
             Commencez avec des crédits, puis confiez les sujets qui vous freinent
             au quotidien.
           </p>
           <a
             href="#pricing"
-            className="mt-6 inline-flex rounded-full bg-brand-blue px-6 py-3 text-sm font-medium text-white transition hover:bg-brand-coral"
+            className="mt-6 inline-flex rounded-full bg-dema-forest px-6 py-3 text-sm font-medium text-dema-paper transition hover:bg-[#284f3a]"
           >
             Déléguer une première tâche
           </a>

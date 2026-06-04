@@ -112,26 +112,26 @@ export default function SystemSetupModal({
       onClick={handleClose}
     >
       <div
-        className="w-full max-w-xl rounded-[2rem] border border-brand-blue/8 bg-[#ffffff] p-6 shadow-[0_30px_80px_rgba(20,20,20,0.18)] md:p-8"
+        className="w-full max-w-xl rounded-[1.25rem] border border-dema-line bg-dema-paper p-6 shadow-[0_24px_60px_rgba(23,35,29,0.14)] md:p-8"
         onClick={(event) => event.stopPropagation()}
       >
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-coral">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
               Audit de vos systèmes
             </p>
             <h2 className="mt-2 text-3xl font-semibold tracking-tight text-brand-blue">
               Audit de vos systèmes
             </h2>
-            <p className="mt-3 text-sm leading-relaxed text-gray-600">
-              Donnez-nous juste l&apos;essentiel. On vous recontacte sur WhatsApp
-              pour cadrer le bon système à mettre en place.
+            <p className="mt-3 text-sm leading-relaxed text-dema-muted">
+              C&apos;est un appel gratuit de 30 minutes. Vous exposez vos
+              problématiques et on trouve les premières solutions ensemble.
             </p>
           </div>
           <button
             type="button"
             onClick={handleClose}
-            className="rounded-full border border-brand-blue/10 bg-white p-2 text-brand-blue transition hover:border-neutral-300 hover:text-neutral-700"
+            className="rounded-full border border-dema-line bg-dema-paper p-2 text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
             aria-label="Fermer la fenêtre"
           >
             <X className="h-4 w-4" />
@@ -139,7 +139,7 @@ export default function SystemSetupModal({
         </div>
 
         {successMessage ? (
-          <div className="mt-6 rounded-[1.5rem] border border-brand-coral/15 bg-white px-5 py-4">
+          <div className="mt-6 rounded-[1.25rem] border border-dema-line bg-dema-paper px-5 py-4">
             <p className="text-sm font-medium text-brand-blue">{successMessage}</p>
           </div>
         ) : (
@@ -148,26 +148,26 @@ export default function SystemSetupModal({
               value={formData.firstName}
               onChange={handleChange("firstName")}
               placeholder="Prénom"
-              className="w-full rounded-[1.25rem] border border-brand-blue/10 bg-white px-4 py-3 text-sm text-brand-blue outline-none transition placeholder:text-brand-blue/40 focus:border-brand-coral/25"
+              className="demaa-input"
             />
             <input
               value={formData.sector}
               onChange={handleChange("sector")}
               placeholder="Secteur d&apos;activité"
-              className="w-full rounded-[1.25rem] border border-brand-blue/10 bg-white px-4 py-3 text-sm text-brand-blue outline-none transition placeholder:text-brand-blue/40 focus:border-brand-coral/25"
+              className="demaa-input"
             />
             <input
               value={formData.whatsapp}
               onChange={handleChange("whatsapp")}
               placeholder="Numéro WhatsApp"
-              className="w-full rounded-[1.25rem] border border-brand-blue/10 bg-white px-4 py-3 text-sm text-brand-blue outline-none transition placeholder:text-brand-blue/40 focus:border-brand-coral/25"
+              className="demaa-input"
             />
             <textarea
               value={formData.availability}
               onChange={handleChange("availability")}
               placeholder="Vos disponibilités pour un appel"
               rows={4}
-              className="w-full resize-none rounded-[1.25rem] border border-brand-blue/10 bg-white px-4 py-3 text-sm text-brand-blue outline-none transition placeholder:text-brand-blue/40 focus:border-brand-coral/25"
+              className="demaa-textarea"
             />
 
             {error ? (
@@ -177,7 +177,7 @@ export default function SystemSetupModal({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="inline-flex rounded-full bg-brand-blue px-6 py-3 text-sm font-medium text-white transition hover:bg-brand-coral disabled:cursor-not-allowed disabled:opacity-60"
+              className="inline-flex rounded-full bg-dema-forest px-6 py-3 text-sm font-medium text-dema-paper transition hover:bg-[#284f3a] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isSubmitting ? "Envoi en cours..." : "Être recontacté"}
             </button>

@@ -147,28 +147,28 @@ export default function ToolDirectoryClient({
 
   return (
     <div className="w-full">
-      <section className={`w-full border-b border-brand-blue/5 bg-[#ffffff] px-4 pb-4 md:pb-5 ${showHeader ? "pt-8 md:pt-10" : "pt-1"}`}>
+      <section className={`w-full border-b border-dema-line/65 bg-dema-cream px-4 pb-4 md:pb-5 ${showHeader ? "pt-8 md:pt-10" : "pt-1"}`}>
         <div className="mx-auto max-w-5xl text-center">
           {showHeader ? (
             <>
               <h1 className="demaa-section-title text-4xl tracking-tight text-brand-blue md:text-5xl">
                 {title}
               </h1>
-              <p className="mx-auto mt-2 max-w-2xl text-sm font-normal leading-relaxed text-gray-600">
+              <p className="mx-auto mt-2 max-w-2xl text-sm font-normal leading-relaxed text-dema-muted">
                 {description}
               </p>
             </>
           ) : null}
 
           {showSearchBar ? (
-            <div className={`mx-auto max-w-4xl rounded-full border border-brand-blue/5 bg-white p-1.5 shadow-[0_10px_30px_rgba(20,20,20,0.035)] ${showHeader ? "mt-5" : "mt-0"}`}>
+            <div className={`demaa-search-shell mx-auto max-w-4xl p-1.5 ${showHeader ? "mt-5" : "mt-0"}`}>
               <div className="relative">
-                <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-300 md:left-5 md:h-5 md:w-5" />
+                <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-dema-forest/42 md:left-5 md:h-5 md:w-5" />
                 <input
                   value={searchQuery}
                   onChange={(event) => updateSearchQuery(event.target.value)}
                   placeholder={searchPlaceholder}
-                  className="w-full rounded-full bg-white py-3.5 pl-10 pr-5 text-sm font-normal text-brand-blue outline-none transition placeholder:text-brand-blue/40 md:py-4 md:pl-12 md:text-base"
+                  className="w-full rounded-full bg-dema-paper py-3.5 pl-10 pr-5 text-sm font-normal text-brand-blue outline-none transition placeholder:text-brand-blue/36 md:py-4 md:pl-12 md:text-base"
                 />
               </div>
             </div>
@@ -231,7 +231,7 @@ export default function ToolDirectoryClient({
                 setActiveSector("Tous");
                 setActiveCategory("Tous");
               }}
-              className="text-xs font-medium text-neutral-700 transition hover:text-brand-blue"
+              className="text-xs font-medium text-dema-muted transition hover:text-dema-forest"
             >
               Réinitialiser
             </button>
@@ -245,9 +245,9 @@ export default function ToolDirectoryClient({
             externalLinks={externalLinks}
           />
         ) : filteredTools.length === 0 ? (
-          <div className="rounded-[2rem] border border-dashed border-brand-blue/10 bg-white p-10 text-center">
+          <div className="rounded-[1.25rem] border border-dashed border-dema-line bg-dema-paper p-10 text-center">
             <h2 className="text-xl font-bold text-brand-blue">Aucun outil trouvé</h2>
-            <p className="mt-3 text-sm font-normal text-gray-500">
+            <p className="mt-3 text-sm font-normal text-dema-muted">
               Essayez un autre secteur, une autre catégorie ou un mot-clé plus large.
             </p>
           </div>
@@ -261,7 +261,7 @@ export default function ToolDirectoryClient({
               >
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-brand-coral">
+                    <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-dema-forest">
                       {tool.category}
                     </p>
                     <h2 className="mt-1.5 text-lg font-semibold tracking-tight text-brand-blue">
@@ -270,7 +270,7 @@ export default function ToolDirectoryClient({
                   </div>
                 </div>
 
-                <p className="mt-3 text-sm font-normal leading-relaxed text-gray-600">
+                <p className="mt-3 text-sm font-normal leading-relaxed text-dema-muted">
                   {tool.description}
                 </p>
 
@@ -286,8 +286,8 @@ export default function ToolDirectoryClient({
                         key={sector}
                         className={`rounded-full px-2.5 py-1 text-[10px] font-normal ${
                           sector === "Transverse"
-                            ? "bg-white text-brand-blue/65"
-                            : "bg-neutral-100 text-brand-blue/75"
+                            ? "bg-dema-paper text-brand-blue/65"
+                            : "bg-dema-sage/75 text-brand-blue/75"
                         }`}
                       >
                         {sector}
@@ -296,7 +296,7 @@ export default function ToolDirectoryClient({
                   {tool.tags.slice(0, 2).map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full bg-neutral-100 px-2.5 py-1 text-[10px] font-normal text-brand-blue/70"
+                      className="rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-normal text-brand-blue/70"
                     >
                       {tag}
                     </span>
@@ -304,7 +304,7 @@ export default function ToolDirectoryClient({
                 </div>
 
                 <div className="mt-auto pt-3">
-                  <span className="inline-flex rounded-full bg-brand-blue px-3 py-1 text-[10px] font-medium text-white">
+                  <span className="inline-flex rounded-full bg-dema-forest px-3 py-1 text-[10px] font-medium text-dema-paper">
                     {tool.pricingHint}
                   </span>
                 </div>
@@ -330,9 +330,9 @@ function ToolboxSections({
 
   if (!hasResults) {
     return (
-      <div className="rounded-[1.25rem] border border-dashed border-brand-blue/10 bg-white p-10 text-center">
+      <div className="rounded-[1.25rem] border border-dashed border-dema-line bg-dema-paper p-10 text-center">
         <h2 className="text-xl font-bold text-brand-blue">Aucun outil trouvé</h2>
-        <p className="mt-3 text-sm font-normal text-gray-500">
+        <p className="mt-3 text-sm font-normal text-dema-muted">
           Essayez un autre mot-clé ou un usage plus large.
         </p>
       </div>
@@ -438,18 +438,18 @@ function SquareToolCard({
   externalLinks: boolean;
 }) {
   const className =
-    "group flex min-h-[10rem] flex-[0_0_calc(50%-0.5rem)] flex-col rounded-[1.15rem] border border-brand-blue/8 bg-white p-5 text-left shadow-[0_8px_24px_rgba(20,20,20,0.025)] transition hover:-translate-y-0.5 hover:border-neutral-300 hover:shadow-[0_16px_42px_rgba(20,20,20,0.06)] md:flex-[0_0_calc(25%-0.75rem)]";
+    "demaa-card group flex min-h-[10rem] flex-[0_0_calc(50%-0.5rem)] flex-col rounded-[1.15rem] p-5 text-left md:flex-[0_0_calc(25%-0.75rem)]";
 
   const content = (
     <>
       <div className="flex h-full flex-col">
-        <p className="text-[10px] font-medium uppercase tracking-[0.16em] text-brand-coral">
+        <p className="text-[10px] font-medium uppercase tracking-[0.16em] text-dema-forest">
           {tool.category}
         </p>
         <h3 className="mt-3 line-clamp-2 text-lg font-semibold leading-tight tracking-tight text-brand-blue">
           {tool.name}
         </h3>
-        <p className="mt-3 line-clamp-3 text-sm font-normal leading-relaxed text-gray-600">
+        <p className="mt-3 line-clamp-3 text-sm font-normal leading-relaxed text-dema-muted">
           {tool.description}
         </p>
       </div>
@@ -481,7 +481,7 @@ function ToolCard({
   children: ReactNode;
 }) {
   const className =
-    "group flex h-full flex-col rounded-[1.25rem] border border-brand-blue/8 bg-white p-4 shadow-[0_8px_24px_rgba(20,20,20,0.025)] transition hover:-translate-y-0.5 hover:border-neutral-300 hover:shadow-[0_16px_42px_rgba(20,20,20,0.06)]";
+    "demaa-card group flex h-full flex-col rounded-[1.15rem] p-4";
 
   if (externalLinks) {
     return (
@@ -511,10 +511,10 @@ function FilterChip({
     <button
       type="button"
       onClick={onClick}
-      className={`min-h-9 whitespace-nowrap rounded-full px-3.5 py-1.5 text-xs transition md:min-h-10 md:px-4 md:text-sm ${
+      className={`demaa-chip ${
         isActive
-          ? "bg-brand-blue text-white shadow-sm"
-          : "bg-neutral-100 text-brand-blue/65 hover:bg-neutral-200"
+          ? "demaa-chip-active"
+          : ""
       }`}
     >
       {label}

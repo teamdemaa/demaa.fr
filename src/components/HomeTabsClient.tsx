@@ -96,7 +96,6 @@ const academyCarousels: AcademyCarousel[] = [
     resourceHref:
       "https://www.canva.com/design/DAHDpfMys10/_MTXI4EYctriq9Mn9eEhRA/view?utm_content=DAHDpfMys10&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h1664f1e785",
     slides: [
-      "/images/academy/obligations-0.png",
       "/images/academy/obligations-1.png",
       "/images/academy/obligations-2.png",
     ],
@@ -108,7 +107,6 @@ const academyCarousels: AcademyCarousel[] = [
     resourceHref:
       "https://docs.google.com/spreadsheets/d/1-7IDhGAtwNQJtZDYYvhDvM3VHfHVeGwOMTFKdAQuIOE/edit?usp=sharing",
     slides: [
-      "/images/academy/budget-0.png",
       "/images/academy/budget-1.png",
       "/images/academy/budget-2.png",
       "/images/academy/budget-3.png",
@@ -120,7 +118,6 @@ const academyCarousels: AcademyCarousel[] = [
     resourceLabel: "Accéder au modèle",
     resourceHref: "https://airtable.com/app3fRlYVjiFAnrjW/shraiL72hO4EvQoh2",
     slides: [
-      "/images/academy/organisation-0.png",
       "/images/academy/organisation-1.png",
       "/images/academy/organisation-2.png",
       "/images/academy/organisation-3.png",
@@ -254,21 +251,25 @@ export default function HomeTabsClient({
 
   return (
     <>
-      <section className="ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] w-screen bg-[#ffffff]/70 px-4 pb-4 pt-10 text-center md:px-8 md:pb-5 md:pt-14">
-        <div className="mx-auto max-w-6xl space-y-5 md:space-y-6">
+      <section className="ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] w-screen bg-dema-cream px-4 pb-5 pt-12 text-center md:px-8 md:pb-6 md:pt-16">
+        <div className="mx-auto max-w-6xl space-y-6 md:space-y-7">
           <div className="mx-auto max-w-5xl">
-            <h1 className="demaa-hero-title text-[2.24rem] text-brand-blue tracking-tight leading-[0.98] sm:text-[2.75rem] md:text-[3.75rem] lg:text-[4.5rem]">
+            <h1 className="text-[2.24rem] tracking-tight leading-[0.98] sm:text-[2.75rem] md:text-[3.75rem] lg:text-[4.5rem]">
               {heroCopy.muted && !heroCopy.mutedAfter ? (
                 <>
-                  <span className="text-neutral-400">{heroCopy.muted}</span>
+                  <span className="font-sans font-light not-italic text-brand-blue/56">
+                    {heroCopy.muted}
+                  </span>
                   {heroCopy.breakAfterMuted ? <br /> : " "}
                 </>
               ) : null}
-              <span>{heroCopy.strong}</span>
+              <span className="demaa-hero-title text-brand-blue/78">{heroCopy.strong}</span>
               {heroCopy.muted && heroCopy.mutedAfter ? (
                 <>
                   {heroCopy.breakBeforeMuted ? <br /> : " "}
-                  <span className="text-neutral-400">{heroCopy.muted}</span>
+                  <span className="font-sans font-light not-italic text-brand-blue/56">
+                    {heroCopy.muted}
+                  </span>
                 </>
               ) : null}
             </h1>
@@ -298,16 +299,16 @@ function SearchBar({
   onChange: (value: string) => void;
 }) {
   return (
-    <div className="mx-auto w-full max-w-4xl rounded-full border border-brand-blue/5 bg-white p-1 shadow-[0_10px_30px_rgba(20,20,20,0.035)]">
+    <div className="demaa-search-shell mx-auto w-full max-w-4xl">
       <div className="relative">
-        <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-300 md:left-5 md:h-5 md:w-5" />
+        <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-dema-forest/42 md:left-5 md:h-5 md:w-5" />
         <input
           type="search"
           value={value}
           onChange={(event) => onChange(event.target.value)}
           placeholder={placeholder}
           aria-label={placeholder}
-          className="w-full rounded-full bg-white py-2.5 pl-10 pr-5 text-sm font-normal text-brand-blue outline-none transition placeholder:text-brand-blue/40 md:py-3 md:pl-12 md:text-base"
+          className="w-full rounded-full bg-dema-paper py-2.5 pl-10 pr-5 text-sm font-normal text-brand-blue outline-none transition placeholder:text-brand-blue/36 md:py-3 md:pl-12 md:text-base"
         />
       </div>
     </div>
@@ -326,7 +327,7 @@ function MobileTabBar({
       className="fixed inset-x-0 bottom-0 z-40 px-4 pb-[calc(env(safe-area-inset-bottom)+0.875rem)] md:hidden"
       aria-label="Navigation principale mobile"
     >
-      <div className="mx-auto grid max-w-md grid-cols-3 gap-1 rounded-full border border-brand-blue/5 bg-white/95 p-1.5 shadow-[0_-8px_28px_rgba(20,20,20,0.07)] backdrop-blur">
+      <div className="mx-auto grid max-w-md grid-cols-3 gap-1 rounded-full border border-dema-line/75 bg-dema-paper/95 p-1.5 shadow-[0_-8px_28px_rgba(23,35,29,0.08)] backdrop-blur">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -337,10 +338,10 @@ function MobileTabBar({
               type="button"
               onClick={() => onSelect(tab.id)}
               aria-current={isActive ? "page" : undefined}
-              className={`flex min-h-11 items-center justify-center gap-1.5 rounded-full px-2 text-[11px] font-medium transition ${
-                isActive
-                  ? "bg-brand-blue/[0.07] text-brand-blue"
-                  : "text-brand-blue/65 hover:bg-neutral-100 hover:text-brand-blue"
+              className={`flex min-h-11 items-center justify-center gap-1.5 rounded-full px-2 text-[11px] transition ${
+                  isActive
+                  ? "bg-dema-forest font-semibold text-white shadow-[0_6px_16px_rgba(49,95,70,0.14)]"
+                  : "font-light text-brand-blue/56 hover:bg-dema-sage/70 hover:text-brand-blue/72"
               }`}
             >
               <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
@@ -402,7 +403,7 @@ function AcademyPlaceholder({ searchQuery }: { searchQuery: string }) {
 
   return (
     <>
-      <section className="w-full border-b border-brand-blue/5 bg-[#ffffff] px-4 pb-4 pt-2 md:pb-5 md:pt-0">
+      <section className="w-full border-b border-dema-line/65 bg-dema-cream px-4 pb-4 pt-2 md:pb-5 md:pt-0">
         <div className="mx-auto max-w-6xl">
           <div className="mx-auto max-w-4xl overflow-x-auto pb-2 soft-scroll">
             <div className="flex min-w-max justify-center gap-2 px-1">
@@ -411,10 +412,10 @@ function AcademyPlaceholder({ searchQuery }: { searchQuery: string }) {
                   key={category}
                   type="button"
                   onClick={() => setActiveCategory(category)}
-                  className={`min-h-9 whitespace-nowrap rounded-full px-3.5 py-1.5 text-xs transition md:min-h-10 md:px-4 md:text-sm ${
+                  className={`demaa-chip ${
                     activeCategory === category
-                      ? "bg-brand-blue text-white shadow-sm"
-                      : "bg-neutral-100 text-brand-blue/65 hover:bg-neutral-200"
+                      ? "demaa-chip-active"
+                      : ""
                   }`}
                 >
                   {category}
@@ -443,9 +444,9 @@ function AcademyPlaceholder({ searchQuery }: { searchQuery: string }) {
         </div>
 
         {filteredCarousels.length === 0 ? (
-          <div className="mt-8 rounded-[1.25rem] border border-dashed border-brand-blue/10 bg-white p-8 text-center">
+          <div className="mt-8 rounded-[1.25rem] border border-dashed border-dema-line bg-dema-paper p-8 text-center">
             <h2 className="text-xl font-bold text-brand-blue">Aucun carrousel trouvé</h2>
-            <p className="mt-3 text-sm font-normal text-gray-500">
+            <p className="mt-3 text-sm font-normal text-dema-muted">
               Essayez un autre thème.
             </p>
           </div>
@@ -457,12 +458,12 @@ function AcademyPlaceholder({ searchQuery }: { searchQuery: string }) {
             onClick={closeCarousel}
           >
             <div
-              className="flex max-h-[92vh] w-full max-w-6xl flex-col overflow-hidden rounded-[1.25rem] border border-brand-blue/8 bg-white shadow-[0_30px_80px_rgba(20,20,20,0.18)]"
+              className="flex max-h-[92vh] w-full max-w-6xl flex-col overflow-hidden rounded-[1.25rem] border border-dema-line bg-dema-paper shadow-[0_30px_80px_rgba(23,35,29,0.18)]"
               onClick={(event) => event.stopPropagation()}
             >
-              <div className="flex items-start justify-between gap-4 border-b border-brand-blue/8 px-4 py-4 md:px-6">
+              <div className="flex items-start justify-between gap-4 border-b border-dema-line px-4 py-4 md:px-6">
                 <div className="min-w-0 text-left">
-                  <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-neutral-500">
+                  <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-dema-muted">
                     {selectedCarousel.category}
                   </p>
                   <h2 className="mt-1 line-clamp-2 text-lg font-semibold leading-tight text-brand-blue md:text-xl">
@@ -472,18 +473,18 @@ function AcademyPlaceholder({ searchQuery }: { searchQuery: string }) {
                 <button
                   type="button"
                   onClick={closeCarousel}
-                  className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-brand-blue/10 bg-white text-brand-blue transition hover:bg-[#fcfcfc]"
+                  className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
                   aria-label="Fermer"
                 >
                   <X className="h-4 w-4" />
                 </button>
               </div>
 
-              <div className="relative flex min-h-0 flex-1 items-center justify-center bg-[#fcfcfc] px-3 py-4 md:px-6">
+              <div className="relative flex min-h-0 flex-1 items-center justify-center bg-dema-cream px-3 py-4 md:px-6">
                 <button
                   type="button"
                   onClick={showPreviousSlide}
-                  className="absolute left-4 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full border border-brand-blue/10 bg-white/95 text-brand-blue shadow-sm transition hover:bg-white"
+                  className="absolute left-4 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper/95 text-brand-blue shadow-sm transition hover:border-dema-forest/25 hover:text-dema-forest"
                   aria-label="Slide précédente"
                 >
                   <ChevronLeft className="h-5 w-5" />
@@ -501,14 +502,14 @@ function AcademyPlaceholder({ searchQuery }: { searchQuery: string }) {
                 <button
                   type="button"
                   onClick={showNextSlide}
-                  className="absolute right-4 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full border border-brand-blue/10 bg-white/95 text-brand-blue shadow-sm transition hover:bg-white"
+                  className="absolute right-4 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper/95 text-brand-blue shadow-sm transition hover:border-dema-forest/25 hover:text-dema-forest"
                   aria-label="Slide suivante"
                 >
                   <ChevronRight className="h-5 w-5" />
                 </button>
               </div>
 
-              <div className="flex flex-col gap-3 border-t border-brand-blue/8 px-4 py-4 md:flex-row md:items-center md:justify-between md:px-6">
+              <div className="flex flex-col gap-3 border-t border-dema-line px-4 py-4 md:flex-row md:items-center md:justify-between md:px-6">
                 <div className="flex items-center justify-center gap-1.5 md:justify-start">
                   {selectedCarousel.slides.map((slide, index) => (
                     <button
@@ -516,7 +517,7 @@ function AcademyPlaceholder({ searchQuery }: { searchQuery: string }) {
                       type="button"
                       onClick={() => setActiveSlide(index)}
                       className={`h-2 rounded-full transition ${
-                        activeSlide === index ? "w-6 bg-brand-blue" : "w-2 bg-neutral-300"
+                        activeSlide === index ? "w-6 bg-dema-forest" : "w-2 bg-dema-line"
                       }`}
                       aria-label={`Afficher la slide ${index + 1}`}
                     />
@@ -527,7 +528,7 @@ function AcademyPlaceholder({ searchQuery }: { searchQuery: string }) {
                   href={selectedCarousel.resourceHref}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-brand-blue/10 bg-white px-4 py-2 text-sm font-medium text-brand-blue transition hover:bg-[#fcfcfc]"
+                  className="demaa-secondary-button gap-2"
                 >
                   <FileText className="h-4 w-4" />
                   {selectedCarousel.resourceLabel}
@@ -580,9 +581,9 @@ function AcademyCarouselCard({
       onMouseLeave={stopPreview}
       onFocus={startPreview}
       onBlur={stopPreview}
-      className="group overflow-hidden rounded-[1.25rem] border border-brand-blue/8 bg-white text-left shadow-[0_8px_24px_rgba(20,20,20,0.025)] transition hover:-translate-y-0.5 hover:border-brand-blue/14 hover:shadow-[0_16px_42px_rgba(20,20,20,0.055)]"
+      className="demaa-card group overflow-hidden rounded-[1.15rem] text-left"
     >
-      <div className="relative aspect-[16/10] overflow-hidden bg-[#fcfcfc]">
+      <div className="relative aspect-[16/10] overflow-hidden bg-dema-cream">
         {carousel.slides.map((slide, index) =>
           index === 0 || hasLoadedPreview ? (
             <Image
@@ -598,12 +599,12 @@ function AcademyCarouselCard({
           ) : null
         )}
         {carousel.slides.length > 1 ? (
-          <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 items-center gap-1.5 rounded-full bg-white/75 px-2 py-1 shadow-[0_4px_14px_rgba(20,20,20,0.08)] backdrop-blur-sm">
+          <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 items-center gap-1.5 rounded-full bg-dema-paper/78 px-2 py-1 shadow-[0_4px_14px_rgba(23,35,29,0.08)] backdrop-blur-sm">
             {carousel.slides.map((slide, index) => (
               <span
                 key={slide}
                 className={`h-1.5 rounded-full transition-all duration-300 ${
-                  previewSlide === index ? "w-4 bg-brand-blue/75" : "w-1.5 bg-neutral-300"
+                previewSlide === index ? "w-4 bg-dema-forest/75" : "w-1.5 bg-dema-line"
                 }`}
               />
             ))}
@@ -611,13 +612,13 @@ function AcademyCarouselCard({
         ) : null}
       </div>
       <div className="p-4">
-        <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-neutral-500">
+        <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-dema-muted">
           {carousel.category}
         </p>
         <h2 className="mt-2 text-base font-semibold leading-snug text-brand-blue">
           {carousel.title}
         </h2>
-        <p className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-neutral-500">
+        <p className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-dema-muted">
           <FileText className="h-3.5 w-3.5" />
           Document inclus
         </p>

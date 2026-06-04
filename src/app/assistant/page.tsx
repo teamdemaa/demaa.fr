@@ -79,7 +79,7 @@ export default function AssistantPage() {
   return (
     <>
       <Navbar />
-      <main className="flex-1 bg-white">
+      <main className="flex-1 bg-dema-cream">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
