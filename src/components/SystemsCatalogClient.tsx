@@ -13,6 +13,7 @@ import {
   Camera,
   Car,
   ChefHat,
+  ChevronDown,
   Cloud,
   Code2,
   ClipboardCheck,
@@ -202,6 +203,7 @@ export default function SystemsCatalogClient({
 }: SystemsCatalogClientProps) {
   const [selectedSlug, setSelectedSlug] = useState<string | null>(initialSelectedSlug ?? null);
   const [activeTab, setActiveTab] = useState<"processus" | "outils">("processus");
+  const [openProcessIds, setOpenProcessIds] = useState<Set<string>>(new Set());
   const [internalSearchQuery, setInternalSearchQuery] = useState("");
   const [activeSector, setActiveSector] = useState("Tous");
   const [isSystemSetupModalOpen, setIsSystemSetupModalOpen] = useState(false);
@@ -213,6 +215,20 @@ export default function SystemsCatalogClient({
     } else {
       setInternalSearchQuery(value);
     }
+  }
+
+  function toggleProcessCard(processId: string) {
+    setOpenProcessIds((currentOpenIds) => {
+      const nextOpenIds = new Set(currentOpenIds);
+
+      if (nextOpenIds.has(processId)) {
+        nextOpenIds.delete(processId);
+      } else {
+        nextOpenIds.add(processId);
+      }
+
+      return nextOpenIds;
+    });
   }
 
   const sectors = useMemo(
@@ -367,6 +383,7 @@ export default function SystemsCatalogClient({
                             onClick={() => {
                               setSelectedSlug(system.slug);
                               setActiveTab("processus");
+                              setOpenProcessIds(new Set());
                             }}
                             className="group flex min-h-[10rem] flex-[0_0_calc(50%-0.5rem)] cursor-pointer flex-col rounded-[1.15rem] border border-brand-blue/8 bg-white p-5 text-left shadow-[0_8px_24px_rgba(20,20,20,0.025)] transition hover:-translate-y-0.5 hover:border-neutral-300 hover:shadow-[0_16px_42px_rgba(20,20,20,0.06)] md:flex-[0_0_calc(25%-0.75rem)]"
                           >
@@ -394,7 +411,10 @@ export default function SystemsCatalogClient({
       {selectedSystem && detail ? (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-brand-blue/35 p-4"
-          onClick={() => setSelectedSlug(null)}
+          onClick={() => {
+            setSelectedSlug(null);
+            setOpenProcessIds(new Set());
+          }}
         >
           <div
             className="relative max-h-[92vh] w-full max-w-7xl overflow-y-auto rounded-[1.25rem] bg-[#ffffff] p-6 pt-14 shadow-[0_30px_80px_rgba(20,20,20,0.18)] md:p-8"
@@ -422,7 +442,10 @@ export default function SystemsCatalogClient({
                 </button>
                 <button
                   type="button"
-                  onClick={() => setSelectedSlug(null)}
+                  onClick={() => {
+                    setSelectedSlug(null);
+                    setOpenProcessIds(new Set());
+                  }}
                   className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-brand-blue/10 bg-white text-brand-blue transition hover:border-neutral-300 hover:text-neutral-700 md:static"
                   aria-label="Fermer"
                 >
@@ -472,24 +495,64 @@ export default function SystemsCatalogClient({
                         <h3 className="demaa-section-title text-xl text-brand-blue">{pillar}</h3>
                         <div className="mt-4 space-y-3">
                           {pillarCards.length > 0 ? (
-                            pillarCards.map((process) => (
-                              <article
-                                key={process.title}
-                                className="rounded-[1.25rem] bg-neutral-50/90 p-3 text-left shadow-none"
-                              >
-                                <h4 className="text-left text-sm font-semibold leading-snug text-brand-blue">
-                                  {process.title}
-                                </h4>
-                                <p className="mt-2 text-left text-xs leading-relaxed text-neutral-700">
-                                  {process.description}
-                                </p>
-                                {process.examples ? (
-                                  <p className="mt-3 text-left text-xs italic leading-relaxed text-neutral-400">
-                                    {process.examples}
-                                  </p>
-                                ) : null}
-                              </article>
-                            ))
+                            pillarCards.map((process) => {
+                              const processId = `${selectedSystem.slug}-${pillar}-${process.title}`
+                                .normalize("NFD")
+                                .replace(/[\u0300-\u036f]/g, "")
+                                .replace(/[^a-zA-Z0-9]+/g, "-")
+                                .replace(/^-|-$/g, "")
+                                .toLowerCase();
+                              const isOpen = openProcessIds.has(processId);
+
+                              return (
+                                <article
+                                  key={process.title}
+                                  className={`rounded-[1.15rem] border text-left transition ${
+                                    isOpen
+                                      ? "border-brand-blue/10 bg-white shadow-[0_10px_24px_rgba(20,20,20,0.04)]"
+                                      : "border-transparent bg-neutral-50/90 hover:border-neutral-200 hover:bg-white"
+                                  }`}
+                                >
+                                  <button
+                                    type="button"
+                                    onClick={() => toggleProcessCard(processId)}
+                                    className="flex min-h-12 w-full items-center justify-between gap-3 px-3 py-3 text-left"
+                                    aria-expanded={isOpen}
+                                    aria-controls={`${processId}-content`}
+                                  >
+                                    <h4 className="text-left text-sm font-semibold leading-snug text-brand-blue">
+                                      {process.title}
+                                    </h4>
+                                    <ChevronDown
+                                      className={`h-4 w-4 shrink-0 text-brand-blue/35 transition-transform duration-200 ${
+                                        isOpen ? "rotate-180" : ""
+                                      }`}
+                                      aria-hidden="true"
+                                    />
+                                  </button>
+                                  <div
+                                    id={`${processId}-content`}
+                                    aria-hidden={!isOpen}
+                                    className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-200 ease-out ${
+                                      isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                                    }`}
+                                  >
+                                    <div className="min-h-0">
+                                      <div className="px-3 pb-3 pt-0">
+                                        <p className="text-left text-xs leading-relaxed text-neutral-700">
+                                          {process.description}
+                                        </p>
+                                        {process.examples ? (
+                                          <p className="mt-3 text-left text-xs italic leading-relaxed text-neutral-500">
+                                            {process.examples}
+                                          </p>
+                                        ) : null}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </article>
+                              );
+                            })
                           ) : (
                             <div className="rounded-[1.25rem] border border-brand-blue/8 bg-transparent p-3">
                               <p className="text-left text-xs leading-relaxed text-gray-500">
