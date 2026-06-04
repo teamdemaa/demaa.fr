@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import Script from "next/script";
 import "./globals.css";
 import Footer from "@/components/Footer";
+import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
 
 import { Analytics } from "@vercel/analytics/next";
 
@@ -57,6 +58,19 @@ export const metadata: Metadata = {
   title: "Demaa - Annuaire d'outils et de services",
   description: "Demaa est un annuaire SEO-friendly ultra-minimaliste pour trouver les meilleurs outils et services.",
   metadataBase: new URL('https://demaa.fr'),
+  applicationName: "Demaa",
+  appleWebApp: {
+    capable: true,
+    title: "Demaa",
+    statusBarStyle: "default",
+  },
+  formatDetection: {
+    telephone: false,
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#ffffff",
 };
 
 export default function RootLayout({
@@ -115,6 +129,7 @@ export default function RootLayout({
         {children}
         {modal}
         <Footer />
+        <ServiceWorkerRegister />
         <Analytics />
       </body>
     </html>
