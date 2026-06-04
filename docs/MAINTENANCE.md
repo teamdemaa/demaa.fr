@@ -22,6 +22,18 @@ Les catalogues sont encore repartis entre plusieurs sources:
 
 Regle pragmatique: avant d'ajouter un outil, un service ou un systeme, verifier quelle page le consomme. Eviter d'ajouter la meme donnee dans plusieurs fichiers si un mapping suffit.
 
+Pour `src/lib/enterprise-annuaire.json`, Git est la source de verite editoriale. Firestore sert de base de lecture runtime et doit rester synchronise via:
+
+```bash
+npm run sync:enterprise-annuaire
+```
+
+Apres chaque merge sur `main` qui touche `src/lib/enterprise-annuaire.json`, le workflow GitHub Actions `Sync enterprise annuaire` pousse automatiquement le JSON vers la collection Firestore `enterprise_annuaire`. Pour corriger un seul systeme:
+
+```bash
+npm run sync:enterprise-annuaire -- --only cabinet-comptable
+```
+
 ## Environnement
 
 Variables serveur principales:
