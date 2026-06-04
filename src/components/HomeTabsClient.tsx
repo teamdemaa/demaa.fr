@@ -130,7 +130,7 @@ type SupportCard = {
   cta: string;
   icon: typeof ReceiptText;
   href?: string;
-  action?: "audit";
+  action?: "audit" | "accountingLead";
 };
 
 const supportCards: SupportCard[] = [
@@ -139,7 +139,7 @@ const supportCards: SupportCard[] = [
     category: "Comptabilité",
     description: "On vous oriente vers le bon cabinet selon votre activité, vos obligations et votre budget.",
     cta: "Trouver le bon cabinet",
-    href: "https://www.tiimora.com",
+    action: "accountingLead",
     icon: Calculator,
   },
   {
@@ -430,6 +430,7 @@ function KitSectionTitle({ title }: { title: string }) {
 
 function KitSupportSection() {
   const [isAuditModalOpen, setIsAuditModalOpen] = useState(false);
+  const [isAccountingLeadModalOpen, setIsAccountingLeadModalOpen] = useState(false);
 
   return (
     <section id="accompagnements-cles" className="mx-auto w-full max-w-7xl scroll-mt-28 px-4 pb-4 sm:px-6 lg:px-8">
@@ -502,6 +503,19 @@ function KitSupportSection() {
               );
             }
 
+            if (card.action === "accountingLead") {
+              return (
+                <button
+                  key={card.title}
+                  type="button"
+                  onClick={() => setIsAccountingLeadModalOpen(true)}
+                  className="demaa-card group flex h-[14.5rem] w-[17.5rem] shrink-0 flex-col rounded-[1.15rem] p-5 text-left sm:h-[15.5rem] sm:w-[19rem]"
+                >
+                  {content}
+                </button>
+              );
+            }
+
             return null;
           })}
         </div>
@@ -511,7 +525,179 @@ function KitSupportSection() {
         onClose={() => setIsAuditModalOpen(false)}
         initialSector="Automatisation des process"
       />
+      <AccountingLeadModal
+        isOpen={isAccountingLeadModalOpen}
+        onClose={() => setIsAccountingLeadModalOpen(false)}
+      />
     </section>
+  );
+}
+
+const ACCOUNTING_LEAD_INITIAL_FORM = {
+  fullName: "",
+  whatsapp: "",
+  sector: "",
+};
+
+function AccountingLeadModal({
+  isOpen,
+  onClose,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+}) {
+  const [formData, setFormData] = useState(ACCOUNTING_LEAD_INITIAL_FORM);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+  if (!isOpen) return null;
+
+  const handleChange =
+    (field: keyof typeof ACCOUNTING_LEAD_INITIAL_FORM) =>
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setFormData((current) => ({
+        ...current,
+        [field]: event.target.value,
+      }));
+    };
+
+  function handleClose() {
+    setError(null);
+    setSuccessMessage(null);
+    setFormData(ACCOUNTING_LEAD_INITIAL_FORM);
+    onClose();
+  }
+
+  function validateForm() {
+    if (!formData.fullName.trim()) return "Merci d'indiquer votre prénom et nom.";
+    if (!formData.whatsapp.trim()) return "Merci d'indiquer votre WhatsApp.";
+    if (!formData.sector.trim()) return "Merci d'indiquer votre secteur d'activité.";
+    return null;
+  }
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setError(null);
+
+    const validationError = validateForm();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+      const response = await fetch("/api/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.fullName.trim(),
+          phone: formData.whatsapp.trim(),
+          sector: formData.sector.trim(),
+          offer: "Expert-comptable",
+          details: "Demande de mise en relation avec un expert-comptable.",
+          source: "Kit du dirigeant - Expert-comptable",
+        }),
+      });
+
+      const payload = (await response.json().catch(() => null)) as
+        | { error?: string }
+        | null;
+
+      if (!response.ok) {
+        throw new Error(
+          payload?.error ||
+            "Impossible d'envoyer votre demande pour le moment. Merci de réessayer."
+        );
+      }
+
+      setSuccessMessage(
+        `Merci ${formData.fullName.trim()}, on vous recontacte rapidement sur WhatsApp.`
+      );
+      setFormData(ACCOUNTING_LEAD_INITIAL_FORM);
+    } catch (submissionError) {
+      setError(
+        submissionError instanceof Error
+          ? submissionError.message
+          : "Impossible d'envoyer votre demande pour le moment. Merci de réessayer."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
+  return (
+    <div
+      className="fixed inset-0 z-[60] flex items-center justify-center bg-brand-blue/35 px-4 py-8"
+      onClick={handleClose}
+    >
+      <div
+        className="w-full max-w-xl rounded-[1.25rem] border border-dema-line bg-dema-paper p-6 shadow-[0_24px_60px_rgba(23,35,29,0.14)] md:p-8"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
+              Mise en relation
+            </p>
+            <h2 className="mt-2 text-3xl font-semibold tracking-tight text-brand-blue">
+              Trouver le bon cabinet
+            </h2>
+            <p className="mt-3 text-sm leading-relaxed text-dema-muted">
+              Laissez vos informations, on vous oriente vers un interlocuteur adapté à votre activité.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={handleClose}
+            className="rounded-full border border-dema-line bg-dema-paper p-2 text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
+            aria-label="Fermer la fenêtre"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+
+        {successMessage ? (
+          <div className="mt-6 rounded-[1.25rem] border border-dema-line bg-dema-paper px-5 py-4">
+            <p className="text-sm font-medium text-brand-blue">{successMessage}</p>
+          </div>
+        ) : (
+          <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
+            <input
+              value={formData.fullName}
+              onChange={handleChange("fullName")}
+              placeholder="Prénom Nom"
+              className="demaa-input"
+            />
+            <input
+              value={formData.whatsapp}
+              onChange={handleChange("whatsapp")}
+              placeholder="Numéro WhatsApp"
+              className="demaa-input"
+            />
+            <input
+              value={formData.sector}
+              onChange={handleChange("sector")}
+              placeholder="Secteur d'activité"
+              className="demaa-input"
+            />
+
+            {error ? (
+              <p className="text-sm text-red-500">{error}</p>
+            ) : null}
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="inline-flex rounded-full bg-dema-forest px-6 py-3 text-sm font-medium text-dema-paper transition hover:bg-[#284f3a] disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {isSubmitting ? "Envoi en cours..." : "Demander une mise en relation"}
+            </button>
+          </form>
+        )}
+      </div>
+    </div>
   );
 }
 
