@@ -118,14 +118,14 @@ export default function SystemSetupModal({
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
-              Audit de vos systèmes
+              Audit de vos process
             </p>
             <h2 className="mt-2 text-3xl font-semibold tracking-tight text-brand-blue">
-              Audit de vos systèmes
+              Audit de vos process
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-dema-muted">
               C&apos;est un appel gratuit de 30 minutes. Vous exposez vos
-              problématiques et on trouve les premières solutions ensemble.
+              process, vos blocages et on identifie les premières améliorations ensemble.
             </p>
           </div>
           <button

@@ -1,8 +1,16 @@
 import Link from "next/link";
 
-const resourcesLinks = [
-  { label: "L'annuaire des logiciels", href: "/annuaire-logiciel" },
-  { label: "Outils Gratuits", href: "/outils-gratuits" },
+const mainLinks = [
+  { label: "Systèmes", href: "/" },
+  { label: "Kit du dirigeant", href: "/outils" },
+  { label: "Assistant", href: "/assistant" },
+  { label: "Annuaire logiciels", href: "/annuaire-logiciel" },
+];
+
+const kitLinks = [
+  { label: "Outils du quotidien", href: "/outils#outils-du-quotidien" },
+  { label: "Ressources", href: "/outils#ressources" },
+  { label: "Accompagnements clés", href: "/outils#accompagnements-cles" },
   { label: "Newsletter", href: "/newsletter" },
 ];
 
@@ -27,6 +35,7 @@ const categoryLinks = [
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   const linkClass = "text-sm text-neutral-500 transition-colors hover:text-neutral-950";
+  const legalLinkClass = "transition-colors hover:text-neutral-950";
 
   return (
     <footer className="mt-auto border-t border-neutral-200 bg-white py-16 text-neutral-950">
@@ -45,15 +54,14 @@ export default function Footer() {
 
           <div>
             <h3 className="text-lg font-semibold mb-6">
-              Navigation
+              Demaa
             </h3>
             <ul className="space-y-3">
-              <li>
-                <Link href="/annuaire-logiciel" className={linkClass}>Annuaire des logiciels</Link>
-              </li>
-              <li>
-                <Link href="/" className={linkClass}>Automatiser mes tâches</Link>
-              </li>
+              {mainLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className={linkClass}>{link.label}</Link>
+                </li>
+              ))}
               <li>
                 <Link href="mailto:team@demaa.fr" className={linkClass}>Nous contacter</Link>
               </li>
@@ -62,10 +70,10 @@ export default function Footer() {
 
           <div>
             <h3 className="text-lg font-semibold mb-6">
-              Ressources
+              Kit du dirigeant
             </h3>
             <ul className="space-y-3">
-              {resourcesLinks.map((link) => (
+              {kitLinks.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className={linkClass}>{link.label}</Link>
                 </li>
@@ -75,7 +83,7 @@ export default function Footer() {
 
           <div>
             <h3 className="text-lg font-semibold mb-6">
-              Outils par secteur d&apos;activité
+              Logiciels par secteur
             </h3>
             <ul className="space-y-3">
               {sectorLinks.map((link) => (
@@ -88,7 +96,7 @@ export default function Footer() {
 
           <div>
             <h3 className="text-lg font-semibold mb-6">
-              Outils par catégorie
+              Logiciels par catégorie
             </h3>
             <ul className="space-y-3">
               {categoryLinks.map((link) => (
@@ -101,13 +109,13 @@ export default function Footer() {
           
         </div>
 
-        <div className="mt-16 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500">
+        <div className="mt-16 pt-8 border-t border-neutral-200 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500">
           <p>© {currentYear} Demaa. Tous droits réservés.</p>
           <div className="flex space-x-4 mt-4 sm:mt-0">
-            <Link href="/mentions-legales" className="hover:text-white transition-colors">Mentions légales</Link>
-            <Link href="/politique-de-confidentialite" className="hover:text-white transition-colors">Politique de confidentialité</Link>
-            <Link href="/politique-de-cookies" className="hover:text-white transition-colors">Cookies</Link>
-            <Link href="/cgv" className="hover:text-white transition-colors">CGV</Link>
+            <Link href="/mentions-legales" className={legalLinkClass}>Mentions légales</Link>
+            <Link href="/politique-de-confidentialite" className={legalLinkClass}>Politique de confidentialité</Link>
+            <Link href="/politique-de-cookies" className={legalLinkClass}>Cookies</Link>
+            <Link href="/cgv" className={legalLinkClass}>CGV</Link>
           </div>
         </div>
       </div>

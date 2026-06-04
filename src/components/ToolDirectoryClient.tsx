@@ -380,10 +380,9 @@ function ToolboxSections({
   return (
     <div className="space-y-10">
       {freeTools.length > 0 ? (
-        <section>
-          <SectionTitle title="Outils Gratuits" />
+        <section id="outils-du-quotidien" className="scroll-mt-28">
+          <SectionTitle title="Outils du quotidien" />
           <HorizontalScrollArea
-            viewAllHref="/outils-gratuits"
             outerClassName="-mx-4 sm:-mx-6 lg:-mx-8"
             scrollClassName="overflow-x-auto px-4 pb-3 soft-scroll sm:px-6 lg:px-8"
           >
@@ -498,7 +497,7 @@ function SquareToolCard({
     </>
   );
 
-  if (externalLinks) {
+  if (externalLinks || tool.url.startsWith("http")) {
     return (
       <a href={tool.url} target="_blank" rel="noreferrer" className={className}>
         {content}
@@ -531,7 +530,7 @@ function ToolCard({
   const className =
     "demaa-card group flex h-full flex-col rounded-[1.15rem] p-4";
 
-  if (externalLinks) {
+  if (externalLinks || tool.url.startsWith("http")) {
     return (
       <a href={tool.url} target="_blank" rel="noreferrer" className={className}>
         {children}

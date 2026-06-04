@@ -55,9 +55,24 @@ const gambetta = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Demaa - Annuaire d'outils et de services",
-  description: "Demaa est un annuaire SEO-friendly ultra-minimaliste pour trouver les meilleurs outils et services.",
+  title: "Demaa - Systèmes, outils et accompagnement pour dirigeants",
+  description:
+    "Demaa aide les dirigeants de TPE à structurer leur activité avec des systèmes métier, des outils du quotidien, des ressources pratiques et des accompagnements ciblés.",
   metadataBase: new URL('https://demaa.fr'),
+  openGraph: {
+    title: "Demaa - Systèmes, outils et accompagnement pour dirigeants",
+    description:
+      "Demaa aide les dirigeants de TPE à structurer leur activité avec des systèmes métier, des outils du quotidien, des ressources pratiques et des accompagnements ciblés.",
+    siteName: "Demaa",
+    locale: "fr_FR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Demaa - Systèmes, outils et accompagnement pour dirigeants",
+    description:
+      "Demaa aide les dirigeants de TPE à structurer leur activité avec des systèmes métier, des outils du quotidien, des ressources pratiques et des accompagnements ciblés.",
+  },
   applicationName: "Demaa",
   appleWebApp: {
     capable: true,

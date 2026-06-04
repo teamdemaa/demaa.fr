@@ -1,18 +1,22 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import {
-  BookOpen,
   Boxes,
-  ChevronLeft,
-  ChevronRight,
+  Calculator,
   FileText,
+  Handshake,
+  PlayCircle,
+  ReceiptText,
   Search,
+  Workflow,
   Wrench,
   X,
 } from "lucide-react";
 import SystemsCatalogClient from "@/components/SystemsCatalogClient";
+import SystemSetupModal from "@/components/SystemSetupModal";
 import ToolDirectoryClient from "@/components/ToolDirectoryClient";
 import type { System } from "@/lib/types";
 import type { OperationalSystemDetail } from "@/lib/system-operations";
@@ -42,13 +46,8 @@ const tabs = [
   },
   {
     id: "outils",
-    label: "Outils",
+    label: "Kit",
     icon: Wrench,
-  },
-  {
-    id: "academy",
-    label: "Academy",
-    icon: BookOpen,
   },
 ] as const;
 
@@ -68,10 +67,9 @@ const tabHeroCopy: Record<
     breakAfterMuted: true,
   },
   outils: {
-    muted: "au quotidien",
-    strong: "Libérez du temps",
-    breakBeforeMuted: true,
-    mutedAfter: true,
+    muted: "Tout pour gérer votre activité",
+    strong: "efficacement",
+    breakAfterMuted: true,
   },
   academy: {
     muted: "Maîtrisez les bases de la",
@@ -88,7 +86,7 @@ type AcademyCarousel = {
   slides: string[];
 };
 
-const academyCarousels: AcademyCarousel[] = [
+const resourceCarousels: AcademyCarousel[] = [
   {
     title: "Maîtriser les obligations et les finances de son entreprise",
     category: "Obligations",
@@ -125,13 +123,97 @@ const academyCarousels: AcademyCarousel[] = [
   },
 ];
 
+type SupportCard = {
+  title: string;
+  category: string;
+  description: string;
+  cta: string;
+  icon: typeof ReceiptText;
+  href?: string;
+  action?: "audit";
+};
+
+const supportCards: SupportCard[] = [
+  {
+    title: "Expert-Comptable",
+    category: "Comptabilité",
+    description: "On vous oriente vers le bon cabinet selon votre activité, vos obligations et votre budget.",
+    cta: "Trouver le bon cabinet",
+    href: "https://www.tiimora.com",
+    icon: Calculator,
+  },
+  {
+    title: "Automatisation des process",
+    category: "Organisation",
+    description: "On repère les tâches répétitives et les automatisations qui peuvent vraiment vous faire gagner du temps.",
+    cta: "Prendre RDV",
+    action: "audit",
+    icon: Workflow,
+  },
+  {
+    title: "Assistants",
+    category: "Support opérationnel",
+    description: "Déléguez les tâches qui vous ralentissent : facturation, contenu, prospection, subventions ou appels d'offres.",
+    cta: "Découvrir les assistants",
+    href: "/assistant",
+    icon: ReceiptText,
+  },
+];
+
+type AcademyCourse = {
+  title: string;
+  category: string;
+  description: string;
+  expert: string;
+  duration: string;
+  level: string;
+  status: string;
+  youtubeEmbedUrl: string;
+};
+
+const academyCourses: AcademyCourse[] = [
+  {
+    title: "Tout comprendre sur la facturation électronique",
+    category: "Finance",
+    description:
+      "Un cours court pour comprendre les échéances, les impacts concrets et les premiers réflexes à adopter dans une TPE.",
+    expert: "Expert Demaa",
+    duration: "25 min",
+    level: "Débutant",
+    status: "Bientôt disponible",
+    youtubeEmbedUrl: "https://www.youtube.com/embed/videoseries?list=PL8mG-RkN2uTw7PhlnAr4pZZz2QubIbujH",
+  },
+  {
+    title: "Lancer des publicités en ligne Facebook",
+    category: "Marketing",
+    description:
+      "Les bases pour préparer une première campagne Meta propre : objectif, ciblage, créatif, budget et suivi.",
+    expert: "Expert marketing",
+    duration: "30 min",
+    level: "Débutant",
+    status: "Bientôt disponible",
+    youtubeEmbedUrl: "https://www.youtube.com/embed/videoseries?list=PL8mG-RkN2uTw7PhlnAr4pZZz2QubIbujH",
+  },
+  {
+    title: "Systématiser la prospection",
+    category: "Vente",
+    description:
+      "Une méthode simple pour transformer la prospection en routine mesurable : listes, séquences, relances et CRM.",
+    expert: "Expert croissance",
+    duration: "35 min",
+    level: "Intermédiaire",
+    status: "Bientôt disponible",
+    youtubeEmbedUrl: "https://www.youtube.com/embed/videoseries?list=PL8mG-RkN2uTw7PhlnAr4pZZz2QubIbujH",
+  },
+];
+
 function getInitialTab(tab?: string): HomeTab {
   if (tab === "boite-a-outils" || tab === "outils") {
     return "outils";
   }
 
-  if (tab === "academy" || tab === "systemes") {
-    return tab;
+  if (tab === "systemes") {
+    return "systemes";
   }
 
   return "systemes";
@@ -165,36 +247,28 @@ export default function HomeTabsClient({
     activeTab === "systemes"
       ? "Rechercher votre activité"
       : activeTab === "outils"
-        ? "Rechercher un outil"
+        ? "Rechercher dans le kit"
         : "Rechercher un sujet";
 
   const tabContent = useMemo(() => {
     if (activeTab === "outils") {
       return (
-        <ToolDirectoryClient
+        <KitContent
           key={`${initialSector ?? "tous"}-${initialCategory ?? "tous"}`}
-          title="Outils"
-          description="Les outils gratuits créés par Demaa pour faire avancer l'activité plus vite."
-          searchPlaceholder="Rechercher un outil"
-          items={tools}
-          secondaryItems={otherTools}
-          sectors={toolSectors}
-          categories={toolCategories}
+          tools={tools}
+          otherTools={otherTools}
+          toolSectors={toolSectors}
+          toolCategories={toolCategories}
           initialCategory={initialCategory}
           initialSector={initialSector}
-          hideTransverseOnSector={false}
-          externalLinks={false}
           searchQuery={searchQuery}
-          onSearchQueryChange={setSearchQuery}
-          showHeader={false}
-          showSearchBar={false}
-          variant="toolbox"
+          setSearchQuery={setSearchQuery}
         />
       );
     }
 
     if (activeTab === "academy") {
-      return <AcademyPlaceholder searchQuery={searchQuery} />;
+      return <AcademyCourses searchQuery={searchQuery} />;
     }
 
     return (
@@ -234,7 +308,7 @@ export default function HomeTabsClient({
     function handleHomeTabSelect(event: Event) {
       const tab = (event as CustomEvent<{ tab?: string }>).detail?.tab;
 
-      if (tab !== "systemes" && tab !== "outils" && tab !== "academy") {
+      if (tab !== "systemes" && tab !== "outils") {
         return;
       }
 
@@ -260,13 +334,23 @@ export default function HomeTabsClient({
                   <span className="font-sans font-light not-italic text-brand-blue/44">
                     {heroCopy.muted}
                   </span>
-                  {heroCopy.breakAfterMuted ? <br /> : " "}
+                  {heroCopy.breakAfterMuted ? (
+                    <>
+                      {" "}
+                      <br />
+                    </>
+                  ) : " "}
                 </>
               ) : null}
               <span className="demaa-hero-title text-brand-blue/86">{heroCopy.strong}</span>
               {heroCopy.muted && heroCopy.mutedAfter ? (
                 <>
-                  {heroCopy.breakBeforeMuted ? <br /> : " "}
+                  {heroCopy.breakBeforeMuted ? (
+                    <>
+                      {" "}
+                      <br />
+                    </>
+                  ) : " "}
                   <span className="font-sans font-light not-italic text-brand-blue/44">
                     {heroCopy.muted}
                   </span>
@@ -286,6 +370,196 @@ export default function HomeTabsClient({
       <div className="h-24 md:hidden" aria-hidden="true" />
       <MobileTabBar activeTab={activeTab} onSelect={selectTab} />
     </>
+  );
+}
+
+function KitContent({
+  tools,
+  otherTools,
+  toolSectors,
+  toolCategories,
+  initialCategory,
+  initialSector,
+  searchQuery,
+  setSearchQuery,
+}: {
+  tools: ToolDirectoryItem[];
+  otherTools: ToolDirectoryItem[];
+  toolSectors: string[];
+  toolCategories: string[];
+  initialCategory?: string;
+  initialSector?: string;
+  searchQuery: string;
+  setSearchQuery: (value: string) => void;
+}) {
+  return (
+    <>
+      <ToolDirectoryClient
+        title="Kit du dirigeant"
+        description="Les outils pratiques pour faire avancer l'activité plus vite."
+        searchPlaceholder="Rechercher dans le kit"
+        items={tools}
+        secondaryItems={otherTools}
+        sectors={toolSectors}
+        categories={toolCategories}
+        initialCategory={initialCategory}
+        initialSector={initialSector}
+        hideTransverseOnSector={false}
+        externalLinks={false}
+        searchQuery={searchQuery}
+        onSearchQueryChange={setSearchQuery}
+        showHeader={false}
+        showSearchBar={false}
+        variant="toolbox"
+      />
+      <KitResourcesSection />
+      <KitSupportSection />
+    </>
+  );
+}
+
+function KitSectionTitle({ title }: { title: string }) {
+  return (
+    <div className="mb-3">
+      <h2 className="demaa-section-title text-2xl tracking-tight text-brand-blue/85 md:text-3xl">
+        {title}
+      </h2>
+    </div>
+  );
+}
+
+function KitSupportSection() {
+  const [isAuditModalOpen, setIsAuditModalOpen] = useState(false);
+
+  return (
+    <section id="accompagnements-cles" className="mx-auto w-full max-w-7xl scroll-mt-28 px-4 pb-4 sm:px-6 lg:px-8">
+      <KitSectionTitle title="Accompagnements clés" />
+      <div className="-mx-4 overflow-x-auto px-4 pb-3 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+        <div className="flex gap-4 pr-4">
+          {supportCards.map((card) => {
+            const Icon = card.icon;
+            const content = (
+              <>
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <p className="text-[10px] font-medium uppercase tracking-[0.16em] text-dema-forest">
+                      {card.category}
+                    </p>
+                    <h3 className="mt-3 text-lg font-semibold leading-tight tracking-tight text-brand-blue">
+                      {card.title}
+                    </h3>
+                  </div>
+                  <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-dema-sage/80 text-dema-forest">
+                    <Icon className="h-4 w-4" aria-hidden="true" />
+                  </span>
+                </div>
+                <p className="mt-4 text-[15px] font-normal leading-relaxed text-dema-muted">
+                  {card.description}
+                </p>
+                <span className="mt-auto inline-flex items-center gap-2 pt-4 text-sm font-semibold text-dema-forest transition group-hover:text-brand-blue">
+                  <Handshake className="h-4 w-4" aria-hidden="true" />
+                  {card.cta}
+                </span>
+              </>
+            );
+
+            if (card.href?.startsWith("http")) {
+              return (
+                <a
+                  key={card.title}
+                  href={card.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="demaa-card group flex h-[14.5rem] w-[17.5rem] shrink-0 flex-col rounded-[1.15rem] p-5 text-left sm:h-[15.5rem] sm:w-[19rem]"
+                >
+                  {content}
+                </a>
+              );
+            }
+
+            if (card.href) {
+              return (
+                <Link
+                  key={card.title}
+                  href={card.href}
+                  className="demaa-card group flex h-[14.5rem] w-[17.5rem] shrink-0 flex-col rounded-[1.15rem] p-5 text-left sm:h-[15.5rem] sm:w-[19rem]"
+                >
+                  {content}
+                </Link>
+              );
+            }
+
+            if (card.action === "audit") {
+              return (
+                <button
+                  key={card.title}
+                  type="button"
+                  onClick={() => setIsAuditModalOpen(true)}
+                  className="demaa-card group flex h-[14.5rem] w-[17.5rem] shrink-0 flex-col rounded-[1.15rem] p-5 text-left sm:h-[15.5rem] sm:w-[19rem]"
+                >
+                  {content}
+                </button>
+              );
+            }
+
+            return null;
+          })}
+        </div>
+      </div>
+      <SystemSetupModal
+        isOpen={isAuditModalOpen}
+        onClose={() => setIsAuditModalOpen(false)}
+        initialSector="Automatisation des process"
+      />
+    </section>
+  );
+}
+
+function KitResourcesSection() {
+  return (
+    <section id="ressources" className="mx-auto w-full max-w-7xl scroll-mt-28 px-4 pb-16 pt-6 sm:px-6 lg:px-8">
+      <KitSectionTitle title="Ressources" />
+      <div className="-mx-4 overflow-x-auto px-4 pb-3 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+        <div className="flex gap-4 pr-4">
+          {resourceCarousels.map((carousel) => (
+            <ResourceLinkCard key={carousel.title} carousel={carousel} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ResourceLinkCard({ carousel }: { carousel: AcademyCarousel }) {
+  return (
+    <a
+      href={carousel.resourceHref}
+      target="_blank"
+      rel="noreferrer"
+      className="demaa-card group w-[17.5rem] shrink-0 overflow-hidden rounded-[1.15rem] text-left sm:w-[19rem] md:w-[21rem]"
+    >
+      <div className="relative aspect-[16/10] overflow-hidden bg-dema-cream">
+        <Image
+          src={carousel.slides[0]}
+          alt=""
+          fill
+          sizes="(min-width: 1024px) 352px, (min-width: 768px) 33vw, calc(100vw - 32px)"
+          className="object-cover transition duration-700 ease-out group-hover:scale-[1.012]"
+        />
+      </div>
+      <div className="p-4">
+        <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-dema-muted">
+          {carousel.category}
+        </p>
+        <h2 className="mt-2 text-base font-semibold leading-snug text-brand-blue">
+          {carousel.title}
+        </h2>
+        <span className="mt-4 inline-flex items-center gap-2 text-xs font-semibold text-dema-forest">
+          <FileText className="h-4 w-4" aria-hidden="true" />
+          {carousel.resourceLabel}
+        </span>
+      </div>
+    </a>
   );
 }
 
@@ -327,7 +601,7 @@ function MobileTabBar({
       className="fixed inset-x-0 bottom-0 z-40 px-4 pb-[calc(env(safe-area-inset-bottom)+0.875rem)] md:hidden"
       aria-label="Navigation principale mobile"
     >
-      <div className="mx-auto grid max-w-md grid-cols-3 gap-1 rounded-full border border-dema-line/75 bg-dema-paper/95 p-1.5 shadow-[0_-8px_28px_rgba(23,35,29,0.08)] backdrop-blur">
+      <div className="mx-auto grid max-w-xs grid-cols-2 gap-1 rounded-full border border-dema-line/75 bg-dema-paper/95 p-1.5 shadow-[0_-8px_28px_rgba(23,35,29,0.08)] backdrop-blur">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -354,52 +628,26 @@ function MobileTabBar({
   );
 }
 
-function AcademyPlaceholder({ searchQuery }: { searchQuery: string }) {
-  const [selectedCarousel, setSelectedCarousel] = useState<AcademyCarousel | null>(null);
-  const [activeSlide, setActiveSlide] = useState(0);
+function AcademyCourses({ searchQuery }: { searchQuery: string }) {
+  const [selectedCourse, setSelectedCourse] = useState<AcademyCourse | null>(null);
   const [activeCategory, setActiveCategory] = useState("Tous");
   const categories = useMemo(
-    () => ["Tous", ...Array.from(new Set(academyCarousels.map((carousel) => carousel.category)))],
+    () => ["Tous", ...Array.from(new Set(academyCourses.map((course) => course.category)))],
     []
   );
 
-  const filteredCarousels = academyCarousels.filter((carousel) => {
+  const filteredCourses = academyCourses.filter((course) => {
     const query = searchQuery.trim().toLowerCase();
-    const matchesCategory = activeCategory === "Tous" || carousel.category === activeCategory;
+    const matchesCategory = activeCategory === "Tous" || course.category === activeCategory;
     const matchesSearch =
       !query ||
-      carousel.title.toLowerCase().includes(query) ||
-      carousel.category.toLowerCase().includes(query) ||
-      carousel.resourceLabel.toLowerCase().includes(query);
+      course.title.toLowerCase().includes(query) ||
+      course.category.toLowerCase().includes(query) ||
+      course.description.toLowerCase().includes(query) ||
+      course.expert.toLowerCase().includes(query);
 
     return matchesCategory && matchesSearch;
   });
-
-  function openCarousel(carousel: AcademyCarousel) {
-    setSelectedCarousel(carousel);
-    setActiveSlide(0);
-  }
-
-  function closeCarousel() {
-    setSelectedCarousel(null);
-    setActiveSlide(0);
-  }
-
-  function showPreviousSlide() {
-    if (!selectedCarousel) return;
-
-    setActiveSlide((currentSlide) =>
-      currentSlide === 0 ? selectedCarousel.slides.length - 1 : currentSlide - 1
-    );
-  }
-
-  function showNextSlide() {
-    if (!selectedCarousel) return;
-
-    setActiveSlide((currentSlide) =>
-      currentSlide === selectedCarousel.slides.length - 1 ? 0 : currentSlide + 1
-    );
-  }
 
   return (
     <>
@@ -427,35 +675,31 @@ function AcademyPlaceholder({ searchQuery }: { searchQuery: string }) {
       </section>
 
       <section className="mx-auto w-full max-w-6xl px-4 pb-16 pt-8 md:pt-10">
-        <div className="mb-3">
-          <h2 className="demaa-section-title text-2xl tracking-tight text-brand-blue/85 md:text-3xl">
-            Ressources Academy
-          </h2>
-        </div>
+        <KitSectionTitle title="Cours Academy" />
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          {filteredCarousels.map((carousel) => (
-            <AcademyCarouselCard
-              key={carousel.title}
-              carousel={carousel}
-              onOpen={openCarousel}
+          {filteredCourses.map((course) => (
+            <AcademyCourseCard
+              key={course.title}
+              course={course}
+              onOpen={setSelectedCourse}
             />
           ))}
         </div>
 
-        {filteredCarousels.length === 0 ? (
+        {filteredCourses.length === 0 ? (
           <div className="mt-8 rounded-[1.25rem] border border-dashed border-dema-line bg-dema-paper p-8 text-center">
-            <h2 className="text-xl font-bold text-brand-blue">Aucun carrousel trouvé</h2>
+            <h2 className="text-xl font-bold text-brand-blue">Aucun cours trouvé</h2>
             <p className="mt-3 text-sm font-normal text-dema-muted">
               Essayez un autre thème.
             </p>
           </div>
         ) : null}
 
-        {selectedCarousel ? (
+        {selectedCourse ? (
           <div
             className="fixed inset-0 z-50 flex items-center justify-center bg-brand-blue/35 p-4"
-            onClick={closeCarousel}
+            onClick={() => setSelectedCourse(null)}
           >
             <div
               className="flex max-h-[92vh] w-full max-w-6xl flex-col overflow-hidden rounded-[1.25rem] border border-dema-line bg-dema-paper shadow-[0_30px_80px_rgba(23,35,29,0.18)]"
@@ -464,15 +708,15 @@ function AcademyPlaceholder({ searchQuery }: { searchQuery: string }) {
               <div className="flex items-start justify-between gap-4 border-b border-dema-line px-4 py-4 md:px-6">
                 <div className="min-w-0 text-left">
                   <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-dema-muted">
-                    {selectedCarousel.category}
+                    {selectedCourse.category}
                   </p>
                   <h2 className="mt-1 line-clamp-2 text-lg font-semibold leading-tight text-brand-blue md:text-xl">
-                    {selectedCarousel.title}
+                    {selectedCourse.title}
                   </h2>
                 </div>
                 <button
                   type="button"
-                  onClick={closeCarousel}
+                  onClick={() => setSelectedCourse(null)}
                   className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
                   aria-label="Fermer"
                 >
@@ -480,59 +724,34 @@ function AcademyPlaceholder({ searchQuery }: { searchQuery: string }) {
                 </button>
               </div>
 
-              <div className="relative flex min-h-0 flex-1 items-center justify-center bg-dema-cream px-3 py-4 md:px-6">
-                <button
-                  type="button"
-                  onClick={showPreviousSlide}
-                  className="absolute left-4 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper/95 text-brand-blue shadow-sm transition hover:border-dema-forest/25 hover:text-dema-forest"
-                  aria-label="Slide précédente"
-                >
-                  <ChevronLeft className="h-5 w-5" />
-                </button>
-
-                <Image
-                  src={selectedCarousel.slides[activeSlide]}
-                  alt={`${selectedCarousel.title} - slide ${activeSlide + 1}`}
-                  width={3360}
-                  height={1890}
-                  sizes="(min-width: 1024px) 1024px, 94vw"
-                  className="max-h-[64vh] w-full rounded-[1rem] object-contain"
-                />
-
-                <button
-                  type="button"
-                  onClick={showNextSlide}
-                  className="absolute right-4 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper/95 text-brand-blue shadow-sm transition hover:border-dema-forest/25 hover:text-dema-forest"
-                  aria-label="Slide suivante"
-                >
-                  <ChevronRight className="h-5 w-5" />
-                </button>
-              </div>
-
-              <div className="flex flex-col gap-3 border-t border-dema-line px-4 py-4 md:flex-row md:items-center md:justify-between md:px-6">
-                <div className="flex items-center justify-center gap-1.5 md:justify-start">
-                  {selectedCarousel.slides.map((slide, index) => (
-                    <button
-                      key={slide}
-                      type="button"
-                      onClick={() => setActiveSlide(index)}
-                      className={`h-2 rounded-full transition ${
-                        activeSlide === index ? "w-6 bg-dema-forest" : "w-2 bg-dema-line"
-                      }`}
-                      aria-label={`Afficher la slide ${index + 1}`}
+              <div className="grid min-h-0 flex-1 gap-0 bg-dema-cream md:grid-cols-[minmax(0,1.5fr)_minmax(18rem,0.8fr)]">
+                <div className="flex items-center justify-center px-3 py-4 md:px-6">
+                  <div className="relative aspect-video w-full overflow-hidden rounded-[1rem] bg-brand-blue">
+                    <iframe
+                      src={selectedCourse.youtubeEmbedUrl}
+                      title={selectedCourse.title}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                      className="absolute inset-0 h-full w-full"
                     />
-                  ))}
+                  </div>
                 </div>
 
-                <a
-                  href={selectedCarousel.resourceHref}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="demaa-secondary-button gap-2"
-                >
-                  <FileText className="h-4 w-4" />
-                  {selectedCarousel.resourceLabel}
-                </a>
+                <div className="border-t border-dema-line bg-dema-paper px-4 py-5 md:border-l md:border-t-0 md:px-6">
+                  <div className="flex flex-wrap gap-2">
+                    {[selectedCourse.status, selectedCourse.level, selectedCourse.duration, selectedCourse.expert].map((item) => (
+                      <span
+                        key={item}
+                        className="rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-normal text-brand-blue/70"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                  <p className="mt-4 text-sm font-normal leading-relaxed text-dema-muted">
+                    {selectedCourse.description}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -542,86 +761,45 @@ function AcademyPlaceholder({ searchQuery }: { searchQuery: string }) {
   );
 }
 
-function AcademyCarouselCard({
-  carousel,
+function AcademyCourseCard({
+  course,
   onOpen,
 }: {
-  carousel: AcademyCarousel;
-  onOpen: (carousel: AcademyCarousel) => void;
+  course: AcademyCourse;
+  onOpen: (course: AcademyCourse) => void;
 }) {
-  const [isPreviewing, setIsPreviewing] = useState(false);
-  const [hasLoadedPreview, setHasLoadedPreview] = useState(false);
-  const [previewSlide, setPreviewSlide] = useState(0);
-
-  useEffect(() => {
-    if (!isPreviewing || carousel.slides.length <= 1) return;
-
-    const interval = window.setInterval(() => {
-      setPreviewSlide((currentSlide) => (currentSlide + 1) % carousel.slides.length);
-    }, 1200);
-
-    return () => window.clearInterval(interval);
-  }, [carousel.slides.length, isPreviewing]);
-
-  function startPreview() {
-    setHasLoadedPreview(true);
-    setIsPreviewing(true);
-  }
-
-  function stopPreview() {
-    setIsPreviewing(false);
-    setPreviewSlide(0);
-  }
-
   return (
     <button
       type="button"
-      onClick={() => onOpen(carousel)}
-      onMouseEnter={startPreview}
-      onMouseLeave={stopPreview}
-      onFocus={startPreview}
-      onBlur={stopPreview}
-      className="demaa-card group overflow-hidden rounded-[1.15rem] text-left"
+      onClick={() => onOpen(course)}
+      className="demaa-card group block w-full overflow-hidden rounded-[1.15rem] p-0 text-left"
     >
-      <div className="relative aspect-[16/10] overflow-hidden bg-dema-cream">
-        {carousel.slides.map((slide, index) =>
-          index === 0 || hasLoadedPreview ? (
-            <Image
-              key={slide}
-              src={slide}
-              alt=""
-              fill
-              sizes="(min-width: 1024px) 352px, (min-width: 768px) 33vw, calc(100vw - 32px)"
-              className={`object-cover transition-[opacity,transform] duration-700 ease-out group-hover:scale-[1.012] ${
-                previewSlide === index ? "opacity-100" : "opacity-0"
-              }`}
-            />
-          ) : null
-        )}
-        {carousel.slides.length > 1 ? (
-          <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 items-center gap-1.5 rounded-full bg-dema-paper/78 px-2 py-1 shadow-[0_4px_14px_rgba(23,35,29,0.08)] backdrop-blur-sm">
-            {carousel.slides.map((slide, index) => (
-              <span
-                key={slide}
-                className={`h-1.5 rounded-full transition-all duration-300 ${
-                previewSlide === index ? "w-4 bg-dema-forest/75" : "w-1.5 bg-dema-line"
-                }`}
-              />
-            ))}
-          </div>
-        ) : null}
+      <div className="relative flex aspect-[16/10] w-full items-center justify-center overflow-hidden bg-brand-blue">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.16),transparent_30%),linear-gradient(135deg,rgba(49,95,70,0.78),rgba(24,38,60,0.94))]" />
+        <span className="relative inline-flex h-14 w-14 items-center justify-center rounded-full border border-dema-paper/35 bg-dema-paper/12 text-dema-paper shadow-[0_16px_44px_rgba(23,35,29,0.18)] backdrop-blur">
+          <PlayCircle className="h-7 w-7" aria-hidden="true" />
+        </span>
       </div>
       <div className="p-4">
         <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-dema-muted">
-          {carousel.category}
+          {course.category}
         </p>
         <h2 className="mt-2 text-base font-semibold leading-snug text-brand-blue">
-          {carousel.title}
+          {course.title}
         </h2>
-        <p className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-dema-muted">
-          <FileText className="h-3.5 w-3.5" />
-          Document inclus
+        <p className="mt-3 line-clamp-3 text-sm font-normal leading-relaxed text-dema-muted">
+          {course.description}
         </p>
+        <div className="mt-4 flex flex-wrap gap-2">
+          {[course.status, course.level, course.duration].map((item) => (
+            <span
+              key={item}
+              className="rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-normal text-brand-blue/70"
+            >
+              {item}
+            </span>
+          ))}
+        </div>
       </div>
     </button>
   );

@@ -7,7 +7,6 @@ import {
   freeToolsDirectoryCategories,
   freeToolsDirectorySectors,
 } from "@/lib/free-tools-directory";
-import { getToolDirectorySlug } from "@/lib/tool-directory";
 import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
 
 type HomeHubPageProps = {
@@ -29,13 +28,6 @@ export default async function HomeHubPage({
   ]);
   const systems = enterprises.map(enterpriseToSystem);
   const detailsBySlug = await buildOperationalSystemDetails(systems, enterprises, toolDirectory);
-  const toolboxTools = toolDirectory
-    .filter((tool) => tool.toolbox)
-    .map((tool) => ({
-      ...tool,
-      url: `/annuaire-logiciel/${getToolDirectorySlug(tool)}`,
-    }));
-  const toolCategories = ["Tous", ...Array.from(new Set(toolDirectory.map((tool) => tool.category)))];
 
   return (
     <>
@@ -45,12 +37,9 @@ export default async function HomeHubPage({
           systems={systems}
           detailsBySlug={detailsBySlug}
           tools={freeToolsDirectory}
-          otherTools={toolboxTools}
+          otherTools={[]}
           toolSectors={freeToolsDirectorySectors}
-          toolCategories={[
-            ...freeToolsDirectoryCategories,
-            ...toolCategories.filter((category) => category !== "Tous"),
-          ].filter((category, index, list) => list.indexOf(category) === index)}
+          toolCategories={freeToolsDirectoryCategories}
           initialTab={initialTab}
           initialCategory={initialCategory}
           initialSector={initialSector}

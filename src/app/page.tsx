@@ -2,9 +2,20 @@ import type { Metadata } from "next";
 import HomeHubPage from "@/components/HomeHubPage";
 
 export const metadata: Metadata = {
-  title: "Automatiser mes tâches - Demaa",
+  title: "Demaa - Systèmes et kit du dirigeant pour structurer votre activité",
   description:
-    "Décrivez vos tâches répétitives et identifiez les systèmes utiles pour automatiser ce qui vous ralentit.",
+    "Explorez les systèmes essentiels, les outils du quotidien et l'accompagnement Demaa pour structurer votre activité.",
+  openGraph: {
+    title: "Demaa - Systèmes et kit du dirigeant pour structurer votre activité",
+    description:
+      "Explorez les systèmes essentiels, les outils du quotidien et l'accompagnement Demaa pour structurer votre activité.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Demaa - Systèmes et kit du dirigeant pour structurer votre activité",
+    description:
+      "Explorez les systèmes essentiels, les outils du quotidien et l'accompagnement Demaa pour structurer votre activité.",
+  },
 };
 
 export const dynamic = "force-dynamic";

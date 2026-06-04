@@ -6,7 +6,7 @@ export async function POST(request: Request) {
     const { company, sector, email, phone, name, source, offer, details, toolPreferences } =
       await request.json();
 
-    if (!email || !name || !phone || !details) {
+    if (!name || !phone || !details) {
       return NextResponse.json(
         { error: "Merci de renseigner les champs obligatoires avant l'envoi." },
         { status: 400 }
@@ -20,7 +20,7 @@ export async function POST(request: Request) {
           type: "section",
           text: {
           type: "mrkdwn",
-            text: `*Nom* : ${name || "_non renseigné_"}\n*Email* : ${email}\n*Téléphone / WhatsApp* : ${phone || "_non renseigné_"}\n*Entreprise* : ${company || "_non renseigné_"}\n*Secteur* : ${sector || "_non renseigné_"}\n*Offre* : ${offer || "_non renseigné_"}\n*Préférences outils* : ${toolPreferences || "_non renseigné_"}\n*Besoin* : ${details || "_non renseigné_"}\n*Source* : ${source || "Modal"}`
+            text: `*Nom* : ${name || "_non renseigné_"}\n*Email* : ${email || "_non renseigné_"}\n*Téléphone / WhatsApp* : ${phone || "_non renseigné_"}\n*Entreprise* : ${company || "_non renseigné_"}\n*Secteur* : ${sector || "_non renseigné_"}\n*Offre* : ${offer || "_non renseigné_"}\n*Préférences outils* : ${toolPreferences || "_non renseigné_"}\n*Besoin* : ${details || "_non renseigné_"}\n*Source* : ${source || "Modal"}`
           }
         },
         {

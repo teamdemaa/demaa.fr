@@ -73,6 +73,12 @@ export const metadata: Metadata = {
     locale: "fr_FR",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Assistant à la demande pour TPE - Demaa",
+    description:
+      "Déléguez vos tâches opérationnelles depuis WhatsApp avec des crédits assistant : facturation, contenu, prospection, subventions et suivi administratif.",
+  },
 };
 
 export default function AssistantPage() {
