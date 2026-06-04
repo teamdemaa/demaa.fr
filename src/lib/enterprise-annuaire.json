@@ -20,33 +20,33 @@
       "operationProcesses": [
         {
           "pillar": "Opérations",
-          "title": "Production comptable",
-          "description": "Organiser la collecte, la saisie, la révision et la production des dossiers comptables.",
-          "examples": "Exemple : pièces manquantes, rapprochements, dossiers à réviser, validations internes."
+          "title": "Comptabilité & Déclarations",
+          "description": "Organiser la collecte, la saisie, la révision comptable et les déclarations fiscales des dossiers clients.",
+          "examples": "Exemple : pièces manquantes, rapprochements, TVA, liasses fiscales, dossiers à réviser."
         },
         {
           "pillar": "Opérations",
-          "title": "Déclarations & paie",
-          "description": "Piloter les déclarations fiscales, sociales et les cycles de paie sans perdre les échéances.",
-          "examples": "Exemple : DSN, TVA, liasses fiscales, bulletins à valider, dépôts effectués."
+          "title": "Paie & Déclarations",
+          "description": "Piloter les cycles de paie, les déclarations sociales et les échéances liées aux salariés des clients.",
+          "examples": "Exemple : bulletins à préparer, variables de paie, DSN, charges sociales, dépôts effectués."
         },
         {
           "pillar": "Opérations",
           "title": "Juridique courant",
-          "description": "Suivre les formalités juridiques récurrentes liées aux sociétés accompagnées.",
-          "examples": "Exemple : approbation des comptes, PV, modifications statutaires, pièces à récupérer."
-        },
-        {
-          "pillar": "Opérations",
-          "title": "Veille fiscale",
-          "description": "Suivre les évolutions réglementaires qui impactent les dossiers clients et les échéances du cabinet.",
-          "examples": "Exemple : alertes TVA, échéances sociales, nouveautés fiscales, clients concernés."
+          "description": "Suivre les formalités juridiques récurrentes, les créations et les modifications de sociétés accompagnées.",
+          "examples": "Exemple : création de société, modification statutaire, approbation des comptes, PV, pièces à récupérer."
         },
         {
           "pillar": "Opérations",
           "title": "Suivi client",
           "description": "Centraliser les demandes clients, les relances et les réponses attendues.",
           "examples": "Exemple : tickets clients, documents attendus, relances automatiques, statut du dossier."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Veille fiscale",
+          "description": "Suivre les évolutions réglementaires qui impactent les dossiers clients et les échéances du cabinet.",
+          "examples": "Exemple : alertes TVA, échéances sociales, nouveautés fiscales, clients concernés."
         },
         {
           "pillar": "Opérations",
