@@ -19,6 +19,7 @@ import type { OperationalSystemDetail } from "@/lib/system-operations";
 import type { ToolDirectoryItem } from "@/lib/tool-directory";
 
 type HomeTab = "systemes" | "outils" | "academy";
+const HOME_TAB_SELECT_EVENT = "demaa:home-tab-select";
 
 type HomeTabsClientProps = {
   systems: System[];
@@ -229,7 +230,27 @@ export default function HomeTabsClient({
     setActiveTab(tab);
     setSearchQuery("");
     window.history.replaceState(null, "", getTabPath(tab));
+    window.dispatchEvent(new CustomEvent(HOME_TAB_SELECT_EVENT, { detail: { tab } }));
   }
+
+  useEffect(() => {
+    function handleHomeTabSelect(event: Event) {
+      const tab = (event as CustomEvent<{ tab?: string }>).detail?.tab;
+
+      if (tab !== "systemes" && tab !== "outils" && tab !== "academy") {
+        return;
+      }
+
+      setActiveTab(tab);
+      setSearchQuery("");
+    }
+
+    window.addEventListener(HOME_TAB_SELECT_EVENT, handleHomeTabSelect);
+
+    return () => {
+      window.removeEventListener(HOME_TAB_SELECT_EVENT, handleHomeTabSelect);
+    };
+  }, []);
 
   return (
     <>

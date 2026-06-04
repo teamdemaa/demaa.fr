@@ -40,7 +40,7 @@ export default async function HomeHubPage({
 
   return (
     <>
-      <Navbar />
+      <Navbar homeTabsMode="client" />
       <main className="flex-1 w-full bg-white min-h-screen">
         <HomeTabsClient
           systems={systems}
