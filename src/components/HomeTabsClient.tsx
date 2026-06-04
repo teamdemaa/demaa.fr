@@ -257,17 +257,17 @@ export default function HomeTabsClient({
             <h1 className="text-[2.24rem] tracking-tight leading-[0.98] sm:text-[2.75rem] md:text-[3.75rem] lg:text-[4.5rem]">
               {heroCopy.muted && !heroCopy.mutedAfter ? (
                 <>
-                  <span className="font-sans font-light not-italic text-brand-blue/56">
+                  <span className="font-sans font-light not-italic text-brand-blue/44">
                     {heroCopy.muted}
                   </span>
                   {heroCopy.breakAfterMuted ? <br /> : " "}
                 </>
               ) : null}
-              <span className="demaa-hero-title text-brand-blue/78">{heroCopy.strong}</span>
+              <span className="demaa-hero-title text-brand-blue/86">{heroCopy.strong}</span>
               {heroCopy.muted && heroCopy.mutedAfter ? (
                 <>
                   {heroCopy.breakBeforeMuted ? <br /> : " "}
-                  <span className="font-sans font-light not-italic text-brand-blue/56">
+                  <span className="font-sans font-light not-italic text-brand-blue/44">
                     {heroCopy.muted}
                   </span>
                 </>

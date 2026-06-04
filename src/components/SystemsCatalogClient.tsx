@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type MouseEvent } from "react";
 import {
   Aperture,
   BadgeCheck,
@@ -49,7 +49,9 @@ import {
   X,
   type LucideIcon,
 } from "lucide-react";
+import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
 import SystemSetupModal from "@/components/SystemSetupModal";
+import type { ToolDirectoryItem } from "@/lib/tool-directory";
 import type { System } from "@/lib/types";
 import type { OperationalSystemDetail, SystemPillar } from "@/lib/system-operations";
 
@@ -207,6 +209,7 @@ export default function SystemsCatalogClient({
   const [internalSearchQuery, setInternalSearchQuery] = useState("");
   const [activeSector, setActiveSector] = useState("Tous");
   const [isSystemSetupModalOpen, setIsSystemSetupModalOpen] = useState(false);
+  const [selectedToolDetail, setSelectedToolDetail] = useState<ToolDirectoryItem | null>(null);
   const searchQuery = controlledSearchQuery ?? internalSearchQuery;
 
   function updateSearchQuery(value: string) {
@@ -230,6 +233,37 @@ export default function SystemsCatalogClient({
       return nextOpenIds;
     });
   }
+
+  function openToolDetails(tool: ToolDirectoryItem) {
+    setSelectedToolDetail(tool);
+
+    const detailPath = tool.slug ? `/annuaire-logiciel/${tool.slug}` : null;
+
+    if (detailPath && window.location.pathname !== detailPath) {
+      window.history.pushState({ demaaToolModal: true }, "", detailPath);
+    }
+  }
+
+  function closeToolDetails() {
+    if (window.history.state?.demaaToolModal) {
+      window.history.back();
+      return;
+    }
+
+    setSelectedToolDetail(null);
+  }
+
+  useEffect(() => {
+    function handlePopState() {
+      setSelectedToolDetail(null);
+    }
+
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, []);
 
   const sectors = useMemo(
     () => [
@@ -417,7 +451,7 @@ export default function SystemsCatalogClient({
           }}
         >
           <div
-            className="relative max-h-[92vh] w-full max-w-7xl overflow-y-auto rounded-[1.25rem] border border-dema-line bg-dema-paper p-6 pt-14 shadow-[0_30px_80px_rgba(23,35,29,0.18)] md:p-8"
+            className="relative max-h-[92vh] w-full max-w-7xl overflow-y-auto rounded-[1.25rem] border border-dema-line bg-dema-paper p-6 pt-14 shadow-[0_24px_60px_rgba(23,35,29,0.14)] md:p-8"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="flex flex-col items-start justify-between gap-4 md:flex-row">
@@ -567,7 +601,7 @@ export default function SystemsCatalogClient({
                 </div>
               </div>
             ) : (
-              <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
                 {detail.tools.map((tool) => {
                   const content = (
                     <>
@@ -600,6 +634,13 @@ export default function SystemsCatalogClient({
                       key={tool.name}
                       href={`/annuaire-logiciel/${tool.slug}`}
                       className={className}
+                      onClick={(event) => {
+                        if (!tool.detail) {
+                          return;
+                        }
+
+                        handleToolDetailClick(event, tool.detail, openToolDetails);
+                      }}
                     >
                       {content}
                     </Link>
@@ -611,6 +652,10 @@ export default function SystemsCatalogClient({
         </div>
       ) : null}
 
+      {selectedToolDetail ? (
+        <SoftwareDetailDialog tool={selectedToolDetail} onClose={closeToolDetails} />
+      ) : null}
+
       <SystemSetupModal
         isOpen={isSystemSetupModalOpen}
         onClose={() => setIsSystemSetupModalOpen(false)}
@@ -618,4 +663,24 @@ export default function SystemsCatalogClient({
       />
     </>
   );
+}
+
+function handleToolDetailClick(
+  event: MouseEvent<HTMLAnchorElement>,
+  tool: ToolDirectoryItem,
+  onOpenDetails: (tool: ToolDirectoryItem) => void,
+) {
+  if (
+    event.defaultPrevented ||
+    event.button !== 0 ||
+    event.metaKey ||
+    event.ctrlKey ||
+    event.shiftKey ||
+    event.altKey
+  ) {
+    return;
+  }
+
+  event.preventDefault();
+  onOpenDetails(tool);
 }

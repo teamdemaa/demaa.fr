@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type MouseEvent, type ReactNode } from "react";
 import { Search } from "lucide-react";
+import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
 import type { ToolDirectoryItem } from "@/lib/tool-directory";
 
 function getValidFilters(
@@ -68,6 +69,7 @@ export default function ToolDirectoryClient({
   const [internalSearchQuery, setInternalSearchQuery] = useState("");
   const [activeSector, setActiveSector] = useState(initialFilters.sector);
   const [activeCategory, setActiveCategory] = useState(initialFilters.category);
+  const [selectedTool, setSelectedTool] = useState<ToolDirectoryItem | null>(null);
   const searchQuery = controlledSearchQuery ?? internalSearchQuery;
   const toolboxSectors = useMemo(
     () => [
@@ -93,6 +95,35 @@ export default function ToolDirectoryClient({
       setInternalSearchQuery(value);
     }
   }
+
+  function openToolDetails(tool: ToolDirectoryItem) {
+    setSelectedTool(tool);
+
+    if (window.location.pathname !== tool.url) {
+      window.history.pushState({ demaaToolModal: true }, "", tool.url);
+    }
+  }
+
+  function closeToolDetails() {
+    if (window.history.state?.demaaToolModal) {
+      window.history.back();
+      return;
+    }
+
+    setSelectedTool(null);
+  }
+
+  useEffect(() => {
+    function handlePopState() {
+      setSelectedTool(null);
+    }
+
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, []);
 
   const filteredTools = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
@@ -243,6 +274,7 @@ export default function ToolDirectoryClient({
             freeTools={filteredTools}
             otherTools={filteredOtherTools}
             externalLinks={externalLinks}
+            onOpenDetails={openToolDetails}
           />
         ) : filteredTools.length === 0 ? (
           <div className="rounded-[1.25rem] border border-dashed border-dema-line bg-dema-paper p-10 text-center">
@@ -257,7 +289,8 @@ export default function ToolDirectoryClient({
               <ToolCard
                 key={tool.name}
                 externalLinks={externalLinks}
-                href={tool.url}
+                tool={tool}
+                onOpenDetails={openToolDetails}
               >
                 <div className="flex items-start justify-between gap-4">
                   <div>
@@ -313,6 +346,9 @@ export default function ToolDirectoryClient({
           </div>
         )}
       </section>
+      {selectedTool ? (
+        <SoftwareDetailDialog tool={selectedTool} onClose={closeToolDetails} />
+      ) : null}
     </div>
   );
 }
@@ -321,10 +357,12 @@ function ToolboxSections({
   freeTools,
   otherTools,
   externalLinks,
+  onOpenDetails,
 }: {
   freeTools: ToolDirectoryItem[];
   otherTools: ToolDirectoryItem[];
   externalLinks: boolean;
+  onOpenDetails: (tool: ToolDirectoryItem) => void;
 }) {
   const hasResults = freeTools.length > 0 || otherTools.length > 0;
 
@@ -355,6 +393,7 @@ function ToolboxSections({
                   key={tool.name}
                   tool={tool}
                   externalLinks={externalLinks}
+                  onOpenDetails={onOpenDetails}
                 />
               ))}
             </div>
@@ -376,6 +415,7 @@ function ToolboxSections({
                   key={tool.name}
                   tool={tool}
                   externalLinks={externalLinks}
+                  onOpenDetails={onOpenDetails}
                 />
               ))}
             </div>
@@ -433,9 +473,11 @@ function HorizontalScrollArea({
 function SquareToolCard({
   tool,
   externalLinks,
+  onOpenDetails,
 }: {
   tool: ToolDirectoryItem;
   externalLinks: boolean;
+  onOpenDetails: (tool: ToolDirectoryItem) => void;
 }) {
   const className =
     "demaa-card group flex min-h-[10rem] flex-[0_0_calc(50%-0.5rem)] flex-col rounded-[1.15rem] p-5 text-left md:flex-[0_0_calc(25%-0.75rem)]";
@@ -465,7 +507,11 @@ function SquareToolCard({
   }
 
   return (
-    <Link href={tool.url} className={className}>
+    <Link
+      href={tool.url}
+      className={className}
+      onClick={(event) => handleClientModalClick(event, tool, onOpenDetails)}
+    >
       {content}
     </Link>
   );
@@ -473,11 +519,13 @@ function SquareToolCard({
 
 function ToolCard({
   externalLinks,
-  href,
+  tool,
+  onOpenDetails,
   children,
 }: {
   externalLinks: boolean;
-  href: string;
+  tool: ToolDirectoryItem;
+  onOpenDetails: (tool: ToolDirectoryItem) => void;
   children: ReactNode;
 }) {
   const className =
@@ -485,17 +533,41 @@ function ToolCard({
 
   if (externalLinks) {
     return (
-      <a href={href} target="_blank" rel="noreferrer" className={className}>
+      <a href={tool.url} target="_blank" rel="noreferrer" className={className}>
         {children}
       </a>
     );
   }
 
   return (
-    <Link href={href} className={className}>
+    <Link
+      href={tool.url}
+      className={className}
+      onClick={(event) => handleClientModalClick(event, tool, onOpenDetails)}
+    >
       {children}
     </Link>
   );
+}
+
+function handleClientModalClick(
+  event: MouseEvent<HTMLAnchorElement>,
+  tool: ToolDirectoryItem,
+  onOpenDetails: (tool: ToolDirectoryItem) => void,
+) {
+  if (
+    event.defaultPrevented ||
+    event.button !== 0 ||
+    event.metaKey ||
+    event.ctrlKey ||
+    event.shiftKey ||
+    event.altKey
+  ) {
+    return;
+  }
+
+  event.preventDefault();
+  onOpenDetails(tool);
 }
 
 function FilterChip({

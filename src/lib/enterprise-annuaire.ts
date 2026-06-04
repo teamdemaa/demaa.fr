@@ -2,6 +2,7 @@ import "server-only";
 
 import { getAdminFirestore } from "./firebase-admin";
 import type { DocumentData } from "firebase-admin/firestore";
+import type { ToolDirectoryItem } from "./tool-directory";
 import type { SystemPillar } from "./system-process-templates";
 import type { System } from "./types";
 import rawEnterpriseAnnuaire from "./enterprise-annuaire.json";
@@ -12,6 +13,7 @@ export type EnterpriseTool = {
   type: string;
   usage: string;
   url?: string;
+  detail?: ToolDirectoryItem;
 };
 
 export type EnterpriseToolReference = {
