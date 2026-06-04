@@ -1,6 +1,5 @@
 import Navbar from "@/components/Navbar";
 import AssistantHub from "@/components/AssistantHub";
-import NewsletterPrompt from "@/components/NewsletterPrompt";
 import { enterpriseToSystem, getEnterpriseCatalog } from "@/lib/enterprise-annuaire";
 import { buildOperationalSystemDetails } from "@/lib/system-operations";
 import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
@@ -27,7 +26,6 @@ export default async function PlanActionAutomatisationPage() {
       <main className="flex-1 w-full bg-[#ffffff] min-h-screen">
         <AssistantHub systems={systems} detailsBySlug={detailsBySlug} mode="tool" />
       </main>
-      <NewsletterPrompt />
     </>
   );
 }

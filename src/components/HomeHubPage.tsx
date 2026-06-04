@@ -1,6 +1,5 @@
 import Navbar from "@/components/Navbar";
 import HomeTabsClient from "@/components/HomeTabsClient";
-import NewsletterPrompt from "@/components/NewsletterPrompt";
 import { enterpriseToSystem, getEnterpriseCatalog } from "@/lib/enterprise-annuaire";
 import { buildOperationalSystemDetails } from "@/lib/system-operations";
 import {
@@ -58,7 +57,6 @@ export default async function HomeHubPage({
           initialSystem={initialSystem}
         />
       </main>
-      <NewsletterPrompt />
     </>
   );
 }
