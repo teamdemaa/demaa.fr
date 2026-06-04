@@ -298,36 +298,36 @@ export default function SystemsCatalogClient({
       <section
         className={
           showIntro
-            ? "w-full border-b border-brand-blue/5 bg-[#ffffff]/70 px-4 pb-12 pt-14 md:pb-16 md:pt-24"
+            ? "w-full border-b border-dema-line/65 bg-dema-cream px-4 pb-12 pt-14 md:pb-16 md:pt-24"
             : "w-full pb-20 md:pb-24"
         }
       >
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           {showIntro ? (
             <div className="max-w-3xl">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-coral">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
                 Entreprises & systèmes
               </p>
               <h1 className="mt-3 demaa-section-title text-4xl tracking-tight text-brand-blue md:text-5xl">
                 Les processus essentiels par entreprise
               </h1>
-              <p className="mt-4 max-w-2xl text-base leading-relaxed text-gray-600">
+              <p className="mt-4 max-w-2xl text-base leading-relaxed text-dema-muted">
                 Un catalogue d&apos;entreprises pour voir les systèmes à mettre en place,
                 les processus prioritaires et les outils métiers les plus utiles.
               </p>
             </div>
           ) : null}
 
-          <div className={showIntro ? "mt-10" : "border-b border-brand-blue/5 pb-4 pt-2 md:pb-5 md:pt-0"}>
+          <div className={showIntro ? "mt-10" : "border-b border-dema-line/65 pb-4 pt-2 md:pb-5 md:pt-0"}>
             {showSearchBar ? (
-              <div className="mx-auto max-w-4xl rounded-full border border-brand-blue/5 bg-white p-1.5 shadow-[0_10px_30px_rgba(20,20,20,0.035)]">
+              <div className="demaa-search-shell mx-auto max-w-4xl p-1.5">
                 <div className="relative">
-                  <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-300 md:left-5 md:h-5 md:w-5" />
+                  <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-dema-forest/42 md:left-5 md:h-5 md:w-5" />
                   <input
                     value={searchQuery}
                     onChange={(event) => updateSearchQuery(event.target.value)}
                     placeholder="Rechercher une entreprise, un processus, un outil..."
-                    className="w-full rounded-full bg-white py-3.5 pl-10 pr-5 text-sm font-normal text-brand-blue outline-none transition placeholder:text-brand-blue/40 md:py-4 md:pl-12 md:text-base"
+                    className="w-full rounded-full bg-dema-paper py-3.5 pl-10 pr-5 text-sm font-normal text-brand-blue outline-none transition placeholder:text-brand-blue/36 md:py-4 md:pl-12 md:text-base"
                   />
                 </div>
               </div>
@@ -342,10 +342,10 @@ export default function SystemsCatalogClient({
                     onClick={() => {
                       setActiveSector(sector);
                     }}
-                    className={`min-h-9 whitespace-nowrap rounded-full px-3.5 py-1.5 text-xs transition md:min-h-10 md:px-4 md:text-sm ${
+                    className={`demaa-chip ${
                       activeSector === sector
-                        ? "bg-brand-blue text-white shadow-sm"
-                        : "bg-neutral-100 text-brand-blue/65 hover:bg-neutral-200"
+                        ? "demaa-chip-active"
+                        : ""
                     }`}
                   >
                     {sector}
@@ -356,9 +356,9 @@ export default function SystemsCatalogClient({
           </div>
 
           {systemSections.length === 0 ? (
-            <div className="mt-8 rounded-[1.25rem] border border-dashed border-brand-blue/10 bg-white p-10 text-center">
+            <div className="mt-8 rounded-[1.25rem] border border-dashed border-dema-line bg-dema-paper p-10 text-center">
               <h2 className="text-xl font-bold text-brand-blue">Aucun système trouvé</h2>
-              <p className="mt-3 text-sm font-normal text-gray-500">
+              <p className="mt-3 text-sm font-normal text-dema-muted">
                 Essayez un autre mot-clé ou un secteur plus large.
               </p>
             </div>
@@ -385,15 +385,15 @@ export default function SystemsCatalogClient({
                               setActiveTab("processus");
                               setOpenProcessIds(new Set());
                             }}
-                            className="group flex min-h-[10rem] flex-[0_0_calc(50%-0.5rem)] cursor-pointer flex-col rounded-[1.15rem] border border-brand-blue/8 bg-white p-5 text-left shadow-[0_8px_24px_rgba(20,20,20,0.025)] transition hover:-translate-y-0.5 hover:border-neutral-300 hover:shadow-[0_16px_42px_rgba(20,20,20,0.06)] md:flex-[0_0_calc(25%-0.75rem)]"
+                            className="demaa-card group flex min-h-[10rem] flex-[0_0_calc(50%-0.5rem)] cursor-pointer flex-col rounded-[1.15rem] p-5 text-left md:flex-[0_0_calc(25%-0.75rem)]"
                           >
-                            <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-neutral-100 text-neutral-700 transition group-hover:bg-neutral-200 group-hover:text-neutral-950">
+                            <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper">
                               <Icon className="h-4 w-4" />
                             </span>
                             <h3 className="mt-4 line-clamp-2 text-lg font-semibold leading-tight tracking-tight text-brand-blue">
                               {system.name}
                             </h3>
-                            <p className="mt-3 line-clamp-3 text-sm font-normal leading-relaxed text-gray-600">
+                            <p className="mt-3 line-clamp-3 text-sm font-normal leading-relaxed text-dema-muted">
                               {system.description}
                             </p>
                           </button>
@@ -417,18 +417,18 @@ export default function SystemsCatalogClient({
           }}
         >
           <div
-            className="relative max-h-[92vh] w-full max-w-7xl overflow-y-auto rounded-[1.25rem] bg-[#ffffff] p-6 pt-14 shadow-[0_30px_80px_rgba(20,20,20,0.18)] md:p-8"
+            className="relative max-h-[92vh] w-full max-w-7xl overflow-y-auto rounded-[1.25rem] border border-dema-line bg-dema-paper p-6 pt-14 shadow-[0_30px_80px_rgba(23,35,29,0.18)] md:p-8"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="flex flex-col items-start justify-between gap-4 md:flex-row">
               <div className="flex-1 text-left">
-                <p className="text-left text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-coral">
-                  {selectedSystem.name}
+                <p className="text-left text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
+                  {detail.sectorLabel}
                 </p>
                 <h2 className="mt-2 text-3xl font-semibold tracking-tight text-brand-blue md:text-4xl">
                   {selectedSystem.name}
                 </h2>
-                <p className="mt-3 max-w-3xl text-base leading-relaxed text-gray-600">
+                <p className="mt-3 max-w-3xl text-base leading-relaxed text-dema-muted">
                   {selectedSystem.description}
                 </p>
               </div>
@@ -436,7 +436,7 @@ export default function SystemsCatalogClient({
                 <button
                   type="button"
                   onClick={() => setIsSystemSetupModalOpen(true)}
-                  className="rounded-full border border-brand-blue/10 bg-white px-4 py-2 text-sm font-medium text-brand-blue transition hover:border-neutral-300 hover:text-neutral-700"
+                  className="demaa-primary-button"
                 >
                   Demander un audit Systèmes
                 </button>
@@ -446,7 +446,7 @@ export default function SystemsCatalogClient({
                     setSelectedSlug(null);
                     setOpenProcessIds(new Set());
                   }}
-                  className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-brand-blue/10 bg-white text-brand-blue transition hover:border-neutral-300 hover:text-neutral-700 md:static"
+                  className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest md:static"
                   aria-label="Fermer"
                 >
                   <X className="h-4 w-4" />
@@ -458,10 +458,10 @@ export default function SystemsCatalogClient({
               <button
                 type="button"
                 onClick={() => setActiveTab("processus")}
-                className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+                className={`relative rounded-full px-4 py-2 text-sm font-medium transition after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:rounded-full after:transition ${
                   activeTab === "processus"
-                    ? "bg-brand-blue text-white"
-                    : "bg-white text-brand-blue/70"
+                    ? "bg-transparent text-brand-blue after:bg-dema-forest"
+                    : "bg-transparent text-brand-blue/55 after:bg-transparent hover:text-brand-blue/75"
                 }`}
               >
                 Processus
@@ -469,10 +469,10 @@ export default function SystemsCatalogClient({
               <button
                 type="button"
                 onClick={() => setActiveTab("outils")}
-                className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+                className={`relative rounded-full px-4 py-2 text-sm font-medium transition after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:rounded-full after:transition ${
                   activeTab === "outils"
-                    ? "bg-brand-blue text-white"
-                    : "bg-white text-brand-blue/70"
+                    ? "bg-transparent text-brand-blue after:bg-dema-forest"
+                    : "bg-transparent text-brand-blue/55 after:bg-transparent hover:text-brand-blue/75"
                 }`}
               >
                 Outils
@@ -490,7 +490,7 @@ export default function SystemsCatalogClient({
                     return (
                       <div
                         key={pillar}
-                        className="w-[18rem] shrink-0 rounded-[1.75rem] border border-neutral-200/80 bg-white p-4 shadow-[0_8px_24px_rgba(20,20,20,0.025)]"
+                        className="w-[18rem] shrink-0 rounded-[1.25rem] border border-dema-line bg-dema-paper p-4 shadow-[0_8px_24px_rgba(23,35,29,0.035)]"
                       >
                         <h3 className="demaa-section-title text-xl text-brand-blue">{pillar}</h3>
                         <div className="mt-4 space-y-3">
@@ -509,8 +509,8 @@ export default function SystemsCatalogClient({
                                   key={process.title}
                                   className={`rounded-[1.15rem] border text-left transition ${
                                     isOpen
-                                      ? "border-brand-blue/10 bg-white shadow-[0_10px_24px_rgba(20,20,20,0.04)]"
-                                      : "border-transparent bg-neutral-50/90 hover:border-neutral-200 hover:bg-white"
+                                      ? "border-dema-forest/18 bg-dema-paper shadow-[0_10px_24px_rgba(23,35,29,0.045)]"
+                                      : "border-transparent bg-dema-sage/45 hover:border-dema-line hover:bg-dema-paper"
                                   }`}
                                 >
                                   <button
@@ -524,7 +524,7 @@ export default function SystemsCatalogClient({
                                       {process.title}
                                     </h4>
                                     <ChevronDown
-                                      className={`h-4 w-4 shrink-0 text-brand-blue/35 transition-transform duration-200 ${
+                                      className={`h-4 w-4 shrink-0 text-dema-forest/45 transition-transform duration-200 ${
                                         isOpen ? "rotate-180" : ""
                                       }`}
                                       aria-hidden="true"
@@ -539,11 +539,11 @@ export default function SystemsCatalogClient({
                                   >
                                     <div className="min-h-0">
                                       <div className="px-3 pb-3 pt-0">
-                                        <p className="text-left text-xs leading-relaxed text-neutral-700">
+                                        <p className="text-left text-xs leading-relaxed text-brand-blue/78">
                                           {process.description}
                                         </p>
                                         {process.examples ? (
-                                          <p className="mt-3 text-left text-xs italic leading-relaxed text-neutral-500">
+                                          <p className="mt-3 text-left text-xs italic leading-relaxed text-dema-muted">
                                             {process.examples}
                                           </p>
                                         ) : null}
@@ -554,8 +554,8 @@ export default function SystemsCatalogClient({
                               );
                             })
                           ) : (
-                            <div className="rounded-[1.25rem] border border-brand-blue/8 bg-transparent p-3">
-                              <p className="text-left text-xs leading-relaxed text-gray-500">
+                            <div className="rounded-[1rem] border border-dema-line bg-dema-cream/65 p-3">
+                              <p className="text-left text-xs leading-relaxed text-dema-muted">
                                 Pas de processus prioritaire ajouté pour ce pilier.
                               </p>
                             </div>
@@ -572,20 +572,20 @@ export default function SystemsCatalogClient({
                   const content = (
                     <>
                       <div>
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-neutral-500">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
                           {tool.type}
                         </p>
                         <h3 className="mt-2 text-lg font-semibold text-brand-blue">
                           {tool.name}
                         </h3>
                       </div>
-                      <p className="mt-3 text-sm leading-relaxed text-gray-600">
+                      <p className="mt-3 text-sm leading-relaxed text-dema-muted">
                         {tool.usage}
                       </p>
                     </>
                   );
                   const className =
-                    "block rounded-[1.75rem] border border-brand-blue/8 bg-white p-5 text-left transition hover:-translate-y-0.5 hover:border-neutral-300 hover:shadow-[0_16px_40px_rgba(20,20,20,0.05)]";
+                    "demaa-card block rounded-[1.15rem] p-5 text-left";
 
                   if (!tool.slug) {
                     return (

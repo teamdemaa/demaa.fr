@@ -1,10 +1,16 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-brand-blue: #141414;
-  --color-brand-coral: #6b7280;
-  --color-background: #ffffff;
-  --color-foreground: #141414;
+  --color-brand-blue: #17231d;
+  --color-brand-coral: #3f6f52;
+  --color-background: #fafafa;
+  --color-foreground: #17231d;
+  --color-dema-cream: #fafafa;
+  --color-dema-paper: #ffffff;
+  --color-dema-forest: #315f46;
+  --color-dema-sage: #f1f3f0;
+  --color-dema-line: #eceeed;
+  --color-dema-muted: #6f756e;
   --font-sans: var(--font-satoshi), "Avenir Next", "Avenir", "Segoe UI", Arial, sans-serif;
   --font-serif: var(--font-gambetta), Georgia, serif;
 }
@@ -31,9 +37,37 @@
     font-synthesis: none;
   }
 
+  .demaa-surface {
+    @apply border border-dema-line/70 bg-dema-paper shadow-[0_6px_18px_rgba(23,35,29,0.024)];
+  }
+
+  .demaa-card {
+    @apply border border-dema-line/70 bg-dema-paper shadow-[0_4px_14px_rgba(23,35,29,0.018)] transition hover:-translate-y-0.5 hover:border-dema-forest/14 hover:shadow-[0_14px_32px_rgba(23,35,29,0.045)];
+  }
+
+  .demaa-chip {
+    @apply min-h-9 whitespace-nowrap rounded-full bg-dema-sage px-3.5 py-1.5 text-xs text-brand-blue/58 transition hover:bg-[#ebeee9] hover:text-brand-blue/72 md:min-h-10 md:px-4 md:text-sm;
+  }
+
+  .demaa-chip-active {
+    @apply bg-dema-forest text-dema-paper shadow-[0_3px_8px_rgba(49,95,70,0.08)] hover:bg-dema-forest hover:text-dema-paper;
+  }
+
+  .demaa-search-shell {
+    @apply rounded-full border border-dema-line/75 bg-dema-paper p-1 shadow-[0_8px_22px_rgba(23,35,29,0.03)];
+  }
+
+  .demaa-primary-button {
+    @apply inline-flex items-center justify-center rounded-full bg-dema-forest px-4 py-2 text-sm font-medium text-dema-paper shadow-[0_10px_22px_rgba(49,95,70,0.14)] transition hover:bg-[#284f3a];
+  }
+
+  .demaa-secondary-button {
+    @apply inline-flex items-center justify-center rounded-full border border-dema-line bg-dema-paper px-4 py-2 text-sm font-medium text-brand-blue transition hover:border-dema-forest/30 hover:text-dema-forest;
+  }
+
   .demaa-input {
-    @apply w-full bg-white border border-brand-coral/10 rounded-xl outline-none text-sm text-brand-blue font-medium placeholder:text-brand-blue/25 placeholder:font-medium transition-all;
-    @apply px-4 py-3.5 shadow-[0_4px_12px_rgba(16,24,40,0.04)] focus:border-brand-coral/30 focus:ring-2 focus:ring-brand-blue/10;
+    @apply w-full bg-dema-paper border border-dema-line rounded-xl outline-none text-sm text-brand-blue font-medium placeholder:text-brand-blue/25 placeholder:font-medium transition-all;
+    @apply px-4 py-3.5 shadow-[0_4px_12px_rgba(23,35,29,0.04)] focus:border-dema-forest/30 focus:ring-2 focus:ring-dema-forest/10;
   }
 
   .demaa-input-with-icon {
@@ -41,8 +75,8 @@
   }
 
   .demaa-textarea {
-    @apply w-full bg-white border border-brand-coral/10 rounded-xl outline-none text-sm text-brand-blue font-medium placeholder:text-brand-blue/25 placeholder:font-medium transition-all resize-none;
-    @apply px-4 py-3.5 shadow-[0_4px_12px_rgba(16,24,40,0.04)] focus:border-brand-coral/30 focus:ring-2 focus:ring-brand-blue/10;
+    @apply w-full bg-dema-paper border border-dema-line rounded-xl outline-none text-sm text-brand-blue font-medium placeholder:text-brand-blue/25 placeholder:font-medium transition-all resize-none;
+    @apply px-4 py-3.5 shadow-[0_4px_12px_rgba(23,35,29,0.04)] focus:border-dema-forest/30 focus:ring-2 focus:ring-dema-forest/10;
   }
 
   .soft-scroll {
@@ -69,6 +103,13 @@
   .soft-scroll::-webkit-scrollbar-thumb:hover {
     background: rgba(25, 27, 48, 0.22);
     background-clip: padding-box;
+  }
+}
+
+@layer base {
+  :where(a, button, input, textarea, select):focus-visible {
+    outline: 2px solid rgba(49, 95, 70, 0.38);
+    outline-offset: 3px;
   }
 }
 

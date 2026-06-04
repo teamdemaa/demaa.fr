@@ -41,7 +41,7 @@ export default async function HomeHubPage({
   return (
     <>
       <Navbar homeTabsMode="client" />
-      <main className="flex-1 w-full bg-white min-h-screen">
+      <main className="flex-1 w-full bg-dema-cream min-h-screen">
         <HomeTabsClient
           systems={systems}
           detailsBySlug={detailsBySlug}

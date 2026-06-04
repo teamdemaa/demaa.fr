@@ -30,7 +30,7 @@ export default function Navbar({
   homeTabsMode?: HomeTabsMode;
 }) {
   return (
-    <nav className="sticky top-0 z-40 border-b border-brand-coral/10 bg-[#ffffff] py-1">
+    <nav className="sticky top-0 z-40 border-b border-dema-line/70 bg-dema-cream/92 py-1 backdrop-blur-md">
       <div className="mx-auto w-full px-6 md:px-10 lg:px-24">
         <div className="relative flex justify-between gap-4 py-3 md:py-4 items-center">
           <Link
@@ -49,7 +49,7 @@ export default function Navbar({
 
               <Link
                 href="/assistant"
-                className="inline-flex min-h-10 items-center justify-center whitespace-nowrap rounded-full border border-brand-blue/10 bg-white px-4 text-xs font-medium text-brand-blue transition-colors hover:border-neutral-300 hover:text-neutral-700 sm:px-5 md:text-sm"
+                className="inline-flex min-h-10 items-center justify-center whitespace-nowrap rounded-full border border-dema-forest bg-dema-forest px-4 text-xs font-light text-dema-paper/90 shadow-[0_6px_16px_rgba(49,95,70,0.14)] transition-colors hover:border-[#284f3a] hover:bg-[#284f3a] hover:text-dema-paper sm:px-5 md:border-dema-forest/18 md:bg-dema-paper md:text-sm md:text-dema-forest md:shadow-none md:hover:border-dema-forest/32 md:hover:bg-dema-sage/60 md:hover:text-dema-forest"
               >
                 J&apos;ai besoin d&apos;un Assistant
               </Link>
@@ -116,13 +116,13 @@ function DesktopHomeTabsNavStatic({
   }
 
   return (
-    <div className="hidden items-center justify-center gap-1 rounded-full border border-brand-blue/5 bg-white p-1 shadow-[0_8px_24px_rgba(20,20,20,0.03)] md:absolute md:left-1/2 md:top-1/2 md:flex md:-translate-x-1/2 md:-translate-y-1/2">
+    <div className="hidden items-center justify-center gap-1 rounded-full border border-dema-line/75 bg-dema-paper p-1 shadow-[0_8px_24px_rgba(23,35,29,0.04)] md:absolute md:left-1/2 md:top-1/2 md:flex md:-translate-x-1/2 md:-translate-y-1/2">
       {homeTabs.map((tab) => {
         const isActive = currentActiveTab === tab.id;
-        const className = `inline-flex min-h-10 items-center justify-center rounded-full px-6 text-sm font-medium transition lg:px-7 ${
+        const className = `inline-flex min-h-10 items-center justify-center rounded-full px-6 text-sm transition lg:px-7 ${
           isActive
-            ? "bg-brand-blue/[0.07] text-brand-blue"
-            : "text-brand-blue/60 hover:bg-neutral-100 hover:text-brand-blue"
+            ? "bg-dema-forest font-semibold text-white shadow-[0_6px_16px_rgba(49,95,70,0.14)]"
+            : "font-light text-brand-blue/56 hover:bg-dema-sage/70 hover:text-brand-blue/72"
         }`;
 
         if (mode === "client") {
