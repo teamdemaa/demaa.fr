@@ -236,20 +236,9 @@ export default function SystemsCatalogClient({
 
   function openToolDetails(tool: ToolDirectoryItem) {
     setSelectedToolDetail(tool);
-
-    const detailPath = tool.slug ? `/annuaire-logiciel/${tool.slug}` : null;
-
-    if (detailPath && window.location.pathname !== detailPath) {
-      window.history.pushState({ demaaToolModal: true }, "", detailPath);
-    }
   }
 
   function closeToolDetails() {
-    if (window.history.state?.demaaToolModal) {
-      window.history.back();
-      return;
-    }
-
     setSelectedToolDetail(null);
   }
 
@@ -635,11 +624,11 @@ export default function SystemsCatalogClient({
                       href={`/annuaire-logiciel/${tool.slug}`}
                       className={className}
                       onClick={(event) => {
-                        if (!tool.detail) {
-                          return;
-                        }
-
-                        handleToolDetailClick(event, tool.detail, openToolDetails);
+                        handleToolDetailClick(
+                          event,
+                          tool.detail ?? getFallbackToolDetail(tool),
+                          openToolDetails
+                        );
                       }}
                     >
                       {content}
@@ -663,6 +652,20 @@ export default function SystemsCatalogClient({
       />
     </>
   );
+}
+
+function getFallbackToolDetail(tool: OperationalSystemDetail["tools"][number]): ToolDirectoryItem {
+  return {
+    slug: tool.slug,
+    name: tool.name,
+    category: tool.type,
+    description: tool.usage,
+    sectors: [],
+    bestFor: tool.usage,
+    pricingHint: "À vérifier",
+    tags: [],
+    url: tool.url ?? "#",
+  };
 }
 
 function handleToolDetailClick(
