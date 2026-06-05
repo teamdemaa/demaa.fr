@@ -4660,6 +4660,944 @@
       "status": "active",
       "toolbox": true,
       "scope": "business"
+    },
+    {
+      "slug": "fieldwire",
+      "name": "Fieldwire",
+      "url": "https://www.fieldwire.com/fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Artisanat & BTP"
+      ],
+      "description": "Logiciel de suivi de chantier terrain : plans, tâches, réserves, photos, rapports et coordination équipes.",
+      "tags": [
+        "Chantier",
+        "Plans",
+        "Réserves"
+      ],
+      "bestFor": "Connecter chantier et bureau avec plans, tâches et suivi terrain en temps réel.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "archireport",
+      "name": "Archireport",
+      "url": "https://www.archireport.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Artisanat & BTP",
+        "Immobilier"
+      ],
+      "description": "Application de suivi de chantier pour architectes et maîtres d’œuvre : réserves, rapports, photos et intervenants.",
+      "tags": [
+        "Architecte",
+        "Suivi chantier",
+        "Rapports"
+      ],
+      "bestFor": "Produire comptes rendus, réserves et suivi chantier depuis le terrain.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "kizeo-forms",
+      "name": "Kizeo Forms",
+      "url": "https://www.kizeo.com/fr/kizeo-forms/",
+      "category": "Outils métier",
+      "sectors": [
+        "Artisanat & BTP",
+        "Services aux particuliers",
+        "Mobilité & logistique"
+      ],
+      "description": "Formulaires terrain digitaux pour chantiers, interventions, relevés, contrôles et rapports personnalisés.",
+      "tags": [
+        "Formulaire terrain",
+        "Rapport",
+        "Intervention"
+      ],
+      "bestFor": "Remplacer les formulaires papier par des rapports terrain structurés.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "letsbuild",
+      "name": "LetsBuild",
+      "url": "https://www.aproplan.com/fr/home",
+      "category": "Outils métier",
+      "sectors": [
+        "Artisanat & BTP"
+      ],
+      "description": "Logiciel de suivi de chantier, inspections, réserves, rapports et collaboration construction.",
+      "tags": [
+        "Chantier",
+        "Inspections",
+        "Réserves"
+      ],
+      "bestFor": "Suivre inspections, réserves et avancement de chantiers structurés.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "jardipro",
+      "name": "JardiPro",
+      "url": "https://www.jardipro.io/",
+      "category": "Outils métier",
+      "sectors": [
+        "Artisanat & BTP",
+        "Services aux particuliers"
+      ],
+      "description": "Logiciel de devis, factures et gestion quotidienne pour jardiniers et paysagistes.",
+      "tags": [
+        "Paysagiste",
+        "Devis",
+        "Facture"
+      ],
+      "bestFor": "Créer devis et factures adaptés aux jardiniers-paysagistes.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "paysagio",
+      "name": "Paysagio",
+      "url": "https://paysag.io/",
+      "category": "Outils métier",
+      "sectors": [
+        "Artisanat & BTP",
+        "Services aux particuliers"
+      ],
+      "description": "Logiciel de gestion conçu pour paysagistes : planning, pointage, notes, photos et suivi chantier.",
+      "tags": [
+        "Paysagiste",
+        "Planning",
+        "Pointage"
+      ],
+      "bestFor": "Piloter planning, heures, photos et suivi terrain d’une équipe paysage.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "ximi",
+      "name": "Ximi",
+      "url": "https://www.ximi.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services aux particuliers"
+      ],
+      "description": "Logiciel métier pour aide et soins à domicile : planification, conformité, coordination et pilotage.",
+      "tags": [
+        "Aide à domicile",
+        "Planning",
+        "Conformité"
+      ],
+      "bestFor": "Piloter planning, intervenants, bénéficiaires et conformité SAP.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "arche-mc2",
+      "name": "Arche MC2",
+      "url": "https://arche-mc2.fr/cibles/sap/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services aux particuliers"
+      ],
+      "description": "Solutions logicielles pour services à la personne, aide et soin à domicile, planning et interventions.",
+      "tags": [
+        "SAP",
+        "Aide à domicile",
+        "Interventions"
+      ],
+      "bestFor": "Structurer interventions, planning et pilotage d’une structure SAP.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "securigest",
+      "name": "SecuriGest",
+      "url": "https://www.securigest.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services aux particuliers"
+      ],
+      "description": "Logiciel de gestion pour entreprises de sécurité privée : agents, planning, pointage QR et rondes.",
+      "tags": [
+        "Sécurité",
+        "Rondes",
+        "Planning"
+      ],
+      "bestFor": "Gérer agents, plannings, rondes et rapports de sécurité privée.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "banetteone",
+      "name": "BanetteOne",
+      "url": "https://banetteone.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services aux particuliers"
+      ],
+      "description": "Logiciel de planification et gestion pour sécurité privée : agents, rondes, prise de poste et signalements.",
+      "tags": [
+        "Sécurité",
+        "Agents",
+        "Rondes"
+      ],
+      "bestFor": "Planifier agents, missions, rondes et prises de poste sur mobile.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "julie",
+      "name": "Julie",
+      "url": "https://www.julie.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Santé & bien-être"
+      ],
+      "description": "Logiciel de gestion pour cabinets dentaires : agenda, dossiers, soins, imagerie et facturation.",
+      "tags": [
+        "Dentiste",
+        "Agenda",
+        "Dossier patient"
+      ],
+      "bestFor": "Gérer l’activité quotidienne d’un cabinet dentaire.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "logosw",
+      "name": "LOGOSw",
+      "url": "https://www.logosw.net/logiciel-dentaire/",
+      "category": "Outils métier",
+      "sectors": [
+        "Santé & bien-être"
+      ],
+      "description": "Logiciel dentaire conçu pour gérer agenda, dossiers, courriers, soins et cabinet multi-praticiens.",
+      "tags": [
+        "Dentiste",
+        "Cabinet dentaire",
+        "Agenda"
+      ],
+      "bestFor": "Structurer les dossiers patients et le pilotage d’un cabinet dentaire.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "visiodent",
+      "name": "Visiodent",
+      "url": "https://www.visiodent.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Santé & bien-être"
+      ],
+      "description": "Solutions e-santé et logiciel dentaire cloud pour cabinets dentaires et centres de santé.",
+      "tags": [
+        "Dentiste",
+        "Cloud",
+        "Centre de santé"
+      ],
+      "bestFor": "Gérer dossiers, soins et activité dentaire avec une solution cloud.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "vega-idel",
+      "name": "VEGA",
+      "url": "https://www.vega-logiciel.fr/infirmiere/",
+      "category": "Outils métier",
+      "sectors": [
+        "Santé & bien-être"
+      ],
+      "description": "Logiciel infirmier libéral IDEL avec télétransmission, cotation, DMP, comptabilité et mobilité.",
+      "tags": [
+        "IDEL",
+        "Télétransmission",
+        "Cotation"
+      ],
+      "bestFor": "Gérer facturation, cotations et obligations d’une infirmière libérale.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "albus-air",
+      "name": "Albus Air",
+      "url": "https://www.albus.fr/solutions/albus-air-logiciel-infirmier/",
+      "category": "Outils métier",
+      "sectors": [
+        "Santé & bien-être"
+      ],
+      "description": "Logiciel et application mobile pour infirmiers libéraux : patientèle, soins, FSE et mobilité.",
+      "tags": [
+        "IDEL",
+        "Mobile",
+        "FSE"
+      ],
+      "bestFor": "Gérer patientèle et facturation IDEL depuis le terrain.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "agathe-you",
+      "name": "Agathe YOU",
+      "url": "https://www.agatheyou.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Santé & bien-être"
+      ],
+      "description": "Logiciel infirmier libéral pour télétransmission, mobilité, cotation, suivi patient et services IDEL.",
+      "tags": [
+        "IDEL",
+        "Télétransmission",
+        "Mobile"
+      ],
+      "bestFor": "Simplifier cotations, télétransmission et suivi quotidien IDEL.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "theram",
+      "name": "therâm",
+      "url": "https://theram.fr/logiciel-psychologue.html",
+      "category": "Outils métier",
+      "sectors": [
+        "Santé & bien-être"
+      ],
+      "description": "Logiciel pour psychologues : dossiers patients HDS, agenda, facturation et notes de séance.",
+      "tags": [
+        "Psychologue",
+        "HDS",
+        "Dossier patient"
+      ],
+      "bestFor": "Centraliser dossiers, agenda et facturation d’un cabinet de psychologie.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "psylean",
+      "name": "Psylean",
+      "url": "https://www.psylean.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Santé & bien-être"
+      ],
+      "description": "Outil de gestion pour psychologues et thérapeutes : agenda, dossiers patients et suivi thérapeutique.",
+      "tags": [
+        "Psychologue",
+        "Thérapie",
+        "Agenda"
+      ],
+      "bestFor": "Suivre les dossiers et parcours thérapeutiques dans le temps.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "rvpsy",
+      "name": "RVPsy",
+      "url": "https://rvpsy.com/fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Santé & bien-être"
+      ],
+      "description": "Logiciel en ligne pour psychologues, psychothérapeutes et psychanalystes : agenda, dossiers et facturation.",
+      "tags": [
+        "Psychologue",
+        "Agenda",
+        "Facturation"
+      ],
+      "bestFor": "Alléger la gestion administrative et patientèle d’un cabinet psy.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "resamania",
+      "name": "Resamania",
+      "url": "https://www.resamania.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Santé & bien-être"
+      ],
+      "description": "Logiciel de gestion pour clubs de sport : abonnements, accès, planning, CRM et encaissement.",
+      "tags": [
+        "Salle de sport",
+        "Abonnements",
+        "CRM"
+      ],
+      "bestFor": "Gérer membres, abonnements, accès et pilotage d’une salle de sport.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "deciplus",
+      "name": "Xplor Deciplus",
+      "url": "https://www.deciplus.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Santé & bien-être"
+      ],
+      "description": "Logiciel de gestion pour clubs, studios sport et bien-être : planning, abonnements, membres et cours.",
+      "tags": [
+        "Salle de sport",
+        "Planning",
+        "Abonnements"
+      ],
+      "bestFor": "Centraliser réservations, membres, abonnements et cours collectifs.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "bsport",
+      "name": "bsport",
+      "url": "https://pro.bsport.io/",
+      "category": "Outils métier",
+      "sectors": [
+        "Santé & bien-être"
+      ],
+      "description": "Plateforme de gestion pour studios fitness, yoga, Pilates et boutique fitness.",
+      "tags": [
+        "Studio fitness",
+        "Yoga",
+        "Pilates"
+      ],
+      "bestFor": "Gérer réservations, membres, paiements et marketing d’un studio sportif.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "ivoirnet",
+      "name": "iVoirNet",
+      "url": "https://www.ivoirnet.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Santé & bien-être",
+        "Commerce local"
+      ],
+      "description": "Logiciel tout-en-un pour opticiens et audioprothésistes : ventes, stock, clients, facturation et télétransmission.",
+      "tags": [
+        "Opticien",
+        "Stock",
+        "Télétransmission"
+      ],
+      "bestFor": "Gérer magasin optique, stock, ventes et télétransmission.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "optimum-live",
+      "name": "Optimum Live",
+      "url": "https://www.optimumcit.com/fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Santé & bien-être",
+        "Commerce local"
+      ],
+      "description": "Solution de gestion web pour opticiens et audioprothésistes indépendants ou enseignes.",
+      "tags": [
+        "Opticien",
+        "Audioprothésiste",
+        "Gestion magasin"
+      ],
+      "bestFor": "Piloter activité optique, clients, ventes et magasins multi-sites.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "kiute-pro",
+      "name": "Kiute Pro",
+      "url": "https://pro.kiute.com/fr/",
+      "category": "Caisse & réservation",
+      "sectors": [
+        "Santé & bien-être",
+        "Commerce local"
+      ],
+      "description": "Logiciel tout-en-un pour salons de coiffure, instituts et spas : rendez-vous, caisse, clients et fidélité.",
+      "tags": [
+        "Beauté",
+        "Coiffure",
+        "Réservation"
+      ],
+      "bestFor": "Gérer agenda, caisse, clients, fidélité et visibilité beauté/coiffure.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "github",
+      "name": "GitHub",
+      "url": "https://github.com/",
+      "category": "IA dev",
+      "sectors": [
+        "Tech & Digital",
+        "Services & conseil"
+      ],
+      "description": "Plateforme de gestion de code, collaboration développeur, issues, pull requests et CI/CD.",
+      "tags": [
+        "Code",
+        "Git",
+        "Collaboration"
+      ],
+      "bestFor": "Centraliser code, revues, issues et automatisations techniques.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "vercel",
+      "name": "Vercel",
+      "url": "https://vercel.com/",
+      "category": "IA dev",
+      "sectors": [
+        "Tech & Digital",
+        "Services & conseil"
+      ],
+      "description": "Plateforme cloud pour déployer sites, applications frontend, APIs et produits web modernes.",
+      "tags": [
+        "Déploiement",
+        "Frontend",
+        "Cloud"
+      ],
+      "bestFor": "Déployer rapidement sites, MVP et applications web modernes.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "linear",
+      "name": "Linear",
+      "url": "https://linear.app/",
+      "category": "Gestion & équipe",
+      "sectors": [
+        "Tech & Digital",
+        "Services & conseil"
+      ],
+      "description": "Gestion de tickets, roadmap, bugs et cycles produit pour équipes SaaS et dev.",
+      "tags": [
+        "Produit",
+        "Tickets",
+        "Roadmap"
+      ],
+      "bestFor": "Structurer bugs, roadmap et exécution produit d’une équipe tech.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "sentry",
+      "name": "Sentry",
+      "url": "https://sentry.io/",
+      "category": "IA dev",
+      "sectors": [
+        "Tech & Digital"
+      ],
+      "description": "Monitoring d’erreurs, performance applicative et alertes pour produits web et logiciels.",
+      "tags": [
+        "Monitoring",
+        "Bugs",
+        "Performance"
+      ],
+      "bestFor": "Détecter, prioriser et corriger les erreurs produit en production.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "posthog",
+      "name": "PostHog",
+      "url": "https://posthog.com/",
+      "category": "CRM & ventes",
+      "sectors": [
+        "Tech & Digital"
+      ],
+      "description": "Analytics produit, feature flags, session replay et expérimentation pour SaaS et apps web.",
+      "tags": [
+        "Analytics produit",
+        "Feature flags",
+        "SaaS"
+      ],
+      "bestFor": "Comprendre l’usage produit et piloter l’amélioration d’un SaaS.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "wordpress",
+      "name": "WordPress",
+      "url": "https://wordpress.org/",
+      "category": "Site & e-commerce",
+      "sectors": [
+        "Tech & Digital",
+        "Services & conseil",
+        "E-commerce"
+      ],
+      "description": "CMS open source pour sites vitrines, médias, blogs, contenus et e-commerce via extensions.",
+      "tags": [
+        "CMS",
+        "Site web",
+        "Contenu"
+      ],
+      "bestFor": "Créer sites éditoriaux, vitrines ou contenus administrables.",
+      "pricingHint": "Open source",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "elementor",
+      "name": "Elementor",
+      "url": "https://elementor.com/",
+      "category": "Site & e-commerce",
+      "sectors": [
+        "Tech & Digital",
+        "Services & conseil"
+      ],
+      "description": "Builder WordPress pour créer sites vitrines, landing pages et pages clients sans repartir de zéro.",
+      "tags": [
+        "WordPress",
+        "Builder",
+        "Site web"
+      ],
+      "bestFor": "Produire plus vite des sites WordPress pour clients.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "kit",
+      "name": "Kit",
+      "url": "https://kit.com/",
+      "category": "Création contenu",
+      "sectors": [
+        "Tech & Digital",
+        "E-commerce"
+      ],
+      "description": "Email marketing et newsletter pour créateurs : audience, automatisations, produits numériques et sponsoring.",
+      "tags": [
+        "Newsletter",
+        "Créateur",
+        "Email"
+      ],
+      "bestFor": "Développer une audience créateur et monétiser via email.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "riverside",
+      "name": "Riverside",
+      "url": "https://riverside.fm/",
+      "category": "Création contenu",
+      "sectors": [
+        "Tech & Digital"
+      ],
+      "description": "Enregistrement audio/vidéo à distance pour podcasts, interviews, webinaires et contenus vidéo.",
+      "tags": [
+        "Podcast",
+        "Interview",
+        "Vidéo"
+      ],
+      "bestFor": "Enregistrer podcasts et interviews vidéo avec bonne qualité à distance.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "runway",
+      "name": "Runway",
+      "url": "https://runwayml.com/",
+      "category": "Création contenu",
+      "sectors": [
+        "Tech & Digital"
+      ],
+      "description": "Outils IA créatifs pour génération vidéo, édition, effets visuels et workflows média.",
+      "tags": [
+        "IA vidéo",
+        "Création",
+        "Montage"
+      ],
+      "bestFor": "Accélérer production vidéo, effets et contenus créatifs avec IA.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "softr",
+      "name": "Softr",
+      "url": "https://www.softr.io/",
+      "category": "Outils métier",
+      "sectors": [
+        "Tech & Digital",
+        "Services & conseil"
+      ],
+      "description": "Builder no-code pour créer portails, annuaires, marketplaces simples et applications internes.",
+      "tags": [
+        "No-code",
+        "Portail",
+        "Marketplace"
+      ],
+      "bestFor": "Créer rapidement un portail ou une marketplace simple connectée aux données.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "medusa",
+      "name": "Medusa",
+      "url": "https://medusajs.com/",
+      "category": "Site & e-commerce",
+      "sectors": [
+        "Tech & Digital",
+        "E-commerce"
+      ],
+      "description": "Framework open source pour commerce composable, back-offices e-commerce et plateformes sur mesure.",
+      "tags": [
+        "E-commerce",
+        "Open source",
+        "Composable"
+      ],
+      "bestFor": "Construire une plateforme commerce ou marketplace technique sur mesure.",
+      "pricingHint": "Open source",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "arcadier",
+      "name": "Arcadier",
+      "url": "https://www.arcadier.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Tech & Digital",
+        "E-commerce"
+      ],
+      "description": "Plateforme marketplace SaaS pour lancer des marketplaces de produits, services ou location.",
+      "tags": [
+        "Marketplace",
+        "SaaS",
+        "No-code"
+      ],
+      "bestFor": "Créer une marketplace verticale sans développement lourd.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "zelok",
+      "name": "Zelok",
+      "url": "https://www.zelok.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Immobilier"
+      ],
+      "description": "Plateforme de dossier locataire pour collecte, qualification, suivi et échanges location.",
+      "tags": [
+        "Location",
+        "Dossier locataire",
+        "Gestion locative"
+      ],
+      "bestFor": "Fluidifier les candidatures locataires et sécuriser les dossiers de location.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "rentila",
+      "name": "Rentila",
+      "url": "https://www.rentila.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Immobilier"
+      ],
+      "description": "Gestion locative en ligne pour loyers, quittances, baux, charges et suivi bailleur.",
+      "tags": [
+        "Gestion locative",
+        "Bailleur",
+        "Loyers"
+      ],
+      "bestFor": "Suivre loyers, documents et obligations locatives sans tableur dispersé.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "mews",
+      "name": "Mews",
+      "url": "https://www.mews.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Hébergement & tourisme"
+      ],
+      "description": "PMS hôtelier cloud pour opérations, réservations, paiements et expérience client.",
+      "tags": [
+        "PMS",
+        "Hôtel",
+        "Paiement"
+      ],
+      "bestFor": "Moderniser la gestion opérationnelle d’un hôtel ou hébergement indépendant.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "roomraccoon",
+      "name": "RoomRaccoon",
+      "url": "https://roomraccoon.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Hébergement & tourisme"
+      ],
+      "description": "Logiciel hôtelier tout-en-un avec PMS, channel manager, moteur de réservation et paiements.",
+      "tags": [
+        "PMS",
+        "Channel manager",
+        "Réservation"
+      ],
+      "bestFor": "Centraliser réservations, distribution et paiements d’un hébergement indépendant.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "d-edge",
+      "name": "D-EDGE",
+      "url": "https://www.d-edge.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Hébergement & tourisme"
+      ],
+      "description": "Solutions de distribution hôtelière pour CRS, channel manager, moteur de réservation et marketing.",
+      "tags": [
+        "Hôtel",
+        "Distribution",
+        "Channel manager"
+      ],
+      "bestFor": "Optimiser distribution, réservations directes et visibilité d’un hôtel.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "antsroute",
+      "name": "AntsRoute",
+      "url": "https://antsroute.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Mobilité & logistique"
+      ],
+      "description": "Logiciel SaaS d’optimisation de tournées, suivi terrain, notifications client et preuves de passage.",
+      "tags": [
+        "Tournées",
+        "Livraison",
+        "Terrain"
+      ],
+      "bestFor": "Planifier, optimiser et suivre les tournées de livraison ou d’intervention.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "nomadia-toursolver",
+      "name": "Nomadia TourSolver",
+      "url": "https://www.nomadia.com/tarifs/tarifs-toursolver/",
+      "category": "Outils métier",
+      "sectors": [
+        "Mobilité & logistique"
+      ],
+      "description": "Solution d’optimisation de tournées pour planifier visites, livraisons et interventions terrain.",
+      "tags": [
+        "Tournées",
+        "Optimisation",
+        "Terrain"
+      ],
+      "bestFor": "Construire des plans de tournées fiables avec contraintes, secteurs et équipes.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "mapotempo",
+      "name": "Mapotempo",
+      "url": "https://mapotempo.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Mobilité & logistique"
+      ],
+      "description": "Solution de cartographie et d’optimisation de tournées pour livraison, collecte et service terrain.",
+      "tags": [
+        "Tournées",
+        "Cartographie",
+        "Livraison"
+      ],
+      "bestFor": "Optimiser tournées récurrentes, zones, itinéraires et contraintes terrain.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
     }
   ]
 }

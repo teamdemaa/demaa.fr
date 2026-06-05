@@ -467,6 +467,22 @@
         {
           "slug": "boondmanager",
           "usage": "Structurer staffing, temps, charge et rentabilité des missions."
+        },
+        {
+          "slug": "wordpress",
+          "usage": "Produire sites, landing pages et contenus administrables."
+        },
+        {
+          "slug": "elementor",
+          "usage": "Livrer rapidement pages WordPress et sites clients."
+        },
+        {
+          "slug": "riverside",
+          "usage": "Produire interviews, podcasts et contenus vidéo clients."
+        },
+        {
+          "slug": "kit",
+          "usage": "Structurer newsletters et automatisations créateur/client."
         }
       ]
     },
@@ -773,6 +789,22 @@
         {
           "slug": "claude",
           "usage": "Clarifier des sujets complexes et produire des livrables plus propres."
+        },
+        {
+          "slug": "wordpress",
+          "usage": "Créer sites vitrines, blogs et contenus administrables pour clients."
+        },
+        {
+          "slug": "elementor",
+          "usage": "Produire plus vite des pages et sites WordPress clients."
+        },
+        {
+          "slug": "github",
+          "usage": "Centraliser code, revues, issues et collaboration développeur."
+        },
+        {
+          "slug": "vercel",
+          "usage": "Déployer sites et applications web modernes rapidement."
         }
       ]
     },
@@ -889,6 +921,18 @@
         {
           "slug": "beehiiv",
           "usage": "Structurer une newsletter de créateur avec croissance et analytics."
+        },
+        {
+          "slug": "riverside",
+          "usage": "Enregistrer podcasts, interviews et contenus vidéo à distance."
+        },
+        {
+          "slug": "runway",
+          "usage": "Créer et éditer des vidéos avec outils IA créatifs."
+        },
+        {
+          "slug": "kit",
+          "usage": "Construire audience email et monétiser contenus numériques."
         }
       ]
     },
@@ -997,6 +1041,18 @@
         {
           "slug": "mirakl",
           "usage": "Gérer vendeurs, catalogues, commandes et opérations marketplace."
+        },
+        {
+          "slug": "softr",
+          "usage": "Créer une marketplace ou portail simple connecté aux données."
+        },
+        {
+          "slug": "arcadier",
+          "usage": "Lancer une marketplace SaaS de produits, services ou location."
+        },
+        {
+          "slug": "medusa",
+          "usage": "Construire un back-office commerce ou marketplace sur mesure."
         }
       ]
     },
@@ -1105,6 +1161,18 @@
         {
           "slug": "beehiiv",
           "usage": "Développer une newsletter avec analytics, croissance et monétisation."
+        },
+        {
+          "slug": "wordpress",
+          "usage": "Publier articles, contenus SEO et média éditorial administrable."
+        },
+        {
+          "slug": "kit",
+          "usage": "Développer newsletter, automatisations et monétisation audience."
+        },
+        {
+          "slug": "riverside",
+          "usage": "Enregistrer interviews, podcasts et contenus vidéo à distance."
         }
       ]
     },
@@ -1217,6 +1285,26 @@
         {
           "slug": "bubble",
           "usage": "Prototyper rapidement back-offices ou fonctionnalités internes."
+        },
+        {
+          "slug": "github",
+          "usage": "Centraliser code, revues, issues et automatisations techniques."
+        },
+        {
+          "slug": "vercel",
+          "usage": "Déployer frontend, APIs et environnements produit rapidement."
+        },
+        {
+          "slug": "linear",
+          "usage": "Structurer bugs, roadmap, cycles produit et exécution équipe."
+        },
+        {
+          "slug": "sentry",
+          "usage": "Surveiller erreurs, performance et stabilité en production."
+        },
+        {
+          "slug": "posthog",
+          "usage": "Analyser usage produit, funnels, feature flags et expérimentation."
         }
       ]
     },
@@ -1323,6 +1411,18 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
+        },
+        {
+          "slug": "fieldwire",
+          "usage": "Coordonner plans, tâches, réserves et équipes terrain."
+        },
+        {
+          "slug": "kizeo-forms",
+          "usage": "Dématérialiser rapports chantier, relevés et contrôles terrain."
+        },
+        {
+          "slug": "letsbuild",
+          "usage": "Suivre inspections, réserves et avancement chantier."
         }
       ]
     },
@@ -1415,6 +1515,10 @@
         {
           "slug": "synchroteam",
           "usage": "Planifier interventions, équipes terrain et comptes-rendus."
+        },
+        {
+          "slug": "kizeo-forms",
+          "usage": "Dématérialiser contrôles qualité, passages et rapports terrain."
         }
       ]
     },
@@ -1515,6 +1619,14 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer annonces, réponses client et scripts de relance."
+        },
+        {
+          "slug": "netty",
+          "usage": "Gérer CRM, mandats, biens, rapprochements et diffusion immobilière."
+        },
+        {
+          "slug": "zelok",
+          "usage": "Collecter et qualifier les dossiers locataires pour les biens à louer."
         }
       ]
     },
@@ -1707,6 +1819,14 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer emails, relances et synthèses non sensibles."
+        },
+        {
+          "slug": "zelok",
+          "usage": "Centraliser les candidatures locataires et fiabiliser les dossiers."
+        },
+        {
+          "slug": "rentila",
+          "usage": "Suivre loyers, quittances, charges, baux et documents locatifs."
         }
       ]
     },
@@ -1803,6 +1923,10 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer annonces, dossiers, synthèses et relances."
+        },
+        {
+          "slug": "netty",
+          "usage": "Suivre biens, contacts, opportunités et diffusion des opérations."
         }
       ]
     },
@@ -1895,6 +2019,10 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer synthèses, relances et analyses non sensibles."
+        },
+        {
+          "slug": "rentila",
+          "usage": "Suivre loyers, quittances, documents et performance locative."
         }
       ]
     },
@@ -1991,6 +2119,10 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer messages voyageurs, procédures et réponses types."
+        },
+        {
+          "slug": "roomraccoon",
+          "usage": "Centraliser réservations, distribution et paiements pour hébergements gérés."
         }
       ]
     },
@@ -2083,6 +2215,10 @@
         {
           "slug": "apimo",
           "usage": "Suivre biens, opportunités et dossiers immobiliers."
+        },
+        {
+          "slug": "rentila",
+          "usage": "Suivre gestion locative, loyers et documents des biens détenus."
         }
       ]
     },
@@ -2371,6 +2507,14 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer réponses client, checklists et comptes-rendus de mission."
+        },
+        {
+          "slug": "antsroute",
+          "usage": "Planifier les tournées, passages et communications client."
+        },
+        {
+          "slug": "nomadia-toursolver",
+          "usage": "Optimiser les plannings d’équipes et de véhicules."
         }
       ]
     },
@@ -2467,6 +2611,18 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer messages client, procédures et synthèses d’incidents."
+        },
+        {
+          "slug": "antsroute",
+          "usage": "Planifier tournées, suivre chauffeurs et envoyer les notifications client."
+        },
+        {
+          "slug": "nomadia-toursolver",
+          "usage": "Optimiser les tournées dernier kilomètre avec contraintes terrain."
+        },
+        {
+          "slug": "mapotempo",
+          "usage": "Construire des tournées optimisées de livraison ou collecte."
         }
       ]
     },
@@ -2563,6 +2719,18 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer des réponses client, procédures, comptes-rendus et synthèses."
+        },
+        {
+          "slug": "antsroute",
+          "usage": "Optimiser les tournées, suivre les passages et notifier les clients."
+        },
+        {
+          "slug": "nomadia-toursolver",
+          "usage": "Construire des plans de tournées avec contraintes et secteurs."
+        },
+        {
+          "slug": "mapotempo",
+          "usage": "Optimiser itinéraires, zones et tournées de livraison ou collecte."
         }
       ]
     },
@@ -2649,6 +2817,14 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer messages client, procédures et réponses aux demandes."
+        },
+        {
+          "slug": "antsroute",
+          "usage": "Planifier les passages, tournées et notifications voyageurs."
+        },
+        {
+          "slug": "nomadia-toursolver",
+          "usage": "Optimiser les circuits, affectations et contraintes horaires."
         }
       ]
     },
@@ -3457,6 +3633,10 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer posts, réponses client et descriptions de prestations."
+        },
+        {
+          "slug": "kiute-pro",
+          "usage": "Gérer rendez-vous, caisse, clients, fidélité et visibilité beauté."
         }
       ]
     },
@@ -3551,6 +3731,10 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer posts, réponses client et descriptions de prestations."
+        },
+        {
+          "slug": "kiute-pro",
+          "usage": "Gérer agenda, caisse, clients, fidélité et visibilité salon."
         }
       ]
     },
@@ -3645,6 +3829,10 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer posts, réponses client et descriptions de prestations."
+        },
+        {
+          "slug": "kiute-pro",
+          "usage": "Centraliser rendez-vous, caisse, clients et fidélisation beauté."
         }
       ]
     },
@@ -3731,6 +3919,14 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer messages, procédures et consignes qualité."
+        },
+        {
+          "slug": "ximi",
+          "usage": "Piloter planning, bénéficiaires, intervenants et conformité SAP."
+        },
+        {
+          "slug": "arche-mc2",
+          "usage": "Structurer interventions, coordination et pilotage service à domicile."
         }
       ]
     },
@@ -4157,6 +4353,14 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
+        },
+        {
+          "slug": "fieldwire",
+          "usage": "Suivre plans, réserves, tâches et interventions chantier."
+        },
+        {
+          "slug": "kizeo-forms",
+          "usage": "Digitaliser fiches intervention, relevés et contrôles techniques."
         }
       ]
     },
@@ -4247,6 +4451,14 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
+        },
+        {
+          "slug": "fieldwire",
+          "usage": "Coordonner plans, tâches, réserves et avancement terrain."
+        },
+        {
+          "slug": "kizeo-forms",
+          "usage": "Créer fiches intervention, contrôles et rapports terrain."
         }
       ]
     },
@@ -4341,6 +4553,18 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
+        },
+        {
+          "slug": "fieldwire",
+          "usage": "Suivre plans, tâches, photos et réserves sur chantier."
+        },
+        {
+          "slug": "archireport",
+          "usage": "Produire comptes rendus, réserves et suivi de chantier."
+        },
+        {
+          "slug": "kizeo-forms",
+          "usage": "Créer formulaires terrain et rapports personnalisés."
         }
       ]
     },
@@ -4435,6 +4659,14 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
+        },
+        {
+          "slug": "fieldwire",
+          "usage": "Suivre plans, réserves, tâches et avancement chantier."
+        },
+        {
+          "slug": "kizeo-forms",
+          "usage": "Collecter relevés, photos et comptes rendus terrain."
         }
       ]
     },
@@ -4529,6 +4761,14 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
+        },
+        {
+          "slug": "fieldwire",
+          "usage": "Coordonner équipes, plans et suivi terrain gros œuvre."
+        },
+        {
+          "slug": "letsbuild",
+          "usage": "Suivre inspections, réserves et avancement des travaux."
         }
       ]
     },
@@ -4619,6 +4859,18 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer réponses client, comptes-rendus et checklists terrain."
+        },
+        {
+          "slug": "extrabat",
+          "usage": "Gérer CRM, devis, planning et interventions paysage."
+        },
+        {
+          "slug": "jardipro",
+          "usage": "Créer devis et factures adaptés aux jardiniers-paysagistes."
+        },
+        {
+          "slug": "paysagio",
+          "usage": "Piloter planning, heures, photos et suivi terrain paysage."
         }
       ]
     },
@@ -5281,6 +5533,18 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer réponses voyageurs, procédures et messages types."
+        },
+        {
+          "slug": "mews",
+          "usage": "Centraliser PMS, opérations, paiements et expérience client."
+        },
+        {
+          "slug": "roomraccoon",
+          "usage": "Gérer PMS, channel manager, réservations directes et paiements."
+        },
+        {
+          "slug": "d-edge",
+          "usage": "Optimiser distribution hôtelière, channel manager et réservations directes."
         }
       ]
     },
@@ -5457,6 +5721,14 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer procédures, messages types et synthèses non sensibles."
+        },
+        {
+          "slug": "theram",
+          "usage": "Gérer dossiers patients, agenda et facturation si activité thérapeutique."
+        },
+        {
+          "slug": "rvpsy",
+          "usage": "Structurer patientèle, rendez-vous et notes de suivi."
         }
       ]
     },
@@ -5543,6 +5815,18 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer messages types, procédures et synthèses non sensibles."
+        },
+        {
+          "slug": "vega-idel",
+          "usage": "Gérer cotations, télétransmission, DMP et comptabilité IDEL."
+        },
+        {
+          "slug": "albus-air",
+          "usage": "Gérer patientèle, FSE et mobilité depuis le terrain."
+        },
+        {
+          "slug": "agathe-you",
+          "usage": "Simplifier cotations, télétransmission et suivi quotidien IDEL."
         }
       ]
     },
@@ -5629,6 +5913,14 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer consignes, réponses client et procédures qualité."
+        },
+        {
+          "slug": "ximi",
+          "usage": "Gérer planning, bénéficiaires, intervenants et conformité terrain."
+        },
+        {
+          "slug": "arche-mc2",
+          "usage": "Coordonner interventions d’aide et soin à domicile."
         }
       ]
     },
@@ -5715,6 +6007,10 @@
         {
           "slug": "hiboutik",
           "usage": "Gérer caisse, ventes, stock et clients boutique."
+        },
+        {
+          "slug": "kizeo-forms",
+          "usage": "Créer fiches diagnostic, intervention, photos et signature client."
         }
       ]
     },
@@ -5801,6 +6097,18 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer comptes-rendus, synthèses et relances client."
+        },
+        {
+          "slug": "archireport",
+          "usage": "Produire comptes rendus, réserves, photos et suivi chantier."
+        },
+        {
+          "slug": "fieldwire",
+          "usage": "Partager plans, tâches et suivi chantier avec les intervenants."
+        },
+        {
+          "slug": "letsbuild",
+          "usage": "Structurer inspections, réserves et rapports de chantier."
         }
       ]
     },
@@ -6091,6 +6399,14 @@
         {
           "slug": "descript",
           "usage": "Monter interviews, podcasts et vidéos clients plus vite."
+        },
+        {
+          "slug": "riverside",
+          "usage": "Enregistrer interviews clients, podcasts et contenus vidéo distants."
+        },
+        {
+          "slug": "runway",
+          "usage": "Accélérer effets, variantes vidéo et workflows créatifs IA."
         }
       ]
     },
@@ -6263,6 +6579,18 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer posts, programmes, messages et réponses adhérents."
+        },
+        {
+          "slug": "resamania",
+          "usage": "Gérer membres, abonnements, accès et CRM club."
+        },
+        {
+          "slug": "deciplus",
+          "usage": "Centraliser planning, abonnements, membres et cours."
+        },
+        {
+          "slug": "bsport",
+          "usage": "Gérer réservations, paiements et marketing studio fitness."
         }
       ]
     },
@@ -6349,6 +6677,18 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer procédures internes et messages types non sensibles."
+        },
+        {
+          "slug": "julie",
+          "usage": "Gérer agenda, dossiers, soins, imagerie et facturation dentaire."
+        },
+        {
+          "slug": "logosw",
+          "usage": "Structurer dossiers patients, courriers et organisation multi-praticiens."
+        },
+        {
+          "slug": "visiodent",
+          "usage": "Piloter dossiers, soins et activité dentaire avec une solution cloud."
         }
       ]
     },
@@ -6717,6 +7057,10 @@
         {
           "slug": "regiondo",
           "usage": "Vendre et organiser visites, loisirs et activités touristiques."
+        },
+        {
+          "slug": "d-edge",
+          "usage": "Structurer la distribution et les réservations côté hébergements partenaires."
         }
       ]
     },
@@ -6803,6 +7147,14 @@
         {
           "slug": "hiboutik",
           "usage": "Gérer caisse, ventes, stock et clients magasin."
+        },
+        {
+          "slug": "ivoirnet",
+          "usage": "Gérer ventes, stock, clients, facturation et télétransmission."
+        },
+        {
+          "slug": "optimum-live",
+          "usage": "Piloter magasin optique, clients et ventes multi-sites."
         }
       ]
     },
@@ -6889,6 +7241,14 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer réponses client, comptes-rendus et checklists SAV."
+        },
+        {
+          "slug": "fieldwire",
+          "usage": "Coordonner chantier, réserves, photos et avancement piscine."
+        },
+        {
+          "slug": "kizeo-forms",
+          "usage": "Créer fiches SAV, contrôle et intervention terrain."
         }
       ]
     },
@@ -7731,6 +8091,10 @@
         {
           "slug": "hexfit",
           "usage": "Suivre bilans, objectifs, programmes et progression sportive."
+        },
+        {
+          "slug": "bsport",
+          "usage": "Gérer réservations, abonnements, paiements et communauté studio."
         }
       ]
     },
@@ -7903,6 +8267,18 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer consignes, comptes-rendus et procédures qualité."
+        },
+        {
+          "slug": "securigest",
+          "usage": "Gérer agents, pointage QR, rondes et rapports."
+        },
+        {
+          "slug": "banetteone",
+          "usage": "Planifier agents, prises de poste, rondes et signalements."
+        },
+        {
+          "slug": "kizeo-forms",
+          "usage": "Créer rapports d’intervention et contrôles terrain sécurité."
         }
       ]
     },
@@ -8083,6 +8459,14 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
+        },
+        {
+          "slug": "fieldwire",
+          "usage": "Suivre chantiers, réserves, photos et coordination terrain."
+        },
+        {
+          "slug": "kizeo-forms",
+          "usage": "Digitaliser rapports, contrôles et fiches d’intervention."
         }
       ]
     },
@@ -8173,6 +8557,14 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
+        },
+        {
+          "slug": "fieldwire",
+          "usage": "Suivre tâches, réserves et avancement des chantiers."
+        },
+        {
+          "slug": "kizeo-forms",
+          "usage": "Collecter photos, contrôles et comptes rendus terrain."
         }
       ]
     },
@@ -8263,6 +8655,14 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
+        },
+        {
+          "slug": "fieldwire",
+          "usage": "Suivre avancement, réserves et coordination terrain."
+        },
+        {
+          "slug": "kizeo-forms",
+          "usage": "Dématérialiser rapports, relevés et signatures chantier."
         }
       ]
     },
@@ -8353,6 +8753,14 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer réponses client, procédures et comptes-rendus."
+        },
+        {
+          "slug": "kizeo-forms",
+          "usage": "Digitaliser fiches maintenance, contrôles et comptes rendus."
+        },
+        {
+          "slug": "fieldwire",
+          "usage": "Suivre tâches, réserves et coordination chantier."
         }
       ]
     },
@@ -8439,6 +8847,14 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer réponses client, procédures et comptes-rendus."
+        },
+        {
+          "slug": "organilog",
+          "usage": "Suivre interventions, dépannage, clients et facturation."
+        },
+        {
+          "slug": "kizeo-forms",
+          "usage": "Créer rapports intervention, photos et signatures terrain."
         }
       ]
     },
@@ -8721,6 +9137,14 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer messages types et procédures non sensibles."
+        },
+        {
+          "slug": "theram",
+          "usage": "Structurer dossiers patients, agenda et notes de séance."
+        },
+        {
+          "slug": "rvpsy",
+          "usage": "Gérer patientèle, rendez-vous et suivi de cabinet thérapeute."
         }
       ]
     },
@@ -8807,6 +9231,18 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer supports internes et messages non sensibles."
+        },
+        {
+          "slug": "theram",
+          "usage": "Centraliser dossiers patients HDS, agenda et facturation."
+        },
+        {
+          "slug": "psylean",
+          "usage": "Suivre thérapies, dossiers patients et rendez-vous."
+        },
+        {
+          "slug": "rvpsy",
+          "usage": "Gérer agenda, patientèle, notes et facturation du cabinet psy."
         }
       ]
     },
@@ -9073,6 +9509,10 @@
         {
           "slug": "modelo",
           "usage": "Préparer documents, mandats et dossiers immobiliers."
+        },
+        {
+          "slug": "netty",
+          "usage": "Structurer biens, contacts, recherches et rapprochements immobiliers."
         }
       ]
     },
@@ -9163,6 +9603,10 @@
         {
           "slug": "liciel",
           "usage": "Compléter les diagnostics et relevés liés aux missions terrain."
+        },
+        {
+          "slug": "kizeo-forms",
+          "usage": "Collecter relevés, photos et formulaires terrain structurés."
         }
       ]
     }
