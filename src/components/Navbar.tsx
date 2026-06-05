@@ -128,10 +128,10 @@ function DesktopHomeTabsNavStatic({
     <div className="hidden items-center justify-center gap-1 rounded-full border border-dema-line/75 bg-dema-paper p-1 shadow-[0_8px_24px_rgba(23,35,29,0.04)] md:absolute md:left-1/2 md:top-1/2 md:flex md:-translate-x-1/2 md:-translate-y-1/2">
       {homeTabs.map((tab) => {
         const isActive = currentActiveTab === tab.id;
-        const className = `inline-flex min-h-10 items-center justify-center rounded-full px-6 text-sm transition lg:px-7 ${
+        const className = `inline-flex min-h-10 items-center justify-center rounded-full px-6 text-base transition lg:px-7 ${
           isActive
             ? "bg-dema-forest font-semibold text-white shadow-[0_6px_16px_rgba(49,95,70,0.14)]"
-            : "font-light text-brand-blue/56 hover:bg-dema-sage/70 hover:text-brand-blue/72"
+            : "font-medium text-brand-blue/56 hover:bg-dema-sage/70 hover:text-brand-blue/72"
         }`;
 
         if (mode === "client" && tab.id !== "assistants") {

@@ -4,21 +4,14 @@ import { ArrowLeft } from "lucide-react";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import SoftwareDetailContent from "@/components/SoftwareDetailContent";
-import {
-  getToolDirectorySlug,
-  toolDirectory,
-} from "@/lib/tool-directory";
+import { getToolDirectorySlug } from "@/lib/tool-directory";
 import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
 
 type ToolDetailPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export async function generateStaticParams() {
-  return toolDirectory.map((tool) => ({
-    slug: getToolDirectorySlug(tool),
-  }));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,

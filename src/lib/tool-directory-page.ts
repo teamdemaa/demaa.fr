@@ -3,6 +3,7 @@ import { getToolDirectorySlug, type ToolDirectoryItem } from "@/lib/tool-directo
 export type ToolDirectorySearchParams = Promise<{
   secteur?: string | string[];
   categorie?: string | string[];
+  retourSysteme?: string | string[];
 }>;
 
 export type ToolDirectoryInitialFilters = {

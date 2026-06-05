@@ -103,6 +103,26 @@
           "usage": "Structurer la paie et les obligations sociales."
         },
         {
+          "slug": "myunisoft",
+          "usage": "Automatiser production comptable, gestion interne et collaboration client."
+        },
+        {
+          "slug": "acd",
+          "usage": "Piloter production, révision, paie et gestion du cabinet."
+        },
+        {
+          "slug": "fulll",
+          "usage": "Gérer compta, paie, pilotage cabinet et relation client."
+        },
+        {
+          "slug": "rca",
+          "usage": "Développer les missions de conseil, prévisionnel et pilotage client."
+        },
+        {
+          "slug": "lefebvre-dalloz",
+          "usage": "Consulter documentation fiscale, sociale et juridique pour sécuriser les dossiers."
+        },
+        {
           "slug": "canva",
           "usage": "Produire des supports propres sans dépendre d’un studio."
         },
@@ -189,6 +209,38 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer trames, synthèses et réponses non sensibles."
+        },
+        {
+          "slug": "secib",
+          "usage": "Gérer dossiers, production, facturation et pilotage du cabinet."
+        },
+        {
+          "slug": "kleos",
+          "usage": "Centraliser dossiers, tâches, documents et échanges cabinet."
+        },
+        {
+          "slug": "jarvis-legal",
+          "usage": "Piloter dossiers, temps, facturation et automatisations juridiques."
+        },
+        {
+          "slug": "lexis-polyoffice",
+          "usage": "Gérer dossiers, actes, procédures, agenda et facturation."
+        },
+        {
+          "slug": "lexis-plus",
+          "usage": "Sécuriser recherche juridique, doctrine, jurisprudence et analyses."
+        },
+        {
+          "slug": "doctrine",
+          "usage": "Accélérer recherches juridiques et préparation des dossiers."
+        },
+        {
+          "slug": "predictice",
+          "usage": "Analyser jurisprudence et stratégie contentieuse."
+        },
+        {
+          "slug": "lefebvre-dalloz",
+          "usage": "Consulter documentation juridique, fiscale et sociale fiable."
         }
       ]
     },
@@ -285,6 +337,22 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer analyses, comptes-rendus, synthèses et supports."
+        },
+        {
+          "slug": "everwin",
+          "usage": "Suivre missions, temps, budgets, marge et facturation."
+        },
+        {
+          "slug": "elityx",
+          "usage": "Gérer missions, CRA, sous-traitance et marge par contrat."
+        },
+        {
+          "slug": "furious",
+          "usage": "Piloter charge, staffing, production et rentabilité de l’équipe."
+        },
+        {
+          "slug": "boondmanager",
+          "usage": "Piloter CRM, staffing, temps, consultants et facturation."
         }
       ]
     },
@@ -391,6 +459,14 @@
         {
           "slug": "metricool",
           "usage": "Programmer les contenus et mesurer la visibilité."
+        },
+        {
+          "slug": "furious",
+          "usage": "Piloter projets, staffing, charge et rentabilité agence."
+        },
+        {
+          "slug": "boondmanager",
+          "usage": "Structurer staffing, temps, charge et rentabilité des missions."
         }
       ]
     },
@@ -481,6 +557,18 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer devis, emails, synthèses et contenus."
+        },
+        {
+          "slug": "freebe",
+          "usage": "Gérer devis, factures, temps et clients freelance."
+        },
+        {
+          "slug": "abby",
+          "usage": "Suivre facturation, obligations et activité indépendante."
+        },
+        {
+          "slug": "propilot",
+          "usage": "Structurer offres, missions et suivi client."
         }
       ]
     },
@@ -571,6 +659,14 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer annonces, synthèses candidat et comptes-rendus."
+        },
+        {
+          "slug": "teamtailor",
+          "usage": "Gérer site carrière, candidatures et pipeline de recrutement."
+        },
+        {
+          "slug": "flatchr",
+          "usage": "Publier offres, centraliser candidatures et suivre recrutements."
         }
       ]
     },
@@ -777,6 +873,22 @@
         {
           "slug": "claude",
           "usage": "Clarifier des sujets complexes et produire des livrables plus propres."
+        },
+        {
+          "slug": "descript",
+          "usage": "Monter podcasts, interviews et vidéos à partir des transcriptions."
+        },
+        {
+          "slug": "capcut",
+          "usage": "Produire rapidement vidéos courtes, sous-titres et formats sociaux."
+        },
+        {
+          "slug": "ghost",
+          "usage": "Publier contenus longs, newsletter ou média propriétaire."
+        },
+        {
+          "slug": "beehiiv",
+          "usage": "Structurer une newsletter de créateur avec croissance et analytics."
         }
       ]
     },
@@ -873,6 +985,18 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer FAQ, réponses support, fiches offre et synthèses."
+        },
+        {
+          "slug": "sharetribe",
+          "usage": "Lancer une marketplace avec profils, annonces, paiements et admin."
+        },
+        {
+          "slug": "bubble",
+          "usage": "Construire des workflows marketplace et back-office sur mesure."
+        },
+        {
+          "slug": "mirakl",
+          "usage": "Gérer vendeurs, catalogues, commandes et opérations marketplace."
         }
       ]
     },
@@ -969,6 +1093,18 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer angles, résumés, newsletters et contenus éditoriaux."
+        },
+        {
+          "slug": "ghost",
+          "usage": "Publier articles, newsletters, abonnements et contenus propriétaires."
+        },
+        {
+          "slug": "substack",
+          "usage": "Lancer une newsletter éditoriale avec audience et abonnements."
+        },
+        {
+          "slug": "beehiiv",
+          "usage": "Développer une newsletter avec analytics, croissance et monétisation."
         }
       ]
     },
@@ -1073,6 +1209,14 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer documentation, messages client, specs et analyses."
+        },
+        {
+          "slug": "attio",
+          "usage": "Structurer CRM, pipelines clients et workflows go-to-market."
+        },
+        {
+          "slug": "bubble",
+          "usage": "Prototyper rapidement back-offices ou fonctionnalités internes."
         }
       ]
     },
@@ -1267,6 +1411,10 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer consignes, réponses client et procédures qualité."
+        },
+        {
+          "slug": "synchroteam",
+          "usage": "Planifier interventions, équipes terrain et comptes-rendus."
         }
       ]
     },
@@ -1931,6 +2079,10 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer synthèses, scénarios et documents de suivi non sensibles."
+        },
+        {
+          "slug": "apimo",
+          "usage": "Suivre biens, opportunités et dossiers immobiliers."
         }
       ]
     },
@@ -2019,6 +2171,14 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer synthèses, supports pédagogiques et comptes-rendus non sensibles."
+        },
+        {
+          "slug": "manymore",
+          "usage": "Suivre allocations, agrégation et relation client patrimoniale."
+        },
+        {
+          "slug": "affinity",
+          "usage": "Structurer pipeline, réseau et opportunités d’investissement."
         }
       ]
     },
@@ -2107,6 +2267,18 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer synthèses, analyses et comptes-rendus non sensibles."
+        },
+        {
+          "slug": "affinity",
+          "usage": "Structurer dealflow, réseau et suivi des opportunités."
+        },
+        {
+          "slug": "attio",
+          "usage": "Créer un CRM flexible pour deals, relations et pipelines."
+        },
+        {
+          "slug": "everwin",
+          "usage": "Suivre projets, temps, budgets et rentabilité des opérations."
         }
       ]
     },
@@ -2567,6 +2739,22 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer réponses client, menus, posts et procédures équipe."
+        },
+        {
+          "slug": "laddition",
+          "usage": "Gérer caisse, salle, commandes, paiement et pilotage restaurant."
+        },
+        {
+          "slug": "popina",
+          "usage": "Piloter caisse iPad, commandes, stock et activité du restaurant."
+        },
+        {
+          "slug": "clyo",
+          "usage": "Centraliser caisse, commande en ligne, fidélité et multi-établissements."
+        },
+        {
+          "slug": "tastycloud",
+          "usage": "Digitaliser menus QR, cartes tablettes et click & collect."
         }
       ]
     },
@@ -2653,6 +2841,18 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer textes d’offres, réponses client et procédures service."
+        },
+        {
+          "slug": "innovorder",
+          "usage": "Gérer bornes, commande en ligne, caisse et préparation cuisine."
+        },
+        {
+          "slug": "clyo",
+          "usage": "Piloter caisse, click & collect, fidélité et commandes rapides."
+        },
+        {
+          "slug": "popina",
+          "usage": "Gérer snacking, commandes à forte affluence et encaissement rapide."
         }
       ]
     },
@@ -2739,6 +2939,22 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer propositions, menus, emails et checklists événement."
+        },
+        {
+          "slug": "zelty",
+          "usage": "Piloter caisse, commandes et flux restauration."
+        },
+        {
+          "slug": "deliverect",
+          "usage": "Centraliser commandes en ligne et plateformes de livraison."
+        },
+        {
+          "slug": "laddition",
+          "usage": "Gérer caisse, prestations, commandes et encaissements traiteur."
+        },
+        {
+          "slug": "popina",
+          "usage": "Piloter commandes, ventes et suivi client sur caisse iPad."
         }
       ]
     },
@@ -2825,6 +3041,14 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer fiches produits, réponses client et procédures cuisine."
+        },
+        {
+          "slug": "innovorder",
+          "usage": "Structurer canaux de commande, préparation et pilotage multi-marques."
+        },
+        {
+          "slug": "clyo",
+          "usage": "Centraliser caisse, commandes en ligne et suivi des ventes."
         }
       ]
     },
@@ -2907,6 +3131,22 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer textes d’offres, posts et réponses client."
+        },
+        {
+          "slug": "cashpad",
+          "usage": "Structurer caisse, ventes et pilotage quotidien boutique."
+        },
+        {
+          "slug": "hiboutik",
+          "usage": "Suivre ventes, stock, clients et caisse en ligne."
+        },
+        {
+          "slug": "popina",
+          "usage": "Gérer encaissement rapide, stock et ventes boulangerie."
+        },
+        {
+          "slug": "tactill",
+          "usage": "Équiper une caisse simple pour ventes comptoir et boutique."
         }
       ]
     },
@@ -2997,6 +3237,18 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer descriptions produits, réponses client et campagnes."
+        },
+        {
+          "slug": "fastmag",
+          "usage": "Gérer caisse, stock, clients et back-office retail."
+        },
+        {
+          "slug": "rovercash",
+          "usage": "Encaisser et suivre les ventes d’un commerce indépendant."
+        },
+        {
+          "slug": "tactill",
+          "usage": "Installer une caisse tactile certifiée adaptée au magasin."
         }
       ]
     },
@@ -3099,6 +3351,18 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer fiches produits, FAQ, emails et réponses client."
+        },
+        {
+          "slug": "wizishop",
+          "usage": "Créer une boutique en ligne SaaS française avec accompagnement."
+        },
+        {
+          "slug": "shippingbo",
+          "usage": "Automatiser commandes, préparation, stocks et expéditions."
+        },
+        {
+          "slug": "akeneo",
+          "usage": "Centraliser et enrichir les données produits pour tous les canaux."
         }
       ]
     },
@@ -3559,6 +3823,34 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer plans, supports, quiz et synthèses pédagogiques."
+        },
+        {
+          "slug": "360learning",
+          "usage": "Créer et suivre des parcours de formation structurés."
+        },
+        {
+          "slug": "moodle",
+          "usage": "Gérer cours, apprenants, évaluations et espaces pédagogiques."
+        },
+        {
+          "slug": "teachable",
+          "usage": "Diffuser des cours en ligne simples avec espace apprenant."
+        },
+        {
+          "slug": "ypareo",
+          "usage": "Piloter CFA, alternance, apprenants, entreprises et obligations complexes."
+        },
+        {
+          "slug": "argalis",
+          "usage": "Dématérialiser administratif, émargement, BPF et suivi Qualiopi."
+        },
+        {
+          "slug": "qualioform",
+          "usage": "Générer documents, évaluations et preuves Qualiopi depuis mobile."
+        },
+        {
+          "slug": "learnybox",
+          "usage": "Diffuser du e-learning et vendre des parcours de formation."
         }
       ]
     },
@@ -3651,6 +3943,30 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer scripts, supports, quiz et contenus pédagogiques."
+        },
+        {
+          "slug": "teachable",
+          "usage": "Créer et vendre des cours en ligne avec espace apprenant."
+        },
+        {
+          "slug": "podia",
+          "usage": "Vendre formations, produits numériques et abonnements."
+        },
+        {
+          "slug": "thinkific",
+          "usage": "Structurer un catalogue de cours, communautés et parcours."
+        },
+        {
+          "slug": "systeme-io",
+          "usage": "Vendre formations via tunnels, emails et paiements intégrés."
+        },
+        {
+          "slug": "learnybox",
+          "usage": "Vendre formations en ligne avec tunnels et marketing intégrés."
+        },
+        {
+          "slug": "learnworlds",
+          "usage": "Créer une école en ligne interactive et structurée."
         }
       ]
     },
@@ -3743,6 +4059,14 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer procédures, synthèses et supports internes."
+        },
+        {
+          "slug": "openprod",
+          "usage": "Gérer production, stocks, achats, qualité et planification."
+        },
+        {
+          "slug": "divalto",
+          "usage": "Piloter flux industriels, ventes, achats et stocks."
         }
       ]
     },
@@ -4557,6 +4881,22 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer posts, textes d’offres et réponses client."
+        },
+        {
+          "slug": "hiboutik",
+          "usage": "Gérer caisse, ventes, stock et clients du commerce."
+        },
+        {
+          "slug": "cashpad",
+          "usage": "Fluidifier encaissement et suivi point de vente."
+        },
+        {
+          "slug": "fastmag",
+          "usage": "Structurer caisse, stock, clients et back-office magasin."
+        },
+        {
+          "slug": "rovercash",
+          "usage": "Gérer encaissement, ventes et activité du commerce."
         }
       ]
     },
@@ -4643,6 +4983,22 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer descriptions produits, emails et réponses client."
+        },
+        {
+          "slug": "hiboutik",
+          "usage": "Gérer caisse, ventes, stock et clients boutique."
+        },
+        {
+          "slug": "fastmag",
+          "usage": "Piloter stock, caisse, clients et ventes omnicanales."
+        },
+        {
+          "slug": "rovercash",
+          "usage": "Encaisser et suivre l’activité d’une boutique indépendante."
+        },
+        {
+          "slug": "tactill",
+          "usage": "Équiper la boutique avec une caisse tactile certifiée."
         }
       ]
     },
@@ -4725,6 +5081,22 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer messages, procédures et réponses client."
+        },
+        {
+          "slug": "hiboutik",
+          "usage": "Suivre ventes, stock et caisse du point de vente."
+        },
+        {
+          "slug": "cashpad",
+          "usage": "Piloter encaissements et activité quotidienne."
+        },
+        {
+          "slug": "rovercash",
+          "usage": "Encaisser et suivre ventes, articles et activité quotidienne."
+        },
+        {
+          "slug": "tactill",
+          "usage": "Installer une caisse simple pour point de vente de proximité."
         }
       ]
     },
@@ -4811,6 +5183,18 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer posts, réponses client et idées d’animation."
+        },
+        {
+          "slug": "laddition",
+          "usage": "Gérer salle, bar, encaissement et paiement à table."
+        },
+        {
+          "slug": "popina",
+          "usage": "Piloter commandes, caisse, stock et comptes clients bar/café."
+        },
+        {
+          "slug": "clyo",
+          "usage": "Gérer caisse, réservations, commande en ligne et fidélité."
         }
       ]
     },
@@ -5327,6 +5711,10 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer diagnostics, réponses client et procédures atelier."
+        },
+        {
+          "slug": "hiboutik",
+          "usage": "Gérer caisse, ventes, stock et clients boutique."
         }
       ]
     },
@@ -5499,6 +5887,14 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer des synthèses, emails de relance et explications client."
+        },
+        {
+          "slug": "courtigo",
+          "usage": "Structurer CRM, contrats, conformité et suivi courtage."
+        },
+        {
+          "slug": "maia-assurance",
+          "usage": "Gérer portefeuille, relances et données clients assurance."
         }
       ]
     },
@@ -5581,6 +5977,26 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer messages élèves, procédures et supports pédagogiques."
+        },
+        {
+          "slug": "glitz",
+          "usage": "Piloter planning, paiements, app élève et moniteurs."
+        },
+        {
+          "slug": "gestauto-ecole",
+          "usage": "Centraliser forfaits, examens, planning et portail élève."
+        },
+        {
+          "slug": "elgeaweb",
+          "usage": "Gérer planning, inscriptions, élèves et suivi financier."
+        },
+        {
+          "slug": "codes-rousseau",
+          "usage": "Structurer pédagogie code/conduite et parcours élève."
+        },
+        {
+          "slug": "ediser",
+          "usage": "Compléter supports pédagogiques et outils numériques auto-école."
         }
       ]
     },
@@ -5663,6 +6079,18 @@
         {
           "slug": "chatgpt",
           "usage": "Gagner du temps sur les propositions, emails et scripts."
+        },
+        {
+          "slug": "pixieset",
+          "usage": "Livrer galeries clients, photos et boutiques privées."
+        },
+        {
+          "slug": "studio-ninja",
+          "usage": "Gérer leads, devis, contrats et workflows client."
+        },
+        {
+          "slug": "descript",
+          "usage": "Monter interviews, podcasts et vidéos clients plus vite."
         }
       ]
     },
@@ -6003,6 +6431,14 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer procédures, messages et supports internes."
+        },
+        {
+          "slug": "smart-rx",
+          "usage": "Gérer ventes, ordonnance, facturation et activité officinale."
+        },
+        {
+          "slug": "winpharma",
+          "usage": "Piloter stock, encaissement et gestion pharmacie."
         }
       ]
     },
@@ -6081,6 +6517,22 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer synthèses, emails et explications client non sensibles."
+        },
+        {
+          "slug": "fiducial-signature-notaires",
+          "usage": "Rédiger actes, suivre dossiers et produire les documents notariaux."
+        },
+        {
+          "slug": "quai-des-notaires",
+          "usage": "Automatiser formalités, échanges sécurisés et services clients."
+        },
+        {
+          "slug": "notalia",
+          "usage": "Sécuriser calculs complexes, donations, successions et fiscalité."
+        },
+        {
+          "slug": "notagest",
+          "usage": "Gérer contrôles, calculs fiscaux et conformité LCB-FT."
         }
       ]
     },
@@ -6163,6 +6615,14 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer messages client, procédures et fiches conseils."
+        },
+        {
+          "slug": "dr-veto",
+          "usage": "Gérer dossiers animaux, agenda, actes et facturation."
+        },
+        {
+          "slug": "vetopartner",
+          "usage": "Centraliser dossiers patients, actes et organisation clinique."
         }
       ]
     },
@@ -6245,6 +6705,18 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer propositions, réponses client et itinéraires."
+        },
+        {
+          "slug": "bokun",
+          "usage": "Gérer réservations et distribution d’activités touristiques."
+        },
+        {
+          "slug": "rezdy",
+          "usage": "Centraliser réservations, disponibilités et expériences."
+        },
+        {
+          "slug": "regiondo",
+          "usage": "Vendre et organiser visites, loisirs et activités touristiques."
         }
       ]
     },
@@ -6327,6 +6799,10 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer réponses client, supports et procédures internes."
+        },
+        {
+          "slug": "hiboutik",
+          "usage": "Gérer caisse, ventes, stock et clients magasin."
         }
       ]
     },
@@ -6495,6 +6971,10 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer emails, synthèses et procédures non sensibles."
+        },
+        {
+          "slug": "archipad",
+          "usage": "Réaliser relevés terrain, plans et comptes-rendus structurés."
         }
       ]
     },
@@ -6581,6 +7061,22 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer textes d’offres, posts et réponses client."
+        },
+        {
+          "slug": "hiboutik",
+          "usage": "Gérer caisse, ventes, stock et clients boutique."
+        },
+        {
+          "slug": "shopify",
+          "usage": "Vendre bouquets et commandes locales en ligne."
+        },
+        {
+          "slug": "fastmag",
+          "usage": "Gérer stock, caisse, clients et ventes boutique."
+        },
+        {
+          "slug": "tactill",
+          "usage": "Équiper une caisse tactile simple pour ventes comptoir."
         }
       ]
     },
@@ -6663,6 +7159,10 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer messages client et procédures internes."
+        },
+        {
+          "slug": "hiboutik",
+          "usage": "Gérer caisse, ventes et suivi clients pressing."
         }
       ]
     },
@@ -6749,6 +7249,14 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer messages client, posts et fiches produits."
+        },
+        {
+          "slug": "popina",
+          "usage": "Gérer caisse mobile, commandes et ventes terrain."
+        },
+        {
+          "slug": "tactill",
+          "usage": "Équiper un point de vente mobile avec caisse tactile certifiée."
         }
       ]
     },
@@ -6831,6 +7339,18 @@
         {
           "slug": "chatgpt",
           "usage": "Accélérer synthèses, plans, emails et livrables."
+        },
+        {
+          "slug": "propilot",
+          "usage": "Structurer offres, missions, suivi client et facturation."
+        },
+        {
+          "slug": "freebe",
+          "usage": "Gérer devis, factures, temps et clients freelance."
+        },
+        {
+          "slug": "abby",
+          "usage": "Simplifier facturation, gestion administrative et déclarations."
         }
       ]
     },
@@ -6913,6 +7433,14 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer synthèses, messages clients et explications pédagogiques."
+        },
+        {
+          "slug": "courtigo",
+          "usage": "Gérer portefeuille, contrats, conformité et extranet client."
+        },
+        {
+          "slug": "maia-assurance",
+          "usage": "Centraliser clients, contrats et suivi commercial assurance."
         }
       ]
     },
@@ -6995,6 +7523,14 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer réponses client, messages et synthèses d’activité."
+        },
+        {
+          "slug": "simplybook",
+          "usage": "Gérer réservations et disponibilités clients."
+        },
+        {
+          "slug": "organilog",
+          "usage": "Planifier tournées, interventions et suivi opérationnel."
         }
       ]
     },
@@ -7077,6 +7613,26 @@
         {
           "slug": "canva",
           "usage": "Créer supports d’accompagnement et documents visuels."
+        },
+        {
+          "slug": "teachable",
+          "usage": "Diffuser programmes, modules et ressources clients."
+        },
+        {
+          "slug": "systeme-io",
+          "usage": "Vendre accompagnements via tunnels et emails."
+        },
+        {
+          "slug": "paperbell",
+          "usage": "Vendre offres, gérer paiements, contrats, planning et clients."
+        },
+        {
+          "slug": "coachaccountable",
+          "usage": "Suivre objectifs, actions, programmes et progression client."
+        },
+        {
+          "slug": "learnybox",
+          "usage": "Vendre programmes d’accompagnement et ressources en ligne."
         }
       ]
     },
@@ -7159,6 +7715,22 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer programmes, messages client et contenus pédagogiques."
+        },
+        {
+          "slug": "planity",
+          "usage": "Gérer rendez-vous, réservations et disponibilités."
+        },
+        {
+          "slug": "fresha",
+          "usage": "Organiser réservations, paiements et suivi client."
+        },
+        {
+          "slug": "azeoo",
+          "usage": "Créer programmes, suivre clients et vendre coaching fitness en ligne."
+        },
+        {
+          "slug": "hexfit",
+          "usage": "Suivre bilans, objectifs, programmes et progression sportive."
         }
       ]
     },
@@ -7241,6 +7813,10 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer affichages, réponses client et procédures maintenance."
+        },
+        {
+          "slug": "hiboutik",
+          "usage": "Suivre caisse, ventes et activité du point de service."
         }
       ]
     },
@@ -7949,6 +8525,18 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer fiches produits, posts et réponses client."
+        },
+        {
+          "slug": "hiboutik",
+          "usage": "Suivre ventes, stock, clients et caisse cave."
+        },
+        {
+          "slug": "fastmag",
+          "usage": "Gérer stock, caisse, clients et ventes multi-canales."
+        },
+        {
+          "slug": "rovercash",
+          "usage": "Suivre encaissements et activité du commerce caviste."
         }
       ]
     },
@@ -8035,6 +8623,18 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer recommandations, posts et textes événementiels."
+        },
+        {
+          "slug": "hiboutik",
+          "usage": "Gérer caisse, ventes, stock et clients librairie."
+        },
+        {
+          "slug": "fastmag",
+          "usage": "Piloter stock, ventes, clients et back-office magasin."
+        },
+        {
+          "slug": "rovercash",
+          "usage": "Gérer encaissement et suivi quotidien librairie."
         }
       ]
     },
@@ -8285,6 +8885,14 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer communications parents, procédures et supports internes."
+        },
+        {
+          "slug": "inoe-petite-enfance",
+          "usage": "Gérer inscriptions, présences, familles et facturation."
+        },
+        {
+          "slug": "kidizz",
+          "usage": "Améliorer transmissions, pointage et communication parents."
         }
       ]
     },
@@ -8367,6 +8975,14 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer comptes-rendus, synthèses et supports pédagogiques non sensibles."
+        },
+        {
+          "slug": "manymore",
+          "usage": "Centraliser vision patrimoniale, agrégation et suivi client."
+        },
+        {
+          "slug": "affinity",
+          "usage": "Suivre réseau, opportunités patrimoniales et relations clés."
         }
       ]
     },
@@ -8453,6 +9069,10 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer comptes-rendus, emails et synthèses de recherche."
+        },
+        {
+          "slug": "modelo",
+          "usage": "Préparer documents, mandats et dossiers immobiliers."
         }
       ]
     },
@@ -8535,6 +9155,14 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer synthèses, réponses client et documents internes."
+        },
+        {
+          "slug": "covadis",
+          "usage": "Produire plans, topographie, VRD et livrables métier."
+        },
+        {
+          "slug": "liciel",
+          "usage": "Compléter les diagnostics et relevés liés aux missions terrain."
         }
       ]
     }

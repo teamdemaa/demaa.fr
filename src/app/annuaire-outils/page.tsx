@@ -7,6 +7,7 @@ import {
   withInternalSoftwareUrls,
 } from "@/lib/tool-directory-page";
 import { getUnifiedToolDirectoryMeta } from "@/lib/tool-directory-firestore";
+import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire";
 
 export const metadata: Metadata = {
   title: "Annuaire Outils - Demaa",
@@ -23,9 +24,20 @@ type AnnuaireOutilsPageProps = {
 export default async function AnnuaireOutilsPage({
   searchParams,
 }: AnnuaireOutilsPageProps) {
-  const { initialCategory, initialSector } = await getToolDirectoryInitialFilters(searchParams);
-  const toolDirectoryMeta = await getUnifiedToolDirectoryMeta();
+  const params = await searchParams;
+  const retourSysteme = getParamValue(params.retourSysteme);
+  const [{ initialCategory, initialSector }, toolDirectoryMeta, returnEnterprise] = await Promise.all([
+    getToolDirectoryInitialFilters(Promise.resolve(params)),
+    getUnifiedToolDirectoryMeta(),
+    retourSysteme ? getEnterpriseBySlug(retourSysteme) : Promise.resolve(null),
+  ]);
   const directoryTools = withInternalSoftwareUrls(toolDirectoryMeta.tools);
+  const backLink = returnEnterprise
+    ? {
+        href: `/?system=${encodeURIComponent(returnEnterprise.slug)}&systemTab=outils`,
+        label: `Retour à ${returnEnterprise.name}`,
+      }
+    : undefined;
 
   return (
     <>
@@ -43,8 +55,13 @@ export default async function AnnuaireOutilsPage({
           initialSector={initialSector}
           hideTransverseOnSector={false}
           externalLinks={false}
+          backLink={backLink}
         />
       </main>
     </>
   );
+}
+
+function getParamValue(value?: string | string[]) {
+  return Array.isArray(value) ? value[0] : value;
 }

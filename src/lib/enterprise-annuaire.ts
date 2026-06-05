@@ -100,6 +100,8 @@ function mergeEnterpriseFallback(
   enterprise: EnterpriseFirestoreDocument,
 ): EnterpriseDefinition {
   const fallback = enterpriseCatalogBySlug[enterprise.slug];
+  const mergedToolRefs = mergeToolRefs(fallback?.toolRefs, enterprise.toolRefs);
+  const mergedTools = mergeEnterpriseTools(fallback?.tools, enterprise.tools);
 
   return {
     ...(fallback ?? {}),
@@ -123,9 +125,45 @@ function mergeEnterpriseFallback(
     processExamples: Object.keys(enterprise.processExamples ?? {}).length
       ? enterprise.processExamples
       : fallback?.processExamples ?? {},
-    tools: enterprise.tools?.length ? enterprise.tools : fallback?.tools ?? [],
-    toolRefs: enterprise.toolRefs?.length ? enterprise.toolRefs : fallback?.toolRefs ?? [],
+    tools: mergedTools,
+    toolRefs: mergedToolRefs,
   };
+}
+
+function mergeToolRefs(
+  fallbackRefs: EnterpriseToolReference[] | undefined,
+  enterpriseRefs: EnterpriseToolReference[] | undefined,
+): EnterpriseToolReference[] {
+  const mergedRefs = [...(enterpriseRefs ?? [])];
+  const existingSlugs = new Set(mergedRefs.map((ref) => ref.slug));
+
+  for (const fallbackRef of fallbackRefs ?? []) {
+    if (!existingSlugs.has(fallbackRef.slug)) {
+      mergedRefs.push(fallbackRef);
+    }
+  }
+
+  return mergedRefs;
+}
+
+function mergeEnterpriseTools(
+  fallbackTools: EnterpriseTool[] | undefined,
+  enterpriseTools: EnterpriseTool[] | undefined,
+): EnterpriseTool[] {
+  const mergedTools = [...(enterpriseTools ?? [])];
+  const existingKeys = new Set(
+    mergedTools.map((tool) => tool.slug || tool.name)
+  );
+
+  for (const fallbackTool of fallbackTools ?? []) {
+    const key = fallbackTool.slug || fallbackTool.name;
+
+    if (!existingKeys.has(key)) {
+      mergedTools.push(fallbackTool);
+    }
+  }
+
+  return mergedTools;
 }
 
 function stripFirestoreMetadata({

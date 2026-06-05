@@ -6,10 +6,12 @@ import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
 
 type HomeHubPageProps = {
   initialSystem?: string;
+  initialSystemTab?: string;
 };
 
 export default async function HomeHubPage({
   initialSystem,
+  initialSystemTab,
 }: HomeHubPageProps) {
   const [enterprises, toolDirectory] = await Promise.all([
     getEnterpriseCatalog(),
@@ -26,6 +28,7 @@ export default async function HomeHubPage({
           systems={systems}
           detailsBySlug={detailsBySlug}
           initialSystem={initialSystem}
+          initialSystemTab={initialSystemTab}
         />
       </main>
     </>

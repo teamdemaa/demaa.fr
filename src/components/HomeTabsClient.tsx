@@ -11,12 +11,14 @@ type HomeTabsClientProps = {
   systems: System[];
   detailsBySlug: Record<string, OperationalSystemDetail>;
   initialSystem?: string;
+  initialSystemTab?: string;
 };
 
 export default function HomeTabsClient({
   systems,
   detailsBySlug,
   initialSystem,
+  initialSystemTab,
 }: HomeTabsClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -52,7 +54,7 @@ export default function HomeTabsClient({
       </section>
 
       <SystemsCatalogClient
-        key={`systems-${initialSystem ?? "none"}`}
+        key={`systems-${initialSystem ?? "none"}-${initialSystemTab ?? "processus"}`}
         systems={systems}
         detailsBySlug={detailsBySlug}
         showIntro={false}
@@ -60,6 +62,7 @@ export default function HomeTabsClient({
         onSearchQueryChange={setSearchQuery}
         showSearchBar={false}
         initialSelectedSlug={initialSystem}
+        initialActiveTab={initialSystemTab}
       />
 
       <div className="h-24 md:hidden" aria-hidden="true" />

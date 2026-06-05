@@ -60,7 +60,6 @@ export function getToolPricingInfo(tool: ToolDirectoryItem): ToolPricingInfo {
         { name: "Entrée", price: "Freemium" },
         { name: "Payant", price: "À vérifier" },
       ],
-      note: "Les tarifs précis ne sont pas encore renseignés dans Demaa. Vérifiez le site officiel avant de choisir.",
       sourceLabel: "Site officiel",
       sourceUrl: tool.url,
     };
@@ -78,7 +77,6 @@ export function getToolPricingInfo(tool: ToolDirectoryItem): ToolPricingInfo {
   return {
     summary: "Outil principalement payant, à comparer selon le nombre d’utilisateurs et le périmètre.",
     plans: [{ name: "Payant", price: "À vérifier" }],
-    note: "Les tarifs précis ne sont pas encore renseignés dans Demaa. Vérifiez le site officiel avant de choisir.",
     sourceLabel: "Site officiel",
     sourceUrl: tool.url,
   };

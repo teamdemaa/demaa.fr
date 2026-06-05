@@ -479,6 +479,86 @@
       "scope": "business"
     },
     {
+      "slug": "myunisoft",
+      "name": "MyUnisoft",
+      "url": "https://myunisoft.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "Plateforme dédiée aux cabinets comptables : production, gestion interne et collaboration client.",
+      "tags": [
+        "Cabinet comptable",
+        "Production",
+        "Collaboration"
+      ],
+      "bestFor": "Automatiser la production comptable et fluidifier la relation cabinet-client.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "acd",
+      "name": "ACD",
+      "url": "https://www.acd-groupe.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "Suite logicielle pour cabinets d’expertise comptable : comptabilité, paie, fiscalité et gestion.",
+      "tags": [
+        "Cabinet comptable",
+        "Paie",
+        "Fiscalité"
+      ],
+      "bestFor": "Structurer production, révision, paie et pilotage d’un cabinet comptable.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "fulll",
+      "name": "fulll",
+      "url": "https://www.fulll.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "Logiciel SaaS pour experts-comptables : compta, paie, pilotage cabinet et outils collaboratifs.",
+      "tags": [
+        "Cabinet comptable",
+        "Compta",
+        "Paie"
+      ],
+      "bestFor": "Gérer production comptable, paie et relation client dans un même écosystème.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "rca",
+      "name": "RCA",
+      "url": "https://rca.fr/logiciels-experts/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "Logiciels pour experts-comptables orientés conseil, pilotage, fiscalité, prévisionnel et RSE.",
+      "tags": [
+        "Cabinet comptable",
+        "Conseil",
+        "Prévisionnel"
+      ],
+      "bestFor": "Développer les missions de conseil et pilotage client du cabinet.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
       "slug": "tiime",
       "name": "Tiime",
       "url": "https://www.tiime.fr/",
@@ -2945,6 +3025,1641 @@
       "status": "active",
       "toolbox": true,
       "scope": "transverse"
+    },
+    {
+      "slug": "secib",
+      "name": "SECIB",
+      "url": "https://www.secib.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "Logiciel de gestion pour cabinets d’avocats : dossiers, production, facturation et pilotage.",
+      "tags": [
+        "Avocat",
+        "Dossiers",
+        "Facturation"
+      ],
+      "bestFor": "Structurer la gestion quotidienne d’un cabinet d’avocat.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "kleos",
+      "name": "Kleos",
+      "url": "https://www.wolterskluwer.com/fr-fr/solutions/kleos/logiciel-gestion-cabinet-avocat",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "Solution cloud de gestion pour cabinets d’avocats : dossiers, tâches, documents et échanges.",
+      "tags": [
+        "Avocat",
+        "Cloud",
+        "Documents"
+      ],
+      "bestFor": "Centraliser dossiers juridiques, tâches et documents du cabinet.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "jarvis-legal",
+      "name": "Jarvis Legal",
+      "url": "https://www.jarvis-legal.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "Logiciel avocat tout-en-un pour gérer dossiers, temps, facturation et automatisations juridiques.",
+      "tags": [
+        "Avocat",
+        "Temps",
+        "Facturation"
+      ],
+      "bestFor": "Piloter les dossiers et la production d’un cabinet moderne.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "lexis-plus",
+      "name": "Lexis+",
+      "url": "https://www.lexisnexis.com/fr-fr/ppc/lexis-360",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "Plateforme LexisNexis de recherche juridique, doctrine, jurisprudence et IA juridique.",
+      "tags": [
+        "Avocat",
+        "Recherche juridique",
+        "IA juridique"
+      ],
+      "bestFor": "Sécuriser recherches, analyses et références juridiques d’un cabinet.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "lexis-polyoffice",
+      "name": "Lexis PolyOffice",
+      "url": "https://www.lexisnexis.com/fr-fr/produits/lexis-polyoffice",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "Logiciel LexisNexis de gestion de cabinet d’avocats : dossiers, actes, agenda et facturation.",
+      "tags": [
+        "Avocat",
+        "Gestion cabinet",
+        "Actes"
+      ],
+      "bestFor": "Piloter dossiers, procédures, actes et facturation d’un cabinet d’avocat.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "doctrine",
+      "name": "Doctrine",
+      "url": "https://www.doctrine.eu/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "Plateforme d’IA juridique et de recherche documentaire pour avocats et juristes.",
+      "tags": [
+        "Avocat",
+        "Recherche juridique",
+        "IA juridique"
+      ],
+      "bestFor": "Accélérer recherches, analyses et préparation de dossiers juridiques.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "predictice",
+      "name": "Predictice",
+      "url": "https://predictice.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "Recherche juridique et analyse statistique de jurisprudence pour professionnels du droit.",
+      "tags": [
+        "Avocat",
+        "Jurisprudence",
+        "Analyse"
+      ],
+      "bestFor": "Évaluer une stratégie contentieuse et explorer la jurisprudence pertinente.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "lefebvre-dalloz",
+      "name": "Lefebvre Dalloz",
+      "url": "https://www.dalloz.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "Documentation juridique, fiscale et sociale pour les professionnels du droit et du chiffre.",
+      "tags": [
+        "Droit",
+        "Documentation",
+        "Fiscalité"
+      ],
+      "bestFor": "Accéder à une documentation juridique et fiscale fiable au quotidien.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "everwin",
+      "name": "Everwin",
+      "url": "https://www.everwin.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "ERP de gestion d’affaires pour sociétés de conseil, bureaux d’études, agences et ESN.",
+      "tags": [
+        "Conseil",
+        "Gestion d’affaires",
+        "Temps"
+      ],
+      "bestFor": "Suivre missions, temps, budgets, marge et facturation.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "elityx",
+      "name": "ElityX",
+      "url": "https://elityx.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "Logiciel de gestion pour sociétés de conseil et portage : missions, CRA, marge et facturation.",
+      "tags": [
+        "Conseil",
+        "Missions",
+        "CRA"
+      ],
+      "bestFor": "Gérer les missions de conseil de la signature à l’encaissement.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "furious",
+      "name": "Furious",
+      "url": "https://www.furious-squad.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil",
+        "Tech & Digital"
+      ],
+      "description": "Plateforme de pilotage pour agences et sociétés de services : projets, charge, rentabilité et staffing.",
+      "tags": [
+        "Agence",
+        "Projets",
+        "Rentabilité"
+      ],
+      "bestFor": "Piloter charge, production et marge d’une agence ou équipe conseil.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "boondmanager",
+      "name": "BoondManager",
+      "url": "https://www.boondmanager.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil",
+        "Tech & Digital"
+      ],
+      "description": "ERP pour ESN, cabinets de conseil et sociétés de services : CRM, staffing, temps et facturation.",
+      "tags": [
+        "Conseil",
+        "ESN",
+        "ERP"
+      ],
+      "bestFor": "Piloter missions, consultants, recrutement, temps et marge d’une société de conseil.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "propilot",
+      "name": "Propilot",
+      "url": "https://propilot.co/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "Logiciel de gestion pour consultants indépendants : offres, missions, suivi et facturation.",
+      "tags": [
+        "Consultant",
+        "Mission",
+        "Facturation"
+      ],
+      "bestFor": "Structurer une activité de consultant indépendant.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "freebe",
+      "name": "Freebe",
+      "url": "https://www.freebe.me/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "Gestion freelance pour devis, factures, temps, clients et déclarations.",
+      "tags": [
+        "Freelance",
+        "Facturation",
+        "Temps"
+      ],
+      "bestFor": "Gérer une activité freelance sans tableur dispersé.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "abby",
+      "name": "Abby",
+      "url": "https://www.abby.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "Solution de gestion pour indépendants : devis, facturation, comptabilité simple et déclarations.",
+      "tags": [
+        "Indépendant",
+        "Facturation",
+        "Déclarations"
+      ],
+      "bestFor": "Simplifier la gestion administrative d’un indépendant.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "sharetribe",
+      "name": "Sharetribe",
+      "url": "https://www.sharetribe.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Tech & Digital",
+        "E-commerce"
+      ],
+      "description": "Builder marketplace pour lancer une plateforme avec profils, annonces, paiements et administration.",
+      "tags": [
+        "Marketplace",
+        "No-code",
+        "Paiement"
+      ],
+      "bestFor": "Lancer une marketplace sans repartir de zéro techniquement.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "bubble",
+      "name": "Bubble",
+      "url": "https://bubble.io/",
+      "category": "Outils métier",
+      "sectors": [
+        "Tech & Digital",
+        "E-commerce"
+      ],
+      "description": "Plateforme no-code pour construire des applications web, marketplaces et back-offices sur mesure.",
+      "tags": [
+        "No-code",
+        "Marketplace",
+        "App web"
+      ],
+      "bestFor": "Créer un MVP ou back-office métier avec logique personnalisée.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "mirakl",
+      "name": "Mirakl",
+      "url": "https://www.mirakl.com/fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Tech & Digital",
+        "E-commerce"
+      ],
+      "description": "Solution marketplace enterprise pour gérer vendeurs, catalogues, commandes et opérations.",
+      "tags": [
+        "Marketplace",
+        "Enterprise",
+        "Vendeurs"
+      ],
+      "bestFor": "Structurer une marketplace ambitieuse avec plusieurs vendeurs.",
+      "pricingHint": "Sur devis",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "ghost",
+      "name": "Ghost",
+      "url": "https://ghost.org/",
+      "category": "Création contenu",
+      "sectors": [
+        "Tech & Digital"
+      ],
+      "description": "Plateforme de publication, site éditorial, newsletter et abonnements.",
+      "tags": [
+        "Média",
+        "Newsletter",
+        "Publication"
+      ],
+      "bestFor": "Construire un média ou une newsletter propriétaire.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "substack",
+      "name": "Substack",
+      "url": "https://substack.com/",
+      "category": "Création contenu",
+      "sectors": [
+        "Tech & Digital"
+      ],
+      "description": "Plateforme de newsletter, publication et abonnements pour créateurs et médias.",
+      "tags": [
+        "Newsletter",
+        "Média",
+        "Abonnement"
+      ],
+      "bestFor": "Lancer rapidement une newsletter ou publication payante.",
+      "pricingHint": "Commission",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "beehiiv",
+      "name": "beehiiv",
+      "url": "https://www.beehiiv.com/",
+      "category": "Création contenu",
+      "sectors": [
+        "Tech & Digital"
+      ],
+      "description": "Plateforme newsletter orientée croissance, audience, monétisation et publication.",
+      "tags": [
+        "Newsletter",
+        "Audience",
+        "Monétisation"
+      ],
+      "bestFor": "Faire grandir une newsletter avec analytics et outils de croissance.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "descript",
+      "name": "Descript",
+      "url": "https://www.descript.com/",
+      "category": "Création contenu",
+      "sectors": [
+        "Tech & Digital"
+      ],
+      "description": "Montage audio et vidéo par transcription pour podcasts, vidéos et contenus courts.",
+      "tags": [
+        "Vidéo",
+        "Podcast",
+        "Montage"
+      ],
+      "bestFor": "Produire plus vite podcasts, interviews et vidéos courtes.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "capcut",
+      "name": "CapCut",
+      "url": "https://www.capcut.com/",
+      "category": "Création contenu",
+      "sectors": [
+        "Tech & Digital"
+      ],
+      "description": "Outil de montage vidéo court format pour réseaux sociaux, sous-titres et templates.",
+      "tags": [
+        "Vidéo courte",
+        "Social media",
+        "Montage"
+      ],
+      "bestFor": "Créer rapidement des vidéos verticales et contenus sociaux.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "teachable",
+      "name": "Teachable",
+      "url": "https://teachable.com/",
+      "category": "Formation",
+      "sectors": [
+        "Éducation & formation",
+        "E-commerce"
+      ],
+      "description": "Plateforme pour créer, vendre et gérer des cours en ligne.",
+      "tags": [
+        "Formation en ligne",
+        "Cours",
+        "Vente"
+      ],
+      "bestFor": "Vendre des formations en ligne avec un espace apprenant simple.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "podia",
+      "name": "Podia",
+      "url": "https://www.podia.com/",
+      "category": "Formation",
+      "sectors": [
+        "Éducation & formation",
+        "E-commerce"
+      ],
+      "description": "Plateforme pour vendre formations, produits numériques, webinaires et abonnements.",
+      "tags": [
+        "Formation en ligne",
+        "Produits numériques",
+        "Abonnement"
+      ],
+      "bestFor": "Commercialiser formations et contenus numériques simplement.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "thinkific",
+      "name": "Thinkific",
+      "url": "https://www.thinkific.com/",
+      "category": "Formation",
+      "sectors": [
+        "Éducation & formation",
+        "E-commerce"
+      ],
+      "description": "Plateforme LMS pour créer et vendre des cours, communautés et parcours en ligne.",
+      "tags": [
+        "LMS",
+        "Formation en ligne",
+        "Communauté"
+      ],
+      "bestFor": "Construire un catalogue de cours en ligne plus structuré.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "systeme-io",
+      "name": "systeme.io",
+      "url": "https://systeme.io/fr",
+      "category": "Formation",
+      "sectors": [
+        "Éducation & formation",
+        "E-commerce"
+      ],
+      "description": "Plateforme française pour tunnels de vente, formations en ligne, emails et paiements.",
+      "tags": [
+        "Formation en ligne",
+        "Tunnel",
+        "Email"
+      ],
+      "bestFor": "Vendre une formation en ligne avec tunnel et email intégrés.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "360learning",
+      "name": "360Learning",
+      "url": "https://360learning.com/fr/",
+      "category": "Formation",
+      "sectors": [
+        "Éducation & formation"
+      ],
+      "description": "LMS collaboratif pour créer, diffuser et suivre des formations internes ou clients.",
+      "tags": [
+        "LMS",
+        "Collaboratif",
+        "Apprenants"
+      ],
+      "bestFor": "Déployer des parcours de formation structurés et suivis.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "moodle",
+      "name": "Moodle",
+      "url": "https://moodle.org/",
+      "category": "Formation",
+      "sectors": [
+        "Éducation & formation"
+      ],
+      "description": "LMS open source pour gérer cours, apprenants, évaluations et espaces pédagogiques.",
+      "tags": [
+        "LMS",
+        "Open source",
+        "Apprenants"
+      ],
+      "bestFor": "Créer une plateforme pédagogique maîtrisée et personnalisable.",
+      "pricingHint": "Open source",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "teamtailor",
+      "name": "Teamtailor",
+      "url": "https://www.teamtailor.com/fr/",
+      "category": "RH & planning",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "ATS et site carrière pour gérer candidatures, pipeline et marque employeur.",
+      "tags": [
+        "Recrutement",
+        "ATS",
+        "Candidats"
+      ],
+      "bestFor": "Structurer le suivi des candidatures et le site carrière.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "flatchr",
+      "name": "Flatchr",
+      "url": "https://www.flatchr.io/",
+      "category": "RH & planning",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "Logiciel de recrutement pour publier des offres, centraliser les candidatures et suivre les recrutements.",
+      "tags": [
+        "Recrutement",
+        "ATS",
+        "Offres"
+      ],
+      "bestFor": "Centraliser les offres et candidatures d’une équipe recrutement.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "pixieset",
+      "name": "Pixieset",
+      "url": "https://pixieset.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Tech & Digital",
+        "Services & conseil"
+      ],
+      "description": "Galeries client, livraison de photos, boutique et gestion de contenus pour photographes.",
+      "tags": [
+        "Photo",
+        "Galerie client",
+        "Livraison"
+      ],
+      "bestFor": "Livrer des galeries professionnelles aux clients photo.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "studio-ninja",
+      "name": "Studio Ninja",
+      "url": "https://www.studioninja.co/",
+      "category": "Outils métier",
+      "sectors": [
+        "Tech & Digital",
+        "Services & conseil"
+      ],
+      "description": "CRM pour photographes : leads, devis, contrats, workflows et paiements.",
+      "tags": [
+        "Photo",
+        "CRM",
+        "Workflow"
+      ],
+      "bestFor": "Piloter les demandes, contrats et suivis clients photo.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "manymore",
+      "name": "Manymore",
+      "url": "https://www.manymore.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Patrimoine",
+        "Services & conseil"
+      ],
+      "description": "Solution pour conseillers patrimoniaux : agrégation, suivi client et vision patrimoniale.",
+      "tags": [
+        "Patrimoine",
+        "Client",
+        "Agrégation"
+      ],
+      "bestFor": "Suivre les situations patrimoniales et échanges clients.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "affinity",
+      "name": "Affinity",
+      "url": "https://www.affinity.co/",
+      "category": "CRM & ventes",
+      "sectors": [
+        "Patrimoine",
+        "Services & conseil",
+        "Tech & Digital"
+      ],
+      "description": "CRM relationnel pour dealflow, investisseurs, réseau et suivi d’opportunités.",
+      "tags": [
+        "Dealflow",
+        "CRM",
+        "Investissement"
+      ],
+      "bestFor": "Structurer le dealflow et les relations d’investissement.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "attio",
+      "name": "Attio",
+      "url": "https://attio.com/",
+      "category": "CRM & ventes",
+      "sectors": [
+        "Tech & Digital",
+        "Services & conseil",
+        "Patrimoine"
+      ],
+      "description": "CRM flexible pour pipelines, relations, workflows et bases d’opportunités.",
+      "tags": [
+        "CRM",
+        "Dealflow",
+        "Pipeline"
+      ],
+      "bestFor": "Créer un CRM sur mesure pour opportunités et relations clés.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "courtigo",
+      "name": "CourtiGo",
+      "url": "https://courtigo.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "CRM et logiciel métier pour courtiers en assurance : clients, contrats, conformité et extranet.",
+      "tags": [
+        "Assurance",
+        "Courtier",
+        "CRM"
+      ],
+      "bestFor": "Structurer un cabinet de courtage assurance avec conformité intégrée.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "maia-assurance",
+      "name": "MAIA",
+      "url": "https://www.maia-logiciels.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "CRM cloud pour courtiers et agents d’assurance avec suivi client, contrats et conformité.",
+      "tags": [
+        "Assurance",
+        "CRM",
+        "Contrats"
+      ],
+      "bestFor": "Gérer portefeuille, contrats et relances d’un cabinet assurance.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "inoe-petite-enfance",
+      "name": "iNoé Petite Enfance",
+      "url": "https://www.aiga.fr/logiciel-gestion-creches-relais-petite-enfance-inoe/",
+      "category": "Outils métier",
+      "sectors": [
+        "Éducation & formation",
+        "Services aux particuliers"
+      ],
+      "description": "Logiciel de gestion pour crèches, relais petite enfance, inscriptions, présences et facturation.",
+      "tags": [
+        "Crèche",
+        "Petite enfance",
+        "Facturation"
+      ],
+      "bestFor": "Gérer inscriptions, présences, familles et facturation d’une crèche.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "kidizz",
+      "name": "Kidizz",
+      "url": "https://kidizz.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Éducation & formation",
+        "Services aux particuliers"
+      ],
+      "description": "Application de communication, transmissions et pointage pour crèches et structures petite enfance.",
+      "tags": [
+        "Crèche",
+        "Parents",
+        "Transmission"
+      ],
+      "bestFor": "Améliorer les transmissions et la communication avec les familles.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "glitz",
+      "name": "Glitz",
+      "url": "https://www.glitz.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Éducation & formation"
+      ],
+      "description": "Logiciel de gestion d’auto-école : planning, paiements, app élève, moniteurs et suivi pédagogique.",
+      "tags": [
+        "Auto-école",
+        "Planning",
+        "Élèves"
+      ],
+      "bestFor": "Piloter une auto-école avec planning, suivi élèves et paiements.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "gestauto-ecole",
+      "name": "GestAuto-École",
+      "url": "https://www.gestauto-ecole.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Éducation & formation"
+      ],
+      "description": "Logiciel SaaS pour auto-écoles : planning, portail élève, forfaits, examens et rapports.",
+      "tags": [
+        "Auto-école",
+        "Planning",
+        "Examens"
+      ],
+      "bestFor": "Centraliser planning, élèves, forfaits et convocations.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "smart-rx",
+      "name": "Smart Rx",
+      "url": "https://www.smart-rx.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Santé & bien-être",
+        "Commerce local"
+      ],
+      "description": "Logiciel de gestion pour pharmacies : ordonnance, vente conseil, facturation et activité officinale.",
+      "tags": [
+        "Pharmacie",
+        "Officine",
+        "Caisse"
+      ],
+      "bestFor": "Gérer les ventes et actes quotidiens d’une pharmacie.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "winpharma",
+      "name": "Winpharma",
+      "url": "https://www.winpharma.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Santé & bien-être",
+        "Commerce local"
+      ],
+      "description": "Logiciel de gestion pour officines, encaissement, stock, suivi et pilotage pharmacie.",
+      "tags": [
+        "Pharmacie",
+        "Officine",
+        "Stock"
+      ],
+      "bestFor": "Piloter stock, encaissement et gestion officinale.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "dr-veto",
+      "name": "dr.veto",
+      "url": "https://www.drveto.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Santé & bien-être"
+      ],
+      "description": "Logiciel vétérinaire tout-en-un pour gérer dossiers animaux, agenda, facturation et activité clinique.",
+      "tags": [
+        "Vétérinaire",
+        "Agenda",
+        "Dossiers"
+      ],
+      "bestFor": "Centraliser l’activité d’une clinique vétérinaire.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "vetopartner",
+      "name": "VétoPartner",
+      "url": "https://www.vetopartner.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Santé & bien-être"
+      ],
+      "description": "Logiciel de gestion vétérinaire pour dossiers patients, activité clinique et outils connectés.",
+      "tags": [
+        "Vétérinaire",
+        "Clinique",
+        "Dossiers"
+      ],
+      "bestFor": "Gérer dossiers, actes et organisation vétérinaire.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "hiboutik",
+      "name": "Hiboutik",
+      "url": "https://www.hiboutik.com/",
+      "category": "Caisse & réservation",
+      "sectors": [
+        "Commerce local",
+        "Restauration"
+      ],
+      "description": "Logiciel de caisse en ligne pour ventes, stock, clients et gestion de commerce.",
+      "tags": [
+        "Caisse",
+        "Stock",
+        "Commerce"
+      ],
+      "bestFor": "Gérer caisse, ventes et stock d’un commerce de proximité.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "cashpad",
+      "name": "Cashpad",
+      "url": "https://www.cashpad.io/",
+      "category": "Caisse & réservation",
+      "sectors": [
+        "Restauration",
+        "Commerce local"
+      ],
+      "description": "Solution de caisse pour restauration, brasseries, boulangeries et commerces de terrain.",
+      "tags": [
+        "Caisse",
+        "Restauration",
+        "Commerce"
+      ],
+      "bestFor": "Structurer l’encaissement et le pilotage quotidien en point de vente.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "bokun",
+      "name": "Bókun",
+      "url": "https://www.bokun.io/",
+      "category": "Outils métier",
+      "sectors": [
+        "Hébergement & tourisme"
+      ],
+      "description": "Plateforme de réservation et distribution pour activités, excursions et offres touristiques.",
+      "tags": [
+        "Tourisme",
+        "Réservation",
+        "Distribution"
+      ],
+      "bestFor": "Gérer réservations et distribution d’activités touristiques.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "rezdy",
+      "name": "Rezdy",
+      "url": "https://www.rezdy.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Hébergement & tourisme"
+      ],
+      "description": "Logiciel de réservation pour tours, activités, expériences et opérateurs touristiques.",
+      "tags": [
+        "Tourisme",
+        "Réservation",
+        "Activités"
+      ],
+      "bestFor": "Centraliser réservations et disponibilités d’activités touristiques.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "regiondo",
+      "name": "Regiondo",
+      "url": "https://pro.regiondo.com/fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Hébergement & tourisme"
+      ],
+      "description": "Système de réservation pour activités de loisirs, visites, expériences et tourisme.",
+      "tags": [
+        "Tourisme",
+        "Booking",
+        "Loisirs"
+      ],
+      "bestFor": "Vendre et organiser des activités touristiques ou loisirs.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "covadis",
+      "name": "COVADIS",
+      "url": "https://www.geo-media.com/covadis/",
+      "category": "Outils métier",
+      "sectors": [
+        "Artisanat & BTP",
+        "Immobilier"
+      ],
+      "description": "Logiciel métier de topographie, géomatique, VRD et conception pour géomètres et bureaux d’études.",
+      "tags": [
+        "Géomètre",
+        "Topographie",
+        "VRD"
+      ],
+      "bestFor": "Produire plans, relevés et projets VRD pour cabinet géomètre.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "openprod",
+      "name": "Open-Prod",
+      "url": "https://open-prod.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Industrie & production"
+      ],
+      "description": "ERP industriel pour production, stocks, achats, ventes, qualité et planification.",
+      "tags": [
+        "ERP",
+        "Production",
+        "Stock"
+      ],
+      "bestFor": "Structurer production, stock et planification industrielle.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "divalto",
+      "name": "Divalto",
+      "url": "https://www.divalto.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Industrie & production",
+        "Commerce local"
+      ],
+      "description": "ERP et CRM pour PME : gestion commerciale, production, stocks, achats et opérations.",
+      "tags": [
+        "ERP",
+        "PME",
+        "Production"
+      ],
+      "bestFor": "Piloter les flux d’une PME industrielle ou commerciale.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "fiducial-signature-notaires",
+      "name": "Signature Fiducial",
+      "url": "https://www.fiducial.fr/Notariat/Logiciel-Notaire-DEV/Signature-redaction-d-actes",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil",
+        "Immobilier"
+      ],
+      "description": "Logiciel web de rédaction d’actes pour notaires, dossiers, actes et production notariale.",
+      "tags": [
+        "Notaire",
+        "Actes",
+        "Dossiers"
+      ],
+      "bestFor": "Rédiger et piloter les actes d’une étude notariale.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "quai-des-notaires",
+      "name": "Quai des Notaires",
+      "url": "https://www.quaidesnotaires.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil",
+        "Immobilier"
+      ],
+      "description": "Plateforme digitale pour notaires : formalités, échanges sécurisés, signature et services office.",
+      "tags": [
+        "Notaire",
+        "Formalités",
+        "Signature"
+      ],
+      "bestFor": "Automatiser formalités, échanges et parcours clients notariaux.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "notalia",
+      "name": "Notalia",
+      "url": "https://www.notalia.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil",
+        "Immobilier"
+      ],
+      "description": "Logiciel notarial pour calculs complexes en droit de la famille, immobilier, donation et fiscalité.",
+      "tags": [
+        "Notaire",
+        "Calculs",
+        "Fiscalité"
+      ],
+      "bestFor": "Sécuriser les calculs notariaux complexes et les simulations clients.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "notagest",
+      "name": "Notagest",
+      "url": "https://www.notagest.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "Suite logicielle notariale pour calculs fiscaux, conformité LCB-FT et contrôles réglementaires.",
+      "tags": [
+        "Notaire",
+        "Conformité",
+        "Calculs"
+      ],
+      "bestFor": "Gérer calculs, contrôles et conformité LCB-FT en étude notariale.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "ypareo",
+      "name": "Ypareo",
+      "url": "https://www.ypareo.com/",
+      "category": "Formation",
+      "sectors": [
+        "Éducation & formation"
+      ],
+      "description": "ERP de gestion pour CFA, organismes de formation complexes, alternance, apprenants et entreprises.",
+      "tags": [
+        "CFA",
+        "Alternance",
+        "ERP formation"
+      ],
+      "bestFor": "Piloter un centre de formation complexe ou un CFA avec alternance.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "argalis",
+      "name": "Argalis",
+      "url": "https://www.argalis.fr/",
+      "category": "Formation",
+      "sectors": [
+        "Éducation & formation"
+      ],
+      "description": "Solution tout-en-un pour organismes de formation : administratif, Qualiopi, émargement et BPF.",
+      "tags": [
+        "Qualiopi",
+        "OF",
+        "Administratif"
+      ],
+      "bestFor": "Dématérialiser l’administratif formation et sécuriser Qualiopi.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "qualioform",
+      "name": "QualioForm",
+      "url": "https://qualioform.fr/",
+      "category": "Formation",
+      "sectors": [
+        "Éducation & formation"
+      ],
+      "description": "Logiciel SaaS mobile-first pour organismes de formation certifiés Qualiopi.",
+      "tags": [
+        "Qualiopi",
+        "OF",
+        "Mobile"
+      ],
+      "bestFor": "Générer documents, évaluations et preuves Qualiopi simplement.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "learnybox",
+      "name": "LearnyBox",
+      "url": "https://learnybox.com/",
+      "category": "Formation",
+      "sectors": [
+        "Éducation & formation",
+        "E-commerce"
+      ],
+      "description": "Plateforme française pour créer, vendre et diffuser des formations en ligne et tunnels de vente.",
+      "tags": [
+        "Formation en ligne",
+        "Tunnel",
+        "LMS"
+      ],
+      "bestFor": "Vendre des formations en ligne avec pages, paiements et marketing intégrés.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "learnworlds",
+      "name": "LearnWorlds",
+      "url": "https://www.learnworlds.com/",
+      "category": "Formation",
+      "sectors": [
+        "Éducation & formation",
+        "E-commerce"
+      ],
+      "description": "Plateforme LMS pour créer, vendre et animer des écoles en ligne interactives.",
+      "tags": [
+        "LMS",
+        "Formation en ligne",
+        "École en ligne"
+      ],
+      "bestFor": "Créer une école en ligne avancée avec expérience apprenant structurée.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "paperbell",
+      "name": "Paperbell",
+      "url": "https://paperbell.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "Logiciel de gestion pour coachs : offres, paiement, planning, contrats, clients et sessions.",
+      "tags": [
+        "Coaching",
+        "Paiement",
+        "Planning"
+      ],
+      "bestFor": "Vendre et délivrer des accompagnements de coaching sans assembler plusieurs outils.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "coachaccountable",
+      "name": "CoachAccountable",
+      "url": "https://www.coachaccountable.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "Plateforme de coaching pour suivre clients, objectifs, programmes, actions et progression.",
+      "tags": [
+        "Coaching",
+        "Objectifs",
+        "Suivi client"
+      ],
+      "bestFor": "Structurer les parcours, actions et résultats des clients coachés.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "azeoo",
+      "name": "AZEOO",
+      "url": "https://azeoo.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Santé & bien-être"
+      ],
+      "description": "Logiciel et application de coaching fitness pour programmes, clients, paiements et revenus en ligne.",
+      "tags": [
+        "Coach sportif",
+        "Fitness",
+        "Coaching en ligne"
+      ],
+      "bestFor": "Digitaliser une activité de coaching sportif ou bien-être.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "hexfit",
+      "name": "Hexfit",
+      "url": "https://www.myhexfit.com/fr-fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Santé & bien-être"
+      ],
+      "description": "Logiciel de suivi pour coachs sportifs, préparateurs physiques et professionnels sport-santé.",
+      "tags": [
+        "Coach sportif",
+        "Suivi",
+        "Programme"
+      ],
+      "bestFor": "Suivre objectifs, bilans, programmes et progression des clients sportifs.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "elgeaweb",
+      "name": "Elgéaweb",
+      "url": "https://tdrgroupe.fr/elgeaweb-logiciel-en-ligne-pour-gerer-votre-auto-ecole/",
+      "category": "Outils métier",
+      "sectors": [
+        "Éducation & formation"
+      ],
+      "description": "Logiciel en ligne Codes Rousseau pour gérer planning, inscriptions, élèves et finance auto-école.",
+      "tags": [
+        "Auto-école",
+        "Planning",
+        "Élèves"
+      ],
+      "bestFor": "Centraliser gestion quotidienne, planning et suivi élèves d’une auto-école.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "codes-rousseau",
+      "name": "Codes Rousseau",
+      "url": "https://public.codesrousseau.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Éducation & formation"
+      ],
+      "description": "Solutions pédagogiques et numériques pour auto-écoles, code de la route et suivi élèves.",
+      "tags": [
+        "Auto-école",
+        "Code",
+        "Pédagogie"
+      ],
+      "bestFor": "Structurer la pédagogie code/conduite et l’expérience élève.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "ediser",
+      "name": "EDISER",
+      "url": "https://www.ediser.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Éducation & formation"
+      ],
+      "description": "Solutions pédagogiques et outils numériques pour écoles de conduite et formation routière.",
+      "tags": [
+        "Auto-école",
+        "Pédagogie",
+        "Code"
+      ],
+      "bestFor": "Compléter les supports pédagogiques et outils numériques d’une auto-école.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "laddition",
+      "name": "L’Addition",
+      "url": "https://www.laddition.com/",
+      "category": "Caisse & réservation",
+      "sectors": [
+        "Restauration"
+      ],
+      "description": "Caisse enregistreuse iPad pour restaurants, bars, brasseries, traiteurs et établissements de restauration.",
+      "tags": [
+        "Restaurant",
+        "Caisse",
+        "iPad"
+      ],
+      "bestFor": "Gérer caisse, prise de commande, salle, paiement et pilotage restaurant.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "innovorder",
+      "name": "Innovorder",
+      "url": "https://www.innovorder.com/",
+      "category": "Caisse & réservation",
+      "sectors": [
+        "Restauration"
+      ],
+      "description": "Suite tout-en-un pour restauration rapide et collective : caisse, bornes, commande en ligne, cuisine et pilotage.",
+      "tags": [
+        "Restauration rapide",
+        "Borne",
+        "Commande"
+      ],
+      "bestFor": "Structurer les flux de commande et encaissement en restauration à fort volume.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "popina",
+      "name": "Popina",
+      "url": "https://www.popina.com/",
+      "category": "Caisse & réservation",
+      "sectors": [
+        "Restauration",
+        "Commerce local"
+      ],
+      "description": "Caisse enregistreuse sur iPad pour restaurants, commerces, boulangeries, snacking et bars.",
+      "tags": [
+        "Caisse",
+        "Restaurant",
+        "Commerce"
+      ],
+      "bestFor": "Gérer prise de commande, encaissement, stock et activité terrain sur iPad.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "tastycloud",
+      "name": "TastyCloud",
+      "url": "https://www.tastycloud.fr/",
+      "category": "Caisse & réservation",
+      "sectors": [
+        "Restauration"
+      ],
+      "description": "Menus digitaux, QR code, tablette et click & collect pour restaurants, bars et hôtels.",
+      "tags": [
+        "Menu digital",
+        "QR code",
+        "Click & collect"
+      ],
+      "bestFor": "Digitaliser la carte, les menus QR et la commande client restaurant.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "clyo",
+      "name": "Clyo",
+      "url": "https://www.clyosystems.com/",
+      "category": "Caisse & réservation",
+      "sectors": [
+        "Restauration",
+        "Commerce local"
+      ],
+      "description": "Logiciel et matériel de caisse pour restaurants, bars, fast-foods et commerces.",
+      "tags": [
+        "Caisse",
+        "Restaurant",
+        "Commerce"
+      ],
+      "bestFor": "Piloter caisse, commande en ligne, fidélité et multi-établissements.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "fastmag",
+      "name": "Fastmag",
+      "url": "https://www.fastmag.fr/",
+      "category": "Caisse & réservation",
+      "sectors": [
+        "Commerce local",
+        "E-commerce"
+      ],
+      "description": "ERP commerce et logiciel de caisse pour magasins, stocks, ventes, clients et omnicanal.",
+      "tags": [
+        "Retail",
+        "Caisse",
+        "Stock"
+      ],
+      "bestFor": "Gérer caisse, stock, clients et back-office d’un commerce de détail.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "rovercash",
+      "name": "RoverCash",
+      "url": "https://www.rovercash.fr/",
+      "category": "Caisse & réservation",
+      "sectors": [
+        "Commerce local"
+      ],
+      "description": "Logiciel d’encaissement et caisse connectée certifiée pour commerces indépendants.",
+      "tags": [
+        "Caisse",
+        "Commerce",
+        "Encaissement"
+      ],
+      "bestFor": "Encaisser, gérer ventes et suivre l’activité d’un commerce indépendant.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "tactill",
+      "name": "Tactill",
+      "url": "https://www.tactill.com/",
+      "category": "Caisse & réservation",
+      "sectors": [
+        "Commerce local",
+        "Restauration"
+      ],
+      "description": "Caisse enregistreuse française certifiée pour commerces, restaurants et points de vente.",
+      "tags": [
+        "Caisse",
+        "Commerce",
+        "Restaurant"
+      ],
+      "bestFor": "Équiper un point de vente simple avec caisse tactile et matériel adapté.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "shippingbo",
+      "name": "Shippingbo",
+      "url": "https://www.shippingbo.com/",
+      "category": "Livraison & expédition",
+      "sectors": [
+        "E-commerce",
+        "Commerce local"
+      ],
+      "description": "Solution logistique e-commerce OMS, WMS et TMS pour commandes, entrepôt et transport.",
+      "tags": [
+        "E-commerce",
+        "Logistique",
+        "WMS"
+      ],
+      "bestFor": "Automatiser commandes, préparation, stocks et expéditions e-commerce.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "akeneo",
+      "name": "Akeneo",
+      "url": "https://www.akeneo.com/",
+      "category": "Site & e-commerce",
+      "sectors": [
+        "E-commerce",
+        "Commerce local"
+      ],
+      "description": "PIM pour centraliser, enrichir et diffuser les informations produits sur tous les canaux.",
+      "tags": [
+        "PIM",
+        "Catalogue",
+        "Omnicanal"
+      ],
+      "bestFor": "Structurer les données produits pour e-commerce, marketplaces et retail omnicanal.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
     }
   ]
 }

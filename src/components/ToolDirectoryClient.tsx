@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState, type MouseEvent, type ReactNode } from "react";
-import { Search } from "lucide-react";
+import { ArrowLeft, Search } from "lucide-react";
 import HorizontalScrollHint from "@/components/HorizontalScrollHint";
 import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
 import type { ToolDirectoryItem } from "@/lib/tool-directory";
@@ -42,6 +42,10 @@ type ToolDirectoryClientProps = {
   showSearchBar?: boolean;
   variant?: "directory" | "toolbox";
   cardClickMode?: "modal" | "navigate";
+  backLink?: {
+    href: string;
+    label: string;
+  };
 };
 
 export default function ToolDirectoryClient({
@@ -62,6 +66,7 @@ export default function ToolDirectoryClient({
   showSearchBar = true,
   variant = "directory",
   cardClickMode = "modal",
+  backLink,
 }: ToolDirectoryClientProps) {
   const initialFilters = getValidFilters(
     sectors,
@@ -185,6 +190,17 @@ export default function ToolDirectoryClient({
         <div className="mx-auto max-w-5xl text-center">
           {showHeader ? (
             <>
+              {backLink ? (
+                <div className="mb-4 flex justify-start">
+                  <Link
+                    href={backLink.href}
+                    className="inline-flex items-center gap-2 rounded-full border border-dema-line bg-dema-paper px-3.5 py-2 text-xs font-medium text-brand-blue/70 transition hover:border-dema-forest/25 hover:text-dema-forest"
+                  >
+                    <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
+                    {backLink.label}
+                  </Link>
+                </div>
+              ) : null}
               <h1 className="demaa-section-title text-4xl tracking-tight text-brand-blue md:text-5xl">
                 {title}
               </h1>
