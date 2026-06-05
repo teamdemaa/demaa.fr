@@ -103,22 +103,6 @@
           "usage": "Structurer la paie et les obligations sociales."
         },
         {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
-        },
-        {
-          "slug": "revolut-business",
-          "usage": "Gérer les paiements et dépenses avec plus de souplesse."
-        },
-        {
-          "slug": "swile",
-          "usage": "Mettre en place des avantages simples pour l’équipe."
-        },
-        {
-          "slug": "alan",
-          "usage": "Proposer une couverture santé claire et simple."
-        },
-        {
           "slug": "canva",
           "usage": "Produire des supports propres sans dépendre d’un studio."
         },
@@ -191,20 +175,20 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "calendly",
+          "usage": "Planifier rendez-vous clients et consultations sans allers-retours."
         },
         {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "slug": "typeform",
+          "usage": "Collecter les premières informations dossier via un formulaire cadré."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser documents internes, agendas et échanges non sensibles."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer trames, synthèses et réponses non sensibles."
         }
       ]
     },
@@ -279,20 +263,28 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "hubspot",
+          "usage": "Suivre prospects, clients, pipeline et relances commerciales."
+        },
+        {
+          "slug": "calendly",
+          "usage": "Planifier rendez-vous, audits et points clients."
+        },
+        {
+          "slug": "typeform",
+          "usage": "Qualifier les demandes et collecter les informations de cadrage."
+        },
+        {
+          "slug": "notion",
+          "usage": "Structurer livrables, process, bases internes et espaces clients."
         },
         {
           "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "usage": "Créer supports de présentation, ateliers et livrables visuels."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer analyses, comptes-rendus, synthèses et supports."
         }
       ]
     },
@@ -467,20 +459,28 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "malt",
+          "usage": "Trouver des missions et gérer la visibilité freelance."
+        },
+        {
+          "slug": "pipedrive",
+          "usage": "Suivre prospects, missions, devis et relances."
+        },
+        {
+          "slug": "calendly",
+          "usage": "Planifier appels prospects et points client."
+        },
+        {
+          "slug": "notion",
+          "usage": "Structurer missions, process, notes et livrables."
         },
         {
           "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "usage": "Créer propositions, portfolios et supports commerciaux."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer devis, emails, synthèses et contenus."
         }
       ]
     },
@@ -549,20 +549,28 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "recruitee",
+          "usage": "Gérer candidats, offres, pipelines et processus de recrutement."
         },
         {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "slug": "hubspot",
+          "usage": "Suivre clients, prospects, missions et relances commerciales."
+        },
+        {
+          "slug": "calendly",
+          "usage": "Planifier entretiens candidats et rendez-vous client."
+        },
+        {
+          "slug": "typeform",
+          "usage": "Collecter candidatures, brief de poste ou pré-qualification."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser documents, plannings et échanges."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer annonces, synthèses candidat et comptes-rendus."
         }
       ]
     },
@@ -669,10 +677,6 @@
         {
           "slug": "claude",
           "usage": "Clarifier des sujets complexes et produire des livrables plus propres."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
         }
       ]
     },
@@ -773,10 +777,6 @@
         {
           "slug": "claude",
           "usage": "Clarifier des sujets complexes et produire des livrables plus propres."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
         }
       ]
     },
@@ -851,20 +851,28 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "stripe",
+          "usage": "Gérer paiements, commissions et logique marketplace."
         },
         {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "slug": "hubspot",
+          "usage": "Suivre vendeurs, partenaires, leads et pipeline commercial."
+        },
+        {
+          "slug": "airtable",
+          "usage": "Structurer catalogue, offres, vendeurs et opérations."
+        },
+        {
+          "slug": "typeform",
+          "usage": "Collecter onboarding vendeurs, demandes et feedback."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser documents et échanges opérationnels."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer FAQ, réponses support, fiches offre et synthèses."
         }
       ]
     },
@@ -939,20 +947,28 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "hubspot",
+          "usage": "Suivre annonceurs, partenaires, contacts et pipeline commercial."
+        },
+        {
+          "slug": "metricool",
+          "usage": "Programmer contenus sociaux et suivre les performances."
+        },
+        {
+          "slug": "buffer",
+          "usage": "Planifier publications et organiser la diffusion."
         },
         {
           "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "usage": "Créer visuels éditoriaux, posts et supports sponsorisés."
+        },
+        {
+          "slug": "figma",
+          "usage": "Structurer maquettes, formats et éléments graphiques avancés."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer angles, résumés, newsletters et contenus éditoriaux."
         }
       ]
     },
@@ -1027,20 +1043,36 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "stripe",
+          "usage": "Gérer paiements, abonnements, facturation et revenus SaaS."
         },
         {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "slug": "hubspot",
+          "usage": "Suivre leads, clients, pipeline et support commercial."
+        },
+        {
+          "slug": "pipedrive",
+          "usage": "Piloter ventes B2B, deals et relances."
+        },
+        {
+          "slug": "calendly",
+          "usage": "Planifier démos, onboarding et points clients."
+        },
+        {
+          "slug": "typeform",
+          "usage": "Collecter feedback, demandes produit et qualification lead."
+        },
+        {
+          "slug": "codex",
+          "usage": "Accélérer développement, corrections et automatisations produit."
+        },
+        {
+          "slug": "claude-code",
+          "usage": "Travailler sur le code et les tâches techniques en terminal."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer documentation, messages client, specs et analyses."
         }
       ]
     },
@@ -1121,32 +1153,32 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
-        },
-        {
           "slug": "obat",
           "usage": "Gérer les devis et la facturation d’une activité BTP."
         },
         {
+          "slug": "costructor",
+          "usage": "Créer devis, factures et suivis simples pour artisans du bâtiment."
+        },
+        {
           "slug": "vertuoza",
-          "usage": "Suivre les chantiers et la rentabilité plus facilement."
+          "usage": "Suivre les chantiers, plannings et rentabilité plus facilement."
         },
         {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "slug": "alobees",
+          "usage": "Planifier les équipes et suivre l’avancement terrain."
         },
         {
-          "slug": "revolut-business",
-          "usage": "Gérer les paiements et dépenses avec plus de souplesse."
+          "slug": "graneet",
+          "usage": "Piloter les achats, coûts et marges par chantier."
         },
         {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, photos, devis et échanges clients."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+          "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
         }
       ]
     },
@@ -1221,20 +1253,20 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "organilog",
+          "usage": "Suivre interventions, contrats, équipes et retours terrain."
         },
         {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "slug": "praxedo",
+          "usage": "Planifier les équipes terrain et ajuster les interventions."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser contrats, plannings et échanges clients."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer consignes, réponses client et procédures qualité."
         }
       ]
     },
@@ -1309,20 +1341,32 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "hektor",
+          "usage": "Gérer biens, contacts, mandats et diffusion d’annonces."
+        },
+        {
+          "slug": "apimo",
+          "usage": "Centraliser mandats, biens, contacts et activité immobilière."
+        },
+        {
+          "slug": "ubiflow",
+          "usage": "Diffuser les annonces et centraliser les leads entrants."
+        },
+        {
+          "slug": "modelo",
+          "usage": "Sécuriser documents, registres, signatures et obligations métier."
+        },
+        {
+          "slug": "pipedrive",
+          "usage": "Suivre prospects, acquéreurs, vendeurs et relances commerciales."
         },
         {
           "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "usage": "Créer supports de biens, publications locales et visuels de prospection."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer annonces, réponses client et scripts de relance."
         }
       ]
     },
@@ -1397,28 +1441,28 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "lockimmo",
+          "usage": "Gérer copropriétés, lots, appels, documents et suivi syndic."
+        },
+        {
+          "slug": "ublo",
+          "usage": "Fluidifier échanges résidents, locataires et propriétaires."
+        },
+        {
+          "slug": "modelo",
+          "usage": "Sécuriser documents, signatures et obligations immobilières."
         },
         {
           "slug": "apimo",
-          "usage": "Structurer une agence immobilière et ses biens."
+          "usage": "Centraliser biens, contacts et dossiers immobiliers."
         },
         {
-          "slug": "pipedrive",
-          "usage": "Ne plus perdre les opportunités commerciales."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
-        },
-        {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "slug": "google-workspace",
+          "usage": "Centraliser documents internes, comptes rendus et échanges."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+          "usage": "Préparer comptes-rendus, synthèses et réponses types."
         }
       ]
     },
@@ -1493,28 +1537,28 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "lockimmo",
+          "usage": "Gérer loyers, baux, quittances, impayés et documents locatifs."
+        },
+        {
+          "slug": "ublo",
+          "usage": "Fluidifier la relation locataire/propriétaire et le suivi opérationnel."
         },
         {
           "slug": "apimo",
-          "usage": "Structurer une agence immobilière et ses biens."
+          "usage": "Centraliser biens, mandats, contacts et dossiers."
+        },
+        {
+          "slug": "modelo",
+          "usage": "Sécuriser documents, signatures et obligations immobilières."
         },
         {
           "slug": "pipedrive",
-          "usage": "Ne plus perdre les opportunités commerciales."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
-        },
-        {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "usage": "Suivre prospects bailleurs, relances et opportunités."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+          "usage": "Préparer emails, relances et synthèses non sensibles."
         }
       ]
     },
@@ -1589,28 +1633,28 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
-        },
-        {
           "slug": "apimo",
-          "usage": "Structurer une agence immobilière et ses biens."
+          "usage": "Centraliser biens, contacts, dossiers et opportunités immobilières."
         },
         {
           "slug": "pipedrive",
-          "usage": "Ne plus perdre les opportunités commerciales."
+          "usage": "Suivre opportunités, vendeurs, partenaires et relances."
         },
         {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "slug": "ubiflow",
+          "usage": "Diffuser annonces et suivre les contacts entrants."
         },
         {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "slug": "modelo",
+          "usage": "Sécuriser documents et signatures liées aux opérations."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser documents, photos, tableaux et échanges."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+          "usage": "Préparer annonces, dossiers, synthèses et relances."
         }
       ]
     },
@@ -1685,28 +1729,24 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "lockimmo",
+          "usage": "Gérer loyers, baux, documents et suivi locatif."
+        },
+        {
+          "slug": "ublo",
+          "usage": "Fluidifier la relation locataire/propriétaire et les demandes."
         },
         {
           "slug": "apimo",
-          "usage": "Structurer une agence immobilière et ses biens."
+          "usage": "Centraliser biens, contacts et dossiers immobiliers."
         },
         {
-          "slug": "pipedrive",
-          "usage": "Ne plus perdre les opportunités commerciales."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
-        },
-        {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "slug": "google-workspace",
+          "usage": "Centraliser tableaux, documents et échanges."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+          "usage": "Préparer synthèses, relances et analyses non sensibles."
         }
       ]
     },
@@ -1781,20 +1821,28 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "guesty",
+          "usage": "Centraliser logements, réservations, messages voyageurs et opérations terrain."
         },
         {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "slug": "smoobu",
+          "usage": "Synchroniser calendriers, canaux et messages de location courte durée."
+        },
+        {
+          "slug": "lodgify",
+          "usage": "Gérer réservations directes, site et canaux de location saisonnière."
+        },
+        {
+          "slug": "organilog",
+          "usage": "Suivre missions terrain, ménage, incidents et retours d’intervention."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser checklists, documents et échanges."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer messages voyageurs, procédures et réponses types."
         }
       ]
     },
@@ -1869,20 +1917,20 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "lockimmo",
+          "usage": "Suivre gestion locative, loyers, baux et documents."
         },
         {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "slug": "ublo",
+          "usage": "Suivre relation locataire/propriétaire et demandes opérationnelles."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser tableaux, documents et échanges."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer synthèses, scénarios et documents de suivi non sensibles."
         }
       ]
     },
@@ -1957,20 +2005,20 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "harvest-patrimoine",
+          "usage": "Analyser patrimoine, allocation, scénarios et conseil financier."
         },
         {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "slug": "pipedrive",
+          "usage": "Suivre prospects, clients, relances et opportunités."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser documents, tableaux et échanges."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer synthèses, supports pédagogiques et comptes-rendus non sensibles."
         }
       ]
     },
@@ -2045,20 +2093,20 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "pipedrive",
+          "usage": "Suivre opportunités, cibles, partenaires et relances."
         },
         {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "slug": "airtable",
+          "usage": "Structurer pipeline d’opportunités, analyses et suivis de dossiers."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser documents, tableaux et échanges."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer synthèses, analyses et comptes-rendus non sensibles."
         }
       ]
     },
@@ -2133,20 +2181,24 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "organilog",
+          "usage": "Suivre les missions, équipes, documents et retours terrain."
         },
         {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "slug": "praxedo",
+          "usage": "Planifier les interventions et ajuster les tournées des équipes."
+        },
+        {
+          "slug": "geotab",
+          "usage": "Suivre les véhicules, disponibilités et usages de la flotte."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, devis, photos et échanges clients."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer réponses client, checklists et comptes-rendus de mission."
         }
       ]
     },
@@ -2221,20 +2273,28 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "urbantz",
+          "usage": "Organiser les tournées, dispatchs, chauffeurs et preuves de livraison."
         },
         {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "slug": "geotab",
+          "usage": "Suivre la flotte, les trajets et les données véhicules."
+        },
+        {
+          "slug": "shippeo",
+          "usage": "Partager visibilité, ETA et suivi des livraisons avec les clients."
+        },
+        {
+          "slug": "praxedo",
+          "usage": "Coordonner les équipes terrain et les imprévus de tournée."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser documents, échanges et suivis simples."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer messages client, procédures et synthèses d’incidents."
         }
       ]
     },
@@ -2309,20 +2369,28 @@
       },
       "toolRefs": [
         {
+          "slug": "dashdoc",
+          "usage": "Piloter les missions transport, documents, plannings et facturation."
+        },
+        {
+          "slug": "geotab",
+          "usage": "Suivre les véhicules, la flotte, la maintenance et les données terrain."
+        },
+        {
+          "slug": "shippeo",
+          "usage": "Partager le suivi des expéditions, ETA et retards avec les clients."
+        },
+        {
+          "slug": "urbantz",
+          "usage": "Organiser les tournées, dispatchs et preuves de livraison."
+        },
+        {
           "slug": "google-workspace",
           "usage": "Centraliser les fichiers, les échanges et les suivis simples."
         },
         {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
-        },
-        {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer des réponses client, procédures, comptes-rendus et synthèses."
         }
       ]
     },
@@ -2391,20 +2459,24 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "geotab",
+          "usage": "Suivre les véhicules, disponibilités, trajets et maintenance."
         },
         {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "slug": "praxedo",
+          "usage": "Planifier les interventions, affectations et retours terrain."
+        },
+        {
+          "slug": "organilog",
+          "usage": "Centraliser les missions, documents et comptes rendus opérationnels."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, échanges et plannings simples."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer messages client, procédures et réponses aux demandes."
         }
       ]
     },
@@ -2473,20 +2545,28 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "lightspeed",
+          "usage": "Gérer caisse, commandes, stock et activité restaurant."
+        },
+        {
+          "slug": "zenchef",
+          "usage": "Gérer les réservations, clients et remplissage de salle."
+        },
+        {
+          "slug": "thefork-manager",
+          "usage": "Centraliser les réservations et améliorer la visibilité du restaurant."
+        },
+        {
+          "slug": "deliverect",
+          "usage": "Synchroniser les commandes de livraison avec la caisse et la cuisine."
         },
         {
           "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "usage": "Créer menus, visuels et supports de communication locale."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer réponses client, menus, posts et procédures équipe."
         }
       ]
     },
@@ -2555,20 +2635,24 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "zelty",
+          "usage": "Gérer caisse, commandes, click & collect et livraison."
+        },
+        {
+          "slug": "deliverect",
+          "usage": "Centraliser les commandes issues des plateformes de livraison."
+        },
+        {
+          "slug": "lightspeed",
+          "usage": "Suivre caisse, ventes, produits et opérations quotidiennes."
         },
         {
           "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "usage": "Créer menus, offres et supports visibles en point de vente."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer textes d’offres, réponses client et procédures service."
         }
       ]
     },
@@ -2637,20 +2721,24 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "lightspeed",
+          "usage": "Gérer ventes, produits, caisse et suivi commercial simple."
+        },
+        {
+          "slug": "tiller",
+          "usage": "Encaisser et suivre les performances de l’activité traiteur."
         },
         {
           "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "usage": "Créer propositions, menus, cartes et supports événementiels."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser devis, fichiers, plannings et échanges clients."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer propositions, menus, emails et checklists événement."
         }
       ]
     },
@@ -2719,20 +2807,24 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "zelty",
+          "usage": "Gérer caisse, commandes, click & collect et livraison."
         },
         {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "slug": "deliverect",
+          "usage": "Synchroniser plateformes de livraison, commandes et cuisine."
+        },
+        {
+          "slug": "lightspeed",
+          "usage": "Suivre ventes, produits et performances opérationnelles."
+        },
+        {
+          "slug": "brevo",
+          "usage": "Relancer les clients et animer les campagnes email ou SMS."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer fiches produits, réponses client et procédures cuisine."
         }
       ]
     },
@@ -2801,20 +2893,20 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "lightspeed",
+          "usage": "Gérer caisse, ventes, stock et performance boutique."
+        },
+        {
+          "slug": "sumup-caisse",
+          "usage": "Encaisser simplement avec une caisse intégrée."
         },
         {
           "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "usage": "Créer affiches, offres saisonnières et supports boutique."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer textes d’offres, posts et réponses client."
         }
       ]
     },
@@ -2883,20 +2975,28 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "lightspeed",
+          "usage": "Gérer caisse, stock, ventes et performance magasin."
+        },
+        {
+          "slug": "sumup-caisse",
+          "usage": "Démarrer une caisse simple avec paiement intégré."
+        },
+        {
+          "slug": "shopify",
+          "usage": "Vendre en ligne et connecter une boutique au commerce physique."
+        },
+        {
+          "slug": "brevo",
+          "usage": "Relancer les clients par email, SMS et automatisations simples."
         },
         {
           "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "usage": "Créer supports boutique, affiches et contenus réseaux sociaux."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer descriptions produits, réponses client et campagnes."
         }
       ]
     },
@@ -2965,20 +3065,40 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "shopify",
+          "usage": "Créer et gérer une boutique en ligne complète."
         },
         {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "slug": "prestashop",
+          "usage": "Gérer une boutique e-commerce open source plus personnalisable."
+        },
+        {
+          "slug": "woocommerce",
+          "usage": "Vendre en ligne depuis un site WordPress."
+        },
+        {
+          "slug": "gorgias",
+          "usage": "Centraliser le support client e-commerce et les demandes après-vente."
+        },
+        {
+          "slug": "klaviyo",
+          "usage": "Automatiser emails, SMS et scénarios de relance e-commerce."
+        },
+        {
+          "slug": "sendcloud",
+          "usage": "Gérer expéditions, transporteurs et retours e-commerce."
+        },
+        {
+          "slug": "boxtal",
+          "usage": "Comparer et gérer les envois multi-transporteurs."
+        },
+        {
+          "slug": "brevo",
+          "usage": "Lancer campagnes email, SMS et automatisations marketing."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer fiches produits, FAQ, emails et réponses client."
         }
       ]
     },
@@ -3047,36 +3167,32 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
-        },
-        {
           "slug": "planity",
-          "usage": "Remplir le planning et simplifier la prise de rendez-vous."
+          "usage": "Gérer les rendez-vous, la visibilité locale et l’agenda client."
         },
         {
           "slug": "fresha",
-          "usage": "Gérer rendez-vous, encaissements et clients au même endroit."
+          "usage": "Gérer agenda, caisse, clients et prestations beauté."
         },
         {
           "slug": "square",
-          "usage": "Encaisser et suivre les ventes au quotidien."
+          "usage": "Encaisser et suivre les ventes au salon ou à l’institut."
+        },
+        {
+          "slug": "sumup-caisse",
+          "usage": "Utiliser une caisse simple avec paiement intégré."
         },
         {
           "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "usage": "Créer visuels, offres, cartes de soins et contenus locaux."
         },
         {
           "slug": "metricool",
-          "usage": "Programmer les contenus et mesurer la visibilité."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Programmer les contenus réseaux sociaux et suivre les performances."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+          "usage": "Préparer posts, réponses client et descriptions de prestations."
         }
       ]
     },
@@ -3145,36 +3261,32 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
-        },
-        {
           "slug": "planity",
-          "usage": "Remplir le planning et simplifier la prise de rendez-vous."
+          "usage": "Gérer les rendez-vous, la visibilité locale et l’agenda client."
         },
         {
           "slug": "fresha",
-          "usage": "Gérer rendez-vous, encaissements et clients au même endroit."
+          "usage": "Gérer agenda, caisse, clients et prestations beauté."
         },
         {
           "slug": "square",
-          "usage": "Encaisser et suivre les ventes au quotidien."
+          "usage": "Encaisser et suivre les ventes au salon ou à l’institut."
+        },
+        {
+          "slug": "sumup-caisse",
+          "usage": "Utiliser une caisse simple avec paiement intégré."
         },
         {
           "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "usage": "Créer visuels, offres, cartes de soins et contenus locaux."
         },
         {
           "slug": "metricool",
-          "usage": "Programmer les contenus et mesurer la visibilité."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Programmer les contenus réseaux sociaux et suivre les performances."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+          "usage": "Préparer posts, réponses client et descriptions de prestations."
         }
       ]
     },
@@ -3243,36 +3355,32 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
-        },
-        {
           "slug": "planity",
-          "usage": "Remplir le planning et simplifier la prise de rendez-vous."
+          "usage": "Gérer les rendez-vous, la visibilité locale et l’agenda client."
         },
         {
           "slug": "fresha",
-          "usage": "Gérer rendez-vous, encaissements et clients au même endroit."
+          "usage": "Gérer agenda, caisse, clients et prestations beauté."
         },
         {
           "slug": "square",
-          "usage": "Encaisser et suivre les ventes au quotidien."
+          "usage": "Encaisser et suivre les ventes au salon ou à l’institut."
+        },
+        {
+          "slug": "sumup-caisse",
+          "usage": "Utiliser une caisse simple avec paiement intégré."
         },
         {
           "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "usage": "Créer visuels, offres, cartes de soins et contenus locaux."
         },
         {
           "slug": "metricool",
-          "usage": "Programmer les contenus et mesurer la visibilité."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Programmer les contenus réseaux sociaux et suivre les performances."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+          "usage": "Préparer posts, réponses client et descriptions de prestations."
         }
       ]
     },
@@ -3341,20 +3449,24 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "ogust",
+          "usage": "Gérer plannings, bénéficiaires, intervenants et interventions."
         },
         {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "slug": "synchroteam",
+          "usage": "Planifier les interventions terrain et suivre les retours."
+        },
+        {
+          "slug": "praxedo",
+          "usage": "Coordonner équipes, tournées et comptes rendus terrain."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser documents, contrats et échanges."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer messages, procédures et consignes qualité."
         }
       ]
     },
@@ -3429,20 +3541,24 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "digiforma",
+          "usage": "Gérer administratif, Qualiopi, sessions, apprenants et documents."
+        },
+        {
+          "slug": "dendreo",
+          "usage": "Piloter actions de formation, extranet, documents et suivi apprenants."
+        },
+        {
+          "slug": "fillout",
+          "usage": "Collecter inscriptions, besoins et évaluations via formulaires."
         },
         {
           "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "usage": "Créer supports pédagogiques, présentations et visuels de formation."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer plans, supports, quiz et synthèses pédagogiques."
         }
       ]
     },
@@ -3517,20 +3633,24 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "kajabi",
+          "usage": "Vendre formations, contenus et programmes en ligne."
+        },
+        {
+          "slug": "digiforma",
+          "usage": "Structurer formations et obligations administratives si organisme déclaré."
+        },
+        {
+          "slug": "dendreo",
+          "usage": "Piloter actions, apprenants et documents de formation."
         },
         {
           "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "usage": "Créer supports, visuels et ressources pédagogiques."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer scripts, supports, quiz et contenus pédagogiques."
         }
       ]
     },
@@ -3605,20 +3725,24 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "odoo",
+          "usage": "Centraliser ventes, stock, achats, production et facturation."
         },
         {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "slug": "katana",
+          "usage": "Piloter production, stock, commandes et fabrication."
+        },
+        {
+          "slug": "airtable",
+          "usage": "Suivre opérations, lots, fournisseurs et tableaux de pilotage."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser documents, procédures et échanges."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer procédures, synthèses et supports internes."
         }
       ]
     },
@@ -3687,28 +3811,28 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
-        },
-        {
           "slug": "obat",
           "usage": "Gérer les devis et la facturation d’une activité BTP."
         },
         {
-          "slug": "vertuoza",
-          "usage": "Suivre les chantiers et la rentabilité plus facilement."
+          "slug": "costructor",
+          "usage": "Créer devis, factures et suivis simples pour artisans du bâtiment."
         },
         {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "slug": "batappli",
+          "usage": "Produire devis et factures avec des modèles bâtiment."
         },
         {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "slug": "alobees",
+          "usage": "Planifier les équipes et suivre l’avancement terrain."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, photos, devis et échanges clients."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+          "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
         }
       ]
     },
@@ -3777,28 +3901,28 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
-        },
-        {
           "slug": "obat",
           "usage": "Gérer les devis et la facturation d’une activité BTP."
         },
         {
-          "slug": "vertuoza",
-          "usage": "Suivre les chantiers et la rentabilité plus facilement."
+          "slug": "costructor",
+          "usage": "Créer devis, factures et suivis simples pour artisans du bâtiment."
         },
         {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "slug": "batappli",
+          "usage": "Produire devis et factures avec des modèles bâtiment."
         },
         {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "slug": "alobees",
+          "usage": "Planifier les équipes et suivre l’avancement terrain."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, photos, devis et échanges clients."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+          "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
         }
       ]
     },
@@ -3867,28 +3991,32 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
-        },
-        {
           "slug": "obat",
           "usage": "Gérer les devis et la facturation d’une activité BTP."
         },
         {
+          "slug": "costructor",
+          "usage": "Créer devis, factures et suivis simples pour artisans du bâtiment."
+        },
+        {
           "slug": "vertuoza",
-          "usage": "Suivre les chantiers et la rentabilité plus facilement."
+          "usage": "Suivre les chantiers, plannings et rentabilité plus facilement."
         },
         {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "slug": "alobees",
+          "usage": "Planifier les équipes et suivre l’avancement terrain."
         },
         {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "slug": "graneet",
+          "usage": "Piloter les achats, coûts et marges par chantier."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, photos, devis et échanges clients."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+          "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
         }
       ]
     },
@@ -3957,28 +4085,32 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
-        },
-        {
           "slug": "obat",
           "usage": "Gérer les devis et la facturation d’une activité BTP."
         },
         {
+          "slug": "costructor",
+          "usage": "Créer devis, factures et suivis simples pour artisans du bâtiment."
+        },
+        {
           "slug": "vertuoza",
-          "usage": "Suivre les chantiers et la rentabilité plus facilement."
+          "usage": "Suivre les chantiers, plannings et rentabilité plus facilement."
         },
         {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "slug": "alobees",
+          "usage": "Planifier les équipes et suivre l’avancement terrain."
         },
         {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "slug": "graneet",
+          "usage": "Piloter les achats, coûts et marges par chantier."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, photos, devis et échanges clients."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+          "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
         }
       ]
     },
@@ -4047,28 +4179,32 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
-        },
-        {
           "slug": "obat",
           "usage": "Gérer les devis et la facturation d’une activité BTP."
         },
         {
           "slug": "vertuoza",
-          "usage": "Suivre les chantiers et la rentabilité plus facilement."
+          "usage": "Suivre les chantiers, plannings et rentabilité plus facilement."
         },
         {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "slug": "graneet",
+          "usage": "Piloter les achats, coûts et marges par chantier."
         },
         {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "slug": "onaya",
+          "usage": "Structurer les études de prix, chantiers et facturation BTP."
+        },
+        {
+          "slug": "alobees",
+          "usage": "Planifier les équipes et suivre l’avancement terrain."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, photos, devis et échanges clients."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+          "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
         }
       ]
     },
@@ -4137,28 +4273,28 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
-        },
-        {
           "slug": "obat",
-          "usage": "Gérer les devis et la facturation d’une activité BTP."
+          "usage": "Gérer les devis et la facturation d’une activité paysage."
         },
         {
-          "slug": "vertuoza",
-          "usage": "Suivre les chantiers et la rentabilité plus facilement."
+          "slug": "costructor",
+          "usage": "Créer devis, factures et suivis simples pour chantiers extérieurs."
         },
         {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "slug": "organilog",
+          "usage": "Suivre interventions, chantiers, contrats et retours terrain."
         },
         {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "slug": "alobees",
+          "usage": "Planifier les équipes et suivre l’avancement terrain."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser photos, devis, échanges et dossiers clients."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+          "usage": "Préparer réponses client, comptes-rendus et checklists terrain."
         }
       ]
     },
@@ -4227,20 +4363,28 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "autoprogestion",
+          "usage": "Gérer clients, véhicules, devis, factures, rendez-vous et stock."
         },
         {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "slug": "keralpha",
+          "usage": "Centraliser accueil, atelier, véhicules et communication client."
+        },
+        {
+          "slug": "embray",
+          "usage": "Créer dossiers, devis et factures rapidement avec scan IA."
+        },
+        {
+          "slug": "carform",
+          "usage": "Organiser planning atelier, relation client et dossiers après-vente."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser documents, photos et échanges clients."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer réponses client, procédures atelier et messages types."
         }
       ]
     },
@@ -4309,20 +4453,28 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "repairsoft",
+          "usage": "Piloter dossiers, ateliers et activité carrosserie."
         },
         {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "slug": "embray",
+          "usage": "Gérer dossiers sinistres, devis, factures et véhicules de prêt."
+        },
+        {
+          "slug": "keralpha",
+          "usage": "Centraliser suivi véhicule, garanties, planning et communication client."
+        },
+        {
+          "slug": "carform",
+          "usage": "Gérer dossiers assurance, rendez-vous, tâches atelier et véhicules de remplacement."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser photos, expertises, documents et échanges."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer messages client, procédures et synthèses de dossier."
         }
       ]
     },
@@ -4391,20 +4543,20 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "lightspeed",
+          "usage": "Gérer caisse, ventes, stock et performance magasin."
+        },
+        {
+          "slug": "sumup-caisse",
+          "usage": "Encaisser simplement avec une caisse intégrée."
         },
         {
           "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "usage": "Créer affiches, offres saisonnières et supports boutique."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer posts, textes d’offres et réponses client."
         }
       ]
     },
@@ -4473,20 +4625,24 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "lightspeed",
+          "usage": "Gérer caisse, stock, ventes et performance boutique."
+        },
+        {
+          "slug": "shopify",
+          "usage": "Vendre en ligne et connecter la boutique physique au digital."
+        },
+        {
+          "slug": "brevo",
+          "usage": "Relancer les clients et automatiser les campagnes simples."
         },
         {
           "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "usage": "Créer supports boutique, affiches et contenus réseaux sociaux."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer descriptions produits, emails et réponses client."
         }
       ]
     },
@@ -4555,20 +4711,20 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "lightspeed",
+          "usage": "Suivre caisse, ventes et stock du point de vente."
         },
         {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "slug": "sumup-caisse",
+          "usage": "Encaisser simplement avec une caisse légère."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser documents, tableaux de suivi et échanges."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer messages, procédures et réponses client."
         }
       ]
     },
@@ -4637,20 +4793,24 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "tiller",
+          "usage": "Gérer caisse, encaissements et back-office café/bar."
+        },
+        {
+          "slug": "lightspeed",
+          "usage": "Suivre ventes, stock, caisse et performance du point de vente."
+        },
+        {
+          "slug": "sumup-caisse",
+          "usage": "Démarrer une caisse simple avec paiement intégré."
         },
         {
           "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "usage": "Créer ardoises, affiches, offres et contenus locaux."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer posts, réponses client et idées d’animation."
         }
       ]
     },
@@ -4719,24 +4879,24 @@
       },
       "toolRefs": [
         {
-          "slug": "guesty",
-          "usage": "Centraliser réservations, calendrier, messages voyageurs et opérations terrain."
+          "slug": "amenitiz",
+          "usage": "Gérer réservations directes, site, channel manager et établissement."
         },
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser procédures, documents internes et suivis d’exploitation."
+          "slug": "cloudbeds",
+          "usage": "Centraliser PMS, distribution, paiements et expérience client."
+        },
+        {
+          "slug": "guesty",
+          "usage": "Gérer réservations, messages voyageurs et opérations terrain."
         },
         {
           "slug": "canva",
-          "usage": "Créer des supports d’accueil, menus, affichages et contenus de présentation."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Suivre paiements, dépenses et trésorerie."
+          "usage": "Créer supports, offres et visuels de communication locale."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur les messages voyageurs, réponses avis et procédures."
+          "usage": "Préparer réponses voyageurs, procédures et messages types."
         }
       ]
     },
@@ -4805,32 +4965,28 @@
       },
       "toolRefs": [
         {
+          "slug": "doctolib",
+          "usage": "Gérer rendez-vous, visibilité patient et agenda médical."
+        },
+        {
+          "slug": "maiia",
+          "usage": "Gérer rendez-vous, téléconsultation et suivi patient."
+        },
+        {
+          "slug": "weda",
+          "usage": "Gérer dossiers patients, prescriptions et activité médicale."
+        },
+        {
+          "slug": "medistory",
+          "usage": "Structurer les dossiers patients et le suivi cabinet."
+        },
+        {
           "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
-        },
-        {
-          "slug": "planity",
-          "usage": "Remplir le planning et simplifier la prise de rendez-vous."
-        },
-        {
-          "slug": "fresha",
-          "usage": "Gérer rendez-vous, encaissements et clients au même endroit."
-        },
-        {
-          "slug": "square",
-          "usage": "Encaisser et suivre les ventes au quotidien."
-        },
-        {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Centraliser documents internes et échanges non sensibles."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+          "usage": "Préparer procédures internes, courriers types et synthèses non sensibles."
         }
       ]
     },
@@ -4899,32 +5055,24 @@
       },
       "toolRefs": [
         {
+          "slug": "doctolib",
+          "usage": "Gérer rendez-vous, visibilité patient et agenda."
+        },
+        {
+          "slug": "maiia",
+          "usage": "Gérer rendez-vous, téléconsultation et suivi patient."
+        },
+        {
+          "slug": "simplybook",
+          "usage": "Proposer une prise de rendez-vous en ligne simple."
+        },
+        {
           "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
-        },
-        {
-          "slug": "planity",
-          "usage": "Remplir le planning et simplifier la prise de rendez-vous."
-        },
-        {
-          "slug": "fresha",
-          "usage": "Gérer rendez-vous, encaissements et clients au même endroit."
-        },
-        {
-          "slug": "square",
-          "usage": "Encaisser et suivre les ventes au quotidien."
-        },
-        {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Centraliser documents internes, planning et échanges non sensibles."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
+          "usage": "Préparer procédures, messages types et synthèses non sensibles."
         }
       ]
     },
@@ -4993,20 +5141,24 @@
       },
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, les échanges et les suivis simples."
+          "slug": "doctolib",
+          "usage": "Gérer rendez-vous, visibilité patient et agenda."
         },
         {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "slug": "maiia",
+          "usage": "Gérer rendez-vous et échanges patients."
+        },
+        {
+          "slug": "organilog",
+          "usage": "Suivre tournées, interventions et retours terrain."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser documents internes et plannings simples."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur la réflexion et la production de contenus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Gérer les finances courantes d’une entreprise."
+          "usage": "Préparer messages types, procédures et synthèses non sensibles."
         }
       ]
     },
@@ -5076,23 +5228,23 @@
       "toolRefs": [
         {
           "slug": "ogust",
-          "usage": "Gérer plannings, interventions, remplacements, bénéficiaires et administratif."
+          "usage": "Gérer services à la personne, plannings, intervenants et bénéficiaires."
+        },
+        {
+          "slug": "synchroteam",
+          "usage": "Planifier interventions, équipes et retours terrain."
+        },
+        {
+          "slug": "praxedo",
+          "usage": "Coordonner tournées et comptes rendus d’intervention."
         },
         {
           "slug": "google-workspace",
-          "usage": "Centraliser consignes, documents et suivis internes."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Suivre paiements, salaires, charges et dépenses courantes."
+          "usage": "Centraliser contrats, documents et échanges."
         },
         {
           "slug": "chatgpt",
-          "usage": "Préparer messages clients, consignes et procédures simples."
-        },
-        {
-          "slug": "canva",
-          "usage": "Créer des supports d’accueil, fiches pratiques et communication locale."
+          "usage": "Préparer consignes, réponses client et procédures qualité."
         }
       ]
     },
@@ -5162,23 +5314,19 @@
       "toolRefs": [
         {
           "slug": "repairdesk",
-          "usage": "Suivre diagnostics, tickets de réparation, pièces, clients et notifications."
+          "usage": "Gérer réparations, tickets, caisse, clients et appareils."
         },
         {
-          "slug": "square",
-          "usage": "Encaisser en boutique et suivre les ventes de services ou accessoires."
+          "slug": "sumup-caisse",
+          "usage": "Encaisser simplement les réparations et ventes accessoires."
         },
         {
           "slug": "google-workspace",
-          "usage": "Centraliser devis, suivis clients et documents internes."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Suivre achats de pièces, encaissements et dépenses courantes."
+          "usage": "Centraliser documents, échanges et suivis simples."
         },
         {
           "slug": "chatgpt",
-          "usage": "Préparer diagnostics vulgarisés, messages client et procédures SAV."
+          "usage": "Préparer diagnostics, réponses client et procédures atelier."
         }
       ]
     },
@@ -5248,23 +5396,23 @@
       "toolRefs": [
         {
           "slug": "archipad",
-          "usage": "Suivre réunions, réserves, photos, plans et comptes rendus de chantier."
+          "usage": "Suivre réunions, réserves, photos et comptes rendus de chantier."
+        },
+        {
+          "slug": "alobees",
+          "usage": "Planifier les équipes et suivre l’avancement terrain."
+        },
+        {
+          "slug": "graneet",
+          "usage": "Piloter les coûts, achats et marges par chantier."
         },
         {
           "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, plans, comptes rendus et échanges."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Suivre les honoraires, dépenses projet et règlements."
+          "usage": "Centraliser plans, comptes-rendus, photos et échanges."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur les comptes rendus, synthèses et relances."
-        },
-        {
-          "slug": "canva",
-          "usage": "Préparer des supports de présentation lisibles pour les clients."
+          "usage": "Préparer comptes-rendus, synthèses et relances client."
         }
       ]
     },
@@ -5349,10 +5497,6 @@
           "usage": "Centraliser pièces, suivis et échanges de dossier."
         },
         {
-          "slug": "qonto",
-          "usage": "Suivre les encaissements et dépenses courantes."
-        },
-        {
           "slug": "chatgpt",
           "usage": "Préparer des synthèses, emails de relance et explications client."
         }
@@ -5424,23 +5568,19 @@
       "toolRefs": [
         {
           "slug": "kopilo",
-          "usage": "Centraliser planning de conduite, dossiers élèves, moniteurs et examens."
+          "usage": "Gérer planning, élèves, moniteurs et documents d’auto-école."
+        },
+        {
+          "slug": "simplybook",
+          "usage": "Proposer réservation de créneaux ou rendez-vous en ligne."
         },
         {
           "slug": "google-workspace",
-          "usage": "Centraliser documents élèves, suivis internes et fichiers administratifs."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Suivre paiements, forfaits et dépenses courantes."
+          "usage": "Centraliser documents, plannings et échanges."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur les messages élèves, rappels et contenus pédagogiques."
-        },
-        {
-          "slug": "canva",
-          "usage": "Créer des supports locaux et contenus pédagogiques simples."
+          "usage": "Préparer messages élèves, procédures et supports pédagogiques."
         }
       ]
     },
@@ -5521,10 +5661,6 @@
           "usage": "Préparer des supports commerciaux et contenus de présentation."
         },
         {
-          "slug": "qonto",
-          "usage": "Suivre acomptes, soldes et dépenses de mission."
-        },
-        {
           "slug": "chatgpt",
           "usage": "Gagner du temps sur les propositions, emails et scripts."
         }
@@ -5596,23 +5732,23 @@
       "toolRefs": [
         {
           "slug": "weezevent",
-          "usage": "Gérer billetterie, inscriptions, contrôle d’accès, cashless et emailing."
+          "usage": "Gérer billetterie, inscriptions, accès et cashless événementiel."
         },
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser rétroplannings, briefs, devis et validations."
+          "slug": "billetweb",
+          "usage": "Créer billetteries, inscriptions et invitations en ligne."
+        },
+        {
+          "slug": "helloasso",
+          "usage": "Gérer billetterie ou inscriptions pour événements associatifs."
         },
         {
           "slug": "canva",
-          "usage": "Préparer propositions, supports client et contenus événementiels."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Suivre acomptes, dépenses prestataires et trésorerie."
+          "usage": "Créer supports, affiches et contenus événementiels."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur les briefs, synthèses et plans d’action."
+          "usage": "Préparer descriptions, emails, scripts et rétroplannings."
         }
       ]
     },
@@ -5682,23 +5818,23 @@
       "toolRefs": [
         {
           "slug": "gesfit",
-          "usage": "Piloter adhésions, planning de cours, réservations, caisse et suivi des membres."
+          "usage": "Gérer abonnements, planning, membres et suivi salle de sport."
         },
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser plannings, suivis adhérents et procédures internes."
+          "slug": "simplybook",
+          "usage": "Proposer réservation de cours ou créneaux en ligne."
+        },
+        {
+          "slug": "sumup-caisse",
+          "usage": "Encaisser abonnements, ventes et prestations additionnelles."
         },
         {
           "slug": "canva",
-          "usage": "Créer des supports pour offres, challenges et communication locale."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Suivre abonnements, dépenses et trésorerie."
+          "usage": "Créer visuels, challenges, offres et communication locale."
         },
         {
           "slug": "chatgpt",
-          "usage": "Gagner du temps sur les messages adhérents, relances et idées d’animation."
+          "usage": "Préparer posts, programmes, messages et réponses adhérents."
         }
       ]
     },
@@ -5768,19 +5904,23 @@
       "toolRefs": [
         {
           "slug": "doctolib",
-          "usage": "Structurer rendez-vous, rappels patients et disponibilités du cabinet."
+          "usage": "Gérer rendez-vous, visibilité patient et agenda."
+        },
+        {
+          "slug": "maiia",
+          "usage": "Gérer rendez-vous et échanges patients."
+        },
+        {
+          "slug": "weda",
+          "usage": "Structurer dossiers patients et activité médicale si adapté."
         },
         {
           "slug": "google-workspace",
-          "usage": "Centraliser documents internes, procédures et suivis simples."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Suivre dépenses, paiements et trésorerie du cabinet."
+          "usage": "Centraliser documents internes et échanges non sensibles."
         },
         {
           "slug": "chatgpt",
-          "usage": "Préparer messages patients, consignes et contenus pédagogiques."
+          "usage": "Préparer procédures internes et messages types non sensibles."
         }
       ]
     },
@@ -5850,19 +5990,19 @@
       "toolRefs": [
         {
           "slug": "visiopharm",
-          "usage": "Gérer comptoir, stock, documents santé et suivi de l’officine."
+          "usage": "Gérer officine, stock, suivi pharmacie et activité métier."
+        },
+        {
+          "slug": "sumup-caisse",
+          "usage": "Encaisser ventes et prestations avec une caisse simple."
         },
         {
           "slug": "google-workspace",
-          "usage": "Centraliser procédures, plannings et documents internes."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Suivre dépenses courantes et pilotage financier."
+          "usage": "Centraliser documents internes et tableaux de suivi."
         },
         {
           "slug": "chatgpt",
-          "usage": "Préparer procédures internes, messages et supports d’équipe."
+          "usage": "Préparer procédures, messages et supports internes."
         }
       ]
     },
@@ -5939,10 +6079,6 @@
           "usage": "Centraliser documents de travail, échanges et suivis internes."
         },
         {
-          "slug": "qonto",
-          "usage": "Suivre dépenses de structure et pilotage financier."
-        },
-        {
           "slug": "chatgpt",
           "usage": "Préparer synthèses, emails et explications client non sensibles."
         }
@@ -6014,19 +6150,19 @@
       "toolRefs": [
         {
           "slug": "vetup",
-          "usage": "Centraliser rendez-vous, dossiers animaux, actes, stock et facturation."
+          "usage": "Gérer clinique vétérinaire, rendez-vous, dossiers et facturation."
+        },
+        {
+          "slug": "simplybook",
+          "usage": "Proposer une réservation en ligne simple pour certains créneaux."
         },
         {
           "slug": "google-workspace",
-          "usage": "Structurer procédures internes et documents d’équipe."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Suivre dépenses, encaissements et trésorerie."
+          "usage": "Centraliser documents internes et échanges clients."
         },
         {
           "slug": "chatgpt",
-          "usage": "Préparer consignes propriétaires, rappels et supports pédagogiques."
+          "usage": "Préparer messages client, procédures et fiches conseils."
         }
       ]
     },
@@ -6100,19 +6236,15 @@
         },
         {
           "slug": "google-workspace",
-          "usage": "Centraliser documents voyageurs, devis et échanges."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Suivre acomptes, soldes, frais et trésorerie."
+          "usage": "Centraliser documents, dossiers voyageurs et échanges."
         },
         {
           "slug": "canva",
-          "usage": "Créer carnets de voyage, supports et contenus de présentation."
+          "usage": "Créer supports d’offres, carnets et visuels de voyage."
         },
         {
           "slug": "chatgpt",
-          "usage": "Préparer propositions, itinéraires et messages clients."
+          "usage": "Préparer propositions, réponses client et itinéraires."
         }
       ]
     },
@@ -6182,19 +6314,19 @@
       "toolRefs": [
         {
           "slug": "winoptics",
-          "usage": "Suivre clients, verres, montures, mutuelles, commandes et ventes."
+          "usage": "Gérer stock, clients, ventes et activité opticien."
         },
         {
-          "slug": "square",
-          "usage": "Encaisser et suivre les ventes boutique."
+          "slug": "sumup-caisse",
+          "usage": "Encaisser ventes et prestations avec une caisse simple."
         },
         {
           "slug": "google-workspace",
-          "usage": "Centraliser documents internes et suivis simples."
+          "usage": "Centraliser documents, échanges et tableaux de suivi."
         },
         {
-          "slug": "qonto",
-          "usage": "Suivre achats, ventes et dépenses courantes."
+          "slug": "chatgpt",
+          "usage": "Préparer réponses client, supports et procédures internes."
         }
       ]
     },
@@ -6264,19 +6396,23 @@
       "toolRefs": [
         {
           "slug": "extrabat",
-          "usage": "Gérer devis, contrats d’entretien, interventions, SAV et saisonnalité."
+          "usage": "Gérer les chantiers, SAV et interventions piscine."
         },
         {
           "slug": "obat",
-          "usage": "Gérer devis et factures de travaux."
+          "usage": "Gérer les devis et la facturation d’une activité BTP."
+        },
+        {
+          "slug": "organilog",
+          "usage": "Suivre interventions, contrats, SAV et retours terrain."
         },
         {
           "slug": "google-workspace",
-          "usage": "Centraliser photos, documents chantier et suivis clients."
+          "usage": "Centraliser photos, devis et dossiers clients."
         },
         {
-          "slug": "qonto",
-          "usage": "Suivre acomptes, achats et trésorerie."
+          "slug": "chatgpt",
+          "usage": "Préparer réponses client, comptes-rendus et checklists SAV."
         }
       ]
     },
@@ -6346,19 +6482,19 @@
       "toolRefs": [
         {
           "slug": "liciel",
-          "usage": "Produire diagnostics, rapports, mesures terrain et suivis réglementaires."
+          "usage": "Produire diagnostics, rapports et dossiers réglementaires."
+        },
+        {
+          "slug": "geofoncier",
+          "usage": "Consulter données foncières et informations parcelles si besoin."
         },
         {
           "slug": "google-workspace",
-          "usage": "Centraliser photos, documents et suivis simples."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Suivre paiements, frais de déplacement et trésorerie."
+          "usage": "Centraliser rapports, photos et échanges clients."
         },
         {
           "slug": "chatgpt",
-          "usage": "Préparer messages clients et synthèses non réglementaires."
+          "usage": "Préparer emails, synthèses et procédures non sensibles."
         }
       ]
     },
@@ -6428,23 +6564,23 @@
       "toolRefs": [
         {
           "slug": "fleuracompta",
-          "usage": "Encaisser, facturer et suivre l’activité quotidienne d’un fleuriste."
+          "usage": "Gérer caisse, facturation et suivi adapté aux fleuristes."
         },
         {
-          "slug": "square",
-          "usage": "Encaisser en boutique et suivre les ventes."
+          "slug": "sumup-caisse",
+          "usage": "Encaisser simplement avec une caisse intégrée."
         },
         {
           "slug": "canva",
-          "usage": "Créer visuels, offres saisonnières et supports boutique."
+          "usage": "Créer affiches, compositions, offres et supports saisonniers."
         },
         {
-          "slug": "qonto",
-          "usage": "Suivre achats fournisseurs, caisse et dépenses."
+          "slug": "brevo",
+          "usage": "Relancer clients et diffuser offres saisonnières par email ou SMS."
         },
         {
           "slug": "chatgpt",
-          "usage": "Préparer messages clients, fiches produits et contenus locaux."
+          "usage": "Préparer textes d’offres, posts et réponses client."
         }
       ]
     },
@@ -6514,19 +6650,19 @@
       "toolRefs": [
         {
           "slug": "xinaya",
-          "usage": "Suivre dépôts, traitements, délais, livraisons, caisse et clients."
+          "usage": "Gérer pressing, linge, caisse et suivi client."
         },
         {
-          "slug": "square",
-          "usage": "Encaisser et suivre les ventes quotidiennes."
+          "slug": "sumup-caisse",
+          "usage": "Encaisser simplement prestations et ventes."
         },
         {
           "slug": "google-workspace",
-          "usage": "Centraliser procédures, photos et documents internes."
+          "usage": "Centraliser documents, tableaux et échanges."
         },
         {
-          "slug": "qonto",
-          "usage": "Suivre caisse, dépenses et trésorerie."
+          "slug": "chatgpt",
+          "usage": "Préparer messages client et procédures internes."
         }
       ]
     },
@@ -6596,23 +6732,23 @@
       "toolRefs": [
         {
           "slug": "nomad-caisse",
-          "usage": "Gérer commandes comptoir, cuisine, stock et canaux de vente en mobilité."
+          "usage": "Gérer caisse et commandes en mobilité."
+        },
+        {
+          "slug": "sumup-caisse",
+          "usage": "Encaisser simplement sur place avec une caisse légère."
         },
         {
           "slug": "square",
-          "usage": "Encaisser rapidement sur place."
+          "usage": "Gérer paiements, caisse et ventes terrain."
         },
         {
           "slug": "canva",
-          "usage": "Créer menus, affichages et communication locale."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Suivre achats, recettes et trésorerie."
+          "usage": "Créer menus, affiches, offres et supports visibles."
         },
         {
           "slug": "chatgpt",
-          "usage": "Préparer menus, messages événementiels et réponses clients."
+          "usage": "Préparer messages client, posts et fiches produits."
         }
       ]
     },
@@ -6691,10 +6827,6 @@
         {
           "slug": "google-workspace",
           "usage": "Centraliser documents client, agenda et fichiers."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Suivre facturation, dépenses et trésorerie."
         },
         {
           "slug": "chatgpt",
@@ -6779,10 +6911,6 @@
           "usage": "Centraliser pièces, documents et échanges internes."
         },
         {
-          "slug": "qonto",
-          "usage": "Suivre dépenses et pilotage financier du cabinet."
-        },
-        {
           "slug": "chatgpt",
           "usage": "Préparer synthèses, messages clients et explications pédagogiques."
         }
@@ -6854,19 +6982,19 @@
       "toolRefs": [
         {
           "slug": "vtc-gestion",
-          "usage": "Suivre chauffeurs, courses, commissions, déductions et montants nets."
+          "usage": "Gérer chauffeurs, commissions, courses et suivi administratif VTC."
+        },
+        {
+          "slug": "geotab",
+          "usage": "Suivre les véhicules, trajets et données de flotte."
         },
         {
           "slug": "google-workspace",
-          "usage": "Centraliser plannings, documents et suivis clients."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Suivre encaissements, dépenses véhicule et trésorerie."
+          "usage": "Centraliser documents, échanges et plannings simples."
         },
         {
           "slug": "chatgpt",
-          "usage": "Préparer messages clients, réponses avis et procédures."
+          "usage": "Préparer réponses client, messages et synthèses d’activité."
         }
       ]
     },
@@ -6941,10 +7069,6 @@
         {
           "slug": "google-workspace",
           "usage": "Centraliser documents, agenda et supports clients."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Suivre paiements, abonnements et dépenses."
         },
         {
           "slug": "chatgpt",
@@ -7022,23 +7146,19 @@
       "toolRefs": [
         {
           "slug": "maliora",
-          "usage": "Créer des programmes, suivre les progrès, gérer clients et facturation."
+          "usage": "Gérer programmes, suivi clients et accompagnement sportif."
         },
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser agenda, fichiers clients et supports."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Suivre paiements, abonnements et dépenses."
+          "slug": "simplybook",
+          "usage": "Proposer réservation de séances et créneaux en ligne."
         },
         {
           "slug": "canva",
-          "usage": "Créer supports, challenges et contenus de communication."
+          "usage": "Créer visuels, programmes, offres et contenus réseaux sociaux."
         },
         {
           "slug": "chatgpt",
-          "usage": "Préparer programmes, messages clients et idées d’animation."
+          "usage": "Préparer programmes, messages client et contenus pédagogiques."
         }
       ]
     },
@@ -7107,24 +7227,20 @@
       ],
       "toolRefs": [
         {
-          "slug": "square",
-          "usage": "Suivre paiements et ventes de services complémentaires."
+          "slug": "sumup-caisse",
+          "usage": "Encaisser ventes ou prestations complémentaires si besoin."
+        },
+        {
+          "slug": "organilog",
+          "usage": "Suivre interventions, maintenance et retours terrain."
         },
         {
           "slug": "google-workspace",
-          "usage": "Centraliser rondes, incidents, procédures et documents."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Suivre encaissements, dépenses machines et trésorerie."
+          "usage": "Centraliser documents, suivis et échanges."
         },
         {
           "slug": "chatgpt",
-          "usage": "Préparer affichages, réponses clients et procédures."
-        },
-        {
-          "slug": "canva",
-          "usage": "Créer affichages clairs pour consignes et tarifs."
+          "usage": "Préparer affichages, réponses client et procédures maintenance."
         }
       ]
     },
@@ -7193,20 +7309,24 @@
       ],
       "toolRefs": [
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser plannings, consignes, documents et suivis clients."
+          "slug": "praxedo",
+          "usage": "Planifier agents, interventions, rondes et comptes rendus terrain."
         },
         {
-          "slug": "qonto",
-          "usage": "Suivre paie, charges, dépenses et trésorerie."
+          "slug": "organilog",
+          "usage": "Suivre missions, contrats, agents et retours d’intervention."
+        },
+        {
+          "slug": "synchroteam",
+          "usage": "Organiser plannings, équipes terrain et rapports."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser documents, consignes et échanges client."
         },
         {
           "slug": "chatgpt",
-          "usage": "Préparer procédures, comptes rendus et messages clients."
-        },
-        {
-          "slug": "canva",
-          "usage": "Créer supports internes, consignes et documents terrain."
+          "usage": "Préparer consignes, comptes-rendus et procédures qualité."
         }
       ]
     },
@@ -7275,24 +7395,28 @@
       ],
       "toolRefs": [
         {
-          "slug": "assotools",
-          "usage": "Gérer membres, adhésions, dons, événements et communication associative."
+          "slug": "helloasso",
+          "usage": "Gérer dons, adhésions, billetterie et paiements associatifs."
         },
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser documents, comptes rendus et fichiers partagés."
+          "slug": "assoconnect",
+          "usage": "Centraliser adhérents, comptabilité, dons, emailing et événements."
+        },
+        {
+          "slug": "yapla",
+          "usage": "Gérer membres, adhésions, événements et paiements."
+        },
+        {
+          "slug": "assotools",
+          "usage": "Structurer la gestion associative, adhésions et dons."
         },
         {
           "slug": "canva",
-          "usage": "Créer affiches, visuels et supports événementiels."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Suivre dépenses, cotisations et trésorerie."
+          "usage": "Créer affiches, campagnes, supports et contenus associatifs."
         },
         {
           "slug": "chatgpt",
-          "usage": "Préparer emails, comptes rendus et documents internes."
+          "usage": "Préparer communications, emails et comptes rendus."
         }
       ]
     },
@@ -7362,23 +7486,27 @@
       "toolRefs": [
         {
           "slug": "obat",
-          "usage": "Gérer devis et factures pour les travaux de couverture."
+          "usage": "Gérer les devis et la facturation d’une activité BTP."
         },
         {
-          "slug": "vertuoza",
-          "usage": "Suivre chantiers, planning et rentabilité."
+          "slug": "costructor",
+          "usage": "Créer devis, factures et suivis simples pour artisans du bâtiment."
+        },
+        {
+          "slug": "batappli",
+          "usage": "Produire devis et factures avec des modèles bâtiment."
+        },
+        {
+          "slug": "alobees",
+          "usage": "Planifier les équipes et suivre l’avancement terrain."
         },
         {
           "slug": "google-workspace",
-          "usage": "Centraliser photos, documents chantier et échanges."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Suivre achats matériaux, acomptes et trésorerie."
+          "usage": "Centraliser les fichiers, photos, devis et échanges clients."
         },
         {
           "slug": "chatgpt",
-          "usage": "Préparer comptes rendus, messages client et procédures."
+          "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
         }
       ]
     },
@@ -7448,19 +7576,27 @@
       "toolRefs": [
         {
           "slug": "obat",
-          "usage": "Gérer devis, métrés et factures de chantier."
+          "usage": "Gérer les devis et la facturation d’une activité BTP."
         },
         {
-          "slug": "vertuoza",
-          "usage": "Suivre planning, avancement et rentabilité des chantiers."
+          "slug": "costructor",
+          "usage": "Créer devis, factures et suivis simples pour artisans du bâtiment."
+        },
+        {
+          "slug": "batappli",
+          "usage": "Produire devis et factures avec des modèles bâtiment."
+        },
+        {
+          "slug": "alobees",
+          "usage": "Planifier les équipes et suivre l’avancement terrain."
         },
         {
           "slug": "google-workspace",
-          "usage": "Centraliser photos, devis et échanges client."
+          "usage": "Centraliser les fichiers, photos, devis et échanges clients."
         },
         {
-          "slug": "qonto",
-          "usage": "Suivre acomptes, achats peinture et trésorerie."
+          "slug": "chatgpt",
+          "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
         }
       ]
     },
@@ -7530,19 +7666,27 @@
       "toolRefs": [
         {
           "slug": "obat",
-          "usage": "Gérer devis, matériaux et facturation."
+          "usage": "Gérer les devis et la facturation d’une activité BTP."
         },
         {
-          "slug": "vertuoza",
-          "usage": "Suivre planning chantier, pose et rentabilité."
+          "slug": "costructor",
+          "usage": "Créer devis, factures et suivis simples pour artisans du bâtiment."
+        },
+        {
+          "slug": "batappli",
+          "usage": "Produire devis et factures avec des modèles bâtiment."
+        },
+        {
+          "slug": "alobees",
+          "usage": "Planifier les équipes et suivre l’avancement terrain."
         },
         {
           "slug": "google-workspace",
-          "usage": "Centraliser photos, plans et échanges client."
+          "usage": "Centraliser les fichiers, photos, devis et échanges clients."
         },
         {
-          "slug": "qonto",
-          "usage": "Suivre achats matériaux, acomptes et dépenses."
+          "slug": "chatgpt",
+          "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
         }
       ]
     },
@@ -7612,19 +7756,27 @@
       "toolRefs": [
         {
           "slug": "obat",
-          "usage": "Gérer devis, contrats d’entretien et factures."
+          "usage": "Gérer les devis et la facturation d’une activité BTP."
         },
         {
-          "slug": "vertuoza",
-          "usage": "Suivre interventions, planning et rentabilité."
+          "slug": "costructor",
+          "usage": "Créer devis, factures et suivis simples pour interventions techniques."
+        },
+        {
+          "slug": "praxedo",
+          "usage": "Planifier les interventions, techniciens et retours terrain."
+        },
+        {
+          "slug": "organilog",
+          "usage": "Suivre interventions, contrats, maintenance et facturation."
         },
         {
           "slug": "google-workspace",
-          "usage": "Centraliser rapports, photos et documents client."
+          "usage": "Centraliser documents, photos et échanges clients."
         },
         {
-          "slug": "qonto",
-          "usage": "Suivre achats matériel, acomptes et trésorerie."
+          "slug": "chatgpt",
+          "usage": "Préparer réponses client, procédures et comptes-rendus."
         }
       ]
     },
@@ -7694,19 +7846,23 @@
       "toolRefs": [
         {
           "slug": "obat",
-          "usage": "Gérer devis et factures d’intervention."
+          "usage": "Gérer les devis et la facturation d’une activité BTP."
+        },
+        {
+          "slug": "costructor",
+          "usage": "Créer devis et factures simples pour interventions serrurerie."
+        },
+        {
+          "slug": "praxedo",
+          "usage": "Planifier les interventions et suivre les retours terrain."
         },
         {
           "slug": "google-workspace",
-          "usage": "Centraliser demandes, photos, documents et suivis."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Suivre encaissements, achats pièces et dépenses."
+          "usage": "Centraliser documents, photos et échanges clients."
         },
         {
           "slug": "chatgpt",
-          "usage": "Préparer messages clients, consignes et réponses SAV."
+          "usage": "Préparer réponses client, procédures et comptes-rendus."
         }
       ]
     },
@@ -7776,19 +7932,23 @@
       "toolRefs": [
         {
           "slug": "wino",
-          "usage": "Gérer caisse, stock, inventaire, réceptions et références de cave."
+          "usage": "Gérer caisse, stock et activité caviste."
+        },
+        {
+          "slug": "sumup-caisse",
+          "usage": "Encaisser simplement avec une caisse intégrée."
         },
         {
           "slug": "canva",
-          "usage": "Créer affiches, cartes, offres et contenus événementiels."
+          "usage": "Créer affiches, offres dégustation et supports boutique."
         },
         {
-          "slug": "qonto",
-          "usage": "Suivre achats fournisseurs, caisse et dépenses."
+          "slug": "brevo",
+          "usage": "Relancer clients et diffuser invitations ou offres par email/SMS."
         },
         {
           "slug": "chatgpt",
-          "usage": "Préparer fiches produits, messages clients et idées de dégustation."
+          "usage": "Préparer fiches produits, posts et réponses client."
         }
       ]
     },
@@ -7858,19 +8018,23 @@
       "toolRefs": [
         {
           "slug": "booknroll",
-          "usage": "Gérer catalogue, ventes, stocks, commandes et références ISBN."
+          "usage": "Gérer caisse, stock et activité librairie."
+        },
+        {
+          "slug": "sumup-caisse",
+          "usage": "Encaisser simplement avec une caisse intégrée."
         },
         {
           "slug": "canva",
-          "usage": "Créer affiches, vitrines, visuels et supports d’animation."
+          "usage": "Créer affiches, événements et supports boutique."
         },
         {
-          "slug": "qonto",
-          "usage": "Suivre achats éditeurs, caisse et trésorerie."
+          "slug": "brevo",
+          "usage": "Relancer lecteurs et diffuser événements ou sélections."
         },
         {
           "slug": "chatgpt",
-          "usage": "Préparer recommandations, newsletters et contenus de librairie."
+          "usage": "Préparer recommandations, posts et textes événementiels."
         }
       ]
     },
@@ -7940,19 +8104,23 @@
       "toolRefs": [
         {
           "slug": "doctolib",
-          "usage": "Structurer agenda, prise de rendez-vous et rappels patients."
+          "usage": "Gérer rendez-vous, visibilité patient et agenda."
+        },
+        {
+          "slug": "maiia",
+          "usage": "Gérer rendez-vous et échanges patients."
+        },
+        {
+          "slug": "simplybook",
+          "usage": "Proposer une réservation en ligne simple."
         },
         {
           "slug": "google-workspace",
-          "usage": "Centraliser documents internes et supports patients."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Suivre paiements, dépenses et trésorerie."
+          "usage": "Centraliser documents internes et planning simple."
         },
         {
           "slug": "chatgpt",
-          "usage": "Préparer messages, consignes et contenus pédagogiques."
+          "usage": "Préparer messages types et procédures non sensibles."
         }
       ]
     },
@@ -8022,19 +8190,23 @@
       "toolRefs": [
         {
           "slug": "doctolib",
-          "usage": "Structurer rendez-vous, rappels patients et visibilité du cabinet."
+          "usage": "Gérer rendez-vous, visibilité patient et agenda."
+        },
+        {
+          "slug": "maiia",
+          "usage": "Gérer rendez-vous et téléconsultation."
+        },
+        {
+          "slug": "simplybook",
+          "usage": "Proposer une réservation en ligne simple."
         },
         {
           "slug": "google-workspace",
-          "usage": "Centraliser documents internes et supports non sensibles."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Suivre paiements, dépenses et trésorerie."
+          "usage": "Centraliser documents internes et planning simple."
         },
         {
           "slug": "chatgpt",
-          "usage": "Préparer contenus pédagogiques généraux et messages administratifs."
+          "usage": "Préparer supports internes et messages non sensibles."
         }
       ]
     },
@@ -8104,19 +8276,15 @@
       "toolRefs": [
         {
           "slug": "meeko",
-          "usage": "Gérer enfants, familles, préinscriptions, planning, transmissions et facturation."
+          "usage": "Gérer crèche, parents, planning, transmissions et dossiers enfants."
         },
         {
           "slug": "google-workspace",
-          "usage": "Centraliser documents, procédures et fichiers internes."
+          "usage": "Centraliser documents internes, plannings et échanges."
         },
         {
-          "slug": "qonto",
-          "usage": "Suivre dépenses, salaires, facturation et trésorerie."
-        },
-        {
-          "slug": "canva",
-          "usage": "Créer supports familles, affichages et documents d’accueil."
+          "slug": "chatgpt",
+          "usage": "Préparer communications parents, procédures et supports internes."
         }
       ]
     },
@@ -8186,23 +8354,19 @@
       "toolRefs": [
         {
           "slug": "harvest-patrimoine",
-          "usage": "Structurer bilan patrimonial, simulations, allocations et dossiers clients."
+          "usage": "Analyser patrimoine, allocation, scénarios et conseil financier."
         },
         {
           "slug": "pipedrive",
-          "usage": "Suivre prospects, clients, revues et relances."
+          "usage": "Suivre prospects, clients, relances et opportunités."
         },
         {
           "slug": "google-workspace",
-          "usage": "Centraliser documents, échanges et suivis."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Suivre dépenses et pilotage financier du cabinet."
+          "usage": "Centraliser documents et échanges clients."
         },
         {
           "slug": "chatgpt",
-          "usage": "Préparer synthèses et explications pédagogiques non sensibles."
+          "usage": "Préparer comptes-rendus, synthèses et supports pédagogiques non sensibles."
         }
       ]
     },
@@ -8272,23 +8436,23 @@
       "toolRefs": [
         {
           "slug": "apimo",
-          "usage": "Structurer biens, mandats, contacts et suivi immobilier."
+          "usage": "Centraliser biens, contacts, mandats et recherches."
         },
         {
           "slug": "pipedrive",
-          "usage": "Suivre prospects, mandats et étapes commerciales."
+          "usage": "Suivre prospects, critères, relances et opportunités."
+        },
+        {
+          "slug": "ubiflow",
+          "usage": "Suivre visibilité et annonces selon les canaux utilisés."
         },
         {
           "slug": "google-workspace",
-          "usage": "Centraliser dossiers, photos et comptes rendus."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Suivre commissions, dépenses et trésorerie."
+          "usage": "Centraliser dossiers, critères, visites et échanges."
         },
         {
           "slug": "chatgpt",
-          "usage": "Préparer synthèses, comparatifs et messages client."
+          "usage": "Préparer comptes-rendus, emails et synthèses de recherche."
         }
       ]
     },
@@ -8358,19 +8522,19 @@
       "toolRefs": [
         {
           "slug": "geofoncier",
-          "usage": "Consulter données foncières, dossiers, parcelles et informations cadastrales."
+          "usage": "Accéder aux données foncières, parcelles et informations métier."
+        },
+        {
+          "slug": "archipad",
+          "usage": "Suivre réserves, photos, comptes rendus et dossiers terrain."
         },
         {
           "slug": "google-workspace",
-          "usage": "Centraliser plans, photos, documents et échanges."
-        },
-        {
-          "slug": "qonto",
-          "usage": "Suivre facturation, déplacements et dépenses."
+          "usage": "Centraliser plans, documents, photos et échanges clients."
         },
         {
           "slug": "chatgpt",
-          "usage": "Préparer messages client et synthèses non réglementaires."
+          "usage": "Préparer synthèses, réponses client et documents internes."
         }
       ]
     }

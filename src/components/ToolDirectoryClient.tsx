@@ -305,6 +305,11 @@ export default function ToolDirectoryClient({
                     <h2 className="mt-1.5 text-lg font-semibold tracking-tight text-brand-blue">
                       {tool.name}
                     </h2>
+                    {tool.memberDealLabel ? (
+                      <span className="mt-2 inline-flex rounded-full bg-dema-sage px-2.5 py-1 text-[10px] font-semibold text-dema-forest">
+                        {tool.memberDealLabel}
+                      </span>
+                    ) : null}
                   </div>
                 </div>
 

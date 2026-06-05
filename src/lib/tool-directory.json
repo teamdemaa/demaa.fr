@@ -71,7 +71,9 @@
       "bestFor": "Créer un mini système interne sans logiciel métier lourd.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "memberDealLabel": "Offre membre",
+      "memberDealDescription": "Accédez à l’espace membre pour vérifier les conditions utiles à votre organisation et à votre équipe."
     },
     {
       "slug": "airtable",
@@ -389,7 +391,9 @@
       "bestFor": "Gérer les paiements et dépenses avec plus de souplesse.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "memberDealLabel": "Offre membre",
+      "memberDealDescription": "Accédez à l’espace membre pour consulter l’offre disponible et les conditions applicables."
     },
     {
       "slug": "pennylane",
@@ -411,7 +415,9 @@
       "bestFor": "Centraliser la gestion financière et comptable.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "memberDealLabel": "Offre membre",
+      "memberDealDescription": "Demandez les conditions disponibles depuis l’espace membre Team Demaa avant de choisir votre outil comptable."
     },
     {
       "slug": "tiimora",
@@ -1017,7 +1023,8 @@
       "category": "Outils métier",
       "sectors": [
         "Artisanat & BTP",
-        "Commerce local"
+        "Commerce local",
+        "Mobilité & logistique"
       ],
       "description": "Gestion des opérations transport, documents et suivi de livraisons.",
       "tags": [
@@ -1036,7 +1043,8 @@
       "url": "https://www.geotab.com/",
       "category": "Outils métier",
       "sectors": [
-        "Commerce local"
+        "Commerce local",
+        "Mobilité & logistique"
       ],
       "description": "Gestion de flotte, télématique et suivi des véhicules.",
       "tags": [
@@ -1045,6 +1053,44 @@
         "Suivi"
       ],
       "bestFor": "Suivre les véhicules et améliorer les opérations terrain.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "shippeo",
+      "name": "Shippeo",
+      "url": "https://www.shippeo.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Mobilité & logistique"
+      ],
+      "description": "Visibilité transport en temps réel, ETA et suivi des livraisons.",
+      "tags": [
+        "Tracking",
+        "ETA",
+        "Transport"
+      ],
+      "bestFor": "Donner de la visibilité aux clients sur les expéditions et retards.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "urbantz",
+      "name": "Urbantz",
+      "url": "https://urbantz.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Mobilité & logistique"
+      ],
+      "description": "Gestion de tournées, dispatch, preuves de livraison et dernier kilomètre.",
+      "tags": [
+        "Tournées",
+        "Dispatch",
+        "Livraison"
+      ],
+      "bestFor": "Organiser les tournées et suivre les preuves de livraison.",
       "pricingHint": "Payant",
       "status": "active",
       "toolbox": true
@@ -1688,6 +1734,886 @@
         "Parcelle"
       ],
       "bestFor": "Consulter données foncières, dossiers, parcelles et informations cadastrales.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "praxedo",
+      "name": "Praxedo",
+      "url": "https://www.praxedo.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Mobilité & logistique",
+        "Services aux particuliers",
+        "Artisanat & BTP"
+      ],
+      "description": "Gestion des interventions terrain, plannings, tournées et comptes rendus mobiles.",
+      "tags": [
+        "Interventions",
+        "Planning",
+        "Terrain"
+      ],
+      "bestFor": "Planifier les équipes terrain et suivre les interventions en mobilité.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "organilog",
+      "name": "Organilog",
+      "url": "https://fr.organilog.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Mobilité & logistique",
+        "Services aux particuliers",
+        "Artisanat & BTP"
+      ],
+      "description": "Suivi opérationnel web et mobile pour interventions, chantiers, contrats et facturation.",
+      "tags": [
+        "Interventions",
+        "Chantiers",
+        "Facturation"
+      ],
+      "bestFor": "Suivre les interventions, documents et retours terrain sans multiplier les fichiers.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "costructor",
+      "name": "Costructor",
+      "url": "https://costructor.co/",
+      "category": "Outils métier",
+      "sectors": [
+        "Artisanat & BTP"
+      ],
+      "description": "Logiciel de devis, factures et gestion simple pour artisans et entreprises du BTP.",
+      "tags": [
+        "Devis",
+        "Facture",
+        "BTP"
+      ],
+      "bestFor": "Créer devis et factures BTP rapidement avec un outil pensé artisans.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "alobees",
+      "name": "Alobees",
+      "url": "https://www.alobees.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Artisanat & BTP"
+      ],
+      "description": "Suivi de chantier, planning d’équipe, heures et communication terrain pour le BTP.",
+      "tags": [
+        "Chantier",
+        "Planning",
+        "Équipe"
+      ],
+      "bestFor": "Planifier les équipes et suivre l’avancement des chantiers.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "graneet",
+      "name": "Graneet",
+      "url": "https://www.graneet.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Artisanat & BTP"
+      ],
+      "description": "ERP BTP pour chiffrage, achats, factures de situation, main d’œuvre et marges chantier.",
+      "tags": [
+        "ERP",
+        "Marge",
+        "Chantier"
+      ],
+      "bestFor": "Piloter rentabilité, achats et marges par chantier.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "batappli",
+      "name": "Batappli",
+      "url": "https://www.batappli.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Artisanat & BTP"
+      ],
+      "description": "Logiciel bâtiment pour devis, factures, bibliothèque de prix et suivi de rentabilité.",
+      "tags": [
+        "Devis",
+        "Facture",
+        "Prix"
+      ],
+      "bestFor": "Gérer devis et factures avec des modèles adaptés aux artisans du bâtiment.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "onaya",
+      "name": "Onaya",
+      "url": "https://www.onaya.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Artisanat & BTP"
+      ],
+      "description": "Solution de gestion BTP pour études de prix, suivi chantier, facturation et pilotage.",
+      "tags": [
+        "Études de prix",
+        "Chantier",
+        "BTP"
+      ],
+      "bestFor": "Structurer les chantiers et le pilotage d’une entreprise BTP plus organisée.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "tiller",
+      "name": "Tiller",
+      "url": "https://www.tillersystems.com/",
+      "category": "Caisse & réservation",
+      "sectors": [
+        "Restauration",
+        "Commerce local"
+      ],
+      "description": "Caisse iPad et back-office pour restaurants, cafés et commerces.",
+      "tags": [
+        "Caisse",
+        "Restaurant",
+        "Back-office"
+      ],
+      "bestFor": "Encaisser et suivre les performances d’un restaurant ou commerce local.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "zelty",
+      "name": "Zelty",
+      "url": "https://www.zelty.fr/",
+      "category": "Caisse & réservation",
+      "sectors": [
+        "Restauration"
+      ],
+      "description": "Caisse cloud pour restauration, commandes, encaissement, click & collect et livraison.",
+      "tags": [
+        "Caisse",
+        "Commande",
+        "Restaurant"
+      ],
+      "bestFor": "Centraliser caisse, commandes et opérations restaurant.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "thefork-manager",
+      "name": "TheFork Manager",
+      "url": "https://www.theforkmanager.com/fr/",
+      "category": "Caisse & réservation",
+      "sectors": [
+        "Restauration"
+      ],
+      "description": "Gestion des réservations, tables, interactions client et visibilité restaurant.",
+      "tags": [
+        "Réservation",
+        "Tables",
+        "Restaurant"
+      ],
+      "bestFor": "Gérer les réservations et remplir plus facilement la salle.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "sumup-caisse",
+      "name": "SumUp Caisse",
+      "url": "https://www.sumup.com/fr-fr/apercu-caisse-enregistreuse/caisse-enregistreuse-pro/",
+      "category": "Caisse & réservation",
+      "sectors": [
+        "Commerce local",
+        "Restauration"
+      ],
+      "description": "Caisse et encaissement pour commerces, cafés et petites activités locales.",
+      "tags": [
+        "Caisse",
+        "Paiement",
+        "Commerce"
+      ],
+      "bestFor": "Démarrer une caisse simple avec paiement intégré.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "sendcloud",
+      "name": "Sendcloud",
+      "url": "https://www.sendcloud.com/fr/",
+      "category": "Livraison & expédition",
+      "sectors": [
+        "E-commerce",
+        "Commerce local"
+      ],
+      "description": "Solution d’expédition e-commerce pour automatiser les envois, transporteurs et retours.",
+      "tags": [
+        "Expédition",
+        "Transporteurs",
+        "Retours"
+      ],
+      "bestFor": "Gérer les expéditions e-commerce et les retours plus vite.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "boxtal",
+      "name": "Boxtal",
+      "url": "https://www.boxtal.com/fr/fr/",
+      "category": "Livraison & expédition",
+      "sectors": [
+        "E-commerce",
+        "Commerce local"
+      ],
+      "description": "Expédition multi-transporteurs pour colis, plis, palettes et commandes e-commerce.",
+      "tags": [
+        "Expédition",
+        "Colis",
+        "Transporteurs"
+      ],
+      "bestFor": "Comparer et gérer les envois sans multiplier les comptes transporteurs.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "brevo",
+      "name": "Brevo",
+      "url": "https://www.brevo.com/fr/",
+      "category": "Marketing & visibilité",
+      "sectors": [
+        "E-commerce",
+        "Commerce local",
+        "Restauration"
+      ],
+      "description": "Emailing, SMS, automatisation marketing et CRM pour relancer clients et prospects.",
+      "tags": [
+        "Emailing",
+        "SMS",
+        "Automation"
+      ],
+      "bestFor": "Relancer les clients et automatiser les campagnes marketing simples.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "woocommerce",
+      "name": "WooCommerce",
+      "url": "https://woocommerce.com/",
+      "category": "Site & e-commerce",
+      "sectors": [
+        "E-commerce",
+        "Commerce local"
+      ],
+      "description": "Extension e-commerce open source pour vendre avec WordPress.",
+      "tags": [
+        "E-commerce",
+        "WordPress",
+        "Boutique"
+      ],
+      "bestFor": "Vendre en ligne sur un site WordPress existant.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "wizishop",
+      "name": "WiziShop",
+      "url": "https://www.wizishop.fr/",
+      "category": "Site & e-commerce",
+      "sectors": [
+        "E-commerce",
+        "Commerce local"
+      ],
+      "description": "Solution française pour créer et gérer une boutique en ligne accompagnée.",
+      "tags": [
+        "Boutique",
+        "E-commerce",
+        "SEO"
+      ],
+      "bestFor": "Lancer une boutique en ligne avec accompagnement et outils intégrés.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "maiia",
+      "name": "Maiia",
+      "url": "https://www.maiia.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Santé & bien-être"
+      ],
+      "description": "Prise de rendez-vous, téléconsultation et outils de suivi pour professionnels de santé.",
+      "tags": [
+        "Rendez-vous",
+        "Téléconsultation",
+        "Santé"
+      ],
+      "bestFor": "Gérer les rendez-vous et consultations médicales avec un outil santé.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "weda",
+      "name": "Weda",
+      "url": "https://www.weda.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Santé & bien-être"
+      ],
+      "description": "Logiciel médical en ligne pour dossiers patients, prescriptions, agenda et coordination.",
+      "tags": [
+        "Dossier patient",
+        "Prescription",
+        "Santé"
+      ],
+      "bestFor": "Gérer les dossiers patients et l’activité d’un cabinet médical.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "simplybook",
+      "name": "SimplyBook.me",
+      "url": "https://simplybook.me/fr/",
+      "category": "Caisse & réservation",
+      "sectors": [
+        "Santé & bien-être",
+        "Services aux particuliers"
+      ],
+      "description": "Réservation en ligne, agenda, rappels et paiements pour activités de rendez-vous.",
+      "tags": [
+        "Réservation",
+        "Agenda",
+        "Rendez-vous"
+      ],
+      "bestFor": "Proposer une réservation en ligne simple pour prestations sur rendez-vous.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "medistory",
+      "name": "Medistory",
+      "url": "https://www.medistory.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Santé & bien-être"
+      ],
+      "description": "Logiciel médical pour gestion des dossiers patients et activité de cabinet.",
+      "tags": [
+        "Dossier patient",
+        "Cabinet",
+        "Santé"
+      ],
+      "bestFor": "Structurer les dossiers patients et le suivi d’un cabinet médical.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "hektor",
+      "name": "Hektor",
+      "url": "https://www.la-boite-immo.com/hektor/",
+      "category": "Outils métier",
+      "sectors": [
+        "Immobilier"
+      ],
+      "description": "Logiciel immobilier pour transaction, biens, contacts, rapprochements et diffusion d’annonces.",
+      "tags": [
+        "Transaction",
+        "Annonces",
+        "Mandats"
+      ],
+      "bestFor": "Gérer les biens, mandats, contacts et annonces d’une agence immobilière.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "netty",
+      "name": "Netty",
+      "url": "https://www.netty.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Immobilier"
+      ],
+      "description": "Logiciel immobilier pour agences, mandats, biens, contacts, site et diffusion.",
+      "tags": [
+        "Agence",
+        "Mandats",
+        "Annonces"
+      ],
+      "bestFor": "Piloter l’activité transaction d’une agence immobilière.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "ubiflow",
+      "name": "Ubiflow",
+      "url": "https://www.ubiflow.net/",
+      "category": "Marketing & visibilité",
+      "sectors": [
+        "Immobilier",
+        "Automobile & réparation"
+      ],
+      "description": "Multidiffusion d’annonces, visibilité digitale et centralisation des contacts.",
+      "tags": [
+        "Multidiffusion",
+        "Annonces",
+        "Leads"
+      ],
+      "bestFor": "Diffuser les annonces sur plusieurs portails et suivre les contacts entrants.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "modelo",
+      "name": "Modelo",
+      "url": "https://www.modelo.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Immobilier"
+      ],
+      "description": "Documents, formulaires, registres et signatures pour professionnels de l’immobilier.",
+      "tags": [
+        "Documents",
+        "Signature",
+        "Conformité"
+      ],
+      "bestFor": "Sécuriser les documents et obligations d’une activité immobilière.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "lockimmo",
+      "name": "LOCKimmo",
+      "url": "https://www.lockimmo.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Immobilier"
+      ],
+      "description": "Suite logicielle pour gestion locative, transaction, syndic et location saisonnière.",
+      "tags": [
+        "Gestion locative",
+        "Syndic",
+        "Transaction"
+      ],
+      "bestFor": "Gérer loyers, baux, appels, documents et suivi locatif.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "ublo",
+      "name": "Ublo",
+      "url": "https://www.ublo.immo/",
+      "category": "Outils métier",
+      "sectors": [
+        "Immobilier"
+      ],
+      "description": "Plateforme de gestion locative et relation locataires/propriétaires pour administrateurs de biens.",
+      "tags": [
+        "Gestion locative",
+        "Relation client",
+        "Immobilier"
+      ],
+      "bestFor": "Fluidifier la gestion locative et les échanges locataires/propriétaires.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "synchroteam",
+      "name": "Synchroteam",
+      "url": "https://www.synchroteam.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services aux particuliers",
+        "Artisanat & BTP"
+      ],
+      "description": "Logiciel de gestion d’interventions, planning, techniciens, rapports et facturation.",
+      "tags": [
+        "Interventions",
+        "Planning",
+        "Terrain"
+      ],
+      "bestFor": "Planifier les équipes terrain et suivre les interventions client.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "dendreo",
+      "name": "Dendreo",
+      "url": "https://www.dendreo.com/",
+      "category": "Formation",
+      "sectors": [
+        "Éducation & formation"
+      ],
+      "description": "Logiciel de gestion pour organismes de formation, actions, apprenants, documents et Qualiopi.",
+      "tags": [
+        "Formation",
+        "Qualiopi",
+        "Apprenants"
+      ],
+      "bestFor": "Piloter les actions de formation et obligations administratives d’un OF.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "amenitiz",
+      "name": "Amenitiz",
+      "url": "https://www.amenitiz.com/fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Hébergement & tourisme"
+      ],
+      "description": "Solution hôtelière pour réservations directes, site, channel manager et gestion d’établissement.",
+      "tags": [
+        "Hôtel",
+        "Réservation",
+        "Channel manager"
+      ],
+      "bestFor": "Gérer un hébergement indépendant et développer les réservations directes.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "cloudbeds",
+      "name": "Cloudbeds",
+      "url": "https://www.cloudbeds.com/fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Hébergement & tourisme"
+      ],
+      "description": "Plateforme de gestion hôtelière pour PMS, distribution, paiements et expérience client.",
+      "tags": [
+        "PMS",
+        "Hôtel",
+        "Channel manager"
+      ],
+      "bestFor": "Centraliser opérations hôtelières, réservations et distribution.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "smoobu",
+      "name": "Smoobu",
+      "url": "https://www.smoobu.com/fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Hébergement & tourisme",
+        "Immobilier"
+      ],
+      "description": "Logiciel de location courte durée pour channel manager, réservations et messages voyageurs.",
+      "tags": [
+        "Location courte durée",
+        "Channel manager",
+        "Voyageurs"
+      ],
+      "bestFor": "Synchroniser calendriers, annonces et messages pour locations courte durée.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "lodgify",
+      "name": "Lodgify",
+      "url": "https://www.lodgify.com/fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Hébergement & tourisme",
+        "Immobilier"
+      ],
+      "description": "Gestion de locations saisonnières, site de réservation, channel manager et paiements.",
+      "tags": [
+        "Location saisonnière",
+        "Réservation",
+        "Channel manager"
+      ],
+      "bestFor": "Gérer réservations directes et canaux de location saisonnière.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "helloasso",
+      "name": "HelloAsso",
+      "url": "https://www.helloasso.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Associations & événements"
+      ],
+      "description": "Paiement, adhésions, dons, crowdfunding, boutique et billetterie pour associations.",
+      "tags": [
+        "Association",
+        "Dons",
+        "Billetterie"
+      ],
+      "bestFor": "Collecter dons, adhésions et inscriptions sans outil technique complexe.",
+      "pricingHint": "Gratuit",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "assoconnect",
+      "name": "AssoConnect",
+      "url": "https://www.assoconnect.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Associations & événements"
+      ],
+      "description": "Gestion associative pour adhésions, comptabilité, dons, emailing, site et événements.",
+      "tags": [
+        "Association",
+        "Adhésions",
+        "Comptabilité"
+      ],
+      "bestFor": "Centraliser gestion associative, membres, paiements et communication.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "yapla",
+      "name": "Yapla",
+      "url": "https://www.yapla.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Associations & événements"
+      ],
+      "description": "Plateforme pour gérer membres, adhésions, événements, dons et paiements associatifs.",
+      "tags": [
+        "Association",
+        "Membres",
+        "Événements"
+      ],
+      "bestFor": "Gérer membres, adhésions et événements associatifs dans un même outil.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "billetweb",
+      "name": "Billetweb",
+      "url": "https://www.billetweb.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Associations & événements"
+      ],
+      "description": "Billetterie en ligne pour événements, inscriptions, invitations et contrôle d’accès.",
+      "tags": [
+        "Billetterie",
+        "Événement",
+        "Inscription"
+      ],
+      "bestFor": "Vendre ou gérer des inscriptions à des événements simplement.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "hubspot",
+      "name": "HubSpot",
+      "url": "https://www.hubspot.fr/",
+      "category": "CRM & ventes",
+      "sectors": [
+        "Services & conseil",
+        "Tech & Digital",
+        "E-commerce"
+      ],
+      "description": "CRM, marketing, ventes et service client pour centraliser contacts, pipeline et campagnes.",
+      "tags": [
+        "CRM",
+        "Marketing",
+        "Ventes"
+      ],
+      "bestFor": "Structurer le suivi commercial et marketing d’une activité de services ou SaaS.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "calendly",
+      "name": "Calendly",
+      "url": "https://calendly.com/",
+      "category": "Gestion & équipe",
+      "sectors": [
+        "Services & conseil",
+        "Tech & Digital",
+        "Éducation & formation"
+      ],
+      "description": "Planification de rendez-vous synchronisée avec les agendas et liens de réservation.",
+      "tags": [
+        "Rendez-vous",
+        "Agenda",
+        "Planification"
+      ],
+      "bestFor": "Éviter les allers-retours pour caler appels, rendez-vous et entretiens.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "typeform",
+      "name": "Typeform",
+      "url": "https://www.typeform.com/",
+      "category": "Formulaires & collecte",
+      "sectors": [
+        "Services & conseil",
+        "Tech & Digital",
+        "Éducation & formation"
+      ],
+      "description": "Formulaires interactifs pour qualification, questionnaires, feedback et collecte de leads.",
+      "tags": [
+        "Formulaire",
+        "Qualification",
+        "Feedback"
+      ],
+      "bestFor": "Créer des formulaires soignés pour qualifier demandes et collecter des informations.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "stripe",
+      "name": "Stripe",
+      "url": "https://stripe.com/fr",
+      "category": "Paiement & revenus",
+      "sectors": [
+        "Tech & Digital",
+        "E-commerce",
+        "Services & conseil"
+      ],
+      "description": "Paiements en ligne, abonnements, facturation et marketplace pour produits digitaux et SaaS.",
+      "tags": [
+        "Paiement",
+        "Abonnement",
+        "SaaS"
+      ],
+      "bestFor": "Encaisser paiements, abonnements ou commissions dans un produit digital.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "keralpha",
+      "name": "Keralpha",
+      "url": "https://keralpha.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Automobile & réparation"
+      ],
+      "description": "Logiciel SaaS pour garages, carrosseries et concessions : planning, véhicules, garanties et suivi client.",
+      "tags": [
+        "Garage",
+        "Planning",
+        "Atelier"
+      ],
+      "bestFor": "Centraliser accueil, atelier, suivi véhicule et communication client.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "embray",
+      "name": "Embray",
+      "url": "https://www.embray.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Automobile & réparation"
+      ],
+      "description": "Logiciel de gestion pour garages et carrosseries : dossiers, devis, factures, sinistres et scan IA.",
+      "tags": [
+        "Garage",
+        "Carrosserie",
+        "Facturation"
+      ],
+      "bestFor": "Créer dossiers, devis et factures plus vite pour garage ou carrosserie.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "autoprogestion",
+      "name": "AutoProGestion",
+      "url": "https://www.autoprogestion.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Automobile & réparation"
+      ],
+      "description": "Gestion garage tout-en-un : clients, véhicules, devis, factures, rendez-vous, stocks et comptabilité.",
+      "tags": [
+        "Garage",
+        "Devis",
+        "Atelier"
+      ],
+      "bestFor": "Gérer atelier, devis, factures, rendez-vous et stocks d’un garage.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "repairsoft",
+      "name": "Repair Soft",
+      "url": "https://www.repairsoft.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Automobile & réparation"
+      ],
+      "description": "Logiciel de gestion et pilotage dédié aux activités de carrosserie.",
+      "tags": [
+        "Carrosserie",
+        "Atelier",
+        "Pilotage"
+      ],
+      "bestFor": "Piloter dossiers, ateliers et activité carrosserie.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true
+    },
+    {
+      "slug": "carform",
+      "name": "Carform",
+      "url": "https://carform.io/",
+      "category": "Outils métier",
+      "sectors": [
+        "Automobile & réparation"
+      ],
+      "description": "Logiciel SaaS pour gestion atelier après-vente automobile, rendez-vous, assurance et véhicules de remplacement.",
+      "tags": [
+        "Atelier",
+        "Après-vente",
+        "Carrosserie"
+      ],
+      "bestFor": "Organiser planning atelier, relation client et dossiers assurance.",
       "pricingHint": "Payant",
       "status": "active",
       "toolbox": true

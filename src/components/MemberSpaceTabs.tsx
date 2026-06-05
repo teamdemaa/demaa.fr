@@ -44,7 +44,7 @@ type MemberSpaceTabsProps = {
 type MemberTab = "requests" | "deals";
 
 const tabs = [
-  { id: "deals", label: "Tarifs négociés" },
+  { id: "deals", label: "Offres membre" },
   { id: "requests", label: "Suivi des demandes" },
 ] as const satisfies readonly { id: MemberTab; label: string }[];
 
@@ -215,8 +215,8 @@ export default function MemberSpaceTabs({
       {activeTab === "deals" ? (
         <section className="mt-8">
           <SectionHeader
-            title="Tarifs négociés"
-            description="Des offres partenaires négociées progressivement pour les membres Demaa."
+            title="Offres membre"
+            description="Des réductions, avantages et offres partenaires ajoutés progressivement pour les membres Demaa."
           />
           <div className="mt-4 grid gap-4 md:grid-cols-3">
             {deals.map((deal) => (

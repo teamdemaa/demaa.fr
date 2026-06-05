@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowUpRight } from "lucide-react";
+import Link from "next/link";
 import { getToolPricingInfo } from "@/lib/tool-pricing";
 import type { ToolDirectoryItem } from "@/lib/tool-directory";
 
@@ -60,6 +61,27 @@ export default function SoftwareDetailContent({
           </div>
           {pricing.note ? (
             <p className="mt-3 text-xs leading-relaxed text-dema-muted">{pricing.note}</p>
+          ) : null}
+          {tool.memberDealLabel ? (
+            <div className="mt-4 rounded-[1rem] border border-dema-forest/15 bg-dema-sage/70 px-3 py-3">
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-forest">
+                Offre membre
+              </p>
+              <p className="mt-1 text-sm font-semibold text-brand-blue">
+                {tool.memberDealLabel}
+              </p>
+              {tool.memberDealDescription ? (
+                <p className="mt-1 text-xs leading-relaxed text-dema-muted">
+                  {tool.memberDealDescription}
+                </p>
+              ) : null}
+              <Link
+                href="/mon-espace"
+                className="mt-3 inline-flex text-xs font-semibold text-dema-forest transition hover:text-brand-blue"
+              >
+                Accéder à l&apos;espace membre
+              </Link>
+            </div>
           ) : null}
         </aside>
       </section>

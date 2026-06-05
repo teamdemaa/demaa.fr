@@ -10,6 +10,8 @@ export type ToolDirectoryItem = {
   tags: string[];
   bestFor: string;
   pricingHint: string;
+  memberDealLabel?: string;
+  memberDealDescription?: string;
   status?: "active" | "hidden" | "deprecated";
   toolbox?: boolean;
 };

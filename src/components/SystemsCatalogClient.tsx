@@ -195,6 +195,44 @@ function getSystemIcon(system: System): LucideIcon {
   return systemIcons[icon] ?? BadgeCheck;
 }
 
+const TRANSVERSE_TOOL_SLUGS = new Set([
+  "google-workspace",
+  "microsoft-365",
+  "notion",
+  "airtable",
+  "figma",
+  "canva",
+  "chatgpt",
+  "claude",
+  "cursor",
+  "github-copilot",
+  "make",
+  "zapier",
+  "fillout",
+  "tally",
+  "typeform",
+  "pennylane",
+  "tiime",
+  "dext",
+  "regate",
+  "qonto",
+  "revolut-business",
+  "alan",
+  "swile",
+  "payfit",
+  "hubspot",
+  "pipedrive",
+  "calendly",
+  "stripe",
+  "brevo",
+  "metricool",
+  "buffer",
+]);
+
+function isTransverseTool(tool: OperationalSystemDetail["tools"][number]): boolean {
+  return Boolean(tool.slug && TRANSVERSE_TOOL_SLUGS.has(tool.slug));
+}
+
 export default function SystemsCatalogClient({
   systems,
   detailsBySlug,
@@ -241,6 +279,56 @@ export default function SystemsCatalogClient({
 
   function closeToolDetails() {
     setSelectedToolDetail(null);
+  }
+
+  function renderToolCard(tool: OperationalSystemDetail["tools"][number]) {
+    const memberDealLabel = tool.detail?.memberDealLabel;
+    const content = (
+      <>
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
+            {tool.type}
+          </p>
+          <h3 className="mt-2 text-lg font-semibold text-brand-blue">
+            {tool.name}
+          </h3>
+          {memberDealLabel ? (
+            <span className="mt-3 inline-flex rounded-full bg-dema-sage px-2.5 py-1 text-[10px] font-semibold text-dema-forest">
+              {memberDealLabel}
+            </span>
+          ) : null}
+        </div>
+        <p className="mt-3 text-sm leading-relaxed text-dema-muted">
+          {tool.usage}
+        </p>
+      </>
+    );
+    const className = "demaa-card block rounded-[1.15rem] p-5 text-left";
+
+    if (!tool.slug) {
+      return (
+        <article key={tool.name} className={className}>
+          {content}
+        </article>
+      );
+    }
+
+    return (
+      <Link
+        key={tool.name}
+        href={`/annuaire-logiciel/${tool.slug}`}
+        className={className}
+        onClick={(event) => {
+          handleToolDetailClick(
+            event,
+            tool.detail ?? getFallbackToolDetail(tool),
+            openToolDetails
+          );
+        }}
+      >
+        {content}
+      </Link>
+    );
   }
 
   useEffect(() => {
@@ -596,51 +684,52 @@ export default function SystemsCatalogClient({
                 </div>
               </div>
             ) : (
-              <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-                {detail.tools.map((tool) => {
-                  const content = (
-                    <>
-                      <div>
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
-                          {tool.type}
-                        </p>
-                        <h3 className="mt-2 text-lg font-semibold text-brand-blue">
-                          {tool.name}
-                        </h3>
-                      </div>
-                      <p className="mt-3 text-sm leading-relaxed text-dema-muted">
-                        {tool.usage}
-                      </p>
-                    </>
-                  );
-                  const className =
-                    "demaa-card block rounded-[1.15rem] p-5 text-left";
-
-                  if (!tool.slug) {
-                    return (
-                      <article key={tool.name} className={className}>
-                        {content}
-                      </article>
-                    );
-                  }
+              <div className="mt-6 space-y-5">
+                {(() => {
+                  const businessTools = detail.tools.filter((tool) => !isTransverseTool(tool));
+                  const transverseTools = detail.tools.filter(isTransverseTool);
 
                   return (
-                    <Link
-                      key={tool.name}
-                      href={`/annuaire-logiciel/${tool.slug}`}
-                      className={className}
-                      onClick={(event) => {
-                        handleToolDetailClick(
-                          event,
-                          tool.detail ?? getFallbackToolDetail(tool),
-                          openToolDetails
-                        );
-                      }}
-                    >
-                      {content}
-                    </Link>
+                    <>
+                      {businessTools.length ? (
+                        <div>
+                          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
+                            Outils métier
+                          </p>
+                          <div className="mt-3 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                            {businessTools.map(renderToolCard)}
+                          </div>
+                        </div>
+                      ) : null}
+
+                      {transverseTools.length ? (
+                        <div>
+                          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-muted">
+                            Outils transverses
+                          </p>
+                          <div className="mt-3 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                            {transverseTools.map(renderToolCard)}
+                          </div>
+                        </div>
+                      ) : null}
+                    </>
                   );
-                })}
+                })()}
+                <div className="rounded-[1.15rem] border border-dema-line bg-dema-cream/70 p-5 text-left">
+                  <h3 className="text-lg font-semibold text-brand-blue">
+                    Besoin de comparer plus largement ?
+                  </h3>
+                  <p className="mt-2 max-w-3xl text-sm leading-relaxed text-dema-muted">
+                    L&apos;annuaire rassemble aussi les comptes pro, assurances, mutuelles,
+                    solutions de paiement, outils d&apos;équipe et services utiles.
+                  </p>
+                  <Link
+                    href="/annuaire-logiciel"
+                    className="mt-4 inline-flex items-center rounded-full border border-dema-line bg-dema-paper px-4 py-2 text-sm font-medium text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
+                  >
+                    Voir tous les outils et services
+                  </Link>
+                </div>
               </div>
             )}
           </div>
