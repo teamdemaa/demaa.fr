@@ -42,14 +42,16 @@ const tabHeroCopy: Record<
   }
 > = {
   systemes: {
-    muted: "Pour que votre entreprise",
-    strong: "ne repose pas que sur vous",
-    breakAfterMuted: true,
+    muted: "votre entreprise",
+    strong: "Organisez efficacement",
+    mutedAfter: true,
+    breakBeforeMuted: true,
   },
   outils: {
-    muted: "Tout pour gérer votre activité",
-    strong: "efficacement",
-    breakAfterMuted: true,
+    muted: "au quotidien",
+    strong: "Gérer votre activité",
+    mutedAfter: true,
+    breakBeforeMuted: true,
   },
   academy: {
     muted: "Maîtrisez les bases de la",

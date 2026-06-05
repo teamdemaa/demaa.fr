@@ -381,7 +381,7 @@ function ToolboxSections({
     <div className="space-y-10">
       {freeTools.length > 0 ? (
         <section id="outils-du-quotidien" className="scroll-mt-28">
-          <SectionTitle title="Outils du quotidien" />
+          <SectionTitle title="Outils gratuits" />
           <HorizontalScrollArea
             outerClassName="-mx-4 sm:-mx-6 lg:-mx-8"
             scrollClassName="overflow-x-auto px-4 pb-3 soft-scroll sm:px-6 lg:px-8"
