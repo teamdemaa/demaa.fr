@@ -24,7 +24,7 @@ export async function POST(request: Request) {
               `*Secteur* : ${sector}\n` +
               `*WhatsApp* : ${whatsapp}\n` +
               `*Disponibilités* : ${availability}\n` +
-              `*Source* : Audit de mes process`,
+              `*Source* : Audit de mon organisation`,
           },
         },
         {

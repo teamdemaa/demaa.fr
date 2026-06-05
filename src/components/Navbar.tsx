@@ -3,21 +3,19 @@
 import Link from "next/link";
 import { Suspense, useEffect, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
-import { UserRound } from "lucide-react";
+import SystemSetupModal from "@/components/SystemSetupModal";
 
-type HomeTabId = "systemes" | "outils" | "assistants";
+type HomeTabId = "systemes" | "assistants";
 type HomeTabsMode = "links" | "client";
 
 const homeTabs = [
   { id: "systemes", label: "Structurer", href: "/" },
-  { id: "outils", label: "S'équiper", href: "/outils" },
   { id: "assistants", label: "Déléguer", href: "/deleguer" },
 ] as const;
 
 const HOME_TAB_SELECT_EVENT = "demaa:home-tab-select";
 
 function getTabPath(tab: HomeTabId) {
-  if (tab === "outils") return "/outils";
   if (tab === "assistants") return "/deleguer";
 
   return "/";
@@ -30,6 +28,8 @@ export default function Navbar({
   minimal?: boolean;
   homeTabsMode?: HomeTabsMode;
 }) {
+  const [isAuditModalOpen, setIsAuditModalOpen] = useState(false);
+
   return (
     <>
       <nav className="sticky top-0 z-40 border-b border-dema-line/70 bg-dema-cream/92 py-1 backdrop-blur-md">
@@ -48,24 +48,24 @@ export default function Navbar({
                 <Suspense fallback={<DesktopHomeTabsNavStatic mode={homeTabsMode} />}>
                   <DesktopHomeTabsNav mode={homeTabsMode} />
                 </Suspense>
-
-                <div className="flex items-center gap-2">
-                  <Link
-                    href="/mon-espace"
-                    className="inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-full border border-dema-line bg-dema-paper px-3 text-dema-forest shadow-[0_8px_24px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/20 hover:bg-dema-sage/45"
-                    aria-label="Accéder à l'espace membre Demaa"
+                <div className="z-50 flex items-center justify-end">
+                  <button
+                    type="button"
+                    onClick={() => setIsAuditModalOpen(true)}
+                    className="inline-flex h-10 shrink-0 items-center justify-center rounded-full border border-dema-line bg-dema-paper px-4 text-sm font-medium text-dema-forest shadow-[0_8px_24px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/20 hover:bg-dema-sage/45"
                   >
-                    <UserRound className="h-4 w-4" aria-hidden="true" />
-                    <span className="whitespace-nowrap text-xs font-medium text-brand-blue/72 md:text-sm">
-                      Espace membre
-                    </span>
-                  </Link>
+                    Audit gratuit
+                  </button>
                 </div>
               </>
             )}
           </div>
         </div>
       </nav>
+      <SystemSetupModal
+        isOpen={isAuditModalOpen}
+        onClose={() => setIsAuditModalOpen(false)}
+      />
     </>
   );
 }
@@ -77,10 +77,8 @@ function DesktopHomeTabsNav({ mode }: { mode: HomeTabsMode }) {
   const activeTab =
     pathname === "/deleguer" || pathname === "/assistants"
       ? "assistants"
-      : pathname === "/outils"
-      ? "outils"
       : pathname === "/"
-        ? urlTab === "outils" || urlTab === "systemes" || urlTab === "assistants"
+        ? urlTab === "systemes" || urlTab === "assistants"
           ? urlTab
           : "systemes"
         : undefined;
@@ -96,7 +94,7 @@ function DesktopHomeTabsNavStatic({
   mode?: HomeTabsMode;
 }) {
   const [clientActiveTab, setClientActiveTab] = useState<HomeTabId>(
-    activeTab === "outils" || activeTab === "systemes" || activeTab === "assistants"
+    activeTab === "systemes" || activeTab === "assistants"
       ? activeTab
       : "systemes"
   );
@@ -108,7 +106,7 @@ function DesktopHomeTabsNavStatic({
     function handleHomeTabSelect(event: Event) {
       const tab = (event as CustomEvent<{ tab?: string }>).detail?.tab;
 
-      if (tab === "systemes" || tab === "outils" || tab === "assistants") {
+      if (tab === "systemes" || tab === "assistants") {
         setClientActiveTab(tab);
       }
     }

@@ -7,6 +7,7 @@ const rootDir = resolve(currentDir, "..");
 const toolDirectoryPath = resolve(rootDir, "src/lib/tool-directory.json");
 const enterpriseAnnuairePath = resolve(rootDir, "src/lib/enterprise-annuaire.json");
 const customerDealsPath = resolve(rootDir, "src/lib/customer-deals.ts");
+const systemResourcesPath = resolve(rootDir, "src/lib/system-resources.ts");
 
 function readJson(path) {
   return JSON.parse(fs.readFileSync(path, "utf8"));
@@ -21,6 +22,17 @@ function addUnique(list, value) {
 function extractCustomerDealToolSlugs() {
   const source = fs.readFileSync(customerDealsPath, "utf8");
   return [...source.matchAll(/toolSlug:\s*"([^"]+)"/g)].map((match) => match[1]);
+}
+
+function extractSystemResourceSlugs() {
+  const source = fs.readFileSync(systemResourcesPath, "utf8");
+  const match = source.match(/const flexibleSystemSlugs = \[([\s\S]*?)\];/);
+
+  if (!match) {
+    return [];
+  }
+
+  return [...match[1].matchAll(/"([^"]+)"/g)].map((slugMatch) => slugMatch[1]);
 }
 
 const toolPayload = readJson(toolDirectoryPath);
@@ -142,6 +154,13 @@ for (const tool of toolPayload.tools.filter((item) => item.memberDealLabel)) {
   }
 }
 
+const resourceSystemSlugs = extractSystemResourceSlugs();
+for (const slug of resourceSystemSlugs) {
+  if (!enterpriseSlugs.has(slug)) {
+    addUnique(errors, `System resource references unknown enterprise ${slug}.`);
+  }
+}
+
 for (const slug of onlyTransverseSystems) {
   addUnique(warnings, `System has only transverse tools: ${slug}`);
 }
@@ -151,6 +170,7 @@ const result = {
   activeTools: activeToolSlugs.size,
   enterprises: enterprisePayload.enterprises.length,
   customerDealToolSlugs: dealToolSlugs.length,
+  resourceSystemSlugs: resourceSystemSlugs.length,
   errors,
   warnings,
 };

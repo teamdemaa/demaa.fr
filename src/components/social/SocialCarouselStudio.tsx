@@ -531,7 +531,7 @@ function ProcessSnapshot({
         </div>
         {showCta ? (
           <div className="mt-4 rounded-full bg-dema-forest px-[22px] py-[10px] text-[15px] font-medium text-white shadow-[0_12px_28px_rgba(49,95,70,0.16)]">
-            Demander un audit de mes process
+            J&apos;ai besoin d&apos;un audit de mon organisation
           </div>
         ) : null}
       </div>

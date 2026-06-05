@@ -22,9 +22,6 @@ export const dynamic = "force-dynamic";
 
 type HomePageProps = {
   searchParams: Promise<{
-    tab?: string | string[];
-    secteur?: string | string[];
-    categorie?: string | string[];
     system?: string | string[];
   }>;
 };
@@ -35,17 +32,7 @@ function getParamValue(value?: string | string[]) {
 
 export default async function HomePage({ searchParams }: HomePageProps) {
   const params = await searchParams;
-  const initialTab = getParamValue(params.tab);
-  const initialCategory = getParamValue(params.categorie);
-  const initialSector = getParamValue(params.secteur);
   const initialSystem = getParamValue(params.system);
 
-  return (
-    <HomeHubPage
-      initialTab={initialTab}
-      initialCategory={initialCategory}
-      initialSector={initialSector}
-      initialSystem={initialSystem}
-    />
-  );
+  return <HomeHubPage initialSystem={initialSystem} />;
 }

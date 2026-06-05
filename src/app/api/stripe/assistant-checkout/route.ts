@@ -55,7 +55,9 @@ function normalizeCheckoutItems(body: CheckoutRequestBody | null) {
       return null;
     }
 
-    if (!getAssistantPack(packId)) {
+    const packDetails = getAssistantPack(packId);
+
+    if (!packDetails || packDetails.pack.amount <= 0) {
       return null;
     }
 

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState, type MouseEvent } from "react";
 import {
@@ -55,6 +56,7 @@ import HorizontalScrollHint from "@/components/HorizontalScrollHint";
 import type { ToolDirectoryItem } from "@/lib/tool-directory";
 import type { System } from "@/lib/types";
 import type { OperationalSystemDetail, SystemPillar } from "@/lib/system-operations";
+import { getSystemResources, type SystemResource } from "@/lib/system-resources";
 
 type SystemsCatalogClientProps = {
   systems: System[];
@@ -247,7 +249,7 @@ export default function SystemsCatalogClient({
   initialSelectedSlug,
 }: SystemsCatalogClientProps) {
   const [selectedSlug, setSelectedSlug] = useState<string | null>(initialSelectedSlug ?? null);
-  const [activeTab, setActiveTab] = useState<"processus" | "outils">("processus");
+  const [activeTab, setActiveTab] = useState<"processus" | "outils" | "ressources">("processus");
   const [openProcessIds, setOpenProcessIds] = useState<Set<string>>(new Set());
   const [internalSearchQuery, setInternalSearchQuery] = useState("");
   const [activeSector, setActiveSector] = useState("Tous");
@@ -286,7 +288,6 @@ export default function SystemsCatalogClient({
   }
 
   function renderToolCard(tool: OperationalSystemDetail["tools"][number]) {
-    const memberDealLabel = tool.detail?.memberDealLabel;
     const content = (
       <>
         <div>
@@ -296,11 +297,6 @@ export default function SystemsCatalogClient({
           <h3 className="mt-2 text-lg font-semibold text-brand-blue">
             {tool.name}
           </h3>
-          {memberDealLabel ? (
-            <span className="mt-3 inline-flex rounded-full bg-dema-sage px-2.5 py-1 text-[10px] font-semibold text-dema-forest">
-              {memberDealLabel}
-            </span>
-          ) : null}
         </div>
         <p className="mt-3 text-sm leading-relaxed text-dema-muted">
           {tool.usage}
@@ -320,7 +316,7 @@ export default function SystemsCatalogClient({
     return (
       <Link
         key={tool.name}
-        href={`/annuaire-logiciel/${tool.slug}`}
+        href={`/annuaire-outils/${tool.slug}`}
         className={className}
         onClick={(event) => {
           handleToolDetailClick(
@@ -557,7 +553,7 @@ export default function SystemsCatalogClient({
                   onClick={() => setIsSystemSetupModalOpen(true)}
                   className="demaa-primary-button"
                 >
-                  Demander un audit de mes process
+                  J&apos;ai besoin d&apos;un audit de mon organisation
                 </button>
                 <button
                   type="button"
@@ -595,6 +591,17 @@ export default function SystemsCatalogClient({
                 }`}
               >
                 Outils
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab("ressources")}
+                className={`relative rounded-full px-4 py-2 text-sm font-medium transition after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:rounded-full after:transition ${
+                  activeTab === "ressources"
+                    ? "bg-transparent text-brand-blue after:bg-dema-forest"
+                    : "bg-transparent text-brand-blue/55 after:bg-transparent hover:text-brand-blue/75"
+                }`}
+              >
+                Ressources
               </button>
             </div>
 
@@ -687,7 +694,7 @@ export default function SystemsCatalogClient({
                   })}
                 </div>
               </div>
-            ) : (
+            ) : activeTab === "outils" ? (
               <div className="mt-6 space-y-5">
                 {(() => {
                   const businessTools = detail.tools.filter((tool) => !isTransverseTool(tool));
@@ -728,12 +735,18 @@ export default function SystemsCatalogClient({
                     solutions de paiement, outils d&apos;équipe et services utiles.
                   </p>
                   <Link
-                    href="/annuaire-logiciel"
+                    href="/annuaire-outils"
                     className="mt-4 inline-flex items-center rounded-full border border-dema-line bg-dema-paper px-4 py-2 text-sm font-medium text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
                   >
                     Voir tous les outils et services
                   </Link>
                 </div>
+              </div>
+            ) : (
+              <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                {getSystemResources(selectedSystem.slug).map((resource) => (
+                  <SystemResourceCard key={resource.id} resource={resource} />
+                ))}
               </div>
             )}
           </div>
@@ -750,6 +763,39 @@ export default function SystemsCatalogClient({
         initialSector={selectedSystem?.name ?? detail?.sectorLabel}
       />
     </>
+  );
+}
+
+function SystemResourceCard({ resource }: { resource: SystemResource }) {
+  return (
+    <a
+      href={resource.resourceHref}
+      target="_blank"
+      rel="noreferrer"
+      className="demaa-card group overflow-hidden rounded-[1.15rem] text-left"
+    >
+      <div className="relative aspect-[16/10] overflow-hidden bg-dema-cream">
+        <Image
+          src={resource.image}
+          alt=""
+          fill
+          sizes="(min-width: 1280px) 390px, (min-width: 768px) 50vw, calc(100vw - 48px)"
+          className="object-cover transition duration-700 ease-out group-hover:scale-[1.012]"
+        />
+      </div>
+      <div className="p-5">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
+          {resource.category}
+        </p>
+        <h3 className="mt-2 text-lg font-semibold leading-snug text-brand-blue">
+          {resource.title}
+        </h3>
+        <span className="mt-4 inline-flex items-center gap-2 text-xs font-semibold text-dema-forest">
+          <FileText className="h-4 w-4" aria-hidden="true" />
+          {resource.resourceLabel}
+        </span>
+      </div>
+    </a>
   );
 }
 

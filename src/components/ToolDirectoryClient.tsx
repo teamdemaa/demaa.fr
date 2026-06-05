@@ -45,8 +45,8 @@ type ToolDirectoryClientProps = {
 };
 
 export default function ToolDirectoryClient({
-  title = "Annuaire Logiciels",
-  description = "Les principaux logiciels utiles aux TPE, classés par secteur et usage.",
+  title = "Annuaire Outils",
+  description = "Les principaux outils utiles aux TPE, classés par secteur et usage.",
   searchPlaceholder = "Rechercher un outil, un usage, un secteur...",
   items,
   secondaryItems = [],
@@ -305,11 +305,6 @@ export default function ToolDirectoryClient({
                     <h2 className="mt-1.5 text-lg font-semibold tracking-tight text-brand-blue">
                       {tool.name}
                     </h2>
-                    {tool.memberDealLabel ? (
-                      <span className="mt-2 inline-flex rounded-full bg-dema-sage px-2.5 py-1 text-[10px] font-semibold text-dema-forest">
-                        {tool.memberDealLabel}
-                      </span>
-                    ) : null}
                   </div>
                 </div>
 

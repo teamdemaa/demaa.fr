@@ -2745,6 +2745,206 @@
       "status": "active",
       "toolbox": true,
       "scope": "business"
+    },
+    {
+      "slug": "generation-de-qr-code",
+      "name": "Génération de QR code",
+      "url": "/outils/generation-de-qr-code",
+      "category": "QR Code",
+      "sectors": [
+        "Services & conseil",
+        "Commerce local",
+        "Restauration",
+        "Artisanat & BTP",
+        "Immobilier"
+      ],
+      "description": "Créez un QR code simple pour envoyer vers un lien, une page ou un support imprimé.",
+      "tags": [
+        "QR",
+        "Lien",
+        "Support imprimé"
+      ],
+      "bestFor": "Créer rapidement un QR code utilisable sur une carte, une affiche ou un document.",
+      "pricingHint": "Gratuit",
+      "status": "active",
+      "toolbox": true,
+      "scope": "transverse"
+    },
+    {
+      "slug": "carte-de-visite-qr-code-whatsapp",
+      "name": "Carte de visite QR Code WhatsApp",
+      "url": "/outils/carte-de-visite-qr-code-whatsapp",
+      "category": "QR Code",
+      "sectors": [
+        "Services & conseil",
+        "Commerce local",
+        "Immobilier"
+      ],
+      "description": "Créez une carte QR code pour partager rapidement un contact WhatsApp.",
+      "tags": [
+        "QR",
+        "WhatsApp",
+        "Carte de visite"
+      ],
+      "bestFor": "Faciliter la prise de contact depuis une carte, un comptoir ou un support commercial.",
+      "pricingHint": "Gratuit",
+      "status": "active",
+      "toolbox": true,
+      "scope": "transverse"
+    },
+    {
+      "slug": "qr-code-pour-avis-client",
+      "name": "QR code pour avis client",
+      "url": "/outils/qr-code-pour-avis-client",
+      "category": "Visibilité locale",
+      "sectors": [
+        "Commerce local",
+        "Restauration",
+        "Artisanat & BTP",
+        "Santé & bien-être"
+      ],
+      "description": "Envoyez vos clients vers une page d’avis en un scan pour renforcer votre preuve sociale.",
+      "tags": [
+        "Avis",
+        "Google",
+        "QR"
+      ],
+      "bestFor": "Collecter plus facilement des avis après une prestation, un passage en caisse ou une livraison.",
+      "pricingHint": "Gratuit",
+      "status": "active",
+      "toolbox": true,
+      "scope": "transverse"
+    },
+    {
+      "slug": "qr-code-commande-rapide",
+      "name": "QR code commande rapide",
+      "url": "/outils/qr-code-commande-rapide",
+      "category": "QR Code",
+      "sectors": [
+        "Commerce local",
+        "Restauration"
+      ],
+      "description": "Créez un QR code pour faciliter une commande ou un paiement rapide depuis un support physique.",
+      "tags": [
+        "Commande",
+        "Paiement",
+        "QR"
+      ],
+      "bestFor": "Réduire les frictions quand un client doit commander ou payer vite.",
+      "pricingHint": "Gratuit",
+      "status": "active",
+      "toolbox": true,
+      "scope": "transverse"
+    },
+    {
+      "slug": "generation-de-menu-qr-code",
+      "name": "Génération menu QR code",
+      "url": "/outils/generation-de-menu-qr-code",
+      "category": "QR Code",
+      "sectors": [
+        "Restauration"
+      ],
+      "description": "Transformez une carte de restaurant en menu digital accessible par QR code.",
+      "tags": [
+        "Restaurant",
+        "Menu",
+        "QR"
+      ],
+      "bestFor": "Afficher un menu digital clair en salle, en terrasse ou sur un comptoir.",
+      "pricingHint": "Gratuit",
+      "status": "active",
+      "toolbox": true,
+      "scope": "transverse"
+    },
+    {
+      "slug": "creation-de-fiche-google-optimisee",
+      "name": "Création de fiche Google",
+      "url": "/outils/creation-de-fiche-google-optimisee",
+      "category": "Visibilité locale",
+      "sectors": [
+        "Commerce local",
+        "Restauration",
+        "Artisanat & BTP",
+        "Immobilier",
+        "Santé & bien-être"
+      ],
+      "description": "Préparez une fiche Google plus complète pour améliorer votre présence locale.",
+      "tags": [
+        "Google",
+        "SEO local",
+        "Visibilité"
+      ],
+      "bestFor": "Structurer les informations essentielles avant de créer ou améliorer une fiche Google.",
+      "pricingHint": "Gratuit",
+      "status": "active",
+      "toolbox": true,
+      "scope": "transverse"
+    },
+    {
+      "slug": "generation-de-tampon",
+      "name": "Génération de tampon",
+      "url": "/outils/generation-de-tampon",
+      "category": "Identité & admin",
+      "sectors": [
+        "Services & conseil",
+        "Artisanat & BTP",
+        "Immobilier"
+      ],
+      "description": "Concevez un tampon visuel pour vos documents et supports administratifs.",
+      "tags": [
+        "Tampon",
+        "Admin",
+        "Document"
+      ],
+      "bestFor": "Créer rapidement un visuel de tampon cohérent pour des documents simples.",
+      "pricingHint": "Gratuit",
+      "status": "active",
+      "toolbox": true,
+      "scope": "transverse"
+    },
+    {
+      "slug": "signature-pro",
+      "name": "Signature email pro",
+      "url": "/outils/signature-pro",
+      "category": "Signature & documents",
+      "sectors": [
+        "Services & conseil",
+        "Immobilier",
+        "Artisanat & BTP"
+      ],
+      "description": "Générez une signature email professionnelle et homogène pour l’équipe.",
+      "tags": [
+        "Email",
+        "Signature",
+        "Image de marque"
+      ],
+      "bestFor": "Uniformiser les signatures email sans outil complexe.",
+      "pricingHint": "Gratuit",
+      "status": "active",
+      "toolbox": true,
+      "scope": "transverse"
+    },
+    {
+      "slug": "signez-un-document-electroniquement",
+      "name": "Signez un document",
+      "url": "/outils/signez-un-document-electroniquement",
+      "category": "Signature & documents",
+      "sectors": [
+        "Services & conseil",
+        "Immobilier",
+        "Artisanat & BTP"
+      ],
+      "description": "Apposez une signature sur un document PDF sans passer par un outil lourd.",
+      "tags": [
+        "Signature",
+        "PDF",
+        "Document"
+      ],
+      "bestFor": "Signer rapidement un document simple ou préparer un PDF à transmettre.",
+      "pricingHint": "Gratuit",
+      "status": "active",
+      "toolbox": true,
+      "scope": "transverse"
     }
   ]
 }

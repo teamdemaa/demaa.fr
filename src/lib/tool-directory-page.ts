@@ -28,7 +28,7 @@ export async function getToolDirectoryInitialFilters(
 export function withInternalSoftwareUrls(tools: ToolDirectoryItem[]): ToolDirectoryItem[] {
   return tools.map((tool) => ({
     ...tool,
-    url: `/annuaire-logiciel/${getToolDirectorySlug(tool)}`,
+    url: `/annuaire-outils/${getToolDirectorySlug(tool)}`,
   }));
 }
 

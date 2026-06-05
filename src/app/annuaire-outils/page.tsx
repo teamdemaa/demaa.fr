@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import ToolDirectoryClient from "@/components/ToolDirectoryClient";
 import {
-  getToolDirectoryFilterValues,
   getToolDirectoryInitialFilters,
   type ToolDirectorySearchParams,
   withInternalSoftwareUrls,
@@ -26,8 +25,7 @@ export default async function AnnuaireOutilsPage({
 }: AnnuaireOutilsPageProps) {
   const { initialCategory, initialSector } = await getToolDirectoryInitialFilters(searchParams);
   const toolDirectoryMeta = await getUnifiedToolDirectoryMeta();
-  const toolboxTools = withInternalSoftwareUrls(toolDirectoryMeta.toolboxTools);
-  const { sectors, categories } = getToolDirectoryFilterValues(toolboxTools);
+  const directoryTools = withInternalSoftwareUrls(toolDirectoryMeta.tools);
 
   return (
     <>
@@ -36,11 +34,11 @@ export default async function AnnuaireOutilsPage({
         <ToolDirectoryClient
           key={`${initialSector ?? "tous"}-${initialCategory ?? "tous"}`}
           title="Annuaire Outils"
-          description="Les outils utiles aux TPE pour organiser, automatiser, créer et piloter l'activité."
-          searchPlaceholder="Rechercher un outil, un usage, un secteur..."
-          items={toolboxTools}
-          sectors={sectors}
-          categories={categories}
+          description="Les outils, logiciels et services utiles aux TPE pour organiser, automatiser, créer et piloter l'activité."
+          searchPlaceholder="Rechercher un outil, un logiciel, un usage..."
+          items={directoryTools}
+          sectors={toolDirectoryMeta.sectors}
+          categories={toolDirectoryMeta.categories}
           initialCategory={initialCategory}
           initialSector={initialSector}
           hideTransverseOnSector={false}

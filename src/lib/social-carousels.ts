@@ -307,7 +307,7 @@ function buildCanvaBrief(
     "",
     "Slide 5",
     "Texte italique : On peut échanger 30 minutes, pour discuter de votre organisation et identifier les opportunités d'amélioration",
-    `Screenshot : aperçu processus ${sector.name} avec bouton Demander un audit de mes process`,
+    `Screenshot : aperçu processus ${sector.name} avec bouton Audit de mon organisation`,
     "Footer : Rendez vous sur www.demaa.fr",
     "",
     "Slide 6",

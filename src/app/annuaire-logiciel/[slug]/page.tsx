@@ -1,73 +1,12 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
-import { notFound } from "next/navigation";
-import Navbar from "@/components/Navbar";
-import SoftwareDetailContent from "@/components/SoftwareDetailContent";
-import {
-  getToolDirectorySlug,
-  toolDirectory,
-} from "@/lib/tool-directory";
-import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
+import { permanentRedirect } from "next/navigation";
 
-type LogicielDetailPageProps = {
+type LegacyLogicielDetailPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export async function generateStaticParams() {
-  return toolDirectory.map((tool) => ({
-    slug: getToolDirectorySlug(tool),
-  }));
-}
-
-export async function generateMetadata({
+export default async function LegacyLogicielDetailPage({
   params,
-}: LogicielDetailPageProps): Promise<Metadata> {
+}: LegacyLogicielDetailPageProps) {
   const { slug } = await params;
-  const tools = await getUnifiedToolDirectory();
-  const tool = tools.find((item) => getToolDirectorySlug(item) === slug);
-
-  if (!tool) {
-    return {
-      title: "Logiciel introuvable - Demaa",
-    };
-  }
-
-  return {
-    title: `${tool.name} - Annuaire Logiciels Demaa`,
-    description: tool.description,
-  };
-}
-
-export default async function LogicielDetailPage({
-  params,
-}: LogicielDetailPageProps) {
-  const { slug } = await params;
-  const tools = await getUnifiedToolDirectory();
-  const tool = tools.find((item) => getToolDirectorySlug(item) === slug);
-
-  if (!tool) {
-    notFound();
-  }
-
-  return (
-    <>
-      <Navbar minimal />
-      <main className="min-h-screen bg-background pb-20">
-        <div className="mx-auto max-w-5xl px-4 pb-16 pt-8 sm:px-6 lg:px-8">
-          <Link
-            href="/annuaire-logiciel"
-            className="group inline-flex items-center gap-2 text-sm font-medium text-gray-400 transition-colors hover:text-neutral-700"
-          >
-            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-            Revenir à l&apos;annuaire des logiciels
-          </Link>
-
-          <div className="mt-8">
-            <SoftwareDetailContent tool={tool} />
-          </div>
-        </div>
-      </main>
-    </>
-  );
+  permanentRedirect(`/annuaire-outils/${slug}`);
 }

@@ -1,4 +1,5 @@
 export type AssistantPackId =
+  | "audit-process"
   | "automation-5h"
   | "automation-10h"
   | "automation-20h"
@@ -45,13 +46,14 @@ export const ASSISTANT_PACK_OFFERS = [
     title: "Structuration & automatisation",
     category: "Organisation",
     description:
-      "Clarifier vos process, identifier les tâches répétitives et mettre en place des automatisations simples.",
-    rateLabel: "60 € / heure",
-    startingLabel: "À partir de 300 €",
+      "Structurer vos process, mettre en place des systèmes de travail clairs, automatiser les tâches répétitives et vous accompagner dans la prise en main.",
+    rateLabel: "Accompagnement mensuel",
+    startingLabel: "Audit gratuit puis accompagnement à partir de 750 €",
     packs: [
-      { id: "automation-5h", label: "5 heures", amount: 300, detail: "Pack de démarrage" },
-      { id: "automation-10h", label: "10 heures", amount: 570, detail: "Pack renforcé" },
-      { id: "automation-20h", label: "20 heures", amount: 1080, detail: "Pack complet" },
+      { id: "audit-process", label: "Audit organisation", amount: 0, detail: "Appel gratuit pour comprendre votre organisation, vos blocages et les premières améliorations possibles" },
+      { id: "automation-5h", label: "1 mois", amount: 750, detail: "Structuration, mise en place d’un premier système et accompagnement à la prise en main" },
+      { id: "automation-10h", label: "2 mois", amount: 1400, detail: "Structuration de plusieurs process, mise en place des systèmes prioritaires et accompagnement dans la durée" },
+      { id: "automation-20h", label: "3 mois", amount: 1950, detail: "Système opérationnel plus complet, automatisations, documentation et accompagnement jusqu’à l’adoption" },
     ],
   },
   {
@@ -83,31 +85,31 @@ export const ASSISTANT_PACK_OFFERS = [
     ],
   },
   {
-    id: "subvention",
-    title: "Subvention",
-    category: "Financement",
-    description:
-      "Préparer un dossier de subvention simple avec les pièces, les informations demandées et le suivi de dépôt.",
-    rateLabel: "Minimum par dossier",
-    startingLabel: "À partir de 500 €",
-    packs: [
-      { id: "subvention-1", label: "1 dossier", amount: 500, detail: "Pack dossier" },
-      { id: "subvention-2", label: "2 dossiers", amount: 950, detail: "Pack dossiers" },
-      { id: "subvention-3", label: "3 dossiers", amount: 1350, detail: "Pack dossiers" },
-    ],
-  },
-  {
     id: "appel-offre",
     title: "Appel d'offre",
     category: "Dossiers",
     description:
-      "Préparer une réponse simple à appel d'offre avec les pièces, la trame de réponse et les éléments demandés.",
+      "Structurer votre réponse, rassembler les pièces demandées, clarifier les éléments attendus et préparer un dossier prêt à envoyer.",
     rateLabel: "Minimum par réponse",
     startingLabel: "À partir de 500 €",
     packs: [
       { id: "appel-offre-1", label: "1 réponse", amount: 500, detail: "Pack réponse" },
       { id: "appel-offre-2", label: "2 réponses", amount: 950, detail: "Pack réponses" },
       { id: "appel-offre-3", label: "3 réponses", amount: 1350, detail: "Pack réponses" },
+    ],
+  },
+  {
+    id: "subvention",
+    title: "Subvention",
+    category: "Financement",
+    description:
+      "Vérifier l’éligibilité, réunir les justificatifs, compléter les informations demandées et préparer un dossier de subvention propre.",
+    rateLabel: "Minimum par dossier",
+    startingLabel: "À partir de 500 €",
+    packs: [
+      { id: "subvention-1", label: "1 dossier", amount: 500, detail: "Pack dossier" },
+      { id: "subvention-2", label: "2 dossiers", amount: 950, detail: "Pack dossiers" },
+      { id: "subvention-3", label: "3 dossiers", amount: 1350, detail: "Pack dossiers" },
     ],
   },
 ] as const satisfies readonly AssistantOffer[];

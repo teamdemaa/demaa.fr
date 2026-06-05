@@ -1085,7 +1085,7 @@ export default function AssistantHub({
                     onClick={() => setShowSystemSetupModal(true)}
                     className="inline-flex items-center justify-center rounded-full border border-white/12 bg-white px-7 py-3.5 text-sm font-medium text-brand-blue shadow-[0_10px_24px_rgba(0,0,0,0.08)] transition hover:-translate-y-0.5 hover:bg-[#fcfcfc] hover:text-brand-blue"
                   >
-                    Demander un audit de mes process
+                    J&apos;ai besoin d&apos;un audit de mon organisation
                   </button>
                 </div>
               </div>

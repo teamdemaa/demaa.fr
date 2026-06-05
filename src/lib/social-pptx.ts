@@ -142,7 +142,7 @@ function processSnapshot(
 
   if (showCta) {
     shapes.push(rect(startId + 4, { x: x + w - 2.6, y: y + 0.35, w: 2.2, h: 0.45, fill: FOREST, stroke: FOREST, radius: true }));
-    shapes.push(textBox(startId + 5, { x: x + w - 2.5, y: y + 0.49, w: 2.0, h: 0.18, text: "Demander un audit de mes process", size: 8, color: WHITE, align: "ctr" }));
+    shapes.push(textBox(startId + 5, { x: x + w - 2.5, y: y + 0.49, w: 2.0, h: 0.18, text: "Audit de mon organisation", size: 8, color: WHITE, align: "ctr" }));
   }
 
   shapes.push(textBox(startId + 6, { x: x + 0.35, y: y + 1.72, w: 0.8, h: 0.25, text: "Processus", size: 9, color: BLACK, bold: true }));

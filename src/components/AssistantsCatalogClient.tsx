@@ -9,14 +9,13 @@ import {
   HandCoins,
   Minus,
   Plus,
-  ReceiptText,
   Search,
-  Send,
   ShoppingBag,
   Trash2,
   Workflow,
   X,
 } from "lucide-react";
+import SystemSetupModal from "@/components/SystemSetupModal";
 import {
   ASSISTANT_PACK_OFFERS,
   formatAssistantPrice,
@@ -51,41 +50,11 @@ const assistantOffers = [
     title: "Structuration & automatisation",
     category: "Automatisation",
     tags: ["Automatisation", "Administration"],
-    format: "À partir de 300 €",
+    format: "À partir de 750 €",
     description:
-      "Cadrage des tâches répétitives, structuration des process et mise en place d'automatisations simples avec vos outils.",
+      "Structuration des process, mise en place de systèmes de travail, automatisations simples et accompagnement à la prise en main.",
     icon: Workflow,
     packOfferId: "structuration-automatisation",
-  },
-  {
-    title: "Assistant facturation",
-    category: "Finance",
-    tags: ["Finance", "Administration"],
-    format: "À partir de 300 €",
-    description:
-      "Classement des pièces, suivi des paiements, relances simples et préparation comptable.",
-    icon: ReceiptText,
-    packOfferId: "facturation",
-  },
-  {
-    title: "Assistant administratif",
-    category: "Administration",
-    tags: ["Administration"],
-    format: "À partir de 250 €",
-    description:
-      "Classement de documents, préparation de formulaires, suivi de dossiers et organisation des pièces utiles.",
-    icon: Send,
-    packOfferId: "administratif",
-  },
-  {
-    title: "Subventions",
-    category: "Financement",
-    tags: ["Finance", "Dossiers"],
-    format: "À partir de 500 €",
-    description:
-      "Préparation d'un dossier de subvention simple avec les pièces, les informations demandées et le suivi de dépôt.",
-    icon: HandCoins,
-    packOfferId: "subvention",
   },
   {
     title: "Appels d'offres",
@@ -93,9 +62,19 @@ const assistantOffers = [
     tags: ["Dossiers", "Commercial"],
     format: "À partir de 500 €",
     description:
-      "Préparation d'une réponse simple à appel d'offre avec les pièces, la trame et les éléments demandés.",
+      "On vous aide à structurer une réponse claire, rassembler les pièces demandées et sécuriser un dossier prêt à envoyer.",
     icon: FileCheck2,
     packOfferId: "appel-offre",
+  },
+  {
+    title: "Subventions",
+    category: "Financement",
+    tags: ["Finance", "Dossiers"],
+    format: "À partir de 500 €",
+    description:
+      "On vous accompagne pour vérifier l’éligibilité, réunir les justificatifs et préparer un dossier de subvention propre.",
+    icon: HandCoins,
+    packOfferId: "subvention",
   },
 ] as const satisfies readonly AssistantCatalogOffer[];
 
@@ -152,6 +131,7 @@ export default function AssistantsCatalogClient() {
   const [embeddedCheckout, setEmbeddedCheckout] = useState<EmbeddedCheckoutState | null>(null);
   const [isEmbeddedCheckoutLoading, setIsEmbeddedCheckoutLoading] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
+  const [isAuditModalOpen, setIsAuditModalOpen] = useState(false);
   const embeddedCheckoutRef = useRef<{ destroy: () => void } | null>(null);
 
   const filteredOffers = useMemo(() => {
@@ -593,11 +573,15 @@ export default function AssistantsCatalogClient() {
               const selectedPack =
                 packOffer?.packs.find((pack) => pack.id === selectedPackId) ||
                 packOffer?.packs[0];
+              const isAuditRequest = selectedPack?.id === "audit-process";
+              const isPackDropdownOpen = openPackOfferId === offer.packOfferId;
 
               return (
                 <article
                   key={offer.title}
-                  className="demaa-card flex h-full flex-col rounded-[1.15rem] p-5"
+                  className={`demaa-card relative flex h-full flex-col overflow-visible rounded-[1.15rem] p-5 ${
+                    isPackDropdownOpen ? "z-40" : "z-0"
+                  }`}
                 >
                   <div>
                     <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
@@ -625,7 +609,7 @@ export default function AssistantsCatalogClient() {
                               )
                             }
                             className="group inline-flex h-11 w-full min-w-0 items-center justify-between gap-3 rounded-full border border-dema-line/85 bg-dema-paper px-3.5 text-left text-sm font-medium text-brand-blue shadow-[0_7px_18px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/20 hover:bg-dema-sage/45 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dema-forest/35"
-                            aria-expanded={openPackOfferId === offer.packOfferId}
+                            aria-expanded={isPackDropdownOpen}
                             aria-haspopup="listbox"
                           >
                             <span className="min-w-0 truncate">
@@ -634,15 +618,15 @@ export default function AssistantsCatalogClient() {
                             <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-paper">
                               <ChevronDown
                                 className={`h-4 w-4 transition ${
-                                  openPackOfferId === offer.packOfferId ? "rotate-180" : ""
+                                  isPackDropdownOpen ? "rotate-180" : ""
                                 }`}
                                 aria-hidden="true"
                               />
                             </span>
                           </button>
-                          {openPackOfferId === offer.packOfferId ? (
+                          {isPackDropdownOpen ? (
                             <div
-                              className="absolute left-0 right-0 top-full z-30 mt-2 overflow-hidden rounded-[1rem] border border-dema-line bg-dema-paper p-1.5 shadow-[0_18px_46px_rgba(23,35,29,0.12)]"
+                              className="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-[1rem] border border-dema-line bg-dema-paper p-1.5 shadow-[0_18px_46px_rgba(23,35,29,0.12)]"
                               role="listbox"
                             >
                               {packOffer.packs.map((pack) => {
@@ -685,11 +669,15 @@ export default function AssistantsCatalogClient() {
                           type="button"
                           onClick={() => {
                             if (!selectedPack) return;
+                            if (isAuditRequest) {
+                              setIsAuditModalOpen(true);
+                              return;
+                            }
                             addPackToCart(selectedPack.id);
                           }}
                           className="inline-flex h-11 shrink-0 items-center justify-center rounded-full border border-dema-forest/18 bg-dema-paper px-4 text-sm font-medium text-dema-forest shadow-[0_7px_18px_rgba(23,35,29,0.025)] transition hover:border-dema-forest/28 hover:bg-dema-sage/55"
                         >
-                          Ajouter
+                          {isAuditRequest ? "Demander" : "Ajouter"}
                         </button>
                       </div>
                     ) : null}
@@ -900,6 +888,10 @@ export default function AssistantsCatalogClient() {
           </aside>
         </div>
       ) : null}
+      <SystemSetupModal
+        isOpen={isAuditModalOpen}
+        onClose={() => setIsAuditModalOpen(false)}
+      />
     </>
   );
 }

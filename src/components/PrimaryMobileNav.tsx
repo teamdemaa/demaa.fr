@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { Boxes, HandHelping, Wrench } from "lucide-react";
+import { Boxes, HandHelping } from "lucide-react";
 
-export type PrimaryNavTab = "structurer" | "equiper" | "deleguer";
+export type PrimaryNavTab = "structurer" | "deleguer";
 
 const primaryMobileTabs = [
   {
@@ -11,12 +11,6 @@ const primaryMobileTabs = [
     label: "Structurer",
     href: "/",
     icon: Boxes,
-  },
-  {
-    id: "equiper",
-    label: "S'équiper",
-    href: "/outils",
-    icon: Wrench,
   },
   {
     id: "deleguer",
@@ -38,7 +32,7 @@ export default function PrimaryMobileNav({
       className="fixed inset-x-0 bottom-0 z-40 px-4 pb-[calc(env(safe-area-inset-bottom)+0.875rem)] md:hidden"
       aria-label="Navigation principale mobile"
     >
-      <div className="mx-auto grid max-w-md grid-cols-3 gap-1 rounded-full border border-dema-line/75 bg-dema-paper/95 p-1.5 shadow-[0_-8px_28px_rgba(23,35,29,0.08)] backdrop-blur">
+      <div className="mx-auto grid max-w-sm grid-cols-2 gap-1 rounded-full border border-dema-line/75 bg-dema-paper/95 p-1.5 shadow-[0_-8px_28px_rgba(23,35,29,0.08)] backdrop-blur">
         {primaryMobileTabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;

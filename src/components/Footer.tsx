@@ -2,33 +2,27 @@ import Link from "next/link";
 
 const mainLinks = [
   { label: "Structurer", href: "/" },
-  { label: "S'équiper", href: "/outils" },
   { label: "Déléguer", href: "/deleguer" },
-  { label: "Annuaire logiciels", href: "/annuaire-logiciel" },
-];
-
-const kitLinks = [
-  { label: "Outils du quotidien", href: "/outils#outils-du-quotidien" },
-  { label: "Ressources", href: "/outils#ressources" },
+  { label: "Annuaire outils", href: "/annuaire-outils" },
   { label: "Newsletter", href: "/newsletter" },
 ];
 
 const sectorLinks = [
-  { label: "Logiciels Services & conseil", href: "/annuaire-logiciel?secteur=Services%20%26%20conseil" },
-  { label: "Logiciels Commerce local", href: "/annuaire-logiciel?secteur=Commerce%20local" },
-  { label: "Logiciels Restaurant", href: "/annuaire-logiciel?secteur=Restauration" },
-  { label: "Logiciels BTP", href: "/annuaire-logiciel?secteur=Artisanat%20%26%20BTP" },
-  { label: "Logiciels Immobilier", href: "/annuaire-logiciel?secteur=Immobilier" },
-  { label: "Logiciels Santé & bien-être", href: "/annuaire-logiciel?secteur=Sant%C3%A9%20%26%20bien-%C3%AAtre" },
+  { label: "Outils Services & conseil", href: "/annuaire-outils?secteur=Services%20%26%20conseil" },
+  { label: "Outils Commerce local", href: "/annuaire-outils?secteur=Commerce%20local" },
+  { label: "Outils Restaurant", href: "/annuaire-outils?secteur=Restauration" },
+  { label: "Outils BTP", href: "/annuaire-outils?secteur=Artisanat%20%26%20BTP" },
+  { label: "Outils Immobilier", href: "/annuaire-outils?secteur=Immobilier" },
+  { label: "Outils Santé & bien-être", href: "/annuaire-outils?secteur=Sant%C3%A9%20%26%20bien-%C3%AAtre" },
 ];
 
 const categoryLinks = [
-  { label: "Logiciels CRM & ventes", href: "/annuaire-logiciel?categorie=CRM%20%26%20ventes" },
-  { label: "Logiciels Marketing", href: "/annuaire-logiciel?categorie=Marketing%20%26%20visibilit%C3%A9" },
-  { label: "Logiciels Automatisation", href: "/annuaire-logiciel?categorie=Automatisation" },
-  { label: "Logiciels Finance & paiement", href: "/annuaire-logiciel?categorie=Finance%20%26%20paiement" },
-  { label: "Logiciels métier", href: "/annuaire-logiciel?categorie=Outils%20m%C3%A9tier" },
-  { label: "Logiciels IA bureautique", href: "/annuaire-logiciel?categorie=IA%20bureautique" },
+  { label: "Outils CRM & ventes", href: "/annuaire-outils?categorie=CRM%20%26%20ventes" },
+  { label: "Outils Marketing", href: "/annuaire-outils?categorie=Marketing%20%26%20visibilit%C3%A9" },
+  { label: "Outils Automatisation", href: "/annuaire-outils?categorie=Automatisation" },
+  { label: "Outils Finance & paiement", href: "/annuaire-outils?categorie=Finance%20%26%20paiement" },
+  { label: "Outils métier", href: "/annuaire-outils?categorie=Outils%20m%C3%A9tier" },
+  { label: "Outils gratuits", href: "/annuaire-outils?categorie=QR%20Code" },
 ];
 
 export default function Footer() {
@@ -39,7 +33,7 @@ export default function Footer() {
   return (
     <footer className="mt-auto border-t border-neutral-200 bg-white py-16 text-neutral-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-5">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
           
           {/* Brand Info */}
           <div className="space-y-4">
@@ -69,20 +63,7 @@ export default function Footer() {
 
           <div>
             <h3 className="text-lg font-semibold mb-6">
-              S&apos;équiper
-            </h3>
-            <ul className="space-y-3">
-              {kitLinks.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className={linkClass}>{link.label}</Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-lg font-semibold mb-6">
-              Logiciels par secteur
+              Outils par secteur
             </h3>
             <ul className="space-y-3">
               {sectorLinks.map((link) => (
@@ -95,7 +76,7 @@ export default function Footer() {
 
           <div>
             <h3 className="text-lg font-semibold mb-6">
-              Logiciels par catégorie
+              Outils par catégorie
             </h3>
             <ul className="space-y-3">
               {categoryLinks.map((link) => (

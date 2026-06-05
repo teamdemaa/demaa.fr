@@ -8,5 +8,5 @@ export default async function LegacyLogicielDetailPage({
   params,
 }: LegacyLogicielDetailPageProps) {
   const { slug } = await params;
-  permanentRedirect(`/annuaire-logiciel/${slug}`);
+  permanentRedirect(`/annuaire-outils/${slug}`);
 }

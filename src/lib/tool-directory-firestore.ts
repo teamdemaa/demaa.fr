@@ -38,7 +38,21 @@ export async function getUnifiedToolDirectory(): Promise<ToolDirectoryItem[]> {
       return toolDirectory;
     }
 
-    return tools.sort((left, right) => left.name.localeCompare(right.name, "fr"));
+    const toolsBySlug = new Map(
+      tools.map((tool) => [tool.slug || tool.name, tool])
+    );
+
+    for (const localTool of toolDirectory) {
+      const key = localTool.slug || localTool.name;
+
+      if (!toolsBySlug.has(key)) {
+        toolsBySlug.set(key, localTool);
+      }
+    }
+
+    return Array.from(toolsBySlug.values()).sort((left, right) =>
+      left.name.localeCompare(right.name, "fr")
+    );
   } catch (error) {
     console.warn("[tool-directory] Firestore unavailable, using JSON fallback.", error);
     return toolDirectory;
