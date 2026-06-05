@@ -3,14 +3,13 @@ import Link from "next/link";
 const mainLinks = [
   { label: "Systèmes", href: "/" },
   { label: "Kit du dirigeant", href: "/outils" },
-  { label: "Assistant", href: "/assistant" },
+  { label: "Assistants", href: "/assistants" },
   { label: "Annuaire logiciels", href: "/annuaire-logiciel" },
 ];
 
 const kitLinks = [
   { label: "Outils du quotidien", href: "/outils#outils-du-quotidien" },
   { label: "Ressources", href: "/outils#ressources" },
-  { label: "Accompagnements clés", href: "/outils#accompagnements-cles" },
   { label: "Newsletter", href: "/newsletter" },
 ];
 

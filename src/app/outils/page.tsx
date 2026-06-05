@@ -2,19 +2,19 @@ import type { Metadata } from "next";
 import HomeHubPage from "@/components/HomeHubPage";
 
 export const metadata: Metadata = {
-  title: "Kit du dirigeant - Outils, ressources et accompagnements | Demaa",
+  title: "Kit du dirigeant - Outils et ressources | Demaa",
   description:
-    "Retrouvez les outils du quotidien, ressources pratiques et accompagnements clés pour mieux gérer votre activité et structurer vos process.",
+    "Retrouvez les outils du quotidien et les ressources pratiques pour mieux gérer votre activité et structurer vos process.",
   openGraph: {
-    title: "Kit du dirigeant - Outils, ressources et accompagnements | Demaa",
+    title: "Kit du dirigeant - Outils et ressources | Demaa",
     description:
-      "Retrouvez les outils du quotidien, ressources pratiques et accompagnements clés pour mieux gérer votre activité et structurer vos process.",
+      "Retrouvez les outils du quotidien et les ressources pratiques pour mieux gérer votre activité et structurer vos process.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Kit du dirigeant - Outils, ressources et accompagnements | Demaa",
+    title: "Kit du dirigeant - Outils et ressources | Demaa",
     description:
-      "Retrouvez les outils du quotidien, ressources pratiques et accompagnements clés pour mieux gérer votre activité et structurer vos process.",
+      "Retrouvez les outils du quotidien et les ressources pratiques pour mieux gérer votre activité et structurer vos process.",
   },
   alternates: {
     canonical: "/outils",

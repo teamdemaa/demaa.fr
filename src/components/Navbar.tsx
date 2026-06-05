@@ -5,18 +5,20 @@ import { Suspense, useEffect, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import SystemSetupModal from "@/components/SystemSetupModal";
 
-type HomeTabId = "systemes" | "outils";
+type HomeTabId = "systemes" | "outils" | "assistants";
 type HomeTabsMode = "links" | "client";
 
 const homeTabs = [
   { id: "systemes", label: "Systèmes", href: "/" },
   { id: "outils", label: "Kit du dirigeant", href: "/outils" },
+  { id: "assistants", label: "Assistants", href: "/assistants" },
 ] as const;
 
 const HOME_TAB_SELECT_EVENT = "demaa:home-tab-select";
 
 function getTabPath(tab: HomeTabId) {
   if (tab === "outils") return "/outils";
+  if (tab === "assistants") return "/assistants";
 
   return "/";
 }
@@ -52,7 +54,7 @@ export default function Navbar({
                 <button
                   type="button"
                   onClick={() => setIsAuditModalOpen(true)}
-                  className="inline-flex min-h-10 items-center justify-center whitespace-nowrap rounded-full border border-dema-forest/18 bg-dema-paper px-4 text-xs font-light text-dema-forest shadow-none transition-colors hover:border-dema-forest/32 hover:bg-dema-sage/60 hover:text-dema-forest sm:px-5 md:text-sm"
+                  className="inline-flex min-h-10 items-center justify-center whitespace-nowrap px-1 text-xs font-light text-brand-blue/72 transition-colors hover:text-brand-blue sm:px-2 md:text-sm"
                 >
                   J&apos;ai besoin d&apos;un audit de mes process
                 </button>
@@ -74,10 +76,12 @@ function DesktopHomeTabsNav({ mode }: { mode: HomeTabsMode }) {
   const searchParams = useSearchParams();
   const urlTab = searchParams.get("tab");
   const activeTab =
-    pathname === "/outils"
+    pathname === "/assistants"
+      ? "assistants"
+      : pathname === "/outils"
       ? "outils"
       : pathname === "/"
-        ? urlTab === "outils" || urlTab === "systemes"
+        ? urlTab === "outils" || urlTab === "systemes" || urlTab === "assistants"
           ? urlTab
           : "systemes"
         : undefined;
@@ -93,7 +97,7 @@ function DesktopHomeTabsNavStatic({
   mode?: HomeTabsMode;
 }) {
   const [clientActiveTab, setClientActiveTab] = useState<HomeTabId>(
-    activeTab === "outils" || activeTab === "systemes"
+    activeTab === "outils" || activeTab === "systemes" || activeTab === "assistants"
       ? activeTab
       : "systemes"
   );
@@ -105,7 +109,7 @@ function DesktopHomeTabsNavStatic({
     function handleHomeTabSelect(event: Event) {
       const tab = (event as CustomEvent<{ tab?: string }>).detail?.tab;
 
-      if (tab === "systemes" || tab === "outils") {
+      if (tab === "systemes" || tab === "outils" || tab === "assistants") {
         setClientActiveTab(tab);
       }
     }
@@ -133,7 +137,7 @@ function DesktopHomeTabsNavStatic({
             : "font-light text-brand-blue/56 hover:bg-dema-sage/70 hover:text-brand-blue/72"
         }`;
 
-        if (mode === "client") {
+        if (mode === "client" && tab.id !== "assistants") {
           return (
             <button
               key={tab.id}
