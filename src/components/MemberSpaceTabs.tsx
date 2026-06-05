@@ -31,6 +31,7 @@ type MemberDeal = {
   href: string;
   name: string;
   offer: string;
+  toolSlug?: string;
 };
 
 type MemberSpaceTabsProps = {

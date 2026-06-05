@@ -26,7 +26,8 @@
       "bestFor": "Centraliser les fichiers, les échanges et les suivis simples.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "transverse"
     },
     {
       "slug": "microsoft-365",
@@ -49,7 +50,8 @@
       "bestFor": "Garder Excel et Outlook au centre de l’organisation.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": false
+      "toolbox": false,
+      "scope": "transverse"
     },
     {
       "slug": "notion",
@@ -73,7 +75,8 @@
       "status": "active",
       "toolbox": true,
       "memberDealLabel": "Offre membre",
-      "memberDealDescription": "Accédez à l’espace membre pour vérifier les conditions utiles à votre organisation et à votre équipe."
+      "memberDealDescription": "Accédez à l’espace membre pour vérifier les conditions utiles à votre organisation et à votre équipe.",
+      "scope": "transverse"
     },
     {
       "slug": "airtable",
@@ -97,7 +100,8 @@
       "bestFor": "Structurer un suivi plus propre qu’un tableur classique.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "transverse"
     },
     {
       "slug": "figma",
@@ -118,7 +122,8 @@
       "bestFor": "Créer et valider des interfaces ou supports visuels.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "transverse"
     },
     {
       "slug": "canva",
@@ -145,7 +150,8 @@
       "bestFor": "Produire des supports propres sans dépendre d’un studio.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "transverse"
     },
     {
       "slug": "chatgpt",
@@ -172,7 +178,8 @@
       "bestFor": "Gagner du temps sur la réflexion et la production de contenus.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "transverse"
     },
     {
       "slug": "claude",
@@ -199,7 +206,8 @@
       "bestFor": "Clarifier des sujets complexes et produire des livrables plus propres.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "transverse"
     },
     {
       "slug": "codex",
@@ -220,7 +228,8 @@
       "bestFor": "Accélérer les chantiers techniques et les prototypes.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "claude-code",
@@ -241,7 +250,8 @@
       "bestFor": "Avancer plus vite sur les projets techniques.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "make",
@@ -268,7 +278,8 @@
       "bestFor": "Créer des automatisations lisibles et sur mesure pour TPE.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "transverse"
     },
     {
       "slug": "zapier",
@@ -290,7 +301,8 @@
       "bestFor": "Automatiser vite quand les outils sont déjà compatibles.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": false
+      "toolbox": false,
+      "scope": "transverse"
     },
     {
       "slug": "fillout",
@@ -314,7 +326,8 @@
       "bestFor": "Créer des formulaires propres et faciles à brancher.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "transverse"
     },
     {
       "slug": "tally",
@@ -337,7 +350,8 @@
       "bestFor": "Remplacer un email libre par un formulaire clair.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "transverse"
     },
     {
       "slug": "qonto",
@@ -364,7 +378,8 @@
       "bestFor": "Gérer les finances courantes d’une entreprise.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "transverse"
     },
     {
       "slug": "revolut-business",
@@ -393,7 +408,8 @@
       "status": "active",
       "toolbox": true,
       "memberDealLabel": "Offre membre",
-      "memberDealDescription": "Accédez à l’espace membre pour consulter l’offre disponible et les conditions applicables."
+      "memberDealDescription": "Accédez à l’espace membre pour consulter l’offre disponible et les conditions applicables.",
+      "scope": "transverse"
     },
     {
       "slug": "pennylane",
@@ -417,7 +433,8 @@
       "status": "active",
       "toolbox": true,
       "memberDealLabel": "Offre membre",
-      "memberDealDescription": "Demandez les conditions disponibles depuis l’espace membre Team Demaa avant de choisir votre outil comptable."
+      "memberDealDescription": "Demandez les conditions disponibles depuis l’espace membre Team Demaa avant de choisir votre outil comptable.",
+      "scope": "transverse"
     },
     {
       "slug": "tiimora",
@@ -436,7 +453,8 @@
       "bestFor": "Piloter les opérations et les processus d’un cabinet.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "cegid",
@@ -457,7 +475,8 @@
       "bestFor": "Structurer une gestion plus robuste quand l’activité grandit.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "tiime",
@@ -478,7 +497,8 @@
       "bestFor": "Simplifier la gestion administrative et comptable.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "transverse"
     },
     {
       "slug": "dext",
@@ -499,7 +519,8 @@
       "bestFor": "Réduire la saisie et sécuriser les pièces comptables.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "transverse"
     },
     {
       "slug": "regate",
@@ -520,7 +541,8 @@
       "bestFor": "Mieux cadrer les dépenses et validations financières.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "transverse"
     },
     {
       "slug": "silae",
@@ -541,7 +563,8 @@
       "bestFor": "Structurer la paie et les obligations sociales.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "swile",
@@ -568,7 +591,8 @@
       "bestFor": "Mettre en place des avantages simples pour l’équipe.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "transverse"
     },
     {
       "slug": "alan",
@@ -595,7 +619,8 @@
       "bestFor": "Proposer une couverture santé claire et simple.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "transverse"
     },
     {
       "slug": "obat",
@@ -614,7 +639,8 @@
       "bestFor": "Gérer les devis et la facturation d’une activité BTP.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "vertuoza",
@@ -633,7 +659,8 @@
       "bestFor": "Suivre les chantiers et la rentabilité plus facilement.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "planity",
@@ -653,7 +680,8 @@
       "bestFor": "Remplir le planning et simplifier la prise de rendez-vous.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "fresha",
@@ -673,7 +701,8 @@
       "bestFor": "Gérer rendez-vous, encaissements et clients au même endroit.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "square",
@@ -694,7 +723,8 @@
       "bestFor": "Encaisser et suivre les ventes au quotidien.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "lightspeed",
@@ -714,7 +744,8 @@
       "bestFor": "Structurer les ventes et le suivi opérationnel.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "zenchef",
@@ -733,7 +764,8 @@
       "bestFor": "Mieux gérer les réservations et l’expérience client.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "deliverect",
@@ -753,7 +785,8 @@
       "bestFor": "Fluidifier la vente à emporter et la livraison.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "shopify",
@@ -773,7 +806,8 @@
       "bestFor": "Lancer et structurer une boutique en ligne.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "prestashop",
@@ -792,7 +826,8 @@
       "bestFor": "Construire une boutique avec plus de contrôle technique.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": false
+      "toolbox": false,
+      "scope": "business"
     },
     {
       "slug": "gorgias",
@@ -811,7 +846,8 @@
       "bestFor": "Centraliser les demandes client et commandes.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "klaviyo",
@@ -830,7 +866,8 @@
       "bestFor": "Relancer les clients et mieux exploiter la donnée boutique.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "metricool",
@@ -853,7 +890,8 @@
       "bestFor": "Programmer les contenus et mesurer la visibilité.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "transverse"
     },
     {
       "slug": "buffer",
@@ -874,7 +912,8 @@
       "bestFor": "Programmer les contenus sans outil complexe.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": false
+      "toolbox": false,
+      "scope": "transverse"
     },
     {
       "slug": "webflow",
@@ -895,7 +934,8 @@
       "bestFor": "Créer un site propre avec plus de liberté visuelle.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "framer",
@@ -916,7 +956,8 @@
       "bestFor": "Lancer une page claire et élégante rapidement.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "recruitee",
@@ -935,7 +976,8 @@
       "bestFor": "Structurer le recrutement sans perdre les candidatures.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "malt",
@@ -954,7 +996,8 @@
       "bestFor": "Trouver des missions ou renforcer une équipe ponctuellement.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "pipedrive",
@@ -975,7 +1018,8 @@
       "bestFor": "Ne plus perdre les opportunités commerciales.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "transverse"
     },
     {
       "slug": "apimo",
@@ -994,7 +1038,8 @@
       "bestFor": "Structurer une agence immobilière et ses biens.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "guesty",
@@ -1014,7 +1059,8 @@
       "bestFor": "Centraliser logements, réservations, messages voyageurs et opérations terrain.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "dashdoc",
@@ -1035,7 +1081,8 @@
       "bestFor": "Structurer les flux et documents transport.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "geotab",
@@ -1055,7 +1102,8 @@
       "bestFor": "Suivre les véhicules et améliorer les opérations terrain.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "shippeo",
@@ -1074,7 +1122,8 @@
       "bestFor": "Donner de la visibilité aux clients sur les expéditions et retards.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "urbantz",
@@ -1093,7 +1142,8 @@
       "bestFor": "Organiser les tournées et suivre les preuves de livraison.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "digiforma",
@@ -1112,7 +1162,8 @@
       "bestFor": "Structurer les formations et obligations associées.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "kajabi",
@@ -1132,7 +1183,8 @@
       "bestFor": "Commercialiser une offre de formation en ligne.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "odoo",
@@ -1153,7 +1205,8 @@
       "bestFor": "Centraliser plusieurs briques métier dans un seul système.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "katana",
@@ -1172,7 +1225,8 @@
       "bestFor": "Piloter une petite production avec plus de visibilité.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "archipad",
@@ -1192,7 +1246,8 @@
       "bestFor": "Suivre réunions, réserves, photos et comptes rendus de chantier.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "kopilo",
@@ -1211,7 +1266,8 @@
       "bestFor": "Centraliser planning de conduite, dossiers élèves et suivi pédagogique.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "lya",
@@ -1230,7 +1286,8 @@
       "bestFor": "Suivre portefeuille, contrats, conformité et relation client assurance.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "kiilt",
@@ -1250,7 +1307,8 @@
       "bestFor": "Structurer les dossiers de financement, pièces, relances et partenaires bancaires.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "picstudio",
@@ -1270,7 +1328,8 @@
       "bestFor": "Gérer prospects, réservations, contrats, galeries client et paiements.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "weezevent",
@@ -1289,7 +1348,8 @@
       "bestFor": "Gérer inscriptions, billets, accès et communication événementielle.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "gesfit",
@@ -1308,7 +1368,8 @@
       "bestFor": "Piloter adhésions, cours, réservations, caisse et suivi des membres.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "ogust",
@@ -1327,7 +1388,8 @@
       "bestFor": "Gérer interventions, remplacements, bénéficiaires et obligations administratives.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "repairdesk",
@@ -1347,7 +1409,8 @@
       "bestFor": "Suivre diagnostics, tickets de réparation, pièces, clients et notifications.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "doctolib",
@@ -1366,7 +1429,8 @@
       "bestFor": "Structurer les rendez-vous, rappels patients et disponibilités du cabinet.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "visiopharm",
@@ -1386,7 +1450,8 @@
       "bestFor": "Gérer comptoir, stock, documents santé et suivi de l’officine.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "genapi",
@@ -1406,7 +1471,8 @@
       "bestFor": "Piloter dossiers, actes, formalités et comptabilité d’une étude notariale.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "vetup",
@@ -1425,7 +1491,8 @@
       "bestFor": "Centraliser rendez-vous, dossiers animaux, actes, stock et facturation.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "orchestra-travel",
@@ -1444,7 +1511,8 @@
       "bestFor": "Structurer offres, réservations, dossiers voyageurs et production touristique.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "winoptics",
@@ -1464,7 +1532,8 @@
       "bestFor": "Suivre clients, verres, montures, mutuelles, commandes et ventes.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "extrabat",
@@ -1483,7 +1552,8 @@
       "bestFor": "Gérer devis, contrats d’entretien, interventions, SAV et saisonnalité.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "liciel",
@@ -1503,7 +1573,8 @@
       "bestFor": "Produire diagnostics, rapports, mesures terrain et suivis réglementaires.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "fleuracompta",
@@ -1522,7 +1593,8 @@
       "bestFor": "Encaisser, facturer et suivre l’activité quotidienne d’un fleuriste.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "xinaya",
@@ -1542,7 +1614,8 @@
       "bestFor": "Suivre dépôts, traitements, délais, livraisons, caisse et clients.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "nomad-caisse",
@@ -1561,7 +1634,8 @@
       "bestFor": "Gérer commandes comptoir, cuisine, stock et canaux de vente en mobilité.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "vtc-gestion",
@@ -1580,7 +1654,8 @@
       "bestFor": "Suivre chauffeurs, courses, commissions, déductions et montants nets.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "cognito-app",
@@ -1600,7 +1675,8 @@
       "bestFor": "Gérer clients, séances, notes, objectifs et communications d’accompagnement.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "maliora",
@@ -1619,7 +1695,8 @@
       "bestFor": "Créer des programmes, suivre les progrès, gérer clients et facturation.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "assotools",
@@ -1638,7 +1715,8 @@
       "bestFor": "Gérer membres, adhésions, dons, événements et communication associative.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "wino",
@@ -1657,7 +1735,8 @@
       "bestFor": "Gérer caisse, stock, inventaire, réceptions et références de cave.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "booknroll",
@@ -1676,7 +1755,8 @@
       "bestFor": "Gérer catalogue, ventes, stocks, commandes et références ISBN.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "meeko",
@@ -1696,7 +1776,8 @@
       "bestFor": "Gérer enfants, familles, préinscriptions, planning, transmissions et facturation.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "harvest-patrimoine",
@@ -1716,7 +1797,8 @@
       "bestFor": "Structurer bilan patrimonial, simulations, allocations et dossiers clients.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "geofoncier",
@@ -1736,7 +1818,8 @@
       "bestFor": "Consulter données foncières, dossiers, parcelles et informations cadastrales.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "praxedo",
@@ -1757,7 +1840,8 @@
       "bestFor": "Planifier les équipes terrain et suivre les interventions en mobilité.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "organilog",
@@ -1778,7 +1862,8 @@
       "bestFor": "Suivre les interventions, documents et retours terrain sans multiplier les fichiers.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "costructor",
@@ -1797,7 +1882,8 @@
       "bestFor": "Créer devis et factures BTP rapidement avec un outil pensé artisans.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "alobees",
@@ -1816,7 +1902,8 @@
       "bestFor": "Planifier les équipes et suivre l’avancement des chantiers.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "graneet",
@@ -1835,7 +1922,8 @@
       "bestFor": "Piloter rentabilité, achats et marges par chantier.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "batappli",
@@ -1854,7 +1942,8 @@
       "bestFor": "Gérer devis et factures avec des modèles adaptés aux artisans du bâtiment.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "onaya",
@@ -1873,7 +1962,8 @@
       "bestFor": "Structurer les chantiers et le pilotage d’une entreprise BTP plus organisée.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "tiller",
@@ -1893,7 +1983,8 @@
       "bestFor": "Encaisser et suivre les performances d’un restaurant ou commerce local.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "zelty",
@@ -1912,7 +2003,8 @@
       "bestFor": "Centraliser caisse, commandes et opérations restaurant.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "thefork-manager",
@@ -1931,7 +2023,8 @@
       "bestFor": "Gérer les réservations et remplir plus facilement la salle.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "sumup-caisse",
@@ -1951,7 +2044,8 @@
       "bestFor": "Démarrer une caisse simple avec paiement intégré.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "sendcloud",
@@ -1971,7 +2065,8 @@
       "bestFor": "Gérer les expéditions e-commerce et les retours plus vite.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "boxtal",
@@ -1991,7 +2086,8 @@
       "bestFor": "Comparer et gérer les envois sans multiplier les comptes transporteurs.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "brevo",
@@ -2012,7 +2108,8 @@
       "bestFor": "Relancer les clients et automatiser les campagnes marketing simples.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "transverse"
     },
     {
       "slug": "woocommerce",
@@ -2032,7 +2129,8 @@
       "bestFor": "Vendre en ligne sur un site WordPress existant.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "wizishop",
@@ -2052,7 +2150,8 @@
       "bestFor": "Lancer une boutique en ligne avec accompagnement et outils intégrés.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "maiia",
@@ -2071,7 +2170,8 @@
       "bestFor": "Gérer les rendez-vous et consultations médicales avec un outil santé.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "weda",
@@ -2090,7 +2190,8 @@
       "bestFor": "Gérer les dossiers patients et l’activité d’un cabinet médical.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "simplybook",
@@ -2110,7 +2211,8 @@
       "bestFor": "Proposer une réservation en ligne simple pour prestations sur rendez-vous.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "medistory",
@@ -2129,7 +2231,8 @@
       "bestFor": "Structurer les dossiers patients et le suivi d’un cabinet médical.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "hektor",
@@ -2148,7 +2251,8 @@
       "bestFor": "Gérer les biens, mandats, contacts et annonces d’une agence immobilière.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "netty",
@@ -2167,7 +2271,8 @@
       "bestFor": "Piloter l’activité transaction d’une agence immobilière.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "ubiflow",
@@ -2187,7 +2292,8 @@
       "bestFor": "Diffuser les annonces sur plusieurs portails et suivre les contacts entrants.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "modelo",
@@ -2206,7 +2312,8 @@
       "bestFor": "Sécuriser les documents et obligations d’une activité immobilière.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "lockimmo",
@@ -2225,7 +2332,8 @@
       "bestFor": "Gérer loyers, baux, appels, documents et suivi locatif.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "ublo",
@@ -2244,7 +2352,8 @@
       "bestFor": "Fluidifier la gestion locative et les échanges locataires/propriétaires.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "synchroteam",
@@ -2264,7 +2373,8 @@
       "bestFor": "Planifier les équipes terrain et suivre les interventions client.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "dendreo",
@@ -2283,7 +2393,8 @@
       "bestFor": "Piloter les actions de formation et obligations administratives d’un OF.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "amenitiz",
@@ -2302,7 +2413,8 @@
       "bestFor": "Gérer un hébergement indépendant et développer les réservations directes.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "cloudbeds",
@@ -2321,7 +2433,8 @@
       "bestFor": "Centraliser opérations hôtelières, réservations et distribution.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "smoobu",
@@ -2341,7 +2454,8 @@
       "bestFor": "Synchroniser calendriers, annonces et messages pour locations courte durée.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "lodgify",
@@ -2361,7 +2475,8 @@
       "bestFor": "Gérer réservations directes et canaux de location saisonnière.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "helloasso",
@@ -2380,7 +2495,8 @@
       "bestFor": "Collecter dons, adhésions et inscriptions sans outil technique complexe.",
       "pricingHint": "Gratuit",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "assoconnect",
@@ -2399,7 +2515,8 @@
       "bestFor": "Centraliser gestion associative, membres, paiements et communication.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "yapla",
@@ -2418,7 +2535,8 @@
       "bestFor": "Gérer membres, adhésions et événements associatifs dans un même outil.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "billetweb",
@@ -2437,7 +2555,8 @@
       "bestFor": "Vendre ou gérer des inscriptions à des événements simplement.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "hubspot",
@@ -2458,7 +2577,8 @@
       "bestFor": "Structurer le suivi commercial et marketing d’une activité de services ou SaaS.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "transverse"
     },
     {
       "slug": "calendly",
@@ -2479,7 +2599,8 @@
       "bestFor": "Éviter les allers-retours pour caler appels, rendez-vous et entretiens.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "transverse"
     },
     {
       "slug": "typeform",
@@ -2500,7 +2621,8 @@
       "bestFor": "Créer des formulaires soignés pour qualifier demandes et collecter des informations.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "transverse"
     },
     {
       "slug": "stripe",
@@ -2521,7 +2643,8 @@
       "bestFor": "Encaisser paiements, abonnements ou commissions dans un produit digital.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "transverse"
     },
     {
       "slug": "keralpha",
@@ -2540,7 +2663,8 @@
       "bestFor": "Centraliser accueil, atelier, suivi véhicule et communication client.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "embray",
@@ -2559,7 +2683,8 @@
       "bestFor": "Créer dossiers, devis et factures plus vite pour garage ou carrosserie.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "autoprogestion",
@@ -2578,7 +2703,8 @@
       "bestFor": "Gérer atelier, devis, factures, rendez-vous et stocks d’un garage.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "repairsoft",
@@ -2597,7 +2723,8 @@
       "bestFor": "Piloter dossiers, ateliers et activité carrosserie.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     },
     {
       "slug": "carform",
@@ -2616,7 +2743,8 @@
       "bestFor": "Organiser planning atelier, relation client et dossiers assurance.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true
+      "toolbox": true,
+      "scope": "business"
     }
   ]
 }

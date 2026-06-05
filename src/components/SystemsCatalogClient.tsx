@@ -230,6 +230,10 @@ const TRANSVERSE_TOOL_SLUGS = new Set([
 ]);
 
 function isTransverseTool(tool: OperationalSystemDetail["tools"][number]): boolean {
+  if (tool.detail?.scope) {
+    return tool.detail.scope === "transverse";
+  }
+
   return Boolean(tool.slug && TRANSVERSE_TOOL_SLUGS.has(tool.slug));
 }
 

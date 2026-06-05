@@ -12,6 +12,7 @@ export type ToolDirectoryItem = {
   pricingHint: string;
   memberDealLabel?: string;
   memberDealDescription?: string;
+  scope?: "business" | "transverse";
   status?: "active" | "hidden" | "deprecated";
   toolbox?: boolean;
 };

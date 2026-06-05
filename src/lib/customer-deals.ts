@@ -1,5 +1,6 @@
 export const customerDeals = [
   {
+    toolSlug: "qonto",
     name: "Qonto",
     category: "Compte pro",
     offer: "Offre partenaire à venir",
@@ -8,6 +9,7 @@ export const customerDeals = [
     href: "https://qonto.com/fr",
   },
   {
+    toolSlug: "revolut-business",
     name: "Revolut Business",
     category: "Compte pro",
     offer: "-10% sur la plateforme",
@@ -16,6 +18,7 @@ export const customerDeals = [
     href: "https://www.revolut.com/business/",
   },
   {
+    toolSlug: "alan",
     name: "Alan",
     category: "Mutuelle",
     offer: "Offre partenaire à venir",
@@ -24,6 +27,7 @@ export const customerDeals = [
     href: "https://alan.com/fr-fr",
   },
   {
+    toolSlug: "swile",
     name: "Swile",
     category: "Avantages salariés",
     offer: "Offre partenaire à venir",
@@ -56,6 +60,7 @@ export const customerDeals = [
     href: "/mon-espace",
   },
   {
+    toolSlug: "pennylane",
     name: "Pennylane",
     category: "Comptabilité",
     offer: "Offre partenaire à venir",
@@ -64,6 +69,7 @@ export const customerDeals = [
     href: "https://www.pennylane.com/",
   },
   {
+    toolSlug: "notion",
     name: "Notion",
     category: "Organisation",
     offer: "Bon plan à venir",
