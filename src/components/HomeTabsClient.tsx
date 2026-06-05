@@ -49,7 +49,7 @@ const tabHeroCopy: Record<
   },
   outils: {
     muted: "au quotidien",
-    strong: "Gérer votre activité",
+    strong: "Gérez votre activité",
     mutedAfter: true,
     breakBeforeMuted: true,
   },
