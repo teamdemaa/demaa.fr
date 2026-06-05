@@ -440,7 +440,7 @@ export default function SystemsCatalogClient({
           }}
         >
           <div
-            className="relative max-h-[92vh] w-full max-w-7xl overflow-y-auto rounded-[1.25rem] border border-dema-line bg-dema-paper p-6 pt-14 shadow-[0_24px_60px_rgba(23,35,29,0.14)] md:p-8"
+            className="relative h-[92vh] w-full max-w-7xl overflow-y-auto rounded-[1.25rem] border border-dema-line bg-dema-paper p-6 pt-14 shadow-[0_24px_60px_rgba(23,35,29,0.14)] md:p-8"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="flex flex-col items-start justify-between gap-4 md:flex-row">
@@ -503,8 +503,8 @@ export default function SystemsCatalogClient({
             </div>
 
             {activeTab === "processus" ? (
-              <div className="mt-6 overflow-x-auto pb-2 soft-scroll">
-                <div className="mx-auto flex min-w-max justify-center gap-4">
+              <div className="mt-6 overflow-x-auto pb-2 soft-scroll xl:overflow-x-visible">
+                <div className="mx-auto flex min-w-max justify-center gap-4 xl:grid xl:min-w-0 xl:grid-cols-5 xl:gap-3">
                   {PILLARS.map((pillar) => {
                     const pillarCards = detail.processes.filter(
                       (process) => process.pillar === pillar
@@ -513,9 +513,11 @@ export default function SystemsCatalogClient({
                     return (
                       <div
                         key={pillar}
-                        className="w-[18rem] shrink-0 rounded-[1.25rem] border border-dema-line bg-dema-paper p-4 shadow-[0_8px_24px_rgba(23,35,29,0.035)]"
+                        className="w-[18rem] shrink-0 rounded-[1.25rem] border border-dema-line bg-dema-paper p-4 shadow-[0_8px_24px_rgba(23,35,29,0.035)] xl:w-auto xl:min-w-0 xl:p-3"
                       >
-                        <h3 className="demaa-section-title text-xl text-brand-blue">{pillar}</h3>
+                        <h3 className="demaa-section-title text-center text-xl text-brand-blue">
+                          {pillar}
+                        </h3>
                         <div className="mt-4 space-y-3">
                           {pillarCards.length > 0 ? (
                             pillarCards.map((process) => {
