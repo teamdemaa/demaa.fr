@@ -62,7 +62,7 @@ export default function CustomerSpaceAccessForm({
   if (sent) {
     return (
       <div className={compact ? "space-y-3" : "mx-auto max-w-md text-center"}>
-        <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-full bg-green-50 text-green-600">
+        <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
           <CheckCircle2 className="h-5 w-5" />
         </div>
         <h2 className="text-xl font-semibold tracking-tight text-brand-blue">
@@ -87,7 +87,7 @@ export default function CustomerSpaceAccessForm({
     <form className={compact ? "space-y-3" : "mx-auto max-w-md space-y-4"} onSubmit={handleSubmit}>
       <div className="text-left">
         <label className="text-xs font-medium text-brand-blue/70" htmlFor="customer-email">
-          Email utilisé pour votre paiement ou votre demande
+          Email utilisé pour votre paiement, votre demande ou votre accès
         </label>
         <div className="relative mt-1.5">
           <Mail className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-dema-forest/45" />
@@ -102,7 +102,7 @@ export default function CustomerSpaceAccessForm({
         </div>
       </div>
 
-      {error ? <p className="text-sm text-red-500">{error}</p> : null}
+      {error ? <p className="text-sm text-dema-forest">{error}</p> : null}
 
       <button
         type="submit"
@@ -110,7 +110,7 @@ export default function CustomerSpaceAccessForm({
         className="inline-flex w-full items-center justify-center rounded-full bg-dema-forest px-5 py-3 text-sm font-medium text-dema-paper transition hover:bg-[#284f3a] disabled:cursor-not-allowed disabled:opacity-60"
       >
         {isSending ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : null}
-        {isSending ? "Envoi du lien..." : "Recevoir mon lien"}
+        {isSending ? "Envoi du lien..." : "Recevoir mon lien sécurisé"}
       </button>
     </form>
   );

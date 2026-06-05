@@ -41,6 +41,7 @@ type ToolDirectoryClientProps = {
   showHeader?: boolean;
   showSearchBar?: boolean;
   variant?: "directory" | "toolbox";
+  cardClickMode?: "modal" | "navigate";
 };
 
 export default function ToolDirectoryClient({
@@ -60,6 +61,7 @@ export default function ToolDirectoryClient({
   showHeader = true,
   showSearchBar = true,
   variant = "directory",
+  cardClickMode = "modal",
 }: ToolDirectoryClientProps) {
   const initialFilters = getValidFilters(
     sectors,
@@ -275,6 +277,7 @@ export default function ToolDirectoryClient({
             freeTools={filteredTools}
             otherTools={filteredOtherTools}
             externalLinks={externalLinks}
+            cardClickMode={cardClickMode}
             onOpenDetails={openToolDetails}
           />
         ) : filteredTools.length === 0 ? (
@@ -290,6 +293,7 @@ export default function ToolDirectoryClient({
               <ToolCard
                 key={tool.name}
                 externalLinks={externalLinks}
+                cardClickMode={cardClickMode}
                 tool={tool}
                 onOpenDetails={openToolDetails}
               >
@@ -358,11 +362,13 @@ function ToolboxSections({
   freeTools,
   otherTools,
   externalLinks,
+  cardClickMode,
   onOpenDetails,
 }: {
   freeTools: ToolDirectoryItem[];
   otherTools: ToolDirectoryItem[];
   externalLinks: boolean;
+  cardClickMode: "modal" | "navigate";
   onOpenDetails: (tool: ToolDirectoryItem) => void;
 }) {
   const hasResults = freeTools.length > 0 || otherTools.length > 0;
@@ -395,6 +401,7 @@ function ToolboxSections({
                   key={tool.name}
                   tool={tool}
                   externalLinks={externalLinks}
+                  cardClickMode={cardClickMode}
                   onOpenDetails={onOpenDetails}
                 />
               ))}
@@ -419,6 +426,7 @@ function ToolboxSections({
                   key={tool.name}
                   tool={tool}
                   externalLinks={externalLinks}
+                  cardClickMode={cardClickMode}
                   onOpenDetails={onOpenDetails}
                 />
               ))}
@@ -485,10 +493,12 @@ function HorizontalScrollArea({
 function SquareToolCard({
   tool,
   externalLinks,
+  cardClickMode,
   onOpenDetails,
 }: {
   tool: ToolDirectoryItem;
   externalLinks: boolean;
+  cardClickMode: "modal" | "navigate";
   onOpenDetails: (tool: ToolDirectoryItem) => void;
 }) {
   const className =
@@ -522,7 +532,11 @@ function SquareToolCard({
     <Link
       href={tool.url}
       className={className}
-      onClick={(event) => handleClientModalClick(event, tool, onOpenDetails)}
+      onClick={
+        cardClickMode === "modal"
+          ? (event) => handleClientModalClick(event, tool, onOpenDetails)
+          : undefined
+      }
     >
       {content}
     </Link>
@@ -531,11 +545,13 @@ function SquareToolCard({
 
 function ToolCard({
   externalLinks,
+  cardClickMode,
   tool,
   onOpenDetails,
   children,
 }: {
   externalLinks: boolean;
+  cardClickMode: "modal" | "navigate";
   tool: ToolDirectoryItem;
   onOpenDetails: (tool: ToolDirectoryItem) => void;
   children: ReactNode;
@@ -555,7 +571,11 @@ function ToolCard({
     <Link
       href={tool.url}
       className={className}
-      onClick={(event) => handleClientModalClick(event, tool, onOpenDetails)}
+      onClick={
+        cardClickMode === "modal"
+          ? (event) => handleClientModalClick(event, tool, onOpenDetails)
+          : undefined
+      }
     >
       {children}
     </Link>

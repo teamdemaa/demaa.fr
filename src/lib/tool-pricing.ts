@@ -66,6 +66,15 @@ export function getToolPricingInfo(tool: ToolDirectoryItem): ToolPricingInfo {
     };
   }
 
+  if (tool.pricingHint === "Gratuit") {
+    return {
+      summary: "Cet outil est gratuit sur Demaa.",
+      plans: [{ name: "Gratuit", price: "0 €" }],
+      sourceLabel: "Ouvrir l'outil",
+      sourceUrl: tool.url,
+    };
+  }
+
   return {
     summary: "Outil principalement payant, à comparer selon le nombre d’utilisateurs et le périmètre.",
     plans: [{ name: "Payant", price: "À vérifier" }],

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import FreeToolBackLink from "@/components/FreeToolBackLink";
 import Navbar from "@/components/Navbar";
 import { 
   User, 
@@ -337,6 +338,7 @@ export default function SignaturePro() {
   return (
     <div className="min-h-screen md:h-screen bg-[#ffffff] flex flex-col overflow-y-auto md:overflow-hidden text-[#141414] soft-scroll">
       <Navbar />
+      <FreeToolBackLink />
       
       <main className="flex-1 flex flex-col md:flex-row w-full overflow-y-auto md:overflow-hidden soft-scroll">
         
@@ -513,9 +515,9 @@ export default function SignaturePro() {
             {/* PREVIEW CARD */}
             <div className="bg-white rounded-3xl shadow-[0_20px_60px_rgba(10,29,54,0.06)] border border-brand-coral/10 p-8 md:p-12 mb-8">
               <div className="flex items-center gap-2 mb-8 border-b border-gray-50 pb-4">
-                <div className="w-3 h-3 rounded-full bg-red-400 opacity-50" />
-                <div className="w-3 h-3 rounded-full bg-yellow-400 opacity-50" />
-                <div className="w-3 h-3 rounded-full bg-green-400 opacity-50" />
+                <div className="w-3 h-3 rounded-full bg-brand-blue/30" />
+                <div className="w-3 h-3 rounded-full bg-dema-forest/30" />
+                <div className="w-3 h-3 rounded-full bg-dema-sage" />
                 <span className="ml-2 text-[10px] font-bold text-gray-300 uppercase tracking-widest">Aperçu Signature</span>
               </div>
 
@@ -685,7 +687,7 @@ export default function SignaturePro() {
                 className="w-full flex items-center justify-center gap-3 py-5 bg-brand-blue text-white rounded-3xl text-sm font-bold hover:bg-brand-blue/95 shadow-2xl shadow-brand-blue/20 transition-all active:scale-95 group overflow-hidden relative"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-                {copied ? <CheckCircle2 className="w-5 h-5 text-green-400" /> : <Copy className="w-5 h-5 opacity-70" />}
+                {copied ? <CheckCircle2 className="w-5 h-5 text-dema-sage" /> : <Copy className="w-5 h-5 opacity-70" />}
                 {copied ? "SIGNATURE COPIÉE !" : "COPIER LA SIGNATURE"}
               </button>
               

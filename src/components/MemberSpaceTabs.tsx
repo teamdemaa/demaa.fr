@@ -79,7 +79,7 @@ function getRequestStatus(input: {
   if (input.hasRequest) {
     return {
       label: "Demande envoyée",
-      className: "bg-green-50 text-green-700",
+      className: "bg-dema-sage text-dema-forest",
       icon: BadgeCheck,
     };
   }

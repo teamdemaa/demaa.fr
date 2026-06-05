@@ -44,11 +44,11 @@ export default async function MonEspacePage({ searchParams }: MonEspacePageProps
               Accéder à votre espace membre
             </h1>
             <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-dema-muted">
-              Entrez l&apos;email utilisé pour votre paiement. Vous recevrez un lien sécurisé
-              pour accéder au suivi de vos demandes et aux tarifs négociés.
+              Retrouvez vos tarifs négociés, vos demandes en cours et les offres utiles à
+              votre activité. Entrez votre email pour recevoir un lien sécurisé.
             </p>
             {error ? (
-              <p className="mt-4 rounded-[0.9rem] bg-red-50 px-4 py-3 text-sm text-red-600">
+              <p className="mt-4 rounded-[0.9rem] border border-dema-forest/15 bg-dema-sage/70 px-4 py-3 text-sm text-dema-forest">
                 Le lien n&apos;est plus valide. Demandez un nouveau lien.
               </p>
             ) : null}

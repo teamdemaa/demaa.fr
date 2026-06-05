@@ -133,8 +133,8 @@ export default function TeamLeadModal({
                   animate={{ opacity: 1, scale: 1 }}
                   className="p-8 text-center"
                 >
-                  <div className="w-9 h-9 bg-green-50 rounded-xl flex items-center justify-center mx-auto mb-4">
-                    <CheckCircle2 className="w-4 h-4 text-green-500" />
+                  <div className="w-9 h-9 bg-dema-sage rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <CheckCircle2 className="w-4 h-4 text-dema-forest" />
                   </div>
                   <h3 className="text-sm font-black text-brand-blue mb-1 tracking-tight">C&apos;est envoyé !</h3>
                   <p className="text-gray-400 text-[10px] leading-relaxed mb-6">

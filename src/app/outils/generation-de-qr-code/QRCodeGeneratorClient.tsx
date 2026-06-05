@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import { QRCodeSVG } from "qrcode.react";
+import FreeToolBackLink from "@/components/FreeToolBackLink";
 import Navbar from "@/components/Navbar";
 import { Download, Upload, Trash2, Monitor, Share2 } from "lucide-react";
 import { toPng, toJpeg, toSvg } from "html-to-image";
@@ -76,6 +77,7 @@ export default function QRCodeGenerator() {
   return (
     <div className="min-h-screen bg-[#ffffff] flex flex-col overflow-y-auto text-[#141414]">
       <Navbar />
+      <FreeToolBackLink />
       
       <main className="flex-1 flex flex-col md:flex-row w-full overflow-y-auto">
         
@@ -122,7 +124,7 @@ export default function QRCodeGenerator() {
                   <input type="file" className="hidden" accept="image/*" onChange={handleLogoUpload} />
                 </label>
                 {logoUrl && (
-                  <button onClick={() => setLogoUrl(null)} className="p-3 bg-red-50 text-red-500 rounded-xl hover:bg-red-100 transition-colors">
+                  <button onClick={() => setLogoUrl(null)} className="p-3 bg-dema-sage/55 text-brand-blue/65 rounded-xl hover:bg-dema-sage transition-colors">
                     <Trash2 className="w-4 h-4" />
                   </button>
                 )}

@@ -40,7 +40,7 @@ Merci de me recontacter !`;
       
       {/* Subtle indicator as requested by user */}
       <p className="text-center text-xs text-gray-400 mt-4 flex items-center justify-center">
-        <span className="w-2 h-2 rounded-full bg-emerald-500 mr-2"></span>
+        <span className="w-2 h-2 rounded-full bg-dema-forest mr-2"></span>
         Traitement rapide via WhatsApp
       </p>
 
@@ -61,7 +61,7 @@ Merci de me recontacter !`;
               </div>
               <button 
                 onClick={() => setIsOpen(false)} 
-                className="p-2 bg-white rounded-full hover:bg-red-50 text-gray-400 hover:text-red-500 transition-colors shadow-sm focus:outline-none"
+                className="p-2 bg-white rounded-full hover:bg-dema-sage text-gray-400 hover:text-dema-forest transition-colors shadow-sm focus:outline-none"
               >
                 <X className="w-5 h-5" />
               </button>

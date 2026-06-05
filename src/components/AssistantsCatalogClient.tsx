@@ -892,7 +892,7 @@ export default function AssistantsCatalogClient() {
                 {isStartingCheckout ? "Ouverture du paiement..." : "Valider et payer"}
               </button>
               {checkoutError ? (
-                <p className="mt-3 text-sm leading-relaxed text-red-500">
+                <p className="mt-3 text-sm leading-relaxed text-dema-forest">
                   {checkoutError}
                 </p>
               ) : null}

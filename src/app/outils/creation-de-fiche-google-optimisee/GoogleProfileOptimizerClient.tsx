@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import FreeToolBackLink from "@/components/FreeToolBackLink";
 import Navbar from "@/components/Navbar";
 import { 
   MapPin, 
@@ -42,6 +43,7 @@ export default function GoogleProfileOptimizer() {
   return (
     <div className="min-h-screen md:h-screen bg-[#ffffff] flex flex-col overflow-y-auto md:overflow-hidden text-[#141414]">
       <Navbar />
+      <FreeToolBackLink />
       
       <main className="flex-1 flex flex-col md:flex-row w-full overflow-y-auto md:overflow-hidden">
         
@@ -85,7 +87,7 @@ export default function GoogleProfileOptimizer() {
             <div className="space-y-1.5">
               <div className="flex justify-between items-end ml-1">
                 <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30">Description (Optimisée SEO)</label>
-                <span className={`text-[9px] font-bold ${description.length > DESC_LIMIT ? "text-red-500" : "text-brand-blue/40"}`}>
+                <span className={`text-[9px] font-bold ${description.length > DESC_LIMIT ? "text-dema-forest" : "text-brand-blue/40"}`}>
                   {description.length} / {DESC_LIMIT}
                 </span>
               </div>
@@ -147,7 +149,7 @@ export default function GoogleProfileOptimizer() {
                 <div>
                     <h2 className="text-2xl font-bold text-brand-blue hover:underline cursor-pointer leading-tight mb-1">{name}</h2>
                     <div className="flex items-center gap-2">
-                      <div className="flex items-center gap-0.5 text-orange-400">
+                      <div className="flex items-center gap-0.5 text-dema-forest/70">
                         {[...Array(5)].map((_, i) => <Star key={i} className="w-3.5 h-3.5 fill-current" />)}
                       </div>
                       <span className="text-xs font-medium text-gray-500">5.0 (24 avis)</span>
@@ -203,9 +205,9 @@ export default function GoogleProfileOptimizer() {
               </h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {checklist.map((item, idx) => (
-                  <div key={idx} className={`p-3 rounded-xl border flex items-center gap-3 transition-all ${item.status ? "bg-green-50/50 border-green-100" : "bg-gray-50/50 border-gray-100 opacity-60"}`}>
+                  <div key={idx} className={`p-3 rounded-xl border flex items-center gap-3 transition-all ${item.status ? "bg-dema-sage/70 border-dema-forest/15" : "bg-gray-50/50 border-gray-100 opacity-60"}`}>
                     {item.status ? (
-                      <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-dema-forest shrink-0" />
                     ) : (
                       <div className="w-4 h-4 border-2 border-gray-200 rounded-full shrink-0" />
                     )}

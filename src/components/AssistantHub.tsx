@@ -888,7 +888,7 @@ export default function AssistantHub({
                   </div>
 
                   {emailError && (
-                    <div className="text-sm font-semibold text-red-500">{emailError}</div>
+                    <div className="text-sm font-semibold text-dema-forest">{emailError}</div>
                   )}
 
                   <button
@@ -1035,7 +1035,7 @@ export default function AssistantHub({
                 )}
 
                 {error && (
-                  <div className="mt-6 flex items-center gap-2 rounded-2xl border border-red-100 bg-red-50 px-6 py-4 text-sm font-bold text-red-500 animate-in slide-in-from-top-2">
+                  <div className="mt-6 flex items-center gap-2 rounded-2xl border border-dema-forest/15 bg-dema-sage/70 px-6 py-4 text-sm font-bold text-dema-forest animate-in slide-in-from-top-2">
                     <AlertCircle className="w-5 h-5" />
                     {error}
                   </div>
@@ -1144,7 +1144,7 @@ export default function AssistantHub({
               <div className="mx-auto hidden w-full max-w-5xl overflow-hidden rounded-[2rem] border border-brand-blue/10 bg-white shadow-[0_8px_18px_rgba(20,20,20,0.016)] md:block">
                 <div className="hidden grid-cols-2 bg-white text-center text-sm font-medium md:grid">
                   <div className="px-7 py-4 text-brand-blue">Aujourd&apos;hui</div>
-                  <div className="bg-[#FFEAE2] px-7 py-4 text-brand-blue">Une fois automatisé</div>
+                  <div className="bg-dema-sage px-7 py-4 text-brand-blue">Une fois automatisé</div>
                 </div>
 
                 <div>
@@ -1462,7 +1462,7 @@ export default function AssistantHub({
                   )}
 
                   {error && (
-                    <div className="mt-6 flex items-center gap-2 rounded-2xl border border-red-100 bg-red-50 px-6 py-4 text-sm font-bold text-red-500 animate-in slide-in-from-top-2">
+                    <div className="mt-6 flex items-center gap-2 rounded-2xl border border-dema-forest/15 bg-dema-sage/70 px-6 py-4 text-sm font-bold text-dema-forest animate-in slide-in-from-top-2">
                       <AlertCircle className="w-5 h-5" />
                       {error}
                     </div>

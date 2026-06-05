@@ -64,8 +64,8 @@ export default function SubscriptionModal({
         <div className="px-8 pb-12 pt-2 text-center">
           {status === "success" ? (
             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-              <div className="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                <CheckCircle2 className="w-10 h-10 text-emerald-500" />
+              <div className="w-20 h-20 bg-dema-sage rounded-full flex items-center justify-center mx-auto mb-6">
+                <CheckCircle2 className="w-10 h-10 text-dema-forest" />
               </div>
               <h3 className="text-2xl font-bold text-brand-blue mb-3">C&apos;est noté !</h3>
               <p className="text-gray-500 leading-relaxed mb-8">

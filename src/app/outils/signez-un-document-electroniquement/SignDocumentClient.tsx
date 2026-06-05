@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import FreeToolBackLink from "@/components/FreeToolBackLink";
 import Navbar from "@/components/Navbar";
 import { 
   Download, 
@@ -17,7 +18,7 @@ export default function SignDocument() {
   const [fullName, setFullName] = useState("Alexandre Martin");
   const [role, setRole] = useState("Président-Directeur Général");
   const [date, setDate] = useState(new Date().toLocaleDateString('fr-FR'));
-  const [inkColor, setInkColor] = useState("#003399"); // Professional Dark Blue
+  const [inkColor, setInkColor] = useState("#141414");
   const [isExporting, setIsExporting] = useState(false);
   
   const signatureRef = useRef<HTMLDivElement>(null);
@@ -41,6 +42,7 @@ export default function SignDocument() {
   return (
     <div className="min-h-screen md:h-screen bg-[#ffffff] flex flex-col overflow-y-auto md:overflow-hidden text-[#141414]">
       <Navbar />
+      <FreeToolBackLink />
       
       <main className="flex-1 flex flex-col md:flex-row w-full overflow-y-auto md:overflow-hidden">
         
@@ -48,7 +50,7 @@ export default function SignDocument() {
         <div className="w-full md:w-[45%] pl-12 md:pl-24 lg:pl-40 pr-6 flex flex-col justify-center space-y-7 md:border-r border-brand-coral/5 py-12">
           <div className="space-y-2">
             <h1 className="text-2xl md:text-3xl font-bold text-brand-blue tracking-tight">
-              Signature <span className="text-brand-coral">Digitale ✍️</span>
+              Signature <span className="text-brand-coral">digitale</span>
             </h1>
             <p className="text-gray-500 text-xs md:text-sm leading-relaxed max-w-sm font-medium">
               Créez votre griffe de signature électronique pour vos contrats et devis PDF.
@@ -84,15 +86,14 @@ export default function SignDocument() {
               <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1 flex items-center gap-2">
                 <Palette className="w-3 h-3 text-gray-300" /> Couleur de l&apos;encre
               </label>
-              <div className="flex items-center gap-3">
-                {["#003399", "#000000", "#141414", "#dc2626"].map((c) => (
-                  <button 
-                    key={c}
-                    onClick={() => setInkColor(c)}
-                    className={`w-10 h-10 rounded-full border-4 transition-all ${inkColor === c ? "border-brand-coral scale-110 shadow-md" : "border-white"}`}
-                    style={{ backgroundColor: c }}
-                  />
-                ))}
+              <div className="flex items-center gap-3 rounded-xl border border-brand-coral/10 bg-white px-4 py-3 shadow-sm">
+                <input
+                  type="color"
+                  value={inkColor}
+                  onChange={(e) => setInkColor(e.target.value)}
+                  className="h-9 w-9 shrink-0 cursor-pointer overflow-hidden rounded-lg border-none p-0 shadow-sm"
+                />
+                <span className="text-xs font-semibold uppercase tracking-[0.08em] text-brand-blue/45">{inkColor}</span>
               </div>
             </div>
           </div>

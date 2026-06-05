@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import FreeToolBackLink from "@/components/FreeToolBackLink";
 import Navbar from "@/components/Navbar";
 import { 
   UtensilsCrossed, 
@@ -21,18 +22,11 @@ export default function MenuQRCode() {
   const [restaurantName, setRestaurantName] = useState("Le Petit Bistro");
   const [menuUrl, setMenuUrl] = useState("https://demaa.fr/menu-exemple");
   const [ctaText, setCtaText] = useState("Scannez pour la carte");
-  const [color, setColor] = useState("#141414"); // Demaa Blue by default
+  const [color, setColor] = useState("#141414");
   const [icon, setIcon] = useState<"dish" | "wine" | "coffee">("dish");
   const [isExporting, setIsExporting] = useState(false);
   
   const designRef = useRef<HTMLDivElement>(null);
-
-  const colors = [
-    { name: "Bleu Demaa", hex: "#141414" },
-    { name: "Vert Olive", hex: "#556b2f" },
-    { name: "Terracotta", hex: "#e2725b" },
-    { name: "Noir Profond", hex: "#000000" },
-  ];
 
   const exportAsPng = async () => {
     if (!designRef.current) return;
@@ -53,6 +47,7 @@ export default function MenuQRCode() {
   return (
     <div className="min-h-screen md:h-screen bg-[#ffffff] flex flex-col overflow-y-auto md:overflow-hidden text-[#141414]">
       <Navbar />
+      <FreeToolBackLink />
       
       <main className="flex-1 flex flex-col md:flex-row w-full overflow-y-auto md:overflow-hidden">
         
@@ -108,21 +103,11 @@ export default function MenuQRCode() {
             {/* Colors */}
             <div className="space-y-2.5">
               <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1 flex items-center gap-2">
-                <Palette className="w-3 h-3 text-gray-300" /> Thème graphique
+                <Palette className="w-3 h-3 text-gray-300" /> Couleur
               </label>
-              <div className="flex items-center gap-3">
-                {colors.map((c) => (
-                  <button 
-                    key={c.hex}
-                    onClick={() => setColor(c.hex)}
-                    className={`w-10 h-10 rounded-full border-4 transition-all ${color === c.hex ? "border-brand-coral scale-110 shadow-md" : "border-white"}`}
-                    style={{ backgroundColor: c.hex }}
-                    title={c.name}
-                  />
-                ))}
-                <div className="relative flex items-center gap-2 ml-2 pl-4 border-l border-gray-100">
-                  <input type="color" value={color} onChange={(e) => setColor(e.target.value)} className="w-8 h-8 rounded-full border-4 border-white cursor-pointer shadow-sm overflow-hidden p-0" />
-                </div>
+              <div className="flex items-center gap-3 rounded-xl border border-brand-coral/10 bg-white px-4 py-3 shadow-sm">
+                <input type="color" value={color} onChange={(e) => setColor(e.target.value)} className="h-9 w-9 shrink-0 cursor-pointer overflow-hidden rounded-lg border-none p-0 shadow-sm" />
+                <span className="text-xs font-semibold uppercase tracking-[0.08em] text-brand-blue/45">{color}</span>
               </div>
             </div>
           </div>
@@ -181,7 +166,7 @@ export default function MenuQRCode() {
             </button>
             
             <div className="flex items-center gap-3 p-4 bg-white/40 backdrop-blur-md rounded-2xl border border-brand-coral/10">
-              <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-dema-forest shrink-0" />
               <p className="text-[11px] text-brand-blue/60 leading-relaxed italic">
                 <strong>Prêt pour impression :</strong> Fond transparent et haute définition. Idéal pour vos stickers de table ou chevalets.
               </p>

@@ -102,7 +102,7 @@ export default function SuccessPageClient({
 
             {verification.status === "success" && (
               <div className="space-y-4">
-                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-green-50 text-green-600">
+                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
                   <CheckCircle2 className="h-7 w-7" />
                 </div>
                 <h1 className="text-3xl font-black tracking-tight text-brand-blue md:text-4xl">
@@ -135,7 +135,7 @@ export default function SuccessPageClient({
                 <h1 className="text-3xl font-black tracking-tight text-brand-blue md:text-4xl">
                   Vérification impossible
                 </h1>
-                <p className="text-sm leading-relaxed text-red-500 md:text-base">
+                <p className="text-sm leading-relaxed text-dema-forest md:text-base">
                   {verification.message}
                 </p>
               </div>

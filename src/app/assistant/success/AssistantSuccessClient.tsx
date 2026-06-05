@@ -221,7 +221,7 @@ export default function AssistantSuccessClient({
               <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
                 Vérification impossible
               </h1>
-              <p className="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-red-500 md:text-base">
+              <p className="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-dema-forest md:text-base">
                 {verification.message}
               </p>
             </div>
@@ -229,7 +229,7 @@ export default function AssistantSuccessClient({
 
           {verification.status === "success" ? (
             <div className="py-16">
-              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-green-50 text-green-600">
+              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
                 <CheckCircle2 className="h-7 w-7" />
               </div>
               <h1 className="mt-6 text-3xl font-semibold tracking-tight md:text-4xl">
@@ -359,12 +359,12 @@ export default function AssistantSuccessClient({
                 className="min-h-[4.75rem] w-full resize-none overflow-hidden rounded-[0.9rem] border border-brand-blue/10 bg-white px-3.5 py-2.5 text-sm text-brand-blue outline-none transition placeholder:text-brand-blue/40 focus:border-brand-coral/35"
               />
 
-              {error ? <p className="text-sm text-red-500">{error}</p> : null}
+              {error ? <p className="text-sm text-dema-forest">{error}</p> : null}
 
               <button
                 type="submit"
                 disabled={isSubmitting || isSubmitted}
-                className="inline-flex w-full items-center justify-center rounded-full bg-brand-blue px-6 py-2.5 text-sm font-medium text-white transition hover:bg-brand-coral disabled:cursor-not-allowed disabled:bg-green-600"
+                className="inline-flex w-full items-center justify-center rounded-full bg-brand-blue px-6 py-2.5 text-sm font-medium text-white transition hover:bg-brand-coral disabled:cursor-not-allowed disabled:bg-dema-forest/60"
               >
                 {isSubmitted ? (
                   <CheckCircle2 className="mr-2 h-4 w-4" />
@@ -383,7 +383,7 @@ export default function AssistantSuccessClient({
       {isConfirmationOpen ? (
         <div className="fixed inset-0 z-[70] flex items-center justify-center bg-brand-blue/35 px-4 py-6">
           <div className="w-full max-w-sm rounded-[1.1rem] bg-white p-5 text-center shadow-[0_30px_80px_rgba(20,20,20,0.18)]">
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-50 text-green-600">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
               <CheckCircle2 className="h-6 w-6" />
             </div>
             <h2 className="mt-4 text-xl font-semibold tracking-tight text-brand-blue">

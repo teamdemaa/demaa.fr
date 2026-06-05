@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import FreeToolBackLink from "@/components/FreeToolBackLink";
 import Navbar from "@/components/Navbar";
 import { Send, Copy, FileDown, User, Bot, Trash2 } from "lucide-react";
 
@@ -148,6 +149,7 @@ export default function DocGeneratorPage() {
   return (
     <>
       <Navbar />
+      <FreeToolBackLink />
       <main className="min-h-screen bg-white">
         <div className="max-w-4xl mx-auto px-4 py-8">
           
@@ -162,7 +164,7 @@ export default function DocGeneratorPage() {
               </div>
               <button 
                 onClick={() => setMessages([messages[0]])}
-                className="p-2 text-gray-400 hover:text-red-500 transition-colors"
+                className="p-2 text-gray-400 hover:text-dema-forest transition-colors"
                 title="Nouvelle discussion"
               >
                 <Trash2 className="w-4 h-4" />

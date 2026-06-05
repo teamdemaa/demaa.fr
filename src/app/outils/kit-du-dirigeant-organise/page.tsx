@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import FreeToolBackLink from "@/components/FreeToolBackLink";
 import { templatesData } from "@/lib/templates";
 import TemplateCard from "@/components/TemplateCard";
 import ToolSeoSection from "@/components/ToolSeoSection";
@@ -24,6 +25,7 @@ export default function OrganizedLeaderKitPage() {
   return (
     <>
       <Navbar />
+      <FreeToolBackLink />
       <main className="flex-1 w-full bg-background min-h-screen pb-24">
         <section className="w-full flex flex-col items-center justify-center pt-10 pb-12 md:pt-16 md:pb-16 px-4 text-center bg-[#ffffff] border-b border-brand-coral/10">
           <div className="inline-flex items-center px-3 py-1 bg-neutral-100 text-neutral-700 text-[10px] font-bold uppercase tracking-widest rounded-full mb-6">

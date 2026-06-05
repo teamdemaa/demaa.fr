@@ -574,7 +574,7 @@ export default function DelegationPricingModal({
               </div>
 
               {submitError && (
-                <div className="rounded-[1.25rem] border border-red-200 bg-red-50 px-4 py-3 text-sm leading-relaxed text-red-600">
+                <div className="rounded-[1.25rem] border border-dema-forest/15 bg-dema-sage/70 px-4 py-3 text-sm leading-relaxed text-dema-forest">
                   {submitError}
                 </div>
               )}

@@ -171,7 +171,7 @@ export default function SystemSetupModal({
             />
 
             {error ? (
-              <p className="text-sm text-red-500">{error}</p>
+              <p className="text-sm text-dema-forest">{error}</p>
             ) : null}
 
             <button

@@ -371,6 +371,7 @@ function KitContent({
         showHeader={false}
         showSearchBar={false}
         variant="toolbox"
+        cardClickMode="navigate"
       />
       <KitResourcesSection />
     </>

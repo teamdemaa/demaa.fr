@@ -35,8 +35,8 @@ export default function ConsultationForm({ onSuccess }: { onSuccess?: () => void
   if (isSubmitted) {
     return (
       <div className="p-10 text-center">
-        <div className="w-14 h-14 bg-green-50 rounded-2xl flex items-center justify-center mx-auto mb-5">
-          <CheckCircle2 className="w-7 h-7 text-green-500" />
+        <div className="w-14 h-14 bg-dema-sage rounded-2xl flex items-center justify-center mx-auto mb-5">
+          <CheckCircle2 className="w-7 h-7 text-dema-forest" />
         </div>
         <h3 className="text-xl font-black text-brand-blue mb-2 tracking-tight">Demande envoyée !</h3>
         <p className="text-gray-400 text-sm leading-relaxed mb-8 max-w-xs mx-auto">
