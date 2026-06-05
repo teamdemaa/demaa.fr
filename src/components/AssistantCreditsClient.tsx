@@ -7,79 +7,57 @@ import {
   ChevronDown,
   FileCheck2,
   HandCoins,
-  Megaphone,
   MessageCircle,
+  Minus,
   ReceiptText,
-  Search,
+  Send,
+  Settings2,
+  Trash2,
   X,
 } from "lucide-react";
+import {
+  ASSISTANT_PACK_OFFERS,
+  formatAssistantPrice,
+  type AssistantOfferId,
+  type AssistantPackId,
+} from "@/lib/assistant-packs";
 
-const CREDIT_OPTIONS = [
-  { credits: 250 },
-  { credits: 500 },
-  { credits: 750 },
-  { credits: 1000 },
-] as const;
+const OFFER_ICONS = {
+  "structuration-automatisation": Settings2,
+  facturation: ReceiptText,
+  administratif: Send,
+  subvention: HandCoins,
+  "appel-offre": FileCheck2,
+} satisfies Record<AssistantOfferId, typeof Settings2>;
 
-type CreditAmount = (typeof CREDIT_OPTIONS)[number]["credits"];
+type CartItem = {
+  id: AssistantPackId;
+  quantity: number;
+};
 
 type EmbeddedCheckoutState = {
   clientSecret: string;
-  credits: CreditAmount;
+  label: string;
   publishableKey: string;
   sessionId: string | null;
 };
 
-const ASSISTANT_USES = [
-  {
-    title: "Facturation",
-    rate: "25 crédits / heure",
-    icon: ReceiptText,
-    description:
-      "Classement des pièces, suivi des paiements, préparation des éléments comptables et mise à jour de vos documents de gestion.",
-  },
-  {
-    title: "Contenu / Marketing",
-    rate: "30 crédits / heure",
-    icon: Megaphone,
-    description:
-      "Posts, newsletters, supports simples, idées de contenu et mises en forme pour garder une présence régulière.",
-  },
-  {
-    title: "Prospection",
-    rate: "30 crédits / heure",
-    icon: Search,
-    description:
-      "Recherche de contacts, enrichissement de listes, préparation des messages et suivi des opportunités.",
-  },
-  {
-    title: "Subventions",
-    rate: "40 crédits / heure",
-    icon: HandCoins,
-    description:
-      "Recherche d'aides, vérification de l'éligibilité, préparation des pièces et suivi du dossier.",
-  },
-  {
-    title: "Appels d'offres",
-    rate: "50 crédits / heure",
-    icon: FileCheck2,
-    description:
-      "Repérage des opportunités, liste des pièces à fournir, organisation des documents et préparation des réponses.",
-  },
-] as const;
+const DEFAULT_PACK_BY_OFFER = Object.fromEntries(
+  ASSISTANT_PACK_OFFERS.map((offer) => [offer.id, offer.packs[0].id])
+) as Record<AssistantOfferId, AssistantPackId>;
 
 const STEPS = [
   {
-    title: "Vous choisissez vos crédits",
-    description: "Vous achetez des crédits simples, sans abonnement et sans recrutement.",
+    title: "Choisissez vos packs",
+    description: "Vous sélectionnez les heures ou dossiers dont vous avez besoin, sans abonnement.",
   },
   {
-    title: "Vous déléguez",
-    description: "Vous confiez les tâches qui bloquent votre semaine : factures, contenus, dossiers, suivi ou prospection.",
+    title: "Ajoutez au panier",
+    description: "Vous pouvez combiner structuration, facturation, administratif, subvention ou appel d'offre.",
   },
   {
-    title: "On exécute intelligemment",
-    description: "On avance par priorité, avec un suivi simple, et vos crédits sont consommés selon le temps réellement passé.",
+    title: "On cadre puis on exécute",
+    description: "Après paiement, vous envoyez vos éléments et on revient vers vous sous 24h.",
   },
 ] as const;
 
@@ -93,68 +71,133 @@ const FAQ_ITEMS = [
   {
     question: "Est-ce un abonnement ?",
     answer:
-      "Non. Vous achetez des crédits, sans abonnement. Vous les utilisez selon vos besoins.",
+      "Non. Vous achetez un ou plusieurs packs, sans abonnement. Vous pouvez reprendre un pack quand vous en avez besoin.",
   },
   {
-    question: "Dois-je choisir les tâches maintenant ?",
+    question: "Puis-je mélanger plusieurs assistants ?",
     answer:
-      "Non. Vous choisissez seulement vos crédits. Les premières tâches sont définies au démarrage, selon ce qui vous fait perdre le plus de temps.",
+      "Oui. Vous pouvez ajouter plusieurs packs dans le même panier, par exemple structuration et facturation.",
   },
   {
-    question: "Puis-je mélanger plusieurs besoins ?",
+    question: "Que se passe-t-il si le besoin dépasse le pack ?",
     answer:
-      "Oui. Vous pouvez utiliser vos crédits pour une seule mission ou les répartir entre facturation, contenu, prospection, subventions ou appels d'offres.",
+      "On vous prévient avant de continuer. Le temps ou le dossier complémentaire est validé avant facturation.",
   },
   {
-    question: "Comment sont consommés les crédits ?",
+    question: "Les dossiers subvention et appel d'offre sont-ils toujours à 500 € ?",
     answer:
-      "Les crédits sont consommés selon le temps réellement passé sur les tâches validées.",
+      "500 € est le minimum pour lancer un dossier simple ou une réponse simple. Les cas plus complexes sont cadrés avant d'aller plus loin.",
   },
   {
-    question: "Que se passe-t-il si je n'utilise pas tout ou si une tâche dépasse ?",
+    question: "Comment démarre la mission ?",
     answer:
-      "Les crédits non utilisés restent disponibles pour d'autres tâches. Si une tâche demande plus de temps que prévu, on vous prévient avant de continuer.",
-  },
-  {
-    question: "Puis-je commencer petit ?",
-    answer:
-      "Oui. Vous pouvez commencer avec 250 crédits pour tester sur une première série de tâches.",
+      "Après paiement, vous indiquez les sujets à traiter et vos coordonnées WhatsApp. L'équipe Demaa revient vers vous sous 24h.",
   },
 ] as const;
 
-function formatCredits(credits: number) {
-  return `${credits} crédits`;
+function getPackDetails(packId: AssistantPackId) {
+  for (const offer of ASSISTANT_PACK_OFFERS) {
+    const pack = offer.packs.find((item) => item.id === packId);
+
+    if (pack) {
+      return { offer, pack };
+    }
+  }
+
+  return null;
 }
 
-function formatPrice(credits: number) {
-  return `${credits} €`;
+function getCartItemLabel(item: CartItem) {
+  const details = getPackDetails(item.id);
+
+  if (!details) return "Pack assistant";
+
+  return `${details.offer.title} - ${details.pack.label}`;
 }
 
 export default function AssistantCreditsClient() {
-  const [selectedCredits, setSelectedCredits] = useState<CreditAmount>(CREDIT_OPTIONS[0].credits);
-  const [isCreditMenuOpen, setIsCreditMenuOpen] = useState(false);
+  const [selectedPacks, setSelectedPacks] =
+    useState<Record<AssistantOfferId, AssistantPackId>>(DEFAULT_PACK_BY_OFFER);
+  const [openPackMenu, setOpenPackMenu] = useState<AssistantOfferId | null>(null);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isStartingCheckout, setIsStartingCheckout] = useState(false);
   const [embeddedCheckout, setEmbeddedCheckout] = useState<EmbeddedCheckoutState | null>(null);
   const [isEmbeddedCheckoutLoading, setIsEmbeddedCheckoutLoading] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
-  const [openUseIndex, setOpenUseIndex] = useState<number | null>(0);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
   const embeddedCheckoutRef = useRef<{ destroy: () => void } | null>(null);
 
-  const selectedOption = useMemo(
-    () => CREDIT_OPTIONS.find((option) => option.credits === selectedCredits) ?? CREDIT_OPTIONS[0],
-    [selectedCredits]
+  const cartTotal = useMemo(
+    () =>
+      cartItems.reduce((total, item) => {
+        const details = getPackDetails(item.id);
+        return total + (details?.pack.amount ?? 0) * item.quantity;
+      }, 0),
+    [cartItems]
   );
+
+  const cartLabel = useMemo(() => {
+    if (cartItems.length === 0) return "Votre sélection";
+
+    return cartItems
+      .map((item) => {
+        const label = getCartItemLabel(item);
+        return item.quantity > 1 ? `${label} x${item.quantity}` : label;
+      })
+      .join(", ");
+  }, [cartItems]);
+
+  const addPackToCart = (packId: AssistantPackId) => {
+    setCartItems((current) => {
+      const existingItem = current.find((item) => item.id === packId);
+
+      if (existingItem) {
+        return current.map((item) =>
+          item.id === packId ? { ...item, quantity: item.quantity + 1 } : item
+        );
+      }
+
+      return [...current, { id: packId, quantity: 1 }];
+    });
+    setCheckoutError(null);
+  };
+
+  const removePackFromCart = (packId: AssistantPackId) => {
+    setCartItems((current) => current.filter((item) => item.id !== packId));
+    setCheckoutError(null);
+  };
+
+  const decrementPack = (packId: AssistantPackId) => {
+    setCartItems((current) =>
+      current.flatMap((item) => {
+        if (item.id !== packId) return [item];
+        if (item.quantity <= 1) return [];
+        return [{ ...item, quantity: item.quantity - 1 }];
+      })
+    );
+    setCheckoutError(null);
+  };
 
   const handlePayment = async () => {
     setCheckoutError(null);
+
+    if (cartItems.length === 0) {
+      setCheckoutError("Ajoutez au moins un pack au panier pour continuer.");
+      return;
+    }
+
     setIsStartingCheckout(true);
 
     try {
       const response = await fetch("/api/stripe/assistant-checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ credits: selectedOption.credits }),
+        body: JSON.stringify({
+          items: cartItems.map((item) => ({
+            packId: item.id,
+            quantity: item.quantity,
+          })),
+        }),
       });
 
       const payload = (await response.json().catch(() => null)) as
@@ -162,6 +205,7 @@ export default function AssistantCreditsClient() {
             clientSecret?: string;
             error?: string;
             id?: string | null;
+            label?: string;
             publishableKey?: string;
           }
         | null;
@@ -175,7 +219,7 @@ export default function AssistantCreditsClient() {
 
       setEmbeddedCheckout({
         clientSecret: payload.clientSecret,
-        credits: selectedOption.credits,
+        label: payload.label || cartLabel,
         publishableKey: payload.publishableKey,
         sessionId: payload.id ?? null,
       });
@@ -252,8 +296,6 @@ export default function AssistantCreditsClient() {
     };
   }, [embeddedCheckout]);
 
-  const selectedFacturationHours = Math.floor(selectedCredits / 25);
-
   return (
     <div className="min-h-screen bg-dema-cream text-brand-blue">
       {embeddedCheckout ? (
@@ -261,7 +303,7 @@ export default function AssistantCreditsClient() {
           className="fixed inset-0 z-50 overflow-y-auto bg-brand-blue/45 px-4 py-6 backdrop-blur-sm md:px-8 md:py-10"
           role="dialog"
           aria-modal="true"
-          aria-label={`Paiement Stripe pour ${formatCredits(embeddedCheckout.credits)}`}
+          aria-label={`Paiement Stripe pour ${embeddedCheckout.label}`}
         >
           <div className="mx-auto min-h-full w-full max-w-3xl">
             <div className="relative overflow-hidden rounded-[1.25rem] border border-dema-line bg-dema-paper shadow-[0_24px_60px_rgba(23,35,29,0.14)]">
@@ -271,7 +313,7 @@ export default function AssistantCreditsClient() {
                     Paiement sécurisé
                   </p>
                   <h2 className="mt-1 text-lg font-semibold text-brand-blue">
-                    {formatCredits(embeddedCheckout.credits)}
+                    {formatAssistantPrice(cartTotal)}
                   </h2>
                 </div>
                 <button
@@ -295,50 +337,50 @@ export default function AssistantCreditsClient() {
           </div>
         </div>
       ) : null}
+
       <section className="mx-auto w-full max-w-6xl px-4 pb-20 pt-20 md:px-8 md:pb-32 md:pt-28">
         <div className="mx-auto max-w-5xl text-center">
           <h1 className="demaa-hero-title text-[3rem] leading-[0.98] tracking-tight text-brand-blue md:text-[5rem]">
             Déléguez ce qui vous ralentit.
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-dema-muted md:text-lg">
-            Confiez-nous les tâches qui vous prennent la tête : factures,
-            contenus, prospection, suivi administratif, le tout depuis
-            WhatsApp.
+            Choisissez un pack, envoyez vos éléments, puis l&apos;équipe Demaa
+            prend le relais sur WhatsApp.
           </p>
           <div className="mt-9 flex flex-row flex-wrap items-center justify-center gap-1.5 sm:gap-3">
             <a
-              href="#pricing"
+              href="#packs"
               className="inline-flex min-h-10 w-auto items-center justify-center rounded-full bg-dema-forest px-3 text-[11px] font-medium text-dema-paper transition hover:bg-[#284f3a] sm:min-h-12 sm:px-6 sm:text-sm"
             >
-              Déléguer une première tâche
+              Choisir un pack
             </a>
             <a
-              href="#deleguer"
+              href="#fonctionnement"
               className="inline-flex min-h-10 w-auto items-center justify-center rounded-full bg-dema-sage px-3 text-[11px] font-medium text-brand-blue/72 transition hover:bg-[#ebeee9] hover:text-brand-blue sm:min-h-12 sm:px-6 sm:text-sm"
             >
-              Voir ce que je peux déléguer
+              Voir le fonctionnement
             </a>
           </div>
         </div>
 
-        <section className="mx-auto mt-24 max-w-5xl md:mt-32">
+        <section id="fonctionnement" className="mx-auto mt-24 max-w-5xl md:mt-32">
           <div className="max-w-2xl">
             <h2 className="text-2xl font-semibold tracking-tight text-brand-blue md:text-3xl">
-              Votre Assistant, un renfort simple, quand vous en avez besoin.
+              Un achat simple, sans boutique compliquée.
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-dema-muted md:text-base">
-              Vous choisissez vos crédits, vous confiez les tâches à traiter,
-              puis on avance par priorité avec un suivi clair.
+              Vous composez votre panier avec des packs d&apos;heures ou de
+              dossiers, puis vous payez en une fois.
             </p>
           </div>
           <div className="mt-10 grid gap-5 md:grid-cols-3">
-          {STEPS.map((step, index) => (
-            <div key={step.title} className="demaa-card rounded-[1.15rem] px-5 py-6">
-              <p className="text-xs font-semibold text-dema-forest">0{index + 1}</p>
-              <h2 className="mt-4 text-base font-semibold text-brand-blue">{step.title}</h2>
-              <p className="mt-2 text-sm leading-relaxed text-dema-muted">{step.description}</p>
-            </div>
-          ))}
+            {STEPS.map((step, index) => (
+              <div key={step.title} className="demaa-card rounded-[1.15rem] px-5 py-6">
+                <p className="text-xs font-semibold text-dema-forest">0{index + 1}</p>
+                <h2 className="mt-4 text-base font-semibold text-brand-blue">{step.title}</h2>
+                <p className="mt-2 text-sm leading-relaxed text-dema-muted">{step.description}</p>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -370,148 +412,228 @@ export default function AssistantCreditsClient() {
           </div>
         </section>
 
-        <section id="deleguer" className="mx-auto mt-28 grid max-w-5xl gap-12 lg:grid-cols-[0.85fr_1.15fr] md:mt-36">
-          <div className="pt-1">
-            <h2 className="text-2xl font-semibold tracking-tight text-brand-blue md:text-3xl">
-              Ce que vous pouvez nous confier.
-            </h2>
-            <p className="mt-4 text-sm leading-relaxed text-dema-muted md:text-base">
-              On commence par les sujets qui vous font perdre du temps ou qui
-              restent trop souvent en attente.
-            </p>
-          </div>
+        <section id="packs" className="mx-auto mt-28 max-w-6xl md:mt-36">
+          <div className="grid gap-8 lg:grid-cols-[1fr_22rem]">
+            <div>
+              <div className="max-w-2xl">
+                <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
+                  Packs assistant
+                </p>
+                <h2 className="text-2xl font-semibold tracking-tight text-brand-blue md:text-3xl">
+                  Choisissez ce que vous voulez déléguer.
+                </h2>
+                <p className="mt-3 text-sm leading-relaxed text-dema-muted md:text-base">
+                  Sélectionnez un pack dans chaque carte, ajoutez-le au panier,
+                  puis validez le paiement.
+                </p>
+              </div>
 
-          <div className="space-y-2">
-            {ASSISTANT_USES.map((item, index) => {
-              const isOpen = openUseIndex === index;
-              const UseIcon = item.icon;
-
-              return (
-                <div key={item.title} className="border-b border-dema-line/70 bg-transparent last:border-b-0">
-                  <button
-                    type="button"
-                    onClick={() => setOpenUseIndex(isOpen ? null : index)}
-                    className="flex w-full items-center justify-between gap-4 py-4 text-left"
-                    aria-expanded={isOpen}
-                  >
-                    <span className="flex min-w-0 items-center gap-3">
-                      <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
-                        <UseIcon className="h-4 w-4" aria-hidden="true" />
-                      </span>
-                      <span className="text-base font-semibold text-brand-blue">
-                        {item.title}
-                      </span>
-                    </span>
-                    <span className="flex items-center gap-3">
-                      <span className="hidden text-sm font-medium text-dema-forest sm:inline">
-                        {item.rate}
-                      </span>
-                      <ChevronDown
-                        className={`h-5 w-5 shrink-0 text-dema-forest transition-transform ${
-                          isOpen ? "rotate-180" : ""
-                        }`}
-                      />
-                    </span>
-                  </button>
-
-                  {isOpen ? (
-                    <div className="pb-4">
-                      <p className="text-sm font-medium text-dema-forest sm:hidden">
-                        {item.rate}
-                      </p>
-                      <p className="mt-2 text-sm leading-relaxed text-dema-muted">
-                        {item.description}
-                      </p>
-                    </div>
-                  ) : null}
-                </div>
-              );
-            })}
-          </div>
-        </section>
-
-        <section id="pricing" className="demaa-surface mx-auto mt-28 max-w-3xl rounded-[1.25rem] px-5 py-10 md:mt-36 md:px-8 md:py-12">
-          <div className="mx-auto max-w-2xl text-center">
-            <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
-              Assistant à la demande
-            </p>
-            <h2 className="text-2xl font-semibold tracking-tight text-brand-blue md:text-3xl">
-              Choisissez vos crédits.
-            </h2>
-            <p className="mt-3 text-sm leading-relaxed text-dema-muted md:text-base">
-              1 crédit = 1 €. Vous achetez vos crédits, puis vous les utilisez
-              selon vos besoins.
-            </p>
-          </div>
-
-          <div className="mx-auto mt-7 max-w-xl">
-            <button
-              type="button"
-              onClick={() => setIsCreditMenuOpen((isOpen) => !isOpen)}
-              className="flex min-h-14 w-full items-center justify-between rounded-[0.9rem] border border-dema-line bg-dema-paper px-4 text-left text-base font-normal text-brand-blue shadow-[0_6px_18px_rgba(23,35,29,0.024)] transition hover:bg-dema-sage/45"
-              aria-expanded={isCreditMenuOpen}
-            >
-              <span>
-                {formatCredits(selectedCredits)} - {formatPrice(selectedCredits)}
-              </span>
-              <ChevronDown
-                className={`h-5 w-5 transition-transform ${isCreditMenuOpen ? "rotate-180" : ""}`}
-              />
-            </button>
-
-            {isCreditMenuOpen ? (
-              <div className="mt-3 overflow-hidden rounded-[0.9rem] border border-dema-line bg-dema-paper py-3 shadow-[0_16px_32px_rgba(23,35,29,0.07)]">
-                {CREDIT_OPTIONS.map((option) => {
-                  const isSelected = option.credits === selectedCredits;
+              <div className="mt-8 grid gap-4 md:grid-cols-2">
+                {ASSISTANT_PACK_OFFERS.map((offer) => {
+                  const selectedPackId = selectedPacks[offer.id];
+                  const selectedPack =
+                    offer.packs.find((pack) => pack.id === selectedPackId) ||
+                    offer.packs[0];
+                  const Icon = OFFER_ICONS[offer.id];
+                  const isMenuOpen = openPackMenu === offer.id;
 
                   return (
-                    <button
-                      key={option.credits}
-                      type="button"
-                      onClick={() => {
-                        setSelectedCredits(option.credits);
-                        setIsCreditMenuOpen(false);
-                      }}
-                      className={`flex w-full items-center justify-between px-5 py-3 text-left text-base transition ${
-                        isSelected
-                          ? "font-semibold text-dema-forest"
-                          : "font-normal text-brand-blue hover:bg-dema-sage/50"
-                      }`}
+                    <article
+                      key={offer.id}
+                      className="demaa-card flex min-h-[22rem] flex-col rounded-[1.15rem] p-5"
                     >
-                      <span>
-                        {formatCredits(option.credits)} - {formatPrice(option.credits)}
-                      </span>
-                      {isSelected ? <Check className="h-5 w-5" /> : null}
-                    </button>
+                      <div className="flex items-start justify-between gap-4">
+                        <div>
+                          <p className="text-[10px] font-medium uppercase tracking-[0.16em] text-dema-forest">
+                            {offer.category}
+                          </p>
+                          <h3 className="mt-3 text-xl font-semibold leading-tight tracking-tight text-brand-blue">
+                            {offer.title}
+                          </h3>
+                        </div>
+                        <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
+                          <Icon className="h-5 w-5" aria-hidden="true" />
+                        </span>
+                      </div>
+
+                      <p className="mt-4 text-sm leading-relaxed text-dema-muted">
+                        {offer.description}
+                      </p>
+                      <div className="mt-5 flex flex-wrap gap-2">
+                        <span className="rounded-full bg-dema-sage px-3 py-1.5 text-xs font-medium text-brand-blue/72">
+                          {offer.startingLabel}
+                        </span>
+                        <span className="rounded-full bg-dema-paper px-3 py-1.5 text-xs font-medium text-dema-forest">
+                          {offer.rateLabel}
+                        </span>
+                      </div>
+
+                      <div className="mt-auto pt-6">
+                        <div className="relative">
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setOpenPackMenu(isMenuOpen ? null : offer.id)
+                            }
+                            className="flex min-h-14 w-full items-center justify-between rounded-[0.9rem] border border-dema-line bg-dema-paper px-4 text-left text-sm font-normal text-brand-blue shadow-[0_6px_18px_rgba(23,35,29,0.024)] transition hover:bg-dema-sage/45"
+                            aria-expanded={isMenuOpen}
+                          >
+                            <span>
+                              <span className="block font-medium">
+                                {selectedPack.label} - {formatAssistantPrice(selectedPack.amount)}
+                              </span>
+                              <span className="mt-0.5 block text-xs text-dema-muted">
+                                {selectedPack.detail}
+                              </span>
+                            </span>
+                            <ChevronDown
+                              className={`h-5 w-5 shrink-0 transition-transform ${
+                                isMenuOpen ? "rotate-180" : ""
+                              }`}
+                            />
+                          </button>
+
+                          {isMenuOpen ? (
+                            <div className="absolute left-0 right-0 z-20 mt-2 overflow-hidden rounded-[0.9rem] border border-dema-line bg-dema-paper py-2 shadow-[0_16px_32px_rgba(23,35,29,0.07)]">
+                              {offer.packs.map((pack) => {
+                                const isSelected = pack.id === selectedPack.id;
+
+                                return (
+                                  <button
+                                    key={pack.id}
+                                    type="button"
+                                    onClick={() => {
+                                      setSelectedPacks((current) => ({
+                                        ...current,
+                                        [offer.id]: pack.id,
+                                      }));
+                                      setOpenPackMenu(null);
+                                    }}
+                                    className={`flex w-full items-center justify-between gap-3 px-4 py-3 text-left text-sm transition ${
+                                      isSelected
+                                        ? "font-semibold text-dema-forest"
+                                        : "font-normal text-brand-blue hover:bg-dema-sage/50"
+                                    }`}
+                                  >
+                                    <span>
+                                      <span className="block">
+                                        {pack.label} - {formatAssistantPrice(pack.amount)}
+                                      </span>
+                                      <span className="mt-0.5 block text-xs font-normal text-dema-muted">
+                                        {pack.detail}
+                                      </span>
+                                    </span>
+                                    {isSelected ? <Check className="h-4 w-4 shrink-0" /> : null}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          ) : null}
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={() => addPackToCart(selectedPack.id)}
+                          className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-dema-forest px-4 py-3 text-sm font-medium text-dema-paper transition hover:bg-[#284f3a]"
+                        >
+                          Ajouter au panier
+                        </button>
+                      </div>
+                    </article>
                   );
                 })}
               </div>
-            ) : null}
+            </div>
 
-            <p className="mt-5 text-center text-sm font-medium text-brand-blue">
-              1 crédit assistant = 1 €
-            </p>
+            <aside className="lg:sticky lg:top-24 lg:self-start">
+              <div className="demaa-surface rounded-[1.15rem] px-5 py-6">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
+                  Votre panier
+                </p>
+                <h2 className="mt-2 text-xl font-semibold tracking-tight text-brand-blue">
+                  Sélection
+                </h2>
 
-            <button
-              type="button"
-              onClick={handlePayment}
-              disabled={isStartingCheckout}
-              className="mt-7 inline-flex w-full items-center justify-center rounded-full bg-dema-forest px-5 py-3 text-sm font-medium text-dema-paper transition hover:bg-[#284f3a] disabled:cursor-not-allowed disabled:opacity-60"
-            >
-              {isStartingCheckout
-                ? "Ouverture du paiement..."
-                : `Acheter ${formatCredits(selectedCredits)}`}
-            </button>
-            {checkoutError ? (
-              <p className="mx-auto mt-3 max-w-md text-center text-sm leading-relaxed text-red-500">
-                {checkoutError}
-              </p>
-            ) : null}
-            <p className="mx-auto mt-4 max-w-md text-center text-xs leading-relaxed text-dema-muted">
-              Exemple : {formatCredits(selectedCredits)} peuvent couvrir jusqu&apos;à{" "}
-              {selectedFacturationHours}h de facturation, ou être répartis entre
-              plusieurs tâches.
-            </p>
+                {cartItems.length > 0 ? (
+                  <div className="mt-5 space-y-3">
+                    {cartItems.map((item) => {
+                      const details = getPackDetails(item.id);
+
+                      if (!details) return null;
+
+                      const lineTotal = details.pack.amount * item.quantity;
+
+                      return (
+                        <div key={item.id} className="rounded-[0.9rem] border border-dema-line bg-dema-paper px-4 py-3">
+                          <div className="flex items-start justify-between gap-3">
+                            <div>
+                              <p className="text-sm font-semibold leading-snug text-brand-blue">
+                                {details.offer.title}
+                              </p>
+                              <p className="mt-1 text-xs text-dema-muted">
+                                {details.pack.label}
+                                {item.quantity > 1 ? ` x${item.quantity}` : ""}
+                              </p>
+                            </div>
+                            <p className="text-sm font-semibold text-dema-forest">
+                              {formatAssistantPrice(lineTotal)}
+                            </p>
+                          </div>
+                          <div className="mt-3 flex items-center gap-2">
+                            <button
+                              type="button"
+                              onClick={() => decrementPack(item.id)}
+                              className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition hover:bg-[#ebeee9]"
+                              aria-label="Réduire la quantité"
+                            >
+                              <Minus className="h-4 w-4" aria-hidden="true" />
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => removePackFromCart(item.id)}
+                              className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition hover:bg-[#ebeee9]"
+                              aria-label="Retirer du panier"
+                            >
+                              <Trash2 className="h-4 w-4" aria-hidden="true" />
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <p className="mt-5 rounded-[0.9rem] border border-dashed border-dema-line px-4 py-5 text-sm leading-relaxed text-dema-muted">
+                    Ajoutez un pack pour voir le total et ouvrir le paiement.
+                  </p>
+                )}
+
+                <div className="mt-5 border-t border-dema-line pt-5">
+                  <div className="flex items-center justify-between gap-4">
+                    <span className="text-sm font-medium text-dema-muted">Total</span>
+                    <span className="text-xl font-semibold text-brand-blue">
+                      {formatAssistantPrice(cartTotal)}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handlePayment}
+                    disabled={isStartingCheckout || cartItems.length === 0}
+                    className="mt-5 inline-flex w-full items-center justify-center rounded-full bg-dema-forest px-5 py-3 text-sm font-medium text-dema-paper transition hover:bg-[#284f3a] disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    {isStartingCheckout ? "Ouverture du paiement..." : "Valider et payer"}
+                  </button>
+                  {checkoutError ? (
+                    <p className="mt-3 text-sm leading-relaxed text-red-500">
+                      {checkoutError}
+                    </p>
+                  ) : null}
+                  <p className="mt-4 text-xs leading-relaxed text-dema-muted">
+                    Si le besoin dépasse le pack prévu, le complément est validé
+                    avant d&apos;être facturé.
+                  </p>
+                </div>
+              </div>
+            </aside>
           </div>
         </section>
 
@@ -564,14 +686,14 @@ export default function AssistantCreditsClient() {
             Déléguez une première tâche cette semaine.
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-dema-muted md:text-base">
-            Commencez avec des crédits, puis confiez les sujets qui vous freinent
-            au quotidien.
+            Choisissez un pack, payez en ligne, puis envoyez les éléments à
+            traiter.
           </p>
           <a
-            href="#pricing"
+            href="#packs"
             className="mt-6 inline-flex rounded-full bg-dema-forest px-6 py-3 text-sm font-medium text-dema-paper transition hover:bg-[#284f3a]"
           >
-            Déléguer une première tâche
+            Choisir un pack
           </a>
         </section>
       </section>

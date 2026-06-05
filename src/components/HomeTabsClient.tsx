@@ -3,13 +3,12 @@
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import {
-  Boxes,
   FileText,
   PlayCircle,
   Search,
-  Wrench,
   X,
 } from "lucide-react";
+import PrimaryMobileNav, { type PrimaryNavTab } from "@/components/PrimaryMobileNav";
 import SystemsCatalogClient from "@/components/SystemsCatalogClient";
 import ToolDirectoryClient from "@/components/ToolDirectoryClient";
 import type { System } from "@/lib/types";
@@ -31,19 +30,6 @@ type HomeTabsClientProps = {
   initialSector?: string;
   initialSystem?: string;
 };
-
-const tabs = [
-  {
-    id: "systemes",
-    label: "Systèmes",
-    icon: Boxes,
-  },
-  {
-    id: "outils",
-    label: "Kit",
-    icon: Wrench,
-  },
-] as const;
 
 const tabHeroCopy: Record<
   HomeTab,
@@ -261,6 +247,17 @@ export default function HomeTabsClient({
     window.dispatchEvent(new CustomEvent(HOME_TAB_SELECT_EVENT, { detail: { tab } }));
   }
 
+  function selectPrimaryMobileTab(tab: PrimaryNavTab) {
+    if (tab === "structurer") {
+      selectTab("systemes");
+      return;
+    }
+
+    if (tab === "equiper") {
+      selectTab("outils");
+    }
+  }
+
   useEffect(() => {
     function handleHomeTabSelect(event: Event) {
       const tab = (event as CustomEvent<{ tab?: string }>).detail?.tab;
@@ -325,7 +322,10 @@ export default function HomeTabsClient({
       </section>
       {tabContent}
       <div className="h-24 md:hidden" aria-hidden="true" />
-      <MobileTabBar activeTab={activeTab} onSelect={selectTab} />
+      <PrimaryMobileNav
+        activeTab={activeTab === "outils" ? "equiper" : "structurer"}
+        onSelect={selectPrimaryMobileTab}
+      />
     </>
   );
 }
@@ -352,7 +352,7 @@ function KitContent({
   return (
     <>
       <ToolDirectoryClient
-        title="Kit du dirigeant"
+        title="S'équiper"
         description="Les outils pratiques pour faire avancer l'activité plus vite."
         searchPlaceholder="Rechercher dans le kit"
         items={tools}
@@ -455,45 +455,6 @@ function SearchBar({
         />
       </div>
     </div>
-  );
-}
-
-function MobileTabBar({
-  activeTab,
-  onSelect,
-}: {
-  activeTab: HomeTab;
-  onSelect: (tab: HomeTab) => void;
-}) {
-  return (
-    <nav
-      className="fixed inset-x-0 bottom-0 z-40 px-4 pb-[calc(env(safe-area-inset-bottom)+0.875rem)] md:hidden"
-      aria-label="Navigation principale mobile"
-    >
-      <div className="mx-auto grid max-w-xs grid-cols-2 gap-1 rounded-full border border-dema-line/75 bg-dema-paper/95 p-1.5 shadow-[0_-8px_28px_rgba(23,35,29,0.08)] backdrop-blur">
-        {tabs.map((tab) => {
-          const Icon = tab.icon;
-          const isActive = activeTab === tab.id;
-
-          return (
-            <button
-              key={tab.id}
-              type="button"
-              onClick={() => onSelect(tab.id)}
-              aria-current={isActive ? "page" : undefined}
-              className={`flex min-h-11 items-center justify-center gap-1.5 rounded-full px-2 text-[11px] transition ${
-                  isActive
-                  ? "bg-dema-forest font-semibold text-white shadow-[0_6px_16px_rgba(49,95,70,0.14)]"
-                  : "font-light text-brand-blue/56 hover:bg-dema-sage/70 hover:text-brand-blue/72"
-              }`}
-            >
-              <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
-              <span className="whitespace-nowrap">{tab.label}</span>
-            </button>
-          );
-        })}
-      </div>
-    </nav>
   );
 }
 

@@ -11,7 +11,7 @@ const assistantFaqJsonLd = {
       name: "Est-ce un abonnement ?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Non. Vous achetez des crédits, sans abonnement. Vous les utilisez selon vos besoins.",
+        text: "Non. Vous achetez un ou plusieurs packs assistant, sans abonnement.",
       },
     },
     {
@@ -19,23 +19,23 @@ const assistantFaqJsonLd = {
       name: "Dois-je choisir les tâches maintenant ?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Non. Vous choisissez seulement vos crédits. Les premières tâches sont définies au démarrage, selon ce qui vous fait perdre le plus de temps.",
+        text: "Non. Vous choisissez le pack adapté, puis les premières tâches sont précisées après paiement.",
       },
     },
     {
       "@type": "Question",
-      name: "Puis-je mélanger plusieurs besoins ?",
+      name: "Puis-je mélanger plusieurs packs ?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Oui. Vous pouvez utiliser vos crédits pour une seule mission ou les répartir entre facturation, contenu, prospection, subventions ou appels d'offres.",
+        text: "Oui. Vous pouvez ajouter plusieurs packs dans le même panier, par exemple structuration, facturation et administratif.",
       },
     },
     {
       "@type": "Question",
-      name: "Comment sont consommés les crédits ?",
+      name: "Comment fonctionnent les packs ?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Les crédits sont consommés selon le temps réellement passé sur les tâches validées.",
+        text: "Les packs horaires incluent un volume d'heures. Les packs subvention et appel d'offre incluent un nombre de dossiers ou réponses simples.",
       },
     },
     {
@@ -43,15 +43,15 @@ const assistantFaqJsonLd = {
       name: "Que se passe-t-il si je n'utilise pas tout ou si une tâche dépasse ?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Les crédits non utilisés restent disponibles pour d'autres tâches. Si une tâche demande plus de temps que prévu, on vous prévient avant de continuer.",
+        text: "Si une tâche demande plus de temps ou sort du cadre du pack, Demaa vous prévient avant de continuer.",
       },
     },
     {
       "@type": "Question",
-      name: "Puis-je commencer petit ?",
+      name: "Puis-je commencer avec un petit pack ?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Oui. Vous pouvez commencer avec 250 crédits pour tester sur une première série de tâches.",
+        text: "Oui. Vous pouvez commencer avec un pack administratif à 250 € ou un pack structuration à 300 €.",
       },
     },
   ],
@@ -60,14 +60,14 @@ const assistantFaqJsonLd = {
 export const metadata: Metadata = {
   title: "Assistant à la demande pour TPE - Demaa",
   description:
-    "Déléguez vos tâches opérationnelles depuis WhatsApp avec des crédits assistant : facturation, contenu, prospection, subventions et suivi administratif.",
+    "Déléguez vos tâches opérationnelles depuis WhatsApp avec des packs assistant : structuration, automatisation, facturation, administratif, subventions et appels d'offres.",
   alternates: {
     canonical: "/assistant",
   },
   openGraph: {
     title: "Assistant à la demande pour TPE - Demaa",
     description:
-      "Déléguez vos tâches opérationnelles depuis WhatsApp avec des crédits assistant : facturation, contenu, prospection, subventions et suivi administratif.",
+      "Déléguez vos tâches opérationnelles depuis WhatsApp avec des packs assistant : structuration, automatisation, facturation, administratif, subventions et appels d'offres.",
     url: "/assistant",
     siteName: "Demaa",
     locale: "fr_FR",
@@ -77,7 +77,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Assistant à la demande pour TPE - Demaa",
     description:
-      "Déléguez vos tâches opérationnelles depuis WhatsApp avec des crédits assistant : facturation, contenu, prospection, subventions et suivi administratif.",
+      "Déléguez vos tâches opérationnelles depuis WhatsApp avec des packs assistant : structuration, automatisation, facturation, administratif, subventions et appels d'offres.",
   },
 };
 

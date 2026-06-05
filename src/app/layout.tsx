@@ -55,23 +55,23 @@ const gambetta = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Demaa - Systèmes, outils et accompagnement pour dirigeants",
+  title: "Demaa - Structurer, s'équiper et déléguer",
   description:
-    "Demaa aide les dirigeants de TPE à structurer leur activité avec des systèmes métier, des outils du quotidien, des ressources pratiques et des accompagnements ciblés.",
+    "Demaa aide les dirigeants de TPE à structurer leur activité, s'équiper avec les bons outils et déléguer les tâches opérationnelles.",
   metadataBase: new URL('https://demaa.fr'),
   openGraph: {
-    title: "Demaa - Systèmes, outils et accompagnement pour dirigeants",
+    title: "Demaa - Structurer, s'équiper et déléguer",
     description:
-      "Demaa aide les dirigeants de TPE à structurer leur activité avec des systèmes métier, des outils du quotidien, des ressources pratiques et des accompagnements ciblés.",
+      "Demaa aide les dirigeants de TPE à structurer leur activité, s'équiper avec les bons outils et déléguer les tâches opérationnelles.",
     siteName: "Demaa",
     locale: "fr_FR",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Demaa - Systèmes, outils et accompagnement pour dirigeants",
+    title: "Demaa - Structurer, s'équiper et déléguer",
     description:
-      "Demaa aide les dirigeants de TPE à structurer leur activité avec des systèmes métier, des outils du quotidien, des ressources pratiques et des accompagnements ciblés.",
+      "Demaa aide les dirigeants de TPE à structurer leur activité, s'équiper avec les bons outils et déléguer les tâches opérationnelles.",
   },
   applicationName: "Demaa",
   appleWebApp: {

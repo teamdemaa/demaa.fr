@@ -2,12 +2,13 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Navbar from "@/components/Navbar";
-import { CheckCircle2, LoaderCircle, Send, X } from "lucide-react";
+import { CheckCircle2, LoaderCircle, Send, UserRound, X } from "lucide-react";
 
 type VerificationState =
   | { status: "loading" }
   | {
       status: "success";
+      cartSummary: string;
       credits: number | null;
       email: string | null;
       firstName: string | null;
@@ -19,10 +20,16 @@ type VerificationState =
   | { status: "error"; message: string };
 
 type OnboardingForm = {
+  firstName: string;
+  lastName: string;
+  whatsappPhone: string;
   problems: string;
 };
 
 const INITIAL_FORM: OnboardingForm = {
+  firstName: "",
+  lastName: "",
+  whatsappPhone: "",
   problems: "",
 };
 
@@ -37,6 +44,7 @@ export default function AssistantSuccessClient({
   const [formData, setFormData] = useState(INITIAL_FORM);
   const [error, setError] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -59,6 +67,7 @@ export default function AssistantSuccessClient({
 
         const payload = (await response.json().catch(() => null)) as
           | {
+              cartSummary?: string;
               credits?: number | null;
               email?: string | null;
               error?: string;
@@ -80,12 +89,13 @@ export default function AssistantSuccessClient({
 
         setVerification({
           status: "success",
+          cartSummary: payload.cartSummary || payload.offerLabel || "Packs assistant",
           credits: payload.credits ?? null,
           email: payload.email || null,
           firstName: payload.firstName || null,
           lastName: payload.lastName || null,
           name: payload.name || null,
-          offerLabel: payload.offerLabel || "Crédits assistant",
+          offerLabel: payload.offerLabel || "Packs assistant",
           whatsappPhone: payload.whatsappPhone || null,
         });
         setIsModalOpen(true);
@@ -113,9 +123,11 @@ export default function AssistantSuccessClient({
 
   const handleChange =
     (field: keyof OnboardingForm) =>
-    (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-      event.currentTarget.style.height = "auto";
-      event.currentTarget.style.height = `${event.currentTarget.scrollHeight}px`;
+    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      if (event.currentTarget instanceof HTMLTextAreaElement) {
+        event.currentTarget.style.height = "auto";
+        event.currentTarget.style.height = `${event.currentTarget.scrollHeight}px`;
+      }
       setFormData((current) => ({
         ...current,
         [field]: event.target.value,
@@ -128,8 +140,18 @@ export default function AssistantSuccessClient({
 
     if (isSubmitted) return;
 
+    if (!formData.firstName.trim()) {
+      setError("Merci d'indiquer votre prénom.");
+      return;
+    }
+
+    if (!formData.whatsappPhone.trim()) {
+      setError("Merci d'indiquer votre WhatsApp pour que l'équipe Demaa puisse vous contacter.");
+      return;
+    }
+
     if (!formData.problems.trim()) {
-      setError("Merci d'indiquer ce que vous voulez déléguer.");
+      setError("Merci de détailler ce que vous voulez déléguer.");
       return;
     }
 
@@ -143,6 +165,9 @@ export default function AssistantSuccessClient({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           sessionId,
+          firstName: formData.firstName.trim(),
+          lastName: formData.lastName.trim(),
+          whatsappPhone: formData.whatsappPhone.trim(),
           tasks: formData.problems.trim(),
         }),
       });
@@ -159,6 +184,8 @@ export default function AssistantSuccessClient({
       }
 
       setIsSubmitted(true);
+      setIsModalOpen(false);
+      setIsConfirmationOpen(true);
     } catch (submitError) {
       setError(
         submitError instanceof Error
@@ -210,17 +237,29 @@ export default function AssistantSuccessClient({
               </h1>
               <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-gray-600 md:text-base">
                 {displayName ? `Merci ${displayName}, ` : ""}
-                vos crédits assistant sont validés. Ajoutez les tâches à déléguer,
-                puis on revient vers vous sous 24h.
+                votre commande assistant est validée. Ajoutez les tâches à déléguer,
+                puis on vous contacte sur WhatsApp sous 24h.
               </p>
-              <div className="mt-7">
+              <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(true)}
+                  disabled={isSubmitted}
                   className="inline-flex rounded-full bg-brand-blue px-6 py-3 text-sm font-medium text-white transition hover:bg-brand-coral"
                 >
-                  Ajouter les tâches à déléguer
+                  {isSubmitted ? "Demande envoyée" : "Ajouter les tâches à déléguer"}
                 </button>
+                {sessionId ? (
+                  <a
+                    href={`/api/customer-space/stripe-entry?session_id=${encodeURIComponent(
+                      sessionId
+                    )}`}
+                    className="inline-flex items-center gap-2 rounded-full border border-brand-blue/10 bg-white px-6 py-3 text-sm font-medium text-brand-blue transition hover:border-brand-coral/30 hover:text-brand-coral"
+                  >
+                    <UserRound className="h-4 w-4" aria-hidden="true" />
+                    Voir mon espace membre
+                  </a>
+                ) : null}
               </div>
             </div>
           ) : null}
@@ -229,24 +268,24 @@ export default function AssistantSuccessClient({
 
       {isModalOpen && verification.status === "success" ? (
         <div
-          className="fixed inset-0 z-[70] flex items-center justify-center bg-brand-blue/35 px-4 py-8"
+          className="fixed inset-0 z-[70] flex items-start justify-center overflow-y-auto bg-brand-blue/35 px-4 py-4 md:items-center"
           onClick={() => setIsModalOpen(false)}
         >
           <div
-            className="w-full max-w-xl bg-white p-6 shadow-[0_30px_80px_rgba(20,20,20,0.18)] md:p-8"
+            className="max-h-[calc(100vh-2rem)] w-full max-w-lg overflow-y-auto rounded-[1.1rem] bg-white p-4 shadow-[0_30px_80px_rgba(20,20,20,0.18)] md:p-5"
             onClick={(event) => event.stopPropagation()}
           >
-            <div className="flex items-start justify-between gap-4">
+            <div className="flex items-start justify-between gap-3">
               <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-coral">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-brand-coral">
                   Dernière étape
                 </p>
-                <h2 className="mt-2 text-2xl font-semibold tracking-tight text-brand-blue md:text-3xl">
-                  Dites-nous quoi traiter en priorité.
+                <h2 className="mt-1.5 text-xl font-semibold leading-tight tracking-tight text-brand-blue md:text-2xl">
+                  Merci, vous allez enfin pouvoir souffler.
                 </h2>
-                <p className="mt-3 text-sm leading-relaxed text-gray-600">
-                  Ces informations seront envoyées à l&apos;équipe Demaa avec
-                  votre paiement confirmé.
+                <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                  Ajoutez les détails de votre demande, et on vous contacte sur
+                  WhatsApp pour organiser la suite.
                 </p>
               </div>
               <button
@@ -259,43 +298,73 @@ export default function AssistantSuccessClient({
               </button>
             </div>
 
-            <div className="mt-5 bg-neutral-50 px-4 py-3 text-left text-sm text-gray-600">
+            <div className="mt-3 rounded-[0.9rem] bg-neutral-50 px-3 py-2 text-left text-xs leading-relaxed text-gray-600">
               <p>
                 <span className="font-medium text-brand-blue">Paiement :</span>{" "}
-                {verification.offerLabel}
+                {verification.cartSummary || verification.offerLabel}
               </p>
-              <p className="mt-1">
+              <p>
                 <span className="font-medium text-brand-blue">Client :</span>{" "}
-                {displayName || verification.email || "non renseigné"}
-              </p>
-              <p className="mt-1">
-                <span className="font-medium text-brand-blue">WhatsApp :</span>{" "}
-                {verification.whatsappPhone || "renseigné dans Stripe"}
+                {verification.email || displayName || "non renseigné"}
               </p>
             </div>
 
-            <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
+            <form className="mt-4 space-y-3" onSubmit={handleSubmit}>
+              <div className="grid gap-3 md:grid-cols-2">
+                <label className="block text-left">
+                  <span className="text-xs font-medium text-brand-blue/70">Prénom</span>
+                  <input
+                    type="text"
+                    value={formData.firstName}
+                    onChange={handleChange("firstName")}
+                    disabled={isSubmitting || isSubmitted}
+                    autoComplete="given-name"
+                    className="mt-1 w-full rounded-[0.9rem] border border-brand-blue/10 bg-white px-3.5 py-2.5 text-sm text-brand-blue outline-none transition placeholder:text-brand-blue/40 focus:border-brand-coral/35"
+                  />
+                </label>
+                <label className="block text-left">
+                  <span className="text-xs font-medium text-brand-blue/70">Nom</span>
+                  <input
+                    type="text"
+                    value={formData.lastName}
+                    onChange={handleChange("lastName")}
+                    disabled={isSubmitting || isSubmitted}
+                    autoComplete="family-name"
+                    className="mt-1 w-full rounded-[0.9rem] border border-brand-blue/10 bg-white px-3.5 py-2.5 text-sm text-brand-blue outline-none transition placeholder:text-brand-blue/40 focus:border-brand-coral/35"
+                  />
+                </label>
+              </div>
+
+              <label className="block text-left">
+                <span className="text-xs font-medium text-brand-blue/70">
+                  WhatsApp pour vous contacter
+                </span>
+                <input
+                  type="tel"
+                  value={formData.whatsappPhone}
+                  onChange={handleChange("whatsappPhone")}
+                  placeholder="+33 6 ..."
+                  disabled={isSubmitting || isSubmitted}
+                  autoComplete="tel"
+                  className="mt-1 w-full rounded-[0.9rem] border border-brand-blue/10 bg-white px-3.5 py-2.5 text-sm text-brand-blue outline-none transition placeholder:text-brand-blue/40 focus:border-brand-coral/35"
+                />
+              </label>
+
               <textarea
                 value={formData.problems}
                 onChange={handleChange("problems")}
-                placeholder="Les tâches, problèmes ou sujets à déléguer"
+                placeholder="Détaillez ce que vous voulez déléguer : contexte, documents, échéance, outils utilisés..."
                 rows={2}
                 disabled={isSubmitting || isSubmitted}
-                className="min-h-[3.25rem] w-full resize-none overflow-hidden rounded-[1rem] border border-brand-blue/10 bg-white px-4 py-3 text-sm text-brand-blue outline-none transition placeholder:text-brand-blue/40 focus:border-brand-coral/35"
+                className="min-h-[4.75rem] w-full resize-none overflow-hidden rounded-[0.9rem] border border-brand-blue/10 bg-white px-3.5 py-2.5 text-sm text-brand-blue outline-none transition placeholder:text-brand-blue/40 focus:border-brand-coral/35"
               />
 
               {error ? <p className="text-sm text-red-500">{error}</p> : null}
-              {isSubmitted ? (
-                <p className="rounded-[1rem] bg-green-50 px-4 py-3 text-sm leading-relaxed text-green-700">
-                  Vous allez enfin pouvoir souffler, on revient vers vous sous
-                  24h pour prendre en charge les tâches.
-                </p>
-              ) : null}
 
               <button
                 type="submit"
                 disabled={isSubmitting || isSubmitted}
-                className="inline-flex w-full items-center justify-center rounded-full bg-brand-blue px-6 py-3 text-sm font-medium text-white transition hover:bg-brand-coral disabled:cursor-not-allowed disabled:bg-green-600"
+                className="inline-flex w-full items-center justify-center rounded-full bg-brand-blue px-6 py-2.5 text-sm font-medium text-white transition hover:bg-brand-coral disabled:cursor-not-allowed disabled:bg-green-600"
               >
                 {isSubmitted ? (
                   <CheckCircle2 className="mr-2 h-4 w-4" />
@@ -307,6 +376,30 @@ export default function AssistantSuccessClient({
                 {isSubmitted ? "Envoyé" : isSubmitting ? "Envoi..." : "Envoyer"}
               </button>
             </form>
+          </div>
+        </div>
+      ) : null}
+
+      {isConfirmationOpen ? (
+        <div className="fixed inset-0 z-[70] flex items-center justify-center bg-brand-blue/35 px-4 py-6">
+          <div className="w-full max-w-sm rounded-[1.1rem] bg-white p-5 text-center shadow-[0_30px_80px_rgba(20,20,20,0.18)]">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-50 text-green-600">
+              <CheckCircle2 className="h-6 w-6" />
+            </div>
+            <h2 className="mt-4 text-xl font-semibold tracking-tight text-brand-blue">
+              Demande envoyée.
+            </h2>
+            <p className="mt-2 text-sm leading-relaxed text-gray-600">
+              Vous allez enfin pouvoir souffler. On revient vers vous sous 24h
+              sur WhatsApp pour organiser la suite.
+            </p>
+            <button
+              type="button"
+              onClick={() => setIsConfirmationOpen(false)}
+              className="mt-5 inline-flex w-full items-center justify-center rounded-full bg-brand-blue px-5 py-2.5 text-sm font-medium text-white transition hover:bg-brand-coral"
+            >
+              Fermer
+            </button>
           </div>
         </div>
       ) : null}

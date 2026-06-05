@@ -12,7 +12,43 @@ interface PaymentRow {
 }
 
 interface AssistantDelegationRequestRow {
+  created_at?: string | null;
+  customer_name?: string | null;
+  email?: string | null;
+  livemode?: boolean | null;
+  offer_label?: string | null;
+  stripe_session_id?: string | null;
+  tasks?: string | null;
+  updated_at?: string | null;
+  whatsapp_phone?: string | null;
   slack_notified_at?: string | null;
+}
+
+interface StripePaymentRow {
+  amount_total?: number | null;
+  checkout_status?: string | null;
+  created_at?: string | null;
+  currency?: string | null;
+  customer_name?: string | null;
+  email?: string | null;
+  livemode?: boolean | null;
+  offer_label?: string | null;
+  payment_status?: string | null;
+  stripe_session_id?: string | null;
+  updated_at?: string | null;
+  assistant_tasks?: string | null;
+  assistant_tasks_submitted_at?: string | null;
+}
+
+interface MagicLinkRow {
+  consumed_at?: string | null;
+  email?: string | null;
+  expires_at?: string | null;
+}
+
+interface CustomerSessionRow {
+  email?: string | null;
+  expires_at?: string | null;
 }
 
 interface GenerationInput {
@@ -167,7 +203,9 @@ export async function upsertConfirmedStripePayment(input: StripePaymentInput) {
       paymentRef,
       {
         stripe_session_id: input.stripeSessionId,
-        stripe_event_id: input.stripeEventId,
+        stripe_event_id: paymentDoc.exists
+          ? paymentDoc.data()?.stripe_event_id || input.stripeEventId
+          : input.stripeEventId,
         email: input.email?.trim().toLowerCase() || null,
         customer_name: input.customerName?.trim() || null,
         amount_total: input.amountTotal ?? null,
@@ -230,6 +268,152 @@ export async function getAssistantDelegationRequestBySessionId(sessionId: string
   return {
     slack_notified_at: request?.slack_notified_at || null,
   };
+}
+
+export async function getAssistantDelegationRequestsByEmail(email: string) {
+  const database = getAdminFirestore();
+  const normalizedEmail = normalizeEmail(email);
+  const snapshot = await database
+    .collection("assistant_delegation_requests")
+    .where("email", "==", normalizedEmail)
+    .get();
+
+  return snapshot.docs
+    .map((doc) => {
+      const request = doc.data() as AssistantDelegationRequestRow | undefined;
+
+      return {
+        id: doc.id,
+        createdAt: request?.created_at || null,
+        customerName: request?.customer_name || null,
+        email: request?.email || null,
+        livemode: Boolean(request?.livemode),
+        offerLabel: request?.offer_label || "Demande Demaa",
+        slackNotifiedAt: request?.slack_notified_at || null,
+        stripeSessionId: request?.stripe_session_id || doc.id,
+        tasks: request?.tasks || null,
+        updatedAt: request?.updated_at || null,
+        whatsappPhone: request?.whatsapp_phone || null,
+      };
+    })
+    .sort((a, b) => {
+      const bDate = Date.parse(b.updatedAt || b.createdAt || "");
+      const aDate = Date.parse(a.updatedAt || a.createdAt || "");
+      return (Number.isFinite(bDate) ? bDate : 0) - (Number.isFinite(aDate) ? aDate : 0);
+    });
+}
+
+export async function getStripePaymentsByEmail(email: string) {
+  const database = getAdminFirestore();
+  const normalizedEmail = normalizeEmail(email);
+  const snapshot = await database
+    .collection("stripe_payments")
+    .where("email", "==", normalizedEmail)
+    .get();
+
+  return snapshot.docs
+    .map((doc) => {
+      const payment = doc.data() as StripePaymentRow | undefined;
+
+      return {
+        id: doc.id,
+        amountTotal: payment?.amount_total ?? null,
+        assistantTasks: payment?.assistant_tasks || null,
+        assistantTasksSubmittedAt: payment?.assistant_tasks_submitted_at || null,
+        checkoutStatus: payment?.checkout_status || null,
+        createdAt: payment?.created_at || null,
+        currency: payment?.currency || "eur",
+        customerName: payment?.customer_name || null,
+        email: payment?.email || null,
+        livemode: Boolean(payment?.livemode),
+        offerLabel: payment?.offer_label || "Commande Demaa",
+        paymentStatus: payment?.payment_status || null,
+        stripeSessionId: payment?.stripe_session_id || doc.id,
+        updatedAt: payment?.updated_at || null,
+      };
+    })
+    .sort((a, b) => {
+      const bDate = Date.parse(b.updatedAt || b.createdAt || "");
+      const aDate = Date.parse(a.updatedAt || a.createdAt || "");
+      return (Number.isFinite(bDate) ? bDate : 0) - (Number.isFinite(aDate) ? aDate : 0);
+    });
+}
+
+export async function saveCustomerMagicLink(input: {
+  email: string;
+  expiresAt: string;
+  tokenHash: string;
+}) {
+  const database = getAdminFirestore();
+  const now = new Date().toISOString();
+
+  await database.collection("customer_magic_links").doc(input.tokenHash).set({
+    email: normalizeEmail(input.email),
+    expires_at: input.expiresAt,
+    created_at: now,
+    consumed_at: null,
+  });
+}
+
+export async function consumeCustomerMagicLink(tokenHash: string) {
+  const database = getAdminFirestore();
+  const now = new Date().toISOString();
+  const linkRef = database.collection("customer_magic_links").doc(tokenHash);
+  let email: string | null = null;
+
+  await database.runTransaction(async (transaction) => {
+    const linkDoc = await transaction.get(linkRef);
+    const link = linkDoc.data() as MagicLinkRow | undefined;
+
+    if (!linkDoc.exists || !link?.email || link.consumed_at) {
+      return;
+    }
+
+    const expiresAt = Date.parse(link.expires_at || "");
+
+    if (!Number.isFinite(expiresAt) || expiresAt < Date.now()) {
+      return;
+    }
+
+    email = normalizeEmail(link.email);
+    transaction.set(linkRef, { consumed_at: now, updated_at: now }, { merge: true });
+  });
+
+  return email;
+}
+
+export async function saveCustomerSession(input: {
+  email: string;
+  expiresAt: string;
+  sessionHash: string;
+}) {
+  const database = getAdminFirestore();
+  const now = new Date().toISOString();
+
+  await database.collection("customer_sessions").doc(input.sessionHash).set({
+    email: normalizeEmail(input.email),
+    expires_at: input.expiresAt,
+    created_at: now,
+    updated_at: now,
+  });
+}
+
+export async function getCustomerSessionEmail(sessionHash: string) {
+  const database = getAdminFirestore();
+  const sessionDoc = await database.collection("customer_sessions").doc(sessionHash).get();
+  const session = sessionDoc.data() as CustomerSessionRow | undefined;
+
+  if (!sessionDoc.exists || !session?.email) {
+    return null;
+  }
+
+  const expiresAt = Date.parse(session.expires_at || "");
+
+  if (!Number.isFinite(expiresAt) || expiresAt < Date.now()) {
+    return null;
+  }
+
+  return normalizeEmail(session.email);
 }
 
 export async function saveAssistantDelegationRequest(

@@ -3,22 +3,22 @@
 import Link from "next/link";
 import { Suspense, useEffect, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
-import SystemSetupModal from "@/components/SystemSetupModal";
+import { UserRound } from "lucide-react";
 
 type HomeTabId = "systemes" | "outils" | "assistants";
 type HomeTabsMode = "links" | "client";
 
 const homeTabs = [
-  { id: "systemes", label: "Systèmes", href: "/" },
-  { id: "outils", label: "Kit du dirigeant", href: "/outils" },
-  { id: "assistants", label: "Assistants", href: "/assistants" },
+  { id: "systemes", label: "Structurer", href: "/" },
+  { id: "outils", label: "S'équiper", href: "/outils" },
+  { id: "assistants", label: "Déléguer", href: "/deleguer" },
 ] as const;
 
 const HOME_TAB_SELECT_EVENT = "demaa:home-tab-select";
 
 function getTabPath(tab: HomeTabId) {
   if (tab === "outils") return "/outils";
-  if (tab === "assistants") return "/assistants";
+  if (tab === "assistants") return "/deleguer";
 
   return "/";
 }
@@ -30,8 +30,6 @@ export default function Navbar({
   minimal?: boolean;
   homeTabsMode?: HomeTabsMode;
 }) {
-  const [isAuditModalOpen, setIsAuditModalOpen] = useState(false);
-
   return (
     <>
       <nav className="sticky top-0 z-40 border-b border-dema-line/70 bg-dema-cream/92 py-1 backdrop-blur-md">
@@ -51,22 +49,23 @@ export default function Navbar({
                   <DesktopHomeTabsNav mode={homeTabsMode} />
                 </Suspense>
 
-                <button
-                  type="button"
-                  onClick={() => setIsAuditModalOpen(true)}
-                  className="inline-flex min-h-10 items-center justify-center whitespace-nowrap px-1 text-xs font-light text-brand-blue/72 transition-colors hover:text-brand-blue sm:px-2 md:text-sm"
-                >
-                  J&apos;ai besoin d&apos;un audit de mes process
-                </button>
+                <div className="flex items-center gap-2">
+                  <Link
+                    href="/mon-espace"
+                    className="inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-full border border-dema-line bg-dema-paper px-3 text-dema-forest shadow-[0_8px_24px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/20 hover:bg-dema-sage/45"
+                    aria-label="Accéder à l'espace membre Demaa"
+                  >
+                    <UserRound className="h-4 w-4" aria-hidden="true" />
+                    <span className="whitespace-nowrap text-xs font-medium text-brand-blue/72 md:text-sm">
+                      Espace membre
+                    </span>
+                  </Link>
+                </div>
               </>
             )}
           </div>
         </div>
       </nav>
-      <SystemSetupModal
-        isOpen={isAuditModalOpen}
-        onClose={() => setIsAuditModalOpen(false)}
-      />
     </>
   );
 }
@@ -76,7 +75,7 @@ function DesktopHomeTabsNav({ mode }: { mode: HomeTabsMode }) {
   const searchParams = useSearchParams();
   const urlTab = searchParams.get("tab");
   const activeTab =
-    pathname === "/assistants"
+    pathname === "/deleguer" || pathname === "/assistants"
       ? "assistants"
       : pathname === "/outils"
       ? "outils"

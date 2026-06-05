@@ -1,0 +1,93 @@
+import { NextResponse } from "next/server";
+import {
+  createMagicLinkToken,
+  isValidEmail,
+  normalizeEmail,
+} from "@/lib/customer-space-auth";
+
+export const runtime = "nodejs";
+
+type MagicLinkRequestBody = {
+  email?: unknown;
+};
+
+function getBaseUrl(request: Request) {
+  const requestOrigin = new URL(request.url).origin;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
+
+  if (siteUrl && !siteUrl.includes("vercel.app")) {
+    return siteUrl;
+  }
+
+  return requestOrigin;
+}
+
+async function sendMagicLinkEmail(input: {
+  email: string;
+  magicLink: string;
+}) {
+  const apiKey = process.env.RESEND_API_KEY;
+  const from = process.env.RESEND_FROM_EMAIL;
+
+  if (!apiKey || !from) {
+    return { sent: false, reason: "missing_resend_config" as const };
+  }
+
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from,
+      to: input.email,
+      subject: "Votre lien d'accès à l'espace membre Demaa",
+      html: `
+        <div style="font-family:Arial,sans-serif;color:#17231d;line-height:1.6">
+          <p>Bonjour,</p>
+          <p>Voici votre lien sécurisé pour retrouver le suivi de vos demandes et les tarifs négociés Demaa.</p>
+          <p>
+            <a href="${input.magicLink}" style="display:inline-block;border-radius:999px;background:#315f46;color:#ffffff;padding:12px 18px;text-decoration:none">
+              Accéder à mon espace membre Demaa
+            </a>
+          </p>
+          <p>Ce lien expire dans 30 minutes.</p>
+        </div>
+      `,
+      text: `Votre lien d'accès à l'espace membre Demaa : ${input.magicLink}\n\nCe lien expire dans 30 minutes.`,
+    }),
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text().catch(() => "");
+    console.error("[customer-space] Resend error:", response.status, errorText);
+    return { sent: false, reason: "resend_error" as const };
+  }
+
+  return { sent: true, reason: null };
+}
+
+export async function POST(request: Request) {
+  const body = (await request.json().catch(() => null)) as MagicLinkRequestBody | null;
+  const email = typeof body?.email === "string" ? normalizeEmail(body.email) : "";
+
+  if (!email || !isValidEmail(email)) {
+    return NextResponse.json(
+      { error: "Merci d'indiquer une adresse email valide." },
+      { status: 400 }
+    );
+  }
+
+  const token = await createMagicLinkToken(email);
+  const magicLink = `${getBaseUrl(request)}/api/customer-space/consume?token=${encodeURIComponent(
+    token
+  )}`;
+  const emailResult = await sendMagicLinkEmail({ email, magicLink });
+
+  return NextResponse.json({
+    sent: emailResult.sent,
+    devLink: process.env.NODE_ENV === "production" ? null : magicLink,
+  });
+}

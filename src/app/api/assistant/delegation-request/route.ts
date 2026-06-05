@@ -8,8 +8,11 @@ import { sendSlackMessage } from "@/lib/slack";
 export const runtime = "nodejs";
 
 type DelegationRequestBody = {
+  firstName?: unknown;
+  lastName?: unknown;
   sessionId?: unknown;
   tasks?: unknown;
+  whatsappPhone?: unknown;
 };
 
 type StripeCheckoutSession = {
@@ -31,6 +34,7 @@ type StripeCheckoutSession = {
     } | null;
   }> | null;
   metadata?: {
+    cart_summary?: string | null;
     credits?: string | null;
     offer_label?: string | null;
     offer_type?: string | null;
@@ -59,19 +63,13 @@ function getStripeSecretKey(sessionId: string) {
   return process.env.STRIPE_SECRET_KEY || null;
 }
 
-function getCustomFieldValue(
-  customFields: StripeCheckoutSession["custom_fields"],
-  key: string
-) {
-  return (
-    customFields?.find((field) => field.key === key)?.text?.value?.trim() ||
-    null
-  );
-}
-
 function getOfferLabel(session: StripeCheckoutSession) {
   if (session.metadata?.offer_label) return session.metadata.offer_label;
   return "Crédits assistant Demaa";
+}
+
+function getCartSummary(session: StripeCheckoutSession) {
+  return session.metadata?.cart_summary || getOfferLabel(session);
 }
 
 function getCredits(session: StripeCheckoutSession) {
@@ -146,8 +144,12 @@ async function retrieveCheckoutSession(sessionId: string) {
 
 export async function POST(request: Request) {
   const body = (await request.json().catch(() => null)) as DelegationRequestBody | null;
+  const firstName = typeof body?.firstName === "string" ? body.firstName.trim() : "";
+  const lastName = typeof body?.lastName === "string" ? body.lastName.trim() : "";
   const sessionId = typeof body?.sessionId === "string" ? body.sessionId.trim() : "";
   const tasks = typeof body?.tasks === "string" ? body.tasks.trim() : "";
+  const whatsappPhone =
+    typeof body?.whatsappPhone === "string" ? body.whatsappPhone.trim() : "";
 
   if (!sessionId) {
     return NextResponse.json(
@@ -158,7 +160,24 @@ export async function POST(request: Request) {
 
   if (!tasks) {
     return NextResponse.json(
-      { error: "Merci d'indiquer les tâches à déléguer." },
+      { error: "Merci de détailler ce que vous voulez déléguer." },
+      { status: 400 }
+    );
+  }
+
+  if (!firstName) {
+    return NextResponse.json(
+      { error: "Merci d'indiquer votre prénom." },
+      { status: 400 }
+    );
+  }
+
+  if (!whatsappPhone) {
+    return NextResponse.json(
+      {
+        error:
+          "Merci d'indiquer votre WhatsApp pour que l'équipe Demaa puisse vous contacter.",
+      },
       { status: 400 }
     );
   }
@@ -186,16 +205,15 @@ export async function POST(request: Request) {
     return NextResponse.json({ sent: true, duplicate: true });
   }
 
-  const firstName = getCustomFieldValue(session.custom_fields, "first_name");
-  const lastName = getCustomFieldValue(session.custom_fields, "last_name");
   const customerName =
     [firstName, lastName].filter(Boolean).join(" ") ||
     session.customer_details?.name ||
     null;
   const email = session.customer_details?.email || session.customer_email || null;
-  const whatsappPhone = getCustomFieldValue(session.custom_fields, "whatsapp_phone");
   const offerLabel = getOfferLabel(session);
+  const cartSummary = getCartSummary(session);
   const credits = getCredits(session);
+  const creditsLine = credits ? `\n*Crédits* : ${credits}` : "";
 
   await sendSlackMessage({
     text: "Nouvelle demande de delegation assistant Demaa",
@@ -204,7 +222,7 @@ export async function POST(request: Request) {
         type: "section",
         text: {
           type: "mrkdwn",
-            text: `*Nouvelle demande assistant*\n*Offre* : ${offerLabel}\n*Montant* : ${getAmountLabel(session)}\n*Crédits* : ${credits ?? "_non renseigné_"}\n*Nom* : ${customerName || "_non renseigné_"}\n*Email* : ${email || "_non renseigné_"}\n*WhatsApp* : ${whatsappPhone || "_non renseigné_"}\n*Tâches à déléguer* :\n${tasks}\n*Action admin* : contacter le client sous 24h\n*Session Stripe* : ${sessionId}\n*Mode* : ${session.livemode ? "Live" : "Test"}`,
+            text: `*Nouvelle demande assistant*\n*Sélection* : ${cartSummary}\n*Montant* : ${getAmountLabel(session)}${creditsLine}\n*Nom* : ${customerName || "_non renseigné_"}\n*Email Stripe* : ${email || "_non renseigné_"}\n*WhatsApp* : ${whatsappPhone || "_non renseigné_"}\n*Détail de ce que le client veut déléguer* :\n${tasks}\n*Action admin* : contacter le client sur WhatsApp sous 24h\n*Session Stripe* : ${sessionId}\n*Mode* : ${session.livemode ? "Live" : "Test"}`,
         },
       },
       {

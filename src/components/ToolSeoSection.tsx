@@ -46,7 +46,7 @@ export default function ToolSeoSection({ tool }: ToolSeoSectionProps) {
         {
           "@type": "ListItem",
           position: 2,
-          name: "Kit du dirigeant",
+          name: "S'équiper",
           item: "https://demaa.fr/outils",
         },
         {

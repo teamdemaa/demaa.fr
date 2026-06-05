@@ -19,6 +19,7 @@ type StripeCheckoutSession = {
     } | null;
   }> | null;
   metadata?: {
+    cart_summary?: string | null;
     credits?: string | null;
     offer_label?: string | null;
     offer_type?: string | null;
@@ -46,6 +47,10 @@ function getCustomFieldValue(
 function getOfferLabel(session: StripeCheckoutSession) {
   if (session.metadata?.offer_label) return session.metadata.offer_label;
   return "Offre Demaa";
+}
+
+function getCartSummary(session: StripeCheckoutSession) {
+  return session.metadata?.cart_summary || getOfferLabel(session);
 }
 
 function getStripeSecretKey(sessionId: string) {
@@ -152,5 +157,6 @@ export async function GET(request: Request) {
     credits: Number.isFinite(credits) ? credits : null,
     offerType: session.metadata?.offer_type ?? null,
     offerLabel: getOfferLabel(session),
+    cartSummary: getCartSummary(session),
   });
 }

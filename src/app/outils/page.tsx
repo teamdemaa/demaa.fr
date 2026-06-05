@@ -2,17 +2,17 @@ import type { Metadata } from "next";
 import HomeHubPage from "@/components/HomeHubPage";
 
 export const metadata: Metadata = {
-  title: "Kit du dirigeant - Outils et ressources | Demaa",
+  title: "S'équiper - Outils et ressources | Demaa",
   description:
     "Retrouvez les outils du quotidien et les ressources pratiques pour mieux gérer votre activité et structurer vos process.",
   openGraph: {
-    title: "Kit du dirigeant - Outils et ressources | Demaa",
+    title: "S'équiper - Outils et ressources | Demaa",
     description:
       "Retrouvez les outils du quotidien et les ressources pratiques pour mieux gérer votre activité et structurer vos process.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Kit du dirigeant - Outils et ressources | Demaa",
+    title: "S'équiper - Outils et ressources | Demaa",
     description:
       "Retrouvez les outils du quotidien et les ressources pratiques pour mieux gérer votre activité et structurer vos process.",
   },

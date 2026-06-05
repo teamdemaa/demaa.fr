@@ -2,19 +2,19 @@ import type { Metadata } from "next";
 import HomeHubPage from "@/components/HomeHubPage";
 
 export const metadata: Metadata = {
-  title: "Demaa - Systèmes et kit du dirigeant pour structurer votre activité",
+  title: "Structurer votre activité - Demaa",
   description:
-    "Explorez les systèmes essentiels, les outils du quotidien et l'accompagnement Demaa pour structurer votre activité.",
+    "Explorez les systèmes essentiels pour structurer votre activité, clarifier vos process et mieux piloter votre entreprise.",
   openGraph: {
-    title: "Demaa - Systèmes et kit du dirigeant pour structurer votre activité",
+    title: "Structurer votre activité - Demaa",
     description:
-      "Explorez les systèmes essentiels, les outils du quotidien et l'accompagnement Demaa pour structurer votre activité.",
+      "Explorez les systèmes essentiels pour structurer votre activité, clarifier vos process et mieux piloter votre entreprise.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Demaa - Systèmes et kit du dirigeant pour structurer votre activité",
+    title: "Structurer votre activité - Demaa",
     description:
-      "Explorez les systèmes essentiels, les outils du quotidien et l'accompagnement Demaa pour structurer votre activité.",
+      "Explorez les systèmes essentiels pour structurer votre activité, clarifier vos process et mieux piloter votre entreprise.",
   },
 };
 

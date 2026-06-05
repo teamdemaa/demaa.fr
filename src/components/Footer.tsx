@@ -1,9 +1,9 @@
 import Link from "next/link";
 
 const mainLinks = [
-  { label: "Systèmes", href: "/" },
-  { label: "Kit du dirigeant", href: "/outils" },
-  { label: "Assistants", href: "/assistants" },
+  { label: "Structurer", href: "/" },
+  { label: "S'équiper", href: "/outils" },
+  { label: "Déléguer", href: "/deleguer" },
   { label: "Annuaire logiciels", href: "/annuaire-logiciel" },
 ];
 
@@ -69,7 +69,7 @@ export default function Footer() {
 
           <div>
             <h3 className="text-lg font-semibold mb-6">
-              Kit du dirigeant
+              S&apos;équiper
             </h3>
             <ul className="space-y-3">
               {kitLinks.map((link) => (

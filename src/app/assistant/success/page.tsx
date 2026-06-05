@@ -1,5 +1,7 @@
 import AssistantSuccessClient from "./AssistantSuccessClient";
 
+export const dynamic = "force-dynamic";
+
 type AssistantSuccessPageProps = {
   searchParams: Promise<{ session_id?: string | string[] }>;
 };
