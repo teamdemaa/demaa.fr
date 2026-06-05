@@ -51,6 +51,7 @@ import {
 } from "lucide-react";
 import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
 import SystemSetupModal from "@/components/SystemSetupModal";
+import HorizontalScrollHint from "@/components/HorizontalScrollHint";
 import type { ToolDirectoryItem } from "@/lib/tool-directory";
 import type { System } from "@/lib/types";
 import type { OperationalSystemDetail, SystemPillar } from "@/lib/system-operations";
@@ -394,7 +395,10 @@ export default function SystemsCatalogClient({
                       {section.title}
                     </h2>
                   </div>
-                  <div className="-mx-4 overflow-x-auto px-4 pb-4 pt-2 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+                  <HorizontalScrollHint
+                    className="-mx-4 overflow-x-auto px-4 pb-4 pt-2 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
+                    controlsClassName="absolute right-0 -top-10 z-10 flex items-center gap-1.5"
+                  >
                     <div className="flex gap-4">
                       {section.systems.map((system) => {
                         const Icon = getSystemIcon(system);
@@ -423,7 +427,7 @@ export default function SystemsCatalogClient({
                         );
                       })}
                     </div>
-                  </div>
+                  </HorizontalScrollHint>
                 </section>
               ))}
             </div>

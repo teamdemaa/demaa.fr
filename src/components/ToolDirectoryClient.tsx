@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState, type MouseEvent, type ReactNode } from "react";
 import { Search } from "lucide-react";
+import HorizontalScrollHint from "@/components/HorizontalScrollHint";
 import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
 import type { ToolDirectoryItem } from "@/lib/tool-directory";
 
@@ -385,6 +386,8 @@ function ToolboxSections({
           <HorizontalScrollArea
             outerClassName="-mx-4 sm:-mx-6 lg:-mx-8"
             scrollClassName="overflow-x-auto px-4 pb-3 soft-scroll sm:px-6 lg:px-8"
+            controlsClassName="absolute right-4 -top-10 z-10 flex items-center gap-1.5 sm:right-6 lg:right-8"
+            showScrollHint
           >
             <div className="flex gap-4">
               {freeTools.map((tool) => (
@@ -407,6 +410,8 @@ function ToolboxSections({
             viewAllHref="/annuaire-outils"
             outerClassName="-mx-4 sm:-mx-6 lg:-mx-8"
             scrollClassName="overflow-x-auto px-4 pb-3 soft-scroll sm:px-6 lg:px-8"
+            controlsClassName="absolute right-4 -top-10 z-10 flex items-center gap-1.5 sm:right-6 lg:right-8"
+            showScrollHint
           >
             <div className="flex gap-4">
               {otherTools.map((tool) => (
@@ -441,20 +446,28 @@ function HorizontalScrollArea({
   viewAllLabel = "Voir tout",
   outerClassName = "",
   scrollClassName = "",
+  showScrollHint = false,
+  controlsClassName,
 }: {
   children: ReactNode;
   viewAllHref?: string;
   viewAllLabel?: string;
   outerClassName?: string;
   scrollClassName?: string;
+  showScrollHint?: boolean;
+  controlsClassName?: string;
 }) {
   return (
     <div className={outerClassName}>
-      <div className="relative">
+      {showScrollHint ? (
+        <HorizontalScrollHint className={scrollClassName} controlsClassName={controlsClassName}>
+          {children}
+        </HorizontalScrollHint>
+      ) : (
         <div className={scrollClassName}>
           {children}
         </div>
-      </div>
+      )}
       {viewAllHref ? (
         <div className="mt-1 flex justify-end px-4 sm:px-6 lg:px-8">
           <Link

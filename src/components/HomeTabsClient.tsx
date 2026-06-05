@@ -9,6 +9,7 @@ import {
   X,
 } from "lucide-react";
 import PrimaryMobileNav, { type PrimaryNavTab } from "@/components/PrimaryMobileNav";
+import HorizontalScrollHint from "@/components/HorizontalScrollHint";
 import SystemsCatalogClient from "@/components/SystemsCatalogClient";
 import ToolDirectoryClient from "@/components/ToolDirectoryClient";
 import type { System } from "@/lib/types";
@@ -390,13 +391,16 @@ function KitResourcesSection() {
   return (
     <section id="ressources" className="mx-auto w-full max-w-7xl scroll-mt-28 px-4 pb-16 pt-6 sm:px-6 lg:px-8">
       <KitSectionTitle title="Ressources" />
-      <div className="-mx-4 overflow-x-auto px-4 pb-3 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+      <HorizontalScrollHint
+        className="-mx-4 overflow-x-auto px-4 pb-3 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
+        controlsClassName="absolute right-4 -top-10 z-10 flex items-center gap-1.5 sm:right-6 lg:right-8"
+      >
         <div className="flex gap-4 pr-4">
           {resourceCarousels.map((carousel) => (
             <ResourceLinkCard key={carousel.title} carousel={carousel} />
           ))}
         </div>
-      </div>
+      </HorizontalScrollHint>
     </section>
   );
 }
