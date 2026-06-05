@@ -711,170 +711,172 @@ export default function AssistantsCatalogClient() {
       </section>
 
       {isCartOpen ? (
-        <div className="fixed inset-0 z-40 bg-brand-blue/35" onClick={() => setIsCartOpen(false)}>
+        <div className="fixed inset-0 z-50 bg-brand-blue/35" onClick={() => setIsCartOpen(false)}>
           <aside
-            className="absolute bottom-0 right-0 max-h-[88vh] w-full overflow-y-auto rounded-t-[1.15rem] bg-dema-cream p-5 shadow-[0_20px_60px_rgba(23,35,29,0.18)] md:bottom-auto md:top-0 md:h-full md:max-h-none md:w-[26rem] md:rounded-l-[1.15rem] md:rounded-tr-none md:p-6"
+            className="absolute bottom-0 right-0 flex max-h-[88vh] w-full flex-col overflow-hidden rounded-t-[1.15rem] bg-dema-cream shadow-[0_20px_60px_rgba(23,35,29,0.18)] md:bottom-auto md:top-0 md:h-full md:max-h-none md:w-[26rem] md:rounded-l-[1.15rem] md:rounded-tr-none"
             onClick={(event) => event.stopPropagation()}
           >
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
-                  Votre panier
-                </p>
-                <h2 className="mt-2 text-2xl font-semibold tracking-tight text-brand-blue">
-                  Sélection
-                </h2>
+            <div className="min-h-0 flex-1 overflow-y-auto px-5 pt-5 md:px-6 md:pt-6">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
+                    Votre panier
+                  </p>
+                  <h2 className="mt-2 text-2xl font-semibold tracking-tight text-brand-blue">
+                    Sélection
+                  </h2>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setIsCartOpen(false)}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition hover:bg-[#ebeee9]"
+                  aria-label="Fermer le panier"
+                >
+                  <X className="h-5 w-5" aria-hidden="true" />
+                </button>
               </div>
-              <button
-                type="button"
-                onClick={() => setIsCartOpen(false)}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition hover:bg-[#ebeee9]"
-                aria-label="Fermer le panier"
-              >
-                <X className="h-5 w-5" aria-hidden="true" />
-              </button>
-            </div>
 
-            {cartItems.length > 0 ? (
-              <div className="mt-6 space-y-3">
-                {cartItems.map((item) => {
-                  const details = getPackDetails(item.id);
+              {cartItems.length > 0 ? (
+                <div className="mt-6 space-y-3 pb-5">
+                  {cartItems.map((item) => {
+                    const details = getPackDetails(item.id);
 
-                  if (!details) return null;
+                    if (!details) return null;
 
-                  const lineTotal = details.pack.amount;
-                  const currentPackIndex = details.offer.packs.findIndex(
-                    (pack) => pack.id === item.id
-                  );
-                  const packStep = currentPackIndex + 1;
-                  const isFirstPack = currentPackIndex <= 0;
-                  const isLastPack = currentPackIndex >= details.offer.packs.length - 1;
+                    const lineTotal = details.pack.amount;
+                    const currentPackIndex = details.offer.packs.findIndex(
+                      (pack) => pack.id === item.id
+                    );
+                    const packStep = currentPackIndex + 1;
+                    const isFirstPack = currentPackIndex <= 0;
+                    const isLastPack = currentPackIndex >= details.offer.packs.length - 1;
 
-                  return (
-                    <div
-                      key={item.id}
-                      className="rounded-[0.9rem] border border-dema-line bg-dema-paper px-4 py-3"
-                    >
-                      <div className="flex items-start justify-between gap-3">
-                        <div className="min-w-0 flex-1">
-                          <p className="text-sm font-semibold leading-snug text-brand-blue">
-                            {details.offer.title}
+                    return (
+                      <div
+                        key={item.id}
+                        className="rounded-[0.9rem] border border-dema-line bg-dema-paper px-4 py-3"
+                      >
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="min-w-0 flex-1">
+                            <p className="text-sm font-semibold leading-snug text-brand-blue">
+                              {details.offer.title}
+                            </p>
+                          </div>
+                          <p className="shrink-0 text-sm font-semibold text-dema-forest">
+                            {formatAssistantPrice(lineTotal)}
                           </p>
                         </div>
-                        <p className="shrink-0 text-sm font-semibold text-dema-forest">
-                          {formatAssistantPrice(lineTotal)}
-                        </p>
-                      </div>
-                      <div className="mt-3 flex items-center gap-2">
-                        <div className="relative min-w-0 flex-1">
-                          <button
-                            type="button"
-                            onClick={() =>
-                              setOpenCartOfferId((current) =>
-                                current === details.offer.id ? null : details.offer.id
-                              )
-                            }
-                            className="group inline-flex h-10 w-full min-w-0 items-center justify-between gap-2 rounded-full border border-dema-line/85 bg-dema-cream px-3 text-left text-xs font-medium text-brand-blue transition hover:border-dema-forest/20 hover:bg-dema-sage/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dema-forest/35"
-                            aria-expanded={openCartOfferId === details.offer.id}
-                            aria-haspopup="listbox"
-                          >
-                            <span className="min-w-0 truncate">
-                              {details.pack.label} - {formatAssistantPrice(details.pack.amount)}
-                            </span>
-                            <span className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-dema-paper text-dema-forest transition group-hover:bg-dema-sage">
-                              <ChevronDown
-                                className={`h-3.5 w-3.5 transition ${
-                                  openCartOfferId === details.offer.id ? "rotate-180" : ""
-                                }`}
-                                aria-hidden="true"
-                              />
-                            </span>
-                          </button>
-                          {openCartOfferId === details.offer.id ? (
-                            <div
-                              className="absolute left-0 right-0 top-full z-40 mt-2 overflow-hidden rounded-[1rem] border border-dema-line bg-dema-paper p-1.5 shadow-[0_18px_46px_rgba(23,35,29,0.12)]"
-                              role="listbox"
+                        <div className="mt-3 flex items-center gap-2">
+                          <div className="relative min-w-0 flex-1">
+                            <button
+                              type="button"
+                              onClick={() =>
+                                setOpenCartOfferId((current) =>
+                                  current === details.offer.id ? null : details.offer.id
+                                )
+                              }
+                              className="group inline-flex h-10 w-full min-w-0 items-center justify-between gap-2 rounded-full border border-dema-line/85 bg-dema-cream px-3 text-left text-xs font-medium text-brand-blue transition hover:border-dema-forest/20 hover:bg-dema-sage/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dema-forest/35"
+                              aria-expanded={openCartOfferId === details.offer.id}
+                              aria-haspopup="listbox"
                             >
-                              {details.offer.packs.map((pack) => {
-                                const isSelected = pack.id === item.id;
+                              <span className="min-w-0 truncate">
+                                {details.pack.label} - {formatAssistantPrice(details.pack.amount)}
+                              </span>
+                              <span className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-dema-paper text-dema-forest transition group-hover:bg-dema-sage">
+                                <ChevronDown
+                                  className={`h-3.5 w-3.5 transition ${
+                                    openCartOfferId === details.offer.id ? "rotate-180" : ""
+                                  }`}
+                                  aria-hidden="true"
+                                />
+                              </span>
+                            </button>
+                            {openCartOfferId === details.offer.id ? (
+                              <div
+                                className="absolute left-0 right-0 top-full z-40 mt-2 overflow-hidden rounded-[1rem] border border-dema-line bg-dema-paper p-1.5 shadow-[0_18px_46px_rgba(23,35,29,0.12)]"
+                                role="listbox"
+                              >
+                                {details.offer.packs.map((pack) => {
+                                  const isSelected = pack.id === item.id;
 
-                                return (
-                                  <button
-                                    key={pack.id}
-                                    type="button"
-                                    onClick={() => changeCartPack(item.id, pack.id)}
-                                    className={`flex w-full items-start justify-between gap-3 rounded-[0.8rem] px-3 py-2.5 text-left transition ${
-                                      isSelected
-                                        ? "bg-dema-sage text-brand-blue"
-                                        : "text-brand-blue hover:bg-dema-sage/55"
-                                    }`}
-                                    role="option"
-                                    aria-selected={isSelected}
-                                  >
-                                    <span className="min-w-0">
-                                      <span className="block text-xs font-semibold leading-tight">
-                                        {pack.label} - {formatAssistantPrice(pack.amount)}
+                                  return (
+                                    <button
+                                      key={pack.id}
+                                      type="button"
+                                      onClick={() => changeCartPack(item.id, pack.id)}
+                                      className={`flex w-full items-start justify-between gap-3 rounded-[0.8rem] px-3 py-2.5 text-left transition ${
+                                        isSelected
+                                          ? "bg-dema-sage text-brand-blue"
+                                          : "text-brand-blue hover:bg-dema-sage/55"
+                                      }`}
+                                      role="option"
+                                      aria-selected={isSelected}
+                                    >
+                                      <span className="min-w-0">
+                                        <span className="block text-xs font-semibold leading-tight">
+                                          {pack.label} - {formatAssistantPrice(pack.amount)}
+                                        </span>
+                                        <span className="mt-1 block text-[11px] leading-snug text-dema-muted">
+                                          {pack.detail}
+                                        </span>
                                       </span>
-                                      <span className="mt-1 block text-[11px] leading-snug text-dema-muted">
-                                        {pack.detail}
-                                      </span>
-                                    </span>
-                                    {isSelected ? (
-                                      <Check
-                                        className="mt-0.5 h-3.5 w-3.5 shrink-0 text-dema-forest"
-                                        aria-hidden="true"
-                                      />
-                                    ) : null}
-                                  </button>
-                                );
-                              })}
-                            </div>
-                          ) : null}
-                        </div>
-                        <div className="inline-flex shrink-0 items-center rounded-full border border-dema-line bg-dema-cream p-1">
+                                      {isSelected ? (
+                                        <Check
+                                          className="mt-0.5 h-3.5 w-3.5 shrink-0 text-dema-forest"
+                                          aria-hidden="true"
+                                        />
+                                      ) : null}
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            ) : null}
+                          </div>
+                          <div className="inline-flex shrink-0 items-center rounded-full border border-dema-line bg-dema-cream p-1">
+                            <button
+                              type="button"
+                              onClick={() => decrementPack(item.id)}
+                              className="inline-flex h-8 w-8 items-center justify-center rounded-full text-dema-forest transition hover:bg-dema-paper disabled:cursor-not-allowed disabled:opacity-35"
+                              aria-label={
+                                isFirstPack ? "Retirer du panier" : "Revenir au pack précédent"
+                              }
+                            >
+                              <Minus className="h-4 w-4" aria-hidden="true" />
+                            </button>
+                            <span className="min-w-8 text-center text-xs font-semibold text-brand-blue">
+                              {packStep}
+                            </span>
+                            <button
+                              type="button"
+                              onClick={() => incrementPack(item.id)}
+                              disabled={isLastPack}
+                              className="inline-flex h-8 w-8 items-center justify-center rounded-full text-dema-forest transition hover:bg-dema-paper disabled:cursor-not-allowed disabled:opacity-35"
+                              aria-label="Passer au pack suivant"
+                            >
+                              <Plus className="h-4 w-4" aria-hidden="true" />
+                            </button>
+                          </div>
                           <button
                             type="button"
-                            onClick={() => decrementPack(item.id)}
-                            className="inline-flex h-8 w-8 items-center justify-center rounded-full text-dema-forest transition hover:bg-dema-paper disabled:cursor-not-allowed disabled:opacity-35"
-                            aria-label={
-                              isFirstPack ? "Retirer du panier" : "Revenir au pack précédent"
-                            }
+                            onClick={() => removePackFromCart(item.id)}
+                            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition hover:bg-[#ebeee9]"
+                            aria-label="Retirer du panier"
                           >
-                            <Minus className="h-4 w-4" aria-hidden="true" />
-                          </button>
-                          <span className="min-w-8 text-center text-xs font-semibold text-brand-blue">
-                            {packStep}
-                          </span>
-                          <button
-                            type="button"
-                            onClick={() => incrementPack(item.id)}
-                            disabled={isLastPack}
-                            className="inline-flex h-8 w-8 items-center justify-center rounded-full text-dema-forest transition hover:bg-dema-paper disabled:cursor-not-allowed disabled:opacity-35"
-                            aria-label="Passer au pack suivant"
-                          >
-                            <Plus className="h-4 w-4" aria-hidden="true" />
+                            <Trash2 className="h-4 w-4" aria-hidden="true" />
                           </button>
                         </div>
-                        <button
-                          type="button"
-                          onClick={() => removePackFromCart(item.id)}
-                          className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition hover:bg-[#ebeee9]"
-                          aria-label="Retirer du panier"
-                        >
-                          <Trash2 className="h-4 w-4" aria-hidden="true" />
-                        </button>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
-            ) : (
-              <p className="mt-6 rounded-[0.9rem] border border-dashed border-dema-line bg-dema-paper px-4 py-5 text-sm leading-relaxed text-dema-muted">
-                Ajoutez un pack pour voir le total et ouvrir le paiement.
-              </p>
-            )}
+                    );
+                  })}
+                </div>
+              ) : (
+                <p className="mt-6 rounded-[0.9rem] border border-dashed border-dema-line bg-dema-paper px-4 py-5 text-sm leading-relaxed text-dema-muted">
+                  Ajoutez un pack pour voir le total et ouvrir le paiement.
+                </p>
+              )}
+            </div>
 
-            <div className="mt-6 border-t border-dema-line pt-5">
+            <div className="shrink-0 border-t border-dema-line bg-dema-cream px-5 pb-[calc(env(safe-area-inset-bottom)+1.25rem)] pt-5 md:px-6 md:pb-6">
               <div className="flex items-center justify-between gap-4">
                 <span className="text-sm font-medium text-dema-muted">Total</span>
                 <span className="text-xl font-semibold text-brand-blue">
