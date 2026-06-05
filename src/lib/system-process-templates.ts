@@ -26,6 +26,9 @@ const SYSTEM_PROCESS_TEMPLATES_COLLECTION = "system_process_templates";
 const processTemplates = rawProcessTemplates as SystemProcessTemplatesPayload;
 
 export const fallbackSystemProcessTemplates = processTemplates.templates;
+const fallbackSystemProcessTemplateById = new Map(
+  fallbackSystemProcessTemplates.map((template) => [template.id, template]),
+);
 
 const PILLAR_ORDER: Record<SystemProcessTemplate["pillar"], number> = {
   Stratégie: 1,
@@ -70,6 +73,21 @@ function normalizeTemplate(data: unknown): SystemProcessTemplate | null {
   };
 }
 
+function applyLocalTemplateCopy(template: SystemProcessTemplate): SystemProcessTemplate {
+  const localTemplate = fallbackSystemProcessTemplateById.get(template.id);
+
+  if (!localTemplate) {
+    return template;
+  }
+
+  return {
+    ...template,
+    pillar: localTemplate.pillar,
+    title: localTemplate.title,
+    description: localTemplate.description,
+  };
+}
+
 export async function getSystemProcessTemplates(): Promise<SystemProcessTemplate[]> {
   try {
     const firestore = getAdminFirestore();
@@ -83,7 +101,9 @@ export async function getSystemProcessTemplates(): Promise<SystemProcessTemplate
       .map((doc) => normalizeTemplate({ id: doc.id, ...doc.data() }))
       .filter((template): template is SystemProcessTemplate => Boolean(template));
 
-    return sortProcessTemplates(templates.length ? templates : fallbackSystemProcessTemplates);
+    return sortProcessTemplates(
+      templates.length ? templates.map(applyLocalTemplateCopy) : fallbackSystemProcessTemplates,
+    );
   } catch {
     return sortProcessTemplates(fallbackSystemProcessTemplates);
   }
