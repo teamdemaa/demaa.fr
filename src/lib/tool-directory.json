@@ -5598,6 +5598,1033 @@
       "status": "active",
       "toolbox": true,
       "scope": "business"
+    },
+    {
+      "slug": "taleez",
+      "name": "Taleez",
+      "url": "https://taleez.com/",
+      "category": "RH & planning",
+      "sectors": [
+        "Conseil & services aux entreprises"
+      ],
+      "description": "ATS français pour centraliser candidatures, multidiffuser les offres et piloter les recrutements.",
+      "tags": [
+        "Recrutement",
+        "ATS",
+        "Candidats"
+      ],
+      "bestFor": "Structurer les recrutements PME, pipelines candidats et collaboration recruteur-manager.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "beetween",
+      "name": "Beetween",
+      "url": "https://beetween.fr/",
+      "category": "RH & planning",
+      "sectors": [
+        "Conseil & services aux entreprises"
+      ],
+      "description": "Logiciel de recrutement pour offres, vivier candidats, multidiffusion, suivi et collaboration RH.",
+      "tags": [
+        "Recrutement",
+        "ATS",
+        "Vivier"
+      ],
+      "bestFor": "Gérer des recrutements récurrents avec vivier, scoring et suivi candidat.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "oggo-data",
+      "name": "OGGO Data",
+      "url": "https://oggo-data.net/",
+      "category": "Outils métier",
+      "sectors": [
+        "Conseil & services aux entreprises"
+      ],
+      "description": "CRM SaaS pour courtiers d’assurance avec tarificateurs, parcours de vente et suivi client.",
+      "tags": [
+        "Assurance",
+        "Courtage",
+        "CRM"
+      ],
+      "bestFor": "Comparer offres, suivre prospects assurance et gérer le parcours de souscription.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "assur3d",
+      "name": "ASSUR3D",
+      "url": "https://assur3d.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Conseil & services aux entreprises"
+      ],
+      "description": "CRM tout-en-un pour courtiers en assurance : clients, contrats, conformité et pilotage.",
+      "tags": [
+        "Assurance",
+        "Courtage",
+        "Conformité"
+      ],
+      "bestFor": "Centraliser portefeuille, suivi commercial et obligations d’un cabinet de courtage.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "bl-enfance",
+      "name": "BL.enfance",
+      "url": "https://www.berger-levrault.com/fr/produit/bl-enfance/",
+      "category": "Outils métier",
+      "sectors": [
+        "Éducation & formation"
+      ],
+      "description": "Solution de gestion enfance et petite enfance pour inscriptions, réservations, pointages et facturation.",
+      "tags": [
+        "Crèche",
+        "Petite enfance",
+        "Facturation"
+      ],
+      "bestFor": "Structurer inscriptions, présences, familles et facturation petite enfance.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "eventmaker",
+      "name": "Eventmaker",
+      "url": "https://www.eventmaker.com/fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Associations & événements",
+        "Conseil & services aux entreprises"
+      ],
+      "description": "Plateforme d’event automation pour inscriptions, participants, formats physiques, digitaux et hybrides.",
+      "tags": [
+        "Événementiel",
+        "Inscription",
+        "Automation"
+      ],
+      "bestFor": "Gérer événements professionnels, invitations, inscriptions et engagement participant.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "yurplan",
+      "name": "Yurplan",
+      "url": "https://yurplan.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Associations & événements"
+      ],
+      "description": "Solution française de billetterie, inscription et gestion événementielle.",
+      "tags": [
+        "Billetterie",
+        "Événementiel",
+        "Inscription"
+      ],
+      "bestFor": "Créer billetteries, formulaires d’inscription et suivi des participants.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "diag-pilote",
+      "name": "Diag Pilote",
+      "url": "https://dpil.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Immobilier"
+      ],
+      "description": "Logiciel SaaS pour diagnostiqueurs immobiliers : DDT, DPE, devis, factures, planning et rapports.",
+      "tags": [
+        "Diagnostic immobilier",
+        "Rapports",
+        "Planning"
+      ],
+      "bestFor": "Centraliser dossiers, rapports réglementaires, devis et facturation diagnostic.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "gestiondiag",
+      "name": "Gestion Diag",
+      "url": "https://gestiondiag.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Immobilier"
+      ],
+      "description": "Logiciel de gestion commerciale pour diagnostiqueurs immobiliers avec devis, factures et conformité.",
+      "tags": [
+        "Diagnostic immobilier",
+        "Gestion commerciale",
+        "Facturation"
+      ],
+      "bestFor": "Piloter devis, facturation, dossiers et conformité d’un diagnostiqueur.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "patriom",
+      "name": "Patriom",
+      "url": "https://patriom.app/",
+      "category": "Outils métier",
+      "sectors": [
+        "Patrimoine"
+      ],
+      "description": "Logiciel CGP pour bilan patrimonial, cartographies, diversification, alertes et relation client.",
+      "tags": [
+        "Patrimoine",
+        "CGP",
+        "Bilan"
+      ],
+      "bestFor": "Produire des bilans patrimoniaux lisibles et des supports de conseil modernes.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "o2s",
+      "name": "O2S",
+      "url": "https://www.harvest.fr/solution/o2s/",
+      "category": "Outils métier",
+      "sectors": [
+        "Patrimoine"
+      ],
+      "description": "Solution Harvest pour agrégation, suivi de comptes, CRM, conformité et reporting patrimonial.",
+      "tags": [
+        "Patrimoine",
+        "Agrégation",
+        "Reporting"
+      ],
+      "bestFor": "Suivre portefeuilles, comptes, relation client et reporting CGP.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "quantalys",
+      "name": "Quantalys",
+      "url": "https://quantalys.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Patrimoine"
+      ],
+      "description": "Plateforme d’analyse de fonds, allocation, portefeuilles et supports d’investissement.",
+      "tags": [
+        "Allocation",
+        "Fonds",
+        "Investissement"
+      ],
+      "bestFor": "Comparer fonds, analyser allocations et construire des supports d’investissement.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "active-asset-allocation",
+      "name": "Active Asset Allocation",
+      "url": "https://active-asset-allocation.com/fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Patrimoine"
+      ],
+      "description": "Suite d’outils digitaux d’ingénierie financière pour allocation, conseil et gestion de portefeuille.",
+      "tags": [
+        "Allocation",
+        "Portefeuille",
+        "Ingénierie financière"
+      ],
+      "bestFor": "Outiller le conseil en allocation d’actifs et les scénarios de portefeuille.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "edda",
+      "name": "Edda",
+      "url": "https://edda.co/",
+      "category": "Outils métier",
+      "sectors": [
+        "Patrimoine"
+      ],
+      "description": "Logiciel de dealflow, portefeuille et suivi d’investissement pour fonds, VC et équipes d’investissement.",
+      "tags": [
+        "Dealflow",
+        "Investissement",
+        "Portefeuille"
+      ],
+      "bestFor": "Structurer dealflow, due diligence, portefeuille et reporting d’investissement.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "washonline",
+      "name": "WashOnline",
+      "url": "https://washonline.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services aux particuliers"
+      ],
+      "description": "Application de laverie connectée pour disponibilités machines, réservation, paiement et alertes client.",
+      "tags": [
+        "Laverie",
+        "Paiement",
+        "Réservation"
+      ],
+      "bestFor": "Rendre une laverie automatique plus pilotable et plus simple côté client.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "netilav",
+      "name": "NETILAV",
+      "url": "https://www.netilav.com/PBCPPlayer.asp?ID=1450719",
+      "category": "Outils métier",
+      "sectors": [
+        "Services aux particuliers"
+      ],
+      "description": "Système de gestion à distance pour laveries automatiques, machines, séchoirs et centrales.",
+      "tags": [
+        "Laverie",
+        "Gestion à distance",
+        "Machines"
+      ],
+      "bestFor": "Piloter machines et équipements d’une laverie automatique à distance.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "hangers-pressing",
+      "name": "Hangers Pressing",
+      "url": "https://hangers.io/Pressing",
+      "category": "Caisse & réservation",
+      "sectors": [
+        "Services aux particuliers"
+      ],
+      "description": "Logiciel de caisse certifié NF525 pour pressing, ventes, clients et opérations de point de service.",
+      "tags": [
+        "Pressing",
+        "Caisse",
+        "NF525"
+      ],
+      "bestFor": "Gérer caisse, tickets, clients et activité d’un pressing moderne.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "blanchinet",
+      "name": "BlanchiNet",
+      "url": "https://blanchinet.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services aux particuliers"
+      ],
+      "description": "Logiciel de gestion pour blanchisseries professionnelles : scan, suivi, facturation et automatisation.",
+      "tags": [
+        "Blanchisserie",
+        "Pressing",
+        "Facturation"
+      ],
+      "bestFor": "Suivre linge, clients, facturation et opérations de blanchisserie.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "wix",
+      "name": "Wix",
+      "url": "https://www.wix.com/",
+      "category": "Site & e-commerce",
+      "sectors": [
+        "E-commerce",
+        "Commerce local",
+        "Services & conseil",
+        "Tech & Digital"
+      ],
+      "description": "Créateur de site no-code avec boutique en ligne, réservations, paiements, marketing et templates.",
+      "tags": [
+        "Site web",
+        "No-code",
+        "E-commerce"
+      ],
+      "bestFor": "Créer rapidement un site vitrine ou une petite boutique sans équipe technique.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "squarespace",
+      "name": "Squarespace",
+      "url": "https://www.squarespace.com/",
+      "category": "Site & e-commerce",
+      "sectors": [
+        "E-commerce",
+        "Services & conseil",
+        "Tech & Digital"
+      ],
+      "description": "Plateforme tout-en-un pour créer un site professionnel, portfolio, blog ou petite boutique en ligne.",
+      "tags": [
+        "Site web",
+        "Portfolio",
+        "E-commerce"
+      ],
+      "bestFor": "Créer un site élégant pour une activité de service, créative ou une petite boutique.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "bigcommerce",
+      "name": "BigCommerce",
+      "url": "https://www.bigcommerce.com/",
+      "category": "Site & e-commerce",
+      "sectors": [
+        "E-commerce"
+      ],
+      "description": "Plateforme e-commerce SaaS pour catalogues avancés, ventes multicanales et croissance internationale.",
+      "tags": [
+        "E-commerce",
+        "Catalogue",
+        "Multicanal"
+      ],
+      "bestFor": "Structurer une boutique e-commerce plus avancée avec besoins de catalogue et intégrations.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "ecwid",
+      "name": "Ecwid",
+      "url": "https://www.ecwid.com/",
+      "category": "Site & e-commerce",
+      "sectors": [
+        "E-commerce",
+        "Commerce local"
+      ],
+      "description": "Solution e-commerce légère pour ajouter une boutique à un site existant ou vendre sur plusieurs canaux.",
+      "tags": [
+        "E-commerce",
+        "Boutique en ligne",
+        "Multicanal"
+      ],
+      "bestFor": "Ajouter une boutique simple à un site ou une activité locale sans refonte lourde.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "booking-com",
+      "name": "Booking.com",
+      "url": "https://www.booking.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Hébergement & tourisme"
+      ],
+      "description": "Canal de distribution hôtelier pour hébergements, réservations, visibilité et acquisition voyageurs.",
+      "tags": [
+        "Hébergement",
+        "OTA",
+        "Réservations"
+      ],
+      "bestFor": "Être visible auprès des voyageurs et générer des réservations via un grand canal OTA.",
+      "pricingHint": "Commission",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "airbnb",
+      "name": "Airbnb",
+      "url": "https://www.airbnb.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Hébergement & tourisme",
+        "Immobilier"
+      ],
+      "description": "Plateforme de location courte durée pour publier des logements, gérer demandes et réservations voyageurs.",
+      "tags": [
+        "Location courte durée",
+        "Voyageurs",
+        "Réservations"
+      ],
+      "bestFor": "Commercialiser des logements courte durée et gérer la demande voyageur.",
+      "pricingHint": "Commission",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "deliveroo",
+      "name": "Deliveroo",
+      "url": "https://restaurants.deliveroo.com/",
+      "category": "Caisse & réservation",
+      "sectors": [
+        "Restauration",
+        "Commerce local"
+      ],
+      "description": "Canal de livraison pour restaurants, dark kitchens, fast-foods et commerces alimentaires.",
+      "tags": [
+        "Livraison",
+        "Restaurant",
+        "Commande en ligne"
+      ],
+      "bestFor": "Développer les commandes livrées et toucher une clientèle locale à domicile.",
+      "pricingHint": "Commission",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "uber-eats",
+      "name": "Uber Eats",
+      "url": "https://merchants.ubereats.com/",
+      "category": "Caisse & réservation",
+      "sectors": [
+        "Restauration",
+        "Commerce local"
+      ],
+      "description": "Plateforme de commande et livraison pour restaurants, snacks, commerces alimentaires et dark kitchens.",
+      "tags": [
+        "Livraison",
+        "Commande en ligne",
+        "Restaurant"
+      ],
+      "bestFor": "Recevoir des commandes en ligne et développer la livraison locale.",
+      "pricingHint": "Commission",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "eventbrite",
+      "name": "Eventbrite",
+      "url": "https://www.eventbrite.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Associations & événements",
+        "Services & conseil"
+      ],
+      "description": "Plateforme de création, promotion, billetterie et gestion d’événements en ligne ou physiques.",
+      "tags": [
+        "Événementiel",
+        "Billetterie",
+        "Inscription"
+      ],
+      "bestFor": "Créer un événement public, gérer inscriptions et vendre des billets simplement.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "asana",
+      "name": "Asana",
+      "url": "https://asana.com/",
+      "category": "Gestion & équipe",
+      "sectors": [
+        "Services & conseil",
+        "Tech & Digital",
+        "Éducation & formation"
+      ],
+      "description": "Outil de gestion de projet pour tâches, responsabilités, calendriers, workflows et suivi d’équipe.",
+      "tags": [
+        "Projet",
+        "Tâches",
+        "Équipe"
+      ],
+      "bestFor": "Piloter des projets clients ou internes avec responsabilités et délais visibles.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "transverse"
+    },
+    {
+      "slug": "trello",
+      "name": "Trello",
+      "url": "https://trello.com/",
+      "category": "Gestion & équipe",
+      "sectors": [
+        "Services & conseil",
+        "Tech & Digital",
+        "Associations & événements"
+      ],
+      "description": "Tableaux Kanban simples pour organiser tâches, idées, projets et suivis d’équipe.",
+      "tags": [
+        "Kanban",
+        "Tâches",
+        "Projet"
+      ],
+      "bestFor": "Mettre en place un suivi visuel simple sans complexité projet.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "transverse"
+    },
+    {
+      "slug": "jira",
+      "name": "Jira",
+      "url": "https://www.atlassian.com/software/jira",
+      "category": "Gestion & équipe",
+      "sectors": [
+        "Tech & Digital"
+      ],
+      "description": "Outil de suivi agile, tickets, bugs, sprints et projets produit ou développement logiciel.",
+      "tags": [
+        "Tickets",
+        "Agile",
+        "Bugs"
+      ],
+      "bestFor": "Suivre bugs, tickets produit, sprints et roadmap d’une équipe tech.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "clickup",
+      "name": "ClickUp",
+      "url": "https://clickup.com/",
+      "category": "Gestion & équipe",
+      "sectors": [
+        "Services & conseil",
+        "Tech & Digital"
+      ],
+      "description": "Plateforme de gestion du travail pour tâches, documents, objectifs, automatisations et collaboration.",
+      "tags": [
+        "Projet",
+        "Productivité",
+        "Équipe"
+      ],
+      "bestFor": "Centraliser projets, tâches et documents quand l’équipe veut un outil tout-en-un.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "transverse"
+    },
+    {
+      "slug": "slack",
+      "name": "Slack",
+      "url": "https://slack.com/",
+      "category": "Gestion & équipe",
+      "sectors": [
+        "Services & conseil",
+        "Tech & Digital"
+      ],
+      "description": "Messagerie collaborative pour équipes, canaux, intégrations, notifications et coordination rapide.",
+      "tags": [
+        "Messagerie",
+        "Équipe",
+        "Collaboration"
+      ],
+      "bestFor": "Coordonner une équipe avec canaux, notifications et intégrations métier.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "transverse"
+    },
+    {
+      "slug": "zoom",
+      "name": "Zoom",
+      "url": "https://zoom.us/",
+      "category": "Gestion & équipe",
+      "sectors": [
+        "Services & conseil",
+        "Éducation & formation"
+      ],
+      "description": "Visioconférence pour réunions, rendez-vous, formations, webinaires simples et échanges clients.",
+      "tags": [
+        "Visio",
+        "Réunion",
+        "Formation"
+      ],
+      "bestFor": "Organiser réunions client, sessions de formation ou rendez-vous à distance.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "transverse"
+    },
+    {
+      "slug": "livestorm",
+      "name": "Livestorm",
+      "url": "https://livestorm.co/",
+      "category": "Formation",
+      "sectors": [
+        "Éducation & formation",
+        "Services & conseil",
+        "Associations & événements"
+      ],
+      "description": "Plateforme française de webinaires, événements en ligne, démos produit et sessions de formation.",
+      "tags": [
+        "Webinaire",
+        "Formation live",
+        "Événement en ligne"
+      ],
+      "bestFor": "Animer formations, webinaires ou démonstrations avec inscriptions et relances.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "acuity-scheduling",
+      "name": "Acuity Scheduling",
+      "url": "https://www.squarespace.com/scheduling",
+      "category": "Gestion & équipe",
+      "sectors": [
+        "Services & conseil",
+        "Santé & bien-être",
+        "Éducation & formation"
+      ],
+      "description": "Outil de prise de rendez-vous en ligne avec disponibilités, rappels, formulaires et paiements.",
+      "tags": [
+        "Rendez-vous",
+        "Réservation",
+        "Planning"
+      ],
+      "bestFor": "Permettre aux clients de réserver un créneau avec rappels et paiement si besoin.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "transverse"
+    },
+    {
+      "slug": "n8n",
+      "name": "n8n",
+      "url": "https://n8n.io/",
+      "category": "Automatisation",
+      "sectors": [
+        "Services & conseil",
+        "Tech & Digital",
+        "E-commerce"
+      ],
+      "description": "Plateforme d’automatisation de workflows avec connecteurs, logique conditionnelle et option self-hosted.",
+      "tags": [
+        "Automatisation",
+        "Workflows",
+        "No-code"
+      ],
+      "bestFor": "Automatiser des flux métier avancés avec plus de contrôle technique.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "transverse"
+    },
+    {
+      "slug": "mailchimp",
+      "name": "Mailchimp",
+      "url": "https://mailchimp.com/",
+      "category": "Marketing & visibilité",
+      "sectors": [
+        "E-commerce",
+        "Services & conseil",
+        "Associations & événements",
+        "Tech & Digital"
+      ],
+      "description": "Plateforme d’email marketing pour newsletters, audiences, campagnes, automatisations et formulaires.",
+      "tags": [
+        "Emailing",
+        "Newsletter",
+        "Marketing"
+      ],
+      "bestFor": "Lancer newsletters, campagnes email et séquences marketing simples.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "transverse"
+    },
+    {
+      "slug": "paypal",
+      "name": "PayPal",
+      "url": "https://www.paypal.com/business/",
+      "category": "Finance & paiement",
+      "sectors": [
+        "E-commerce",
+        "Tech & Digital",
+        "Services & conseil"
+      ],
+      "description": "Solution de paiement en ligne pour encaisser cartes, comptes PayPal, paiements internationaux et marketplaces.",
+      "tags": [
+        "Paiement",
+        "E-commerce",
+        "International"
+      ],
+      "bestFor": "Ajouter un moyen de paiement reconnu pour vendre en ligne ou à l’international.",
+      "pricingHint": "Commission",
+      "status": "active",
+      "toolbox": true,
+      "scope": "transverse"
+    },
+    {
+      "slug": "wise-business",
+      "name": "Wise Business",
+      "url": "https://wise.com/business/",
+      "category": "Finance & paiement",
+      "sectors": [
+        "Services & conseil",
+        "E-commerce",
+        "Tech & Digital"
+      ],
+      "description": "Compte international pour paiements, virements, devises et frais réduits sur opérations multi-pays.",
+      "tags": [
+        "Compte pro",
+        "International",
+        "Devises"
+      ],
+      "bestFor": "Gérer paiements internationaux, devises et prestataires étrangers.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "transverse"
+    },
+    {
+      "slug": "shine",
+      "name": "Shine",
+      "url": "https://www.shine.fr/",
+      "category": "Finance & paiement",
+      "sectors": [
+        "Services & conseil",
+        "Commerce local",
+        "Artisanat & BTP"
+      ],
+      "description": "Compte pro en ligne avec cartes, facturation, justificatifs, aides administratives et suivi indépendant/TPE.",
+      "tags": [
+        "Compte pro",
+        "Indépendant",
+        "Facturation"
+      ],
+      "bestFor": "Simplifier banque, factures et administratif d’un indépendant ou d’une petite entreprise.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "transverse"
+    },
+    {
+      "slug": "payfit",
+      "name": "PayFit",
+      "url": "https://payfit.com/fr/",
+      "category": "RH & planning",
+      "sectors": [
+        "Services & conseil",
+        "Tech & Digital",
+        "Commerce local"
+      ],
+      "description": "Solution de paie et RH pour bulletins, déclarations, congés, absences et suivi salarié.",
+      "tags": [
+        "Paie",
+        "RH",
+        "Congés"
+      ],
+      "bestFor": "Gérer paie et RH d’une équipe sans complexité excessive.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "transverse"
+    },
+    {
+      "slug": "lucca",
+      "name": "Lucca",
+      "url": "https://www.lucca.fr/",
+      "category": "RH & planning",
+      "sectors": [
+        "Services & conseil",
+        "Tech & Digital"
+      ],
+      "description": "Suite RH pour congés, absences, notes de frais, temps, entretiens et administration du personnel.",
+      "tags": [
+        "RH",
+        "Congés",
+        "Notes de frais"
+      ],
+      "bestFor": "Structurer les processus RH quand l’équipe grandit.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "transverse"
+    },
+    {
+      "slug": "sage",
+      "name": "Sage",
+      "url": "https://www.sage.com/fr-fr/",
+      "category": "Finance & paiement",
+      "sectors": [
+        "Services & conseil",
+        "Commerce local",
+        "Industrie & production"
+      ],
+      "description": "Solutions de comptabilité, gestion commerciale, paie et finance pour TPE, PME et entreprises.",
+      "tags": [
+        "Comptabilité",
+        "Gestion",
+        "Paie"
+      ],
+      "bestFor": "Gérer comptabilité ou gestion commerciale avec un outil installé sur le marché.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "transverse"
+    },
+    {
+      "slug": "quickbooks",
+      "name": "QuickBooks",
+      "url": "https://quickbooks.intuit.com/",
+      "category": "Finance & paiement",
+      "sectors": [
+        "Services & conseil",
+        "E-commerce"
+      ],
+      "description": "Logiciel de comptabilité et facturation pour petites entreprises, indépendants et activités de service.",
+      "tags": [
+        "Comptabilité",
+        "Facturation",
+        "TPE"
+      ],
+      "bestFor": "Suivre factures, dépenses et comptabilité simple d’une petite entreprise.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "transverse"
+    },
+    {
+      "slug": "sellsy",
+      "name": "Sellsy",
+      "url": "https://www.sellsy.com/",
+      "category": "CRM & ventes",
+      "sectors": [
+        "Services & conseil",
+        "Commerce local",
+        "E-commerce"
+      ],
+      "description": "CRM français avec devis, factures, opportunités, relances, marketing et suivi commercial.",
+      "tags": [
+        "CRM",
+        "Facturation",
+        "Ventes"
+      ],
+      "bestFor": "Centraliser prospection, devis, factures et suivi commercial dans une TPE/PME.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "transverse"
+    },
+    {
+      "slug": "axonaut",
+      "name": "Axonaut",
+      "url": "https://axonaut.com/",
+      "category": "CRM & ventes",
+      "sectors": [
+        "Services & conseil",
+        "Commerce local"
+      ],
+      "description": "ERP/CRM français pour devis, factures, trésorerie, projets, RH et gestion d’entreprise TPE/PME.",
+      "tags": [
+        "CRM",
+        "Facturation",
+        "Gestion"
+      ],
+      "bestFor": "Piloter commercial, facturation et gestion interne dans une petite entreprise.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "transverse"
+    },
+    {
+      "slug": "intercom",
+      "name": "Intercom",
+      "url": "https://www.intercom.com/",
+      "category": "CRM & ventes",
+      "sectors": [
+        "Tech & Digital",
+        "E-commerce"
+      ],
+      "description": "Plateforme de support client, messagerie, chat, base de connaissance et automatisation service client.",
+      "tags": [
+        "Support",
+        "Chat",
+        "SaaS"
+      ],
+      "bestFor": "Gérer support client, chat et self-service pour SaaS ou activité digitale.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "zendesk",
+      "name": "Zendesk",
+      "url": "https://www.zendesk.fr/",
+      "category": "CRM & ventes",
+      "sectors": [
+        "Tech & Digital",
+        "E-commerce",
+        "Services & conseil"
+      ],
+      "description": "Solution de service client pour tickets, help center, chat, support multicanal et reporting.",
+      "tags": [
+        "Support",
+        "Tickets",
+        "Help center"
+      ],
+      "bestFor": "Structurer un support client multicanal avec tickets et base de connaissance.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
+    },
+    {
+      "slug": "freshdesk",
+      "name": "Freshdesk",
+      "url": "https://www.freshworks.com/freshdesk/",
+      "category": "CRM & ventes",
+      "sectors": [
+        "Tech & Digital",
+        "E-commerce",
+        "Services & conseil"
+      ],
+      "description": "Logiciel de support client pour tickets, emails, chat, base de connaissance et automatisations.",
+      "tags": [
+        "Support",
+        "Tickets",
+        "Service client"
+      ],
+      "bestFor": "Mettre en place un support client simple et structuré sans outil trop lourd.",
+      "pricingHint": "Freemium",
+      "status": "active",
+      "toolbox": true,
+      "scope": "business"
     }
   ]
 }

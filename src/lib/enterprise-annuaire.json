@@ -133,6 +133,14 @@
         {
           "slug": "claude",
           "usage": "Clarifier des sujets complexes et produire des livrables plus propres."
+        },
+        {
+          "slug": "sage",
+          "usage": "Comparer une solution comptable installée sur le marché."
+        },
+        {
+          "slug": "quickbooks",
+          "usage": "Comparer une solution compta/facturation orientée petites entreprises."
         }
       ]
     },
@@ -353,6 +361,34 @@
         {
           "slug": "boondmanager",
           "usage": "Piloter CRM, staffing, temps, consultants et facturation."
+        },
+        {
+          "slug": "asana",
+          "usage": "Structurer missions, tâches, jalons et responsabilités client."
+        },
+        {
+          "slug": "clickup",
+          "usage": "Centraliser projets, documents et suivi opérationnel d’équipe."
+        },
+        {
+          "slug": "acuity-scheduling",
+          "usage": "Proposer des créneaux de rendez-vous ou diagnostics clients."
+        },
+        {
+          "slug": "sellsy",
+          "usage": "Centraliser prospection, devis, factures et suivi commercial."
+        },
+        {
+          "slug": "axonaut",
+          "usage": "Piloter CRM, facturation, projets et gestion interne TPE/PME."
+        },
+        {
+          "slug": "payfit",
+          "usage": "Gérer paie et RH si l’équipe se structure."
+        },
+        {
+          "slug": "lucca",
+          "usage": "Structurer congés, notes de frais et processus RH."
         }
       ]
     },
@@ -483,6 +519,34 @@
         {
           "slug": "kit",
           "usage": "Structurer newsletters et automatisations créateur/client."
+        },
+        {
+          "slug": "asana",
+          "usage": "Piloter campagnes, contenus, validations et tâches client."
+        },
+        {
+          "slug": "trello",
+          "usage": "Organiser calendrier éditorial et production avec un tableau simple."
+        },
+        {
+          "slug": "slack",
+          "usage": "Fluidifier coordination d’équipe et échanges projet."
+        },
+        {
+          "slug": "n8n",
+          "usage": "Automatiser reporting, leads, formulaires et campagnes clients."
+        },
+        {
+          "slug": "mailchimp",
+          "usage": "Gérer newsletters, audiences et campagnes email."
+        },
+        {
+          "slug": "sellsy",
+          "usage": "Suivre prospects, devis, factures et relances commerciales."
+        },
+        {
+          "slug": "payfit",
+          "usage": "Gérer paie et RH quand l’équipe grandit."
         }
       ]
     },
@@ -585,6 +649,14 @@
         {
           "slug": "propilot",
           "usage": "Structurer offres, missions et suivi client."
+        },
+        {
+          "slug": "wise-business",
+          "usage": "Gérer clients ou prestataires internationaux."
+        },
+        {
+          "slug": "shine",
+          "usage": "Simplifier banque, factures et administratif freelance."
         }
       ]
     },
@@ -683,6 +755,14 @@
         {
           "slug": "flatchr",
           "usage": "Publier offres, centraliser candidatures et suivre recrutements."
+        },
+        {
+          "slug": "taleez",
+          "usage": "Centraliser candidatures, offres, multidiffusion et pipeline de recrutement."
+        },
+        {
+          "slug": "beetween",
+          "usage": "Gérer vivier candidats, offres, suivi RH et collaboration recruteur."
         }
       ]
     },
@@ -805,6 +885,38 @@
         {
           "slug": "vercel",
           "usage": "Déployer sites et applications web modernes rapidement."
+        },
+        {
+          "slug": "wix",
+          "usage": "Créer des sites simples rapidement pour clients TPE ou indépendants."
+        },
+        {
+          "slug": "squarespace",
+          "usage": "Créer des sites vitrines élégants, portfolios et petites boutiques."
+        },
+        {
+          "slug": "asana",
+          "usage": "Piloter projets clients, tâches, délais et validations."
+        },
+        {
+          "slug": "trello",
+          "usage": "Suivre les étapes de production de sites avec un tableau simple."
+        },
+        {
+          "slug": "slack",
+          "usage": "Centraliser échanges d’équipe et notifications projet."
+        },
+        {
+          "slug": "n8n",
+          "usage": "Créer des automatisations client ou internes plus avancées."
+        },
+        {
+          "slug": "sellsy",
+          "usage": "Suivre leads, devis, factures et relances commerciales."
+        },
+        {
+          "slug": "axonaut",
+          "usage": "Centraliser CRM, facturation et suivi de projets client."
         }
       ]
     },
@@ -933,6 +1045,10 @@
         {
           "slug": "kit",
           "usage": "Construire audience email et monétiser contenus numériques."
+        },
+        {
+          "slug": "mailchimp",
+          "usage": "Créer une newsletter et garder le lien avec son audience."
         }
       ]
     },
@@ -1039,10 +1155,6 @@
           "usage": "Construire des workflows marketplace et back-office sur mesure."
         },
         {
-          "slug": "mirakl",
-          "usage": "Gérer vendeurs, catalogues, commandes et opérations marketplace."
-        },
-        {
           "slug": "softr",
           "usage": "Créer une marketplace ou portail simple connecté aux données."
         },
@@ -1053,6 +1165,18 @@
         {
           "slug": "medusa",
           "usage": "Construire un back-office commerce ou marketplace sur mesure."
+        },
+        {
+          "slug": "n8n",
+          "usage": "Connecter formulaires, CRM, paiements et opérations marketplace."
+        },
+        {
+          "slug": "paypal",
+          "usage": "Proposer un moyen de paiement complémentaire selon les cas d’usage."
+        },
+        {
+          "slug": "zendesk",
+          "usage": "Gérer demandes utilisateurs, litiges et support multicanal."
         }
       ]
     },
@@ -1173,6 +1297,10 @@
         {
           "slug": "riverside",
           "usage": "Enregistrer interviews, podcasts et contenus vidéo à distance."
+        },
+        {
+          "slug": "mailchimp",
+          "usage": "Gérer newsletter, audience et campagnes éditoriales."
         }
       ]
     },
@@ -1305,6 +1433,38 @@
         {
           "slug": "posthog",
           "usage": "Analyser usage produit, funnels, feature flags et expérimentation."
+        },
+        {
+          "slug": "jira",
+          "usage": "Suivre bugs, tickets produit, backlog et sprints de développement."
+        },
+        {
+          "slug": "slack",
+          "usage": "Coordonner l’équipe produit, support et tech avec canaux dédiés."
+        },
+        {
+          "slug": "n8n",
+          "usage": "Automatiser workflows produit, CRM, support ou opérations internes."
+        },
+        {
+          "slug": "intercom",
+          "usage": "Gérer chat, support, onboarding et relation utilisateur."
+        },
+        {
+          "slug": "zendesk",
+          "usage": "Structurer tickets support, base de connaissance et suivi client."
+        },
+        {
+          "slug": "freshdesk",
+          "usage": "Mettre en place un support ticketing plus léger."
+        },
+        {
+          "slug": "payfit",
+          "usage": "Gérer paie et RH quand l’équipe grandit."
+        },
+        {
+          "slug": "lucca",
+          "usage": "Structurer congés, notes de frais et processus RH."
         }
       ]
     },
@@ -2123,6 +2283,14 @@
         {
           "slug": "roomraccoon",
           "usage": "Centraliser réservations, distribution et paiements pour hébergements gérés."
+        },
+        {
+          "slug": "airbnb",
+          "usage": "Publier logements, gérer demandes et réservations courte durée."
+        },
+        {
+          "slug": "booking-com",
+          "usage": "Diversifier les canaux de réservation des hébergements gérés."
         }
       ]
     },
@@ -2315,6 +2483,14 @@
         {
           "slug": "affinity",
           "usage": "Structurer pipeline, réseau et opportunités d’investissement."
+        },
+        {
+          "slug": "quantalys",
+          "usage": "Comparer fonds, analyser portefeuilles et allocations."
+        },
+        {
+          "slug": "active-asset-allocation",
+          "usage": "Outiller allocation d’actifs, scénarios et suivi de portefeuille."
         }
       ]
     },
@@ -2415,6 +2591,14 @@
         {
           "slug": "everwin",
           "usage": "Suivre projets, temps, budgets et rentabilité des opérations."
+        },
+        {
+          "slug": "edda",
+          "usage": "Structurer dealflow, due diligence, portefeuille et reporting investissement."
+        },
+        {
+          "slug": "active-asset-allocation",
+          "usage": "Construire scénarios d’allocation et supports de décision financière."
         }
       ]
     },
@@ -2511,10 +2695,6 @@
         {
           "slug": "antsroute",
           "usage": "Planifier les tournées, passages et communications client."
-        },
-        {
-          "slug": "nomadia-toursolver",
-          "usage": "Optimiser les plannings d’équipes et de véhicules."
         }
       ]
     },
@@ -2597,10 +2777,6 @@
           "usage": "Suivre la flotte, les trajets et les données véhicules."
         },
         {
-          "slug": "shippeo",
-          "usage": "Partager visibilité, ETA et suivi des livraisons avec les clients."
-        },
-        {
           "slug": "praxedo",
           "usage": "Coordonner les équipes terrain et les imprévus de tournée."
         },
@@ -2615,10 +2791,6 @@
         {
           "slug": "antsroute",
           "usage": "Planifier tournées, suivre chauffeurs et envoyer les notifications client."
-        },
-        {
-          "slug": "nomadia-toursolver",
-          "usage": "Optimiser les tournées dernier kilomètre avec contraintes terrain."
         },
         {
           "slug": "mapotempo",
@@ -2821,10 +2993,6 @@
         {
           "slug": "antsroute",
           "usage": "Planifier les passages, tournées et notifications voyageurs."
-        },
-        {
-          "slug": "nomadia-toursolver",
-          "usage": "Optimiser les circuits, affectations et contraintes horaires."
         }
       ]
     },
@@ -2931,6 +3099,14 @@
         {
           "slug": "tastycloud",
           "usage": "Digitaliser menus QR, cartes tablettes et click & collect."
+        },
+        {
+          "slug": "deliveroo",
+          "usage": "Développer les commandes livrées via une place de marché connue."
+        },
+        {
+          "slug": "uber-eats",
+          "usage": "Recevoir des commandes en ligne et toucher une clientèle locale."
         }
       ]
     },
@@ -3029,6 +3205,14 @@
         {
           "slug": "popina",
           "usage": "Gérer snacking, commandes à forte affluence et encaissement rapide."
+        },
+        {
+          "slug": "deliveroo",
+          "usage": "Augmenter les commandes livrées sur les zones à fort volume."
+        },
+        {
+          "slug": "uber-eats",
+          "usage": "Développer commande en ligne et livraison locale."
         }
       ]
     },
@@ -3225,6 +3409,14 @@
         {
           "slug": "clyo",
           "usage": "Centraliser caisse, commandes en ligne et suivi des ventes."
+        },
+        {
+          "slug": "deliveroo",
+          "usage": "Commercialiser les menus sur un canal de livraison majeur."
+        },
+        {
+          "slug": "uber-eats",
+          "usage": "Générer des commandes livrées sans salle de restaurant."
         }
       ]
     },
@@ -3425,6 +3617,18 @@
         {
           "slug": "tactill",
           "usage": "Installer une caisse tactile certifiée adaptée au magasin."
+        },
+        {
+          "slug": "wix",
+          "usage": "Créer une présence web et vendre quelques produits en ligne."
+        },
+        {
+          "slug": "ecwid",
+          "usage": "Ajouter une boutique simple à un commerce existant."
+        },
+        {
+          "slug": "sellsy",
+          "usage": "Suivre clients, devis B2B éventuels, factures et relances."
         }
       ]
     },
@@ -3537,8 +3741,32 @@
           "usage": "Automatiser commandes, préparation, stocks et expéditions."
         },
         {
-          "slug": "akeneo",
-          "usage": "Centraliser et enrichir les données produits pour tous les canaux."
+          "slug": "wix",
+          "usage": "Lancer une boutique simple avec site, paiements et marketing intégrés."
+        },
+        {
+          "slug": "squarespace",
+          "usage": "Créer une boutique visuelle avec site, contenus et ventes en ligne."
+        },
+        {
+          "slug": "ecwid",
+          "usage": "Ajouter une boutique légère à un site ou canal existant."
+        },
+        {
+          "slug": "mailchimp",
+          "usage": "Lancer newsletters, campagnes et automatisations email e-commerce."
+        },
+        {
+          "slug": "paypal",
+          "usage": "Ajouter un moyen de paiement reconnu pour clients en ligne."
+        },
+        {
+          "slug": "zendesk",
+          "usage": "Structurer tickets, demandes client et base de connaissance."
+        },
+        {
+          "slug": "freshdesk",
+          "usage": "Gérer support client e-commerce avec tickets et automatisations simples."
         }
       ]
     },
@@ -4047,6 +4275,14 @@
         {
           "slug": "learnybox",
           "usage": "Diffuser du e-learning et vendre des parcours de formation."
+        },
+        {
+          "slug": "zoom",
+          "usage": "Animer sessions à distance, classes virtuelles ou rendez-vous apprenants."
+        },
+        {
+          "slug": "livestorm",
+          "usage": "Organiser classes virtuelles, webinaires et sessions pédagogiques live."
         }
       ]
     },
@@ -4163,6 +4399,14 @@
         {
           "slug": "learnworlds",
           "usage": "Créer une école en ligne interactive et structurée."
+        },
+        {
+          "slug": "zoom",
+          "usage": "Organiser sessions live, coaching collectif ou rendez-vous pédagogiques."
+        },
+        {
+          "slug": "livestorm",
+          "usage": "Animer webinaires, sessions live et ateliers avec inscriptions."
         }
       ]
     },
@@ -4263,6 +4507,10 @@
         {
           "slug": "divalto",
           "usage": "Piloter flux industriels, ventes, achats et stocks."
+        },
+        {
+          "slug": "sage",
+          "usage": "Structurer comptabilité, gestion commerciale ou finance PME."
         }
       ]
     },
@@ -5149,6 +5397,14 @@
         {
           "slug": "rovercash",
           "usage": "Gérer encaissement, ventes et activité du commerce."
+        },
+        {
+          "slug": "deliveroo",
+          "usage": "Proposer livraison locale de produits alimentaires."
+        },
+        {
+          "slug": "uber-eats",
+          "usage": "Recevoir des commandes locales en livraison ou retrait."
         }
       ]
     },
@@ -5251,6 +5507,14 @@
         {
           "slug": "tactill",
           "usage": "Équiper la boutique avec une caisse tactile certifiée."
+        },
+        {
+          "slug": "wix",
+          "usage": "Créer un site vitrine ou une petite boutique en ligne facilement."
+        },
+        {
+          "slug": "ecwid",
+          "usage": "Ajouter une boutique en ligne simple à l’activité locale."
         }
       ]
     },
@@ -5545,6 +5809,10 @@
         {
           "slug": "d-edge",
           "usage": "Optimiser distribution hôtelière, channel manager et réservations directes."
+        },
+        {
+          "slug": "booking-com",
+          "usage": "Développer visibilité, acquisition voyageurs et réservations via OTA."
         }
       ]
     },
@@ -6407,6 +6675,14 @@
         {
           "slug": "runway",
           "usage": "Accélérer effets, variantes vidéo et workflows créatifs IA."
+        },
+        {
+          "slug": "squarespace",
+          "usage": "Créer un portfolio professionnel et présenter ses prestations."
+        },
+        {
+          "slug": "wix",
+          "usage": "Créer un site vitrine avec galeries, formulaires et réservations."
         }
       ]
     },
@@ -6493,6 +6769,30 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer descriptions, emails, scripts et rétroplannings."
+        },
+        {
+          "slug": "eventmaker",
+          "usage": "Gérer invitations, inscriptions, participants et événements hybrides."
+        },
+        {
+          "slug": "yurplan",
+          "usage": "Créer billetteries, inscriptions et suivi participant."
+        },
+        {
+          "slug": "eventbrite",
+          "usage": "Créer événements publics, inscriptions, billetterie et visibilité."
+        },
+        {
+          "slug": "trello",
+          "usage": "Suivre rétroplanning, prestataires, tâches et checklists événement."
+        },
+        {
+          "slug": "asana",
+          "usage": "Piloter préparation, échéances et responsabilités événementielles."
+        },
+        {
+          "slug": "livestorm",
+          "usage": "Gérer événements digitaux, hybrides, inscriptions et relances."
         }
       ]
     },
@@ -7335,6 +7635,14 @@
         {
           "slug": "archipad",
           "usage": "Réaliser relevés terrain, plans et comptes-rendus structurés."
+        },
+        {
+          "slug": "diag-pilote",
+          "usage": "Centraliser dossiers DDT, DPE, devis, factures, planning et rapports."
+        },
+        {
+          "slug": "gestiondiag",
+          "usage": "Piloter devis, facturation, dossiers et conformité diagnostic."
         }
       ]
     },
@@ -7437,6 +7745,14 @@
         {
           "slug": "tactill",
           "usage": "Équiper une caisse tactile simple pour ventes comptoir."
+        },
+        {
+          "slug": "wix",
+          "usage": "Créer un site vitrine et vendre bouquets ou compositions en ligne."
+        },
+        {
+          "slug": "ecwid",
+          "usage": "Ajouter une petite boutique de commandes florales."
         }
       ]
     },
@@ -7523,6 +7839,14 @@
         {
           "slug": "hiboutik",
           "usage": "Gérer caisse, ventes et suivi clients pressing."
+        },
+        {
+          "slug": "hangers-pressing",
+          "usage": "Gérer caisse, clients, tickets et activité pressing certifiée."
+        },
+        {
+          "slug": "blanchinet",
+          "usage": "Suivre linge, clients, facturation et opérations de blanchisserie."
         }
       ]
     },
@@ -7617,6 +7941,10 @@
         {
           "slug": "tactill",
           "usage": "Équiper un point de vente mobile avec caisse tactile certifiée."
+        },
+        {
+          "slug": "uber-eats",
+          "usage": "Tester la commande en ligne selon zone et organisation."
         }
       ]
     },
@@ -7711,6 +8039,38 @@
         {
           "slug": "abby",
           "usage": "Simplifier facturation, gestion administrative et déclarations."
+        },
+        {
+          "slug": "malt",
+          "usage": "Trouver des missions, structurer son profil et générer des opportunités."
+        },
+        {
+          "slug": "tiime",
+          "usage": "Gérer facturation, justificatifs et suivi administratif simple."
+        },
+        {
+          "slug": "squarespace",
+          "usage": "Créer un site vitrine clair pour offres, preuves et prise de contact."
+        },
+        {
+          "slug": "wix",
+          "usage": "Lancer rapidement un site professionnel sans développement."
+        },
+        {
+          "slug": "trello",
+          "usage": "Organiser missions, tâches client et priorités simplement."
+        },
+        {
+          "slug": "acuity-scheduling",
+          "usage": "Permettre aux prospects ou clients de réserver un rendez-vous."
+        },
+        {
+          "slug": "wise-business",
+          "usage": "Gérer paiements internationaux ou prestataires étrangers."
+        },
+        {
+          "slug": "shine",
+          "usage": "Simplifier compte pro, facturation et administratif indépendant."
         }
       ]
     },
@@ -7801,6 +8161,14 @@
         {
           "slug": "maia-assurance",
           "usage": "Centraliser clients, contrats et suivi commercial assurance."
+        },
+        {
+          "slug": "oggo-data",
+          "usage": "Comparer offres, structurer parcours de vente et suivi client assurance."
+        },
+        {
+          "slug": "assur3d",
+          "usage": "Centraliser portefeuille, conformité, contrats et pilotage courtage."
         }
       ]
     },
@@ -7993,6 +8361,22 @@
         {
           "slug": "learnybox",
           "usage": "Vendre programmes d’accompagnement et ressources en ligne."
+        },
+        {
+          "slug": "squarespace",
+          "usage": "Présenter offres, contenus, rendez-vous et preuves clients."
+        },
+        {
+          "slug": "wix",
+          "usage": "Créer un site vitrine avec réservation et pages d’offre."
+        },
+        {
+          "slug": "zoom",
+          "usage": "Animer séances à distance, ateliers ou rendez-vous de suivi."
+        },
+        {
+          "slug": "acuity-scheduling",
+          "usage": "Gérer réservations, rappels et créneaux de coaching."
         }
       ]
     },
@@ -8095,6 +8479,10 @@
         {
           "slug": "bsport",
           "usage": "Gérer réservations, abonnements, paiements et communauté studio."
+        },
+        {
+          "slug": "acuity-scheduling",
+          "usage": "Gérer séances, disponibilités et rappels clients."
         }
       ]
     },
@@ -8181,6 +8569,14 @@
         {
           "slug": "hiboutik",
           "usage": "Suivre caisse, ventes et activité du point de service."
+        },
+        {
+          "slug": "washonline",
+          "usage": "Proposer disponibilité machines, réservation, paiement et alertes client."
+        },
+        {
+          "slug": "netilav",
+          "usage": "Piloter machines, séchoirs et centrales de paiement à distance."
         }
       ]
     },
@@ -8369,6 +8765,14 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer communications, emails et comptes rendus."
+        },
+        {
+          "slug": "eventbrite",
+          "usage": "Gérer inscriptions et billetterie pour événements associatifs."
+        },
+        {
+          "slug": "mailchimp",
+          "usage": "Envoyer newsletters, appels à participation et campagnes aux membres."
         }
       ]
     },
@@ -8953,6 +9357,10 @@
         {
           "slug": "rovercash",
           "usage": "Suivre encaissements et activité du commerce caviste."
+        },
+        {
+          "slug": "ecwid",
+          "usage": "Ajouter une boutique en ligne simple pour vendre une sélection de produits."
         }
       ]
     },
@@ -9051,6 +9459,10 @@
         {
           "slug": "rovercash",
           "usage": "Gérer encaissement et suivi quotidien librairie."
+        },
+        {
+          "slug": "ecwid",
+          "usage": "Ajouter une boutique en ligne légère pour catalogue et commandes."
         }
       ]
     },
@@ -9145,6 +9557,10 @@
         {
           "slug": "rvpsy",
           "usage": "Gérer patientèle, rendez-vous et suivi de cabinet thérapeute."
+        },
+        {
+          "slug": "acuity-scheduling",
+          "usage": "Gérer rendez-vous, rappels et disponibilités praticien."
         }
       ]
     },
@@ -9243,6 +9659,10 @@
         {
           "slug": "rvpsy",
           "usage": "Gérer agenda, patientèle, notes et facturation du cabinet psy."
+        },
+        {
+          "slug": "acuity-scheduling",
+          "usage": "Proposer une prise de rendez-vous en ligne si l’organisation le permet."
         }
       ]
     },
@@ -9329,6 +9749,14 @@
         {
           "slug": "kidizz",
           "usage": "Améliorer transmissions, pointage et communication parents."
+        },
+        {
+          "slug": "ogust",
+          "usage": "Gérer inscriptions, familles, plannings et facturation petite enfance."
+        },
+        {
+          "slug": "bl-enfance",
+          "usage": "Structurer inscriptions, pointages, réservations et facturation crèche."
         }
       ]
     },
@@ -9419,6 +9847,18 @@
         {
           "slug": "affinity",
           "usage": "Suivre réseau, opportunités patrimoniales et relations clés."
+        },
+        {
+          "slug": "patriom",
+          "usage": "Produire bilans patrimoniaux, cartographies et supports de conseil."
+        },
+        {
+          "slug": "o2s",
+          "usage": "Suivre agrégation, comptes, conformité, CRM et reporting patrimonial."
+        },
+        {
+          "slug": "quantalys",
+          "usage": "Comparer fonds, analyser allocations et construire des portefeuilles."
         }
       ]
     },
