@@ -6,10 +6,10 @@ import {
   Check,
   ChevronDown,
   FileCheck2,
-  HandCoins,
   Minus,
   Plus,
   Search,
+  Send,
   ShoppingBag,
   Trash2,
   Workflow,
@@ -47,14 +47,24 @@ type EmbeddedCheckoutState = {
 
 const assistantOffers = [
   {
-    title: "Structuration & automatisation",
-    category: "Automatisation",
-    tags: ["Automatisation", "Administration"],
+    title: "Accompagnement structuration",
+    category: "Organisation",
+    tags: ["Administration"],
     format: "À partir de 750 €",
     description:
-      "Structuration des process, mise en place de systèmes de travail, automatisations simples et accompagnement à la prise en main.",
+      "On vous aide à clarifier vos process, poser des systèmes de travail solides et reprendre la main sur votre organisation.",
     icon: Workflow,
     packOfferId: "structuration-automatisation",
+  },
+  {
+    title: "Assistant polyvalent",
+    category: "Administration",
+    tags: ["Administration"],
+    format: "Minimum 20 heures / mois",
+    description:
+      "On prend en charge vos tâches récurrentes, le suivi de vos dossiers et l'organisation opérationnelle du mois.",
+    icon: Send,
+    packOfferId: "administratif",
   },
   {
     title: "Appels d'offres",
@@ -65,16 +75,6 @@ const assistantOffers = [
       "On vous aide à structurer une réponse claire, rassembler les pièces demandées et sécuriser un dossier prêt à envoyer.",
     icon: FileCheck2,
     packOfferId: "appel-offre",
-  },
-  {
-    title: "Subventions",
-    category: "Financement",
-    tags: ["Finance", "Dossiers"],
-    format: "À partir de 500 €",
-    description:
-      "On vous accompagne pour vérifier l’éligibilité, réunir les justificatifs et préparer un dossier de subvention propre.",
-    icon: HandCoins,
-    packOfferId: "subvention",
   },
 ] as const satisfies readonly AssistantCatalogOffer[];
 
@@ -649,9 +649,6 @@ export default function AssistantsCatalogClient() {
                                       <span className="block text-sm font-semibold leading-tight">
                                         {pack.label} - {formatAssistantPrice(pack.amount)}
                                       </span>
-                                      <span className="mt-1 block text-xs leading-snug text-dema-muted">
-                                        {pack.detail}
-                                      </span>
                                     </span>
                                     {isSelected ? (
                                       <Check
@@ -803,9 +800,6 @@ export default function AssistantsCatalogClient() {
                                       <span className="min-w-0">
                                         <span className="block text-xs font-semibold leading-tight">
                                           {pack.label} - {formatAssistantPrice(pack.amount)}
-                                        </span>
-                                        <span className="mt-1 block text-[11px] leading-snug text-dema-muted">
-                                          {pack.detail}
                                         </span>
                                       </span>
                                       {isSelected ? (

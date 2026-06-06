@@ -6,14 +6,14 @@ import PrimaryMobileNav from "@/components/PrimaryMobileNav";
 export const metadata: Metadata = {
   title: "Déléguer des tâches opérationnelles - Demaa",
   description:
-    "Choisissez le pack Demaa adapté à vos besoins : structuration, automatisation, facturation, administratif, subventions ou appels d'offres.",
+    "Choisissez le pack Demaa adapté à vos besoins : accompagnement structuration, assistant polyvalent ou appels d'offres.",
   alternates: {
     canonical: "/deleguer",
   },
   openGraph: {
     title: "Déléguer des tâches opérationnelles - Demaa",
     description:
-      "Choisissez le pack Demaa adapté à vos besoins : structuration, automatisation, facturation, administratif, subventions ou appels d'offres.",
+      "Choisissez le pack Demaa adapté à vos besoins : accompagnement structuration, assistant polyvalent ou appels d'offres.",
     url: "/deleguer",
     siteName: "Demaa",
     locale: "fr_FR",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Déléguer des tâches opérationnelles - Demaa",
     description:
-      "Choisissez le pack Demaa adapté à vos besoins : structuration, automatisation, facturation, administratif, subventions ou appels d'offres.",
+      "Choisissez le pack Demaa adapté à vos besoins : accompagnement structuration, assistant polyvalent ou appels d'offres.",
   },
 };
 

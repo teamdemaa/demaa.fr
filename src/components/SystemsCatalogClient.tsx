@@ -14,6 +14,7 @@ import {
   Camera,
   Car,
   ChefHat,
+  Check,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
@@ -243,6 +244,19 @@ function isTransverseTool(tool: OperationalSystemDetail["tools"][number]): boole
   }
 
   return Boolean(tool.slug && TRANSVERSE_TOOL_SLUGS.has(tool.slug));
+}
+
+function getProcessChecklistItems(examples?: string): string[] {
+  if (!examples) {
+    return [];
+  }
+
+  return examples
+    .replace(/^Exemple\s*:\s*/i, "")
+    .replace(/\.$/, "")
+    .split("→")
+    .map((item) => item.trim())
+    .filter(Boolean);
 }
 
 export default function SystemsCatalogClient({
@@ -664,6 +678,7 @@ export default function SystemsCatalogClient({
                                 .replace(/^-|-$/g, "")
                                 .toLowerCase();
                               const isOpen = openProcessIds.has(processId);
+                              const checklistItems = getProcessChecklistItems(process.examples);
 
                               return (
                                 <article
@@ -703,10 +718,25 @@ export default function SystemsCatalogClient({
                                         <p className="text-left text-xs leading-relaxed text-brand-blue/78">
                                           {process.description}
                                         </p>
-                                        {process.examples ? (
-                                          <p className="mt-3 text-left text-xs italic leading-relaxed text-dema-muted">
-                                            {process.examples}
-                                          </p>
+                                        {checklistItems.length > 0 ? (
+                                          <div className="mt-3">
+                                            <p className="text-left text-xs font-semibold tracking-normal text-dema-forest/70">
+                                              À structurer
+                                            </p>
+                                            <ul className="mt-2 space-y-1.5">
+                                              {checklistItems.map((item) => (
+                                                <li
+                                                  key={item}
+                                                  className="flex items-start gap-2 text-left text-xs leading-relaxed text-dema-muted"
+                                                >
+                                                  <span className="mt-0.5 inline-flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
+                                                    <Check className="h-2.5 w-2.5" aria-hidden="true" />
+                                                  </span>
+                                                  <span>{item}</span>
+                                                </li>
+                                              ))}
+                                            </ul>
+                                          </div>
                                         ) : null}
                                       </div>
                                     </div>

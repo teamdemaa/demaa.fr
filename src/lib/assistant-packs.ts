@@ -6,9 +6,9 @@ export type AssistantPackId =
   | "facturation-10h"
   | "facturation-20h"
   | "facturation-30h"
-  | "administratif-10h"
   | "administratif-20h"
   | "administratif-30h"
+  | "administratif-40h"
   | "subvention-1"
   | "subvention-2"
   | "subvention-3"
@@ -43,10 +43,10 @@ export type AssistantOffer = {
 export const ASSISTANT_PACK_OFFERS = [
   {
     id: "structuration-automatisation",
-    title: "Structuration & automatisation",
+    title: "Accompagnement structuration",
     category: "Organisation",
     description:
-      "Structurer vos process, mettre en place des systèmes de travail clairs, automatiser les tâches répétitives et vous accompagner dans la prise en main.",
+      "Structurer vos process, mettre en place des systèmes de travail clairs et vous accompagner dans la prise en main.",
     rateLabel: "Accompagnement mensuel",
     startingLabel: "Audit gratuit puis accompagnement à partir de 750 €",
     packs: [
@@ -72,16 +72,16 @@ export const ASSISTANT_PACK_OFFERS = [
   },
   {
     id: "administratif",
-    title: "Administratif",
+    title: "Assistant polyvalent",
     category: "Administration",
     description:
-      "Classer les documents, préparer des formulaires, suivre les dossiers et organiser les pièces utiles.",
+      "Déléguer vos tâches récurrentes, organiser vos documents, suivre vos dossiers et garder votre activité à jour.",
     rateLabel: "25 € / heure",
-    startingLabel: "À partir de 250 €",
+    startingLabel: "Minimum 20 heures / mois",
     packs: [
-      { id: "administratif-10h", label: "10 heures", amount: 250, detail: "Pack administratif" },
-      { id: "administratif-20h", label: "20 heures", amount: 475, detail: "Pack suivi" },
-      { id: "administratif-30h", label: "30 heures", amount: 675, detail: "Pack mensuel" },
+      { id: "administratif-20h", label: "20 heures / mois", amount: 500, detail: "Minimum mensuel pour déléguer les tâches récurrentes" },
+      { id: "administratif-30h", label: "30 heures / mois", amount: 750, detail: "Pack mensuel pour un suivi plus régulier" },
+      { id: "administratif-40h", label: "40 heures / mois", amount: 1000, detail: "Pack mensuel pour une délégation plus complète" },
     ],
   },
   {
