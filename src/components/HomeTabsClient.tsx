@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 import PrimaryMobileNav, { type PrimaryNavTab } from "@/components/PrimaryMobileNav";
 import SystemsCatalogClient from "@/components/SystemsCatalogClient";
 import type { OperationalSystemDetail } from "@/lib/system-operations";
@@ -90,8 +90,18 @@ function SearchBar({
           onChange={(event) => onChange(event.target.value)}
           placeholder={placeholder}
           aria-label={placeholder}
-          className="w-full rounded-full bg-dema-paper py-2.5 pl-10 pr-5 text-sm font-normal text-brand-blue outline-none transition placeholder:text-brand-blue/36 md:py-3 md:pl-12 md:text-base"
+          className="w-full rounded-full bg-dema-paper py-2.5 pl-10 pr-12 text-sm font-normal text-brand-blue outline-none transition placeholder:text-brand-blue/36 md:py-3 md:pl-12 md:text-base"
         />
+        {value ? (
+          <button
+            type="button"
+            onClick={() => onChange("")}
+            className="absolute right-4 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full text-dema-forest/42 transition hover:bg-dema-sage/70 hover:text-dema-forest/70"
+            aria-label="Effacer la recherche"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        ) : null}
       </div>
     </div>
   );

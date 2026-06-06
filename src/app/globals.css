@@ -57,6 +57,10 @@
     @apply rounded-full border border-dema-line/75 bg-dema-paper p-1 shadow-[0_8px_22px_rgba(23,35,29,0.03)];
   }
 
+  .demaa-search-shell input[type="search"]::-webkit-search-cancel-button {
+    appearance: none;
+  }
+
   .demaa-primary-button {
     @apply inline-flex items-center justify-center rounded-full bg-dema-forest px-4 py-2 text-sm font-medium text-dema-paper shadow-[0_10px_22px_rgba(49,95,70,0.14)] transition hover:bg-[#284f3a];
   }
