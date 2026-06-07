@@ -1,5 +1,9 @@
 import { getToolDirectorySlug, type ToolDirectoryItem } from "@/lib/tool-directory";
 
+export type ToolDirectoryCardItem = ToolDirectoryItem & {
+  detailUrl?: string;
+};
+
 export type ToolDirectorySearchParams = Promise<{
   secteur?: string | string[];
   categorie?: string | string[];
@@ -26,10 +30,10 @@ export async function getToolDirectoryInitialFilters(
   };
 }
 
-export function withInternalSoftwareUrls(tools: ToolDirectoryItem[]): ToolDirectoryItem[] {
+export function withSoftwareDetailUrls(tools: ToolDirectoryItem[]): ToolDirectoryCardItem[] {
   return tools.map((tool) => ({
     ...tool,
-    url: `/annuaire-outils/${getToolDirectorySlug(tool)}`,
+    detailUrl: `/annuaire-outils/${getToolDirectorySlug(tool)}`,
   }));
 }
 

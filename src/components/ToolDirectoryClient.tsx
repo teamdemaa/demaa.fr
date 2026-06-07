@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState, type MouseEvent, type ReactNode } from "r
 import { ArrowLeft, Search } from "lucide-react";
 import HorizontalScrollHint from "@/components/HorizontalScrollHint";
 import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
-import type { ToolDirectoryItem } from "@/lib/tool-directory";
+import type { ToolDirectoryCardItem } from "@/lib/tool-directory-page";
 
 function getValidFilters(
   sectors: string[],
@@ -28,8 +28,8 @@ type ToolDirectoryClientProps = {
   title?: string;
   description?: string;
   searchPlaceholder?: string;
-  items: ToolDirectoryItem[];
-  secondaryItems?: ToolDirectoryItem[];
+  items: ToolDirectoryCardItem[];
+  secondaryItems?: ToolDirectoryCardItem[];
   sectors: string[];
   categories: string[];
   initialCategory?: string;
@@ -77,7 +77,7 @@ export default function ToolDirectoryClient({
   const [internalSearchQuery, setInternalSearchQuery] = useState("");
   const [activeSector, setActiveSector] = useState(initialFilters.sector);
   const [activeCategory, setActiveCategory] = useState(initialFilters.category);
-  const [selectedTool, setSelectedTool] = useState<ToolDirectoryItem | null>(null);
+  const [selectedTool, setSelectedTool] = useState<ToolDirectoryCardItem | null>(null);
   const searchQuery = controlledSearchQuery ?? internalSearchQuery;
   const toolboxSectors = useMemo(
     () => [
@@ -104,11 +104,13 @@ export default function ToolDirectoryClient({
     }
   }
 
-  function openToolDetails(tool: ToolDirectoryItem) {
+  function openToolDetails(tool: ToolDirectoryCardItem) {
+    const detailUrl = tool.detailUrl ?? tool.url;
+
     setSelectedTool(tool);
 
-    if (window.location.pathname !== tool.url) {
-      window.history.pushState({ demaaToolModal: true }, "", tool.url);
+    if (window.location.pathname !== detailUrl) {
+      window.history.pushState({ demaaToolModal: true }, "", detailUrl);
     }
   }
 
@@ -381,11 +383,11 @@ function ToolboxSections({
   cardClickMode,
   onOpenDetails,
 }: {
-  freeTools: ToolDirectoryItem[];
-  otherTools: ToolDirectoryItem[];
+  freeTools: ToolDirectoryCardItem[];
+  otherTools: ToolDirectoryCardItem[];
   externalLinks: boolean;
   cardClickMode: "modal" | "navigate";
-  onOpenDetails: (tool: ToolDirectoryItem) => void;
+  onOpenDetails: (tool: ToolDirectoryCardItem) => void;
 }) {
   const hasResults = freeTools.length > 0 || otherTools.length > 0;
 
@@ -512,11 +514,12 @@ function SquareToolCard({
   cardClickMode,
   onOpenDetails,
 }: {
-  tool: ToolDirectoryItem;
+  tool: ToolDirectoryCardItem;
   externalLinks: boolean;
   cardClickMode: "modal" | "navigate";
-  onOpenDetails: (tool: ToolDirectoryItem) => void;
+  onOpenDetails: (tool: ToolDirectoryCardItem) => void;
 }) {
+  const detailHref = tool.detailUrl ?? tool.url;
   const className =
     "demaa-card group flex min-h-[10rem] flex-[0_0_calc(50%-0.5rem)] flex-col rounded-[1.15rem] p-5 text-left md:flex-[0_0_calc(25%-0.75rem)]";
 
@@ -536,7 +539,7 @@ function SquareToolCard({
     </>
   );
 
-  if (externalLinks || tool.url.startsWith("http")) {
+  if (externalLinks || (!tool.detailUrl && tool.url.startsWith("http"))) {
     return (
       <a href={tool.url} target="_blank" rel="noreferrer" className={className}>
         {content}
@@ -546,7 +549,7 @@ function SquareToolCard({
 
   return (
     <Link
-      href={tool.url}
+      href={detailHref}
       className={className}
       onClick={
         cardClickMode === "modal"
@@ -568,14 +571,15 @@ function ToolCard({
 }: {
   externalLinks: boolean;
   cardClickMode: "modal" | "navigate";
-  tool: ToolDirectoryItem;
-  onOpenDetails: (tool: ToolDirectoryItem) => void;
+  tool: ToolDirectoryCardItem;
+  onOpenDetails: (tool: ToolDirectoryCardItem) => void;
   children: ReactNode;
 }) {
+  const detailHref = tool.detailUrl ?? tool.url;
   const className =
     "demaa-card group flex h-full flex-col rounded-[1.15rem] p-4";
 
-  if (externalLinks || tool.url.startsWith("http")) {
+  if (externalLinks || (!tool.detailUrl && tool.url.startsWith("http"))) {
     return (
       <a href={tool.url} target="_blank" rel="noreferrer" className={className}>
         {children}
@@ -585,7 +589,7 @@ function ToolCard({
 
   return (
     <Link
-      href={tool.url}
+      href={detailHref}
       className={className}
       onClick={
         cardClickMode === "modal"
@@ -600,8 +604,8 @@ function ToolCard({
 
 function handleClientModalClick(
   event: MouseEvent<HTMLAnchorElement>,
-  tool: ToolDirectoryItem,
-  onOpenDetails: (tool: ToolDirectoryItem) => void,
+  tool: ToolDirectoryCardItem,
+  onOpenDetails: (tool: ToolDirectoryCardItem) => void,
 ) {
   if (
     event.defaultPrevented ||
