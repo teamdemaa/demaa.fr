@@ -4,7 +4,7 @@ import ToolDirectoryClient from "@/components/ToolDirectoryClient";
 import {
   getToolDirectoryInitialFilters,
   type ToolDirectorySearchParams,
-  withInternalSoftwareUrls,
+  withSoftwareDetailUrls,
 } from "@/lib/tool-directory-page";
 import { getUnifiedToolDirectoryMeta } from "@/lib/tool-directory-firestore";
 import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire";
@@ -31,7 +31,7 @@ export default async function AnnuaireOutilsPage({
     getUnifiedToolDirectoryMeta(),
     retourSysteme ? getEnterpriseBySlug(retourSysteme) : Promise.resolve(null),
   ]);
-  const directoryTools = withInternalSoftwareUrls(toolDirectoryMeta.tools);
+  const directoryTools = withSoftwareDetailUrls(toolDirectoryMeta.tools);
   const backLink = returnEnterprise
     ? {
         href: `/?system=${encodeURIComponent(returnEnterprise.slug)}&systemTab=outils`,
