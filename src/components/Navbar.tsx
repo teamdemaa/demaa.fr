@@ -52,7 +52,7 @@ export default function Navbar({
                   <button
                     type="button"
                     onClick={() => setIsAuditModalOpen(true)}
-                    className="inline-flex h-10 shrink-0 items-center justify-center rounded-full border border-dema-forest/25 bg-dema-paper px-4 text-sm font-medium text-brand-blue/72 shadow-[0_8px_24px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/40 hover:bg-dema-sage/45"
+                    className="inline-flex h-10 shrink-0 items-center justify-center rounded-full border border-brand-blue/28 bg-dema-paper px-4 text-sm font-medium text-brand-blue/72 shadow-[0_8px_24px_rgba(23,35,29,0.035)] transition hover:border-brand-blue/40 hover:bg-dema-sage/45"
                   >
                     <span className="md:hidden">Audit gratuit</span>
                     <span className="hidden md:inline">Audit organisation gratuit</span>

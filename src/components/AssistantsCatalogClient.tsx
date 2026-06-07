@@ -14,11 +14,12 @@ import {
   Workflow,
   X,
 } from "lucide-react";
-import SystemSetupModal from "@/components/SystemSetupModal";
 import {
   ASSISTANT_PACK_OFFERS,
   formatAssistantPrice,
+  type AssistantOffer,
   type AssistantOfferId,
+  type AssistantPack,
   type AssistantPackId,
 } from "@/lib/assistant-packs";
 import PrimaryMobileNav from "@/components/PrimaryMobileNav";
@@ -78,8 +79,72 @@ const assistantOffers = [
   },
 ] as const satisfies readonly AssistantCatalogOffer[];
 
+const howItWorksSteps = [
+  {
+    title: "Vous choisissez la mission",
+    description:
+      "Structuration, tâches récurrentes ou appel d’offres : vous choisissez ce que vous voulez nous confier.",
+  },
+  {
+    title: "On confirme le cadre",
+    description:
+      "On vérifie le périmètre, les délais, les documents nécessaires et les points à valider.",
+  },
+  {
+    title: "On avance avec vous",
+    description:
+      "On exécute la mission, on vous tient au courant, et vous gardez la main sur les décisions importantes.",
+  },
+] as const;
+
+const faqItems = [
+  {
+    question: "Est-ce que l’audit gratuit m’engage à acheter quelque chose ?",
+    answer:
+      "Non. L’audit gratuit ne vous engage à rien. Il sert à faire le point sur votre organisation si vous voulez commencer par clarifier les choses.",
+  },
+  {
+    question: "Comment je sais quelle offre choisir ?",
+    answer:
+      "Si vous voulez remettre de l’ordre dans votre organisation, choisissez l’accompagnement structuration. Si vous voulez déléguer des tâches chaque mois, choisissez l’assistant polyvalent. Si vous devez répondre à un marché, choisissez l’appel d’offres.",
+  },
+  {
+    question: "Est-ce que je garde la main sur les décisions ?",
+    answer:
+      "Oui. On prend en charge l’exécution, l’organisation et le suivi, mais les décisions importantes restent de votre côté.",
+  },
+  {
+    question: "Qu’est-ce que je dois fournir ?",
+    answer:
+      "Les informations utiles à la mission : documents, accès, consignes, échéances et validations attendues.",
+  },
+  {
+    question: "Comment se passe la communication ?",
+    answer:
+      "La communication se fait simplement sur WhatsApp, pour que les échanges soient rapides, faciles à suivre et proches de votre quotidien. Si un document ou une validation est nécessaire, on vous le précise clairement.",
+  },
+  {
+    question: "Est-ce que je peux commencer petit ?",
+    answer:
+      "Oui. Vous pouvez choisir le plus petit format adapté, puis ajuster ensuite si le besoin évolue.",
+  },
+  {
+    question: "Et si mon besoin ne rentre pas exactement dans une offre ?",
+    answer:
+      "Vous pouvez passer par l’audit gratuit ou nous contacter. On vous dira simplement si le besoin est adapté, s’il faut ajuster le périmètre, ou si ce n’est pas le bon sujet.",
+  },
+] as const;
+
+function getPurchasablePacks(offer: AssistantOffer): readonly AssistantPack[] {
+  return offer.packs.filter((pack) => pack.amount > 0);
+}
+
 const DEFAULT_PACK_BY_OFFER = Object.fromEntries(
-  ASSISTANT_PACK_OFFERS.map((offer) => [offer.id, offer.packs[0].id])
+  ASSISTANT_PACK_OFFERS.map((offer) => {
+    const firstPurchasablePack = getPurchasablePacks(offer)[0] ?? offer.packs[0];
+
+    return [offer.id, firstPurchasablePack.id];
+  })
 ) as Record<AssistantOfferId, AssistantPackId>;
 
 function getPackDetails(packId: AssistantPackId) {
@@ -117,7 +182,6 @@ export default function AssistantsCatalogClient() {
   const [embeddedCheckout, setEmbeddedCheckout] = useState<EmbeddedCheckoutState | null>(null);
   const [isEmbeddedCheckoutLoading, setIsEmbeddedCheckoutLoading] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
-  const [isAuditModalOpen, setIsAuditModalOpen] = useState(false);
   const embeddedCheckoutRef = useRef<{ destroy: () => void } | null>(null);
 
   const cartTotal = useMemo(
@@ -144,7 +208,9 @@ export default function AssistantsCatalogClient() {
   const addPackToCart = (packId: AssistantPackId) => {
     setCartItems((current) => {
       const details = getPackDetails(packId);
-      if (!details) return current;
+      if (!details || details.pack.amount <= 0) return current;
+
+      const purchasablePacks = getPurchasablePacks(details.offer);
 
       const existingItem = current.find((item) => {
         const itemDetails = getPackDetails(item.id);
@@ -152,13 +218,13 @@ export default function AssistantsCatalogClient() {
       });
 
       if (existingItem) {
-        const currentIndex = details.offer.packs.findIndex((pack) => pack.id === existingItem.id);
-        const selectedIndex = details.offer.packs.findIndex((pack) => pack.id === packId);
+        const currentIndex = purchasablePacks.findIndex((pack) => pack.id === existingItem.id);
+        const selectedIndex = purchasablePacks.findIndex((pack) => pack.id === packId);
         const nextIndex =
           existingItem.id === packId
-            ? Math.min(currentIndex + 1, details.offer.packs.length - 1)
+            ? Math.min(Math.max(currentIndex, 0) + 1, purchasablePacks.length - 1)
             : selectedIndex;
-        const nextPack = details.offer.packs[nextIndex] ?? details.pack;
+        const nextPack = purchasablePacks[nextIndex] ?? details.pack;
 
         return current.map((item) =>
           item.id === existingItem.id ? { ...item, id: nextPack.id, quantity: 1 } : item
@@ -188,14 +254,15 @@ export default function AssistantsCatalogClient() {
     const details = getPackDetails(packId);
     if (!details) return;
 
-    const currentIndex = details.offer.packs.findIndex((pack) => pack.id === packId);
+    const purchasablePacks = getPurchasablePacks(details.offer);
+    const currentIndex = purchasablePacks.findIndex((pack) => pack.id === packId);
 
     setCartItems((current) => {
       if (currentIndex <= 0) {
         return current.filter((item) => item.id !== packId);
       }
 
-      const previousPack = details.offer.packs[currentIndex - 1];
+      const previousPack = purchasablePacks[currentIndex - 1];
 
       return current.map((item) =>
         item.id === packId ? { ...item, id: previousPack.id, quantity: 1 } : item
@@ -208,8 +275,10 @@ export default function AssistantsCatalogClient() {
     const details = getPackDetails(packId);
     if (!details) return;
 
-    const currentIndex = details.offer.packs.findIndex((pack) => pack.id === packId);
-    const nextPack = details.offer.packs[Math.min(currentIndex + 1, details.offer.packs.length - 1)];
+    const purchasablePacks = getPurchasablePacks(details.offer);
+    const currentIndex = purchasablePacks.findIndex((pack) => pack.id === packId);
+    const nextPack =
+      purchasablePacks[Math.min(Math.max(currentIndex, 0) + 1, purchasablePacks.length - 1)];
 
     setCartItems((current) =>
       current.map((item) =>
@@ -478,7 +547,7 @@ export default function AssistantsCatalogClient() {
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-6xl px-4 pb-20 pt-4 md:px-8 md:pb-28 md:pt-8">
+      <section className="mx-auto w-full max-w-6xl px-4 pb-14 pt-4 md:px-8 md:pb-20 md:pt-8">
         <div className="mb-4 flex items-center justify-between gap-4">
           <h2 className="text-sm font-semibold tracking-tight text-brand-blue md:text-base">
             Offres disponibles
@@ -486,11 +555,10 @@ export default function AssistantsCatalogClient() {
           <button
             type="button"
             onClick={() => setIsCartOpen(true)}
-            className="relative inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-full border border-dema-forest/25 bg-dema-paper px-3.5 text-sm font-medium text-brand-blue/72 shadow-[0_5px_14px_rgba(23,35,29,0.025)] transition hover:border-dema-forest/40 hover:bg-dema-sage/45"
+            className="relative inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-brand-blue/28 bg-dema-paper text-brand-blue/72 shadow-[0_5px_14px_rgba(23,35,29,0.025)] transition hover:border-brand-blue/40 hover:bg-dema-sage/45"
             aria-label="Ouvrir le panier"
           >
             <ShoppingBag className="h-4 w-4" aria-hidden="true" />
-            <span>Panier</span>
             {cartCount > 0 ? (
               <span className="absolute -right-1 -top-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-dema-forest px-1 text-[10px] font-semibold text-dema-paper">
                 {cartCount}
@@ -503,11 +571,11 @@ export default function AssistantsCatalogClient() {
           {assistantOffers.map((offer) => {
             const Icon = offer.icon;
             const packOffer = getPackOffer(offer.packOfferId);
+            const purchasablePacks = packOffer ? getPurchasablePacks(packOffer) : [];
             const selectedPackId = selectedPacks[offer.packOfferId];
             const selectedPack =
-              packOffer?.packs.find((pack) => pack.id === selectedPackId) ||
-              packOffer?.packs[0];
-            const isAuditRequest = selectedPack?.id === "audit-process";
+              purchasablePacks.find((pack) => pack.id === selectedPackId) ||
+              purchasablePacks[0];
             const isPackDropdownOpen = openPackOfferId === offer.packOfferId;
 
             return (
@@ -563,7 +631,7 @@ export default function AssistantsCatalogClient() {
                             className="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-[1rem] border border-dema-line bg-dema-paper p-1.5 shadow-[0_18px_46px_rgba(23,35,29,0.12)]"
                             role="listbox"
                           >
-                            {packOffer.packs.map((pack) => {
+                            {purchasablePacks.map((pack) => {
                               const isSelected = pack.id === selectedPack.id;
 
                               return (
@@ -600,15 +668,11 @@ export default function AssistantsCatalogClient() {
                         type="button"
                         onClick={() => {
                           if (!selectedPack) return;
-                          if (isAuditRequest) {
-                            setIsAuditModalOpen(true);
-                            return;
-                          }
                           addPackToCart(selectedPack.id);
                         }}
                         className="inline-flex h-11 shrink-0 items-center justify-center rounded-full border border-dema-forest/18 bg-dema-paper px-4 text-sm font-medium text-dema-forest shadow-[0_7px_18px_rgba(23,35,29,0.025)] transition hover:border-dema-forest/28 hover:bg-dema-sage/55"
                       >
-                        {isAuditRequest ? "Demander" : "Ajouter"}
+                        Ajouter
                       </button>
                     </div>
                   ) : null}
@@ -616,6 +680,56 @@ export default function AssistantsCatalogClient() {
               </article>
             );
           })}
+        </div>
+      </section>
+
+      <section className="mx-auto w-full max-w-6xl px-4 pb-20 md:px-8 md:pb-28">
+        <div className="border-t border-dema-line/65 pt-10 md:pt-14">
+          <div>
+            <h2 className="text-3xl font-semibold tracking-tight text-brand-blue md:text-4xl">
+              Comment ça marche
+            </h2>
+            <div className="mx-auto mt-6 grid gap-4 md:max-w-5xl md:grid-cols-3 md:gap-5">
+              {howItWorksSteps.map((step, index) => (
+                <div
+                  key={step.title}
+                  className="rounded-[1rem] border border-dema-line/70 bg-dema-sage/30 px-4 py-4 md:min-h-[11.5rem] md:px-5 md:py-5"
+                >
+                  <div className="flex gap-3 md:flex-col">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-dema-paper text-sm font-semibold text-dema-forest">
+                      {index + 1}
+                    </span>
+                    <div>
+                      <h3 className="text-sm font-semibold leading-snug text-brand-blue md:text-base">
+                        {step.title}
+                      </h3>
+                      <p className="mt-1 text-sm leading-relaxed text-dema-muted">
+                        {step.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-14 md:mt-20">
+            <h2 className="text-3xl font-semibold tracking-tight text-brand-blue md:text-4xl">
+              FAQ
+            </h2>
+            <div className="mt-6 divide-y divide-dema-line/70 rounded-[1rem] border border-dema-line/70 bg-dema-paper">
+              {faqItems.map((item, index) => (
+                <div key={item.question} className="px-4 py-5 md:px-5">
+                  <h3 className="text-sm font-semibold leading-snug text-brand-blue md:text-base">
+                    {index + 1}. {item.question}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-dema-muted">
+                    {item.answer}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -652,13 +766,14 @@ export default function AssistantsCatalogClient() {
 
                     if (!details) return null;
 
+                    const purchasablePacks = getPurchasablePacks(details.offer);
                     const lineTotal = details.pack.amount;
-                    const currentPackIndex = details.offer.packs.findIndex(
+                    const currentPackIndex = purchasablePacks.findIndex(
                       (pack) => pack.id === item.id
                     );
                     const packStep = currentPackIndex + 1;
                     const isFirstPack = currentPackIndex <= 0;
-                    const isLastPack = currentPackIndex >= details.offer.packs.length - 1;
+                    const isLastPack = currentPackIndex >= purchasablePacks.length - 1;
 
                     return (
                       <div
@@ -705,7 +820,7 @@ export default function AssistantsCatalogClient() {
                                 className="absolute left-0 right-0 top-full z-40 mt-2 overflow-hidden rounded-[1rem] border border-dema-line bg-dema-paper p-1.5 shadow-[0_18px_46px_rgba(23,35,29,0.12)]"
                                 role="listbox"
                               >
-                                {details.offer.packs.map((pack) => {
+                                {purchasablePacks.map((pack) => {
                                   const isSelected = pack.id === item.id;
 
                                   return (
@@ -806,10 +921,6 @@ export default function AssistantsCatalogClient() {
           </aside>
         </div>
       ) : null}
-      <SystemSetupModal
-        isOpen={isAuditModalOpen}
-        onClose={() => setIsAuditModalOpen(false)}
-      />
     </>
   );
 }
