@@ -129,6 +129,7 @@ export async function POST(request: Request) {
     "metadata[offer_label]": cartSummary.slice(0, 500),
     "metadata[cart_summary]": cartSummary.slice(0, 500),
     "metadata[item_count]": String(items.reduce((total, item) => total + item.quantity, 0)),
+    "adaptive_pricing[enabled]": "false",
     billing_address_collection: "auto",
   });
 
