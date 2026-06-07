@@ -477,7 +477,7 @@ export default function SystemsCatalogClient({
             </div>
           ) : null}
 
-          <div className={showIntro ? "mt-10" : "border-b border-dema-line/65 pb-4 pt-2 md:pb-5 md:pt-0"}>
+          <div className={showIntro ? "mt-10" : "border-b border-dema-line/65 pb-4 pt-1 md:pb-5 md:pt-0"}>
             {showSearchBar ? (
               <div className="demaa-search-shell mx-auto max-w-4xl p-1.5">
                 <div className="relative">
@@ -594,14 +594,25 @@ export default function SystemsCatalogClient({
                   {selectedSystem.description}
                 </p>
               </div>
-              <div className="flex shrink-0 items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => setIsSystemSetupModalOpen(true)}
-                  className="demaa-primary-button"
-                >
-                  J&apos;ai besoin d&apos;un audit de mon organisation
-                </button>
+              <div className="flex shrink-0 items-start gap-2">
+                <div className="flex flex-col gap-2 sm:flex-row md:flex-col lg:flex-row">
+                  <Link
+                    href={`/documents-structuration/${selectedSystem.slug}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="demaa-secondary-button gap-2 bg-dema-paper"
+                  >
+                    <FileText className="h-4 w-4" />
+                    Ouvrir le document de structuration
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => setIsSystemSetupModalOpen(true)}
+                    className="demaa-primary-button"
+                  >
+                    Audit organisation gratuit
+                  </button>
+                </div>
                 <button
                   type="button"
                   onClick={() => {
