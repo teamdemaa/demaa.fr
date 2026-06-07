@@ -552,7 +552,7 @@ export default function SystemsCatalogClient({
                             <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper">
                               <Icon className="h-4 w-4" />
                             </span>
-                            <h3 className="mt-4 line-clamp-2 text-lg font-semibold leading-tight tracking-tight text-brand-blue">
+                            <h3 className="mt-4 line-clamp-2 text-lg font-normal leading-tight tracking-tight text-brand-blue">
                               {system.name}
                             </h3>
                             <p className="mt-3 line-clamp-3 text-sm font-normal leading-relaxed text-dema-muted">
@@ -587,7 +587,7 @@ export default function SystemsCatalogClient({
                 <p className="text-left text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
                   {detail.sectorLabel}
                 </p>
-                <h2 className="mt-2 text-3xl font-semibold tracking-tight text-brand-blue md:text-4xl">
+                <h2 className="mt-2 text-3xl font-normal tracking-tight text-brand-blue md:text-4xl">
                   {selectedSystem.name}
                 </h2>
                 <p className="mt-3 max-w-3xl text-base leading-relaxed text-dema-muted">

@@ -36,7 +36,7 @@ export default function HomeTabsClient({
           <PrimaryMobileNav activeTab="structurer" onSelect={selectPrimaryMobileTab} />
 
           <div className="mx-auto max-w-5xl">
-            <h1 className="text-[2.24rem] tracking-tight leading-[0.98] sm:text-[2.75rem] md:text-[3.75rem] lg:text-[4.5rem]">
+            <h1 className="text-[clamp(3rem,14.5vw,3.36rem)] tracking-tight leading-[0.92] sm:text-[2.75rem] md:text-[3.75rem] lg:text-[4.5rem]">
               <span className="demaa-hero-title text-brand-blue/86">
                 Organisez efficacement
               </span>{" "}
