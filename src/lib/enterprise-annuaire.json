@@ -5,7 +5,7 @@
       "slug": "cabinet-comptable",
       "name": "Cabinet comptable",
       "category": "Système opérationnel",
-      "description": "Gardez production, échéances et relation client sous contrôle sans tout porter mentalement.",
+      "description": "Reprenez le contrôle des dossiers, échéances et relances clients pour produire sereinement sans tout garder dans votre tête.",
       "tags": [
         "Conseil",
         "B2B",
@@ -149,7 +149,7 @@
       "slug": "cabinet-davocat",
       "name": "Cabinet d’avocat",
       "category": "Système opérationnel",
-      "description": "Clarifiez dossiers, priorités et échéances pour sécuriser le cabinet au quotidien.",
+      "description": "Gardez dossiers, audiences, pièces et priorités sous contrôle pour sécuriser le cabinet sans subir chaque urgence.",
       "tags": [
         "Conseil",
         "B2B",
@@ -257,7 +257,7 @@
       "slug": "cabinet-de-conseil",
       "name": "Cabinet de conseil",
       "category": "Système opérationnel",
-      "description": "Gardez missions, livrables et rentabilité visibles sans dépendre de votre mémoire.",
+      "description": "Gardez missions, livrables, clients et marge sous contrôle pour avancer sans dépendre de votre mémoire.",
       "tags": [
         "Conseil",
         "B2B",
@@ -397,7 +397,7 @@
       "slug": "agence-marketing",
       "name": "Agence marketing",
       "category": "Système opérationnel",
-      "description": "Alignez acquisition, production et suivi client pour diriger l’agence avec plus de recul.",
+      "description": "Pilotez prospects, campagnes, livrables et marges pour faire grandir l’agence sans courir après chaque client.",
       "tags": [
         "Conseil",
         "B2B",
@@ -442,7 +442,7 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin client → choisir la prestation principale → clarifier la différence avec les concurrents → choisir le canal principal.",
+        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin client → choisir les prestations principales → clarifier la différence avec les concurrents → choisir le canal principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : montrer le réalisation client → expliquer le prix → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -555,7 +555,7 @@
       "slug": "freelance",
       "name": "Freelance",
       "category": "Système opérationnel",
-      "description": "Transformez votre activité en système clair pour vendre, produire et respirer davantage.",
+      "description": "Gardez prospection, missions, livraisons et paiements sous contrôle pour développer votre activité sans tout porter seul.",
       "tags": [
         "Conseil",
         "B2B",
@@ -665,7 +665,7 @@
       "slug": "agence-de-recrutement",
       "name": "Agence de recrutement",
       "category": "Système opérationnel",
-      "description": "Gardez candidats, clients et placements visibles sans perdre les bonnes opportunités.",
+      "description": "Suivez candidats, clients, postes et relances pour placer plus vite sans laisser filer les bonnes opportunités.",
       "tags": [
         "Conseil",
         "B2B",
@@ -710,7 +710,7 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin client → choisir la prestation principale → clarifier la différence avec les concurrents → choisir le canal principal.",
+        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin client → choisir les prestations principales → clarifier la différence avec les concurrents → choisir le canal principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : montrer le réalisation client → expliquer le prix → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -771,7 +771,7 @@
       "slug": "agence-web",
       "name": "Agence web",
       "category": "Système opérationnel",
-      "description": "Reliez ventes, production, support et rentabilité pour garder chaque projet sous contrôle.",
+      "description": "Gardez prospects, projets, livraisons et marge sous contrôle pour livrer proprement sans courir après chaque client.",
       "tags": [
         "Tech",
         "Digital",
@@ -816,7 +816,7 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin client → choisir la prestation principale → clarifier la différence avec les concurrents → choisir le canal principal.",
+        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin client → choisir les prestations principales → clarifier la différence avec les concurrents → choisir le canal principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : montrer le réalisation client → expliquer le prix → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -925,7 +925,7 @@
       "slug": "creation-de-contenu",
       "name": "Création de contenu",
       "category": "Système opérationnel",
-      "description": "Cadrez idées, production et revenus pour publier régulièrement sans vous disperser.",
+      "description": "Gardez idées, contenus, publications et revenus sous contrôle pour produire régulièrement sans vous disperser.",
       "tags": [
         "Tech",
         "Digital",
@@ -976,7 +976,7 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin client → choisir la prestation principale → clarifier la différence avec les concurrents → choisir le canal principal.",
+        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin client → choisir les prestations principales → clarifier la différence avec les concurrents → choisir le canal principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : montrer le réalisation client → expliquer le prix → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -1057,7 +1057,7 @@
       "slug": "marketplace",
       "name": "Marketplace",
       "category": "Système opérationnel",
-      "description": "Gardez vendeurs, commandes, paiements et litiges visibles avant que le support ne déborde.",
+      "description": "Pilotez vendeurs, commandes, paiements et litiges sans laisser le support de la marketplace déborder.",
       "tags": [
         "Tech",
         "Digital",
@@ -1185,7 +1185,7 @@
       "slug": "media",
       "name": "Média",
       "category": "Système opérationnel",
-      "description": "Alignez édition, audience et revenus pour tenir le rythme sans piloter à l’instinct.",
+      "description": "Pilotez contenus, audience, partenariats et revenus pour tenir le rythme sans avancer à l’instinct.",
       "tags": [
         "Tech",
         "Digital",
@@ -1309,7 +1309,7 @@
       "slug": "saas",
       "name": "SaaS",
       "category": "Système opérationnel",
-      "description": "Suivez acquisition, produit, support et revenus pour faire grandir le SaaS avec méthode.",
+      "description": "Pilotez acquisition, produit, support et revenus pour faire grandir le SaaS sans perdre la trajectoire.",
       "tags": [
         "Tech",
         "Digital",
@@ -1473,7 +1473,7 @@
       "slug": "batiment",
       "name": "Bâtiment",
       "category": "Système opérationnel",
-      "description": "Gardez devis, chantiers, équipes et marge visibles sans courir après l’information terrain.",
+      "description": "Gardez devis, chantiers, équipes et marge sous contrôle pour livrer sans courir après l’information terrain.",
       "tags": [
         "BTP",
         "Terrain",
@@ -1591,7 +1591,7 @@
       "slug": "nettoyage-professionnel",
       "name": "Nettoyage professionnel",
       "category": "Système opérationnel",
-      "description": "Coordonnez équipes, passages et qualité client sans avoir chaque détail en tête.",
+      "description": "Coordonnez équipes, passages, contrôles et réclamations pour assurer la qualité sans tout garder dans votre tête.",
       "tags": [
         "BTP",
         "Terrain",
@@ -1642,7 +1642,7 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin d’intervention → choisir la prestation principale → clarifier la différence avec les concurrents → choisir le canal principal.",
+        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin d’intervention → choisir les prestations principales → clarifier la différence avec les concurrents → choisir le canal principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : montrer le passages ou résultats → expliquer le prix → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -1687,7 +1687,7 @@
       "slug": "agence-immobiliere",
       "name": "Agence immobilière",
       "category": "Système opérationnel",
-      "description": "Gardez mandats, prospects et signatures sous contrôle sans perdre le fil commercial.",
+      "description": "Gardez mandats, prospects, visites et signatures sous contrôle pour vendre sans perdre le fil commercial.",
       "tags": [
         "Immobilier",
         "Actifs",
@@ -1738,7 +1738,7 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le projet immobilier → choisir le service principal → clarifier la différence avec les concurrents → choisir le canal principal.",
+        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le projet immobilier → choisir les services principaux → clarifier la différence avec les concurrents → choisir le canal principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : montrer les biens ou résultats → expliquer les honoraires → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -1795,7 +1795,7 @@
       "slug": "syndic",
       "name": "Syndic",
       "category": "Système opérationnel",
-      "description": "Tenez copropriétés, urgences et décisions visibles sans subir la pression permanente.",
+      "description": "Tenez copropriétés, urgences, assemblées et décisions sans subir la pression permanente.",
       "tags": [
         "Immobilier",
         "Copropriété",
@@ -1891,7 +1891,7 @@
       "slug": "gestion-locative",
       "name": "Gestion locative",
       "category": "Système opérationnel",
-      "description": "Gardez loyers, incidents et documents locatifs clairs sans multiplier les relances.",
+      "description": "Pilotez loyers, incidents, locataires et documents sans multiplier les relances.",
       "tags": [
         "Immobilier",
         "Location",
@@ -1995,7 +1995,7 @@
       "slug": "marchand-de-biens",
       "name": "Marchand de biens",
       "category": "Système opérationnel",
-      "description": "Suivez chaque opération de l’achat à la revente sans perdre la vision de marge.",
+      "description": "Maîtrisez achats, travaux, financement et revente pour préserver la marge de chaque opération.",
       "tags": [
         "Immobilier",
         "Opérations",
@@ -2046,7 +2046,7 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le projet immobilier → choisir le service principal → clarifier la différence avec les concurrents → choisir le canal principal.",
+        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le projet immobilier → choisir les services principaux → clarifier la différence avec les concurrents → choisir le canal principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : montrer les biens ou résultats → expliquer les honoraires → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -2095,7 +2095,7 @@
       "slug": "investissement-locatif",
       "name": "Investissement locatif",
       "category": "Système opérationnel",
-      "description": "Gardez financement, location et rentabilité visibles pour décider sans flou.",
+      "description": "Gardez financement, loyers, travaux et rendement sous contrôle pour investir sans avancer dans le flou.",
       "tags": [
         "Immobilier",
         "Location",
@@ -2191,7 +2191,7 @@
       "slug": "conciergerie-airbnb",
       "name": "Conciergerie Airbnb",
       "category": "Système opérationnel",
-      "description": "Gardez réservations, ménage et voyageurs alignés sans gérer chaque urgence vous-même.",
+      "description": "Maîtrisez réservations, ménage, voyageurs et imprévus pour louer sereinement sans gérer chaque urgence vous-même.",
       "tags": [
         "Tourisme",
         "Réservation",
@@ -2242,7 +2242,7 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin de séjour → choisir l’offre principale → clarifier la différence avec les concurrents → choisir le canal de réservation principal.",
+        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin de séjour → choisir les offres principales → clarifier la différence avec les concurrents → choisir le canal de réservation principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : rendre les avis et photos visibles → clarifier le prix et conditions → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -2299,7 +2299,7 @@
       "slug": "investissement-immobilier",
       "name": "Investissement immobilier",
       "category": "Système opérationnel",
-      "description": "Gardez vos biens, travaux et rendements visibles pour arbitrer avec plus de sérénité.",
+      "description": "Gardez biens, travaux, loyers et rendements sous contrôle pour arbitrer sans perdre la vision d’ensemble.",
       "tags": [
         "Patrimoine",
         "Investissement",
@@ -2395,7 +2395,7 @@
       "slug": "investissement-financier",
       "name": "Investissement financier",
       "category": "Système opérationnel",
-      "description": "Clarifiez allocations, risques et décisions pour piloter votre patrimoine sans bruit inutile.",
+      "description": "Gardez allocations, risques, frais et décisions sous contrôle pour piloter votre patrimoine sans bruit inutile.",
       "tags": [
         "Patrimoine",
         "Investissement",
@@ -2499,7 +2499,7 @@
       "slug": "investissement-entreprise",
       "name": "Investissement entreprise",
       "category": "Système opérationnel",
-      "description": "Suivez participations, performance et décisions clés sans perdre la vision d’ensemble.",
+      "description": "Suivez participations, performance, risques et décisions clés sans perdre la vision d’ensemble.",
       "tags": [
         "Patrimoine",
         "Investissement",
@@ -2607,7 +2607,7 @@
       "slug": "demenagement",
       "name": "Déménagement",
       "category": "Système opérationnel",
-      "description": "Gardez devis, équipes et planning alignés sans stress le jour des déménagements.",
+      "description": "Organisez devis, équipes, camions et planning pour enchaîner les déménagements sans stress le jour J.",
       "tags": [
         "Logistique",
         "Transport",
@@ -2658,7 +2658,7 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin de transport → choisir le service principal → clarifier la différence avec les concurrents → choisir le canal de réservation principal.",
+        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin de transport → choisir les services principaux → clarifier la différence avec les concurrents → choisir le canal de réservation principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : rendre les avis et délais visibles → clarifier le prix → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -2703,7 +2703,7 @@
       "slug": "livraison-dernier-kilometre",
       "name": "Livraison dernier kilomètre",
       "category": "Système opérationnel",
-      "description": "Gardez tournées, délais et incidents visibles sans surveiller chaque livraison à la main.",
+      "description": "Pilotez tournées, délais, chauffeurs et incidents pour livrer à l’heure sans surveiller chaque course à la main.",
       "tags": [
         "Logistique",
         "Transport",
@@ -2754,7 +2754,7 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin de transport → choisir le service principal → clarifier la différence avec les concurrents → choisir le canal de réservation principal.",
+        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin de transport → choisir les services principaux → clarifier la différence avec les concurrents → choisir le canal de réservation principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : rendre les avis et délais visibles → clarifier le prix → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -2803,7 +2803,7 @@
       "slug": "transport-de-marchandise",
       "name": "Transport de marchandises",
       "category": "Système opérationnel",
-      "description": "Alignez flotte, fret et rentabilité sans perdre la trace des expéditions.",
+      "description": "Suivez flotte, fret, expéditions et marge pour transporter sans perdre la trace des dossiers.",
       "tags": [
         "Logistique",
         "Transport",
@@ -2854,7 +2854,7 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin de transport → choisir le service principal → clarifier la différence avec les concurrents → choisir le canal de réservation principal.",
+        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin de transport → choisir les services principaux → clarifier la différence avec les concurrents → choisir le canal de réservation principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : rendre les avis et délais visibles → clarifier le prix → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -2911,7 +2911,7 @@
       "slug": "transport-de-personnes",
       "name": "Transport de personnes",
       "category": "Système opérationnel",
-      "description": "Gardez chauffeurs, trajets et demandes clients clairs sans piloter dans l’urgence.",
+      "description": "Gardez chauffeurs, trajets, réservations et rentabilité sous contrôle pour rouler sans piloter dans l’urgence.",
       "tags": [
         "Logistique",
         "Transport",
@@ -2956,7 +2956,7 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin de transport → choisir le service principal → clarifier la différence avec les concurrents → choisir le canal de réservation principal.",
+        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin de transport → choisir les services principaux → clarifier la différence avec les concurrents → choisir le canal de réservation principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : rendre les avis et délais visibles → clarifier le prix → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -3001,7 +3001,7 @@
       "slug": "restaurant",
       "name": "Restaurant",
       "category": "Système opérationnel",
-      "description": "Tenez vos marges, votre qualité de service et votre équipe dans un rythme maîtrisé.",
+      "description": "Gardez service, équipe, achats et marge sous contrôle pour tenir vos rushs sans découvrir trop tard ce qui coûte cher.",
       "tags": [
         "Restauration",
         "Service",
@@ -3046,7 +3046,7 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre l’envie ou le besoin client → choisir l’offre principale → clarifier la différence avec les concurrents → choisir le canal principal.",
+        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre l’envie ou le besoin client → choisir les offres principales → clarifier la différence avec les concurrents → choisir le canal principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : rendre les avis et photos visibles → clarifier le prix → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -3115,7 +3115,7 @@
       "slug": "fast-food",
       "name": "Fast-food",
       "category": "Système opérationnel",
-      "description": "Gardez commandes, équipe et rentabilité alignées même pendant les rushs.",
+      "description": "Gardez commandes, équipe, stocks et marge sous contrôle pour encaisser les rushs sans perdre la rentabilité.",
       "tags": [
         "Restauration",
         "Service",
@@ -3160,7 +3160,7 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre l’envie ou le besoin client → choisir l’offre principale → clarifier la différence avec les concurrents → choisir le canal principal.",
+        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre l’envie ou le besoin client → choisir les offres principales → clarifier la différence avec les concurrents → choisir le canal principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : rendre les avis et photos visibles → clarifier le prix → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -3221,7 +3221,7 @@
       "slug": "traiteur",
       "name": "Traiteur",
       "category": "Système opérationnel",
-      "description": "Structurez vos demandes, vos événements et votre rentabilité sans dépendre de votre mémoire.",
+      "description": "Gardez demandes, devis, événements et marge sous contrôle pour servir vos clients sans dépendre de votre mémoire.",
       "tags": [
         "Restauration",
         "Service",
@@ -3266,7 +3266,7 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre l’envie ou le besoin client → choisir l’offre principale → clarifier la différence avec les concurrents → choisir le canal principal.",
+        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre l’envie ou le besoin client → choisir les offres principales → clarifier la différence avec les concurrents → choisir le canal principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : rendre les avis et photos visibles → clarifier le prix → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -3323,7 +3323,7 @@
       "slug": "dark-kitchen",
       "name": "Dark kitchen",
       "category": "Système opérationnel",
-      "description": "Gardez commandes, cuisine et livraison visibles sans subir le rythme des plateformes.",
+      "description": "Pilotez commandes, cuisine, plateformes et marge pour produire vite sans subir le rythme des applis.",
       "tags": [
         "Restauration",
         "Service",
@@ -3368,7 +3368,7 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre l’envie ou le besoin client → choisir l’offre principale → clarifier la différence avec les concurrents → choisir le canal principal.",
+        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre l’envie ou le besoin client → choisir les offres principales → clarifier la différence avec les concurrents → choisir le canal principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : rendre les avis et photos visibles → clarifier le prix → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -3425,7 +3425,7 @@
       "slug": "boulangerie",
       "name": "Boulangerie",
       "category": "Système opérationnel",
-      "description": "Gardez une boulangerie rentable, régulière et bien organisée, sans tout porter au quotidien.",
+      "description": "Gardez production, vente, équipe et marge sous contrôle pour faire tourner la boulangerie sans tout porter au quotidien.",
       "tags": [
         "Retail",
         "Vente",
@@ -3470,7 +3470,7 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre l’envie ou le besoin client → choisir l’offre principale → clarifier la différence avec les concurrents → choisir le canal principal.",
+        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre l’envie ou le besoin client → choisir les offres principales → clarifier la différence avec les concurrents → choisir le canal principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : rendre les avis et photos visibles → clarifier le prix → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -3523,7 +3523,7 @@
       "slug": "commerce-de-detail",
       "name": "Commerce de détail",
       "category": "Système opérationnel",
-      "description": "Gardez stock, ventes et équipe alignés pour diriger le magasin avec plus de recul.",
+      "description": "Pilotez stock, ventes, caisse et équipe sans découvrir les problèmes trop tard.",
       "tags": [
         "Retail",
         "Vente",
@@ -3637,7 +3637,7 @@
       "slug": "e-commerce",
       "name": "E-commerce",
       "category": "Système opérationnel",
-      "description": "Reliez boutique, commandes, support et rentabilité sans vous disperser entre les outils.",
+      "description": "Gardez ventes, commandes, stock et marge lisibles du trafic jusqu’au SAV, sans vous perdre entre pub, retours et outils.",
       "tags": [
         "Retail",
         "Vente",
@@ -3775,7 +3775,7 @@
       "slug": "institut-de-beaute",
       "name": "Institut de beauté",
       "category": "Système opérationnel",
-      "description": "Remplissez l’agenda, fidélisez les clientes et suivez la rentabilité sans charge mentale.",
+      "description": "Gardez agenda, prestations, clientes et marge sous contrôle pour remplir l’institut sans charge mentale permanente.",
       "tags": [
         "Bien-être",
         "RDV",
@@ -3873,7 +3873,7 @@
       "slug": "salon-de-coiffure",
       "name": "Salon de coiffure",
       "category": "Système opérationnel",
-      "description": "Gardez agenda, équipe et ventes visibles pour faire tourner le salon avec régularité.",
+      "description": "Gardez agenda, équipe, clientes et ventes sous contrôle pour remplir le salon sans subir les trous ni les rushs.",
       "tags": [
         "Bien-être",
         "RDV",
@@ -3971,7 +3971,7 @@
       "slug": "esthetique",
       "name": "Esthétique",
       "category": "Système opérationnel",
-      "description": "Structurez rendez-vous, prestations et relances pour développer l’activité avec sérénité.",
+      "description": "Gardez rendez-vous, prestations, relances et ventes sous contrôle pour développer l’activité sans vous disperser.",
       "tags": [
         "Bien-être",
         "RDV",
@@ -4069,7 +4069,7 @@
       "slug": "services-a-la-personne",
       "name": "Services à la personne",
       "category": "Système opérationnel",
-      "description": "Gardez demandes, intervenants et familles alignés sans tout coordonner dans votre tête.",
+      "description": "Coordonnez demandes, intervenants, plannings et familles sans tout porter dans votre tête.",
       "tags": [
         "Particuliers",
         "Service",
@@ -4114,7 +4114,7 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin d’intervention → choisir la prestation principale → clarifier la différence avec les concurrents → choisir le canal principal.",
+        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin d’intervention → choisir les prestations principales → clarifier la différence avec les concurrents → choisir le canal principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : montrer le passages ou résultats → expliquer le prix → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -4163,7 +4163,7 @@
       "slug": "organisme-de-formation",
       "name": "Organisme de formation",
       "category": "Système opérationnel",
-      "description": "Reliez ventes, sessions, documents et conformité pour gérer l’organisme sans surcharge.",
+      "description": "Pilotez inscriptions, sessions, formateurs et preuves Qualiopi sans vous noyer dans l’administratif.",
       "tags": [
         "Formation",
         "Apprenants",
@@ -4214,7 +4214,7 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les apprenants ou entreprises à cibler → comprendre le besoin de formation → choisir la formation principale → clarifier la différence avec les concurrents → choisir le canal d’inscription principal.",
+        "strategie.positionnement": "Exemple : définir les apprenants ou entreprises à cibler → comprendre le besoin de formation → choisir les formations principales → clarifier la différence avec les concurrents → choisir le canal d’inscription principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : rendre le programme et les avis visibles → clarifier le prix et le financement → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -4291,7 +4291,7 @@
       "slug": "formation-en-ligne",
       "name": "Formation en ligne",
       "category": "Système opérationnel",
-      "description": "Gardez ventes, apprenants et contenus alignés sans disperser votre énergie.",
+      "description": "Gardez ventes, apprenants, contenus et progression sous contrôle pour vendre vos formations sans disperser votre énergie.",
       "tags": [
         "Formation",
         "Apprenants",
@@ -4342,7 +4342,7 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les apprenants ou entreprises à cibler → comprendre le besoin de formation → choisir la formation principale → clarifier la différence avec les concurrents → choisir le canal d’inscription principal.",
+        "strategie.positionnement": "Exemple : définir les apprenants ou entreprises à cibler → comprendre le besoin de formation → choisir les formations principales → clarifier la différence avec les concurrents → choisir le canal d’inscription principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : rendre le programme et les avis visibles → clarifier le prix et le financement → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -4415,7 +4415,7 @@
       "slug": "production-industrie",
       "name": "Production & Industrie",
       "category": "Système opérationnel",
-      "description": "Gardez production, stocks et priorités visibles pour diriger l’atelier sans pilotage permanent.",
+      "description": "Pilotez production, stocks, délais et priorités sans gérer chaque urgence de l’atelier à la main.",
       "tags": [
         "Industrie",
         "Production",
@@ -4519,7 +4519,7 @@
       "slug": "plomberie-chauffage",
       "name": "Plomberie & chauffage",
       "category": "Système opérationnel",
-      "description": "Gardez urgences, devis et chantiers sous contrôle sans courir après chaque intervention.",
+      "description": "Gardez urgences, devis, chantiers et pièces sous contrôle pour intervenir vite sans courir après chaque dossier.",
       "tags": [
         "BTP",
         "Intervention",
@@ -4564,7 +4564,7 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le problème technique → choisir l’intervention principale → clarifier la différence avec les concurrents → choisir le canal d’appels principal.",
+        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le problème technique → choisir les interventions principales → clarifier la différence avec les concurrents → choisir le canal d’appels principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : montrer les réalisations et garanties → expliquer le devis ou forfait → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -4617,7 +4617,7 @@
       "slug": "electricite-generale",
       "name": "Électricité générale",
       "category": "Système opérationnel",
-      "description": "Alignez urgences, conformité, devis et équipes sans perdre la vision des chantiers.",
+      "description": "Maîtrisez urgences, devis, conformité et équipes pour sécuriser les chantiers sans perdre la vision terrain.",
       "tags": [
         "BTP",
         "Intervention",
@@ -4662,7 +4662,7 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le problème technique → choisir l’intervention principale → clarifier la différence avec les concurrents → choisir le canal d’appels principal.",
+        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le problème technique → choisir les interventions principales → clarifier la différence avec les concurrents → choisir le canal d’appels principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : montrer les réalisations et garanties → expliquer le devis ou forfait → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -4715,7 +4715,7 @@
       "slug": "renovation-interieur",
       "name": "Rénovation intérieure",
       "category": "Système opérationnel",
-      "description": "Gardez clients, choix, chantiers et marge alignés sans multiplier les allers-retours.",
+      "description": "Gardez clients, choix, chantiers et marge sous contrôle pour avancer sans multiplier les allers-retours.",
       "tags": [
         "BTP",
         "Chantier",
@@ -4821,7 +4821,7 @@
       "slug": "menuiserie-agencement",
       "name": "Menuiserie & agencement",
       "category": "Système opérationnel",
-      "description": "Reliez devis, atelier, pose et validations client sans tout garder en tête.",
+      "description": "Gardez devis, atelier, pose et validations client sous contrôle pour livrer sans tout garder en tête.",
       "tags": [
         "BTP",
         "Atelier",
@@ -4923,7 +4923,7 @@
       "slug": "maconnerie-gros-oeuvre",
       "name": "Maçonnerie & gros œuvre",
       "category": "Système opérationnel",
-      "description": "Gardez planning, matériaux et sous-traitants visibles pour sécuriser chaque chantier.",
+      "description": "Cadrez planning, matériaux, équipes et sous-traitants pour sécuriser chaque chantier.",
       "tags": [
         "BTP",
         "Chantier",
@@ -5025,7 +5025,7 @@
       "slug": "paysagiste",
       "name": "Paysagiste",
       "category": "Système opérationnel",
-      "description": "Gardez devis, équipes et entretiens récurrents alignés sans perdre les demandes client.",
+      "description": "Gardez devis, équipes, chantiers et entretiens sous contrôle pour servir les clients sans perdre les demandes.",
       "tags": [
         "Terrain",
         "Service",
@@ -5127,7 +5127,7 @@
       "slug": "garage-automobile",
       "name": "Garage automobile",
       "category": "Système opérationnel",
-      "description": "Gardez atelier, clients, pièces et rentabilité visibles du premier contact à la facture.",
+      "description": "Gardez atelier, clients, pièces et marge sous contrôle du premier contact jusqu’à la facture.",
       "tags": [
         "Auto",
         "Réparation",
@@ -5217,7 +5217,7 @@
       "slug": "carrosserie",
       "name": "Carrosserie",
       "category": "Système opérationnel",
-      "description": "Suivez sinistres, accords et travaux sans laisser les dossiers bloquer l’atelier.",
+      "description": "Suivez sinistres, accords, pièces et travaux pour faire avancer l’atelier sans dossiers bloqués.",
       "tags": [
         "Auto",
         "Réparation",
@@ -5307,7 +5307,7 @@
       "slug": "commerce-alimentaire",
       "name": "Commerce alimentaire",
       "category": "Système opérationnel",
-      "description": "Gardez produits, caisse, fournisseurs et marge alignés sans subir les urgences du frais.",
+      "description": "Gardez produits frais, caisse, fournisseurs et marge sous contrôle sans subir les urgences du quotidien.",
       "tags": [
         "Retail",
         "Alimentaire",
@@ -5413,7 +5413,7 @@
       "slug": "boutique-specialisee",
       "name": "Boutique spécialisée",
       "category": "Système opérationnel",
-      "description": "Gardez assortiment, conseil client et rentabilité visibles pour diriger la boutique sereinement.",
+      "description": "Gardez assortiment, conseil client, stock et marge sous contrôle pour diriger la boutique sereinement.",
       "tags": [
         "Retail",
         "Vente",
@@ -5523,7 +5523,7 @@
       "slug": "tabac-presse-point-relais",
       "name": "Tabac / presse / point relais",
       "category": "Système opérationnel",
-      "description": "Gardez caisse, stocks et services de proximité clairs malgré le flux permanent.",
+      "description": "Maîtrisez caisse, stocks, relais et services malgré le flux permanent du point de vente.",
       "tags": [
         "Retail",
         "Proximité",
@@ -5621,7 +5621,7 @@
       "slug": "bar-cafe",
       "name": "Bar / café",
       "category": "Système opérationnel",
-      "description": "Gardez service, caisse, équipe et marge alignés du matin à la fermeture.",
+      "description": "Gardez service, caisse, équipe et marge sous contrôle du matin à la fermeture.",
       "tags": [
         "Restauration",
         "Service",
@@ -5666,7 +5666,7 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre l’envie ou le besoin client → choisir l’offre principale → clarifier la différence avec les concurrents → choisir le canal principal.",
+        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre l’envie ou le besoin client → choisir les offres principales → clarifier la différence avec les concurrents → choisir le canal principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : rendre les avis et photos visibles → clarifier le prix → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -5719,7 +5719,7 @@
       "slug": "hotel-hebergement-independant",
       "name": "Hôtel & hébergement indépendant",
       "category": "Système opérationnel",
-      "description": "Gardez réservations, chambres et avis clients visibles sans subir les pics d’activité.",
+      "description": "Gardez réservations, chambres, ménage et avis clients sous contrôle sans subir les pics d’activité.",
       "tags": [
         "Tourisme",
         "Réservation",
@@ -5764,7 +5764,7 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin de séjour → choisir l’offre principale → clarifier la différence avec les concurrents → choisir le canal de réservation principal.",
+        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin de séjour → choisir les offres principales → clarifier la différence avec les concurrents → choisir le canal de réservation principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : rendre les avis et photos visibles → clarifier le prix et conditions → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -5821,7 +5821,7 @@
       "slug": "cabinet-medical",
       "name": "Cabinet médical",
       "category": "Système opérationnel",
-      "description": "Gardez agenda, documents et demandes patients clairs sans alourdir le cabinet.",
+      "description": "Gardez agenda, demandes patients, documents et suivis sous contrôle sans alourdir le cabinet.",
       "tags": [
         "Santé",
         "RDV",
@@ -5911,7 +5911,7 @@
       "slug": "cabinet-paramedical",
       "name": "Cabinet paramédical",
       "category": "Système opérationnel",
-      "description": "Gardez séances, suivis et facturation visibles sans surcharge administrative inutile.",
+      "description": "Gardez séances, suivis, facturation et documents sous contrôle sans surcharge administrative inutile.",
       "tags": [
         "Santé",
         "RDV",
@@ -6005,7 +6005,7 @@
       "slug": "infirmier-liberal",
       "name": "Infirmier libéral",
       "category": "Système opérationnel",
-      "description": "Gardez tournées, soins et documents patients sous contrôle sans épuiser votre organisation.",
+      "description": "Gardez tournées, soins, patients et documents sous contrôle sans épuiser votre organisation.",
       "tags": [
         "Santé",
         "Terrain",
@@ -6103,7 +6103,7 @@
       "slug": "aide-a-domicile-menage",
       "name": "Aide à domicile & ménage",
       "category": "Système opérationnel",
-      "description": "Gardez bénéficiaires, plannings et remplacements alignés sans gérer chaque imprévu à chaud.",
+      "description": "Gardez bénéficiaires, plannings, intervenants et remplacements sous contrôle sans gérer chaque imprévu à chaud.",
       "tags": [
         "Particuliers",
         "Service",
@@ -6148,7 +6148,7 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin d’intervention → choisir la prestation principale → clarifier la différence avec les concurrents → choisir le canal principal.",
+        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin d’intervention → choisir les prestations principales → clarifier la différence avec les concurrents → choisir le canal principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : montrer le passages ou résultats → expliquer le prix → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -6197,7 +6197,7 @@
       "slug": "reparation-informatique-mobile",
       "name": "Réparation informatique & mobile",
       "category": "Système opérationnel",
-      "description": "Suivez chaque appareil, client et réparation sans perdre la maîtrise du SAV.",
+      "description": "Gardez appareils, clients, pièces et réparations sous contrôle sans perdre la maîtrise du SAV.",
       "tags": [
         "Réparation",
         "Service",
@@ -6287,7 +6287,7 @@
       "slug": "architecte-maitre-oeuvre",
       "name": "Architecte / maître d’œuvre",
       "category": "Système opérationnel",
-      "description": "Gardez clients, plans, artisans et marges visibles sans porter chaque chantier dans votre tête.",
+      "description": "Gardez clients, plans, artisans et marges sous contrôle sans porter chaque chantier dans votre tête.",
       "tags": [
         "BTP",
         "Projet",
@@ -6385,7 +6385,7 @@
       "slug": "courtier-credit-assurance",
       "name": "Courtier crédit / assurance",
       "category": "Système opérationnel",
-      "description": "Gardez dossiers, pièces, partenaires et relances visibles sans laisser filer les opportunités.",
+      "description": "Gardez dossiers, pièces, partenaires et relances sous contrôle pour conclure sans laisser filer les opportunités.",
       "tags": [
         "Finance",
         "Conseil",
@@ -6479,7 +6479,7 @@
       "slug": "auto-ecole",
       "name": "Auto-école",
       "category": "Système opérationnel",
-      "description": "Gardez élèves, moniteurs, heures et examens alignés sans subir les changements de planning.",
+      "description": "Gardez élèves, moniteurs, heures et examens sous contrôle sans subir les changements de planning.",
       "tags": [
         "Formation",
         "Planning",
@@ -6524,7 +6524,7 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les apprenants ou entreprises à cibler → comprendre le besoin de formation → choisir la formation principale → clarifier la différence avec les concurrents → choisir le canal d’inscription principal.",
+        "strategie.positionnement": "Exemple : définir les apprenants ou entreprises à cibler → comprendre le besoin de formation → choisir les formations principales → clarifier la différence avec les concurrents → choisir le canal d’inscription principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : rendre le programme et les avis visibles → clarifier le prix et le financement → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -6581,7 +6581,7 @@
       "slug": "photographe-videaste",
       "name": "Photographe / vidéaste",
       "category": "Système opérationnel",
-      "description": "Gardez prospects, shootings, livraisons et paiements visibles sans vous disperser entre les projets.",
+      "description": "Gardez prospects, shootings, livraisons et paiements sous contrôle sans vous disperser entre les projets.",
       "tags": [
         "Créatif",
         "Projet",
@@ -6626,7 +6626,7 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin client → choisir la prestation principale → clarifier la différence avec les concurrents → choisir le canal principal.",
+        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin client → choisir les prestations principales → clarifier la différence avec les concurrents → choisir le canal principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : montrer le réalisation client → expliquer le prix → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -6691,7 +6691,7 @@
       "slug": "evenementiel",
       "name": "Événementiel",
       "category": "Système opérationnel",
-      "description": "Gardez clients, prestataires, budget et planning alignés sans tout vérifier jusqu’au jour J.",
+      "description": "Gardez clients, prestataires, budget et planning sous contrôle sans tout vérifier jusqu’au jour J.",
       "tags": [
         "Événement",
         "Projet",
@@ -6736,7 +6736,7 @@
         }
       ],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin d’intervention → choisir la prestation principale → clarifier la différence avec les concurrents → choisir le canal principal.",
+        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin d’intervention → choisir les prestations principales → clarifier la différence avec les concurrents → choisir le canal principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : montrer le passages ou résultats → expliquer le prix → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -6801,7 +6801,7 @@
       "slug": "salle-de-sport",
       "name": "Salle de sport",
       "category": "Système opérationnel",
-      "description": "Gardez abonnements, planning, équipe et fidélisation visibles sans subir les creux d’activité.",
+      "description": "Gardez abonnements, planning, équipe et fidélisation sous contrôle sans subir les creux d’activité.",
       "tags": [
         "Sport",
         "Abonnement",
@@ -6924,7 +6924,7 @@
         "Rendez-vous",
         "Système"
       ],
-      "description": "Gardez patients, soins, devis et rappels alignés sans saturer le cabinet.",
+      "description": "Gardez patients, soins, devis et rappels sous contrôle pour soigner sans saturer le cabinet.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -7000,7 +7000,7 @@
       "imageSubtitle": "Aperçu du système opérationnel pour pharmacie",
       "processes": [],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir le clients ou patients à cibler → comprendre le besoin de santé → choisir le service principal → clarifier la différence avec les concurrents → choisir le canal principal.",
+        "strategie.positionnement": "Exemple : définir le clients ou patients à cibler → comprendre le besoin de santé → choisir les services principaux → clarifier la différence avec les concurrents → choisir le canal principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : rendre les conseils et garanties visibles → clarifier le prix ou prise en charge → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -7022,7 +7022,7 @@
         "Stock",
         "Système"
       ],
-      "description": "Gardez stock, comptoir, équipe et obligations santé sous contrôle au quotidien.",
+      "description": "Maîtrisez stock, comptoir, équipe et obligations santé pour servir les patients sans perdre le fil.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -7112,7 +7112,7 @@
         "Dossiers",
         "Système"
       ],
-      "description": "Gardez actes, pièces, échéances et clients visibles sans perdre le fil des dossiers.",
+      "description": "Gardez actes, pièces, échéances et clients sous contrôle sans perdre le fil des dossiers.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -7206,7 +7206,7 @@
         "Animaux",
         "Système"
       ],
-      "description": "Gardez rendez-vous, dossiers animaux, soins et stock visibles dans la clinique.",
+      "description": "Pilotez rendez-vous, dossiers animaux, soins et stock pour faire tourner la clinique sans surcharge.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -7274,7 +7274,7 @@
       "imageSubtitle": "Aperçu du système opérationnel pour agence de voyage",
       "processes": [],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin de séjour → choisir l’offre principale → clarifier la différence avec les concurrents → choisir le canal de réservation principal.",
+        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin de séjour → choisir les offres principales → clarifier la différence avec les concurrents → choisir le canal de réservation principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : rendre les avis et photos visibles → clarifier le prix et conditions → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -7296,7 +7296,7 @@
         "Réservation",
         "Système"
       ],
-      "description": "Gardez offres, dossiers voyageurs, fournisseurs et paiements alignés sans dispersion.",
+      "description": "Pilotez offres, voyageurs, fournisseurs et paiements pour vendre des séjours sans dispersion.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -7372,7 +7372,7 @@
       "imageSubtitle": "Aperçu du système opérationnel pour opticien",
       "processes": [],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir le clients ou patients à cibler → comprendre le besoin de santé → choisir le service principal → clarifier la différence avec les concurrents → choisir le canal principal.",
+        "strategie.positionnement": "Exemple : définir le clients ou patients à cibler → comprendre le besoin de santé → choisir les services principaux → clarifier la différence avec les concurrents → choisir le canal principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : rendre les conseils et garanties visibles → clarifier le prix ou prise en charge → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -7394,7 +7394,7 @@
         "Commerce",
         "Système"
       ],
-      "description": "Gardez clients, verres, montures, mutuelles et commandes visibles en boutique.",
+      "description": "Suivez clients, verres, montures, mutuelles et commandes pour servir sans bloquer la boutique.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -7466,7 +7466,7 @@
       "imageSubtitle": "Aperçu du système opérationnel pour pisciniste",
       "processes": [],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le problème technique → choisir l’intervention principale → clarifier la différence avec les concurrents → choisir le canal d’appels principal.",
+        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le problème technique → choisir les interventions principales → clarifier la différence avec les concurrents → choisir le canal d’appels principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : montrer les réalisations et garanties → expliquer le devis ou forfait → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -7488,7 +7488,7 @@
         "SAV",
         "Système"
       ],
-      "description": "Gardez devis, chantiers, entretiens et SAV piscine visibles malgré la saisonnalité.",
+      "description": "Gardez devis, chantiers, entretiens et SAV piscine sous contrôle malgré la saisonnalité.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -7582,7 +7582,7 @@
         "Diagnostic",
         "Système"
       ],
-      "description": "Gardez rendez-vous, diagnostics, rapports et conformité alignés du terrain à l’envoi.",
+      "description": "Gardez rendez-vous, diagnostics, rapports et conformité sous contrôle du terrain jusqu’à l’envoi.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -7676,7 +7676,7 @@
         "Stock",
         "Système"
       ],
-      "description": "Gardez commandes, stock frais, livraisons et pics saisonniers visibles en boutique.",
+      "description": "Anticipez commandes, stock frais, livraisons et pics saisonniers sans perdre la marge.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -7786,7 +7786,7 @@
         "Caisse",
         "Système"
       ],
-      "description": "Gardez dépôts, traitements, délais et clients visibles sans perdre une pièce.",
+      "description": "Gardez dépôts, traitements, délais et clients sous contrôle sans perdre une pièce.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -7858,7 +7858,7 @@
       "imageSubtitle": "Aperçu du système opérationnel pour food truck",
       "processes": [],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre l’envie ou le besoin client → choisir l’offre principale → clarifier la différence avec les concurrents → choisir le canal principal.",
+        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre l’envie ou le besoin client → choisir les offres principales → clarifier la différence avec les concurrents → choisir le canal principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : rendre les avis et photos visibles → clarifier le prix → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -7880,7 +7880,7 @@
         "Mobilité",
         "Système"
       ],
-      "description": "Gardez emplacements, stock, service et autorisations alignés malgré les déplacements.",
+      "description": "Maîtrisez emplacements, stock, service et autorisations malgré les déplacements.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -7978,7 +7978,7 @@
         "Mission",
         "Système"
       ],
-      "description": "Gardez missions, livrables, relances et rentabilité visibles sans vous disperser.",
+      "description": "Gardez missions, livrables, relances et marge sous contrôle sans vous disperser.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -8104,7 +8104,7 @@
         "Contrats",
         "Système"
       ],
-      "description": "Gardez portefeuille, contrats, sinistres et renouvellements visibles sans perdre les échéances.",
+      "description": "Gardez portefeuille, contrats, sinistres et renouvellements sous contrôle sans perdre les échéances.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -8180,7 +8180,7 @@
       "imageSubtitle": "Aperçu du système opérationnel pour vtc",
       "processes": [],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin de transport → choisir le service principal → clarifier la différence avec les concurrents → choisir le canal de réservation principal.",
+        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin de transport → choisir les services principaux → clarifier la différence avec les concurrents → choisir le canal de réservation principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : rendre les avis et délais visibles → clarifier le prix → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -8202,7 +8202,7 @@
         "Planning",
         "Système"
       ],
-      "description": "Gardez courses, clients, chauffeurs et rentabilité visibles sans subir les imprévus.",
+      "description": "Pilotez courses, clients, chauffeurs et rentabilité sans subir chaque imprévu.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -8292,7 +8292,7 @@
         "Accompagnement",
         "Système"
       ],
-      "description": "Gardez clients, objectifs, séances et progression visibles sans perdre le cadre.",
+      "description": "Gardez clients, objectifs, séances et progression sous contrôle sans perdre le cadre.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -8410,7 +8410,7 @@
         "Coaching",
         "Système"
       ],
-      "description": "Gardez clients, séances, programmes et paiements visibles sans perdre le suivi terrain.",
+      "description": "Gardez clients, séances, programmes et paiements sous contrôle sans perdre le suivi terrain.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -8516,7 +8516,7 @@
         "Maintenance",
         "Système"
       ],
-      "description": "Gardez machines, paiements, maintenance et incidents visibles sans présence permanente.",
+      "description": "Surveillez machines, paiements, maintenance et incidents sans présence permanente.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -8588,7 +8588,7 @@
       "imageSubtitle": "Aperçu du système opérationnel pour entreprise de sécurité",
       "processes": [],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin d’intervention → choisir la prestation principale → clarifier la différence avec les concurrents → choisir le canal principal.",
+        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin d’intervention → choisir les prestations principales → clarifier la différence avec les concurrents → choisir le canal principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : montrer le passages ou résultats → expliquer le prix → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -8610,7 +8610,7 @@
         "Planning",
         "Système"
       ],
-      "description": "Gardez agents, sites, vacations et incidents visibles sans perdre la main courante.",
+      "description": "Pilotez agents, sites, vacations et incidents sans perdre la main courante.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -8708,7 +8708,7 @@
         "Membres",
         "Système"
       ],
-      "description": "Gardez membres, adhésions, événements et finances visibles sans alourdir les bénévoles.",
+      "description": "Structurez membres, adhésions, événements et finances pour avancer sans épuiser les bénévoles.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -8784,7 +8784,7 @@
       "imageSubtitle": "Aperçu du système opérationnel pour couvreur",
       "processes": [],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le problème technique → choisir l’intervention principale → clarifier la différence avec les concurrents → choisir le canal d’appels principal.",
+        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le problème technique → choisir les interventions principales → clarifier la différence avec les concurrents → choisir le canal d’appels principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : montrer les réalisations et garanties → expliquer le devis ou forfait → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -8806,7 +8806,7 @@
         "Chantier",
         "Système"
       ],
-      "description": "Gardez urgences, devis, chantiers et sécurité toiture visibles sans perdre les priorités.",
+      "description": "Gardez urgences, devis, chantiers et sécurité toiture sous contrôle sans perdre les priorités terrain.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -8904,7 +8904,7 @@
         "Chantier",
         "Système"
       ],
-      "description": "Gardez devis, chantiers, teintes et finitions visibles sans perdre les demandes client.",
+      "description": "Gardez devis, chantiers, teintes et finitions sous contrôle sans perdre les demandes client.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -9002,7 +9002,7 @@
         "Chantier",
         "Système"
       ],
-      "description": "Gardez métrés, matériaux, poses et réserves alignés du devis à la réception.",
+      "description": "Gardez métrés, matériaux, poses et réserves sous contrôle du devis jusqu’à la réception.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -9078,7 +9078,7 @@
       "imageSubtitle": "Aperçu du système opérationnel pour climatisation",
       "processes": [],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le problème technique → choisir l’intervention principale → clarifier la différence avec les concurrents → choisir le canal d’appels principal.",
+        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le problème technique → choisir les interventions principales → clarifier la différence avec les concurrents → choisir le canal d’appels principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : montrer les réalisations et garanties → expliquer le devis ou forfait → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -9100,7 +9100,7 @@
         "Installation",
         "Système"
       ],
-      "description": "Gardez diagnostics, installations, entretiens et SAV climatisation visibles au quotidien.",
+      "description": "Gardez diagnostics, installations, entretiens et SAV climatisation sous contrôle au quotidien.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -9176,7 +9176,7 @@
       "imageSubtitle": "Aperçu du système opérationnel pour serrurier",
       "processes": [],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le problème technique → choisir l’intervention principale → clarifier la différence avec les concurrents → choisir le canal d’appels principal.",
+        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le problème technique → choisir les interventions principales → clarifier la différence avec les concurrents → choisir le canal d’appels principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : montrer les réalisations et garanties → expliquer le devis ou forfait → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -9198,7 +9198,7 @@
         "BTP",
         "Système"
       ],
-      "description": "Gardez urgences, devis, interventions et pièces visibles sans perdre les priorités terrain.",
+      "description": "Gardez urgences, devis, interventions et pièces sous contrôle sans perdre les priorités terrain.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -9292,7 +9292,7 @@
         "Stock",
         "Système"
       ],
-      "description": "Gardez références, stock, dégustations et ventes visibles sans perdre la rotation cave.",
+      "description": "Maîtrisez références, stock, dégustations et ventes sans perdre la rotation de cave.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -9394,7 +9394,7 @@
         "Livre",
         "Système"
       ],
-      "description": "Gardez catalogue, commandes, stock et animations visibles sans perdre les demandes lecteurs.",
+      "description": "Gardez catalogue, commandes, stock et animations sous contrôle sans perdre les demandes lecteurs.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -9496,7 +9496,7 @@
         "Rendez-vous",
         "Système"
       ],
-      "description": "Gardez rendez-vous, dossiers patients, suivis et paiements visibles sans alourdir le cabinet.",
+      "description": "Gardez rendez-vous, dossiers patients, suivis et paiements sous contrôle sans alourdir le cabinet.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -9594,7 +9594,7 @@
         "Accompagnement",
         "Système"
       ],
-      "description": "Gardez rendez-vous, suivis, notes et cadre administratif visibles sans perdre le fil.",
+      "description": "Gardez rendez-vous, suivis, notes et cadre administratif sous contrôle sans perdre le fil.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -9696,7 +9696,7 @@
         "Familles",
         "Système"
       ],
-      "description": "Gardez enfants, familles, équipe, transmissions et facturation visibles sans surcharger la structure.",
+      "description": "Coordonnez enfants, familles, équipe, transmissions et facturation sans surcharger la structure.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -9790,7 +9790,7 @@
         "Conseil",
         "Système"
       ],
-      "description": "Gardez bilans, allocations, clients et conformité visibles sans disperser les dossiers.",
+      "description": "Gardez bilans, allocations, clients et conformité sous contrôle sans disperser les dossiers.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -9870,7 +9870,7 @@
       "imageSubtitle": "Aperçu du système opérationnel pour chasseur immobilier",
       "processes": [],
       "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le projet immobilier → choisir le service principal → clarifier la différence avec les concurrents → choisir le canal principal.",
+        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le projet immobilier → choisir les services principaux → clarifier la différence avec les concurrents → choisir le canal principal.",
         "strategie.objectifs": "Exemple : choisir l’objectif principal → définir le chiffre à suivre → noter la limite à ne pas dépasser → prévoir un point mensuel.",
         "strategie.plan-action": "Exemple : choisir les actions principales → nommer un responsable → prévoir une date → remonter vite un blocage → vérifier le résultat.",
         "marketing.confiance": "Exemple : montrer les biens ou résultats → expliquer les honoraires → clarifier le délai de réponse → rendre le contact facile à trouver.",
@@ -9892,7 +9892,7 @@
         "Recherche",
         "Système"
       ],
-      "description": "Gardez mandats, recherches, visites et négociations visibles sans perdre les critères client.",
+      "description": "Gardez mandats, recherches, visites et négociations sous contrôle sans perdre les critères client.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -9986,7 +9986,7 @@
         "Terrain",
         "Système"
       ],
-      "description": "Gardez missions, relevés, plans et dossiers fonciers visibles du terrain à la livraison.",
+      "description": "Gardez missions, relevés, plans et dossiers fonciers sous contrôle du terrain à la livraison.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
