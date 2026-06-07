@@ -23,6 +23,7 @@ import {
   type AssistantPackId,
 } from "@/lib/assistant-packs";
 import PrimaryMobileNav from "@/components/PrimaryMobileNav";
+import SystemSetupModal from "@/components/SystemSetupModal";
 
 type AssistantCatalogOffer = {
   title: string;
@@ -135,6 +136,24 @@ const faqItems = [
   },
 ] as const;
 
+const em2aResults = [
+  "36 jours/an gagnés côté comptabilité",
+  "30 jours/an gagnés côté paie",
+  "Jusqu’à 30 000 € de capacité récupérée/an",
+] as const;
+
+const em2aImpacts = [
+  "Moins de relances",
+  "Moins de flou dans le suivi",
+  "Plus de temps pour les clients",
+] as const;
+
+const em2aSteps = [
+  "Audit de l’organisation",
+  "Priorisation des demandes cles (ex: clients et de la collecte paie)",
+  "Mise en place du Système Opétationnel avec Airtable, Fillout et Linktree",
+] as const;
+
 function getPurchasablePacks(offer: AssistantOffer): readonly AssistantPack[] {
   return offer.packs.filter((pack) => pack.amount > 0);
 }
@@ -178,6 +197,7 @@ export default function AssistantsCatalogClient() {
   const [openCartOfferId, setOpenCartOfferId] = useState<AssistantOfferId | null>(null);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isAuditModalOpen, setIsAuditModalOpen] = useState(false);
   const [isStartingCheckout, setIsStartingCheckout] = useState(false);
   const [embeddedCheckout, setEmbeddedCheckout] = useState<EmbeddedCheckoutState | null>(null);
   const [isEmbeddedCheckoutLoading, setIsEmbeddedCheckoutLoading] = useState(false);
@@ -550,7 +570,7 @@ export default function AssistantsCatalogClient() {
       <section className="mx-auto w-full max-w-6xl px-4 pb-14 pt-4 md:px-8 md:pb-20 md:pt-8">
         <div className="mb-4 flex items-center justify-between gap-4">
           <h2 className="text-sm font-semibold tracking-tight text-brand-blue md:text-base">
-            Offres disponibles
+            Ce que vous pouvez déléguer
           </h2>
           <button
             type="button"
@@ -687,7 +707,7 @@ export default function AssistantsCatalogClient() {
         <div className="border-t border-dema-line/65 pt-10 md:pt-14">
           <div>
             <h2 className="text-3xl font-semibold tracking-tight text-brand-blue md:text-4xl">
-              Comment ça marche
+              Comment ça se passe concrètement ?
             </h2>
             <div className="mx-auto mt-6 grid gap-4 md:max-w-5xl md:grid-cols-3 md:gap-5">
               {howItWorksSteps.map((step, index) => (
@@ -714,8 +734,61 @@ export default function AssistantsCatalogClient() {
           </div>
 
           <div className="mt-14 md:mt-20">
+            <div className="grid gap-6 rounded-[1rem] border border-dema-line/70 bg-dema-paper px-4 py-6 md:grid-cols-[1.05fr_0.95fr] md:px-6 md:py-7">
+              <div>
+                <p className="inline-flex rounded-full bg-dema-forest/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
+                  Étude de cas EM2A
+                </p>
+                <h2 className="mt-4 text-[2.45rem] font-light leading-[1.02] tracking-tight text-brand-blue/44 md:text-[3.45rem]">
+                  Plus de{" "}
+                  <span className="demaa-hero-title text-brand-blue/86">2 mois</span>
+                  <br />
+                  de travail récupérés par an.
+                </h2>
+                <div className="mt-6 grid gap-3 sm:grid-cols-3">
+                  {em2aImpacts.map((impact) => (
+                    <div
+                      key={impact}
+                      className="rounded-[0.9rem] bg-dema-sage/55 px-4 py-3"
+                    >
+                      <p className="text-sm font-semibold leading-snug text-brand-blue">
+                        {impact}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="rounded-[0.9rem] border border-dema-line/70 bg-dema-cream px-4 py-5 md:px-5">
+                <p className="text-sm font-semibold text-brand-blue">Résultats</p>
+                <div className="mt-4 space-y-3">
+                  {em2aResults.map((result) => (
+                    <div key={result} className="flex gap-3">
+                      <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-dema-forest" />
+                      <p className="text-sm leading-relaxed text-dema-muted">{result}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-6 border-t border-dema-line/70 pt-5">
+                  <p className="text-sm font-semibold text-brand-blue">Méthode</p>
+                  <div className="mt-4 space-y-3">
+                    {em2aSteps.map((step, index) => (
+                      <div key={step} className="flex gap-3">
+                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-dema-sage text-xs font-semibold text-dema-forest">
+                          {index + 1}
+                        </span>
+                        <p className="text-sm leading-relaxed text-dema-muted">{step}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-14 md:mt-20">
             <h2 className="text-3xl font-semibold tracking-tight text-brand-blue md:text-4xl">
-              FAQ
+              On répond aux questions fréquentes
             </h2>
             <div className="mt-6 divide-y divide-dema-line/70 rounded-[1rem] border border-dema-line/70 bg-dema-paper">
               {faqItems.map((item, index) => (
@@ -729,9 +802,34 @@ export default function AssistantsCatalogClient() {
                 </div>
               ))}
             </div>
+
+            <div className="mx-auto mt-14 max-w-4xl rounded-[1rem] border border-dema-line/70 bg-dema-paper px-5 py-12 text-center shadow-[0_18px_50px_rgba(23,35,29,0.04)] md:mt-20 md:px-12 md:py-16">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-dema-forest">
+                Expérience
+              </p>
+              <h2 className="mx-auto mt-4 max-w-3xl text-3xl font-semibold tracking-tight text-brand-blue md:text-4xl">
+                Plus de 200 dirigeants accompagnés.
+              </h2>
+              <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-dema-muted md:text-lg">
+                Des dirigeants de TPE, cabinets, indépendants et petites équipes, dans différents
+                secteurs, accompagnés pour structurer leur organisation et alléger leur quotidien.
+              </p>
+              <button
+                type="button"
+                onClick={() => setIsAuditModalOpen(true)}
+                className="demaa-primary-button mx-auto mt-8 px-5 py-3"
+              >
+                Audit organisation gratuit
+              </button>
+            </div>
           </div>
         </div>
       </section>
+
+      <SystemSetupModal
+        isOpen={isAuditModalOpen}
+        onClose={() => setIsAuditModalOpen(false)}
+      />
 
       {isCartOpen ? (
         <div className="fixed inset-0 z-50 bg-brand-blue/35" onClick={() => setIsCartOpen(false)}>
