@@ -50,7 +50,7 @@
   }
 
   .demaa-chip-active {
-    @apply bg-dema-forest text-dema-paper shadow-[0_3px_8px_rgba(49,95,70,0.08)] hover:bg-dema-forest hover:text-dema-paper;
+    @apply bg-dema-forest/10 font-semibold text-dema-forest shadow-none hover:bg-dema-forest/10 hover:text-dema-forest;
   }
 
   .demaa-search-shell {
@@ -62,11 +62,11 @@
   }
 
   .demaa-primary-button {
-    @apply inline-flex items-center justify-center rounded-full bg-dema-forest px-4 py-2 text-sm font-medium text-dema-paper shadow-[0_10px_22px_rgba(49,95,70,0.14)] transition hover:bg-[#284f3a];
+    @apply inline-flex items-center justify-center rounded-full bg-dema-forest px-4 py-2 text-sm font-medium text-dema-paper shadow-[0_4px_12px_rgba(49,95,70,0.08)] transition hover:bg-[#284f3a];
   }
 
   .demaa-secondary-button {
-    @apply inline-flex items-center justify-center rounded-full border border-dema-line bg-dema-paper px-4 py-2 text-sm font-medium text-brand-blue transition hover:border-dema-forest/30 hover:text-dema-forest;
+    @apply inline-flex items-center justify-center rounded-full border border-dema-forest/25 bg-dema-paper px-4 py-2 text-sm font-medium text-brand-blue transition hover:border-dema-forest/40 hover:text-dema-forest;
   }
 
   .demaa-input {

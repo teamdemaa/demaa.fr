@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import AssistantsCatalogClient from "@/components/AssistantsCatalogClient";
-import PrimaryMobileNav from "@/components/PrimaryMobileNav";
 
 export const metadata: Metadata = {
   title: "Déléguer des tâches opérationnelles - Demaa",
@@ -31,10 +30,9 @@ export default function DeleguerPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-dema-cream pb-24 text-brand-blue md:pb-0">
+      <main className="min-h-screen bg-dema-cream text-brand-blue">
         <AssistantsCatalogClient />
       </main>
-      <PrimaryMobileNav activeTab="deleguer" />
     </>
   );
 }

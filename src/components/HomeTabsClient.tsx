@@ -31,8 +31,10 @@ export default function HomeTabsClient({
 
   return (
     <>
-      <section className="ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] w-screen bg-dema-cream px-4 pb-5 pt-12 text-center md:px-8 md:pb-6 md:pt-16">
+      <section className="ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] w-screen bg-dema-cream px-4 pb-3 pt-5 text-center md:px-8 md:pb-3 md:pt-16">
         <div className="mx-auto max-w-6xl space-y-6 md:space-y-7">
+          <PrimaryMobileNav activeTab="structurer" onSelect={selectPrimaryMobileTab} />
+
           <div className="mx-auto max-w-5xl">
             <h1 className="text-[2.24rem] tracking-tight leading-[0.98] sm:text-[2.75rem] md:text-[3.75rem] lg:text-[4.5rem]">
               <span className="demaa-hero-title text-brand-blue/86">
@@ -64,9 +66,6 @@ export default function HomeTabsClient({
         initialSelectedSlug={initialSystem}
         initialActiveTab={initialSystemTab}
       />
-
-      <div className="h-24 md:hidden" aria-hidden="true" />
-      <PrimaryMobileNav activeTab="structurer" onSelect={selectPrimaryMobileTab} />
     </>
   );
 }

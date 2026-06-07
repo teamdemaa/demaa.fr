@@ -103,7 +103,7 @@ export default function RootLayout({
     >
       <body
         suppressHydrationWarning
-        className="min-h-full flex flex-col bg-background text-foreground font-sans pb-24 md:pb-0"
+        className="min-h-full flex flex-col bg-background text-foreground font-sans"
       >
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-V1V4EX55K6"

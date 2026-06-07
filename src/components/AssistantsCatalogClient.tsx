@@ -8,7 +8,6 @@ import {
   FileCheck2,
   Minus,
   Plus,
-  Search,
   Send,
   ShoppingBag,
   Trash2,
@@ -22,6 +21,7 @@ import {
   type AssistantOfferId,
   type AssistantPackId,
 } from "@/lib/assistant-packs";
+import PrimaryMobileNav from "@/components/PrimaryMobileNav";
 
 type AssistantCatalogOffer = {
   title: string;
@@ -78,18 +78,6 @@ const assistantOffers = [
   },
 ] as const satisfies readonly AssistantCatalogOffer[];
 
-const filterTags = [
-  "Tous",
-  "Finance",
-  "Marketing",
-  "Commercial",
-  "Dossiers",
-  "Automatisation",
-  "Administration",
-] as const;
-
-type FilterTag = (typeof filterTags)[number];
-
 const DEFAULT_PACK_BY_OFFER = Object.fromEntries(
   ASSISTANT_PACK_OFFERS.map((offer) => [offer.id, offer.packs[0].id])
 ) as Record<AssistantOfferId, AssistantPackId>;
@@ -119,8 +107,6 @@ function getCartItemLabel(item: CartItem) {
 }
 
 export default function AssistantsCatalogClient() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [activeTag, setActiveTag] = useState<FilterTag>("Tous");
   const [selectedPacks, setSelectedPacks] =
     useState<Record<AssistantOfferId, AssistantPackId>>(DEFAULT_PACK_BY_OFFER);
   const [openPackOfferId, setOpenPackOfferId] = useState<AssistantOfferId | null>(null);
@@ -133,32 +119,6 @@ export default function AssistantsCatalogClient() {
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const [isAuditModalOpen, setIsAuditModalOpen] = useState(false);
   const embeddedCheckoutRef = useRef<{ destroy: () => void } | null>(null);
-
-  const filteredOffers = useMemo(() => {
-    const query = searchQuery.trim().toLowerCase();
-
-    return assistantOffers.filter((offer) => {
-      const matchesTag =
-        activeTag === "Tous" || (offer.tags as readonly string[]).includes(activeTag);
-      const packOffer = getPackOffer(offer.packOfferId);
-      const matchesSearch =
-        !query ||
-        offer.title.toLowerCase().includes(query) ||
-        offer.category.toLowerCase().includes(query) ||
-        offer.format.toLowerCase().includes(query) ||
-        offer.description.toLowerCase().includes(query) ||
-        offer.tags.some((tag) => tag.toLowerCase().includes(query)) ||
-        Boolean(
-          packOffer?.packs.some(
-            (pack) =>
-              pack.label.toLowerCase().includes(query) ||
-              pack.detail.toLowerCase().includes(query)
-          )
-        );
-
-      return matchesTag && matchesSearch;
-    });
-  }, [activeTag, searchQuery]);
 
   const cartTotal = useMemo(
     () =>
@@ -501,8 +461,10 @@ export default function AssistantsCatalogClient() {
         </div>
       ) : null}
 
-      <section className="ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] w-screen bg-dema-cream px-4 pb-5 pt-12 text-center md:px-8 md:pb-6 md:pt-16">
+      <section className="ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] w-screen bg-dema-cream px-4 pb-5 pt-5 text-center md:px-8 md:pb-6 md:pt-16">
         <div className="mx-auto max-w-6xl space-y-6 md:space-y-7">
+          <PrimaryMobileNav activeTab="deleguer" />
+
           <div className="mx-auto max-w-5xl">
             <h1 className="text-[2.24rem] tracking-tight leading-[0.98] sm:text-[2.75rem] md:text-[3.75rem] lg:text-[4.5rem]">
               <span className="demaa-hero-title text-brand-blue/86">Déléguez</span>
@@ -513,47 +475,22 @@ export default function AssistantsCatalogClient() {
             </h1>
           </div>
 
-          <div className="demaa-search-shell mx-auto w-full max-w-4xl">
-            <div className="relative">
-              <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-dema-forest/42 md:left-5 md:h-5 md:w-5" />
-              <input
-                type="search"
-                value={searchQuery}
-                onChange={(event) => setSearchQuery(event.target.value)}
-                placeholder="Rechercher un assistant"
-                aria-label="Rechercher un assistant"
-                className="w-full rounded-full bg-dema-paper py-2.5 pl-10 pr-5 text-sm font-normal text-brand-blue outline-none transition placeholder:text-brand-blue/36 md:py-3 md:pl-12 md:text-base"
-              />
-            </div>
-          </div>
         </div>
       </section>
 
-      <section className="w-full border-b border-dema-line/65 bg-dema-cream px-4 pb-4 pt-1 md:pb-5">
-        <div className="mx-auto flex max-w-6xl items-start justify-center gap-3">
-          <div className="max-w-4xl overflow-x-auto pb-2 soft-scroll">
-            <div className="flex min-w-max justify-center gap-2 px-1">
-              {filterTags.map((tag) => (
-                <button
-                  key={tag}
-                  type="button"
-                  onClick={() => setActiveTag(tag)}
-                  className={`demaa-chip ${
-                    activeTag === tag ? "demaa-chip-active" : ""
-                  }`}
-                >
-                  {tag}
-                </button>
-              ))}
-            </div>
-          </div>
+      <section className="mx-auto w-full max-w-6xl px-4 pb-20 pt-4 md:px-8 md:pb-28 md:pt-8">
+        <div className="mb-4 flex items-center justify-between gap-4">
+          <h2 className="text-sm font-semibold tracking-tight text-brand-blue md:text-base">
+            Offres disponibles
+          </h2>
           <button
             type="button"
             onClick={() => setIsCartOpen(true)}
-            className="relative inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-dema-forest shadow-[0_8px_24px_rgba(23,35,29,0.04)] transition hover:bg-dema-sage/70"
+            className="relative inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-full border border-dema-forest/25 bg-dema-paper px-3.5 text-sm font-medium text-brand-blue/72 shadow-[0_5px_14px_rgba(23,35,29,0.025)] transition hover:border-dema-forest/40 hover:bg-dema-sage/45"
             aria-label="Ouvrir le panier"
           >
             <ShoppingBag className="h-4 w-4" aria-hidden="true" />
+            <span>Panier</span>
             {cartCount > 0 ? (
               <span className="absolute -right-1 -top-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-dema-forest px-1 text-[10px] font-semibold text-dema-paper">
                 {cartCount}
@@ -561,138 +498,125 @@ export default function AssistantsCatalogClient() {
             ) : null}
           </button>
         </div>
-      </section>
 
-      <section className="mx-auto w-full max-w-6xl px-4 pb-20 pt-8 md:px-8 md:pb-28 md:pt-10">
-        {filteredOffers.length > 0 ? (
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {filteredOffers.map((offer) => {
-              const Icon = offer.icon;
-              const packOffer = getPackOffer(offer.packOfferId);
-              const selectedPackId = selectedPacks[offer.packOfferId];
-              const selectedPack =
-                packOffer?.packs.find((pack) => pack.id === selectedPackId) ||
-                packOffer?.packs[0];
-              const isAuditRequest = selectedPack?.id === "audit-process";
-              const isPackDropdownOpen = openPackOfferId === offer.packOfferId;
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {assistantOffers.map((offer) => {
+            const Icon = offer.icon;
+            const packOffer = getPackOffer(offer.packOfferId);
+            const selectedPackId = selectedPacks[offer.packOfferId];
+            const selectedPack =
+              packOffer?.packs.find((pack) => pack.id === selectedPackId) ||
+              packOffer?.packs[0];
+            const isAuditRequest = selectedPack?.id === "audit-process";
+            const isPackDropdownOpen = openPackOfferId === offer.packOfferId;
 
-              return (
-                <article
-                  key={offer.title}
-                  className={`demaa-card relative flex h-full flex-col overflow-visible rounded-[1.15rem] p-5 ${
-                    isPackDropdownOpen ? "z-40" : "z-0"
-                  }`}
-                >
-                  <div>
-                    <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
-                      <Icon className="h-5 w-5" aria-hidden="true" />
-                    </span>
-                    <p className="mt-4 text-[10px] font-medium uppercase tracking-[0.16em] text-dema-forest">
-                      {offer.category}
-                    </p>
-                    <h2 className="mt-3 text-xl font-semibold leading-tight tracking-tight text-brand-blue">
-                      {offer.title}
-                    </h2>
-                  </div>
-                  <p className="mt-4 text-sm leading-relaxed text-dema-muted">
-                    {offer.description}
+            return (
+              <article
+                key={offer.title}
+                className={`demaa-card relative flex h-full flex-col overflow-visible rounded-[1.15rem] p-5 ${
+                  isPackDropdownOpen ? "z-40" : "z-0"
+                }`}
+              >
+                <div>
+                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
+                    <Icon className="h-5 w-5" aria-hidden="true" />
+                  </span>
+                  <p className="mt-4 text-[10px] font-medium uppercase tracking-[0.16em] text-dema-forest">
+                    {offer.category}
                   </p>
-                  <div className="mt-auto pt-5">
-                    {packOffer && selectedPack ? (
-                      <div className="flex items-center gap-2">
-                        <div className="relative min-w-0 flex-1">
-                          <button
-                            type="button"
-                            onClick={() =>
-                              setOpenPackOfferId((current) =>
-                                current === offer.packOfferId ? null : offer.packOfferId
-                              )
-                            }
-                            className="group inline-flex h-11 w-full min-w-0 items-center justify-between gap-3 rounded-full border border-dema-line/85 bg-dema-paper px-3.5 text-left text-sm font-medium text-brand-blue shadow-[0_7px_18px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/20 hover:bg-dema-sage/45 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dema-forest/35"
-                            aria-expanded={isPackDropdownOpen}
-                            aria-haspopup="listbox"
-                          >
-                            <span className="min-w-0 truncate">
-                              {selectedPack.label} - {formatAssistantPrice(selectedPack.amount)}
-                            </span>
-                            <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-paper">
-                              <ChevronDown
-                                className={`h-4 w-4 transition ${
-                                  isPackDropdownOpen ? "rotate-180" : ""
-                                }`}
-                                aria-hidden="true"
-                              />
-                            </span>
-                          </button>
-                          {isPackDropdownOpen ? (
-                            <div
-                              className="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-[1rem] border border-dema-line bg-dema-paper p-1.5 shadow-[0_18px_46px_rgba(23,35,29,0.12)]"
-                              role="listbox"
-                            >
-                              {packOffer.packs.map((pack) => {
-                                const isSelected = pack.id === selectedPack.id;
-
-                                return (
-                                  <button
-                                    key={pack.id}
-                                    type="button"
-                                    onClick={() => selectPack(offer.packOfferId, pack.id)}
-                                    className={`flex w-full items-start justify-between gap-3 rounded-[0.8rem] px-3 py-2.5 text-left transition ${
-                                      isSelected
-                                        ? "bg-dema-sage text-brand-blue"
-                                        : "text-brand-blue hover:bg-dema-sage/55"
-                                    }`}
-                                    role="option"
-                                    aria-selected={isSelected}
-                                  >
-                                    <span className="min-w-0">
-                                      <span className="block text-sm font-semibold leading-tight">
-                                        {pack.label} - {formatAssistantPrice(pack.amount)}
-                                      </span>
-                                    </span>
-                                    {isSelected ? (
-                                      <Check
-                                        className="mt-0.5 h-4 w-4 shrink-0 text-dema-forest"
-                                        aria-hidden="true"
-                                      />
-                                    ) : null}
-                                  </button>
-                                );
-                              })}
-                            </div>
-                          ) : null}
-                        </div>
+                  <h2 className="mt-3 text-xl font-semibold leading-tight tracking-tight text-brand-blue">
+                    {offer.title}
+                  </h2>
+                </div>
+                <p className="mt-4 text-sm leading-relaxed text-dema-muted">
+                  {offer.description}
+                </p>
+                <div className="mt-auto pt-5">
+                  {packOffer && selectedPack ? (
+                    <div className="flex items-center gap-2">
+                      <div className="relative min-w-0 flex-1">
                         <button
                           type="button"
-                          onClick={() => {
-                            if (!selectedPack) return;
-                            if (isAuditRequest) {
-                              setIsAuditModalOpen(true);
-                              return;
-                            }
-                            addPackToCart(selectedPack.id);
-                          }}
-                          className="inline-flex h-11 shrink-0 items-center justify-center rounded-full border border-dema-forest/18 bg-dema-paper px-4 text-sm font-medium text-dema-forest shadow-[0_7px_18px_rgba(23,35,29,0.025)] transition hover:border-dema-forest/28 hover:bg-dema-sage/55"
+                          onClick={() =>
+                            setOpenPackOfferId((current) =>
+                              current === offer.packOfferId ? null : offer.packOfferId
+                            )
+                          }
+                          className="group inline-flex h-11 w-full min-w-0 items-center justify-between gap-3 rounded-full border border-dema-line/85 bg-dema-paper px-3.5 text-left text-sm font-medium text-brand-blue shadow-[0_7px_18px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/20 hover:bg-dema-sage/45 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dema-forest/35"
+                          aria-expanded={isPackDropdownOpen}
+                          aria-haspopup="listbox"
                         >
-                          {isAuditRequest ? "Demander" : "Ajouter"}
+                          <span className="min-w-0 truncate">
+                            {selectedPack.label} - {formatAssistantPrice(selectedPack.amount)}
+                          </span>
+                          <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-paper">
+                            <ChevronDown
+                              className={`h-4 w-4 transition ${
+                                isPackDropdownOpen ? "rotate-180" : ""
+                              }`}
+                              aria-hidden="true"
+                            />
+                          </span>
                         </button>
+                        {isPackDropdownOpen ? (
+                          <div
+                            className="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-[1rem] border border-dema-line bg-dema-paper p-1.5 shadow-[0_18px_46px_rgba(23,35,29,0.12)]"
+                            role="listbox"
+                          >
+                            {packOffer.packs.map((pack) => {
+                              const isSelected = pack.id === selectedPack.id;
+
+                              return (
+                                <button
+                                  key={pack.id}
+                                  type="button"
+                                  onClick={() => selectPack(offer.packOfferId, pack.id)}
+                                  className={`flex w-full items-start justify-between gap-3 rounded-[0.8rem] px-3 py-2.5 text-left transition ${
+                                    isSelected
+                                      ? "bg-dema-sage text-brand-blue"
+                                      : "text-brand-blue hover:bg-dema-sage/55"
+                                  }`}
+                                  role="option"
+                                  aria-selected={isSelected}
+                                >
+                                  <span className="min-w-0">
+                                    <span className="block text-sm font-semibold leading-tight">
+                                      {pack.label} - {formatAssistantPrice(pack.amount)}
+                                    </span>
+                                  </span>
+                                  {isSelected ? (
+                                    <Check
+                                      className="mt-0.5 h-4 w-4 shrink-0 text-dema-forest"
+                                      aria-hidden="true"
+                                    />
+                                  ) : null}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        ) : null}
                       </div>
-                    ) : null}
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-        ) : (
-          <div className="rounded-[1.15rem] border border-dashed border-dema-line bg-dema-paper px-6 py-10 text-center">
-            <h2 className="text-xl font-semibold tracking-tight text-brand-blue">
-              Aucun assistant trouvé
-            </h2>
-            <p className="mt-2 text-sm leading-relaxed text-dema-muted">
-              Essayez un autre mot-clé ou un autre filtre.
-            </p>
-          </div>
-        )}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (!selectedPack) return;
+                          if (isAuditRequest) {
+                            setIsAuditModalOpen(true);
+                            return;
+                          }
+                          addPackToCart(selectedPack.id);
+                        }}
+                        className="inline-flex h-11 shrink-0 items-center justify-center rounded-full border border-dema-forest/18 bg-dema-paper px-4 text-sm font-medium text-dema-forest shadow-[0_7px_18px_rgba(23,35,29,0.025)] transition hover:border-dema-forest/28 hover:bg-dema-sage/55"
+                      >
+                        {isAuditRequest ? "Demander" : "Ajouter"}
+                      </button>
+                    </div>
+                  ) : null}
+                </div>
+              </article>
+            );
+          })}
+        </div>
       </section>
 
       {isCartOpen ? (
