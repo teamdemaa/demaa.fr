@@ -62,7 +62,7 @@ const assistantOffers = [
     title: "Assistant polyvalent",
     category: "Administration",
     tags: ["Administration"],
-    format: "Minimum 20 heures / mois",
+    format: "Minimum 20 h / mois",
     description:
       "On prend en charge vos tâches récurrentes, le suivi de vos dossiers et l'organisation opérationnelle du mois.",
     icon: Send,

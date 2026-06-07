@@ -77,11 +77,11 @@ export const ASSISTANT_PACK_OFFERS = [
     description:
       "Déléguer vos tâches récurrentes, organiser vos documents, suivre vos dossiers et garder votre activité à jour.",
     rateLabel: "25 € / heure",
-    startingLabel: "Minimum 20 heures / mois",
+    startingLabel: "Minimum 20 h / mois",
     packs: [
-      { id: "administratif-20h", label: "20 heures / mois", amount: 500, detail: "Minimum mensuel pour déléguer les tâches récurrentes" },
-      { id: "administratif-30h", label: "30 heures / mois", amount: 750, detail: "Pack mensuel pour un suivi plus régulier" },
-      { id: "administratif-40h", label: "40 heures / mois", amount: 1000, detail: "Pack mensuel pour une délégation plus complète" },
+      { id: "administratif-20h", label: "20 h / mois", amount: 500, detail: "Minimum mensuel pour déléguer les tâches récurrentes" },
+      { id: "administratif-30h", label: "30 h / mois", amount: 750, detail: "Pack mensuel pour un suivi plus régulier" },
+      { id: "administratif-40h", label: "40 h / mois", amount: 1000, detail: "Pack mensuel pour une délégation plus complète" },
     ],
   },
   {
