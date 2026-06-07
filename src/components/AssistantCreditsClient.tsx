@@ -478,11 +478,11 @@ export default function AssistantCreditsClient() {
                             className="flex min-h-14 w-full items-center justify-between rounded-[0.9rem] border border-dema-line bg-dema-paper px-4 text-left text-sm font-normal text-brand-blue shadow-[0_6px_18px_rgba(23,35,29,0.024)] transition hover:bg-dema-sage/45"
                             aria-expanded={isMenuOpen}
                           >
-                            <span>
-                              <span className="block font-medium">
+                            <span className="min-w-0 pr-3">
+                              <span className="block break-words font-medium">
                                 {selectedPack.label} - {formatAssistantPrice(selectedPack.amount)}
                               </span>
-                              <span className="mt-0.5 block text-xs text-dema-muted">
+                              <span className="mt-0.5 block break-words text-xs text-dema-muted">
                                 {selectedPack.detail}
                               </span>
                             </span>
@@ -515,11 +515,11 @@ export default function AssistantCreditsClient() {
                                         : "font-normal text-brand-blue hover:bg-dema-sage/50"
                                     }`}
                                   >
-                                    <span>
-                                      <span className="block">
+                                    <span className="min-w-0">
+                                      <span className="block break-words">
                                         {pack.label} - {formatAssistantPrice(pack.amount)}
                                       </span>
-                                      <span className="mt-0.5 block text-xs font-normal text-dema-muted">
+                                      <span className="mt-0.5 block break-words text-xs font-normal text-dema-muted">
                                         {pack.detail}
                                       </span>
                                     </span>

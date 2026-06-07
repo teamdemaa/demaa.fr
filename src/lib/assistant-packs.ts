@@ -1,8 +1,7 @@
 export type AssistantPackId =
-  | "audit-process"
-  | "automation-5h"
-  | "automation-10h"
-  | "automation-20h"
+  | "structuration-1-societe"
+  | "structuration-2-societes"
+  | "structuration-3-societes"
   | "facturation-10h"
   | "facturation-20h"
   | "facturation-30h"
@@ -43,17 +42,16 @@ export type AssistantOffer = {
 export const ASSISTANT_PACK_OFFERS = [
   {
     id: "structuration-automatisation",
-    title: "Accompagnement structuration",
+    title: "Structuration & Automatisation",
     category: "Organisation",
     description:
-      "Structurer vos process, mettre en place des systèmes de travail clairs et vous accompagner dans la prise en main.",
-    rateLabel: "Accompagnement mensuel",
-    startingLabel: "Audit gratuit puis accompagnement à partir de 750 €",
+      "On structure avec vous les process, les outils et les automatisations pour que l’entreprise gagne en clarté, en temps et en capacité de développement.",
+    rateLabel: "Forfait structuration",
+    startingLabel: "À partir de 1500 €",
     packs: [
-      { id: "audit-process", label: "Audit organisation", amount: 0, detail: "Appel gratuit pour comprendre votre organisation, vos blocages et les premières améliorations possibles" },
-      { id: "automation-5h", label: "1 mois", amount: 750, detail: "Structuration, mise en place d’un premier système et accompagnement à la prise en main" },
-      { id: "automation-10h", label: "2 mois", amount: 1400, detail: "Structuration de plusieurs process, mise en place des systèmes prioritaires et accompagnement dans la durée" },
-      { id: "automation-20h", label: "3 mois", amount: 1950, detail: "Système opérationnel plus complet, automatisations, documentation et accompagnement jusqu’à l’adoption" },
+      { id: "structuration-1-societe", label: "1 société", amount: 1500, detail: "Système clair, process posés et automatisations utiles pour gagner du temps" },
+      { id: "structuration-2-societes", label: "2 sociétés", amount: 2900, detail: "Structuration coordonnée pour deux sociétés" },
+      { id: "structuration-3-societes", label: "3 sociétés", amount: 4300, detail: "Structuration coordonnée pour trois sociétés" },
     ],
   },
   {
@@ -75,7 +73,7 @@ export const ASSISTANT_PACK_OFFERS = [
     title: "Assistant polyvalent",
     category: "Administration",
     description:
-      "Déléguer vos tâches récurrentes, organiser vos documents, suivre vos dossiers et garder votre activité à jour.",
+      "On garde votre administratif à jour : factures, relances clients, suivi des dossiers, documents et organisation des tâches récurrentes.",
     rateLabel: "25 € / heure",
     startingLabel: "Minimum 20 h / mois",
     packs: [
@@ -89,7 +87,7 @@ export const ASSISTANT_PACK_OFFERS = [
     title: "Appel d'offre",
     category: "Dossiers",
     description:
-      "Structurer votre réponse, rassembler les pièces demandées, clarifier les éléments attendus et préparer un dossier prêt à envoyer.",
+      "On vous aide à structurer une réponse claire, complète et bien positionnée pour mettre toutes les chances de votre côté.",
     rateLabel: "Minimum par réponse",
     startingLabel: "À partir de 500 €",
     packs: [

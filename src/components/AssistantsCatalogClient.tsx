@@ -49,12 +49,12 @@ type EmbeddedCheckoutState = {
 
 const assistantOffers = [
   {
-    title: "Accompagnement structuration",
+    title: "Structuration & Automatisation",
     category: "Organisation",
     tags: ["Administration"],
-    format: "À partir de 750 €",
+    format: "À partir de 1500 €",
     description:
-      "On vous aide à clarifier vos process, poser des systèmes de travail solides et reprendre la main sur votre organisation.",
+      "On structure avec vous les process, les outils et les automatisations pour que l’entreprise gagne en clarté, en temps et en capacité de développement.",
     icon: Workflow,
     packOfferId: "structuration-automatisation",
   },
@@ -64,7 +64,7 @@ const assistantOffers = [
     tags: ["Administration"],
     format: "Minimum 20 h / mois",
     description:
-      "On prend en charge vos tâches récurrentes, le suivi de vos dossiers et l'organisation opérationnelle du mois.",
+      "On garde votre administratif à jour : factures, relances clients, suivi des dossiers, documents et organisation des tâches récurrentes.",
     icon: Send,
     packOfferId: "administratif",
   },
@@ -74,7 +74,7 @@ const assistantOffers = [
     tags: ["Dossiers", "Commercial"],
     format: "À partir de 500 €",
     description:
-      "On vous aide à structurer une réponse claire, rassembler les pièces demandées et sécuriser un dossier prêt à envoyer.",
+      "On vous aide à structurer une réponse claire, complète et bien positionnée pour mettre toutes les chances de votre côté.",
     icon: FileCheck2,
     packOfferId: "appel-offre",
   },
