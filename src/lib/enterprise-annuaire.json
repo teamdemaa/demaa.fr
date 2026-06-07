@@ -1716,7 +1716,7 @@
           "pillar": "Opérations",
           "title": "Visites & acquéreurs",
           "description": "Organiser les visites et qualifier les acquéreurs intéressés.",
-          "examples": "Exemple : confirmer la disponibilité → vérifier le dossier → organiser le créneau → noter le problème → lancer la suite client."
+          "examples": "Exemple : confirmer la disponibilité du bien → vérifier le dossier candidat ou acquéreur → organiser la visite → noter le retour → déclencher la suite."
         },
         {
           "pillar": "Opérations",
@@ -1914,7 +1914,7 @@
           "pillar": "Opérations",
           "title": "Mise en location",
           "description": "Piloter l’annonce, les visites, les dossiers candidats et la signature du bail.",
-          "examples": "Exemple : confirmer la disponibilité → vérifier le dossier → organiser le créneau → noter le problème → lancer la suite client."
+          "examples": "Exemple : confirmer la disponibilité du logement → vérifier le dossier candidat → organiser la visite → noter le retour → déclencher la suite."
         },
         {
           "pillar": "Opérations",
@@ -1932,7 +1932,7 @@
           "pillar": "Opérations",
           "title": "Départs & relocation",
           "description": "Organiser les préavis, états des lieux, retenues et remise en location.",
-          "examples": "Exemple : confirmer la disponibilité → vérifier le dossier → organiser le créneau → noter le problème → lancer la suite client."
+          "examples": "Exemple : confirmer la disponibilité du logement → vérifier le dossier candidat → organiser la visite → noter le retour → déclencher la suite."
         },
         {
           "pillar": "Opérations",
@@ -2130,7 +2130,7 @@
           "pillar": "Opérations",
           "title": "Mise en location",
           "description": "Organiser annonce, sélection locataire, bail, état des lieux et entrée.",
-          "examples": "Exemple : confirmer la disponibilité → vérifier le dossier → organiser le créneau → noter le problème → lancer la suite client."
+          "examples": "Exemple : confirmer la disponibilité du bien → vérifier les critères investisseur → organiser la visite → noter les points de vigilance → décider la suite."
         },
         {
           "pillar": "Opérations",
@@ -2220,7 +2220,7 @@
           "pillar": "Opérations",
           "title": "Arrivées & départs",
           "description": "Suivre les check-in, check-out, instructions et accès voyageurs.",
-          "examples": "Exemple : confirmer la disponibilité → vérifier le dossier → organiser le créneau → noter le problème → lancer la suite client."
+          "examples": "Exemple : confirmer l’arrivée voyageur → envoyer les instructions → vérifier accès, linge et ménage → suivre le check-in → traiter le blocage."
         },
         {
           "pillar": "Opérations",
@@ -2238,7 +2238,7 @@
           "pillar": "Opérations",
           "title": "Qualité séjour",
           "description": "Contrôler la qualité post-séjour et les points à améliorer.",
-          "examples": "Exemple : définir le standard dossier → contrôler les informations clés → corriger l’écart → tracer la cause → fiabiliser le suivi."
+          "examples": "Exemple : définir le standard logement → contrôler propreté, équipements et avis voyageur → corriger l’écart → tracer la cause → fiabiliser le séjour."
         }
       ],
       "processExamples": {
@@ -5742,7 +5742,7 @@
           "pillar": "Opérations",
           "title": "Arrivées & départs",
           "description": "Organiser check-in, check-out, consignes et demandes spécifiques.",
-          "examples": "Exemple : confirmer la disponibilité → vérifier le dossier → organiser le créneau → noter le problème → lancer la suite client."
+          "examples": "Exemple : confirmer la réservation → préparer la chambre → vérifier accès et paiement → suivre l’arrivée → traiter le blocage."
         },
         {
           "pillar": "Opérations",
@@ -8220,7 +8220,7 @@
           "pillar": "Opérations",
           "title": "Chauffeurs",
           "description": "Suivre disponibilité, commissions, documents et performance.",
-          "examples": "Exemple : vérifier le chauffeur disponible → vérifier les documents → attribuer la course → signaler le retard → suivre la qualité."
+          "examples": "Exemple : confirmer le chauffeur disponible → contrôler les documents → attribuer la course → signaler le retard → suivre la qualité."
         },
         {
           "pillar": "Opérations",
@@ -9916,7 +9916,7 @@
           "pillar": "Opérations",
           "title": "Visites",
           "description": "Organiser visites, comptes rendus, photos et décisions.",
-          "examples": "Exemple : confirmer la disponibilité → vérifier le dossier → organiser le créneau → noter le problème → lancer la suite client."
+          "examples": "Exemple : confirmer la disponibilité du bien → vérifier le dossier acquéreur → organiser la visite → noter le retour → déclencher la suite."
         },
         {
           "pillar": "Opérations",
