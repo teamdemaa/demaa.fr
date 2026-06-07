@@ -150,8 +150,8 @@ const em2aImpacts = [
 
 const em2aSteps = [
   "Audit de l’organisation",
-  "Priorisation des demandes cles (ex: clients et de la collecte paie)",
-  "Mise en place du Système Opétationnel avec Airtable, Fillout et Linktree",
+  "Priorisation des demandes clients et de la collecte paie",
+  "Mise en place du système opérationnel avec Airtable, Fillout et Linktree",
 ] as const;
 
 function getPurchasablePacks(offer: AssistantOffer): readonly AssistantPack[] {
