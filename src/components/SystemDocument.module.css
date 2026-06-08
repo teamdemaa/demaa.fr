@@ -22,6 +22,21 @@
   line-height: 1.1;
 }
 
+.backLink {
+  display: inline-flex;
+  width: fit-content;
+  margin-bottom: 10px;
+  color: var(--color-dema-forest);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.backLink:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .screenEyebrow {
   margin: 0;
   color: var(--color-dema-muted);

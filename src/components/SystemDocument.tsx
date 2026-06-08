@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { EnterpriseDefinition, EnterpriseProcess } from "@/lib/enterprise-annuaire";
 import type { SystemProcessTemplate, SystemPillar } from "@/lib/system-process-templates";
 import type { ReactNode } from "react";
@@ -164,6 +165,9 @@ export default function SystemDocument({ system, templates }: SystemDocumentProp
     <main className={styles.shell}>
       <div className={styles.screenActions}>
         <div>
+          <Link className={styles.backLink} href="/">
+            Retour à Demaa
+          </Link>
           <p className={styles.screenEyebrow}>Document de structuration</p>
           <h1>{system.name}</h1>
         </div>
