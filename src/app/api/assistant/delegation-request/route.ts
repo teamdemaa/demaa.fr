@@ -1,5 +1,12 @@
 import { NextResponse } from "next/server";
 import {
+  enforceRateLimit,
+  escapeSlackMrkdwn,
+  isValidStripeSessionId,
+  normalizeText,
+  readJsonBody,
+} from "@/lib/api-security";
+import {
   getAssistantDelegationRequestBySessionId,
   saveAssistantDelegationRequest,
 } from "@/lib/generations-db";
@@ -143,17 +150,37 @@ async function retrieveCheckoutSession(sessionId: string) {
 }
 
 export async function POST(request: Request) {
-  const body = (await request.json().catch(() => null)) as DelegationRequestBody | null;
-  const firstName = typeof body?.firstName === "string" ? body.firstName.trim() : "";
-  const lastName = typeof body?.lastName === "string" ? body.lastName.trim() : "";
-  const sessionId = typeof body?.sessionId === "string" ? body.sessionId.trim() : "";
-  const tasks = typeof body?.tasks === "string" ? body.tasks.trim() : "";
-  const whatsappPhone =
-    typeof body?.whatsappPhone === "string" ? body.whatsappPhone.trim() : "";
+  const { data: body, response } =
+    await readJsonBody<DelegationRequestBody>(request, 16 * 1024);
+  if (response) return response;
+
+  const firstName = normalizeText(body?.firstName, 80);
+  const lastName = normalizeText(body?.lastName, 80);
+  const sessionId = normalizeText(body?.sessionId, 120);
+  const tasks = normalizeText(body?.tasks, 2500, { multiline: true });
+  const whatsappPhone = normalizeText(body?.whatsappPhone, 60);
+
+  const limited = enforceRateLimit(
+    request,
+    {
+      keyPrefix: "assistant-delegation",
+      limit: 6,
+      windowMs: 10 * 60 * 1000,
+    },
+    sessionId || undefined
+  );
+  if (limited) return limited;
 
   if (!sessionId) {
     return NextResponse.json(
       { error: "La session Stripe est manquante." },
+      { status: 400 }
+    );
+  }
+
+  if (!isValidStripeSessionId(sessionId)) {
+    return NextResponse.json(
+      { error: "La session Stripe est invalide." },
       { status: 400 }
     );
   }
@@ -222,7 +249,7 @@ export async function POST(request: Request) {
         type: "section",
         text: {
           type: "mrkdwn",
-            text: `*Nouvelle demande assistant*\n*Sélection* : ${cartSummary}\n*Montant* : ${getAmountLabel(session)}${creditsLine}\n*Nom* : ${customerName || "_non renseigné_"}\n*Email Stripe* : ${email || "_non renseigné_"}\n*WhatsApp* : ${whatsappPhone || "_non renseigné_"}\n*Détail de ce que le client veut déléguer* :\n${tasks}\n*Action admin* : contacter le client sur WhatsApp sous 24h\n*Session Stripe* : ${sessionId}\n*Mode* : ${session.livemode ? "Live" : "Test"}`,
+            text: `*Nouvelle demande assistant*\n*Sélection* : ${escapeSlackMrkdwn(cartSummary)}\n*Montant* : ${getAmountLabel(session)}${creditsLine}\n*Nom* : ${escapeSlackMrkdwn(customerName || "") || "_non renseigné_"}\n*Email Stripe* : ${escapeSlackMrkdwn(email || "") || "_non renseigné_"}\n*WhatsApp* : ${escapeSlackMrkdwn(whatsappPhone) || "_non renseigné_"}\n*Détail de ce que le client veut déléguer* :\n${escapeSlackMrkdwn(tasks)}\n*Action admin* : contacter le client sur WhatsApp sous 24h\n*Session Stripe* : ${sessionId}\n*Mode* : ${session.livemode ? "Live" : "Test"}`,
         },
       },
       {

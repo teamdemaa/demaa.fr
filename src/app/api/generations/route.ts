@@ -1,7 +1,19 @@
 import { NextResponse } from "next/server";
+import {
+  enforceRateLimit,
+  normalizeText,
+  readJsonBody,
+} from "@/lib/api-security";
 import { getGenerationCountByEmail, saveGeneration } from "@/lib/generations-db";
 
 const MAX_GENERATIONS_PER_USER = 3;
+
+type SaveGenerationRequestBody = {
+  email?: unknown;
+  prompt?: unknown;
+  result?: unknown;
+  sector?: unknown;
+};
 
 function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -9,8 +21,15 @@ function isValidEmail(email: string) {
 
 export async function GET(request: Request) {
   try {
+    const limited = enforceRateLimit(request, {
+      keyPrefix: "generations-read",
+      limit: 30,
+      windowMs: 10 * 60 * 1000,
+    });
+    if (limited) return limited;
+
     const { searchParams } = new URL(request.url);
-    const email = searchParams.get("email");
+    const email = normalizeText(searchParams.get("email"), 160).toLowerCase();
 
     if (!email || !isValidEmail(email)) {
       return NextResponse.json({ error: "Valid email is required" }, { status: 400 });
@@ -31,13 +50,29 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const { email, prompt, result, sector } = await request.json();
+    const { data: body, response } =
+      await readJsonBody<SaveGenerationRequestBody>(request, 64 * 1024);
+    if (response) return response;
+
+    const email = normalizeText(body?.email, 160).toLowerCase();
+    const prompt = normalizeText(body?.prompt, 2000, { multiline: true });
+    const sector = normalizeText(body?.sector, 120);
+    const result = body?.result;
+
+    const limited = enforceRateLimit(
+      request,
+      {
+        keyPrefix: "generations-write",
+        limit: 5,
+        windowMs: 10 * 60 * 1000,
+      },
+      email || undefined
+    );
+    if (limited) return limited;
 
     if (
-      typeof email !== "string" ||
       !isValidEmail(email) ||
-      typeof prompt !== "string" ||
-      !prompt.trim() ||
+      !prompt ||
       !result
     ) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
@@ -57,9 +92,9 @@ export async function POST(request: Request) {
 
     await saveGeneration({
       email,
-      prompt: prompt.trim(),
+      prompt,
       result,
-      sector: typeof sector === "string" ? sector : undefined,
+      sector: sector || undefined,
     });
 
     return NextResponse.json({ ok: true });

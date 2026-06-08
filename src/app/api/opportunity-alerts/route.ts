@@ -1,5 +1,11 @@
 import { FieldValue } from "firebase-admin/firestore";
 import { NextResponse } from "next/server";
+import {
+  enforceRateLimit,
+  escapeSlackMrkdwn,
+  normalizeText,
+  readJsonBody,
+} from "@/lib/api-security";
 import { getAdminFirestore } from "@/lib/firebase-admin";
 import { sendSlackMessage, SlackMessageError } from "@/lib/slack";
 
@@ -9,16 +15,22 @@ type OpportunityAlertRequest = {
   whatsapp?: unknown;
 };
 
-function normalizeValue(value: unknown) {
-  return typeof value === "string" ? value.trim() : "";
-}
-
 export async function POST(request: Request) {
   try {
-    const body = (await request.json().catch(() => null)) as OpportunityAlertRequest | null;
-    const sector = normalizeValue(body?.sector);
-    const keyword = normalizeValue(body?.keyword);
-    const whatsapp = normalizeValue(body?.whatsapp);
+    const limited = enforceRateLimit(request, {
+      keyPrefix: "opportunity-alerts",
+      limit: 8,
+      windowMs: 10 * 60 * 1000,
+    });
+    if (limited) return limited;
+
+    const { data: body, response } =
+      await readJsonBody<OpportunityAlertRequest>(request);
+    if (response) return response;
+
+    const sector = normalizeText(body?.sector, 120);
+    const keyword = normalizeText(body?.keyword, 120);
+    const whatsapp = normalizeText(body?.whatsapp, 60);
 
     if (!sector || !whatsapp) {
       return NextResponse.json(
@@ -46,12 +58,12 @@ export async function POST(request: Request) {
           type: "section",
           text: {
             type: "mrkdwn",
-            text:
-              `*Nouvelle alerte opportunités*\n` +
-              `*Secteur* : ${sector}\n` +
-              `*Mot-clé* : ${keyword || "_non renseigné_"}\n` +
-              `*WhatsApp* : ${whatsapp}\n` +
-              `*Source* : Page Opportunités`,
+              text:
+                `*Nouvelle alerte opportunités*\n` +
+                `*Secteur* : ${escapeSlackMrkdwn(sector)}\n` +
+                `*Mot-clé* : ${escapeSlackMrkdwn(keyword) || "_non renseigné_"}\n` +
+                `*WhatsApp* : ${escapeSlackMrkdwn(whatsapp)}\n` +
+                `*Source* : Page Opportunités`,
           },
         },
         {

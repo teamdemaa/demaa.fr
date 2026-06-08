@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 import {
+  enforceRateLimit,
+  normalizeText,
+  readJsonBody,
+} from "@/lib/api-security";
+import {
   getCachedAssistantPlan,
   saveAssistantPlanCache,
 } from "@/lib/generations-db";
@@ -199,17 +204,23 @@ function normalizeAssistantPlan(payload: unknown): AssistantPlan {
 }
 
 function normalizeUserMessage(value: unknown) {
-  if (typeof value !== "string") {
-    return "";
-  }
-
-  return value.replace(/\s+/g, " ").trim().slice(0, MAX_INPUT_CHARS);
+  return normalizeText(value, MAX_INPUT_CHARS);
 }
 
 export async function POST(req: Request) {
   try {
-    const { message } = await req.json();
-    const normalizedMessage = normalizeUserMessage(message);
+    const limited = enforceRateLimit(req, {
+      keyPrefix: "assistant-plan",
+      limit: 6,
+      windowMs: 10 * 60 * 1000,
+    });
+    if (limited) return limited;
+
+    const { data: body, response: invalidBodyResponse } =
+      await readJsonBody<{ message?: unknown }>(req, 8 * 1024);
+    if (invalidBodyResponse) return invalidBodyResponse;
+
+    const normalizedMessage = normalizeUserMessage(body?.message);
 
     if (!normalizedMessage) {
       return NextResponse.json({ error: "Message is required" }, { status: 400 });

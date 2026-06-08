@@ -1,8 +1,11 @@
-import { publicSectorFilterLabels } from "@/lib/public-sectors";
+import {
+  publicSectorFilterLabels,
+  type PublicSectorLabel,
+} from "@/lib/public-sectors";
 
 export type Opportunity = {
   id: string;
-  sector: string;
+  sector: PublicSectorLabel;
   title: string;
   description: string;
   publishedAt: string;
@@ -31,7 +34,7 @@ export const opportunities: Opportunity[] = [
   },
   {
     id: "cabinet-comptable-renfort-admin",
-    sector: "Administration",
+    sector: "Conseil & services aux entreprises",
     title:
       "Cabinet comptable cherche renfort administratif pour organiser la collecte client mensuelle.",
     description:

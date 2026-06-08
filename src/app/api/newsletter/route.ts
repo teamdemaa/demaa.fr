@@ -1,5 +1,17 @@
 import { NextResponse } from "next/server";
+import {
+  enforceRateLimit,
+  normalizeText,
+  readJsonBody,
+} from "@/lib/api-security";
 import { saveNewsletterSubscriber } from "@/lib/generations-db";
+
+type NewsletterRequestBody = {
+  email?: unknown;
+  firstName?: unknown;
+  sector?: unknown;
+  source?: unknown;
+};
 
 function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -7,11 +19,21 @@ function isValidEmail(email: string) {
 
 export async function POST(request: Request) {
   try {
-    const { firstName, sector, email, source } = await request.json();
+    const limited = enforceRateLimit(request, {
+      keyPrefix: "newsletter",
+      limit: 10,
+      windowMs: 10 * 60 * 1000,
+    });
+    if (limited) return limited;
 
-    const normalizedFirstName = typeof firstName === "string" ? firstName.trim() : "";
-    const normalizedSector = typeof sector === "string" ? sector.trim() : "";
-    const normalizedEmail = typeof email === "string" ? email.trim().toLowerCase() : "";
+    const { data: body, response } =
+      await readJsonBody<NewsletterRequestBody>(request);
+    if (response) return response;
+
+    const normalizedFirstName = normalizeText(body?.firstName, 80);
+    const normalizedSector = normalizeText(body?.sector, 120);
+    const normalizedEmail = normalizeText(body?.email, 160).toLowerCase();
+    const normalizedSource = normalizeText(body?.source, 120) || "newsletter_page";
 
     if (!normalizedFirstName || !normalizedSector || !normalizedEmail) {
       return NextResponse.json(
@@ -31,7 +53,7 @@ export async function POST(request: Request) {
       firstName: normalizedFirstName,
       sector: normalizedSector,
       email: normalizedEmail,
-      source: typeof source === "string" ? source : "newsletter_page",
+      source: normalizedSource,
     });
 
     return NextResponse.json({ ok: true });

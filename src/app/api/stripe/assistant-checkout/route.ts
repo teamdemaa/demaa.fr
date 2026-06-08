@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { enforceRateLimit, readJsonBody } from "@/lib/api-security";
 import { getAssistantPack } from "@/lib/assistant-packs";
 
 export const runtime = "nodejs";
@@ -97,7 +98,17 @@ function getCartSummary(items: CheckoutItem[]) {
 }
 
 export async function POST(request: Request) {
-  const body = (await request.json().catch(() => null)) as CheckoutRequestBody | null;
+  const limited = enforceRateLimit(request, {
+    keyPrefix: "assistant-checkout",
+    limit: 12,
+    windowMs: 10 * 60 * 1000,
+  });
+  if (limited) return limited;
+
+  const { data: body, response } =
+    await readJsonBody<CheckoutRequestBody>(request, 12 * 1024);
+  if (response) return response;
+
   const items = normalizeCheckoutItems(body);
 
   if (!items) {
