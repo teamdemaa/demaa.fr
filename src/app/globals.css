@@ -61,6 +61,14 @@
     appearance: none;
   }
 
+  .demaa-nav-icon {
+    @apply transition-transform duration-200 ease-out;
+  }
+
+  .demaa-nav-item:hover .demaa-nav-icon {
+    @apply -translate-y-0.5;
+  }
+
   .demaa-primary-button {
     @apply inline-flex items-center justify-center rounded-full bg-dema-forest px-4 py-2 text-sm font-medium text-dema-paper shadow-[0_4px_12px_rgba(49,95,70,0.08)] transition hover:bg-[#284f3a];
   }
@@ -124,6 +132,16 @@
   .no-scrollbar {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .demaa-nav-icon {
+      transition: none;
+    }
+
+    .demaa-nav-item:hover .demaa-nav-icon {
+      transform: none;
+    }
   }
   
   @keyframes marquee {

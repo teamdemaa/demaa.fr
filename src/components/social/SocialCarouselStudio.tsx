@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { Check, Copy, Download, FileText, Images, Palette, Presentation } from "lucide-react";
+import { Check, ChevronDown, Copy, Download, FileText, Images, Palette, Presentation } from "lucide-react";
 import { toPng } from "html-to-image";
 import {
   buildSocialCarousel,
@@ -174,17 +174,23 @@ export default function SocialCarouselStudio({
             </h1>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            <select
-              value={selectedSlug}
-              onChange={(event) => setSelectedSlug(event.target.value)}
-              className="h-11 min-w-64 rounded-full border border-dema-line bg-dema-paper px-4 text-sm font-medium outline-none transition focus:border-dema-forest/35"
-            >
-              {sectors.map((sector) => (
-                <option key={sector.slug} value={sector.slug}>
-                  {sector.name}
-                </option>
-              ))}
-            </select>
+            <div className="relative min-w-64">
+              <select
+                value={selectedSlug}
+                onChange={(event) => setSelectedSlug(event.target.value)}
+                className="h-11 w-full appearance-none rounded-full border border-dema-line bg-dema-paper px-4 pr-10 text-sm font-medium outline-none transition focus:border-dema-forest/35"
+              >
+                {sectors.map((sector) => (
+                  <option key={sector.slug} value={sector.slug}>
+                    {sector.name}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown
+                className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-brand-blue/45"
+                aria-hidden="true"
+              />
+            </div>
             <button
               type="button"
               onClick={exportAllPng}

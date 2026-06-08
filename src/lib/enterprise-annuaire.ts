@@ -5,6 +5,7 @@ import type { DocumentData } from "firebase-admin/firestore";
 import type { ToolDirectoryItem } from "./tool-directory";
 import type { SystemPillar } from "./system-process-templates";
 import type { System } from "./types";
+import { publicSectorLabels } from "./public-sectors";
 import rawEnterpriseAnnuaire from "./enterprise-annuaire.json";
 
 export type EnterpriseTool = {
@@ -114,7 +115,7 @@ function mergeEnterpriseFallback(
     tags: enterprise.tags?.length ? enterprise.tags : fallback?.tags ?? [],
     icon: enterprise.icon || fallback?.icon || "Briefcase",
     price: enterprise.price ?? fallback?.price ?? "",
-    sectorLabel: enterprise.sectorLabel || fallback?.sectorLabel || "Services & conseil",
+    sectorLabel: enterprise.sectorLabel || fallback?.sectorLabel || publicSectorLabels[0],
     imageTitle: enterprise.imageTitle || fallback?.imageTitle || enterprise.name || enterprise.slug,
     imageSubtitle:
       enterprise.imageSubtitle || fallback?.imageSubtitle || `Aperçu du système opérationnel pour ${enterprise.name || fallback?.name || enterprise.slug}`,

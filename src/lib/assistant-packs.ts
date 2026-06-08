@@ -1,4 +1,5 @@
 export type AssistantPackId =
+  | "audit-process"
   | "structuration-1-societe"
   | "structuration-2-societes"
   | "structuration-3-societes"
@@ -49,6 +50,7 @@ export const ASSISTANT_PACK_OFFERS = [
     rateLabel: "Forfait structuration",
     startingLabel: "À partir de 1500 €",
     packs: [
+      { id: "audit-process", label: "Audit organisation", amount: 0, detail: "Appel gratuit pour comprendre votre organisation, vos blocages et les premières améliorations possibles" },
       { id: "structuration-1-societe", label: "1 société", amount: 1500, detail: "Système clair, process posés et automatisations utiles pour gagner du temps" },
       { id: "structuration-2-societes", label: "2 sociétés", amount: 2900, detail: "Structuration coordonnée pour deux sociétés" },
       { id: "structuration-3-societes", label: "3 sociétés", amount: 4300, detail: "Structuration coordonnée pour trois sociétés" },

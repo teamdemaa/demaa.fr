@@ -3,20 +3,27 @@
 import Link from "next/link";
 import { Suspense, useEffect, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
-import SystemSetupModal from "@/components/SystemSetupModal";
+import { Boxes, HandHelping, Handshake, type LucideIcon } from "lucide-react";
 
-type HomeTabId = "systemes" | "assistants";
+type HomeTabId = "systemes" | "assistants" | "opportunites";
 type HomeTabsMode = "links" | "client";
 
-const homeTabs = [
-  { id: "systemes", label: "Structurer", href: "/" },
-  { id: "assistants", label: "Déléguer", href: "/deleguer" },
-] as const;
+const homeTabs: readonly {
+  id: HomeTabId;
+  label: string;
+  href: string;
+  icon: LucideIcon;
+}[] = [
+  { id: "systemes", label: "Structurer", href: "/", icon: Boxes },
+  { id: "assistants", label: "Déléguer", href: "/deleguer", icon: HandHelping },
+  { id: "opportunites", label: "Opportunités", href: "/opportunites", icon: Handshake },
+];
 
 const HOME_TAB_SELECT_EVENT = "demaa:home-tab-select";
 
 function getTabPath(tab: HomeTabId) {
   if (tab === "assistants") return "/deleguer";
+  if (tab === "opportunites") return "/opportunites";
 
   return "/";
 }
@@ -28,46 +35,26 @@ export default function Navbar({
   minimal?: boolean;
   homeTabsMode?: HomeTabsMode;
 }) {
-  const [isAuditModalOpen, setIsAuditModalOpen] = useState(false);
-
   return (
-    <>
-      <nav className="sticky top-0 z-40 border-b border-dema-line/70 bg-dema-cream/92 py-1 backdrop-blur-md">
-        <div className="mx-auto w-full px-6 md:px-10 lg:px-24">
-          <div className="relative flex justify-between gap-4 py-3 md:py-4 items-center">
-            <Link
-              href="/"
-              aria-label="Retour à l'accueil"
-              className="demaa-brand-logo inline-flex items-center text-xl tracking-tight text-brand-blue shrink-0 z-50 cursor-pointer sm:text-2xl"
-            >
-              Demaa
-            </Link>
+    <nav className="sticky top-0 z-40 border-b border-dema-line/70 bg-dema-cream/92 py-1 backdrop-blur-md">
+      <div className="mx-auto w-full px-6 md:px-10 lg:px-24">
+        <div className="relative flex justify-center gap-4 py-3 md:justify-between md:py-4 items-center">
+          <Link
+            href="/"
+            aria-label="Retour à l'accueil"
+            className="demaa-brand-logo inline-flex items-center text-xl tracking-tight text-brand-blue shrink-0 z-50 cursor-pointer sm:text-2xl"
+          >
+            Demaa
+          </Link>
 
-            {!minimal && (
-              <>
-                <Suspense fallback={<DesktopHomeTabsNavStatic mode={homeTabsMode} />}>
-                  <DesktopHomeTabsNav mode={homeTabsMode} />
-                </Suspense>
-                <div className="z-50 flex items-center justify-end">
-                  <button
-                    type="button"
-                    onClick={() => setIsAuditModalOpen(true)}
-                    className="inline-flex h-10 shrink-0 items-center justify-center rounded-full border border-brand-blue/28 bg-dema-paper px-4 text-sm font-medium text-brand-blue/72 shadow-[0_8px_24px_rgba(23,35,29,0.035)] transition hover:border-brand-blue/40 hover:bg-dema-sage/45"
-                  >
-                    <span className="md:hidden">Audit gratuit</span>
-                    <span className="hidden md:inline">Audit organisation gratuit</span>
-                  </button>
-                </div>
-              </>
-            )}
-          </div>
+          {!minimal && (
+            <Suspense fallback={<DesktopHomeTabsNavStatic mode={homeTabsMode} />}>
+              <DesktopHomeTabsNav mode={homeTabsMode} />
+            </Suspense>
+          )}
         </div>
-      </nav>
-      <SystemSetupModal
-        isOpen={isAuditModalOpen}
-        onClose={() => setIsAuditModalOpen(false)}
-      />
-    </>
+      </div>
+    </nav>
   );
 }
 
@@ -76,10 +63,12 @@ function DesktopHomeTabsNav({ mode }: { mode: HomeTabsMode }) {
   const searchParams = useSearchParams();
   const urlTab = searchParams.get("tab");
   const activeTab =
-    pathname === "/deleguer" || pathname === "/assistants"
+    pathname === "/opportunites"
+      ? "opportunites"
+      : pathname === "/deleguer" || pathname === "/assistants"
       ? "assistants"
       : pathname === "/"
-        ? urlTab === "systemes" || urlTab === "assistants"
+        ? urlTab === "systemes" || urlTab === "assistants" || urlTab === "opportunites"
           ? urlTab
           : "systemes"
         : undefined;
@@ -107,7 +96,7 @@ function DesktopHomeTabsNavStatic({
     function handleHomeTabSelect(event: Event) {
       const tab = (event as CustomEvent<{ tab?: string }>).detail?.tab;
 
-      if (tab === "systemes" || tab === "assistants") {
+      if (tab === "systemes" || tab === "assistants" || tab === "opportunites") {
         setClientActiveTab(tab);
       }
     }
@@ -128,14 +117,15 @@ function DesktopHomeTabsNavStatic({
   return (
     <div className="hidden items-center justify-center gap-1 rounded-full border border-dema-line/75 bg-dema-paper p-1 shadow-[0_8px_24px_rgba(23,35,29,0.04)] md:absolute md:left-1/2 md:top-1/2 md:flex md:-translate-x-1/2 md:-translate-y-1/2">
       {homeTabs.map((tab) => {
+        const Icon = tab.icon;
         const isActive = currentActiveTab === tab.id;
-        const className = `inline-flex min-h-10 items-center justify-center rounded-full px-6 text-base transition lg:px-7 ${
+        const className = `demaa-nav-item inline-flex min-h-10 items-center justify-center gap-2 rounded-full px-5 text-base transition lg:px-6 ${
           isActive
             ? "bg-dema-forest font-semibold text-white shadow-[0_6px_16px_rgba(49,95,70,0.14)]"
             : "font-medium text-brand-blue/56 hover:bg-dema-sage/70 hover:text-brand-blue/72"
         }`;
 
-        if (mode === "client" && tab.id !== "assistants") {
+        if (mode === "client" && tab.id === "systemes") {
           return (
             <button
               key={tab.id}
@@ -144,6 +134,7 @@ function DesktopHomeTabsNavStatic({
               aria-current={isActive ? "page" : undefined}
               className={className}
             >
+              <Icon className="demaa-nav-icon h-4 w-4 shrink-0" aria-hidden="true" />
               {tab.label}
             </button>
           );
@@ -155,6 +146,7 @@ function DesktopHomeTabsNavStatic({
             href={tab.href}
             className={className}
           >
+            <Icon className="demaa-nav-icon h-4 w-4 shrink-0" aria-hidden="true" />
             {tab.label}
           </Link>
         );

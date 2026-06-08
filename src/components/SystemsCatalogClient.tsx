@@ -41,8 +41,8 @@ import {
   PartyPopper,
   PenTool,
   Scissors,
-  Search,
   Shield,
+  SlidersHorizontal,
   ShoppingBag,
   Smartphone,
   Sparkles,
@@ -57,6 +57,7 @@ import {
 import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
 import SystemSetupModal from "@/components/SystemSetupModal";
 import HorizontalScrollHint from "@/components/HorizontalScrollHint";
+import { ALL_SECTORS_LABEL, publicSectorFilterLabels } from "@/lib/public-sectors";
 import type { ToolDirectoryItem } from "@/lib/tool-directory";
 import type { System } from "@/lib/types";
 import type { OperationalSystemDetail, SystemPillar } from "@/lib/system-operations";
@@ -68,6 +69,8 @@ type SystemsCatalogClientProps = {
   showIntro?: boolean;
   searchQuery?: string;
   onSearchQueryChange?: (value: string) => void;
+  activeSector?: string;
+  onActiveSectorChange?: (value: string) => void;
   showSearchBar?: boolean;
   initialSelectedSlug?: string;
   initialActiveTab?: string;
@@ -265,6 +268,8 @@ export default function SystemsCatalogClient({
   showIntro = true,
   searchQuery: controlledSearchQuery,
   onSearchQueryChange,
+  activeSector: controlledActiveSector,
+  onActiveSectorChange,
   showSearchBar = true,
   initialSelectedSlug,
   initialActiveTab,
@@ -275,7 +280,8 @@ export default function SystemsCatalogClient({
   );
   const [openProcessIds, setOpenProcessIds] = useState<Set<string>>(new Set());
   const [internalSearchQuery, setInternalSearchQuery] = useState("");
-  const [activeSector, setActiveSector] = useState("Tous");
+  const [internalActiveSector, setInternalActiveSector] = useState(ALL_SECTORS_LABEL);
+  const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false);
   const [isSystemSetupModalOpen, setIsSystemSetupModalOpen] = useState(false);
   const [selectedToolDetail, setSelectedToolDetail] = useState<ToolDirectoryItem | null>(null);
   const [resourcePreview, setResourcePreview] = useState<{
@@ -283,6 +289,7 @@ export default function SystemsCatalogClient({
     slideIndex: number;
   } | null>(null);
   const searchQuery = controlledSearchQuery ?? internalSearchQuery;
+  const activeSector = controlledActiveSector ?? internalActiveSector;
 
   function updateSearchQuery(value: string) {
     if (onSearchQueryChange) {
@@ -290,6 +297,15 @@ export default function SystemsCatalogClient({
     } else {
       setInternalSearchQuery(value);
     }
+  }
+
+  function updateActiveSector(value: string) {
+    if (onActiveSectorChange) {
+      onActiveSectorChange(value);
+    } else {
+      setInternalActiveSector(value);
+    }
+    setIsFilterPanelOpen(false);
   }
 
   function toggleProcessCard(processId: string) {
@@ -390,24 +406,14 @@ export default function SystemsCatalogClient({
     };
   }, []);
 
-  const sectors = useMemo(
-    () => [
-      "Tous",
-      ...Array.from(
-        new Set(
-          systems.map((system) => detailsBySlug[system.slug]?.sectorLabel ?? "Services & conseil")
-        )
-      ),
-    ],
-    [detailsBySlug, systems]
-  );
+  const sectors = publicSectorFilterLabels;
 
   const filteredSystems = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
 
     return systems.filter((system) => {
       const detail = detailsBySlug[system.slug];
-      const sectorLabel = detail?.sectorLabel ?? "Services & conseil";
+      const sectorLabel = detail?.sectorLabel ?? "Conseil & services aux entreprises";
 
       const matchesSearch =
         !query ||
@@ -416,7 +422,7 @@ export default function SystemsCatalogClient({
         system.tags.some((tag) => tag.toLowerCase().includes(query)) ||
         sectorLabel.toLowerCase().includes(query);
 
-      const matchesSector = activeSector === "Tous" || sectorLabel === activeSector;
+      const matchesSector = activeSector === ALL_SECTORS_LABEL || sectorLabel === activeSector;
 
       return matchesSearch && matchesSector;
     });
@@ -481,37 +487,50 @@ export default function SystemsCatalogClient({
             {showSearchBar ? (
               <div className="demaa-search-shell mx-auto max-w-4xl p-1.5">
                 <div className="relative">
-                  <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-dema-forest/42 md:left-5 md:h-5 md:w-5" />
                   <input
                     value={searchQuery}
                     onChange={(event) => updateSearchQuery(event.target.value)}
                     placeholder="Rechercher une entreprise, un processus, un outil..."
-                    className="w-full rounded-full bg-dema-paper py-3.5 pl-10 pr-5 text-sm font-normal text-brand-blue outline-none transition placeholder:text-brand-blue/36 md:py-4 md:pl-12 md:text-base"
+                    className="w-full rounded-full bg-dema-paper py-3.5 pl-5 pr-16 text-sm font-normal text-brand-blue outline-none transition placeholder:text-brand-blue/36 md:py-4 md:pl-6 md:pr-20 md:text-base"
                   />
+                  <button
+                    type="button"
+                    onClick={() => setIsFilterPanelOpen((current) => !current)}
+                    className={`absolute right-2 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full transition md:right-2.5 md:h-10 md:w-10 ${
+                      activeSector === ALL_SECTORS_LABEL
+                        ? "bg-dema-sage text-dema-forest"
+                        : "bg-dema-forest text-dema-paper"
+                    }`}
+                    aria-expanded={isFilterPanelOpen}
+                    aria-label="Afficher les filtres"
+                  >
+                    <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
+                  </button>
                 </div>
               </div>
             ) : null}
 
-            <div className={`mx-auto max-w-4xl overflow-x-auto pb-2 soft-scroll ${showSearchBar ? "mt-3" : "mt-1"}`}>
-              <div className="flex min-w-max justify-center gap-2 px-1">
-                {sectors.map((sector) => (
-                  <button
-                    key={sector}
-                    type="button"
-                    onClick={() => {
-                      setActiveSector(sector);
-                    }}
-                    className={`demaa-chip ${
-                      activeSector === sector
-                        ? "demaa-chip-active"
-                        : ""
-                    }`}
-                  >
-                    {sector}
-                  </button>
-                ))}
+            {showSearchBar && isFilterPanelOpen ? (
+              <div className="mx-auto mt-2 max-w-4xl overflow-x-auto pb-1 soft-scroll">
+                <div className="flex min-w-max gap-2 px-1">
+                  {sectors.map((sector) => (
+                    <button
+                      key={sector}
+                      type="button"
+                      onClick={() => updateActiveSector(sector)}
+                      className={`demaa-chip shrink-0 whitespace-nowrap ${
+                        activeSector === sector
+                          ? "demaa-chip-active"
+                          : ""
+                      }`}
+                    >
+                      {sector}
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
+            ) : null}
+
           </div>
 
           {systemSections.length === 0 ? (

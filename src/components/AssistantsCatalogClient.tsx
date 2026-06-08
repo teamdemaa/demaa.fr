@@ -125,11 +125,6 @@ const faqItems = [
       "La communication se fait simplement sur WhatsApp, pour que les échanges soient rapides, faciles à suivre et proches de votre quotidien. Si un document ou une validation est nécessaire, on vous le précise clairement.",
   },
   {
-    question: "Est-ce que je peux commencer petit ?",
-    answer:
-      "Oui. Vous pouvez choisir le plus petit format adapté, puis ajuster ensuite si le besoin évolue.",
-  },
-  {
     question: "Et si mon besoin ne rentre pas exactement dans une offre ?",
     answer:
       "Vous pouvez passer par l’audit gratuit ou nous contacter. On vous dira simplement si le besoin est adapté, s’il faut ajuster le périmètre, ou si ce n’est pas le bon sujet.",
@@ -198,6 +193,7 @@ export default function AssistantsCatalogClient() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isAuditModalOpen, setIsAuditModalOpen] = useState(false);
+  const [openFaqIndex, setOpenFaqIndex] = useState(0);
   const [isStartingCheckout, setIsStartingCheckout] = useState(false);
   const [embeddedCheckout, setEmbeddedCheckout] = useState<EmbeddedCheckoutState | null>(null);
   const [isEmbeddedCheckoutLoading, setIsEmbeddedCheckoutLoading] = useState(false);
@@ -255,6 +251,16 @@ export default function AssistantsCatalogClient() {
     });
     setIsCartOpen(true);
     setCheckoutError(null);
+  };
+
+  const handleSelectedPackAction = (pack: AssistantPack) => {
+    if (pack.amount <= 0) {
+      setIsAuditModalOpen(true);
+      setCheckoutError(null);
+      return;
+    }
+
+    addPackToCart(pack.id);
   };
 
   const selectPack = (offerId: AssistantOfferId, packId: AssistantPackId) => {
@@ -592,10 +598,14 @@ export default function AssistantsCatalogClient() {
             const Icon = offer.icon;
             const packOffer = getPackOffer(offer.packOfferId);
             const purchasablePacks = packOffer ? getPurchasablePacks(packOffer) : [];
+            const selectablePacks = packOffer?.packs ?? [];
             const selectedPackId = selectedPacks[offer.packOfferId];
             const selectedPack =
-              purchasablePacks.find((pack) => pack.id === selectedPackId) ||
-              purchasablePacks[0];
+              selectablePacks.find((pack) => pack.id === selectedPackId) ||
+              purchasablePacks[0] ||
+              selectablePacks[0];
+            const cardDescription =
+              selectedPack && selectedPack.amount <= 0 ? selectedPack.detail : offer.description;
             const isPackDropdownOpen = openPackOfferId === offer.packOfferId;
 
             return (
@@ -617,7 +627,7 @@ export default function AssistantsCatalogClient() {
                   </h2>
                 </div>
                 <p className="mt-4 text-sm leading-relaxed text-dema-muted">
-                  {offer.description}
+                  {cardDescription}
                 </p>
                 <div className="mt-auto pt-5">
                   {packOffer && selectedPack ? (
@@ -651,7 +661,7 @@ export default function AssistantsCatalogClient() {
                             className="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-[1rem] border border-dema-line bg-dema-paper p-1.5 shadow-[0_18px_46px_rgba(23,35,29,0.12)]"
                             role="listbox"
                           >
-                            {purchasablePacks.map((pack) => {
+                            {selectablePacks.map((pack) => {
                               const isSelected = pack.id === selectedPack.id;
 
                               return (
@@ -688,11 +698,11 @@ export default function AssistantsCatalogClient() {
                         type="button"
                         onClick={() => {
                           if (!selectedPack) return;
-                          addPackToCart(selectedPack.id);
+                          handleSelectedPackAction(selectedPack);
                         }}
                         className="inline-flex h-11 shrink-0 items-center justify-center rounded-full border border-dema-forest/18 bg-dema-paper px-4 text-sm font-medium text-dema-forest shadow-[0_7px_18px_rgba(23,35,29,0.025)] transition hover:border-dema-forest/28 hover:bg-dema-sage/55"
                       >
-                        Ajouter
+                        {selectedPack.amount <= 0 ? "Demander" : "Ajouter"}
                       </button>
                     </div>
                   ) : null}
@@ -791,16 +801,39 @@ export default function AssistantsCatalogClient() {
               On répond aux questions fréquentes
             </h2>
             <div className="mt-6 divide-y divide-dema-line/70 rounded-[1rem] border border-dema-line/70 bg-dema-paper">
-              {faqItems.map((item, index) => (
-                <div key={item.question} className="px-4 py-5 md:px-5">
-                  <h3 className="text-sm font-semibold leading-snug text-brand-blue md:text-base">
-                    {index + 1}. {item.question}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-dema-muted">
-                    {item.answer}
-                  </p>
-                </div>
-              ))}
+              {faqItems.map((item, index) => {
+                const isOpen = openFaqIndex === index;
+                const answerId = `assistant-faq-answer-${index}`;
+
+                return (
+                  <div key={item.question}>
+                    <button
+                      type="button"
+                      onClick={() => setOpenFaqIndex(isOpen ? -1 : index)}
+                      className="flex w-full items-center justify-between gap-4 px-4 py-5 text-left transition hover:bg-dema-sage/35 md:px-5"
+                      aria-expanded={isOpen}
+                      aria-controls={answerId}
+                    >
+                      <span className="text-sm font-semibold leading-snug text-brand-blue md:text-base">
+                        {index + 1}. {item.question}
+                      </span>
+                      <ChevronDown
+                        className={`h-4 w-4 shrink-0 text-dema-forest transition ${
+                          isOpen ? "rotate-180" : ""
+                        }`}
+                        aria-hidden="true"
+                      />
+                    </button>
+                    {isOpen ? (
+                      <div id={answerId} className="px-4 pb-5 md:px-5">
+                        <p className="text-sm leading-relaxed text-dema-muted">
+                          {item.answer}
+                        </p>
+                      </div>
+                    ) : null}
+                  </div>
+                );
+              })}
             </div>
 
             <div className="mx-auto mt-14 max-w-4xl rounded-[1rem] border border-dema-line/70 bg-dema-paper px-5 py-12 text-center shadow-[0_18px_50px_rgba(23,35,29,0.04)] md:mt-20 md:px-12 md:py-16">

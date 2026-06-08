@@ -1,4 +1,5 @@
 import type { System } from "@/lib/types";
+import { publicSectorLabels } from "@/lib/public-sectors";
 import {
   getEnterpriseCatalog,
   getEnterpriseBySlug,
@@ -126,7 +127,7 @@ function buildOperationalSystemDetailFromSources(
   }
 
   return {
-    sectorLabel: "Services & conseil",
+    sectorLabel: publicSectorLabels[0],
     imageTitle: system.name,
     imageSubtitle: `Aperçu du système opérationnel pour ${system.name.toLowerCase()}`,
     processes: templates.map((template) => ({ ...template })),
