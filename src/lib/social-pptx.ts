@@ -116,6 +116,10 @@ function renderSlide(slide: SocialCarouselSlide, slideNumber: number): string {
 }
 
 function getIntroSubtitleText(subtitle: string): string {
+  if (subtitle === "Pour que l'entreprise avance sans dépendre de vous à chaque décision") {
+    return "Pour que l'entreprise avance\nsans dépendre de vous\nà chaque décision";
+  }
+
   if (subtitle === "Pour que tout ne repose pas que sur vous") {
     return "Pour que tout ne repose pas\nque sur vous";
   }

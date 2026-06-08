@@ -461,6 +461,10 @@ function SocialSlide({ slide }: { slide: SocialCarouselSlide }) {
 }
 
 function getIntroSubtitleLines(subtitle: string): string[] {
+  if (subtitle === "Pour que l'entreprise avance sans dépendre de vous à chaque décision") {
+    return ["Pour que l'entreprise avance", "sans dépendre de vous", "à chaque décision"];
+  }
+
   if (subtitle === "Pour que tout ne repose pas que sur vous") {
     return ["Pour que tout ne repose pas", "que sur vous"];
   }

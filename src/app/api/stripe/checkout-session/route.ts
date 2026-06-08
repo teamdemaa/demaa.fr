@@ -1,4 +1,9 @@
 import { NextResponse } from "next/server";
+import {
+  enforceRateLimit,
+  isValidStripeSessionId,
+  normalizeText,
+} from "@/lib/api-security";
 
 export const runtime = "nodejs";
 
@@ -68,12 +73,26 @@ function getStripeSecretKey(sessionId: string) {
 }
 
 export async function GET(request: Request) {
+  const limited = enforceRateLimit(request, {
+    keyPrefix: "stripe-session-lookup",
+    limit: 20,
+    windowMs: 10 * 60 * 1000,
+  });
+  if (limited) return limited;
+
   const { searchParams } = new URL(request.url);
-  const sessionId = searchParams.get("session_id");
+  const sessionId = normalizeText(searchParams.get("session_id"), 120);
 
   if (!sessionId) {
     return NextResponse.json(
       { error: "session_id is required." },
+      { status: 400 }
+    );
+  }
+
+  if (!isValidStripeSessionId(sessionId)) {
+    return NextResponse.json(
+      { error: "session_id is invalid." },
       { status: 400 }
     );
   }

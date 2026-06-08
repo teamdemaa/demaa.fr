@@ -1,5 +1,10 @@
 import { NextResponse } from "next/server";
 import {
+  enforceRateLimit,
+  normalizeText,
+  readJsonBody,
+} from "@/lib/api-security";
+import {
   createMagicLinkToken,
   isValidEmail,
   normalizeEmail,
@@ -70,8 +75,11 @@ async function sendMagicLinkEmail(input: {
 }
 
 export async function POST(request: Request) {
-  const body = (await request.json().catch(() => null)) as MagicLinkRequestBody | null;
-  const email = typeof body?.email === "string" ? normalizeEmail(body.email) : "";
+  const { data: body, response } =
+    await readJsonBody<MagicLinkRequestBody>(request, 4 * 1024);
+  if (response) return response;
+
+  const email = normalizeEmail(normalizeText(body?.email, 160));
 
   if (!email || !isValidEmail(email)) {
     return NextResponse.json(
@@ -79,6 +87,17 @@ export async function POST(request: Request) {
       { status: 400 }
     );
   }
+
+  const limited = enforceRateLimit(
+    request,
+    {
+      keyPrefix: "customer-magic-link",
+      limit: 3,
+      windowMs: 15 * 60 * 1000,
+    },
+    email
+  );
+  if (limited) return limited;
 
   const token = await createMagicLinkToken(email);
   const magicLink = `${getBaseUrl(request)}/api/customer-space/consume?token=${encodeURIComponent(

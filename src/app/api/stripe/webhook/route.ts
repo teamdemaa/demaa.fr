@@ -7,6 +7,8 @@ import {
 
 export const runtime = "nodejs";
 
+const STRIPE_WEBHOOK_TOLERANCE_SECONDS = 5 * 60;
+
 type StripeEvent = {
   id?: string;
   livemode?: boolean;
@@ -80,6 +82,16 @@ function verifyStripeSignature(
     .map((part) => part.slice(3));
 
   if (!timestamp || signatures.length === 0) {
+    return false;
+  }
+
+  const timestampSeconds = Number(timestamp);
+  const nowSeconds = Math.floor(Date.now() / 1000);
+
+  if (
+    !Number.isFinite(timestampSeconds) ||
+    Math.abs(nowSeconds - timestampSeconds) > STRIPE_WEBHOOK_TOLERANCE_SECONDS
+  ) {
     return false;
   }
 

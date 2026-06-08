@@ -1,10 +1,47 @@
 import { NextResponse } from "next/server";
+import {
+  enforceRateLimit,
+  escapeSlackMrkdwn,
+  normalizeText,
+  readJsonBody,
+} from "@/lib/api-security";
 import { sendSlackMessage, SlackMessageError } from "@/lib/slack";
+
+type LeadRequestBody = {
+  company?: unknown;
+  details?: unknown;
+  email?: unknown;
+  name?: unknown;
+  offer?: unknown;
+  phone?: unknown;
+  sector?: unknown;
+  source?: unknown;
+  toolPreferences?: unknown;
+};
 
 export async function POST(request: Request) {
   try {
-    const { company, sector, email, phone, name, source, offer, details, toolPreferences } =
-      await request.json();
+    const limited = enforceRateLimit(request, {
+      keyPrefix: "lead",
+      limit: 8,
+      windowMs: 10 * 60 * 1000,
+    });
+    if (limited) return limited;
+
+    const { data: body, response } = await readJsonBody<LeadRequestBody>(request);
+    if (response) return response;
+
+    const company = normalizeText(body?.company, 120);
+    const sector = normalizeText(body?.sector, 120);
+    const email = normalizeText(body?.email, 160);
+    const phone = normalizeText(body?.phone, 60);
+    const name = normalizeText(body?.name, 120);
+    const source = normalizeText(body?.source, 120);
+    const offer = normalizeText(body?.offer, 160);
+    const details = normalizeText(body?.details, 2000, { multiline: true });
+    const toolPreferences = normalizeText(body?.toolPreferences, 500, {
+      multiline: true,
+    });
 
     if (!name || !phone || !details) {
       return NextResponse.json(
@@ -20,7 +57,7 @@ export async function POST(request: Request) {
           type: "section",
           text: {
           type: "mrkdwn",
-            text: `*Nom* : ${name || "_non renseigné_"}\n*Email* : ${email || "_non renseigné_"}\n*Téléphone / WhatsApp* : ${phone || "_non renseigné_"}\n*Entreprise* : ${company || "_non renseigné_"}\n*Secteur* : ${sector || "_non renseigné_"}\n*Offre* : ${offer || "_non renseigné_"}\n*Préférences outils* : ${toolPreferences || "_non renseigné_"}\n*Besoin* : ${details || "_non renseigné_"}\n*Source* : ${source || "Modal"}`
+            text: `*Nom* : ${escapeSlackMrkdwn(name) || "_non renseigné_"}\n*Email* : ${escapeSlackMrkdwn(email) || "_non renseigné_"}\n*Téléphone / WhatsApp* : ${escapeSlackMrkdwn(phone) || "_non renseigné_"}\n*Entreprise* : ${escapeSlackMrkdwn(company) || "_non renseigné_"}\n*Secteur* : ${escapeSlackMrkdwn(sector) || "_non renseigné_"}\n*Offre* : ${escapeSlackMrkdwn(offer) || "_non renseigné_"}\n*Préférences outils* : ${escapeSlackMrkdwn(toolPreferences) || "_non renseigné_"}\n*Besoin* : ${escapeSlackMrkdwn(details) || "_non renseigné_"}\n*Source* : ${escapeSlackMrkdwn(source) || "Modal"}`
           }
         },
         {

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { enforceRateLimit, normalizeText } from "@/lib/api-security";
 import {
   CUSTOMER_SPACE_COOKIE,
   createCustomerSession,
@@ -10,8 +11,15 @@ import { consumeCustomerMagicLink } from "@/lib/generations-db";
 export const runtime = "nodejs";
 
 export async function GET(request: Request) {
+  const limited = enforceRateLimit(request, {
+    keyPrefix: "customer-magic-consume",
+    limit: 20,
+    windowMs: 10 * 60 * 1000,
+  });
+  if (limited) return limited;
+
   const url = new URL(request.url);
-  const token = url.searchParams.get("token") || "";
+  const token = normalizeText(url.searchParams.get("token"), 80);
   const email = token ? await consumeCustomerMagicLink(hashToken(token)) : null;
 
   if (!email) {

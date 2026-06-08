@@ -13,16 +13,16 @@
     "sync:tool-directory": "node scripts/sync-tool-directory.mjs"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.80.0",
+    "@anthropic-ai/sdk": "^0.102.0",
     "@stripe/stripe-js": "^9.7.0",
     "@vercel/analytics": "^2.0.1",
-    "firebase-admin": "^13.7.0",
+    "firebase-admin": "^13.10.0",
     "framer-motion": "^12.38.0",
     "gray-matter": "^4.0.3",
     "html-to-image": "^1.11.13",
     "jspdf": "^4.2.1",
     "lucide-react": "^1.7.0",
-    "next": "^16.2.1",
+    "next": "^16.2.7",
     "qrcode.react": "^4.2.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
@@ -34,8 +34,11 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.2.1",
+    "eslint-config-next": "16.2.7",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "overrides": {
+    "postcss": "^8.5.15"
   }
 }

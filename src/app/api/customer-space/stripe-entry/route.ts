@@ -1,5 +1,10 @@
 import { NextResponse } from "next/server";
 import {
+  enforceRateLimit,
+  isValidStripeSessionId,
+  normalizeText,
+} from "@/lib/api-security";
+import {
   CUSTOMER_SPACE_COOKIE,
   createCustomerSession,
   getCustomerCookieOptions,
@@ -60,8 +65,20 @@ async function retrieveCheckoutSession(sessionId: string) {
 }
 
 export async function GET(request: Request) {
+  const limited = enforceRateLimit(request, {
+    keyPrefix: "customer-stripe-entry",
+    limit: 20,
+    windowMs: 10 * 60 * 1000,
+  });
+  if (limited) return limited;
+
   const url = new URL(request.url);
-  const sessionId = url.searchParams.get("session_id") || "";
+  const sessionId = normalizeText(url.searchParams.get("session_id"), 120);
+
+  if (sessionId && !isValidStripeSessionId(sessionId)) {
+    return NextResponse.redirect(new URL("/mon-espace?error=acces", request.url));
+  }
+
   const session = sessionId ? await retrieveCheckoutSession(sessionId) : null;
   const paid =
     session?.payment_status === "paid" ||
