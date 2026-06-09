@@ -32,7 +32,7 @@ const securityHeaders = [
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: blob: https://www.google-analytics.com https://www.googletagmanager.com https://www.facebook.com",
       "font-src 'self' data:",
-      "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://api.stripe.com https://checkout.stripe.com",
+      "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://api.stripe.com https://checkout.stripe.com https://api-adresse.data.gouv.fr",
       "frame-src https://js.stripe.com https://checkout.stripe.com",
       "form-action 'self' https://checkout.stripe.com",
       "upgrade-insecure-requests",
@@ -44,6 +44,15 @@ const nextConfig: NextConfig = {
   allowedDevOrigins: ['127.0.0.1'],
   experimental: {
     optimizePackageImports: ['lucide-react', 'framer-motion']
+  },
+  async redirects() {
+    return [
+      {
+        source: '/opportunites',
+        destination: '/developper',
+        permanent: true,
+      },
+    ];
   },
   async headers() {
     return [

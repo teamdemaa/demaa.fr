@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 import { ChevronDown, Plus, SlidersHorizontal, X } from "lucide-react";
 import PrimaryMobileNav from "@/components/PrimaryMobileNav";
@@ -11,6 +11,11 @@ import {
 } from "@/lib/opportunities";
 
 const ALL_SECTORS = opportunitySectors[0];
+
+type CitySuggestion = {
+  id: string;
+  label: string;
+};
 
 function formatPublishedDate(value: string) {
   const date = new Date(`${value}T00:00:00`);
@@ -52,6 +57,11 @@ export default function OpportunitiesClient() {
       const matchesSearch =
         !query ||
         opportunity.sector.toLowerCase().includes(query) ||
+        opportunity.location.toLowerCase().includes(query) ||
+        opportunity.amount.toLowerCase().includes(query) ||
+        Boolean(opportunity.revenue?.toLowerCase().includes(query)) ||
+        Boolean(opportunity.result?.toLowerCase().includes(query)) ||
+        Boolean(opportunity.employees?.toLowerCase().includes(query)) ||
         opportunity.title.toLowerCase().includes(query) ||
         opportunity.description.toLowerCase().includes(query);
 
@@ -83,16 +93,16 @@ export default function OpportunitiesClient() {
     <>
       <section className="ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] w-screen bg-dema-cream px-4 pb-3 pt-5 text-center md:px-8 md:pb-3 md:pt-16">
         <div className="mx-auto max-w-6xl space-y-6 md:space-y-7">
-          <PrimaryMobileNav activeTab="opportunites" />
+          <PrimaryMobileNav activeTab="developper" />
 
           <div className="mx-auto max-w-5xl">
             <h1 className="text-[clamp(3rem,13vw,3.25rem)] leading-[0.92] tracking-tight sm:text-[2.75rem] md:text-[3.65rem] lg:text-[4.35rem]">
               <span className="demaa-hero-title text-brand-blue/86">
-                Opportunités
+                Développer
               </span>
               <br />
               <span className="font-sans font-light not-italic text-brand-blue/44">
-                entre dirigeants.
+                en reprenant une entreprise.
               </span>
             </h1>
           </div>
@@ -100,7 +110,7 @@ export default function OpportunitiesClient() {
           <div className="mx-auto grid w-full max-w-4xl grid-cols-[minmax(0,1fr)_auto] items-center gap-2 md:block">
             <SearchBar
               value={searchQuery}
-              placeholder="Rechercher une opportunité, une mission, un secteur..."
+              placeholder="Rechercher une entreprise, une ville, un secteur..."
               onChange={setSearchQuery}
               activeSector={activeSector}
               isFilterOpen={isFilterPanelOpen}
@@ -110,7 +120,7 @@ export default function OpportunitiesClient() {
               type="button"
               onClick={openPublishModal}
               className="inline-flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition hover:bg-[#ebeee9] md:hidden"
-              aria-label="Publier une opportunité"
+              aria-label="Proposer une entreprise"
             >
               <Plus className="h-5 w-5" aria-hidden="true" />
             </button>
@@ -137,7 +147,7 @@ export default function OpportunitiesClient() {
             ))
           ) : (
             <div className="rounded-[1.15rem] border border-dashed border-dema-line bg-dema-paper p-6 text-sm leading-relaxed text-dema-muted">
-              Aucune opportunité ne correspond à cette recherche.
+              Aucune entreprise ne correspond à cette recherche.
             </div>
           )}
         </div>
@@ -145,15 +155,15 @@ export default function OpportunitiesClient() {
         <aside className="hidden rounded-[1.15rem] border border-dema-line/80 bg-dema-paper p-5 shadow-[0_4px_14px_rgba(23,35,29,0.018)] md:block">
           {isDesktopPublishSubmitted ? (
             <SuccessMessage>
-              Votre opportunité va être vérifiée puis publiée sous 24 heures.
+              Votre entreprise va être vérifiée puis publiée sous 24 heures.
             </SuccessMessage>
           ) : (
             <>
               <h2 className="text-lg font-medium tracking-tight text-brand-blue/86">
-                Publier une opportunité
+                Proposer une entreprise
               </h2>
               <p className="mt-2 text-xs leading-relaxed text-dema-muted">
-                Une mission ou un besoin à confier. Demaa vérifie avant publication.
+                Entreprise à céder. Demaa vérifie avant publication.
               </p>
               <PublishForm onSubmit={() => setIsDesktopPublishSubmitted(true)} />
             </>
@@ -164,7 +174,7 @@ export default function OpportunitiesClient() {
       <section className="mx-auto w-full max-w-6xl px-4 pb-20 md:px-8 md:pb-24">
         <div className="mx-auto max-w-3xl rounded-[1rem] border border-dema-line/70 bg-dema-sage/30 px-5 py-10 text-center md:px-8 md:py-12">
           <p className="text-base font-semibold leading-snug text-brand-blue md:text-lg">
-            Recevoir les nouvelles opportunités sur WhatsApp
+            Recevoir les nouvelles entreprises à reprendre par mail
           </p>
           <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-dema-muted">
             Créez une alerte selon vos critères.
@@ -303,7 +313,7 @@ function OpportunityCard({
           onReply();
         }
       }}
-      className="grid cursor-pointer gap-4 rounded-[1.15rem] border border-dema-line/80 bg-dema-paper p-5 text-left shadow-[0_4px_14px_rgba(23,35,29,0.018)] transition hover:border-dema-forest/14 hover:shadow-[0_14px_32px_rgba(23,35,29,0.045)] md:grid-cols-[minmax(0,1fr)_auto] md:items-center"
+      className="grid cursor-pointer gap-4 rounded-[1.15rem] border border-dema-line/80 bg-dema-paper p-5 text-left shadow-[0_4px_14px_rgba(23,35,29,0.018)] transition hover:border-dema-forest/14 hover:shadow-[0_14px_32px_rgba(23,35,29,0.045)]"
     >
       <div>
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px]">
@@ -320,6 +330,29 @@ function OpportunityCard({
         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-dema-muted">
           {opportunity.description}
         </p>
+        <div className="mt-3 flex flex-wrap gap-2 text-xs font-medium text-brand-blue/58">
+          <span className="rounded-full border border-dema-line bg-dema-cream px-3 py-1">
+            {opportunity.location}
+          </span>
+          <span className="rounded-full border border-dema-line bg-dema-cream px-3 py-1">
+            {opportunity.amount}
+          </span>
+          {opportunity.revenue ? (
+            <span className="rounded-full border border-dema-line bg-dema-cream px-3 py-1">
+              {opportunity.revenue}
+            </span>
+          ) : null}
+          {opportunity.result ? (
+            <span className="rounded-full border border-dema-line bg-dema-cream px-3 py-1">
+              {opportunity.result}
+            </span>
+          ) : null}
+          {opportunity.employees ? (
+            <span className="rounded-full border border-dema-line bg-dema-cream px-3 py-1">
+              {opportunity.employees}
+            </span>
+          ) : null}
+        </div>
       </div>
       <button
         type="button"
@@ -327,9 +360,9 @@ function OpportunityCard({
           event.stopPropagation();
           onReply();
         }}
-        className="justify-self-start rounded-full border border-dema-forest/16 bg-dema-paper px-4 py-2 text-sm font-medium text-dema-forest transition hover:bg-dema-sage md:justify-self-end"
+        className="justify-self-start rounded-full border border-dema-forest/16 bg-dema-paper px-4 py-2 text-sm font-medium text-dema-forest transition hover:bg-dema-sage"
       >
-        Répondre
+        Demander le dossier
       </button>
     </article>
   );
@@ -344,25 +377,17 @@ function PublishForm({ onSubmit }: { onSubmit: () => void }) {
         onSubmit();
       }}
     >
-      <FormField id="company" label="Société" defaultValue="Bati Nord Services" />
+      <FormField
+        id="company"
+        label="Société à céder"
+        defaultValue="Agence web Rhône"
+      />
       <FormField
         id="need"
-        label="Opportunité à confier"
-        defaultValue="Sous-traitance BTP pour chantier signé"
+        label="Titre de l'entreprise"
+        defaultValue="Agence digitale avec portefeuille clients récurrents"
         maxLength={120}
       />
-      <label className="flex items-center justify-between gap-3 rounded-[0.85rem] border border-dema-line bg-dema-paper px-3 py-2.5 text-sm text-brand-blue/66">
-        <span>Marquer comme urgent</span>
-        <span className="relative h-6 w-10 rounded-full bg-dema-forest">
-          <input
-            type="checkbox"
-            defaultChecked
-            className="peer absolute inset-0 z-10 cursor-pointer opacity-0"
-            aria-label="Marquer comme urgent"
-          />
-          <span className="absolute left-1 top-1 h-4 w-4 rounded-full bg-dema-paper shadow-[0_2px_6px_rgba(23,35,29,0.12)] transition peer-checked:translate-x-4" />
-        </span>
-      </label>
       <label className="grid gap-1.5 text-xs font-medium text-brand-blue/52">
         Secteur
         <span className="relative">
@@ -377,12 +402,44 @@ function PublishForm({ onSubmit }: { onSubmit: () => void }) {
           />
         </span>
       </label>
-      <FormField id="whatsapp" label="WhatsApp" defaultValue="+33 6 12 34 56 78" />
+      <CityAutocompleteField
+        id="location"
+        label="Localisation"
+        placeholder="Ex : Nantes"
+        defaultValue="Lyon"
+      />
+      <FormField
+        id="amount"
+        label="Prix demandé"
+        defaultValue="Prix demandé 280 k€"
+      />
+      <FormField
+        id="revenue"
+        label="Chiffre d'affaires approximatif"
+        defaultValue="CA annuel 420 k€"
+      />
+      <FormField
+        id="result"
+        label="Résultat approximatif"
+        defaultValue="Résultat 85 k€"
+      />
+      <FormField
+        id="employees"
+        label="Nombre de salariés"
+        defaultValue="6 salariés"
+      />
+      <FormField
+        id="email"
+        label="Email de contact"
+        type="email"
+        defaultValue="cession@entreprise.fr"
+      />
+      <FormField id="phone" label="Téléphone / WhatsApp" defaultValue="+33 6 12 34 56 78" />
       <label className="grid gap-1.5 text-xs font-medium text-brand-blue/52">
-        Contexte
+        Description courte
         <textarea
           maxLength={350}
-          defaultValue="Chantier signé, démarrage dans cinq jours, besoin d'une entreprise assurée et disponible."
+          defaultValue="Dossier complet transmis après qualification du repreneur. Accompagnement possible pendant trois mois."
           className="min-h-24 resize-y rounded-[0.85rem] border border-dema-line bg-dema-paper px-3 py-2.5 text-sm font-normal text-brand-blue outline-none"
         />
       </label>
@@ -401,6 +458,7 @@ function FormField({
   name,
   placeholder,
   required,
+  type = "text",
 }: {
   id: string;
   label: string;
@@ -409,6 +467,7 @@ function FormField({
   name?: string;
   placeholder?: string;
   required?: boolean;
+  type?: string;
 }) {
   return (
     <label className="grid gap-1.5 text-xs font-medium text-brand-blue/52" htmlFor={id}>
@@ -416,6 +475,7 @@ function FormField({
       <input
         id={id}
         name={name}
+        type={type}
         defaultValue={defaultValue}
         maxLength={maxLength}
         placeholder={placeholder}
@@ -423,6 +483,123 @@ function FormField({
         className="rounded-[0.85rem] border border-dema-line bg-dema-paper px-3 py-2.5 text-sm font-normal text-brand-blue outline-none placeholder:text-brand-blue/30"
       />
     </label>
+  );
+}
+
+function CityAutocompleteField({
+  id,
+  label,
+  placeholder,
+  defaultValue,
+}: {
+  id: string;
+  label: string;
+  placeholder?: string;
+  defaultValue?: string;
+}) {
+  const [value, setValue] = useState(defaultValue || "");
+  const [suggestions, setSuggestions] = useState<CitySuggestion[]>([]);
+  const [isFocused, setIsFocused] = useState(false);
+
+  useEffect(() => {
+    const query = value.trim();
+
+    if (query.length < 2) {
+      return;
+    }
+
+    const controller = new AbortController();
+    const timeout = window.setTimeout(async () => {
+      try {
+        const params = new URLSearchParams({
+          q: query,
+          type: "municipality",
+          autocomplete: "1",
+          limit: "5",
+        });
+        const response = await fetch(
+          `https://api-adresse.data.gouv.fr/search/?${params.toString()}`,
+          { signal: controller.signal }
+        );
+        const payload = (await response.json()) as {
+          features?: Array<{
+            properties?: {
+              id?: string;
+              label?: string;
+              city?: string;
+              postcode?: string;
+            };
+          }>;
+        };
+
+        const nextSuggestions: CitySuggestion[] = [];
+
+        for (const feature of payload.features || []) {
+          const properties = feature.properties;
+          const suggestionLabel = properties?.label || properties?.city;
+
+          if (suggestionLabel) {
+            nextSuggestions.push({
+              id: properties?.id || suggestionLabel,
+              label: suggestionLabel,
+            });
+          }
+        }
+
+        setSuggestions(nextSuggestions);
+      } catch (error) {
+        if (!(error instanceof DOMException && error.name === "AbortError")) {
+          setSuggestions([]);
+        }
+      }
+    }, 220);
+
+    return () => {
+      controller.abort();
+      window.clearTimeout(timeout);
+    };
+  }, [value]);
+
+  return (
+    <div className="relative grid gap-1.5 text-xs font-medium text-brand-blue/52">
+      <label htmlFor={id}>{label}</label>
+      <input
+        id={id}
+        name={id}
+        value={value}
+        onChange={(event) => {
+          const nextValue = event.target.value;
+          setValue(nextValue);
+
+          if (nextValue.trim().length < 2) {
+            setSuggestions([]);
+          }
+        }}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => window.setTimeout(() => setIsFocused(false), 120)}
+        placeholder={placeholder}
+        autoComplete="address-level2"
+        className="rounded-[0.85rem] border border-dema-line bg-dema-paper px-3 py-2.5 text-sm font-normal text-brand-blue outline-none placeholder:text-brand-blue/30"
+      />
+      {isFocused && value.trim().length >= 2 && suggestions.length > 0 ? (
+        <span className="absolute left-0 right-0 top-full z-20 mt-1 overflow-hidden rounded-[0.85rem] border border-dema-line bg-dema-paper text-sm font-normal text-brand-blue shadow-[0_14px_32px_rgba(23,35,29,0.08)]">
+          {suggestions.map((suggestion) => (
+            <button
+              key={suggestion.id}
+              type="button"
+              onMouseDown={(event) => {
+                event.preventDefault();
+                setValue(suggestion.label);
+                setSuggestions([]);
+              }}
+              className="block w-full px-3 py-2 text-left transition hover:bg-dema-sage"
+            >
+              {suggestion.label}
+            </button>
+          ))}
+        </span>
+      ) : null}
+    </div>
   );
 }
 
@@ -444,20 +621,19 @@ function ReplyModal({
       <div className="flex items-start justify-between gap-4">
         <div>
           <h2 className="text-2xl font-medium tracking-tight text-brand-blue/88">
-            Répondre à l&apos;opportunité
+            Demander le dossier
           </h2>
           <p className="mt-2 text-sm leading-relaxed text-dema-muted">
-            Laissez vos coordonnées et un message court. Demaa transmettra la réponse si
-            elle correspond au besoin.
+            Laissez vos coordonnées et un message court. Demaa transmettra le dossier si
+            votre demande correspond au profil recherché.
           </p>
         </div>
         <CloseButton onClose={onClose} />
       </div>
       {isSubmitted ? (
         <SuccessMessage>
-          Merci, c&apos;est bien reçu. Nous partageons votre réponse avec l&apos;entreprise
-          concernée. Si elle souhaite avancer, elle prendra contact avec vous; sinon,
-          nous vous ferons un retour.
+          Merci, c&apos;est bien reçu. Nous qualifions votre demande avant de partager le
+          dossier de cession.
         </SuccessMessage>
       ) : (
         <form
@@ -469,16 +645,17 @@ function ReplyModal({
         >
           <FormField id="reply-name" label="Nom" />
           <FormField id="reply-company" label="Société" />
-          <FormField id="reply-whatsapp" label="WhatsApp" />
+          <FormField id="reply-email" label="Email" type="email" />
+          <FormField id="reply-phone" label="Téléphone / WhatsApp" />
           <label className="grid gap-1.5 text-xs font-medium text-brand-blue/52">
             Message
             <textarea
-              placeholder="Votre réponse, zone, expérience utile..."
+              placeholder="Votre intérêt, capacité de reprise ou dossier utile..."
               className="min-h-24 resize-y rounded-[0.85rem] border border-dema-line bg-dema-paper px-3 py-2.5 text-sm font-normal text-brand-blue outline-none placeholder:text-brand-blue/30"
             />
           </label>
           <button type="submit" className="demaa-primary-button min-h-11 w-full">
-            Envoyer ma réponse
+            Envoyer ma demande
           </button>
         </form>
       )}
@@ -512,10 +689,10 @@ function AlertModal({
     const formData = new FormData(event.currentTarget);
     const sector = String(formData.get("sector") || "").trim();
     const keyword = String(formData.get("keyword") || "").trim();
-    const whatsapp = String(formData.get("whatsapp") || "").trim();
+    const email = String(formData.get("email") || "").trim();
 
-    if (!sector || !whatsapp) {
-      setError("Merci d'indiquer un secteur et un WhatsApp.");
+    if (!sector || !email) {
+      setError("Merci d'indiquer un secteur et un email.");
       return;
     }
 
@@ -524,7 +701,7 @@ function AlertModal({
       const response = await fetch("/api/opportunity-alerts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sector, keyword, whatsapp }),
+        body: JSON.stringify({ sector, keyword, email }),
       });
       const payload = (await response.json().catch(() => null)) as
         | { error?: string }
@@ -557,14 +734,14 @@ function AlertModal({
             Créer une alerte
           </h2>
           <p className="mt-2 text-sm leading-relaxed text-dema-muted">
-            On vous prévient quand une opportunité correspond.
+            On vous prévient quand une entreprise à reprendre correspond.
           </p>
         </div>
         <CloseButton onClose={onClose} />
       </div>
       {isSubmitted ? (
         <SuccessMessage>
-          Alerte activée. Vous serez prévenu sur WhatsApp lorsqu&apos;une opportunité correspond.
+          Alerte activée. Vous serez prévenu par mail lorsqu&apos;une entreprise à reprendre correspond.
         </SuccessMessage>
       ) : (
         <form className="mt-5 grid gap-3" onSubmit={handleSubmit}>
@@ -590,12 +767,13 @@ function AlertModal({
               />
             </span>
           </label>
-          <FormField id="alert-keyword" name="keyword" label="Mot-clé" placeholder="Ex : POEC" />
+          <FormField id="alert-keyword" name="keyword" label="Mot-clé" placeholder="Ex : Nantes, restaurant, 300 k€" />
           <FormField
-            id="alert-whatsapp"
-            name="whatsapp"
-            label="WhatsApp"
-            placeholder="+33 6 12 34 56 78"
+            id="alert-email"
+            name="email"
+            label="Email"
+            type="email"
+            placeholder="vous@entreprise.fr"
             required
           />
           {error ? (
@@ -632,17 +810,17 @@ function PublishModal({
       <div className="flex items-start justify-between gap-4">
         <div>
           <h2 className="text-2xl font-medium tracking-tight text-brand-blue/88">
-            Publier une opportunité
+            Proposer une entreprise
           </h2>
           <p className="mt-2 text-sm leading-relaxed text-dema-muted">
-            Une mission ou un besoin à confier. Demaa vérifie avant publication.
+            Entreprise à céder. Demaa vérifie avant publication.
           </p>
         </div>
         <CloseButton onClose={onClose} />
       </div>
       {isSubmitted ? (
         <SuccessMessage>
-          Votre opportunité va être vérifiée puis publiée sous 24 heures.
+          Votre entreprise va être vérifiée puis publiée sous 24 heures.
         </SuccessMessage>
       ) : (
         <PublishForm onSubmit={onSubmit} />
@@ -658,6 +836,20 @@ function Modal({
   children: ReactNode;
   onClose: () => void;
 }) {
+  useEffect(() => {
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [onClose]);
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-brand-blue/30 p-4"

@@ -12,8 +12,12 @@ import { sendSlackMessage, SlackMessageError } from "@/lib/slack";
 type OpportunityAlertRequest = {
   sector?: unknown;
   keyword?: unknown;
-  whatsapp?: unknown;
+  email?: unknown;
 };
+
+function isValidEmail(email: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
 
 export async function POST(request: Request) {
   try {
@@ -30,11 +34,18 @@ export async function POST(request: Request) {
 
     const sector = normalizeText(body?.sector, 120);
     const keyword = normalizeText(body?.keyword, 120);
-    const whatsapp = normalizeText(body?.whatsapp, 60);
+    const email = normalizeText(body?.email, 160).toLowerCase();
 
-    if (!sector || !whatsapp) {
+    if (!sector || !email) {
       return NextResponse.json(
-        { error: "Merci d'indiquer un secteur et un WhatsApp." },
+        { error: "Merci d'indiquer un secteur et un email." },
+        { status: 400 }
+      );
+    }
+
+    if (!isValidEmail(email)) {
+      return NextResponse.json(
+        { error: "Merci d'indiquer une adresse email valide." },
         { status: 400 }
       );
     }
@@ -45,25 +56,25 @@ export async function POST(request: Request) {
     await database.collection("opportunity_alerts").add({
       sector,
       keyword: keyword || null,
-      whatsapp,
+      email,
       status: "active",
-      source: "Page Opportunités",
+      source: "Page Développer",
       created_at: createdAt,
     });
 
     await sendSlackMessage({
-      text: "🔔 Nouvelle alerte opportunités",
+      text: "Nouvelle alerte entreprises à reprendre",
       blocks: [
         {
           type: "section",
           text: {
             type: "mrkdwn",
               text:
-                `*Nouvelle alerte opportunités*\n` +
+                `*Nouvelle alerte entreprises à reprendre*\n` +
                 `*Secteur* : ${escapeSlackMrkdwn(sector)}\n` +
                 `*Mot-clé* : ${escapeSlackMrkdwn(keyword) || "_non renseigné_"}\n` +
-                `*WhatsApp* : ${escapeSlackMrkdwn(whatsapp)}\n` +
-                `*Source* : Page Opportunités`,
+                `*Email* : ${escapeSlackMrkdwn(email)}\n` +
+                `*Source* : Page Développer`,
           },
         },
         {

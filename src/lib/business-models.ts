@@ -684,7 +684,7 @@ export const enterpriseBusinessSignalOverrides = {
   },
   "investissement-entreprise": {
     documents: ["Dossier société", "Analyse financière", "Term sheet", "Pacte", "Tableau de suivi", "Reporting participation"],
-    indicators: ["Opportunités analysées", "Tickets investis", "Valorisation", "Cash burn", "Échéances reporting", "Plus-value latente"],
+    indicators: ["Opportunités analysées", "Tickets investis", "Valorisation", "Trésorerie consommée", "Échéances reporting", "Plus-value latente"],
   },
   "e-commerce": {
     documents: ["Fiches produits", "Commandes", "Bons d’expédition", "Tickets SAV", "Factures", "Inventaire"],

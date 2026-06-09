@@ -3,7 +3,7 @@ import Link from "next/link";
 const mainLinks = [
   { label: "Structurer", href: "/" },
   { label: "Déléguer", href: "/deleguer" },
-  { label: "Opportunités", href: "/opportunites" },
+  { label: "Développer", href: "/developper" },
   { label: "Annuaire outils", href: "/annuaire-outils" },
   { label: "Newsletter", href: "/newsletter" },
 ];

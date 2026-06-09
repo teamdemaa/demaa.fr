@@ -5,7 +5,7 @@ import { Suspense, useEffect, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Boxes, HandHelping, Handshake, type LucideIcon } from "lucide-react";
 
-type HomeTabId = "systemes" | "assistants" | "opportunites";
+type HomeTabId = "systemes" | "assistants" | "developper";
 type HomeTabsMode = "links" | "client";
 
 const homeTabs: readonly {
@@ -16,14 +16,14 @@ const homeTabs: readonly {
 }[] = [
   { id: "systemes", label: "Structurer", href: "/", icon: Boxes },
   { id: "assistants", label: "Déléguer", href: "/deleguer", icon: HandHelping },
-  { id: "opportunites", label: "Opportunités", href: "/opportunites", icon: Handshake },
+  { id: "developper", label: "Développer", href: "/developper", icon: Handshake },
 ];
 
 const HOME_TAB_SELECT_EVENT = "demaa:home-tab-select";
 
 function getTabPath(tab: HomeTabId) {
   if (tab === "assistants") return "/deleguer";
-  if (tab === "opportunites") return "/opportunites";
+  if (tab === "developper") return "/developper";
 
   return "/";
 }
@@ -63,12 +63,12 @@ function DesktopHomeTabsNav({ mode }: { mode: HomeTabsMode }) {
   const searchParams = useSearchParams();
   const urlTab = searchParams.get("tab");
   const activeTab =
-    pathname === "/opportunites"
-      ? "opportunites"
+    pathname === "/developper"
+      ? "developper"
       : pathname === "/deleguer" || pathname === "/assistants"
       ? "assistants"
       : pathname === "/"
-        ? urlTab === "systemes" || urlTab === "assistants" || urlTab === "opportunites"
+        ? urlTab === "systemes" || urlTab === "assistants" || urlTab === "developper"
           ? urlTab
           : "systemes"
         : undefined;
@@ -84,7 +84,7 @@ function DesktopHomeTabsNavStatic({
   mode?: HomeTabsMode;
 }) {
   const [clientActiveTab, setClientActiveTab] = useState<HomeTabId>(
-    activeTab === "systemes" || activeTab === "assistants"
+    activeTab === "systemes" || activeTab === "assistants" || activeTab === "developper"
       ? activeTab
       : "systemes"
   );
@@ -96,7 +96,7 @@ function DesktopHomeTabsNavStatic({
     function handleHomeTabSelect(event: Event) {
       const tab = (event as CustomEvent<{ tab?: string }>).detail?.tab;
 
-      if (tab === "systemes" || tab === "assistants" || tab === "opportunites") {
+      if (tab === "systemes" || tab === "assistants" || tab === "developper") {
         setClientActiveTab(tab);
       }
     }

@@ -6,47 +6,70 @@ import {
 export type Opportunity = {
   id: string;
   sector: PublicSectorLabel;
+  location: string;
+  amount: string;
+  revenue?: string;
+  result?: string;
+  employees?: string;
   title: string;
   description: string;
   publishedAt: string;
-  isUrgent?: boolean;
 };
 
 export const opportunitySectors = publicSectorFilterLabels;
 
 export const opportunities: Opportunity[] = [
   {
-    id: "btp-peinture-renovation",
-    sector: "BTP & services techniques",
-    title: "Cherche sous-traitant peinture pour chantier qui démarre dans cinq jours.",
-    description:
-      "Appartement déjà préparé. Réponse attendue avec disponibilité et zone d'intervention.",
-    publishedAt: "2026-06-08",
-    isUrgent: true,
-  },
-  {
     id: "agence-web-seo-pme",
     sector: "Tech & Digital",
-    title: "Agence web cherche partenaire SEO pour répondre à une consultation PME.",
+    location: "Lyon",
+    amount: "Prix demandé 280 k€",
+    revenue: "CA annuel 420 k€",
+    result: "Résultat 85 k€",
+    employees: "6 salariés",
+    title: "Agence web et SEO à céder avec portefeuille clients PME.",
     description:
-      "Mission en marque blanche possible. Besoin d'un profil avec références concrètes.",
+      "Chiffre d'affaires récurrent, dirigeant disponible pour accompagner la reprise pendant trois mois.",
     publishedAt: "2026-06-07",
   },
   {
-    id: "cabinet-comptable-renfort-admin",
-    sector: "Conseil & services aux entreprises",
+    id: "commerce-alimentaire-sud-ouest",
+    sector: "Commerce & retail",
+    location: "Bordeaux",
+    amount: "Prix demandé 240 k€",
+    revenue: "CA annuel 510 k€",
+    result: "Résultat 72 k€",
+    employees: "8 salariés",
     title:
-      "Cabinet comptable cherche renfort administratif pour organiser la collecte client mensuelle.",
+      "Commerce alimentaire de proximité à reprendre avec équipe en place.",
     description:
-      "Mission récurrente à confier, avec process existant et suivi sur WhatsApp.",
+      "Emplacement résidentiel, clientèle régulière et transmission progressive possible avec le dirigeant.",
     publishedAt: "2026-06-06",
   },
   {
-    id: "restaurant-formation-poec",
+    id: "restaurant-centre-ville",
     sector: "Restauration",
-    title: "Restaurant cherche organisme de formation pour monter une POEC en restauration.",
+    location: "Nantes",
+    amount: "Prix demandé 190 k€",
+    revenue: "CA annuel 360 k€",
+    result: "Résultat 48 k€",
+    employees: "5 salariés",
+    title: "Restaurant de centre-ville à vendre, licence et matériel inclus.",
     description:
-      "Besoin de former un groupe avant recrutement, avec programme court et calendrier à cadrer.",
+      "Affaire saine, emplacement passant, dossier complet transmis après qualification du repreneur.",
+    publishedAt: "2026-06-08",
+  },
+  {
+    id: "societe-nettoyage-idf",
+    sector: "Conseil & services aux entreprises",
+    location: "Île-de-France",
+    amount: "Prix demandé 450 k€",
+    revenue: "CA annuel 780 k€",
+    result: "Résultat 120 k€",
+    employees: "14 salariés",
+    title: "Société de nettoyage B2B rentable à céder en Île-de-France.",
+    description:
+      "Contrats récurrents, équipe encadrée et portefeuille clients diversifié. Cession accompagnée possible.",
     publishedAt: "2026-06-08",
   },
 ];
