@@ -15,7 +15,6 @@ import {
   Car,
   ChefHat,
   Check,
-  ChevronDown,
   ChevronLeft,
   ChevronRight,
   Cloud,
@@ -62,6 +61,7 @@ import type { ToolDirectoryItem } from "@/lib/tool-directory";
 import type { System } from "@/lib/types";
 import type { OperationalSystemDetail, SystemPillar } from "@/lib/system-operations";
 import { getSystemResources, type SystemResource } from "@/lib/system-resources";
+import { buildBusinessBlockChecklists } from "@/lib/business-block-checklists";
 
 type SystemsCatalogClientProps = {
   systems: System[];
@@ -79,7 +79,7 @@ type SystemsCatalogClientProps = {
 type SystemModalTab = "processus" | "outils" | "ressources";
 type ProcessGroup = {
   title: string;
-  processes: OperationalSystemDetail["processes"];
+  checklist: string[];
 };
 
 const PILLARS: SystemPillar[] = [
@@ -266,62 +266,18 @@ function getProcessChecklistItems(examples?: string): string[] {
     .filter(Boolean);
 }
 
-function getPillarForBusinessBlock(
-  block: OperationalSystemDetail["businessBlocks"][number],
-): SystemPillar {
-  if (block.internalPillar === "strategy") {
-    return "Stratégie";
-  }
-
-  if (block.internalPillar === "sales") {
-    return "Marketing & Vente";
-  }
-
-  if (block.internalPillar === "finance") {
-    return "Finance & administration";
-  }
-
-  if (block.internalPillar === "team") {
-    return "Équipe";
-  }
-
-  return "Opérations";
-}
-
 function buildProcessGroups(detail: OperationalSystemDetail): ProcessGroup[] {
-  if (!detail.businessBlocks.length) {
-    return PILLARS.map((pillar) => ({
-      title: pillar,
-      processes: detail.processes.filter((process) => process.pillar === pillar),
-    }));
+  if (detail.businessBlocks.length) {
+    return buildBusinessBlockChecklists(detail.businessBlocks);
   }
 
-  const blockCounts = new Map<string, number>();
-  const blockPositions = new Map<string, number>();
-
-  for (const block of detail.businessBlocks) {
-    const key = getPillarForBusinessBlock(block);
-    blockCounts.set(key, (blockCounts.get(key) ?? 0) + 1);
-  }
-
-  return detail.businessBlocks.map((block) => {
-    const pillar = getPillarForBusinessBlock(block);
-    const key = pillar;
-    const position = blockPositions.get(key) ?? 0;
-    const count = blockCounts.get(key) ?? 1;
-    blockPositions.set(key, position + 1);
-
-    const pillarProcesses = detail.processes.filter((process) => process.pillar === pillar);
-    const processes =
-      count > 1
-        ? pillarProcesses.filter((_, index) => index % count === position)
-        : pillarProcesses;
-
-    return {
-      title: block.title,
-      processes,
-    };
-  });
+  return PILLARS.map((pillar) => ({
+    title: pillar,
+    checklist: detail.processes
+      .filter((process) => process.pillar === pillar)
+      .flatMap((process) => getProcessChecklistItems(process.examples))
+      .slice(0, 7),
+  }));
 }
 
 export default function SystemsCatalogClient({
@@ -340,7 +296,6 @@ export default function SystemsCatalogClient({
   const [activeTab, setActiveTab] = useState<SystemModalTab>(
     isSystemModalTab(initialActiveTab) ? initialActiveTab : "processus"
   );
-  const [openProcessIds, setOpenProcessIds] = useState<Set<string>>(new Set());
   const [internalSearchQuery, setInternalSearchQuery] = useState("");
   const [internalActiveSector, setInternalActiveSector] = useState(ALL_SECTORS_LABEL);
   const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false);
@@ -370,23 +325,8 @@ export default function SystemsCatalogClient({
     setIsFilterPanelOpen(false);
   }
 
-  function toggleProcessCard(processId: string) {
-    setOpenProcessIds((currentOpenIds) => {
-      const nextOpenIds = new Set(currentOpenIds);
-
-      if (nextOpenIds.has(processId)) {
-        nextOpenIds.delete(processId);
-      } else {
-        nextOpenIds.add(processId);
-      }
-
-      return nextOpenIds;
-    });
-  }
-
   function closeSystemModal() {
     setSelectedSlug(null);
-    setOpenProcessIds(new Set());
   }
 
   function openToolDetails(tool: ToolDirectoryItem) {
@@ -650,7 +590,6 @@ export default function SystemsCatalogClient({
                             onClick={() => {
                               setSelectedSlug(system.slug);
                               setActiveTab("processus");
-                              setOpenProcessIds(new Set());
                             }}
                             className="demaa-card group flex min-h-[10rem] flex-[0_0_calc(50%-0.5rem)] cursor-pointer flex-col rounded-[1.15rem] p-5 text-left md:flex-[0_0_calc(25%-0.75rem)]"
                           >
@@ -767,132 +706,36 @@ export default function SystemsCatalogClient({
 
             {activeTab === "processus" ? (
               <div className="mt-6 space-y-5">
-                {detail.businessSignals ? (
-                  <div className="grid gap-3 text-left md:grid-cols-2">
-                    <div className="rounded-[1.15rem] border border-dema-line bg-dema-cream/70 p-4">
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-                        Documents à suivre
-                      </p>
-                      <div className="mt-3 flex flex-wrap gap-2">
-                        {detail.businessSignals.documents.map((document) => (
-                          <span
-                            key={document}
-                            className="rounded-full border border-dema-line bg-dema-paper px-3 py-1 text-xs font-medium text-brand-blue/72"
-                          >
-                            {document}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="rounded-[1.15rem] border border-dema-line bg-dema-cream/70 p-4">
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-                        Indicateurs métier
-                      </p>
-                      <div className="mt-3 flex flex-wrap gap-2">
-                        {detail.businessSignals.indicators.map((indicator) => (
-                          <span
-                            key={indicator}
-                            className="rounded-full border border-dema-line bg-dema-paper px-3 py-1 text-xs font-medium text-brand-blue/72"
-                          >
-                            {indicator}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                ) : null}
-
                 <div className="overflow-x-auto pb-2 soft-scroll xl:overflow-x-visible">
-                <div className="mx-auto flex min-w-max justify-center gap-4 xl:grid xl:min-w-0 xl:grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] xl:gap-3">
+                <div className="mx-auto flex min-w-max justify-start gap-4">
                   {processGroups.map((group) => {
                     return (
                       <div
                         key={group.title}
-                        className="w-[18rem] shrink-0 rounded-[1.25rem] border border-dema-line bg-dema-paper p-4 shadow-[0_8px_24px_rgba(23,35,29,0.035)] xl:w-auto xl:min-w-0 xl:p-3"
+                        className="w-[18rem] shrink-0 rounded-[1.25rem] border border-dema-line bg-dema-paper p-4 shadow-[0_8px_24px_rgba(23,35,29,0.035)]"
                       >
                         <h3 className="demaa-section-title text-center text-xl text-brand-blue">
                           {group.title}
                         </h3>
-                        <div className="mt-4 space-y-3">
-                          {group.processes.length > 0 ? (
-                            group.processes.map((process) => {
-                              const processId = `${selectedSystem.slug}-${group.title}-${process.title}`
-                                .normalize("NFD")
-                                .replace(/[\u0300-\u036f]/g, "")
-                                .replace(/[^a-zA-Z0-9]+/g, "-")
-                                .replace(/^-|-$/g, "")
-                                .toLowerCase();
-                              const isOpen = openProcessIds.has(processId);
-                              const checklistItems = getProcessChecklistItems(process.examples);
-
-                              return (
-                                <article
-                                  key={process.title}
-                                  className={`rounded-[1.15rem] border text-left transition ${
-                                    isOpen
-                                      ? "border-dema-forest/18 bg-dema-paper shadow-[0_10px_24px_rgba(23,35,29,0.045)]"
-                                      : "border-transparent bg-dema-sage/45 hover:border-dema-line hover:bg-dema-paper"
-                                  }`}
+                        <div className="mt-4">
+                          {group.checklist.length > 0 ? (
+                            <ul className="space-y-2">
+                              {group.checklist.map((item) => (
+                                <li
+                                  key={item}
+                                  className="flex items-start gap-2 text-left text-xs leading-relaxed text-dema-muted"
                                 >
-                                  <button
-                                    type="button"
-                                    onClick={() => toggleProcessCard(processId)}
-                                    className="flex min-h-12 w-full items-center justify-between gap-3 px-3 py-3 text-left"
-                                    aria-expanded={isOpen}
-                                    aria-controls={`${processId}-content`}
-                                  >
-                                    <h4 className="text-left text-sm font-semibold leading-snug text-brand-blue">
-                                      {process.title}
-                                    </h4>
-                                    <ChevronDown
-                                      className={`h-4 w-4 shrink-0 text-dema-forest/45 transition-transform duration-200 ${
-                                        isOpen ? "rotate-180" : ""
-                                      }`}
-                                      aria-hidden="true"
-                                    />
-                                  </button>
-                                  <div
-                                    id={`${processId}-content`}
-                                    aria-hidden={!isOpen}
-                                    className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-200 ease-out ${
-                                      isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
-                                    }`}
-                                  >
-                                    <div className="min-h-0">
-                                      <div className="px-3 pb-3 pt-0">
-                                        <p className="text-left text-xs leading-relaxed text-brand-blue/78">
-                                          {process.description}
-                                        </p>
-                                        {checklistItems.length > 0 ? (
-                                          <div className="mt-3">
-                                            <p className="text-left text-xs font-semibold tracking-normal text-dema-forest/70">
-                                              À structurer
-                                            </p>
-                                            <ul className="mt-2 space-y-1.5">
-                                              {checklistItems.map((item) => (
-                                                <li
-                                                  key={item}
-                                                  className="flex items-start gap-2 text-left text-xs leading-relaxed text-dema-muted"
-                                                >
-                                                  <span className="mt-0.5 inline-flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
-                                                    <Check className="h-2.5 w-2.5" aria-hidden="true" />
-                                                  </span>
-                                                  <span>{item}</span>
-                                                </li>
-                                              ))}
-                                            </ul>
-                                          </div>
-                                        ) : null}
-                                      </div>
-                                    </div>
-                                  </div>
-                                </article>
-                              );
-                            })
+                                  <span className="mt-0.5 inline-flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
+                                    <Check className="h-2.5 w-2.5" aria-hidden="true" />
+                                  </span>
+                                  <span>{item}</span>
+                                </li>
+                              ))}
+                            </ul>
                           ) : (
                             <div className="rounded-[1rem] border border-dema-line bg-dema-cream/65 p-3">
                               <p className="text-left text-xs leading-relaxed text-dema-muted">
-                                Pas de processus prioritaire ajouté pour ce bloc.
+                                Pas de checklist prioritaire ajoutée pour ce bloc.
                               </p>
                             </div>
                           )}

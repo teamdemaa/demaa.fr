@@ -24,22 +24,22 @@
     {
       "id": "marketing.confiance",
       "pillar": "Marketing & Vente",
-      "title": "Créer la confiance",
-      "description": "Créer la confiance pour attirer des prospects, démontrer son expertise et rendre l’entreprise plus crédible.",
+      "title": "Demandes entrantes",
+      "description": "Demandes entrantes pour qualifier les besoins, comprendre le contexte client et garder une trace exploitable.",
       "sort_order": 4
     },
     {
       "id": "marketing.decision",
       "pillar": "Marketing & Vente",
-      "title": "Aider à la décision",
-      "description": "Aider à la décision pour répondre aux besoins du prospect, lever les hésitations et faciliter son passage à l’action.",
+      "title": "Devis & décision client",
+      "description": "Devis & décision client pour cadrer la proposition, clarifier les conditions et suivre les accords attendus.",
       "sort_order": 5
     },
     {
       "id": "marketing.lien",
       "pillar": "Marketing & Vente",
-      "title": "Maintenir la relation",
-      "description": "Maintenir la relation pour fidéliser les clients, nourrir la relation et créer des opportunités dans la durée.",
+      "title": "Relances & suivi client",
+      "description": "Relances & suivi client pour traiter les points ouverts, informer au bon moment et clôturer proprement.",
       "sort_order": 6
     },
     {

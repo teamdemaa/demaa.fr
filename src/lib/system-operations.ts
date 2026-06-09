@@ -108,19 +108,21 @@ function buildOperationalSystemDetailFromSources(
         ? enterprise.operationProcesses
         : enterprise.processes?.filter((process) => normalizePillar(process.pillar) === "Opérations") ?? [];
 
-    const sharedProcesses: SystemProcessCard[] = templates.map((template) => ({
-      pillar: template.pillar,
-      title: template.title,
-      description: template.description,
-      examples: enterprise.processExamples?.[template.id],
-    }));
-
     const operationProcesses: SystemProcessCard[] = operationSource.map((process) => ({
       pillar: "Opérations",
       title: process.title,
       description: process.description,
       examples: process.examples,
     }));
+    const hasBusinessBlocks = Boolean(enterprise.businessBlocks?.length);
+    const sharedProcesses: SystemProcessCard[] = hasBusinessBlocks
+      ? []
+      : templates.map((template) => ({
+          pillar: template.pillar,
+          title: template.title,
+          description: template.description,
+          examples: enterprise.processExamples?.[template.id],
+        }));
 
     return {
       sectorLabel: enterprise.sectorLabel,

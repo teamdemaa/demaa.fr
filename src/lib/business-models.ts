@@ -140,7 +140,7 @@ export const businessModels = [
     label: "BTP artisans",
     description: "Demandes, devis, interventions, matériaux, planning terrain et SAV.",
     blocks: [
-      { title: "Demandes & devis", internalPillar: "sales" },
+      { title: "Demandes chantier & devis", internalPillar: "sales" },
       { title: "Visites & chiffrage", internalPillar: "operations" },
       { title: "Planning & interventions", internalPillar: "operations" },
       { title: "Matériaux & fournisseurs", internalPillar: "operations" },
@@ -224,7 +224,7 @@ export const businessModels = [
     description: "Rendez-vous, prestations, cabines, abonnements, stock, hygiène et équipe.",
     blocks: [
       { title: "Offres & prestations", internalPillar: "strategy" },
-      { title: "Réservations & fidélisation", internalPillar: "sales" },
+      { title: "Visibilité & réservations", internalPillar: "sales" },
       { title: "Planning & réalisation", internalPillar: "operations" },
       { title: "Produits & matériel", internalPillar: "operations" },
       { title: "Hygiène & qualité", internalPillar: "quality" },
@@ -237,7 +237,7 @@ export const businessModels = [
     label: "Automobile & réparation",
     description: "Rendez-vous, diagnostic, devis, pièces, atelier, restitution et marge.",
     blocks: [
-      { title: "Rendez-vous atelier", internalPillar: "sales" },
+      { title: "Clients & rendez-vous atelier", internalPillar: "sales" },
       { title: "Diagnostic & devis", internalPillar: "operations" },
       { title: "Pièces & fournisseurs", internalPillar: "operations" },
       { title: "Planning & réparations", internalPillar: "operations" },
@@ -251,7 +251,7 @@ export const businessModels = [
     label: "Transport & mobilité",
     description: "Demandes, tournées, véhicules, chauffeurs, interventions et rentabilité mission.",
     blocks: [
-      { title: "Demandes & réservations", internalPillar: "sales" },
+      { title: "Offres, demandes & réservations", internalPillar: "sales" },
       { title: "Planning & tournées", internalPillar: "operations" },
       { title: "Véhicules & matériel", internalPillar: "operations" },
       { title: "Exécution & incidents", internalPillar: "operations" },
@@ -865,8 +865,7 @@ export const enterpriseBusinessBlockOverrides = {
   restaurant: [
     { title: "Carte & offres", internalPillar: "strategy" },
     { title: "Réservations & remplissage", internalPillar: "sales" },
-    { title: "Cuisine & mise en place", internalPillar: "operations" },
-    { title: "Salle & service", internalPillar: "operations" },
+    { title: "Cuisine & service", internalPillar: "operations" },
     { title: "Stocks & fournisseurs", internalPillar: "operations" },
     { title: "Hygiène HACCP", internalPillar: "compliance" },
     { title: "Caisse & marge", internalPillar: "finance" },
@@ -918,7 +917,7 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Équipe & renforts", internalPillar: "team" },
   ],
   "garage-automobile": [
-    { title: "Rendez-vous atelier", internalPillar: "sales" },
+    { title: "Clients & rendez-vous atelier", internalPillar: "sales" },
     { title: "Diagnostic & devis", internalPillar: "operations" },
     { title: "Pièces & fournisseurs", internalPillar: "operations" },
     { title: "Planning atelier", internalPillar: "operations" },
@@ -927,7 +926,7 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Équipe & atelier", internalPillar: "team" },
   ],
   carrosserie: [
-    { title: "Entrées atelier & sinistres", internalPillar: "sales" },
+    { title: "Clients, atelier & sinistres", internalPillar: "sales" },
     { title: "Expertise & devis", internalPillar: "operations" },
     { title: "Pièces & assurances", internalPillar: "operations" },
     { title: "Planning carrosserie", internalPillar: "operations" },
@@ -936,7 +935,7 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Équipe & atelier", internalPillar: "team" },
   ],
   demenagement: [
-    { title: "Demandes & visites", internalPillar: "sales" },
+    { title: "Demandes, visites & devis", internalPillar: "sales" },
     { title: "Devis & inventaire", internalPillar: "operations" },
     { title: "Planning camions", internalPillar: "operations" },
     { title: "Intervention & livraison", internalPillar: "operations" },
@@ -945,7 +944,7 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Équipe & renforts", internalPillar: "team" },
   ],
   "livraison-dernier-kilometre": [
-    { title: "Demandes & volumes", internalPillar: "sales" },
+    { title: "Demandes clients & volumes", internalPillar: "sales" },
     { title: "Tournées & zones", internalPillar: "operations" },
     { title: "Chauffeurs & véhicules", internalPillar: "team" },
     { title: "Livraisons & preuves", internalPillar: "operations" },
@@ -953,7 +952,7 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Coût par livraison", internalPillar: "finance" },
   ],
   "transport-de-marchandise": [
-    { title: "Ordres de transport", internalPillar: "sales" },
+    { title: "Clients & ordres de transport", internalPillar: "sales" },
     { title: "Planning flotte", internalPillar: "operations" },
     { title: "Chargement & livraison", internalPillar: "operations" },
     { title: "CMR & conformité", internalPillar: "compliance" },
@@ -962,7 +961,7 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Équipe & chauffeurs", internalPillar: "team" },
   ],
   "transport-de-personnes": [
-    { title: "Réservations & groupes", internalPillar: "sales" },
+    { title: "Demandes & réservations groupes", internalPillar: "sales" },
     { title: "Planning trajets", internalPillar: "operations" },
     { title: "Véhicules & sécurité", internalPillar: "compliance" },
     { title: "Chauffeurs & services", internalPillar: "team" },
@@ -970,7 +969,7 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Rentabilité trajet", internalPillar: "finance" },
   ],
   "reparation-informatique-mobile": [
-    { title: "Demandes & tickets", internalPillar: "sales" },
+    { title: "Demandes & tickets réparation", internalPillar: "sales" },
     { title: "Diagnostic appareil", internalPillar: "operations" },
     { title: "Pièces & fournisseurs", internalPillar: "operations" },
     { title: "Réparation & restitution", internalPillar: "operations" },
@@ -979,7 +978,7 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Équipe & techniciens", internalPillar: "team" },
   ],
   "nettoyage-professionnel": [
-    { title: "Contrats & sites", internalPillar: "sales" },
+    { title: "Contrats clients & sites", internalPillar: "sales" },
     { title: "Cahiers des charges", internalPillar: "operations" },
     { title: "Planning agents", internalPillar: "operations" },
     { title: "Passages & contrôles", internalPillar: "quality" },
@@ -1005,7 +1004,7 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Équipe & remplacements", internalPillar: "team" },
   ],
   "entreprise-de-securite": [
-    { title: "Contrats & sites", internalPillar: "sales" },
+    { title: "Contrats clients & sites", internalPillar: "sales" },
     { title: "Consignes de poste", internalPillar: "operations" },
     { title: "Planning agents", internalPillar: "operations" },
     { title: "Main courante & incidents", internalPillar: "quality" },
@@ -1014,7 +1013,7 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Équipe & habilitations", internalPillar: "team" },
   ],
   pressing: [
-    { title: "Dépôts & tickets", internalPillar: "sales" },
+    { title: "Clients, dépôts & tickets", internalPillar: "sales" },
     { title: "Tri & traitement", internalPillar: "operations" },
     { title: "Machines & consommables", internalPillar: "operations" },
     { title: "Retraits & litiges", internalPillar: "quality" },
@@ -1039,7 +1038,7 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Équipe & conseillers", internalPillar: "team" },
   ],
   "production-industrie": [
-    { title: "Commandes & prévisions", internalPillar: "sales" },
+    { title: "Commandes clients & prévisions", internalPillar: "sales" },
     { title: "Planning production", internalPillar: "operations" },
     { title: "Atelier & machines", internalPillar: "operations" },
     { title: "Stocks & composants", internalPillar: "operations" },
@@ -1048,7 +1047,7 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Équipe & postes", internalPillar: "team" },
   ],
   "plomberie-chauffage": [
-    { title: "Demandes & urgences", internalPillar: "sales" },
+    { title: "Demandes, urgences & devis", internalPillar: "sales" },
     { title: "Visites & devis", internalPillar: "operations" },
     { title: "Planning interventions", internalPillar: "operations" },
     { title: "Matériel & fournisseurs", internalPillar: "operations" },
@@ -1057,7 +1056,7 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Équipe & sous-traitants", internalPillar: "team" },
   ],
   batiment: [
-    { title: "Demandes & devis", internalPillar: "sales" },
+    { title: "Demandes chantier & devis", internalPillar: "sales" },
     { title: "Planning chantiers", internalPillar: "operations" },
     { title: "Matériaux & fournisseurs", internalPillar: "operations" },
     { title: "Suivi terrain", internalPillar: "operations" },
@@ -1066,7 +1065,7 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Équipe & sous-traitants", internalPillar: "team" },
   ],
   "electricite-generale": [
-    { title: "Demandes & dépannage", internalPillar: "sales" },
+    { title: "Dépannages, demandes & devis", internalPillar: "sales" },
     { title: "Diagnostic & devis", internalPillar: "operations" },
     { title: "Planning interventions", internalPillar: "operations" },
     { title: "Matériel & fournisseurs", internalPillar: "operations" },
@@ -1075,7 +1074,7 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Équipe & habilitations", internalPillar: "team" },
   ],
   "renovation-interieur": [
-    { title: "Demandes & cadrage", internalPillar: "sales" },
+    { title: "Projets client & devis", internalPillar: "sales" },
     { title: "Choix client & devis", internalPillar: "operations" },
     { title: "Planning chantier", internalPillar: "operations" },
     { title: "Achats & corps d’état", internalPillar: "operations" },
@@ -1084,7 +1083,7 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Équipe & partenaires", internalPillar: "team" },
   ],
   "menuiserie-agencement": [
-    { title: "Demandes & plans", internalPillar: "sales" },
+    { title: "Demandes, plans & devis", internalPillar: "sales" },
     { title: "Métrés & chiffrage", internalPillar: "operations" },
     { title: "Fabrication & achats", internalPillar: "operations" },
     { title: "Pose & réception", internalPillar: "operations" },
@@ -1093,7 +1092,7 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Équipe & atelier", internalPillar: "team" },
   ],
   "maconnerie-gros-oeuvre": [
-    { title: "Demandes & devis", internalPillar: "sales" },
+    { title: "Demandes chantier & devis", internalPillar: "sales" },
     { title: "Préparation chantier", internalPillar: "operations" },
     { title: "Matériaux & engins", internalPillar: "operations" },
     { title: "Avancement travaux", internalPillar: "operations" },
@@ -1102,7 +1101,7 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Équipe & sous-traitants", internalPillar: "team" },
   ],
   paysagiste: [
-    { title: "Demandes & projet jardin", internalPillar: "sales" },
+    { title: "Demandes & projets jardin", internalPillar: "sales" },
     { title: "Plans & devis", internalPillar: "operations" },
     { title: "Végétaux & fournitures", internalPillar: "operations" },
     { title: "Chantiers & entretien", internalPillar: "operations" },
@@ -1111,7 +1110,7 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Équipe & saisonnalité", internalPillar: "team" },
   ],
   "architecte-maitre-oeuvre": [
-    { title: "Programme & cadrage", internalPillar: "sales" },
+    { title: "Programme & cadrage client", internalPillar: "sales" },
     { title: "Études & permis", internalPillar: "operations" },
     { title: "Consultation entreprises", internalPillar: "operations" },
     { title: "Suivi chantier", internalPillar: "operations" },
@@ -1129,7 +1128,7 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Équipe & techniciens", internalPillar: "team" },
   ],
   couvreur: [
-    { title: "Urgences & diagnostics", internalPillar: "sales" },
+    { title: "Urgences & diagnostics toiture", internalPillar: "sales" },
     { title: "Devis & photos toiture", internalPillar: "operations" },
     { title: "Planning météo", internalPillar: "operations" },
     { title: "Matériaux & chantier", internalPillar: "operations" },
@@ -1138,7 +1137,7 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Équipe & sous-traitants", internalPillar: "team" },
   ],
   "peintre-en-batiment": [
-    { title: "Demandes & devis", internalPillar: "sales" },
+    { title: "Demandes chantier & devis", internalPillar: "sales" },
     { title: "Préparation support", internalPillar: "operations" },
     { title: "Couleurs & fournitures", internalPillar: "operations" },
     { title: "Chantier & finitions", internalPillar: "operations" },
@@ -1147,7 +1146,7 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Équipe & planning", internalPillar: "team" },
   ],
   carreleur: [
-    { title: "Demandes & métrés", internalPillar: "sales" },
+    { title: "Demandes, métrés & devis", internalPillar: "sales" },
     { title: "Calepinage & devis", internalPillar: "operations" },
     { title: "Matériaux & commandes", internalPillar: "operations" },
     { title: "Pose & finitions", internalPillar: "operations" },
@@ -1156,7 +1155,7 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Équipe & planning", internalPillar: "team" },
   ],
   climatisation: [
-    { title: "Demandes & diagnostic", internalPillar: "sales" },
+    { title: "Demandes, diagnostic & devis", internalPillar: "sales" },
     { title: "Devis & matériel", internalPillar: "operations" },
     { title: "Pose & mise en service", internalPillar: "operations" },
     { title: "Entretien & SAV", internalPillar: "operations" },
@@ -1165,7 +1164,7 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Équipe & habilitations", internalPillar: "team" },
   ],
   serrurier: [
-    { title: "Urgences & demandes", internalPillar: "sales" },
+    { title: "Urgences, demandes & devis", internalPillar: "sales" },
     { title: "Diagnostic & devis", internalPillar: "operations" },
     { title: "Interventions terrain", internalPillar: "operations" },
     { title: "Matériel & fournisseurs", internalPillar: "operations" },
@@ -1174,7 +1173,7 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Équipe & astreintes", internalPillar: "team" },
   ],
   geometre: [
-    { title: "Demandes & dossiers", internalPillar: "sales" },
+    { title: "Demandes & dossiers clients", internalPillar: "sales" },
     { title: "Cadastre & préparation", internalPillar: "operations" },
     { title: "Relevés terrain", internalPillar: "operations" },
     { title: "Plans & livrables", internalPillar: "operations" },
@@ -1308,7 +1307,7 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Équipe & prestataires", internalPillar: "team" },
   ],
   "marchand-de-biens": [
-    { title: "Sourcing opérations", internalPillar: "sales" },
+    { title: "Sourcing & stratégie opérations", internalPillar: "sales" },
     { title: "Acquisition & financement", internalPillar: "finance" },
     { title: "Travaux & planning", internalPillar: "operations" },
     { title: "Commercialisation", internalPillar: "sales" },
@@ -1381,7 +1380,7 @@ export const enterpriseBusinessBlockOverrides = {
   ],
   "investissement-financier": [
     { title: "Objectifs & profil risque", internalPillar: "strategy" },
-    { title: "Opportunités & allocation", internalPillar: "operations" },
+    { title: "Sourcing & allocation", internalPillar: "operations" },
     { title: "Souscriptions & arbitrages", internalPillar: "operations" },
     { title: "Conformité investisseur", internalPillar: "compliance" },
     { title: "Reporting portefeuille", internalPillar: "quality" },
@@ -1389,7 +1388,7 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Conseils & partenaires", internalPillar: "team" },
   ],
   "investissement-entreprise": [
-    { title: "Sourcing opportunités", internalPillar: "sales" },
+    { title: "Sourcing & thèse d’investissement", internalPillar: "sales" },
     { title: "Analyse société", internalPillar: "operations" },
     { title: "Négociation & pacte", internalPillar: "operations" },
     { title: "Conformité investisseur", internalPillar: "compliance" },
@@ -1480,16 +1479,16 @@ export const enterpriseBusinessBlockOverrides = {
   ],
   "institut-de-beaute": [
     { title: "Prestations & forfaits", internalPillar: "strategy" },
-    { title: "Réservations & fidélisation", internalPillar: "sales" },
+    { title: "Visibilité & réservations", internalPillar: "sales" },
     { title: "Cabines & planning", internalPillar: "operations" },
     { title: "Produits & matériel", internalPillar: "operations" },
     { title: "Hygiène & qualité", internalPillar: "quality" },
     { title: "Caisse & rentabilité", internalPillar: "finance" },
-    { title: "Équipe & planning", internalPillar: "team" },
+    { title: "Équipe & praticiennes", internalPillar: "team" },
   ],
   "salon-de-coiffure": [
     { title: "Prestations & tarifs", internalPillar: "strategy" },
-    { title: "Réservations & fidélisation", internalPillar: "sales" },
+    { title: "Visibilité & réservations", internalPillar: "sales" },
     { title: "Planning fauteuils", internalPillar: "operations" },
     { title: "Produits & stock", internalPillar: "operations" },
     { title: "Qualité & expérience client", internalPillar: "quality" },
@@ -1498,7 +1497,7 @@ export const enterpriseBusinessBlockOverrides = {
   ],
   esthetique: [
     { title: "Prestations & forfaits", internalPillar: "strategy" },
-    { title: "Réservations & fidélisation", internalPillar: "sales" },
+    { title: "Visibilité & réservations", internalPillar: "sales" },
     { title: "Planning prestations", internalPillar: "operations" },
     { title: "Produits & matériel", internalPillar: "operations" },
     { title: "Hygiène & qualité", internalPillar: "quality" },
