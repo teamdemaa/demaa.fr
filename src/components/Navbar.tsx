@@ -4,28 +4,23 @@ import Link from "next/link";
 import { Suspense, useEffect, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Boxes, HandHelping, Handshake, type LucideIcon } from "lucide-react";
+import {
+  visiblePrimaryNavigationItems,
+  type PrimaryNavigationId,
+} from "@/lib/navigation";
 
-type HomeTabId = "systemes" | "assistants" | "developper";
 type HomeTabsMode = "links" | "client";
 
-const homeTabs: readonly {
-  id: HomeTabId;
-  label: string;
-  href: string;
-  icon: LucideIcon;
-}[] = [
-  { id: "systemes", label: "Structurer", href: "/", icon: Boxes },
-  { id: "assistants", label: "Déléguer", href: "/deleguer", icon: HandHelping },
-  { id: "developper", label: "Développer", href: "/developper", icon: Handshake },
-];
+const tabIcons: Record<PrimaryNavigationId, LucideIcon> = {
+  structurer: Boxes,
+  deleguer: HandHelping,
+  developper: Handshake,
+};
 
 const HOME_TAB_SELECT_EVENT = "demaa:home-tab-select";
 
-function getTabPath(tab: HomeTabId) {
-  if (tab === "assistants") return "/deleguer";
-  if (tab === "developper") return "/developper";
-
-  return "/";
+function getVisibleTab(tabId: string) {
+  return visiblePrimaryNavigationItems.find((tab) => tab.id === tabId);
 }
 
 export default function Navbar({
@@ -63,14 +58,10 @@ function DesktopHomeTabsNav({ mode }: { mode: HomeTabsMode }) {
   const searchParams = useSearchParams();
   const urlTab = searchParams.get("tab");
   const activeTab =
-    pathname === "/developper"
-      ? "developper"
-      : pathname === "/deleguer" || pathname === "/assistants"
-      ? "assistants"
+    pathname === "/deleguer" || pathname === "/assistants"
+      ? "deleguer"
       : pathname === "/"
-        ? urlTab === "systemes" || urlTab === "assistants" || urlTab === "developper"
-          ? urlTab
-          : "systemes"
+        ? getVisibleTab(urlTab ?? "")?.id ?? "structurer"
         : undefined;
 
   return <DesktopHomeTabsNavStatic activeTab={activeTab} mode={mode} />;
@@ -83,10 +74,8 @@ function DesktopHomeTabsNavStatic({
   activeTab?: string;
   mode?: HomeTabsMode;
 }) {
-  const [clientActiveTab, setClientActiveTab] = useState<HomeTabId>(
-    activeTab === "systemes" || activeTab === "assistants" || activeTab === "developper"
-      ? activeTab
-      : "systemes"
+  const [clientActiveTab, setClientActiveTab] = useState<PrimaryNavigationId>(
+    getVisibleTab(activeTab ?? "")?.id ?? "structurer"
   );
   const currentActiveTab = mode === "client" ? clientActiveTab : activeTab;
 
@@ -96,8 +85,10 @@ function DesktopHomeTabsNavStatic({
     function handleHomeTabSelect(event: Event) {
       const tab = (event as CustomEvent<{ tab?: string }>).detail?.tab;
 
-      if (tab === "systemes" || tab === "assistants" || tab === "developper") {
-        setClientActiveTab(tab);
+      const visibleTab = getVisibleTab(tab ?? "");
+
+      if (visibleTab) {
+        setClientActiveTab(visibleTab.id);
       }
     }
 
@@ -108,16 +99,19 @@ function DesktopHomeTabsNavStatic({
     };
   }, [mode]);
 
-  function selectClientTab(tab: HomeTabId) {
+  function selectClientTab(tab: PrimaryNavigationId) {
+    const visibleTab = getVisibleTab(tab);
+    if (!visibleTab) return;
+
     setClientActiveTab(tab);
-    window.history.replaceState(null, "", getTabPath(tab));
+    window.history.replaceState(null, "", visibleTab.href);
     window.dispatchEvent(new CustomEvent(HOME_TAB_SELECT_EVENT, { detail: { tab } }));
   }
 
   return (
     <div className="hidden items-center justify-center gap-1 rounded-full border border-dema-line/75 bg-dema-paper p-1 shadow-[0_8px_24px_rgba(23,35,29,0.04)] md:absolute md:left-1/2 md:top-1/2 md:flex md:-translate-x-1/2 md:-translate-y-1/2">
-      {homeTabs.map((tab) => {
-        const Icon = tab.icon;
+      {visiblePrimaryNavigationItems.map((tab) => {
+        const Icon = tabIcons[tab.id];
         const isActive = currentActiveTab === tab.id;
         const className = `demaa-nav-item inline-flex min-h-10 items-center justify-center gap-2 rounded-full px-5 text-base transition lg:px-6 ${
           isActive
@@ -125,7 +119,7 @@ function DesktopHomeTabsNavStatic({
             : "font-medium text-brand-blue/56 hover:bg-dema-sage/70 hover:text-brand-blue/72"
         }`;
 
-        if (mode === "client" && tab.id === "systemes") {
+        if (mode === "client" && tab.id === "structurer") {
           return (
             <button
               key={tab.id}

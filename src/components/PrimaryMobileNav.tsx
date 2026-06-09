@@ -1,46 +1,38 @@
 "use client";
 
 import Link from "next/link";
-import { Boxes, HandHelping, Handshake } from "lucide-react";
+import { Boxes, HandHelping, Handshake, type LucideIcon } from "lucide-react";
+import {
+  visiblePrimaryNavigationItems,
+  type PrimaryNavigationId,
+} from "@/lib/navigation";
 
-export type PrimaryNavTab = "structurer" | "deleguer" | "developper";
+export type PrimaryNavTab = PrimaryNavigationId;
 
-const primaryMobileTabs = [
-  {
-    id: "structurer",
-    label: "Structurer",
-    href: "/",
-    icon: Boxes,
-  },
-  {
-    id: "deleguer",
-    label: "Déléguer",
-    href: "/deleguer",
-    icon: HandHelping,
-  },
-  {
-    id: "developper",
-    label: "Développer",
-    href: "/developper",
-    icon: Handshake,
-  },
-] as const;
+const tabIcons: Record<PrimaryNavigationId, LucideIcon> = {
+  structurer: Boxes,
+  deleguer: HandHelping,
+  developper: Handshake,
+};
 
 export default function PrimaryMobileNav({
   activeTab,
   onSelect,
 }: {
-  activeTab: PrimaryNavTab;
+  activeTab?: PrimaryNavTab;
   onSelect?: (tab: PrimaryNavTab) => void;
 }) {
+  const gridClass =
+    visiblePrimaryNavigationItems.length === 2 ? "grid-cols-2" : "grid-cols-3";
+
   return (
     <nav
       className="md:hidden"
       aria-label="Navigation principale mobile"
     >
-      <div className="mx-auto grid w-full max-w-[24rem] grid-cols-3 items-center gap-1 rounded-full border border-dema-line/75 bg-dema-paper/95 px-1.5 py-1.5 shadow-[0_3px_8px_rgba(23,35,29,0.016)] backdrop-blur">
-        {primaryMobileTabs.map((tab) => {
-          const Icon = tab.icon;
+      <div className={`mx-auto grid w-full max-w-[24rem] ${gridClass} items-center gap-1 rounded-full border border-dema-line/75 bg-dema-paper/95 px-1.5 py-1.5 shadow-[0_3px_8px_rgba(23,35,29,0.016)] backdrop-blur`}>
+        {visiblePrimaryNavigationItems.map((tab) => {
+          const Icon = tabIcons[tab.id];
           const isActive = activeTab === tab.id;
           const className = `demaa-nav-item flex min-h-10 min-w-0 items-center justify-center gap-1.5 rounded-full px-2 text-[13px] transition min-[380px]:text-sm ${
             isActive
