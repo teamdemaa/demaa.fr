@@ -1,9 +1,8 @@
 import Link from "next/link";
+import { visiblePrimaryNavigationItems } from "@/lib/navigation";
 
 const mainLinks = [
-  { label: "Structurer", href: "/" },
-  { label: "Déléguer", href: "/deleguer" },
-  { label: "Développer", href: "/developper" },
+  ...visiblePrimaryNavigationItems.map(({ label, href }) => ({ label, href })),
   { label: "Annuaire outils", href: "/annuaire-outils" },
   { label: "Newsletter", href: "/newsletter" },
 ];
