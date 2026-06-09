@@ -1,13 +1,16 @@
+export type BusinessModelPillar =
+  | "strategy"
+  | "sales"
+  | "operations"
+  | "finance"
+  | "team"
+  | "quality"
+  | "compliance";
+
 export type BusinessModelBlock = {
   title: string;
-  internalPillar:
-    | "strategy"
-    | "sales"
-    | "operations"
-    | "finance"
-    | "team"
-    | "quality"
-    | "compliance";
+  internalPillar: BusinessModelPillar;
+  coveredPillars?: BusinessModelPillar[];
 };
 
 export type BusinessModelDefinition = {
@@ -1785,6 +1788,67 @@ export const enterpriseBusinessModelMap = {
   geometre: { businessModelId: "btp-projets", variant: "geometre" },
 } satisfies Record<string, EnterpriseBusinessModelMapping>;
 
+function inferCoveredPillars(block: BusinessModelBlock): BusinessModelPillar[] {
+  const covered = new Set<BusinessModelPillar>([
+    block.internalPillar,
+    ...(block.coveredPillars ?? []),
+  ]);
+  const title = block.title.toLowerCase();
+
+  if (
+    /offre|positionnement|projet|programme|mission|carte|menu|catalogue|assortiment|spécialit|thèse|stratégie|client|demande|contrat|commande|devis|diagnostic|ticket|sourcing/.test(
+      title,
+    )
+  ) {
+    covered.add("strategy");
+  }
+
+  if (
+    /client|demande|prospect|réservation|admission|inscription|commercial|vente|visibilité|acquisition|conversion|devis|chiffrage|mandat|contrat|sourcing|rendez-vous|ticket|commande|fidélisation/.test(
+      title,
+    )
+  ) {
+    covered.add("sales");
+  }
+
+  if (
+    /planning|chantier|intervention|production|session|dossier|atelier|terrain|tournée|livraison|stock|fournisseur|fabrication|réparation|suivi|traitement|diagnostic|préparation/.test(
+      title,
+    )
+  ) {
+    covered.add("operations");
+  }
+
+  if (
+    /caisse|marge|rentabilité|facturation|paiement|finance|budget|coût|trésorerie|honoraire|commission|encaissement|opco|revenu|pilotage/.test(
+      title,
+    )
+  ) {
+    covered.add("finance");
+  }
+
+  if (
+    /équipe|intervenant|sous-traitant|prestataire|collaborateur|agent|chauffeur|moniteur|coach|bénévole|atelier|technicien|praticien|remplacement|planning/.test(
+      title,
+    )
+  ) {
+    covered.add("team");
+  }
+
+  if (/qualité|conformité|réserve|réception|preuve|haccp|hygiène|sécurité|traçabilité|norme|agrément|confidentialité/.test(title)) {
+    covered.add("quality");
+  }
+
+  return [...covered];
+}
+
+function normalizeBusinessBlocks(blocks: BusinessModelBlock[]): BusinessModelBlock[] {
+  return blocks.map((block) => ({
+    ...block,
+    coveredPillars: inferCoveredPillars(block),
+  }));
+}
+
 export function getEnterpriseBusinessModel(slug: string) {
   const mapping = enterpriseBusinessModelMap[slug as keyof typeof enterpriseBusinessModelMap];
 
@@ -1798,12 +1862,14 @@ export function getEnterpriseBusinessModel(slug: string) {
     return null;
   }
 
+  const blocks = enterpriseBusinessBlockOverrides[
+    slug as keyof typeof enterpriseBusinessBlockOverrides
+  ] ?? model.blocks;
+
   return {
     ...mapping,
     model,
-    blocks: enterpriseBusinessBlockOverrides[
-      slug as keyof typeof enterpriseBusinessBlockOverrides
-    ] ?? model.blocks,
+    blocks: normalizeBusinessBlocks(blocks),
     signals: enterpriseBusinessSignalOverrides[
       slug as keyof typeof enterpriseBusinessSignalOverrides
     ] ?? businessModelSignalsById[mapping.businessModelId],
