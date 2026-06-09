@@ -100,14 +100,14 @@
 
 .coverTitle {
   max-width: 150mm;
-  margin-top: 18mm;
-  font-size: 52px;
+  margin-top: 12mm;
+  font-size: 48px;
   line-height: 0.98;
   letter-spacing: 0;
 }
 
 .coverLabel {
-  margin-top: 16mm;
+  margin-top: 10mm;
   color: var(--color-dema-forest);
   font-size: 30px;
   font-weight: 800;
@@ -115,7 +115,7 @@
 
 .lead {
   max-width: 138mm;
-  margin-top: 10mm;
+  margin-top: 7mm;
   color: var(--color-dema-muted);
   font-size: 14px;
   line-height: 1.45;
@@ -124,9 +124,9 @@
 .startPanel {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 14mm;
-  margin-top: 22mm;
-  padding: 11mm;
+  gap: 10mm;
+  margin-top: 13mm;
+  padding: 8mm;
   border-radius: 8px;
   background: var(--color-dema-sage);
 }
@@ -145,8 +145,8 @@
 
 .steps {
   display: grid;
-  gap: 5mm;
-  margin-top: 5mm;
+  gap: 3.6mm;
+  margin-top: 4mm;
 }
 
 .step {
@@ -170,11 +170,35 @@
   font-weight: 800;
 }
 
+.signalGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8mm;
+  margin-top: 8mm;
+}
+
+.signalPanel {
+  padding: 6mm 6.5mm;
+  border: 1px solid var(--color-dema-line);
+  border-radius: 8px;
+  background: var(--color-dema-paper);
+}
+
+.signalList {
+  display: grid;
+  gap: 2.5mm;
+  margin: 4mm 0 0;
+  padding-left: 4mm;
+  color: var(--color-dema-muted);
+  font-size: 10.2px;
+  line-height: 1.26;
+}
+
 .fields {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16mm;
-  margin-top: 15mm;
+  margin-top: 9mm;
 }
 
 .field {
@@ -205,13 +229,20 @@
   margin-top: 8mm;
 }
 
+.processGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6mm;
+  margin-top: 8mm;
+}
+
 .processListTwo {
   gap: 9.5mm;
   margin-top: 11mm;
 }
 
 .process {
-  padding: 6.2mm 7.4mm;
+  padding: 5mm 5.6mm;
   border: 1px solid var(--color-dema-line);
   border-radius: 8px;
   background: var(--color-dema-paper);
@@ -255,7 +286,8 @@
 }
 
 .process h3 {
-  font-size: 14px;
+  color: var(--color-dema-forest);
+  font-size: 13px;
   line-height: 1.2;
 }
 
@@ -270,8 +302,8 @@
 .checks {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 2.7mm;
-  margin-top: 4.6mm;
+  gap: 2.1mm;
+  margin-top: 3.4mm;
 }
 
 .check {
@@ -280,7 +312,7 @@
   gap: 7px;
   align-items: start;
   min-height: 15px;
-  font-size: 10.4px;
+  font-size: 9.8px;
   line-height: 1.28;
 }
 
@@ -295,8 +327,8 @@
 .blockFields {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12mm;
-  margin-top: 5mm;
+  gap: 8mm;
+  margin-top: 3.7mm;
 }
 
 .miniField {
@@ -361,7 +393,9 @@
 
   .startPanel,
   .fields,
-  .referenceGrid {
+  .referenceGrid,
+  .processGrid,
+  .signalGrid {
     grid-template-columns: 1fr;
   }
 
@@ -422,29 +456,29 @@
   }
 
   .coverTitle {
-    margin-top: 18mm;
+    margin-top: 12mm;
   }
 
   .coverLabel {
-    margin-top: 16mm;
+    margin-top: 10mm;
   }
 
   .lead {
-    margin-top: 10mm;
+    margin-top: 7mm;
   }
 
   .startPanel {
     grid-template-columns: 1fr 1fr;
-    gap: 14mm;
-    margin-top: 22mm;
-    padding: 11mm;
+    gap: 10mm;
+    margin-top: 13mm;
+    padding: 8mm;
     background: var(--color-dema-sage);
   }
 
   .fields {
     grid-template-columns: 1fr 1fr;
     gap: 16mm;
-    margin-top: 15mm;
+    margin-top: 9mm;
   }
 
   .pageTitle {
@@ -471,16 +505,16 @@
   }
 
   .process {
-    padding: 6.2mm 7.4mm;
+    padding: 5mm 5.6mm;
   }
 
   .checks {
-    gap: 2.7mm;
-    margin-top: 4.6mm;
+    gap: 2.1mm;
+    margin-top: 3.4mm;
   }
 
   .blockFields {
-    margin-top: 5mm;
+    margin-top: 3.7mm;
   }
 
   .priorityList {

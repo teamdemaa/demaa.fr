@@ -623,7 +623,7 @@ export default function SystemsCatalogClient({
           aria-labelledby="system-detail-title"
         >
           <div
-            className="relative h-[92vh] w-full max-w-7xl overflow-y-auto rounded-[1.25rem] border border-dema-line bg-dema-paper p-6 pt-14 shadow-[0_24px_60px_rgba(23,35,29,0.14)] md:p-8"
+            className="relative flex h-[92vh] w-full max-w-7xl flex-col overflow-hidden rounded-[1.25rem] border border-dema-line bg-dema-paper p-6 pt-14 shadow-[0_24px_60px_rgba(23,35,29,0.14)] md:p-8"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="flex flex-col items-start justify-between gap-4 md:flex-row">
@@ -704,107 +704,109 @@ export default function SystemsCatalogClient({
               </button>
             </div>
 
-            {activeTab === "processus" ? (
-              <div className="mt-6 space-y-5">
-                <div className="overflow-x-auto pb-2 soft-scroll xl:overflow-x-visible">
-                <div className="mx-auto flex min-w-max justify-start gap-4">
-                  {processGroups.map((group) => {
-                    return (
-                      <div
-                        key={group.title}
-                        className="w-[18rem] shrink-0 rounded-[1.25rem] border border-dema-line bg-dema-paper p-4 shadow-[0_8px_24px_rgba(23,35,29,0.035)]"
-                      >
-                        <h3 className="demaa-section-title text-center text-xl text-brand-blue">
-                          {group.title}
-                        </h3>
-                        <div className="mt-4">
-                          {group.checklist.length > 0 ? (
-                            <ul className="space-y-2">
-                              {group.checklist.map((item) => (
-                                <li
-                                  key={item}
-                                  className="flex items-start gap-2 text-left text-xs leading-relaxed text-dema-muted"
-                                >
-                                  <span className="mt-0.5 inline-flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
-                                    <Check className="h-2.5 w-2.5" aria-hidden="true" />
-                                  </span>
-                                  <span>{item}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          ) : (
-                            <div className="rounded-[1rem] border border-dema-line bg-dema-cream/65 p-3">
-                              <p className="text-left text-xs leading-relaxed text-dema-muted">
-                                Pas de checklist prioritaire ajoutée pour ce bloc.
-                              </p>
+            <div className="mt-6 min-h-0 flex-1 overflow-y-auto pr-1 soft-scroll">
+              {activeTab === "processus" ? (
+                <div className="space-y-5">
+                  <div className="overflow-x-auto pb-2 soft-scroll xl:overflow-x-visible">
+                    <div className="mx-auto flex min-w-max justify-start gap-4">
+                      {processGroups.map((group) => {
+                        return (
+                          <div
+                            key={group.title}
+                            className="w-[18rem] shrink-0 rounded-[1.25rem] border border-dema-line bg-dema-paper p-4 shadow-[0_8px_24px_rgba(23,35,29,0.035)]"
+                          >
+                            <h3 className="demaa-section-title text-center text-xl text-brand-blue">
+                              {group.title}
+                            </h3>
+                            <div className="mt-4">
+                              {group.checklist.length > 0 ? (
+                                <ul className="space-y-2">
+                                  {group.checklist.map((item) => (
+                                    <li
+                                      key={item}
+                                      className="flex items-start gap-2 text-left text-xs leading-relaxed text-dema-muted"
+                                    >
+                                      <span className="mt-0.5 inline-flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
+                                        <Check className="h-2.5 w-2.5" aria-hidden="true" />
+                                      </span>
+                                      <span>{item}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              ) : (
+                                <div className="rounded-[1rem] border border-dema-line bg-dema-cream/65 p-3">
+                                  <p className="text-left text-xs leading-relaxed text-dema-muted">
+                                    Pas de checklist prioritaire ajoutée pour ce bloc.
+                                  </p>
+                                </div>
+                              )}
                             </div>
-                          )}
-                        </div>
-                      </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              ) : activeTab === "outils" ? (
+                <div className="space-y-5">
+                  {(() => {
+                    const businessTools = detail.tools.filter((tool) => !isTransverseTool(tool));
+                    const transverseTools = detail.tools.filter(isTransverseTool);
+
+                    return (
+                      <>
+                        {businessTools.length ? (
+                          <div>
+                            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
+                              Outils métier
+                            </p>
+                            <div className="mt-3 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                              {businessTools.map(renderToolCard)}
+                            </div>
+                          </div>
+                        ) : null}
+
+                        {transverseTools.length ? (
+                          <div>
+                            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-muted">
+                              Outils transverses
+                            </p>
+                            <div className="mt-3 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                              {transverseTools.map(renderToolCard)}
+                            </div>
+                          </div>
+                        ) : null}
+                      </>
                     );
-                  })}
+                  })()}
+                  <div className="rounded-[1.15rem] border border-dema-line bg-dema-cream/70 p-5 text-left">
+                    <h3 className="text-lg font-semibold text-brand-blue">
+                      Besoin de comparer plus largement ?
+                    </h3>
+                    <p className="mt-2 max-w-3xl text-sm leading-relaxed text-dema-muted">
+                      L&apos;annuaire rassemble aussi les comptes pro, assurances, mutuelles,
+                      solutions de paiement, outils d&apos;équipe et services utiles.
+                    </p>
+                    <Link
+                      href={`/annuaire-outils?retourSysteme=${encodeURIComponent(selectedSystem.slug)}`}
+                      className="mt-4 inline-flex items-center rounded-full border border-dema-line bg-dema-paper px-4 py-2 text-sm font-medium text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
+                    >
+                      Voir tous les outils et services
+                    </Link>
+                  </div>
                 </div>
+              ) : (
+                <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                  {getSystemResources(selectedSystem.slug).map((resource) => (
+                    <SystemResourceCard
+                      key={resource.id}
+                      resource={resource}
+                      onPreview={openResourcePreview}
+                    />
+                  ))}
                 </div>
-              </div>
-            ) : activeTab === "outils" ? (
-              <div className="mt-6 space-y-5">
-                {(() => {
-                  const businessTools = detail.tools.filter((tool) => !isTransverseTool(tool));
-                  const transverseTools = detail.tools.filter(isTransverseTool);
-
-                  return (
-                    <>
-                      {businessTools.length ? (
-                        <div>
-                          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-                            Outils métier
-                          </p>
-                          <div className="mt-3 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-                            {businessTools.map(renderToolCard)}
-                          </div>
-                        </div>
-                      ) : null}
-
-                      {transverseTools.length ? (
-                        <div>
-                          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-muted">
-                            Outils transverses
-                          </p>
-                          <div className="mt-3 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-                            {transverseTools.map(renderToolCard)}
-                          </div>
-                        </div>
-                      ) : null}
-                    </>
-                  );
-                })()}
-                <div className="rounded-[1.15rem] border border-dema-line bg-dema-cream/70 p-5 text-left">
-                  <h3 className="text-lg font-semibold text-brand-blue">
-                    Besoin de comparer plus largement ?
-                  </h3>
-                  <p className="mt-2 max-w-3xl text-sm leading-relaxed text-dema-muted">
-                    L&apos;annuaire rassemble aussi les comptes pro, assurances, mutuelles,
-                    solutions de paiement, outils d&apos;équipe et services utiles.
-                  </p>
-                  <Link
-                    href={`/annuaire-outils?retourSysteme=${encodeURIComponent(selectedSystem.slug)}`}
-                    className="mt-4 inline-flex items-center rounded-full border border-dema-line bg-dema-paper px-4 py-2 text-sm font-medium text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
-                  >
-                    Voir tous les outils et services
-                  </Link>
-                </div>
-              </div>
-            ) : (
-              <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                {getSystemResources(selectedSystem.slug).map((resource) => (
-                  <SystemResourceCard
-                    key={resource.id}
-                    resource={resource}
-                    onPreview={openResourcePreview}
-                  />
-                ))}
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       ) : null}

@@ -46,9 +46,10 @@ function buildBusinessBlockGroups(
   }));
 }
 
-function ChecklistBlock({ checklist }: { checklist: string[] }) {
+function ChecklistBlock({ title, checklist }: { title: string; checklist: string[] }) {
   return (
     <article className={styles.process}>
+      <h3>{title}</h3>
       <div className={styles.checks}>
         {checklist.map((item) => (
           <div className={styles.check} key={item}>
@@ -62,6 +63,33 @@ function ChecklistBlock({ checklist }: { checklist: string[] }) {
         <div className={styles.miniField}>Échéance</div>
       </div>
     </article>
+  );
+}
+
+function chunkProcessGroups(groups: BusinessBlockChecklist[], size = 4) {
+  const pages: BusinessBlockChecklist[][] = [];
+
+  for (let index = 0; index < groups.length; index += size) {
+    pages.push(groups.slice(index, index + size));
+  }
+
+  return pages;
+}
+
+function SignalList({ title, items }: { title: string; items: string[] }) {
+  if (!items.length) {
+    return null;
+  }
+
+  return (
+    <div className={styles.signalPanel}>
+      <div className={styles.panelTitle}>{title}</div>
+      <ul className={styles.signalList}>
+        {items.slice(0, 6).map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
@@ -95,26 +123,26 @@ function DocumentPage({
   );
 }
 
-function PillarPage({
+function ProcessGroupsPage({
   systemName,
-  title,
   pageNumber,
-  checklist,
+  groups,
 }: {
   systemName: string;
-  title: string;
   pageNumber: number;
-  checklist: string[];
+  groups: BusinessBlockChecklist[];
 }) {
   return (
     <DocumentPage
       systemName={systemName}
-      title={title}
-      intro="Cochez ce qui est déjà en place, puis gardez les manques les plus importants dans le plan d'action."
+      title="Diagnostic opérationnel"
+      intro="Cochez ce qui fonctionne déjà. Les cases restantes servent à choisir les priorités du plan d'action."
       pageNumber={pageNumber}
     >
-      <div className={styles.processList}>
-        <ChecklistBlock checklist={checklist} />
+      <div className={styles.processGrid}>
+        {groups.map((group) => (
+          <ChecklistBlock key={group.title} title={group.title} checklist={group.checklist} />
+        ))}
       </div>
     </DocumentPage>
   );
@@ -122,8 +150,11 @@ function PillarPage({
 
 export default function SystemDocument({ system, templates }: SystemDocumentProps) {
   const processGroups = buildBusinessBlockGroups(system, templates);
+  const processPages = chunkProcessGroups(processGroups);
   const firstProcessPageNumber = 2;
-  const actionPlanPageNumber = processGroups.length + firstProcessPageNumber;
+  const actionPlanPageNumber = processPages.length + firstProcessPageNumber;
+  const coverDocuments = system.businessSignals?.documents ?? [];
+  const coverIndicators = system.businessSignals?.indicators ?? [];
 
   return (
     <main className={styles.shell}>
@@ -171,6 +202,12 @@ export default function SystemDocument({ system, templates }: SystemDocumentProp
             </div>
           </div>
         </div>
+        {(coverDocuments.length || coverIndicators.length) ? (
+          <div className={styles.signalGrid}>
+            <SignalList title="Documents clés" items={coverDocuments} />
+            <SignalList title="Indicateurs à suivre" items={coverIndicators} />
+          </div>
+        ) : null}
         <div className={styles.fields}>
           <div className={styles.field}>Entreprise</div>
           <div className={styles.field}>Date</div>
@@ -181,13 +218,12 @@ export default function SystemDocument({ system, templates }: SystemDocumentProp
         </footer>
       </section>
 
-      {processGroups.map((group, index) => (
-        <PillarPage
-          key={group.title}
+      {processPages.map((groups, index) => (
+        <ProcessGroupsPage
+          key={groups.map((group) => group.title).join("-")}
           systemName={system.name}
-          title={group.title}
           pageNumber={index + firstProcessPageNumber}
-          checklist={group.checklist}
+          groups={groups}
         />
       ))}
 
