@@ -740,9 +740,10 @@ export default function AssistantsCatalogClient() {
                 </p>
                 <h2 className="mt-4 text-[2.45rem] font-light leading-[1.02] tracking-tight text-brand-blue/44 md:text-[3.45rem]">
                   Plus de{" "}
-                  <span className="demaa-hero-title text-brand-blue/86">2 mois</span>
-                  <br />
-                  de travail récupérés par an.
+                  <span className="demaa-hero-title text-brand-blue/86">2 mois</span>{" "}
+                  de travail
+                  <br className="md:hidden" /> récupérés
+                  <br className="hidden md:block" /> par an.
                 </h2>
                 <div className="mt-6 grid gap-3 sm:grid-cols-3">
                   {em2aImpacts.map((impact) => (
