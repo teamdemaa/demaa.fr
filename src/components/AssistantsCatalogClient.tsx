@@ -5,7 +5,6 @@ import { loadStripe } from "@stripe/stripe-js";
 import {
   Check,
   ChevronDown,
-  FileCheck2,
   Minus,
   Plus,
   Send,
@@ -68,23 +67,13 @@ const assistantOffers = [
     icon: Send,
     packOfferId: "administratif",
   },
-  {
-    title: "Appels d'offres",
-    category: "Dossiers",
-    tags: ["Dossiers", "Commercial"],
-    format: "À partir de 500 €",
-    description:
-      "On vous aide à structurer une réponse claire, complète et bien positionnée pour mettre toutes les chances de votre côté.",
-    icon: FileCheck2,
-    packOfferId: "appel-offre",
-  },
 ] as const satisfies readonly AssistantCatalogOffer[];
 
 const howItWorksSteps = [
   {
     title: "Vous choisissez la mission",
     description:
-      "Structuration, tâches récurrentes ou appel d’offres : vous choisissez ce que vous voulez nous confier.",
+      "Structuration ou tâches récurrentes : vous choisissez ce que vous voulez nous confier.",
   },
   {
     title: "On confirme le cadre",
@@ -107,7 +96,7 @@ const faqItems = [
   {
     question: "Comment je sais quelle offre choisir ?",
     answer:
-      "Si vous voulez remettre de l’ordre dans votre organisation, choisissez l’accompagnement structuration. Si vous voulez déléguer des tâches chaque mois, choisissez l’assistant polyvalent. Si vous devez répondre à un marché, choisissez l’appel d’offres.",
+      "Si vous voulez remettre de l’ordre dans votre organisation, choisissez l’accompagnement structuration. Si vous voulez déléguer des tâches chaque mois, choisissez l’assistant polyvalent.",
   },
   {
     question: "Est-ce que je garde la main sur les décisions ?",
@@ -593,7 +582,7 @@ export default function AssistantsCatalogClient() {
           </button>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2">
           {assistantOffers.map((offer) => {
             const Icon = offer.icon;
             const packOffer = getPackOffer(offer.packOfferId);
