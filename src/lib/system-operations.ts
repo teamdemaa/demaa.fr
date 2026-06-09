@@ -7,6 +7,7 @@ import {
   type EnterpriseTool,
   type EnterpriseToolReference,
 } from "@/lib/enterprise-annuaire";
+import type { BusinessModelBlock, BusinessModelSignals } from "@/lib/business-models";
 import {
   getSystemProcessTemplates,
   type SystemPillar,
@@ -29,6 +30,10 @@ export type OperationalSystemDetail = {
   imageTitle: string;
   imageSubtitle: string;
   processes: SystemProcessCard[];
+  businessModelId?: string;
+  businessVariant?: string;
+  businessBlocks: BusinessModelBlock[];
+  businessSignals?: BusinessModelSignals;
   tools: EnterpriseTool[];
 };
 
@@ -122,6 +127,10 @@ function buildOperationalSystemDetailFromSources(
       imageTitle: enterprise.imageTitle,
       imageSubtitle: enterprise.imageSubtitle,
       processes: [...sharedProcesses, ...operationProcesses],
+      businessModelId: enterprise.businessModelId,
+      businessVariant: enterprise.businessVariant,
+      businessBlocks: enterprise.businessBlocks ?? [],
+      businessSignals: enterprise.businessSignals,
       tools: resolveEnterpriseTools(enterprise.toolRefs, enterprise.tools, toolDirectory),
     };
   }
@@ -131,6 +140,7 @@ function buildOperationalSystemDetailFromSources(
     imageTitle: system.name,
     imageSubtitle: `Aperçu du système opérationnel pour ${system.name.toLowerCase()}`,
     processes: templates.map((template) => ({ ...template })),
+    businessBlocks: [],
     tools: [],
   };
 }

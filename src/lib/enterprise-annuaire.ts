@@ -6,6 +6,11 @@ import type { ToolDirectoryItem } from "./tool-directory";
 import type { SystemPillar } from "./system-process-templates";
 import type { System } from "./types";
 import { publicSectorLabels } from "./public-sectors";
+import {
+  getEnterpriseBusinessModel,
+  type BusinessModelBlock,
+  type BusinessModelSignals,
+} from "./business-models";
 import rawEnterpriseAnnuaire from "./enterprise-annuaire.json";
 
 export type EnterpriseTool = {
@@ -46,6 +51,10 @@ export type EnterpriseDefinition = {
   processExamples?: Record<string, string>;
   tools?: EnterpriseTool[];
   toolRefs?: EnterpriseToolReference[];
+  businessModelId?: string;
+  businessVariant?: string;
+  businessBlocks?: BusinessModelBlock[];
+  businessSignals?: BusinessModelSignals;
 };
 
 type EnterpriseAnnuairePayload = {
@@ -180,8 +189,26 @@ function stripFirestoreMetadata({
   return enterprise;
 }
 
+function enrichEnterpriseBusinessModel(enterprise: EnterpriseDefinition): EnterpriseDefinition {
+  const businessModel = getEnterpriseBusinessModel(enterprise.slug);
+
+  if (!businessModel) {
+    return enterprise;
+  }
+
+  return {
+    ...enterprise,
+    businessModelId: enterprise.businessModelId || businessModel.businessModelId,
+    businessVariant: enterprise.businessVariant || businessModel.variant,
+    businessBlocks: enterprise.businessBlocks?.length
+      ? enterprise.businessBlocks
+      : businessModel.blocks,
+    businessSignals: enterprise.businessSignals || businessModel.signals,
+  };
+}
+
 function fallbackEnterpriseCatalog() {
-  return enterpriseCatalog;
+  return enterpriseCatalog.map(enrichEnterpriseBusinessModel);
 }
 
 export async function getEnterpriseCatalog(): Promise<EnterpriseDefinition[]> {
@@ -212,7 +239,9 @@ export async function getEnterpriseCatalog(): Promise<EnterpriseDefinition[]> {
       return left.name.localeCompare(right.name, "fr");
     });
 
-    return enterprises.map((enterprise) => mergeEnterpriseFallback(stripFirestoreMetadata(enterprise)));
+    return enterprises.map((enterprise) =>
+      enrichEnterpriseBusinessModel(mergeEnterpriseFallback(stripFirestoreMetadata(enterprise)))
+    );
   } catch (error) {
     console.warn("[enterprise-annuaire] Firestore unavailable, using JSON fallback.", error);
     return fallbackEnterpriseCatalog();
@@ -234,14 +263,16 @@ export async function getEnterpriseBySlug(slug: string): Promise<EnterpriseDefin
       const enterprise = normalizeEnterpriseDocument(doc.data());
 
       if (enterprise) {
-        return mergeEnterpriseFallback(stripFirestoreMetadata(enterprise));
+        return enrichEnterpriseBusinessModel(mergeEnterpriseFallback(stripFirestoreMetadata(enterprise)));
       }
     }
   } catch (error) {
     console.warn(`[enterprise-annuaire] Firestore lookup failed for "${normalizedSlug}", using JSON fallback.`, error);
   }
 
-  return enterpriseCatalogBySlug[normalizedSlug] ?? null;
+  const fallback = enterpriseCatalogBySlug[normalizedSlug];
+
+  return fallback ? enrichEnterpriseBusinessModel(fallback) : null;
 }
 
 export async function getEnterpriseSystems(): Promise<System[]> {

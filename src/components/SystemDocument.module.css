@@ -217,6 +217,43 @@
   background: var(--color-dema-paper);
 }
 
+.referenceGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9mm;
+  margin-top: 12mm;
+}
+
+.referencePanel {
+  min-height: 150mm;
+  padding: 8mm;
+  border: 1px solid var(--color-dema-line);
+  border-radius: 8px;
+  background: var(--color-dema-paper);
+}
+
+.referencePanel h3 {
+  margin: 0;
+  color: var(--color-dema-forest);
+  font-size: 16px;
+  line-height: 1.2;
+}
+
+.referenceList {
+  display: grid;
+  gap: 4mm;
+  margin-top: 8mm;
+}
+
+.referenceItem {
+  padding: 4mm 4.4mm;
+  border-radius: 8px;
+  background: var(--color-dema-sage);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
 .process h3 {
   font-size: 14px;
   line-height: 1.2;
@@ -323,8 +360,13 @@
   }
 
   .startPanel,
-  .fields {
+  .fields,
+  .referenceGrid {
     grid-template-columns: 1fr;
+  }
+
+  .referencePanel {
+    min-height: 0;
   }
 }
 

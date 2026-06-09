@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { EnterpriseDefinition, EnterpriseProcess } from "@/lib/enterprise-annuaire";
+import type { BusinessModelBlock } from "@/lib/business-models";
 import type { SystemProcessTemplate, SystemPillar } from "@/lib/system-process-templates";
 import type { ReactNode } from "react";
 import SystemDocumentPrintButton from "@/components/SystemDocumentPrintButton";
@@ -10,6 +11,12 @@ type DocumentProcess = {
   title: string;
   description: string;
   checklist: string[];
+};
+
+type DocumentProcessGroup = {
+  title: string;
+  intro: string;
+  processes: DocumentProcess[];
 };
 
 type SystemDocumentProps = {
@@ -69,6 +76,89 @@ function buildPillarProcesses(
   return templates
     .filter((template) => template.pillar === pillar)
     .map((template) => processFromTemplate(system, template));
+}
+
+function getPillarForBusinessBlock(block: BusinessModelBlock): SystemPillar {
+  if (block.internalPillar === "strategy") {
+    return "Stratégie";
+  }
+
+  if (block.internalPillar === "sales") {
+    return "Marketing & Vente";
+  }
+
+  if (block.internalPillar === "finance") {
+    return "Finance & administration";
+  }
+
+  if (block.internalPillar === "team") {
+    return "Équipe";
+  }
+
+  return "Opérations";
+}
+
+function buildBusinessBlockGroups(
+  system: EnterpriseDefinition,
+  templates: SystemProcessTemplate[],
+): DocumentProcessGroup[] {
+  const blocks = system.businessBlocks;
+
+  if (!blocks?.length) {
+    return [
+      ...PROCESS_PILLARS.slice(0, 2).map((pillar) => ({
+        title: pillar,
+        intro: pillarIntros[pillar],
+        processes: buildPillarProcesses(system, templates, pillar),
+      })),
+      {
+        title: "Opérations",
+        intro: pillarIntros.Opérations,
+        processes: (system.operationProcesses ?? []).map(processFromOperation),
+      },
+      ...PROCESS_PILLARS.slice(2).map((pillar) => ({
+        title: pillar,
+        intro: pillarIntros[pillar],
+        processes: buildPillarProcesses(system, templates, pillar),
+      })),
+    ];
+  }
+
+  const blockCounts = new Map<string, number>();
+  const blockPositions = new Map<string, number>();
+  const operationProcesses = (system.operationProcesses ?? []).map(processFromOperation);
+
+  for (const block of blocks) {
+    const key = getPillarForBusinessBlock(block);
+    blockCounts.set(key, (blockCounts.get(key) ?? 0) + 1);
+  }
+
+  return blocks.map((block) => {
+    const pillar = getPillarForBusinessBlock(block);
+    const key = pillar;
+    const position = blockPositions.get(key) ?? 0;
+    const count = blockCounts.get(key) ?? 1;
+    blockPositions.set(key, position + 1);
+
+    const pillarProcesses =
+      pillar === "Opérations"
+        ? operationProcesses
+        : buildPillarProcesses(
+            system,
+            templates,
+            pillar as Exclude<SystemPillar, "Opérations">,
+          );
+    const processes =
+      count > 1
+        ? pillarProcesses.filter((_, index) => index % count === position)
+        : pillarProcesses;
+
+    return {
+      title: block.title,
+      intro: "Les points concrets à vérifier, documenter et améliorer pour structurer ce volet de l’activité.",
+      processes,
+    };
+  });
 }
 
 function ProcessCard({ process }: { process: DocumentProcess }) {
@@ -148,6 +238,50 @@ function PillarPage({
   );
 }
 
+function ReferencePage({
+  systemName,
+  pageNumber,
+  documents,
+  indicators,
+}: {
+  systemName: string;
+  pageNumber: number;
+  documents: string[];
+  indicators: string[];
+}) {
+  return (
+    <DocumentPage
+      systemName={systemName}
+      title="Repères métier"
+      intro="Les documents et indicateurs à garder visibles pour piloter l’activité avec les bons réflexes."
+      pageNumber={pageNumber}
+    >
+      <div className={styles.referenceGrid}>
+        <article className={styles.referencePanel}>
+          <h3>Documents à suivre</h3>
+          <div className={styles.referenceList}>
+            {documents.map((document) => (
+              <div className={styles.referenceItem} key={document}>
+                {document}
+              </div>
+            ))}
+          </div>
+        </article>
+        <article className={styles.referencePanel}>
+          <h3>Indicateurs métier</h3>
+          <div className={styles.referenceList}>
+            {indicators.map((indicator) => (
+              <div className={styles.referenceItem} key={indicator}>
+                {indicator}
+              </div>
+            ))}
+          </div>
+        </article>
+      </div>
+    </DocumentPage>
+  );
+}
+
 const pillarIntros: Record<SystemPillar, string> = {
   Stratégie: "Clarifiez la cible, les objectifs et les actions à suivre avant d'empiler les outils ou les automatisations.",
   "Marketing & Vente": "Rendez la décision d'achat plus simple : confiance, clarté, suivi et relance utile.",
@@ -157,9 +291,10 @@ const pillarIntros: Record<SystemPillar, string> = {
 };
 
 export default function SystemDocument({ system, templates }: SystemDocumentProps) {
-  const operationProcesses = (system.operationProcesses ?? []).map(processFromOperation);
-  const firstOperationPage = operationProcesses.slice(0, 3);
-  const secondOperationPage = operationProcesses.slice(3);
+  const processGroups = buildBusinessBlockGroups(system, templates);
+  const hasBusinessSignals = Boolean(system.businessSignals);
+  const firstProcessPageNumber = hasBusinessSignals ? 3 : 2;
+  const actionPlanPageNumber = processGroups.length + firstProcessPageNumber;
 
   return (
     <main className={styles.shell}>
@@ -217,42 +352,24 @@ export default function SystemDocument({ system, templates }: SystemDocumentProp
         </footer>
       </section>
 
-      {PROCESS_PILLARS.slice(0, 2).map((pillar, index) => (
-        <PillarPage
-          key={pillar}
+      {system.businessSignals ? (
+        <ReferencePage
           systemName={system.name}
-          title={pillar}
-          intro={pillarIntros[pillar]}
-          pageNumber={index + 2}
-          processes={buildPillarProcesses(system, templates, pillar)}
+          pageNumber={2}
+          documents={system.businessSignals.documents}
+          indicators={system.businessSignals.indicators}
         />
-      ))}
+      ) : null}
 
-      <PillarPage
-        systemName={system.name}
-        title="Opérations"
-        intro={pillarIntros.Opérations}
-        pageNumber={4}
-        processes={firstOperationPage}
-      />
-
-      <PillarPage
-        systemName={system.name}
-        title="Opérations - suite"
-        intro="Les points complémentaires à cadrer pour garder une exécution fiable, lisible et facile à suivre."
-        pageNumber={5}
-        processes={secondOperationPage}
-        compact
-      />
-
-      {PROCESS_PILLARS.slice(2).map((pillar, index) => (
+      {processGroups.map((group, index) => (
         <PillarPage
-          key={pillar}
+          key={group.title}
           systemName={system.name}
-          title={pillar}
-          intro={pillarIntros[pillar]}
-          pageNumber={index + 6}
-          processes={buildPillarProcesses(system, templates, pillar)}
+          title={group.title}
+          intro={group.intro}
+          pageNumber={index + firstProcessPageNumber}
+          processes={group.processes}
+          compact={group.processes.length > 3}
         />
       ))}
 
@@ -280,7 +397,7 @@ export default function SystemDocument({ system, templates }: SystemDocumentProp
         </div>
         <footer className={styles.footer}>
           <span>{system.name}</span>
-          <span>Page 8</span>
+          <span>Page {actionPlanPageNumber}</span>
         </footer>
       </section>
     </main>

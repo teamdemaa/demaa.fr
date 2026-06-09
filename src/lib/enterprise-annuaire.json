@@ -4287,6 +4287,122 @@
       ]
     },
     {
+      "id": "e97",
+      "slug": "cfa",
+      "name": "CFA",
+      "category": "Système opérationnel",
+      "description": "Pilotez candidats, contrats d’apprentissage, entreprises, alternance, OPCO et suivi apprentis sans perdre la trace des obligations.",
+      "tags": [
+        "Formation",
+        "Apprentissage",
+        "Système"
+      ],
+      "icon": "GraduationCap",
+      "price": "",
+      "sectorLabel": "Éducation & formation",
+      "imageTitle": "CFA",
+      "imageSubtitle": "Aperçu du système opérationnel pour centre de formation d’apprentis",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Offre & référentiels",
+          "description": "Structurer diplômes, titres, blocs de compétences, calendriers et modalités d’évaluation.",
+          "examples": "Exemple : vérifier le référentiel → cadrer les blocs de compétences → planifier les évaluations → publier le calendrier → archiver la version validée."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Candidats & admissions",
+          "description": "Suivre candidatures, prérequis, entretiens, positionnement et pièces du dossier apprenti.",
+          "examples": "Exemple : qualifier la candidature → vérifier les prérequis → demander les pièces manquantes → valider l’admission → confirmer la prochaine étape."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Entreprises & contrats",
+          "description": "Piloter entreprises d’accueil, maîtres d’apprentissage, contrats, CERFA et ruptures.",
+          "examples": "Exemple : identifier l’entreprise d’accueil → vérifier le maître d’apprentissage → préparer le contrat → suivre la signature → tracer l’accord OPCO."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Alternance & assiduité",
+          "description": "Coordonner planning CFA/entreprise, présences, absences, retards et alertes de suivi.",
+          "examples": "Exemple : publier le planning d’alternance → contrôler l’assiduité → signaler l’absence → prévenir l’entreprise → mettre à jour le dossier apprenti."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Suivi apprentis",
+          "description": "Centraliser progression, difficultés, accompagnement, référent handicap et médiation.",
+          "examples": "Exemple : repérer l’apprenti à risque → organiser le point de suivi → noter la décision → prévenir les parties concernées → vérifier l’amélioration."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Qualité & résultats",
+          "description": "Suivre preuves Qualiopi, enquêtes, réclamations, taux de rupture, réussite et insertion.",
+          "examples": "Exemple : collecter la preuve → analyser le retour apprenti ou entreprise → traiter la réclamation → suivre l’indicateur → préparer le conseil de perfectionnement."
+        }
+      ],
+      "processExamples": {
+        "strategie.positionnement": "Exemple : définir les diplômes ou titres à porter → comprendre les besoins entreprises → choisir les publics apprentis prioritaires → clarifier la différence du CFA → choisir les canaux d’admission.",
+        "strategie.objectifs": "Exemple : choisir 3 priorités → suivre remplissage, rupture et réussite → fixer un seuil d’alerte → décider du rythme de pilotage → ajuster chaque mois.",
+        "strategie.plan-action": "Exemple : transformer chaque priorité en actions → nommer un référent → fixer une date → lever les blocages → vérifier le résultat obtenu.",
+        "marketing.confiance": "Exemple : montrer les formations, résultats et entreprises partenaires → clarifier prérequis, rythme et débouchés → expliquer les étapes d’admission → faciliter la candidature → rassurer candidat et entreprise.",
+        "marketing.decision": "Exemple : qualifier candidat et entreprise → proposer le bon parcours → expliquer contrat, rythme et financement → lever les hésitations → confirmer l’admission.",
+        "marketing.lien": "Exemple : noter la prochaine étape candidat ou entreprise → relancer les pièces ou signatures → demander le retour → repérer un risque de rupture → maintenir le suivi actif.",
+        "finance.facturation": "Exemple : vérifier le contrat et l’accord OPCO → suivre la facturation → contrôler le règlement → repérer le retard → relancer le financeur ou l’entreprise.",
+        "finance.pilotage": "Exemple : suivre taux de remplissage, prise en charge OPCO, reste à facturer, rupture et réussite → surveiller la trésorerie → repérer les écarts → décider les ajustements.",
+        "finance.conformite": "Exemple : classer contrats, CERFA, accords OPCO et preuves → suivre les échéances réglementaires → vérifier les documents manquants → préparer les éléments pour le contrôle.",
+        "equipe.recrutement": "Exemple : repérer le besoin formateur, référent ou relation entreprise → définir le rôle attendu → vérifier l’expérience apprentissage → préparer l’arrivée → suivre les premières missions.",
+        "equipe.rh": "Exemple : clarifier qui suit candidats, apprentis, entreprises et formateurs → rendre planning et charge visibles → anticiper absences et pics → suivre les compétences indispensables → transmettre les alertes.",
+        "equipe.culture": "Exemple : rappeler le cadre pédagogique et entreprise → partager les retours apprentis → sécuriser les transmissions → traiter tôt les tensions → améliorer l’accompagnement ensemble."
+      },
+      "toolRefs": [
+        {
+          "slug": "ypareo",
+          "usage": "Piloter CFA, alternance, apprentis, entreprises, contrats et obligations complexes."
+        },
+        {
+          "slug": "dendreo",
+          "usage": "Structurer actions, apprenants, documents, extranet et suivi qualité."
+        },
+        {
+          "slug": "digiforma",
+          "usage": "Gérer sessions, documents, évaluations et preuves Qualiopi."
+        },
+        {
+          "slug": "argalis",
+          "usage": "Dématérialiser administratif, émargement, BPF et suivi Qualiopi."
+        },
+        {
+          "slug": "qualioform",
+          "usage": "Générer documents, évaluations et preuves Qualiopi depuis mobile."
+        },
+        {
+          "slug": "fillout",
+          "usage": "Collecter candidatures, besoins entreprises, évaluations et enquêtes."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser documents, calendriers, échanges et suivis partagés."
+        },
+        {
+          "slug": "canva",
+          "usage": "Créer supports pédagogiques, livrets, présentations et visuels d’admission."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer supports, quiz, synthèses, messages et procédures de suivi."
+        },
+        {
+          "slug": "zoom",
+          "usage": "Animer classes à distance, réunions entreprises et points de suivi."
+        },
+        {
+          "slug": "livestorm",
+          "usage": "Organiser webinaires d’admission, réunions d’information et sessions live."
+        }
+      ]
+    },
+    {
       "id": "e35",
       "slug": "formation-en-ligne",
       "name": "Formation en ligne",

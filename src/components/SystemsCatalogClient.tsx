@@ -77,6 +77,10 @@ type SystemsCatalogClientProps = {
 };
 
 type SystemModalTab = "processus" | "outils" | "ressources";
+type ProcessGroup = {
+  title: string;
+  processes: OperationalSystemDetail["processes"];
+};
 
 const PILLARS: SystemPillar[] = [
   "Stratégie",
@@ -260,6 +264,64 @@ function getProcessChecklistItems(examples?: string): string[] {
     .split("→")
     .map((item) => item.trim())
     .filter(Boolean);
+}
+
+function getPillarForBusinessBlock(
+  block: OperationalSystemDetail["businessBlocks"][number],
+): SystemPillar {
+  if (block.internalPillar === "strategy") {
+    return "Stratégie";
+  }
+
+  if (block.internalPillar === "sales") {
+    return "Marketing & Vente";
+  }
+
+  if (block.internalPillar === "finance") {
+    return "Finance & administration";
+  }
+
+  if (block.internalPillar === "team") {
+    return "Équipe";
+  }
+
+  return "Opérations";
+}
+
+function buildProcessGroups(detail: OperationalSystemDetail): ProcessGroup[] {
+  if (!detail.businessBlocks.length) {
+    return PILLARS.map((pillar) => ({
+      title: pillar,
+      processes: detail.processes.filter((process) => process.pillar === pillar),
+    }));
+  }
+
+  const blockCounts = new Map<string, number>();
+  const blockPositions = new Map<string, number>();
+
+  for (const block of detail.businessBlocks) {
+    const key = getPillarForBusinessBlock(block);
+    blockCounts.set(key, (blockCounts.get(key) ?? 0) + 1);
+  }
+
+  return detail.businessBlocks.map((block) => {
+    const pillar = getPillarForBusinessBlock(block);
+    const key = pillar;
+    const position = blockPositions.get(key) ?? 0;
+    const count = blockCounts.get(key) ?? 1;
+    blockPositions.set(key, position + 1);
+
+    const pillarProcesses = detail.processes.filter((process) => process.pillar === pillar);
+    const processes =
+      count > 1
+        ? pillarProcesses.filter((_, index) => index % count === position)
+        : pillarProcesses;
+
+    return {
+      title: block.title,
+      processes,
+    };
+  });
 }
 
 export default function SystemsCatalogClient({
@@ -457,6 +519,7 @@ export default function SystemsCatalogClient({
     [selectedSlug, systems]
   );
   const detail = selectedSlug ? detailsBySlug[selectedSlug] : null;
+  const processGroups = detail ? buildProcessGroups(detail) : [];
 
   return (
     <>
@@ -683,25 +746,57 @@ export default function SystemsCatalogClient({
             </div>
 
             {activeTab === "processus" ? (
-              <div className="mt-6 overflow-x-auto pb-2 soft-scroll xl:overflow-x-visible">
-                <div className="mx-auto flex min-w-max justify-center gap-4 xl:grid xl:min-w-0 xl:grid-cols-5 xl:gap-3">
-                  {PILLARS.map((pillar) => {
-                    const pillarCards = detail.processes.filter(
-                      (process) => process.pillar === pillar
-                    );
+              <div className="mt-6 space-y-5">
+                {detail.businessSignals ? (
+                  <div className="grid gap-3 text-left md:grid-cols-2">
+                    <div className="rounded-[1.15rem] border border-dema-line bg-dema-cream/70 p-4">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
+                        Documents à suivre
+                      </p>
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {detail.businessSignals.documents.map((document) => (
+                          <span
+                            key={document}
+                            className="rounded-full border border-dema-line bg-dema-paper px-3 py-1 text-xs font-medium text-brand-blue/72"
+                          >
+                            {document}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="rounded-[1.15rem] border border-dema-line bg-dema-cream/70 p-4">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
+                        Indicateurs métier
+                      </p>
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {detail.businessSignals.indicators.map((indicator) => (
+                          <span
+                            key={indicator}
+                            className="rounded-full border border-dema-line bg-dema-paper px-3 py-1 text-xs font-medium text-brand-blue/72"
+                          >
+                            {indicator}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ) : null}
 
+                <div className="overflow-x-auto pb-2 soft-scroll xl:overflow-x-visible">
+                <div className="mx-auto flex min-w-max justify-center gap-4 xl:grid xl:min-w-0 xl:grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] xl:gap-3">
+                  {processGroups.map((group) => {
                     return (
                       <div
-                        key={pillar}
+                        key={group.title}
                         className="w-[18rem] shrink-0 rounded-[1.25rem] border border-dema-line bg-dema-paper p-4 shadow-[0_8px_24px_rgba(23,35,29,0.035)] xl:w-auto xl:min-w-0 xl:p-3"
                       >
                         <h3 className="demaa-section-title text-center text-xl text-brand-blue">
-                          {pillar}
+                          {group.title}
                         </h3>
                         <div className="mt-4 space-y-3">
-                          {pillarCards.length > 0 ? (
-                            pillarCards.map((process) => {
-                              const processId = `${selectedSystem.slug}-${pillar}-${process.title}`
+                          {group.processes.length > 0 ? (
+                            group.processes.map((process) => {
+                              const processId = `${selectedSystem.slug}-${group.title}-${process.title}`
                                 .normalize("NFD")
                                 .replace(/[\u0300-\u036f]/g, "")
                                 .replace(/[^a-zA-Z0-9]+/g, "-")
@@ -777,7 +872,7 @@ export default function SystemsCatalogClient({
                           ) : (
                             <div className="rounded-[1rem] border border-dema-line bg-dema-cream/65 p-3">
                               <p className="text-left text-xs leading-relaxed text-dema-muted">
-                                Pas de processus prioritaire ajouté pour ce pilier.
+                                Pas de processus prioritaire ajouté pour ce bloc.
                               </p>
                             </div>
                           )}
@@ -785,6 +880,7 @@ export default function SystemsCatalogClient({
                       </div>
                     );
                   })}
+                </div>
                 </div>
               </div>
             ) : activeTab === "outils" ? (
