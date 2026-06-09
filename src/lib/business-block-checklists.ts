@@ -175,7 +175,7 @@ const SPECIFIC_ACTIONS: Array<[RegExp, string[]]> = [
     "Relancer les partenaires actifs",
     "Mesurer ce que le réseau apporte vraiment",
   ]],
-  [/maintenance|pannes|machines|véhicule & entretien|matériel & lieux|local & machines/i, [
+  [/pannes|machines|véhicule & entretien|matériel & lieux|local & machines/i, [
     "Lister équipements et points sensibles",
     "Planifier entretien ou vérifications",
     "Suivre pannes, incidents et indisponibilités",
@@ -224,7 +224,7 @@ const SPECIFIC_ACTIONS: Array<[RegExp, string[]]> = [
     "Suivre retours, objections et décisions",
     "Relancer les contacts à potentiel",
   ]],
-  [/passages & contrôles|ménage & check-in|service bar|mise en service|tri & traitement/i, [
+  [/passages & contrôles|ménage & check-in|ménage & maintenance|service bar|mise en service|tri & traitement/i, [
     "Préparer le passage ou l'intervention",
     "Vérifier consignes, matériel et accès",
     "Réaliser le contrôle qualité",
