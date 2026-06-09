@@ -211,6 +211,20 @@ function fallbackEnterpriseCatalog() {
   return enterpriseCatalog.map(enrichEnterpriseBusinessModel);
 }
 
+function mergeCatalogWithFallbacks(
+  enterprises: EnterpriseDefinition[],
+): EnterpriseDefinition[] {
+  const existingSlugs = new Set(enterprises.map((enterprise) => enterprise.slug));
+  const missingFallbacks = enterpriseCatalog.filter(
+    (enterprise) => !existingSlugs.has(enterprise.slug)
+  );
+
+  return [
+    ...enterprises,
+    ...missingFallbacks,
+  ].map(enrichEnterpriseBusinessModel);
+}
+
 export async function getEnterpriseCatalog(): Promise<EnterpriseDefinition[]> {
   try {
     const firestore = getAdminFirestore();
@@ -239,8 +253,10 @@ export async function getEnterpriseCatalog(): Promise<EnterpriseDefinition[]> {
       return left.name.localeCompare(right.name, "fr");
     });
 
-    return enterprises.map((enterprise) =>
-      enrichEnterpriseBusinessModel(mergeEnterpriseFallback(stripFirestoreMetadata(enterprise)))
+    return mergeCatalogWithFallbacks(
+      enterprises.map((enterprise) =>
+        mergeEnterpriseFallback(stripFirestoreMetadata(enterprise))
+      )
     );
   } catch (error) {
     console.warn("[enterprise-annuaire] Firestore unavailable, using JSON fallback.", error);

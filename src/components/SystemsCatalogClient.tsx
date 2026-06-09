@@ -384,6 +384,11 @@ export default function SystemsCatalogClient({
     });
   }
 
+  function closeSystemModal() {
+    setSelectedSlug(null);
+    setOpenProcessIds(new Set());
+  }
+
   function openToolDetails(tool: ToolDirectoryItem) {
     setSelectedToolDetail(tool);
   }
@@ -467,6 +472,24 @@ export default function SystemsCatalogClient({
       window.removeEventListener("popstate", handlePopState);
     };
   }, []);
+
+  useEffect(() => {
+    if (!selectedSlug) {
+      return;
+    }
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        closeSystemModal();
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [selectedSlug]);
 
   const sectors = publicSectorFilterLabels;
 
@@ -655,10 +678,10 @@ export default function SystemsCatalogClient({
       {selectedSystem && detail ? (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-brand-blue/35 p-4"
-          onClick={() => {
-            setSelectedSlug(null);
-            setOpenProcessIds(new Set());
-          }}
+          onClick={closeSystemModal}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="system-detail-title"
         >
           <div
             className="relative h-[92vh] w-full max-w-7xl overflow-y-auto rounded-[1.25rem] border border-dema-line bg-dema-paper p-6 pt-14 shadow-[0_24px_60px_rgba(23,35,29,0.14)] md:p-8"
@@ -669,7 +692,7 @@ export default function SystemsCatalogClient({
                 <p className="text-left text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
                   {detail.sectorLabel}
                 </p>
-                <h2 className="mt-2 text-3xl font-normal tracking-tight text-brand-blue md:text-4xl">
+                <h2 id="system-detail-title" className="mt-2 text-3xl font-normal tracking-tight text-brand-blue md:text-4xl">
                   {selectedSystem.name}
                 </h2>
                 <p className="mt-3 max-w-3xl text-base leading-relaxed text-dema-muted">
@@ -697,10 +720,7 @@ export default function SystemsCatalogClient({
                 </div>
                 <button
                   type="button"
-                  onClick={() => {
-                    setSelectedSlug(null);
-                    setOpenProcessIds(new Set());
-                  }}
+                  onClick={closeSystemModal}
                   className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest md:static"
                   aria-label="Fermer"
                 >

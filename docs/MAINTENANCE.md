@@ -34,6 +34,8 @@ Apres chaque merge sur `main` qui touche `src/lib/enterprise-annuaire.json`, le 
 npm run sync:enterprise-annuaire -- --only cabinet-comptable
 ```
 
+Si les secrets Firebase ne sont pas configures dans GitHub Actions, le workflow passe sans synchroniser Firestore. Dans ce cas, ajouter les secrets ci-dessous ou lancer la synchronisation depuis un environnement qui les possede.
+
 ## Environnement
 
 Variables serveur principales:
