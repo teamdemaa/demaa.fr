@@ -1,89 +1,38 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
-import { loadStripe } from "@stripe/stripe-js";
+import { useState } from "react";
 import {
   Check,
   ChevronDown,
-  Minus,
-  Plus,
-  Send,
-  ShoppingBag,
-  Trash2,
   Workflow,
-  X,
 } from "lucide-react";
 import {
   ASSISTANT_PACK_OFFERS,
   formatAssistantPrice,
   type AssistantOffer,
-  type AssistantOfferId,
   type AssistantPack,
   type AssistantPackId,
 } from "@/lib/assistant-packs";
 import PrimaryMobileNav from "@/components/PrimaryMobileNav";
 import SystemSetupModal from "@/components/SystemSetupModal";
 
-type AssistantCatalogOffer = {
-  title: string;
-  category: string;
-  tags: readonly string[];
-  format: string;
-  description: string;
-  icon: typeof Workflow;
-  packOfferId: AssistantOfferId;
-};
-
-type CartItem = {
-  id: AssistantPackId;
-  quantity: number;
-};
-
-type EmbeddedCheckoutState = {
-  clientSecret: string;
-  label: string;
-  publishableKey: string;
-  sessionId: string | null;
-};
-
-const assistantOffers = [
-  {
-    title: "Structuration & Automatisation",
-    category: "Organisation",
-    tags: ["Administration"],
-    format: "À partir de 1500 €",
-    description:
-      "On structure avec vous les process, les outils et les automatisations pour que l’entreprise gagne en clarté, en temps et en capacité de développement.",
-    icon: Workflow,
-    packOfferId: "structuration-automatisation",
-  },
-  {
-    title: "Assistant polyvalent",
-    category: "Administration",
-    tags: ["Administration"],
-    format: "Minimum 20 h / mois",
-    description:
-      "On garde votre administratif à jour : factures, relances clients, suivi des dossiers, documents et organisation des tâches récurrentes.",
-    icon: Send,
-    packOfferId: "administratif",
-  },
-] as const satisfies readonly AssistantCatalogOffer[];
+const STRUCTURATION_OFFER_ID = "structuration-automatisation";
 
 const howItWorksSteps = [
   {
-    title: "Vous choisissez la mission",
+    title: "On analyse votre fonctionnement",
     description:
-      "Structuration ou tâches récurrentes : vous choisissez ce que vous voulez nous confier.",
+      "On identifie vos tâches répétitives, vos outils, vos documents, vos points de friction et les validations qui ralentissent l’équipe.",
   },
   {
-    title: "On confirme le cadre",
+    title: "On priorise les process à structurer",
     description:
-      "On vérifie le périmètre, les délais, les documents nécessaires et les points à valider.",
+      "On choisit les process à clarifier, les tableaux à créer, les formulaires utiles et les automatisations qui auront un vrai impact.",
   },
   {
-    title: "On avance avec vous",
+    title: "On met en place le système",
     description:
-      "On exécute la mission, on vous tient au courant, et vous gardez la main sur les décisions importantes.",
+      "On configure les outils, on teste les parcours avec vos cas réels, puis on vous transmet un système clair et exploitable.",
   },
 ] as const;
 
@@ -94,9 +43,9 @@ const faqItems = [
       "Non. L’audit gratuit ne vous engage à rien. Il sert à faire le point sur votre organisation si vous voulez commencer par clarifier les choses.",
   },
   {
-    question: "Comment je sais quelle offre choisir ?",
+    question: "Comment choisir entre audit, 1 société, 2 sociétés ou 3 sociétés ?",
     answer:
-      "Si vous voulez remettre de l’ordre dans votre organisation, choisissez l’accompagnement structuration. Si vous voulez déléguer des tâches chaque mois, choisissez l’assistant polyvalent.",
+      "L’audit gratuit sert à faire le point avant de vous engager. Le pack 1 société convient si une seule structure doit être organisée. Les packs 2 ou 3 sociétés servent quand plusieurs entités partagent des outils, des tâches ou des validations à coordonner.",
   },
   {
     question: "Est-ce que je garde la main sur les décisions ?",
@@ -138,207 +87,42 @@ const em2aSteps = [
   "Mise en place du système opérationnel avec Airtable, Fillout et Linktree",
 ] as const;
 
+const structurationIncludedItems = [
+  "Analyse de vos tâches et blocages",
+  "Organisation des outils et documents",
+  "Automatisations testées et documentées",
+] as const;
+
 function getPurchasablePacks(offer: AssistantOffer): readonly AssistantPack[] {
   return offer.packs.filter((pack) => pack.amount > 0);
 }
 
-const DEFAULT_PACK_BY_OFFER = Object.fromEntries(
-  ASSISTANT_PACK_OFFERS.map((offer) => {
-    const firstPurchasablePack = getPurchasablePacks(offer)[0] ?? offer.packs[0];
-
-    return [offer.id, firstPurchasablePack.id];
-  })
-) as Record<AssistantOfferId, AssistantPackId>;
-
-function getPackDetails(packId: AssistantPackId) {
-  for (const offer of ASSISTANT_PACK_OFFERS) {
-    const pack = offer.packs.find((item) => item.id === packId);
-
-    if (pack) {
-      return { offer, pack };
-    }
-  }
-
-  return null;
-}
-
-function getPackOffer(offerId: AssistantOfferId) {
+function getPackOffer(offerId: string) {
   return ASSISTANT_PACK_OFFERS.find((offer) => offer.id === offerId);
 }
 
-function getCartItemLabel(item: CartItem) {
-  const details = getPackDetails(item.id);
-
-  if (!details) return "Pack assistant";
-
-  return `${details.offer.title} - ${details.pack.label}`;
-}
-
 export default function AssistantsCatalogClient() {
-  const [selectedPacks, setSelectedPacks] =
-    useState<Record<AssistantOfferId, AssistantPackId>>(DEFAULT_PACK_BY_OFFER);
-  const [openPackOfferId, setOpenPackOfferId] = useState<AssistantOfferId | null>(null);
-  const [openCartOfferId, setOpenCartOfferId] = useState<AssistantOfferId | null>(null);
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [isCartOpen, setIsCartOpen] = useState(false);
+  const structurationOffer = getPackOffer(STRUCTURATION_OFFER_ID);
+  const structurationPacks = structurationOffer ? getPurchasablePacks(structurationOffer) : [];
+  const defaultStructurationPackId = structurationPacks[0]?.id ?? "structuration-1-societe";
+  const [selectedStructurationPackId, setSelectedStructurationPackId] =
+    useState<AssistantPackId>(defaultStructurationPackId);
+  const [isPackDropdownOpen, setIsPackDropdownOpen] = useState(false);
   const [isAuditModalOpen, setIsAuditModalOpen] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState(0);
   const [isStartingCheckout, setIsStartingCheckout] = useState(false);
-  const [embeddedCheckout, setEmbeddedCheckout] = useState<EmbeddedCheckoutState | null>(null);
-  const [isEmbeddedCheckoutLoading, setIsEmbeddedCheckoutLoading] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
-  const embeddedCheckoutRef = useRef<{ destroy: () => void } | null>(null);
 
-  const cartTotal = useMemo(
-    () =>
-      cartItems.reduce((total, item) => {
-        const details = getPackDetails(item.id);
-        return total + (details?.pack.amount ?? 0);
-      }, 0),
-    [cartItems]
-  );
+  const selectedStructurationPack =
+    structurationPacks.find((pack) => pack.id === selectedStructurationPackId) ??
+    structurationPacks[0] ??
+    null;
 
-  const cartCount = cartItems.length;
-
-  const cartLabel = useMemo(() => {
-    if (cartItems.length === 0) return "Votre sélection";
-
-    return cartItems
-      .map((item) => {
-        return getCartItemLabel(item);
-      })
-      .join(", ");
-  }, [cartItems]);
-
-  const addPackToCart = (packId: AssistantPackId) => {
-    setCartItems((current) => {
-      const details = getPackDetails(packId);
-      if (!details || details.pack.amount <= 0) return current;
-
-      const purchasablePacks = getPurchasablePacks(details.offer);
-
-      const existingItem = current.find((item) => {
-        const itemDetails = getPackDetails(item.id);
-        return itemDetails?.offer.id === details.offer.id;
-      });
-
-      if (existingItem) {
-        const currentIndex = purchasablePacks.findIndex((pack) => pack.id === existingItem.id);
-        const selectedIndex = purchasablePacks.findIndex((pack) => pack.id === packId);
-        const nextIndex =
-          existingItem.id === packId
-            ? Math.min(Math.max(currentIndex, 0) + 1, purchasablePacks.length - 1)
-            : selectedIndex;
-        const nextPack = purchasablePacks[nextIndex] ?? details.pack;
-
-        return current.map((item) =>
-          item.id === existingItem.id ? { ...item, id: nextPack.id, quantity: 1 } : item
-        );
-      }
-
-      return [...current, { id: packId, quantity: 1 }];
-    });
-    setIsCartOpen(true);
+  const startCheckout = async (pack: AssistantPack) => {
     setCheckoutError(null);
-  };
 
-  const handleSelectedPackAction = (pack: AssistantPack) => {
     if (pack.amount <= 0) {
       setIsAuditModalOpen(true);
-      setCheckoutError(null);
-      return;
-    }
-
-    addPackToCart(pack.id);
-  };
-
-  const selectPack = (offerId: AssistantOfferId, packId: AssistantPackId) => {
-    setSelectedPacks((current) => ({
-      ...current,
-      [offerId]: packId,
-    }));
-    setOpenPackOfferId(null);
-  };
-
-  const removePackFromCart = (packId: AssistantPackId) => {
-    setCartItems((current) => current.filter((item) => item.id !== packId));
-    setCheckoutError(null);
-  };
-
-  const decrementPack = (packId: AssistantPackId) => {
-    const details = getPackDetails(packId);
-    if (!details) return;
-
-    const purchasablePacks = getPurchasablePacks(details.offer);
-    const currentIndex = purchasablePacks.findIndex((pack) => pack.id === packId);
-
-    setCartItems((current) => {
-      if (currentIndex <= 0) {
-        return current.filter((item) => item.id !== packId);
-      }
-
-      const previousPack = purchasablePacks[currentIndex - 1];
-
-      return current.map((item) =>
-        item.id === packId ? { ...item, id: previousPack.id, quantity: 1 } : item
-      );
-    });
-    setCheckoutError(null);
-  };
-
-  const incrementPack = (packId: AssistantPackId) => {
-    const details = getPackDetails(packId);
-    if (!details) return;
-
-    const purchasablePacks = getPurchasablePacks(details.offer);
-    const currentIndex = purchasablePacks.findIndex((pack) => pack.id === packId);
-    const nextPack =
-      purchasablePacks[Math.min(Math.max(currentIndex, 0) + 1, purchasablePacks.length - 1)];
-
-    setCartItems((current) =>
-      current.map((item) =>
-        item.id === packId ? { ...item, id: nextPack.id, quantity: 1 } : item
-      )
-    );
-    setCheckoutError(null);
-  };
-
-  const changeCartPack = (currentPackId: AssistantPackId, nextPackId: AssistantPackId) => {
-    if (currentPackId === nextPackId) return;
-
-    setCartItems((current) => {
-      const currentItem = current.find((item) => item.id === currentPackId);
-      if (!currentItem) return current;
-
-      const nextDetails = getPackDetails(nextPackId);
-      const nextItem = current.find((item) => {
-        const itemDetails = getPackDetails(item.id);
-        return itemDetails?.offer.id === nextDetails?.offer.id && item.id !== currentPackId;
-      });
-
-      if (nextItem) {
-        return current
-          .filter((item) => item.id !== currentPackId)
-          .map((item) =>
-            item.id === nextPackId
-              ? { ...item, quantity: 1 }
-              : item
-          );
-      }
-
-      return current.map((item) =>
-        item.id === currentPackId ? { ...item, id: nextPackId, quantity: 1 } : item
-      );
-    });
-    setOpenCartOfferId(null);
-    setCheckoutError(null);
-  };
-
-  const handlePayment = async () => {
-    setCheckoutError(null);
-
-    if (cartItems.length === 0) {
-      setCheckoutError("Ajoutez au moins un pack pour continuer.");
       return;
     }
 
@@ -349,10 +133,7 @@ export default function AssistantsCatalogClient() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          items: cartItems.map((item) => ({
-            packId: item.id,
-            quantity: 1,
-          })),
+          items: [{ packId: pack.id, quantity: 1 }],
         }),
       });
 
@@ -367,7 +148,7 @@ export default function AssistantsCatalogClient() {
           }
         | null;
 
-      if (!response.ok || (!payload?.url && (!payload?.clientSecret || !payload.publishableKey))) {
+      if (!response.ok || !payload?.url) {
         throw new Error(
           payload?.error ||
             "Impossible de créer le paiement Stripe pour le moment."
@@ -378,22 +159,6 @@ export default function AssistantsCatalogClient() {
         window.location.assign(payload.url);
         return;
       }
-
-      const clientSecret = payload.clientSecret;
-      const publishableKey = payload.publishableKey;
-
-      if (!clientSecret || !publishableKey) {
-        throw new Error("Impossible de créer le paiement Stripe pour le moment.");
-      }
-
-      setEmbeddedCheckout({
-        clientSecret,
-        label: payload.label || cartLabel,
-        publishableKey,
-        sessionId: payload.id ?? null,
-      });
-      setIsCartOpen(false);
-      setIsStartingCheckout(false);
     } catch (error) {
       setCheckoutError(
         error instanceof Error
@@ -404,157 +169,18 @@ export default function AssistantsCatalogClient() {
     }
   };
 
-  const closeEmbeddedCheckout = () => {
-    embeddedCheckoutRef.current?.destroy();
-    embeddedCheckoutRef.current = null;
-    setEmbeddedCheckout(null);
-    setIsEmbeddedCheckoutLoading(false);
-  };
-
-  useEffect(() => {
-    if (!embeddedCheckout) return undefined;
-
-    let isActive = true;
-    let loadingFallbackTimer: ReturnType<typeof setTimeout> | null = null;
-    let iframeObserver: MutationObserver | null = null;
-    const containerId = "assistant-embedded-checkout";
-
-    setCheckoutError(null);
-    setIsEmbeddedCheckoutLoading(true);
-
-    function watchStripeFrameLoad() {
-      const container = document.getElementById(containerId);
-      if (!container) return;
-
-      const markLoaded = () => {
-        if (!isActive) return;
-        setIsEmbeddedCheckoutLoading(false);
-      };
-
-      const attachLoadListener = () => {
-        const iframe = container.querySelector("iframe");
-        if (!iframe) return false;
-
-        iframe.addEventListener("load", markLoaded, { once: true });
-        return true;
-      };
-
-      if (attachLoadListener()) return;
-
-      iframeObserver = new MutationObserver(() => {
-        if (attachLoadListener()) {
-          iframeObserver?.disconnect();
-          iframeObserver = null;
-        }
-      });
-      iframeObserver.observe(container, { childList: true, subtree: true });
-    }
-
-    void (async () => {
-      try {
-        const stripe = await loadStripe(embeddedCheckout.publishableKey);
-
-        if (!stripe) {
-          throw new Error("Impossible de charger Stripe Checkout.");
-        }
-
-        const checkout = await stripe.createEmbeddedCheckoutPage({
-          clientSecret: embeddedCheckout.clientSecret,
-          onComplete: () => {
-            if (embeddedCheckout.sessionId) {
-              window.location.assign(
-                `/assistant/success?session_id=${encodeURIComponent(embeddedCheckout.sessionId)}`
-              );
-            }
-          },
-        });
-
-        if (!isActive) {
-          checkout.destroy();
-          return;
-        }
-
-        embeddedCheckoutRef.current?.destroy();
-        embeddedCheckoutRef.current = checkout;
-        checkout.mount(`#${containerId}`);
-        watchStripeFrameLoad();
-        loadingFallbackTimer = setTimeout(() => {
-          if (isActive) setIsEmbeddedCheckoutLoading(false);
-        }, 6000);
-      } catch (error) {
-        setCheckoutError(
-          error instanceof Error
-            ? error.message
-            : "Impossible d'afficher le paiement Stripe pour le moment."
-        );
-        setEmbeddedCheckout(null);
-        setIsEmbeddedCheckoutLoading(false);
-      }
-    })();
-
-    return () => {
-      isActive = false;
-      if (loadingFallbackTimer) clearTimeout(loadingFallbackTimer);
-      iframeObserver?.disconnect();
-      embeddedCheckoutRef.current?.destroy();
-      embeddedCheckoutRef.current = null;
-    };
-  }, [embeddedCheckout]);
-
   return (
     <>
-      {embeddedCheckout ? (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-brand-blue/45 px-4 py-5 md:px-8"
-          role="dialog"
-          aria-modal="true"
-          aria-label={`Paiement Stripe pour ${embeddedCheckout.label}`}
-        >
-          <div className="mx-auto max-h-[88vh] w-full max-w-3xl overflow-y-auto rounded-[1.25rem] border border-dema-line bg-dema-paper shadow-[0_24px_60px_rgba(23,35,29,0.14)]">
-            <div className="border-b border-dema-line bg-dema-paper">
-              <div className="flex items-center justify-between gap-4 px-5 py-4 md:px-6">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-dema-forest">
-                    Paiement sécurisé
-                  </p>
-                  <h2 className="mt-1 text-lg font-semibold text-brand-blue">
-                    {formatAssistantPrice(cartTotal)}
-                  </h2>
-                </div>
-                <button
-                  type="button"
-                  onClick={closeEmbeddedCheckout}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition hover:bg-[#ebeee9]"
-                  aria-label="Fermer le paiement"
-                >
-                  <X className="h-5 w-5" aria-hidden="true" />
-                </button>
-              </div>
-            </div>
-            <div className="relative min-h-[680px] px-2 py-4 md:px-4">
-              {isEmbeddedCheckoutLoading ? (
-                <div className="absolute inset-0 z-10 flex min-h-[560px] items-center justify-center bg-dema-paper/92 text-sm font-medium text-dema-muted">
-                  <span className="rounded-full border border-dema-line bg-dema-paper px-4 py-2 shadow-[0_8px_24px_rgba(23,35,29,0.04)]">
-                    Chargement du paiement...
-                  </span>
-                </div>
-              ) : null}
-              <div id="assistant-embedded-checkout" />
-            </div>
-          </div>
-        </div>
-      ) : null}
-
       <section className="ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] w-screen bg-dema-cream px-4 pb-5 pt-5 text-center md:px-8 md:pb-6 md:pt-16">
         <div className="mx-auto max-w-6xl space-y-6 md:space-y-7">
           <PrimaryMobileNav activeTab="deleguer" />
 
           <div className="mx-auto max-w-5xl">
             <h1 className="text-[clamp(3rem,14.5vw,3.36rem)] tracking-tight leading-[0.92] sm:text-[2.75rem] md:text-[3.75rem] lg:text-[4.5rem]">
-              <span className="demaa-hero-title text-brand-blue/86">Déléguez</span>
+              <span className="demaa-hero-title text-brand-blue/86">Structurez</span>
               <br />
               <span className="font-sans font-light not-italic text-brand-blue/44">
-                ce qui vous ralentit.
+                ce qui vous ralentit
               </span>
             </h1>
           </div>
@@ -562,153 +188,10 @@ export default function AssistantsCatalogClient() {
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-6xl px-4 pb-14 pt-4 md:px-8 md:pb-20 md:pt-8">
-        <div className="mb-4 flex items-center justify-between gap-4">
-          <h2 className="text-sm font-semibold tracking-tight text-brand-blue md:text-base">
-            Ce que vous pouvez déléguer
-          </h2>
-          <button
-            type="button"
-            onClick={() => setIsCartOpen(true)}
-            className="relative inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-brand-blue/28 bg-dema-paper text-brand-blue/72 shadow-[0_5px_14px_rgba(23,35,29,0.025)] transition hover:border-brand-blue/40 hover:bg-dema-sage/45"
-            aria-label="Ouvrir le panier"
-          >
-            <ShoppingBag className="h-4 w-4" aria-hidden="true" />
-            {cartCount > 0 ? (
-              <span className="absolute -right-1 -top-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-dema-forest px-1 text-[10px] font-semibold text-dema-paper">
-                {cartCount}
-              </span>
-            ) : null}
-          </button>
-        </div>
-
-        <div className="grid gap-4 md:grid-cols-2">
-          {assistantOffers.map((offer) => {
-            const Icon = offer.icon;
-            const packOffer = getPackOffer(offer.packOfferId);
-            const purchasablePacks = packOffer ? getPurchasablePacks(packOffer) : [];
-            const selectablePacks = packOffer?.packs ?? [];
-            const selectedPackId = selectedPacks[offer.packOfferId];
-            const selectedPack =
-              selectablePacks.find((pack) => pack.id === selectedPackId) ||
-              purchasablePacks[0] ||
-              selectablePacks[0];
-            const cardDescription =
-              selectedPack && selectedPack.amount <= 0 ? selectedPack.detail : offer.description;
-            const isPackDropdownOpen = openPackOfferId === offer.packOfferId;
-
-            return (
-              <article
-                key={offer.title}
-                className={`demaa-card relative flex h-full flex-col overflow-visible rounded-[1.15rem] p-5 ${
-                  isPackDropdownOpen ? "z-40" : "z-0"
-                }`}
-              >
-                <div>
-                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
-                    <Icon className="h-5 w-5" aria-hidden="true" />
-                  </span>
-                  <p className="mt-4 text-[10px] font-medium uppercase tracking-[0.16em] text-dema-forest">
-                    {offer.category}
-                  </p>
-                  <h2 className="mt-3 text-xl font-semibold leading-tight tracking-tight text-brand-blue">
-                    {offer.title}
-                  </h2>
-                </div>
-                <p className="mt-4 text-sm leading-relaxed text-dema-muted">
-                  {cardDescription}
-                </p>
-                <div className="mt-auto pt-5">
-                  {packOffer && selectedPack ? (
-                    <div className="flex items-center gap-2">
-                      <div className="relative min-w-0 flex-1">
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setOpenPackOfferId((current) =>
-                              current === offer.packOfferId ? null : offer.packOfferId
-                            )
-                          }
-                          className="group inline-flex h-11 w-full min-w-0 items-center justify-between gap-3 rounded-full border border-dema-line/85 bg-dema-paper px-3.5 text-left text-sm font-medium text-brand-blue shadow-[0_7px_18px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/20 hover:bg-dema-sage/45 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dema-forest/35"
-                          aria-expanded={isPackDropdownOpen}
-                          aria-haspopup="listbox"
-                        >
-                          <span className="min-w-0 truncate">
-                            {selectedPack.label} - {formatAssistantPrice(selectedPack.amount)}
-                          </span>
-                          <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-paper">
-                            <ChevronDown
-                              className={`h-4 w-4 transition ${
-                                isPackDropdownOpen ? "rotate-180" : ""
-                              }`}
-                              aria-hidden="true"
-                            />
-                          </span>
-                        </button>
-                        {isPackDropdownOpen ? (
-                          <div
-                            className="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-[1rem] border border-dema-line bg-dema-paper p-1.5 shadow-[0_18px_46px_rgba(23,35,29,0.12)]"
-                            role="listbox"
-                          >
-                            {selectablePacks.map((pack) => {
-                              const isSelected = pack.id === selectedPack.id;
-
-                              return (
-                                <button
-                                  key={pack.id}
-                                  type="button"
-                                  onClick={() => selectPack(offer.packOfferId, pack.id)}
-                                  className={`flex w-full items-start justify-between gap-3 rounded-[0.8rem] px-3 py-2.5 text-left transition ${
-                                    isSelected
-                                      ? "bg-dema-sage text-brand-blue"
-                                      : "text-brand-blue hover:bg-dema-sage/55"
-                                  }`}
-                                  role="option"
-                                  aria-selected={isSelected}
-                                >
-                                  <span className="min-w-0">
-                                    <span className="block text-sm font-semibold leading-tight">
-                                      {pack.label} - {formatAssistantPrice(pack.amount)}
-                                    </span>
-                                  </span>
-                                  {isSelected ? (
-                                    <Check
-                                      className="mt-0.5 h-4 w-4 shrink-0 text-dema-forest"
-                                      aria-hidden="true"
-                                    />
-                                  ) : null}
-                                </button>
-                              );
-                            })}
-                          </div>
-                        ) : null}
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          if (!selectedPack) return;
-                          handleSelectedPackAction(selectedPack);
-                        }}
-                        className="inline-flex h-11 shrink-0 items-center justify-center rounded-full border border-dema-forest/18 bg-dema-paper px-4 text-sm font-medium text-dema-forest shadow-[0_7px_18px_rgba(23,35,29,0.025)] transition hover:border-dema-forest/28 hover:bg-dema-sage/55"
-                      >
-                        {selectedPack.amount <= 0 ? "Demander" : "Ajouter"}
-                      </button>
-                    </div>
-                  ) : null}
-                </div>
-              </article>
-            );
-          })}
-        </div>
-      </section>
-
       <section className="mx-auto w-full max-w-6xl px-4 pb-20 md:px-8 md:pb-28">
         <div className="border-t border-dema-line/65 pt-10 md:pt-14">
           <div>
-            <h2 className="text-3xl font-semibold tracking-tight text-brand-blue md:text-4xl">
-              Comment ça se passe concrètement ?
-            </h2>
-            <div className="mx-auto mt-6 grid gap-4 md:max-w-5xl md:grid-cols-3 md:gap-5">
+            <div className="mx-auto grid gap-4 md:max-w-5xl md:grid-cols-3 md:gap-5">
               {howItWorksSteps.map((step, index) => (
                 <div
                   key={step.title}
@@ -732,7 +215,7 @@ export default function AssistantsCatalogClient() {
             </div>
           </div>
 
-          <div className="mt-14 md:mt-20">
+          <div className="mt-14 md:mt-20 lg:-mx-[5.25rem]">
             <div className="grid gap-6 rounded-[1rem] border border-dema-line/70 bg-dema-paper px-4 py-6 md:grid-cols-[1.05fr_0.95fr] md:px-6 md:py-7">
               <div>
                 <p className="inline-flex rounded-full bg-dema-forest/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
@@ -783,6 +266,178 @@ export default function AssistantsCatalogClient() {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+
+          <div id="pricing" className="mx-auto mt-14 max-w-[50.5rem] scroll-mt-24 md:mt-20">
+            <div className="mx-auto max-w-3xl text-center">
+              <h2 className="text-3xl font-semibold tracking-tight text-brand-blue md:text-4xl">
+                Choisissez votre point d&apos;entrée
+              </h2>
+              <p className="mt-3 text-sm leading-relaxed text-dema-muted md:text-base">
+                Commencez par un audit offert ou lancez directement la structuration de votre organisation.
+              </p>
+            </div>
+
+            <div className="mt-6 grid gap-4 md:grid-cols-2 md:gap-5">
+              <article className="demaa-card flex h-full flex-col rounded-[1.15rem] p-5 text-left">
+                <div>
+                  <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
+                    <Check className="h-5 w-5" aria-hidden="true" />
+                  </span>
+                  <p className="mt-4 text-[10px] font-medium uppercase tracking-[0.16em] text-dema-forest">
+                    Diagnostic
+                  </p>
+                  <h3 className="mt-2 text-2xl font-semibold leading-tight tracking-tight text-brand-blue">
+                    Audit organisation
+                  </h3>
+                </div>
+                <div className="mt-6">
+                  <p className="text-4xl font-semibold tracking-tight text-brand-blue">
+                    0 €
+                  </p>
+                  <p className="mt-3 text-sm leading-relaxed text-dema-muted">
+                    Un échange pour comprendre vos tâches récurrentes, vos outils, vos documents,
+                    vos blocages et les premières priorités à traiter.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setCheckoutError(null);
+                    setIsAuditModalOpen(true);
+                  }}
+                  className="mt-6 inline-flex w-full items-center justify-center rounded-full border border-dema-forest/20 bg-dema-sage/55 px-5 py-2.5 text-sm font-medium text-dema-forest transition hover:border-dema-forest/30 hover:bg-dema-sage disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  Demander l&apos;audit gratuit
+                </button>
+              </article>
+
+              <article className="demaa-card relative flex h-full flex-col overflow-visible rounded-[1.15rem] p-5 text-left">
+                <div>
+                  <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
+                    <Workflow className="h-5 w-5" aria-hidden="true" />
+                  </span>
+                  <p className="mt-4 text-[10px] font-medium uppercase tracking-[0.16em] text-dema-forest">
+                    Organisation
+                  </p>
+                  <h3 className="mt-2 text-2xl font-semibold leading-tight tracking-tight text-brand-blue">
+                    Structuration & Automatisation
+                  </h3>
+                </div>
+
+                <div className="mt-6">
+                  <p className="text-4xl font-semibold tracking-tight text-brand-blue">
+                    {selectedStructurationPack
+                      ? formatAssistantPrice(selectedStructurationPack.amount)
+                      : "À partir de 1 500 €"}
+                  </p>
+                  <p className="mt-3 text-sm leading-relaxed text-dema-muted">
+                    On structure vos process, vos outils, vos tableaux de suivi et les automatisations utiles
+                    pour rendre l&apos;activité plus claire et plus simple à piloter.
+                  </p>
+                </div>
+
+                <div className="mt-5 rounded-[1rem] border border-dema-line/70 bg-dema-cream/60 p-4">
+                  <p className="text-sm font-semibold text-brand-blue">Ce qui est inclus</p>
+                  <ul className="mt-3 space-y-2.5">
+                    {structurationIncludedItems.map((item) => (
+                      <li
+                        key={item}
+                        className="flex items-start gap-3 text-sm leading-relaxed text-dema-muted"
+                      >
+                        <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
+                          <Check className="h-3.5 w-3.5" aria-hidden="true" />
+                        </span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {selectedStructurationPack ? (
+                  <div className="mt-5">
+                    <div className="relative">
+                      <button
+                        type="button"
+                        onClick={() => setIsPackDropdownOpen((current) => !current)}
+                        className="group inline-flex h-11 w-full min-w-0 items-center justify-between gap-3 rounded-full border border-dema-line/85 bg-dema-paper px-3.5 text-left text-sm font-medium text-brand-blue shadow-[0_7px_18px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/20 hover:bg-dema-sage/45 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dema-forest/35"
+                        aria-expanded={isPackDropdownOpen}
+                        aria-haspopup="listbox"
+                      >
+                        <span className="min-w-0 truncate">
+                          {selectedStructurationPack.label} - {formatAssistantPrice(selectedStructurationPack.amount)}
+                        </span>
+                        <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-paper">
+                          <ChevronDown
+                            className={`h-4 w-4 transition ${
+                              isPackDropdownOpen ? "rotate-180" : ""
+                            }`}
+                            aria-hidden="true"
+                          />
+                        </span>
+                      </button>
+                      {isPackDropdownOpen ? (
+                        <div
+                          className="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-[1rem] border border-dema-line bg-dema-paper p-1.5 shadow-[0_18px_46px_rgba(23,35,29,0.12)]"
+                          role="listbox"
+                        >
+                          {structurationPacks.map((pack) => {
+                            const isSelected = pack.id === selectedStructurationPack.id;
+
+                            return (
+                              <button
+                                key={pack.id}
+                                type="button"
+                                onClick={() => {
+                                  setSelectedStructurationPackId(pack.id);
+                                  setIsPackDropdownOpen(false);
+                                  setCheckoutError(null);
+                                }}
+                                className={`flex w-full items-start justify-between gap-3 rounded-[0.8rem] px-3 py-2.5 text-left transition ${
+                                  isSelected
+                                    ? "bg-dema-sage text-brand-blue"
+                                    : "text-brand-blue hover:bg-dema-sage/55"
+                                }`}
+                                role="option"
+                                aria-selected={isSelected}
+                              >
+                                <span className="min-w-0">
+                                  <span className="block text-sm font-semibold leading-tight">
+                                    {pack.label} - {formatAssistantPrice(pack.amount)}
+                                  </span>
+                                </span>
+                                {isSelected ? (
+                                  <Check
+                                    className="mt-0.5 h-4 w-4 shrink-0 text-dema-forest"
+                                    aria-hidden="true"
+                                  />
+                                ) : null}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      ) : null}
+                    </div>
+                  </div>
+                ) : null}
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (selectedStructurationPack) void startCheckout(selectedStructurationPack);
+                  }}
+                  disabled={!selectedStructurationPack || isStartingCheckout}
+                  className="mt-4 inline-flex w-full items-center justify-center rounded-full border border-dema-forest/20 bg-dema-sage/55 px-5 py-2.5 text-sm font-medium text-dema-forest transition hover:border-dema-forest/30 hover:bg-dema-sage disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {isStartingCheckout ? "Ouverture..." : "Valider"}
+                </button>
+                {checkoutError ? (
+                  <p className="mt-3 text-sm leading-relaxed text-dema-forest">
+                    {checkoutError}
+                  </p>
+                ) : null}
+              </article>
             </div>
           </div>
 
@@ -853,195 +508,6 @@ export default function AssistantsCatalogClient() {
         isOpen={isAuditModalOpen}
         onClose={() => setIsAuditModalOpen(false)}
       />
-
-      {isCartOpen ? (
-        <div className="fixed inset-0 z-50 bg-brand-blue/35" onClick={() => setIsCartOpen(false)}>
-          <aside
-            className="absolute bottom-0 right-0 flex max-h-[88vh] w-full flex-col overflow-hidden rounded-t-[1.15rem] bg-dema-cream shadow-[0_20px_60px_rgba(23,35,29,0.18)] md:bottom-auto md:top-0 md:h-full md:max-h-none md:w-[26rem] md:rounded-l-[1.15rem] md:rounded-tr-none"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <div className="min-h-0 flex-1 overflow-y-auto px-5 pt-5 md:px-6 md:pt-6">
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
-                    Votre panier
-                  </p>
-                  <h2 className="mt-2 text-2xl font-semibold tracking-tight text-brand-blue">
-                    Sélection
-                  </h2>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setIsCartOpen(false)}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition hover:bg-[#ebeee9]"
-                  aria-label="Fermer le panier"
-                >
-                  <X className="h-5 w-5" aria-hidden="true" />
-                </button>
-              </div>
-
-              {cartItems.length > 0 ? (
-                <div className="mt-6 space-y-3 pb-5">
-                  {cartItems.map((item) => {
-                    const details = getPackDetails(item.id);
-
-                    if (!details) return null;
-
-                    const purchasablePacks = getPurchasablePacks(details.offer);
-                    const lineTotal = details.pack.amount;
-                    const currentPackIndex = purchasablePacks.findIndex(
-                      (pack) => pack.id === item.id
-                    );
-                    const packStep = currentPackIndex + 1;
-                    const isFirstPack = currentPackIndex <= 0;
-                    const isLastPack = currentPackIndex >= purchasablePacks.length - 1;
-
-                    return (
-                      <div
-                        key={item.id}
-                        className="rounded-[0.9rem] border border-dema-line bg-dema-paper px-4 py-3"
-                      >
-                        <div className="flex items-start justify-between gap-3">
-                          <div className="min-w-0 flex-1">
-                            <p className="text-sm font-semibold leading-snug text-brand-blue">
-                              {details.offer.title}
-                            </p>
-                          </div>
-                          <p className="shrink-0 text-sm font-semibold text-dema-forest">
-                            {formatAssistantPrice(lineTotal)}
-                          </p>
-                        </div>
-                        <div className="mt-3 flex items-center gap-2">
-                          <div className="relative min-w-0 flex-1">
-                            <button
-                              type="button"
-                              onClick={() =>
-                                setOpenCartOfferId((current) =>
-                                  current === details.offer.id ? null : details.offer.id
-                                )
-                              }
-                              className="group inline-flex h-10 w-full min-w-0 items-center justify-between gap-2 rounded-full border border-dema-line/85 bg-dema-cream px-3 text-left text-xs font-medium text-brand-blue transition hover:border-dema-forest/20 hover:bg-dema-sage/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dema-forest/35"
-                              aria-expanded={openCartOfferId === details.offer.id}
-                              aria-haspopup="listbox"
-                            >
-                              <span className="min-w-0 truncate">
-                                {details.pack.label} - {formatAssistantPrice(details.pack.amount)}
-                              </span>
-                              <span className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-dema-paper text-dema-forest transition group-hover:bg-dema-sage">
-                                <ChevronDown
-                                  className={`h-3.5 w-3.5 transition ${
-                                    openCartOfferId === details.offer.id ? "rotate-180" : ""
-                                  }`}
-                                  aria-hidden="true"
-                                />
-                              </span>
-                            </button>
-                            {openCartOfferId === details.offer.id ? (
-                              <div
-                                className="absolute left-0 right-0 top-full z-40 mt-2 overflow-hidden rounded-[1rem] border border-dema-line bg-dema-paper p-1.5 shadow-[0_18px_46px_rgba(23,35,29,0.12)]"
-                                role="listbox"
-                              >
-                                {purchasablePacks.map((pack) => {
-                                  const isSelected = pack.id === item.id;
-
-                                  return (
-                                    <button
-                                      key={pack.id}
-                                      type="button"
-                                      onClick={() => changeCartPack(item.id, pack.id)}
-                                      className={`flex w-full items-start justify-between gap-3 rounded-[0.8rem] px-3 py-2.5 text-left transition ${
-                                        isSelected
-                                          ? "bg-dema-sage text-brand-blue"
-                                          : "text-brand-blue hover:bg-dema-sage/55"
-                                      }`}
-                                      role="option"
-                                      aria-selected={isSelected}
-                                    >
-                                      <span className="min-w-0">
-                                        <span className="block text-xs font-semibold leading-tight">
-                                          {pack.label} - {formatAssistantPrice(pack.amount)}
-                                        </span>
-                                      </span>
-                                      {isSelected ? (
-                                        <Check
-                                          className="mt-0.5 h-3.5 w-3.5 shrink-0 text-dema-forest"
-                                          aria-hidden="true"
-                                        />
-                                      ) : null}
-                                    </button>
-                                  );
-                                })}
-                              </div>
-                            ) : null}
-                          </div>
-                          <div className="inline-flex shrink-0 items-center rounded-full border border-dema-line bg-dema-cream p-1">
-                            <button
-                              type="button"
-                              onClick={() => decrementPack(item.id)}
-                              className="inline-flex h-8 w-8 items-center justify-center rounded-full text-dema-forest transition hover:bg-dema-paper disabled:cursor-not-allowed disabled:opacity-35"
-                              aria-label={
-                                isFirstPack ? "Retirer du panier" : "Revenir au pack précédent"
-                              }
-                            >
-                              <Minus className="h-4 w-4" aria-hidden="true" />
-                            </button>
-                            <span className="min-w-8 text-center text-xs font-semibold text-brand-blue">
-                              {packStep}
-                            </span>
-                            <button
-                              type="button"
-                              onClick={() => incrementPack(item.id)}
-                              disabled={isLastPack}
-                              className="inline-flex h-8 w-8 items-center justify-center rounded-full text-dema-forest transition hover:bg-dema-paper disabled:cursor-not-allowed disabled:opacity-35"
-                              aria-label="Passer au pack suivant"
-                            >
-                              <Plus className="h-4 w-4" aria-hidden="true" />
-                            </button>
-                          </div>
-                          <button
-                            type="button"
-                            onClick={() => removePackFromCart(item.id)}
-                            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition hover:bg-[#ebeee9]"
-                            aria-label="Retirer du panier"
-                          >
-                            <Trash2 className="h-4 w-4" aria-hidden="true" />
-                          </button>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              ) : (
-                <p className="mt-6 rounded-[0.9rem] border border-dashed border-dema-line bg-dema-paper px-4 py-5 text-sm leading-relaxed text-dema-muted">
-                  Ajoutez un pack pour voir le total et ouvrir le paiement.
-                </p>
-              )}
-            </div>
-
-            <div className="shrink-0 border-t border-dema-line bg-dema-cream px-5 pb-[calc(env(safe-area-inset-bottom)+1.25rem)] pt-5 md:px-6 md:pb-6">
-              <div className="flex items-center justify-between gap-4">
-                <span className="text-sm font-medium text-dema-muted">Total</span>
-                <span className="text-xl font-semibold text-brand-blue">
-                  {formatAssistantPrice(cartTotal)}
-                </span>
-              </div>
-              <button
-                type="button"
-                onClick={handlePayment}
-                disabled={isStartingCheckout || cartItems.length === 0}
-                className="mt-5 inline-flex w-full items-center justify-center rounded-full bg-dema-forest px-5 py-3 text-sm font-medium text-dema-paper transition hover:bg-[#284f3a] disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                {isStartingCheckout ? "Ouverture du paiement..." : "Valider et payer"}
-              </button>
-              {checkoutError ? (
-                <p className="mt-3 text-sm leading-relaxed text-dema-forest">
-                  {checkoutError}
-                </p>
-              ) : null}
-            </div>
-          </aside>
-        </div>
-      ) : null}
     </>
   );
 }

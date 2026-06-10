@@ -3,16 +3,16 @@ import Navbar from "@/components/Navbar";
 import AssistantsCatalogClient from "@/components/AssistantsCatalogClient";
 
 export const metadata: Metadata = {
-  title: "Déléguer des tâches opérationnelles - Demaa",
+  title: "Structuration & automatisation d'entreprise - Demaa",
   description:
-    "Choisissez le pack Demaa adapté à vos besoins : accompagnement structuration, assistant polyvalent ou appels d'offres.",
+    "Auditez votre organisation puis structurez vos process, outils et automatisations avec Demaa.",
   alternates: {
     canonical: "/deleguer",
   },
   openGraph: {
-    title: "Déléguer des tâches opérationnelles - Demaa",
+    title: "Structuration & automatisation d'entreprise - Demaa",
     description:
-      "Choisissez le pack Demaa adapté à vos besoins : accompagnement structuration, assistant polyvalent ou appels d'offres.",
+      "Auditez votre organisation puis structurez vos process, outils et automatisations avec Demaa.",
     url: "/deleguer",
     siteName: "Demaa",
     locale: "fr_FR",
@@ -20,9 +20,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Déléguer des tâches opérationnelles - Demaa",
+    title: "Structuration & automatisation d'entreprise - Demaa",
     description:
-      "Choisissez le pack Demaa adapté à vos besoins : accompagnement structuration, assistant polyvalent ou appels d'offres.",
+      "Auditez votre organisation puis structurez vos process, outils et automatisations avec Demaa.",
   },
 };
 

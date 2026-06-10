@@ -56,12 +56,17 @@ import {
 import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
 import SystemSetupModal from "@/components/SystemSetupModal";
 import HorizontalScrollHint from "@/components/HorizontalScrollHint";
+import DeleguerPricingPreviewModal from "@/components/DeleguerPricingPreviewModal";
+import { ServiceIcon } from "@/components/ServiceIcon";
+import ServiceDetailDialog from "@/components/ServiceDetailDialog";
 import { ALL_SECTORS_LABEL, publicSectorFilterLabels } from "@/lib/public-sectors";
 import type { ToolDirectoryItem } from "@/lib/tool-directory";
 import type { System } from "@/lib/types";
 import type { OperationalSystemDetail, SystemPillar } from "@/lib/system-operations";
 import { getSystemResources, type SystemResource } from "@/lib/system-resources";
 import { buildBusinessBlockChecklists } from "@/lib/business-block-checklists";
+import { getRecommendedServicesForSystem } from "@/lib/service-recommendations";
+import type { DemaaService } from "@/lib/service-catalog";
 
 type SystemsCatalogClientProps = {
   systems: System[];
@@ -76,7 +81,7 @@ type SystemsCatalogClientProps = {
   initialActiveTab?: string;
 };
 
-type SystemModalTab = "processus" | "outils" | "ressources";
+type SystemModalTab = "processus" | "outils" | "services" | "ressources";
 type ProcessGroup = {
   title: string;
   checklist: string[];
@@ -301,6 +306,8 @@ export default function SystemsCatalogClient({
   const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false);
   const [isSystemSetupModalOpen, setIsSystemSetupModalOpen] = useState(false);
   const [selectedToolDetail, setSelectedToolDetail] = useState<ToolDirectoryItem | null>(null);
+  const [selectedServiceDetail, setSelectedServiceDetail] = useState<DemaaService | null>(null);
+  const [isDeleguerPricingOpen, setIsDeleguerPricingOpen] = useState(false);
   const [resourcePreview, setResourcePreview] = useState<{
     resource: SystemResource;
     slideIndex: number;
@@ -401,6 +408,55 @@ export default function SystemsCatalogClient({
     );
   }
 
+  function renderServiceCard(service: DemaaService) {
+    const serviceSource =
+      service.slug === "structuration-automatisation" ? "Demaa" : "Partenaire";
+
+    return (
+      <button
+        type="button"
+        key={service.slug}
+        onClick={() => {
+          if (service.slug === "structuration-automatisation") {
+            setIsDeleguerPricingOpen(true);
+            return;
+          }
+
+          setSelectedServiceDetail(service);
+        }}
+        className="demaa-card group flex min-h-[15rem] flex-col rounded-[1.15rem] p-5 text-left"
+      >
+        <div className="flex items-start justify-between gap-4">
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper">
+            <ServiceIcon icon={service.icon} className="h-4 w-4" aria-hidden="true" />
+          </span>
+        </div>
+        <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
+          {service.category}
+        </p>
+        <h3 className="mt-2 text-lg font-semibold leading-snug text-brand-blue">
+          {service.name}
+        </h3>
+        <p className="mt-3 text-sm leading-relaxed text-dema-muted">
+          {service.shortDescription}
+        </p>
+        <div className="mt-auto pt-4">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="inline-flex rounded-full bg-dema-forest px-3 py-1 text-[10px] font-medium text-dema-paper">
+              {service.price}
+            </span>
+            <span className="inline-flex rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-medium lowercase text-brand-blue/70">
+              {service.category}
+            </span>
+            <span className="inline-flex rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-medium lowercase text-brand-blue/70">
+              {serviceSource}
+            </span>
+          </div>
+        </div>
+      </button>
+    );
+  }
+
   useEffect(() => {
     function handlePopState() {
       setSelectedToolDetail(null);
@@ -483,6 +539,9 @@ export default function SystemsCatalogClient({
   );
   const detail = selectedSlug ? detailsBySlug[selectedSlug] : null;
   const processGroups = detail ? buildProcessGroups(detail) : [];
+  const recommendedServices = selectedSlug
+    ? getRecommendedServicesForSystem(selectedSlug)
+    : [];
 
   return (
     <>
@@ -693,6 +752,17 @@ export default function SystemsCatalogClient({
               </button>
               <button
                 type="button"
+                onClick={() => setActiveTab("services")}
+                className={`relative rounded-full px-4 py-2 text-sm font-medium transition after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:rounded-full after:transition ${
+                  activeTab === "services"
+                    ? "bg-transparent text-brand-blue after:bg-dema-forest"
+                    : "bg-transparent text-brand-blue/55 after:bg-transparent hover:text-brand-blue/75"
+                }`}
+              >
+                Services
+              </button>
+              <button
+                type="button"
                 onClick={() => setActiveTab("ressources")}
                 className={`relative rounded-full px-4 py-2 text-sm font-medium transition after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:rounded-full after:transition ${
                   activeTab === "ressources"
@@ -795,6 +865,30 @@ export default function SystemsCatalogClient({
                     </Link>
                   </div>
                 </div>
+              ) : activeTab === "services" ? (
+                <div className="space-y-5">
+                  <div>
+                    <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                      {recommendedServices.map(renderServiceCard)}
+                    </div>
+                  </div>
+
+                  <div className="rounded-[1.15rem] border border-dema-line bg-dema-cream/70 p-5 text-left">
+                    <h3 className="text-lg font-semibold text-brand-blue">
+                      Besoin de voir tout le catalogue ?
+                    </h3>
+                    <p className="mt-2 max-w-3xl text-sm leading-relaxed text-dema-muted">
+                      L&apos;annuaire services rassemble les offres juridiques, finance,
+                      acquisition, structuration, automatisation et support opérationnel.
+                    </p>
+                    <Link
+                      href={`/annuaire-services?retourSysteme=${encodeURIComponent(selectedSystem.slug)}`}
+                      className="mt-4 inline-flex items-center rounded-full border border-dema-line bg-dema-paper px-4 py-2 text-sm font-medium text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
+                    >
+                      Voir tous les services
+                    </Link>
+                  </div>
+                </div>
               ) : (
                 <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                   {getSystemResources(selectedSystem.slug).map((resource) => (
@@ -813,6 +907,18 @@ export default function SystemsCatalogClient({
 
       {selectedToolDetail ? (
         <SoftwareDetailDialog tool={selectedToolDetail} onClose={closeToolDetails} />
+      ) : null}
+
+      {selectedServiceDetail ? (
+        <ServiceDetailDialog
+          service={selectedServiceDetail}
+          source={selectedSystem ? `Système ${selectedSystem.name}` : "Modale système"}
+          onClose={() => setSelectedServiceDetail(null)}
+        />
+      ) : null}
+
+      {isDeleguerPricingOpen ? (
+        <DeleguerPricingPreviewModal onClose={() => setIsDeleguerPricingOpen(false)} />
       ) : null}
 
       {resourcePreview ? (
@@ -834,7 +940,7 @@ export default function SystemsCatalogClient({
 }
 
 function isSystemModalTab(tab?: string): tab is SystemModalTab {
-  return tab === "processus" || tab === "outils" || tab === "ressources";
+  return tab === "processus" || tab === "outils" || tab === "services" || tab === "ressources";
 }
 
 function getResourceSlides(resource: SystemResource): string[] {

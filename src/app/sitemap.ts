@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getAllPosts } from "@/lib/blog";
+import { demaaServices } from "@/lib/service-catalog";
 import { getToolDirectorySlug } from "@/lib/tool-directory";
 import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
 
@@ -32,6 +33,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: base, lastModified: now, changeFrequency: "weekly", priority: 1 },
     { url: `${base}/annuaire-outils`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${base}/annuaire-services`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/blog`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/deleguer`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
     { url: `${base}/developper`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
@@ -79,5 +81,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...blogEntries, ...toolEntries, ...freeToolEntries];
+  const serviceEntries: MetadataRoute.Sitemap = demaaServices.map((service) => ({
+    url: `${base}/services/${service.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  return [...staticRoutes, ...blogEntries, ...toolEntries, ...freeToolEntries, ...serviceEntries];
 }

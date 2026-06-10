@@ -170,10 +170,10 @@ export default function DevelopperOpportunitiesClient({
 
           <div className="mx-auto max-w-5xl">
             <h1 className="text-[clamp(3rem,14.5vw,3.36rem)] leading-[0.92] tracking-tight sm:text-[2.75rem] md:text-[3.75rem] lg:text-[4.5rem]">
-              <span className="demaa-hero-title text-brand-blue/86">Opportunités </span>
+              <span className="demaa-hero-title text-brand-blue/86">Développez </span>
               <br />
               <span className="font-sans font-light not-italic text-brand-blue/44">
-                à reprendre.
+                avec des entreprises à reprendre
               </span>
             </h1>
           </div>
@@ -413,7 +413,7 @@ function OpportunityCard({
       type="button"
       onClick={onOpen}
       aria-label={`Voir le détail : ${opportunity.title}`}
-      className="grid w-full cursor-pointer gap-4 rounded-[1.15rem] border border-brand-blue/[0.08] bg-dema-paper p-4 text-left shadow-[0_4px_14px_rgba(23,35,29,0.018)] transition hover:-translate-y-px hover:border-dema-forest/14 hover:shadow-[0_10px_26px_rgba(23,35,29,0.035)] md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:p-[17px_18px]"
+      className="flex w-full cursor-pointer flex-col rounded-[1.15rem] border border-brand-blue/[0.08] bg-dema-paper p-4 text-left shadow-[0_4px_14px_rgba(23,35,29,0.018)] transition hover:-translate-y-px hover:border-dema-forest/14 hover:shadow-[0_10px_26px_rgba(23,35,29,0.035)] md:p-[17px_18px]"
     >
       <div className="min-w-0">
         <h2 className="line-clamp-2 text-base font-medium leading-[1.24] tracking-tight text-brand-blue">
@@ -432,7 +432,7 @@ function OpportunityCard({
           </div>
         ) : null}
       </div>
-      <div className="flex min-w-0 flex-wrap items-start gap-2 md:min-w-[154px] md:flex-col md:items-end">
+      <div className="mt-4 flex min-w-0 flex-wrap items-start gap-2">
         <span className="rounded-full bg-dema-forest/10 px-2.5 py-1 text-[11px] font-normal text-dema-forest">
           {deadlineLabel(opportunity.deadline)}
         </span>
