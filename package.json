@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "validate:data": "node scripts/validate-data.mjs",
+    "validate:data": "node scripts/validate-data.mjs && node scripts/audit-business-checklists.mjs --strict",
     "seed:enterprise-annuaire": "node scripts/seed-enterprise-annuaire.mjs",
     "sync:enterprise-annuaire": "node scripts/sync-enterprise-annuaire.mjs",
     "sync:tool-directory": "node scripts/sync-tool-directory.mjs"
