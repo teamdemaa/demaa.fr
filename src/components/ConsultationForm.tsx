@@ -5,6 +5,7 @@ import { Send, CheckCircle2, User, Briefcase, Mail, Phone } from "lucide-react";
 
 export default function ConsultationForm({ onSuccess }: { onSuccess?: () => void }) {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: "",
     company: "",
@@ -15,21 +16,40 @@ export default function ConsultationForm({ onSuccess }: { onSuccess?: () => void
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
+
     try {
-      await fetch("/api/lead", {
+      const response = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           company: formData.company || formData.name,
           sector: formData.sector,
           email: formData.email,
-          source: `Consultation — ${formData.name} — ${formData.phone}`
+          name: formData.name,
+          phone: formData.phone,
+          details: formData.sector || "Demande de consultation gratuite",
+          source: "Consultation form"
         })
       });
+
+      const payload = (await response.json().catch(() => null)) as
+        | { error?: string }
+        | null;
+
+      if (!response.ok) {
+        throw new Error(payload?.error || "Impossible d'envoyer votre demande.");
+      }
+
+      setIsSubmitted(true);
     } catch (err) {
       console.error("Consultation submission failed", err);
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Impossible d'envoyer votre demande pour le moment."
+      );
     }
-    setIsSubmitted(true);
   };
 
   if (isSubmitted) {
@@ -120,6 +140,11 @@ export default function ConsultationForm({ onSuccess }: { onSuccess?: () => void
       >
         Demander ma consultation gratuite <Send className="w-4 h-4" />
       </button>
+      {error ? (
+        <p className="text-center text-sm font-medium text-brand-coral">
+          {error}
+        </p>
+      ) : null}
     </form>
   );
 }

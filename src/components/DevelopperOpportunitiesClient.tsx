@@ -455,25 +455,85 @@ function OpportunityCard({
 }
 
 function SubmitForm() {
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setStatus("sending");
+    setErrorMessage("");
+
+    const form = new FormData(event.currentTarget);
+    const name = String(form.get("name") || "");
+    const company = String(form.get("company") || "");
+    const email = String(form.get("email") || "");
+    const details = String(form.get("details") || "");
+
+    try {
+      const response = await fetch("/api/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          company,
+          email,
+          details,
+          offer: "Soumission entreprise a reprendre",
+          source: "Developper opportunities submit modal",
+        }),
+      });
+      const payload = (await response.json().catch(() => null)) as
+        | { error?: string }
+        | null;
+
+      if (!response.ok) {
+        throw new Error(payload?.error || "Impossible d'envoyer la soumission.");
+      }
+
+      event.currentTarget.reset();
+      setStatus("sent");
+    } catch (error) {
+      setStatus("error");
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : "Impossible d'envoyer la soumission pour le moment."
+      );
+    }
+  }
+
   return (
     <form
       className="mt-4 grid gap-3"
-      onSubmit={(event) => {
-        event.preventDefault();
-      }}
+      onSubmit={handleSubmit}
     >
       <FormField label="Nom" name="name" autoComplete="name" />
       <FormField label="Société" name="company" autoComplete="organization" />
-      <FormField label="Email" name="email" type="email" autoComplete="email" />
+      <FormField label="Email" name="email" type="email" autoComplete="email" required />
       <label className="grid gap-1.5 text-xs font-normal text-brand-blue/54">
         Lien ou description
-        <textarea className="min-h-24 resize-y rounded-[0.85rem] border border-dema-line bg-dema-paper px-3 py-2.5 text-sm font-normal text-brand-blue outline-none" />
+        <textarea
+          name="details"
+          required
+          className="min-h-24 resize-y rounded-[0.85rem] border border-dema-line bg-dema-paper px-3 py-2.5 text-sm font-normal text-brand-blue outline-none"
+        />
       </label>
+      {status === "sent" ? (
+        <p className="rounded-[0.9rem] bg-dema-sage/70 px-3 py-2 text-sm text-dema-forest">
+          C&apos;est envoyé. On revient vers vous rapidement.
+        </p>
+      ) : null}
+      {status === "error" ? (
+        <p className="rounded-[0.9rem] bg-dema-sage/70 px-3 py-2 text-sm text-dema-forest">
+          {errorMessage}
+        </p>
+      ) : null}
       <button
         type="submit"
-        className="mt-1 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-dema-forest px-5 text-sm font-medium text-dema-paper transition hover:bg-[#28513b]"
+        disabled={status === "sending"}
+        className="mt-1 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-dema-forest px-5 text-sm font-medium text-dema-paper transition hover:bg-[#28513b] disabled:cursor-not-allowed disabled:opacity-60"
       >
-        Envoyer
+        {status === "sending" ? "Envoi..." : "Envoyer"}
       </button>
     </form>
   );
@@ -483,11 +543,13 @@ function FormField({
   autoComplete,
   label,
   name,
+  required = false,
   type = "text",
 }: {
   autoComplete?: string;
   label: string;
   name: string;
+  required?: boolean;
   type?: string;
 }) {
   return (
@@ -496,6 +558,7 @@ function FormField({
       <input
         autoComplete={autoComplete}
         name={name}
+        required={required}
         type={type}
         className="h-11 rounded-full border border-dema-line bg-dema-paper px-3 text-sm font-normal text-brand-blue outline-none"
       />

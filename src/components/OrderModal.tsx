@@ -6,14 +6,19 @@ import { createPortal } from "react-dom";
 
 export default function OrderModal({ serviceName }: { serviceName: string }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     prenom: "",
     email: "",
     telephone: ""
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
+    setIsSubmitting(true);
+
     const text = `Bonjour, je suis intéressé(e) par le service : *${serviceName}*.
     
 Mes informations :
@@ -23,10 +28,40 @@ Mes informations :
 
 Merci de me recontacter !`;
 
-    const encodedText = encodeURIComponent(text);
-    const whatsappUrl = `https://wa.me/33782842435?text=${encodedText}`;
-    window.open(whatsappUrl, "_blank");
-    setIsOpen(false);
+    try {
+      const response = await fetch("/api/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.prenom,
+          email: formData.email,
+          phone: formData.telephone,
+          offer: serviceName,
+          details: text,
+          source: "Order modal",
+        }),
+      });
+      const payload = (await response.json().catch(() => null)) as
+        | { error?: string }
+        | null;
+
+      if (!response.ok) {
+        throw new Error(payload?.error || "Impossible d'envoyer la demande.");
+      }
+
+      const encodedText = encodeURIComponent(text);
+      const whatsappUrl = `https://wa.me/33782842435?text=${encodedText}`;
+      window.open(whatsappUrl, "_blank");
+      setIsOpen(false);
+    } catch (submissionError) {
+      setError(
+        submissionError instanceof Error
+          ? submissionError.message
+          : "Impossible d'envoyer la demande pour le moment."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -82,10 +117,15 @@ Merci de me recontacter !`;
               </div>
               
               <div className="pt-4">
-                <button type="submit" className="w-full flex items-center justify-center bg-brand-blue hover:bg-brand-coral text-white font-medium py-4 rounded-xl transition-all shadow-lg shadow-brand-blue/20 transform hover:-translate-y-0.5">
+                <button type="submit" disabled={isSubmitting} className="w-full flex items-center justify-center bg-brand-blue hover:bg-brand-coral text-white font-medium py-4 rounded-xl transition-all shadow-lg shadow-brand-blue/20 transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60">
                   <Send className="w-5 h-5 mr-3" />
-                  Envoyer via WhatsApp
+                  {isSubmitting ? "Envoi..." : "Envoyer via WhatsApp"}
                 </button>
+                {error ? (
+                  <p className="text-center text-xs font-medium text-brand-coral mt-4">
+                    {error}
+                  </p>
+                ) : null}
                 <p className="text-center text-xs text-gray-400 mt-5">
                    Vous allez être redirigé vers l&apos;application WhatsApp pour valider l&apos;envoi de façon sécurisée.
                 </p>

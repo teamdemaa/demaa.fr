@@ -667,16 +667,27 @@ export default function AssistantHub({
     setEmailError(null);
 
     try {
-      await fetch("/api/lead", {
+      const response = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           company: "Assistant Demaa",
           sector: inputValue.slice(0, 140),
           email: trimmedEmail,
+          details: inputValue,
           source: "Assistant plan modal",
         }),
       });
+      const payload = (await response.json().catch(() => null)) as
+        | { error?: string }
+        | null;
+
+      if (!response.ok) {
+        throw new Error(
+          payload?.error ||
+            "Impossible d'envoyer votre demande pour le moment."
+        );
+      }
 
       if (pendingResult) {
         await persistGeneration({
@@ -691,6 +702,12 @@ export default function AssistantHub({
       setGenerationLimitReached(limitState.limitReached);
     } catch (leadError) {
       console.error("Lead capture error:", leadError);
+      setEmailError(
+        leadError instanceof Error
+          ? leadError.message
+          : "Impossible d'envoyer votre demande pour le moment."
+      );
+      return;
     }
 
     window.localStorage.setItem("demaa_assistant_email", trimmedEmail);

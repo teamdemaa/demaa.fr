@@ -14,6 +14,7 @@ export default function SubscriptionModal({
   onClose: () => void
 }) {
   const [email, setEmail] = useState("");
+  const [submittedEmail, setSubmittedEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -21,14 +22,27 @@ export default function SubscriptionModal({
     setStatus("loading");
 
     try {
-      // Simulate API call
-      // In a real scenario, this would call /api/subscribe
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // OPTIONAL: Send to WhatsApp in the background (will likely be blocked by popup blockers if not triggered by direct click)
-      // For now, we follow the user requirement: "juste un message de succès"
-      
+      const submittedEmail = email.trim();
+      const response = await fetch("/api/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: submittedEmail,
+          offer: toolName,
+          details: `Demande de notification au lancement de l'outil : ${toolName}`,
+          source: "Modal outil bientot disponible",
+        }),
+      });
+      const payload = (await response.json().catch(() => null)) as
+        | { error?: string }
+        | null;
+
+      if (!response.ok) {
+        throw new Error(payload?.error || "Impossible d'envoyer la demande.");
+      }
+
       setStatus("success");
+      setSubmittedEmail(submittedEmail);
       setEmail("");
     } catch {
       setStatus("error");
@@ -69,7 +83,7 @@ export default function SubscriptionModal({
               </div>
               <h3 className="text-2xl font-bold text-brand-blue mb-3">C&apos;est noté !</h3>
               <p className="text-gray-500 leading-relaxed mb-8">
-                Merci ! On vous prévient sur <span className="font-bold text-brand-blue">{email || "votre email"}</span> dès que <span className="text-brand-coral font-medium">{toolName}</span> est prêt.
+                Merci ! On vous prévient sur <span className="font-bold text-brand-blue">{submittedEmail || "votre email"}</span> dès que <span className="text-brand-coral font-medium">{toolName}</span> est prêt.
               </p>
               <button 
                 onClick={onClose}
@@ -112,6 +126,11 @@ export default function SubscriptionModal({
                     "Notifiez-moi"
                   )}
                 </button>
+                {status === "error" ? (
+                  <p className="text-xs font-medium text-brand-coral">
+                    Impossible d&apos;envoyer la demande pour le moment.
+                  </p>
+                ) : null}
                 
                 <p className="text-[10px] text-gray-400 mt-4 uppercase tracking-widest font-bold">
                   Promis, pas de spam

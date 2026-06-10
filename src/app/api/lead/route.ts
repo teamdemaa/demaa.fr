@@ -43,9 +43,9 @@ export async function POST(request: Request) {
       multiline: true,
     });
 
-    if (!name || !phone || !details) {
+    if ((!email && !phone) || (!details && !offer && !source)) {
       return NextResponse.json(
-        { error: "Merci de renseigner les champs obligatoires avant l'envoi." },
+        { error: "Merci de renseigner vos coordonnées avant l'envoi." },
         { status: 400 }
       );
     }

@@ -19,6 +19,7 @@ export default function TeamLeadModal({
   description?: string;
 }) {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     company: "",
     sector: "",
@@ -27,16 +28,38 @@ export default function TeamLeadModal({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
+
     try {
-      await fetch("/api/lead", {
+      const response = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...formData, source: "Modal Team Demaa" })
+        body: JSON.stringify({
+          ...formData,
+          name: formData.company,
+          details: `Demande de tarifs negocies pour le secteur : ${formData.sector}`,
+          offer: title,
+          source: "Modal Team Demaa",
+        })
       });
+
+      const payload = (await response.json().catch(() => null)) as
+        | { error?: string }
+        | null;
+
+      if (!response.ok) {
+        throw new Error(payload?.error || "Impossible d'envoyer votre demande.");
+      }
+
+      setIsSubmitted(true);
     } catch (err) {
       console.error("Lead submission failed", err);
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Impossible d'envoyer votre demande pour le moment."
+      );
     }
-    setIsSubmitted(true);
   };
 
   return (
@@ -122,6 +145,11 @@ export default function TeamLeadModal({
                     >
                       ENVOYER <Send className="w-2 h-2" />
                     </button>
+                    {error ? (
+                      <p className="text-[10px] text-center text-dema-forest mt-3 leading-relaxed">
+                        {error}
+                      </p>
+                    ) : null}
                     <p className="text-[8px] text-center text-gray-300 mt-3 leading-relaxed font-bold uppercase tracking-widest opacity-40">
                       Tarifs préférentiels partenaires
                     </p>

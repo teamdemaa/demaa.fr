@@ -1,10 +1,12 @@
 import { NextResponse } from "next/server";
 import {
   enforceRateLimit,
+  escapeSlackMrkdwn,
   normalizeText,
   readJsonBody,
 } from "@/lib/api-security";
 import { saveNewsletterSubscriber } from "@/lib/generations-db";
+import { sendSlackMessage, SlackMessageError } from "@/lib/slack";
 
 type NewsletterRequestBody = {
   email?: unknown;
@@ -56,6 +58,33 @@ export async function POST(request: Request) {
       source: normalizedSource,
     });
 
+    await sendSlackMessage({
+      text: "Nouvelle inscription newsletter Demaa",
+      blocks: [
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text:
+              `*Newsletter Demaa*\n` +
+              `*Prénom* : ${escapeSlackMrkdwn(normalizedFirstName)}\n` +
+              `*Secteur* : ${escapeSlackMrkdwn(normalizedSector)}\n` +
+              `*Email* : ${escapeSlackMrkdwn(normalizedEmail)}\n` +
+              `*Source* : ${escapeSlackMrkdwn(normalizedSource)}`,
+          },
+        },
+        {
+          type: "context",
+          elements: [
+            {
+              type: "mrkdwn",
+              text: `⏰ ${new Date().toLocaleString("fr-FR", { timeZone: "Europe/Paris" })}`,
+            },
+          ],
+        },
+      ],
+    });
+
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error("Newsletter subscription error:", error);
@@ -65,7 +94,7 @@ export async function POST(request: Request) {
         error:
           "Impossible de vous inscrire pour le moment. Merci de réessayer dans quelques minutes.",
       },
-      { status: 500 }
+      { status: error instanceof SlackMessageError ? error.statusCode : 500 }
     );
   }
 }
