@@ -29,7 +29,7 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
       "publicite-google",
     ],
   },
-  "cabinet-d-avocat": {
+  "cabinet-davocat": {
     order: [
       "site-web",
       "publicite-google",
@@ -242,7 +242,7 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
       "assistant-polyvalent",
     ],
   },
-  coaching: {
+  "coach-professionnel": {
     order: [
       "expert-comptable",
       "marketing-vente",
@@ -284,7 +284,18 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
       "audit-conformite-fiscale",
     ],
   },
-  "reparation-telephonique": {
+  "coach-sportif": {
+    order: [
+      "expert-comptable",
+      "marketing-vente",
+      "site-web",
+      "publicite-facebook-instagram",
+      "montage-video",
+      "structuration-automatisation",
+      "assistant-polyvalent",
+    ],
+  },
+  "reparation-informatique-mobile": {
     order: [
       "expert-comptable",
       "site-web",
@@ -333,7 +344,7 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
       "site-web",
     ],
   },
-  "industrie-production": {
+  "production-industrie": {
     order: [
       "expert-comptable",
       "previsionnel-financier",
@@ -354,17 +365,7 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
       "audit-conformite-fiscale",
     ],
   },
-  "location-de-materiel": {
-    order: [
-      "expert-comptable",
-      "site-web",
-      "publicite-google",
-      "structuration-automatisation",
-      "assistant-polyvalent",
-      "previsionnel-financier",
-    ],
-  },
-  "securite-privee": {
+  "entreprise-de-securite": {
     order: [
       "expert-comptable",
       "site-web",

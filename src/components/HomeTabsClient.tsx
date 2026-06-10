@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import PrimaryMobileNav, { type PrimaryNavTab } from "@/components/PrimaryMobileNav";
 import SearchFilterControls from "@/components/SearchFilterControls";
 import SystemsCatalogClient from "@/components/SystemsCatalogClient";
-import { ALL_SECTORS_LABEL, publicSectorFilterLabels } from "@/lib/public-sectors";
+import { ALL_SECTORS_LABEL } from "@/lib/public-sectors";
 import type { OperationalSystemDetail } from "@/lib/system-operations";
 import type { System } from "@/lib/types";
 
@@ -24,6 +24,15 @@ export default function HomeTabsClient({
   const [searchQuery, setSearchQuery] = useState("");
   const [activeSector, setActiveSector] = useState(ALL_SECTORS_LABEL);
   const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false);
+  const sectorFilters = useMemo(() => {
+    const visibleSectors = systems
+      .map((system) => detailsBySlug[system.slug]?.sectorLabel)
+      .filter((sector): sector is string => Boolean(sector));
+
+    return [ALL_SECTORS_LABEL, ...Array.from(new Set(visibleSectors))];
+  }, [detailsBySlug, systems]);
+
+  const effectiveActiveSector = sectorFilters.includes(activeSector) ? activeSector : ALL_SECTORS_LABEL;
 
   function selectPrimaryMobileTab(tab: PrimaryNavTab) {
     if (tab === "analyser") {
@@ -59,10 +68,10 @@ export default function HomeTabsClient({
           <SearchFilterControls
             value={searchQuery}
             placeholder="Rechercher votre activité"
-            activeFilter={activeSector}
+            activeFilter={effectiveActiveSector}
             defaultFilter={ALL_SECTORS_LABEL}
             isFilterOpen={isFilterPanelOpen}
-            filters={publicSectorFilterLabels}
+            filters={sectorFilters}
             onChange={setSearchQuery}
             onFilterClick={() => setIsFilterPanelOpen((current) => !current)}
             onFilterSelect={selectSector}
@@ -77,7 +86,7 @@ export default function HomeTabsClient({
         showIntro={false}
         searchQuery={searchQuery}
         onSearchQueryChange={setSearchQuery}
-        activeSector={activeSector}
+        activeSector={effectiveActiveSector}
         onActiveSectorChange={selectSector}
         showSearchBar={false}
         initialSelectedSlug={initialSystem}

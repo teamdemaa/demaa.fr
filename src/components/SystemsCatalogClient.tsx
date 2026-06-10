@@ -30,6 +30,7 @@ import {
   GraduationCap,
   Hammer,
   HeartHandshake,
+  Headphones,
   Home,
   KeyRound,
   Landmark,
@@ -59,7 +60,7 @@ import HorizontalScrollHint from "@/components/HorizontalScrollHint";
 import DeleguerPricingPreviewModal from "@/components/DeleguerPricingPreviewModal";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import ServiceDetailDialog from "@/components/ServiceDetailDialog";
-import { ALL_SECTORS_LABEL, publicSectorFilterLabels } from "@/lib/public-sectors";
+import { ALL_SECTORS_LABEL } from "@/lib/public-sectors";
 import type { ToolDirectoryItem } from "@/lib/tool-directory";
 import type { System } from "@/lib/types";
 import type { OperationalSystemDetail, SystemPillar } from "@/lib/system-operations";
@@ -121,6 +122,7 @@ const systemIcons: Record<string, LucideIcon> = {
   GraduationCap,
   Hammer,
   HeartHandshake,
+  Headphones,
   Home,
   Key: KeyRound,
   Landmark,
@@ -543,7 +545,14 @@ export default function SystemsCatalogClient({
     };
   }, [selectedSlug]);
 
-  const sectors = publicSectorFilterLabels;
+  const sectors = useMemo(() => {
+    const visibleSectors = systems
+      .map((system) => detailsBySlug[system.slug]?.sectorLabel)
+      .filter((sector): sector is string => Boolean(sector));
+
+    return [ALL_SECTORS_LABEL, ...Array.from(new Set(visibleSectors))];
+  }, [detailsBySlug, systems]);
+  const effectiveActiveSector = sectors.includes(activeSector) ? activeSector : ALL_SECTORS_LABEL;
 
   const filteredSystems = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
@@ -559,11 +568,12 @@ export default function SystemsCatalogClient({
         system.tags.some((tag) => tag.toLowerCase().includes(query)) ||
         sectorLabel.toLowerCase().includes(query);
 
-      const matchesSector = activeSector === ALL_SECTORS_LABEL || sectorLabel === activeSector;
+      const matchesSector =
+        effectiveActiveSector === ALL_SECTORS_LABEL || sectorLabel === effectiveActiveSector;
 
       return matchesSearch && matchesSector;
     });
-  }, [activeSector, detailsBySlug, searchQuery, systems]);
+  }, [detailsBySlug, effectiveActiveSector, searchQuery, systems]);
 
   const systemSections = useMemo(() => {
     const sections = filteredSystems.reduce<Array<{ index: number; title: string; systems: System[] }>>(
@@ -638,7 +648,7 @@ export default function SystemsCatalogClient({
                     type="button"
                     onClick={() => setIsFilterPanelOpen((current) => !current)}
                     className={`absolute right-2 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full transition md:right-2.5 md:h-10 md:w-10 ${
-                      activeSector === ALL_SECTORS_LABEL
+                      effectiveActiveSector === ALL_SECTORS_LABEL
                         ? "bg-dema-sage text-dema-forest"
                         : "bg-dema-forest text-dema-paper"
                     }`}
@@ -660,7 +670,7 @@ export default function SystemsCatalogClient({
                       type="button"
                       onClick={() => updateActiveSector(sector)}
                       className={`demaa-chip shrink-0 whitespace-nowrap ${
-                        activeSector === sector
+                        effectiveActiveSector === sector
                           ? "demaa-chip-active"
                           : ""
                       }`}

@@ -142,7 +142,10 @@
           "slug": "quickbooks",
           "usage": "Comparer une solution compta/facturation orientée petites entreprises."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "primary",
+      "offerType": "service"
     },
     {
       "id": "e2",
@@ -250,7 +253,10 @@
           "slug": "lefebvre-dalloz",
           "usage": "Consulter documentation juridique, fiscale et sociale fiable."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "primary",
+      "offerType": "service"
     },
     {
       "id": "e3",
@@ -390,7 +396,10 @@
           "slug": "lucca",
           "usage": "Structurer congés, notes de frais et processus RH."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "primary",
+      "offerType": "service"
     },
     {
       "id": "e4",
@@ -548,24 +557,27 @@
           "slug": "payfit",
           "usage": "Gérer paie et RH quand l’équipe grandit."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "primary",
+      "offerType": "service"
     },
     {
       "id": "e5",
       "slug": "freelance",
-      "name": "Freelance",
+      "name": "Freelance B2B",
       "category": "Système opérationnel",
-      "description": "Gardez prospection, missions, livraisons et paiements sous contrôle pour développer votre activité sans tout porter seul.",
+      "description": "Structurez offres, clients, missions, relances et marge sans dépendre de l’improvisation.",
       "tags": [
-        "Conseil",
         "B2B",
+        "Services",
         "Système"
       ],
       "icon": "Briefcase",
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
-      "imageTitle": "Freelance",
-      "imageSubtitle": "Aperçu du système opérationnel pour freelance",
+      "imageTitle": "Freelance B2B",
+      "imageSubtitle": "Aperçu du système opérationnel pour freelance B2B",
       "processes": [],
       "operationProcesses": [
         {
@@ -651,14 +663,13 @@
           "usage": "Structurer offres, missions et suivi client."
         },
         {
-          "slug": "wise-business",
-          "usage": "Gérer clients ou prestataires internationaux."
-        },
-        {
-          "slug": "shine",
-          "usage": "Simplifier banque, factures et administratif freelance."
+          "slug": "tiime",
+          "usage": "Gérer facturation, justificatifs et suivi administratif freelance."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "primary",
+      "offerType": "service"
     },
     {
       "id": "e6",
@@ -764,7 +775,10 @@
           "slug": "beetween",
           "usage": "Gérer vivier candidats, offres, suivi RH et collaboration recruteur."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "primary",
+      "offerType": "service"
     },
     {
       "id": "e7",
@@ -918,7 +932,10 @@
           "slug": "axonaut",
           "usage": "Centraliser CRM, facturation et suivi de projets client."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "primary",
+      "offerType": "service"
     },
     {
       "id": "e8",
@@ -1050,7 +1067,10 @@
           "slug": "mailchimp",
           "usage": "Créer une newsletter et garder le lien avec son audience."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e9",
@@ -1178,7 +1198,10 @@
           "slug": "zendesk",
           "usage": "Gérer demandes utilisateurs, litiges et support multicanal."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "platform"
     },
     {
       "id": "e10",
@@ -1302,7 +1325,10 @@
           "slug": "mailchimp",
           "usage": "Gérer newsletter, audience et campagnes éditoriales."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "platform"
     },
     {
       "id": "e11",
@@ -1466,7 +1492,10 @@
           "slug": "lucca",
           "usage": "Structurer congés, notes de frais et processus RH."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "platform"
     },
     {
       "id": "e12",
@@ -1584,7 +1613,10 @@
           "slug": "letsbuild",
           "usage": "Suivre inspections, réserves et avancement chantier."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e13",
@@ -1680,24 +1712,27 @@
           "slug": "kizeo-forms",
           "usage": "Dématérialiser contrôles qualité, passages et rapports terrain."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "primary",
+      "offerType": "service"
     },
     {
       "id": "e14",
       "slug": "agence-immobiliere",
-      "name": "Agence immobilière",
+      "name": "Agence immobilière professionnelle",
       "category": "Système opérationnel",
       "description": "Gardez mandats, prospects, visites et signatures sous contrôle pour vendre sans perdre le fil commercial.",
       "tags": [
+        "B2B",
         "Immobilier",
-        "Actifs",
         "Système"
       ],
       "icon": "Home",
       "price": "",
       "sectorLabel": "Immobilier",
-      "imageTitle": "Agence immobilière",
-      "imageSubtitle": "Aperçu du système opérationnel pour agence immobilière",
+      "imageTitle": "Agence immobilière professionnelle",
+      "imageSubtitle": "Aperçu du système opérationnel pour agence immobilière professionnelle",
       "processes": [],
       "operationProcesses": [
         {
@@ -1788,7 +1823,10 @@
           "slug": "zelok",
           "usage": "Collecter et qualifier les dossiers locataires pour les biens à louer."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "secondary",
+      "offerType": "service"
     },
     {
       "id": "e55",
@@ -1884,24 +1922,27 @@
           "slug": "chatgpt",
           "usage": "Préparer comptes-rendus, synthèses et réponses types."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "secondary",
+      "offerType": "service"
     },
     {
       "id": "e56",
       "slug": "gestion-locative",
-      "name": "Gestion locative",
+      "name": "Gestion locative pour investisseurs",
       "category": "Système opérationnel",
       "description": "Pilotez loyers, incidents, locataires et documents sans multiplier les relances.",
       "tags": [
+        "B2B",
         "Immobilier",
-        "Location",
         "Système"
       ],
       "icon": "KeyRound",
       "price": "Sur devis",
       "sectorLabel": "Immobilier",
-      "imageTitle": "Gestion locative",
-      "imageSubtitle": "Aperçu du système opérationnel pour gestion locative",
+      "imageTitle": "Gestion locative pour investisseurs",
+      "imageSubtitle": "Aperçu du système opérationnel pour gestion locative investisseurs",
       "processes": [],
       "operationProcesses": [
         {
@@ -1988,7 +2029,10 @@
           "slug": "rentila",
           "usage": "Suivre loyers, quittances, charges, baux et documents locatifs."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "secondary",
+      "offerType": "service"
     },
     {
       "id": "e57",
@@ -2088,7 +2132,10 @@
           "slug": "netty",
           "usage": "Suivre biens, contacts, opportunités et diffusion des opérations."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "investment"
     },
     {
       "id": "e58",
@@ -2184,24 +2231,27 @@
           "slug": "rentila",
           "usage": "Suivre loyers, quittances, documents et performance locative."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "investment"
     },
     {
       "id": "e15",
       "slug": "conciergerie-airbnb",
-      "name": "Conciergerie Airbnb",
+      "name": "Conciergerie multi-biens",
       "category": "Système opérationnel",
       "description": "Maîtrisez réservations, ménage, voyageurs et imprévus pour louer sereinement sans gérer chaque urgence vous-même.",
       "tags": [
-        "Tourisme",
-        "Réservation",
+        "B2B",
+        "Immobilier",
         "Système"
       ],
       "icon": "Home",
       "price": "",
       "sectorLabel": "Hébergement & tourisme",
-      "imageTitle": "Conciergerie Airbnb",
-      "imageSubtitle": "Aperçu du système opérationnel pour conciergerie airbnb",
+      "imageTitle": "Conciergerie multi-biens",
+      "imageSubtitle": "Aperçu du système opérationnel pour conciergerie multi-biens",
       "processes": [],
       "operationProcesses": [
         {
@@ -2292,7 +2342,10 @@
           "slug": "booking-com",
           "usage": "Diversifier les canaux de réservation des hébergements gérés."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "secondary",
+      "offerType": "service"
     },
     {
       "id": "e16",
@@ -2388,7 +2441,10 @@
           "slug": "rentila",
           "usage": "Suivre gestion locative, loyers et documents des biens détenus."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "investment"
     },
     {
       "id": "e17",
@@ -2492,7 +2548,10 @@
           "slug": "active-asset-allocation",
           "usage": "Outiller allocation d’actifs, scénarios et suivi de portefeuille."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "investment"
     },
     {
       "id": "e18",
@@ -2600,24 +2659,27 @@
           "slug": "active-asset-allocation",
           "usage": "Construire scénarios d’allocation et supports de décision financière."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "investment"
     },
     {
       "id": "e19",
       "slug": "demenagement",
-      "name": "Déménagement",
+      "name": "Déménagement professionnel",
       "category": "Système opérationnel",
-      "description": "Organisez devis, équipes, camions et planning pour enchaîner les déménagements sans stress le jour J.",
+      "description": "Cadrez visites, devis, équipes, planning et marge pour les déménagements d’entreprise.",
       "tags": [
+        "B2B",
         "Logistique",
-        "Transport",
         "Système"
       ],
       "icon": "Truck",
       "price": "",
       "sectorLabel": "Mobilité & logistique",
-      "imageTitle": "Déménagement",
-      "imageSubtitle": "Aperçu du système opérationnel pour déménagement",
+      "imageTitle": "Déménagement professionnel",
+      "imageSubtitle": "Aperçu du système opérationnel pour déménagement professionnel",
       "processes": [],
       "operationProcesses": [
         {
@@ -2696,7 +2758,10 @@
           "slug": "antsroute",
           "usage": "Planifier les tournées, passages et communications client."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "primary",
+      "offerType": "service"
     },
     {
       "id": "e20",
@@ -2796,7 +2861,10 @@
           "slug": "mapotempo",
           "usage": "Construire des tournées optimisées de livraison ou collecte."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "primary",
+      "offerType": "service"
     },
     {
       "id": "e21",
@@ -2904,24 +2972,27 @@
           "slug": "mapotempo",
           "usage": "Optimiser itinéraires, zones et tournées de livraison ou collecte."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "primary",
+      "offerType": "service"
     },
     {
       "id": "e22",
       "slug": "transport-de-personnes",
-      "name": "Transport de personnes",
+      "name": "Transport de personnes B2B",
       "category": "Système opérationnel",
-      "description": "Gardez chauffeurs, trajets, réservations et rentabilité sous contrôle pour rouler sans piloter dans l’urgence.",
+      "description": "Pilotez réservations, trajets, chauffeurs, incidents et rentabilité pour clients professionnels.",
       "tags": [
-        "Logistique",
+        "B2B",
         "Transport",
         "Système"
       ],
       "icon": "Truck",
       "price": "",
       "sectorLabel": "Mobilité & logistique",
-      "imageTitle": "Transport de personnes",
-      "imageSubtitle": "Aperçu du système opérationnel pour transport de personnes",
+      "imageTitle": "Transport de personnes B2B",
+      "imageSubtitle": "Aperçu du système opérationnel pour transport de personnes B2B",
       "processes": [],
       "operationProcesses": [
         {
@@ -2994,7 +3065,10 @@
           "slug": "antsroute",
           "usage": "Planifier les passages, tournées et notifications voyageurs."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "primary",
+      "offerType": "service"
     },
     {
       "id": "e23",
@@ -3108,7 +3182,10 @@
           "slug": "uber-eats",
           "usage": "Recevoir des commandes en ligne et toucher une clientèle locale."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "commerce"
     },
     {
       "id": "e24",
@@ -3214,24 +3291,27 @@
           "slug": "uber-eats",
           "usage": "Développer commande en ligne et livraison locale."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "commerce"
     },
     {
       "id": "e25",
       "slug": "traiteur",
-      "name": "Traiteur",
+      "name": "Traiteur événementiel B2B",
       "category": "Système opérationnel",
-      "description": "Gardez demandes, devis, événements et marge sous contrôle pour servir vos clients sans dépendre de votre mémoire.",
+      "description": "Cadrez demandes, devis, production, livraison, extras et marge par événement professionnel.",
       "tags": [
-        "Restauration",
-        "Service",
+        "B2B",
+        "Événementiel",
         "Système"
       ],
       "icon": "Utensils",
       "price": "",
       "sectorLabel": "Restauration",
-      "imageTitle": "Traiteur",
-      "imageSubtitle": "Aperçu du système opérationnel pour traiteur",
+      "imageTitle": "Traiteur événementiel B2B",
+      "imageSubtitle": "Aperçu du système opérationnel pour traiteur événementiel B2B",
       "processes": [],
       "operationProcesses": [
         {
@@ -3316,7 +3396,10 @@
           "slug": "popina",
           "usage": "Piloter commandes, ventes et suivi client sur caisse iPad."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "secondary",
+      "offerType": "service"
     },
     {
       "id": "e26",
@@ -3418,7 +3501,10 @@
           "slug": "uber-eats",
           "usage": "Générer des commandes livrées sans salle de restaurant."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "commerce"
     },
     {
       "id": "e27",
@@ -3516,7 +3602,10 @@
           "slug": "tactill",
           "usage": "Équiper une caisse simple pour ventes comptoir et boutique."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "commerce"
     },
     {
       "id": "e28",
@@ -3630,7 +3719,10 @@
           "slug": "sellsy",
           "usage": "Suivre clients, devis B2B éventuels, factures et relances."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "commerce"
     },
     {
       "id": "e29",
@@ -3768,7 +3860,10 @@
           "slug": "freshdesk",
           "usage": "Gérer support client e-commerce avec tickets et automatisations simples."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "platform"
     },
     {
       "id": "e30",
@@ -3866,7 +3961,10 @@
           "slug": "kiute-pro",
           "usage": "Gérer rendez-vous, caisse, clients, fidélité et visibilité beauté."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e31",
@@ -3964,7 +4062,10 @@
           "slug": "kiute-pro",
           "usage": "Gérer agenda, caisse, clients, fidélité et visibilité salon."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e32",
@@ -4062,7 +4163,10 @@
           "slug": "kiute-pro",
           "usage": "Centraliser rendez-vous, caisse, clients et fidélisation beauté."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e33",
@@ -4156,7 +4260,10 @@
           "slug": "arche-mc2",
           "usage": "Structurer interventions, coordination et pilotage service à domicile."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e34",
@@ -4284,7 +4391,10 @@
           "slug": "livestorm",
           "usage": "Organiser classes virtuelles, webinaires et sessions pédagogiques live."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "primary",
+      "offerType": "service"
     },
     {
       "id": "e97",
@@ -4400,7 +4510,10 @@
           "slug": "livestorm",
           "usage": "Organiser webinaires d’admission, réunions d’information et sessions live."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "primary",
+      "offerType": "service"
     },
     {
       "id": "e35",
@@ -4524,7 +4637,10 @@
           "slug": "livestorm",
           "usage": "Animer webinaires, sessions live et ateliers avec inscriptions."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "primary",
+      "offerType": "service"
     },
     {
       "id": "e36",
@@ -4628,7 +4744,10 @@
           "slug": "sage",
           "usage": "Structurer comptabilité, gestion commerciale ou finance PME."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "secondary",
+      "offerType": "production"
     },
     {
       "id": "e37",
@@ -4726,7 +4845,10 @@
           "slug": "kizeo-forms",
           "usage": "Digitaliser fiches intervention, relevés et contrôles techniques."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e38",
@@ -4824,7 +4946,10 @@
           "slug": "kizeo-forms",
           "usage": "Créer fiches intervention, contrôles et rapports terrain."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e39",
@@ -4930,7 +5055,10 @@
           "slug": "kizeo-forms",
           "usage": "Créer formulaires terrain et rapports personnalisés."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e40",
@@ -5032,7 +5160,10 @@
           "slug": "kizeo-forms",
           "usage": "Collecter relevés, photos et comptes rendus terrain."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e41",
@@ -5134,7 +5265,10 @@
           "slug": "letsbuild",
           "usage": "Suivre inspections, réserves et avancement des travaux."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e42",
@@ -5236,7 +5370,10 @@
           "slug": "paysagio",
           "usage": "Piloter planning, heures, photos et suivi terrain paysage."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e43",
@@ -5326,7 +5463,10 @@
           "slug": "chatgpt",
           "usage": "Préparer réponses client, procédures atelier et messages types."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e44",
@@ -5416,7 +5556,10 @@
           "slug": "chatgpt",
           "usage": "Préparer messages client, procédures et synthèses de dossier."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e45",
@@ -5522,7 +5665,10 @@
           "slug": "uber-eats",
           "usage": "Recevoir des commandes locales en livraison ou retrait."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "commerce"
     },
     {
       "id": "e46",
@@ -5632,7 +5778,10 @@
           "slug": "ecwid",
           "usage": "Ajouter une boutique en ligne simple à l’activité locale."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "commerce"
     },
     {
       "id": "e47",
@@ -5730,12 +5879,15 @@
           "slug": "tactill",
           "usage": "Installer une caisse simple pour point de vente de proximité."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "commerce"
     },
     {
       "id": "e48",
       "slug": "bar-cafe",
-      "name": "Bar / café",
+      "name": "Café",
       "category": "Système opérationnel",
       "description": "Gardez service, caisse, équipe et marge sous contrôle du matin à la fermeture.",
       "tags": [
@@ -5746,8 +5898,8 @@
       "icon": "ChefHat",
       "price": "",
       "sectorLabel": "Restauration",
-      "imageTitle": "Bar / café",
-      "imageSubtitle": "Aperçu du système opérationnel pour bar / café",
+      "imageTitle": "Café",
+      "imageSubtitle": "Aperçu du système opérationnel pour café",
       "processes": [],
       "operationProcesses": [
         {
@@ -5828,7 +5980,10 @@
           "slug": "clyo",
           "usage": "Gérer caisse, réservations, commande en ligne et fidélité."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "commerce"
     },
     {
       "id": "e49",
@@ -5930,7 +6085,10 @@
           "slug": "booking-com",
           "usage": "Développer visibilité, acquisition voyageurs et réservations via OTA."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e50",
@@ -6020,7 +6178,10 @@
           "slug": "chatgpt",
           "usage": "Préparer procédures internes, courriers types et synthèses non sensibles."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e51",
@@ -6114,7 +6275,10 @@
           "slug": "rvpsy",
           "usage": "Structurer patientèle, rendez-vous et notes de suivi."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e52",
@@ -6212,7 +6376,10 @@
           "slug": "agathe-you",
           "usage": "Simplifier cotations, télétransmission et suivi quotidien IDEL."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e53",
@@ -6306,24 +6473,27 @@
           "slug": "arche-mc2",
           "usage": "Coordonner interventions d’aide et soin à domicile."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e54",
       "slug": "reparation-informatique-mobile",
-      "name": "Réparation informatique & mobile",
+      "name": "Maintenance informatique B2B",
       "category": "Système opérationnel",
-      "description": "Gardez appareils, clients, pièces et réparations sous contrôle sans perdre la maîtrise du SAV.",
+      "description": "Centralisez tickets, interventions, parc client, délais, contrats et facturation.",
       "tags": [
-        "Réparation",
-        "Service",
+        "B2B",
+        "IT",
         "Système"
       ],
       "icon": "Smartphone",
       "price": "",
-      "sectorLabel": "Services aux particuliers",
-      "imageTitle": "Réparation informatique & mobile",
-      "imageSubtitle": "Aperçu du système opérationnel pour réparation informatique & mobile",
+      "sectorLabel": "Tech & Digital",
+      "imageTitle": "Maintenance informatique B2B",
+      "imageSubtitle": "Aperçu du système opérationnel pour maintenance informatique B2B",
       "processes": [],
       "operationProcesses": [
         {
@@ -6396,7 +6566,10 @@
           "slug": "kizeo-forms",
           "usage": "Créer fiches diagnostic, intervention, photos et signature client."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "secondary",
+      "offerType": "service"
     },
     {
       "id": "e59",
@@ -6494,7 +6667,10 @@
           "slug": "letsbuild",
           "usage": "Structurer inspections, réserves et rapports de chantier."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "primary",
+      "offerType": "service"
     },
     {
       "id": "e60",
@@ -6588,24 +6764,27 @@
           "slug": "maia-assurance",
           "usage": "Gérer portefeuille, relances et données clients assurance."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "primary",
+      "offerType": "service"
     },
     {
       "id": "e61",
       "slug": "auto-ecole",
-      "name": "Auto-école",
+      "name": "Centre de formation conduite pro",
       "category": "Système opérationnel",
-      "description": "Gardez élèves, moniteurs, heures et examens sous contrôle sans subir les changements de planning.",
+      "description": "Suivez inscriptions, plannings, moniteurs, sessions, examens et facturation professionnelle.",
       "tags": [
+        "B2B",
         "Formation",
-        "Planning",
         "Système"
       ],
       "icon": "Car",
       "price": "",
       "sectorLabel": "Éducation & formation",
-      "imageTitle": "Auto-école",
-      "imageSubtitle": "Aperçu du système opérationnel pour auto-école",
+      "imageTitle": "Centre de formation conduite pro",
+      "imageSubtitle": "Aperçu du système opérationnel pour centre de formation conduite pro",
       "processes": [],
       "operationProcesses": [
         {
@@ -6690,24 +6869,27 @@
           "slug": "ediser",
           "usage": "Compléter supports pédagogiques et outils numériques auto-école."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "secondary",
+      "offerType": "service"
     },
     {
       "id": "e62",
       "slug": "photographe-videaste",
-      "name": "Photographe / vidéaste",
+      "name": "Photographe / vidéaste corporate",
       "category": "Système opérationnel",
-      "description": "Gardez prospects, shootings, livraisons et paiements sous contrôle sans vous disperser entre les projets.",
+      "description": "Cadrez briefs, tournages, validations, livrables et marge pour les missions d’entreprise.",
       "tags": [
-        "Créatif",
-        "Projet",
+        "B2B",
+        "Production",
         "Système"
       ],
       "icon": "Aperture",
       "price": "",
       "sectorLabel": "Tech & Digital",
-      "imageTitle": "Photographe / vidéaste",
-      "imageSubtitle": "Aperçu du système opérationnel pour photographe / vidéaste",
+      "imageTitle": "Photographe / vidéaste corporate",
+      "imageSubtitle": "Aperçu du système opérationnel pour photographe / vidéaste corporate",
       "processes": [],
       "operationProcesses": [
         {
@@ -6800,24 +6982,27 @@
           "slug": "wix",
           "usage": "Créer un site vitrine avec galeries, formulaires et réservations."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "primary",
+      "offerType": "service"
     },
     {
       "id": "e63",
       "slug": "evenementiel",
-      "name": "Événementiel",
+      "name": "Événementiel professionnel",
       "category": "Système opérationnel",
-      "description": "Gardez clients, prestataires, budget et planning sous contrôle sans tout vérifier jusqu’au jour J.",
+      "description": "Structurez briefs, prestataires, planning, budget et exécution des événements clients.",
       "tags": [
-        "Événement",
-        "Projet",
+        "B2B",
+        "Événementiel",
         "Système"
       ],
       "icon": "PartyPopper",
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
-      "imageTitle": "Événementiel",
-      "imageSubtitle": "Aperçu du système opérationnel pour événementiel",
+      "imageTitle": "Événementiel professionnel",
+      "imageSubtitle": "Aperçu du système opérationnel pour événementiel professionnel",
       "processes": [],
       "operationProcesses": [
         {
@@ -6910,7 +7095,10 @@
           "slug": "livestorm",
           "usage": "Gérer événements digitaux, hybrides, inscriptions et relances."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "primary",
+      "offerType": "service"
     },
     {
       "id": "e64",
@@ -7008,7 +7196,10 @@
           "slug": "bsport",
           "usage": "Gérer réservations, paiements et marketing studio fitness."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e65",
@@ -7106,7 +7297,10 @@
           "slug": "visiodent",
           "usage": "Piloter dossiers, soins et activité dentaire avec une solution cloud."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e66",
@@ -7196,7 +7390,10 @@
           "slug": "winpharma",
           "usage": "Piloter stock, encaissement et gestion pharmacie."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "commerce"
     },
     {
       "id": "e67",
@@ -7290,7 +7487,10 @@
           "slug": "notagest",
           "usage": "Gérer contrôles, calculs fiscaux et conformité LCB-FT."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "primary",
+      "offerType": "service"
     },
     {
       "id": "e68",
@@ -7380,7 +7580,10 @@
           "slug": "vetopartner",
           "usage": "Centraliser dossiers patients, actes et organisation clinique."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e69",
@@ -7478,7 +7681,10 @@
           "slug": "d-edge",
           "usage": "Structurer la distribution et les réservations côté hébergements partenaires."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e70",
@@ -7572,7 +7778,10 @@
           "slug": "optimum-live",
           "usage": "Piloter magasin optique, clients et ventes multi-sites."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "commerce"
     },
     {
       "id": "e71",
@@ -7666,7 +7875,10 @@
           "slug": "kizeo-forms",
           "usage": "Créer fiches SAV, contrôle et intervention terrain."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e72",
@@ -7760,14 +7972,17 @@
           "slug": "gestiondiag",
           "usage": "Piloter devis, facturation, dossiers et conformité diagnostic."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "primary",
+      "offerType": "service"
     },
     {
       "id": "e73",
       "category": "Système opérationnel",
       "price": "",
-      "imageTitle": "Fleuriste",
-      "imageSubtitle": "Aperçu du système opérationnel pour fleuriste",
+      "imageTitle": "Fleuriste événementiel B2B",
+      "imageSubtitle": "Aperçu du système opérationnel pour fleuriste événementiel B2B",
       "processes": [],
       "processExamples": {
         "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin client → choisir les produits frais principaux → clarifier la différence avec les concurrents → choisir le canal principal.",
@@ -7784,15 +7999,15 @@
         "equipe.culture": "Exemple : rappeler l’accueil et la tenue du point de vente → partager les retours clients → valoriser les bons réflexes → corriger les écarts → maintenir une équipe commerçante."
       },
       "slug": "fleuriste",
-      "name": "Fleuriste",
-      "sectorLabel": "Commerce & retail",
+      "name": "Fleuriste événementiel B2B",
+      "sectorLabel": "Conseil & services aux entreprises",
       "icon": "Flower2",
       "tags": [
-        "Commerce",
-        "Stock",
+        "B2B",
+        "Événementiel",
         "Système"
       ],
-      "description": "Anticipez commandes, stock frais, livraisons et pics saisonniers sans perdre la marge.",
+      "description": "Structurez commandes entreprises, événements, compositions, livraison, stock et marge.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -7870,7 +8085,10 @@
           "slug": "ecwid",
           "usage": "Ajouter une petite boutique de commandes florales."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "secondary",
+      "offerType": "service"
     },
     {
       "id": "e74",
@@ -7964,7 +8182,10 @@
           "slug": "blanchinet",
           "usage": "Suivre linge, clients, facturation et opérations de blanchisserie."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e75",
@@ -8062,7 +8283,10 @@
           "slug": "uber-eats",
           "usage": "Tester la commande en ligne selon zone et organisation."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "commerce"
     },
     {
       "id": "e76",
@@ -8181,14 +8405,13 @@
           "usage": "Permettre aux prospects ou clients de réserver un rendez-vous."
         },
         {
-          "slug": "wise-business",
-          "usage": "Gérer paiements internationaux ou prestataires étrangers."
-        },
-        {
-          "slug": "shine",
-          "usage": "Simplifier compte pro, facturation et administratif indépendant."
+          "slug": "quickbooks",
+          "usage": "Suivre facturation, dépenses et rentabilité des missions."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "primary",
+      "offerType": "service"
     },
     {
       "id": "e77",
@@ -8286,7 +8509,10 @@
           "slug": "assur3d",
           "usage": "Centraliser portefeuille, conformité, contrats et pilotage courtage."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "primary",
+      "offerType": "service"
     },
     {
       "id": "e78",
@@ -8376,7 +8602,10 @@
           "slug": "organilog",
           "usage": "Planifier tournées, interventions et suivi opérationnel."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e79",
@@ -8494,7 +8723,10 @@
           "slug": "acuity-scheduling",
           "usage": "Gérer réservations, rappels et créneaux de coaching."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "primary",
+      "offerType": "service"
     },
     {
       "id": "e80",
@@ -8600,7 +8832,10 @@
           "slug": "acuity-scheduling",
           "usage": "Gérer séances, disponibilités et rappels clients."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e81",
@@ -8694,14 +8929,17 @@
           "slug": "netilav",
           "usage": "Piloter machines, séchoirs et centrales de paiement à distance."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e82",
       "category": "Système opérationnel",
       "price": "",
-      "imageTitle": "Entreprise de sécurité",
-      "imageSubtitle": "Aperçu du système opérationnel pour entreprise de sécurité",
+      "imageTitle": "Entreprise de sécurité B2B",
+      "imageSubtitle": "Aperçu du système opérationnel pour entreprise de sécurité B2B",
       "processes": [],
       "processExamples": {
         "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin d’intervention → choisir les prestations principales → clarifier la différence avec les concurrents → choisir le canal principal.",
@@ -8718,15 +8956,15 @@
         "equipe.culture": "Exemple : rappeler les consignes de passage → partager les retours terrain → sécuriser les remplacements → traiter les écarts tôt → maintenir une qualité régulière."
       },
       "slug": "entreprise-de-securite",
-      "name": "Entreprise de sécurité",
-      "sectorLabel": "Services aux particuliers",
+      "name": "Entreprise de sécurité B2B",
+      "sectorLabel": "Conseil & services aux entreprises",
       "icon": "Shield",
       "tags": [
+        "B2B",
         "Sécurité",
-        "Planning",
         "Système"
       ],
-      "description": "Pilotez agents, sites, vacations et incidents sans perdre la main courante.",
+      "description": "Suivez sites clients, agents, plannings, agréments, incidents et facturation.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -8792,7 +9030,10 @@
           "slug": "kizeo-forms",
           "usage": "Créer rapports d’intervention et contrôles terrain sécurité."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "primary",
+      "offerType": "service"
     },
     {
       "id": "e83",
@@ -8890,7 +9131,10 @@
           "slug": "mailchimp",
           "usage": "Envoyer newsletters, appels à participation et campagnes aux membres."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e84",
@@ -8988,7 +9232,10 @@
           "slug": "kizeo-forms",
           "usage": "Digitaliser rapports, contrôles et fiches d’intervention."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e85",
@@ -9086,7 +9333,10 @@
           "slug": "kizeo-forms",
           "usage": "Collecter photos, contrôles et comptes rendus terrain."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e86",
@@ -9184,7 +9434,10 @@
           "slug": "kizeo-forms",
           "usage": "Dématérialiser rapports, relevés et signatures chantier."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e87",
@@ -9282,7 +9535,10 @@
           "slug": "fieldwire",
           "usage": "Suivre tâches, réserves et coordination chantier."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e88",
@@ -9376,109 +9632,10 @@
           "slug": "kizeo-forms",
           "usage": "Créer rapports intervention, photos et signatures terrain."
         }
-      ]
-    },
-    {
-      "id": "e89",
-      "category": "Système opérationnel",
-      "price": "",
-      "imageTitle": "Caviste",
-      "imageSubtitle": "Aperçu du système opérationnel pour caviste",
-      "processes": [],
-      "processExamples": {
-        "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin client → choisir les produits principaux → clarifier la différence avec les concurrents → choisir le canal principal.",
-        "strategie.objectifs": "Exemple : choisir 3 priorités → définir le chiffre à suivre → fixer un seuil d’alerte → décider du rythme de pilotage → ajuster chaque mois.",
-        "strategie.plan-action": "Exemple : transformer chaque priorité en actions → nommer un responsable → fixer une date → lever les blocages → vérifier le résultat obtenu.",
-        "marketing.confiance": "Exemple : montrer les produits, services, avis et prix → clarifier disponibilités, horaires et commandes → afficher les infos pratiques → faciliter l’achat ou la demande → rassurer avant le passage.",
-        "marketing.decision": "Exemple : qualifier la demande → proposer la bonne sélection de vins → expliquer le prix et les conditions → lever les hésitations → confirmer l’accord.",
-        "marketing.lien": "Exemple : noter la préférence client → prévenir de l’arrivage ou du réassort → demander le retour → repérer le prochain achat → maintenir le lien commercial actif.",
-        "finance.facturation": "Exemple : clôturer la caisse → vérifier les écarts de caisse → envoyer la facture ou le reçu → repérer le retard → relancer le paiement.",
-        "finance.pilotage": "Exemple : suivre le stock, la rotation, la marge produit et les retours → surveiller la trésorerie → repérer les écarts → décider les ajustements.",
-        "finance.conformite": "Exemple : classer les contrats, factures et justificatifs → suivre les échéances fiscales ou sociales → vérifier les documents manquants → préparer les éléments pour le comptable.",
-        "equipe.recrutement": "Exemple : repérer le besoin en vente, caisse ou stock → définir le rôle attendu → tester le sens client → préparer l’arrivée → suivre les premières ventes.",
-        "equipe.rh": "Exemple : clarifier qui tient vente, caisse, stock et commandes → rendre le planning visible → anticiper absences et pics → suivre les compétences indispensables → transmettre les consignes magasin.",
-        "equipe.culture": "Exemple : rappeler l’accueil et la tenue du point de vente → partager les retours clients → valoriser les bons réflexes → corriger les écarts → maintenir une équipe commerçante."
-      },
-      "slug": "caviste",
-      "name": "Caviste",
-      "sectorLabel": "Commerce & retail",
-      "icon": "Store",
-      "tags": [
-        "Commerce",
-        "Stock",
-        "Système"
       ],
-      "description": "Maîtrisez références, stock, dégustations et ventes sans perdre la rotation de cave.",
-      "operationProcesses": [
-        {
-          "pillar": "Opérations",
-          "title": "Catalogue cave",
-          "description": "Structurer vins, millésimes, domaines, prix et conseils.",
-          "examples": "Exemple : vérifier les références en cave → contrôler prix et disponibilité → compléter les conseils utiles → ranger par rayon → préparer la vente."
-        },
-        {
-          "pillar": "Opérations",
-          "title": "Stock & réassort",
-          "description": "Suivre réceptions, seuils, inventaires et ruptures.",
-          "examples": "Exemple : contrôler le niveau disponible → repérer les références critiques → déclencher le réassort → suivre la réception → limiter rupture et surstock."
-        },
-        {
-          "pillar": "Opérations",
-          "title": "Vente conseil",
-          "description": "Centraliser préférences client, recommandations et paniers.",
-          "examples": "Exemple : comprendre le besoin client → proposer le produit adapté → confirmer le stock → conclure la vente → noter la préférence client."
-        },
-        {
-          "pillar": "Opérations",
-          "title": "Dégustations",
-          "description": "Organiser événements, invitations, stocks et retours.",
-          "examples": "Exemple : fixer l’objectif → cibler les participants → valider le budget → préparer le jour J → relancer les participants."
-        },
-        {
-          "pillar": "Opérations",
-          "title": "Caisse & marge",
-          "description": "Piloter encaissements, remises, marges et performance.",
-          "examples": "Exemple : clôturer la caisse → vérifier le montant → suivre le paiement → repérer le retard → relancer le paiement."
-        }
-      ],
-      "toolRefs": [
-        {
-          "slug": "wino",
-          "usage": "Gérer caisse, stock et activité caviste."
-        },
-        {
-          "slug": "sumup-caisse",
-          "usage": "Encaisser simplement avec une caisse intégrée."
-        },
-        {
-          "slug": "canva",
-          "usage": "Créer affiches, offres dégustation et supports boutique."
-        },
-        {
-          "slug": "brevo",
-          "usage": "Relancer clients et diffuser invitations ou offres par email/SMS."
-        },
-        {
-          "slug": "chatgpt",
-          "usage": "Préparer fiches produits, posts et réponses client."
-        },
-        {
-          "slug": "hiboutik",
-          "usage": "Suivre ventes, stock, clients et caisse cave."
-        },
-        {
-          "slug": "fastmag",
-          "usage": "Gérer stock, caisse, clients et ventes multi-canales."
-        },
-        {
-          "slug": "rovercash",
-          "usage": "Suivre encaissements et activité du commerce caviste."
-        },
-        {
-          "slug": "ecwid",
-          "usage": "Ajouter une boutique en ligne simple pour vendre une sélection de produits."
-        }
-      ]
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e90",
@@ -9580,7 +9737,10 @@
           "slug": "ecwid",
           "usage": "Ajouter une boutique en ligne légère pour catalogue et commandes."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "commerce"
     },
     {
       "id": "e91",
@@ -9678,7 +9838,10 @@
           "slug": "acuity-scheduling",
           "usage": "Gérer rendez-vous, rappels et disponibilités praticien."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e92",
@@ -9780,7 +9943,10 @@
           "slug": "acuity-scheduling",
           "usage": "Proposer une prise de rendez-vous en ligne si l’organisation le permet."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e93",
@@ -9874,14 +10040,17 @@
           "slug": "bl-enfance",
           "usage": "Structurer inscriptions, pointages, réservations et facturation crèche."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e94",
       "category": "Système opérationnel",
       "price": "",
-      "imageTitle": "Gestionnaire de patrimoine",
-      "imageSubtitle": "Aperçu du système opérationnel pour gestionnaire de patrimoine",
+      "imageTitle": "Gestionnaire de patrimoine dirigeant",
+      "imageSubtitle": "Aperçu du système opérationnel pour gestionnaire de patrimoine dirigeant",
       "processes": [],
       "processExamples": {
         "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le projet patrimonial → choisir l’accompagnement principal → clarifier la différence avec les concurrents → choisir le canal principal.",
@@ -9898,15 +10067,15 @@
         "equipe.culture": "Exemple : partager la méthode de travail → clarifier le niveau d’exigence → faire circuler les apprentissages → traiter les désaccords tôt → maintenir une équipe alignée."
       },
       "slug": "gestionnaire-de-patrimoine",
-      "name": "Gestionnaire de patrimoine",
+      "name": "Gestionnaire de patrimoine dirigeant",
       "sectorLabel": "Patrimoine",
       "icon": "Landmark",
       "tags": [
+        "B2B",
         "Patrimoine",
-        "Conseil",
         "Système"
       ],
-      "description": "Gardez bilans, allocations, clients et conformité sous contrôle sans disperser les dossiers.",
+      "description": "Structurez découverte client, conformité, recommandations, arbitrages et suivi patrimonial.",
       "operationProcesses": [
         {
           "pillar": "Opérations",
@@ -9976,7 +10145,10 @@
           "slug": "quantalys",
           "usage": "Comparer fonds, analyser allocations et construire des portefeuilles."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "secondary",
+      "offerType": "service"
     },
     {
       "id": "e95",
@@ -10070,7 +10242,10 @@
           "slug": "netty",
           "usage": "Structurer biens, contacts, recherches et rapprochements immobiliers."
         }
-      ]
+      ],
+      "audience": "mixed",
+      "visibility": "hidden",
+      "offerType": "service"
     },
     {
       "id": "e96",
@@ -10164,7 +10339,1110 @@
           "slug": "kizeo-forms",
           "usage": "Collecter relevés, photos et formulaires terrain structurés."
         }
-      ]
+      ],
+      "audience": "b2b",
+      "visibility": "primary",
+      "offerType": "service"
+    },
+    {
+      "id": "e98",
+      "slug": "daf-externalise",
+      "name": "DAF externalisé",
+      "category": "Système opérationnel",
+      "description": "Structurez budget, trésorerie, reporting, décisions financières et échanges dirigeant.",
+      "tags": [
+        "B2B",
+        "Finance",
+        "Pilotage"
+      ],
+      "icon": "Calculator",
+      "price": "",
+      "sectorLabel": "Conseil & services aux entreprises",
+      "imageTitle": "DAF externalisé",
+      "imageSubtitle": "Aperçu du système opérationnel pour daf externalisé",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Reporting financier",
+          "description": "Centraliser chiffres clés, budget, trésorerie et alertes de gestion.",
+          "examples": "Exemple : récupérer ventes et charges → rapprocher trésorerie → mettre à jour tableau de bord → signaler écarts → préparer arbitrage dirigeant."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Prévisionnel & trésorerie",
+          "description": "Suivre cash, échéances, scénarios et besoins de financement.",
+          "examples": "Exemple : mettre à jour encaissements attendus → lister décaissements → repérer tension → proposer actions → suivre résultat."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Comités de pilotage",
+          "description": "Préparer décisions, supports, priorités et plan d’action financier.",
+          "examples": "Exemple : consolider chiffres → isoler sujets sensibles → préparer recommandations → décider actions → relancer responsables."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "pennylane",
+          "usage": "Suivre comptabilité, trésorerie et reporting."
+        },
+        {
+          "slug": "notion",
+          "usage": "Centraliser décisions, documents et routines de pilotage."
+        },
+        {
+          "slug": "regate",
+          "usage": "Suivre dépenses, validations et pilotage financier."
+        }
+      ],
+      "audience": "b2b",
+      "offerType": "service",
+      "visibility": "primary"
+    },
+    {
+      "id": "e99",
+      "slug": "office-manager-externalise",
+      "name": "Office manager externalisé",
+      "category": "Système opérationnel",
+      "description": "Cadrez administration, fournisseurs, contrats, équipe et routines internes.",
+      "tags": [
+        "B2B",
+        "Admin",
+        "Organisation"
+      ],
+      "icon": "Briefcase",
+      "price": "",
+      "sectorLabel": "Conseil & services aux entreprises",
+      "imageTitle": "Office manager externalisé",
+      "imageSubtitle": "Aperçu du système opérationnel pour office manager externalisé",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Administration quotidienne",
+          "description": "Centraliser demandes internes, documents, contrats et tâches administratives.",
+          "examples": "Exemple : collecter demandes → prioriser urgences → affecter actions → suivre blocages → clôturer avec preuve."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Fournisseurs & achats",
+          "description": "Suivre commandes, contrats, échéances, accès et factures fournisseurs.",
+          "examples": "Exemple : vérifier besoin → demander devis → valider achat → suivre livraison → classer facture."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Routines équipe",
+          "description": "Organiser réunions, arrivées, départs, accès et informations internes.",
+          "examples": "Exemple : préparer checklist arrivée → ouvrir accès → partager documents → confirmer matériel → suivre période d’intégration."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "notion",
+          "usage": "Centraliser procédures, tâches et documents internes."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Gérer fichiers, mails et agenda."
+        },
+        {
+          "slug": "airtable",
+          "usage": "Suivre fournisseurs, contrats et demandes."
+        }
+      ],
+      "audience": "b2b",
+      "offerType": "service",
+      "visibility": "primary"
+    },
+    {
+      "id": "e100",
+      "slug": "assistant-administratif-externalise",
+      "name": "Assistant administratif externalisé",
+      "category": "Système opérationnel",
+      "description": "Organisez documents, relances, factures, rendez-vous et support administratif client.",
+      "tags": [
+        "B2B",
+        "Admin",
+        "Services"
+      ],
+      "icon": "FileText",
+      "price": "",
+      "sectorLabel": "Conseil & services aux entreprises",
+      "imageTitle": "Assistant administratif externalisé",
+      "imageSubtitle": "Aperçu du système opérationnel pour assistant administratif externalisé",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Dossiers administratifs",
+          "description": "Collecter pièces, vérifier manquants et classer la bonne version.",
+          "examples": "Exemple : recevoir demande → lister pièces → relancer manquants → nommer fichiers → confirmer dossier complet."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Relances & suivi",
+          "description": "Suivre emails, échéances, rendez-vous et réponses attendues.",
+          "examples": "Exemple : extraire relances → prioriser → envoyer message → mettre à jour statut → alerter si blocage."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Factures & justificatifs",
+          "description": "Préparer factures, justificatifs, notes et transmissions comptables.",
+          "examples": "Exemple : récupérer justificatif → contrôler informations → classer → transmettre → suivre validation."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Gérer mails, fichiers et agendas clients."
+        },
+        {
+          "slug": "notion",
+          "usage": "Suivre tâches et procédures."
+        },
+        {
+          "slug": "pennylane",
+          "usage": "Transmettre factures et justificatifs."
+        }
+      ],
+      "audience": "b2b",
+      "offerType": "service",
+      "visibility": "primary"
+    },
+    {
+      "id": "e101",
+      "slug": "secretariat-externalise",
+      "name": "Secrétariat externalisé",
+      "category": "Système opérationnel",
+      "description": "Structurez appels, agenda, accueil, messages et transmission des informations.",
+      "tags": [
+        "B2B",
+        "Secrétariat",
+        "Support"
+      ],
+      "icon": "FileText",
+      "price": "",
+      "sectorLabel": "Conseil & services aux entreprises",
+      "imageTitle": "Secrétariat externalisé",
+      "imageSubtitle": "Aperçu du système opérationnel pour secrétariat externalisé",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Accueil & appels",
+          "description": "Qualifier demandes, urgence, coordonnées et suite attendue.",
+          "examples": "Exemple : recevoir appel → qualifier motif → noter informations → transmettre au bon interlocuteur → confirmer prise en charge."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Agenda & rendez-vous",
+          "description": "Gérer créneaux, confirmations, reports et consignes de rendez-vous.",
+          "examples": "Exemple : proposer créneau → confirmer documents → envoyer rappel → gérer annulation → mettre à jour agenda."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Transmission client",
+          "description": "Garder une trace claire des messages, décisions et réponses attendues.",
+          "examples": "Exemple : noter message → classer priorité → transmettre → suivre réponse → clôturer."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "google-workspace",
+          "usage": "Gérer agenda, mails et documents."
+        },
+        {
+          "slug": "calendly",
+          "usage": "Planifier rendez-vous et confirmations."
+        },
+        {
+          "slug": "airtable",
+          "usage": "Suivre demandes et statuts."
+        }
+      ],
+      "audience": "b2b",
+      "offerType": "service",
+      "visibility": "primary"
+    },
+    {
+      "id": "e102",
+      "slug": "gestionnaire-paie-independant",
+      "name": "Gestionnaire de paie indépendant",
+      "category": "Système opérationnel",
+      "description": "Suivez variables, bulletins, DSN, échéances sociales et demandes salariés.",
+      "tags": [
+        "B2B",
+        "Paie",
+        "RH"
+      ],
+      "icon": "Calculator",
+      "price": "",
+      "sectorLabel": "Conseil & services aux entreprises",
+      "imageTitle": "Gestionnaire de paie indépendant",
+      "imageSubtitle": "Aperçu du système opérationnel pour gestionnaire de paie indépendant",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Variables de paie",
+          "description": "Collecter absences, primes, heures et changements contractuels.",
+          "examples": "Exemple : demander variables → contrôler cohérence → traiter manquants → préparer import → valider avec client."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Bulletins & DSN",
+          "description": "Produire bulletins, contrôler déclarations et respecter échéances.",
+          "examples": "Exemple : générer bulletins → vérifier cotisations → préparer DSN → obtenir validation → archiver preuves."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Demandes RH",
+          "description": "Suivre questions salariés, documents et corrections de paie.",
+          "examples": "Exemple : qualifier demande → vérifier dossier → corriger si besoin → répondre → garder trace."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "silae",
+          "usage": "Produire bulletins et déclarations sociales."
+        },
+        {
+          "slug": "payfit",
+          "usage": "Gérer paie et RH clients."
+        },
+        {
+          "slug": "lucca",
+          "usage": "Suivre absences et variables RH."
+        }
+      ],
+      "audience": "b2b",
+      "offerType": "service",
+      "visibility": "primary"
+    },
+    {
+      "id": "e103",
+      "slug": "cabinet-rh-externalise",
+      "name": "Cabinet RH externalisé",
+      "category": "Système opérationnel",
+      "description": "Structurez recrutements, contrats, entretiens, obligations RH et suivi équipe.",
+      "tags": [
+        "B2B",
+        "RH",
+        "Services"
+      ],
+      "icon": "UserCheck",
+      "price": "",
+      "sectorLabel": "Conseil & services aux entreprises",
+      "imageTitle": "Cabinet RH externalisé",
+      "imageSubtitle": "Aperçu du système opérationnel pour cabinet rh externalisé",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Recrutement",
+          "description": "Cadrer besoin, diffuser offre, suivre candidats et décisions.",
+          "examples": "Exemple : définir poste → publier offre → trier candidats → organiser entretiens → suivre décision."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Administration RH",
+          "description": "Suivre contrats, avenants, absences, échéances et documents salariés.",
+          "examples": "Exemple : collecter informations → préparer document → faire valider → signer → archiver."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Suivi équipe",
+          "description": "Organiser entretiens, objectifs, alertes et plans d’action RH.",
+          "examples": "Exemple : préparer trame → collecter retours → noter décisions → suivre actions → relancer manager."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "lucca",
+          "usage": "Gérer dossiers RH et absences."
+        },
+        {
+          "slug": "recruitee",
+          "usage": "Suivre recrutements et candidats."
+        },
+        {
+          "slug": "teamtailor",
+          "usage": "Structurer marque employeur et candidatures."
+        }
+      ],
+      "audience": "b2b",
+      "offerType": "service",
+      "visibility": "primary"
+    },
+    {
+      "id": "e104",
+      "slug": "centre-appels-support-client",
+      "name": "Centre d’appels / support client",
+      "category": "Système opérationnel",
+      "description": "Pilotez tickets, appels, SLA, réponses, escalades et qualité de support.",
+      "tags": [
+        "B2B",
+        "Support",
+        "Service client"
+      ],
+      "icon": "Headphones",
+      "price": "",
+      "sectorLabel": "Conseil & services aux entreprises",
+      "imageTitle": "Centre d’appels / support client",
+      "imageSubtitle": "Aperçu du système opérationnel pour centre d’appels / support client",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Tickets & appels",
+          "description": "Qualifier demandes, urgence, client, statut et prochaine réponse.",
+          "examples": "Exemple : recevoir demande → classifier → prioriser → répondre → escalader si nécessaire."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "SLA & qualité",
+          "description": "Suivre délais, résolutions, motifs récurrents et satisfaction client.",
+          "examples": "Exemple : mesurer temps réponse → repérer retard → écouter échantillon → corriger script → suivre satisfaction."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Base de connaissance",
+          "description": "Mettre à jour réponses types, procédures et causes récurrentes.",
+          "examples": "Exemple : identifier question fréquente → rédiger réponse → valider → publier → mesurer réutilisation."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "zendesk",
+          "usage": "Centraliser tickets et SLA."
+        },
+        {
+          "slug": "intercom",
+          "usage": "Gérer support et conversations clients."
+        },
+        {
+          "slug": "freshdesk",
+          "usage": "Suivre demandes et qualité de support."
+        }
+      ],
+      "audience": "b2b",
+      "offerType": "service",
+      "visibility": "primary"
+    },
+    {
+      "id": "e105",
+      "slug": "societe-recouvrement",
+      "name": "Société de recouvrement",
+      "category": "Système opérationnel",
+      "description": "Cadrez créances, relances, dossiers, preuves, échéanciers et encaissements.",
+      "tags": [
+        "B2B",
+        "Finance",
+        "Recouvrement"
+      ],
+      "icon": "Landmark",
+      "price": "",
+      "sectorLabel": "Conseil & services aux entreprises",
+      "imageTitle": "Société de recouvrement",
+      "imageSubtitle": "Aperçu du système opérationnel pour société de recouvrement",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Portefeuille créances",
+          "description": "Qualifier créances, montants, ancienneté, preuves et niveau de risque.",
+          "examples": "Exemple : importer balance → classer ancienneté → vérifier justificatifs → prioriser dossiers → lancer action."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Relances & échéanciers",
+          "description": "Suivre scénarios de relance, réponses, promesses et paiements.",
+          "examples": "Exemple : envoyer relance → noter réponse → proposer échéancier → suivre paiement → escalader si rupture."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Dossiers sensibles",
+          "description": "Préparer éléments pour contentieux, transmission ou arbitrage client.",
+          "examples": "Exemple : vérifier contrat → regrouper factures → documenter échanges → recommander suite → archiver décision."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "sellsy",
+          "usage": "Suivre clients, factures et relances."
+        },
+        {
+          "slug": "pennylane",
+          "usage": "Visualiser factures et encaissements."
+        },
+        {
+          "slug": "airtable",
+          "usage": "Piloter portefeuille de créances."
+        }
+      ],
+      "audience": "b2b",
+      "offerType": "service",
+      "visibility": "primary"
+    },
+    {
+      "id": "e106",
+      "slug": "societe-domiciliation",
+      "name": "Société de domiciliation",
+      "category": "Système opérationnel",
+      "description": "Structurez dossiers clients, contrats, courrier, conformité et renouvellements.",
+      "tags": [
+        "B2B",
+        "Admin",
+        "Domiciliation"
+      ],
+      "icon": "Building2",
+      "price": "",
+      "sectorLabel": "Conseil & services aux entreprises",
+      "imageTitle": "Société de domiciliation",
+      "imageSubtitle": "Aperçu du système opérationnel pour société de domiciliation",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Entrée client & conformité",
+          "description": "Collecter pièces, vérifier identité, société, contrat et obligations.",
+          "examples": "Exemple : recevoir demande → vérifier pièces → valider conformité → signer contrat → créer dossier."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Courrier & services",
+          "description": "Suivre réception, notification, scan, transfert et demandes client.",
+          "examples": "Exemple : recevoir courrier → identifier client → scanner → notifier → archiver action."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Renouvellements",
+          "description": "Piloter échéances, paiements, changements d’adresse et résiliations.",
+          "examples": "Exemple : lister échéances → relancer paiement → mettre à jour contrat → confirmer renouvellement → archiver."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "airtable",
+          "usage": "Suivre dossiers, courriers et statuts."
+        },
+        {
+          "slug": "signez-un-document-electroniquement",
+          "usage": "Faire signer contrats et avenants."
+        },
+        {
+          "slug": "stripe",
+          "usage": "Encaisser abonnements et frais."
+        }
+      ],
+      "audience": "b2b",
+      "offerType": "service",
+      "visibility": "primary"
+    },
+    {
+      "id": "e107",
+      "slug": "centre-affaires-coworking",
+      "name": "Centre d’affaires / coworking",
+      "category": "Système opérationnel",
+      "description": "Pilotez espaces, réservations, membres, services, contrats et facturation.",
+      "tags": [
+        "B2B",
+        "Espaces",
+        "Services"
+      ],
+      "icon": "Building2",
+      "price": "",
+      "sectorLabel": "Conseil & services aux entreprises",
+      "imageTitle": "Centre d’affaires / coworking",
+      "imageSubtitle": "Aperçu du système opérationnel pour centre d’affaires / coworking",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Espaces & réservations",
+          "description": "Suivre bureaux, salles, disponibilités, accès et options réservées.",
+          "examples": "Exemple : recevoir demande → vérifier disponibilité → bloquer salle → confirmer accès → facturer."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Membres & contrats",
+          "description": "Gérer abonnements, entrées, sorties, documents et services inclus.",
+          "examples": "Exemple : créer membre → signer contrat → ouvrir accès → suivre options → préparer renouvellement."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Services & incidents",
+          "description": "Centraliser demandes, maintenance, courrier, visiteurs et support membre.",
+          "examples": "Exemple : recevoir ticket → assigner → traiter → confirmer résolution → repérer récurrence."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "calendly",
+          "usage": "Gérer réservations et rendez-vous."
+        },
+        {
+          "slug": "stripe",
+          "usage": "Encaisser abonnements et options."
+        },
+        {
+          "slug": "notion",
+          "usage": "Centraliser procédures et demandes."
+        }
+      ],
+      "audience": "b2b",
+      "offerType": "service",
+      "visibility": "primary"
+    },
+    {
+      "id": "e108",
+      "slug": "cabinet-qhse-conformite",
+      "name": "Cabinet QHSE / conformité",
+      "category": "Système opérationnel",
+      "description": "Structurez audits, plans d’action, preuves, risques et obligations clients.",
+      "tags": [
+        "B2B",
+        "Conformité",
+        "QHSE"
+      ],
+      "icon": "ClipboardCheck",
+      "price": "",
+      "sectorLabel": "Conseil & services aux entreprises",
+      "imageTitle": "Cabinet QHSE / conformité",
+      "imageSubtitle": "Aperçu du système opérationnel pour cabinet qhse / conformité",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Audits & diagnostics",
+          "description": "Préparer périmètre, référentiel, constats, preuves et risques.",
+          "examples": "Exemple : cadrer audit → collecter preuves → noter écarts → prioriser risques → restituer."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Plans d’action",
+          "description": "Suivre corrections, responsables, échéances, preuves et validations.",
+          "examples": "Exemple : créer action → nommer responsable → fixer date → contrôler preuve → clôturer."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Veille & obligations",
+          "description": "Maintenir référentiels, échéances, documents et changements réglementaires.",
+          "examples": "Exemple : identifier obligation → mesurer impact → informer client → mettre à jour procédure → archiver preuve."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "notion",
+          "usage": "Centraliser référentiels et plans d’action."
+        },
+        {
+          "slug": "airtable",
+          "usage": "Suivre audits, écarts et preuves."
+        },
+        {
+          "slug": "signez-un-document-electroniquement",
+          "usage": "Faire valider rapports et documents."
+        }
+      ],
+      "audience": "b2b",
+      "offerType": "service",
+      "visibility": "primary"
+    },
+    {
+      "id": "e109",
+      "slug": "bureau-etudes",
+      "name": "Bureau d’études",
+      "category": "Système opérationnel",
+      "description": "Cadrez demandes, études, chiffrages, livrables, validations et marge projet.",
+      "tags": [
+        "B2B",
+        "Études",
+        "Projet"
+      ],
+      "icon": "PenTool",
+      "price": "",
+      "sectorLabel": "Conseil & services aux entreprises",
+      "imageTitle": "Bureau d’études",
+      "imageSubtitle": "Aperçu du système opérationnel pour bureau d’études",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Demandes & cadrage",
+          "description": "Qualifier besoin, contraintes, documents, délais et livrables attendus.",
+          "examples": "Exemple : recevoir demande → collecter plans → clarifier contraintes → estimer charge → proposer planning."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Production d’études",
+          "description": "Suivre calculs, plans, versions, revues et validations techniques.",
+          "examples": "Exemple : produire version → contrôler → envoyer revue → intégrer retours → figer livrable."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Marge projet",
+          "description": "Comparer temps prévu, temps passé, modifications et facturation.",
+          "examples": "Exemple : suivre heures → identifier hors périmètre → chiffrer avenant → facturer → analyser marge."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "notion",
+          "usage": "Suivre projets, décisions et livrables."
+        },
+        {
+          "slug": "airtable",
+          "usage": "Piloter demandes et versions."
+        },
+        {
+          "slug": "signez-un-document-electroniquement",
+          "usage": "Valider devis et avenants."
+        }
+      ],
+      "audience": "b2b",
+      "offerType": "service",
+      "visibility": "primary"
+    },
+    {
+      "id": "e110",
+      "slug": "cabinet-etudes",
+      "name": "Cabinet d’études",
+      "category": "Système opérationnel",
+      "description": "Structurez enquêtes, analyses, livrables, validations et recommandations clients.",
+      "tags": [
+        "B2B",
+        "Études",
+        "Conseil"
+      ],
+      "icon": "FileText",
+      "price": "",
+      "sectorLabel": "Conseil & services aux entreprises",
+      "imageTitle": "Cabinet d’études",
+      "imageSubtitle": "Aperçu du système opérationnel pour cabinet d’études",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Cadrage d’étude",
+          "description": "Clarifier objectif, méthodologie, sources, planning et livrables.",
+          "examples": "Exemple : cadrer question → choisir méthode → lister données → planifier entretiens → valider livrable."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Collecte & analyse",
+          "description": "Suivre sources, entretiens, données, hypothèses et points à valider.",
+          "examples": "Exemple : collecter données → nettoyer → analyser → isoler limites → préparer synthèse."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Restitution client",
+          "description": "Préparer recommandations, supports, décisions et prochaines actions.",
+          "examples": "Exemple : rédiger rapport → préparer slides → valider messages → présenter → suivre décisions."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "notion",
+          "usage": "Centraliser recherche et livrables."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Collaborer sur documents et présentations."
+        },
+        {
+          "slug": "airtable",
+          "usage": "Structurer collecte et analyse."
+        }
+      ],
+      "audience": "b2b",
+      "offerType": "service",
+      "visibility": "primary"
+    },
+    {
+      "id": "e111",
+      "slug": "infogerance-informatique",
+      "name": "Infogérance informatique",
+      "category": "Système opérationnel",
+      "description": "Pilotez parc client, tickets, contrats, interventions, sécurité et SLA.",
+      "tags": [
+        "B2B",
+        "IT",
+        "Support"
+      ],
+      "icon": "Cpu",
+      "price": "",
+      "sectorLabel": "Tech & Digital",
+      "imageTitle": "Infogérance informatique",
+      "imageSubtitle": "Aperçu du système opérationnel pour infogérance informatique",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Parc & contrats",
+          "description": "Suivre clients, équipements, accès, garanties et périmètres de service.",
+          "examples": "Exemple : inventorier parc → vérifier contrat → noter accès → planifier maintenance → mettre à jour statut."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Tickets & interventions",
+          "description": "Prioriser incidents, demandes, techniciens, délais et résolution.",
+          "examples": "Exemple : recevoir ticket → qualifier urgence → assigner → traiter → documenter résolution."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Sécurité & maintenance",
+          "description": "Planifier sauvegardes, mises à jour, contrôles et alertes de sécurité.",
+          "examples": "Exemple : lancer contrôle → repérer risque → corriger → informer client → archiver preuve."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "zendesk",
+          "usage": "Gérer tickets et SLA."
+        },
+        {
+          "slug": "jira",
+          "usage": "Suivre incidents techniques et projets."
+        },
+        {
+          "slug": "notion",
+          "usage": "Documenter procédures et parc client."
+        }
+      ],
+      "audience": "b2b",
+      "offerType": "service",
+      "visibility": "primary"
+    },
+    {
+      "id": "e112",
+      "slug": "cybersecurite-pme",
+      "name": "Cybersécurité PME",
+      "category": "Système opérationnel",
+      "description": "Structurez audits, risques, remédiations, preuves et sensibilisation sécurité.",
+      "tags": [
+        "B2B",
+        "Cybersécurité",
+        "PME"
+      ],
+      "icon": "Shield",
+      "price": "",
+      "sectorLabel": "Tech & Digital",
+      "imageTitle": "Cybersécurité PME",
+      "imageSubtitle": "Aperçu du système opérationnel pour cybersécurité pme",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Audit sécurité",
+          "description": "Cadrer périmètre, actifs, risques, tests et preuves.",
+          "examples": "Exemple : définir périmètre → collecter accès → tester points sensibles → noter risques → restituer."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Remédiation",
+          "description": "Suivre corrections, responsables, preuves et validation des risques traités.",
+          "examples": "Exemple : créer ticket risque → prioriser → corriger → retester → clôturer."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Sensibilisation",
+          "description": "Planifier formations, supports, campagnes et retours utilisateurs.",
+          "examples": "Exemple : préparer contenu → lancer session → mesurer compréhension → relancer → documenter."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "notion",
+          "usage": "Centraliser risques, preuves et plans d’action."
+        },
+        {
+          "slug": "jira",
+          "usage": "Suivre remédiations techniques."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Gérer supports et documents."
+        }
+      ],
+      "audience": "b2b",
+      "offerType": "service",
+      "visibility": "primary"
+    },
+    {
+      "id": "e113",
+      "slug": "integrateur-crm-erp",
+      "name": "Intégrateur CRM / ERP",
+      "category": "Système opérationnel",
+      "description": "Cadrez besoins, paramétrage, migration, recettes, formation et support client.",
+      "tags": [
+        "B2B",
+        "Logiciel",
+        "Intégration"
+      ],
+      "icon": "Code",
+      "price": "",
+      "sectorLabel": "Tech & Digital",
+      "imageTitle": "Intégrateur CRM / ERP",
+      "imageSubtitle": "Aperçu du système opérationnel pour intégrateur crm / erp",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Cadrage & périmètre",
+          "description": "Clarifier processus, données, rôles, contraintes et réussite attendue.",
+          "examples": "Exemple : cartographier flux → lister données → cadrer priorités → valider périmètre → planifier."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Paramétrage & migration",
+          "description": "Suivre configuration, imports, tests, anomalies et validations.",
+          "examples": "Exemple : préparer mapping → importer données → tester parcours → corriger anomalies → valider."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Formation & support",
+          "description": "Organiser formation, documentation, tickets post-lancement et adoption.",
+          "examples": "Exemple : former utilisateurs → publier guide → suivre tickets → corriger irritants → clôturer projet."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "odoo",
+          "usage": "Déployer CRM, ERP et processus métier."
+        },
+        {
+          "slug": "hubspot",
+          "usage": "Structurer CRM et ventes."
+        },
+        {
+          "slug": "pipedrive",
+          "usage": "Suivre pipeline et adoption commerciale."
+        }
+      ],
+      "audience": "b2b",
+      "offerType": "service",
+      "visibility": "primary"
+    },
+    {
+      "id": "e114",
+      "slug": "consultant-data-bi",
+      "name": "Consultant data / BI",
+      "category": "Système opérationnel",
+      "description": "Structurez sources, tableaux de bord, indicateurs, qualité des données et décisions.",
+      "tags": [
+        "B2B",
+        "Data",
+        "BI"
+      ],
+      "icon": "Cpu",
+      "price": "",
+      "sectorLabel": "Tech & Digital",
+      "imageTitle": "Consultant data / BI",
+      "imageSubtitle": "Aperçu du système opérationnel pour consultant data / bi",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Sources & qualité",
+          "description": "Identifier sources, propriétaires, définitions et anomalies de données.",
+          "examples": "Exemple : lister sources → définir indicateurs → contrôler qualité → corriger écarts → documenter."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Tableaux de bord",
+          "description": "Construire vues utiles, fréquence, responsables et seuils d’alerte.",
+          "examples": "Exemple : choisir KPI → connecter données → créer dashboard → valider lecture → planifier revue."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Analyse & décisions",
+          "description": "Transformer analyses en recommandations, arbitrages et actions suivies.",
+          "examples": "Exemple : analyser tendance → formuler hypothèse → proposer action → suivre résultat → ajuster."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "airtable",
+          "usage": "Structurer bases et référentiels."
+        },
+        {
+          "slug": "notion",
+          "usage": "Documenter indicateurs et décisions."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Partager analyses et supports."
+        }
+      ],
+      "audience": "b2b",
+      "offerType": "service",
+      "visibility": "primary"
+    },
+    {
+      "id": "e115",
+      "slug": "agence-seo",
+      "name": "Agence SEO",
+      "category": "Système opérationnel",
+      "description": "Pilotez audit, contenus, technique, backlinks, reporting et performance organique.",
+      "tags": [
+        "B2B",
+        "SEO",
+        "Marketing"
+      ],
+      "icon": "Megaphone",
+      "price": "",
+      "sectorLabel": "Conseil & services aux entreprises",
+      "imageTitle": "Agence SEO",
+      "imageSubtitle": "Aperçu du système opérationnel pour agence seo",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Audit & priorités",
+          "description": "Identifier freins techniques, contenus, concurrence et opportunités.",
+          "examples": "Exemple : crawler site → analyser mots clés → prioriser pages → chiffrer impact → valider plan."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Production SEO",
+          "description": "Suivre briefs, contenus, optimisations, validations et publication.",
+          "examples": "Exemple : créer brief → produire contenu → optimiser → faire valider → publier."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Reporting SEO",
+          "description": "Mesurer positions, trafic, leads, actions réalisées et prochaines priorités.",
+          "examples": "Exemple : récupérer données → comparer objectifs → commenter écarts → recommander actions → suivre."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "notion",
+          "usage": "Suivre briefs, contenus et planning SEO."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Collaborer sur contenus et reporting."
+        },
+        {
+          "slug": "hubspot",
+          "usage": "Relier leads et performance commerciale."
+        }
+      ],
+      "audience": "b2b",
+      "offerType": "service",
+      "visibility": "primary"
+    },
+    {
+      "id": "e116",
+      "slug": "agence-acquisition-paid-ads",
+      "name": "Agence acquisition paid ads",
+      "category": "Système opérationnel",
+      "description": "Structurez campagnes, budgets, créas, tracking, leads et rentabilité client.",
+      "tags": [
+        "B2B",
+        "Acquisition",
+        "Marketing"
+      ],
+      "icon": "Megaphone",
+      "price": "",
+      "sectorLabel": "Conseil & services aux entreprises",
+      "imageTitle": "Agence acquisition paid ads",
+      "imageSubtitle": "Aperçu du système opérationnel pour agence acquisition paid ads",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Cadrage campagne",
+          "description": "Clarifier objectif, audience, budget, offre, tracking et contraintes.",
+          "examples": "Exemple : cadrer objectif → vérifier tracking → définir audience → préparer créas → lancer."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Pilotage budget",
+          "description": "Suivre dépenses, CPL, conversions, qualité leads et arbitrages.",
+          "examples": "Exemple : contrôler dépenses → repérer campagnes faibles → réallouer budget → documenter décision → mesurer."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Créations & tests",
+          "description": "Organiser variantes, validations, apprentissages et itérations.",
+          "examples": "Exemple : briefer créa → produire variante → tester → analyser → garder gagnants."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "hubspot",
+          "usage": "Suivre leads et conversion commerciale."
+        },
+        {
+          "slug": "pipedrive",
+          "usage": "Relier campagnes et pipeline."
+        },
+        {
+          "slug": "notion",
+          "usage": "Piloter briefs, budgets et tests."
+        }
+      ],
+      "audience": "b2b",
+      "offerType": "service",
+      "visibility": "primary"
+    },
+    {
+      "id": "e117",
+      "slug": "studio-branding-design",
+      "name": "Studio branding / design",
+      "category": "Système opérationnel",
+      "description": "Cadrez stratégie de marque, créations, retours, livrables et validations client.",
+      "tags": [
+        "B2B",
+        "Design",
+        "Marque"
+      ],
+      "icon": "PenTool",
+      "price": "",
+      "sectorLabel": "Conseil & services aux entreprises",
+      "imageTitle": "Studio branding / design",
+      "imageSubtitle": "Aperçu du système opérationnel pour studio branding / design",
+      "processes": [],
+      "operationProcesses": [
+        {
+          "pillar": "Opérations",
+          "title": "Brief marque",
+          "description": "Clarifier cible, positionnement, messages, contraintes et livrables.",
+          "examples": "Exemple : cadrer besoin → collecter références → définir direction → valider périmètre → planifier."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Création & retours",
+          "description": "Suivre pistes, versions, commentaires, validations et décisions.",
+          "examples": "Exemple : produire piste → présenter → centraliser retours → ajuster → obtenir validation."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Livrables & passation",
+          "description": "Préparer fichiers, règles d’usage, droits, formats et clôture projet.",
+          "examples": "Exemple : exporter assets → vérifier formats → documenter usage → livrer → archiver."
+        }
+      ],
+      "toolRefs": [
+        {
+          "slug": "figma",
+          "usage": "Produire et partager créations."
+        },
+        {
+          "slug": "canva",
+          "usage": "Préparer supports de marque éditables."
+        },
+        {
+          "slug": "notion",
+          "usage": "Centraliser brief, retours et livrables."
+        }
+      ],
+      "audience": "b2b",
+      "offerType": "service",
+      "visibility": "primary"
     }
   ]
 }

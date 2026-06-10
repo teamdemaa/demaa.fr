@@ -20,6 +20,10 @@ function addUnique(list, value) {
 }
 
 function extractCustomerDealToolSlugs() {
+  if (!fs.existsSync(customerDealsPath)) {
+    return [];
+  }
+
   const source = fs.readFileSync(customerDealsPath, "utf8");
   return [...source.matchAll(/toolSlug:\s*"([^"]+)"/g)].map((match) => match[1]);
 }

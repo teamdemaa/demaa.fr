@@ -55,6 +55,9 @@ export type EnterpriseDefinition = {
   businessVariant?: string;
   businessBlocks?: BusinessModelBlock[];
   businessSignals?: BusinessModelSignals;
+  audience?: "b2b" | "b2c" | "mixed";
+  offerType?: "service" | "product" | "commerce" | "platform" | "investment" | "production";
+  visibility?: "primary" | "secondary" | "hidden";
 };
 
 type EnterpriseAnnuairePayload = {

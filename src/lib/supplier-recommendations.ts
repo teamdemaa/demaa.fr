@@ -220,7 +220,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
       "protection-juridique",
     ],
   },
-  "cabinet-d-avocat": {
+  "cabinet-davocat": {
     order: [
       "qonto",
       "assurance-pro",

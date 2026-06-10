@@ -15,6 +15,56 @@ const TERM_ACTIONS: Array<[RegExp, string[]]> = [
     "Vérifier besoin, urgence, lieu et contraintes",
     "Confirmer la prochaine étape avec le client",
   ]],
+  [/comité|pilotage|gouvernance|décision|arbitrage/i, [
+    "Préparer les chiffres et décisions à regarder",
+    "Lister sujets bloqués, arbitrages et responsables",
+    "Acter décisions, échéances et prochain point",
+  ]],
+  [/périmètre|service interne|services internes|administration quotidienne|priorité/i, [
+    "Lister demandes ouvertes, urgence et propriétaire",
+    "Clarifier ce qui est inclus, exclu ou à valider",
+    "Prioriser actions utiles et points à transmettre",
+  ]],
+  [/appel|message|ticket|support|base de connaissance|transmission|courrier/i, [
+    "Qualifier demande, urgence et compte concerné",
+    "Apporter réponse, escalade ou prochaine action",
+    "Mettre à jour statut, consigne et trace client",
+  ]],
+  [/paie|variable|bulletin|dsn|social/i, [
+    "Collecter variables, absences et changements du mois",
+    "Contrôler cohérence avant émission ou déclaration",
+    "Tracer validation, correction et échéance sociale",
+  ]],
+  [/audit|diagnostic|plans? d.?action|risque|remédiation|référentiel/i, [
+    "Identifier écarts, risques et niveau de priorité",
+    "Définir action corrective, responsable et délai",
+    "Suivre preuve, validation et clôture du point",
+  ]],
+  [/paramétrage|migration|recette|anomalie|version|validation|fichier source|fichiers sources|tableaux? de bord|donnée|tracking|accès|droit/i, [
+    "Vérifier données, accès et version de travail",
+    "Suivre production, tests, retours et anomalies",
+    "Valider livrable avant partage ou mise en ligne",
+  ]],
+  [/facture|justificatif/i, [
+    "Collecter factures, justificatifs et informations manquantes",
+    "Contrôler montant, fournisseur, client et statut de paiement",
+    "Classer la pièce au bon dossier ou à la bonne période",
+  ]],
+  [/recrutement|candidat|rh|consultant|responsabilité/i, [
+    "Suivre personnes concernées, rôle et étape en cours",
+    "Clarifier décision attendue, responsable et délai",
+    "Mettre à jour dossier, transmission et prochaine action",
+  ]],
+  [/expertise|domaine technique|collecte|analyse|escalade/i, [
+    "Collecter éléments, hypothèses et contraintes utiles",
+    "Analyser points sensibles, écarts et décisions à prendre",
+    "Partager conclusion, limite et action suivante",
+  ]],
+  [/créance|recouvrement|relance|échéancier|débiteur/i, [
+    "Qualifier créance, preuve et scénario de relance",
+    "Suivre promesses, paiements et litiges ouverts",
+    "Mettre à jour statut client et prochaine action",
+  ]],
   [/devis|chiffrage|tarif|prix|estimation/i, [
     "Chiffrer le besoin avec les bons coûts",
     "Faire valider le devis ou l'accord client",
@@ -112,6 +162,12 @@ const EXACT_TITLE_ACTIONS: Record<string, string[]> = {
     "Qualifier motifs récurrents, urgence et impact client",
     "Suivre résolution, geste commercial et avis publié",
     "Corriger les causes qui reviennent dans les réclamations",
+  ],
+  [normalizeChecklistTitle("Service café")]: [
+    "Préparer poste, boissons, monnaie et consommables avant le service",
+    "Suivre affluence, commandes et temps d'attente",
+    "Repérer ruptures, erreurs ou pertes pendant le service",
+    "Ranger caisse, stock et points à reprendre en fin de service",
   ],
   [normalizeChecklistTitle("Expertise & positionnement")]: [
     "Clarifier domaines d'expertise, cibles et limites d'intervention",
@@ -1741,7 +1797,203 @@ const FIELD_SERVICE_MARGIN_ACTIONS = [
   "Ajuster tarif, secteur ou organisation des prochaines interventions",
 ];
 
+const B2B_SERVICE_MARGIN_ACTIONS = [
+  "Suivre forfait vendu, temps passé, achats externes et factures émises",
+  "Comparer charge réelle, valeur livrée, marge et reste à produire",
+  "Repérer dépassement, scope non facturé ou retard de paiement",
+  "Rapprocher devis, jalons, validations client et encaissements",
+  "Ajuster prix, périmètre ou staffing sur les prochaines missions",
+];
+
+const B2B_SUBSCRIPTION_MARGIN_ACTIONS = [
+  "Suivre abonnements, volumes traités, coûts d'équipe et encaissements",
+  "Comparer charge réelle, SLA, options facturées et marge par client",
+  "Repérer surconsommation, impayé ou service rendu hors contrat",
+  "Rapprocher contrat, reporting, facture et paiement attendu",
+  "Ajuster forfait, limites ou organisation du service",
+];
+
+const INTERNAL_PURCHASE_ACTIONS = [
+  "Lister besoin interne, fournisseur, budget et validation attendue",
+  "Comparer devis, conditions, délais et impact sur le service rendu",
+  "Suivre commande, livraison, facture et responsable de réception",
+  "Repérer achat non validé, retard ou dépense hors budget",
+  "Rattacher l'achat au client, contrat ou centre de coût concerné",
+];
+
 const CONTEXTUAL_TITLE_ACTIONS: Record<string, string[]> = {
+  [`office-manager-externalise::${normalizeChecklistTitle("Périmètre & services internes")}`]: [
+    "Définir services couverts, limites et interlocuteurs internes",
+    "Repérer demandes hors périmètre ou à faire valider",
+    "Mettre à jour règles, niveaux de service et responsabilités",
+    "Partager les arbitrages avec les équipes concernées",
+  ],
+  [`office-manager-externalise::${normalizeChecklistTitle("Administration quotidienne")}`]: [
+    "Lister tâches administratives ouvertes et urgence réelle",
+    "Traiter demandes, validations et transmissions du jour",
+    "Suivre blocages, relances internes et pièces manquantes",
+    "Clôturer avec trace, responsable et prochaine échéance",
+  ],
+  [`office-manager-externalise::${normalizeChecklistTitle("Fournisseurs & achats")}`]: INTERNAL_PURCHASE_ACTIONS,
+  [`office-manager-externalise::${normalizeChecklistTitle("Budget services généraux")}`]: [
+    "Suivre dépenses engagées, contrats fournisseurs et factures reçues",
+    "Comparer budget prévu, coûts réels et économies obtenues",
+    "Repérer dépense hors validation, doublon ou renouvellement inutile",
+    "Rapprocher commande, validation, facture et centre de coût",
+    "Ajuster fournisseurs, contrats ou règles d'achat interne",
+  ],
+  [`gestionnaire-paie-independant::${normalizeChecklistTitle("Variables de paie")}`]: [
+    "Collecter absences, primes, heures et changements contractuels",
+    "Contrôler cohérence avec planning, contrats et justificatifs",
+    "Repérer variable manquante, incohérente ou hors délai",
+    "Valider les éléments avant préparation des bulletins",
+  ],
+  [`gestionnaire-paie-independant::${normalizeChecklistTitle("Bulletins & DSN")}`]: [
+    "Préparer bulletins, contrôles et déclarations attendues",
+    "Vérifier totaux, cotisations, échéances et anomalies DSN",
+    "Suivre corrections, validations client et envois réalisés",
+    "Archiver preuve, version finale et retour éventuel",
+  ],
+  [`cabinet-rh-externalise::${normalizeChecklistTitle("Recrutements & candidats")}`]: [
+    "Suivre postes ouverts, candidats qualifiés et étapes en cours",
+    "Préparer entretiens, retours client et décisions attendues",
+    "Repérer blocages, profils à relancer ou besoin à recadrer",
+    "Mettre à jour pipeline, shortlists et prochaines actions",
+  ],
+  [`cabinet-rh-externalise::${normalizeChecklistTitle("Administration RH")}`]: [
+    "Centraliser dossiers salariés, documents et échéances RH",
+    "Contrôler contrats, avenants, absences et demandes internes",
+    "Repérer pièce manquante, risque social ou validation attendue",
+    "Tracer transmission, décision et prochaine échéance",
+  ],
+  [`cabinet-rh-externalise::${normalizeChecklistTitle("Consultants & responsabilités")}`]: [
+    "Affecter missions RH, comptes clients et responsabilités",
+    "Rendre visibles charge, priorités et points d'arbitrage",
+    "Partager accès, contexte et décisions utiles",
+    "Suivre capacité, renforts et qualité des livrables",
+  ],
+  [`secretariat-externalise::${normalizeChecklistTitle("Abonnements & facturation")}`]: B2B_SUBSCRIPTION_MARGIN_ACTIONS,
+  [`cabinet-rh-externalise::${normalizeChecklistTitle("Honoraires & marge mission")}`]: B2B_SERVICE_MARGIN_ACTIONS,
+  [`centre-appels-support-client::${normalizeChecklistTitle("Tickets & appels")}`]: [
+    "Qualifier appel, compte, urgence et motif réel",
+    "Traiter réponse, escalade ou rappel à planifier",
+    "Mettre à jour ticket, statut et promesse faite au client",
+    "Repérer irritants récurrents et files en retard",
+  ],
+  [`centre-appels-support-client::${normalizeChecklistTitle("Base de connaissance")}`]: [
+    "Identifier questions fréquentes et réponses à fiabiliser",
+    "Mettre à jour procédures, scripts et informations sensibles",
+    "Valider contenu avec responsable métier ou client",
+    "Suivre usage, incompréhensions et articles à corriger",
+  ],
+  [`centre-appels-support-client::${normalizeChecklistTitle("Coûts support & marge")}`]: B2B_SUBSCRIPTION_MARGIN_ACTIONS,
+  [`societe-recouvrement::${normalizeChecklistTitle("Portefeuille créances")}`]: [
+    "Classer créances par montant, ancienneté, preuve et priorité",
+    "Identifier dossiers contestés, prescrits ou à escalader",
+    "Mettre à jour statut, scénario et prochaine relance",
+    "Suivre récupération par client et créance active",
+  ],
+  [`societe-recouvrement::${normalizeChecklistTitle("Relances & échéanciers")}`]: [
+    "Planifier relances selon promesse, canal et ton adapté",
+    "Suivre réponses débiteur, paiements et échéances promises",
+    "Repérer rupture d'échéancier, litige ou blocage juridique",
+    "Informer client des résultats et prochaines actions",
+  ],
+  [`societe-recouvrement::${normalizeChecklistTitle("Commissions & encaissements")}`]: [
+    "Suivre créances confiées, commissions, frais et encaissements obtenus",
+    "Comparer effort de relance, taux de récupération et marge du dossier",
+    "Repérer promesse non tenue, litige ou créance devenue trop coûteuse",
+    "Rapprocher mandat, preuves, paiements débiteur et reversement client",
+    "Ajuster scénario de relance, seuils ou conditions de commission",
+  ],
+  [`societe-domiciliation::${normalizeChecklistTitle("Abonnements & paiements")}`]: B2B_SUBSCRIPTION_MARGIN_ACTIONS,
+  [`cabinet-qhse-conformite::${normalizeChecklistTitle("Audits & diagnostics")}`]: [
+    "Préparer périmètre, référentiel, preuves et interlocuteurs",
+    "Identifier écarts, risques et causes terrain",
+    "Qualifier criticité, conformité attendue et décision nécessaire",
+    "Rendre lisible diagnostic, preuves et priorités",
+  ],
+  [`cabinet-qhse-conformite::${normalizeChecklistTitle("Plans d'action")}`]: [
+    "Transformer écarts en actions correctives claires",
+    "Attribuer responsable, délai, preuve et niveau de priorité",
+    "Suivre avancement, blocages et validations obtenues",
+    "Clôturer action avec preuve et reste à surveiller",
+  ],
+  [`cabinet-qhse-conformite::${normalizeChecklistTitle("Honoraires & marge mission")}`]: B2B_SERVICE_MARGIN_ACTIONS,
+  [`bureau-etudes::${normalizeChecklistTitle("Marge projet")}`]: B2B_SERVICE_MARGIN_ACTIONS,
+  [`infogerance-informatique::${normalizeChecklistTitle("Abonnements & marge support")}`]: B2B_SUBSCRIPTION_MARGIN_ACTIONS,
+  [`cybersecurite-pme::${normalizeChecklistTitle("Offres cybersécurité & périmètre")}`]: [
+    "Définir périmètre couvert, exclusions et niveau d'engagement",
+    "Clarifier livrables, délais, accès et responsabilités client",
+    "Repérer offres à simplifier, renforcer ou arrêter",
+    "Aligner promesse, risque traité et capacité d'exécution",
+  ],
+  [`cybersecurite-pme::${normalizeChecklistTitle("Prospects & audit sécurité")}`]: [
+    "Qualifier contexte IT, urgence, risques et décideurs",
+    "Collecter accès, incidents, contraintes et preuves disponibles",
+    "Prioriser contrôles à réaliser avant proposition",
+    "Transformer audit en plan, devis ou refus argumenté",
+  ],
+  [`cybersecurite-pme::${normalizeChecklistTitle("Conformité & accès sensibles")}`]: [
+    "Lister accès, droits, obligations et preuves sensibles",
+    "Vérifier habilitations, MFA, journaux et responsabilités",
+    "Repérer exposition, compte dormant ou preuve manquante",
+    "Planifier correction, validation et revue périodique",
+  ],
+  [`cybersecurite-pme::${normalizeChecklistTitle("Forfaits & rentabilité")}`]: B2B_SERVICE_MARGIN_ACTIONS,
+  [`integrateur-crm-erp::${normalizeChecklistTitle("Paramétrage & migration")}`]: [
+    "Valider champs, règles métier, accès et données à migrer",
+    "Suivre paramétrage, imports, écarts et décisions client",
+    "Tester scénarios clés avant bascule ou livraison",
+    "Documenter limites, corrections et version déployée",
+  ],
+  [`integrateur-crm-erp::${normalizeChecklistTitle("Recette & anomalies")}`]: [
+    "Centraliser tests, anomalies, criticité et responsable",
+    "Prioriser corrections selon impact métier et date cible",
+    "Faire valider résolution par utilisateur ou référent",
+    "Suivre reste à corriger avant mise en production",
+  ],
+  [`integrateur-crm-erp::${normalizeChecklistTitle("Forfaits & marge projet")}`]: B2B_SERVICE_MARGIN_ACTIONS,
+  [`consultant-data-bi::${normalizeChecklistTitle("Sources & qualité des données")}`]: [
+    "Identifier sources, propriétaires, fraîcheur et définitions",
+    "Contrôler doublons, trous, incohérences et règles de calcul",
+    "Documenter limites de qualité avant exploitation",
+    "Prioriser corrections avec impact sur les décisions",
+  ],
+  [`consultant-data-bi::${normalizeChecklistTitle("Données & confidentialité")}`]: [
+    "Lister données sensibles, accès et finalités d'usage",
+    "Vérifier droits, anonymisation et règles de partage",
+    "Repérer exposition, fichier inutile ou preuve manquante",
+    "Tracer validation client et conditions de conservation",
+  ],
+  [`consultant-data-bi::${normalizeChecklistTitle("Honoraires & valeur livrée")}`]: B2B_SERVICE_MARGIN_ACTIONS,
+  [`agence-seo::${normalizeChecklistTitle("Production SEO")}`]: [
+    "Planifier contenus, optimisations et livrables techniques",
+    "Préparer brief, mots-clés, structure et éléments client",
+    "Suivre production, validations et mises en ligne",
+    "Contrôler qualité SEO avant livraison ou publication",
+  ],
+  [`agence-seo::${normalizeChecklistTitle("Accès & contenus client")}`]: [
+    "Vérifier accès CMS, Search Console, Analytics et fichiers utiles",
+    "Collecter contenus, contraintes marque et validations nécessaires",
+    "Repérer accès bloquant, contenu manquant ou risque de publication",
+    "Tracer version livrée, validation et prochaine action",
+  ],
+  [`agence-seo::${normalizeChecklistTitle("Budgets & marge client")}`]: AGENCY_PROJECT_MARGIN_ACTIONS,
+  [`agence-acquisition-paid-ads::${normalizeChecklistTitle("Campagnes & tracking")}`]: [
+    "Vérifier objectif, budget, tracking et audiences actives",
+    "Suivre dépenses, conversions, anomalies et apprentissage",
+    "Repérer campagne non rentable, tracking cassé ou budget bloqué",
+    "Préparer décisions d'optimisation et prochaines expérimentations",
+  ],
+  [`agence-acquisition-paid-ads::${normalizeChecklistTitle("Créations & tests")}`]: [
+    "Planifier angles, créations, formats et variantes à tester",
+    "Collecter éléments marque, visuels et validations client",
+    "Suivre performances par message, audience et créa",
+    "Archiver apprentissages et versions gagnantes",
+  ],
+  [`agence-acquisition-paid-ads::${normalizeChecklistTitle("Budgets & marge client")}`]: AGENCY_PROJECT_MARGIN_ACTIONS,
+  [`studio-branding-design::${normalizeChecklistTitle("Forfaits & marge projet")}`]: B2B_SERVICE_MARGIN_ACTIONS,
   [`services-b2b-conseil::${normalizeChecklistTitle("Honoraires & pilotage")}`]: AGENCY_PROJECT_MARGIN_ACTIONS,
   [`ecommerce::${normalizeChecklistTitle("Marge & trésorerie")}`]: [
     "Suivre ventes, paniers, frais logistiques et encaissements",
@@ -2018,7 +2270,7 @@ const CONTEXTUAL_TITLE_ACTIONS: Record<string, string[]> = {
     "Comparer coût boissons, pertes, remises et marge par produit",
     "Repérer écarts de caisse, surconsommations ou invendus coûteux",
     "Rapprocher stock boissons, ventes et achats fournisseurs",
-    "Ajuster prix, carte ou happy hour selon marge réelle",
+    "Ajuster prix, carte ou temps forts selon marge réelle",
   ],
   [`restauration::${normalizeChecklistTitle("Achats & stocks")}`]: FOOD_STOCK_ACTIONS,
   [`restaurant::${normalizeChecklistTitle("Stocks & fournisseurs")}`]: FOOD_STOCK_ACTIONS,
@@ -2027,7 +2279,7 @@ const CONTEXTUAL_TITLE_ACTIONS: Record<string, string[]> = {
     "Contrôler niveaux, ruptures, pertes et contraintes de stockage",
     "Commander ou préparer le réassort selon fréquentation prévue",
     "Suivre livraisons, écarts, retours ou casse",
-    "Rattacher achats au bar, service ou événement concerné",
+    "Rattacher achats au café, service ou événement concerné",
   ],
   [`boulangerie::${normalizeChecklistTitle("Caisse & pertes")}`]: [
     "Suivre caisse, tickets, paniers et encaissements du jour",
@@ -2100,20 +2352,6 @@ const CONTEXTUAL_TITLE_ACTIONS: Record<string, string[]> = {
     "Commander selon événements, compositions et ventes prévues",
     "Suivre livraisons, écarts, retours ou fleurs fragiles",
     "Rattacher achats aux compositions, commandes ou vitrines concernées",
-  ],
-  [`caviste::${normalizeChecklistTitle("Marge & rotation")}`]: [
-    "Suivre caisse, paniers, ventes et encaissements",
-    "Comparer marge, remises, rotation cave et références dormantes",
-    "Repérer écarts de caisse, invendus ou bouteilles peu rentables",
-    "Rapprocher ventes, stock cave et achats fournisseurs",
-    "Ajuster prix, dégustations ou mises en avant",
-  ],
-  [`caviste::${normalizeChecklistTitle("Stock & fournisseurs")}`]: [
-    "Lister bouteilles, millésimes et besoins par gamme",
-    "Contrôler niveaux, rotation cave, ruptures et conditions de stockage",
-    "Commander selon ventes, dégustations et références prioritaires",
-    "Suivre livraisons, écarts, retours ou bouteilles dormantes",
-    "Rattacher achats à la cave, fournisseur ou opération commerciale",
   ],
   [`librairie::${normalizeChecklistTitle("Marge & rotation")}`]: [
     "Suivre caisse, paniers, commandes et encaissements",
