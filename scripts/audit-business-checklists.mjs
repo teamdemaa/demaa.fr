@@ -65,7 +65,7 @@ for (const system of systems) {
   const itemUsage = new Map();
 
   for (const block of system.blocks) {
-    const checklist = checklistModule.buildChecklistForBusinessBlock(block);
+    const checklist = checklistModule.buildChecklistForBusinessBlock(block, { systemId: system.id });
     const signature = checklist.join("\n");
 
     if (!signatures.has(signature)) {

@@ -37,7 +37,7 @@ function buildBusinessBlockGroups(
   const blocks = system.businessBlocks;
 
   if (blocks?.length) {
-    return buildBusinessBlockChecklists(blocks);
+    return buildBusinessBlockChecklists(blocks, { systemId: system.slug });
   }
 
   return templates.map((template) => ({

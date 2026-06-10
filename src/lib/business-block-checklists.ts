@@ -5,6 +5,10 @@ export type BusinessBlockChecklist = {
   checklist: string[];
 };
 
+type BusinessBlockChecklistContext = {
+  systemId?: string;
+};
+
 const TERM_ACTIONS: Array<[RegExp, string[]]> = [
   [/demande|prospect|client|admission|inscription|rendez-vous|réservation/i, [
     "Qualifier la demande entrante",
@@ -109,6 +113,118 @@ const EXACT_TITLE_ACTIONS: Record<string, string[]> = {
     "Suivre résolution, geste commercial et avis publié",
     "Corriger les causes qui reviennent dans les réclamations",
   ],
+  [normalizeChecklistTitle("Expertise & positionnement")]: [
+    "Clarifier domaines d'expertise, cibles et limites d'intervention",
+    "Mettre à jour offres, honoraires et conditions d'entrée",
+    "Identifier dossiers à développer, refuser ou réorienter",
+    "Préparer preuves, références et éléments de réassurance",
+    "Vérifier cohérence entre positionnement et demandes reçues",
+  ],
+  [normalizeChecklistTitle("Offre & assortiment")]: [
+    "Clarifier gammes, rayons et références prioritaires",
+    "Mettre à jour prix, disponibilités et conditions de vente",
+    "Identifier produits à pousser, simplifier ou retirer",
+    "Vérifier cohérence entre assortiment, stock et marge",
+    "Préparer temps forts commerciaux et réassorts utiles",
+  ],
+  [normalizeChecklistTitle("Offres & bénéficiaires")]: [
+    "Clarifier prestations, publics aidés et limites d'intervention",
+    "Mettre à jour tarifs, fréquences et conditions de service",
+    "Identifier offres à renforcer, simplifier ou arrêter",
+    "Préparer éléments de réassurance pour familles ou bénéficiaires",
+    "Vérifier cohérence entre promesse, équipe et capacité terrain",
+  ],
+  [normalizeChecklistTitle("Offre & promesse")]: [
+    "Clarifier promesse, formats et résultats attendus",
+    "Mettre à jour prix, accès, garanties et conditions",
+    "Identifier offres à développer, simplifier ou retirer",
+    "Préparer preuves, extraits ou supports de vente",
+    "Vérifier cohérence entre promesse, contenu et demande",
+  ],
+  [normalizeChecklistTitle("Offre & disponibilités")]: [
+    "Clarifier chambres, formules, options et conditions de séjour",
+    "Mettre à jour disponibilités, prix et restrictions",
+    "Identifier périodes, offres ou canaux à pousser",
+    "Vérifier cohérence entre promesse, capacité et services inclus",
+    "Préparer éléments utiles aux réservations et relances",
+  ],
+  [normalizeChecklistTitle("Prospection & rendez-vous")]: [
+    "Qualifier cible, besoin, urgence et décideur",
+    "Préparer angle d'approche, preuve et prochaine étape",
+    "Planifier rendez-vous, relances et informations à collecter",
+    "Suivre objections, opportunités chaudes et comptes à nourrir",
+    "Mettre à jour pipeline et priorité commerciale",
+  ],
+  [normalizeChecklistTitle("Demandes & cadrage")]: [
+    "Qualifier demande, objectif, budget et contraintes projet",
+    "Collecter contexte, documents et parties prenantes utiles",
+    "Clarifier périmètre, critères de réussite et prochaine étape",
+    "Repérer risques, dépendances ou arbitrages à décider",
+    "Transformer cadrage en devis, étude ou refus motivé",
+  ],
+  [normalizeChecklistTitle("Clients & prévisions")]: [
+    "Collecter commandes, prévisions et priorités client",
+    "Comparer demande attendue, capacité et délais promis",
+    "Repérer pics, risques de rupture ou arbitrages commerciaux",
+    "Partager prévisions avec production, achats et client",
+    "Mettre à jour hypothèses et décisions de planification",
+  ],
+  [normalizeChecklistTitle("Demandes & projets jardin")]: [
+    "Qualifier besoin, terrain, usage et budget client",
+    "Collecter photos, mesures, accès et contraintes végétales",
+    "Planifier visite ou échange de cadrage",
+    "Identifier faisabilité, saisonnalité et priorités de travaux",
+    "Préparer devis, options et prochaine relance",
+  ],
+  [normalizeChecklistTitle("Clientèle & fidélité")]: [
+    "Suivre demandes, habitudes et retours clients récurrents",
+    "Identifier offres, rayons ou moments qui fidélisent",
+    "Relancer clients à potentiel ou paniers abandonnés",
+    "Mesurer panier, fréquence et satisfaction",
+    "Préparer animations ou avantages adaptés à la clientèle",
+  ],
+  [normalizeChecklistTitle("Rendez-vous & urgences")]: [
+    "Qualifier motif, urgence et informations utiles",
+    "Orienter vers le bon créneau ou niveau de priorité",
+    "Confirmer rendez-vous, consignes et documents à prévoir",
+    "Gérer annulation, retard ou urgence intercalée",
+    "Mettre à jour dossier et suite à donner",
+  ],
+  [normalizeChecklistTitle("Offre de soins animaux")]: [
+    "Clarifier soins, espèces prises en charge et limites du cabinet",
+    "Mettre à jour tarifs, créneaux et spécialités disponibles",
+    "Identifier soins à développer, réorganiser ou réorienter",
+    "Préparer informations utiles aux propriétaires d'animaux",
+    "Vérifier cohérence entre offre, équipe et équipement disponible",
+  ],
+  [normalizeChecklistTitle("Offre & pédagogie")]: [
+    "Clarifier parcours, objectifs pédagogiques et prérequis",
+    "Mettre à jour formats, durées, tarifs et modalités d'accès",
+    "Identifier modules à renforcer, simplifier ou retirer",
+    "Préparer éléments utiles aux apprenants, entreprises ou financeurs",
+    "Vérifier cohérence entre offre, niveau attendu et demande",
+  ],
+  [normalizeChecklistTitle("Offre & référentiels")]: [
+    "Clarifier diplômes, blocs de compétences et référentiels suivis",
+    "Mettre à jour rythmes, prérequis, tarifs et modalités d'alternance",
+    "Identifier parcours à renforcer, simplifier ou arrêter",
+    "Préparer éléments utiles aux apprentis, entreprises et financeurs",
+    "Vérifier cohérence entre offre, référentiel et besoins terrain",
+  ],
+  [normalizeChecklistTitle("Offre de soins")]: [
+    "Clarifier soins proposés, spécialités et limites de prise en charge",
+    "Mettre à jour tarifs, créneaux et modalités de rendez-vous",
+    "Identifier soins à développer, réorganiser ou réorienter",
+    "Préparer informations utiles aux patients avant orientation",
+    "Vérifier cohérence entre offre, équipement et demandes reçues",
+  ],
+  [normalizeChecklistTitle("Offre de prise en charge")]: [
+    "Clarifier bilans, séances et limites de prise en charge",
+    "Mettre à jour tarifs, durées et modalités de suivi",
+    "Identifier accompagnements à développer, réorganiser ou réorienter",
+    "Préparer informations utiles aux patients et prescripteurs",
+    "Vérifier cohérence entre offre, compétences et demandes reçues",
+  ],
   [normalizeChecklistTitle("Inscriptions élèves")]: [
     "Qualifier objectif, niveau et contraintes élève",
     "Collecter pièces, contrat et financement nécessaires",
@@ -139,17 +255,17 @@ const EXACT_TITLE_ACTIONS: Record<string, string[]> = {
     "Partager repères structurants avec l'équipe",
     "Revoir les ajustements nécessaires selon occupation",
   ],
-  [normalizeChecklistTitle("Projet d’accueil")]: [
-    "Clarifier projet pédagogique, capacité et priorités d'accueil",
-    "Mettre à jour règles, horaires et modalités familles",
-    "Partager repères structurants avec l'équipe",
-    "Revoir les ajustements nécessaires selon occupation",
-  ],
   [normalizeChecklistTitle("Familles & inscriptions")]: [
     "Suivre demandes familles, places disponibles et priorités",
     "Collecter dossier enfant, autorisations et informations santé",
     "Confirmer modalités d'accueil, dates et documents manquants",
     "Rendre visibles demandes en attente ou refusées",
+  ],
+  [normalizeChecklistTitle("Planning & présence")]: [
+    "Planifier présences, absences et adaptations horaires",
+    "Contrôler occupation, taux d'encadrement et contraintes du jour",
+    "Repérer créneaux sous tension ou places disponibles",
+    "Prévenir équipe et familles des changements importants",
   ],
   [normalizeChecklistTitle("Planning enfants")]: [
     "Planifier présences, absences et adaptations horaires",
@@ -157,11 +273,24 @@ const EXACT_TITLE_ACTIONS: Record<string, string[]> = {
     "Repérer créneaux sous tension ou places disponibles",
     "Prévenir équipe et familles des changements importants",
   ],
+  [normalizeChecklistTitle("Transmissions & suivi enfant")]: [
+    "Collecter transmissions quotidiennes et informations santé",
+    "Repérer alertes, incidents ou consignes spécifiques",
+    "Informer familles et équipe au bon moment",
+    "Conserver une trace confidentielle et exploitable",
+  ],
   [normalizeChecklistTitle("Transmissions & santé")]: [
     "Collecter transmissions quotidiennes et informations santé",
     "Repérer alertes, incidents ou consignes spécifiques",
     "Informer familles et équipe au bon moment",
     "Conserver une trace confidentielle et exploitable",
+  ],
+  [normalizeChecklistTitle("Facturation familles")]: [
+    "Suivre présences, aides et montants à facturer",
+    "Comparer facturation prévue, paiements et régularisations",
+    "Repérer impayés, erreurs ou justificatifs manquants",
+    "Relancer familles, financeurs ou partenaires concernés",
+    "Mettre à jour suivi de trésorerie et reste à encaisser",
   ],
   [normalizeChecklistTitle("Cartes & plateformes")]: [
     "Mettre à jour cartes, prix et disponibilités plateformes",
@@ -199,6 +328,55 @@ const EXACT_TITLE_ACTIONS: Record<string, string[]> = {
     "Faire valider le périmètre par le client",
     "Tracer changements de prestation ou demandes hors périmètre",
   ],
+  [normalizeChecklistTitle("Études & chiffrage")]: [
+    "Collecter plans, contraintes techniques et attentes client",
+    "Analyser faisabilité, lots concernés et dépendances",
+    "Chiffrer études, travaux, délais et marge prévisionnelle",
+    "Documenter hypothèses, exclusions et risques du devis",
+    "Relancer décisions client ou informations manquantes",
+  ],
+  [normalizeChecklistTitle("Devis & inventaire")]: [
+    "Qualifier volume, adresses, accès et contraintes client",
+    "Réaliser inventaire des biens et points sensibles",
+    "Chiffrer équipe, camion, emballage et marge mission",
+    "Présenter options, assurance et conditions de réservation",
+    "Relancer devis ouverts et préparer mission signée",
+  ],
+  [normalizeChecklistTitle("Devis & photos toiture")]: [
+    "Collecter photos, accès toiture et urgence du besoin",
+    "Identifier travaux, sécurité et matériaux nécessaires",
+    "Chiffrer main-d'oeuvre, fournitures, nacelle ou échafaudage",
+    "Préciser limites du devis et visite complémentaire si besoin",
+    "Relancer devis ouverts et planifier intervention signée",
+  ],
+  [normalizeChecklistTitle("Visites & chiffrage")]: [
+    "Préparer visite, photos, mesures et contraintes d'accès",
+    "Identifier travaux, matériaux et points de vigilance",
+    "Chiffrer main-d'oeuvre, fournitures, délais et marge",
+    "Présenter options, limites et conditions du devis",
+    "Relancer devis ouverts et préparer intervention signée",
+  ],
+  [normalizeChecklistTitle("Planning & coordination")]: [
+    "Prioriser phases, lots et dépendances projet",
+    "Bloquer dates, ressources et validations nécessaires",
+    "Confirmer disponibilités client, équipe et partenaires",
+    "Repérer conflits, retards ou arbitrages à décider",
+    "Mettre à jour planning partagé après chaque changement",
+  ],
+  [normalizeChecklistTitle("Planning & réalisation")]: [
+    "Organiser créneaux selon durée, prestation et disponibilité",
+    "Confirmer rendez-vous, intervenant et préparation nécessaire",
+    "Limiter trous, retards et annulations de dernière minute",
+    "Suivre prestations réalisées et points à reprendre",
+    "Mettre à jour planning en cas d'imprévu",
+  ],
+  [normalizeChecklistTitle("Planning ménage")]: [
+    "Planifier passages selon domicile, durée et priorité client",
+    "Confirmer intervenant, accès et consignes particulières",
+    "Limiter déplacements inutiles, absences et remplacements",
+    "Prévenir client ou intervenant en cas de changement",
+    "Mettre à jour heures réalisées et anomalies terrain",
+  ],
   [normalizeChecklistTitle("Planning agents")]: [
     "Planifier agents, passages et remplacements",
     "Contrôler disponibilités, habilitations et temps prévu",
@@ -216,6 +394,27 @@ const EXACT_TITLE_ACTIONS: Record<string, string[]> = {
     "Qualifier cause, responsabilité et impact contrat",
     "Informer client jusqu'à résolution",
     "Repérer irritants récurrents à corriger",
+  ],
+  [normalizeChecklistTitle("Demandes & contrats")]: [
+    "Qualifier besoin, domicile, fréquence et contraintes",
+    "Valider contrat, périmètre, tarifs et modalités de démarrage",
+    "Collecter accès, consignes et informations sensibles",
+    "Confirmer prochaine étape avec bénéficiaire ou famille",
+    "Rendre visibles manquants, risques et engagements pris",
+  ],
+  [normalizeChecklistTitle("Bénéficiaires & contrats")]: [
+    "Qualifier besoin, autonomie, domicile et contraintes",
+    "Valider contrat, fréquence et consignes d'intervention",
+    "Collecter informations utiles, contacts et accès",
+    "Confirmer démarrage avec bénéficiaire ou aidant",
+    "Garder une trace claire des engagements",
+  ],
+  [normalizeChecklistTitle("Clients & contrats")]: [
+    "Qualifier besoin ménage, domicile, fréquence et accès",
+    "Valider contrat, tarif, créneaux et consignes",
+    "Collecter informations utiles avant première intervention",
+    "Confirmer démarrage et modalités pratiques",
+    "Garder une trace claire des engagements",
   ],
   [normalizeChecklistTitle("Contenus & modules")]: [
     "Planifier modules, contenus et supports à produire",
@@ -247,6 +446,20 @@ const EXACT_TITLE_ACTIONS: Record<string, string[]> = {
     "Vérifier conformité de la prestation sur place",
     "Clôturer avec retours client et reste à facturer",
   ],
+  [normalizeChecklistTitle("Qualité & retours client")]: [
+    "Collecter retours client, incidents service et points qualité",
+    "Qualifier impact, cause et correction à prévoir",
+    "Contrôler quantités, présentation, allergies et conformité prestation",
+    "Planifier reprise, geste commercial ou amélioration interne",
+    "Capitaliser retours pour les prochains événements",
+  ],
+  [normalizeChecklistTitle("Marge événement")]: [
+    "Suivre chiffre d'affaires, acomptes et reste à facturer",
+    "Comparer coût matière, équipe, transport et marge réelle",
+    "Repérer options offertes, achats imprévus ou pertes coûteuses",
+    "Rapprocher devis, factures fournisseurs et facture client",
+    "Ajuster prix, quantités ou conditions pour les prochains événements",
+  ],
   [normalizeChecklistTitle("Suivi qualité")]: [
     "Contrôler points qualité, retours terrain et incidents",
     "Identifier écarts récurrents ou prestations à reprendre",
@@ -271,11 +484,53 @@ const EXACT_TITLE_ACTIONS: Record<string, string[]> = {
     "Mettre à jour statut, prix et actions récentes",
     "Mesurer demandes et visites générées par canal",
   ],
+  [normalizeChecklistTitle("Portefeuille & mandats")]: [
+    "Suivre lots, mandats et propriétaires actifs",
+    "Vérifier documents, échéances et informations clés",
+    "Identifier mandats à renouveler ou dossiers incomplets",
+    "Classer pièces utiles au bon dossier",
+    "Préparer actions prioritaires sur le portefeuille",
+  ],
+  [normalizeChecklistTitle("Mandats & portefeuille")]: [
+    "Suivre mandats actifs, propriétaires et logements concernés",
+    "Vérifier documents, accès et informations manquantes",
+    "Identifier renouvellements, arbitrages ou dossiers à risque",
+    "Classer pièces utiles au bon dossier",
+    "Préparer actions prioritaires sur le portefeuille",
+  ],
+  [normalizeChecklistTitle("Lots & interventions")]: [
+    "Suivre demandes travaux, sinistres et interventions",
+    "Qualifier urgence, responsabilité et prestataire utile",
+    "Planifier intervention et validation propriétaire",
+    "Informer locataire ou propriétaire au bon moment",
+    "Clôturer avec preuve, coût et statut du dossier",
+  ],
+  [normalizeChecklistTitle("Interventions & sinistres")]: [
+    "Centraliser demandes, sinistres et interventions ouvertes",
+    "Qualifier urgence, responsabilité et parties concernées",
+    "Coordonner prestataire, assurance éventuelle et validation",
+    "Informer copropriétaire, locataire ou propriétaire selon le cas",
+    "Clôturer avec preuve, coût et décision archivée",
+  ],
+  [normalizeChecklistTitle("Suivi bien & incidents")]: [
+    "Centraliser incidents, travaux et alertes sur le bien",
+    "Qualifier urgence, impact locatif et responsabilité",
+    "Coordonner prestataire, locataire ou propriétaire",
+    "Suivre résolution, coût et preuve d'intervention",
+    "Mettre à jour rentabilité et prochaines actions",
+  ],
   [normalizeChecklistTitle("Vente & délivrance")]: [
     "Vérifier besoin client, conseil et conformité de délivrance",
     "Contrôler ordonnance, substitution ou restriction applicable",
     "Suivre vente, panier et besoin récurrent",
     "Archiver traçabilité et incident qualité si nécessaire",
+  ],
+  [normalizeChecklistTitle("Conseil & vente")]: [
+    "Identifier besoin client, usage et critères de choix",
+    "Présenter produits, options et limites utiles",
+    "Vérifier disponibilité, prix et conditions de vente",
+    "Suivre objections, ventes et demandes non servies",
+    "Déclencher réassort, SAV ou relance si nécessaire",
   ],
   [normalizeChecklistTitle("Accueil & expérience")]: [
     "Préparer arrivée, informations utiles et consignes client",
@@ -400,7 +655,7 @@ const EXACT_TITLE_ACTIONS: Record<string, string[]> = {
   [normalizeChecklistTitle("Incidents & retards")]: [
     "Centraliser retards, litiges et incidents marchandise",
     "Qualifier impact client, responsabilité et urgence",
-    "Coordonner actions avec conducteur, client et assureur",
+    "Coordonner actions avec conducteur, client et interlocuteurs concernés",
     "Documenter cause récurrente et correction à prévoir",
   ],
   [normalizeChecklistTitle("Clients, dépôts & tickets")]: [
@@ -457,6 +712,13 @@ const EXACT_TITLE_ACTIONS: Record<string, string[]> = {
     "Préparer options adaptées avant devis",
     "Relancer demandes sans décision claire",
   ],
+  [normalizeChecklistTitle("Départs & incidents")]: [
+    "Suivre dossiers avant départ, documents et paiements restants",
+    "Confirmer horaires, prestations et contacts d'urgence",
+    "Gérer modifications, annulations ou incidents fournisseur",
+    "Informer voyageurs jusqu'à résolution",
+    "Clôturer retour avec satisfaction et actions à prévoir",
+  ],
   [normalizeChecklistTitle("Devis & réservations")]: [
     "Comparer disponibilités fournisseurs, marges et conditions",
     "Préparer devis, options, assurance et échéances",
@@ -510,6 +772,20 @@ const EXACT_TITLE_ACTIONS: Record<string, string[]> = {
     "Traiter imprévus, reprises et décisions en attente",
     "Mettre à jour planning selon progression terrain",
     "Préparer réception, réserves et reste à facturer",
+  ],
+  [normalizeChecklistTitle("Chantiers & entretien")]: [
+    "Planifier interventions, passages d'entretien et priorités terrain",
+    "Préparer matériel, végétaux et consignes client",
+    "Suivre avancement, photos et points bloquants",
+    "Traiter imprévus météo, accès ou reprises nécessaires",
+    "Clôturer avec retour client et prochaine action prévue",
+  ],
+  [normalizeChecklistTitle("Qualité & reprise")]: [
+    "Contrôler rendu terrain, plantations et finitions visibles",
+    "Lister reprises, réserves ou végétaux à surveiller",
+    "Planifier correction selon météo, saison et disponibilité équipe",
+    "Informer client des suites et délais de reprise",
+    "Capitaliser causes récurrentes pour prochains chantiers",
   ],
   [normalizeChecklistTitle("Programme & cadrage client")]: [
     "Cadrer programme, budget et contraintes client",
@@ -805,6 +1081,20 @@ const EXACT_TITLE_ACTIONS: Record<string, string[]> = {
     "Documenter diligence, questions et zones d'incertitude",
     "Préparer recommandation d'investissement ou refus",
   ],
+  [normalizeChecklistTitle("Négociation & pacte")]: [
+    "Suivre points ouverts de négociation et conditions clés",
+    "Collecter pacte, term sheet et pièces juridiques utiles",
+    "Identifier clauses sensibles, risques et arbitrages",
+    "Coordonner conseils, investisseurs et société cible",
+    "Classer versions validées et décisions prises",
+  ],
+  [normalizeChecklistTitle("Suivi participation")]: [
+    "Suivre reporting, décisions et engagements de la participation",
+    "Identifier alertes financières, opérationnelles ou gouvernance",
+    "Préparer questions, votes ou arbitrages investisseur",
+    "Conserver comptes rendus, documents et décisions clés",
+    "Mettre à jour valorisation, risques et prochaines actions",
+  ],
   [normalizeChecklistTitle("Gamme & recettes")]: [
     "Clarifier gammes, recettes et produits à pousser",
     "Mettre à jour prix, quantités et saisonnalité",
@@ -816,6 +1106,12 @@ const EXACT_TITLE_ACTIONS: Record<string, string[]> = {
     "Vérifier matières, quantités et postes disponibles",
     "Suivre pertes, invendus et ruptures pendant la journée",
     "Ajuster production selon ventes et événements",
+  ],
+  [normalizeChecklistTitle("Production & planning")]: [
+    "Planifier production par poste, machine et priorité",
+    "Confirmer capacité, matières et dépendances critiques",
+    "Suivre retards, changements de série et charge atelier",
+    "Ajuster planning selon urgences et disponibilité",
   ],
   [normalizeChecklistTitle("Assortiment & prix")]: [
     "Définir assortiment, prix et références prioritaires",
@@ -853,6 +1149,26 @@ const EXACT_TITLE_ACTIONS: Record<string, string[]> = {
     "Relancer clients intéressés par nouveautés",
     "Mesurer panier, fréquentation et engagement local",
   ],
+  [normalizeChecklistTitle("Dégustations & événements")]: [
+    "Planifier thème, date, jauge et produits à présenter",
+    "Préparer invitations, inscriptions et animation en cave",
+    "Vérifier stock, accords et conditions de dégustation",
+    "Suivre ventes, retours clients et contacts à relancer",
+  ],
+  [normalizeChecklistTitle("Qualité & fraîcheur")]: [
+    "Contrôler fraîcheur, présentation et tenue des compositions",
+    "Repérer fleurs fragiles, pertes ou réclamations qualité",
+    "Adapter stockage, arrosage et préparation selon arrivages",
+    "Traiter reprises, remplacements ou gestes client",
+    "Mesurer pertes, invendus et causes récurrentes",
+  ],
+  [normalizeChecklistTitle("Qualité & conservation")]: [
+    "Contrôler conditions de stockage, température et rotation cave",
+    "Repérer bouteilles sensibles, défauts ou ruptures qualité",
+    "Adapter rangement, conseil et mise en avant selon conservation",
+    "Traiter retours, litiges ou produits à isoler",
+    "Mesurer pertes, avis clients et références à surveiller",
+  ],
   [normalizeChecklistTitle("Retours & invendus")]: [
     "Identifier invendus, retours éditeurs et stock dormant",
     "Préparer retours, remises ou actions de mise en avant",
@@ -877,11 +1193,25 @@ const EXACT_TITLE_ACTIONS: Record<string, string[]> = {
     "Adapter horaires selon fréquentation et demandes",
     "Prévenir adhérents en cas de changement",
   ],
+  [normalizeChecklistTitle("Planning fauteuils")]: [
+    "Organiser créneaux selon durée de prestation et fauteuil disponible",
+    "Affecter coiffeur ou coiffeuse selon compétence et planning",
+    "Confirmer rendez-vous, préparation et éventuel retard",
+    "Limiter trous, chevauchements et annulations de dernière minute",
+    "Mettre à jour planning en cas d'imprévu",
+  ],
   [normalizeChecklistTitle("Salle & équipements")]: [
     "Contrôler équipements, propreté et incidents matériels",
     "Planifier maintenance, remplacement ou réparation",
     "Repérer zones sous-utilisées ou saturées",
     "Archiver incidents et coûts associés",
+  ],
+  [normalizeChecklistTitle("Sécurité & expérience")]: [
+    "Contrôler sécurité des zones, équipements et parcours adhérents",
+    "Repérer incidents, irritants ou risques d'usage",
+    "Planifier correction, signalétique ou maintenance nécessaire",
+    "Informer équipe et adhérents en cas de changement sensible",
+    "Mesurer satisfaction, fréquentation et points à améliorer",
   ],
   [normalizeChecklistTitle("Abonnements & pilotage")]: [
     "Suivre inscriptions, résiliations et impayés",
@@ -889,11 +1219,38 @@ const EXACT_TITLE_ACTIONS: Record<string, string[]> = {
     "Relancer adhérents à risque ou inactifs",
     "Ajuster offres, prix ou campagnes de réactivation",
   ],
+  [normalizeChecklistTitle("Caisse & rentabilité")]: [
+    "Suivre chiffre d'affaires par activité, produit ou créneau",
+    "Comparer taux de remplissage, pertes, remises et marge",
+    "Repérer impayés, écarts de caisse ou offres peu rentables",
+    "Analyser revente produit, réachat et coûts variables",
+    "Ajuster planning, prix ou priorités commerciales",
+  ],
   [normalizeChecklistTitle("Dossiers patients")]: [
     "Créer ou mettre à jour dossier, antécédents et consentements",
     "Collecter prescriptions, pièces et informations de santé utiles",
     "Classer comptes rendus et documents sensibles",
     "Conserver une trace confidentielle et accessible",
+  ],
+  [normalizeChecklistTitle("Dossiers & prise en charge")]: [
+    "Créer ou mettre à jour dossier patient et informations clés",
+    "Collecter antécédents, consentements et documents utiles",
+    "Vérifier manquants, confidentialité et accès au dossier",
+    "Classer comptes rendus, prescriptions ou bilans importants",
+    "Préparer les éléments nécessaires au suivi",
+  ],
+  [normalizeChecklistTitle("Fauteuils & planning")]: [
+    "Organiser créneaux selon durée, praticien et fauteuil disponible",
+    "Confirmer rendez-vous, consignes et actes prévus",
+    "Limiter temps morts, urgences intercalées et retards",
+    "Mettre à jour planning en cas d'annulation ou report",
+  ],
+  [normalizeChecklistTitle("Hygiène & conformité")]: [
+    "Contrôler protocoles d'hygiène, nettoyage et traçabilité",
+    "Vérifier obligations, affichages ou protocoles sensibles",
+    "Repérer écarts avant contrôle ou activité à risque",
+    "Former l'équipe aux gestes obligatoires",
+    "Archiver relevés et actions correctives",
   ],
   [normalizeChecklistTitle("Consultations & suivi")]: [
     "Préparer consultation, motif et points de vigilance",
@@ -919,6 +1276,13 @@ const EXACT_TITLE_ACTIONS: Record<string, string[]> = {
     "Préparer soins, matériel et facturation associée",
     "Mettre à jour dossier avant transmission",
   ],
+  [normalizeChecklistTitle("Tournées & planning")]: [
+    "Planifier tournée selon soins, horaires et priorités patients",
+    "Vérifier adresses, accès, prescriptions et matériel nécessaire",
+    "Limiter trajets inutiles, retards et conflits de créneaux",
+    "Prévenir patient ou prescripteur en cas de changement sensible",
+    "Mettre à jour soins réalisés, incidents et prochaine visite",
+  ],
   [normalizeChecklistTitle("Soins & transmissions")]: [
     "Réaliser soins, observations et transmissions nécessaires",
     "Noter incidents, évolution et consignes de suivi",
@@ -936,6 +1300,48 @@ const EXACT_TITLE_ACTIONS: Record<string, string[]> = {
     "Qualifier gêne, urgence et responsabilité fournisseur",
     "Planifier correction, remplacement ou geste client",
     "Mesurer causes récurrentes de SAV",
+  ],
+  [normalizeChecklistTitle("Exécution & incidents")]: [
+    "Suivre missions réalisées, retards et incidents terrain",
+    "Qualifier impact client, urgence et responsabilité",
+    "Informer client, chauffeur ou plateforme selon le cas",
+    "Clôturer avec preuve, statut et action corrective",
+    "Repérer causes récurrentes à corriger",
+  ],
+  [normalizeChecklistTitle("Litiges & casse")]: [
+    "Centraliser litiges, casse déclarée et preuves disponibles",
+    "Qualifier responsabilité, urgence et impact client",
+    "Coordonner constat, réparation, indemnisation ou geste commercial",
+    "Informer client jusqu'à résolution",
+    "Archiver photos, décisions et coûts associés",
+  ],
+  [normalizeChecklistTitle("Main courante & incidents")]: [
+    "Centraliser événements, rondes et anomalies de surveillance",
+    "Qualifier gravité, site concerné et personne à prévenir",
+    "Transmettre consignes ou alerte selon procédure",
+    "Clôturer incident avec trace horodatée et action menée",
+    "Repérer récurrences à remonter au client",
+  ],
+  [normalizeChecklistTitle("Entretien & SAV")]: [
+    "Suivre contrats d'entretien, pannes et demandes SAV",
+    "Qualifier urgence, équipement concerné et garantie applicable",
+    "Planifier intervention, pièce ou passage technicien",
+    "Informer client jusqu'à remise en service",
+    "Archiver compte rendu, coût et prochaine échéance",
+  ],
+  [normalizeChecklistTitle("Réclamations & suivi")]: [
+    "Centraliser réclamations, urgence et partie concernée",
+    "Qualifier cause, responsabilité et impact dossier",
+    "Coordonner correction avec prestataire ou gestionnaire",
+    "Informer demandeur jusqu'à résolution",
+    "Repérer irritants récurrents à corriger",
+  ],
+  [normalizeChecklistTitle("Retours & satisfaction")]: [
+    "Centraliser retours, réclamations et motifs de satisfaction",
+    "Qualifier urgence, impact client et action attendue",
+    "Traiter échange, remboursement, SAV ou geste commercial",
+    "Informer client jusqu'à clôture",
+    "Identifier causes récurrentes à corriger",
   ],
   [normalizeChecklistTitle("Rendez-vous & relation patient")]: [
     "Qualifier motif, urgence et attentes du patient",
@@ -979,6 +1385,26 @@ const EXACT_TITLE_ACTIONS: Record<string, string[]> = {
     "Contrôler preuve de passage et qualité avant arrivée",
     "Archiver incidents, coûts et actions correctives",
   ],
+  [normalizeChecklistTitle("Logements & mandats")]: [
+    "Recenser logements, mandats et conditions de gestion",
+    "Vérifier accès, équipements et informations propriétaire",
+    "Identifier logements incomplets, indisponibles ou à risque",
+    "Classer documents, photos et consignes utiles",
+    "Préparer actions avant mise en location ou exploitation",
+  ],
+  [normalizeChecklistTitle("Avis & expérience client")]: [
+    "Collecter avis, retours séjour et irritants récurrents",
+    "Qualifier impact, urgence et responsabilité",
+    "Informer client ou équipe en cas de correction nécessaire",
+    "Planifier action sur accueil, ménage ou équipement",
+    "Mesurer note, récurrence et axes d'amélioration",
+  ],
+  [normalizeChecklistTitle("Prix & saisonnalité")]: [
+    "Suivre prix par période, canal et niveau de demande",
+    "Comparer occupation, marge et événements locaux",
+    "Repérer dates à ajuster ou restrictions à poser",
+    "Mettre à jour tarifs, minimum de nuit et disponibilités",
+  ],
   [normalizeChecklistTitle("Prestataires & logistique")]: [
     "Identifier prestataires, rôles et contraintes logistiques",
     "Suivre devis, disponibilités et confirmations",
@@ -990,6 +1416,13 @@ const EXACT_TITLE_ACTIONS: Record<string, string[]> = {
     "Confirmer présences, tenues, accès et consignes",
     "Suivre charge, pauses et remplacements nécessaires",
     "Clôturer retours équipe et points à améliorer",
+  ],
+  [normalizeChecklistTitle("Jour J & incidents")]: [
+    "Suivre déroulé, horaires et points critiques de l'événement",
+    "Qualifier incident, urgence et responsable de résolution",
+    "Coordonner prestataires, équipe et client sur place",
+    "Documenter décisions, écarts et actions correctives",
+    "Clôturer avec retours client et améliorations à prévoir",
   ],
   [normalizeChecklistTitle("Cadrage & ateliers")]: [
     "Cadrer objectifs, participants et livrables d'atelier",
@@ -1039,11 +1472,32 @@ const EXACT_TITLE_ACTIONS: Record<string, string[]> = {
     "Gérer modification, annulation ou demande spéciale",
     "Relancer demandes ouvertes ou récurrentes",
   ],
+  [normalizeChecklistTitle("Demandes & réservations groupes")]: [
+    "Qualifier trajet, horaires, groupe et contraintes bagages",
+    "Valider capacité véhicule, prix et conditions de réservation",
+    "Collecter contacts, lieux de prise en charge et besoins spéciaux",
+    "Confirmer acompte, feuille de route et prochaine étape",
+    "Rendre visibles options, risques et demandes en attente",
+  ],
   [normalizeChecklistTitle("Expérience client")]: [
     "Suivre ponctualité, attente et qualité de trajet",
     "Collecter notes, avis et retours passagers",
     "Traiter incidents, oublis ou réclamations",
     "Mesurer récurrence, satisfaction et marge course",
+  ],
+  [normalizeChecklistTitle("Expérience passagers")]: [
+    "Suivre ponctualité, confort et qualité d'accueil passagers",
+    "Collecter avis, incidents et retours après trajet",
+    "Traiter réclamations, objets oubliés ou demandes sensibles",
+    "Partager corrections avec chauffeurs et exploitation",
+    "Mesurer satisfaction, récurrence et points à améliorer",
+  ],
+  [normalizeChecklistTitle("Qualité & expérience client")]: [
+    "Collecter avis, retours et irritants récurrents",
+    "Contrôler qualité d'accueil, prestation et finition",
+    "Traiter réclamations, retouches ou gestes commerciaux",
+    "Partager corrections avec l'équipe",
+    "Mesurer satisfaction, fidélité et retours négatifs",
   ],
   [normalizeChecklistTitle("Courses & planning")]: [
     "Planifier courses, trajets et temps d'attente",
@@ -1062,6 +1516,27 @@ const EXACT_TITLE_ACTIONS: Record<string, string[]> = {
     "Comparer offres, franchises et exclusions",
     "Suivre contrats, avenants et renouvellements",
     "Contrôler pièces, primes et dossiers incomplets",
+  ],
+  [normalizeChecklistTitle("Préproduction & planning")]: [
+    "Préparer brief, lieux, matériel et autorisations",
+    "Confirmer planning, participants et contraintes de tournage",
+    "Lister plans, contenus ou fichiers à produire",
+    "Anticiper météo, accès et solutions de secours",
+    "Partager feuille de route avec client et prestataires",
+  ],
+  [normalizeChecklistTitle("Préparation & livraison")]: [
+    "Préparer compositions, emballages et consignes client",
+    "Vérifier fleurs, accessoires, horaires et adresse de livraison",
+    "Suivre avancement des commandes prioritaires",
+    "Contrôler fraîcheur et présentation avant départ",
+    "Confirmer livraison, retour client et reste à facturer",
+  ],
+  [normalizeChecklistTitle("Caisse & marge")]: [
+    "Suivre chiffre d'affaires, encaissements et écarts",
+    "Comparer coûts, pertes, remises et marge réelle",
+    "Rapprocher caisse, tickets et paiements",
+    "Repérer produits, services ou créneaux peu rentables",
+    "Ajuster prix, achats ou priorités commerciales",
   ],
   [normalizeChecklistTitle("Sinistres & suivi")]: [
     "Centraliser sinistres, pièces et urgence client",
@@ -1089,6 +1564,30 @@ const EXACT_TITLE_ACTIONS: Record<string, string[]> = {
   ],
 };
 
+const CONTEXTUAL_TITLE_ACTIONS: Record<string, string[]> = {
+  [`food-truck::${normalizeChecklistTitle("Caisse & rentabilité")}`]: [
+    "Suivre chiffre d'affaires par emplacement, service et événement",
+    "Comparer coût matière, pertes, commissions et marge réelle",
+    "Repérer écarts de caisse, paiements en attente ou invendus coûteux",
+    "Analyser rentabilité par emplacement, météo et volume servi",
+    "Ajuster prix, portions, achats ou prochains emplacements",
+  ],
+  [`btp-artisans::${normalizeChecklistTitle("Qualité & SAV")}`]: [
+    "Contrôler finitions, réserves et points visibles avant clôture",
+    "Lister reprises, garanties ou demandes SAV ouvertes",
+    "Planifier correction avec équipe, sous-traitant et délai",
+    "Informer client avec preuve, photo ou compte rendu",
+    "Repérer causes récurrentes à corriger sur les prochains chantiers",
+  ],
+  [`industrie-production::${normalizeChecklistTitle("Qualité & maintenance")}`]: [
+    "Contrôler non-conformités, rebuts et points de contrôle atelier",
+    "Suivre pannes, maintenance préventive et interventions ouvertes",
+    "Qualifier impact production, sécurité et délai client",
+    "Planifier correction avec responsable, machine et échéance",
+    "Archiver contrôle, action menée et cause récurrente",
+  ],
+};
+
 const CONTEXTUAL_ACTIONS: Array<[RegExp, string[]]> = [
   [/commandes & préparation/i, [
     "Suivre commandes payées, à préparer et à expédier",
@@ -1104,7 +1603,7 @@ const CONTEXTUAL_ACTIONS: Array<[RegExp, string[]]> = [
     "Contrôler hygiène, caisse et contraintes du site",
     "Mesurer CA par emplacement et pertes",
   ]],
-  [/demandes & réservations|expérience client/i, [
+  [/^demandes & réservations$|^expérience client$/i, [
     "Qualifier course, horaire, lieu de prise en charge et destination",
     "Confirmer prix, véhicule et contraintes passager",
     "Suivre ponctualité, attente et qualité de trajet",
@@ -1178,7 +1677,7 @@ const CONTEXTUAL_ACTIONS: Array<[RegExp, string[]]> = [
     "Contrôler niveaux de stock, ruptures et priorités",
     "Planifier réassort, préparation ou expédition",
     "Suivre livraisons, retours et écarts",
-    "Repérer produits dormants, pertes ou DLC courtes",
+    "Repérer produits dormants, pertes ou articles sensibles",
     "Ajuster achats selon ventes et marge",
   ]],
   [/planning production|atelier & machines|qualité & rebuts|commandes clients & prévisions/i, [
@@ -1398,14 +1897,14 @@ const CONTEXTUAL_ACTIONS: Array<[RegExp, string[]]> = [
     "Relancer groupes, habitués ou demandes en attente",
     "Mesurer remplissage, panier moyen et no-show",
   ]],
-  [/hygiène haccp|hygiène & standards|hygiène & conformité|hygiène & notes/i, [
+  [/hygiène haccp|hygiène & standards|hygiène & notes/i, [
     "Contrôler températures, DLC et nettoyage",
     "Vérifier traçabilité, allergènes et fiches HACCP",
     "Repérer écarts avant contrôle ou service",
     "Former l'équipe aux gestes obligatoires",
     "Archiver relevés et actions correctives",
   ]],
-  [/caisse & marge|caisse & coût matière|commissions & marge|marge événement/i, [
+  [/caisse & coût matière|commissions & marge|marge événement/i, [
     "Suivre chiffre d'affaires, encaissements et écarts",
     "Comparer coût matière, pertes et marge réelle",
     "Repérer remises, commissions ou invendus coûteux",
@@ -1428,7 +1927,7 @@ const CONTEXTUAL_ACTIONS: Array<[RegExp, string[]]> = [
   ]],
   [/hygiène & qualité/i, [
     "Contrôler protocoles, nettoyage et consommables",
-    "Vérifier consentements ou précautions nécessaires",
+    "Vérifier précautions, affichages ou consignes nécessaires",
     "Repérer incidents, réactions ou réclamations",
     "Planifier corrections et rappels équipe",
     "Conserver les preuves utiles",
@@ -1664,7 +2163,7 @@ const CONTEXTUAL_ACTIONS: Array<[RegExp, string[]]> = [
     "Traiter notes, retards, remboursements et incidents livraison",
     "Comparer commissions, coût matière et marge nette",
   ]],
-  [/gamme & recettes|production & fournées|production & planning|production cuisine|préparation & rush|préparation & livraison/i, [
+  [/gamme & recettes|production & fournées|production cuisine|préparation & rush/i, [
     "Planifier recettes, fournées ou préparations par créneau",
     "Vérifier matières, quantités et capacités de production",
     "Suivre pertes, invendus et ruptures pendant le service",
@@ -1692,7 +2191,7 @@ const CONTEXTUAL_ACTIONS: Array<[RegExp, string[]]> = [
     "Mesurer fréquentation, no-show et satisfaction adhérents",
     "Ajuster offres, planning et relances de rétention",
   ]],
-  [/contrat|sinistres & suivi|offres & accords|primes & commissions|renouvellements|cabinet d’assurance/i, [
+  [/contrats & avenants|sinistres & suivi|offres & accords|primes & commissions|renouvellements|cabinet d’assurance/i, [
     "Qualifier besoin, garanties, risque et échéance",
     "Comparer offres, franchises et exclusions",
     "Suivre contrats, avenants et renouvellements",
@@ -1713,7 +2212,7 @@ const CONTEXTUAL_ACTIONS: Array<[RegExp, string[]]> = [
     "Repérer décisions client ou réserves bloquantes",
     "Contrôler honoraires, phases et budget travaux",
   ]],
-  [/offre & montures|commandes & montage|conseil & vente|sav & ajustements|équipe & opticiens/i, [
+  [/offre & montures|commandes & montage|sav & ajustements|équipe & opticiens/i, [
     "Vérifier ordonnance, besoin visuel et prise en charge",
     "Conseiller montures, verres et options adaptées",
     "Suivre commande, montage et délai fournisseur",
@@ -2134,7 +2633,18 @@ function uniqueItems(items: string[]) {
   return [...new Set(items.map((item) => item.trim()).filter(Boolean))];
 }
 
-export function buildChecklistForBusinessBlock(block: BusinessModelBlock): string[] {
+export function buildChecklistForBusinessBlock(
+  block: BusinessModelBlock,
+  context: BusinessBlockChecklistContext = {},
+): string[] {
+  const contextualTitle = context.systemId
+    ? CONTEXTUAL_TITLE_ACTIONS[`${context.systemId}::${normalizeChecklistTitle(block.title)}`]
+    : undefined;
+
+  if (contextualTitle) {
+    return contextualTitle;
+  }
+
   const exact = EXACT_TITLE_ACTIONS[normalizeChecklistTitle(block.title)];
 
   if (exact) {
@@ -2166,9 +2676,12 @@ export function buildChecklistForBusinessBlock(block: BusinessModelBlock): strin
   return uniqueItems(actions.length ? actions : FALLBACK_ACTIONS).slice(0, 7);
 }
 
-export function buildBusinessBlockChecklists(blocks: BusinessModelBlock[]): BusinessBlockChecklist[] {
+export function buildBusinessBlockChecklists(
+  blocks: BusinessModelBlock[],
+  context: BusinessBlockChecklistContext = {},
+): BusinessBlockChecklist[] {
   return blocks.map((block) => ({
     title: block.title,
-    checklist: buildChecklistForBusinessBlock(block),
+    checklist: buildChecklistForBusinessBlock(block, context),
   }));
 }

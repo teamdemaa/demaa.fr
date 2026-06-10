@@ -271,7 +271,7 @@ function getProcessChecklistItems(examples?: string): string[] {
 
 function buildProcessGroups(detail: OperationalSystemDetail): ProcessGroup[] {
   if (detail.businessBlocks.length) {
-    return buildBusinessBlockChecklists(detail.businessBlocks);
+    return buildBusinessBlockChecklists(detail.businessBlocks, { systemId: detail.slug });
   }
 
   return PILLARS.map((pillar) => ({

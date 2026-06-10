@@ -26,6 +26,7 @@ export type SystemProcessCard = {
 };
 
 export type OperationalSystemDetail = {
+  slug: string;
   sectorLabel: string;
   imageTitle: string;
   imageSubtitle: string;
@@ -125,6 +126,7 @@ function buildOperationalSystemDetailFromSources(
         }));
 
     return {
+      slug: system.slug,
       sectorLabel: enterprise.sectorLabel,
       imageTitle: enterprise.imageTitle,
       imageSubtitle: enterprise.imageSubtitle,
@@ -138,6 +140,7 @@ function buildOperationalSystemDetailFromSources(
   }
 
   return {
+    slug: system.slug,
     sectorLabel: publicSectorLabels[0],
     imageTitle: system.name,
     imageSubtitle: `Aperçu du système opérationnel pour ${system.name.toLowerCase()}`,
