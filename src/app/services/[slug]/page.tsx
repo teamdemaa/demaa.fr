@@ -67,11 +67,11 @@ export default async function ServiceDetailPage({
       <main className="flex-1 w-full bg-dema-cream px-4 py-8 md:py-12">
         <div className="mx-auto max-w-6xl">
           <Link
-            href="/annuaire-services"
+            href="/deleguer"
             className="inline-flex items-center gap-2 rounded-full border border-dema-line bg-dema-paper px-3.5 py-2 text-xs font-medium text-brand-blue/70 transition hover:border-dema-forest/25 hover:text-dema-forest"
           >
             <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
-            Retour à l&apos;annuaire services
+            Retour aux services
           </Link>
 
           <section className="mt-5 rounded-[1.25rem] border border-dema-line bg-dema-paper p-6 sm:p-8">
@@ -95,7 +95,7 @@ export default async function ServiceDetailPage({
               <aside className="w-full rounded-[1.15rem] border border-dema-line bg-dema-cream/70 p-5 lg:max-w-sm">
                 <p className="text-sm font-semibold text-brand-blue">Tarif</p>
                 <div className="mt-3 flex flex-wrap items-center gap-2">
-                  <span className="inline-flex rounded-full bg-dema-forest px-3 py-1 text-[10px] font-medium text-dema-paper">
+                  <span className="inline-flex rounded-full bg-dema-sage/75 px-3 py-1 text-[10px] font-medium text-brand-blue/70">
                     {service.price}
                   </span>
                   <span className="inline-flex rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-medium lowercase text-brand-blue/70">

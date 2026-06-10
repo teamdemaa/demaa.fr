@@ -440,7 +440,7 @@ export default function SystemsCatalogClient({
         </p>
         <div className="mt-auto pt-4">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="inline-flex rounded-full bg-dema-forest px-3 py-1 text-[10px] font-medium text-dema-paper">
+            <span className="inline-flex rounded-full bg-dema-sage/75 px-3 py-1 text-[10px] font-medium text-brand-blue/70">
               {service.price}
             </span>
             <span className="inline-flex rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-medium lowercase text-brand-blue/70">
@@ -949,7 +949,7 @@ export default function SystemsCatalogClient({
                       acquisition, structuration, automatisation et support opérationnel.
                     </p>
                     <Link
-                      href={`/annuaire-services?retourSysteme=${encodeURIComponent(selectedSystem.slug)}`}
+                      href={`/deleguer?retourSysteme=${encodeURIComponent(selectedSystem.slug)}`}
                       className="mt-4 inline-flex items-center rounded-full border border-dema-line bg-dema-paper px-4 py-2 text-sm font-medium text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
                     >
                       Voir tous les services

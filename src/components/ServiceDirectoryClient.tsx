@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { ArrowLeft, Search } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+import PrimaryMobileNav, { type PrimaryNavTab } from "@/components/PrimaryMobileNav";
+import SearchFilterControls from "@/components/SearchFilterControls";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import ServiceDetailDialog from "@/components/ServiceDetailDialog";
 import type { DemaaService, ServiceCategory } from "@/lib/service-catalog";
@@ -16,6 +18,13 @@ type ServiceDirectoryClientProps = {
     href: string;
     label: string;
   };
+  title?: string;
+  description?: string;
+  activePrimaryTab?: PrimaryNavTab;
+  heroTitleLines?: {
+    primary: string;
+    secondary: string;
+  };
 };
 
 export default function ServiceDirectoryClient({
@@ -24,6 +33,10 @@ export default function ServiceDirectoryClient({
   initialCategory,
   initialSearch = "",
   backLink,
+  title = "Annuaire Services",
+  description = "Les services Demaa pour lancer, structurer, déléguer et développer une activité.",
+  activePrimaryTab,
+  heroTitleLines,
 }: ServiceDirectoryClientProps) {
   const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [activeCategory, setActiveCategory] = useState(
@@ -31,6 +44,7 @@ export default function ServiceDirectoryClient({
       ? initialCategory
       : "Tous"
   );
+  const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<DemaaService | null>(null);
   const filteredServices = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
@@ -49,11 +63,30 @@ export default function ServiceDirectoryClient({
       return matchesCategory && matchesSearch;
     });
   }, [activeCategory, searchQuery, services]);
+  const serviceFilters = useMemo(() => ["Tous", ...categories], [categories]);
+
+  function selectCategory(category: string) {
+    setActiveCategory(category);
+    setIsFilterPanelOpen(false);
+  }
 
   return (
     <div className="w-full">
-      <section className="w-full border-b border-dema-line/65 bg-dema-cream px-4 pb-5 pt-8 md:pt-10">
-        <div className="mx-auto max-w-5xl text-center">
+      <section
+        className={
+          heroTitleLines
+            ? "ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] w-screen bg-dema-cream px-4 pb-5 pt-5 text-center md:px-8 md:pb-6 md:pt-16"
+            : "w-full border-b border-dema-line/65 bg-dema-cream px-4 pb-5 pt-8 md:pt-10"
+        }
+      >
+        <div className={heroTitleLines ? "mx-auto max-w-6xl space-y-6 md:space-y-7" : "mx-auto max-w-5xl text-center"}>
+          {activePrimaryTab && heroTitleLines ? (
+            <PrimaryMobileNav activeTab={activePrimaryTab} />
+          ) : activePrimaryTab ? (
+            <div className="mb-6">
+              <PrimaryMobileNav activeTab={activePrimaryTab} />
+            </div>
+          ) : null}
           {backLink ? (
             <div className="mb-4 flex justify-start">
               <Link
@@ -65,40 +98,41 @@ export default function ServiceDirectoryClient({
               </Link>
             </div>
           ) : null}
-          <h1 className="demaa-section-title text-4xl tracking-tight text-brand-blue md:text-5xl">
-            Annuaire Services
-          </h1>
-          <p className="mx-auto mt-2 max-w-2xl text-sm font-normal leading-relaxed text-dema-muted">
-            Les services Demaa pour lancer, structurer, déléguer et développer une activité.
-          </p>
-
-          <div className="demaa-search-shell mx-auto mt-5 max-w-4xl p-1.5">
-            <div className="relative">
-              <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-dema-forest/42 md:left-5 md:h-5 md:w-5" />
-              <input
-                value={searchQuery}
-                onChange={(event) => setSearchQuery(event.target.value)}
-                placeholder="Rechercher un service, un besoin, une activité..."
-                className="w-full rounded-full bg-dema-paper py-3.5 pl-10 pr-5 text-sm font-normal text-brand-blue outline-none transition placeholder:text-brand-blue/36 md:py-4 md:pl-12 md:text-base"
-              />
+          {heroTitleLines ? (
+            <div className="mx-auto max-w-5xl">
+              <h1 className="text-[clamp(3rem,14.5vw,3.36rem)] tracking-tight leading-[0.92] sm:text-[2.75rem] md:text-[3.75rem] lg:text-[4.5rem]">
+                <span className="demaa-hero-title text-brand-blue/86">
+                  {heroTitleLines.primary}
+                </span>
+                <br />
+                <span className="font-sans font-light not-italic text-brand-blue/44">
+                  {heroTitleLines.secondary}
+                </span>
+              </h1>
             </div>
-          </div>
+          ) : (
+            <>
+              <h1 className="demaa-section-title text-4xl tracking-tight text-brand-blue md:text-5xl">
+                {title}
+              </h1>
+              <p className="mx-auto mt-2 max-w-2xl text-sm font-normal leading-relaxed text-dema-muted">
+                {description}
+              </p>
+            </>
+          )}
 
-          <div className="mx-auto mt-3 max-w-4xl overflow-x-auto pb-2 soft-scroll">
-            <div className="flex min-w-max gap-2">
-              {["Tous", ...categories].map((category) => (
-                <button
-                  key={category}
-                  type="button"
-                  onClick={() => setActiveCategory(category)}
-                  className={`demaa-chip shrink-0 whitespace-nowrap ${
-                    activeCategory === category ? "demaa-chip-active" : ""
-                  }`}
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
+          <div className={heroTitleLines ? "" : "mt-5"}>
+            <SearchFilterControls
+              value={searchQuery}
+              placeholder="Rechercher un service, un besoin, une activité..."
+              activeFilter={activeCategory}
+              defaultFilter="Tous"
+              isFilterOpen={isFilterPanelOpen}
+              filters={serviceFilters}
+              onChange={setSearchQuery}
+              onFilterClick={() => setIsFilterPanelOpen((current) => !current)}
+              onFilterSelect={selectCategory}
+            />
           </div>
         </div>
       </section>
@@ -182,7 +216,7 @@ function ServiceCard({
       </p>
       <div className="mt-4">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="inline-flex rounded-full bg-dema-forest px-3 py-1 text-[10px] font-medium text-dema-paper">
+          <span className="inline-flex rounded-full bg-dema-sage/75 px-3 py-1 text-[10px] font-medium text-brand-blue/70">
             {service.price}
           </span>
           <span className="inline-flex rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-medium lowercase text-brand-blue/70">

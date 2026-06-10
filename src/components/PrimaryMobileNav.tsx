@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Boxes, HandHelping, Handshake, type LucideIcon } from "lucide-react";
+import { Boxes, HandHelping, Handshake, Search, type LucideIcon } from "lucide-react";
 import {
   visiblePrimaryNavigationItems,
   type PrimaryNavigationId,
@@ -10,6 +10,7 @@ import {
 export type PrimaryNavTab = PrimaryNavigationId;
 
 const tabIcons: Record<PrimaryNavigationId, LucideIcon> = {
+  analyser: Search,
   structurer: Boxes,
   deleguer: HandHelping,
   developper: Handshake,
@@ -40,7 +41,7 @@ export default function PrimaryMobileNav({
               : "font-medium text-brand-blue/56 hover:bg-dema-sage/70 hover:text-brand-blue/72"
           }`;
 
-          if (onSelect && tab.id === "structurer") {
+          if (onSelect && tab.id === "analyser") {
             return (
               <button
                 key={tab.id}

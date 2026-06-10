@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Suspense, useEffect, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
-import { Boxes, HandHelping, Handshake, type LucideIcon } from "lucide-react";
+import { Boxes, HandHelping, Handshake, Search, type LucideIcon } from "lucide-react";
 import {
   visiblePrimaryNavigationItems,
   type PrimaryNavigationId,
@@ -12,6 +12,7 @@ import {
 type HomeTabsMode = "links" | "client";
 
 const tabIcons: Record<PrimaryNavigationId, LucideIcon> = {
+  analyser: Search,
   structurer: Boxes,
   deleguer: HandHelping,
   developper: Handshake,
@@ -58,12 +59,14 @@ function DesktopHomeTabsNav({ mode }: { mode: HomeTabsMode }) {
   const searchParams = useSearchParams();
   const urlTab = searchParams.get("tab");
   const activeTab =
-    pathname === "/deleguer" || pathname === "/assistants"
+    pathname === "/deleguer" || pathname === "/annuaire-services"
       ? "deleguer"
+      : pathname === "/structurer" || pathname === "/assistants"
+        ? "structurer"
       : pathname === "/developper"
         ? "developper"
       : pathname === "/"
-        ? getVisibleTab(urlTab ?? "")?.id ?? "structurer"
+        ? getVisibleTab(urlTab ?? "")?.id ?? "analyser"
         : undefined;
 
   return <DesktopHomeTabsNavStatic activeTab={activeTab} mode={mode} />;
@@ -77,7 +80,7 @@ function DesktopHomeTabsNavStatic({
   mode?: HomeTabsMode;
 }) {
   const [clientActiveTab, setClientActiveTab] = useState<PrimaryNavigationId>(
-    getVisibleTab(activeTab ?? "")?.id ?? "structurer"
+    getVisibleTab(activeTab ?? "")?.id ?? "analyser"
   );
   const currentActiveTab = mode === "client" ? clientActiveTab : activeTab;
 
@@ -121,7 +124,7 @@ function DesktopHomeTabsNavStatic({
             : "font-medium text-brand-blue/56 hover:bg-dema-sage/70 hover:text-brand-blue/72"
         }`;
 
-        if (mode === "client" && tab.id === "structurer") {
+        if (mode === "client" && tab.id === "analyser") {
           return (
             <button
               key={tab.id}

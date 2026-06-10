@@ -2,19 +2,19 @@ import type { Metadata } from "next";
 import HomeHubPage from "@/components/HomeHubPage";
 
 export const metadata: Metadata = {
-  title: "Structurer votre activité - Demaa",
+  title: "Analysez votre organisation - Demaa",
   description:
-    "Explorez les systèmes essentiels pour structurer votre activité, clarifier vos process et mieux piloter votre entreprise.",
+    "Analysez votre activité, repérez les systèmes essentiels et identifiez les priorités pour mieux piloter votre entreprise.",
   openGraph: {
-    title: "Structurer votre activité - Demaa",
+    title: "Analysez votre organisation - Demaa",
     description:
-      "Explorez les systèmes essentiels pour structurer votre activité, clarifier vos process et mieux piloter votre entreprise.",
+      "Analysez votre activité, repérez les systèmes essentiels et identifiez les priorités pour mieux piloter votre entreprise.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Structurer votre activité - Demaa",
+    title: "Analysez votre organisation - Demaa",
     description:
-      "Explorez les systèmes essentiels pour structurer votre activité, clarifier vos process et mieux piloter votre entreprise.",
+      "Analysez votre activité, repérez les systèmes essentiels et identifiez les priorités pour mieux piloter votre entreprise.",
   },
 };
 

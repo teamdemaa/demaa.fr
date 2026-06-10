@@ -1,6 +1,7 @@
 export const primaryNavigationItems = [
-  { id: "structurer", label: "Analyser", href: "/", visible: true },
-  { id: "deleguer", label: "Structurer", href: "/deleguer", visible: true },
+  { id: "analyser", label: "Analyser", href: "/", visible: true },
+  { id: "structurer", label: "Structurer", href: "/structurer", visible: true },
+  { id: "deleguer", label: "Déléguer", href: "/deleguer", visible: true },
   { id: "developper", label: "Développer", href: "/developper", visible: false },
 ] as const;
 

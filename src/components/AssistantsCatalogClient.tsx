@@ -173,14 +173,14 @@ export default function AssistantsCatalogClient() {
     <>
       <section className="ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] w-screen bg-dema-cream px-4 pb-5 pt-5 text-center md:px-8 md:pb-6 md:pt-16">
         <div className="mx-auto max-w-6xl space-y-6 md:space-y-7">
-          <PrimaryMobileNav activeTab="deleguer" />
+          <PrimaryMobileNav activeTab="structurer" />
 
           <div className="mx-auto max-w-5xl">
             <h1 className="text-[clamp(3rem,14.5vw,3.36rem)] tracking-tight leading-[0.92] sm:text-[2.75rem] md:text-[3.75rem] lg:text-[4.5rem]">
               <span className="demaa-hero-title text-brand-blue/86">Structurez</span>
               <br />
               <span className="font-sans font-light not-italic text-brand-blue/44">
-                ce qui vous ralentit
+                pour mieux piloter
               </span>
             </h1>
           </div>
@@ -230,6 +230,11 @@ export default function AssistantsCatalogClient() {
                   <br className="md:hidden" /> à l&apos;équipe
                   <br className="hidden md:block" /> chaque année.
                 </h2>
+                <p className="mt-4 max-w-2xl text-sm leading-relaxed text-dema-muted md:text-base">
+                  Chez EM2A, cabinet d&apos;expertise comptable, l&apos;équipe avançait
+                  entre relances clients, collecte paie et suivis dispersés. Le système
+                  a remis de l&apos;ordre dans les échanges et libéré du temps utile.
+                </p>
                 <div className="mt-6 grid gap-3 sm:grid-cols-3">
                   {em2aImpacts.map((impact) => (
                     <div
@@ -274,10 +279,10 @@ export default function AssistantsCatalogClient() {
           <div id="pricing" className="mx-auto mt-14 max-w-[50.5rem] scroll-mt-24 md:mt-20">
             <div className="mx-auto max-w-3xl text-center">
               <h2 className="text-3xl font-semibold tracking-tight text-brand-blue md:text-4xl">
-                Choisissez votre point d&apos;entrée
+                Par où commencer ?
               </h2>
               <p className="mt-3 text-sm leading-relaxed text-dema-muted md:text-base">
-                Commencez par un audit offert ou lancez directement la structuration de votre organisation.
+                Faites le point avec un audit offert ou lancez directement la structuration de votre organisation.
               </p>
             </div>
 
