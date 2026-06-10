@@ -19,6 +19,8 @@ Les catalogues sont encore repartis entre plusieurs sources:
 - `src/lib/enterprise-annuaire.json`: systemes par secteur.
 - `src/lib/service-catalog.ts`: catalogue officiel des services Demaa.
 - `src/lib/service-recommendations.ts`: ordre des services recommandes par systeme.
+- `src/lib/supplier-catalog.ts`: annuaire fournisseurs, banques, assurances, mutuelles et partenaires metier.
+- `src/lib/supplier-recommendations.ts`: ordre des fournisseurs recommandes par systeme.
 - Firestore: source distante avec fallback local pour certains catalogues.
 
 Regle pragmatique: avant d'ajouter un outil, un service ou un systeme, verifier quelle page le consomme. Eviter d'ajouter la meme donnee dans plusieurs fichiers si un mapping suffit.

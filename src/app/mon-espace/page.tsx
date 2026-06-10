@@ -4,7 +4,6 @@ import CustomerSpaceAccessForm from "@/components/CustomerSpaceAccessForm";
 import MemberSpaceTabs from "@/components/MemberSpaceTabs";
 import Navbar from "@/components/Navbar";
 import { CUSTOMER_SPACE_COOKIE, getEmailFromCustomerSessionToken } from "@/lib/customer-space-auth";
-import { customerDeals } from "@/lib/customer-deals";
 import {
   getAssistantDelegationRequestsByEmail,
   getStripePaymentsByEmail,
@@ -12,7 +11,7 @@ import {
 
 export const metadata: Metadata = {
   title: "Espace membre Demaa",
-  description: "Retrouvez le suivi de vos demandes Demaa et vos tarifs négociés.",
+  description: "Retrouvez le suivi de vos demandes Demaa et l'accès aux annuaires utiles.",
   alternates: {
     canonical: "/mon-espace",
   },
@@ -45,7 +44,7 @@ export default async function MonEspacePage({ searchParams }: MonEspacePageProps
             </h1>
             <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-dema-muted">
               Retrouvez vos tarifs négociés, vos demandes en cours et les offres utiles à
-              votre activité. Entrez votre email pour recevoir un lien sécurisé.
+              votre activité via les annuaires Demaa. Entrez votre email pour recevoir un lien sécurisé.
             </p>
             {error ? (
               <p className="mt-4 rounded-[0.9rem] border border-dema-forest/15 bg-dema-sage/70 px-4 py-3 text-sm text-dema-forest">
@@ -87,7 +86,7 @@ export default async function MonEspacePage({ searchParams }: MonEspacePageProps
             <p className="text-sm text-dema-muted">{email}</p>
           </div>
 
-          <MemberSpaceTabs deals={customerDeals} requestCards={requestCards} />
+          <MemberSpaceTabs requestCards={requestCards} />
         </section>
       </main>
     </div>

@@ -67,6 +67,8 @@ import { getSystemResources, type SystemResource } from "@/lib/system-resources"
 import { buildBusinessBlockChecklists } from "@/lib/business-block-checklists";
 import { getRecommendedServicesForSystem } from "@/lib/service-recommendations";
 import type { DemaaService } from "@/lib/service-catalog";
+import { getRecommendedSuppliersForSystem } from "@/lib/supplier-recommendations";
+import type { DemaaSupplier } from "@/lib/supplier-catalog";
 
 type SystemsCatalogClientProps = {
   systems: System[];
@@ -81,7 +83,7 @@ type SystemsCatalogClientProps = {
   initialActiveTab?: string;
 };
 
-type SystemModalTab = "processus" | "outils" | "services" | "ressources";
+type SystemModalTab = "processus" | "outils" | "services" | "fournisseurs" | "ressources";
 type ProcessGroup = {
   title: string;
   checklist: string[];
@@ -236,10 +238,6 @@ const TRANSVERSE_TOOL_SLUGS = new Set([
   "tiime",
   "dext",
   "regate",
-  "qonto",
-  "revolut-business",
-  "alan",
-  "swile",
   "payfit",
   "hubspot",
   "pipedrive",
@@ -454,6 +452,64 @@ export default function SystemsCatalogClient({
           </div>
         </div>
       </button>
+    );
+  }
+
+  function renderSupplierCard(supplier: DemaaSupplier) {
+    const isExternal = supplier.href.startsWith("http");
+    const content = (
+      <>
+        <div className="flex items-start justify-between gap-4">
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper">
+            <ServiceIcon icon={supplier.icon} className="h-4 w-4" aria-hidden="true" />
+          </span>
+        </div>
+        <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
+          {supplier.category}
+        </p>
+        <h3 className="mt-2 text-lg font-semibold leading-snug text-brand-blue">
+          {supplier.name}
+        </h3>
+        <p className="mt-3 text-sm leading-relaxed text-dema-muted">
+          {supplier.shortDescription}
+        </p>
+        <div className="mt-auto pt-4">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="inline-flex rounded-full bg-dema-forest px-3 py-1 text-[10px] font-medium text-dema-paper">
+              {supplier.offerHint}
+            </span>
+            <span className="inline-flex rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-medium lowercase text-brand-blue/70">
+              {supplier.category}
+            </span>
+            {supplier.partner ? (
+              <span className="inline-flex rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-medium lowercase text-brand-blue/70">
+                partenaire
+              </span>
+            ) : null}
+          </div>
+        </div>
+      </>
+    );
+    const className = "demaa-card group flex min-h-[15rem] flex-col rounded-[1.15rem] p-5 text-left";
+
+    if (isExternal) {
+      return (
+        <a
+          key={supplier.slug}
+          href={supplier.href}
+          target="_blank"
+          rel="noreferrer"
+          className={className}
+        >
+          {content}
+        </a>
+      );
+    }
+
+    return (
+      <Link key={supplier.slug} href={supplier.href} className={className}>
+        {content}
+      </Link>
     );
   }
 
@@ -763,6 +819,17 @@ export default function SystemsCatalogClient({
               </button>
               <button
                 type="button"
+                onClick={() => setActiveTab("fournisseurs")}
+                className={`relative rounded-full px-4 py-2 text-sm font-medium transition after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:rounded-full after:transition ${
+                  activeTab === "fournisseurs"
+                    ? "bg-transparent text-brand-blue after:bg-dema-forest"
+                    : "bg-transparent text-brand-blue/55 after:bg-transparent hover:text-brand-blue/75"
+                }`}
+              >
+                Fournisseurs
+              </button>
+              <button
+                type="button"
                 onClick={() => setActiveTab("ressources")}
                 className={`relative rounded-full px-4 py-2 text-sm font-medium transition after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:rounded-full after:transition ${
                   activeTab === "ressources"
@@ -854,14 +921,14 @@ export default function SystemsCatalogClient({
                       Besoin de comparer plus largement ?
                     </h3>
                     <p className="mt-2 max-w-3xl text-sm leading-relaxed text-dema-muted">
-                      L&apos;annuaire rassemble aussi les comptes pro, assurances, mutuelles,
-                      solutions de paiement, outils d&apos;équipe et services utiles.
+                      L&apos;annuaire rassemble les logiciels, plateformes et outils de travail
+                      utiles pour organiser, vendre, produire et piloter l&apos;activité.
                     </p>
                     <Link
                       href={`/annuaire-outils?retourSysteme=${encodeURIComponent(selectedSystem.slug)}`}
                       className="mt-4 inline-flex items-center rounded-full border border-dema-line bg-dema-paper px-4 py-2 text-sm font-medium text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
                     >
-                      Voir tous les outils et services
+                      Voir tous les outils
                     </Link>
                   </div>
                 </div>
@@ -886,6 +953,30 @@ export default function SystemsCatalogClient({
                       className="mt-4 inline-flex items-center rounded-full border border-dema-line bg-dema-paper px-4 py-2 text-sm font-medium text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
                     >
                       Voir tous les services
+                    </Link>
+                  </div>
+                </div>
+              ) : activeTab === "fournisseurs" ? (
+                <div className="space-y-5">
+                  <div>
+                    <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                      {getRecommendedSuppliersForSystem(selectedSystem.slug).map(renderSupplierCard)}
+                    </div>
+                  </div>
+
+                  <div className="rounded-[1.15rem] border border-dema-line bg-dema-cream/70 p-5 text-left">
+                    <h3 className="text-lg font-semibold text-brand-blue">
+                      Besoin de comparer plus largement ?
+                    </h3>
+                    <p className="mt-2 max-w-3xl text-sm leading-relaxed text-dema-muted">
+                      L&apos;annuaire fournisseurs rassemble banques, assurances, mutuelles,
+                      matériaux, grossistes, équipements, énergie, téléphonie et partenaires métier.
+                    </p>
+                    <Link
+                      href={`/annuaire-fournisseurs?retourSysteme=${encodeURIComponent(selectedSystem.slug)}`}
+                      className="mt-4 inline-flex items-center rounded-full border border-dema-line bg-dema-paper px-4 py-2 text-sm font-medium text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
+                    >
+                      Voir tous les fournisseurs
                     </Link>
                   </div>
                 </div>
@@ -940,7 +1031,13 @@ export default function SystemsCatalogClient({
 }
 
 function isSystemModalTab(tab?: string): tab is SystemModalTab {
-  return tab === "processus" || tab === "outils" || tab === "services" || tab === "ressources";
+  return (
+    tab === "processus" ||
+    tab === "outils" ||
+    tab === "services" ||
+    tab === "fournisseurs" ||
+    tab === "ressources"
+  );
 }
 
 function getResourceSlides(resource: SystemResource): string[] {

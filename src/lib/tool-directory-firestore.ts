@@ -11,6 +11,14 @@ import {
 } from "./tool-directory";
 
 const TOOL_DIRECTORY_COLLECTION = "tool_directory";
+const TRANSFERRED_SUPPLIER_TOOL_SLUGS = new Set([
+  "qonto",
+  "revolut-business",
+  "wise-business",
+  "shine",
+  "alan",
+  "swile",
+]);
 
 function normalizeTool(data: DocumentData | undefined): ToolDirectoryItem | null {
   if (!data || !data.slug || !data.name) {
@@ -32,7 +40,8 @@ export async function getUnifiedToolDirectory(): Promise<ToolDirectoryItem[]> {
     const tools = snapshot.docs
       .map((doc) => normalizeTool(doc.data()))
       .filter((tool): tool is ToolDirectoryItem => Boolean(tool))
-      .filter((tool) => tool.status !== "hidden" && tool.status !== "deprecated");
+      .filter((tool) => tool.status !== "hidden" && tool.status !== "deprecated")
+      .filter((tool) => !TRANSFERRED_SUPPLIER_TOOL_SLUGS.has(tool.slug ?? ""));
 
     if (!tools.length) {
       return toolDirectory;

@@ -3,10 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import {
-  ArrowUpRight,
   BadgeCheck,
   CircleDashed,
-  Gift,
   MessageCircle,
 } from "lucide-react";
 
@@ -25,29 +23,19 @@ type MemberRequest = {
   whatsappPhone: string | null;
 } | null;
 
-type MemberDeal = {
-  category: string;
-  description: string;
-  href: string;
-  name: string;
-  offer: string;
-  toolSlug?: string;
-};
-
 type MemberSpaceTabsProps = {
-  deals: readonly MemberDeal[];
   requestCards: Array<{
     payment: MemberRequestPayment;
     request: MemberRequest;
   }>;
 };
 
-type MemberTab = "requests" | "deals";
+type MemberTab = "requests";
 
-const tabs = [
-  { id: "deals", label: "Offres membre" },
-  { id: "requests", label: "Suivi des demandes" },
-] as const satisfies readonly { id: MemberTab; label: string }[];
+const tabs = [{ id: "requests", label: "Suivi des demandes" }] as const satisfies readonly {
+  id: MemberTab;
+  label: string;
+}[];
 
 function formatDate(value?: string | null) {
   if (!value) return "Date non renseignée";
@@ -101,10 +89,9 @@ function getRequestStatus(input: {
 }
 
 export default function MemberSpaceTabs({
-  deals,
   requestCards,
 }: MemberSpaceTabsProps) {
-  const [activeTab, setActiveTab] = useState<MemberTab>("deals");
+  const [activeTab, setActiveTab] = useState<MemberTab>("requests");
 
   return (
     <div className="mt-8">
@@ -213,42 +200,18 @@ export default function MemberSpaceTabs({
         </section>
       ) : null}
 
-      {activeTab === "deals" ? (
-        <section className="mt-8">
-          <SectionHeader
-            title="Offres membre"
-            description="Des réductions, avantages et offres partenaires ajoutés progressivement pour les membres Demaa."
-          />
-          <div className="mt-4 grid gap-4 md:grid-cols-3">
-            {deals.map((deal) => (
-              <article key={deal.name} className="demaa-card rounded-[1.15rem] p-5">
-                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
-                  <Gift className="h-5 w-5" aria-hidden="true" />
-                </div>
-                <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-                  {deal.category}
-                </p>
-                <h2 className="mt-2 text-xl font-semibold tracking-tight">{deal.name}</h2>
-                <p className="mt-2 inline-flex rounded-full bg-dema-sage px-3 py-1 text-xs font-medium text-dema-forest">
-                  {deal.offer}
-                </p>
-                <p className="mt-3 text-sm leading-relaxed text-dema-muted">
-                  {deal.description}
-                </p>
-                <a
-                  href={deal.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-dema-forest"
-                >
-                  Voir l&apos;offre
-                  <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-                </a>
-              </article>
-            ))}
-          </div>
-        </section>
-      ) : null}
+      <section className="mt-8 rounded-[1.15rem] border border-dema-line bg-dema-paper p-5">
+        <SectionHeader
+          title="Fournisseurs"
+          description="Les banques, assurances, mutuelles et fournisseurs métier sont maintenant regroupés dans un annuaire unique."
+        />
+        <Link
+          href="/annuaire-fournisseurs"
+          className="mt-4 inline-flex rounded-full bg-dema-forest px-5 py-3 text-sm font-medium text-dema-paper transition hover:bg-brand-blue"
+        >
+          Ouvrir l&apos;annuaire fournisseurs
+        </Link>
+      </section>
     </div>
   );
 }

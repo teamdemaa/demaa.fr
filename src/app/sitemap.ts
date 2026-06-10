@@ -34,6 +34,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: base, lastModified: now, changeFrequency: "weekly", priority: 1 },
     { url: `${base}/annuaire-outils`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/annuaire-services`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
+    { url: `${base}/annuaire-fournisseurs`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/blog`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/deleguer`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
     { url: `${base}/developper`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
@@ -88,5 +89,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...blogEntries, ...toolEntries, ...freeToolEntries, ...serviceEntries];
+  return [
+    ...staticRoutes,
+    ...blogEntries,
+    ...toolEntries,
+    ...freeToolEntries,
+    ...serviceEntries,
+  ];
 }

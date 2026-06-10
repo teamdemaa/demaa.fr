@@ -46,7 +46,7 @@ export default async function AnnuaireOutilsPage({
         <ToolDirectoryClient
           key={`${initialSector ?? "tous"}-${initialCategory ?? "tous"}`}
           title="Annuaire Outils"
-          description="Les outils, logiciels et services utiles aux TPE pour organiser, automatiser, créer et piloter l'activité."
+          description="Les outils et logiciels utiles aux TPE pour organiser, automatiser, créer et piloter l'activité."
           searchPlaceholder="Rechercher un outil, un logiciel, un usage..."
           items={directoryTools}
           sectors={toolDirectoryMeta.sectors}

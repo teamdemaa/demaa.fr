@@ -377,7 +377,7 @@
       ],
       "bestFor": "Gérer les finances courantes d’une entreprise.",
       "pricingHint": "Payant",
-      "status": "active",
+      "status": "hidden",
       "toolbox": true,
       "scope": "transverse"
     },
@@ -405,7 +405,7 @@
       ],
       "bestFor": "Gérer les paiements et dépenses avec plus de souplesse.",
       "pricingHint": "Payant",
-      "status": "active",
+      "status": "hidden",
       "toolbox": true,
       "memberDealLabel": "Offre membre",
       "memberDealDescription": "Accédez à l’espace membre pour consulter l’offre disponible et les conditions applicables.",
@@ -670,7 +670,7 @@
       ],
       "bestFor": "Mettre en place des avantages simples pour l’équipe.",
       "pricingHint": "Payant",
-      "status": "active",
+      "status": "hidden",
       "toolbox": true,
       "scope": "transverse"
     },
@@ -698,7 +698,7 @@
       ],
       "bestFor": "Proposer une couverture santé claire et simple.",
       "pricingHint": "Payant",
-      "status": "active",
+      "status": "hidden",
       "toolbox": true,
       "scope": "transverse"
     },
@@ -6406,7 +6406,7 @@
       ],
       "bestFor": "Gérer paiements internationaux, devises et prestataires étrangers.",
       "pricingHint": "Payant",
-      "status": "active",
+      "status": "hidden",
       "toolbox": true,
       "scope": "transverse"
     },
@@ -6428,7 +6428,7 @@
       ],
       "bestFor": "Simplifier banque, factures et administratif d’un indépendant ou d’une petite entreprise.",
       "pricingHint": "Payant",
-      "status": "active",
+      "status": "hidden",
       "toolbox": true,
       "scope": "transverse"
     },

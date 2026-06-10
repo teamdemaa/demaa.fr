@@ -83,6 +83,8 @@ export default function DevelopperOpportunitiesClient({
   const [draftFilters, setDraftFilters] = useState<FilterState>(emptyFilters);
   const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false);
   const [selectedOpportunity, setSelectedOpportunity] = useState<ActifyOpportunity | null>(null);
+  const [informationOpportunity, setInformationOpportunity] =
+    useState<ActifyOpportunity | null>(null);
   const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
 
   const filterOptions = useMemo(() => {
@@ -132,7 +134,7 @@ export default function DevelopperOpportunitiesClient({
       });
   }, [filters, opportunities, query]);
 
-  const isModalOpen = Boolean(selectedOpportunity) || isSubmitModalOpen;
+  const isModalOpen = Boolean(selectedOpportunity) || Boolean(informationOpportunity) || isSubmitModalOpen;
 
   useEffect(() => {
     if (!isModalOpen) return;
@@ -255,7 +257,13 @@ export default function DevelopperOpportunitiesClient({
 
       <OpportunityDetailModal
         opportunity={selectedOpportunity}
+        onInformationRequest={setInformationOpportunity}
         onClose={() => setSelectedOpportunity(null)}
+      />
+
+      <InformationRequestModal
+        opportunity={informationOpportunity}
+        onClose={() => setInformationOpportunity(null)}
       />
 
       <SubmitModal isOpen={isSubmitModalOpen} onClose={() => setIsSubmitModalOpen(false)} />
@@ -497,9 +505,11 @@ function FormField({
 
 function OpportunityDetailModal({
   onClose,
+  onInformationRequest,
   opportunity,
 }: {
   onClose: () => void;
+  onInformationRequest: (opportunity: ActifyOpportunity) => void;
   opportunity: ActifyOpportunity | null;
 }) {
   if (!opportunity) return null;
@@ -555,15 +565,121 @@ function OpportunityDetailModal({
 
       <div className="mt-5 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         <span className="text-xs text-dema-muted">{compact(opportunity.contact_study_name)}</span>
-        <a
-          href={opportunity.source_url}
-          target="_blank"
-          rel="noreferrer"
+        <button
+          type="button"
+          onClick={() => onInformationRequest(opportunity)}
           className="inline-flex min-h-10 items-center justify-center rounded-full bg-dema-forest px-5 text-sm font-medium text-dema-paper transition hover:bg-[#28513b]"
         >
-          Voir sur Actify
-        </a>
+          Recevoir les informations
+        </button>
       </div>
+    </Modal>
+  );
+}
+
+function InformationRequestModal({
+  onClose,
+  opportunity,
+}: {
+  onClose: () => void;
+  opportunity: ActifyOpportunity | null;
+}) {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  if (!opportunity) return null;
+
+  const currentOpportunity = opportunity;
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setStatus("sending");
+    setErrorMessage("");
+
+    try {
+      const response = await fetch("/api/actify-information-request", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          opportunityId: currentOpportunity.source_id,
+        }),
+      });
+      const payload = (await response.json().catch(() => null)) as
+        | { error?: string; ok?: boolean }
+        | null;
+
+      if (!response.ok || !payload?.ok) {
+        throw new Error(payload?.error || "Impossible d'envoyer la demande.");
+      }
+
+      setStatus("sent");
+    } catch (error) {
+      setStatus("error");
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : "Impossible d'envoyer la demande pour le moment.",
+      );
+    }
+  }
+
+  return (
+    <Modal onClose={onClose}>
+      <div className="flex items-start justify-between gap-5">
+        <div>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
+            Informations
+          </p>
+          <h2 className="mt-3 text-[clamp(1.35rem,7vw,2rem)] font-medium leading-tight tracking-tight text-brand-blue">
+            Recevoir les informations
+          </h2>
+        </div>
+        <IconCloseButton onClick={onClose} />
+      </div>
+
+      <div className="mt-5 rounded-[1rem] border border-dema-line bg-dema-cream/70 p-4">
+        <p className="text-sm font-medium leading-snug text-brand-blue">
+          {currentOpportunity.title}
+        </p>
+        <p className="mt-2 text-xs leading-relaxed text-dema-muted">
+          Référence : {compact(currentOpportunity.reference)} · ID : {currentOpportunity.source_id}
+        </p>
+      </div>
+
+      {status === "sent" ? (
+        <div className="mt-5 rounded-[1rem] bg-dema-sage px-4 py-4 text-sm leading-relaxed text-dema-forest">
+          C&apos;est envoyé. On revient vers vous avec les informations liées à cette annonce.
+        </div>
+      ) : (
+        <form className="mt-5 grid gap-3" onSubmit={handleSubmit}>
+          <label className="grid gap-1.5 text-xs font-normal text-brand-blue/54">
+            Email
+            <input
+              required
+              autoComplete="email"
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              className="h-11 rounded-full border border-dema-line bg-dema-paper px-3 text-sm font-normal text-brand-blue outline-none"
+              placeholder="vous@entreprise.fr"
+            />
+          </label>
+          {status === "error" ? (
+            <p className="rounded-[0.9rem] bg-dema-sage/70 px-3 py-2 text-sm text-dema-forest">
+              {errorMessage}
+            </p>
+          ) : null}
+          <button
+            type="submit"
+            disabled={status === "sending"}
+            className="mt-1 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-dema-forest px-5 text-sm font-medium text-dema-paper transition hover:bg-[#28513b] disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {status === "sending" ? "Envoi..." : "Recevoir les informations"}
+          </button>
+        </form>
+      )}
     </Modal>
   );
 }
