@@ -8,6 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "validate:data": "node scripts/validate-data.mjs && node scripts/audit-business-checklists.mjs --strict",
+    "audit:business-checklists": "node scripts/audit-business-checklists.mjs --strict && node scripts/audit-business-checklists-semantic.mjs",
+    "audit:business-checklists:ci": "node scripts/audit-business-checklists.mjs --strict && node scripts/audit-business-checklists-semantic.mjs --strict --fail-on-warning",
     "seed:enterprise-annuaire": "node scripts/seed-enterprise-annuaire.mjs",
     "sync:enterprise-annuaire": "node scripts/sync-enterprise-annuaire.mjs",
     "sync:tool-directory": "node scripts/sync-tool-directory.mjs"
