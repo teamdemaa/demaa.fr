@@ -1,7 +1,7 @@
 export const primaryNavigationItems = [
   { id: "structurer", label: "Analyser", href: "/", visible: true },
   { id: "deleguer", label: "Structurer", href: "/deleguer", visible: true },
-  { id: "developper", label: "Développer", href: "/developper", visible: true },
+  { id: "developper", label: "Développer", href: "/developper", visible: false },
 ] as const;
 
 export const visiblePrimaryNavigationItems = primaryNavigationItems.filter(

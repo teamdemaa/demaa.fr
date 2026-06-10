@@ -175,7 +175,7 @@ export default function DevelopperOpportunitiesClient({
               <span className="demaa-hero-title text-brand-blue/86">Développez </span>
               <br />
               <span className="font-sans font-light not-italic text-brand-blue/44">
-                avec des entreprises à reprendre
+                avec la reprise
               </span>
             </h1>
           </div>

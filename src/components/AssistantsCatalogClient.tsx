@@ -191,6 +191,9 @@ export default function AssistantsCatalogClient() {
       <section className="mx-auto w-full max-w-6xl px-4 pb-20 md:px-8 md:pb-28">
         <div className="border-t border-dema-line/65 pt-10 md:pt-14">
           <div>
+            <h2 className="mb-6 text-2xl font-semibold tracking-tight text-brand-blue md:mb-8 md:text-3xl">
+              Comment ça se passe concrètement ?
+            </h2>
             <div className="mx-auto grid gap-4 md:max-w-5xl md:grid-cols-3 md:gap-5">
               {howItWorksSteps.map((step, index) => (
                 <div
@@ -222,11 +225,10 @@ export default function AssistantsCatalogClient() {
                   Étude de cas EM2A
                 </p>
                 <h2 className="mt-4 text-[2.45rem] font-light leading-[1.02] tracking-tight text-brand-blue/44 md:text-[3.45rem]">
-                  Plus de{" "}
-                  <span className="demaa-hero-title text-brand-blue/86">2 mois</span>{" "}
-                  de travail
-                  <br className="md:hidden" /> récupérés
-                  <br className="hidden md:block" /> par an.
+                  <span className="demaa-hero-title text-brand-blue/86">Deux mois</span>{" "}
+                  rendus
+                  <br className="md:hidden" /> à l&apos;équipe
+                  <br className="hidden md:block" /> chaque année.
                 </h2>
                 <div className="mt-6 grid gap-3 sm:grid-cols-3">
                   {em2aImpacts.map((impact) => (
@@ -293,10 +295,7 @@ export default function AssistantsCatalogClient() {
                   </h3>
                 </div>
                 <div className="mt-6">
-                  <p className="text-4xl font-semibold tracking-tight text-brand-blue">
-                    0 €
-                  </p>
-                  <p className="mt-3 text-sm leading-relaxed text-dema-muted">
+                  <p className="text-sm leading-relaxed text-dema-muted">
                     Un échange pour comprendre vos tâches récurrentes, vos outils, vos documents,
                     vos blocages et les premières priorités à traiter.
                   </p>
@@ -327,12 +326,7 @@ export default function AssistantsCatalogClient() {
                 </div>
 
                 <div className="mt-6">
-                  <p className="text-4xl font-semibold tracking-tight text-brand-blue">
-                    {selectedStructurationPack
-                      ? formatAssistantPrice(selectedStructurationPack.amount)
-                      : "À partir de 1 500 €"}
-                  </p>
-                  <p className="mt-3 text-sm leading-relaxed text-dema-muted">
+                  <p className="text-sm leading-relaxed text-dema-muted">
                     On structure vos process, vos outils, vos tableaux de suivi et les automatisations utiles
                     pour rendre l&apos;activité plus claire et plus simple à piloter.
                   </p>
