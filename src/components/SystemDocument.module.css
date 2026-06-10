@@ -170,30 +170,6 @@
   font-weight: 800;
 }
 
-.signalGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8mm;
-  margin-top: 8mm;
-}
-
-.signalPanel {
-  padding: 6mm 6.5mm;
-  border: 1px solid var(--color-dema-line);
-  border-radius: 8px;
-  background: var(--color-dema-paper);
-}
-
-.signalList {
-  display: grid;
-  gap: 2.5mm;
-  margin: 4mm 0 0;
-  padding-left: 4mm;
-  color: var(--color-dema-muted);
-  font-size: 10.2px;
-  line-height: 1.26;
-}
-
 .fields {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -394,8 +370,7 @@
   .startPanel,
   .fields,
   .referenceGrid,
-  .processGrid,
-  .signalGrid {
+  .processGrid {
     grid-template-columns: 1fr;
   }
 

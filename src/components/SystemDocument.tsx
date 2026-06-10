@@ -76,23 +76,6 @@ function chunkProcessGroups(groups: BusinessBlockChecklist[], size = 4) {
   return pages;
 }
 
-function SignalList({ title, items }: { title: string; items: string[] }) {
-  if (!items.length) {
-    return null;
-  }
-
-  return (
-    <div className={styles.signalPanel}>
-      <div className={styles.panelTitle}>{title}</div>
-      <ul className={styles.signalList}>
-        {items.slice(0, 6).map((item) => (
-          <li key={item}>{item}</li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
 function DocumentPage({
   systemName,
   title,
@@ -153,8 +136,6 @@ export default function SystemDocument({ system, templates }: SystemDocumentProp
   const processPages = chunkProcessGroups(processGroups);
   const firstProcessPageNumber = 2;
   const actionPlanPageNumber = processPages.length + firstProcessPageNumber;
-  const coverDocuments = system.businessSignals?.documents ?? [];
-  const coverIndicators = system.businessSignals?.indicators ?? [];
 
   return (
     <main className={styles.shell}>
@@ -202,12 +183,6 @@ export default function SystemDocument({ system, templates }: SystemDocumentProp
             </div>
           </div>
         </div>
-        {(coverDocuments.length || coverIndicators.length) ? (
-          <div className={styles.signalGrid}>
-            <SignalList title="Documents clés" items={coverDocuments} />
-            <SignalList title="Indicateurs à suivre" items={coverIndicators} />
-          </div>
-        ) : null}
         <div className={styles.fields}>
           <div className={styles.field}>Entreprise</div>
           <div className={styles.field}>Date</div>
