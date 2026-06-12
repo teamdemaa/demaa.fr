@@ -2,8 +2,12 @@
 
 import { useState } from "react";
 import {
+  BadgeEuro,
+  Blocks,
   Check,
   ChevronDown,
+  FileCheck,
+  Users,
   Workflow,
 } from "lucide-react";
 import {
@@ -33,6 +37,33 @@ const howItWorksSteps = [
     title: "On met en place le système",
     description:
       "On configure les outils, on teste les parcours avec vos cas réels, puis on vous transmet un système clair et exploitable.",
+  },
+] as const;
+
+const structurationSignals = [
+  {
+    icon: FileCheck,
+    title: "Vous répondez à des appels d’offres",
+    description:
+      "Si les documents, références, validations et responsabilités ne sont pas prêts, chaque réponse devient un sprint.",
+  },
+  {
+    icon: Users,
+    title: "Vous recrutez ou faites grandir l’équipe",
+    description:
+      "Sans cadre clair, chaque arrivée recrée du flou, des questions et de la dépendance.",
+  },
+  {
+    icon: Blocks,
+    title: "Vous gérez plusieurs sociétés ou activités",
+    description:
+      "Les doublons, oublis et validations croisées finissent par ralentir tout le monde.",
+  },
+  {
+    icon: BadgeEuro,
+    title: "Vous préparez une transmission ou une revente",
+    description:
+      "Une entreprise plus autonome, plus lisible et moins dépendante du dirigeant compte aussi dans la valorisation.",
   },
 ] as const;
 
@@ -171,7 +202,7 @@ export default function AssistantsCatalogClient() {
 
   return (
     <>
-      <section className="ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] w-screen bg-dema-cream px-4 pb-5 pt-5 text-center md:px-8 md:pb-6 md:pt-16">
+      <section className="ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] w-screen bg-dema-cream px-4 pb-8 pt-5 text-center md:px-8 md:pb-10 md:pt-16">
         <div className="mx-auto max-w-6xl space-y-6 md:space-y-7">
           <PrimaryMobileNav activeTab="structurer" />
 
@@ -188,9 +219,43 @@ export default function AssistantsCatalogClient() {
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-6xl px-4 pb-20 md:px-8 md:pb-28">
-        <div className="border-t border-dema-line/65 pt-10 md:pt-14">
+      <section className="mx-auto w-full max-w-6xl px-4 pb-24 md:px-8 md:pb-36">
+        <div className="border-t border-dema-line/65 pt-14 md:pt-20">
           <div>
+            <div className="max-w-3xl">
+              <h2 className="text-2xl font-semibold tracking-tight text-brand-blue md:text-3xl">
+                Quand structurer devient indispensable
+              </h2>
+              <p className="mt-3 text-sm leading-relaxed text-dema-muted md:text-base">
+                Certains moments rendent la structuration indispensable. Pas parce
+                que l&apos;entreprise va mal, mais parce qu&apos;elle repose encore trop
+                sur le dirigeant.
+              </p>
+            </div>
+
+            <div className="mx-auto mt-8 grid gap-4 md:grid-cols-2 md:gap-5 xl:grid-cols-4">
+              {structurationSignals.map((signal) => (
+                <div
+                  key={signal.title}
+                  className="rounded-[1rem] border border-dema-line/70 bg-dema-paper px-4 py-5 md:min-h-[14rem] md:px-5"
+                >
+                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage/55 text-dema-forest">
+                    <signal.icon className="h-4.5 w-4.5" aria-hidden="true" />
+                  </span>
+                  <h3 className="text-[1.05rem] font-medium leading-snug text-brand-blue md:text-[1.3rem]">
+                    <span className="mt-4 block">
+                      {signal.title}
+                    </span>
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-dema-muted">
+                    {signal.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-20 md:mt-28">
             <h2 className="mb-6 text-2xl font-semibold tracking-tight text-brand-blue md:mb-8 md:text-3xl">
               Comment ça se passe concrètement ?
             </h2>
@@ -198,14 +263,14 @@ export default function AssistantsCatalogClient() {
               {howItWorksSteps.map((step, index) => (
                 <div
                   key={step.title}
-                  className="rounded-[1rem] border border-dema-line/70 bg-dema-sage/30 px-4 py-4 md:min-h-[11.5rem] md:px-5 md:py-5"
+                  className="rounded-[1rem] border border-dema-line/70 bg-dema-paper px-4 py-4 md:min-h-[11.5rem] md:px-5 md:py-5"
                 >
                   <div className="flex gap-3 md:flex-col">
                     <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-dema-paper text-sm font-semibold text-dema-forest">
                       {index + 1}
                     </span>
                     <div>
-                      <h3 className="text-sm font-semibold leading-snug text-brand-blue md:text-base">
+                      <h3 className="text-[1.05rem] font-medium leading-snug text-brand-blue md:text-[1.3rem]">
                         {step.title}
                       </h3>
                       <p className="mt-1 text-sm leading-relaxed text-dema-muted">
@@ -218,7 +283,7 @@ export default function AssistantsCatalogClient() {
             </div>
           </div>
 
-          <div className="mt-14 md:mt-20 lg:-mx-[5.25rem]">
+          <div className="mt-20 md:mt-28 lg:-mx-[5.25rem]">
             <div className="grid gap-6 rounded-[1rem] border border-dema-line/70 bg-dema-paper px-4 py-6 md:grid-cols-[1.05fr_0.95fr] md:px-6 md:py-7">
               <div>
                 <p className="inline-flex rounded-full bg-dema-forest/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
@@ -226,7 +291,7 @@ export default function AssistantsCatalogClient() {
                 </p>
                 <h2 className="mt-4 text-[2.45rem] font-light leading-[1.02] tracking-tight text-brand-blue/44 md:text-[3.45rem]">
                   <span className="demaa-hero-title text-brand-blue/86">Deux mois</span>{" "}
-                  rendus
+                  rendus{" "}
                   <br className="md:hidden" /> à l&apos;équipe
                   <br className="hidden md:block" /> chaque année.
                 </h2>
@@ -241,7 +306,7 @@ export default function AssistantsCatalogClient() {
                       key={impact}
                       className="rounded-[0.9rem] bg-dema-sage/55 px-4 py-3"
                     >
-                      <p className="text-sm font-semibold leading-snug text-brand-blue">
+                      <p className="text-[1.05rem] font-medium leading-snug text-brand-blue md:text-[1.3rem]">
                         {impact}
                       </p>
                     </div>
@@ -250,7 +315,7 @@ export default function AssistantsCatalogClient() {
               </div>
 
               <div className="rounded-[0.9rem] border border-dema-line/70 bg-dema-cream px-4 py-5 md:px-5">
-                <p className="text-sm font-semibold text-brand-blue">Résultats</p>
+                <p className="text-[1.05rem] font-medium text-brand-blue md:text-[1.3rem]">Résultats</p>
                 <div className="mt-4 space-y-3">
                   {em2aResults.map((result) => (
                     <div key={result} className="flex gap-3">
@@ -260,7 +325,7 @@ export default function AssistantsCatalogClient() {
                   ))}
                 </div>
                 <div className="mt-6 border-t border-dema-line/70 pt-5">
-                  <p className="text-sm font-semibold text-brand-blue">Méthode</p>
+                  <p className="text-[1.05rem] font-medium text-brand-blue md:text-[1.3rem]">Méthode</p>
                   <div className="mt-4 space-y-3">
                     {em2aSteps.map((step, index) => (
                       <div key={step} className="flex gap-3">
@@ -276,7 +341,7 @@ export default function AssistantsCatalogClient() {
             </div>
           </div>
 
-          <div id="pricing" className="mx-auto mt-14 max-w-[50.5rem] scroll-mt-24 md:mt-20">
+          <div id="pricing" className="mx-auto mt-20 max-w-[50.5rem] scroll-mt-24 md:mt-28">
             <div className="mx-auto max-w-3xl text-center">
               <h2 className="text-3xl font-semibold tracking-tight text-brand-blue md:text-4xl">
                 Par où commencer ?
@@ -338,7 +403,7 @@ export default function AssistantsCatalogClient() {
                 </div>
 
                 <div className="mt-5 rounded-[1rem] border border-dema-line/70 bg-dema-cream/60 p-4">
-                  <p className="text-sm font-semibold text-brand-blue">Ce qui est inclus</p>
+                  <p className="text-[1.05rem] font-medium text-brand-blue md:text-[1.3rem]">Ce qui est inclus</p>
                   <ul className="mt-3 space-y-2.5">
                     {structurationIncludedItems.map((item) => (
                       <li
@@ -440,7 +505,7 @@ export default function AssistantsCatalogClient() {
             </div>
           </div>
 
-          <div className="mt-14 md:mt-20">
+          <div className="mt-20 md:mt-28">
             <h2 className="text-3xl font-semibold tracking-tight text-brand-blue md:text-4xl">
               On répond aux questions fréquentes
             </h2>
@@ -480,7 +545,7 @@ export default function AssistantsCatalogClient() {
               })}
             </div>
 
-            <div className="mx-auto mt-14 max-w-4xl rounded-[1rem] border border-dema-line/70 bg-dema-paper px-5 py-12 text-center shadow-[0_18px_50px_rgba(23,35,29,0.04)] md:mt-20 md:px-12 md:py-16">
+            <div className="mx-auto mt-20 max-w-4xl rounded-[1rem] border border-dema-line/70 bg-dema-paper px-5 py-12 text-center shadow-[0_18px_50px_rgba(23,35,29,0.04)] md:mt-28 md:px-12 md:py-16">
               <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-dema-forest">
                 Expérience
               </p>
