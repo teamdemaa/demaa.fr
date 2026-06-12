@@ -68,7 +68,7 @@ export const demaaServices = [
       "Accompagnement sur les étapes de dissolution, liquidation, publication et radiation pour clôturer l'entreprise sans oubli.",
     bestFor:
       "Les dirigeants qui veulent arrêter une société avec une procédure claire et suivie.",
-    price: "À partir de 1 500 €",
+    price: "Sur devis",
     tags: ["Fermeture", "Dissolution", "Radiation"],
     icon: "Ban",
     deliverables: [
@@ -163,7 +163,7 @@ export const demaaServices = [
       "Offre Demaa pour cadrer les flux de travail, choisir les bons outils, connecter les étapes et automatiser les tâches répétitives.",
     bestFor:
       "Les entreprises qui perdent du temps sur relances, devis, documents, reporting, planning ou suivi client.",
-    price: "À partir de 1 500 €",
+    price: "Sur devis",
     tags: ["Structuration", "Automatisation", "Demaa"],
     icon: "Workflow",
     deliverables: [

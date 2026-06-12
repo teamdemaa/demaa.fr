@@ -1,26 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import {
-  BadgeEuro,
-  Blocks,
-  Check,
-  ChevronDown,
-  FileCheck,
-  Users,
-  Workflow,
-} from "lucide-react";
-import {
-  ASSISTANT_PACK_OFFERS,
-  formatAssistantPrice,
-  type AssistantOffer,
-  type AssistantPack,
-  type AssistantPackId,
-} from "@/lib/assistant-packs";
+import { BadgeEuro, Blocks, Check, ChevronDown, FileCheck, Users } from "lucide-react";
 import PrimaryMobileNav from "@/components/PrimaryMobileNav";
 import SystemSetupModal from "@/components/SystemSetupModal";
-
-const STRUCTURATION_OFFER_ID = "structuration-automatisation";
 
 const howItWorksSteps = [
   {
@@ -74,16 +57,6 @@ const faqItems = [
       "Non. L’audit gratuit ne vous engage à rien. Il sert à faire le point sur votre organisation si vous voulez commencer par clarifier les choses.",
   },
   {
-    question: "Comment choisir entre audit, 1 société, 2 sociétés ou 3 sociétés ?",
-    answer:
-      "L’audit gratuit sert à faire le point avant de vous engager. Le pack 1 société convient si une seule structure doit être organisée. Les packs 2 ou 3 sociétés servent quand plusieurs entités partagent des outils, des tâches ou des validations à coordonner.",
-  },
-  {
-    question: "Est-ce que je garde la main sur les décisions ?",
-    answer:
-      "Oui. On prend en charge l’exécution, l’organisation et le suivi, mais les décisions importantes restent de votre côté.",
-  },
-  {
     question: "Qu’est-ce que je dois fournir ?",
     answer:
       "Les informations utiles à la mission : documents, accès, consignes, échéances et validations attendues.",
@@ -93,11 +66,6 @@ const faqItems = [
     answer:
       "La communication se fait simplement sur WhatsApp, pour que les échanges soient rapides, faciles à suivre et proches de votre quotidien. Si un document ou une validation est nécessaire, on vous le précise clairement.",
   },
-  {
-    question: "Et si mon besoin ne rentre pas exactement dans une offre ?",
-    answer:
-      "Vous pouvez passer par l’audit gratuit ou nous contacter. On vous dira simplement si le besoin est adapté, s’il faut ajuster le périmètre, ou si ce n’est pas le bon sujet.",
-  },
 ] as const;
 
 const em2aResults = [
@@ -106,99 +74,15 @@ const em2aResults = [
   "Jusqu’à 30 000 € de capacité récupérée/an",
 ] as const;
 
-const em2aImpacts = [
-  "Moins de relances",
-  "Moins de flou dans le suivi",
-  "Plus de temps pour les clients",
-] as const;
-
 const em2aSteps = [
-  "Audit de l’organisation",
-  "Priorisation des demandes clients et de la collecte paie",
-  "Mise en place du système opérationnel avec Airtable, Fillout et Linktree",
+  "Audit complet des frictions, des relances et des points de blocage",
+  "Reprise en main des demandes clients et de la collecte paie",
+  "Mise en place d’un système opérationnel clair, centralisé et exploitable",
 ] as const;
-
-const structurationIncludedItems = [
-  "Analyse de vos tâches et blocages",
-  "Organisation des outils et documents",
-  "Automatisations testées et documentées",
-] as const;
-
-function getPurchasablePacks(offer: AssistantOffer): readonly AssistantPack[] {
-  return offer.packs.filter((pack) => pack.amount > 0);
-}
-
-function getPackOffer(offerId: string) {
-  return ASSISTANT_PACK_OFFERS.find((offer) => offer.id === offerId);
-}
 
 export default function AssistantsCatalogClient() {
-  const structurationOffer = getPackOffer(STRUCTURATION_OFFER_ID);
-  const structurationPacks = structurationOffer ? getPurchasablePacks(structurationOffer) : [];
-  const defaultStructurationPackId = structurationPacks[0]?.id ?? "structuration-1-societe";
-  const [selectedStructurationPackId, setSelectedStructurationPackId] =
-    useState<AssistantPackId>(defaultStructurationPackId);
-  const [isPackDropdownOpen, setIsPackDropdownOpen] = useState(false);
   const [isAuditModalOpen, setIsAuditModalOpen] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState(0);
-  const [isStartingCheckout, setIsStartingCheckout] = useState(false);
-  const [checkoutError, setCheckoutError] = useState<string | null>(null);
-
-  const selectedStructurationPack =
-    structurationPacks.find((pack) => pack.id === selectedStructurationPackId) ??
-    structurationPacks[0] ??
-    null;
-
-  const startCheckout = async (pack: AssistantPack) => {
-    setCheckoutError(null);
-
-    if (pack.amount <= 0) {
-      setIsAuditModalOpen(true);
-      return;
-    }
-
-    setIsStartingCheckout(true);
-
-    try {
-      const response = await fetch("/api/stripe/assistant-checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          items: [{ packId: pack.id, quantity: 1 }],
-        }),
-      });
-
-      const payload = (await response.json().catch(() => null)) as
-        | {
-            clientSecret?: string;
-            error?: string;
-            id?: string | null;
-            label?: string;
-            publishableKey?: string;
-            url?: string;
-          }
-        | null;
-
-      if (!response.ok || !payload?.url) {
-        throw new Error(
-          payload?.error ||
-            "Impossible de créer le paiement Stripe pour le moment."
-        );
-      }
-
-      if (payload.url) {
-        window.location.assign(payload.url);
-        return;
-      }
-    } catch (error) {
-      setCheckoutError(
-        error instanceof Error
-          ? error.message
-          : "Impossible de créer le paiement Stripe pour le moment."
-      );
-      setIsStartingCheckout(false);
-    }
-  };
 
   return (
     <>
@@ -206,7 +90,7 @@ export default function AssistantsCatalogClient() {
         <div className="mx-auto max-w-6xl space-y-6 md:space-y-7">
           <PrimaryMobileNav activeTab="structurer" />
 
-          <div className="mx-auto max-w-5xl">
+          <div className="mx-auto max-w-5xl demaa-fade-up">
             <h1 className="text-[clamp(3rem,14.5vw,3.36rem)] tracking-tight leading-[0.92] sm:text-[2.75rem] md:text-[3.75rem] lg:text-[4.5rem]">
               <span className="demaa-hero-title text-brand-blue/86">Structurez</span>
               <br />
@@ -222,7 +106,7 @@ export default function AssistantsCatalogClient() {
       <section className="mx-auto w-full max-w-6xl px-4 pb-24 md:px-8 md:pb-36">
         <div className="border-t border-dema-line/65 pt-14 md:pt-20">
           <div>
-            <div className="max-w-3xl">
+            <div className="max-w-3xl demaa-fade-up demaa-delay-1">
               <h2 className="text-2xl font-semibold tracking-tight text-brand-blue md:text-3xl">
                 Quand structurer devient indispensable
               </h2>
@@ -234,13 +118,13 @@ export default function AssistantsCatalogClient() {
             </div>
 
             <div className="mx-auto mt-8 grid gap-4 md:grid-cols-2 md:gap-5 xl:grid-cols-4">
-              {structurationSignals.map((signal) => (
+              {structurationSignals.map((signal, index) => (
                 <div
                   key={signal.title}
-                  className="rounded-[1rem] border border-dema-line/70 bg-dema-paper px-4 py-5 md:min-h-[14rem] md:px-5"
+                  className={`demaa-fade-up demaa-lift-soft rounded-[1rem] border border-dema-line/70 bg-dema-paper px-4 py-5 md:min-h-[14rem] md:px-5 ${index === 0 ? "demaa-delay-2" : index === 1 ? "demaa-delay-3" : index === 2 ? "demaa-delay-4" : "demaa-delay-5"}`}
                 >
                   <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage/55 text-dema-forest">
-                    <signal.icon className="h-4.5 w-4.5" aria-hidden="true" />
+                    <signal.icon className="demaa-icon-float h-4.5 w-4.5" aria-hidden="true" />
                   </span>
                   <h3 className="text-[1.05rem] font-medium leading-snug text-brand-blue md:text-[1.3rem]">
                     <span className="mt-4 block">
@@ -255,7 +139,7 @@ export default function AssistantsCatalogClient() {
             </div>
           </div>
 
-          <div className="mt-20 md:mt-28">
+          <div className="mt-20 md:mt-28 demaa-fade-up demaa-delay-2">
             <h2 className="mb-6 text-2xl font-semibold tracking-tight text-brand-blue md:mb-8 md:text-3xl">
               Comment ça se passe concrètement ?
             </h2>
@@ -263,10 +147,10 @@ export default function AssistantsCatalogClient() {
               {howItWorksSteps.map((step, index) => (
                 <div
                   key={step.title}
-                  className="rounded-[1rem] border border-dema-line/70 bg-dema-paper px-4 py-4 md:min-h-[11.5rem] md:px-5 md:py-5"
+                  className={`demaa-fade-up demaa-lift-soft rounded-[1rem] border border-dema-line/70 bg-dema-paper px-4 py-4 md:min-h-[11.5rem] md:px-5 md:py-5 ${index === 0 ? "demaa-delay-3" : index === 1 ? "demaa-delay-4" : "demaa-delay-5"}`}
                 >
                   <div className="flex gap-3 md:flex-col">
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-dema-paper text-sm font-semibold text-dema-forest">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-dema-sage/55 text-sm font-semibold text-dema-forest">
                       {index + 1}
                     </span>
                     <div>
@@ -283,8 +167,8 @@ export default function AssistantsCatalogClient() {
             </div>
           </div>
 
-          <div className="mt-20 md:mt-28 lg:-mx-[5.25rem]">
-            <div className="grid gap-6 rounded-[1rem] border border-dema-line/70 bg-dema-paper px-4 py-6 md:grid-cols-[1.05fr_0.95fr] md:px-6 md:py-7">
+          <div className="mt-20 md:mt-28 lg:-mx-[5.25rem] demaa-fade-up demaa-delay-3">
+            <div className="grid gap-6 rounded-[1rem] border border-dema-line/70 bg-dema-paper px-4 py-6 shadow-[0_8px_22px_rgba(23,35,29,0.02)] md:grid-cols-[1.05fr_0.95fr] md:px-6 md:py-7">
               <div>
                 <p className="inline-flex rounded-full bg-dema-forest/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
                   Étude de cas EM2A
@@ -339,8 +223,8 @@ export default function AssistantsCatalogClient() {
               </p>
             </div>
 
-            <div className="mt-6 grid gap-4 md:grid-cols-2 md:gap-5">
-              <article className="demaa-card flex h-full flex-col rounded-[1.15rem] p-5 text-left">
+            <div className="mt-6 grid gap-4">
+              <article className="demaa-card mx-auto flex h-full w-full max-w-[32rem] flex-col rounded-[1.15rem] p-5 text-left">
                 <div>
                   <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
                     <Check className="h-5 w-5" aria-hidden="true" />
@@ -361,134 +245,12 @@ export default function AssistantsCatalogClient() {
                 <button
                   type="button"
                   onClick={() => {
-                    setCheckoutError(null);
                     setIsAuditModalOpen(true);
                   }}
                   className="mt-6 inline-flex w-full items-center justify-center rounded-full border border-dema-forest/20 bg-dema-sage/55 px-5 py-2.5 text-sm font-medium text-dema-forest transition hover:border-dema-forest/30 hover:bg-dema-sage disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   Demander l&apos;audit gratuit
                 </button>
-              </article>
-
-              <article className="demaa-card relative flex h-full flex-col overflow-visible rounded-[1.15rem] p-5 text-left">
-                <div>
-                  <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
-                    <Workflow className="h-5 w-5" aria-hidden="true" />
-                  </span>
-                  <p className="mt-4 text-[10px] font-medium uppercase tracking-[0.16em] text-dema-forest">
-                    Organisation
-                  </p>
-                  <h3 className="mt-2 text-2xl font-semibold leading-tight tracking-tight text-brand-blue">
-                    Structuration & Automatisation
-                  </h3>
-                </div>
-
-                <div className="mt-6">
-                  <p className="text-sm leading-relaxed text-dema-muted">
-                    On structure vos process, vos outils, vos tableaux de suivi et les automatisations utiles
-                    pour rendre l&apos;activité plus claire et plus simple à piloter.
-                  </p>
-                </div>
-
-                <div className="mt-5 rounded-[1rem] border border-dema-line/70 bg-dema-cream/60 p-4">
-                  <p className="text-[1.05rem] font-medium text-brand-blue md:text-[1.3rem]">Ce qui est inclus</p>
-                  <ul className="mt-3 space-y-2.5">
-                    {structurationIncludedItems.map((item) => (
-                      <li
-                        key={item}
-                        className="flex items-start gap-3 text-sm leading-relaxed text-dema-muted"
-                      >
-                        <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
-                          <Check className="h-3.5 w-3.5" aria-hidden="true" />
-                        </span>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {selectedStructurationPack ? (
-                  <div className="mt-5">
-                    <div className="relative">
-                      <button
-                        type="button"
-                        onClick={() => setIsPackDropdownOpen((current) => !current)}
-                        className="group inline-flex h-11 w-full min-w-0 items-center justify-between gap-3 rounded-full border border-dema-line/85 bg-dema-paper px-3.5 text-left text-sm font-medium text-brand-blue shadow-[0_7px_18px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/20 hover:bg-dema-sage/45 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dema-forest/35"
-                        aria-expanded={isPackDropdownOpen}
-                        aria-haspopup="listbox"
-                      >
-                        <span className="min-w-0 truncate">
-                          {selectedStructurationPack.label} - {formatAssistantPrice(selectedStructurationPack.amount)}
-                        </span>
-                        <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-paper">
-                          <ChevronDown
-                            className={`h-4 w-4 transition ${
-                              isPackDropdownOpen ? "rotate-180" : ""
-                            }`}
-                            aria-hidden="true"
-                          />
-                        </span>
-                      </button>
-                      {isPackDropdownOpen ? (
-                        <div
-                          className="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-[1rem] border border-dema-line bg-dema-paper p-1.5 shadow-[0_18px_46px_rgba(23,35,29,0.12)]"
-                          role="listbox"
-                        >
-                          {structurationPacks.map((pack) => {
-                            const isSelected = pack.id === selectedStructurationPack.id;
-
-                            return (
-                              <button
-                                key={pack.id}
-                                type="button"
-                                onClick={() => {
-                                  setSelectedStructurationPackId(pack.id);
-                                  setIsPackDropdownOpen(false);
-                                  setCheckoutError(null);
-                                }}
-                                className={`flex w-full items-start justify-between gap-3 rounded-[0.8rem] px-3 py-2.5 text-left transition ${
-                                  isSelected
-                                    ? "bg-dema-sage text-brand-blue"
-                                    : "text-brand-blue hover:bg-dema-sage/55"
-                                }`}
-                                role="option"
-                                aria-selected={isSelected}
-                              >
-                                <span className="min-w-0">
-                                  <span className="block text-sm font-semibold leading-tight">
-                                    {pack.label} - {formatAssistantPrice(pack.amount)}
-                                  </span>
-                                </span>
-                                {isSelected ? (
-                                  <Check
-                                    className="mt-0.5 h-4 w-4 shrink-0 text-dema-forest"
-                                    aria-hidden="true"
-                                  />
-                                ) : null}
-                              </button>
-                            );
-                          })}
-                        </div>
-                      ) : null}
-                    </div>
-                  </div>
-                ) : null}
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (selectedStructurationPack) void startCheckout(selectedStructurationPack);
-                  }}
-                  disabled={!selectedStructurationPack || isStartingCheckout}
-                  className="mt-4 inline-flex w-full items-center justify-center rounded-full border border-dema-forest/20 bg-dema-sage/55 px-5 py-2.5 text-sm font-medium text-dema-forest transition hover:border-dema-forest/30 hover:bg-dema-sage disabled:cursor-not-allowed disabled:opacity-60"
-                >
-                  {isStartingCheckout ? "Ouverture..." : "Valider"}
-                </button>
-                {checkoutError ? (
-                  <p className="mt-3 text-sm leading-relaxed text-dema-forest">
-                    {checkoutError}
-                  </p>
-                ) : null}
               </article>
             </div>
           </div>
