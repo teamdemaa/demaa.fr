@@ -31,10 +31,16 @@ export default function Navbar({
   minimal?: boolean;
   homeTabsMode?: HomeTabsMode;
 }) {
+  const hasDesktopTabs = !minimal && visiblePrimaryNavigationItems.length > 0;
+
   return (
     <nav className="sticky top-0 z-40 border-b border-dema-line/70 bg-dema-cream/92 py-1 backdrop-blur-md">
       <div className="mx-auto w-full px-6 md:px-10 lg:px-24">
-        <div className="relative flex justify-center gap-4 py-3 md:justify-between md:py-4 items-center">
+        <div
+          className={`relative flex items-center justify-center gap-4 py-3 md:py-4 ${
+            hasDesktopTabs ? "md:justify-between" : "md:justify-center"
+          }`}
+        >
           <Link
             href="/"
             aria-label="Retour à l'accueil"
@@ -43,7 +49,7 @@ export default function Navbar({
             Demaa
           </Link>
 
-          {!minimal && (
+          {hasDesktopTabs && (
             <Suspense fallback={<DesktopHomeTabsNavStatic mode={homeTabsMode} />}>
               <DesktopHomeTabsNav mode={homeTabsMode} />
             </Suspense>
@@ -111,6 +117,10 @@ function DesktopHomeTabsNavStatic({
     setClientActiveTab(tab);
     window.history.replaceState(null, "", visibleTab.href);
     window.dispatchEvent(new CustomEvent(HOME_TAB_SELECT_EVENT, { detail: { tab } }));
+  }
+
+  if (visiblePrimaryNavigationItems.length === 0) {
+    return null;
   }
 
   return (

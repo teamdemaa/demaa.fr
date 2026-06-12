@@ -139,7 +139,7 @@ export default function ToolDirectoryClient({
     const query = searchQuery.trim().toLowerCase();
 
     return items.filter((tool) => {
-      const isTransverseTool = tool.sectors.length > 2;
+      const isTransverseTool = tool.scope === "transverse";
       const matchesSearch =
         !query ||
         tool.name.toLowerCase().includes(query) ||

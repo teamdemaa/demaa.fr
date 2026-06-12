@@ -72,6 +72,7 @@ function resolveEnterpriseTools(
           type: tool.category,
           usage: toolRef.usage || tool.bestFor,
           url: tool.url,
+          scope: toolRef.scope ?? tool.scope,
           detail: tool,
         });
       }

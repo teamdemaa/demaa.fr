@@ -76,7 +76,8 @@
         },
         {
           "slug": "pennylane",
-          "usage": "Centraliser la gestion financière et comptable."
+          "usage": "Centraliser la gestion financière et comptable.",
+          "scope": "business"
         },
         {
           "slug": "tiimora",
@@ -88,15 +89,18 @@
         },
         {
           "slug": "tiime",
-          "usage": "Simplifier la gestion administrative et comptable."
+          "usage": "Simplifier la gestion administrative et comptable.",
+          "scope": "business"
         },
         {
           "slug": "dext",
-          "usage": "Réduire la saisie et sécuriser les pièces comptables."
+          "usage": "Réduire la saisie et sécuriser les pièces comptables.",
+          "scope": "business"
         },
         {
           "slug": "regate",
-          "usage": "Mieux cadrer les dépenses et validations financières."
+          "usage": "Mieux cadrer les dépenses et validations financières.",
+          "scope": "business"
         },
         {
           "slug": "silae",
@@ -136,7 +140,8 @@
         },
         {
           "slug": "sage",
-          "usage": "Comparer une solution comptable installée sur le marché."
+          "usage": "Comparer une solution comptable installée sur le marché.",
+          "scope": "business"
         },
         {
           "slug": "quickbooks",
@@ -664,7 +669,8 @@
         },
         {
           "slug": "tiime",
-          "usage": "Gérer facturation, justificatifs et suivi administratif freelance."
+          "usage": "Gérer facturation, justificatifs et suivi administratif freelance.",
+          "scope": "business"
         }
       ],
       "audience": "b2b",
@@ -8386,7 +8392,8 @@
         },
         {
           "slug": "tiime",
-          "usage": "Gérer facturation, justificatifs et suivi administratif simple."
+          "usage": "Gérer facturation, justificatifs et suivi administratif simple.",
+          "scope": "business"
         },
         {
           "slug": "squarespace",
@@ -8406,7 +8413,8 @@
         },
         {
           "slug": "quickbooks",
-          "usage": "Suivre facturation, dépenses et rentabilité des missions."
+          "usage": "Suivre facturation, dépenses et rentabilité des missions.",
+          "scope": "business"
         }
       ],
       "audience": "b2b",
@@ -10384,7 +10392,8 @@
       "toolRefs": [
         {
           "slug": "pennylane",
-          "usage": "Suivre comptabilité, trésorerie et reporting."
+          "usage": "Suivre comptabilité, trésorerie et reporting.",
+          "scope": "business"
         },
         {
           "slug": "notion",
@@ -10392,7 +10401,8 @@
         },
         {
           "slug": "regate",
-          "usage": "Suivre dépenses, validations et pilotage financier."
+          "usage": "Suivre dépenses, validations et pilotage financier.",
+          "scope": "business"
         }
       ],
       "audience": "b2b",

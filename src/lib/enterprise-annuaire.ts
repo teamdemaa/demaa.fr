@@ -2,7 +2,7 @@ import "server-only";
 
 import { getAdminFirestore } from "./firebase-admin";
 import type { DocumentData } from "firebase-admin/firestore";
-import type { ToolDirectoryItem } from "./tool-directory";
+import type { ToolDirectoryItem, ToolScope } from "./tool-directory";
 import type { SystemPillar } from "./system-process-templates";
 import type { System } from "./types";
 import { publicSectorLabels } from "./public-sectors";
@@ -19,12 +19,14 @@ export type EnterpriseTool = {
   type: string;
   usage: string;
   url?: string;
+  scope?: ToolScope;
   detail?: ToolDirectoryItem;
 };
 
 export type EnterpriseToolReference = {
   slug: string;
   usage?: string;
+  scope?: ToolScope;
 };
 
 export type EnterpriseProcess = {

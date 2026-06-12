@@ -56,13 +56,18 @@ export default function HomeTabsClient({
           <div className="mx-auto max-w-5xl">
             <h1 className="text-[clamp(3rem,14.5vw,3.36rem)] tracking-tight leading-[0.92] sm:text-[2.75rem] md:text-[3.75rem] lg:text-[4.5rem]">
               <span className="demaa-hero-title text-brand-blue/86">
-                Analysez
+                Structurez efficacement
               </span>{" "}
               <br />
               <span className="font-sans font-light not-italic text-brand-blue/44">
-                votre organisation
+                votre entreprise
               </span>
             </h1>
+            <p className="mx-auto mt-5 max-w-3xl text-sm leading-6 text-brand-blue/58 sm:text-base">
+              Pour que tout ne repose plus uniquement sur vous, mettez en place les bons systèmes
+              <br className="hidden md:block" />
+              et créez les conditions d&apos;une croissance durable.
+            </p>
           </div>
 
           <SearchFilterControls

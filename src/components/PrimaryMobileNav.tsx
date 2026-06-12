@@ -23,6 +23,10 @@ export default function PrimaryMobileNav({
   activeTab?: PrimaryNavTab;
   onSelect?: (tab: PrimaryNavTab) => void;
 }) {
+  if (visiblePrimaryNavigationItems.length === 0) {
+    return null;
+  }
+
   const gridClass =
     visiblePrimaryNavigationItems.length === 2 ? "grid-cols-2" : "grid-cols-3";
 

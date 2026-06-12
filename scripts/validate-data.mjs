@@ -19,6 +19,10 @@ function addUnique(list, value) {
   }
 }
 
+function resolveToolScope(tool, ref) {
+  return ref?.scope ?? tool?.scope;
+}
+
 function extractCustomerDealToolSlugs() {
   if (!fs.existsSync(customerDealsPath)) {
     return [];
@@ -124,6 +128,10 @@ for (const enterprise of enterprisePayload.enterprises) {
       continue;
     }
 
+    if (ref.scope && !["business", "transverse"].includes(ref.scope)) {
+      addUnique(errors, `Enterprise ${enterprise.slug} toolRef ${ref.slug} has invalid scope: ${ref.scope}`);
+    }
+
     if (!toolSlugs.has(ref.slug)) {
       addUnique(errors, `Enterprise ${enterprise.slug} references unknown tool ${ref.slug}.`);
       continue;
@@ -135,7 +143,7 @@ for (const enterprise of enterprisePayload.enterprises) {
     }
 
     const tool = toolPayload.tools.find((item) => item.slug === ref.slug);
-    if (tool?.scope !== "transverse") {
+    if (resolveToolScope(tool, ref) !== "transverse") {
       businessCount += 1;
     }
   }

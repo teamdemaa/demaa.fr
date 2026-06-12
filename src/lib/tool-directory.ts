@@ -1,5 +1,7 @@
 import rawToolDirectory from "./tool-directory.json";
 
+export type ToolScope = "business" | "transverse";
+
 export type ToolDirectoryItem = {
   slug?: string;
   name: string;
@@ -12,7 +14,7 @@ export type ToolDirectoryItem = {
   pricingHint: string;
   memberDealLabel?: string;
   memberDealDescription?: string;
-  scope?: "business" | "transverse";
+  scope?: ToolScope;
   status?: "active" | "hidden" | "deprecated";
   toolbox?: boolean;
 };
