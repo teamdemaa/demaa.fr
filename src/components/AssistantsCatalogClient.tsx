@@ -300,18 +300,6 @@ export default function AssistantsCatalogClient() {
                   entre relances clients, collecte paie et suivis dispersés. Le système
                   a remis de l&apos;ordre dans les échanges et libéré du temps utile.
                 </p>
-                <div className="mt-6 grid gap-3 sm:grid-cols-3">
-                  {em2aImpacts.map((impact) => (
-                    <div
-                      key={impact}
-                      className="rounded-[0.9rem] bg-dema-sage/55 px-4 py-3"
-                    >
-                      <p className="text-[1.05rem] font-medium leading-snug text-brand-blue md:text-[1.3rem]">
-                        {impact}
-                      </p>
-                    </div>
-                  ))}
-                </div>
               </div>
 
               <div className="rounded-[0.9rem] border border-dema-line/70 bg-dema-cream px-4 py-5 md:px-5">
