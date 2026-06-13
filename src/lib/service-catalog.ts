@@ -231,18 +231,19 @@ export const demaaServices = [
     usefulFor: ["Formats courts", "E-commerce", "Grand public"],
   },
   {
-    slug: "montage-video",
-    name: "Montage vidéo",
+    slug: "conception-montage-video",
+    name: "Conception et montage vidéo",
     category: "Contenu",
-    shortDescription: "Des vidéos prêtes à publier.",
+    shortDescription: "Des vidéos pensées, structurées et prêtes à publier.",
     description:
-      "Montage de contenus pour réseaux sociaux, publicités, pages de vente ou supports pédagogiques : rythme, sous-titres, habillage et exports.",
+      "Conception et montage de contenus pour réseaux sociaux, publicités, pages de vente ou supports pédagogiques : angle, structure, rythme, sous-titres, habillage et exports.",
     bestFor:
       "Les activités où la preuve visuelle, la pédagogie ou la présence social media influencent la décision.",
     price: "Sur devis",
-    tags: ["Vidéo", "Social", "Contenu"],
+    tags: ["Vidéo", "Social", "Contenu", "Conception"],
     icon: "Video",
     deliverables: [
+      "Cadrage du format et de l'angle",
       "Montage des séquences",
       "Sous-titres et habillage",
       "Exports aux formats utiles",
