@@ -10,7 +10,6 @@ type ServiceRecommendationRule = {
 };
 
 const DEFAULT_SERVICE_ORDER = [
-  "expert-comptable",
   "site-web",
   "marketing-vente",
   "structuration-automatisation",
@@ -41,7 +40,6 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   },
   "cabinet-de-conseil": {
     order: [
-      "expert-comptable",
       "marketing-vente",
       "site-web",
       "structuration-automatisation",
@@ -52,7 +50,6 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   },
   freelance: {
     order: [
-      "expert-comptable",
       "site-web",
       "marketing-vente",
       "structuration-automatisation",
@@ -62,7 +59,6 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   },
   saas: {
     order: [
-      "expert-comptable",
       "previsionnel-financier",
       "marketing-vente",
       "structuration-automatisation",
@@ -73,7 +69,6 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   },
   btp: {
     order: [
-      "expert-comptable",
       "site-web",
       "publicite-google",
       "structuration-automatisation",
@@ -83,7 +78,6 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   },
   artisanat: {
     order: [
-      "expert-comptable",
       "site-web",
       "publicite-google",
       "structuration-automatisation",
@@ -93,7 +87,6 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   },
   restaurant: {
     order: [
-      "expert-comptable",
       "site-web",
       "publicite-google",
       "publicite-facebook-instagram",
@@ -105,7 +98,6 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   },
   boulangerie: {
     order: [
-      "expert-comptable",
       "site-web",
       "publicite-google",
       "publicite-facebook-instagram",
@@ -116,7 +108,6 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   },
   traiteur: {
     order: [
-      "expert-comptable",
       "site-web",
       "publicite-google",
       "montage-video",
@@ -127,7 +118,6 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   },
   "e-commerce": {
     order: [
-      "expert-comptable",
       "marketing-vente",
       "publicite-facebook-instagram",
       "publicite-tiktok",
@@ -139,7 +129,6 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   },
   "commerce-de-detail": {
     order: [
-      "expert-comptable",
       "site-web",
       "publicite-google",
       "publicite-facebook-instagram",
@@ -149,7 +138,6 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   },
   "institut-de-beaute": {
     order: [
-      "expert-comptable",
       "site-web",
       "publicite-google",
       "publicite-facebook-instagram",
@@ -160,7 +148,6 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   },
   "salon-de-coiffure": {
     order: [
-      "expert-comptable",
       "site-web",
       "publicite-google",
       "publicite-facebook-instagram",
@@ -170,7 +157,6 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   },
   "salle-de-sport": {
     order: [
-      "expert-comptable",
       "site-web",
       "marketing-vente",
       "publicite-facebook-instagram",
@@ -181,7 +167,6 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   },
   "services-a-la-personne": {
     order: [
-      "expert-comptable",
       "site-web",
       "publicite-google",
       "structuration-automatisation",
@@ -191,7 +176,6 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   },
   "organisme-de-formation": {
     order: [
-      "expert-comptable",
       "site-web",
       "structuration-automatisation",
       "marketing-vente",
@@ -202,7 +186,6 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   },
   "formation-en-ligne": {
     order: [
-      "expert-comptable",
       "marketing-vente",
       "montage-video",
       "publicite-facebook-instagram",
@@ -213,7 +196,6 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   },
   evenementiel: {
     order: [
-      "expert-comptable",
       "site-web",
       "montage-video",
       "publicite-facebook-instagram",
@@ -224,7 +206,6 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   },
   "photographe-videaste": {
     order: [
-      "expert-comptable",
       "site-web",
       "montage-video",
       "publicite-facebook-instagram",
@@ -234,7 +215,6 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   },
   "creation-de-contenu": {
     order: [
-      "expert-comptable",
       "montage-video",
       "marketing-vente",
       "site-web",
@@ -244,7 +224,6 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   },
   "coach-professionnel": {
     order: [
-      "expert-comptable",
       "marketing-vente",
       "site-web",
       "publicite-facebook-instagram",
@@ -255,7 +234,6 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   },
   "agence-immobiliere": {
     order: [
-      "expert-comptable",
       "site-web",
       "publicite-google",
       "montage-video",
@@ -266,7 +244,6 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   },
   "nettoyage-professionnel": {
     order: [
-      "expert-comptable",
       "site-web",
       "publicite-google",
       "structuration-automatisation",
@@ -276,7 +253,6 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   },
   "garage-automobile": {
     order: [
-      "expert-comptable",
       "site-web",
       "publicite-google",
       "structuration-automatisation",
@@ -286,7 +262,6 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   },
   "coach-sportif": {
     order: [
-      "expert-comptable",
       "marketing-vente",
       "site-web",
       "publicite-facebook-instagram",
@@ -297,7 +272,6 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   },
   "reparation-informatique-mobile": {
     order: [
-      "expert-comptable",
       "site-web",
       "publicite-google",
       "publicite-facebook-instagram",
@@ -307,7 +281,6 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   },
   "transport-de-marchandise": {
     order: [
-      "expert-comptable",
       "previsionnel-financier",
       "structuration-automatisation",
       "assistant-polyvalent",
@@ -317,7 +290,6 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   },
   "transport-de-personnes": {
     order: [
-      "expert-comptable",
       "site-web",
       "publicite-google",
       "structuration-automatisation",
@@ -327,7 +299,6 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   },
   demenagement: {
     order: [
-      "expert-comptable",
       "site-web",
       "publicite-google",
       "structuration-automatisation",
@@ -337,7 +308,6 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   },
   "livraison-dernier-kilometre": {
     order: [
-      "expert-comptable",
       "previsionnel-financier",
       "structuration-automatisation",
       "assistant-polyvalent",
@@ -346,7 +316,6 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   },
   "production-industrie": {
     order: [
-      "expert-comptable",
       "previsionnel-financier",
       "structuration-automatisation",
       "assistant-polyvalent",
@@ -356,7 +325,6 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   },
   marketplace: {
     order: [
-      "expert-comptable",
       "previsionnel-financier",
       "marketing-vente",
       "structuration-automatisation",
@@ -367,7 +335,6 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   },
   "entreprise-de-securite": {
     order: [
-      "expert-comptable",
       "site-web",
       "publicite-google",
       "structuration-automatisation",

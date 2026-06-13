@@ -20,21 +20,12 @@ type SupplierDirectoryClientProps = {
 
 export default function SupplierDirectoryClient({
   suppliers,
-  families,
-  initialCategory,
   initialSearch = "",
   backLink,
 }: SupplierDirectoryClientProps) {
   const [searchQuery, setSearchQuery] = useState(initialSearch);
-  const [activeFamily, setActiveFamily] = useState(
-    initialCategory && families.includes(initialCategory as SupplierFamily)
-      ? initialCategory
-      : "Tous",
-  );
   const filteredSuppliers = useMemo(() => {
     return suppliers.filter((supplier) => {
-      const matchesFamily =
-        activeFamily === "Tous" || supplier.family === activeFamily;
       const matchesSearch = matchesSearchQuery(searchQuery, [
         supplier.name,
         supplier.description,
@@ -46,18 +37,9 @@ export default function SupplierDirectoryClient({
         supplier.slug,
       ]);
 
-      return matchesFamily && matchesSearch;
+      return matchesSearch;
     });
-  }, [activeFamily, searchQuery, suppliers]);
-
-  const groupedSuppliers = useMemo(() => {
-    return families
-      .map((family) => ({
-        family,
-        items: filteredSuppliers.filter((supplier) => supplier.family === family),
-      }))
-      .filter((group) => group.items.length > 0);
-  }, [families, filteredSuppliers]);
+  }, [searchQuery, suppliers]);
 
   return (
     <div className="w-full">
@@ -93,33 +75,16 @@ export default function SupplierDirectoryClient({
             </div>
           </div>
 
-          <div className="mx-auto mt-3 max-w-4xl overflow-x-auto pb-2 soft-scroll">
-            <div className="flex min-w-max gap-2">
-              {["Tous", ...families].map((family) => (
-                <button
-                  key={family}
-                  type="button"
-                  onClick={() => setActiveFamily(family)}
-                  className={`demaa-chip shrink-0 whitespace-nowrap ${
-                    activeFamily === family ? "demaa-chip-active" : ""
-                  }`}
-                >
-                  {family}
-                </button>
-              ))}
-            </div>
-          </div>
         </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-7 sm:px-6 lg:px-8">
         <div className="flex items-center justify-end pb-5">
-          {activeFamily !== "Tous" || searchQuery ? (
+          {searchQuery ? (
             <button
               type="button"
               onClick={() => {
                 setSearchQuery("");
-                setActiveFamily("Tous");
               }}
               className="text-xs font-medium text-dema-muted transition hover:text-dema-forest"
             >
@@ -136,20 +101,9 @@ export default function SupplierDirectoryClient({
             </p>
           </div>
         ) : (
-          <div className="space-y-8">
-            {groupedSuppliers.map((group) => (
-              <section key={group.family}>
-                <div className="mb-4">
-                  <h2 className="demaa-section-title text-2xl tracking-tight text-brand-blue/85 md:text-3xl">
-                    {group.family}
-                  </h2>
-                </div>
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-                  {group.items.map((supplier) => (
-                    <SupplierCard key={supplier.slug} supplier={supplier} />
-                  ))}
-                </div>
-              </section>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {filteredSuppliers.map((supplier) => (
+              <SupplierCard key={supplier.slug} supplier={supplier} />
             ))}
           </div>
         )}

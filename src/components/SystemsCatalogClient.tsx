@@ -70,10 +70,7 @@ import { getRecommendedServicesForSystem } from "@/lib/service-recommendations";
 import type { DemaaService } from "@/lib/service-catalog";
 import { getRecommendedSuppliersForSystem } from "@/lib/supplier-recommendations";
 import { matchesSearchQuery } from "@/lib/search";
-import {
-  supplierFamilies,
-  type DemaaSupplier,
-} from "@/lib/supplier-catalog";
+import { type DemaaSupplier } from "@/lib/supplier-catalog";
 
 type SystemsCatalogClientProps = {
   systems: System[];
@@ -977,30 +974,9 @@ export default function SystemsCatalogClient({
                 </div>
               ) : activeTab === "fournisseurs" ? (
                 <div className="space-y-5">
-                  {(() => {
-                    const groupedSuppliers = getRecommendedSuppliersForSystem(selectedSystem.slug).reduce<
-                      Partial<Record<DemaaSupplier["family"], DemaaSupplier[]>>
-                    >((groups, supplier) => {
-                        const currentGroup = groups[supplier.family] ?? [];
-                        currentGroup.push(supplier);
-                        groups[supplier.family] = currentGroup;
-                        return groups;
-                      }, {});
-
-                    return supplierFamilies
-                      .map((family) => ({ family, suppliers: groupedSuppliers[family] ?? [] }))
-                      .filter((group) => group.suppliers.length > 0)
-                      .map(({ family, suppliers }) => (
-                      <section key={family}>
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-                          {family}
-                        </p>
-                        <div className="mt-3 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-                          {suppliers.map(renderSupplierCard)}
-                        </div>
-                      </section>
-                    ));
-                  })()}
+                  <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                    {getRecommendedSuppliersForSystem(selectedSystem.slug).map(renderSupplierCard)}
+                  </div>
 
                   <div className="rounded-[1.15rem] border border-dema-line bg-dema-cream/70 p-5 text-left">
                     <h3 className="text-lg font-semibold text-brand-blue">

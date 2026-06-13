@@ -10,6 +10,7 @@ type SupplierRecommendationRule = {
 };
 
 const DEFAULT_SUPPLIER_ORDER = [
+  "tiimora",
   "assurance-pro",
   "qonto",
   "alan",
@@ -35,6 +36,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   btp: {
     order: [
+      "tiimora",
       "assurance-pro",
       "qonto",
       "plateforme-du-batiment",
@@ -49,6 +51,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   artisanat: {
     order: [
+      "tiimora",
       "assurance-pro",
       "qonto",
       "wurth",
@@ -61,6 +64,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   restaurant: {
     order: [
+      "tiimora",
       "assurance-pro",
       "qonto",
       "terminal-paiement",
@@ -75,6 +79,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   boulangerie: {
     order: [
+      "tiimora",
       "assurance-pro",
       "qonto",
       "terminal-paiement",
@@ -87,6 +92,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   traiteur: {
     order: [
+      "tiimora",
       "assurance-pro",
       "qonto",
       "terminal-paiement",
@@ -99,6 +105,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "commerce-de-detail": {
     order: [
+      "tiimora",
       "assurance-pro",
       "qonto",
       "terminal-paiement",
@@ -110,6 +117,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "e-commerce": {
     order: [
+      "tiimora",
       "qonto",
       "revolut-business",
       "wise-business",
@@ -121,6 +129,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "institut-de-beaute": {
     order: [
+      "tiimora",
       "assurance-pro",
       "qonto",
       "terminal-paiement",
@@ -132,6 +141,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "salon-de-coiffure": {
     order: [
+      "tiimora",
       "assurance-pro",
       "qonto",
       "terminal-paiement",
@@ -143,6 +153,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "services-a-la-personne": {
     order: [
+      "tiimora",
       "assurance-pro",
       "qonto",
       "leasing-vehicule",
@@ -153,6 +164,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "livraison-dernier-kilometre": {
     order: [
+      "tiimora",
       "assurance-pro",
       "qonto",
       "leasing-vehicule",
@@ -163,6 +175,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "transport-de-marchandise": {
     order: [
+      "tiimora",
       "assurance-pro",
       "qonto",
       "leasing-vehicule",
@@ -173,6 +186,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "transport-de-personnes": {
     order: [
+      "tiimora",
       "assurance-pro",
       "qonto",
       "leasing-vehicule",
@@ -183,6 +197,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "agence-immobiliere": {
     order: [
+      "tiimora",
       "assurance-pro",
       "qonto",
       "telephonie-pro",
@@ -192,6 +207,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   freelance: {
     order: [
+      "tiimora",
       "qonto",
       "shine",
       "assurance-pro",
@@ -202,6 +218,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "cabinet-de-conseil": {
     order: [
+      "tiimora",
       "qonto",
       "assurance-pro",
       "alan",
@@ -231,6 +248,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   saas: {
     order: [
+      "tiimora",
       "qonto",
       "revolut-business",
       "wise-business",
@@ -242,6 +260,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   evenementiel: {
     order: [
+      "tiimora",
       "assurance-pro",
       "qonto",
       "kiloutou",
@@ -253,6 +272,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "cabinet-assurance": {
     order: [
+      "tiimora",
       "qonto",
       "assurance-pro",
       "telephonie-pro",
@@ -263,6 +283,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "courtier-credit-assurance": {
     order: [
+      "tiimora",
       "qonto",
       "assurance-pro",
       "telephonie-pro",

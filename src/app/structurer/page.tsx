@@ -3,16 +3,16 @@ import Navbar from "@/components/Navbar";
 import AssistantsCatalogClient from "@/components/AssistantsCatalogClient";
 
 export const metadata: Metadata = {
-  title: "Structurez pour mieux piloter - Demaa",
+  title: "Structurer son entreprise : systemes, process et automatisations - Demaa",
   description:
-    "Auditez votre organisation puis structurez vos process, outils et automatisations avec Demaa.",
+    "Structurez votre entreprise avec les bons systemes, process et automatisations pour mieux piloter l'activite, deleguer plus sereinement et soutenir une croissance durable.",
   alternates: {
     canonical: "/structurer",
   },
   openGraph: {
-    title: "Structurez pour mieux piloter - Demaa",
+    title: "Structurer son entreprise : systemes, process et automatisations - Demaa",
     description:
-      "Auditez votre organisation puis structurez vos process, outils et automatisations avec Demaa.",
+      "Structurez votre entreprise avec les bons systemes, process et automatisations pour mieux piloter l'activite, deleguer plus sereinement et soutenir une croissance durable.",
     url: "/structurer",
     siteName: "Demaa",
     locale: "fr_FR",
@@ -20,9 +20,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Structurez pour mieux piloter - Demaa",
+    title: "Structurer son entreprise : systemes, process et automatisations - Demaa",
     description:
-      "Auditez votre organisation puis structurez vos process, outils et automatisations avec Demaa.",
+      "Structurez votre entreprise avec les bons systemes, process et automatisations pour mieux piloter l'activite, deleguer plus sereinement et soutenir une croissance durable.",
   },
 };
 

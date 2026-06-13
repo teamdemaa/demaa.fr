@@ -160,6 +160,24 @@ export const demaaSuppliers: readonly DemaaSupplier[] = [
     partner: true,
   },
   {
+    slug: "tiimora",
+    name: "Tiimora",
+    family: "Finance & protection",
+    category: "Support",
+    shortDescription: "Trouver un expert-comptable selon l'activité et le contexte.",
+    description:
+      "Annuaire pour comparer des cabinets d'expertise comptable, filtrer selon les besoins de l'entreprise et contacter les profils les plus pertinents.",
+    bestFor:
+      "Les dirigeants qui veulent identifier rapidement un cabinet comptable adapté à leur activité, leur stade et leurs contraintes.",
+    offerHint: "Annuaire partenaire",
+    tags: ["Expert-comptable", "Cabinet comptable", "Comptabilité"],
+    icon: "Calculator",
+    usefulFor: ["Comptabilité", "TVA", "Bilan", "Création"],
+    href: "https://www.tiimora.com/",
+    cta: "Voir le fournisseur",
+    partner: true,
+  },
+  {
     slug: "plateforme-du-batiment",
     name: "Plateforme du Bâtiment",
     family: "Équipement & exploitation",

@@ -79,25 +79,6 @@ export const demaaServices = [
     usefulFor: ["Arrêt activité", "Société dormante", "Réorganisation"],
   },
   {
-    slug: "expert-comptable",
-    name: "Expert-comptable",
-    category: "Finance",
-    shortDescription: "Comptabilité, TVA et bilan sans stress.",
-    description:
-      "Mise en relation et cadrage comptable pour suivre les obligations, organiser les pièces, déclarations, bilan et pilotage financier.",
-    bestFor:
-      "La plupart des sociétés, surtout avec TVA, salariés, stock, volume ou investissements.",
-    price: "À partir de 250 €",
-    tags: ["Comptabilité", "TVA", "Bilan"],
-    icon: "Calculator",
-    deliverables: [
-      "Organisation comptable",
-      "Suivi déclaratif",
-      "Bilan et conseils de pilotage",
-    ],
-    usefulFor: ["Sociétés", "TVA", "Salariés", "Stock"],
-  },
-  {
     slug: "previsionnel-financier",
     name: "Prévisionnel financier",
     category: "Finance",
