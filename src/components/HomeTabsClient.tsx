@@ -64,7 +64,7 @@ export default function HomeTabsClient({
               </span>
             </h1>
             <p className="mx-auto mt-5 max-w-3xl text-sm leading-6 text-brand-blue/58 sm:text-base">
-              Pour que tout ne repose plus uniquement sur vous, mettez en place les bons systèmes
+              Pour que tout ne repose plus uniquement sur vous, mettez en place les bons systèmes{" "}
               <br className="hidden md:block" />
               et créez les conditions d&apos;une croissance durable.
             </p>
