@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState, type MouseEvent, type ReactNode } from "r
 import { ArrowLeft, Search } from "lucide-react";
 import HorizontalScrollHint from "@/components/HorizontalScrollHint";
 import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
+import { matchesSearchQuery } from "@/lib/search";
 import type { ToolDirectoryCardItem } from "@/lib/tool-directory-page";
 
 function getValidFilters(
@@ -136,18 +137,17 @@ export default function ToolDirectoryClient({
   }, []);
 
   const filteredTools = useMemo(() => {
-    const query = searchQuery.trim().toLowerCase();
-
     return items.filter((tool) => {
       const isTransverseTool = tool.scope === "transverse";
-      const matchesSearch =
-        !query ||
-        tool.name.toLowerCase().includes(query) ||
-        tool.description.toLowerCase().includes(query) ||
-        tool.bestFor.toLowerCase().includes(query) ||
-        tool.tags.some((tag) => tag.toLowerCase().includes(query)) ||
-        tool.sectors.some((sector) => sector.toLowerCase().includes(query)) ||
-        tool.category.toLowerCase().includes(query);
+      const matchesSearch = matchesSearchQuery(searchQuery, [
+        tool.name,
+        tool.description,
+        tool.bestFor,
+        ...tool.tags,
+        ...tool.sectors,
+        tool.category,
+        tool.slug,
+      ]);
 
       const matchesSector =
         activeSector === "Tous" ||
@@ -162,21 +162,20 @@ export default function ToolDirectoryClient({
   }, [activeCategory, activeSector, hideTransverseOnSector, items, searchQuery]);
 
   const filteredOtherTools = useMemo(() => {
-    const query = searchQuery.trim().toLowerCase();
-
     return secondaryItems.filter((tool) => {
       const matchesSector =
         activeSector === "Tous" || tool.sectors.includes(activeSector);
       const matchesCategory =
         activeCategory === "Tous" || tool.category === activeCategory;
-      const matchesSearch =
-        !query ||
-        tool.name.toLowerCase().includes(query) ||
-        tool.description.toLowerCase().includes(query) ||
-        tool.bestFor.toLowerCase().includes(query) ||
-        tool.tags.some((tag) => tag.toLowerCase().includes(query)) ||
-        tool.sectors.some((sector) => sector.toLowerCase().includes(query)) ||
-        tool.category.toLowerCase().includes(query);
+      const matchesSearch = matchesSearchQuery(searchQuery, [
+        tool.name,
+        tool.description,
+        tool.bestFor,
+        ...tool.tags,
+        ...tool.sectors,
+        tool.category,
+        tool.slug,
+      ]);
 
       return (
         matchesSearch &&

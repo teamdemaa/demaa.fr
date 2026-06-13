@@ -7,6 +7,7 @@ import PrimaryMobileNav, { type PrimaryNavTab } from "@/components/PrimaryMobile
 import SearchFilterControls from "@/components/SearchFilterControls";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import ServiceDetailDialog from "@/components/ServiceDetailDialog";
+import { matchesSearchQuery } from "@/lib/search";
 import type { DemaaService, ServiceCategory } from "@/lib/service-catalog";
 
 type ServiceDirectoryClientProps = {
@@ -47,18 +48,18 @@ export default function ServiceDirectoryClient({
   const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<DemaaService | null>(null);
   const filteredServices = useMemo(() => {
-    const query = searchQuery.trim().toLowerCase();
-
     return services.filter((service) => {
       const matchesCategory =
         activeCategory === "Tous" || service.category === activeCategory;
-      const matchesSearch =
-        !query ||
-        service.name.toLowerCase().includes(query) ||
-        service.description.toLowerCase().includes(query) ||
-        service.bestFor.toLowerCase().includes(query) ||
-        service.tags.some((tag) => tag.toLowerCase().includes(query)) ||
-        service.usefulFor.some((item) => item.toLowerCase().includes(query));
+      const matchesSearch = matchesSearchQuery(searchQuery, [
+        service.name,
+        service.description,
+        service.bestFor,
+        ...service.tags,
+        ...service.usefulFor,
+        service.category,
+        service.slug,
+      ]);
 
       return matchesCategory && matchesSearch;
     });

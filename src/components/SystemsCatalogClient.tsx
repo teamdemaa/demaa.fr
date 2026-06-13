@@ -69,6 +69,7 @@ import { buildBusinessBlockChecklists } from "@/lib/business-block-checklists";
 import { getRecommendedServicesForSystem } from "@/lib/service-recommendations";
 import type { DemaaService } from "@/lib/service-catalog";
 import { getRecommendedSuppliersForSystem } from "@/lib/supplier-recommendations";
+import { matchesSearchQuery } from "@/lib/search";
 import {
   supplierFamilies,
   type DemaaSupplier,
@@ -562,18 +563,17 @@ export default function SystemsCatalogClient({
   const effectiveActiveSector = sectors.includes(activeSector) ? activeSector : ALL_SECTORS_LABEL;
 
   const filteredSystems = useMemo(() => {
-    const query = searchQuery.trim().toLowerCase();
-
     return systems.filter((system) => {
       const detail = detailsBySlug[system.slug];
       const sectorLabel = detail?.sectorLabel ?? "Conseil & services aux entreprises";
 
-      const matchesSearch =
-        !query ||
-        system.name.toLowerCase().includes(query) ||
-        system.description.toLowerCase().includes(query) ||
-        system.tags.some((tag) => tag.toLowerCase().includes(query)) ||
-        sectorLabel.toLowerCase().includes(query);
+      const matchesSearch = matchesSearchQuery(searchQuery, [
+        system.name,
+        system.description,
+        ...system.tags,
+        sectorLabel,
+        system.slug,
+      ]);
 
       const matchesSector =
         effectiveActiveSector === ALL_SECTORS_LABEL || sectorLabel === effectiveActiveSector;

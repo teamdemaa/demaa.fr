@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { ArrowLeft, ArrowUpRight, Search } from "lucide-react";
 import { ServiceIcon } from "@/components/ServiceIcon";
+import { matchesSearchQuery } from "@/lib/search";
 import { type DemaaSupplier, type SupplierFamily } from "@/lib/supplier-catalog";
 
 type SupplierDirectoryClientProps = {
@@ -31,20 +32,19 @@ export default function SupplierDirectoryClient({
       : "Tous",
   );
   const filteredSuppliers = useMemo(() => {
-    const query = searchQuery.trim().toLowerCase();
-
     return suppliers.filter((supplier) => {
       const matchesFamily =
         activeFamily === "Tous" || supplier.family === activeFamily;
-      const matchesSearch =
-        !query ||
-        supplier.name.toLowerCase().includes(query) ||
-        supplier.description.toLowerCase().includes(query) ||
-        supplier.bestFor.toLowerCase().includes(query) ||
-        supplier.tags.some((tag) => tag.toLowerCase().includes(query)) ||
-        supplier.usefulFor.some((item) => item.toLowerCase().includes(query)) ||
-        supplier.category.toLowerCase().includes(query) ||
-        supplier.family.toLowerCase().includes(query);
+      const matchesSearch = matchesSearchQuery(searchQuery, [
+        supplier.name,
+        supplier.description,
+        supplier.bestFor,
+        ...supplier.tags,
+        ...supplier.usefulFor,
+        supplier.category,
+        supplier.family,
+        supplier.slug,
+      ]);
 
       return matchesFamily && matchesSearch;
     });
