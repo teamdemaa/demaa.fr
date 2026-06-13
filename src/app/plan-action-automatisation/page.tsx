@@ -8,6 +8,18 @@ export const metadata = {
   title: "Plan d'action automatisation - Demaa",
   description:
     "Décrivez votre activité et obtenez un premier plan d'action pour repérer les tâches à automatiser.",
+  alternates: {
+    canonical: "/plan-action-automatisation",
+  },
+  openGraph: {
+    title: "Plan d'action automatisation - Demaa",
+    description:
+      "Décrivez votre activité et obtenez un premier plan d'action pour repérer les tâches à automatiser.",
+    url: "/plan-action-automatisation",
+    siteName: "Demaa",
+    locale: "fr_FR",
+    type: "website",
+  },
 };
 
 export const dynamic = "force-dynamic";

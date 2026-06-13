@@ -8,6 +8,18 @@ export const metadata: Metadata = {
   title: "Annuaire Partenaires & fournisseurs - Demaa",
   description:
     "Explorez les banques, assurances, mutuelles, achats, équipements et partenaires utiles aux TPE.",
+  alternates: {
+    canonical: "/annuaire-fournisseurs",
+  },
+  openGraph: {
+    title: "Annuaire Partenaires & fournisseurs - Demaa",
+    description:
+      "Explorez les banques, assurances, mutuelles, achats, équipements et partenaires utiles aux TPE.",
+    url: "/annuaire-fournisseurs",
+    siteName: "Demaa",
+    locale: "fr_FR",
+    type: "website",
+  },
 };
 
 type AnnuaireFournisseursPageProps = {

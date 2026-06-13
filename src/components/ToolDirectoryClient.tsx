@@ -551,7 +551,7 @@ function SquareToolCard({
       href={detailHref}
       className={className}
       onClick={
-        cardClickMode === "modal"
+        cardClickMode === "modal" && Boolean(tool.detailUrl)
           ? (event) => handleClientModalClick(event, tool, onOpenDetails)
           : undefined
       }
@@ -591,7 +591,7 @@ function ToolCard({
       href={detailHref}
       className={className}
       onClick={
-        cardClickMode === "modal"
+        cardClickMode === "modal" && Boolean(tool.detailUrl)
           ? (event) => handleClientModalClick(event, tool, onOpenDetails)
           : undefined
       }

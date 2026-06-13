@@ -14,7 +14,12 @@ import {
   type SystemProcessTemplate,
 } from "@/lib/system-process-templates";
 import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
-import { getToolDirectorySlug, type ToolDirectoryItem } from "@/lib/tool-directory";
+import {
+  findToolDirectoryItemBySlug,
+  getToolDirectoryItemBySlug,
+  getToolDirectorySlug,
+  type ToolDirectoryItem,
+} from "@/lib/tool-directory";
 
 export type { SystemPillar };
 
@@ -63,7 +68,12 @@ function resolveEnterpriseTools(
     const resolvedTools: EnterpriseTool[] = [];
 
     for (const toolRef of enterpriseTools) {
-      const tool = toolsBySlug[toolRef.slug];
+      const directMatch = toolsBySlug[toolRef.slug];
+      const aliasedMatch =
+        directMatch ??
+        findToolDirectoryItemBySlug(toolDirectory, toolRef.slug) ??
+        getToolDirectoryItemBySlug(toolRef.slug);
+      const tool = aliasedMatch ? toolsBySlug[getToolDirectorySlug(aliasedMatch)] ?? aliasedMatch : null;
 
       if (tool) {
         resolvedTools.push({

@@ -3,6 +3,10 @@ import Link from "next/link";
 export const metadata = {
   title: "Hors ligne - Demaa",
   description: "Cette page est disponible lorsque la connexion est interrompue.",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default function OfflinePage() {

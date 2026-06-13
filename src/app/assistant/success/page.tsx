@@ -1,6 +1,12 @@
 import AssistantSuccessClient from "./AssistantSuccessClient";
 
 export const dynamic = "force-dynamic";
+export const metadata = {
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 type AssistantSuccessPageProps = {
   searchParams: Promise<{ session_id?: string | string[] }>;

@@ -1,4 +1,8 @@
-import { getToolDirectorySlug, type ToolDirectoryItem } from "@/lib/tool-directory";
+import {
+  getToolDirectorySlug,
+  hasStandaloneToolPage,
+  type ToolDirectoryItem,
+} from "@/lib/tool-directory";
 
 export type ToolDirectoryCardItem = ToolDirectoryItem & {
   detailUrl?: string;
@@ -33,7 +37,9 @@ export async function getToolDirectoryInitialFilters(
 export function withSoftwareDetailUrls(tools: ToolDirectoryItem[]): ToolDirectoryCardItem[] {
   return tools.map((tool) => ({
     ...tool,
-    detailUrl: `/annuaire-outils/${getToolDirectorySlug(tool)}`,
+    detailUrl: hasStandaloneToolPage(tool)
+      ? undefined
+      : `/annuaire-outils/${getToolDirectorySlug(tool)}`,
   }));
 }
 

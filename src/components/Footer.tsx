@@ -22,7 +22,7 @@ const categoryLinks = [
   { label: "Outils Automatisation", href: "/annuaire-outils?categorie=Automatisation" },
   { label: "Outils Finance & paiement", href: "/annuaire-outils?categorie=Finance%20%26%20paiement" },
   { label: "Outils métier", href: "/annuaire-outils?categorie=Outils%20m%C3%A9tier" },
-  { label: "Outils gratuits", href: "/outils-gratuits" },
+  { label: "Outils gratuits", href: "/annuaire-outils?categorie=QR%20Code" },
 ];
 
 export default function Footer() {

@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getAllPosts } from "@/lib/blog";
 import { demaaServices } from "@/lib/service-catalog";
-import { getToolDirectorySlug } from "@/lib/tool-directory";
+import { getToolDirectorySlug, hasStandaloneToolPage } from "@/lib/tool-directory";
 import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
 
 export const dynamic = "force-dynamic";
@@ -39,7 +39,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/organisation-automatisation`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
     { url: `${base}/deleguer`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/developper`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
-    { url: `${base}/assistant`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${base}/plan-action-automatisation`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
     { url: `${base}/newsletter`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     { url: `${base}/mentions-legales`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
@@ -56,12 +55,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  const toolEntries: MetadataRoute.Sitemap = tools.map((tool) => ({
-    url: `${base}/annuaire-outils/${getToolDirectorySlug(tool)}`,
-    lastModified: now,
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
-  }));
+  const toolEntries: MetadataRoute.Sitemap = tools
+    .filter((tool) => !hasStandaloneToolPage(tool))
+    .map((tool) => ({
+      url: `${base}/annuaire-outils/${getToolDirectorySlug(tool)}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    }));
 
   const freeToolRoutes = [
     "generation-de-qr-code",
@@ -70,6 +71,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "qr-code-commande-rapide",
     "generation-de-menu-qr-code",
     "creation-de-fiche-google-optimisee",
+    "generation-de-document",
     "generation-de-tampon",
     "signature-pro",
     "signez-un-document-electroniquement",

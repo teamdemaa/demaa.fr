@@ -13,6 +13,15 @@ export const metadata: Metadata = {
   title: "Annuaire Outils - Demaa",
   description:
     "Explorez les outils utiles aux TPE pour organiser, automatiser, créer et piloter leur activité au quotidien.",
+  alternates: {
+    canonical: "/annuaire-outils",
+  },
+  openGraph: {
+    title: "Annuaire Outils - Demaa",
+    description:
+      "Explorez les outils utiles aux TPE pour organiser, automatiser, créer et piloter leur activité au quotidien.",
+    url: "/annuaire-outils",
+  },
 };
 
 export const dynamic = "force-dynamic";

@@ -15,6 +15,18 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/mon-espace",
   },
+  robots: {
+    index: false,
+    follow: false,
+  },
+  openGraph: {
+    title: "Espace membre Demaa",
+    description: "Retrouvez le suivi de vos demandes Demaa et l'accès aux annuaires utiles.",
+    url: "/mon-espace",
+    siteName: "Demaa",
+    locale: "fr_FR",
+    type: "website",
+  },
 };
 
 export const dynamic = "force-dynamic";
