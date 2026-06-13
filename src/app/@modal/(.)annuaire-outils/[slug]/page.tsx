@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import SoftwareDetailContent from "@/components/SoftwareDetailContent";
 import SoftwareDetailModal from "@/components/SoftwareDetailModal";
-import { getToolDirectorySlug } from "@/lib/tool-directory";
+import { findToolDirectoryItemBySlug } from "@/lib/tool-directory";
 import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
 
 type ToolModalPageProps = {
@@ -11,7 +11,7 @@ type ToolModalPageProps = {
 export default async function ToolModalPage({ params }: ToolModalPageProps) {
   const { slug } = await params;
   const tools = await getUnifiedToolDirectory();
-  const tool = tools.find((item) => getToolDirectorySlug(item) === slug);
+  const tool = findToolDirectoryItemBySlug(tools, slug);
 
   if (!tool) {
     notFound();

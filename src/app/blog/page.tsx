@@ -7,6 +7,17 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Conseils et Blog | Demaa",
   description: "Découvrez nos meilleurs conseils pour propulser votre entreprise.",
+  alternates: {
+    canonical: "/blog",
+  },
+  openGraph: {
+    title: "Conseils et Blog | Demaa",
+    description: "Découvrez nos meilleurs conseils pour propulser votre entreprise.",
+    url: "/blog",
+    siteName: "Demaa",
+    locale: "fr_FR",
+    type: "website",
+  },
 };
 
 export default function BlogIndexPage() {

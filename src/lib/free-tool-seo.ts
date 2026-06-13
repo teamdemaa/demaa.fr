@@ -221,6 +221,40 @@ export const freeToolSeo = {
       { label: "Signature email pro", href: "/outils/signature-pro" },
     ],
   },
+  "generation-de-document": {
+    slug: "generation-de-document",
+    path: "/outils/generation-de-document",
+    title: "Générateur de document",
+    metaTitle: "Générateur de document - Demaa",
+    metaDescription:
+      "Préparez un premier document juridique ou administratif avec un assistant guidé pour cadrer les informations utiles.",
+    intro:
+      "Cet outil aide à préparer une première base de document à partir de votre besoin. Il est utile pour cadrer un contrat simple, une trame administrative ou une demande structurée avant relecture.",
+    useCases: [
+      "Préparer une première version de contrat de prestation ou d'accord simple.",
+      "Structurer une demande administrative ou un document récurrent.",
+      "Gagner du temps avant relecture, validation ou envoi.",
+    ],
+    faqs: [
+      {
+        question: "Le document généré remplace-t-il un conseil juridique ?",
+        answer: "Non, il sert à préparer une base de travail. Une relecture adaptée au contexte reste recommandée.",
+      },
+      {
+        question: "Puis-je copier ou exporter le résultat ?",
+        answer: "Oui, vous pouvez récupérer le contenu généré puis l'adapter à votre usage.",
+      },
+      {
+        question: "À qui s'adresse cet outil ?",
+        answer: "Il est utile aux dirigeants, indépendants et petites équipes qui veulent cadrer rapidement un document courant.",
+      },
+    ],
+    related: [
+      { label: "Signer un document électroniquement", href: "/outils/signez-un-document-electroniquement" },
+      { label: "Kit du dirigeant organisé", href: "/outils/kit-du-dirigeant-organise" },
+      { label: "Générateur de tampon", href: "/outils/generation-de-tampon" },
+    ],
+  },
   "generation-de-tampon": {
     slug: "generation-de-tampon",
     path: "/outils/generation-de-tampon",

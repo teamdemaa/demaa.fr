@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/social-studio", "/api/social-studio"],
+        disallow: ["/api/social-studio"],
       },
     ],
     sitemap: "https://demaa.fr/sitemap.xml",

@@ -8,6 +8,18 @@ export const metadata: Metadata = {
   title: "Annuaire Services - Demaa",
   description:
     "Explorez les services Demaa pour créer, structurer, automatiser, déléguer et développer votre activité.",
+  alternates: {
+    canonical: "/annuaire-services",
+  },
+  openGraph: {
+    title: "Annuaire Services - Demaa",
+    description:
+      "Explorez les services Demaa pour créer, structurer, automatiser, déléguer et développer votre activité.",
+    url: "/annuaire-services",
+    siteName: "Demaa",
+    locale: "fr_FR",
+    type: "website",
+  },
 };
 
 type AnnuaireServicesPageProps = {

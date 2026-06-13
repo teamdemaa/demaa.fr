@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import SoftwareDetailContent from "@/components/SoftwareDetailContent";
-import { getToolDirectorySlug } from "@/lib/tool-directory";
+import {
+  findToolDirectoryItemBySlug,
+  hasStandaloneToolPage,
+  resolveToolDirectorySlugInList,
+} from "@/lib/tool-directory";
 import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
 
 type ToolDetailPageProps = {
@@ -18,7 +22,15 @@ export async function generateMetadata({
 }: ToolDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
   const tools = await getUnifiedToolDirectory();
-  const tool = tools.find((item) => getToolDirectorySlug(item) === slug);
+  const canonicalSlug = resolveToolDirectorySlugInList(tools, slug);
+
+  if (!canonicalSlug) {
+    return {
+      title: "Outil introuvable - Demaa",
+    };
+  }
+
+  const tool = findToolDirectoryItemBySlug(tools, canonicalSlug);
 
   if (!tool) {
     return {
@@ -26,9 +38,27 @@ export async function generateMetadata({
     };
   }
 
+  if (hasStandaloneToolPage(tool)) {
+    return {
+      title: "Outil introuvable - Demaa",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
+
   return {
     title: `${tool.name} - Annuaire outils Demaa`,
     description: tool.description,
+    alternates: {
+      canonical: `/annuaire-outils/${canonicalSlug}`,
+    },
+    openGraph: {
+      title: `${tool.name} - Annuaire outils Demaa`,
+      description: tool.description,
+      url: `/annuaire-outils/${canonicalSlug}`,
+    },
   };
 }
 
@@ -37,9 +67,23 @@ export default async function ToolDetailPage({
 }: ToolDetailPageProps) {
   const { slug } = await params;
   const tools = await getUnifiedToolDirectory();
-  const tool = tools.find((item) => getToolDirectorySlug(item) === slug);
+  const canonicalSlug = resolveToolDirectorySlugInList(tools, slug);
+
+  if (!canonicalSlug) {
+    notFound();
+  }
+
+  if (slug !== canonicalSlug) {
+    permanentRedirect(`/annuaire-outils/${canonicalSlug}`);
+  }
+
+  const tool = findToolDirectoryItemBySlug(tools, canonicalSlug);
 
   if (!tool) {
+    notFound();
+  }
+
+  if (hasStandaloneToolPage(tool)) {
     notFound();
   }
 
