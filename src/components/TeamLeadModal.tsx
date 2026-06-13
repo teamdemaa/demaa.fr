@@ -5,13 +5,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Send, CheckCircle2, Building2, Briefcase, Mail, BadgePercent } from "lucide-react";
 
 const DEFAULT_TITLE =
-  "Bénéficier de tarifs négociés de 15 à 30 % :\nServices, Logiciel, Fournisseurs";
+  "Bénéficier de tarifs négociés de 15 à 30 % :\nServices, Logiciels, Partenaires & fournisseurs";
 
 export default function TeamLeadModal({
   isOpen,
   onClose,
   title = DEFAULT_TITLE,
-  description = "Services, logiciels et fournisseurs : laissez vos coordonnées pour recevoir les offres adaptées à votre activité."
+  description = "Services, logiciels et partenaires & fournisseurs : laissez vos coordonnées pour recevoir les offres adaptées à votre activité."
 }: {
   isOpen: boolean;
   onClose: () => void;

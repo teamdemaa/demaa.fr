@@ -202,14 +202,14 @@ export default function MemberSpaceTabs({
 
       <section className="mt-8 rounded-[1.15rem] border border-dema-line bg-dema-paper p-5">
         <SectionHeader
-          title="Fournisseurs"
-          description="Les banques, assurances, mutuelles et fournisseurs métier sont maintenant regroupés dans un annuaire unique."
+          title="Partenaires & fournisseurs"
+          description="Banques, assurances, mutuelles, achats, équipements et partenaires métier sont regroupés dans un annuaire unique."
         />
         <Link
           href="/annuaire-fournisseurs"
           className="mt-4 inline-flex rounded-full bg-dema-forest px-5 py-3 text-sm font-medium text-dema-paper transition hover:bg-brand-blue"
         >
-          Ouvrir l&apos;annuaire fournisseurs
+          Ouvrir l&apos;annuaire partenaires & fournisseurs
         </Link>
       </section>
     </div>

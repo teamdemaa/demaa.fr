@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import SupplierDirectoryClient from "@/components/SupplierDirectoryClient";
 import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire";
-import { getDemaaSuppliers, supplierCategories } from "@/lib/supplier-catalog";
+import { getDemaaSuppliers, supplierFamilies } from "@/lib/supplier-catalog";
 
 export const metadata: Metadata = {
-  title: "Annuaire Fournisseurs - Demaa",
+  title: "Annuaire Partenaires & fournisseurs - Demaa",
   description:
-    "Explorez les banques, assurances, mutuelles, matériaux, grossistes et fournisseurs utiles aux TPE.",
+    "Explorez les banques, assurances, mutuelles, achats, équipements et partenaires utiles aux TPE.",
 };
 
 type AnnuaireFournisseursPageProps = {
@@ -39,7 +39,7 @@ export default async function AnnuaireFournisseursPage({
       <main className="flex-1 w-full bg-background animate-in fade-in duration-700">
         <SupplierDirectoryClient
           suppliers={getDemaaSuppliers()}
-          categories={supplierCategories}
+          families={supplierFamilies}
           initialCategory={getParamValue(params.category)}
           initialSearch={getParamValue(params.q) ?? ""}
           backLink={backLink}

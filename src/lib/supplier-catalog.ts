@@ -11,11 +11,23 @@ export type SupplierCategory =
   | "Transport"
   | "Support";
 
+export type SupplierFamily =
+  | "Finance & protection"
+  | "Équipement & exploitation";
+
+export const supplierFamilyDescriptions: Record<SupplierFamily, string> = {
+  "Finance & protection":
+    "Banques, paiements, assurances, mutuelles, avantages salariés et protections utiles pour sécuriser et piloter l'activité.",
+  "Équipement & exploitation":
+    "Matériaux, grossistes, équipements, énergie, téléphonie, véhicules et moyens utiles pour faire tourner l'activité au quotidien.",
+};
+
 export type SupplierCta = "Voir le fournisseur" | "Demander une mise en relation" | "Comparer les options";
 
 export type DemaaSupplier = {
   slug: string;
   name: string;
+  family: SupplierFamily;
   category: SupplierCategory;
   shortDescription: string;
   description: string;
@@ -33,6 +45,7 @@ export const demaaSuppliers: readonly DemaaSupplier[] = [
   {
     slug: "assurance-pro",
     name: "Assurance pro",
+    family: "Finance & protection",
     category: "Assurance",
     shortDescription: "RC pro, multirisque, local, flotte ou décennale.",
     description:
@@ -49,6 +62,7 @@ export const demaaSuppliers: readonly DemaaSupplier[] = [
   {
     slug: "qonto",
     name: "Qonto",
+    family: "Finance & protection",
     category: "Banque",
     shortDescription: "Compte pro, cartes, virements et justificatifs.",
     description:
@@ -65,6 +79,7 @@ export const demaaSuppliers: readonly DemaaSupplier[] = [
   {
     slug: "revolut-business",
     name: "Revolut Business",
+    family: "Finance & protection",
     category: "Banque",
     shortDescription: "Compte business, cartes et paiements internationaux.",
     description:
@@ -81,6 +96,7 @@ export const demaaSuppliers: readonly DemaaSupplier[] = [
   {
     slug: "wise-business",
     name: "Wise Business",
+    family: "Finance & protection",
     category: "Banque",
     shortDescription: "Paiements, virements et devises à l'international.",
     description:
@@ -96,6 +112,7 @@ export const demaaSuppliers: readonly DemaaSupplier[] = [
   {
     slug: "shine",
     name: "Shine",
+    family: "Finance & protection",
     category: "Banque",
     shortDescription: "Compte pro avec facturation et aides administratives.",
     description:
@@ -111,6 +128,7 @@ export const demaaSuppliers: readonly DemaaSupplier[] = [
   {
     slug: "alan",
     name: "Alan",
+    family: "Finance & protection",
     category: "Mutuelle",
     shortDescription: "Mutuelle santé et prévention pour les équipes.",
     description:
@@ -127,6 +145,7 @@ export const demaaSuppliers: readonly DemaaSupplier[] = [
   {
     slug: "swile",
     name: "Swile",
+    family: "Finance & protection",
     category: "Support",
     shortDescription: "Titres-resto et avantages salariés.",
     description:
@@ -143,6 +162,7 @@ export const demaaSuppliers: readonly DemaaSupplier[] = [
   {
     slug: "plateforme-du-batiment",
     name: "Plateforme du Bâtiment",
+    family: "Équipement & exploitation",
     category: "Matériaux",
     shortDescription: "Matériaux, outillage et approvisionnement BTP.",
     description:
@@ -158,6 +178,7 @@ export const demaaSuppliers: readonly DemaaSupplier[] = [
   {
     slug: "point-p",
     name: "Point.P",
+    family: "Équipement & exploitation",
     category: "Matériaux",
     shortDescription: "Matériaux de construction et négoce bâtiment.",
     description:
@@ -173,6 +194,7 @@ export const demaaSuppliers: readonly DemaaSupplier[] = [
   {
     slug: "kiloutou",
     name: "Kiloutou",
+    family: "Équipement & exploitation",
     category: "Équipement",
     shortDescription: "Location de matériel professionnel.",
     description:
@@ -188,6 +210,7 @@ export const demaaSuppliers: readonly DemaaSupplier[] = [
   {
     slug: "wurth",
     name: "Würth",
+    family: "Équipement & exploitation",
     category: "Équipement",
     shortDescription: "Consommables, visserie, outillage et EPI.",
     description:
@@ -203,6 +226,7 @@ export const demaaSuppliers: readonly DemaaSupplier[] = [
   {
     slug: "rexel",
     name: "Rexel",
+    family: "Équipement & exploitation",
     category: "Matériaux",
     shortDescription: "Matériel électrique et solutions énergie.",
     description:
@@ -218,6 +242,7 @@ export const demaaSuppliers: readonly DemaaSupplier[] = [
   {
     slug: "grossiste-alimentaire",
     name: "Grossiste alimentaire",
+    family: "Équipement & exploitation",
     category: "Grossiste",
     shortDescription: "Approvisionnement alimentaire professionnel.",
     description:
@@ -234,6 +259,7 @@ export const demaaSuppliers: readonly DemaaSupplier[] = [
   {
     slug: "fournisseur-boissons",
     name: "Fournisseur boissons",
+    family: "Équipement & exploitation",
     category: "Grossiste",
     shortDescription: "Boissons, brasserie, café et bar.",
     description:
@@ -250,6 +276,7 @@ export const demaaSuppliers: readonly DemaaSupplier[] = [
   {
     slug: "emballages-pro",
     name: "Emballages pro",
+    family: "Équipement & exploitation",
     category: "Grossiste",
     shortDescription: "Emballages, sacs, cartons et consommables.",
     description:
@@ -266,6 +293,7 @@ export const demaaSuppliers: readonly DemaaSupplier[] = [
   {
     slug: "terminal-paiement",
     name: "Terminal de paiement",
+    family: "Finance & protection",
     category: "Paiement",
     shortDescription: "Encaissement, TPE et paiement en magasin.",
     description:
@@ -282,6 +310,7 @@ export const demaaSuppliers: readonly DemaaSupplier[] = [
   {
     slug: "telephonie-pro",
     name: "Téléphonie pro",
+    family: "Équipement & exploitation",
     category: "Téléphonie",
     shortDescription: "Forfaits, numéros pro et standard simple.",
     description:
@@ -298,6 +327,7 @@ export const demaaSuppliers: readonly DemaaSupplier[] = [
   {
     slug: "energie-pro",
     name: "Énergie pro",
+    family: "Équipement & exploitation",
     category: "Énergie",
     shortDescription: "Électricité, gaz et contrats professionnels.",
     description:
@@ -314,6 +344,7 @@ export const demaaSuppliers: readonly DemaaSupplier[] = [
   {
     slug: "leasing-vehicule",
     name: "Leasing véhicule",
+    family: "Équipement & exploitation",
     category: "Transport",
     shortDescription: "Véhicule, utilitaire, flotte ou mobilité pro.",
     description:
@@ -330,6 +361,7 @@ export const demaaSuppliers: readonly DemaaSupplier[] = [
   {
     slug: "hygiene-nettoyage",
     name: "Hygiène & nettoyage",
+    family: "Équipement & exploitation",
     category: "Support",
     shortDescription: "Produits d'hygiène, entretien et consommables.",
     description:
@@ -346,6 +378,7 @@ export const demaaSuppliers: readonly DemaaSupplier[] = [
   {
     slug: "protection-juridique",
     name: "Protection juridique",
+    family: "Finance & protection",
     category: "Assurance",
     shortDescription: "Appui juridique en cas de litige professionnel.",
     description:
@@ -366,6 +399,10 @@ export type DemaaSupplierSlug = (typeof demaaSuppliers)[number]["slug"];
 export const supplierCategories = Array.from(
   new Set(demaaSuppliers.map((supplier) => supplier.category)),
 ) as SupplierCategory[];
+
+export const supplierFamilies = Array.from(
+  new Set(demaaSuppliers.map((supplier) => supplier.family)),
+) as SupplierFamily[];
 
 export const supplierBySlug = Object.fromEntries(
   demaaSuppliers.map((supplier) => [supplier.slug, supplier]),

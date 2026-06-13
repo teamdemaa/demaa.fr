@@ -4,11 +4,11 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { ArrowLeft, ArrowUpRight, Search } from "lucide-react";
 import { ServiceIcon } from "@/components/ServiceIcon";
-import type { DemaaSupplier, SupplierCategory } from "@/lib/supplier-catalog";
+import { type DemaaSupplier, type SupplierFamily } from "@/lib/supplier-catalog";
 
 type SupplierDirectoryClientProps = {
   suppliers: DemaaSupplier[];
-  categories: readonly SupplierCategory[];
+  families: readonly SupplierFamily[];
   initialCategory?: string;
   initialSearch?: string;
   backLink?: {
@@ -19,14 +19,14 @@ type SupplierDirectoryClientProps = {
 
 export default function SupplierDirectoryClient({
   suppliers,
-  categories,
+  families,
   initialCategory,
   initialSearch = "",
   backLink,
 }: SupplierDirectoryClientProps) {
   const [searchQuery, setSearchQuery] = useState(initialSearch);
-  const [activeCategory, setActiveCategory] = useState(
-    initialCategory && categories.includes(initialCategory as SupplierCategory)
+  const [activeFamily, setActiveFamily] = useState(
+    initialCategory && families.includes(initialCategory as SupplierFamily)
       ? initialCategory
       : "Tous",
   );
@@ -34,19 +34,30 @@ export default function SupplierDirectoryClient({
     const query = searchQuery.trim().toLowerCase();
 
     return suppliers.filter((supplier) => {
-      const matchesCategory =
-        activeCategory === "Tous" || supplier.category === activeCategory;
+      const matchesFamily =
+        activeFamily === "Tous" || supplier.family === activeFamily;
       const matchesSearch =
         !query ||
         supplier.name.toLowerCase().includes(query) ||
         supplier.description.toLowerCase().includes(query) ||
         supplier.bestFor.toLowerCase().includes(query) ||
         supplier.tags.some((tag) => tag.toLowerCase().includes(query)) ||
-        supplier.usefulFor.some((item) => item.toLowerCase().includes(query));
+        supplier.usefulFor.some((item) => item.toLowerCase().includes(query)) ||
+        supplier.category.toLowerCase().includes(query) ||
+        supplier.family.toLowerCase().includes(query);
 
-      return matchesCategory && matchesSearch;
+      return matchesFamily && matchesSearch;
     });
-  }, [activeCategory, searchQuery, suppliers]);
+  }, [activeFamily, searchQuery, suppliers]);
+
+  const groupedSuppliers = useMemo(() => {
+    return families
+      .map((family) => ({
+        family,
+        items: filteredSuppliers.filter((supplier) => supplier.family === family),
+      }))
+      .filter((group) => group.items.length > 0);
+  }, [families, filteredSuppliers]);
 
   return (
     <div className="w-full">
@@ -64,10 +75,10 @@ export default function SupplierDirectoryClient({
             </div>
           ) : null}
           <h1 className="demaa-section-title text-4xl tracking-tight text-brand-blue md:text-5xl">
-            Annuaire Fournisseurs
+            Annuaire Partenaires & fournisseurs
           </h1>
           <p className="mx-auto mt-2 max-w-2xl text-sm font-normal leading-relaxed text-dema-muted">
-            Banques, assurances, mutuelles, matériaux, grossistes et fournisseurs utiles selon l&apos;activité.
+            Banques, assurances, mutuelles, achats, équipements et partenaires utiles selon l&apos;activité.
           </p>
 
           <div className="demaa-search-shell mx-auto mt-5 max-w-4xl p-1.5">
@@ -76,7 +87,7 @@ export default function SupplierDirectoryClient({
               <input
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.target.value)}
-                placeholder="Rechercher une banque, assurance, grossiste, matériau..."
+                placeholder="Rechercher une banque, un grossiste, un partenaire..."
                 className="w-full rounded-full bg-dema-paper py-3.5 pl-10 pr-5 text-sm font-normal text-brand-blue outline-none transition placeholder:text-brand-blue/36 md:py-4 md:pl-12 md:text-base"
               />
             </div>
@@ -84,16 +95,16 @@ export default function SupplierDirectoryClient({
 
           <div className="mx-auto mt-3 max-w-4xl overflow-x-auto pb-2 soft-scroll">
             <div className="flex min-w-max gap-2">
-              {["Tous", ...categories].map((category) => (
+              {["Tous", ...families].map((family) => (
                 <button
-                  key={category}
+                  key={family}
                   type="button"
-                  onClick={() => setActiveCategory(category)}
+                  onClick={() => setActiveFamily(family)}
                   className={`demaa-chip shrink-0 whitespace-nowrap ${
-                    activeCategory === category ? "demaa-chip-active" : ""
+                    activeFamily === family ? "demaa-chip-active" : ""
                   }`}
                 >
-                  {category}
+                  {family}
                 </button>
               ))}
             </div>
@@ -103,12 +114,12 @@ export default function SupplierDirectoryClient({
 
       <section className="mx-auto max-w-7xl px-4 py-7 sm:px-6 lg:px-8">
         <div className="flex items-center justify-end pb-5">
-          {activeCategory !== "Tous" || searchQuery ? (
+          {activeFamily !== "Tous" || searchQuery ? (
             <button
               type="button"
               onClick={() => {
                 setSearchQuery("");
-                setActiveCategory("Tous");
+                setActiveFamily("Tous");
               }}
               className="text-xs font-medium text-dema-muted transition hover:text-dema-forest"
             >
@@ -119,15 +130,26 @@ export default function SupplierDirectoryClient({
 
         {filteredSuppliers.length === 0 ? (
           <div className="rounded-[1.25rem] border border-dashed border-dema-line bg-dema-paper p-10 text-center">
-            <h2 className="text-xl font-bold text-brand-blue">Aucun fournisseur trouvé</h2>
+            <h2 className="text-xl font-bold text-brand-blue">Aucun partenaire ou fournisseur trouvé</h2>
             <p className="mt-3 text-sm font-normal text-dema-muted">
               Essayez un autre mot-clé ou une catégorie plus large.
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {filteredSuppliers.map((supplier) => (
-              <SupplierCard key={supplier.slug} supplier={supplier} />
+          <div className="space-y-8">
+            {groupedSuppliers.map((group) => (
+              <section key={group.family}>
+                <div className="mb-4">
+                  <h2 className="demaa-section-title text-2xl tracking-tight text-brand-blue/85 md:text-3xl">
+                    {group.family}
+                  </h2>
+                </div>
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+                  {group.items.map((supplier) => (
+                    <SupplierCard key={supplier.slug} supplier={supplier} />
+                  ))}
+                </div>
+              </section>
             ))}
           </div>
         )}

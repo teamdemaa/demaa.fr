@@ -69,7 +69,10 @@ import { buildBusinessBlockChecklists } from "@/lib/business-block-checklists";
 import { getRecommendedServicesForSystem } from "@/lib/service-recommendations";
 import type { DemaaService } from "@/lib/service-catalog";
 import { getRecommendedSuppliersForSystem } from "@/lib/supplier-recommendations";
-import type { DemaaSupplier } from "@/lib/supplier-catalog";
+import {
+  supplierFamilies,
+  type DemaaSupplier,
+} from "@/lib/supplier-catalog";
 
 type SystemsCatalogClientProps = {
   systems: System[];
@@ -797,62 +800,64 @@ export default function SystemsCatalogClient({
               </div>
             </div>
 
-            <div className="mt-6 flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => setActiveTab("processus")}
-                className={`relative rounded-full px-4 py-2 text-sm font-medium transition after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:rounded-full after:transition ${
-                  activeTab === "processus"
-                    ? "bg-transparent text-brand-blue after:bg-dema-forest"
-                    : "bg-transparent text-brand-blue/55 after:bg-transparent hover:text-brand-blue/75"
-                }`}
-              >
-                Processus
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveTab("outils")}
-                className={`relative rounded-full px-4 py-2 text-sm font-medium transition after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:rounded-full after:transition ${
-                  activeTab === "outils"
-                    ? "bg-transparent text-brand-blue after:bg-dema-forest"
-                    : "bg-transparent text-brand-blue/55 after:bg-transparent hover:text-brand-blue/75"
-                }`}
-              >
-                Outils
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveTab("services")}
-                className={`relative rounded-full px-4 py-2 text-sm font-medium transition after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:rounded-full after:transition ${
-                  activeTab === "services"
-                    ? "bg-transparent text-brand-blue after:bg-dema-forest"
-                    : "bg-transparent text-brand-blue/55 after:bg-transparent hover:text-brand-blue/75"
-                }`}
-              >
-                Services
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveTab("fournisseurs")}
-                className={`relative rounded-full px-4 py-2 text-sm font-medium transition after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:rounded-full after:transition ${
-                  activeTab === "fournisseurs"
-                    ? "bg-transparent text-brand-blue after:bg-dema-forest"
-                    : "bg-transparent text-brand-blue/55 after:bg-transparent hover:text-brand-blue/75"
-                }`}
-              >
-                Fournisseurs
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveTab("ressources")}
-                className={`relative rounded-full px-4 py-2 text-sm font-medium transition after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:rounded-full after:transition ${
-                  activeTab === "ressources"
-                    ? "bg-transparent text-brand-blue after:bg-dema-forest"
-                    : "bg-transparent text-brand-blue/55 after:bg-transparent hover:text-brand-blue/75"
-                }`}
-              >
-                Ressources
-              </button>
+            <div className="mt-6 -mx-2 overflow-x-auto px-2 pb-2 soft-scroll">
+              <div className="flex min-w-max items-center gap-2 whitespace-nowrap">
+                <button
+                  type="button"
+                  onClick={() => setActiveTab("processus")}
+                  className={`relative shrink-0 rounded-full px-4 py-2 text-sm font-medium transition after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:rounded-full after:transition ${
+                    activeTab === "processus"
+                      ? "bg-transparent text-brand-blue after:bg-dema-forest"
+                      : "bg-transparent text-brand-blue/55 after:bg-transparent hover:text-brand-blue/75"
+                  }`}
+                >
+                  Processus
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab("outils")}
+                  className={`relative shrink-0 rounded-full px-4 py-2 text-sm font-medium transition after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:rounded-full after:transition ${
+                    activeTab === "outils"
+                      ? "bg-transparent text-brand-blue after:bg-dema-forest"
+                      : "bg-transparent text-brand-blue/55 after:bg-transparent hover:text-brand-blue/75"
+                  }`}
+                >
+                  Outils
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab("services")}
+                  className={`relative shrink-0 rounded-full px-4 py-2 text-sm font-medium transition after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:rounded-full after:transition ${
+                    activeTab === "services"
+                      ? "bg-transparent text-brand-blue after:bg-dema-forest"
+                      : "bg-transparent text-brand-blue/55 after:bg-transparent hover:text-brand-blue/75"
+                  }`}
+                >
+                  Services
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab("fournisseurs")}
+                  className={`relative shrink-0 rounded-full px-4 py-2 text-sm font-medium transition after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:rounded-full after:transition ${
+                    activeTab === "fournisseurs"
+                      ? "bg-transparent text-brand-blue after:bg-dema-forest"
+                      : "bg-transparent text-brand-blue/55 after:bg-transparent hover:text-brand-blue/75"
+                  }`}
+                >
+                  Partenaires & fournisseurs
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab("ressources")}
+                  className={`relative shrink-0 rounded-full px-4 py-2 text-sm font-medium transition after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:rounded-full after:transition ${
+                    activeTab === "ressources"
+                      ? "bg-transparent text-brand-blue after:bg-dema-forest"
+                      : "bg-transparent text-brand-blue/55 after:bg-transparent hover:text-brand-blue/75"
+                  }`}
+                >
+                  Ressources
+                </button>
+              </div>
             </div>
 
             <div className="mt-6 min-h-0 flex-1 overflow-y-auto pr-1 soft-scroll">
@@ -972,25 +977,40 @@ export default function SystemsCatalogClient({
                 </div>
               ) : activeTab === "fournisseurs" ? (
                 <div className="space-y-5">
-                  <div>
-                    <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-                      {getRecommendedSuppliersForSystem(selectedSystem.slug).map(renderSupplierCard)}
-                    </div>
-                  </div>
+                  {(() => {
+                    const groupedSuppliers = getRecommendedSuppliersForSystem(selectedSystem.slug).reduce<
+                      Partial<Record<DemaaSupplier["family"], DemaaSupplier[]>>
+                    >((groups, supplier) => {
+                        const currentGroup = groups[supplier.family] ?? [];
+                        currentGroup.push(supplier);
+                        groups[supplier.family] = currentGroup;
+                        return groups;
+                      }, {});
+
+                    return supplierFamilies
+                      .map((family) => ({ family, suppliers: groupedSuppliers[family] ?? [] }))
+                      .filter((group) => group.suppliers.length > 0)
+                      .map(({ family, suppliers }) => (
+                      <section key={family}>
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
+                          {family}
+                        </p>
+                        <div className="mt-3 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                          {suppliers.map(renderSupplierCard)}
+                        </div>
+                      </section>
+                    ));
+                  })()}
 
                   <div className="rounded-[1.15rem] border border-dema-line bg-dema-cream/70 p-5 text-left">
                     <h3 className="text-lg font-semibold text-brand-blue">
                       Besoin de comparer plus largement ?
                     </h3>
-                    <p className="mt-2 max-w-3xl text-sm leading-relaxed text-dema-muted">
-                      L&apos;annuaire fournisseurs rassemble banques, assurances, mutuelles,
-                      matériaux, grossistes, équipements, énergie, téléphonie et partenaires métier.
-                    </p>
                     <Link
                       href={`/annuaire-fournisseurs?retourSysteme=${encodeURIComponent(selectedSystem.slug)}`}
-                      className="mt-4 inline-flex items-center rounded-full border border-dema-line bg-dema-paper px-4 py-2 text-sm font-medium text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
+                      className="mt-3 inline-flex items-center rounded-full border border-dema-line bg-dema-paper px-4 py-2 text-sm font-medium text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
                     >
-                      Voir tous les fournisseurs
+                      Voir tous les partenaires & fournisseurs
                     </Link>
                   </div>
                 </div>
