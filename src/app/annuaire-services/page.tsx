@@ -5,20 +5,26 @@ import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire";
 import { getDemaaServices, serviceCategories } from "@/lib/service-catalog";
 
 export const metadata: Metadata = {
-  title: "Annuaire Services - Demaa",
+  title: "Déléguez pour libérer du temps - Demaa",
   description:
-    "Explorez les services Demaa pour créer, structurer, automatiser, déléguer et développer votre activité.",
+    "Explorez les services Demaa pour déléguer les sujets juridiques, finance, acquisition, contenu, systèmes et support opérationnel.",
   alternates: {
     canonical: "/annuaire-services",
   },
   openGraph: {
-    title: "Annuaire Services - Demaa",
+    title: "Déléguez pour libérer du temps - Demaa",
     description:
-      "Explorez les services Demaa pour créer, structurer, automatiser, déléguer et développer votre activité.",
+      "Explorez les services Demaa pour déléguer les sujets juridiques, finance, acquisition, contenu, systèmes et support opérationnel.",
     url: "/annuaire-services",
     siteName: "Demaa",
     locale: "fr_FR",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Déléguez pour libérer du temps - Demaa",
+    description:
+      "Explorez les services Demaa pour déléguer les sujets juridiques, finance, acquisition, contenu, systèmes et support opérationnel.",
   },
 };
 
@@ -55,6 +61,13 @@ export default async function AnnuaireServicesPage({
           initialCategory={getParamValue(params.category)}
           initialSearch={getParamValue(params.q) ?? ""}
           backLink={backLink}
+          title="Déléguez pour libérer du temps"
+          description="Les services Demaa pour confier ce qui prend du temps, sécuriser l'exécution et libérer la croissance."
+          activePrimaryTab="deleguer"
+          heroTitleLines={{
+            primary: "Déléguez",
+            secondary: "pour libérer du temps",
+          }}
         />
       </main>
     </>

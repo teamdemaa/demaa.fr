@@ -15,8 +15,6 @@ import {
   Car,
   ChefHat,
   Check,
-  ChevronLeft,
-  ChevronRight,
   Cloud,
   Code2,
   ClipboardCheck,
@@ -313,10 +311,6 @@ export default function SystemsCatalogClient({
   const [selectedToolDetail, setSelectedToolDetail] = useState<ToolDirectoryItem | null>(null);
   const [selectedServiceDetail, setSelectedServiceDetail] = useState<DemaaService | null>(null);
   const [isDeleguerPricingOpen, setIsDeleguerPricingOpen] = useState(false);
-  const [resourcePreview, setResourcePreview] = useState<{
-    resource: SystemResource;
-    slideIndex: number;
-  } | null>(null);
   const searchQuery = controlledSearchQuery ?? internalSearchQuery;
   const activeSector = controlledActiveSector ?? internalActiveSector;
 
@@ -347,26 +341,6 @@ export default function SystemsCatalogClient({
 
   function closeToolDetails() {
     setSelectedToolDetail(null);
-  }
-
-  function openResourcePreview(resource: SystemResource) {
-    setResourcePreview({ resource, slideIndex: 0 });
-  }
-
-  function closeResourcePreview() {
-    setResourcePreview(null);
-  }
-
-  function changeResourceSlide(direction: -1 | 1) {
-    setResourcePreview((currentPreview) => {
-      if (!currentPreview) return currentPreview;
-
-      const slides = getResourceSlides(currentPreview.resource);
-      const nextIndex =
-        (currentPreview.slideIndex + direction + slides.length) % slides.length;
-
-      return { ...currentPreview, slideIndex: nextIndex };
-    });
   }
 
   function renderToolCard(tool: OperationalSystemDetail["tools"][number]) {
@@ -965,7 +939,7 @@ export default function SystemsCatalogClient({
                       acquisition, structuration, automatisation et support opérationnel.
                     </p>
                     <Link
-                      href={`/deleguer?retourSysteme=${encodeURIComponent(selectedSystem.slug)}`}
+                      href={`/annuaire-services?retourSysteme=${encodeURIComponent(selectedSystem.slug)}`}
                       className="mt-4 inline-flex items-center rounded-full border border-dema-line bg-dema-paper px-4 py-2 text-sm font-medium text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
                     >
                       Voir tous les services
@@ -996,7 +970,6 @@ export default function SystemsCatalogClient({
                     <SystemResourceCard
                       key={resource.id}
                       resource={resource}
-                      onPreview={openResourcePreview}
                     />
                   ))}
                 </div>
@@ -1022,15 +995,6 @@ export default function SystemsCatalogClient({
         <DeleguerPricingPreviewModal onClose={() => setIsDeleguerPricingOpen(false)} />
       ) : null}
 
-      {resourcePreview ? (
-        <SystemResourcePreview
-          resource={resourcePreview.resource}
-          slideIndex={resourcePreview.slideIndex}
-          onClose={closeResourcePreview}
-          onSlideChange={changeResourceSlide}
-        />
-      ) : null}
-
       <SystemSetupModal
         isOpen={isSystemSetupModalOpen}
         onClose={() => setIsSystemSetupModalOpen(false)}
@@ -1050,24 +1014,17 @@ function isSystemModalTab(tab?: string): tab is SystemModalTab {
   );
 }
 
-function getResourceSlides(resource: SystemResource): string[] {
-  return resource.slides?.length ? resource.slides : [resource.image];
-}
-
 function SystemResourceCard({
   resource,
-  onPreview,
 }: {
   resource: SystemResource;
-  onPreview: (resource: SystemResource) => void;
 }) {
   return (
     <article className="demaa-card group overflow-hidden rounded-[1.15rem] text-left">
-      <button
-        type="button"
-        onClick={() => onPreview(resource)}
+      <Link
+        href={`/ressources/${resource.id}`}
         className="block w-full text-left"
-        aria-label={`Agrandir ${resource.title}`}
+        aria-label={`Voir ${resource.title}`}
       >
         <div className="relative aspect-[16/10] overflow-hidden border-b border-dema-line bg-[#f8f8f5]">
           <Image
@@ -1086,7 +1043,7 @@ function SystemResourceCard({
             {resource.title}
           </h3>
         </div>
-      </button>
+      </Link>
       <div className="px-5 pb-5">
         <a
           href={resource.resourceHref}
@@ -1100,116 +1057,6 @@ function SystemResourceCard({
         </a>
       </div>
     </article>
-  );
-}
-
-function SystemResourcePreview({
-  resource,
-  slideIndex,
-  onClose,
-  onSlideChange,
-}: {
-  resource: SystemResource;
-  slideIndex: number;
-  onClose: () => void;
-  onSlideChange: (direction: -1 | 1) => void;
-}) {
-  const slides = getResourceSlides(resource);
-  const hasMultipleSlides = slides.length > 1;
-
-  useEffect(() => {
-    function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") onClose();
-      if (event.key === "ArrowLeft" && hasMultipleSlides) onSlideChange(-1);
-      if (event.key === "ArrowRight" && hasMultipleSlides) onSlideChange(1);
-    }
-
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [hasMultipleSlides, onClose, onSlideChange]);
-
-  return (
-    <div
-      className="fixed inset-0 z-[80] flex items-center justify-center bg-brand-blue/72 p-3 backdrop-blur-sm sm:p-6"
-      role="dialog"
-      aria-modal="true"
-      aria-label={resource.title}
-      onClick={onClose}
-    >
-      <div
-        className="relative flex max-h-[92vh] w-full max-w-6xl flex-col overflow-hidden rounded-[1.15rem] bg-dema-paper shadow-[0_24px_80px_rgba(0,0,0,0.28)]"
-        onClick={(event) => event.stopPropagation()}
-      >
-        <div className="flex items-center justify-between gap-4 border-b border-dema-line px-4 py-3 sm:px-5">
-          <div className="min-w-0">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
-              {resource.category}
-            </p>
-            <h2 className="truncate text-sm font-semibold text-brand-blue sm:text-base">
-              {resource.title}
-            </h2>
-          </div>
-          <button
-            type="button"
-            onClick={onClose}
-            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-dema-line text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
-            aria-label="Fermer l'aperçu"
-          >
-            <X className="h-4 w-4" />
-          </button>
-        </div>
-
-        <div className="relative min-h-[58vh] bg-[#f8f8f5] sm:min-h-[68vh]">
-          <Image
-            src={slides[slideIndex]}
-            alt=""
-            fill
-            sizes="100vw"
-            className="object-contain p-3 sm:p-6"
-            priority
-          />
-
-          {hasMultipleSlides ? (
-            <>
-              <button
-                type="button"
-                onClick={() => onSlideChange(-1)}
-                className="absolute left-3 top-1/2 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-dema-line bg-dema-paper/92 text-brand-blue shadow-sm transition hover:border-dema-forest/25 hover:text-dema-forest"
-                aria-label="Image précédente"
-              >
-                <ChevronLeft className="h-5 w-5" />
-              </button>
-              <button
-                type="button"
-                onClick={() => onSlideChange(1)}
-                className="absolute right-3 top-1/2 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-dema-line bg-dema-paper/92 text-brand-blue shadow-sm transition hover:border-dema-forest/25 hover:text-dema-forest"
-                aria-label="Image suivante"
-              >
-                <ChevronRight className="h-5 w-5" />
-              </button>
-            </>
-          ) : null}
-        </div>
-
-        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-dema-line px-4 py-3 sm:px-5">
-          <p className="text-xs font-medium text-dema-muted">
-            {hasMultipleSlides ? `${slideIndex + 1} / ${slides.length}` : "Aperçu"}
-          </p>
-          <a
-            href={resource.resourceHref}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-dema-forest px-4 py-2 text-xs font-semibold text-white transition hover:bg-brand-blue"
-          >
-            {resource.resourceLabel}
-            <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
-          </a>
-        </div>
-      </div>
-    </div>
   );
 }
 

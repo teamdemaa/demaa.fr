@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getAllPosts } from "@/lib/blog";
+import { getAllEditorialEntries } from "@/lib/editorial-content";
 import { demaaServices } from "@/lib/service-catalog";
 import { getToolDirectorySlug, hasStandaloneToolPage } from "@/lib/tool-directory";
 import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
@@ -35,9 +35,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/annuaire-outils`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/annuaire-services`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-fournisseurs`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
-    { url: `${base}/blog`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${base}/ressources`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/organisation-automatisation`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
-    { url: `${base}/deleguer`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/developper`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/plan-action-automatisation`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
     { url: `${base}/newsletter`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
@@ -47,10 +46,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/cgv`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
   ];
 
-  const posts = getAllPosts();
-  const blogEntries: MetadataRoute.Sitemap = posts.map((post) => ({
-    url: `${base}/blog/${post.slug}`,
-    lastModified: new Date(post.date),
+  const editorialEntries = getAllEditorialEntries();
+  const editorialContentEntries: MetadataRoute.Sitemap = editorialEntries.map((entry) => ({
+    url: `${base}/ressources/${entry.slug}`,
+    lastModified: new Date(entry.date),
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
@@ -75,7 +74,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "generation-de-tampon",
     "signature-pro",
     "signez-un-document-electroniquement",
-    "kit-du-dirigeant-organise",
   ];
 
   const freeToolEntries: MetadataRoute.Sitemap = freeToolRoutes.map((slug) => ({
@@ -94,7 +92,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     ...staticRoutes,
-    ...blogEntries,
+    ...editorialContentEntries,
     ...toolEntries,
     ...freeToolEntries,
     ...serviceEntries,

@@ -65,7 +65,7 @@ function DesktopHomeTabsNav({ mode }: { mode: HomeTabsMode }) {
   const searchParams = useSearchParams();
   const urlTab = searchParams.get("tab");
   const activeTab =
-    pathname === "/deleguer" || pathname === "/annuaire-services"
+    pathname === "/annuaire-services"
       ? "deleguer"
       : pathname === "/structurer" ||
           pathname === "/organisation-automatisation" ||
