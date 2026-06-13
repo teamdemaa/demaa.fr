@@ -251,7 +251,7 @@ export const freeToolSeo = {
     ],
     related: [
       { label: "Signer un document électroniquement", href: "/outils/signez-un-document-electroniquement" },
-      { label: "Kit du dirigeant organisé", href: "/outils/kit-du-dirigeant-organise" },
+      { label: "Les obligations d’une TPE", href: "/ressources/obligations-tpe-template" },
       { label: "Générateur de tampon", href: "/outils/generation-de-tampon" },
     ],
   },
@@ -285,7 +285,7 @@ export const freeToolSeo = {
     ],
     related: [
       { label: "Signature email pro", href: "/outils/signature-pro" },
-      { label: "Kit du dirigeant organisé", href: "/outils/kit-du-dirigeant-organise" },
+      { label: "Système opérationnel", href: "/ressources/systeme-operationnel-template" },
       { label: "Signer un document électroniquement", href: "/outils/signez-un-document-electroniquement" },
     ],
   },
@@ -353,41 +353,7 @@ export const freeToolSeo = {
     ],
     related: [
       { label: "Générateur de tampon", href: "/outils/generation-de-tampon" },
-      { label: "Kit du dirigeant organisé", href: "/outils/kit-du-dirigeant-organise" },
-      { label: "Signature email pro", href: "/outils/signature-pro" },
-    ],
-  },
-  "kit-du-dirigeant-organise": {
-    slug: "kit-du-dirigeant-organise",
-    path: "/outils/kit-du-dirigeant-organise",
-    title: "Kit du dirigeant organisé",
-    metaTitle: "Kit du dirigeant organisé - Demaa",
-    metaDescription:
-      "Retrouvez des modèles de documents utiles pour organiser une TPE : obligations, prévisionnel, systèmes et suivi.",
-    intro:
-      "Ce kit rassemble des ressources pratiques pour mieux cadrer l'activité d'une petite entreprise. L'objectif est simple : partir de documents clairs plutôt que repartir de zéro à chaque besoin administratif ou organisationnel.",
-    useCases: [
-      "Structurer les documents essentiels d'une TPE.",
-      "Préparer un suivi financier ou opérationnel plus clair.",
-      "Gagner du temps sur les supports récurrents du dirigeant.",
-    ],
-    faqs: [
-      {
-        question: "À qui s'adresse ce kit ?",
-        answer: "Aux indépendants, dirigeants de TPE et petites équipes qui veulent mieux organiser leurs documents.",
-      },
-      {
-        question: "Les modèles remplacent-ils un conseil juridique ?",
-        answer: "Non, ils servent de base de travail. Les situations sensibles doivent être validées par un professionnel.",
-      },
-      {
-        question: "Le kit sera-t-il enrichi ?",
-        answer: "Oui, de nouvelles ressources peuvent être ajoutées selon les besoins les plus fréquents.",
-      },
-    ],
-    related: [
-      { label: "Signer un document électroniquement", href: "/outils/signez-un-document-electroniquement" },
-      { label: "Générateur de tampon", href: "/outils/generation-de-tampon" },
+      { label: "Suivi et prévisionnel financier", href: "/ressources/suivi-previsionnel-financier-template" },
       { label: "Signature email pro", href: "/outils/signature-pro" },
     ],
   },

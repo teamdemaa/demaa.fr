@@ -37,7 +37,3 @@ export const templatesData: TemplateRecord[] = [
     image: "/images/templates/systeme_operationnel.png"
   }
 ];
-
-export async function getTemplates(): Promise<TemplateRecord[]> {
-  return new Promise((resolve) => setTimeout(() => resolve(templatesData), 20));
-}
