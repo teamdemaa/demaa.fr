@@ -163,27 +163,18 @@ export default function ToolDirectoryClient({
               <p className="mx-auto mt-2 max-w-2xl text-sm font-normal leading-relaxed text-dema-muted">
                 {description}
               </p>
-              {!backLink ? (
-                <p className="mx-auto mt-3 max-w-2xl text-xs leading-relaxed text-dema-muted">
-                  Vous pouvez aussi partir d&apos;un métier depuis{" "}
-                  <Link href="/" className="font-medium text-dema-forest transition hover:text-brand-blue">
-                    l&apos;annuaire des systèmes
-                  </Link>
-                  .
-                </p>
-              ) : null}
             </>
           ) : null}
 
           {showSearchBar ? (
-            <div className={`demaa-search-shell mx-auto max-w-4xl p-1.5 ${showHeader ? "mt-5" : "mt-0"}`}>
+            <div className={`demaa-search-shell mx-auto max-w-4xl ${showHeader ? "mt-5" : "mt-0"}`}>
               <div className="relative">
                 <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-dema-forest/42 md:left-5 md:h-5 md:w-5" />
                 <input
                   value={searchQuery}
                   onChange={(event) => updateSearchQuery(event.target.value)}
                   placeholder={searchPlaceholder}
-                  className="w-full rounded-full bg-dema-paper py-3.5 pl-10 pr-5 text-sm font-normal text-brand-blue outline-none transition placeholder:text-brand-blue/36 md:py-4 md:pl-12 md:text-base"
+                  className="w-full rounded-full bg-dema-paper py-2.5 pl-10 pr-5 text-sm font-normal text-brand-blue outline-none transition placeholder:text-brand-blue/36 md:py-3 md:pl-12 md:text-base"
                 />
               </div>
             </div>

@@ -93,19 +93,28 @@ export default async function ResourceDetailPage(
           ) : null}
 
           {entry.slides?.length ? (
-            <div className="mb-10 grid gap-4 sm:grid-cols-2">
-              {entry.slides.map((slide) => (
-                <div key={slide} className="relative aspect-[16/10] overflow-hidden rounded-3xl border border-gray-100 bg-dema-cream">
-                  <Image
-                    src={slide}
-                    alt={entry.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover"
-                  />
+            <section className="mb-10">
+              <div className="-mx-4 overflow-x-auto px-4 pb-4 soft-scroll sm:-mx-6 sm:px-6">
+                <div className="flex w-max snap-x snap-mandatory gap-4">
+                  {entry.slides.map((slide, index) => (
+                    <div
+                      key={slide}
+                      className="w-[min(86vw,44rem)] shrink-0 snap-start"
+                    >
+                      <div className="relative aspect-[16/10] overflow-hidden rounded-3xl border border-gray-100 bg-dema-cream shadow-[0_10px_30px_rgba(20,20,20,0.05)]">
+                        <Image
+                          src={slide}
+                          alt={`${entry.title} - visuel ${index + 1}`}
+                          fill
+                          sizes="(max-width: 768px) 86vw, 44rem"
+                          className="object-cover"
+                        />
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </div>
+            </section>
           ) : null}
 
           <div className="[&>p]:text-lg [&>p]:leading-relaxed [&>p]:text-gray-600 [&>p]:mb-6 [&>h3]:text-2xl [&>h3]:font-bold [&>h3]:text-brand-blue [&>h3]:mt-10 [&>h3]:mb-4 [&>h2]:text-3xl [&>h2]:font-bold [&>h2]:text-brand-blue [&>h2]:mt-12 [&>h2]:mb-6 [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:mb-6 [&>ul>li]:mb-2 [&>ul>li]:text-gray-600 [&>strong]:text-brand-blue [&>strong]:font-semibold [&_img]:rounded-3xl [&_img]:shadow-sm [&_img]:my-10 [&_img]:mx-auto [&_img]:max-w-full">

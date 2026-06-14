@@ -61,13 +61,8 @@ export default async function AnnuaireServicesPage({
           initialCategory={getParamValue(params.category)}
           initialSearch={getParamValue(params.q) ?? ""}
           backLink={backLink}
-          title="Déléguez pour libérer du temps"
+          title="Annuaire Services"
           description="Les services Demaa pour confier ce qui prend du temps, sécuriser l'exécution et libérer la croissance."
-          activePrimaryTab="deleguer"
-          heroTitleLines={{
-            primary: "Déléguez",
-            secondary: "pour libérer du temps",
-          }}
         />
       </main>
     </>

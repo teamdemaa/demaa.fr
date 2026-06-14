@@ -4,13 +4,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState, type MouseEvent } from "react";
-import { Check, ExternalLink, FileText } from "lucide-react";
+import { Check, ExternalLink, FileText, GraduationCap } from "lucide-react";
 import DeleguerPricingPreviewModal from "@/components/DeleguerPricingPreviewModal";
 import ServiceDetailDialog from "@/components/ServiceDetailDialog";
 import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import SystemSetupModal from "@/components/SystemSetupModal";
 import { buildBusinessBlockChecklists } from "@/lib/business-block-checklists";
+import type { CourseEntry } from "@/lib/course-content";
+import { getRelatedCoursesForSystemSlug } from "@/lib/related-systems";
 import { getSectorPageByLabel } from "@/lib/sector-pages";
 import { getRecommendedServicesForSystem } from "@/lib/service-recommendations";
 import type { DemaaService } from "@/lib/service-catalog";
@@ -29,7 +31,8 @@ export type SystemDetailTab =
   | "outils"
   | "services"
   | "fournisseurs"
-  | "ressources";
+  | "ressources"
+  | "cours";
 
 type ProcessGroup = {
   title: string;
@@ -59,7 +62,8 @@ export function isSystemDetailTab(tab?: string): tab is SystemDetailTab {
     tab === "outils" ||
     tab === "services" ||
     tab === "fournisseurs" ||
-    tab === "ressources"
+    tab === "ressources" ||
+    tab === "cours"
   );
 }
 
@@ -164,6 +168,7 @@ export default function SystemDetailContent({
     [system.slug]
   );
   const resources = useMemo(() => getSystemResources(system.slug), [system.slug]);
+  const courses = useMemo(() => getRelatedCoursesForSystemSlug(system.slug), [system.slug]);
   const Heading = headingAs;
   const sectorPage = getSectorPageByLabel(detail.sectorLabel);
 
@@ -333,50 +338,89 @@ export default function SystemDetailContent({
     );
   }
 
+  function renderCourseCard(course: CourseEntry) {
+    return (
+      <Link
+        key={course.slug}
+        href={`/cours/${course.slug}`}
+        className="demaa-card group flex h-full flex-col rounded-[1.15rem] p-5 text-left"
+      >
+        <div className="flex items-start justify-between gap-4">
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper">
+            <GraduationCap className="h-4 w-4" aria-hidden="true" />
+          </span>
+          <span className="rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-medium text-brand-blue/70">
+            {course.duration}
+          </span>
+        </div>
+        <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
+          {course.category}
+        </p>
+        <h3 className="mt-2 text-lg font-semibold leading-snug text-brand-blue">
+          {course.title}
+        </h3>
+        <p className="mt-3 text-sm leading-relaxed text-dema-muted">
+          {course.description}
+        </p>
+        <div className="mt-auto pt-4">
+          <div className="flex flex-wrap gap-2">
+            {course.tags.slice(0, 3).map((tag) => (
+              <span
+                key={tag}
+                className="inline-flex rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-medium text-brand-blue/70"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      </Link>
+    );
+  }
+
   return (
     <>
-      <div className="flex flex-col items-start justify-between gap-4 md:flex-row">
-        <div className="flex-1 text-left">
-          {sectorPage ? (
-            <Link
-              href={`/secteurs/${sectorPage.slug}`}
-              className="text-left text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest transition hover:text-brand-blue"
-            >
-              {detail.sectorLabel}
-            </Link>
-          ) : (
-            <p className="text-left text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
-              {detail.sectorLabel}
-            </p>
-          )}
-          <Heading
-            id={headingId}
-            className="mt-2 text-3xl font-normal tracking-tight text-brand-blue md:text-4xl"
-          >
-            {system.name}
-          </Heading>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-dema-muted">
-            {intro}
-          </p>
-        </div>
-        <div className="flex shrink-0 flex-col gap-2 sm:flex-row md:flex-col lg:flex-row">
+      <div className="text-left">
+        {sectorPage ? (
           <Link
-            href={`/plans-organisation/${system.slug}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="demaa-secondary-button gap-2 bg-dema-paper"
+            href={`/secteurs/${sectorPage.slug}`}
+            className="text-left text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest transition hover:text-brand-blue"
           >
-            <FileText className="h-4 w-4" />
-            Obtenir le Plan d&apos;organisation
+            {detail.sectorLabel}
           </Link>
-          <button
-            type="button"
-            onClick={() => setIsSystemSetupModalOpen(true)}
-            className="demaa-primary-button"
-          >
-            Audit organisation gratuit
-          </button>
-        </div>
+        ) : (
+          <p className="text-left text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
+            {detail.sectorLabel}
+          </p>
+        )}
+        <Heading
+          id={headingId}
+          className="mt-2 text-3xl font-normal tracking-tight text-brand-blue md:text-4xl"
+        >
+          {system.name}
+        </Heading>
+        <p className="mt-3 max-w-2xl text-sm leading-6 text-dema-muted">
+          {intro}
+        </p>
+      </div>
+
+      <div className="mt-5 flex flex-col gap-2 text-left sm:flex-row sm:flex-wrap">
+        <Link
+          href={`/plans-organisation/${system.slug}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="demaa-secondary-button gap-2 bg-dema-paper"
+        >
+          <FileText className="h-4 w-4" />
+          Obtenir le Plan d&apos;organisation
+        </Link>
+        <button
+          type="button"
+          onClick={() => setIsSystemSetupModalOpen(true)}
+          className="demaa-primary-button"
+        >
+          Audit organisation gratuit
+        </button>
       </div>
 
       <div className="mt-6 -mx-2 overflow-x-auto px-2 pb-2 soft-scroll">
@@ -388,6 +432,7 @@ export default function SystemDetailContent({
               ["services", "Services"],
               ["fournisseurs", "Partenaires & fournisseurs"],
               ["ressources", "Ressources"],
+              ["cours", "Cours"],
             ] as Array<[SystemDetailTab, string]>
           ).map(([tab, label]) => (
             <button
@@ -535,11 +580,33 @@ export default function SystemDetailContent({
               </Link>
             </div>
           </div>
-        ) : (
+        ) : activeTab === "ressources" ? (
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {resources.map((resource) => (
               <SystemResourceCard key={resource.id} resource={resource} />
             ))}
+          </div>
+        ) : (
+          <div className="space-y-5">
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {courses.map(renderCourseCard)}
+            </div>
+
+            <div className="rounded-[1.15rem] border border-dema-line bg-dema-cream/70 p-5 text-left">
+              <h3 className="text-lg font-semibold text-brand-blue">
+                Voir tous les cours ?
+              </h3>
+              <p className="mt-2 max-w-3xl text-sm leading-relaxed text-dema-muted">
+                Retrouvez les cours Demaa pour approfondir un sujet, monter en autonomie
+                et structurer vos décisions plus sereinement.
+              </p>
+              <Link
+                href="/cours"
+                className="mt-4 inline-flex items-center rounded-full border border-dema-line bg-dema-paper px-4 py-2 text-sm font-medium text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
+              >
+                Parcourir les cours
+              </Link>
+            </div>
           </div>
         )}
       </div>

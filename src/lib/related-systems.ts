@@ -1,4 +1,5 @@
 import { enterpriseCatalog, enterpriseCatalogBySlug, enterpriseToSystem } from "@/lib/enterprise-annuaire";
+import { getAllCourseEntries, type CourseEntry } from "@/lib/course-content";
 import { getRecommendedServicesForSystem } from "@/lib/service-recommendations";
 import { systemResources } from "@/lib/system-resources";
 import type { System } from "@/lib/types";
@@ -102,4 +103,16 @@ export function getRelatedSystemsForServiceSlug(serviceSlug: string, limit = 6):
     .slice(0, limit);
 
   return matches.map(({ enterprise }) => enterpriseToSystem(enterprise));
+}
+
+export function getRelatedCoursesForSystemSlug(systemSlug: string, limit = 3): CourseEntry[] {
+  const relatedCourses = getAllCourseEntries().filter((entry) =>
+    (RELATED_SYSTEM_SLUGS_BY_CONTENT_SLUG[entry.slug] ?? []).includes(systemSlug),
+  );
+
+  if (relatedCourses.length) {
+    return relatedCourses.slice(0, limit);
+  }
+
+  return getAllCourseEntries().slice(0, limit);
 }

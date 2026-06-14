@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Suspense, useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Boxes, HandHelping, Search, type LucideIcon } from "lucide-react";
 import {
   visiblePrimaryNavigationItems,
@@ -30,7 +30,17 @@ export default function Navbar({
   minimal?: boolean;
   homeTabsMode?: HomeTabsMode;
 }) {
+  const router = useRouter();
+  const pathname = usePathname();
   const hasDesktopTabs = !minimal && visiblePrimaryNavigationItems.length > 0;
+
+  useEffect(() => {
+    if (pathname === "/") {
+      return;
+    }
+
+    router.prefetch("/");
+  }, [pathname, router]);
 
   return (
     <nav className="sticky top-0 z-40 border-b border-dema-line/70 bg-dema-cream/92 py-1 backdrop-blur-md">
@@ -44,6 +54,8 @@ export default function Navbar({
             href="/"
             aria-label="Retour à l'accueil"
             className="demaa-brand-logo inline-flex items-center text-xl tracking-tight text-brand-blue shrink-0 z-50 cursor-pointer sm:text-2xl"
+            onMouseEnter={() => router.prefetch("/")}
+            onFocus={() => router.prefetch("/")}
           >
             Demaa
           </Link>

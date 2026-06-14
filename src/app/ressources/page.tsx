@@ -33,16 +33,25 @@ export default function ResourcesIndexPage() {
     <>
       <Navbar />
       <main className="flex-1 w-full bg-background min-h-[85vh]">
-        <section className="w-full flex flex-col items-center justify-center pt-8 pb-8 md:pt-10 md:pb-8 px-4 text-center bg-[#ffffff] border-b border-brand-coral/10 mb-8">
-          <h1 className="text-2xl md:text-4xl font-bold text-brand-blue mb-3">
-            Nos <span className="text-brand-coral">ressources</span>
-          </h1>
-          <p className="text-sm md:text-base text-gray-500 max-w-2xl mx-auto font-medium">
-            Un seul espace pour retrouver les contenus, ressources et templates utiles à votre activité.
-          </p>
+        <section className="w-full border-b border-dema-line/65 bg-dema-cream px-4 pb-5 pt-8 md:pt-10">
+          <div className="mx-auto max-w-5xl text-center">
+            <h1 className="demaa-section-title text-4xl tracking-tight text-brand-blue md:text-5xl">
+              Ressources
+            </h1>
+            <p className="mx-auto mt-2 max-w-2xl text-sm font-normal leading-relaxed text-dema-muted">
+              Retrouvez les contenus, ressources et templates utiles pour structurer, piloter et développer votre activité.
+            </p>
+            <p className="mx-auto mt-3 max-w-2xl text-xs leading-relaxed text-dema-muted">
+              Vous pouvez aussi partir d&apos;un métier depuis{" "}
+              <Link href="/" className="font-medium text-dema-forest transition hover:text-brand-blue">
+                l&apos;annuaire des systèmes
+              </Link>
+              .
+            </p>
+          </div>
         </section>
 
-        <div className="max-w-6xl mx-auto px-4">
+        <div className="max-w-6xl mx-auto px-4 pt-8">
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {entries.length === 0 && (
               <div className="text-center py-20 text-gray-400">
