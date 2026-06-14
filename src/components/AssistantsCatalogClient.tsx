@@ -1,9 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { BadgeEuro, Blocks, Check, ChevronDown, FileCheck, Users } from "lucide-react";
 import PrimaryMobileNav from "@/components/PrimaryMobileNav";
-import SystemSetupModal from "@/components/SystemSetupModal";
 
 const howItWorksSteps = [
   {
@@ -80,8 +80,9 @@ const em2aSteps = [
   "Mise en place d’un système opérationnel clair, centralisé et exploitable",
 ] as const;
 
+const GOOGLE_AUDIT_BOOKING_URL = "https://calendar.app.google/E9WX9qfHxViWZ3uq8";
+
 export default function AssistantsCatalogClient() {
-  const [isAuditModalOpen, setIsAuditModalOpen] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState(0);
 
   return (
@@ -242,15 +243,12 @@ export default function AssistantsCatalogClient() {
                     vos blocages et les premières priorités à traiter.
                   </p>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsAuditModalOpen(true);
-                  }}
+                <Link
+                  href={GOOGLE_AUDIT_BOOKING_URL}
                   className="mt-6 inline-flex w-full items-center justify-center rounded-full border border-dema-forest/20 bg-dema-sage/55 px-5 py-2.5 text-sm font-medium text-dema-forest transition hover:border-dema-forest/30 hover:bg-dema-sage disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   Demander l&apos;audit gratuit
-                </button>
+                </Link>
               </article>
             </div>
           </div>
@@ -306,22 +304,16 @@ export default function AssistantsCatalogClient() {
                 Des dirigeants de TPE, cabinets, indépendants et petites équipes, dans différents
                 secteurs, accompagnés pour structurer leur organisation et alléger leur quotidien.
               </p>
-              <button
-                type="button"
-                onClick={() => setIsAuditModalOpen(true)}
+              <Link
+                href={GOOGLE_AUDIT_BOOKING_URL}
                 className="demaa-primary-button mx-auto mt-8 px-5 py-3"
               >
                 Audit organisation gratuit
-              </button>
+              </Link>
             </div>
           </div>
         </div>
       </section>
-
-      <SystemSetupModal
-        isOpen={isAuditModalOpen}
-        onClose={() => setIsAuditModalOpen(false)}
-      />
     </>
   );
 }

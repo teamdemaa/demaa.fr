@@ -3,13 +3,18 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useMemo, useState, type MouseEvent } from "react";
+import {
+  startTransition,
+  useMemo,
+  useOptimistic,
+  useState,
+  type MouseEvent,
+} from "react";
 import { Check, ExternalLink, FileText, GraduationCap } from "lucide-react";
 import DeleguerPricingPreviewModal from "@/components/DeleguerPricingPreviewModal";
 import ServiceDetailDialog from "@/components/ServiceDetailDialog";
 import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
 import { ServiceIcon } from "@/components/ServiceIcon";
-import SystemSetupModal from "@/components/SystemSetupModal";
 import { buildBusinessBlockChecklists } from "@/lib/business-block-checklists";
 import type { CourseEntry } from "@/lib/course-content";
 import { getRelatedCoursesForSystemSlug } from "@/lib/related-courses";
@@ -51,6 +56,8 @@ const PILLARS: SystemPillar[] = [
   "Finance & administration",
   "Équipe",
 ];
+
+const GOOGLE_AUDIT_BOOKING_URL = "https://calendar.app.google/E9WX9qfHxViWZ3uq8";
 
 function getProcessChecklistItems(examples?: string): string[] {
   if (!examples) {
@@ -136,7 +143,6 @@ export default function SystemDetailContent({
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [isSystemSetupModalOpen, setIsSystemSetupModalOpen] = useState(false);
   const [selectedToolDetail, setSelectedToolDetail] = useState<ToolDirectoryItem | null>(null);
   const [selectedServiceDetail, setSelectedServiceDetail] = useState<DemaaService | null>(null);
   const [isDeleguerPricingOpen, setIsDeleguerPricingOpen] = useState(false);
@@ -154,13 +160,18 @@ export default function SystemDetailContent({
   const Heading = headingAs;
   const sectorPage = getSectorPageByLabel(detail.sectorLabel);
   const resolvedTabFromUrl = searchParams.get("tab") ?? undefined;
-  const activeTab = isSystemDetailTab(resolvedTabFromUrl)
+  const currentTab = isSystemDetailTab(resolvedTabFromUrl)
     ? resolvedTabFromUrl
     : isSystemDetailTab(initialActiveTab)
       ? initialActiveTab
       : "processus";
+  const [activeTab, setActiveTab] = useOptimistic<SystemDetailTab, SystemDetailTab>(
+    currentTab,
+    (_currentState, nextTab) => nextTab,
+  );
 
   function selectTab(tab: SystemDetailTab) {
+    setActiveTab(tab);
     const params = new URLSearchParams(searchParams.toString());
 
     if (tab === "processus") {
@@ -170,7 +181,9 @@ export default function SystemDetailContent({
     }
 
     const query = params.toString();
-    router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
+    startTransition(() => {
+      router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
+    });
   }
 
   function renderToolCard(tool: OperationalSystemDetail["tools"][number]) {
@@ -365,7 +378,7 @@ export default function SystemDetailContent({
   }
 
   return (
-    <>
+    <div className="flex h-full min-h-0 flex-col">
       <div className="text-left">
         {sectorPage ? (
           <Link
@@ -400,13 +413,12 @@ export default function SystemDetailContent({
           <FileText className="h-4 w-4" />
           Obtenir le Plan d&apos;organisation
         </Link>
-        <button
-          type="button"
-          onClick={() => setIsSystemSetupModalOpen(true)}
+        <Link
+          href={GOOGLE_AUDIT_BOOKING_URL}
           className="demaa-primary-button"
         >
           Audit organisation gratuit
-        </button>
+        </Link>
       </div>
 
       <div className="mt-6 -mx-2 overflow-x-auto px-2 pb-2 soft-scroll">
@@ -612,13 +624,7 @@ export default function SystemDetailContent({
       {isDeleguerPricingOpen ? (
         <DeleguerPricingPreviewModal onClose={() => setIsDeleguerPricingOpen(false)} />
       ) : null}
-
-      <SystemSetupModal
-        isOpen={isSystemSetupModalOpen}
-        onClose={() => setIsSystemSetupModalOpen(false)}
-        initialSector={system.name ?? detail.sectorLabel}
-      />
-    </>
+    </div>
   );
 }
 
