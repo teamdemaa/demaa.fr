@@ -75,7 +75,7 @@ export const toolDirectory = toolDirectoryPayload.tools.filter(
   (tool) => tool.status !== "hidden" && tool.status !== "deprecated",
 );
 
-export const toolDirectoryBySlug = Object.fromEntries(
+const toolDirectoryBySlug = Object.fromEntries(
   toolDirectory.flatMap((tool) => {
     const canonicalSlug = getToolDirectorySlug(tool);
     const aliases = getToolDirectoryAliases(tool);
@@ -103,16 +103,6 @@ export function findToolDirectoryItemBySlug(
 
 export function getToolDirectoryItemBySlug(slug: string): ToolDirectoryItem | null {
   return toolDirectoryBySlug[slug] ?? null;
-}
-
-export function resolveToolDirectorySlug(slug: string): string | null {
-  const tool = getToolDirectoryItemBySlug(slug);
-
-  if (!tool) {
-    return null;
-  }
-
-  return getToolDirectorySlug(tool);
 }
 
 export function resolveToolDirectorySlugInList(

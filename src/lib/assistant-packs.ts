@@ -40,7 +40,7 @@ export type AssistantOffer = {
   packs: readonly AssistantPack[];
 };
 
-export const ASSISTANT_PACK_OFFERS = [
+const ASSISTANT_PACK_OFFERS = [
   {
     id: "structuration-automatisation",
     title: "Structuration & Automatisation",

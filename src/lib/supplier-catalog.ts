@@ -411,7 +411,7 @@ export const supplierFamilies = Array.from(
   new Set(demaaSuppliers.map((supplier) => supplier.family)),
 ) as SupplierFamily[];
 
-export const supplierBySlug = Object.fromEntries(
+const supplierBySlug = Object.fromEntries(
   demaaSuppliers.map((supplier) => [supplier.slug, supplier]),
 ) as Partial<Record<DemaaSupplierSlug, DemaaSupplier>>;
 
