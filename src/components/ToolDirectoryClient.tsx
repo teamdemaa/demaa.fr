@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState, type MouseEvent, type ReactNode } from "react";
 import { ArrowLeft, Search } from "lucide-react";
-import HorizontalScrollHint from "@/components/HorizontalScrollHint";
 import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
 import { matchesSearchQuery } from "@/lib/search";
 import type { ToolDirectoryCardItem } from "@/lib/tool-directory-page";
@@ -30,7 +29,6 @@ type ToolDirectoryClientProps = {
   description?: string;
   searchPlaceholder?: string;
   items: ToolDirectoryCardItem[];
-  secondaryItems?: ToolDirectoryCardItem[];
   sectors: string[];
   categories: string[];
   initialCategory?: string;
@@ -41,7 +39,6 @@ type ToolDirectoryClientProps = {
   onSearchQueryChange?: (value: string) => void;
   showHeader?: boolean;
   showSearchBar?: boolean;
-  variant?: "directory" | "toolbox";
   cardClickMode?: "modal" | "navigate";
   backLink?: {
     href: string;
@@ -54,7 +51,6 @@ export default function ToolDirectoryClient({
   description = "Les principaux outils utiles aux TPE, classés par secteur et usage.",
   searchPlaceholder = "Rechercher un outil, un usage, un secteur...",
   items,
-  secondaryItems = [],
   sectors,
   categories,
   initialCategory,
@@ -65,7 +61,6 @@ export default function ToolDirectoryClient({
   onSearchQueryChange,
   showHeader = true,
   showSearchBar = true,
-  variant = "directory",
   cardClickMode = "modal",
   backLink,
 }: ToolDirectoryClientProps) {
@@ -80,22 +75,6 @@ export default function ToolDirectoryClient({
   const [activeCategory, setActiveCategory] = useState(initialFilters.category);
   const [selectedTool, setSelectedTool] = useState<ToolDirectoryCardItem | null>(null);
   const searchQuery = controlledSearchQuery ?? internalSearchQuery;
-  const toolboxSectors = useMemo(
-    () => [
-      ...sectors,
-      ...secondaryItems.flatMap((tool) => tool.sectors),
-    ].filter((sector, index, list) => list.indexOf(sector) === index),
-    [secondaryItems, sectors]
-  );
-  const toolboxCategories = useMemo(
-    () => [
-      ...categories,
-      ...secondaryItems.map((tool) => tool.category),
-    ].filter((category, index, list) => list.indexOf(category) === index),
-    [categories, secondaryItems]
-  );
-  const visibleSectors = variant === "toolbox" ? toolboxSectors : sectors;
-  const visibleCategories = variant === "toolbox" ? toolboxCategories : categories;
 
   function updateSearchQuery(value: string) {
     if (onSearchQueryChange) {
@@ -161,30 +140,6 @@ export default function ToolDirectoryClient({
     });
   }, [activeCategory, activeSector, hideTransverseOnSector, items, searchQuery]);
 
-  const filteredOtherTools = useMemo(() => {
-    return secondaryItems.filter((tool) => {
-      const matchesSector =
-        activeSector === "Tous" || tool.sectors.includes(activeSector);
-      const matchesCategory =
-        activeCategory === "Tous" || tool.category === activeCategory;
-      const matchesSearch = matchesSearchQuery(searchQuery, [
-        tool.name,
-        tool.description,
-        tool.bestFor,
-        ...tool.tags,
-        ...tool.sectors,
-        tool.category,
-        tool.slug,
-      ]);
-
-      return (
-        matchesSearch &&
-        matchesSector &&
-        matchesCategory
-      );
-    });
-  }, [activeCategory, activeSector, searchQuery, secondaryItems]);
-
   return (
     <div className="w-full">
       <section className={`w-full border-b border-dema-line/65 bg-dema-cream px-4 pb-4 md:pb-5 ${showHeader ? "pt-8 md:pt-10" : "pt-1"}`}>
@@ -225,50 +180,48 @@ export default function ToolDirectoryClient({
             </div>
           ) : null}
 
-          {variant === "directory" || variant === "toolbox" ? (
-            <HorizontalScrollArea
-              outerClassName={`mx-auto max-w-4xl ${showSearchBar || showHeader ? "mt-3" : "mt-1"}`}
-              scrollClassName="flex gap-2 overflow-x-auto pb-2 soft-scroll"
-            >
-              <FilterChip
-                label="Tous"
-                isActive={activeSector === "Tous" && activeCategory === "Tous"}
-                onClick={() => {
-                  setActiveSector("Tous");
-                  setActiveCategory("Tous");
-                }}
-              />
-              {visibleSectors
-                .filter((sector) => sector !== "Tous")
-                .map((sector) => (
-                  <FilterChip
-                    key={sector}
-                    label={sector}
-                    isActive={activeSector === sector}
-                    onClick={() => {
-                      setActiveSector(sector);
-                      setActiveCategory("Tous");
-                    }}
-                  />
-                ))}
-              {visibleCategories
-                .filter(
-                  (category) =>
-                    category !== "Tous" && !visibleSectors.includes(category)
-                )
-                .map((category) => (
-                  <FilterChip
-                    key={category}
-                    label={category}
-                    isActive={activeCategory === category}
-                    onClick={() => {
-                      setActiveCategory(category);
-                      setActiveSector("Tous");
-                    }}
-                  />
-                ))}
-            </HorizontalScrollArea>
-          ) : null}
+          <HorizontalScrollArea
+            outerClassName={`mx-auto max-w-4xl ${showSearchBar || showHeader ? "mt-3" : "mt-1"}`}
+            scrollClassName="flex gap-2 overflow-x-auto pb-2 soft-scroll"
+          >
+            <FilterChip
+              label="Tous"
+              isActive={activeSector === "Tous" && activeCategory === "Tous"}
+              onClick={() => {
+                setActiveSector("Tous");
+                setActiveCategory("Tous");
+              }}
+            />
+            {sectors
+              .filter((sector) => sector !== "Tous")
+              .map((sector) => (
+                <FilterChip
+                  key={sector}
+                  label={sector}
+                  isActive={activeSector === sector}
+                  onClick={() => {
+                    setActiveSector(sector);
+                    setActiveCategory("Tous");
+                  }}
+                />
+              ))}
+            {categories
+              .filter(
+                (category) =>
+                  category !== "Tous" && !sectors.includes(category)
+              )
+              .map((category) => (
+                <FilterChip
+                  key={category}
+                  label={category}
+                  isActive={activeCategory === category}
+                  onClick={() => {
+                    setActiveCategory(category);
+                    setActiveSector("Tous");
+                  }}
+                />
+              ))}
+          </HorizontalScrollArea>
         </div>
       </section>
 
@@ -289,15 +242,7 @@ export default function ToolDirectoryClient({
           )}
         </div>
 
-        {variant === "toolbox" ? (
-          <ToolboxSections
-            freeTools={filteredTools}
-            otherTools={filteredOtherTools}
-            externalLinks={externalLinks}
-            cardClickMode={cardClickMode}
-            onOpenDetails={openToolDetails}
-          />
-        ) : filteredTools.length === 0 ? (
+        {filteredTools.length === 0 ? (
           <div className="rounded-[1.25rem] border border-dashed border-dema-line bg-dema-paper p-10 text-center">
             <h2 className="text-xl font-bold text-brand-blue">Aucun outil trouvé</h2>
             <p className="mt-3 text-sm font-normal text-dema-muted">
@@ -375,189 +320,21 @@ export default function ToolDirectoryClient({
   );
 }
 
-function ToolboxSections({
-  freeTools,
-  otherTools,
-  externalLinks,
-  cardClickMode,
-  onOpenDetails,
-}: {
-  freeTools: ToolDirectoryCardItem[];
-  otherTools: ToolDirectoryCardItem[];
-  externalLinks: boolean;
-  cardClickMode: "modal" | "navigate";
-  onOpenDetails: (tool: ToolDirectoryCardItem) => void;
-}) {
-  const hasResults = freeTools.length > 0 || otherTools.length > 0;
-
-  if (!hasResults) {
-    return (
-      <div className="rounded-[1.25rem] border border-dashed border-dema-line bg-dema-paper p-10 text-center">
-        <h2 className="text-xl font-bold text-brand-blue">Aucun outil trouvé</h2>
-        <p className="mt-3 text-sm font-normal text-dema-muted">
-          Essayez un autre mot-clé ou un usage plus large.
-        </p>
-      </div>
-    );
-  }
-
-  return (
-    <div className="space-y-10">
-      {freeTools.length > 0 ? (
-        <section id="outils-du-quotidien" className="scroll-mt-28">
-          <SectionTitle title="Outils gratuits" />
-          <HorizontalScrollArea
-            outerClassName="-mx-4 sm:-mx-6 lg:-mx-8"
-            scrollClassName="overflow-x-auto px-4 pb-3 soft-scroll sm:px-6 lg:px-8"
-            controlsClassName="absolute right-4 -top-10 z-10 flex items-center gap-1.5 sm:right-6 lg:right-8"
-            showScrollHint
-          >
-            <div className="flex gap-4">
-              {freeTools.map((tool) => (
-                <SquareToolCard
-                  key={tool.name}
-                  tool={tool}
-                  externalLinks={externalLinks}
-                  cardClickMode={cardClickMode}
-                  onOpenDetails={onOpenDetails}
-                />
-              ))}
-            </div>
-          </HorizontalScrollArea>
-        </section>
-      ) : null}
-
-      {otherTools.length > 0 ? (
-        <section>
-          <SectionTitle title="Autres Outils" />
-          <HorizontalScrollArea
-            viewAllHref="/annuaire-outils"
-            outerClassName="-mx-4 sm:-mx-6 lg:-mx-8"
-            scrollClassName="overflow-x-auto px-4 pb-3 soft-scroll sm:px-6 lg:px-8"
-            controlsClassName="absolute right-4 -top-10 z-10 flex items-center gap-1.5 sm:right-6 lg:right-8"
-            showScrollHint
-          >
-            <div className="flex gap-4">
-              {otherTools.map((tool) => (
-                <SquareToolCard
-                  key={tool.name}
-                  tool={tool}
-                  externalLinks={externalLinks}
-                  cardClickMode={cardClickMode}
-                  onOpenDetails={onOpenDetails}
-                />
-              ))}
-            </div>
-          </HorizontalScrollArea>
-        </section>
-      ) : null}
-    </div>
-  );
-}
-
-function SectionTitle({ title }: { title: string }) {
-  return (
-    <div className="mb-3">
-      <h2 className="demaa-section-title text-2xl tracking-tight text-brand-blue/85 md:text-3xl">
-        {title}
-      </h2>
-    </div>
-  );
-}
-
 function HorizontalScrollArea({
   children,
-  viewAllHref,
-  viewAllLabel = "Voir tout",
   outerClassName = "",
   scrollClassName = "",
-  showScrollHint = false,
-  controlsClassName,
 }: {
   children: ReactNode;
-  viewAllHref?: string;
-  viewAllLabel?: string;
   outerClassName?: string;
   scrollClassName?: string;
-  showScrollHint?: boolean;
-  controlsClassName?: string;
 }) {
   return (
     <div className={outerClassName}>
-      {showScrollHint ? (
-        <HorizontalScrollHint className={scrollClassName} controlsClassName={controlsClassName}>
-          {children}
-        </HorizontalScrollHint>
-      ) : (
-        <div className={scrollClassName}>
-          {children}
-        </div>
-      )}
-      {viewAllHref ? (
-        <div className="mt-1 flex justify-end px-4 sm:px-6 lg:px-8">
-          <Link
-            href={viewAllHref}
-            className="text-xs font-medium text-brand-blue/60 transition hover:text-brand-blue"
-          >
-            {viewAllLabel}
-          </Link>
-        </div>
-      ) : null}
-    </div>
-  );
-}
-
-function SquareToolCard({
-  tool,
-  externalLinks,
-  cardClickMode,
-  onOpenDetails,
-}: {
-  tool: ToolDirectoryCardItem;
-  externalLinks: boolean;
-  cardClickMode: "modal" | "navigate";
-  onOpenDetails: (tool: ToolDirectoryCardItem) => void;
-}) {
-  const detailHref = tool.detailUrl ?? tool.url;
-  const className =
-    "demaa-card group flex min-h-[10rem] flex-[0_0_calc(50%-0.5rem)] flex-col rounded-[1.15rem] p-5 text-left md:flex-[0_0_calc(25%-0.75rem)]";
-
-  const content = (
-    <>
-      <div className="flex h-full flex-col">
-        <p className="text-[10px] font-medium uppercase tracking-[0.16em] text-dema-forest">
-          {tool.category}
-        </p>
-        <h3 className="mt-3 line-clamp-2 text-lg font-semibold leading-tight tracking-tight text-brand-blue">
-          {tool.name}
-        </h3>
-        <p className="mt-3 line-clamp-3 text-sm font-normal leading-relaxed text-dema-muted">
-          {tool.description}
-        </p>
+      <div className={scrollClassName}>
+        {children}
       </div>
-    </>
-  );
-
-  if (externalLinks || (!tool.detailUrl && tool.url.startsWith("http"))) {
-    return (
-      <a href={tool.url} target="_blank" rel="noreferrer" className={className}>
-        {content}
-      </a>
-    );
-  }
-
-  return (
-    <Link
-      href={detailHref}
-      className={className}
-      onClick={
-        cardClickMode === "modal" && Boolean(tool.detailUrl)
-          ? (event) => handleClientModalClick(event, tool, onOpenDetails)
-          : undefined
-      }
-    >
-      {content}
-    </Link>
+    </div>
   );
 }
 

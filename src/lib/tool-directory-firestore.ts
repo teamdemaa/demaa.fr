@@ -4,9 +4,6 @@ import { getAdminFirestore } from "./firebase-admin";
 import type { DocumentData } from "firebase-admin/firestore";
 import {
   toolDirectory,
-  toolDirectoryCategories,
-  toolDirectorySectors,
-  toolboxToolDirectory,
   type ToolDirectoryItem,
 } from "./tool-directory";
 
@@ -73,15 +70,7 @@ export async function getUnifiedToolDirectoryMeta() {
 
   return {
     tools,
-    toolboxTools: tools.filter((tool) => tool.toolbox),
     sectors: ["Tous", ...Array.from(new Set(tools.flatMap((tool) => tool.sectors)))],
     categories: ["Tous", ...Array.from(new Set(tools.map((tool) => tool.category)))],
   };
 }
-
-export const fallbackToolDirectoryMeta = {
-  tools: toolDirectory,
-  toolboxTools: toolboxToolDirectory,
-  sectors: toolDirectorySectors,
-  categories: toolDirectoryCategories,
-};

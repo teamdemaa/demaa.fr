@@ -76,8 +76,6 @@ export const toolDirectory = toolDirectoryPayload.tools.filter(
   (tool) => tool.status !== "hidden" && tool.status !== "deprecated",
 );
 
-export const toolboxToolDirectory = toolDirectory.filter((tool) => tool.toolbox);
-
 export const toolDirectoryBySlug = Object.fromEntries(
   toolDirectory.flatMap((tool) => {
     const canonicalSlug = getToolDirectorySlug(tool);

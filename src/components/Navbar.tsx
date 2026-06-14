@@ -66,9 +66,7 @@ function DesktopHomeTabsNav({ mode }: { mode: HomeTabsMode }) {
   const activeTab =
     pathname === "/annuaire-services"
       ? "deleguer"
-      : pathname === "/structurer" ||
-          pathname === "/organisation-automatisation" ||
-          pathname === "/assistants"
+      : pathname === "/organisation-automatisation"
         ? "structurer"
       : pathname === "/"
         ? getVisibleTab(urlTab ?? "")?.id ?? "analyser"
