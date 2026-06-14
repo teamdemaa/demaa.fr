@@ -6627,6 +6627,30 @@
       "scope": "business"
     },
     {
+      "slug": "repriz",
+      "name": "Repriz",
+      "url": "/outils/repriz",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil",
+        "Commerce local",
+        "E-commerce",
+        "Artisanat & BTP",
+        "Immobilier"
+      ],
+      "description": "Annuaire d’opportunités et future marketplace d’entreprises à reprendre.",
+      "tags": [
+        "Reprise",
+        "Marketplace",
+        "Opportunités"
+      ],
+      "bestFor": "Repérer des entreprises à reprendre et structurer une première qualification.",
+      "pricingHint": "À vérifier",
+      "status": "active",
+      "toolbox": false,
+      "scope": "business"
+    },
+    {
       "slug": "freshdesk",
       "name": "Freshdesk",
       "url": "https://www.freshworks.com/freshdesk/",

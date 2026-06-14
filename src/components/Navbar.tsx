@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Suspense, useEffect, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
-import { Boxes, HandHelping, Handshake, Search, type LucideIcon } from "lucide-react";
+import { Boxes, HandHelping, Search, type LucideIcon } from "lucide-react";
 import {
   visiblePrimaryNavigationItems,
   type PrimaryNavigationId,
@@ -15,7 +15,6 @@ const tabIcons: Record<PrimaryNavigationId, LucideIcon> = {
   analyser: Search,
   structurer: Boxes,
   deleguer: HandHelping,
-  developper: Handshake,
 };
 
 const HOME_TAB_SELECT_EVENT = "demaa:home-tab-select";
@@ -71,8 +70,6 @@ function DesktopHomeTabsNav({ mode }: { mode: HomeTabsMode }) {
           pathname === "/organisation-automatisation" ||
           pathname === "/assistants"
         ? "structurer"
-      : pathname === "/developper"
-        ? "developper"
       : pathname === "/"
         ? getVisibleTab(urlTab ?? "")?.id ?? "analyser"
         : undefined;
