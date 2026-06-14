@@ -3,13 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import {
-  startTransition,
-  useMemo,
-  useOptimistic,
-  useState,
-  type MouseEvent,
-} from "react";
+import { useMemo, useState, type MouseEvent } from "react";
 import { Check, ExternalLink, FileText, GraduationCap } from "lucide-react";
 import DeleguerPricingPreviewModal from "@/components/DeleguerPricingPreviewModal";
 import NewsletterForm from "@/components/NewsletterForm";
@@ -161,18 +155,13 @@ export default function SystemDetailContent({
   const Heading = headingAs;
   const sectorPage = getSectorPageByLabel(detail.sectorLabel);
   const resolvedTabFromUrl = searchParams.get("tab") ?? undefined;
-  const currentTab = isSystemDetailTab(resolvedTabFromUrl)
+  const activeTab = isSystemDetailTab(resolvedTabFromUrl)
     ? resolvedTabFromUrl
     : isSystemDetailTab(initialActiveTab)
       ? initialActiveTab
       : "processus";
-  const [activeTab, setActiveTab] = useOptimistic<SystemDetailTab, SystemDetailTab>(
-    currentTab,
-    (_currentState, nextTab) => nextTab,
-  );
 
   function selectTab(tab: SystemDetailTab) {
-    setActiveTab(tab);
     const params = new URLSearchParams(searchParams.toString());
 
     if (tab === "processus") {
@@ -182,9 +171,7 @@ export default function SystemDetailContent({
     }
 
     const query = params.toString();
-    startTransition(() => {
-      router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
-    });
+    router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
   }
 
   function renderToolCard(tool: OperationalSystemDetail["tools"][number]) {
@@ -417,7 +404,7 @@ export default function SystemDetailContent({
   }
 
   return (
-    <div className="flex h-full min-h-0 flex-col">
+    <>
       <div className="text-left">
         {sectorPage ? (
           <Link
@@ -637,7 +624,7 @@ export default function SystemDetailContent({
       {isDeleguerPricingOpen ? (
         <DeleguerPricingPreviewModal onClose={() => setIsDeleguerPricingOpen(false)} />
       ) : null}
-    </div>
+    </>
   );
 }
 
