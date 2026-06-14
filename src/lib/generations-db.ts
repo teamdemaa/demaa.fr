@@ -2,10 +2,6 @@ import { createHash } from "node:crypto";
 import { normalizeEmail } from "@/lib/email";
 import { getAdminFirestore } from "./firebase-admin";
 
-interface CacheRow {
-  result_json?: string;
-}
-
 interface PaymentRow {
   stripe_session_id: string;
   email_sent_at: string | null;
@@ -52,13 +48,6 @@ interface CustomerSessionRow {
   expires_at?: string | null;
 }
 
-interface GenerationInput {
-  email: string;
-  prompt: string;
-  result: unknown;
-  sector?: string;
-}
-
 interface StripePaymentInput {
   stripeSessionId: string;
   stripeEventId: string;
@@ -99,93 +88,6 @@ interface AssistantDelegationRequestInput {
 
 function getStableKey(value: string) {
   return createHash("sha256").update(value.trim().toLowerCase()).digest("hex");
-}
-
-function getPromptKey(prompt: string) {
-  return getStableKey(prompt);
-}
-
-async function saveLead(email: string, now: string) {
-  const database = getAdminFirestore();
-  const normalizedEmail = normalizeEmail(email);
-  const leadRef = database.collection("leads").doc(getStableKey(normalizedEmail));
-
-  await database.runTransaction(async (transaction) => {
-    const leadDoc = await transaction.get(leadRef);
-
-    transaction.set(
-      leadRef,
-      {
-        email: normalizedEmail,
-        created_at: leadDoc.exists ? leadDoc.data()?.created_at || now : now,
-        updated_at: now,
-      },
-      { merge: true }
-    );
-  });
-}
-
-export async function saveGeneration(input: GenerationInput) {
-  const database = getAdminFirestore();
-  const now = new Date().toISOString();
-  const email = normalizeEmail(input.email);
-
-  await saveLead(email, now);
-
-  await database.collection("generations").add({
-    email,
-    prompt: input.prompt,
-    sector: input.sector?.trim() || null,
-    result_json: JSON.stringify(input.result),
-    created_at: now,
-  });
-}
-
-export async function getGenerationCountByEmail(email: string) {
-  const database = getAdminFirestore();
-  const snapshot = await database
-    .collection("generations")
-    .where("email", "==", normalizeEmail(email))
-    .get();
-
-  return snapshot.size;
-}
-
-export async function getCachedAssistantPlan(prompt: string) {
-  const database = getAdminFirestore();
-  const cacheDoc = await database
-    .collection("assistant_plan_cache")
-    .doc(getPromptKey(prompt))
-    .get();
-
-  if (!cacheDoc.exists) {
-    return null;
-  }
-
-  const cacheRow = cacheDoc.data() as CacheRow | undefined;
-
-  if (!cacheRow?.result_json) {
-    return null;
-  }
-
-  try {
-    return JSON.parse(cacheRow.result_json);
-  } catch {
-    return null;
-  }
-}
-
-export async function saveAssistantPlanCache(prompt: string, result: unknown) {
-  const database = getAdminFirestore();
-  const now = new Date().toISOString();
-
-  await database.collection("assistant_plan_cache").doc(getPromptKey(prompt)).set({
-    prompt_key: getPromptKey(prompt),
-    prompt_text: prompt,
-    result_json: JSON.stringify(result),
-    created_at: now,
-    updated_at: now,
-  });
 }
 
 export async function upsertConfirmedStripePayment(input: StripePaymentInput) {
