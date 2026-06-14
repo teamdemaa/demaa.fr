@@ -35,7 +35,7 @@ export default function PartnerOffersForm({
     const submittedFirstName = firstName.trim();
 
     try {
-      const response = await fetch("/api/newsletter", {
+      const response = await fetch("/api/offres-partenaires", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

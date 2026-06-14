@@ -74,7 +74,7 @@ Routes critiques:
 
 - `/api/assistant`: genere le plan d'action IA.
 - `/api/generations`: compte et sauvegarde les generations.
-- `/api/newsletter`: inscription offres partenaires / tarifs negocies.
+- `/api/offres-partenaires`: inscription offres partenaires / tarifs negocies.
 - `/api/lead`: envoi lead vers Slack.
 - `/api/system-setup-request`: demande systeme vers Slack.
 - `/api/stripe/*`: checkout et webhook paiement.

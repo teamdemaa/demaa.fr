@@ -5,7 +5,7 @@ export const metadata = {
   description:
     "Recevez les tarifs negocies, les offres partenaires et les opportunites utiles proposees par Demaa.",
   alternates: {
-    canonical: "/newsletter",
+    canonical: "/offres-partenaires",
   },
   robots: {
     index: false,
