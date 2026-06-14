@@ -23,16 +23,12 @@ import {
 } from "@/lib/system-operations";
 import { getRecommendedSuppliersForSystem } from "@/lib/supplier-recommendations";
 import type { DemaaSupplier } from "@/lib/supplier-catalog";
+import {
+  isSystemDetailTab,
+  type SystemDetailTab,
+} from "@/lib/system-detail-tabs";
 import type { ToolDirectoryItem } from "@/lib/tool-directory";
 import type { System } from "@/lib/types";
-
-export type SystemDetailTab =
-  | "processus"
-  | "outils"
-  | "services"
-  | "fournisseurs"
-  | "ressources"
-  | "cours";
 
 type ProcessGroup = {
   title: string;
@@ -55,17 +51,6 @@ const PILLARS: SystemPillar[] = [
   "Finance & administration",
   "Équipe",
 ];
-
-export function isSystemDetailTab(tab?: string): tab is SystemDetailTab {
-  return (
-    tab === "processus" ||
-    tab === "outils" ||
-    tab === "services" ||
-    tab === "fournisseurs" ||
-    tab === "ressources" ||
-    tab === "cours"
-  );
-}
 
 function getProcessChecklistItems(examples?: string): string[] {
   if (!examples) {
@@ -151,9 +136,6 @@ export default function SystemDetailContent({
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [activeTab, setActiveTab] = useState<SystemDetailTab>(
-    isSystemDetailTab(initialActiveTab) ? initialActiveTab : "processus"
-  );
   const [isSystemSetupModalOpen, setIsSystemSetupModalOpen] = useState(false);
   const [selectedToolDetail, setSelectedToolDetail] = useState<ToolDirectoryItem | null>(null);
   const [selectedServiceDetail, setSelectedServiceDetail] = useState<DemaaService | null>(null);
@@ -171,10 +153,14 @@ export default function SystemDetailContent({
   const courses = useMemo(() => getRelatedCoursesForSystemSlug(system.slug), [system.slug]);
   const Heading = headingAs;
   const sectorPage = getSectorPageByLabel(detail.sectorLabel);
+  const resolvedTabFromUrl = searchParams.get("tab") ?? undefined;
+  const activeTab = isSystemDetailTab(resolvedTabFromUrl)
+    ? resolvedTabFromUrl
+    : isSystemDetailTab(initialActiveTab)
+      ? initialActiveTab
+      : "processus";
 
   function selectTab(tab: SystemDetailTab) {
-    setActiveTab(tab);
-
     const params = new URLSearchParams(searchParams.toString());
 
     if (tab === "processus") {
