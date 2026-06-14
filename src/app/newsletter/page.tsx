@@ -1,9 +1,9 @@
 import NewsletterPageModal from "@/components/NewsletterPageModal";
 
 export const metadata = {
-  title: "Newsletter Demaa",
+  title: "Tarifs negocies et offres partenaires - Demaa",
   description:
-    "Inscrivez-vous à la newsletter Demaa pour recevoir des idées simples d'automatisation adaptées aux petites entreprises.",
+    "Recevez les tarifs negocies, les offres partenaires et les opportunites utiles proposees par Demaa.",
   alternates: {
     canonical: "/newsletter",
   },

@@ -9,6 +9,8 @@ interface NewsletterFormProps {
   compact?: boolean;
   onSuccess?: (firstName: string) => void;
   source?: string;
+  submitLabel?: string;
+  submittingLabel?: string;
   successMessage?: (firstName: string) => string;
 }
 
@@ -16,6 +18,8 @@ export default function NewsletterForm({
   compact = false,
   onSuccess,
   source = "newsletter_page",
+  submitLabel = "Recevoir les tarifs negocies",
+  submittingLabel = "Inscription...",
   successMessage,
 }: NewsletterFormProps) {
   const [firstName, setFirstName] = useState("");
@@ -50,7 +54,7 @@ export default function NewsletterForm({
       setStatus("success");
       setMessage(
         successMessage?.(submittedFirstName) ||
-          "C'est noté. Vous êtes bien inscrit à la newsletter Demaa."
+          "C'est note. Vous recevrez les tarifs negocies et les offres partenaires Demaa."
       );
       setFirstName("");
       setSector("");
@@ -107,7 +111,7 @@ export default function NewsletterForm({
         disabled={status === "submitting"}
         className={`inline-flex w-full items-center justify-center bg-brand-blue px-6 text-white transition-colors hover:bg-brand-coral disabled:cursor-not-allowed disabled:bg-brand-blue/40 ${compact ? "h-11 rounded-full text-[13px] font-semibold" : "h-14 rounded-full text-sm font-semibold"}`}
       >
-        {status === "submitting" ? "Inscription..." : "Recevoir la newsletter"}
+        {status === "submitting" ? submittingLabel : submitLabel}
       </button>
 
       {message && (

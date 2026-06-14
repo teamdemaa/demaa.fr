@@ -32,7 +32,7 @@ export async function POST(request: Request) {
     const normalizedFirstName = normalizeText(body?.firstName, 80);
     const normalizedSector = normalizeText(body?.sector, 120);
     const normalizedEmail = normalizeEmail(normalizeText(body?.email, 160));
-    const normalizedSource = normalizeText(body?.source, 120) || "newsletter_page";
+    const normalizedSource = normalizeText(body?.source, 120) || "partner_offers_page";
 
     if (!normalizedFirstName || !normalizedSector || !normalizedEmail) {
       return NextResponse.json(
@@ -56,14 +56,14 @@ export async function POST(request: Request) {
     });
 
     await sendSlackMessage({
-      text: "Nouvelle inscription newsletter Demaa",
+      text: "Nouvelle inscription offres partenaires Demaa",
       blocks: [
         {
           type: "section",
           text: {
             type: "mrkdwn",
             text:
-              `*Newsletter Demaa*\n` +
+              `*Offres partenaires Demaa*\n` +
               `*Prénom* : ${escapeSlackMrkdwn(normalizedFirstName)}\n` +
               `*Secteur* : ${escapeSlackMrkdwn(normalizedSector)}\n` +
               `*Email* : ${escapeSlackMrkdwn(normalizedEmail)}\n` +
@@ -84,7 +84,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ ok: true });
   } catch (error) {
-    console.error("Newsletter subscription error:", error);
+    console.error("Partner offers subscription error:", error);
 
     return NextResponse.json(
       {

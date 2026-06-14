@@ -12,7 +12,7 @@ const mainLinks = [
 const contentLinks = [
   { label: "Ressources", href: "/ressources" },
   { label: "Cours", href: "/cours" },
-  { label: "Newsletter", href: "/newsletter" },
+  { label: "Recevoir les tarifs negocies", href: "/newsletter" },
 ];
 
 export default function Footer() {

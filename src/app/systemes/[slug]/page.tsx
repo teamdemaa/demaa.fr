@@ -70,7 +70,7 @@ export default async function SystemDetailPage({
               <X className="h-4 w-4" />
             </Link>
           </div>
-          <div className="min-h-0 flex-1">
+          <div className="flex min-h-0 flex-1 flex-col">
             <SystemDetailContent
               system={data.system}
               detail={data.detail}

@@ -12,6 +12,7 @@ import {
 } from "react";
 import { Check, ExternalLink, FileText, GraduationCap } from "lucide-react";
 import DeleguerPricingPreviewModal from "@/components/DeleguerPricingPreviewModal";
+import NewsletterForm from "@/components/NewsletterForm";
 import ServiceDetailDialog from "@/components/ServiceDetailDialog";
 import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
 import { ServiceIcon } from "@/components/ServiceIcon";
@@ -377,6 +378,44 @@ export default function SystemDetailContent({
     );
   }
 
+  function renderPartnerOffersBlock({
+    browseHref,
+    browseLabel,
+    source,
+  }: {
+    browseHref: string;
+    browseLabel: string;
+    source: string;
+  }) {
+    return (
+      <div className="space-y-3">
+        <Link
+          href={browseHref}
+          className="inline-flex items-center gap-2 text-sm font-medium text-dema-forest transition hover:text-brand-blue"
+        >
+          {browseLabel}
+          <span aria-hidden="true">→</span>
+        </Link>
+
+        <div className="rounded-[1.15rem] border border-dema-line bg-dema-cream/70 p-5 text-left">
+          <h3 className="text-lg font-semibold text-brand-blue">
+            Beneficier de tarifs negocies
+          </h3>
+          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-dema-muted">
+            Plus on est nombreux, plus on peut faire valoir des reductions
+            interessantes. Rejoignez la liste pour etre informe des tarifs negocies
+            et des offres partenaires utiles.
+          </p>
+          <NewsletterForm
+            compact
+            source={source}
+            submitLabel="Recevoir les tarifs negocies"
+          />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex h-full min-h-0 flex-col">
       <div className="text-left">
@@ -522,21 +561,11 @@ export default function SystemDetailContent({
                 </>
               );
             })()}
-            <div className="rounded-[1.15rem] border border-dema-line bg-dema-cream/70 p-5 text-left">
-              <h3 className="text-lg font-semibold text-brand-blue">
-                Comparer plus d&apos;outils ?
-              </h3>
-              <p className="mt-2 max-w-3xl text-sm leading-relaxed text-dema-muted">
-                Retrouvez l&apos;annuaire complet des logiciels, plateformes et outils utiles
-                pour organiser et piloter l&apos;activité.
-              </p>
-              <Link
-                href={`/annuaire-outils?retourSysteme=${encodeURIComponent(system.slug)}`}
-                className="mt-4 inline-flex items-center rounded-full border border-dema-line bg-dema-paper px-4 py-2 text-sm font-medium text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
-              >
-                Parcourir l&apos;annuaire outils
-              </Link>
-            </div>
+            {renderPartnerOffersBlock({
+              browseHref: `/annuaire-outils?retourSysteme=${encodeURIComponent(system.slug)}`,
+              browseLabel: "Voir tous les outils",
+              source: `system_tools_${system.slug}`,
+            })}
           </div>
         ) : activeTab === "services" ? (
           <div className="space-y-5">
@@ -544,21 +573,11 @@ export default function SystemDetailContent({
               {recommendedServices.map(renderServiceCard)}
             </div>
 
-            <div className="rounded-[1.15rem] border border-dema-line bg-dema-cream/70 p-5 text-left">
-              <h3 className="text-lg font-semibold text-brand-blue">
-                Voir plus de services ?
-              </h3>
-              <p className="mt-2 max-w-3xl text-sm leading-relaxed text-dema-muted">
-                Accédez au catalogue complet des services utiles pour structurer,
-                automatiser et soutenir l&apos;operationnel.
-              </p>
-              <Link
-                href={`/annuaire-services?retourSysteme=${encodeURIComponent(system.slug)}`}
-                className="mt-4 inline-flex items-center rounded-full border border-dema-line bg-dema-paper px-4 py-2 text-sm font-medium text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
-              >
-                Parcourir l&apos;annuaire services
-              </Link>
-            </div>
+            {renderPartnerOffersBlock({
+              browseHref: `/annuaire-services?retourSysteme=${encodeURIComponent(system.slug)}`,
+              browseLabel: "Voir tous les services",
+              source: `system_services_${system.slug}`,
+            })}
           </div>
         ) : activeTab === "fournisseurs" ? (
           <div className="space-y-5">
@@ -566,17 +585,11 @@ export default function SystemDetailContent({
               {recommendedSuppliers.map(renderSupplierCard)}
             </div>
 
-            <div className="rounded-[1.15rem] border border-dema-line bg-dema-cream/70 p-5 text-left">
-              <h3 className="text-lg font-semibold text-brand-blue">
-                Comparer plus de partenaires ?
-              </h3>
-              <Link
-                href={`/annuaire-fournisseurs?retourSysteme=${encodeURIComponent(system.slug)}`}
-                className="mt-3 inline-flex items-center rounded-full border border-dema-line bg-dema-paper px-4 py-2 text-sm font-medium text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
-              >
-                Parcourir l&apos;annuaire fournisseurs
-              </Link>
-            </div>
+            {renderPartnerOffersBlock({
+              browseHref: `/annuaire-fournisseurs?retourSysteme=${encodeURIComponent(system.slug)}`,
+              browseLabel: "Voir tous les fournisseurs",
+              source: `system_suppliers_${system.slug}`,
+            })}
           </div>
         ) : activeTab === "ressources" ? (
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">

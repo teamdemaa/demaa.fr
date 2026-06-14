@@ -74,7 +74,7 @@ Routes critiques:
 
 - `/api/assistant`: genere le plan d'action IA.
 - `/api/generations`: compte et sauvegarde les generations.
-- `/api/newsletter`: inscription newsletter.
+- `/api/newsletter`: inscription offres partenaires / tarifs negocies.
 - `/api/lead`: envoi lead vers Slack.
 - `/api/system-setup-request`: demande systeme vers Slack.
 - `/api/stripe/*`: checkout et webhook paiement.
@@ -82,7 +82,7 @@ Routes critiques:
 Helpers utiles:
 
 - `src/lib/firebase-admin.ts`: initialisation Firebase unique.
-- `src/lib/generations-db.ts`: acces Firestore generations, credits, newsletter, paiements.
+- `src/lib/generations-db.ts`: acces Firestore generations, credits, inscriptions offres partenaires, paiements.
 - `src/lib/slack.ts`: envoi Slack commun.
 
 ## Checklist avant livraison

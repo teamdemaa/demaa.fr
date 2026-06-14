@@ -23,20 +23,21 @@ export default function NewsletterPageModal() {
           <button
             type="button"
             onClick={handleClose}
-            aria-label="Fermer la newsletter"
+            aria-label="Fermer le formulaire des tarifs negocies"
             className="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full text-brand-blue/45 transition-colors hover:bg-white hover:text-brand-blue"
           >
             <X className="h-4 w-4" />
           </button>
 
           <p className="text-xs font-black uppercase tracking-[0.22em] text-brand-coral">
-            Newsletter
+            Offres partenaires
           </p>
           <p className="mx-auto mt-5 max-w-lg text-sm leading-relaxed text-brand-blue/65 md:text-base">
-            Recevez des exemples concrets, des outils utiles et des pistes adaptées à votre secteur d&apos;activité.
+            Recevez les tarifs negocies, les offres partenaires et les opportunites utiles
+            selon votre secteur d&apos;activite.
           </p>
 
-          <NewsletterForm source="newsletter_page" />
+          <NewsletterForm source="partner_offers_page" />
         </section>
       </div>
     </main>
