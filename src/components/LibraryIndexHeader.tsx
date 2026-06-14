@@ -1,14 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import SearchFilterControls from "@/components/SearchFilterControls";
 
 type LibraryIndexHeaderProps = {
   title: string;
   description: string;
-  helperHref?: string;
-  helperLabel?: string;
-  helperPrefix?: string;
   searchValue: string;
   searchPlaceholder: string;
   activeFilter: string;
@@ -23,9 +19,6 @@ type LibraryIndexHeaderProps = {
 export default function LibraryIndexHeader({
   title,
   description,
-  helperHref,
-  helperLabel,
-  helperPrefix,
   searchValue,
   searchPlaceholder,
   activeFilter,
@@ -45,18 +38,6 @@ export default function LibraryIndexHeader({
         <p className="mx-auto mt-2 max-w-2xl text-sm font-normal leading-relaxed text-dema-muted">
           {description}
         </p>
-        {helperHref && helperLabel ? (
-          <p className="mx-auto mt-3 max-w-2xl text-xs leading-relaxed text-dema-muted">
-            {helperPrefix}
-            <Link
-              href={helperHref}
-              className="font-medium text-dema-forest transition hover:text-brand-blue"
-            >
-              {helperLabel}
-            </Link>
-            .
-          </p>
-        ) : null}
 
         <div className="mt-5">
           <SearchFilterControls

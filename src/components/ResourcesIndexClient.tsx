@@ -55,9 +55,6 @@ export default function ResourcesIndexClient({
       <LibraryIndexHeader
         title="Ressources"
         description="Retrouvez les contenus, ressources et templates utiles pour structurer, piloter et développer votre activité."
-        helperPrefix="Vous pouvez aussi partir d'un métier depuis "
-        helperHref="/"
-        helperLabel="l'annuaire des systèmes"
         searchValue={searchQuery}
         searchPlaceholder="Rechercher une ressource, un template, un sujet..."
         activeFilter={activeFilter}

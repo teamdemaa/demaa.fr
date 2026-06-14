@@ -49,9 +49,6 @@ export default function CoursesIndexClient({
       <LibraryIndexHeader
         title="Cours"
         description="Un espace simple pour apprendre les sujets clés et avancer plus sereinement."
-        helperPrefix="Vous pouvez aussi partir d'un métier depuis "
-        helperHref="/"
-        helperLabel="l'annuaire des systèmes"
         searchValue={searchQuery}
         searchPlaceholder="Rechercher un cours, un sujet, une notion..."
         activeFilter={activeFilter}
