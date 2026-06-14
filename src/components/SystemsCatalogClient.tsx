@@ -409,7 +409,6 @@ function SystemCard({
   return (
     <Link
       href={href}
-      scroll={false}
       className="demaa-card group flex min-h-[10rem] flex-[0_0_calc(50%-0.5rem)] cursor-pointer flex-col rounded-[1.15rem] p-5 text-left md:flex-[0_0_calc(25%-0.75rem)]"
     >
       {icon}
