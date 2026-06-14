@@ -381,7 +381,7 @@ export default function SystemsCatalogClient({
                 </div>
                 <HorizontalScrollHint
                   className="-mx-4 overflow-x-auto px-4 pb-4 pt-2 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
-                  controlsClassName="absolute right-0 -top-10 z-10 flex items-center gap-1.5"
+                  controlsClassName="absolute -right-2 -top-10 z-10 flex items-center gap-1.5 sm:-right-3"
                 >
                   <div className="flex gap-4">
                     {section.systems.map((system) => {
