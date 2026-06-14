@@ -135,7 +135,7 @@ export async function POST(request: Request) {
   const checkoutParams = new URLSearchParams({
     mode: "payment",
     success_url: `${baseUrl}/assistant/success?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${baseUrl}/structurer`,
+    cancel_url: `${baseUrl}/organisation-automatisation`,
     "metadata[offer_type]": "assistant_packs",
     "metadata[offer_label]": cartSummary.slice(0, 500),
     "metadata[cart_summary]": cartSummary.slice(0, 500),

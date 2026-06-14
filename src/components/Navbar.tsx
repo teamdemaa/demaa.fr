@@ -67,7 +67,9 @@ function DesktopHomeTabsNav({ mode }: { mode: HomeTabsMode }) {
   const activeTab =
     pathname === "/deleguer" || pathname === "/annuaire-services"
       ? "deleguer"
-      : pathname === "/structurer" || pathname === "/assistants"
+      : pathname === "/structurer" ||
+          pathname === "/organisation-automatisation" ||
+          pathname === "/assistants"
         ? "structurer"
       : pathname === "/developper"
         ? "developper"

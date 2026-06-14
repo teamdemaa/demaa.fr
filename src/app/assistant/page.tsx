@@ -1,5 +1,5 @@
 import { permanentRedirect } from "next/navigation";
 
 export default function AssistantPage() {
-  permanentRedirect("/structurer");
+  permanentRedirect("/organisation-automatisation");
 }
