@@ -12,7 +12,7 @@ import { ServiceIcon } from "@/components/ServiceIcon";
 import SystemSetupModal from "@/components/SystemSetupModal";
 import { buildBusinessBlockChecklists } from "@/lib/business-block-checklists";
 import type { CourseEntry } from "@/lib/course-content";
-import { getRelatedCoursesForSystemSlug } from "@/lib/related-systems";
+import { getRelatedCoursesForSystemSlug } from "@/lib/related-courses";
 import { getSectorPageByLabel } from "@/lib/sector-pages";
 import { getRecommendedServicesForSystem } from "@/lib/service-recommendations";
 import type { DemaaService } from "@/lib/service-catalog";

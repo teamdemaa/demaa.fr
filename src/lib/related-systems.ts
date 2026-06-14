@@ -1,67 +1,8 @@
 import { enterpriseCatalog, enterpriseCatalogBySlug, enterpriseToSystem } from "@/lib/enterprise-annuaire";
-import { getAllCourseEntries, type CourseEntry } from "@/lib/course-content";
+import { RELATED_SYSTEM_SLUGS_BY_CONTENT_SLUG } from "@/lib/content-relationships";
 import { getRecommendedServicesForSystem } from "@/lib/service-recommendations";
 import { systemResources } from "@/lib/system-resources";
 import type { System } from "@/lib/types";
-
-const RELATED_SYSTEM_SLUGS_BY_CONTENT_SLUG: Record<string, string[]> = {
-  "obligations-tpe": [
-    "cabinet-comptable",
-    "daf-externalise",
-    "assistant-administratif-externalise",
-    "gestionnaire-paie-independant",
-    "commerce-de-detail",
-    "restaurant",
-  ],
-  "previsionnel-financier": [
-    "daf-externalise",
-    "cabinet-comptable",
-    "investissement-locatif",
-    "marchand-de-biens",
-    "saas",
-    "restaurant",
-  ],
-  "systeme-operationnel-airtable": [
-    "cabinet-de-conseil",
-    "consultant-independant",
-    "freelance",
-    "agence-marketing",
-    "agence-web",
-    "daf-externalise",
-  ],
-  "obligations-tpe-template": [
-    "cabinet-comptable",
-    "daf-externalise",
-    "assistant-administratif-externalise",
-    "gestionnaire-paie-independant",
-    "commerce-de-detail",
-    "restaurant",
-  ],
-  "suivi-previsionnel-financier-template": [
-    "daf-externalise",
-    "cabinet-comptable",
-    "investissement-locatif",
-    "marchand-de-biens",
-    "saas",
-    "restaurant",
-  ],
-  "systeme-operationnel-template": [
-    "cabinet-de-conseil",
-    "consultant-independant",
-    "freelance",
-    "agence-marketing",
-    "agence-web",
-    "daf-externalise",
-  ],
-  "facture-electronique": [
-    "cabinet-comptable",
-    "daf-externalise",
-    "assistant-administratif-externalise",
-    "commerce-de-detail",
-    "restaurant",
-    "e-commerce",
-  ],
-};
 
 function uniqueSystemsFromSlugs(slugs: string[], limit = 6): System[] {
   const unique = Array.from(new Set(slugs));
@@ -103,16 +44,4 @@ export function getRelatedSystemsForServiceSlug(serviceSlug: string, limit = 6):
     .slice(0, limit);
 
   return matches.map(({ enterprise }) => enterpriseToSystem(enterprise));
-}
-
-export function getRelatedCoursesForSystemSlug(systemSlug: string, limit = 3): CourseEntry[] {
-  const relatedCourses = getAllCourseEntries().filter((entry) =>
-    (RELATED_SYSTEM_SLUGS_BY_CONTENT_SLUG[entry.slug] ?? []).includes(systemSlug),
-  );
-
-  if (relatedCourses.length) {
-    return relatedCourses.slice(0, limit);
-  }
-
-  return getAllCourseEntries().slice(0, limit);
 }
