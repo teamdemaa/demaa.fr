@@ -4,11 +4,8 @@ import {
   normalizeText,
   readJsonBody,
 } from "@/lib/api-security";
-import {
-  createMagicLinkToken,
-  isValidEmail,
-  normalizeEmail,
-} from "@/lib/customer-space-auth";
+import { isValidEmail, normalizeEmail } from "@/lib/email";
+import { createMagicLinkToken } from "@/lib/customer-space-auth";
 
 export const runtime = "nodejs";
 

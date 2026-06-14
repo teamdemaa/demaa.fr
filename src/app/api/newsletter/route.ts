@@ -5,6 +5,7 @@ import {
   normalizeText,
   readJsonBody,
 } from "@/lib/api-security";
+import { isValidEmail, normalizeEmail } from "@/lib/email";
 import { saveNewsletterSubscriber } from "@/lib/generations-db";
 import { sendSlackMessage, SlackMessageError } from "@/lib/slack";
 
@@ -14,10 +15,6 @@ type NewsletterRequestBody = {
   sector?: unknown;
   source?: unknown;
 };
-
-function isValidEmail(email: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
 
 export async function POST(request: Request) {
   try {
@@ -34,7 +31,7 @@ export async function POST(request: Request) {
 
     const normalizedFirstName = normalizeText(body?.firstName, 80);
     const normalizedSector = normalizeText(body?.sector, 120);
-    const normalizedEmail = normalizeText(body?.email, 160).toLowerCase();
+    const normalizedEmail = normalizeEmail(normalizeText(body?.email, 160));
     const normalizedSource = normalizeText(body?.source, 120) || "newsletter_page";
 
     if (!normalizedFirstName || !normalizedSector || !normalizedEmail) {

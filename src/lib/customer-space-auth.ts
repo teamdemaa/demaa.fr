@@ -1,4 +1,5 @@
 import { createHash, randomBytes } from "node:crypto";
+import { normalizeEmail } from "@/lib/email";
 import {
   getCustomerSessionEmail,
   saveCustomerMagicLink,
@@ -9,14 +10,6 @@ export const CUSTOMER_SPACE_COOKIE = "demaa_customer_session";
 
 const MAGIC_LINK_TTL_MS = 30 * 60 * 1000;
 const CUSTOMER_SESSION_TTL_MS = 30 * 24 * 60 * 60 * 1000;
-
-export function isValidEmail(email: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
-
-export function normalizeEmail(email: string) {
-  return email.trim().toLowerCase();
-}
 
 export function hashToken(token: string) {
   return createHash("sha256").update(token).digest("hex");

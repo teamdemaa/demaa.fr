@@ -407,10 +407,6 @@ export const demaaSuppliers: readonly DemaaSupplier[] = [
 
 export type DemaaSupplierSlug = (typeof demaaSuppliers)[number]["slug"];
 
-export const supplierCategories = Array.from(
-  new Set(demaaSuppliers.map((supplier) => supplier.category)),
-) as SupplierCategory[];
-
 export const supplierFamilies = Array.from(
   new Set(demaaSuppliers.map((supplier) => supplier.family)),
 ) as SupplierFamily[];

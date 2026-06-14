@@ -4,6 +4,7 @@ import {
   normalizeText,
   readJsonBody,
 } from "@/lib/api-security";
+import { isValidEmail, normalizeEmail } from "@/lib/email";
 import { getGenerationCountByEmail, saveGeneration } from "@/lib/generations-db";
 
 const MAX_GENERATIONS_PER_USER = 3;
@@ -15,10 +16,6 @@ type SaveGenerationRequestBody = {
   sector?: unknown;
 };
 
-function isValidEmail(email: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
-
 export async function GET(request: Request) {
   try {
     const limited = enforceRateLimit(request, {
@@ -29,7 +26,7 @@ export async function GET(request: Request) {
     if (limited) return limited;
 
     const { searchParams } = new URL(request.url);
-    const email = normalizeText(searchParams.get("email"), 160).toLowerCase();
+    const email = normalizeEmail(normalizeText(searchParams.get("email"), 160));
 
     if (!email || !isValidEmail(email)) {
       return NextResponse.json({ error: "Valid email is required" }, { status: 400 });
@@ -54,7 +51,7 @@ export async function POST(request: Request) {
       await readJsonBody<SaveGenerationRequestBody>(request, 64 * 1024);
     if (response) return response;
 
-    const email = normalizeText(body?.email, 160).toLowerCase();
+    const email = normalizeEmail(normalizeText(body?.email, 160));
     const prompt = normalizeText(body?.prompt, 2000, { multiline: true });
     const sector = normalizeText(body?.sector, 120);
     const result = body?.result;

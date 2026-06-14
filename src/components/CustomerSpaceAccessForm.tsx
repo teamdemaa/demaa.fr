@@ -2,10 +2,7 @@
 
 import { useState } from "react";
 import { CheckCircle2, LoaderCircle, Mail } from "lucide-react";
-
-function isValidEmail(email: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
+import { isValidEmail, normalizeEmail } from "@/lib/email";
 
 export default function CustomerSpaceAccessForm({
   compact = false,
@@ -20,7 +17,7 @@ export default function CustomerSpaceAccessForm({
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const normalizedEmail = email.trim().toLowerCase();
+    const normalizedEmail = normalizeEmail(email);
 
     setError(null);
     setDevLink(null);

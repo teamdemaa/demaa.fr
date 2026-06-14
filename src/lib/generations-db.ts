@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+import { normalizeEmail } from "@/lib/email";
 import { getAdminFirestore } from "./firebase-admin";
 
 interface CacheRow {
@@ -94,10 +95,6 @@ interface AssistantDelegationRequestInput {
   credits?: number | null;
   tasks: string;
   livemode: boolean;
-}
-
-function normalizeEmail(email: string) {
-  return email.trim().toLowerCase();
 }
 
 function getStableKey(value: string) {

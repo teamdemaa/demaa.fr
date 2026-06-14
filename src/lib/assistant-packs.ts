@@ -114,10 +114,6 @@ export const ASSISTANT_PACK_OFFERS = [
   },
 ] as const satisfies readonly AssistantOffer[];
 
-export function formatAssistantPrice(amount: number) {
-  return `${amount.toLocaleString("fr-FR")} €`;
-}
-
 export function getAssistantPack(packId: string) {
   for (const offer of ASSISTANT_PACK_OFFERS) {
     const pack = offer.packs.find((item) => item.id === packId);
