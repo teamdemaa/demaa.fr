@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { useState } from "react";
 import DeleguerPricingPreviewModal from "@/components/DeleguerPricingPreviewModal";
@@ -25,6 +26,18 @@ export default function ServiceRequestCta({ service }: { service: DemaaService }
           <DeleguerPricingPreviewModal onClose={() => setIsPricingPreviewOpen(false)} />
         ) : null}
       </>
+    );
+  }
+
+  if (service.slug === "assistant-polyvalent") {
+    return (
+      <Link
+        href={`/services/${service.slug}`}
+        className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper transition hover:bg-brand-blue"
+      >
+        Voir l&apos;offre
+        <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+      </Link>
     );
   }
 

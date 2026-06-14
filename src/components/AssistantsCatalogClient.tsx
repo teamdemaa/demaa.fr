@@ -92,10 +92,10 @@ export default function AssistantsCatalogClient() {
 
           <div className="mx-auto max-w-5xl demaa-fade-up">
             <h1 className="text-[clamp(3rem,14.5vw,3.36rem)] tracking-tight leading-[0.92] sm:text-[2.75rem] md:text-[3.75rem] lg:text-[4.5rem]">
-              <span className="demaa-hero-title text-brand-blue/86">Structurez</span>
+              <span className="demaa-hero-title text-brand-blue/86">Organisation</span>
               <br />
               <span className="font-sans font-light not-italic text-brand-blue/44">
-                pour mieux piloter
+                & automatisation
               </span>
             </h1>
           </div>
@@ -108,10 +108,10 @@ export default function AssistantsCatalogClient() {
           <div>
             <div className="max-w-3xl demaa-fade-up demaa-delay-1">
               <h2 className="text-2xl font-semibold tracking-tight text-brand-blue md:text-3xl">
-                Quand structurer devient indispensable
+                Quand l&apos;organisation devient indispensable
               </h2>
               <p className="mt-3 text-sm leading-relaxed text-dema-muted md:text-base">
-                Certains moments rendent la structuration indispensable. Pas parce
+                Certains moments rendent l&apos;organisation indispensable. Pas parce
                 que l&apos;entreprise va mal, mais parce qu&apos;elle repose encore trop
                 sur le dirigeant.
               </p>
@@ -219,7 +219,7 @@ export default function AssistantsCatalogClient() {
                 Par où commencer ?
               </h2>
               <p className="mt-3 text-sm leading-relaxed text-dema-muted md:text-base">
-                Faites le point avec un audit offert ou lancez directement la structuration de votre organisation.
+                Faites le point avec un audit offert ou lancez directement l&apos;organisation et l&apos;automatisation de votre activité.
               </p>
             </div>
 

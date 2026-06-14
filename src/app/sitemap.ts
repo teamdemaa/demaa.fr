@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { getAllCourseEntries } from "@/lib/course-content";
 import { getAllEditorialEntries } from "@/lib/editorial-content";
 import { demaaServices } from "@/lib/service-catalog";
 import { getToolDirectorySlug, hasStandaloneToolPage } from "@/lib/tool-directory";
@@ -36,10 +37,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/annuaire-services`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-fournisseurs`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/ressources`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${base}/cours`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/structurer`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
-    { url: `${base}/developper`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
-    { url: `${base}/plan-action-automatisation`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
     { url: `${base}/newsletter`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${base}/outils/repriz`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${base}/mentions-legales`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
     { url: `${base}/politique-de-confidentialite`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
     { url: `${base}/politique-de-cookies`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
@@ -49,6 +50,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const editorialEntries = getAllEditorialEntries();
   const editorialContentEntries: MetadataRoute.Sitemap = editorialEntries.map((entry) => ({
     url: `${base}/ressources/${entry.slug}`,
+    lastModified: new Date(entry.date),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  const courseEntries = getAllCourseEntries();
+  const courseContentEntries: MetadataRoute.Sitemap = courseEntries.map((entry) => ({
+    url: `${base}/cours/${entry.slug}`,
     lastModified: new Date(entry.date),
     changeFrequency: "monthly" as const,
     priority: 0.7,
@@ -93,6 +102,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [
     ...staticRoutes,
     ...editorialContentEntries,
+    ...courseContentEntries,
     ...toolEntries,
     ...freeToolEntries,
     ...serviceEntries,

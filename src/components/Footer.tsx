@@ -3,32 +3,21 @@ import { visiblePrimaryNavigationItems } from "@/lib/navigation";
 
 const mainLinks = [
   ...visiblePrimaryNavigationItems.map(({ label, href }) => ({ label, href })),
+  { label: "Annuaire systèmes", href: "/" },
   { label: "Annuaire outils", href: "/annuaire-outils" },
+  { label: "Annuaire services", href: "/annuaire-services" },
+  { label: "Annuaire fournisseurs", href: "/annuaire-fournisseurs" },
+];
+
+const contentLinks = [
+  { label: "Ressources", href: "/ressources" },
+  { label: "Cours", href: "/cours" },
   { label: "Newsletter", href: "/newsletter" },
-];
-
-const sectorLinks = [
-  { label: "Outils Services & conseil", href: "/annuaire-outils?secteur=Conseil%20%26%20services%20aux%20entreprises" },
-  { label: "Outils Commerce local", href: "/annuaire-outils?secteur=Commerce%20local" },
-  { label: "Outils Restaurant", href: "/annuaire-outils?secteur=Restauration" },
-  { label: "Outils BTP", href: "/annuaire-outils?secteur=Artisanat%20%26%20BTP" },
-  { label: "Outils Immobilier", href: "/annuaire-outils?secteur=Immobilier" },
-  { label: "Outils Santé & bien-être", href: "/annuaire-outils?secteur=Sant%C3%A9%20%26%20bien-%C3%AAtre" },
-];
-
-const categoryLinks = [
-  { label: "Outils CRM & ventes", href: "/annuaire-outils?categorie=CRM%20%26%20ventes" },
-  { label: "Outils Marketing", href: "/annuaire-outils?categorie=Marketing%20%26%20visibilit%C3%A9" },
-  { label: "Outils Automatisation", href: "/annuaire-outils?categorie=Automatisation" },
-  { label: "Outils Finance & paiement", href: "/annuaire-outils?categorie=Finance%20%26%20paiement" },
-  { label: "Outils métier", href: "/annuaire-outils?categorie=Outils%20m%C3%A9tier" },
-  { label: "Outils gratuits", href: "/annuaire-outils?categorie=QR%20Code" },
 ];
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   const linkClass = "text-sm text-neutral-500 transition-colors hover:text-neutral-950";
-  const legalLinkClass = "transition-colors hover:text-neutral-950";
 
   return (
     <footer className="mt-auto border-t border-neutral-200 bg-white py-16 text-neutral-950">
@@ -63,10 +52,10 @@ export default function Footer() {
 
           <div>
             <h3 className="text-lg font-semibold mb-6">
-              Outils par secteur
+              Contenus
             </h3>
             <ul className="space-y-3">
-              {sectorLinks.map((link) => (
+              {contentLinks.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className={linkClass}>{link.label}</Link>
                 </li>
@@ -76,14 +65,13 @@ export default function Footer() {
 
           <div>
             <h3 className="text-lg font-semibold mb-6">
-              Outils par catégorie
+              Légal
             </h3>
             <ul className="space-y-3">
-              {categoryLinks.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className={linkClass}>{link.label}</Link>
-                </li>
-              ))}
+              <li><Link href="/mentions-legales" className={linkClass}>Mentions légales</Link></li>
+              <li><Link href="/politique-de-confidentialite" className={linkClass}>Politique de confidentialité</Link></li>
+              <li><Link href="/politique-de-cookies" className={linkClass}>Cookies</Link></li>
+              <li><Link href="/cgv" className={linkClass}>CGV</Link></li>
             </ul>
           </div>
           
@@ -91,12 +79,7 @@ export default function Footer() {
 
         <div className="mt-16 pt-8 border-t border-neutral-200 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500">
           <p>© {currentYear} Demaa. Tous droits réservés.</p>
-          <div className="flex space-x-4 mt-4 sm:mt-0">
-            <Link href="/mentions-legales" className={legalLinkClass}>Mentions légales</Link>
-            <Link href="/politique-de-confidentialite" className={legalLinkClass}>Politique de confidentialité</Link>
-            <Link href="/politique-de-cookies" className={legalLinkClass}>Cookies</Link>
-            <Link href="/cgv" className={legalLinkClass}>CGV</Link>
-          </div>
+          <p className="mt-4 sm:mt-0">Structure simplifiée pour une navigation plus claire.</p>
         </div>
       </div>
     </footer>

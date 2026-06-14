@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Check } from "lucide-react";
+import AssistantPolyvalentLanding from "@/components/AssistantPolyvalentLanding";
 import Navbar from "@/components/Navbar";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import ServiceRequestCta from "@/components/ServiceRequestCta";
@@ -56,6 +57,10 @@ export default async function ServiceDetailPage({
 
   if (!service) {
     notFound();
+  }
+
+  if (service.slug === "assistant-polyvalent") {
+    return <AssistantPolyvalentLanding service={service} />;
   }
 
   const serviceSource =

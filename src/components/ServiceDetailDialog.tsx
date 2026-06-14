@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { ArrowUpRight, Check, X } from "lucide-react";
 import { useState } from "react";
 import DeleguerPricingPreviewModal from "@/components/DeleguerPricingPreviewModal";
@@ -23,6 +24,7 @@ export default function ServiceDetailDialog({
   const serviceSource =
     service.slug === "structuration-automatisation" ? "Demaa" : "Partenaire";
   const isStructuration = service.slug === "structuration-automatisation";
+  const isAssistantLanding = service.slug === "assistant-polyvalent";
 
   return (
     <>
@@ -109,6 +111,14 @@ export default function ServiceDetailDialog({
                     Voir le pricing
                     <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                   </button>
+                ) : isAssistantLanding ? (
+                  <Link
+                    href={`/services/${service.slug}`}
+                    className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper transition hover:bg-brand-blue"
+                  >
+                    Voir l&apos;offre
+                    <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                  </Link>
                 ) : (
                   <button
                     type="button"
