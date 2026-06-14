@@ -107,7 +107,7 @@ export default function CoursesIndexClient({
                         {entry.category}
                       </span>
                     </div>
-                    <h2 className="mt-4 text-2xl font-semibold text-brand-blue transition-colors group-hover:text-neutral-700">
+                    <h2 className="mt-4 text-[1.85rem] font-normal leading-tight text-brand-blue transition-colors group-hover:text-neutral-700">
                       {entry.title}
                     </h2>
                     <p className="mt-3 leading-relaxed text-gray-500">

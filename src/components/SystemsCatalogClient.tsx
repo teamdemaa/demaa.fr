@@ -50,7 +50,6 @@ import {
 } from "lucide-react";
 import HorizontalScrollHint from "@/components/HorizontalScrollHint";
 import { ALL_SECTORS_LABEL } from "@/lib/public-sectors";
-import { getSectorPageByLabel } from "@/lib/sector-pages";
 import { matchesSearchQuery } from "@/lib/search";
 import type { OperationalSystemDetail } from "@/lib/system-operations";
 import type { System } from "@/lib/types";
@@ -362,22 +361,6 @@ export default function SystemsCatalogClient({
                   <h2 className="demaa-section-title text-2xl tracking-tight text-brand-blue/85 md:text-3xl">
                     {section.title}
                   </h2>
-                  {(() => {
-                    const sectorPage = getSectorPageByLabel(section.title);
-
-                    if (!sectorPage) {
-                      return null;
-                    }
-
-                    return (
-                      <Link
-                        href={`/secteurs/${sectorPage.slug}`}
-                        className="shrink-0 text-xs font-medium text-dema-forest transition hover:text-brand-blue"
-                      >
-                        Explorer le secteur
-                      </Link>
-                    );
-                  })()}
                 </div>
                 <HorizontalScrollHint
                   className="-mx-4 overflow-x-auto px-4 pb-4 pt-2 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
