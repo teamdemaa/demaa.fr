@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState, type MouseEvent, type ReactNode } from "react";
-import { ArrowLeft, Search } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+import SearchFilterControls from "@/components/SearchFilterControls";
 import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
 import { matchesSearchQuery } from "@/lib/search";
 import type { ToolDirectoryCardItem } from "@/lib/tool-directory-page";
@@ -73,8 +74,18 @@ export default function ToolDirectoryClient({
   const [internalSearchQuery, setInternalSearchQuery] = useState("");
   const [activeSector, setActiveSector] = useState(initialFilters.sector);
   const [activeCategory, setActiveCategory] = useState(initialFilters.category);
+  const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false);
   const [selectedTool, setSelectedTool] = useState<ToolDirectoryCardItem | null>(null);
   const searchQuery = controlledSearchQuery ?? internalSearchQuery;
+  const availableFilters = useMemo(
+    () => [
+      "Tous",
+      ...sectors.filter((sector) => sector !== "Tous"),
+      ...categories.filter((category) => category !== "Tous" && !sectors.includes(category)),
+    ],
+    [categories, sectors]
+  );
+  const activeFilter = activeCategory !== "Tous" ? activeCategory : activeSector;
 
   function updateSearchQuery(value: string) {
     if (onSearchQueryChange) {
@@ -167,61 +178,32 @@ export default function ToolDirectoryClient({
           ) : null}
 
           {showSearchBar ? (
-            <div className={`demaa-search-shell mx-auto max-w-4xl ${showHeader ? "mt-5" : "mt-0"}`}>
-              <div className="relative">
-                <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-dema-forest/42 md:left-5 md:h-5 md:w-5" />
-                <input
-                  value={searchQuery}
-                  onChange={(event) => updateSearchQuery(event.target.value)}
-                  placeholder={searchPlaceholder}
-                  className="w-full rounded-full bg-dema-paper py-2.5 pl-10 pr-5 text-sm font-normal text-brand-blue outline-none transition placeholder:text-brand-blue/36 md:py-3 md:pl-12 md:text-base"
-                />
-              </div>
+            <div className={showHeader ? "mt-5" : "mt-0"}>
+              <SearchFilterControls
+                value={searchQuery}
+                placeholder={searchPlaceholder}
+                activeFilter={activeFilter}
+                defaultFilter="Tous"
+                isFilterOpen={isFilterPanelOpen}
+                filters={availableFilters}
+                onChange={updateSearchQuery}
+                onFilterClick={() => setIsFilterPanelOpen((current) => !current)}
+                onFilterSelect={(filter) => {
+                  if (filter === "Tous") {
+                    setActiveSector("Tous");
+                    setActiveCategory("Tous");
+                  } else if (sectors.includes(filter)) {
+                    setActiveSector(filter);
+                    setActiveCategory("Tous");
+                  } else {
+                    setActiveCategory(filter);
+                    setActiveSector("Tous");
+                  }
+                  setIsFilterPanelOpen(false);
+                }}
+              />
             </div>
           ) : null}
-
-          <HorizontalScrollArea
-            outerClassName={`mx-auto max-w-4xl ${showSearchBar || showHeader ? "mt-3" : "mt-1"}`}
-            scrollClassName="flex gap-2 overflow-x-auto pb-2 soft-scroll"
-          >
-            <FilterChip
-              label="Tous"
-              isActive={activeSector === "Tous" && activeCategory === "Tous"}
-              onClick={() => {
-                setActiveSector("Tous");
-                setActiveCategory("Tous");
-              }}
-            />
-            {sectors
-              .filter((sector) => sector !== "Tous")
-              .map((sector) => (
-                <FilterChip
-                  key={sector}
-                  label={sector}
-                  isActive={activeSector === sector}
-                  onClick={() => {
-                    setActiveSector(sector);
-                    setActiveCategory("Tous");
-                  }}
-                />
-              ))}
-            {categories
-              .filter(
-                (category) =>
-                  category !== "Tous" && !sectors.includes(category)
-              )
-              .map((category) => (
-                <FilterChip
-                  key={category}
-                  label={category}
-                  isActive={activeCategory === category}
-                  onClick={() => {
-                    setActiveCategory(category);
-                    setActiveSector("Tous");
-                  }}
-                />
-              ))}
-          </HorizontalScrollArea>
         </div>
       </section>
 
@@ -320,24 +302,6 @@ export default function ToolDirectoryClient({
   );
 }
 
-function HorizontalScrollArea({
-  children,
-  outerClassName = "",
-  scrollClassName = "",
-}: {
-  children: ReactNode;
-  outerClassName?: string;
-  scrollClassName?: string;
-}) {
-  return (
-    <div className={outerClassName}>
-      <div className={scrollClassName}>
-        {children}
-      </div>
-    </div>
-  );
-}
-
 function ToolCard({
   externalLinks,
   cardClickMode,
@@ -396,28 +360,4 @@ function handleClientModalClick(
 
   event.preventDefault();
   onOpenDetails(tool);
-}
-
-function FilterChip({
-  label,
-  isActive,
-  onClick,
-}: {
-  label: string;
-  isActive: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`demaa-chip ${
-        isActive
-          ? "demaa-chip-active"
-          : ""
-      }`}
-    >
-      {label}
-    </button>
-  );
 }

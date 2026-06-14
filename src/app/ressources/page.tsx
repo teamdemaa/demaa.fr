@@ -1,9 +1,7 @@
-import Image from "next/image";
 import Navbar from "@/components/Navbar";
-import Link from "next/link";
-import { ArrowRight, BookOpen } from "lucide-react";
 import { Metadata } from "next";
 import { getAllEditorialEntries } from "@/lib/editorial-content";
+import ResourcesIndexClient from "@/components/ResourcesIndexClient";
 
 export const metadata: Metadata = {
   title: "Ressources pour structurer son entreprise - Demaa",
@@ -33,89 +31,7 @@ export default function ResourcesIndexPage() {
     <>
       <Navbar />
       <main className="flex-1 w-full bg-background min-h-[85vh]">
-        <section className="w-full border-b border-dema-line/65 bg-dema-cream px-4 pb-5 pt-8 md:pt-10">
-          <div className="mx-auto max-w-5xl text-center">
-            <h1 className="demaa-section-title text-4xl tracking-tight text-brand-blue md:text-5xl">
-              Ressources
-            </h1>
-            <p className="mx-auto mt-2 max-w-2xl text-sm font-normal leading-relaxed text-dema-muted">
-              Retrouvez les contenus, ressources et templates utiles pour structurer, piloter et développer votre activité.
-            </p>
-            <p className="mx-auto mt-3 max-w-2xl text-xs leading-relaxed text-dema-muted">
-              Vous pouvez aussi partir d&apos;un métier depuis{" "}
-              <Link href="/" className="font-medium text-dema-forest transition hover:text-brand-blue">
-                l&apos;annuaire des systèmes
-              </Link>
-              .
-            </p>
-          </div>
-        </section>
-
-        <div className="max-w-6xl mx-auto px-4 pt-8">
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {entries.length === 0 && (
-              <div className="text-center py-20 text-gray-400">
-                Aucun contenu publié pour le moment.
-              </div>
-            )}
-
-            {entries.map((entry) => (
-              <Link key={entry.slug} href={`/ressources/${entry.slug}`} className="block group h-full">
-                <article className="h-full overflow-hidden rounded-3xl border border-gray-100 bg-white transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)]">
-                  <div className="relative aspect-[16/10] overflow-hidden bg-dema-cream border-b border-gray-100">
-                    {entry.image ? (
-                      <Image
-                        src={entry.image}
-                        alt={entry.title}
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                    ) : (
-                      <div className="flex h-full items-end bg-[linear-gradient(135deg,#f8f5ef_0%,#f3efe6_100%)] p-5">
-                        <span className="rounded-full bg-white/80 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-brand-blue">
-                          {entry.type}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                  <div className="flex flex-col p-6 h-full">
-                    <div className="flex items-center justify-between gap-4">
-                      <div className="flex items-center space-x-2 text-sm text-brand-coral font-medium">
-                        <BookOpen className="w-4 h-4" />
-                        <span>{new Date(entry.date).toLocaleDateString("fr-FR", { year: "numeric", month: "long", day: "numeric" })}</span>
-                      </div>
-                      <span className="rounded-full bg-neutral-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-neutral-700">
-                        {entry.type}
-                      </span>
-                    </div>
-                    <h2 className="mt-4 text-2xl font-semibold text-brand-blue transition-colors group-hover:text-neutral-700">
-                      {entry.title}
-                    </h2>
-                    <p className="mt-3 text-gray-500 leading-relaxed">
-                      {entry.description}
-                    </p>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {entry.tags.slice(0, 3).map((tag) => (
-                        <span
-                          key={tag}
-                          className="rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-medium text-brand-blue/75"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                    <div className="mt-auto flex justify-end pt-6">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-50 text-brand-blue transition-colors group-hover:bg-neutral-100 group-hover:text-neutral-700">
-                        <ArrowRight className="w-5 h-5" />
-                      </div>
-                    </div>
-                  </div>
-                </article>
-              </Link>
-            ))}
-          </div>
-        </div>
+        <ResourcesIndexClient entries={entries} />
       </main>
     </>
   );

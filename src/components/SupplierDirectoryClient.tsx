@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { ArrowLeft, ArrowUpRight, Search } from "lucide-react";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import SearchFilterControls from "@/components/SearchFilterControls";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import { matchesSearchQuery } from "@/lib/search";
 import { type DemaaSupplier, type SupplierFamily } from "@/lib/supplier-catalog";
@@ -20,10 +21,13 @@ type SupplierDirectoryClientProps = {
 
 export default function SupplierDirectoryClient({
   suppliers,
+  families,
   initialSearch = "",
   backLink,
 }: SupplierDirectoryClientProps) {
   const [searchQuery, setSearchQuery] = useState(initialSearch);
+  const [activeFamily, setActiveFamily] = useState<string>("Tous");
+  const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false);
   const filteredSuppliers = useMemo(() => {
     return suppliers.filter((supplier) => {
       const matchesSearch = matchesSearchQuery(searchQuery, [
@@ -37,9 +41,13 @@ export default function SupplierDirectoryClient({
         supplier.slug,
       ]);
 
-      return matchesSearch;
+      const matchesFamily =
+        activeFamily === "Tous" || supplier.family === activeFamily;
+
+      return matchesSearch && matchesFamily;
     });
-  }, [searchQuery, suppliers]);
+  }, [activeFamily, searchQuery, suppliers]);
+  const supplierFilters = useMemo(() => ["Tous", ...families], [families]);
 
   return (
     <div className="w-full">
@@ -63,28 +71,33 @@ export default function SupplierDirectoryClient({
             Banques, assurances, mutuelles, achats, équipements et partenaires utiles selon l&apos;activité.
           </p>
 
-          <div className="demaa-search-shell mx-auto mt-5 max-w-4xl">
-            <div className="relative">
-              <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-dema-forest/42 md:left-5 md:h-5 md:w-5" />
-              <input
-                value={searchQuery}
-                onChange={(event) => setSearchQuery(event.target.value)}
-                placeholder="Rechercher une banque, un grossiste, un partenaire..."
-                className="w-full rounded-full bg-dema-paper py-2.5 pl-10 pr-5 text-sm font-normal text-brand-blue outline-none transition placeholder:text-brand-blue/36 md:py-3 md:pl-12 md:text-base"
-              />
-            </div>
+          <div className="mt-5">
+            <SearchFilterControls
+              value={searchQuery}
+              placeholder="Rechercher une banque, un grossiste, un partenaire..."
+              activeFilter={activeFamily}
+              defaultFilter="Tous"
+              isFilterOpen={isFilterPanelOpen}
+              filters={supplierFilters}
+              onChange={setSearchQuery}
+              onFilterClick={() => setIsFilterPanelOpen((current) => !current)}
+              onFilterSelect={(filter) => {
+                setActiveFamily(filter);
+                setIsFilterPanelOpen(false);
+              }}
+            />
           </div>
-
         </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-7 sm:px-6 lg:px-8">
         <div className="flex items-center justify-end pb-5">
-          {searchQuery ? (
+          {(searchQuery || activeFamily !== "Tous") ? (
             <button
               type="button"
               onClick={() => {
                 setSearchQuery("");
+                setActiveFamily("Tous");
               }}
               className="text-xs font-medium text-dema-muted transition hover:text-dema-forest"
             >
