@@ -227,6 +227,212 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
       "protection-juridique",
     ],
   },
+  notaire: {
+    order: [
+      "qonto",
+      "assurance-pro",
+      "protection-juridique",
+      "telephonie-pro",
+      "alan",
+      "swile",
+    ],
+  },
+  "daf-externalise": {
+    order: [
+      "qonto",
+      "tiimora",
+      "assurance-pro",
+      "alan",
+      "swile",
+      "telephonie-pro",
+      "protection-juridique",
+    ],
+  },
+  "office-manager-externalise": {
+    order: [
+      "qonto",
+      "telephonie-pro",
+      "assurance-pro",
+      "alan",
+      "swile",
+      "protection-juridique",
+    ],
+  },
+  "assistant-administratif-externalise": {
+    order: [
+      "qonto",
+      "shine",
+      "telephonie-pro",
+      "assurance-pro",
+      "protection-juridique",
+    ],
+  },
+  "secretariat-externalise": {
+    order: [
+      "telephonie-pro",
+      "qonto",
+      "assurance-pro",
+      "alan",
+      "protection-juridique",
+    ],
+  },
+  "gestionnaire-paie-independant": {
+    order: [
+      "tiimora",
+      "qonto",
+      "shine",
+      "assurance-pro",
+      "protection-juridique",
+      "telephonie-pro",
+    ],
+  },
+  "cabinet-rh-externalise": {
+    order: [
+      "tiimora",
+      "qonto",
+      "alan",
+      "swile",
+      "assurance-pro",
+      "telephonie-pro",
+      "protection-juridique",
+    ],
+  },
+  "centre-appels-support-client": {
+    order: [
+      "telephonie-pro",
+      "qonto",
+      "assurance-pro",
+      "alan",
+      "swile",
+      "protection-juridique",
+    ],
+  },
+  "societe-recouvrement": {
+    order: [
+      "qonto",
+      "assurance-pro",
+      "protection-juridique",
+      "telephonie-pro",
+      "alan",
+    ],
+  },
+  "societe-domiciliation": {
+    order: [
+      "qonto",
+      "assurance-pro",
+      "telephonie-pro",
+      "protection-juridique",
+      "energie-pro",
+      "alan",
+    ],
+  },
+  "centre-affaires-coworking": {
+    order: [
+      "qonto",
+      "terminal-paiement",
+      "energie-pro",
+      "telephonie-pro",
+      "assurance-pro",
+      "hygiene-nettoyage",
+      "alan",
+    ],
+  },
+  "cabinet-qhse-conformite": {
+    order: [
+      "qonto",
+      "assurance-pro",
+      "telephonie-pro",
+      "alan",
+      "protection-juridique",
+    ],
+  },
+  "bureau-etudes": {
+    order: [
+      "qonto",
+      "assurance-pro",
+      "telephonie-pro",
+      "alan",
+      "protection-juridique",
+    ],
+  },
+  "cabinet-etudes": {
+    order: [
+      "qonto",
+      "assurance-pro",
+      "telephonie-pro",
+      "alan",
+      "protection-juridique",
+    ],
+  },
+  "infogerance-informatique": {
+    order: [
+      "qonto",
+      "telephonie-pro",
+      "assurance-pro",
+      "alan",
+      "swile",
+      "protection-juridique",
+    ],
+  },
+  "cybersecurite-pme": {
+    order: [
+      "qonto",
+      "assurance-pro",
+      "protection-juridique",
+      "telephonie-pro",
+      "alan",
+    ],
+  },
+  "integrateur-crm-erp": {
+    order: [
+      "qonto",
+      "telephonie-pro",
+      "assurance-pro",
+      "alan",
+      "swile",
+      "protection-juridique",
+    ],
+  },
+  "consultant-data-bi": {
+    order: [
+      "qonto",
+      "telephonie-pro",
+      "assurance-pro",
+      "alan",
+      "swile",
+      "protection-juridique",
+    ],
+  },
+  "studio-branding-design": {
+    order: [
+      "qonto",
+      "assurance-pro",
+      "telephonie-pro",
+      "alan",
+      "swile",
+      "protection-juridique",
+    ],
+  },
+  syndic: {
+    order: [
+      "qonto",
+      "assurance-pro",
+      "telephonie-pro",
+      "energie-pro",
+      "protection-juridique",
+      "alan",
+    ],
+  },
+  "gestion-locative": {
+    order: [
+      "qonto",
+      "assurance-pro",
+      "telephonie-pro",
+      "energie-pro",
+      "protection-juridique",
+      "alan",
+    ],
+  },
   "cabinet-comptable": {
     order: [
       "qonto",
@@ -279,6 +485,106 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
       "alan",
       "swile",
       "protection-juridique",
+    ],
+  },
+  "agence-seo": {
+    order: [
+      "qonto",
+      "assurance-pro",
+      "telephonie-pro",
+      "alan",
+      "swile",
+      "protection-juridique",
+    ],
+  },
+  "agence-acquisition-paid-ads": {
+    order: [
+      "qonto",
+      "assurance-pro",
+      "telephonie-pro",
+      "alan",
+      "swile",
+      "protection-juridique",
+    ],
+  },
+  "diagnostiqueur-immobilier": {
+    order: [
+      "qonto",
+      "assurance-pro",
+      "telephonie-pro",
+      "leasing-vehicule",
+      "protection-juridique",
+      "alan",
+    ],
+  },
+  geometre: {
+    order: [
+      "qonto",
+      "assurance-pro",
+      "telephonie-pro",
+      "leasing-vehicule",
+      "protection-juridique",
+      "alan",
+    ],
+  },
+  "architecte-maitre-oeuvre": {
+    order: [
+      "qonto",
+      "assurance-pro",
+      "telephonie-pro",
+      "alan",
+      "protection-juridique",
+      "kiloutou",
+    ],
+  },
+  "reparation-informatique-mobile": {
+    order: [
+      "qonto",
+      "assurance-pro",
+      "telephonie-pro",
+      "leasing-vehicule",
+      "protection-juridique",
+      "alan",
+    ],
+  },
+  "nettoyage-professionnel": {
+    order: [
+      "qonto",
+      "assurance-pro",
+      "hygiene-nettoyage",
+      "telephonie-pro",
+      "alan",
+      "protection-juridique",
+    ],
+  },
+  demenagement: {
+    order: [
+      "qonto",
+      "assurance-pro",
+      "leasing-vehicule",
+      "telephonie-pro",
+      "alan",
+      "protection-juridique",
+    ],
+  },
+  "auto-ecole": {
+    order: [
+      "qonto",
+      "assurance-pro",
+      "leasing-vehicule",
+      "telephonie-pro",
+      "alan",
+      "protection-juridique",
+    ],
+  },
+  "gestionnaire-de-patrimoine": {
+    order: [
+      "qonto",
+      "assurance-pro",
+      "protection-juridique",
+      "alan",
+      "telephonie-pro",
+      "swile",
     ],
   },
   "courtier-credit-assurance": {

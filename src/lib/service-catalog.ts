@@ -136,16 +136,16 @@ export const demaaServices = [
     usefulFor: ["Visibilité", "Crédibilité", "Prise de contact"],
   },
   {
-    slug: "structuration-automatisation",
-    name: "Structuration & Automatisation",
+    slug: "organisation-automatisation",
+    name: "Organisation & Automatisation",
     category: "Systèmes",
-    shortDescription: "Clarifier les process puis automatiser ce qui se répète.",
+    shortDescription: "Organiser l'activité puis automatiser ce qui se répète.",
     description:
-      "Offre Demaa pour cadrer les flux de travail, choisir les bons outils, connecter les étapes et automatiser les tâches répétitives.",
+      "Offre Demaa pour organiser les flux de travail, choisir les bons outils, connecter les étapes et automatiser les tâches répétitives.",
     bestFor:
       "Les entreprises qui perdent du temps sur relances, devis, documents, reporting, planning ou suivi client.",
     price: "Sur devis",
-    tags: ["Structuration", "Automatisation", "Demaa"],
+    tags: ["Organisation", "Automatisation", "Demaa"],
     icon: "Workflow",
     deliverables: [
       "Analyse de vos tâches et blocages",

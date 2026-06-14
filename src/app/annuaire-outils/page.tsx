@@ -10,17 +10,26 @@ import { getUnifiedToolDirectoryMeta } from "@/lib/tool-directory-firestore";
 import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire";
 
 export const metadata: Metadata = {
-  title: "Annuaire Outils - Demaa",
+  title: "Annuaire outils TPE - Demaa",
   description:
     "Explorez les outils utiles aux TPE pour organiser, automatiser, créer et piloter leur activité au quotidien.",
   alternates: {
     canonical: "/annuaire-outils",
   },
   openGraph: {
-    title: "Annuaire Outils - Demaa",
+    title: "Annuaire outils TPE - Demaa",
     description:
       "Explorez les outils utiles aux TPE pour organiser, automatiser, créer et piloter leur activité au quotidien.",
     url: "/annuaire-outils",
+    siteName: "Demaa",
+    locale: "fr_FR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Annuaire outils TPE - Demaa",
+    description:
+      "Explorez les outils utiles aux TPE pour organiser, automatiser, créer et piloter leur activité au quotidien.",
   },
 };
 
@@ -43,7 +52,7 @@ export default async function AnnuaireOutilsPage({
   const directoryTools = withSoftwareDetailUrls(toolDirectoryMeta.tools);
   const backLink = returnEnterprise
     ? {
-        href: `/?system=${encodeURIComponent(returnEnterprise.slug)}&systemTab=outils`,
+        href: `/systemes/${encodeURIComponent(returnEnterprise.slug)}?tab=outils`,
         label: `Retour à ${returnEnterprise.name}`,
       }
     : undefined;

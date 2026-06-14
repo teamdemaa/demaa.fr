@@ -5,20 +5,26 @@ import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire";
 import { getDemaaSuppliers, supplierFamilies } from "@/lib/supplier-catalog";
 
 export const metadata: Metadata = {
-  title: "Annuaire Partenaires & fournisseurs - Demaa",
+  title: "Annuaire partenaires et fournisseurs TPE - Demaa",
   description:
     "Explorez les banques, assurances, mutuelles, achats, équipements et partenaires utiles aux TPE.",
   alternates: {
     canonical: "/annuaire-fournisseurs",
   },
   openGraph: {
-    title: "Annuaire Partenaires & fournisseurs - Demaa",
+    title: "Annuaire partenaires et fournisseurs TPE - Demaa",
     description:
       "Explorez les banques, assurances, mutuelles, achats, équipements et partenaires utiles aux TPE.",
     url: "/annuaire-fournisseurs",
     siteName: "Demaa",
     locale: "fr_FR",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Annuaire partenaires et fournisseurs TPE - Demaa",
+    description:
+      "Explorez les banques, assurances, mutuelles, achats, équipements et partenaires utiles aux TPE.",
   },
 };
 
@@ -40,7 +46,7 @@ export default async function AnnuaireFournisseursPage({
     : null;
   const backLink = returnEnterprise
     ? {
-        href: `/?system=${encodeURIComponent(returnEnterprise.slug)}&systemTab=fournisseurs`,
+        href: `/systemes/${encodeURIComponent(returnEnterprise.slug)}?tab=fournisseurs`,
         label: `Retour à ${returnEnterprise.name}`,
       }
     : undefined;

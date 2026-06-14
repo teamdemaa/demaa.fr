@@ -163,6 +163,15 @@ export default function ToolDirectoryClient({
               <p className="mx-auto mt-2 max-w-2xl text-sm font-normal leading-relaxed text-dema-muted">
                 {description}
               </p>
+              {!backLink ? (
+                <p className="mx-auto mt-3 max-w-2xl text-xs leading-relaxed text-dema-muted">
+                  Vous pouvez aussi partir d&apos;un métier depuis{" "}
+                  <Link href="/" className="font-medium text-dema-forest transition hover:text-brand-blue">
+                    l&apos;annuaire des systèmes
+                  </Link>
+                  .
+                </p>
+              ) : null}
             </>
           ) : null}
 

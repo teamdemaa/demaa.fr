@@ -4,7 +4,9 @@ import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import { ArrowLeft, Calendar, GraduationCap } from "lucide-react";
 import Navbar from "@/components/Navbar";
+import RelatedSystemsLinks from "@/components/RelatedSystemsLinks";
 import { getCourseEntryBySlug } from "@/lib/course-content";
+import { getRelatedSystemsForContentSlug } from "@/lib/related-systems";
 
 export async function generateMetadata(
   props: { params: Promise<{ slug: string }> }
@@ -17,6 +19,22 @@ export async function generateMetadata(
   return {
     title: `${entry.title} | Cours Demaa`,
     description: entry.description,
+    alternates: {
+      canonical: `/cours/${entry.slug}`,
+    },
+    openGraph: {
+      title: `${entry.title} | Cours Demaa`,
+      description: entry.description,
+      url: `/cours/${entry.slug}`,
+      siteName: "Demaa",
+      locale: "fr_FR",
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${entry.title} | Cours Demaa`,
+      description: entry.description,
+    },
   };
 }
 
@@ -25,6 +43,7 @@ export default async function CourseDetailPage(
 ) {
   const params = await props.params;
   const entry = getCourseEntryBySlug(params.slug);
+  const relatedSystems = getRelatedSystemsForContentSlug(params.slug);
 
   if (!entry) {
     notFound();
@@ -77,6 +96,13 @@ export default async function CourseDetailPage(
               ))}
             </div>
           ) : null}
+
+          <div className="mt-10">
+            <RelatedSystemsLinks
+              systems={relatedSystems}
+              description="Quelques pages système où ce cours est particulièrement utile."
+            />
+          </div>
         </article>
       </main>
     </>

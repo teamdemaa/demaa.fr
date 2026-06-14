@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
 import { getAllCourseEntries } from "@/lib/course-content";
 import { getAllEditorialEntries } from "@/lib/editorial-content";
+import { getEnterpriseCatalog } from "@/lib/enterprise-annuaire";
+import { sectorPageDefinitions } from "@/lib/sector-pages";
 import { demaaServices } from "@/lib/service-catalog";
 import { getToolDirectorySlug, hasStandaloneToolPage } from "@/lib/tool-directory";
 import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
@@ -29,7 +31,10 @@ function getBaseUrl(): string {
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = getBaseUrl();
   const now = new Date();
-  const tools = await getUnifiedToolDirectory();
+  const [tools, enterprises] = await Promise.all([
+    getUnifiedToolDirectory(),
+    getEnterpriseCatalog(),
+  ]);
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: base, lastModified: now, changeFrequency: "weekly", priority: 1 },
@@ -39,7 +44,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/ressources`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/organisation-automatisation`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
     { url: `${base}/cours`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
-    { url: `${base}/newsletter`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     { url: `${base}/mentions-legales`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
     { url: `${base}/politique-de-confidentialite`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
     { url: `${base}/politique-de-cookies`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
@@ -98,6 +102,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
+  const sectorEntries: MetadataRoute.Sitemap = sectorPageDefinitions.map((sector) => ({
+    url: `${base}/secteurs/${sector.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
+
+  const systemEntries: MetadataRoute.Sitemap = enterprises.map((enterprise) => ({
+    url: `${base}/systemes/${enterprise.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.75,
+  }));
+
   return [
     ...staticRoutes,
     ...editorialContentEntries,
@@ -105,5 +123,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...toolEntries,
     ...freeToolEntries,
     ...serviceEntries,
+    ...sectorEntries,
+    ...systemEntries,
   ];
 }

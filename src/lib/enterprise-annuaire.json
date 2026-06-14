@@ -11315,15 +11315,33 @@
         },
         {
           "pillar": "Opérations",
+          "title": "Roadmap client",
+          "description": "Transformer l’audit en plan d’action clair, séquencé et validé avec le client.",
+          "examples": "Exemple : trier les chantiers → ordonner les quick wins → fixer la priorité mensuelle → faire valider la feuille de route → lancer l’exécution."
+        },
+        {
+          "pillar": "Opérations",
           "title": "Production SEO",
           "description": "Suivre briefs, contenus, optimisations, validations et publication.",
           "examples": "Exemple : créer brief → produire contenu → optimiser → faire valider → publier."
         },
         {
           "pillar": "Opérations",
+          "title": "Netlinking & autorité",
+          "description": "Piloter campagnes de liens, opportunités éditoriales et qualité du profil de domaine.",
+          "examples": "Exemple : cibler les pages à pousser → préparer l’angle d’acquisition → obtenir le lien → vérifier l’indexation → suivre l’impact SEO."
+        },
+        {
+          "pillar": "Opérations",
           "title": "Reporting SEO",
           "description": "Mesurer positions, trafic, leads, actions réalisées et prochaines priorités.",
           "examples": "Exemple : récupérer données → comparer objectifs → commenter écarts → recommander actions → suivre."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Suivi client & validations",
+          "description": "Organiser les retours client, arbitrages, validations et relances sans casser le rythme de production.",
+          "examples": "Exemple : préparer le point client → valider les priorités → relancer les contenus attendus → arbitrer les blocages → confirmer la prochaine étape."
         }
       ],
       "toolRefs": [
@@ -11338,6 +11356,42 @@
         {
           "slug": "hubspot",
           "usage": "Relier leads et performance commerciale."
+        },
+        {
+          "slug": "airtable",
+          "usage": "Structurer roadmap SEO, backlog, contenus et priorités par client."
+        },
+        {
+          "slug": "clickup",
+          "usage": "Piloter les tâches SEO, validations et délais de production."
+        },
+        {
+          "slug": "asana",
+          "usage": "Suivre campagnes SEO, jalons de production et coordination d’équipe."
+        },
+        {
+          "slug": "pipedrive",
+          "usage": "Suivre les prospects, devis et opportunités commerciales de l’agence."
+        },
+        {
+          "slug": "brevo",
+          "usage": "Gérer newsletters, nurturing et relances email liées à la stratégie SEO."
+        },
+        {
+          "slug": "canva",
+          "usage": "Créer visuels, audits client et supports de restitution clairs."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer briefs, angles, analyses de SERP et premiers jets de contenus."
+        },
+        {
+          "slug": "claude",
+          "usage": "Rédiger des synthèses SEO plus propres et clarifier les recommandations."
+        },
+        {
+          "slug": "make",
+          "usage": "Automatiser collecte de données, reporting et relances internes."
         }
       ],
       "audience": "b2b",
@@ -11370,6 +11424,12 @@
         },
         {
           "pillar": "Opérations",
+          "title": "Tracking & attribution",
+          "description": "Fiabiliser les conversions, les sources et la lecture de performance avant d’optimiser les campagnes.",
+          "examples": "Exemple : vérifier les événements → contrôler les remontées CRM → comparer les sources → corriger l’attribution → valider la mesure."
+        },
+        {
+          "pillar": "Opérations",
           "title": "Pilotage budget",
           "description": "Suivre dépenses, CPL, conversions, qualité leads et arbitrages.",
           "examples": "Exemple : contrôler dépenses → repérer campagnes faibles → réallouer budget → documenter décision → mesurer."
@@ -11379,6 +11439,18 @@
           "title": "Créations & tests",
           "description": "Organiser variantes, validations, apprentissages et itérations.",
           "examples": "Exemple : briefer créa → produire variante → tester → analyser → garder gagnants."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Landing pages & conversion",
+          "description": "Aligner messages, offres et pages de conversion pour éviter de payer des clics qui ne transforment pas.",
+          "examples": "Exemple : relire la promesse → vérifier la cohérence annonce-page → améliorer la preuve → simplifier le formulaire → mesurer l’impact."
+        },
+        {
+          "pillar": "Opérations",
+          "title": "Reporting client & arbitrages",
+          "description": "Expliquer les résultats, les décisions prises et les prochaines priorités sans noyer le client dans les chiffres.",
+          "examples": "Exemple : consolider les données → expliquer les écarts → proposer le prochain arbitrage → faire valider la priorité → lancer l’action."
         }
       ],
       "toolRefs": [
@@ -11393,6 +11465,30 @@
         {
           "slug": "notion",
           "usage": "Piloter briefs, budgets et tests."
+        },
+        {
+          "slug": "airtable",
+          "usage": "Structurer campagnes, créas, tests et priorités par client."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Partager reportings, validations et documents de campagne."
+        },
+        {
+          "slug": "canva",
+          "usage": "Préparer rapidement visuels publicitaires et supports de restitution."
+        },
+        {
+          "slug": "clickup",
+          "usage": "Suivre tâches, validations et délais de production paid ads."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer angles, variantes d’annonces et premiers briefs créatifs."
+        },
+        {
+          "slug": "make",
+          "usage": "Automatiser alertes, reporting et circulation des leads."
         }
       ],
       "audience": "b2b",

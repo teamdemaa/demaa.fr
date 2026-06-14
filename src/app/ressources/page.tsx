@@ -6,18 +6,23 @@ import { Metadata } from "next";
 import { getAllEditorialEntries } from "@/lib/editorial-content";
 
 export const metadata: Metadata = {
-  title: "Ressources Demaa",
+  title: "Ressources pour structurer son entreprise - Demaa",
   description: "Retrouvez les articles, ressources et templates utiles pour structurer, piloter et développer votre activité.",
   alternates: {
     canonical: "/ressources",
   },
   openGraph: {
-    title: "Ressources Demaa",
+    title: "Ressources pour structurer son entreprise - Demaa",
     description: "Retrouvez les articles, ressources et templates utiles pour structurer, piloter et développer votre activité.",
     url: "/ressources",
     siteName: "Demaa",
     locale: "fr_FR",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ressources pour structurer son entreprise - Demaa",
+    description: "Retrouvez les articles, ressources et templates utiles pour structurer, piloter et développer votre activité.",
   },
 };
 

@@ -27,7 +27,7 @@ export default function DeleguerPricingPreviewModal({
       className="fixed inset-0 z-[90] flex items-center justify-center bg-brand-blue/45 p-3 md:p-5"
       role="dialog"
       aria-modal="true"
-      aria-label="Pricing Structuration & Automatisation"
+      aria-label="Pricing Organisation & Automatisation"
       onClick={onClose}
     >
       <div
@@ -40,7 +40,7 @@ export default function DeleguerPricingPreviewModal({
               Demaa
             </p>
             <h2 className="truncate text-lg font-semibold text-brand-blue md:text-xl">
-              Structuration & Automatisation
+              Organisation & Automatisation
             </h2>
           </div>
           <button

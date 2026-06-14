@@ -5,20 +5,26 @@ import Navbar from "@/components/Navbar";
 import { getAllCourseEntries } from "@/lib/course-content";
 
 export const metadata: Metadata = {
-  title: "Cours Demaa",
+  title: "Cours pour dirigeants de TPE - Demaa",
   description:
     "Retrouvez les cours Demaa pour comprendre les sujets clés, structurer vos décisions et monter en autonomie.",
   alternates: {
     canonical: "/cours",
   },
   openGraph: {
-    title: "Cours Demaa",
+    title: "Cours pour dirigeants de TPE - Demaa",
     description:
       "Retrouvez les cours Demaa pour comprendre les sujets clés, structurer vos décisions et monter en autonomie.",
     url: "/cours",
     siteName: "Demaa",
     locale: "fr_FR",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Cours pour dirigeants de TPE - Demaa",
+    description:
+      "Retrouvez les cours Demaa pour comprendre les sujets clés, structurer vos décisions et monter en autonomie.",
   },
 };
 

@@ -46,7 +46,7 @@ export default async function AnnuaireServicesPage({
     : null;
   const backLink = returnEnterprise
     ? {
-        href: `/?system=${encodeURIComponent(returnEnterprise.slug)}&systemTab=services`,
+        href: `/systemes/${encodeURIComponent(returnEnterprise.slug)}?tab=services`,
         label: `Retour à ${returnEnterprise.name}`,
       }
     : undefined;

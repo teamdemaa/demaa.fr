@@ -1,0 +1,96 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
+import { notFound } from "next/navigation";
+import Navbar from "@/components/Navbar";
+import SystemDetailContent from "@/components/SystemDetailContent";
+import {
+  buildSystemPageIntro,
+  buildSystemPageJsonLd,
+  buildSystemPageMetadata,
+  getSystemDetailPageData,
+} from "@/lib/system-detail-page";
+
+type SystemDetailPageProps = {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ tab?: string | string[] }>;
+};
+
+function getParamValue(value?: string | string[]) {
+  return Array.isArray(value) ? value[0] : value;
+}
+
+function isSystemDetailTab(tab?: string) {
+  return (
+    tab === "processus" ||
+    tab === "outils" ||
+    tab === "services" ||
+    tab === "fournisseurs" ||
+    tab === "ressources"
+  );
+}
+
+export async function generateMetadata({
+  params,
+}: SystemDetailPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const data = await getSystemDetailPageData(slug);
+
+  if (!data) {
+    return {
+      title: "Système introuvable - Demaa",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
+
+  return buildSystemPageMetadata(data);
+}
+
+export default async function SystemDetailPage({
+  params,
+  searchParams,
+}: SystemDetailPageProps) {
+  const [{ slug }, resolvedSearchParams] = await Promise.all([params, searchParams]);
+  const data = await getSystemDetailPageData(slug);
+
+  if (!data) {
+    notFound();
+  }
+
+  const initialTab = getParamValue(resolvedSearchParams.tab);
+  const jsonLd = buildSystemPageJsonLd(data);
+
+  return (
+    <>
+      <Navbar minimal />
+      <main className="min-h-screen bg-background pb-20">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <div className="mx-auto max-w-7xl px-4 pb-16 pt-8 sm:px-6 lg:px-8">
+          <Link
+            href="/"
+            className="group inline-flex items-center gap-2 text-sm font-medium text-gray-400 transition-colors hover:text-neutral-700"
+          >
+            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+            Retour à l&apos;annuaire des systèmes
+          </Link>
+
+          <div className="mt-8 rounded-[1.25rem] border border-dema-line bg-dema-paper p-6 shadow-[0_24px_60px_rgba(23,35,29,0.08)] md:p-8">
+            <SystemDetailContent
+              system={data.system}
+              detail={data.detail}
+              intro={buildSystemPageIntro(data)}
+              initialActiveTab={isSystemDetailTab(initialTab) ? initialTab : undefined}
+              headingAs="h1"
+            />
+          </div>
+        </div>
+      </main>
+    </>
+  );
+}

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Suspense, useEffect, useState } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Boxes, HandHelping, Search, type LucideIcon } from "lucide-react";
 import {
   visiblePrimaryNavigationItems,
@@ -61,15 +61,13 @@ export default function Navbar({
 
 function DesktopHomeTabsNav({ mode }: { mode: HomeTabsMode }) {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const urlTab = searchParams.get("tab");
   const activeTab =
     pathname === "/annuaire-services"
       ? "deleguer"
       : pathname === "/organisation-automatisation"
         ? "structurer"
       : pathname === "/"
-        ? getVisibleTab(urlTab ?? "")?.id ?? "analyser"
+        ? "analyser"
         : undefined;
 
   return <DesktopHomeTabsNavStatic activeTab={activeTab} mode={mode} />;

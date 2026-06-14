@@ -22,8 +22,8 @@ export default function ServiceDetailDialog({
   const [isIntroductionOpen, setIsIntroductionOpen] = useState(false);
   const [isPricingPreviewOpen, setIsPricingPreviewOpen] = useState(false);
   const serviceSource =
-    service.slug === "structuration-automatisation" ? "Demaa" : "Partenaire";
-  const isStructuration = service.slug === "structuration-automatisation";
+    service.slug === "organisation-automatisation" ? "Demaa" : "Partenaire";
+  const isOrganisationService = service.slug === "organisation-automatisation";
   const isAssistantLanding = service.slug === "assistant-polyvalent";
 
   return (
@@ -102,7 +102,7 @@ export default function ServiceDetailDialog({
                 <p className="mt-3 text-sm leading-relaxed text-dema-muted">
                   {service.bestFor}
                 </p>
-                {isStructuration ? (
+                {isOrganisationService ? (
                   <button
                     type="button"
                     onClick={() => setIsPricingPreviewOpen(true)}

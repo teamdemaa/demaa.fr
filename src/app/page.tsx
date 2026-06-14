@@ -27,21 +27,6 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
-type HomePageProps = {
-  searchParams: Promise<{
-    system?: string | string[];
-    systemTab?: string | string[];
-  }>;
-};
-
-function getParamValue(value?: string | string[]) {
-  return Array.isArray(value) ? value[0] : value;
-}
-
-export default async function HomePage({ searchParams }: HomePageProps) {
-  const params = await searchParams;
-  const initialSystem = getParamValue(params.system);
-  const initialSystemTab = getParamValue(params.systemTab);
-
-  return <HomeHubPage initialSystem={initialSystem} initialSystemTab={initialSystemTab} />;
+export default async function HomePage() {
+  return <HomeHubPage />;
 }

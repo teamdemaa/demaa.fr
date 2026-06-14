@@ -4,8 +4,10 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, Check } from "lucide-react";
 import AssistantPolyvalentLanding from "@/components/AssistantPolyvalentLanding";
 import Navbar from "@/components/Navbar";
+import RelatedSystemsLinks from "@/components/RelatedSystemsLinks";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import ServiceRequestCta from "@/components/ServiceRequestCta";
+import { getRelatedSystemsForServiceSlug } from "@/lib/related-systems";
 import {
   demaaServices,
   getDemaaServiceBySlug,
@@ -42,7 +44,19 @@ export async function generateMetadata({
   return {
     title: `${service.name} - Demaa`,
     description: service.description,
+    alternates: {
+      canonical: `/services/${service.slug}`,
+    },
     openGraph: {
+      title: `${service.name} - Demaa`,
+      description: service.description,
+      url: `/services/${service.slug}`,
+      siteName: "Demaa",
+      locale: "fr_FR",
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
       title: `${service.name} - Demaa`,
       description: service.description,
     },
@@ -64,7 +78,8 @@ export default async function ServiceDetailPage({
   }
 
   const serviceSource =
-    service.slug === "structuration-automatisation" ? "Demaa" : "Partenaire";
+    service.slug === "organisation-automatisation" ? "Demaa" : "Partenaire";
+  const relatedSystems = getRelatedSystemsForServiceSlug(service.slug);
 
   return (
     <>
@@ -157,6 +172,13 @@ export default async function ServiceDetailPage({
                 ))}
               </div>
             </div>
+          </section>
+
+          <section className="mt-5">
+            <RelatedSystemsLinks
+              systems={relatedSystems}
+              description="Quelques pages système où ce service est particulièrement pertinent."
+            />
           </section>
         </div>
       </main>

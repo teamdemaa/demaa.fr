@@ -16,13 +16,20 @@ export async function generateMetadata({
 
   if (!system) {
     return {
-      title: "Document de structuration introuvable - Demaa",
+      title: "Plan d'organisation introuvable - Demaa",
     };
   }
 
   return {
-    title: `Structurer votre activité ${system.name} - Demaa`,
-    description: `Document de structuration Demaa pour structurer une activité ${system.name}.`,
+    title: `Plan d'organisation ${system.name} - Demaa`,
+    description: `Plan d'organisation Demaa pour mieux organiser l'activité ${system.name}.`,
+    alternates: {
+      canonical: `/systemes/${system.slug}`,
+    },
+    robots: {
+      index: false,
+      follow: true,
+    },
   };
 }
 

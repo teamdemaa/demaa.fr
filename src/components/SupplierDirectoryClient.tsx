@@ -62,6 +62,15 @@ export default function SupplierDirectoryClient({
           <p className="mx-auto mt-2 max-w-2xl text-sm font-normal leading-relaxed text-dema-muted">
             Banques, assurances, mutuelles, achats, équipements et partenaires utiles selon l&apos;activité.
           </p>
+          {!backLink ? (
+            <p className="mx-auto mt-3 max-w-2xl text-xs leading-relaxed text-dema-muted">
+              Vous pouvez aussi partir d&apos;un métier depuis{" "}
+              <Link href="/" className="font-medium text-dema-forest transition hover:text-brand-blue">
+                l&apos;annuaire des systèmes
+              </Link>
+              .
+            </p>
+          ) : null}
 
           <div className="demaa-search-shell mx-auto mt-5 max-w-4xl p-1.5">
             <div className="relative">

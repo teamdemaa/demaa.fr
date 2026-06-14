@@ -1,25 +1,23 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import PrimaryMobileNav, { type PrimaryNavTab } from "@/components/PrimaryMobileNav";
 import SearchFilterControls from "@/components/SearchFilterControls";
 import SystemsCatalogClient from "@/components/SystemsCatalogClient";
 import { ALL_SECTORS_LABEL } from "@/lib/public-sectors";
+import { getSectorPageByLabel } from "@/lib/sector-pages";
 import type { OperationalSystemDetail } from "@/lib/system-operations";
 import type { System } from "@/lib/types";
 
 type HomeTabsClientProps = {
   systems: System[];
   detailsBySlug: Record<string, OperationalSystemDetail>;
-  initialSystem?: string;
-  initialSystemTab?: string;
 };
 
 export default function HomeTabsClient({
   systems,
   detailsBySlug,
-  initialSystem,
-  initialSystemTab,
 }: HomeTabsClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeSector, setActiveSector] = useState(ALL_SECTORS_LABEL);
@@ -33,10 +31,21 @@ export default function HomeTabsClient({
   }, [detailsBySlug, systems]);
 
   const effectiveActiveSector = sectorFilters.includes(activeSector) ? activeSector : ALL_SECTORS_LABEL;
+  const featuredSectorPages = useMemo(() => {
+    return sectorFilters
+      .filter((sector) => sector !== ALL_SECTORS_LABEL)
+      .map((sector) => ({
+        sector,
+        count: systems.filter((system) => detailsBySlug[system.slug]?.sectorLabel === sector).length,
+        page: getSectorPageByLabel(sector),
+      }))
+      .filter((entry): entry is { sector: string; count: number; page: NonNullable<ReturnType<typeof getSectorPageByLabel>> } => Boolean(entry.page))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 6);
+  }, [detailsBySlug, sectorFilters, systems]);
 
   function selectPrimaryMobileTab(tab: PrimaryNavTab) {
     if (tab === "analyser") {
-      window.history.replaceState(null, "", "/");
       setSearchQuery("");
       setActiveSector(ALL_SECTORS_LABEL);
     }
@@ -81,11 +90,29 @@ export default function HomeTabsClient({
             onFilterClick={() => setIsFilterPanelOpen((current) => !current)}
             onFilterSelect={selectSector}
           />
+
+          {featuredSectorPages.length ? (
+            <div className="mx-auto max-w-5xl">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-blue/42">
+                Explorer par secteur
+              </p>
+              <div className="mt-3 flex flex-wrap justify-center gap-2">
+                {featuredSectorPages.map(({ page, count }) => (
+                  <Link
+                    key={page.slug}
+                    href={`/secteurs/${page.slug}`}
+                    className="inline-flex rounded-full border border-dema-line bg-dema-paper px-3 py-1.5 text-xs font-medium text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
+                  >
+                    {page.label} · {count}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          ) : null}
         </div>
       </section>
 
       <SystemsCatalogClient
-        key={`systems-${initialSystem ?? "none"}-${initialSystemTab ?? "processus"}`}
         systems={systems}
         detailsBySlug={detailsBySlug}
         showIntro={false}
@@ -94,8 +121,6 @@ export default function HomeTabsClient({
         activeSector={effectiveActiveSector}
         onActiveSectorChange={selectSector}
         showSearchBar={false}
-        initialSelectedSlug={initialSystem}
-        initialActiveTab={initialSystemTab}
       />
     </>
   );

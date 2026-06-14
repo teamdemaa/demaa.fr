@@ -1214,7 +1214,6 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Création & validations", internalPillar: "operations" },
     { title: "Reporting & performance", internalPillar: "quality" },
     { title: "Budgets & marge client", internalPillar: "finance" },
-    { title: "Équipe & freelances", internalPillar: "team" },
   ],
   freelance: [
     { title: "Offre & positionnement", internalPillar: "strategy" },
@@ -1240,7 +1239,6 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Développement & recette", internalPillar: "operations" },
     { title: "Maintenance & support", internalPillar: "quality" },
     { title: "Marge projet", internalPillar: "finance" },
-    { title: "Équipe & prestataires", internalPillar: "team" },
   ],
   "creation-de-contenu": [
     { title: "Ligne éditoriale", internalPillar: "strategy" },
@@ -1698,7 +1696,6 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Factures & justificatifs", internalPillar: "finance" },
     { title: "Documents & conformité", internalPillar: "compliance" },
     { title: "Honoraires & temps passé", internalPillar: "finance" },
-    { title: "Organisation & priorités", internalPillar: "team" },
   ],
   "secretariat-externalise": [
     { title: "Offres & standards d'accueil", internalPillar: "strategy" },
@@ -1707,7 +1704,6 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Messages & transmissions", internalPillar: "operations" },
     { title: "Confidentialité & consignes", internalPillar: "compliance" },
     { title: "Abonnements & facturation", internalPillar: "finance" },
-    { title: "Équipe & plages horaires", internalPillar: "team" },
   ],
   "gestionnaire-paie-independant": [
     { title: "Offres paie & périmètre", internalPillar: "strategy" },
@@ -1716,7 +1712,6 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Bulletins & DSN", internalPillar: "operations" },
     { title: "Échéances & conformité sociale", internalPillar: "compliance" },
     { title: "Honoraires & rentabilité dossier", internalPillar: "finance" },
-    { title: "Équipe & validations client", internalPillar: "team" },
   ],
   "cabinet-rh-externalise": [
     { title: "Offres RH & positionnement", internalPillar: "strategy" },
@@ -1743,7 +1738,6 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Relances & échéanciers", internalPillar: "operations" },
     { title: "Dossiers sensibles & preuves", internalPillar: "compliance" },
     { title: "Commissions & encaissements", internalPillar: "finance" },
-    { title: "Équipe & escalades", internalPillar: "team" },
   ],
   "societe-domiciliation": [
     { title: "Offres domiciliation & services", internalPillar: "strategy" },
@@ -1770,7 +1764,6 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Plans d'action", internalPillar: "operations" },
     { title: "Veille & obligations", internalPillar: "compliance" },
     { title: "Honoraires & marge mission", internalPillar: "finance" },
-    { title: "Consultants & validations", internalPillar: "team" },
   ],
   "bureau-etudes": [
     { title: "Expertises & domaines techniques", internalPillar: "strategy" },
@@ -1792,12 +1785,11 @@ export const enterpriseBusinessBlockOverrides = {
   ],
   "infogerance-informatique": [
     { title: "Offres infogérance & SLA", internalPillar: "strategy" },
-    { title: "Prospects & audit parc", internalPillar: "sales" },
+    { title: "Prospects & cadrage parc", internalPillar: "sales" },
     { title: "Parc & contrats", internalPillar: "operations" },
     { title: "Tickets & interventions", internalPillar: "operations" },
     { title: "Sécurité & maintenance", internalPillar: "compliance" },
     { title: "Abonnements & marge support", internalPillar: "finance" },
-    { title: "Techniciens & astreintes", internalPillar: "team" },
   ],
   "cybersecurite-pme": [
     { title: "Offres cybersécurité & périmètre", internalPillar: "strategy" },
@@ -1806,7 +1798,6 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Sensibilisation & preuves", internalPillar: "quality" },
     { title: "Conformité & accès sensibles", internalPillar: "compliance" },
     { title: "Forfaits & rentabilité", internalPillar: "finance" },
-    { title: "Experts & escalades", internalPillar: "team" },
   ],
   "integrateur-crm-erp": [
     { title: "Offres intégration & périmètre", internalPillar: "strategy" },
@@ -1815,7 +1806,6 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Recette & anomalies", internalPillar: "quality" },
     { title: "Accès & données client", internalPillar: "compliance" },
     { title: "Forfaits & marge projet", internalPillar: "finance" },
-    { title: "Consultants & support", internalPillar: "team" },
   ],
   "consultant-data-bi": [
     { title: "Offres data & indicateurs", internalPillar: "strategy" },
@@ -1824,25 +1814,22 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Tableaux de bord", internalPillar: "operations" },
     { title: "Données & confidentialité", internalPillar: "compliance" },
     { title: "Honoraires & valeur livrée", internalPillar: "finance" },
-    { title: "Équipe & relais métier", internalPillar: "team" },
   ],
   "agence-seo": [
     { title: "Offres SEO & positionnement", internalPillar: "strategy" },
-    { title: "Prospects & audit SEO", internalPillar: "sales" },
+    { title: "Prospects & cadrage SEO", internalPillar: "sales" },
     { title: "Production SEO", internalPillar: "operations" },
-    { title: "Reporting SEO", internalPillar: "quality" },
     { title: "Accès & contenus client", internalPillar: "compliance" },
+    { title: "Reporting & priorités SEO", internalPillar: "quality" },
     { title: "Budgets & marge client", internalPillar: "finance" },
-    { title: "Équipe & freelances", internalPillar: "team" },
   ],
   "agence-acquisition-paid-ads": [
     { title: "Offres acquisition & canaux", internalPillar: "strategy" },
     { title: "Prospects & cadrage campagne", internalPillar: "sales" },
-    { title: "Campagnes & tracking", internalPillar: "operations" },
-    { title: "Créations & tests", internalPillar: "operations" },
-    { title: "Données & accès publicitaires", internalPillar: "compliance" },
-    { title: "Budgets & marge client", internalPillar: "finance" },
-    { title: "Équipe & validations", internalPillar: "team" },
+    { title: "Tracking & accès publicitaires", internalPillar: "compliance" },
+    { title: "Campagnes & optimisations", internalPillar: "operations" },
+    { title: "Créations & landing pages", internalPillar: "operations" },
+    { title: "Budgets & arbitrages", internalPillar: "finance" },
   ],
   "studio-branding-design": [
     { title: "Offres branding & design", internalPillar: "strategy" },
@@ -1851,7 +1838,6 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Livrables & passation", internalPillar: "quality" },
     { title: "Droits & fichiers sources", internalPillar: "compliance" },
     { title: "Forfaits & marge projet", internalPillar: "finance" },
-    { title: "Équipe & freelances", internalPillar: "team" },
   ],
 } satisfies Record<string, BusinessModelBlock[]>;
 

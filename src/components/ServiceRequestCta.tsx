@@ -11,7 +11,7 @@ export default function ServiceRequestCta({ service }: { service: DemaaService }
   const [isIntroductionOpen, setIsIntroductionOpen] = useState(false);
   const [isPricingPreviewOpen, setIsPricingPreviewOpen] = useState(false);
 
-  if (service.slug === "structuration-automatisation") {
+  if (service.slug === "organisation-automatisation") {
     return (
       <>
         <button

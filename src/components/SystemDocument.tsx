@@ -93,7 +93,7 @@ function DocumentPage({
     <section className={styles.page}>
       <header className={styles.topbar}>
         <span className={styles.brand}>Demaa</span>
-        <span>Document de structuration</span>
+        <span>Plan d&apos;organisation</span>
       </header>
       <h2 className={styles.pageTitle}>{title}</h2>
       <p className={styles.pageIntro}>{intro}</p>
@@ -144,7 +144,7 @@ export default function SystemDocument({ system, templates }: SystemDocumentProp
           <Link className={styles.backLink} href="/">
             Retour à Demaa
           </Link>
-          <p className={styles.screenEyebrow}>Document de structuration</p>
+          <p className={styles.screenEyebrow}>Plan d&apos;organisation</p>
           <h1>{system.name}</h1>
         </div>
         <SystemDocumentPrintButton />
@@ -153,9 +153,9 @@ export default function SystemDocument({ system, templates }: SystemDocumentProp
       <section className={styles.page}>
         <header className={styles.topbar}>
           <span className={styles.brand}>Demaa</span>
-          <span>Document de structuration</span>
+          <span>Plan d&apos;organisation</span>
         </header>
-        <h1 className={styles.coverTitle}>Structurer votre activité</h1>
+        <h1 className={styles.coverTitle}>Plan d&apos;organisation de votre activité</h1>
         <div className={styles.coverLabel}>{system.name}</div>
         <p className={styles.lead}>{system.description}</p>
         <div className={styles.startPanel}>
@@ -205,7 +205,7 @@ export default function SystemDocument({ system, templates }: SystemDocumentProp
       <section className={styles.page}>
         <header className={styles.topbar}>
           <span className={styles.brand}>Demaa</span>
-          <span>Document de structuration</span>
+          <span>Plan d&apos;organisation</span>
         </header>
         <h2 className={styles.pageTitle}>Plan d&apos;action 3 mois</h2>
         <p className={styles.pageIntro}>

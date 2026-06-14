@@ -12,7 +12,7 @@ type ServiceRecommendationRule = {
 const DEFAULT_SERVICE_ORDER = [
   "site-web",
   "marketing-vente",
-  "structuration-automatisation",
+  "organisation-automatisation",
   "assistant-polyvalent",
   "publicite-google",
 ] satisfies DemaaServiceSlug[];
@@ -22,7 +22,7 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
     order: [
       "site-web",
       "marketing-vente",
-      "structuration-automatisation",
+      "organisation-automatisation",
       "assistant-polyvalent",
       "montage-video",
       "publicite-google",
@@ -33,7 +33,7 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
       "site-web",
       "publicite-google",
       "marketing-vente",
-      "structuration-automatisation",
+      "organisation-automatisation",
       "assistant-polyvalent",
       "montage-video",
     ],
@@ -42,17 +42,207 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
     order: [
       "marketing-vente",
       "site-web",
-      "structuration-automatisation",
+      "organisation-automatisation",
       "assistant-polyvalent",
       "montage-video",
       "publicite-google",
+    ],
+  },
+  notaire: {
+    order: [
+      "site-web",
+      "organisation-automatisation",
+      "assistant-polyvalent",
+      "marketing-vente",
+      "audit-conformite-fiscale",
+    ],
+  },
+  "daf-externalise": {
+    order: [
+      "previsionnel-financier",
+      "organisation-automatisation",
+      "assistant-polyvalent",
+      "site-web",
+      "marketing-vente",
+      "audit-conformite-fiscale",
+    ],
+  },
+  "office-manager-externalise": {
+    order: [
+      "organisation-automatisation",
+      "assistant-polyvalent",
+      "site-web",
+      "marketing-vente",
+      "previsionnel-financier",
+    ],
+  },
+  "assistant-administratif-externalise": {
+    order: [
+      "assistant-polyvalent",
+      "organisation-automatisation",
+      "site-web",
+      "marketing-vente",
+      "audit-conformite-fiscale",
+    ],
+  },
+  "secretariat-externalise": {
+    order: [
+      "assistant-polyvalent",
+      "organisation-automatisation",
+      "site-web",
+      "marketing-vente",
+      "publicite-google",
+    ],
+  },
+  "gestionnaire-paie-independant": {
+    order: [
+      "organisation-automatisation",
+      "assistant-polyvalent",
+      "audit-conformite-fiscale",
+      "previsionnel-financier",
+      "site-web",
+    ],
+  },
+  "cabinet-rh-externalise": {
+    order: [
+      "marketing-vente",
+      "site-web",
+      "organisation-automatisation",
+      "assistant-polyvalent",
+      "previsionnel-financier",
+    ],
+  },
+  "centre-appels-support-client": {
+    order: [
+      "organisation-automatisation",
+      "marketing-vente",
+      "assistant-polyvalent",
+      "site-web",
+      "previsionnel-financier",
+    ],
+  },
+  "societe-recouvrement": {
+    order: [
+      "organisation-automatisation",
+      "site-web",
+      "marketing-vente",
+      "assistant-polyvalent",
+      "audit-conformite-fiscale",
+    ],
+  },
+  "societe-domiciliation": {
+    order: [
+      "organisation-automatisation",
+      "site-web",
+      "marketing-vente",
+      "assistant-polyvalent",
+      "audit-conformite-fiscale",
+    ],
+  },
+  "centre-affaires-coworking": {
+    order: [
+      "site-web",
+      "marketing-vente",
+      "publicite-google",
+      "organisation-automatisation",
+      "assistant-polyvalent",
+    ],
+  },
+  "cabinet-qhse-conformite": {
+    order: [
+      "site-web",
+      "marketing-vente",
+      "organisation-automatisation",
+      "assistant-polyvalent",
+      "audit-conformite-fiscale",
+    ],
+  },
+  "bureau-etudes": {
+    order: [
+      "site-web",
+      "marketing-vente",
+      "organisation-automatisation",
+      "assistant-polyvalent",
+      "previsionnel-financier",
+    ],
+  },
+  "cabinet-etudes": {
+    order: [
+      "site-web",
+      "marketing-vente",
+      "organisation-automatisation",
+      "assistant-polyvalent",
+      "previsionnel-financier",
+    ],
+  },
+  "infogerance-informatique": {
+    order: [
+      "organisation-automatisation",
+      "site-web",
+      "marketing-vente",
+      "assistant-polyvalent",
+      "previsionnel-financier",
+    ],
+  },
+  "cybersecurite-pme": {
+    order: [
+      "site-web",
+      "marketing-vente",
+      "organisation-automatisation",
+      "assistant-polyvalent",
+      "audit-conformite-fiscale",
+    ],
+  },
+  "integrateur-crm-erp": {
+    order: [
+      "organisation-automatisation",
+      "marketing-vente",
+      "site-web",
+      "assistant-polyvalent",
+      "previsionnel-financier",
+    ],
+  },
+  "consultant-data-bi": {
+    order: [
+      "organisation-automatisation",
+      "marketing-vente",
+      "site-web",
+      "assistant-polyvalent",
+      "previsionnel-financier",
+    ],
+  },
+  "studio-branding-design": {
+    order: [
+      "marketing-vente",
+      "site-web",
+      "montage-video",
+      "organisation-automatisation",
+      "assistant-polyvalent",
+    ],
+  },
+  syndic: {
+    order: [
+      "organisation-automatisation",
+      "site-web",
+      "assistant-polyvalent",
+      "marketing-vente",
+      "audit-conformite-fiscale",
+    ],
+  },
+  "gestion-locative": {
+    order: [
+      "organisation-automatisation",
+      "site-web",
+      "assistant-polyvalent",
+      "marketing-vente",
+      "audit-conformite-fiscale",
     ],
   },
   freelance: {
     order: [
       "site-web",
       "marketing-vente",
-      "structuration-automatisation",
+      "organisation-automatisation",
       "assistant-polyvalent",
       "previsionnel-financier",
     ],
@@ -61,7 +251,7 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
     order: [
       "previsionnel-financier",
       "marketing-vente",
-      "structuration-automatisation",
+      "organisation-automatisation",
       "assistant-polyvalent",
       "publicite-google",
       "montage-video",
@@ -71,7 +261,7 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
     order: [
       "site-web",
       "publicite-google",
-      "structuration-automatisation",
+      "organisation-automatisation",
       "assistant-polyvalent",
       "previsionnel-financier",
     ],
@@ -80,7 +270,7 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
     order: [
       "site-web",
       "publicite-google",
-      "structuration-automatisation",
+      "organisation-automatisation",
       "assistant-polyvalent",
       "montage-video",
     ],
@@ -90,7 +280,7 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
       "site-web",
       "publicite-google",
       "publicite-facebook-instagram",
-      "structuration-automatisation",
+      "organisation-automatisation",
       "assistant-polyvalent",
       "montage-video",
       "audit-conformite-fiscale",
@@ -103,7 +293,7 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
       "publicite-facebook-instagram",
       "assistant-polyvalent",
       "montage-video",
-      "structuration-automatisation",
+      "organisation-automatisation",
     ],
   },
   traiteur: {
@@ -112,7 +302,7 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
       "publicite-google",
       "montage-video",
       "marketing-vente",
-      "structuration-automatisation",
+      "organisation-automatisation",
       "assistant-polyvalent",
     ],
   },
@@ -121,7 +311,7 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
       "marketing-vente",
       "publicite-facebook-instagram",
       "publicite-tiktok",
-      "structuration-automatisation",
+      "organisation-automatisation",
       "assistant-polyvalent",
       "previsionnel-financier",
       "audit-conformite-fiscale",
@@ -133,7 +323,7 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
       "publicite-google",
       "publicite-facebook-instagram",
       "assistant-polyvalent",
-      "structuration-automatisation",
+      "organisation-automatisation",
     ],
   },
   "institut-de-beaute": {
@@ -143,7 +333,7 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
       "publicite-facebook-instagram",
       "montage-video",
       "assistant-polyvalent",
-      "structuration-automatisation",
+      "organisation-automatisation",
     ],
   },
   "salon-de-coiffure": {
@@ -161,7 +351,7 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
       "marketing-vente",
       "publicite-facebook-instagram",
       "montage-video",
-      "structuration-automatisation",
+      "organisation-automatisation",
       "assistant-polyvalent",
     ],
   },
@@ -169,7 +359,7 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
     order: [
       "site-web",
       "publicite-google",
-      "structuration-automatisation",
+      "organisation-automatisation",
       "assistant-polyvalent",
       "audit-conformite-fiscale",
     ],
@@ -177,7 +367,7 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   "organisme-de-formation": {
     order: [
       "site-web",
-      "structuration-automatisation",
+      "organisation-automatisation",
       "marketing-vente",
       "assistant-polyvalent",
       "audit-conformite-fiscale",
@@ -189,7 +379,7 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
       "marketing-vente",
       "montage-video",
       "publicite-facebook-instagram",
-      "structuration-automatisation",
+      "organisation-automatisation",
       "assistant-polyvalent",
       "site-web",
     ],
@@ -200,7 +390,7 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
       "montage-video",
       "publicite-facebook-instagram",
       "marketing-vente",
-      "structuration-automatisation",
+      "organisation-automatisation",
       "assistant-polyvalent",
     ],
   },
@@ -228,8 +418,82 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
       "site-web",
       "publicite-facebook-instagram",
       "montage-video",
-      "structuration-automatisation",
+      "organisation-automatisation",
       "assistant-polyvalent",
+    ],
+  },
+  "agence-seo": {
+    order: [
+      "marketing-vente",
+      "site-web",
+      "organisation-automatisation",
+      "assistant-polyvalent",
+      "publicite-google",
+      "montage-video",
+    ],
+  },
+  "agence-acquisition-paid-ads": {
+    order: [
+      "marketing-vente",
+      "publicite-google",
+      "publicite-facebook-instagram",
+      "publicite-tiktok",
+      "organisation-automatisation",
+      "assistant-polyvalent",
+    ],
+  },
+  "diagnostiqueur-immobilier": {
+    order: [
+      "site-web",
+      "publicite-google",
+      "organisation-automatisation",
+      "assistant-polyvalent",
+      "audit-conformite-fiscale",
+    ],
+  },
+  geometre: {
+    order: [
+      "site-web",
+      "organisation-automatisation",
+      "marketing-vente",
+      "assistant-polyvalent",
+      "previsionnel-financier",
+    ],
+  },
+  "architecte-maitre-oeuvre": {
+    order: [
+      "site-web",
+      "marketing-vente",
+      "organisation-automatisation",
+      "assistant-polyvalent",
+      "previsionnel-financier",
+    ],
+  },
+  "courtier-credit-assurance": {
+    order: [
+      "marketing-vente",
+      "site-web",
+      "organisation-automatisation",
+      "assistant-polyvalent",
+      "previsionnel-financier",
+    ],
+  },
+  "auto-ecole": {
+    order: [
+      "site-web",
+      "marketing-vente",
+      "publicite-google",
+      "organisation-automatisation",
+      "assistant-polyvalent",
+    ],
+  },
+  "gestionnaire-de-patrimoine": {
+    order: [
+      "marketing-vente",
+      "site-web",
+      "organisation-automatisation",
+      "assistant-polyvalent",
+      "previsionnel-financier",
     ],
   },
   "agence-immobiliere": {
@@ -238,7 +502,7 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
       "publicite-google",
       "montage-video",
       "marketing-vente",
-      "structuration-automatisation",
+      "organisation-automatisation",
       "assistant-polyvalent",
     ],
   },
@@ -246,7 +510,7 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
     order: [
       "site-web",
       "publicite-google",
-      "structuration-automatisation",
+      "organisation-automatisation",
       "assistant-polyvalent",
       "marketing-vente",
     ],
@@ -255,7 +519,7 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
     order: [
       "site-web",
       "publicite-google",
-      "structuration-automatisation",
+      "organisation-automatisation",
       "assistant-polyvalent",
       "audit-conformite-fiscale",
     ],
@@ -266,7 +530,7 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
       "site-web",
       "publicite-facebook-instagram",
       "montage-video",
-      "structuration-automatisation",
+      "organisation-automatisation",
       "assistant-polyvalent",
     ],
   },
@@ -276,13 +540,13 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
       "publicite-google",
       "publicite-facebook-instagram",
       "assistant-polyvalent",
-      "structuration-automatisation",
+      "organisation-automatisation",
     ],
   },
   "transport-de-marchandise": {
     order: [
       "previsionnel-financier",
-      "structuration-automatisation",
+      "organisation-automatisation",
       "assistant-polyvalent",
       "site-web",
       "publicite-google",
@@ -292,7 +556,7 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
     order: [
       "site-web",
       "publicite-google",
-      "structuration-automatisation",
+      "organisation-automatisation",
       "assistant-polyvalent",
       "previsionnel-financier",
     ],
@@ -301,7 +565,7 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
     order: [
       "site-web",
       "publicite-google",
-      "structuration-automatisation",
+      "organisation-automatisation",
       "assistant-polyvalent",
       "previsionnel-financier",
     ],
@@ -309,7 +573,7 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   "livraison-dernier-kilometre": {
     order: [
       "previsionnel-financier",
-      "structuration-automatisation",
+      "organisation-automatisation",
       "assistant-polyvalent",
       "site-web",
     ],
@@ -317,7 +581,7 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
   "production-industrie": {
     order: [
       "previsionnel-financier",
-      "structuration-automatisation",
+      "organisation-automatisation",
       "assistant-polyvalent",
       "audit-conformite-fiscale",
       "site-web",
@@ -327,7 +591,7 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
     order: [
       "previsionnel-financier",
       "marketing-vente",
-      "structuration-automatisation",
+      "organisation-automatisation",
       "assistant-polyvalent",
       "publicite-google",
       "audit-conformite-fiscale",
@@ -337,7 +601,7 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
     order: [
       "site-web",
       "publicite-google",
-      "structuration-automatisation",
+      "organisation-automatisation",
       "assistant-polyvalent",
     ],
   },
@@ -346,7 +610,7 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
 export function getRecommendedServicesForSystem(systemSlug: string): DemaaService[] {
   const rule = SERVICE_RECOMMENDATIONS_BY_SYSTEM[systemSlug];
   const order = [
-    "structuration-automatisation",
+    "organisation-automatisation",
     ...(rule?.order ?? DEFAULT_SERVICE_ORDER),
   ].filter((slug, index, list) => list.indexOf(slug) === index);
   const recommended = order

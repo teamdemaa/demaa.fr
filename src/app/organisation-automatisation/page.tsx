@@ -3,14 +3,14 @@ import Navbar from "@/components/Navbar";
 import AssistantsCatalogClient from "@/components/AssistantsCatalogClient";
 
 export const metadata: Metadata = {
-  title: "Organisation et automatisation : systemes, process et automatisations - Demaa",
+  title: "Organisation et automatisation pour TPE - Demaa",
   description:
     "Organisez votre entreprise avec les bons systemes, process et automatisations pour mieux piloter l'activite, deleguer plus sereinement et soutenir une croissance durable.",
   alternates: {
     canonical: "/organisation-automatisation",
   },
   openGraph: {
-    title: "Organisation et automatisation : systemes, process et automatisations - Demaa",
+    title: "Organisation et automatisation pour TPE - Demaa",
     description:
       "Organisez votre entreprise avec les bons systemes, process et automatisations pour mieux piloter l'activite, deleguer plus sereinement et soutenir une croissance durable.",
     url: "/organisation-automatisation",

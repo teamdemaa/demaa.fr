@@ -5,7 +5,9 @@ import Navbar from "@/components/Navbar";
 import ReactMarkdown from "react-markdown";
 import { ArrowLeft, ArrowUpRight, Calendar } from "lucide-react";
 import Link from "next/link";
+import RelatedSystemsLinks from "@/components/RelatedSystemsLinks";
 import { getEditorialEntryBySlug } from "@/lib/editorial-content";
+import { getRelatedSystemsForContentSlug } from "@/lib/related-systems";
 
 export async function generateMetadata(
   props: { params: Promise<{ slug: string }> }
@@ -18,6 +20,22 @@ export async function generateMetadata(
   return {
     title: `${entry.title} | Ressources Demaa`,
     description: entry.description,
+    alternates: {
+      canonical: `/ressources/${entry.slug}`,
+    },
+    openGraph: {
+      title: `${entry.title} | Ressources Demaa`,
+      description: entry.description,
+      url: `/ressources/${entry.slug}`,
+      siteName: "Demaa",
+      locale: "fr_FR",
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${entry.title} | Ressources Demaa`,
+      description: entry.description,
+    },
   };
 }
 
@@ -26,6 +44,7 @@ export default async function ResourceDetailPage(
 ) {
   const params = await props.params;
   const entry = getEditorialEntryBySlug(params.slug);
+  const relatedSystems = getRelatedSystemsForContentSlug(params.slug);
 
   if (!entry) {
     notFound();
@@ -119,6 +138,13 @@ export default async function ResourceDetailPage(
               </a>
             </div>
           ) : null}
+
+          <div className="mt-10">
+            <RelatedSystemsLinks
+              systems={relatedSystems}
+              description="Quelques pages système où cette ressource peut être particulièrement utile."
+            />
+          </div>
         </article>
       </main>
     </>
