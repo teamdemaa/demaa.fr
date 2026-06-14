@@ -5,7 +5,7 @@ import { useState } from "react";
 
 type FormState = "idle" | "submitting" | "success" | "error";
 
-interface NewsletterFormProps {
+interface PartnerOffersFormProps {
   compact?: boolean;
   onSuccess?: (firstName: string) => void;
   source?: string;
@@ -14,14 +14,14 @@ interface NewsletterFormProps {
   successMessage?: (firstName: string) => string;
 }
 
-export default function NewsletterForm({
+export default function PartnerOffersForm({
   compact = false,
   onSuccess,
-  source = "newsletter_page",
+  source = "partner_offers_page",
   submitLabel = "Recevoir les tarifs negocies",
   submittingLabel = "Inscription...",
   successMessage,
-}: NewsletterFormProps) {
+}: PartnerOffersFormProps) {
   const [firstName, setFirstName] = useState("");
   const [sector, setSector] = useState("");
   const [email, setEmail] = useState("");

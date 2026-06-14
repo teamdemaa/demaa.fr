@@ -68,7 +68,7 @@ interface StripeCreditGrantInput {
   offerLabel: string;
 }
 
-interface NewsletterSubscriberInput {
+interface PartnerOffersSubscriberInput {
   firstName: string;
   sector: string;
   email: string;
@@ -445,7 +445,7 @@ export async function getCreditBalanceByEmail(email: string) {
   return Number.isFinite(balance) ? balance : 0;
 }
 
-export async function saveNewsletterSubscriber(input: NewsletterSubscriberInput) {
+export async function savePartnerOffersSubscriber(input: PartnerOffersSubscriberInput) {
   const database = getAdminFirestore();
   const now = new Date().toISOString();
   const email = normalizeEmail(input.email);
@@ -460,7 +460,7 @@ export async function saveNewsletterSubscriber(input: NewsletterSubscriberInput)
         email,
         first_name: input.firstName.trim(),
         sector: input.sector.trim(),
-        source: input.source?.trim() || "newsletter",
+        source: input.source?.trim() || "partner_offers",
         status: "subscribed",
         created_at: subscriberDoc.exists ? subscriberDoc.data()?.created_at || now : now,
         updated_at: now,

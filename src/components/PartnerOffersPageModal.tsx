@@ -2,9 +2,9 @@
 
 import { useRouter } from "next/navigation";
 import { X } from "lucide-react";
-import NewsletterForm from "@/components/NewsletterForm";
+import PartnerOffersForm from "@/components/PartnerOffersForm";
 
-export default function NewsletterPageModal() {
+export default function PartnerOffersPageModal() {
   const router = useRouter();
 
   const handleClose = () => {
@@ -37,7 +37,7 @@ export default function NewsletterPageModal() {
             selon votre secteur d&apos;activite.
           </p>
 
-          <NewsletterForm source="partner_offers_page" />
+          <PartnerOffersForm source="partner_offers_page" />
         </section>
       </div>
     </main>

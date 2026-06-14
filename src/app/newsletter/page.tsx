@@ -1,4 +1,4 @@
-import NewsletterPageModal from "@/components/NewsletterPageModal";
+import PartnerOffersPageModal from "@/components/PartnerOffersPageModal";
 
 export const metadata = {
   title: "Tarifs negocies et offres partenaires - Demaa",
@@ -13,6 +13,6 @@ export const metadata = {
   },
 };
 
-export default function NewsletterPage() {
-  return <NewsletterPageModal />;
+export default function PartnerOffersPage() {
+  return <PartnerOffersPageModal />;
 }

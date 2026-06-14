@@ -6,7 +6,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState, type MouseEvent } from "react";
 import { Check, ExternalLink, FileText, GraduationCap } from "lucide-react";
 import DeleguerPricingPreviewModal from "@/components/DeleguerPricingPreviewModal";
-import NewsletterForm from "@/components/NewsletterForm";
+import PartnerOffersForm from "@/components/PartnerOffersForm";
 import ServiceDetailDialog from "@/components/ServiceDetailDialog";
 import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
 import { ServiceIcon } from "@/components/ServiceIcon";
@@ -393,7 +393,7 @@ export default function SystemDetailContent({
             interessantes. Rejoignez la liste pour etre informe des tarifs negocies
             et des offres partenaires utiles.
           </p>
-          <NewsletterForm
+          <PartnerOffersForm
             compact
             source={source}
             submitLabel="Recevoir les tarifs negocies"

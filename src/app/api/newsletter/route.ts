@@ -6,10 +6,10 @@ import {
   readJsonBody,
 } from "@/lib/api-security";
 import { isValidEmail, normalizeEmail } from "@/lib/email";
-import { saveNewsletterSubscriber } from "@/lib/generations-db";
+import { savePartnerOffersSubscriber } from "@/lib/generations-db";
 import { sendSlackMessage, SlackMessageError } from "@/lib/slack";
 
-type NewsletterRequestBody = {
+type PartnerOffersRequestBody = {
   email?: unknown;
   firstName?: unknown;
   sector?: unknown;
@@ -19,14 +19,14 @@ type NewsletterRequestBody = {
 export async function POST(request: Request) {
   try {
     const limited = enforceRateLimit(request, {
-      keyPrefix: "newsletter",
+      keyPrefix: "partner_offers",
       limit: 10,
       windowMs: 10 * 60 * 1000,
     });
     if (limited) return limited;
 
     const { data: body, response } =
-      await readJsonBody<NewsletterRequestBody>(request);
+      await readJsonBody<PartnerOffersRequestBody>(request);
     if (response) return response;
 
     const normalizedFirstName = normalizeText(body?.firstName, 80);
@@ -48,7 +48,7 @@ export async function POST(request: Request) {
       );
     }
 
-    await saveNewsletterSubscriber({
+    await savePartnerOffersSubscriber({
       firstName: normalizedFirstName,
       sector: normalizedSector,
       email: normalizedEmail,
