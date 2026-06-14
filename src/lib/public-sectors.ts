@@ -19,8 +19,3 @@ export const publicSectorLabels = [
 ] as const;
 
 export type PublicSectorLabel = (typeof publicSectorLabels)[number];
-
-export const publicSectorFilterLabels = [
-  ALL_SECTORS_LABEL,
-  ...publicSectorLabels,
-] as const;

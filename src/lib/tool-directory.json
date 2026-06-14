@@ -26,7 +26,6 @@
       "bestFor": "Centraliser les fichiers, les échanges et les suivis simples.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -50,7 +49,6 @@
       "bestFor": "Garder Excel et Outlook au centre de l’organisation.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": false,
       "scope": "transverse"
     },
     {
@@ -73,7 +71,6 @@
       "bestFor": "Créer un mini système interne sans logiciel métier lourd.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "memberDealLabel": "Offre membre",
       "memberDealDescription": "Accédez à l’espace membre pour vérifier les conditions utiles à votre organisation et à votre équipe.",
       "scope": "transverse"
@@ -100,7 +97,6 @@
       "bestFor": "Structurer un suivi plus propre qu’un tableur classique.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -122,7 +118,6 @@
       "bestFor": "Créer et valider des interfaces ou supports visuels.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -150,7 +145,6 @@
       "bestFor": "Produire des supports propres sans dépendre d’un studio.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -178,7 +172,6 @@
       "bestFor": "Gagner du temps sur la réflexion et la production de contenus.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -206,7 +199,6 @@
       "bestFor": "Clarifier des sujets complexes et produire des livrables plus propres.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -228,7 +220,6 @@
       "bestFor": "Accélérer les chantiers techniques et les prototypes.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -250,7 +241,6 @@
       "bestFor": "Avancer plus vite sur les projets techniques.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -278,7 +268,6 @@
       "bestFor": "Créer des automatisations lisibles et sur mesure pour TPE.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -301,7 +290,6 @@
       "bestFor": "Automatiser vite quand les outils sont déjà compatibles.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": false,
       "scope": "transverse"
     },
     {
@@ -326,7 +314,6 @@
       "bestFor": "Créer des formulaires propres et faciles à brancher.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -350,7 +337,6 @@
       "bestFor": "Remplacer un email libre par un formulaire clair.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -378,7 +364,6 @@
       "bestFor": "Gérer les finances courantes d’une entreprise.",
       "pricingHint": "Payant",
       "status": "hidden",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -406,7 +391,6 @@
       "bestFor": "Gérer les paiements et dépenses avec plus de souplesse.",
       "pricingHint": "Payant",
       "status": "hidden",
-      "toolbox": true,
       "memberDealLabel": "Offre membre",
       "memberDealDescription": "Accédez à l’espace membre pour consulter l’offre disponible et les conditions applicables.",
       "scope": "transverse"
@@ -431,7 +415,6 @@
       "bestFor": "Centraliser la gestion financière et comptable.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "memberDealLabel": "Offre membre",
       "memberDealDescription": "Demandez les conditions disponibles depuis l’espace membre Team Demaa avant de choisir votre outil comptable.",
       "scope": "transverse"
@@ -453,7 +436,6 @@
       "bestFor": "Piloter les opérations et les processus d’un cabinet.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -475,7 +457,6 @@
       "bestFor": "Structurer une gestion plus robuste quand l’activité grandit.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -495,7 +476,6 @@
       "bestFor": "Automatiser la production comptable et fluidifier la relation cabinet-client.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -515,7 +495,6 @@
       "bestFor": "Structurer production, révision, paie et pilotage d’un cabinet comptable.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -535,7 +514,6 @@
       "bestFor": "Gérer production comptable, paie et relation client dans un même écosystème.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -555,7 +533,6 @@
       "bestFor": "Développer les missions de conseil et pilotage client du cabinet.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -577,7 +554,6 @@
       "bestFor": "Simplifier la gestion administrative et comptable.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -599,7 +575,6 @@
       "bestFor": "Réduire la saisie et sécuriser les pièces comptables.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -621,7 +596,6 @@
       "bestFor": "Mieux cadrer les dépenses et validations financières.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -643,7 +617,6 @@
       "bestFor": "Structurer la paie et les obligations sociales.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -671,7 +644,6 @@
       "bestFor": "Mettre en place des avantages simples pour l’équipe.",
       "pricingHint": "Payant",
       "status": "hidden",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -699,7 +671,6 @@
       "bestFor": "Proposer une couverture santé claire et simple.",
       "pricingHint": "Payant",
       "status": "hidden",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -719,7 +690,6 @@
       "bestFor": "Gérer les devis et la facturation d’une activité BTP.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -739,7 +709,6 @@
       "bestFor": "Suivre les chantiers et la rentabilité plus facilement.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -760,7 +729,6 @@
       "bestFor": "Remplir le planning et simplifier la prise de rendez-vous.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -781,7 +749,6 @@
       "bestFor": "Gérer rendez-vous, encaissements et clients au même endroit.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -803,7 +770,6 @@
       "bestFor": "Encaisser et suivre les ventes au quotidien.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -824,7 +790,6 @@
       "bestFor": "Structurer les ventes et le suivi opérationnel.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -844,7 +809,6 @@
       "bestFor": "Mieux gérer les réservations et l’expérience client.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -865,7 +829,6 @@
       "bestFor": "Fluidifier la vente à emporter et la livraison.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -886,7 +849,6 @@
       "bestFor": "Lancer et structurer une boutique en ligne.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -906,7 +868,6 @@
       "bestFor": "Construire une boutique avec plus de contrôle technique.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": false,
       "scope": "business"
     },
     {
@@ -926,7 +887,6 @@
       "bestFor": "Centraliser les demandes client et commandes.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -946,7 +906,6 @@
       "bestFor": "Relancer les clients et mieux exploiter la donnée boutique.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -970,7 +929,6 @@
       "bestFor": "Programmer les contenus et mesurer la visibilité.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -992,7 +950,6 @@
       "bestFor": "Programmer les contenus sans outil complexe.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": false,
       "scope": "transverse"
     },
     {
@@ -1014,7 +971,6 @@
       "bestFor": "Créer un site propre avec plus de liberté visuelle.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1036,7 +992,6 @@
       "bestFor": "Lancer une page claire et élégante rapidement.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1056,7 +1011,6 @@
       "bestFor": "Structurer le recrutement sans perdre les candidatures.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1076,7 +1030,6 @@
       "bestFor": "Trouver des missions ou renforcer une équipe ponctuellement.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1098,7 +1051,6 @@
       "bestFor": "Ne plus perdre les opportunités commerciales.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -1118,7 +1070,6 @@
       "bestFor": "Structurer une agence immobilière et ses biens.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1139,7 +1090,6 @@
       "bestFor": "Centraliser logements, réservations, messages voyageurs et opérations terrain.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1161,7 +1111,6 @@
       "bestFor": "Structurer les flux et documents transport.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1182,7 +1131,6 @@
       "bestFor": "Suivre les véhicules et améliorer les opérations terrain.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1202,7 +1150,6 @@
       "bestFor": "Donner de la visibilité aux clients sur les expéditions et retards.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1222,7 +1169,6 @@
       "bestFor": "Organiser les tournées et suivre les preuves de livraison.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1242,7 +1188,6 @@
       "bestFor": "Structurer les formations et obligations associées.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1263,7 +1208,6 @@
       "bestFor": "Commercialiser une offre de formation en ligne.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1285,7 +1229,6 @@
       "bestFor": "Centraliser plusieurs briques métier dans un seul système.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1305,7 +1248,6 @@
       "bestFor": "Piloter une petite production avec plus de visibilité.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1326,7 +1268,6 @@
       "bestFor": "Suivre réunions, réserves, photos et comptes rendus de chantier.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1346,7 +1287,6 @@
       "bestFor": "Centraliser planning de conduite, dossiers élèves et suivi pédagogique.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1366,7 +1306,6 @@
       "bestFor": "Suivre portefeuille, contrats, conformité et relation client assurance.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1387,7 +1326,6 @@
       "bestFor": "Structurer les dossiers de financement, pièces, relances et partenaires bancaires.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1408,7 +1346,6 @@
       "bestFor": "Gérer prospects, réservations, contrats, galeries client et paiements.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1428,7 +1365,6 @@
       "bestFor": "Gérer inscriptions, billets, accès et communication événementielle.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1448,7 +1384,6 @@
       "bestFor": "Piloter adhésions, cours, réservations, caisse et suivi des membres.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1468,7 +1403,6 @@
       "bestFor": "Gérer interventions, remplacements, bénéficiaires et obligations administratives.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1489,7 +1423,6 @@
       "bestFor": "Suivre diagnostics, tickets de réparation, pièces, clients et notifications.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1509,7 +1442,6 @@
       "bestFor": "Structurer les rendez-vous, rappels patients et disponibilités du cabinet.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1530,7 +1462,6 @@
       "bestFor": "Gérer comptoir, stock, documents santé et suivi de l’officine.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1551,7 +1482,6 @@
       "bestFor": "Piloter dossiers, actes, formalités et comptabilité d’une étude notariale.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1571,7 +1501,6 @@
       "bestFor": "Centraliser rendez-vous, dossiers animaux, actes, stock et facturation.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1591,7 +1520,6 @@
       "bestFor": "Structurer offres, réservations, dossiers voyageurs et production touristique.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1612,7 +1540,6 @@
       "bestFor": "Suivre clients, verres, montures, mutuelles, commandes et ventes.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1632,7 +1559,6 @@
       "bestFor": "Gérer devis, contrats d’entretien, interventions, SAV et saisonnalité.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1653,7 +1579,6 @@
       "bestFor": "Produire diagnostics, rapports, mesures terrain et suivis réglementaires.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1673,7 +1598,6 @@
       "bestFor": "Encaisser, facturer et suivre l’activité quotidienne d’un fleuriste.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1694,7 +1618,6 @@
       "bestFor": "Suivre dépôts, traitements, délais, livraisons, caisse et clients.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1714,7 +1637,6 @@
       "bestFor": "Gérer commandes comptoir, cuisine, stock et canaux de vente en mobilité.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1734,7 +1656,6 @@
       "bestFor": "Suivre chauffeurs, courses, commissions, déductions et montants nets.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1755,7 +1676,6 @@
       "bestFor": "Gérer clients, séances, notes, objectifs et communications d’accompagnement.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1775,7 +1695,6 @@
       "bestFor": "Créer des programmes, suivre les progrès, gérer clients et facturation.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1795,7 +1714,6 @@
       "bestFor": "Gérer membres, adhésions, dons, événements et communication associative.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1815,7 +1733,6 @@
       "bestFor": "Gérer caisse, stock, inventaire, réceptions et références produits.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1835,7 +1752,6 @@
       "bestFor": "Gérer catalogue, ventes, stocks, commandes et références ISBN.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1856,7 +1772,6 @@
       "bestFor": "Gérer enfants, familles, préinscriptions, planning, transmissions et facturation.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1877,7 +1792,6 @@
       "bestFor": "Structurer bilan patrimonial, simulations, allocations et dossiers clients.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1898,7 +1812,6 @@
       "bestFor": "Consulter données foncières, dossiers, parcelles et informations cadastrales.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1920,7 +1833,6 @@
       "bestFor": "Planifier les équipes terrain et suivre les interventions en mobilité.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1942,7 +1854,6 @@
       "bestFor": "Suivre les interventions, documents et retours terrain sans multiplier les fichiers.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1962,7 +1873,6 @@
       "bestFor": "Créer devis et factures BTP rapidement avec un outil pensé artisans.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -1982,7 +1892,6 @@
       "bestFor": "Planifier les équipes et suivre l’avancement des chantiers.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2002,7 +1911,6 @@
       "bestFor": "Piloter rentabilité, achats et marges par chantier.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2022,7 +1930,6 @@
       "bestFor": "Gérer devis et factures avec des modèles adaptés aux artisans du bâtiment.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2042,7 +1949,6 @@
       "bestFor": "Structurer les chantiers et le pilotage d’une entreprise BTP plus organisée.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2063,7 +1969,6 @@
       "bestFor": "Encaisser et suivre les performances d’un restaurant ou commerce local.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2083,7 +1988,6 @@
       "bestFor": "Centraliser caisse, commandes et opérations restaurant.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2103,7 +2007,6 @@
       "bestFor": "Gérer les réservations et remplir plus facilement la salle.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2124,7 +2027,6 @@
       "bestFor": "Démarrer une caisse simple avec paiement intégré.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2145,7 +2047,6 @@
       "bestFor": "Gérer les expéditions e-commerce et les retours plus vite.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2166,7 +2067,6 @@
       "bestFor": "Comparer et gérer les envois sans multiplier les comptes transporteurs.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2188,7 +2088,6 @@
       "bestFor": "Relancer les clients et automatiser les campagnes marketing simples.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -2209,7 +2108,6 @@
       "bestFor": "Vendre en ligne sur un site WordPress existant.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2230,7 +2128,6 @@
       "bestFor": "Lancer une boutique en ligne avec accompagnement et outils intégrés.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2250,7 +2147,6 @@
       "bestFor": "Gérer les rendez-vous et consultations médicales avec un outil santé.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2270,7 +2166,6 @@
       "bestFor": "Gérer les dossiers patients et l’activité d’un cabinet médical.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2291,7 +2186,6 @@
       "bestFor": "Proposer une réservation en ligne simple pour prestations sur rendez-vous.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2311,7 +2205,6 @@
       "bestFor": "Structurer les dossiers patients et le suivi d’un cabinet médical.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2331,7 +2224,6 @@
       "bestFor": "Gérer les biens, mandats, contacts et annonces d’une agence immobilière.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2351,7 +2243,6 @@
       "bestFor": "Piloter l’activité transaction d’une agence immobilière.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2372,7 +2263,6 @@
       "bestFor": "Diffuser les annonces sur plusieurs portails et suivre les contacts entrants.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2392,7 +2282,6 @@
       "bestFor": "Sécuriser les documents et obligations d’une activité immobilière.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2412,7 +2301,6 @@
       "bestFor": "Gérer loyers, baux, appels, documents et suivi locatif.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2432,7 +2320,6 @@
       "bestFor": "Fluidifier la gestion locative et les échanges locataires/propriétaires.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2453,7 +2340,6 @@
       "bestFor": "Planifier les équipes terrain et suivre les interventions client.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2473,7 +2359,6 @@
       "bestFor": "Piloter les actions de formation et obligations administratives d’un OF.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2493,7 +2378,6 @@
       "bestFor": "Gérer un hébergement indépendant et développer les réservations directes.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2513,7 +2397,6 @@
       "bestFor": "Centraliser opérations hôtelières, réservations et distribution.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2534,7 +2417,6 @@
       "bestFor": "Synchroniser calendriers, annonces et messages pour locations courte durée.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2555,7 +2437,6 @@
       "bestFor": "Gérer réservations directes et canaux de location saisonnière.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2575,7 +2456,6 @@
       "bestFor": "Collecter dons, adhésions et inscriptions sans outil technique complexe.",
       "pricingHint": "Gratuit",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2595,7 +2475,6 @@
       "bestFor": "Centraliser gestion associative, membres, paiements et communication.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2615,7 +2494,6 @@
       "bestFor": "Gérer membres, adhésions et événements associatifs dans un même outil.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2635,7 +2513,6 @@
       "bestFor": "Vendre ou gérer des inscriptions à des événements simplement.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2657,7 +2534,6 @@
       "bestFor": "Structurer le suivi commercial et marketing d’une activité de services ou SaaS.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -2679,7 +2555,6 @@
       "bestFor": "Éviter les allers-retours pour caler appels, rendez-vous et entretiens.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -2701,7 +2576,6 @@
       "bestFor": "Créer des formulaires soignés pour qualifier demandes et collecter des informations.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -2723,7 +2597,6 @@
       "bestFor": "Encaisser paiements, abonnements ou commissions dans un produit digital.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -2743,7 +2616,6 @@
       "bestFor": "Centraliser accueil, atelier, suivi véhicule et communication client.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2763,7 +2635,6 @@
       "bestFor": "Créer dossiers, devis et factures plus vite pour garage ou carrosserie.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2783,7 +2654,6 @@
       "bestFor": "Gérer atelier, devis, factures, rendez-vous et stocks d’un garage.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2803,7 +2673,6 @@
       "bestFor": "Piloter dossiers, ateliers et activité carrosserie.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2823,7 +2692,6 @@
       "bestFor": "Organiser planning atelier, relation client et dossiers assurance.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -2847,7 +2715,6 @@
       "bestFor": "Créer rapidement un QR code utilisable sur une carte, une affiche ou un document.",
       "pricingHint": "Gratuit",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -2869,7 +2736,6 @@
       "bestFor": "Faciliter la prise de contact depuis une carte, un comptoir ou un support commercial.",
       "pricingHint": "Gratuit",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -2892,7 +2758,6 @@
       "bestFor": "Collecter plus facilement des avis après une prestation, un passage en caisse ou une livraison.",
       "pricingHint": "Gratuit",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -2913,7 +2778,6 @@
       "bestFor": "Réduire les frictions quand un client doit commander ou payer vite.",
       "pricingHint": "Gratuit",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -2933,7 +2797,6 @@
       "bestFor": "Afficher un menu digital clair en salle, en terrasse ou sur un comptoir.",
       "pricingHint": "Gratuit",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -2957,7 +2820,6 @@
       "bestFor": "Structurer les informations essentielles avant de créer ou améliorer une fiche Google.",
       "pricingHint": "Gratuit",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -2979,7 +2841,6 @@
       "bestFor": "Créer rapidement un visuel de tampon cohérent pour des documents simples.",
       "pricingHint": "Gratuit",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -3001,7 +2862,6 @@
       "bestFor": "Structurer rapidement un document courant avant adaptation ou relecture finale.",
       "pricingHint": "Gratuit",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -3023,7 +2883,6 @@
       "bestFor": "Uniformiser les signatures email sans outil complexe.",
       "pricingHint": "Gratuit",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -3045,7 +2904,6 @@
       "bestFor": "Signer rapidement un document simple ou préparer un PDF à transmettre.",
       "pricingHint": "Gratuit",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -3065,7 +2923,6 @@
       "bestFor": "Structurer la gestion quotidienne d’un cabinet d’avocat.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3085,7 +2942,6 @@
       "bestFor": "Centraliser dossiers juridiques, tâches et documents du cabinet.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3105,7 +2961,6 @@
       "bestFor": "Piloter les dossiers et la production d’un cabinet moderne.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3125,7 +2980,6 @@
       "bestFor": "Sécuriser recherches, analyses et références juridiques d’un cabinet.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3145,7 +2999,6 @@
       "bestFor": "Piloter dossiers, procédures, actes et facturation d’un cabinet d’avocat.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3165,7 +3018,6 @@
       "bestFor": "Accélérer recherches, analyses et préparation de dossiers juridiques.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3185,7 +3037,6 @@
       "bestFor": "Évaluer une stratégie contentieuse et explorer la jurisprudence pertinente.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3205,7 +3056,6 @@
       "bestFor": "Accéder à une documentation juridique et fiscale fiable au quotidien.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3225,7 +3075,6 @@
       "bestFor": "Suivre missions, temps, budgets, marge et facturation.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3245,7 +3094,6 @@
       "bestFor": "Gérer les missions de conseil de la signature à l’encaissement.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3266,7 +3114,6 @@
       "bestFor": "Piloter charge, production et marge d’une agence ou équipe conseil.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3287,7 +3134,6 @@
       "bestFor": "Piloter missions, consultants, recrutement, temps et marge d’une société de conseil.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3307,7 +3153,6 @@
       "bestFor": "Structurer une activité de consultant indépendant.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3327,7 +3172,6 @@
       "bestFor": "Gérer une activité freelance sans tableur dispersé.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3347,7 +3191,6 @@
       "bestFor": "Simplifier la gestion administrative d’un indépendant.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3368,7 +3211,6 @@
       "bestFor": "Lancer une marketplace sans repartir de zéro techniquement.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3389,7 +3231,6 @@
       "bestFor": "Créer un MVP ou back-office métier avec logique personnalisée.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3410,7 +3251,6 @@
       "bestFor": "Structurer une marketplace ambitieuse avec plusieurs vendeurs.",
       "pricingHint": "Sur devis",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3430,7 +3270,6 @@
       "bestFor": "Construire un média ou une newsletter propriétaire.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3450,7 +3289,6 @@
       "bestFor": "Lancer rapidement une newsletter ou publication payante.",
       "pricingHint": "Commission",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3470,7 +3308,6 @@
       "bestFor": "Faire grandir une newsletter avec analytics et outils de croissance.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3490,7 +3327,6 @@
       "bestFor": "Produire plus vite podcasts, interviews et vidéos courtes.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3510,7 +3346,6 @@
       "bestFor": "Créer rapidement des vidéos verticales et contenus sociaux.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3531,7 +3366,6 @@
       "bestFor": "Vendre des formations en ligne avec un espace apprenant simple.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3552,7 +3386,6 @@
       "bestFor": "Commercialiser formations et contenus numériques simplement.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3573,7 +3406,6 @@
       "bestFor": "Construire un catalogue de cours en ligne plus structuré.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3594,7 +3426,6 @@
       "bestFor": "Vendre une formation en ligne avec tunnel et email intégrés.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3614,7 +3445,6 @@
       "bestFor": "Déployer des parcours de formation structurés et suivis.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3634,7 +3464,6 @@
       "bestFor": "Créer une plateforme pédagogique maîtrisée et personnalisable.",
       "pricingHint": "Open source",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3654,7 +3483,6 @@
       "bestFor": "Structurer le suivi des candidatures et le site carrière.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3674,7 +3502,6 @@
       "bestFor": "Centraliser les offres et candidatures d’une équipe recrutement.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3695,7 +3522,6 @@
       "bestFor": "Livrer des galeries professionnelles aux clients photo.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3716,7 +3542,6 @@
       "bestFor": "Piloter les demandes, contrats et suivis clients photo.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3737,7 +3562,6 @@
       "bestFor": "Suivre les situations patrimoniales et échanges clients.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3759,7 +3583,6 @@
       "bestFor": "Structurer le dealflow et les relations d’investissement.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3781,7 +3604,6 @@
       "bestFor": "Créer un CRM sur mesure pour opportunités et relations clés.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3801,7 +3623,6 @@
       "bestFor": "Structurer un cabinet de courtage assurance avec conformité intégrée.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3821,7 +3642,6 @@
       "bestFor": "Gérer portefeuille, contrats et relances d’un cabinet assurance.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3842,7 +3662,6 @@
       "bestFor": "Gérer inscriptions, présences, familles et facturation d’une crèche.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3863,7 +3682,6 @@
       "bestFor": "Améliorer les transmissions et la communication avec les familles.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3883,7 +3701,6 @@
       "bestFor": "Piloter une auto-école avec planning, suivi élèves et paiements.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3903,7 +3720,6 @@
       "bestFor": "Centraliser planning, élèves, forfaits et convocations.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3924,7 +3740,6 @@
       "bestFor": "Gérer les ventes et actes quotidiens d’une pharmacie.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3945,7 +3760,6 @@
       "bestFor": "Piloter stock, encaissement et gestion officinale.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3965,7 +3779,6 @@
       "bestFor": "Centraliser l’activité d’une clinique vétérinaire.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -3985,7 +3798,6 @@
       "bestFor": "Gérer dossiers, actes et organisation vétérinaire.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4006,7 +3818,6 @@
       "bestFor": "Gérer caisse, ventes et stock d’un commerce de proximité.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4027,7 +3838,6 @@
       "bestFor": "Structurer l’encaissement et le pilotage quotidien en point de vente.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4047,7 +3857,6 @@
       "bestFor": "Gérer réservations et distribution d’activités touristiques.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4067,7 +3876,6 @@
       "bestFor": "Centraliser réservations et disponibilités d’activités touristiques.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4087,7 +3895,6 @@
       "bestFor": "Vendre et organiser des activités touristiques ou loisirs.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4108,7 +3915,6 @@
       "bestFor": "Produire plans, relevés et projets VRD pour cabinet géomètre.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4128,7 +3934,6 @@
       "bestFor": "Structurer production, stock et planification industrielle.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4149,7 +3954,6 @@
       "bestFor": "Piloter les flux d’une PME industrielle ou commerciale.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4170,7 +3974,6 @@
       "bestFor": "Rédiger et piloter les actes d’une étude notariale.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4191,7 +3994,6 @@
       "bestFor": "Automatiser formalités, échanges et parcours clients notariaux.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4212,7 +4014,6 @@
       "bestFor": "Sécuriser les calculs notariaux complexes et les simulations clients.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4232,7 +4033,6 @@
       "bestFor": "Gérer calculs, contrôles et conformité LCB-FT en étude notariale.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4252,7 +4052,6 @@
       "bestFor": "Piloter un centre de formation complexe ou un CFA avec alternance.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4272,7 +4071,6 @@
       "bestFor": "Dématérialiser l’administratif formation et sécuriser Qualiopi.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4292,7 +4090,6 @@
       "bestFor": "Générer documents, évaluations et preuves Qualiopi simplement.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4313,7 +4110,6 @@
       "bestFor": "Vendre des formations en ligne avec pages, paiements et marketing intégrés.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4334,7 +4130,6 @@
       "bestFor": "Créer une école en ligne avancée avec expérience apprenant structurée.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4354,7 +4149,6 @@
       "bestFor": "Vendre et délivrer des accompagnements de coaching sans assembler plusieurs outils.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4374,7 +4168,6 @@
       "bestFor": "Structurer les parcours, actions et résultats des clients coachés.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4394,7 +4187,6 @@
       "bestFor": "Digitaliser une activité de coaching sportif ou bien-être.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4414,7 +4206,6 @@
       "bestFor": "Suivre objectifs, bilans, programmes et progression des clients sportifs.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4434,7 +4225,6 @@
       "bestFor": "Centraliser gestion quotidienne, planning et suivi élèves d’une auto-école.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4454,7 +4244,6 @@
       "bestFor": "Structurer la pédagogie code/conduite et l’expérience élève.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4474,7 +4263,6 @@
       "bestFor": "Compléter les supports pédagogiques et outils numériques d’une auto-école.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4494,7 +4282,6 @@
       "bestFor": "Gérer caisse, prise de commande, salle, paiement et pilotage restaurant.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4514,7 +4301,6 @@
       "bestFor": "Structurer les flux de commande et encaissement en restauration à fort volume.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4535,7 +4321,6 @@
       "bestFor": "Gérer prise de commande, encaissement, stock et activité terrain sur iPad.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4555,7 +4340,6 @@
       "bestFor": "Digitaliser la carte, les menus QR et la commande client restaurant.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4576,7 +4360,6 @@
       "bestFor": "Piloter caisse, commande en ligne, fidélité et multi-établissements.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4597,7 +4380,6 @@
       "bestFor": "Gérer caisse, stock, clients et back-office d’un commerce de détail.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4617,7 +4399,6 @@
       "bestFor": "Encaisser, gérer ventes et suivre l’activité d’un commerce indépendant.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4638,7 +4419,6 @@
       "bestFor": "Équiper un point de vente simple avec caisse tactile et matériel adapté.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4659,7 +4439,6 @@
       "bestFor": "Automatiser commandes, préparation, stocks et expéditions e-commerce.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4680,7 +4459,6 @@
       "bestFor": "Structurer les données produits pour e-commerce, marketplaces et retail omnicanal.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4700,7 +4478,6 @@
       "bestFor": "Connecter chantier et bureau avec plans, tâches et suivi terrain en temps réel.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4721,7 +4498,6 @@
       "bestFor": "Produire comptes rendus, réserves et suivi chantier depuis le terrain.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4743,7 +4519,6 @@
       "bestFor": "Remplacer les formulaires papier par des rapports terrain structurés.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4763,7 +4538,6 @@
       "bestFor": "Suivre inspections, réserves et avancement de chantiers structurés.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4784,7 +4558,6 @@
       "bestFor": "Créer devis et factures adaptés aux jardiniers-paysagistes.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4805,7 +4578,6 @@
       "bestFor": "Piloter planning, heures, photos et suivi terrain d’une équipe paysage.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4825,7 +4597,6 @@
       "bestFor": "Piloter planning, intervenants, bénéficiaires et conformité SAP.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4845,7 +4616,6 @@
       "bestFor": "Structurer interventions, planning et pilotage d’une structure SAP.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4865,7 +4635,6 @@
       "bestFor": "Gérer agents, plannings, rondes et rapports de sécurité privée.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4885,7 +4654,6 @@
       "bestFor": "Planifier agents, missions, rondes et prises de poste sur mobile.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4905,7 +4673,6 @@
       "bestFor": "Gérer l’activité quotidienne d’un cabinet dentaire.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4925,7 +4692,6 @@
       "bestFor": "Structurer les dossiers patients et le pilotage d’un cabinet dentaire.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4945,7 +4711,6 @@
       "bestFor": "Gérer dossiers, soins et activité dentaire avec une solution cloud.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4965,7 +4730,6 @@
       "bestFor": "Gérer facturation, cotations et obligations d’une infirmière libérale.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -4985,7 +4749,6 @@
       "bestFor": "Gérer patientèle et facturation IDEL depuis le terrain.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5005,7 +4768,6 @@
       "bestFor": "Simplifier cotations, télétransmission et suivi quotidien IDEL.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5025,7 +4787,6 @@
       "bestFor": "Centraliser dossiers, agenda et facturation d’un cabinet de psychologie.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5045,7 +4806,6 @@
       "bestFor": "Suivre les dossiers et parcours thérapeutiques dans le temps.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5065,7 +4825,6 @@
       "bestFor": "Alléger la gestion administrative et patientèle d’un cabinet psy.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5085,7 +4844,6 @@
       "bestFor": "Gérer membres, abonnements, accès et pilotage d’une salle de sport.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5105,7 +4863,6 @@
       "bestFor": "Centraliser réservations, membres, abonnements et cours collectifs.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5125,7 +4882,6 @@
       "bestFor": "Gérer réservations, membres, paiements et marketing d’un studio sportif.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5146,7 +4902,6 @@
       "bestFor": "Gérer magasin optique, stock, ventes et télétransmission.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5167,7 +4922,6 @@
       "bestFor": "Piloter activité optique, clients, ventes et magasins multi-sites.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5188,7 +4942,6 @@
       "bestFor": "Gérer agenda, caisse, clients, fidélité et visibilité beauté/coiffure.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5209,7 +4962,6 @@
       "bestFor": "Centraliser code, revues, issues et automatisations techniques.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5230,7 +4982,6 @@
       "bestFor": "Déployer rapidement sites, MVP et applications web modernes.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5251,7 +5002,6 @@
       "bestFor": "Structurer bugs, roadmap et exécution produit d’une équipe tech.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5271,7 +5021,6 @@
       "bestFor": "Détecter, prioriser et corriger les erreurs produit en production.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5291,7 +5040,6 @@
       "bestFor": "Comprendre l’usage produit et piloter l’amélioration d’un SaaS.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5313,7 +5061,6 @@
       "bestFor": "Créer sites éditoriaux, vitrines ou contenus administrables.",
       "pricingHint": "Open source",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5334,7 +5081,6 @@
       "bestFor": "Produire plus vite des sites WordPress pour clients.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5355,7 +5101,6 @@
       "bestFor": "Développer une audience créateur et monétiser via email.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5375,7 +5120,6 @@
       "bestFor": "Enregistrer podcasts et interviews vidéo avec bonne qualité à distance.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5395,7 +5139,6 @@
       "bestFor": "Accélérer production vidéo, effets et contenus créatifs avec IA.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5416,7 +5159,6 @@
       "bestFor": "Créer rapidement un portail ou une marketplace simple connectée aux données.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5437,7 +5179,6 @@
       "bestFor": "Construire une plateforme commerce ou marketplace technique sur mesure.",
       "pricingHint": "Open source",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5458,7 +5199,6 @@
       "bestFor": "Créer une marketplace verticale sans développement lourd.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5478,7 +5218,6 @@
       "bestFor": "Fluidifier les candidatures locataires et sécuriser les dossiers de location.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5498,7 +5237,6 @@
       "bestFor": "Suivre loyers, documents et obligations locatives sans tableur dispersé.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5518,7 +5256,6 @@
       "bestFor": "Moderniser la gestion opérationnelle d’un hôtel ou hébergement indépendant.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5538,7 +5275,6 @@
       "bestFor": "Centraliser réservations, distribution et paiements d’un hébergement indépendant.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5558,7 +5294,6 @@
       "bestFor": "Optimiser distribution, réservations directes et visibilité d’un hôtel.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5578,7 +5313,6 @@
       "bestFor": "Planifier, optimiser et suivre les tournées de livraison ou d’intervention.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5598,7 +5332,6 @@
       "bestFor": "Construire des plans de tournées fiables avec contraintes, secteurs et équipes.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5618,7 +5351,6 @@
       "bestFor": "Optimiser tournées récurrentes, zones, itinéraires et contraintes terrain.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5638,7 +5370,6 @@
       "bestFor": "Structurer les recrutements PME, pipelines candidats et collaboration recruteur-manager.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5658,7 +5389,6 @@
       "bestFor": "Gérer des recrutements récurrents avec vivier, scoring et suivi candidat.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5678,7 +5408,6 @@
       "bestFor": "Comparer offres, suivre prospects assurance et gérer le parcours de souscription.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5698,7 +5427,6 @@
       "bestFor": "Centraliser portefeuille, suivi commercial et obligations d’un cabinet de courtage.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5718,7 +5446,6 @@
       "bestFor": "Structurer inscriptions, présences, familles et facturation petite enfance.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5739,7 +5466,6 @@
       "bestFor": "Gérer événements professionnels, invitations, inscriptions et engagement participant.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5759,7 +5485,6 @@
       "bestFor": "Créer billetteries, formulaires d’inscription et suivi des participants.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5779,7 +5504,6 @@
       "bestFor": "Centraliser dossiers, rapports réglementaires, devis et facturation diagnostic.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5799,7 +5523,6 @@
       "bestFor": "Piloter devis, facturation, dossiers et conformité d’un diagnostiqueur.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5819,7 +5542,6 @@
       "bestFor": "Produire des bilans patrimoniaux lisibles et des supports de conseil modernes.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5839,7 +5561,6 @@
       "bestFor": "Suivre portefeuilles, comptes, relation client et reporting CGP.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5859,7 +5580,6 @@
       "bestFor": "Comparer fonds, analyser allocations et construire des supports d’investissement.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5879,7 +5599,6 @@
       "bestFor": "Outiller le conseil en allocation d’actifs et les scénarios de portefeuille.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5899,7 +5618,6 @@
       "bestFor": "Structurer dealflow, due diligence, portefeuille et reporting d’investissement.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5919,7 +5637,6 @@
       "bestFor": "Rendre une laverie automatique plus pilotable et plus simple côté client.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5939,7 +5656,6 @@
       "bestFor": "Piloter machines et équipements d’une laverie automatique à distance.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5959,7 +5675,6 @@
       "bestFor": "Gérer caisse, tickets, clients et activité d’un pressing moderne.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -5979,7 +5694,6 @@
       "bestFor": "Suivre linge, clients, facturation et opérations de blanchisserie.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -6002,7 +5716,6 @@
       "bestFor": "Créer rapidement un site vitrine ou une petite boutique sans équipe technique.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -6024,7 +5737,6 @@
       "bestFor": "Créer un site élégant pour une activité de service, créative ou une petite boutique.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -6044,7 +5756,6 @@
       "bestFor": "Structurer une boutique e-commerce plus avancée avec besoins de catalogue et intégrations.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -6065,7 +5776,6 @@
       "bestFor": "Ajouter une boutique simple à un site ou une activité locale sans refonte lourde.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -6085,7 +5795,6 @@
       "bestFor": "Être visible auprès des voyageurs et générer des réservations via un grand canal OTA.",
       "pricingHint": "Commission",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -6106,7 +5815,6 @@
       "bestFor": "Commercialiser des logements courte durée et gérer la demande voyageur.",
       "pricingHint": "Commission",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -6127,7 +5835,6 @@
       "bestFor": "Développer les commandes livrées et toucher une clientèle locale à domicile.",
       "pricingHint": "Commission",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -6148,7 +5855,6 @@
       "bestFor": "Recevoir des commandes en ligne et développer la livraison locale.",
       "pricingHint": "Commission",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -6169,7 +5875,6 @@
       "bestFor": "Créer un événement public, gérer inscriptions et vendre des billets simplement.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -6191,7 +5896,6 @@
       "bestFor": "Piloter des projets clients ou internes avec responsabilités et délais visibles.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -6213,7 +5917,6 @@
       "bestFor": "Mettre en place un suivi visuel simple sans complexité projet.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -6233,7 +5936,6 @@
       "bestFor": "Suivre bugs, tickets produit, sprints et roadmap d’une équipe tech.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -6254,7 +5956,6 @@
       "bestFor": "Centraliser projets, tâches et documents quand l’équipe veut un outil tout-en-un.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -6275,7 +5976,6 @@
       "bestFor": "Coordonner une équipe avec canaux, notifications et intégrations métier.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -6296,7 +5996,6 @@
       "bestFor": "Organiser réunions client, sessions de formation ou rendez-vous à distance.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -6318,7 +6017,6 @@
       "bestFor": "Animer formations, webinaires ou démonstrations avec inscriptions et relances.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -6340,7 +6038,6 @@
       "bestFor": "Permettre aux clients de réserver un créneau avec rappels et paiement si besoin.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -6362,7 +6059,6 @@
       "bestFor": "Automatiser des flux métier avancés avec plus de contrôle technique.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -6385,7 +6081,6 @@
       "bestFor": "Lancer newsletters, campagnes email et séquences marketing simples.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -6407,7 +6102,6 @@
       "bestFor": "Ajouter un moyen de paiement reconnu pour vendre en ligne ou à l’international.",
       "pricingHint": "Commission",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -6429,7 +6123,6 @@
       "bestFor": "Gérer paiements internationaux, devises et prestataires étrangers.",
       "pricingHint": "Payant",
       "status": "hidden",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -6451,7 +6144,6 @@
       "bestFor": "Simplifier banque, factures et administratif d’un indépendant ou d’une petite entreprise.",
       "pricingHint": "Payant",
       "status": "hidden",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -6473,7 +6165,6 @@
       "bestFor": "Gérer paie et RH d’une équipe sans complexité excessive.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -6494,7 +6185,6 @@
       "bestFor": "Structurer les processus RH quand l’équipe grandit.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -6516,7 +6206,6 @@
       "bestFor": "Gérer comptabilité ou gestion commerciale avec un outil installé sur le marché.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -6537,7 +6226,6 @@
       "bestFor": "Suivre factures, dépenses et comptabilité simple d’une petite entreprise.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -6559,7 +6247,6 @@
       "bestFor": "Centraliser prospection, devis, factures et suivi commercial dans une TPE/PME.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -6580,7 +6267,6 @@
       "bestFor": "Piloter commercial, facturation et gestion interne dans une petite entreprise.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "transverse"
     },
     {
@@ -6601,7 +6287,6 @@
       "bestFor": "Gérer support client, chat et self-service pour SaaS ou activité digitale.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -6623,7 +6308,6 @@
       "bestFor": "Structurer un support client multicanal avec tickets et base de connaissance.",
       "pricingHint": "Payant",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     },
     {
@@ -6645,7 +6329,6 @@
       "bestFor": "Mettre en place un support client simple et structuré sans outil trop lourd.",
       "pricingHint": "Freemium",
       "status": "active",
-      "toolbox": true,
       "scope": "business"
     }
   ]

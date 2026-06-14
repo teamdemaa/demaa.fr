@@ -16,7 +16,6 @@ export type ToolDirectoryItem = {
   memberDealDescription?: string;
   scope?: ToolScope;
   status?: "active" | "hidden" | "deprecated";
-  toolbox?: boolean;
 };
 
 type ToolDirectoryPayload = {
@@ -87,16 +86,6 @@ export const toolDirectoryBySlug = Object.fromEntries(
     ];
   }),
 );
-
-export const toolDirectorySectors = [
-  "Tous",
-  ...Array.from(new Set(toolDirectory.flatMap((tool) => tool.sectors))),
-];
-
-export const toolDirectoryCategories = [
-  "Tous",
-  ...Array.from(new Set(toolDirectory.map((tool) => tool.category))),
-];
 
 export function findToolDirectoryItemBySlug(
   tools: ToolDirectoryItem[],

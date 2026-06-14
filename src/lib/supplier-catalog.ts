@@ -15,13 +15,6 @@ export type SupplierFamily =
   | "Finance & protection"
   | "Équipement & exploitation";
 
-export const supplierFamilyDescriptions: Record<SupplierFamily, string> = {
-  "Finance & protection":
-    "Banques, paiements, assurances, mutuelles, avantages salariés et protections utiles pour sécuriser et piloter l'activité.",
-  "Équipement & exploitation":
-    "Matériaux, grossistes, équipements, énergie, téléphonie, véhicules et moyens utiles pour faire tourner l'activité au quotidien.",
-};
-
 export type SupplierCta = "Voir le fournisseur" | "Demander une mise en relation" | "Comparer les options";
 
 export type DemaaSupplier = {
@@ -432,8 +425,4 @@ export function getDemaaSuppliers(): DemaaSupplier[] {
 
 export function getDemaaSupplierBySlug(slug: string): DemaaSupplier | null {
   return supplierBySlug[slug as DemaaSupplierSlug] ?? null;
-}
-
-export function getMemberSuppliers(): DemaaSupplier[] {
-  return demaaSuppliers.filter((supplier) => supplier.partner);
 }

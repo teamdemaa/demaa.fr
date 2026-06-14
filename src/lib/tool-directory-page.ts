@@ -42,10 +42,3 @@ export function withSoftwareDetailUrls(tools: ToolDirectoryItem[]): ToolDirector
       : `/annuaire-outils/${getToolDirectorySlug(tool)}`,
   }));
 }
-
-export function getToolDirectoryFilterValues(tools: ToolDirectoryItem[]) {
-  return {
-    sectors: ["Tous", ...Array.from(new Set(tools.flatMap((tool) => tool.sectors)))],
-    categories: ["Tous", ...Array.from(new Set(tools.map((tool) => tool.category)))],
-  };
-}
