@@ -45,6 +45,7 @@ export default async function ResourceDetailPage(
   const params = await props.params;
   const entry = getEditorialEntryBySlug(params.slug);
   const relatedSystems = getRelatedSystemsForContentSlug(params.slug);
+  const mediaSlides = entry?.slides?.length ? entry.slides : entry?.image ? [entry.image] : [];
 
   if (!entry) {
     notFound();
@@ -80,23 +81,11 @@ export default async function ResourceDetailPage(
             </div>
           </header>
 
-          {entry.image ? (
-            <div className="relative mb-10 aspect-[16/9] overflow-hidden rounded-3xl border border-gray-100 bg-dema-cream">
-              <Image
-                src={entry.image}
-                alt={entry.title}
-                fill
-                sizes="(max-width: 1024px) 100vw, 900px"
-                className="object-cover"
-              />
-            </div>
-          ) : null}
-
-          {entry.slides?.length ? (
+          {mediaSlides.length ? (
             <section className="mb-10">
               <div className="-mx-4 overflow-x-auto px-4 pb-4 soft-scroll sm:-mx-6 sm:px-6">
                 <div className="flex w-max snap-x snap-mandatory gap-4">
-                  {entry.slides.map((slide, index) => (
+                  {mediaSlides.map((slide, index) => (
                     <div
                       key={slide}
                       className="w-[min(86vw,44rem)] shrink-0 snap-start"
