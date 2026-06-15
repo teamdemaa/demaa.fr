@@ -2,8 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useMemo, useState, type MouseEvent } from "react";
+import { startTransition, useMemo, useState, type MouseEvent } from "react";
 import { Check, ExternalLink, FileText, GraduationCap } from "lucide-react";
 import DeleguerPricingPreviewModal from "@/components/DeleguerPricingPreviewModal";
 import PartnerOffersForm from "@/components/PartnerOffersForm";
@@ -135,43 +134,35 @@ export default function SystemDetailContent({
   headingAs = "h1",
   headingId,
 }: SystemDetailContentProps) {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const defaultTab = isSystemDetailTab(initialActiveTab) ? initialActiveTab : "processus";
+  const [activeTab, setActiveTab] = useState<SystemDetailTab>(defaultTab);
   const [selectedToolDetail, setSelectedToolDetail] = useState<ToolDirectoryItem | null>(null);
   const [selectedServiceDetail, setSelectedServiceDetail] = useState<DemaaService | null>(null);
   const [isDeleguerPricingOpen, setIsDeleguerPricingOpen] = useState(false);
   const processGroups = useMemo(() => buildProcessGroups(detail), [detail]);
   const recommendedServices = useMemo(
-    () => getRecommendedServicesForSystem(system.slug),
-    [system.slug]
+    () => (activeTab === "services" ? getRecommendedServicesForSystem(system.slug) : []),
+    [activeTab, system.slug]
   );
   const recommendedSuppliers = useMemo(
-    () => getRecommendedSuppliersForSystem(system.slug),
-    [system.slug]
+    () => (activeTab === "fournisseurs" ? getRecommendedSuppliersForSystem(system.slug) : []),
+    [activeTab, system.slug]
   );
-  const resources = useMemo(() => getSystemResources(system.slug), [system.slug]);
-  const courses = useMemo(() => getRelatedCoursesForSystemSlug(system.slug), [system.slug]);
+  const resources = useMemo(
+    () => (activeTab === "ressources" ? getSystemResources(system.slug) : []),
+    [activeTab, system.slug]
+  );
+  const courses = useMemo(
+    () => (activeTab === "cours" ? getRelatedCoursesForSystemSlug(system.slug) : []),
+    [activeTab, system.slug]
+  );
   const Heading = headingAs;
   const sectorPage = getSectorPageByLabel(detail.sectorLabel);
-  const resolvedTabFromUrl = searchParams.get("tab") ?? undefined;
-  const activeTab = isSystemDetailTab(resolvedTabFromUrl)
-    ? resolvedTabFromUrl
-    : isSystemDetailTab(initialActiveTab)
-      ? initialActiveTab
-      : "processus";
 
   function selectTab(tab: SystemDetailTab) {
-    const params = new URLSearchParams(searchParams.toString());
-
-    if (tab === "processus") {
-      params.delete("tab");
-    } else {
-      params.set("tab", tab);
-    }
-
-    const query = params.toString();
-    router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
+    startTransition(() => {
+      setActiveTab(tab);
+    });
   }
 
   function renderToolCard(tool: OperationalSystemDetail["tools"][number]) {
@@ -429,7 +420,7 @@ export default function SystemDetailContent({
         </p>
       </div>
 
-      <div className="mt-5 flex flex-col gap-2 text-left sm:flex-row sm:flex-wrap">
+      <div className="mt-4 flex flex-col gap-2 text-left sm:flex-row sm:flex-wrap">
         <Link
           href={`/plans-organisation/${system.slug}`}
           target="_blank"
@@ -447,7 +438,7 @@ export default function SystemDetailContent({
         </Link>
       </div>
 
-      <div className="mt-6 -mx-2 overflow-x-auto px-2 pb-2 soft-scroll">
+      <div className="mt-5 -mx-2 overflow-x-auto px-2 pb-2 soft-scroll">
         <div className="flex min-w-max items-center gap-2 whitespace-nowrap">
           {(
             [
@@ -475,15 +466,14 @@ export default function SystemDetailContent({
         </div>
       </div>
 
-      <div className="mt-6">
+      <div className="mt-5">
         {activeTab === "processus" ? (
           <div className="space-y-5">
-            <div className="overflow-x-auto pb-2 soft-scroll xl:overflow-x-visible">
-              <div className="mx-auto flex min-w-max justify-start gap-4">
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                 {processGroups.map((group) => (
                   <div
                     key={group.title}
-                    className="w-[18rem] shrink-0 rounded-[1.25rem] border border-dema-line bg-dema-paper p-4 shadow-[0_8px_24px_rgba(23,35,29,0.035)]"
+                    className="rounded-[1.25rem] border border-dema-line bg-dema-paper p-4 shadow-[0_8px_24px_rgba(23,35,29,0.035)]"
                   >
                     <h3 className="demaa-section-title text-center text-xl text-brand-blue">
                       {group.title}
@@ -513,7 +503,6 @@ export default function SystemDetailContent({
                     </div>
                   </div>
                 ))}
-              </div>
             </div>
           </div>
         ) : activeTab === "outils" ? (
