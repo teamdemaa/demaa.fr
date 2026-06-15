@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { X } from "lucide-react";
 import { notFound } from "next/navigation";
 import SystemDetailContent from "@/components/SystemDetailContent";
 import { isSystemDetailTab } from "@/lib/system-detail-tabs";
@@ -60,17 +58,8 @@ export default async function SystemDetailPage({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <div className="relative mx-auto flex h-[92vh] w-full max-w-7xl flex-col overflow-hidden rounded-[1.25rem] border border-dema-line bg-dema-paper p-6 pt-14 shadow-[0_24px_60px_rgba(23,35,29,0.14)] md:p-8">
-          <div className="absolute right-4 top-4 flex items-center gap-2">
-            <Link
-              href="/"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
-              aria-label="Fermer"
-            >
-              <X className="h-4 w-4" />
-            </Link>
-          </div>
-          <div className="flex min-h-0 flex-1 flex-col">
+        <div className="mx-auto w-full max-w-7xl rounded-[1.25rem] border border-dema-line bg-dema-paper p-6 shadow-[0_24px_60px_rgba(23,35,29,0.14)] md:p-8">
+          <div>
             <SystemDetailContent
               system={data.system}
               detail={data.detail}
