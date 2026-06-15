@@ -475,7 +475,7 @@ export default function SystemDetailContent({
         </div>
       </div>
 
-      <div className="mt-6 pr-1">
+      <div className="mt-6">
         {activeTab === "processus" ? (
           <div className="space-y-5">
             <div className="overflow-x-auto pb-2 soft-scroll xl:overflow-x-visible">
