@@ -357,24 +357,12 @@ export default function SystemDetailContent({
   }
 
   function renderPartnerOffersBlock({
-    browseHref,
-    browseLabel,
     source,
   }: {
-    browseHref: string;
-    browseLabel: string;
     source: string;
   }) {
     return (
-      <div className="space-y-3">
-        <Link
-          href={browseHref}
-          className="inline-flex items-center gap-2 text-sm font-medium text-dema-forest transition hover:text-brand-blue"
-        >
-          {browseLabel}
-          <span aria-hidden="true">→</span>
-        </Link>
-
+      <div>
         <div className="w-full md:w-2/3 lg:w-1/2 xl:w-1/3">
           <div className="rounded-[1.15rem] border border-dema-line bg-dema-cream/70 p-5 text-left">
             <h3 className="text-lg font-semibold text-brand-blue">
@@ -393,6 +381,26 @@ export default function SystemDetailContent({
             />
           </div>
         </div>
+      </div>
+    );
+  }
+
+  function renderBrowseAllLink({
+    browseHref,
+    browseLabel,
+  }: {
+    browseHref: string;
+    browseLabel: string;
+  }) {
+    return (
+      <div className="flex justify-start md:justify-end">
+        <Link
+          href={browseHref}
+          className="inline-flex items-center gap-2 text-sm font-medium text-dema-forest transition hover:text-brand-blue"
+        >
+          {browseLabel}
+          <span aria-hidden="true">→</span>
+        </Link>
       </div>
     );
   }
@@ -518,9 +526,18 @@ export default function SystemDetailContent({
                 <>
                   {businessTools.length ? (
                     <div>
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-                        Outils métier
-                      </p>
+                      <div className="flex items-baseline justify-between gap-4">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
+                          Outils métier
+                        </p>
+                        <Link
+                          href={`/annuaire-outils?retourSysteme=${encodeURIComponent(system.slug)}`}
+                          className="inline-flex items-center gap-2 text-sm font-medium text-dema-forest transition hover:text-brand-blue"
+                        >
+                          Voir tous les outils
+                          <span aria-hidden="true">→</span>
+                        </Link>
+                      </div>
                       <div className="mt-3 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
                         {businessTools.map(renderToolCard)}
                       </div>
@@ -541,61 +558,57 @@ export default function SystemDetailContent({
               );
             })()}
             {renderPartnerOffersBlock({
-              browseHref: `/annuaire-outils?retourSysteme=${encodeURIComponent(system.slug)}`,
-              browseLabel: "Voir tous les outils",
               source: `system_tools_${system.slug}`,
             })}
           </div>
         ) : activeTab === "services" ? (
           <div className="space-y-5">
+            {renderBrowseAllLink({
+              browseHref: `/annuaire-services?retourSysteme=${encodeURIComponent(system.slug)}`,
+              browseLabel: "Voir tous les services",
+            })}
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
               {recommendedServices.map(renderServiceCard)}
             </div>
 
             {renderPartnerOffersBlock({
-              browseHref: `/annuaire-services?retourSysteme=${encodeURIComponent(system.slug)}`,
-              browseLabel: "Voir tous les services",
               source: `system_services_${system.slug}`,
             })}
           </div>
         ) : activeTab === "fournisseurs" ? (
           <div className="space-y-5">
+            {renderBrowseAllLink({
+              browseHref: `/annuaire-fournisseurs?retourSysteme=${encodeURIComponent(system.slug)}`,
+              browseLabel: "Voir tous les fournisseurs",
+            })}
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
               {recommendedSuppliers.map(renderSupplierCard)}
             </div>
 
             {renderPartnerOffersBlock({
-              browseHref: `/annuaire-fournisseurs?retourSysteme=${encodeURIComponent(system.slug)}`,
-              browseLabel: "Voir tous les fournisseurs",
               source: `system_suppliers_${system.slug}`,
             })}
           </div>
         ) : activeTab === "ressources" ? (
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {resources.map((resource) => (
-              <SystemResourceCard key={resource.id} resource={resource} />
-            ))}
+          <div className="space-y-5">
+            {renderBrowseAllLink({
+              browseHref: `/ressources`,
+              browseLabel: "Voir toutes les ressources",
+            })}
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {resources.map((resource) => (
+                <SystemResourceCard key={resource.id} resource={resource} />
+              ))}
+            </div>
           </div>
         ) : (
           <div className="space-y-5">
+            {renderBrowseAllLink({
+              browseHref: "/cours",
+              browseLabel: "Voir tous les cours",
+            })}
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {courses.map(renderCourseCard)}
-            </div>
-
-            <div className="rounded-[1.15rem] border border-dema-line bg-dema-cream/70 p-5 text-left">
-              <h3 className="text-lg font-semibold text-brand-blue">
-                Voir tous les cours ?
-              </h3>
-              <p className="mt-2 max-w-3xl text-sm leading-relaxed text-dema-muted">
-                Retrouvez les cours Demaa pour approfondir un sujet, monter en autonomie
-                et structurer vos décisions plus sereinement.
-              </p>
-              <Link
-                href="/cours"
-                className="mt-4 inline-flex items-center rounded-full border border-dema-line bg-dema-paper px-4 py-2 text-sm font-medium text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
-              >
-                Parcourir les cours
-              </Link>
             </div>
           </div>
         )}
