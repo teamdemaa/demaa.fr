@@ -36,12 +36,14 @@ export default function ProNetworkDetailContent({
               {network.description}
             </p>
           </div>
-          <aside className="w-full rounded-[1.15rem] border border-dema-line bg-dema-cream/70 p-5 lg:max-w-sm">
-            <p className="text-sm font-semibold text-brand-blue">Pourquoi c’est utile</p>
-            <p className="mt-3 text-sm leading-relaxed text-dema-muted">
-              {network.bestFor}
-            </p>
-          </aside>
+          {!compact ? (
+            <aside className="w-full rounded-[1.15rem] border border-dema-line bg-dema-cream/70 p-5 lg:max-w-sm">
+              <p className="text-sm font-semibold text-brand-blue">Pourquoi c’est utile</p>
+              <p className="mt-3 text-sm leading-relaxed text-dema-muted">
+                {network.bestFor}
+              </p>
+            </aside>
+          ) : null}
         </div>
       </section>
 

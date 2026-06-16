@@ -189,7 +189,7 @@ function SupplierCard({
         {supplier.bestFor}
       </p>
       <div className="mt-4 flex flex-wrap items-center gap-2">
-        <span className="inline-flex rounded-full bg-dema-forest px-3 py-1 text-[10px] font-medium text-dema-paper">
+        <span className="inline-flex rounded-full bg-dema-sage/75 px-3 py-1 text-[10px] font-medium text-brand-blue/70">
           {supplier.offerHint}
         </span>
         <span className="inline-flex rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-medium lowercase text-brand-blue/70">

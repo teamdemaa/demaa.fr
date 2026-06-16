@@ -53,25 +53,27 @@ export default function SupplierDetailContent({
               {supplier.description}
             </p>
           </div>
-          <aside className="w-full rounded-[1.15rem] border border-dema-line bg-dema-cream/70 p-5 lg:max-w-sm">
-            <p className="text-sm font-semibold text-brand-blue">Offre</p>
-            <div className="mt-3 flex flex-wrap items-center gap-2">
-              <span className="inline-flex rounded-full bg-dema-forest px-3 py-1 text-[10px] font-medium text-dema-paper">
-                {supplier.offerHint}
-              </span>
-              <span className="inline-flex rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-medium lowercase text-brand-blue/70">
-                {supplier.family}
-              </span>
-              {supplier.partner ? (
-                <span className="inline-flex rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-medium lowercase text-brand-blue/70">
-                  partenaire
+          {!compact ? (
+            <aside className="w-full rounded-[1.15rem] border border-dema-line bg-dema-cream/70 p-5 lg:max-w-sm">
+              <p className="text-sm font-semibold text-brand-blue">Offre</p>
+              <div className="mt-3 flex flex-wrap items-center gap-2">
+                <span className="inline-flex rounded-full bg-dema-sage/75 px-3 py-1 text-[10px] font-medium text-brand-blue/70">
+                  {supplier.offerHint}
                 </span>
-              ) : null}
-            </div>
-            <p className="mt-3 text-sm leading-relaxed text-dema-muted">
-              {supplier.bestFor}
-            </p>
-          </aside>
+                <span className="inline-flex rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-medium lowercase text-brand-blue/70">
+                  {supplier.family}
+                </span>
+                {supplier.partner ? (
+                  <span className="inline-flex rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-medium lowercase text-brand-blue/70">
+                    partenaire
+                  </span>
+                ) : null}
+              </div>
+              <p className="mt-3 text-sm leading-relaxed text-dema-muted">
+                {supplier.bestFor}
+              </p>
+            </aside>
+          ) : null}
         </div>
       </section>
 
