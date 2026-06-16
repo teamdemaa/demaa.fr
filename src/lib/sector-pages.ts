@@ -38,7 +38,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     ],
     highlights: [
       { label: "Voir la ressource organisation", href: "/ressources/systeme-operationnel-airtable" },
-      { label: "Voir le service organisation", href: "/services/organisation-automatisation" },
+      { label: "Voir le service organisation", href: "/annuaire-services/organisation-automatisation" },
       { label: "Voir les outils utiles", href: "/annuaire-outils" },
     ],
   },

@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type MouseEvent } from "react";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import SearchFilterControls from "@/components/SearchFilterControls";
 import { ServiceIcon } from "@/components/ServiceIcon";
+import SupplierDetailDialog from "@/components/SupplierDetailDialog";
 import { matchesSearchQuery } from "@/lib/search";
 import { type DemaaSupplier, type SupplierFamily } from "@/lib/supplier-catalog";
 
@@ -28,6 +29,19 @@ export default function SupplierDirectoryClient({
   const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [activeFamily, setActiveFamily] = useState<string>("Tous");
   const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false);
+  const [selectedSupplier, setSelectedSupplier] = useState<DemaaSupplier | null>(null);
+
+  useEffect(() => {
+    function handlePopState() {
+      setSelectedSupplier(null);
+    }
+
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, []);
   const filteredSuppliers = useMemo(() => {
     return suppliers.filter((supplier) => {
       const matchesSearch = matchesSearchQuery(searchQuery, [
@@ -48,6 +62,24 @@ export default function SupplierDirectoryClient({
     });
   }, [activeFamily, searchQuery, suppliers]);
   const supplierFilters = useMemo(() => ["Tous", ...families], [families]);
+
+  function openSupplierDetails(supplier: DemaaSupplier) {
+    setSelectedSupplier(supplier);
+    const detailUrl = `/annuaire-fournisseurs/${supplier.slug}`;
+
+    if (window.location.pathname !== detailUrl) {
+      window.history.pushState({ demaaSupplierModal: true }, "", detailUrl);
+    }
+  }
+
+  function closeSupplierDetails() {
+    if (window.history.state?.demaaSupplierModal) {
+      window.history.back();
+      return;
+    }
+
+    setSelectedSupplier(null);
+  }
 
   return (
     <div className="w-full">
@@ -116,17 +148,30 @@ export default function SupplierDirectoryClient({
         ) : (
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
             {filteredSuppliers.map((supplier) => (
-              <SupplierCard key={supplier.slug} supplier={supplier} />
+              <SupplierCard
+                key={supplier.slug}
+                supplier={supplier}
+                onOpenDetails={openSupplierDetails}
+              />
             ))}
           </div>
         )}
       </section>
+
+      {selectedSupplier ? (
+        <SupplierDetailDialog supplier={selectedSupplier} onClose={closeSupplierDetails} />
+      ) : null}
     </div>
   );
 }
 
-function SupplierCard({ supplier }: { supplier: DemaaSupplier }) {
-  const isExternal = supplier.href.startsWith("http");
+function SupplierCard({
+  supplier,
+  onOpenDetails,
+}: {
+  supplier: DemaaSupplier;
+  onOpenDetails: (supplier: DemaaSupplier) => void;
+}) {
   const content = (
     <>
       <div className="flex items-center justify-between gap-4">
@@ -163,25 +208,33 @@ function SupplierCard({ supplier }: { supplier: DemaaSupplier }) {
     </>
   );
 
-  if (isExternal) {
-    return (
-      <a
-        href={supplier.href}
-        target="_blank"
-        rel="noreferrer"
-        className="demaa-card group flex min-h-[17rem] flex-col rounded-[1.15rem] p-5 text-left"
-      >
-        {content}
-      </a>
-    );
-  }
-
   return (
     <Link
-      href={supplier.href}
+      href={`/annuaire-fournisseurs/${supplier.slug}`}
+      onClick={(event) => handleSupplierCardClick(event, supplier, onOpenDetails)}
       className="demaa-card group flex min-h-[17rem] flex-col rounded-[1.15rem] p-5 text-left"
     >
       {content}
     </Link>
   );
+}
+
+function handleSupplierCardClick(
+  event: MouseEvent<HTMLAnchorElement>,
+  supplier: DemaaSupplier,
+  onOpenDetails: (supplier: DemaaSupplier) => void,
+) {
+  if (
+    event.defaultPrevented ||
+    event.button !== 0 ||
+    event.metaKey ||
+    event.ctrlKey ||
+    event.shiftKey ||
+    event.altKey
+  ) {
+    return;
+  }
+
+  event.preventDefault();
+  onOpenDetails(supplier);
 }

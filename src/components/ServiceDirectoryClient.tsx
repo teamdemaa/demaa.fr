@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type MouseEvent } from "react";
 import { ArrowLeft } from "lucide-react";
 import PrimaryMobileNav, { type PrimaryNavTab } from "@/components/PrimaryMobileNav";
 import SearchFilterControls from "@/components/SearchFilterControls";
@@ -47,6 +47,18 @@ export default function ServiceDirectoryClient({
   );
   const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<DemaaService | null>(null);
+
+  useEffect(() => {
+    function handlePopState() {
+      setSelectedService(null);
+    }
+
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, []);
   const filteredServices = useMemo(() => {
     return services.filter((service) => {
       const matchesCategory =
@@ -69,6 +81,24 @@ export default function ServiceDirectoryClient({
   function selectCategory(category: string) {
     setActiveCategory(category);
     setIsFilterPanelOpen(false);
+  }
+
+  function openServiceDetails(service: DemaaService) {
+    setSelectedService(service);
+    const detailUrl = `/annuaire-services/${service.slug}`;
+
+    if (window.location.pathname !== detailUrl) {
+      window.history.pushState({ demaaServiceModal: true }, "", detailUrl);
+    }
+  }
+
+  function closeServiceDetails() {
+    if (window.history.state?.demaaServiceModal) {
+      window.history.back();
+      return;
+    }
+
+    setSelectedService(null);
   }
 
   return (
@@ -176,7 +206,7 @@ export default function ServiceDirectoryClient({
               <ServiceCard
                 key={service.slug}
                 service={service}
-                onOpenDetails={setSelectedService}
+                onOpenDetails={openServiceDetails}
               />
             ))}
           </div>
@@ -187,7 +217,7 @@ export default function ServiceDirectoryClient({
         <ServiceDetailDialog
           service={selectedService}
           source="Annuaire services"
-          onClose={() => setSelectedService(null)}
+          onClose={closeServiceDetails}
         />
       ) : null}
     </div>
@@ -205,9 +235,9 @@ function ServiceCard({
     service.slug === "organisation-automatisation" ? "Demaa" : "Partenaire";
 
   return (
-    <button
-      type="button"
-      onClick={() => onOpenDetails(service)}
+    <Link
+      href={`/annuaire-services/${service.slug}`}
+      onClick={(event) => handleServiceCardClick(event, service, onOpenDetails)}
       className="demaa-card group flex min-h-[15.5rem] flex-col rounded-[1.15rem] p-5 text-left"
     >
       <div className="flex items-center justify-between gap-4">
@@ -237,6 +267,26 @@ function ServiceCard({
           </span>
         </div>
       </div>
-    </button>
+    </Link>
   );
+}
+
+function handleServiceCardClick(
+  event: MouseEvent<HTMLAnchorElement>,
+  service: DemaaService,
+  onOpenDetails: (service: DemaaService) => void,
+) {
+  if (
+    event.defaultPrevented ||
+    event.button !== 0 ||
+    event.metaKey ||
+    event.ctrlKey ||
+    event.shiftKey ||
+    event.altKey
+  ) {
+    return;
+  }
+
+  event.preventDefault();
+  onOpenDetails(service);
 }

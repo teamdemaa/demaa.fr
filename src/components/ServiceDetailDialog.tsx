@@ -113,7 +113,7 @@ export default function ServiceDetailDialog({
                   </button>
                 ) : isAssistantLanding ? (
                   <Link
-                    href={`/services/${service.slug}`}
+                    href={`/annuaire-services/${service.slug}`}
                     className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper transition hover:bg-brand-blue"
                   >
                     Voir l&apos;offre

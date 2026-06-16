@@ -54,7 +54,12 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/services/structuration-automatisation',
-        destination: '/services/organisation-automatisation',
+        destination: '/annuaire-services/organisation-automatisation',
+        permanent: true,
+      },
+      {
+        source: '/services/:slug',
+        destination: '/annuaire-services/:slug',
         permanent: true,
       },
     ];

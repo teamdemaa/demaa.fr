@@ -6,11 +6,15 @@ import { startTransition, useMemo, useState, type MouseEvent } from "react";
 import { Check, ExternalLink, FileText, GraduationCap } from "lucide-react";
 import DeleguerPricingPreviewModal from "@/components/DeleguerPricingPreviewModal";
 import PartnerOffersForm from "@/components/PartnerOffersForm";
+import ProNetworkDetailDialog from "@/components/ProNetworkDetailDialog";
 import ServiceDetailDialog from "@/components/ServiceDetailDialog";
 import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
+import SupplierDetailDialog from "@/components/SupplierDetailDialog";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import { buildBusinessBlockChecklists } from "@/lib/business-block-checklists";
 import type { CourseEntry } from "@/lib/course-content";
+import type { DemaaProNetwork } from "@/lib/pro-network-catalog";
+import { getRecommendedProNetworksForSystem } from "@/lib/pro-network-recommendations";
 import { getRelatedCoursesForSystemSlug } from "@/lib/related-courses";
 import { getSectorPageByLabel } from "@/lib/sector-pages";
 import { getRecommendedServicesForSystem } from "@/lib/service-recommendations";
@@ -126,6 +130,54 @@ function handleToolDetailClick(
   onOpenDetails(tool);
 }
 
+function handleSupplierDetailClick(
+  event: MouseEvent<HTMLAnchorElement>,
+  supplier: DemaaSupplier,
+  onOpenDetails: (supplier: DemaaSupplier) => void,
+) {
+  if (
+    event.defaultPrevented ||
+    event.button !== 0 ||
+    event.metaKey ||
+    event.ctrlKey ||
+    event.shiftKey ||
+    event.altKey
+  ) {
+    return;
+  }
+
+  event.preventDefault();
+  onOpenDetails(supplier);
+}
+
+function handleProNetworkDetailClick(
+  event: MouseEvent<HTMLAnchorElement>,
+  network: DemaaProNetwork,
+  onOpenDetails: (network: DemaaProNetwork) => void,
+) {
+  if (
+    event.defaultPrevented ||
+    event.button !== 0 ||
+    event.metaKey ||
+    event.ctrlKey ||
+    event.shiftKey ||
+    event.altKey
+  ) {
+    return;
+  }
+
+  event.preventDefault();
+  onOpenDetails(network);
+}
+
+function getProNetworkCardTags(network: DemaaProNetwork): string[] {
+  const normalizedCategory = network.category.toLowerCase();
+
+  return network.tags
+    .filter((tag) => tag.toLowerCase() !== normalizedCategory)
+    .slice(0, 3);
+}
+
 export default function SystemDetailContent({
   system,
   detail,
@@ -138,6 +190,8 @@ export default function SystemDetailContent({
   const [activeTab, setActiveTab] = useState<SystemDetailTab>(defaultTab);
   const [selectedToolDetail, setSelectedToolDetail] = useState<ToolDirectoryItem | null>(null);
   const [selectedServiceDetail, setSelectedServiceDetail] = useState<DemaaService | null>(null);
+  const [selectedSupplierDetail, setSelectedSupplierDetail] = useState<DemaaSupplier | null>(null);
+  const [selectedProNetworkDetail, setSelectedProNetworkDetail] = useState<DemaaProNetwork | null>(null);
   const [isDeleguerPricingOpen, setIsDeleguerPricingOpen] = useState(false);
   const processGroups = useMemo(() => buildProcessGroups(detail), [detail]);
   const recommendedServices = useMemo(
@@ -146,6 +200,10 @@ export default function SystemDetailContent({
   );
   const recommendedSuppliers = useMemo(
     () => (activeTab === "fournisseurs" ? getRecommendedSuppliersForSystem(system.slug) : []),
+    [activeTab, system.slug]
+  );
+  const recommendedProNetworks = useMemo(
+    () => (activeTab === "reseaux-pro" ? getRecommendedProNetworksForSystem(system.slug) : []),
     [activeTab, system.slug]
   );
   const resources = useMemo(
@@ -259,7 +317,6 @@ export default function SystemDetailContent({
   }
 
   function renderSupplierCard(supplier: DemaaSupplier) {
-    const isExternal = supplier.href.startsWith("http");
     const content = (
       <>
         <div className="flex items-start justify-between gap-4">
@@ -293,25 +350,56 @@ export default function SystemDetailContent({
         </div>
       </>
     );
-    const className = "demaa-card group flex min-h-[15rem] flex-col rounded-[1.15rem] p-5 text-left";
-
-    if (isExternal) {
-      return (
-        <a
-          key={supplier.slug}
-          href={supplier.href}
-          target="_blank"
-          rel="noreferrer"
-          className={className}
-        >
-          {content}
-        </a>
-      );
-    }
-
     return (
-      <Link key={supplier.slug} href={supplier.href} className={className}>
+      <Link
+        key={supplier.slug}
+        href={`/annuaire-fournisseurs/${supplier.slug}`}
+        className="demaa-card group flex min-h-[15rem] flex-col rounded-[1.15rem] p-5 text-left"
+        onClick={(event) => {
+          handleSupplierDetailClick(event, supplier, setSelectedSupplierDetail);
+        }}
+      >
         {content}
+      </Link>
+    );
+  }
+
+  function renderProNetworkCard(network: DemaaProNetwork) {
+    return (
+      <Link
+        key={network.slug}
+        href={`/annuaire-reseaux-pro/${network.slug}`}
+        className="demaa-card group flex min-h-[15rem] flex-col rounded-[1.15rem] p-5 text-left"
+        onClick={(event) => {
+          handleProNetworkDetailClick(event, network, setSelectedProNetworkDetail);
+        }}
+      >
+        <div className="flex items-start justify-between gap-4">
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper">
+            <ServiceIcon icon={network.icon} className="h-4 w-4" aria-hidden="true" />
+          </span>
+        </div>
+        <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
+          {network.category}
+        </p>
+        <h3 className="mt-2 text-lg font-semibold leading-snug text-brand-blue">
+          {network.name}
+        </h3>
+        <p className="mt-3 text-sm leading-relaxed text-dema-muted">
+          {network.shortDescription}
+        </p>
+        <div className="mt-auto pt-4">
+          <div className="flex flex-wrap items-center gap-2">
+            {getProNetworkCardTags(network).map((tag) => (
+              <span
+                key={tag}
+                className="inline-flex rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-medium text-brand-blue/70"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
       </Link>
     );
   }
@@ -457,6 +545,7 @@ export default function SystemDetailContent({
               ["outils", "Outils"],
               ["services", "Services"],
               ["fournisseurs", "Partenaires & fournisseurs"],
+              ["reseaux-pro", "Réseaux Pro"],
               ["ressources", "Ressources"],
               ["cours", "Cours"],
             ] as Array<[SystemDetailTab, string]>
@@ -589,6 +678,16 @@ export default function SystemDetailContent({
               source: `system_suppliers_${system.slug}`,
             })}
           </div>
+        ) : activeTab === "reseaux-pro" ? (
+          <div className="space-y-5">
+            {renderBrowseAllLink({
+              browseHref: `/annuaire-reseaux-pro?retourSysteme=${encodeURIComponent(system.slug)}`,
+              browseLabel: "Voir tous les réseaux pro",
+            })}
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {recommendedProNetworks.map(renderProNetworkCard)}
+            </div>
+          </div>
         ) : activeTab === "ressources" ? (
           <div className="space-y-5">
             {renderBrowseAllLink({
@@ -623,6 +722,20 @@ export default function SystemDetailContent({
           service={selectedServiceDetail}
           source={`Système ${system.name}`}
           onClose={() => setSelectedServiceDetail(null)}
+        />
+      ) : null}
+
+      {selectedSupplierDetail ? (
+        <SupplierDetailDialog
+          supplier={selectedSupplierDetail}
+          onClose={() => setSelectedSupplierDetail(null)}
+        />
+      ) : null}
+
+      {selectedProNetworkDetail ? (
+        <ProNetworkDetailDialog
+          network={selectedProNetworkDetail}
+          onClose={() => setSelectedProNetworkDetail(null)}
         />
       ) : null}
 
