@@ -10,6 +10,7 @@ interface PartnerOffersFormProps {
   onSuccess?: (firstName: string) => void;
   source?: string;
   submitLabel?: string;
+  submitClassName?: string;
   submittingLabel?: string;
   successMessage?: (firstName: string) => string;
 }
@@ -18,7 +19,8 @@ export default function PartnerOffersForm({
   compact = false,
   onSuccess,
   source = "partner_offers_page",
-  submitLabel = "Recevoir les tarifs negocies",
+  submitLabel = "Recevoir les tarifs négociés",
+  submitClassName,
   submittingLabel = "Inscription...",
   successMessage,
 }: PartnerOffersFormProps) {
@@ -54,7 +56,7 @@ export default function PartnerOffersForm({
       setStatus("success");
       setMessage(
         successMessage?.(submittedFirstName) ||
-          "C'est note. Vous recevrez les tarifs negocies et les offres partenaires Demaa."
+          "C'est noté. Vous recevrez les tarifs négociés et les offres partenaires Demaa."
       );
       setFirstName("");
       setSector("");
@@ -109,7 +111,7 @@ export default function PartnerOffersForm({
       <button
         type="submit"
         disabled={status === "submitting"}
-        className={`inline-flex w-full items-center justify-center bg-brand-blue px-6 text-white transition-colors hover:bg-brand-coral disabled:cursor-not-allowed disabled:bg-brand-blue/40 ${compact ? "h-11 rounded-full text-[13px] font-semibold" : "h-14 rounded-full text-sm font-semibold"}`}
+        className={`inline-flex w-full items-center justify-center px-6 text-white transition-colors disabled:cursor-not-allowed ${submitClassName ?? "bg-brand-blue hover:bg-brand-coral disabled:bg-brand-blue/40"} ${compact ? "h-11 rounded-full text-[13px] font-semibold" : "h-14 rounded-full text-sm font-semibold"}`}
       >
         {status === "submitting" ? submittingLabel : submitLabel}
       </button>

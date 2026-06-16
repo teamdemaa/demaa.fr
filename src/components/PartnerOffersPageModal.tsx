@@ -23,7 +23,7 @@ export default function PartnerOffersPageModal() {
           <button
             type="button"
             onClick={handleClose}
-            aria-label="Fermer le formulaire des tarifs negocies"
+            aria-label="Fermer le formulaire des tarifs négociés"
             className="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full text-brand-blue/45 transition-colors hover:bg-white hover:text-brand-blue"
           >
             <X className="h-4 w-4" />
@@ -33,8 +33,8 @@ export default function PartnerOffersPageModal() {
             Offres partenaires
           </p>
           <p className="mx-auto mt-5 max-w-lg text-sm leading-relaxed text-brand-blue/65 md:text-base">
-            Recevez les tarifs negocies, les offres partenaires et les opportunites utiles
-            selon votre secteur d&apos;activite.
+            Recevez les tarifs négociés, les offres partenaires et les opportunités utiles
+            selon votre secteur d&apos;activité.
           </p>
 
           <PartnerOffersForm source="partner_offers_page" />
