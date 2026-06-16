@@ -1876,6 +1876,44 @@
       "scope": "business"
     },
     {
+      "slug": "esabora",
+      "name": "Esabora",
+      "url": "https://www.esabora.fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Artisanat & BTP"
+      ],
+      "description": "Logiciel pour installateurs avec devis, factures, commandes, interventions SAV et suivi d'affaires.",
+      "tags": [
+        "Installateur",
+        "SAV",
+        "Planning"
+      ],
+      "bestFor": "Piloter une activité d'installation, d'intervention et de chantier dans le second oeuvre.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "scope": "business"
+    },
+    {
+      "slug": "tolteck",
+      "name": "Tolteck",
+      "url": "https://www.tolteck.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Artisanat & BTP"
+      ],
+      "description": "Logiciel de devis et factures simple pour artisans du bâtiment, avec bibliothèque d'ouvrages et usage mobile.",
+      "tags": [
+        "Devis",
+        "Facture",
+        "Artisan"
+      ],
+      "bestFor": "Aller vite sur les devis et factures sans déployer un ERP plus lourd.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "scope": "business"
+    },
+    {
       "slug": "alobees",
       "name": "Alobees",
       "url": "https://www.alobees.com/",
@@ -1909,6 +1947,44 @@
         "Chantier"
       ],
       "bestFor": "Piloter rentabilité, achats et marges par chantier.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "scope": "business"
+    },
+    {
+      "slug": "progbat",
+      "name": "ProGBat",
+      "url": "https://www.progbat.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Artisanat & BTP"
+      ],
+      "description": "Logiciel BTP tout-en-un pour devis, factures, chantiers, planning et suivi de rentabilité.",
+      "tags": [
+        "Chantier",
+        "Facturation",
+        "BTP"
+      ],
+      "bestFor": "Structurer les chantiers et la gestion d'entreprise dans un même outil.",
+      "pricingHint": "Payant",
+      "status": "active",
+      "scope": "business"
+    },
+    {
+      "slug": "sage-batigest-connect",
+      "name": "Sage Batigest Connect",
+      "url": "https://www.sage.com/fr-fr/produits/sage-batigest-connect/",
+      "category": "Outils métier",
+      "sectors": [
+        "Artisanat & BTP"
+      ],
+      "description": "Solution Sage pour devis, factures, suivi de chantier, bibliothèque de prix et gestion bâtiment.",
+      "tags": [
+        "Devis",
+        "Facture",
+        "Gestion bâtiment"
+      ],
+      "bestFor": "Garder un cadre de gestion BTP plus structuré avec un acteur historique du marché.",
       "pricingHint": "Payant",
       "status": "active",
       "scope": "business"

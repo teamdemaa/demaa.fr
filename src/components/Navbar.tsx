@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Suspense, useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { Boxes, HandHelping, Search, type LucideIcon } from "lucide-react";
+import DemaaWordmark from "@/components/DemaaWordmark";
 import {
   visiblePrimaryNavigationItems,
   type PrimaryNavigationId,
@@ -53,11 +54,11 @@ export default function Navbar({
           <Link
             href="/"
             aria-label="Retour à l'accueil"
-            className="demaa-brand-logo inline-flex items-center text-xl tracking-tight text-brand-blue shrink-0 z-50 cursor-pointer sm:text-2xl"
+            className="inline-flex items-center shrink-0 z-50 cursor-pointer"
             onMouseEnter={() => router.prefetch("/")}
             onFocus={() => router.prefetch("/")}
           >
-            Demaa
+            <DemaaWordmark className="text-[1.65rem] sm:text-[2rem]" />
           </Link>
 
           {hasDesktopTabs && (

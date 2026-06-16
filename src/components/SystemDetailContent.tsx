@@ -375,20 +375,23 @@ export default function SystemDetailContent({
           <span aria-hidden="true">→</span>
         </Link>
 
-        <div className="rounded-[1.15rem] border border-dema-line bg-dema-cream/70 p-5 text-left">
-          <h3 className="text-lg font-semibold text-brand-blue">
-            Beneficier de tarifs negocies
-          </h3>
-          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-dema-muted">
-            Plus on est nombreux, plus on peut faire valoir des reductions
-            interessantes. Rejoignez la liste pour etre informe des tarifs negocies
-            et des offres partenaires utiles.
-          </p>
-          <PartnerOffersForm
-            compact
-            source={source}
-            submitLabel="Recevoir les tarifs negocies"
-          />
+        <div className="w-full md:w-2/3 lg:w-1/2 xl:w-1/3">
+          <div className="rounded-[1.15rem] border border-dema-line bg-dema-cream/70 p-5 text-left">
+            <h3 className="text-lg font-semibold text-brand-blue">
+              Bénéficier de tarifs négociés
+            </h3>
+            <p className="mt-2 text-sm leading-relaxed text-dema-muted">
+              Plus on est nombreux, plus on peut faire valoir des réductions
+              intéressantes. Rejoignez la liste pour être informé des tarifs négociés
+              et des offres partenaires utiles.
+            </p>
+            <PartnerOffersForm
+              compact
+              source={source}
+              submitLabel="Recevoir les tarifs négociés"
+              submitClassName="bg-dema-forest hover:bg-[#284f3a] disabled:bg-dema-forest/60"
+            />
+          </div>
         </div>
       </div>
     );

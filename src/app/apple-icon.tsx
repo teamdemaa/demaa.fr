@@ -3,7 +3,7 @@ import { ImageResponse } from "next/og";
 export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
 
-/** Icône « D. » pour Apple Touch / écran d’accueil. */
+/** Icône Apple monogramme Demaa sur fond creme. */
 export default function AppleIcon() {
   return new ImageResponse(
     (
@@ -14,16 +14,16 @@ export default function AppleIcon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#ffffff",
-          fontWeight: 700,
-          fontSize: 112,
-          fontFamily:
-            'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-          letterSpacing: "-0.05em",
+          background: "#fafafa",
+          color: "#315f46",
+          fontSize: 124,
+          fontStyle: "italic",
+          fontWeight: 400,
+          fontFamily: "Georgia, serif",
+          letterSpacing: "-0.08em",
         }}
       >
-        <span style={{ color: "#141414" }}>D</span>
-        <span style={{ color: "#6b7280" }}>.</span>
+        D
       </div>
     ),
     { ...size }

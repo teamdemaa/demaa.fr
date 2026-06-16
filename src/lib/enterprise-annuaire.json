@@ -1580,6 +1580,22 @@
       },
       "toolRefs": [
         {
+          "slug": "vertuoza",
+          "usage": "Suivre les chantiers, plannings et rentabilité plus facilement."
+        },
+        {
+          "slug": "progbat",
+          "usage": "Structurer devis, chantiers, planning et rentabilité dans un seul outil."
+        },
+        {
+          "slug": "graneet",
+          "usage": "Piloter les achats, coûts et marges par chantier."
+        },
+        {
+          "slug": "sage-batigest-connect",
+          "usage": "Gérer devis, factures, bibliothèque de prix et suivi chantier avec un cadre plus structuré."
+        },
+        {
           "slug": "obat",
           "usage": "Gérer les devis et la facturation d’une activité BTP."
         },
@@ -1588,24 +1604,16 @@
           "usage": "Créer devis, factures et suivis simples pour artisans du bâtiment."
         },
         {
-          "slug": "vertuoza",
-          "usage": "Suivre les chantiers, plannings et rentabilité plus facilement."
+          "slug": "esabora",
+          "usage": "Compléter les chantiers bâtiment avec une logique installateur, SAV et suivi d'affaires."
+        },
+        {
+          "slug": "tolteck",
+          "usage": "Aller vite sur les devis et factures pour les artisans bâtiment."
         },
         {
           "slug": "alobees",
           "usage": "Planifier les équipes et suivre l’avancement terrain."
-        },
-        {
-          "slug": "graneet",
-          "usage": "Piloter les achats, coûts et marges par chantier."
-        },
-        {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, photos, devis et échanges clients."
-        },
-        {
-          "slug": "chatgpt",
-          "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
         },
         {
           "slug": "fieldwire",
@@ -1618,6 +1626,14 @@
         {
           "slug": "letsbuild",
           "usage": "Suivre inspections, réserves et avancement chantier."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, photos, devis et échanges clients."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
         }
       ],
       "audience": "mixed",
@@ -4820,28 +4836,32 @@
       },
       "toolRefs": [
         {
-          "slug": "obat",
-          "usage": "Gérer les devis et la facturation d’une activité BTP."
+          "slug": "esabora",
+          "usage": "Gérer devis, factures, commandes, SAV et suivi de chantier pour plomberie et chauffage."
         },
         {
-          "slug": "costructor",
-          "usage": "Créer devis, factures et suivis simples pour artisans du bâtiment."
+          "slug": "obat",
+          "usage": "Gérer les devis et la facturation d’une activité BTP."
         },
         {
           "slug": "batappli",
           "usage": "Produire devis et factures avec des modèles bâtiment."
         },
         {
+          "slug": "sage-batigest-connect",
+          "usage": "Apporter un cadre de gestion BTP plus complet pour devis, chantier et facturation."
+        },
+        {
+          "slug": "progbat",
+          "usage": "Suivre chantier, planning et rentabilité dans une logique tout-en-un."
+        },
+        {
+          "slug": "costructor",
+          "usage": "Créer devis, factures et suivis simples pour artisans du bâtiment."
+        },
+        {
           "slug": "alobees",
           "usage": "Planifier les équipes et suivre l’avancement terrain."
-        },
-        {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, photos, devis et échanges clients."
-        },
-        {
-          "slug": "chatgpt",
-          "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
         },
         {
           "slug": "fieldwire",
@@ -4850,6 +4870,14 @@
         {
           "slug": "kizeo-forms",
           "usage": "Digitaliser fiches intervention, relevés et contrôles techniques."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, photos, devis et échanges clients."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
         }
       ],
       "audience": "mixed",
@@ -4921,28 +4949,32 @@
       },
       "toolRefs": [
         {
-          "slug": "obat",
-          "usage": "Gérer les devis et la facturation d’une activité BTP."
-        },
-        {
-          "slug": "costructor",
-          "usage": "Créer devis, factures et suivis simples pour artisans du bâtiment."
+          "slug": "esabora",
+          "usage": "Gérer devis, factures, commandes, bons d’intervention et suivi d'affaires pour installateurs."
         },
         {
           "slug": "batappli",
           "usage": "Produire devis et factures avec des modèles bâtiment."
         },
         {
+          "slug": "sage-batigest-connect",
+          "usage": "Structurer devis, prix, chantier et facturation avec une solution Sage reconnue."
+        },
+        {
+          "slug": "obat",
+          "usage": "Gérer les devis et la facturation d’une activité BTP."
+        },
+        {
+          "slug": "progbat",
+          "usage": "Suivre chantiers, planning et rentabilité avec un outil tout-en-un."
+        },
+        {
+          "slug": "costructor",
+          "usage": "Créer devis, factures et suivis simples pour artisans du bâtiment."
+        },
+        {
           "slug": "alobees",
           "usage": "Planifier les équipes et suivre l’avancement terrain."
-        },
-        {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, photos, devis et échanges clients."
-        },
-        {
-          "slug": "chatgpt",
-          "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
         },
         {
           "slug": "fieldwire",
@@ -4951,6 +4983,14 @@
         {
           "slug": "kizeo-forms",
           "usage": "Créer fiches intervention, contrôles et rapports terrain."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, photos, devis et échanges clients."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
         }
       ],
       "audience": "mixed",
@@ -5022,24 +5062,48 @@
       },
       "toolRefs": [
         {
+          "slug": "vertuoza",
+          "usage": "Suivre les chantiers, plannings et rentabilité plus facilement."
+        },
+        {
+          "slug": "progbat",
+          "usage": "Centraliser devis, planning, chantiers et rentabilité pour les rénovations."
+        },
+        {
+          "slug": "graneet",
+          "usage": "Piloter les achats, coûts et marges par chantier."
+        },
+        {
+          "slug": "sage-batigest-connect",
+          "usage": "Apporter une base plus structurée pour devis, prix et suivi d'exécution."
+        },
+        {
           "slug": "obat",
           "usage": "Gérer les devis et la facturation d’une activité BTP."
+        },
+        {
+          "slug": "tolteck",
+          "usage": "Aller vite sur les devis et factures quand la structure reste artisanale."
         },
         {
           "slug": "costructor",
           "usage": "Créer devis, factures et suivis simples pour artisans du bâtiment."
         },
         {
-          "slug": "vertuoza",
-          "usage": "Suivre les chantiers, plannings et rentabilité plus facilement."
-        },
-        {
           "slug": "alobees",
           "usage": "Planifier les équipes et suivre l’avancement terrain."
         },
         {
-          "slug": "graneet",
-          "usage": "Piloter les achats, coûts et marges par chantier."
+          "slug": "archireport",
+          "usage": "Produire comptes rendus, réserves et suivi de chantier."
+        },
+        {
+          "slug": "fieldwire",
+          "usage": "Suivre plans, tâches, photos et réserves sur chantier."
+        },
+        {
+          "slug": "kizeo-forms",
+          "usage": "Créer formulaires terrain et rapports personnalisés."
         },
         {
           "slug": "google-workspace",
@@ -5048,18 +5112,6 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
-        },
-        {
-          "slug": "fieldwire",
-          "usage": "Suivre plans, tâches, photos et réserves sur chantier."
-        },
-        {
-          "slug": "archireport",
-          "usage": "Produire comptes rendus, réserves et suivi de chantier."
-        },
-        {
-          "slug": "kizeo-forms",
-          "usage": "Créer formulaires terrain et rapports personnalisés."
         }
       ],
       "audience": "mixed",
@@ -5131,32 +5183,36 @@
       },
       "toolRefs": [
         {
-          "slug": "obat",
-          "usage": "Gérer les devis et la facturation d’une activité BTP."
+          "slug": "progbat",
+          "usage": "Suivre devis, chantier, planning et rentabilité dans un même outil."
         },
         {
-          "slug": "costructor",
-          "usage": "Créer devis, factures et suivis simples pour artisans du bâtiment."
+          "slug": "sage-batigest-connect",
+          "usage": "Structurer les devis, prix et la gestion bâtiment sur un socle plus établi."
         },
         {
           "slug": "vertuoza",
           "usage": "Suivre les chantiers, plannings et rentabilité plus facilement."
         },
         {
-          "slug": "alobees",
-          "usage": "Planifier les équipes et suivre l’avancement terrain."
+          "slug": "obat",
+          "usage": "Gérer les devis et la facturation d’une activité BTP."
+        },
+        {
+          "slug": "tolteck",
+          "usage": "Créer devis et factures rapidement pour les ateliers et poses artisanales."
         },
         {
           "slug": "graneet",
           "usage": "Piloter les achats, coûts et marges par chantier."
         },
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, photos, devis et échanges clients."
+          "slug": "costructor",
+          "usage": "Créer devis, factures et suivis simples pour artisans du bâtiment."
         },
         {
-          "slug": "chatgpt",
-          "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
+          "slug": "alobees",
+          "usage": "Planifier les équipes et suivre l’avancement terrain."
         },
         {
           "slug": "fieldwire",
@@ -5165,6 +5221,14 @@
         {
           "slug": "kizeo-forms",
           "usage": "Collecter relevés, photos et comptes rendus terrain."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, photos, devis et échanges clients."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
         }
       ],
       "audience": "mixed",
@@ -5236,8 +5300,16 @@
       },
       "toolRefs": [
         {
-          "slug": "obat",
-          "usage": "Gérer les devis et la facturation d’une activité BTP."
+          "slug": "onaya",
+          "usage": "Structurer les études de prix, chantiers et facturation BTP."
+        },
+        {
+          "slug": "progbat",
+          "usage": "Piloter les chantiers, le planning et la rentabilité dans un seul outil."
+        },
+        {
+          "slug": "sage-batigest-connect",
+          "usage": "Ajouter un cadre de gestion bâtiment plus structuré pour devis, prix et facturation."
         },
         {
           "slug": "vertuoza",
@@ -5248,20 +5320,12 @@
           "usage": "Piloter les achats, coûts et marges par chantier."
         },
         {
-          "slug": "onaya",
-          "usage": "Structurer les études de prix, chantiers et facturation BTP."
+          "slug": "obat",
+          "usage": "Gérer les devis et la facturation d’une activité BTP."
         },
         {
           "slug": "alobees",
           "usage": "Planifier les équipes et suivre l’avancement terrain."
-        },
-        {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, photos, devis et échanges clients."
-        },
-        {
-          "slug": "chatgpt",
-          "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
         },
         {
           "slug": "fieldwire",
@@ -5270,6 +5334,14 @@
         {
           "slug": "letsbuild",
           "usage": "Suivre inspections, réserves et avancement des travaux."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, photos, devis et échanges clients."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
         }
       ],
       "audience": "mixed",
@@ -5341,20 +5413,40 @@
       },
       "toolRefs": [
         {
-          "slug": "obat",
-          "usage": "Gérer les devis et la facturation d’une activité paysage."
+          "slug": "paysagio",
+          "usage": "Piloter planning, heures, photos et suivi terrain paysage."
         },
         {
-          "slug": "costructor",
-          "usage": "Créer devis, factures et suivis simples pour chantiers extérieurs."
+          "slug": "jardipro",
+          "usage": "Créer devis et factures adaptés aux jardiniers-paysagistes."
+        },
+        {
+          "slug": "tolteck",
+          "usage": "Créer devis et factures rapidement pour les chantiers extérieurs et petits entretiens."
+        },
+        {
+          "slug": "obat",
+          "usage": "Gérer les devis et la facturation d’une activité paysage."
         },
         {
           "slug": "organilog",
           "usage": "Suivre interventions, chantiers, contrats et retours terrain."
         },
         {
+          "slug": "costructor",
+          "usage": "Créer devis, factures et suivis simples pour chantiers extérieurs."
+        },
+        {
           "slug": "alobees",
           "usage": "Planifier les équipes et suivre l’avancement terrain."
+        },
+        {
+          "slug": "progbat",
+          "usage": "Structurer planning, chantier et suivi d'activité quand l'entreprise se complexifie."
+        },
+        {
+          "slug": "extrabat",
+          "usage": "Gérer CRM, devis, planning et interventions paysage."
         },
         {
           "slug": "google-workspace",
@@ -5363,18 +5455,6 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer réponses client, comptes-rendus et checklists terrain."
-        },
-        {
-          "slug": "extrabat",
-          "usage": "Gérer CRM, devis, planning et interventions paysage."
-        },
-        {
-          "slug": "jardipro",
-          "usage": "Créer devis et factures adaptés aux jardiniers-paysagistes."
-        },
-        {
-          "slug": "paysagio",
-          "usage": "Piloter planning, heures, photos et suivi terrain paysage."
         }
       ],
       "audience": "mixed",
@@ -7858,20 +7938,20 @@
           "usage": "Gérer les chantiers, SAV et interventions piscine."
         },
         {
+          "slug": "progbat",
+          "usage": "Suivre devis, planning, chantier et rentabilité dans une logique plus tout-en-un."
+        },
+        {
           "slug": "obat",
           "usage": "Gérer les devis et la facturation d’une activité BTP."
         },
         {
+          "slug": "tolteck",
+          "usage": "Aller vite sur les devis et factures des petits projets ou interventions piscine."
+        },
+        {
           "slug": "organilog",
           "usage": "Suivre interventions, contrats, SAV et retours terrain."
-        },
-        {
-          "slug": "google-workspace",
-          "usage": "Centraliser photos, devis et dossiers clients."
-        },
-        {
-          "slug": "chatgpt",
-          "usage": "Préparer réponses client, comptes-rendus et checklists SAV."
         },
         {
           "slug": "fieldwire",
@@ -7880,6 +7960,14 @@
         {
           "slug": "kizeo-forms",
           "usage": "Créer fiches SAV, contrôle et intervention terrain."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser photos, devis et dossiers clients."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer réponses client, comptes-rendus et checklists SAV."
         }
       ],
       "audience": "mixed",
@@ -9213,24 +9301,28 @@
           "usage": "Gérer les devis et la facturation d’une activité BTP."
         },
         {
-          "slug": "costructor",
-          "usage": "Créer devis, factures et suivis simples pour artisans du bâtiment."
+          "slug": "tolteck",
+          "usage": "Créer devis et factures rapidement pour une activité artisanale de couverture."
         },
         {
           "slug": "batappli",
           "usage": "Produire devis et factures avec des modèles bâtiment."
         },
         {
+          "slug": "sage-batigest-connect",
+          "usage": "Structurer devis, prix et gestion chantier dans une solution BTP reconnue."
+        },
+        {
+          "slug": "progbat",
+          "usage": "Centraliser chantiers, planning, devis et rentabilité."
+        },
+        {
+          "slug": "costructor",
+          "usage": "Créer devis, factures et suivis simples pour artisans du bâtiment."
+        },
+        {
           "slug": "alobees",
           "usage": "Planifier les équipes et suivre l’avancement terrain."
-        },
-        {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, photos, devis et échanges clients."
-        },
-        {
-          "slug": "chatgpt",
-          "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
         },
         {
           "slug": "fieldwire",
@@ -9239,6 +9331,14 @@
         {
           "slug": "kizeo-forms",
           "usage": "Digitaliser rapports, contrôles et fiches d’intervention."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, photos, devis et échanges clients."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
         }
       ],
       "audience": "mixed",
@@ -9310,28 +9410,32 @@
       ],
       "toolRefs": [
         {
-          "slug": "obat",
-          "usage": "Gérer les devis et la facturation d’une activité BTP."
+          "slug": "tolteck",
+          "usage": "Créer devis et factures rapidement pour les chantiers de peinture à taille artisanale."
         },
         {
-          "slug": "costructor",
-          "usage": "Créer devis, factures et suivis simples pour artisans du bâtiment."
+          "slug": "obat",
+          "usage": "Gérer les devis et la facturation d’une activité BTP."
         },
         {
           "slug": "batappli",
           "usage": "Produire devis et factures avec des modèles bâtiment."
         },
         {
+          "slug": "sage-batigest-connect",
+          "usage": "Structurer devis, prix et suivi de chantiers avec un cadre plus solide."
+        },
+        {
+          "slug": "progbat",
+          "usage": "Suivre planning, chantiers et rentabilité sur des équipes ou volumes plus importants."
+        },
+        {
+          "slug": "costructor",
+          "usage": "Créer devis, factures et suivis simples pour artisans du bâtiment."
+        },
+        {
           "slug": "alobees",
           "usage": "Planifier les équipes et suivre l’avancement terrain."
-        },
-        {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, photos, devis et échanges clients."
-        },
-        {
-          "slug": "chatgpt",
-          "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
         },
         {
           "slug": "fieldwire",
@@ -9340,6 +9444,14 @@
         {
           "slug": "kizeo-forms",
           "usage": "Collecter photos, contrôles et comptes rendus terrain."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, photos, devis et échanges clients."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
         }
       ],
       "audience": "mixed",
@@ -9411,28 +9523,32 @@
       ],
       "toolRefs": [
         {
-          "slug": "obat",
-          "usage": "Gérer les devis et la facturation d’une activité BTP."
+          "slug": "tolteck",
+          "usage": "Créer devis et factures rapidement pour les chantiers artisanaux de carrelage."
         },
         {
-          "slug": "costructor",
-          "usage": "Créer devis, factures et suivis simples pour artisans du bâtiment."
+          "slug": "obat",
+          "usage": "Gérer les devis et la facturation d’une activité BTP."
         },
         {
           "slug": "batappli",
           "usage": "Produire devis et factures avec des modèles bâtiment."
         },
         {
+          "slug": "sage-batigest-connect",
+          "usage": "Ajouter une base plus structurée pour devis, prix et suivi de chantier."
+        },
+        {
+          "slug": "progbat",
+          "usage": "Suivre planning, chantiers et rentabilité dans une logique tout-en-un."
+        },
+        {
+          "slug": "costructor",
+          "usage": "Créer devis, factures et suivis simples pour artisans du bâtiment."
+        },
+        {
           "slug": "alobees",
           "usage": "Planifier les équipes et suivre l’avancement terrain."
-        },
-        {
-          "slug": "google-workspace",
-          "usage": "Centraliser les fichiers, photos, devis et échanges clients."
-        },
-        {
-          "slug": "chatgpt",
-          "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
         },
         {
           "slug": "fieldwire",
@@ -9441,6 +9557,14 @@
         {
           "slug": "kizeo-forms",
           "usage": "Dématérialiser rapports, relevés et signatures chantier."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser les fichiers, photos, devis et échanges clients."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
         }
       ],
       "audience": "mixed",
@@ -9512,12 +9636,8 @@
       ],
       "toolRefs": [
         {
-          "slug": "obat",
-          "usage": "Gérer les devis et la facturation d’une activité BTP."
-        },
-        {
-          "slug": "costructor",
-          "usage": "Créer devis, factures et suivis simples pour interventions techniques."
+          "slug": "esabora",
+          "usage": "Gérer devis, factures, commandes, interventions et SAV pour une activité de climatisation."
         },
         {
           "slug": "praxedo",
@@ -9528,12 +9648,20 @@
           "usage": "Suivre interventions, contrats, maintenance et facturation."
         },
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser documents, photos et échanges clients."
+          "slug": "obat",
+          "usage": "Gérer les devis et la facturation d’une activité BTP."
         },
         {
-          "slug": "chatgpt",
-          "usage": "Préparer réponses client, procédures et comptes-rendus."
+          "slug": "sage-batigest-connect",
+          "usage": "Structurer devis, prix, chantier et facturation avec un cadre plus établi."
+        },
+        {
+          "slug": "progbat",
+          "usage": "Piloter planning, chantiers et rentabilité sur les installations et maintenances."
+        },
+        {
+          "slug": "costructor",
+          "usage": "Créer devis, factures et suivis simples pour interventions techniques."
         },
         {
           "slug": "kizeo-forms",
@@ -9542,6 +9670,14 @@
         {
           "slug": "fieldwire",
           "usage": "Suivre tâches, réserves et coordination chantier."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser documents, photos et échanges clients."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer réponses client, procédures et comptes-rendus."
         }
       ],
       "audience": "mixed",
@@ -9613,24 +9749,28 @@
       ],
       "toolRefs": [
         {
-          "slug": "obat",
-          "usage": "Gérer les devis et la facturation d’une activité BTP."
-        },
-        {
-          "slug": "costructor",
-          "usage": "Créer devis et factures simples pour interventions serrurerie."
+          "slug": "esabora",
+          "usage": "Gérer devis, factures, commandes et interventions pour une activité d'installation et de dépannage."
         },
         {
           "slug": "praxedo",
           "usage": "Planifier les interventions et suivre les retours terrain."
         },
         {
-          "slug": "google-workspace",
-          "usage": "Centraliser documents, photos et échanges clients."
+          "slug": "obat",
+          "usage": "Gérer les devis et la facturation d’une activité BTP."
         },
         {
-          "slug": "chatgpt",
-          "usage": "Préparer réponses client, procédures et comptes-rendus."
+          "slug": "tolteck",
+          "usage": "Créer devis et factures rapidement pour les dépannages et poses simples."
+        },
+        {
+          "slug": "sage-batigest-connect",
+          "usage": "Ajouter un cadre plus robuste pour devis, prix et suivi administratif."
+        },
+        {
+          "slug": "costructor",
+          "usage": "Créer devis et factures simples pour interventions serrurerie."
         },
         {
           "slug": "organilog",
@@ -9639,6 +9779,14 @@
         {
           "slug": "kizeo-forms",
           "usage": "Créer rapports intervention, photos et signatures terrain."
+        },
+        {
+          "slug": "google-workspace",
+          "usage": "Centraliser documents, photos et échanges clients."
+        },
+        {
+          "slug": "chatgpt",
+          "usage": "Préparer réponses client, procédures et comptes-rendus."
         }
       ],
       "audience": "mixed",
