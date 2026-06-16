@@ -2,16 +2,16 @@ import type { Metadata } from "next";
 import HomeHubPage from "@/components/HomeHubPage";
 
 export const metadata: Metadata = {
-  title: "Analysez votre organisation - Demaa",
+  title: "Structurez efficacement votre entreprise | Organisation TPE - Demaa",
   description:
-    "Analysez votre activité, repérez les systèmes essentiels et identifiez les priorités pour mieux piloter votre entreprise.",
+    "Pour que votre entreprise ne repose plus uniquement sur vous, mettez en place les bons systèmes et créez les conditions d'une croissance durable.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Analysez votre organisation - Demaa",
+    title: "Structurez efficacement votre entreprise | Organisation TPE - Demaa",
     description:
-      "Analysez votre activité, repérez les systèmes essentiels et identifiez les priorités pour mieux piloter votre entreprise.",
+      "Pour que votre entreprise ne repose plus uniquement sur vous, mettez en place les bons systèmes et créez les conditions d'une croissance durable.",
     url: "/",
     siteName: "Demaa",
     locale: "fr_FR",
@@ -19,9 +19,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Analysez votre organisation - Demaa",
+    title: "Structurez efficacement votre entreprise | Organisation TPE - Demaa",
     description:
-      "Analysez votre activité, repérez les systèmes essentiels et identifiez les priorités pour mieux piloter votre entreprise.",
+      "Pour que votre entreprise ne repose plus uniquement sur vous, mettez en place les bons systèmes et créez les conditions d'une croissance durable.",
   },
 };
 
