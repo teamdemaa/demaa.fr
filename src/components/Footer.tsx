@@ -5,6 +5,7 @@ const mainLinks = [
   ...visiblePrimaryNavigationItems.map(({ label, href }) => ({ label, href })),
   { label: "Annuaire systèmes", href: "/" },
   { label: "Annuaire outils", href: "/annuaire-outils" },
+  { label: "Annuaire financement", href: "/annuaire-financement" },
   { label: "Annuaire services", href: "/annuaire-services" },
   { label: "Annuaire fournisseurs", href: "/annuaire-fournisseurs" },
 ];
