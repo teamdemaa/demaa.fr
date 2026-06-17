@@ -45,6 +45,30 @@
     @apply border border-dema-line/70 bg-dema-paper shadow-[0_4px_14px_rgba(23,35,29,0.018)] transition hover:-translate-y-0.5 hover:border-dema-forest/14 hover:shadow-[0_14px_32px_rgba(23,35,29,0.045)];
   }
 
+  .demaa-accordion {
+    @apply rounded-[1.25rem] border border-dema-line bg-dema-paper shadow-[0_8px_24px_rgba(23,35,29,0.035)] transition;
+  }
+
+  .demaa-accordion:hover {
+    border-color: rgb(49 95 70 / 0.14);
+  }
+
+  .demaa-accordion summary {
+    list-style: none;
+  }
+
+  .demaa-accordion summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .demaa-accordion[open] .demaa-accordion-chevron {
+    transform: rotate(180deg);
+  }
+
+  .demaa-accordion[open] .demaa-accordion-content {
+    animation: demaa-accordion-in 220ms ease-out;
+  }
+
   .demaa-chip {
     @apply min-h-9 whitespace-nowrap rounded-full bg-dema-sage px-3.5 py-1.5 text-xs text-brand-blue/58 transition hover:bg-[#ebeee9] hover:text-brand-blue/72 md:min-h-10 md:px-4 md:text-sm;
   }
@@ -143,6 +167,17 @@
     0% {
       opacity: 0;
       transform: translateY(18px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes demaa-accordion-in {
+    0% {
+      opacity: 0;
+      transform: translateY(-6px);
     }
     100% {
       opacity: 1;

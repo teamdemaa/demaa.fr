@@ -1,8 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import type { EnterpriseDefinition } from "@/lib/enterprise-annuaire";
 import { buildBusinessBlockChecklists, type BusinessBlockChecklist } from "@/lib/business-block-checklists";
 import type { SystemProcessTemplate } from "@/lib/system-process-templates";
-import type { ReactNode } from "react";
+import { ChevronDown } from "lucide-react";
+import { type ReactNode, useEffect } from "react";
 import SystemDocumentPrintButton from "@/components/SystemDocumentPrintButton";
 import styles from "./SystemDocument.module.css";
 
@@ -48,21 +51,28 @@ function buildBusinessBlockGroups(
 
 function ChecklistBlock({ title, checklist }: { title: string; checklist: string[] }) {
   return (
-    <article className={styles.process}>
-      <h3>{title}</h3>
-      <div className={styles.checks}>
-        {checklist.map((item) => (
-          <div className={styles.check} key={item}>
-            <span className={styles.box} aria-hidden="true" />
-            <span>{item}</span>
-          </div>
-        ))}
+    <details className={styles.process} data-print-expandable>
+      <summary className={styles.processSummary}>
+        <div>
+          <h3>{title}</h3>
+        </div>
+        <ChevronDown className={styles.processChevron} aria-hidden="true" />
+      </summary>
+      <div className={styles.processContent}>
+        <div className={styles.checks}>
+          {checklist.map((item) => (
+            <div className={styles.check} key={item}>
+              <span className={styles.box} aria-hidden="true" />
+              <span>{item}</span>
+            </div>
+          ))}
+        </div>
+        <div className={styles.blockFields}>
+          <div className={styles.miniField}>Responsable</div>
+          <div className={styles.miniField}>Échéance</div>
+        </div>
       </div>
-      <div className={styles.blockFields}>
-        <div className={styles.miniField}>Responsable</div>
-        <div className={styles.miniField}>Échéance</div>
-      </div>
-    </article>
+    </details>
   );
 }
 
@@ -132,6 +142,35 @@ function ProcessGroupsPage({
 }
 
 export default function SystemDocument({ system, templates }: SystemDocumentProps) {
+  useEffect(() => {
+    const details = Array.from(
+      document.querySelectorAll<HTMLDetailsElement>("details[data-print-expandable]"),
+    );
+    const openStates = new Map<HTMLDetailsElement, boolean>();
+
+    const handleBeforePrint = () => {
+      details.forEach((detail) => {
+        openStates.set(detail, detail.open);
+        detail.open = true;
+      });
+    };
+
+    const handleAfterPrint = () => {
+      details.forEach((detail) => {
+        detail.open = openStates.get(detail) ?? false;
+      });
+      openStates.clear();
+    };
+
+    window.addEventListener("beforeprint", handleBeforePrint);
+    window.addEventListener("afterprint", handleAfterPrint);
+
+    return () => {
+      window.removeEventListener("beforeprint", handleBeforePrint);
+      window.removeEventListener("afterprint", handleAfterPrint);
+    };
+  }, []);
+
   const processGroups = buildBusinessBlockGroups(system, templates);
   const processPages = chunkProcessGroups(processGroups);
   const firstProcessPageNumber = 2;
@@ -213,15 +252,20 @@ export default function SystemDocument({ system, templates }: SystemDocumentProp
         </p>
         <div className={styles.priorityList}>
           {[1, 2, 3].map((priority) => (
-            <article className={styles.priority} key={priority}>
-              <h3>Priorité {priority}</h3>
-              <div className={styles.priorityFields}>
-                <div className={styles.miniField}>Action</div>
-                <div className={styles.miniField}>Responsable</div>
-                <div className={styles.miniField}>Échéance</div>
-                <div className={styles.miniField}>Résultat attendu</div>
+            <details className={styles.priority} data-print-expandable key={priority}>
+              <summary className={styles.prioritySummary}>
+                <h3>Priorité {priority}</h3>
+                <ChevronDown className={styles.processChevron} aria-hidden="true" />
+              </summary>
+              <div className={styles.priorityContent}>
+                <div className={styles.priorityFields}>
+                  <div className={styles.miniField}>Action</div>
+                  <div className={styles.miniField}>Responsable</div>
+                  <div className={styles.miniField}>Échéance</div>
+                  <div className={styles.miniField}>Résultat attendu</div>
+                </div>
               </div>
-            </article>
+            </details>
           ))}
         </div>
         <footer className={styles.footer}>

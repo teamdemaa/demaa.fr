@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { startTransition, useMemo, useState, type MouseEvent } from "react";
-import { Check, ExternalLink, FileText, GraduationCap } from "lucide-react";
+import { Check, ChevronDown, ExternalLink, FileText, GraduationCap } from "lucide-react";
 import DeleguerPricingPreviewModal from "@/components/DeleguerPricingPreviewModal";
 import PartnerOffersForm from "@/components/PartnerOffersForm";
 import ProNetworkDetailDialog from "@/components/ProNetworkDetailDialog";
@@ -570,39 +570,44 @@ export default function SystemDetailContent({
         {activeTab === "processus" ? (
           <div className="space-y-5">
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                {processGroups.map((group) => (
-                  <div
-                    key={group.title}
-                    className="rounded-[1.25rem] border border-dema-line bg-dema-paper p-4 shadow-[0_8px_24px_rgba(23,35,29,0.035)]"
-                  >
-                    <h3 className="demaa-section-title text-center text-xl text-brand-blue">
-                      {group.title}
-                    </h3>
-                    <div className="mt-4">
-                      {group.checklist.length > 0 ? (
-                        <ul className="space-y-2">
-                          {group.checklist.map((item) => (
-                            <li
-                              key={item}
-                              className="flex items-start gap-2 text-left text-xs leading-relaxed text-dema-muted"
-                            >
-                              <span className="mt-0.5 inline-flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
-                                <Check className="h-2.5 w-2.5" aria-hidden="true" />
-                              </span>
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <div className="rounded-[1rem] border border-dema-line bg-dema-cream/65 p-3">
-                          <p className="text-left text-xs leading-relaxed text-dema-muted">
-                            Pas de checklist prioritaire ajoutée pour ce bloc.
-                          </p>
-                        </div>
-                      )}
+              {processGroups.map((group) => (
+                <details key={group.title} className="demaa-accordion group overflow-hidden" data-print-expandable>
+                  <summary className="flex cursor-pointer items-center justify-between gap-4 px-4 py-4 sm:px-5">
+                    <div className="min-w-0 text-left">
+                      <h3 className="text-[1.05rem] font-medium text-brand-blue">
+                        {group.title}
+                      </h3>
                     </div>
+                    <ChevronDown
+                      className="demaa-accordion-chevron h-4 w-4 shrink-0 text-dema-forest transition duration-200"
+                      aria-hidden="true"
+                    />
+                  </summary>
+                  <div className="demaa-accordion-content border-t border-dema-line/80 px-4 pb-4 pt-3 sm:px-5 sm:pb-5">
+                    {group.checklist.length > 0 ? (
+                      <ul className="space-y-2.5">
+                        {group.checklist.map((item) => (
+                          <li
+                            key={item}
+                            className="flex items-start gap-2 text-left text-xs leading-relaxed text-dema-muted"
+                          >
+                            <span className="mt-0.5 inline-flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
+                              <Check className="h-2.5 w-2.5" aria-hidden="true" />
+                            </span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <div className="rounded-[1rem] border border-dema-line bg-dema-cream/65 p-3">
+                        <p className="text-left text-xs leading-relaxed text-dema-muted">
+                          Pas de checklist prioritaire ajoutée pour ce bloc.
+                        </p>
+                      </div>
+                    )}
                   </div>
-                ))}
+                </details>
+              ))}
             </div>
           </div>
         ) : activeTab === "outils" ? (
