@@ -1,10 +1,8 @@
 export const SYSTEM_DETAIL_TABS = [
-  "processus",
   "outils",
   "services",
   "fournisseurs",
   "reseaux-pro",
-  "ressources",
   "cours",
 ] as const;
 

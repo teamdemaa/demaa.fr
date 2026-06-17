@@ -1,9 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { startTransition, useMemo, useState, type MouseEvent } from "react";
-import { Check, ChevronDown, ExternalLink, FileText, GraduationCap } from "lucide-react";
+import { FileText, GraduationCap } from "lucide-react";
 import DeleguerPricingPreviewModal from "@/components/DeleguerPricingPreviewModal";
 import PartnerOffersForm from "@/components/PartnerOffersForm";
 import ProNetworkDetailDialog from "@/components/ProNetworkDetailDialog";
@@ -11,7 +10,6 @@ import ServiceDetailDialog from "@/components/ServiceDetailDialog";
 import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
 import SupplierDetailDialog from "@/components/SupplierDetailDialog";
 import { ServiceIcon } from "@/components/ServiceIcon";
-import { buildBusinessBlockChecklists } from "@/lib/business-block-checklists";
 import type { CourseEntry } from "@/lib/course-content";
 import type { DemaaProNetwork } from "@/lib/pro-network-catalog";
 import { getRecommendedProNetworksForSystem } from "@/lib/pro-network-recommendations";
@@ -19,11 +17,7 @@ import { getRelatedCoursesForSystemSlug } from "@/lib/related-courses";
 import { getSectorPageByLabel } from "@/lib/sector-pages";
 import { getRecommendedServicesForSystem } from "@/lib/service-recommendations";
 import type { DemaaService } from "@/lib/service-catalog";
-import { getSystemResources, type SystemResource } from "@/lib/system-resources";
-import {
-  type OperationalSystemDetail,
-  type SystemPillar,
-} from "@/lib/system-operations";
+import { type OperationalSystemDetail } from "@/lib/system-operations";
 import { getRecommendedSuppliersForSystem } from "@/lib/supplier-recommendations";
 import type { DemaaSupplier } from "@/lib/supplier-catalog";
 import {
@@ -32,11 +26,6 @@ import {
 } from "@/lib/system-detail-tabs";
 import type { ToolDirectoryItem } from "@/lib/tool-directory";
 import type { System } from "@/lib/types";
-
-type ProcessGroup = {
-  title: string;
-  checklist: string[];
-};
 
 type SystemDetailContentProps = {
   system: System;
@@ -47,42 +36,9 @@ type SystemDetailContentProps = {
   headingId?: string;
 };
 
-const PILLARS: SystemPillar[] = [
-  "Stratégie",
-  "Marketing & Vente",
-  "Opérations",
-  "Finance & administration",
-  "Équipe",
-];
-
 const GOOGLE_AUDIT_BOOKING_URL = "https://calendar.app.google/E9WX9qfHxViWZ3uq8";
-
-function getProcessChecklistItems(examples?: string): string[] {
-  if (!examples) {
-    return [];
-  }
-
-  return examples
-    .replace(/^Exemple\s*:\s*/i, "")
-    .replace(/\.$/, "")
-    .split("→")
-    .map((item) => item.trim())
-    .filter(Boolean);
-}
-
-function buildProcessGroups(detail: OperationalSystemDetail): ProcessGroup[] {
-  if (detail.businessBlocks.length) {
-    return buildBusinessBlockChecklists(detail.businessBlocks, { systemId: detail.slug });
-  }
-
-  return PILLARS.map((pillar) => ({
-    title: pillar,
-    checklist: detail.processes
-      .filter((process) => process.pillar === pillar)
-      .flatMap((process) => getProcessChecklistItems(process.examples))
-      .slice(0, 7),
-  }));
-}
+const BUILDING_PILOTING_SHEET_URL =
+  "https://docs.google.com/spreadsheets/d/1hThXGp-YMvO69dQIyAbFNMQVByzE973tbrnjIUMkYMs/edit";
 
 function isTransverseTool(tool: OperationalSystemDetail["tools"][number]): boolean {
   if (tool.scope) {
@@ -186,14 +142,13 @@ export default function SystemDetailContent({
   headingAs = "h1",
   headingId,
 }: SystemDetailContentProps) {
-  const defaultTab = isSystemDetailTab(initialActiveTab) ? initialActiveTab : "processus";
+  const defaultTab = isSystemDetailTab(initialActiveTab) ? initialActiveTab : "outils";
   const [activeTab, setActiveTab] = useState<SystemDetailTab>(defaultTab);
   const [selectedToolDetail, setSelectedToolDetail] = useState<ToolDirectoryItem | null>(null);
   const [selectedServiceDetail, setSelectedServiceDetail] = useState<DemaaService | null>(null);
   const [selectedSupplierDetail, setSelectedSupplierDetail] = useState<DemaaSupplier | null>(null);
   const [selectedProNetworkDetail, setSelectedProNetworkDetail] = useState<DemaaProNetwork | null>(null);
   const [isDeleguerPricingOpen, setIsDeleguerPricingOpen] = useState(false);
-  const processGroups = useMemo(() => buildProcessGroups(detail), [detail]);
   const recommendedServices = useMemo(
     () => (activeTab === "services" ? getRecommendedServicesForSystem(system.slug) : []),
     [activeTab, system.slug]
@@ -206,16 +161,16 @@ export default function SystemDetailContent({
     () => (activeTab === "reseaux-pro" ? getRecommendedProNetworksForSystem(system.slug) : []),
     [activeTab, system.slug]
   );
-  const resources = useMemo(
-    () => (activeTab === "ressources" ? getSystemResources(system.slug) : []),
-    [activeTab, system.slug]
-  );
   const courses = useMemo(
     () => (activeTab === "cours" ? getRelatedCoursesForSystemSlug(system.slug) : []),
     [activeTab, system.slug]
   );
   const Heading = headingAs;
   const sectorPage = getSectorPageByLabel(detail.sectorLabel);
+  const documentHref =
+    system.slug === "batiment" ? BUILDING_PILOTING_SHEET_URL : `/plans-organisation/${system.slug}`;
+  const documentLabel =
+    system.slug === "batiment" ? "Obtenir le Tableau de pilotage" : "Obtenir le Plan d'organisation";
 
   function selectTab(tab: SystemDetailTab) {
     startTransition(() => {
@@ -521,13 +476,13 @@ export default function SystemDetailContent({
 
       <div className="mt-4 flex flex-col gap-2 text-left sm:flex-row sm:flex-wrap">
         <Link
-          href={`/plans-organisation/${system.slug}`}
+          href={documentHref}
           target="_blank"
           rel="noopener noreferrer"
           className="demaa-secondary-button gap-2 bg-dema-paper"
         >
           <FileText className="h-4 w-4" />
-          Obtenir le Plan d&apos;organisation
+          {documentLabel}
         </Link>
         <Link
           href={GOOGLE_AUDIT_BOOKING_URL}
@@ -541,11 +496,9 @@ export default function SystemDetailContent({
         <div className="flex min-w-max items-center gap-2 whitespace-nowrap">
           {(
             [
-              ["processus", "Checklist"],
               ["outils", "Outils"],
               ["fournisseurs", "Partenaires & fournisseurs"],
               ["reseaux-pro", "Réseaux Pro"],
-              ["ressources", "Ressources"],
               ["services", "Services"],
             ] as Array<[SystemDetailTab, string]>
           ).map(([tab, label]) => (
@@ -566,54 +519,7 @@ export default function SystemDetailContent({
       </div>
 
       <div className="mt-5">
-        {activeTab === "processus" ? (
-          <div className="space-y-5">
-            <div className="grid items-start gap-4 md:grid-cols-2 xl:grid-cols-3">
-              {processGroups.map((group) => (
-                <details
-                  key={group.title}
-                  className="demaa-accordion group self-start overflow-hidden"
-                  data-print-expandable
-                >
-                  <summary className="flex cursor-pointer items-center justify-between gap-4 px-4 py-4 sm:px-5">
-                    <div className="min-w-0 text-left">
-                      <h3 className="text-[1.05rem] font-medium text-brand-blue">
-                        {group.title}
-                      </h3>
-                    </div>
-                    <ChevronDown
-                      className="demaa-accordion-chevron h-4 w-4 shrink-0 text-dema-forest transition duration-200"
-                      aria-hidden="true"
-                    />
-                  </summary>
-                  <div className="demaa-accordion-content border-t border-dema-line/80 px-4 pb-4 pt-3 sm:px-5 sm:pb-5">
-                    {group.checklist.length > 0 ? (
-                      <ul className="space-y-2.5">
-                        {group.checklist.map((item) => (
-                          <li
-                            key={item}
-                            className="flex items-start gap-2 text-left text-xs leading-relaxed text-dema-muted"
-                          >
-                            <span className="mt-0.5 inline-flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
-                              <Check className="h-2.5 w-2.5" aria-hidden="true" />
-                            </span>
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <div className="rounded-[1rem] border border-dema-line bg-dema-cream/65 p-3">
-                        <p className="text-left text-xs leading-relaxed text-dema-muted">
-                          Pas de checklist prioritaire ajoutée pour ce bloc.
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                </details>
-              ))}
-            </div>
-          </div>
-        ) : activeTab === "outils" ? (
+        {activeTab === "outils" ? (
           <div className="space-y-5">
             {(() => {
               const businessTools = detail.tools.filter((tool) => !isTransverseTool(tool));
@@ -696,18 +602,6 @@ export default function SystemDetailContent({
               {recommendedProNetworks.map(renderProNetworkCard)}
             </div>
           </div>
-        ) : activeTab === "ressources" ? (
-          <div className="space-y-5">
-            {renderBrowseAllLink({
-              browseHref: `/ressources`,
-              browseLabel: "Voir toutes les ressources",
-            })}
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-              {resources.map((resource) => (
-                <SystemResourceCard key={resource.id} resource={resource} />
-              ))}
-            </div>
-          </div>
         ) : (
           <div className="space-y-5">
             {renderBrowseAllLink({
@@ -751,51 +645,5 @@ export default function SystemDetailContent({
         <DeleguerPricingPreviewModal onClose={() => setIsDeleguerPricingOpen(false)} />
       ) : null}
     </>
-  );
-}
-
-function SystemResourceCard({
-  resource,
-}: {
-  resource: SystemResource;
-}) {
-  return (
-    <article className="demaa-card group overflow-hidden rounded-[1.15rem] text-left">
-      <Link
-        href={`/ressources/${resource.id}`}
-        className="block w-full text-left"
-        aria-label={`Voir ${resource.title}`}
-      >
-        <div className="relative aspect-[16/10] overflow-hidden border-b border-dema-line bg-[#f8f8f5]">
-          <Image
-            src={resource.image}
-            alt=""
-            fill
-            sizes="(min-width: 1280px) 390px, (min-width: 768px) 50vw, calc(100vw - 48px)"
-            className="object-contain p-2.5 transition duration-300 ease-out group-hover:scale-[1.006] sm:p-3"
-          />
-        </div>
-        <div className="px-5 pb-3 pt-5">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
-            {resource.category}
-          </p>
-          <h3 className="mt-2 text-lg font-semibold leading-snug text-brand-blue">
-            {resource.title}
-          </h3>
-        </div>
-      </Link>
-      <div className="px-5 pb-5">
-        <a
-          href={resource.resourceHref}
-          target="_blank"
-          rel="noreferrer"
-          className="inline-flex items-center gap-2 text-xs font-semibold text-dema-forest transition hover:text-brand-blue"
-        >
-          <FileText className="h-4 w-4" aria-hidden="true" />
-          {resource.resourceLabel}
-          <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
-        </a>
-      </div>
-    </article>
   );
 }
