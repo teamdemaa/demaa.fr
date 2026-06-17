@@ -3,17 +3,16 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState, type MouseEvent } from "react";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
-import { getSupplierCardBadge } from "@/lib/card-badges";
+import FinanceDetailDialog from "@/components/FinanceDetailDialog";
 import SearchFilterControls from "@/components/SearchFilterControls";
 import { ServiceIcon } from "@/components/ServiceIcon";
-import SupplierDetailDialog from "@/components/SupplierDetailDialog";
+import { getFinanceCardBadge } from "@/lib/card-badges";
+import { type DemaaFinanceItem, type FinanceFamily } from "@/lib/finance-catalog";
 import { matchesSearchQuery } from "@/lib/search";
-import { type DemaaSupplier, type SupplierFamily } from "@/lib/supplier-catalog";
 
-type SupplierDirectoryClientProps = {
-  suppliers: DemaaSupplier[];
-  families: readonly SupplierFamily[];
-  initialCategory?: string;
+type FinanceDirectoryClientProps = {
+  items: DemaaFinanceItem[];
+  families: readonly FinanceFamily[];
   initialSearch?: string;
   backLink?: {
     href: string;
@@ -21,20 +20,20 @@ type SupplierDirectoryClientProps = {
   };
 };
 
-export default function SupplierDirectoryClient({
-  suppliers,
+export default function FinanceDirectoryClient({
+  items,
   families,
   initialSearch = "",
   backLink,
-}: SupplierDirectoryClientProps) {
+}: FinanceDirectoryClientProps) {
   const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [activeFamily, setActiveFamily] = useState<string>("Tous");
   const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false);
-  const [selectedSupplier, setSelectedSupplier] = useState<DemaaSupplier | null>(null);
+  const [selectedItem, setSelectedItem] = useState<DemaaFinanceItem | null>(null);
 
   useEffect(() => {
     function handlePopState() {
-      setSelectedSupplier(null);
+      setSelectedItem(null);
     }
 
     window.addEventListener("popstate", handlePopState);
@@ -43,43 +42,43 @@ export default function SupplierDirectoryClient({
       window.removeEventListener("popstate", handlePopState);
     };
   }, []);
-  const filteredSuppliers = useMemo(() => {
-    return suppliers.filter((supplier) => {
-      const matchesSearch = matchesSearchQuery(searchQuery, [
-        supplier.name,
-        supplier.description,
-        supplier.bestFor,
-        ...supplier.tags,
-        ...supplier.usefulFor,
-        supplier.category,
-        supplier.family,
-        supplier.slug,
-      ]);
 
-      const matchesFamily =
-        activeFamily === "Tous" || supplier.family === activeFamily;
+  const filteredItems = useMemo(() => {
+    return items.filter((item) => {
+      const matchesSearch = matchesSearchQuery(searchQuery, [
+        item.name,
+        item.description,
+        item.bestFor,
+        ...item.tags,
+        ...item.usefulFor,
+        item.category,
+        item.family,
+        item.slug,
+      ]);
+      const matchesFamily = activeFamily === "Tous" || item.family === activeFamily;
 
       return matchesSearch && matchesFamily;
     });
-  }, [activeFamily, searchQuery, suppliers]);
-  const supplierFilters = useMemo(() => ["Tous", ...families], [families]);
+  }, [activeFamily, items, searchQuery]);
 
-  function openSupplierDetails(supplier: DemaaSupplier) {
-    setSelectedSupplier(supplier);
-    const detailUrl = `/annuaire-fournisseurs/${supplier.slug}`;
+  const filters = useMemo(() => ["Tous", ...families], [families]);
+
+  function openFinanceDetails(item: DemaaFinanceItem) {
+    setSelectedItem(item);
+    const detailUrl = `/annuaire-financement/${item.slug}`;
 
     if (window.location.pathname !== detailUrl) {
-      window.history.pushState({ demaaSupplierModal: true }, "", detailUrl);
+      window.history.pushState({ demaaFinanceModal: true }, "", detailUrl);
     }
   }
 
-  function closeSupplierDetails() {
-    if (window.history.state?.demaaSupplierModal) {
+  function closeFinanceDetails() {
+    if (window.history.state?.demaaFinanceModal) {
       window.history.back();
       return;
     }
 
-    setSelectedSupplier(null);
+    setSelectedItem(null);
   }
 
   return (
@@ -98,20 +97,20 @@ export default function SupplierDirectoryClient({
             </div>
           ) : null}
           <h1 className="demaa-section-title text-4xl tracking-tight text-brand-blue md:text-5xl">
-            Annuaire fournisseurs
+            Annuaire financement
           </h1>
           <p className="mx-auto mt-2 max-w-2xl text-sm font-normal leading-relaxed text-dema-muted">
-            Banques, assurances, mutuelles, achats, équipements et fournisseurs utiles selon l&apos;activité.
+            Comptes pro avec crédit, affacturage, BFR et solutions de leasing utiles aux TPE.
           </p>
 
           <div className="mt-5">
             <SearchFilterControls
               value={searchQuery}
-              placeholder="Rechercher une banque, un grossiste, un fournisseur..."
+              placeholder="Rechercher un acteur d'affacturage, de crédit ou de leasing..."
               activeFilter={activeFamily}
               defaultFilter="Tous"
               isFilterOpen={isFilterPanelOpen}
-              filters={supplierFilters}
+              filters={filters}
               onChange={setSearchQuery}
               onFilterClick={() => setIsFilterPanelOpen((current) => !current)}
               onFilterSelect={(filter) => {
@@ -139,97 +138,84 @@ export default function SupplierDirectoryClient({
           ) : null}
         </div>
 
-        {filteredSuppliers.length === 0 ? (
+        {filteredItems.length === 0 ? (
           <div className="rounded-[1.25rem] border border-dashed border-dema-line bg-dema-paper p-10 text-center">
-            <h2 className="text-xl font-bold text-brand-blue">Aucun fournisseur trouvé</h2>
+            <h2 className="text-xl font-bold text-brand-blue">Aucune solution de financement trouvée</h2>
             <p className="mt-3 text-sm font-normal text-dema-muted">
-              Essayez un autre mot-clé ou une catégorie plus large.
+              Essayez un autre mot-clé ou une famille plus large.
             </p>
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {filteredSuppliers.map((supplier) => (
-              <SupplierCard
-                key={supplier.slug}
-                supplier={supplier}
-                onOpenDetails={openSupplierDetails}
-              />
+            {filteredItems.map((item) => (
+              <FinanceCard key={item.slug} item={item} onOpenDetails={openFinanceDetails} />
             ))}
           </div>
         )}
       </section>
 
-      {selectedSupplier ? (
-        <SupplierDetailDialog supplier={selectedSupplier} onClose={closeSupplierDetails} />
+      {selectedItem ? (
+        <FinanceDetailDialog item={selectedItem} onClose={closeFinanceDetails} />
       ) : null}
     </div>
   );
 }
 
-function SupplierCard({
-  supplier,
+function FinanceCard({
+  item,
   onOpenDetails,
 }: {
-  supplier: DemaaSupplier;
-  onOpenDetails: (supplier: DemaaSupplier) => void;
+  item: DemaaFinanceItem;
+  onOpenDetails: (item: DemaaFinanceItem) => void;
 }) {
   const content = (
     <>
       <div className="flex items-center justify-between gap-4">
         <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper">
-          <ServiceIcon icon={supplier.icon} className="h-4 w-4" aria-hidden="true" />
+          <ServiceIcon icon={item.icon} className="h-4 w-4" aria-hidden="true" />
         </span>
-      </div>
-      <h2 className="mt-4 text-lg font-semibold tracking-tight text-brand-blue">
-        {supplier.name}
-      </h2>
-      <p className="mt-2 text-sm leading-relaxed text-dema-muted">
-        {supplier.shortDescription}
-      </p>
-      <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-brand-blue/65">
-        {supplier.bestFor}
-      </p>
-      {getSupplierCardBadge(supplier) ? (
-        <div className="mt-4 flex flex-wrap items-center gap-2">
-          <span className="inline-flex rounded-full bg-dema-sage/75 px-3 py-1 text-[10px] font-medium text-brand-blue/70">
-            {getSupplierCardBadge(supplier)}
+        {item.partner ? (
+          <span className="rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-medium text-brand-blue/70">
+            partenaire
           </span>
-        </div>
-      ) : null}
-      <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-dema-forest">
-        {supplier.cta}
-        <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-      </span>
+        ) : null}
+      </div>
+
+      <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
+        {item.category}
+      </p>
+      <h2 className="mt-2 text-lg font-semibold leading-snug text-brand-blue">
+        {item.name}
+      </h2>
+      <p className="mt-3 text-sm leading-relaxed text-dema-muted">
+        {item.shortDescription}
+      </p>
+
+      <div className="mt-auto flex items-center justify-between gap-3 pt-4">
+        {getFinanceCardBadge(item) ? (
+          <span className="inline-flex rounded-full bg-dema-sage/75 px-3 py-1 text-[10px] font-medium text-brand-blue/70">
+            {getFinanceCardBadge(item)}
+          </span>
+        ) : (
+          <span />
+        )}
+                    <span className="inline-flex items-center text-dema-forest" aria-hidden="true">
+                      <ArrowUpRight className="h-3.5 w-3.5" />
+                    </span>
+      </div>
     </>
   );
 
   return (
     <Link
-      href={`/annuaire-fournisseurs/${supplier.slug}`}
-      onClick={(event) => handleSupplierCardClick(event, supplier, onOpenDetails)}
-      className="demaa-card group flex min-h-[17rem] flex-col rounded-[1.15rem] p-5 text-left"
+      href={`/annuaire-financement/${item.slug}`}
+      className="demaa-card group flex min-h-[15rem] flex-col rounded-[1.15rem] p-5 text-left"
+      onClick={(event: MouseEvent<HTMLAnchorElement>) => {
+        event.preventDefault();
+        onOpenDetails(item);
+      }}
     >
       {content}
     </Link>
   );
-}
-
-function handleSupplierCardClick(
-  event: MouseEvent<HTMLAnchorElement>,
-  supplier: DemaaSupplier,
-  onOpenDetails: (supplier: DemaaSupplier) => void,
-) {
-  if (
-    event.defaultPrevented ||
-    event.button !== 0 ||
-    event.metaKey ||
-    event.ctrlKey ||
-    event.shiftKey ||
-    event.altKey
-  ) {
-    return;
-  }
-
-  event.preventDefault();
-  onOpenDetails(supplier);
 }

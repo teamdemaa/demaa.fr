@@ -34,6 +34,7 @@ type ToolDirectoryClientProps = {
   categories: string[];
   initialCategory?: string;
   initialSector?: string;
+  initialSearchQuery?: string;
   hideTransverseOnSector?: boolean;
   externalLinks?: boolean;
   searchQuery?: string;
@@ -56,6 +57,7 @@ export default function ToolDirectoryClient({
   categories,
   initialCategory,
   initialSector,
+  initialSearchQuery = "",
   hideTransverseOnSector = true,
   externalLinks = true,
   searchQuery: controlledSearchQuery,
@@ -71,7 +73,7 @@ export default function ToolDirectoryClient({
     initialSector,
     initialCategory,
   );
-  const [internalSearchQuery, setInternalSearchQuery] = useState("");
+  const [internalSearchQuery, setInternalSearchQuery] = useState(initialSearchQuery);
   const [activeSector, setActiveSector] = useState(initialFilters.sector);
   const [activeCategory, setActiveCategory] = useState(initialFilters.category);
   const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false);

@@ -62,7 +62,7 @@ export default async function CourseDetailPage(
     ? searchParams.retourSysteme[0]
     : searchParams.retourSysteme;
   const backHref = returnSystemSlug
-    ? `/systemes/${returnSystemSlug}?tab=cours`
+    ? `/systemes/${returnSystemSlug}?tab=outils`
     : "/cours";
   const backLabel = returnSystemSlug ? "Retour au système" : "Retour aux cours";
   const articleJsonLd = {

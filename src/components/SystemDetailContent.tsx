@@ -4,6 +4,7 @@ import Link from "next/link";
 import { startTransition, useMemo, useState, type MouseEvent } from "react";
 import { FileText, GraduationCap } from "lucide-react";
 import DeleguerPricingPreviewModal from "@/components/DeleguerPricingPreviewModal";
+import FinanceDetailDialog from "@/components/FinanceDetailDialog";
 import PartnerOffersForm from "@/components/PartnerOffersForm";
 import ProNetworkDetailDialog from "@/components/ProNetworkDetailDialog";
 import ServiceDetailDialog from "@/components/ServiceDetailDialog";
@@ -11,11 +12,14 @@ import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
 import SupplierDetailDialog from "@/components/SupplierDetailDialog";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import {
+  getFinanceCardBadge,
   getProNetworkCardBadge,
   getServiceCardBadge,
   getSupplierCardBadge,
 } from "@/lib/card-badges";
 import type { CourseEntry } from "@/lib/course-content";
+import type { DemaaFinanceItem } from "@/lib/finance-catalog";
+import { getRecommendedFinanceForSystem } from "@/lib/finance-recommendations";
 import type { DemaaProNetwork } from "@/lib/pro-network-catalog";
 import { getRecommendedProNetworksForSystem } from "@/lib/pro-network-recommendations";
 import { getRelatedCoursesForSystemSlug } from "@/lib/related-courses";
@@ -365,11 +369,17 @@ export default function SystemDetailContent({
   headingAs = "h1",
   headingId,
 }: SystemDetailContentProps) {
-  const defaultTab = isSystemDetailTab(initialActiveTab) ? initialActiveTab : "outils";
+  const defaultTab =
+    initialActiveTab === "cours"
+      ? "outils"
+      : isSystemDetailTab(initialActiveTab)
+        ? initialActiveTab
+        : "outils";
   const [activeTab, setActiveTab] = useState<SystemDetailTab>(defaultTab);
   const [selectedToolDetail, setSelectedToolDetail] = useState<ToolDirectoryItem | null>(null);
   const [selectedServiceDetail, setSelectedServiceDetail] = useState<DemaaService | null>(null);
   const [selectedSupplierDetail, setSelectedSupplierDetail] = useState<DemaaSupplier | null>(null);
+  const [selectedFinanceDetail, setSelectedFinanceDetail] = useState<DemaaFinanceItem | null>(null);
   const [selectedProNetworkDetail, setSelectedProNetworkDetail] = useState<DemaaProNetwork | null>(null);
   const [isDeleguerPricingOpen, setIsDeleguerPricingOpen] = useState(false);
   const recommendedServices = useMemo(
@@ -378,6 +388,10 @@ export default function SystemDetailContent({
   );
   const recommendedSuppliers = useMemo(
     () => (activeTab === "fournisseurs" ? getRecommendedSuppliersForSystem(system.slug) : []),
+    [activeTab, system.slug]
+  );
+  const recommendedFinance = useMemo(
+    () => (activeTab === "financement" ? getRecommendedFinanceForSystem(system.slug) : []),
     [activeTab, system.slug]
   );
   const recommendedProNetworks = useMemo(
@@ -561,6 +575,42 @@ export default function SystemDetailContent({
     );
   }
 
+  function renderFinanceCard(item: DemaaFinanceItem) {
+    return (
+      <Link
+        key={item.slug}
+        href={`/annuaire-financement/${item.slug}`}
+        className="demaa-card group flex min-h-[15rem] flex-col rounded-[1.15rem] p-5 text-left"
+        onClick={(event) => {
+          event.preventDefault();
+          setSelectedFinanceDetail(item);
+        }}
+      >
+        <div className="flex items-start justify-between gap-4">
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper">
+            <ServiceIcon icon={item.icon} className="h-4 w-4" aria-hidden="true" />
+          </span>
+        </div>
+        <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
+          {item.category}
+        </p>
+        <h3 className="mt-2 text-lg font-semibold leading-snug text-brand-blue">
+          {item.name}
+        </h3>
+        <p className="mt-3 text-sm leading-relaxed text-dema-muted">
+          {item.shortDescription}
+        </p>
+        {getFinanceCardBadge(item) ? (
+          <div className="mt-auto pt-4">
+            <span className="inline-flex rounded-full bg-dema-sage/75 px-3 py-1 text-[10px] font-medium text-brand-blue/70">
+              {getFinanceCardBadge(item)}
+            </span>
+          </div>
+        ) : null}
+      </Link>
+    );
+  }
+
   function renderCourseCard(course: CourseEntry) {
     return (
       <Link
@@ -699,10 +749,10 @@ export default function SystemDetailContent({
           {(
             [
               ["outils", "Outils"],
-              ["fournisseurs", "Partenaires & fournisseurs"],
+              ["fournisseurs", "Fournisseurs"],
+              ["financement", "Financement"],
               ["reseaux-pro", "Réseaux Pro"],
               ["services", "Services"],
-              ["cours", "Cours"],
             ] as Array<[SystemDetailTab, string]>
           ).map(([tab, label]) => (
             <button
@@ -795,6 +845,20 @@ export default function SystemDetailContent({
               source: `system_suppliers_${system.slug}`,
             })}
           </div>
+        ) : activeTab === "financement" ? (
+          <div className="space-y-5">
+            {renderBrowseAllLink({
+              browseHref: `/annuaire-financement?retourSysteme=${encodeURIComponent(system.slug)}`,
+              browseLabel: "Voir tous les financements",
+            })}
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              {recommendedFinance.map(renderFinanceCard)}
+            </div>
+
+            {renderPartnerOffersBlock({
+              source: `system_finance_${system.slug}`,
+            })}
+          </div>
         ) : activeTab === "reseaux-pro" ? (
           <div className="space-y-5">
             {renderBrowseAllLink({
@@ -834,6 +898,13 @@ export default function SystemDetailContent({
         <SupplierDetailDialog
           supplier={selectedSupplierDetail}
           onClose={() => setSelectedSupplierDetail(null)}
+        />
+      ) : null}
+
+      {selectedFinanceDetail ? (
+        <FinanceDetailDialog
+          item={selectedFinanceDetail}
+          onClose={() => setSelectedFinanceDetail(null)}
         />
       ) : null}
 

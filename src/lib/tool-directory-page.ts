@@ -11,6 +11,7 @@ export type ToolDirectoryCardItem = ToolDirectoryItem & {
 export type ToolDirectorySearchParams = Promise<{
   secteur?: string | string[];
   categorie?: string | string[];
+  q?: string | string[];
   retourSysteme?: string | string[];
 }>;
 

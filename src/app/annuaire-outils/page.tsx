@@ -71,6 +71,7 @@ export default async function AnnuaireOutilsPage({
           categories={toolDirectoryMeta.categories}
           initialCategory={initialCategory}
           initialSector={initialSector}
+          initialSearchQuery={getParamValue(params.q) ?? ""}
           hideTransverseOnSector={false}
           externalLinks={false}
           backLink={backLink}

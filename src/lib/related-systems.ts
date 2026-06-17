@@ -1,5 +1,6 @@
 import { enterpriseCatalog, enterpriseCatalogBySlug, enterpriseToSystem } from "@/lib/enterprise-annuaire";
 import { RELATED_SYSTEM_SLUGS_BY_CONTENT_SLUG } from "@/lib/content-relationships";
+import { getRecommendedFinanceForSystem } from "@/lib/finance-recommendations";
 import { getRecommendedProNetworksForSystem } from "@/lib/pro-network-recommendations";
 import { getRecommendedServicesForSystem } from "@/lib/service-recommendations";
 import { getRecommendedSuppliersForSystem } from "@/lib/supplier-recommendations";
@@ -75,6 +76,28 @@ export function getRelatedSystemsForProNetworkSlug(networkSlug: string, limit = 
     .map((enterprise) => {
       const recommendations = getRecommendedProNetworksForSystem(enterprise.slug);
       const index = recommendations.findIndex((network) => network.slug === networkSlug);
+
+      if (index === -1) {
+        return null;
+      }
+
+      return {
+        enterprise,
+        index,
+      };
+    })
+    .filter((match): match is { enterprise: (typeof enterpriseCatalog)[number]; index: number } => Boolean(match))
+    .sort((a, b) => a.index - b.index || a.enterprise.name.localeCompare(b.enterprise.name, "fr"))
+    .slice(0, limit);
+
+  return matches.map(({ enterprise }) => enterpriseToSystem(enterprise));
+}
+
+export function getRelatedSystemsForFinanceSlug(financeSlug: string, limit = 6): System[] {
+  const matches = enterpriseCatalog
+    .map((enterprise) => {
+      const recommendations = getRecommendedFinanceForSystem(enterprise.slug);
+      const index = recommendations.findIndex((item) => item.slug === financeSlug);
 
       if (index === -1) {
         return null;

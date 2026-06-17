@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { getAllCourseEntries } from "@/lib/course-content";
 import { getAllEditorialEntries } from "@/lib/editorial-content";
 import { getEnterpriseCatalog } from "@/lib/enterprise-annuaire";
+import { demaaFinanceItems } from "@/lib/finance-catalog";
 import { demaaProNetworks } from "@/lib/pro-network-catalog";
 import { sectorPageDefinitions } from "@/lib/sector-pages";
 import { demaaServices } from "@/lib/service-catalog";
@@ -43,6 +44,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/annuaire-outils`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/annuaire-services`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-fournisseurs`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
+    { url: `${base}/annuaire-financement`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-reseaux-pro`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/ressources`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/organisation-automatisation`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
@@ -112,6 +114,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
+  const financeEntries: MetadataRoute.Sitemap = demaaFinanceItems.map((item) => ({
+    url: `${base}/annuaire-financement/${item.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
   const proNetworkEntries: MetadataRoute.Sitemap = demaaProNetworks.map((network) => ({
     url: `${base}/annuaire-reseaux-pro/${network.slug}`,
     lastModified: now,
@@ -141,6 +150,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...freeToolEntries,
     ...serviceEntries,
     ...supplierEntries,
+    ...financeEntries,
     ...proNetworkEntries,
     ...sectorEntries,
     ...systemEntries,

@@ -1,3 +1,4 @@
+import type { DemaaFinanceItem } from "@/lib/finance-catalog";
 import type { DemaaProNetwork } from "@/lib/pro-network-catalog";
 import type { DemaaService } from "@/lib/service-catalog";
 import type { DemaaSupplier } from "@/lib/supplier-catalog";
@@ -18,6 +19,12 @@ const GENERIC_SERVICE_PRICES = new Set([
   "Frais de gestion %",
 ]);
 
+const GENERIC_FINANCE_HINTS = new Set([
+  "À vérifier",
+  "Comparaison à venir",
+  "Conditions pro à vérifier",
+]);
+
 export function getSupplierCardBadge(supplier: DemaaSupplier): string | null {
   if (supplier.offerHint && !GENERIC_SUPPLIER_HINTS.has(supplier.offerHint)) {
     return supplier.offerHint;
@@ -36,4 +43,12 @@ export function getServiceCardBadge(service: DemaaService): string | null {
   }
 
   return service.usefulFor[0] ?? service.tags[0] ?? null;
+}
+
+export function getFinanceCardBadge(item: DemaaFinanceItem): string | null {
+  if (item.offerHint && !GENERIC_FINANCE_HINTS.has(item.offerHint)) {
+    return item.offerHint;
+  }
+
+  return item.usefulFor[0] ?? item.tags[0] ?? null;
 }

@@ -48,6 +48,21 @@ export const demaaProNetworks = [
     cta: "Trouver son conseil régional",
   },
   {
+    slug: "tiimora",
+    name: "Tiimora",
+    category: "Prescripteur",
+    shortDescription: "Annuaire qualifié pour trouver un expert-comptable selon le contexte.",
+    description:
+      "Tiimora aide à identifier des cabinets comptables selon le stade de l'entreprise, les enjeux opérationnels et le type d'accompagnement recherché, avec une logique de mise en relation qualifiée.",
+    bestFor:
+      "Les dirigeants, DAF externalisés et partenaires métier qui veulent orienter rapidement une entreprise vers un cabinet comptable pertinent.",
+    tags: ["Expert-comptable", "Annuaire qualifié", "Mise en relation"],
+    icon: "Calculator",
+    usefulFor: ["Comptabilité", "Mise en relation", "Cabinet"],
+    href: "https://www.tiimora.com/",
+    cta: "Voir l'annuaire",
+  },
+  {
     slug: "capeb",
     name: "CAPEB",
     category: "Réseau",

@@ -43,7 +43,7 @@ export default async function CoursesIndexPage({
   const returnSystemSlug = getParamValue(resolvedSearchParams.retourSysteme);
   const backLink = returnSystemSlug
     ? {
-        href: `/systemes/${returnSystemSlug}?tab=cours`,
+        href: `/systemes/${returnSystemSlug}?tab=outils`,
         label: "Retour au système",
       }
     : undefined;

@@ -177,6 +177,7 @@ const PRO_NETWORK_OVERRIDES_BY_SYSTEM: Record<string, ProNetworkRecommendationRu
     order: [
       "ordre-experts-comptables",
       "croec-regional",
+      "tiimora",
       "banques-professionnelles",
       "avocats-affaires",
     ],
@@ -197,6 +198,7 @@ const PRO_NETWORK_OVERRIDES_BY_SYSTEM: Record<string, ProNetworkRecommendationRu
   },
   "courtier-credit-assurance": {
     order: [
+      "tiimora",
       "banques-professionnelles",
       "notaires",
       "cci-locale",
@@ -234,6 +236,7 @@ const PRO_NETWORK_OVERRIDES_BY_SYSTEM: Record<string, ProNetworkRecommendationRu
   },
   freelance: {
     order: [
+      "tiimora",
       "bni",
       "cci-locale",
       "cpme-locale",
@@ -241,6 +244,7 @@ const PRO_NETWORK_OVERRIDES_BY_SYSTEM: Record<string, ProNetworkRecommendationRu
   },
   "consultant-independant": {
     order: [
+      "tiimora",
       "bni",
       "cci-locale",
       "cpme-locale",

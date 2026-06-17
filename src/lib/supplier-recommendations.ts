@@ -6,57 +6,47 @@ import {
 } from "@/lib/supplier-catalog";
 
 type SupplierRecommendationRule = {
-  order: readonly DemaaSupplierSlug[];
+  order: readonly string[];
 };
 
 const DEFAULT_SUPPLIER_ORDER = [
-  "tiimora",
   "assurance-pro",
-  "qonto",
   "alan",
   "telephonie-pro",
   "terminal-paiement",
   "protection-juridique",
-] satisfies DemaaSupplierSlug[];
+] satisfies readonly string[];
 
 const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationRule> = {
   batiment: {
     order: [
       "assurance-pro",
-      "qonto",
       "plateforme-du-batiment",
       "point-p",
       "kiloutou",
       "wurth",
       "rexel",
-      "leasing-vehicule",
       "alan",
       "telephonie-pro",
     ],
   },
   btp: {
     order: [
-      "tiimora",
       "assurance-pro",
-      "qonto",
       "plateforme-du-batiment",
       "point-p",
       "kiloutou",
       "wurth",
       "rexel",
-      "leasing-vehicule",
       "alan",
       "telephonie-pro",
     ],
   },
   artisanat: {
     order: [
-      "tiimora",
       "assurance-pro",
-      "qonto",
       "wurth",
       "kiloutou",
-      "leasing-vehicule",
       "alan",
       "telephonie-pro",
       "protection-juridique",
@@ -64,9 +54,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   restaurant: {
     order: [
-      "tiimora",
       "assurance-pro",
-      "qonto",
       "terminal-paiement",
       "grossiste-alimentaire",
       "fournisseur-boissons",
@@ -79,9 +67,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   boulangerie: {
     order: [
-      "tiimora",
       "assurance-pro",
-      "qonto",
       "terminal-paiement",
       "grossiste-alimentaire",
       "emballages-pro",
@@ -92,22 +78,17 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   traiteur: {
     order: [
-      "tiimora",
       "assurance-pro",
-      "qonto",
       "terminal-paiement",
       "grossiste-alimentaire",
       "fournisseur-boissons",
       "emballages-pro",
-      "leasing-vehicule",
       "hygiene-nettoyage",
     ],
   },
   "commerce-de-detail": {
     order: [
-      "tiimora",
       "assurance-pro",
-      "qonto",
       "terminal-paiement",
       "emballages-pro",
       "energie-pro",
@@ -117,10 +98,6 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "e-commerce": {
     order: [
-      "tiimora",
-      "qonto",
-      "revolut-business",
-      "wise-business",
       "emballages-pro",
       "assurance-pro",
       "telephonie-pro",
@@ -129,9 +106,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "institut-de-beaute": {
     order: [
-      "tiimora",
       "assurance-pro",
-      "qonto",
       "terminal-paiement",
       "hygiene-nettoyage",
       "alan",
@@ -141,9 +116,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "salon-de-coiffure": {
     order: [
-      "tiimora",
       "assurance-pro",
-      "qonto",
       "terminal-paiement",
       "hygiene-nettoyage",
       "energie-pro",
@@ -153,10 +126,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "services-a-la-personne": {
     order: [
-      "tiimora",
       "assurance-pro",
-      "qonto",
-      "leasing-vehicule",
       "alan",
       "telephonie-pro",
       "protection-juridique",
@@ -164,10 +134,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "livraison-dernier-kilometre": {
     order: [
-      "tiimora",
       "assurance-pro",
-      "qonto",
-      "leasing-vehicule",
       "telephonie-pro",
       "alan",
       "protection-juridique",
@@ -175,10 +142,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "transport-de-marchandise": {
     order: [
-      "tiimora",
       "assurance-pro",
-      "qonto",
-      "leasing-vehicule",
       "telephonie-pro",
       "alan",
       "protection-juridique",
@@ -186,10 +150,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "transport-de-personnes": {
     order: [
-      "tiimora",
       "assurance-pro",
-      "qonto",
-      "leasing-vehicule",
       "telephonie-pro",
       "alan",
       "protection-juridique",
@@ -197,9 +158,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "agence-immobiliere": {
     order: [
-      "tiimora",
       "assurance-pro",
-      "qonto",
       "telephonie-pro",
       "protection-juridique",
       "alan",
@@ -207,9 +166,6 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   freelance: {
     order: [
-      "tiimora",
-      "qonto",
-      "shine",
       "assurance-pro",
       "alan",
       "telephonie-pro",
@@ -218,8 +174,6 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "cabinet-de-conseil": {
     order: [
-      "tiimora",
-      "qonto",
       "assurance-pro",
       "alan",
       "telephonie-pro",
@@ -229,7 +183,6 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   notaire: {
     order: [
-      "qonto",
       "assurance-pro",
       "protection-juridique",
       "telephonie-pro",
@@ -239,8 +192,6 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "daf-externalise": {
     order: [
-      "qonto",
-      "tiimora",
       "assurance-pro",
       "alan",
       "swile",
@@ -250,7 +201,6 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "office-manager-externalise": {
     order: [
-      "qonto",
       "telephonie-pro",
       "assurance-pro",
       "alan",
@@ -260,17 +210,15 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "assistant-administratif-externalise": {
     order: [
-      "qonto",
-      "shine",
       "telephonie-pro",
       "assurance-pro",
       "protection-juridique",
+      "alan",
     ],
   },
   "secretariat-externalise": {
     order: [
       "telephonie-pro",
-      "qonto",
       "assurance-pro",
       "alan",
       "protection-juridique",
@@ -278,18 +226,14 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "gestionnaire-paie-independant": {
     order: [
-      "tiimora",
-      "qonto",
-      "shine",
       "assurance-pro",
       "protection-juridique",
       "telephonie-pro",
+      "alan",
     ],
   },
   "cabinet-rh-externalise": {
     order: [
-      "tiimora",
-      "qonto",
       "alan",
       "swile",
       "assurance-pro",
@@ -300,7 +244,6 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   "centre-appels-support-client": {
     order: [
       "telephonie-pro",
-      "qonto",
       "assurance-pro",
       "alan",
       "swile",
@@ -309,7 +252,6 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "societe-recouvrement": {
     order: [
-      "qonto",
       "assurance-pro",
       "protection-juridique",
       "telephonie-pro",
@@ -318,7 +260,6 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "societe-domiciliation": {
     order: [
-      "qonto",
       "assurance-pro",
       "telephonie-pro",
       "protection-juridique",
@@ -328,7 +269,6 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "centre-affaires-coworking": {
     order: [
-      "qonto",
       "terminal-paiement",
       "energie-pro",
       "telephonie-pro",
@@ -339,7 +279,6 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "cabinet-qhse-conformite": {
     order: [
-      "qonto",
       "assurance-pro",
       "telephonie-pro",
       "alan",
@@ -348,7 +287,6 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "bureau-etudes": {
     order: [
-      "qonto",
       "assurance-pro",
       "telephonie-pro",
       "alan",
@@ -357,7 +295,6 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "cabinet-etudes": {
     order: [
-      "qonto",
       "assurance-pro",
       "telephonie-pro",
       "alan",
@@ -366,7 +303,6 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "infogerance-informatique": {
     order: [
-      "qonto",
       "telephonie-pro",
       "assurance-pro",
       "alan",
@@ -376,7 +312,6 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "cybersecurite-pme": {
     order: [
-      "qonto",
       "assurance-pro",
       "protection-juridique",
       "telephonie-pro",
@@ -385,7 +320,6 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "integrateur-crm-erp": {
     order: [
-      "qonto",
       "telephonie-pro",
       "assurance-pro",
       "alan",
@@ -395,7 +329,6 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "consultant-data-bi": {
     order: [
-      "qonto",
       "telephonie-pro",
       "assurance-pro",
       "alan",
@@ -405,7 +338,6 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "studio-branding-design": {
     order: [
-      "qonto",
       "assurance-pro",
       "telephonie-pro",
       "alan",
@@ -415,7 +347,6 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   syndic: {
     order: [
-      "qonto",
       "assurance-pro",
       "telephonie-pro",
       "energie-pro",
@@ -425,7 +356,6 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "gestion-locative": {
     order: [
-      "qonto",
       "assurance-pro",
       "telephonie-pro",
       "energie-pro",
@@ -435,7 +365,6 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "cabinet-comptable": {
     order: [
-      "qonto",
       "assurance-pro",
       "alan",
       "swile",
@@ -445,7 +374,6 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "cabinet-davocat": {
     order: [
-      "qonto",
       "assurance-pro",
       "protection-juridique",
       "alan",
@@ -454,10 +382,6 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   saas: {
     order: [
-      "tiimora",
-      "qonto",
-      "revolut-business",
-      "wise-business",
       "assurance-pro",
       "alan",
       "swile",
@@ -466,9 +390,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   evenementiel: {
     order: [
-      "tiimora",
       "assurance-pro",
-      "qonto",
       "kiloutou",
       "fournisseur-boissons",
       "terminal-paiement",
@@ -478,8 +400,6 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "cabinet-assurance": {
     order: [
-      "tiimora",
-      "qonto",
       "assurance-pro",
       "telephonie-pro",
       "alan",
@@ -489,7 +409,6 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "agence-seo": {
     order: [
-      "qonto",
       "assurance-pro",
       "telephonie-pro",
       "alan",
@@ -499,7 +418,6 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "agence-acquisition-paid-ads": {
     order: [
-      "qonto",
       "assurance-pro",
       "telephonie-pro",
       "alan",
@@ -509,27 +427,22 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "diagnostiqueur-immobilier": {
     order: [
-      "qonto",
       "assurance-pro",
       "telephonie-pro",
-      "leasing-vehicule",
       "protection-juridique",
       "alan",
     ],
   },
   geometre: {
     order: [
-      "qonto",
       "assurance-pro",
       "telephonie-pro",
-      "leasing-vehicule",
       "protection-juridique",
       "alan",
     ],
   },
   "architecte-maitre-oeuvre": {
     order: [
-      "qonto",
       "assurance-pro",
       "telephonie-pro",
       "alan",
@@ -539,17 +452,14 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "reparation-informatique-mobile": {
     order: [
-      "qonto",
       "assurance-pro",
       "telephonie-pro",
-      "leasing-vehicule",
       "protection-juridique",
       "alan",
     ],
   },
   "nettoyage-professionnel": {
     order: [
-      "qonto",
       "assurance-pro",
       "hygiene-nettoyage",
       "telephonie-pro",
@@ -559,9 +469,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   demenagement: {
     order: [
-      "qonto",
       "assurance-pro",
-      "leasing-vehicule",
       "telephonie-pro",
       "alan",
       "protection-juridique",
@@ -569,9 +477,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "auto-ecole": {
     order: [
-      "qonto",
       "assurance-pro",
-      "leasing-vehicule",
       "telephonie-pro",
       "alan",
       "protection-juridique",
@@ -579,7 +485,6 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "gestionnaire-de-patrimoine": {
     order: [
-      "qonto",
       "assurance-pro",
       "protection-juridique",
       "alan",
@@ -589,8 +494,6 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
   },
   "courtier-credit-assurance": {
     order: [
-      "tiimora",
-      "qonto",
       "assurance-pro",
       "telephonie-pro",
       "alan",
@@ -601,11 +504,11 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
 
 export function getRecommendedSuppliersForSystem(systemSlug: string): DemaaSupplier[] {
   const rule = SUPPLIER_RECOMMENDATIONS_BY_SYSTEM[systemSlug];
-  const order = (rule?.order ?? DEFAULT_SUPPLIER_ORDER).filter(
+  const order = [...(rule?.order ?? []), ...DEFAULT_SUPPLIER_ORDER].filter(
     (slug, index, list) => list.indexOf(slug) === index,
-  );
+  ) as string[];
   const recommended = order
-    .map((slug) => getDemaaSupplierBySlug(slug))
+    .map((slug) => getDemaaSupplierBySlug(slug as DemaaSupplierSlug))
     .filter((supplier): supplier is DemaaSupplier => Boolean(supplier));
 
   return recommended.length ? recommended : [...demaaSuppliers.slice(0, 6)];

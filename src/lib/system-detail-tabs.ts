@@ -2,6 +2,7 @@ export const SYSTEM_DETAIL_TABS = [
   "outils",
   "services",
   "fournisseurs",
+  "financement",
   "reseaux-pro",
   "cours",
 ] as const;
