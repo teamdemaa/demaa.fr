@@ -543,11 +543,10 @@ export default function SystemDetailContent({
             [
               ["processus", "Processus"],
               ["outils", "Outils"],
-              ["services", "Services"],
               ["fournisseurs", "Partenaires & fournisseurs"],
               ["reseaux-pro", "Réseaux Pro"],
               ["ressources", "Ressources"],
-              ["cours", "Cours"],
+              ["services", "Services"],
             ] as Array<[SystemDetailTab, string]>
           ).map(([tab, label]) => (
             <button
