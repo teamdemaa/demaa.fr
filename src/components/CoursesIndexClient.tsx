@@ -9,10 +9,17 @@ import type { CourseEntry } from "@/lib/course-content";
 
 type CoursesIndexClientProps = {
   entries: CourseEntry[];
+  backLink?: {
+    href: string;
+    label: string;
+  };
+  returnSystemSlug?: string;
 };
 
 export default function CoursesIndexClient({
   entries,
+  backLink,
+  returnSystemSlug,
 }: CoursesIndexClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("Tous");
@@ -64,6 +71,16 @@ export default function CoursesIndexClient({
       />
 
       <section className="mx-auto max-w-6xl px-4 py-7">
+        {backLink ? (
+          <div className="pb-5">
+            <Link
+              href={backLink.href}
+              className="inline-flex items-center gap-2 text-sm font-medium text-brand-blue transition-colors hover:text-neutral-700"
+            >
+              Retour au système
+            </Link>
+          </div>
+        ) : null}
         <div className="flex items-center justify-end pb-5">
           {(searchQuery || activeFilter !== "Tous") ? (
             <button
@@ -89,7 +106,15 @@ export default function CoursesIndexClient({
         ) : (
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {filteredEntries.map((entry) => (
-              <Link key={entry.slug} href={`/cours/${entry.slug}`} className="block h-full group">
+              <Link
+                key={entry.slug}
+                href={
+                  returnSystemSlug
+                    ? `/cours/${entry.slug}?retourSysteme=${encodeURIComponent(returnSystemSlug)}`
+                    : `/cours/${entry.slug}`
+                }
+                className="block h-full group"
+              >
                 <article className="flex h-full flex-col overflow-hidden rounded-3xl border border-gray-100 bg-white transition-all duration-300 group-hover:-translate-y-0.5 group-hover:shadow-[0_6px_18px_rgba(0,0,0,0.045)]">
                   <div className="flex aspect-[16/10] items-end border-b border-gray-100 bg-[linear-gradient(135deg,#f8f5ef_0%,#f3efe6_100%)] p-5">
                     <span className="inline-flex items-center gap-2 rounded-full bg-white/80 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-brand-blue">

@@ -42,18 +42,42 @@ type SystemDetailContentProps = {
 };
 
 const GOOGLE_AUDIT_BOOKING_URL = "https://calendar.app.google/E9WX9qfHxViWZ3uq8";
-const BUILDING_PILOTING_SHEET_URL =
-  "https://docs.google.com/spreadsheets/d/1hThXGp-YMvO69dQIyAbFNMQVByzE973tbrnjIUMkYMs/edit";
-const GENERIC_SUPPLIER_HINTS = new Set([
-  "À vérifier",
-  "Comparaison partenaire",
-  "Comparaison à venir",
-  "Offre partenaire à venir",
-  "Annuaire partenaire",
-  "Conditions pro à vérifier",
-  "Sélection à venir",
-  "Bon plan à venir",
-]);
+const PILOTING_SHEET_URLS: Partial<Record<System["slug"], string>> = {
+  batiment: "https://docs.google.com/spreadsheets/d/1hThXGp-YMvO69dQIyAbFNMQVByzE973tbrnjIUMkYMs/edit",
+  "plomberie-chauffage":
+    "https://docs.google.com/spreadsheets/d/1cruI9aFuuP4ggbbQ2nQKxA2Pcv1dJGL9K3SZ-gJGKGQ/edit",
+  "electricite-generale":
+    "https://docs.google.com/spreadsheets/d/1cGtxwRceldfZlFjokVTfkuOJyXrKw0zZ8E87Ue7F7FE/edit",
+  "renovation-interieur":
+    "https://docs.google.com/spreadsheets/d/1Mj_cU-we__AkIv3VetPPLCdE88bhPsgzPW9863y9ZzM/edit",
+  "menuiserie-agencement":
+    "https://docs.google.com/spreadsheets/d/1Cv_zaCfuDH8APYRgbVoWQajSZwcjWknhvMxUN1HWSNY/edit",
+  "maconnerie-gros-oeuvre":
+    "https://docs.google.com/spreadsheets/d/1g8znKrrHg28-aOS2yBce_VNpE4g5_jdgbAi7hvB-vic/edit",
+  "architecte-maitre-oeuvre":
+    "https://docs.google.com/spreadsheets/d/11MyBHnQIB_7ClHQOZakw20fKE8bY_SevzmJw7HUVrO4/edit",
+  "peintre-en-batiment":
+    "https://docs.google.com/spreadsheets/d/1WL5ZBbGQWTSEdjaHIz7C70EPzuTM5VN2RSLmqbbddxI/edit",
+  couvreur: "https://docs.google.com/spreadsheets/d/1TxpREzqwewHhFFB4zUeLfGJRgMBqJi5J8pNj-aBF1RY/edit",
+  carreleur: "https://docs.google.com/spreadsheets/d/1rslN-Iquxm6Cp3D8SBz_ZXoCRCylhiUlFMYhP_oz6uk/edit",
+  climatisation:
+    "https://docs.google.com/spreadsheets/d/1Acdluq7dc-H_34fkWd4vJXxYuJXPXUzdD464eICiTcQ/edit",
+  paysagiste: "https://docs.google.com/spreadsheets/d/1XQfyE_Fk4PpR24Gyf4Fsv_PSHrtLwPWjHHu0GEI6hno/edit",
+  pisciniste: "https://docs.google.com/spreadsheets/d/1hHscXb9BBiCsfkpcxuQ5k2EzHb3Z3s52a-TuTOlHFzM/edit",
+  serrurier: "https://docs.google.com/spreadsheets/d/1sznkKMKpSdzNr4scE1usEIgpNyGH0ibXlAyqEh_ilcg/edit",
+  "garage-automobile":
+    "https://docs.google.com/spreadsheets/d/1-O-rNsfSwNcCtU1Zaab0kWkcTsNBUDzMT0YpG3PZka0/edit",
+  carrosserie:
+    "https://docs.google.com/spreadsheets/d/1yzTeRFlzWNSMQ1xvsbqCQx0rRqVuUULaoa1Jly4ucfA/edit",
+  demenagement:
+    "https://docs.google.com/spreadsheets/d/10iF9BBFFOUjV8-W9atnptqjo4ssIjGuyTWCr2YfnCMA/edit",
+  "livraison-dernier-kilometre":
+    "https://docs.google.com/spreadsheets/d/1vcZsHocv0svXHqbT1r5Jn768DAp4KqgQ1bsh1Lwyieo/edit",
+  "transport-de-marchandise":
+    "https://docs.google.com/spreadsheets/d/19oKO19pRSZwua2UeGvVzyZnHlOwqCtgS8kBI6CU89Pc/edit",
+  "transport-de-personnes":
+    "https://docs.google.com/spreadsheets/d/1oyp7LcTYBhd_YnSG6hRkogFXuByQV3SNL8oRVOY5h3E/edit",
+};
 
 function isTransverseTool(tool: OperationalSystemDetail["tools"][number]): boolean {
   if (tool.scope) {
@@ -174,10 +198,11 @@ export default function SystemDetailContent({
   );
   const Heading = headingAs;
   const sectorPage = getSectorPageByLabel(detail.sectorLabel);
-  const documentHref =
-    system.slug === "batiment" ? BUILDING_PILOTING_SHEET_URL : `/plans-organisation/${system.slug}`;
-  const documentLabel =
-    system.slug === "batiment" ? "Obtenir le Tableau de pilotage" : "Obtenir le Plan d'organisation";
+  const pilotingSheetUrl = PILOTING_SHEET_URLS[system.slug];
+  const documentHref = pilotingSheetUrl ?? `/plans-organisation/${system.slug}`;
+  const documentLabel = pilotingSheetUrl
+    ? "Obtenir le Tableau de pilotage"
+    : "Obtenir le Plan d'organisation";
 
   function selectTab(tab: SystemDetailTab) {
     startTransition(() => {
@@ -348,7 +373,7 @@ export default function SystemDetailContent({
     return (
       <Link
         key={course.slug}
-        href={`/cours/${course.slug}`}
+        href={`/cours/${course.slug}?retourSysteme=${encodeURIComponent(system.slug)}`}
         className="demaa-card group flex h-full flex-col rounded-[1.15rem] p-5 text-left"
       >
         <div className="flex items-start justify-between gap-4">
@@ -485,6 +510,7 @@ export default function SystemDetailContent({
               ["fournisseurs", "Partenaires & fournisseurs"],
               ["reseaux-pro", "Réseaux Pro"],
               ["services", "Services"],
+              ["cours", "Cours"],
             ] as Array<[SystemDetailTab, string]>
           ).map(([tab, label]) => (
             <button
@@ -590,7 +616,7 @@ export default function SystemDetailContent({
         ) : (
           <div className="space-y-5">
             {renderBrowseAllLink({
-              browseHref: "/cours",
+              browseHref: `/cours?retourSysteme=${encodeURIComponent(system.slug)}`,
               browseLabel: "Voir tous les cours",
             })}
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">

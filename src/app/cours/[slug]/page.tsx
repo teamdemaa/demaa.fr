@@ -16,15 +16,18 @@ export async function generateMetadata(
 
   if (!entry) return { title: "Cours introuvable - Demaa" };
 
+  const title = `${entry.seoTitle ?? entry.title} | Demaa`;
+  const description = entry.seoDescription ?? entry.description;
+
   return {
-    title: `${entry.title} | Cours Demaa`,
-    description: entry.description,
+    title,
+    description,
     alternates: {
       canonical: `/cours/${entry.slug}`,
     },
     openGraph: {
-      title: `${entry.title} | Cours Demaa`,
-      description: entry.description,
+      title,
+      description,
       url: `/cours/${entry.slug}`,
       siteName: "Demaa",
       locale: "fr_FR",
@@ -32,16 +35,20 @@ export async function generateMetadata(
     },
     twitter: {
       card: "summary_large_image",
-      title: `${entry.title} | Cours Demaa`,
-      description: entry.description,
+      title,
+      description,
     },
   };
 }
 
 export default async function CourseDetailPage(
-  props: { params: Promise<{ slug: string }> }
+  props: {
+    params: Promise<{ slug: string }>;
+    searchParams: Promise<{ retourSysteme?: string | string[] }>;
+  }
 ) {
   const params = await props.params;
+  const searchParams = await props.searchParams;
   const entry = getCourseEntryBySlug(params.slug);
   const relatedSystems = getRelatedSystemsForContentSlug(params.slug);
 
@@ -49,14 +56,65 @@ export default async function CourseDetailPage(
     notFound();
   }
 
+  const title = entry.seoTitle ?? entry.title;
+  const description = entry.seoDescription ?? entry.description;
+  const returnSystemSlug = Array.isArray(searchParams.retourSysteme)
+    ? searchParams.retourSysteme[0]
+    : searchParams.retourSysteme;
+  const backHref = returnSystemSlug
+    ? `/systemes/${returnSystemSlug}?tab=cours`
+    : "/cours";
+  const backLabel = returnSystemSlug ? "Retour au système" : "Retour aux cours";
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: title,
+    description,
+    datePublished: entry.date,
+    dateModified: entry.date,
+    author: {
+      "@type": "Organization",
+      name: "Demaa",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Demaa",
+    },
+    mainEntityOfPage: `https://demaa.fr/cours/${entry.slug}`,
+  };
+  const faqJsonLd = entry.faq?.length
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: entry.faq.map((item) => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: item.answer,
+          },
+        })),
+      }
+    : null;
+
   return (
     <>
       <Navbar />
       <main className="flex-1 w-full bg-background min-h-[85vh] py-16 px-4">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+        />
+        {faqJsonLd ? (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+          />
+        ) : null}
         <article className="max-w-3xl mx-auto animate-in slide-in-from-bottom-4 duration-500">
-          <Link href="/cours" className="inline-flex items-center text-brand-blue hover:text-neutral-700 font-medium mb-10 transition-colors">
+          <Link href={backHref} className="inline-flex items-center text-brand-blue hover:text-neutral-700 font-medium mb-10 transition-colors">
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Retour aux cours
+            {backLabel}
           </Link>
 
           <header className="mb-12 border-b border-gray-100 pb-10">
@@ -80,7 +138,7 @@ export default async function CourseDetailPage(
             </div>
           </header>
 
-          <div className="[&>p]:text-lg [&>p]:leading-relaxed [&>p]:text-gray-600 [&>p]:mb-6 [&>h3]:text-2xl [&>h3]:font-bold [&>h3]:text-brand-blue [&>h3]:mt-10 [&>h3]:mb-4 [&>h2]:text-3xl [&>h2]:font-bold [&>h2]:text-brand-blue [&>h2]:mt-12 [&>h2]:mb-6 [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:mb-6 [&>ul>li]:mb-2 [&>ul>li]:text-gray-600 [&>strong]:text-brand-blue [&>strong]:font-semibold">
+          <div className="[&>p]:mb-6 [&>p]:text-lg [&>p]:leading-relaxed [&>p]:text-gray-600 [&>h2]:mt-12 [&>h2]:mb-6 [&>h2]:text-3xl [&>h2]:font-bold [&>h2]:text-brand-blue [&>h3]:mt-10 [&>h3]:mb-4 [&>h3]:text-2xl [&>h3]:font-bold [&>h3]:text-brand-blue [&>ul]:mb-7 [&>ul]:list-disc [&>ul]:space-y-3 [&>ul]:pl-6 [&>ul>li]:text-lg [&>ul>li]:leading-relaxed [&>ul>li]:text-gray-600 [&>ol]:mb-7 [&>ol]:list-decimal [&>ol]:space-y-3 [&>ol]:pl-6 [&>ol>li]:text-lg [&>ol>li]:leading-relaxed [&>ol>li]:text-gray-600 [&>strong]:font-semibold [&>strong]:text-brand-blue">
             <ReactMarkdown>{entry.content}</ReactMarkdown>
           </div>
 
@@ -95,6 +153,20 @@ export default async function CourseDetailPage(
                 </span>
               ))}
             </div>
+          ) : null}
+
+          {entry.faq?.length ? (
+            <section className="mt-14 border-t border-gray-100 pt-10">
+              <h2 className="text-3xl font-bold text-brand-blue">FAQ</h2>
+              <div className="mt-6 space-y-6">
+                {entry.faq.map((item) => (
+                  <div key={item.question} className="rounded-2xl border border-gray-100 bg-white p-5">
+                    <h3 className="text-lg font-semibold text-brand-blue">{item.question}</h3>
+                    <p className="mt-2 text-base leading-relaxed text-gray-600">{item.answer}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
           ) : null}
 
           <div className="mt-10">
