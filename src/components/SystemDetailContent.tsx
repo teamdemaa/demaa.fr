@@ -39,6 +39,16 @@ type SystemDetailContentProps = {
 const GOOGLE_AUDIT_BOOKING_URL = "https://calendar.app.google/E9WX9qfHxViWZ3uq8";
 const BUILDING_PILOTING_SHEET_URL =
   "https://docs.google.com/spreadsheets/d/1hThXGp-YMvO69dQIyAbFNMQVByzE973tbrnjIUMkYMs/edit";
+const GENERIC_SUPPLIER_HINTS = new Set([
+  "À vérifier",
+  "Comparaison partenaire",
+  "Comparaison à venir",
+  "Offre partenaire à venir",
+  "Annuaire partenaire",
+  "Conditions pro à vérifier",
+  "Sélection à venir",
+  "Bon plan à venir",
+]);
 
 function isTransverseTool(tool: OperationalSystemDetail["tools"][number]): boolean {
   if (tool.scope) {
@@ -50,6 +60,18 @@ function isTransverseTool(tool: OperationalSystemDetail["tools"][number]): boole
   }
 
   return Boolean(tool.slug && tool.detail?.scope === "transverse");
+}
+
+function getSupplierCardBadge(supplier: DemaaSupplier): string | null {
+  if (supplier.offerHint && !GENERIC_SUPPLIER_HINTS.has(supplier.offerHint)) {
+    return supplier.offerHint;
+  }
+
+  return supplier.usefulFor[0] ?? supplier.tags[0] ?? null;
+}
+
+function getProNetworkCardBadge(network: DemaaProNetwork): string | null {
+  return network.usefulFor[0] ?? network.tags[0] ?? null;
 }
 
 function getFallbackToolDetail(tool: OperationalSystemDetail["tools"][number]): ToolDirectoryItem {
@@ -124,14 +146,6 @@ function handleProNetworkDetailClick(
 
   event.preventDefault();
   onOpenDetails(network);
-}
-
-function getProNetworkCardTags(network: DemaaProNetwork): string[] {
-  const normalizedCategory = network.category.toLowerCase();
-
-  return network.tags
-    .filter((tag) => tag.toLowerCase() !== normalizedCategory)
-    .slice(0, 3);
 }
 
 export default function SystemDetailContent({
@@ -288,21 +302,13 @@ export default function SystemDetailContent({
         <p className="mt-3 text-sm leading-relaxed text-dema-muted">
           {supplier.shortDescription}
         </p>
-        <div className="mt-auto pt-4">
-          <div className="flex flex-wrap items-center gap-2">
+        {getSupplierCardBadge(supplier) ? (
+          <div className="mt-auto pt-4">
             <span className="inline-flex rounded-full bg-dema-sage/75 px-3 py-1 text-[10px] font-medium text-brand-blue/70">
-              {supplier.offerHint}
+              {getSupplierCardBadge(supplier)}
             </span>
-            <span className="inline-flex rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-medium lowercase text-brand-blue/70">
-              {supplier.category}
-            </span>
-            {supplier.partner ? (
-              <span className="inline-flex rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-medium lowercase text-brand-blue/70">
-                partenaire
-              </span>
-            ) : null}
           </div>
-        </div>
+        ) : null}
       </>
     );
     return (
@@ -343,18 +349,13 @@ export default function SystemDetailContent({
         <p className="mt-3 text-sm leading-relaxed text-dema-muted">
           {network.shortDescription}
         </p>
-        <div className="mt-auto pt-4">
-          <div className="flex flex-wrap items-center gap-2">
-            {getProNetworkCardTags(network).map((tag) => (
-              <span
-                key={tag}
-                className="inline-flex rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-medium text-brand-blue/70"
-              >
-                {tag}
-              </span>
-            ))}
+        {getProNetworkCardBadge(network) ? (
+          <div className="mt-auto pt-4">
+            <span className="inline-flex rounded-full bg-dema-sage/75 px-3 py-1 text-[10px] font-medium text-brand-blue/70">
+              {getProNetworkCardBadge(network)}
+            </span>
           </div>
-        </div>
+        ) : null}
       </Link>
     );
   }
