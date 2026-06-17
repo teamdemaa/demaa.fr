@@ -508,7 +508,7 @@ function singularizeSectorLabel(label: string): string {
 }
 
 export function buildSystemPageTitle(data: SystemDetailPageData): string {
-  return `${data.system.name} : processus, outils et services | Demaa`;
+  return `${data.system.name} : checklist, outils et services | Demaa`;
 }
 
 export function buildSystemPageIntro(data: SystemDetailPageData): string {
@@ -525,7 +525,7 @@ export function buildSystemPageDescription(data: SystemDetailPageData): string {
   const sectorLabel = singularizeSectorLabel(data.detail.sectorLabel).toLowerCase();
   const parts = [
     data.enterprise.description,
-    `${data.detail.processes.length} processus cles, ${data.detail.tools.length} outils ${data.detail.tools.length > 1 ? "recommandes" : "recommande"} pour structurer une activite de ${sectorLabel}.`,
+    `${data.detail.processes.length} points de checklist, ${data.detail.tools.length} outils ${data.detail.tools.length > 1 ? "recommandes" : "recommande"} pour structurer une activite de ${sectorLabel}.`,
   ];
 
   return parts.join(" ");
@@ -541,7 +541,7 @@ export function buildSystemPageMetadata(data: SystemDetailPageData): Metadata {
     description,
     keywords: [
       data.system.name,
-      `processus ${data.system.name.toLowerCase()}`,
+      `checklist ${data.system.name.toLowerCase()}`,
       `outils ${data.system.name.toLowerCase()}`,
       `organisation ${data.system.name.toLowerCase()}`,
       `structurer ${data.system.name.toLowerCase()}`,

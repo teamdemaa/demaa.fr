@@ -541,7 +541,7 @@ export default function SystemDetailContent({
         <div className="flex min-w-max items-center gap-2 whitespace-nowrap">
           {(
             [
-              ["processus", "Processus"],
+              ["processus", "Checklist"],
               ["outils", "Outils"],
               ["fournisseurs", "Partenaires & fournisseurs"],
               ["reseaux-pro", "Réseaux Pro"],
