@@ -569,9 +569,13 @@ export default function SystemDetailContent({
       <div className="mt-5">
         {activeTab === "processus" ? (
           <div className="space-y-5">
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            <div className="grid items-start gap-4 md:grid-cols-2 xl:grid-cols-3">
               {processGroups.map((group) => (
-                <details key={group.title} className="demaa-accordion group overflow-hidden" data-print-expandable>
+                <details
+                  key={group.title}
+                  className="demaa-accordion group self-start overflow-hidden"
+                  data-print-expandable
+                >
                   <summary className="flex cursor-pointer items-center justify-between gap-4 px-4 py-4 sm:px-5">
                     <div className="min-w-0 text-left">
                       <h3 className="text-[1.05rem] font-medium text-brand-blue">
