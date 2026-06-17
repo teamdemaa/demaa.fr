@@ -138,7 +138,7 @@ export default async function CourseDetailPage(
             </div>
           </header>
 
-          <div className="[&>p]:mb-6 [&>p]:text-lg [&>p]:leading-relaxed [&>p]:text-gray-600 [&>h2]:mt-12 [&>h2]:mb-6 [&>h2]:text-3xl [&>h2]:font-bold [&>h2]:text-brand-blue [&>h3]:mt-10 [&>h3]:mb-4 [&>h3]:text-2xl [&>h3]:font-bold [&>h3]:text-brand-blue [&>ul]:mb-7 [&>ul]:list-disc [&>ul]:space-y-3 [&>ul]:pl-6 [&>ul>li]:text-lg [&>ul>li]:leading-relaxed [&>ul>li]:text-gray-600 [&>ol]:mb-7 [&>ol]:list-decimal [&>ol]:space-y-3 [&>ol]:pl-6 [&>ol>li]:text-lg [&>ol>li]:leading-relaxed [&>ol>li]:text-gray-600 [&>strong]:font-semibold [&>strong]:text-brand-blue">
+          <div className="[&>p]:mb-6 [&>p]:text-lg [&>p]:leading-8 [&>p]:text-gray-700 [&>h2]:mt-12 [&>h2]:mb-6 [&>h2]:text-3xl [&>h2]:font-bold [&>h2]:text-brand-blue [&>h3]:mt-10 [&>h3]:mb-4 [&>h3]:text-2xl [&>h3]:font-bold [&>h3]:text-brand-blue [&>ul]:mb-7 [&>ul]:list-disc [&>ul]:space-y-3 [&>ul]:pl-6 [&>ul>li]:text-lg [&>ul>li]:leading-8 [&>ul>li]:text-gray-700 [&>ol]:mb-7 [&>ol]:list-decimal [&>ol]:space-y-3 [&>ol]:pl-6 [&>ol>li]:text-lg [&>ol>li]:leading-8 [&>ol>li]:text-gray-700 [&>blockquote]:my-8 [&>blockquote]:rounded-3xl [&>blockquote]:border [&>blockquote]:border-dema-sage/60 [&>blockquote]:bg-dema-sage/15 [&>blockquote]:px-6 [&>blockquote]:py-5 [&>blockquote]:text-base [&>blockquote]:leading-8 [&>blockquote]:text-brand-blue [&>blockquote]:shadow-[0_10px_30px_rgba(29,78,61,0.08)] [&>blockquote_p]:mb-3 [&>blockquote_p:last-child]:mb-0 [&>strong]:font-semibold [&>strong]:text-brand-blue">
             <ReactMarkdown>{entry.content}</ReactMarkdown>
           </div>
 
@@ -162,7 +162,7 @@ export default async function CourseDetailPage(
                 {entry.faq.map((item) => (
                   <div key={item.question} className="rounded-2xl border border-gray-100 bg-white p-5">
                     <h3 className="text-lg font-semibold text-brand-blue">{item.question}</h3>
-                    <p className="mt-2 text-base leading-relaxed text-gray-600">{item.answer}</p>
+                    <p className="mt-2 text-base leading-7 text-gray-700">{item.answer}</p>
                   </div>
                 ))}
               </div>

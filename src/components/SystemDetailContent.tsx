@@ -77,6 +77,54 @@ const PILOTING_SHEET_URLS: Partial<Record<System["slug"], string>> = {
     "https://docs.google.com/spreadsheets/d/19oKO19pRSZwua2UeGvVzyZnHlOwqCtgS8kBI6CU89Pc/edit",
   "transport-de-personnes":
     "https://docs.google.com/spreadsheets/d/1oyp7LcTYBhd_YnSG6hRkogFXuByQV3SNL8oRVOY5h3E/edit",
+  "nettoyage-professionnel":
+    "https://docs.google.com/spreadsheets/d/1GyxXzsewMbpSQTVie0w53MLLY1U5ph9f0uZV6LNMfzg/edit",
+  "entreprise-de-securite":
+    "https://docs.google.com/spreadsheets/d/1wxpRpc4MdgauiTF5MgwJjokgfdHr2OiG9yhBzZJ2Bic/edit",
+  "services-a-la-personne":
+    "https://docs.google.com/spreadsheets/d/1s4fhzbwG4avCkwWm1jSyC2cGjSrBAzAajGvuS8Ze5fE/edit",
+  "aide-a-domicile-menage":
+    "https://docs.google.com/spreadsheets/d/1_089awA6PYuNg6_1TOCXeugHTbnGl2jYxW0wXFNS5qs/edit",
+  pressing:
+    "https://docs.google.com/spreadsheets/d/1fzn8qDag7cTqr7PxeFTHW5tRdTnMb_M5UPIhFMU6trc/edit",
+  "laverie-automatique":
+    "https://docs.google.com/spreadsheets/d/18rjmkDUbiU56tQUPeG79SycFCRKZmMVZnmgmqgVC8KY/edit",
+  "agence-de-voyage":
+    "https://docs.google.com/spreadsheets/d/135A-PoG2b-AkRuPkzlJeGMuiZLeWThW5h-NUPVPKMTE/edit",
+  "agence-marketing":
+    "https://docs.google.com/spreadsheets/d/1yqWnO8QnI6MJcjcXQNbsVnptJ8hSEKT56hZcu651RJc/edit",
+  "cabinet-comptable":
+    "https://docs.google.com/spreadsheets/d/1iZuJ1hSCNksaJC_gTOCdKKg-60MoJj12iZVaqKrgg6c/edit",
+  "cabinet-davocat":
+    "https://docs.google.com/spreadsheets/d/1LwnvOas8DUG286sZ3jOS-_fBr6Bj1Q8I6ZpE_lYigJw/edit",
+  "cabinet-de-conseil":
+    "https://docs.google.com/spreadsheets/d/1dULvdh9xRouDhPswybmSSx0c_lSsvENxjT3_8fM3sKM/edit",
+  "production-industrie":
+    "https://docs.google.com/spreadsheets/d/14hxGrhgKmvVwi2hDgfvpoIj_5MyWQCntCrum-Ecx49A/edit",
+  opticien:
+    "https://docs.google.com/spreadsheets/d/1Y5xucGB1VYR9mgaghtJHdfEjbcKdv7E1vG8OaFFfFzo/edit",
+  "reparation-informatique-mobile":
+    "https://docs.google.com/spreadsheets/d/141GolGHKmeiodlgLT4Oag0izsknAiupsJ8WQnfTn61s/edit",
+  "food-truck":
+    "https://docs.google.com/spreadsheets/d/1bajbua9QbzR7BbN4Uwv9T2FMAEJe9l__RyLJTesUBo0/edit",
+  association:
+    "https://docs.google.com/spreadsheets/d/1UfDMsanJisonen5FhemaLmx8UC3EPDBgGcW_Tt-EFpE/edit",
+  "consultant-independant":
+    "https://docs.google.com/spreadsheets/d/1UCsrZLWdqK2hacju3d0R3vGGqoQCaaqCGobTAHyUL9M/edit",
+  "coach-sportif":
+    "https://docs.google.com/spreadsheets/d/10Rhl25jSUF2EF65jo7o3Tn4KldKGvbHiFgHlZFoOZm8/edit",
+  "institut-de-beaute":
+    "https://docs.google.com/spreadsheets/d/1uISQC-lgk-Z1XMnxLv5xUpZ0wDznI66_KqPTAEU3hZ8/edit",
+  "salon-de-coiffure":
+    "https://docs.google.com/spreadsheets/d/1u7Jc7e8k8ieTcCtgBdZpHoAkhkHUo9k6h6aPDw12_g0/edit",
+  osteopathe:
+    "https://docs.google.com/spreadsheets/d/1jTOYEviY77seifxcsqwkKf3Jy_5CJ0yUoBITKCGFrPI/edit",
+  psychologue:
+    "https://docs.google.com/spreadsheets/d/1DDgOoJeY7vQNpdQCmMG2zldk0gwChcqaaYVhYmfQQSw/edit",
+  creche:
+    "https://docs.google.com/spreadsheets/d/1UTy1QoDyLGY5rRin5ZL0mCoSYE8Ag1EXdAI0uiwfjbk/edit",
+  "hotel-hebergement-independant":
+    "https://docs.google.com/spreadsheets/d/1uKY1zb79mZf9Y_tZqaNOYfKOcs_9E6rEmzP70m3F--g/edit",
 };
 
 function isTransverseTool(tool: OperationalSystemDetail["tools"][number]): boolean {

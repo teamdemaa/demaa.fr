@@ -4,14 +4,14 @@ import { getAllCourseEntries } from "@/lib/course-content";
 import CoursesIndexClient from "@/components/CoursesIndexClient";
 
 export const metadata: Metadata = {
-  title: "Cours pour dirigeants de TPE - Demaa",
+  title: "Cours pour dirigeants de petites entreprises - Demaa",
   description:
     "Retrouvez les cours Demaa pour comprendre les sujets clés, structurer vos décisions et monter en autonomie.",
   alternates: {
     canonical: "/cours",
   },
   openGraph: {
-    title: "Cours pour dirigeants de TPE - Demaa",
+    title: "Cours pour dirigeants de petites entreprises - Demaa",
     description:
       "Retrouvez les cours Demaa pour comprendre les sujets clés, structurer vos décisions et monter en autonomie.",
     url: "/cours",
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Cours pour dirigeants de TPE - Demaa",
+    title: "Cours pour dirigeants de petites entreprises - Demaa",
     description:
       "Retrouvez les cours Demaa pour comprendre les sujets clés, structurer vos décisions et monter en autonomie.",
   },
