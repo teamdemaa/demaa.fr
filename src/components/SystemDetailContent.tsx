@@ -10,6 +10,11 @@ import ServiceDetailDialog from "@/components/ServiceDetailDialog";
 import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
 import SupplierDetailDialog from "@/components/SupplierDetailDialog";
 import { ServiceIcon } from "@/components/ServiceIcon";
+import {
+  getProNetworkCardBadge,
+  getServiceCardBadge,
+  getSupplierCardBadge,
+} from "@/lib/card-badges";
 import type { CourseEntry } from "@/lib/course-content";
 import type { DemaaProNetwork } from "@/lib/pro-network-catalog";
 import { getRecommendedProNetworksForSystem } from "@/lib/pro-network-recommendations";
@@ -60,18 +65,6 @@ function isTransverseTool(tool: OperationalSystemDetail["tools"][number]): boole
   }
 
   return Boolean(tool.slug && tool.detail?.scope === "transverse");
-}
-
-function getSupplierCardBadge(supplier: DemaaSupplier): string | null {
-  if (supplier.offerHint && !GENERIC_SUPPLIER_HINTS.has(supplier.offerHint)) {
-    return supplier.offerHint;
-  }
-
-  return supplier.usefulFor[0] ?? supplier.tags[0] ?? null;
-}
-
-function getProNetworkCardBadge(network: DemaaProNetwork): string | null {
-  return network.usefulFor[0] ?? network.tags[0] ?? null;
 }
 
 function getFallbackToolDetail(tool: OperationalSystemDetail["tools"][number]): ToolDirectoryItem {
@@ -237,9 +230,6 @@ export default function SystemDetailContent({
   }
 
   function renderServiceCard(service: DemaaService) {
-    const serviceSource =
-      service.slug === "organisation-automatisation" ? "Demaa" : "Partenaire";
-
     return (
       <button
         type="button"
@@ -268,19 +258,13 @@ export default function SystemDetailContent({
         <p className="mt-3 text-sm leading-relaxed text-dema-muted">
           {service.shortDescription}
         </p>
-        <div className="mt-auto pt-4">
-          <div className="flex flex-wrap items-center gap-2">
+        {getServiceCardBadge(service) ? (
+          <div className="mt-auto pt-4">
             <span className="inline-flex rounded-full bg-dema-sage/75 px-3 py-1 text-[10px] font-medium text-brand-blue/70">
-              {service.price}
-            </span>
-            <span className="inline-flex rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-medium lowercase text-brand-blue/70">
-              {service.category}
-            </span>
-            <span className="inline-flex rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-medium lowercase text-brand-blue/70">
-              {serviceSource}
+              {getServiceCardBadge(service)}
             </span>
           </div>
-        </div>
+        ) : null}
       </button>
     );
   }

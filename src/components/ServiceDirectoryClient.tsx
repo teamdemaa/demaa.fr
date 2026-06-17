@@ -7,6 +7,7 @@ import PrimaryMobileNav, { type PrimaryNavTab } from "@/components/PrimaryMobile
 import SearchFilterControls from "@/components/SearchFilterControls";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import ServiceDetailDialog from "@/components/ServiceDetailDialog";
+import { getServiceCardBadge } from "@/lib/card-badges";
 import { matchesSearchQuery } from "@/lib/search";
 import type { DemaaService, ServiceCategory } from "@/lib/service-catalog";
 
@@ -231,9 +232,6 @@ function ServiceCard({
   service: DemaaService;
   onOpenDetails: (service: DemaaService) => void;
 }) {
-  const serviceSource =
-    service.slug === "organisation-automatisation" ? "Demaa" : "Partenaire";
-
   return (
     <Link
       href={`/annuaire-services/${service.slug}`}
@@ -254,19 +252,13 @@ function ServiceCard({
       <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-brand-blue/65">
         {service.bestFor}
       </p>
-      <div className="mt-4">
-        <div className="flex flex-wrap items-center gap-2">
+      {getServiceCardBadge(service) ? (
+        <div className="mt-4">
           <span className="inline-flex rounded-full bg-dema-sage/75 px-3 py-1 text-[10px] font-medium text-brand-blue/70">
-            {service.price}
-          </span>
-          <span className="inline-flex rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-medium lowercase text-brand-blue/70">
-            {service.category}
-          </span>
-          <span className="inline-flex rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-medium lowercase text-brand-blue/70">
-            {serviceSource}
+            {getServiceCardBadge(service)}
           </span>
         </div>
-      </div>
+      ) : null}
     </Link>
   );
 }

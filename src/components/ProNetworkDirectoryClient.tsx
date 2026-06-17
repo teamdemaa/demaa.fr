@@ -6,6 +6,7 @@ import { ArrowLeft } from "lucide-react";
 import ProNetworkDetailDialog from "@/components/ProNetworkDetailDialog";
 import SearchFilterControls from "@/components/SearchFilterControls";
 import { ServiceIcon } from "@/components/ServiceIcon";
+import { getProNetworkCardBadge } from "@/lib/card-badges";
 import { matchesSearchQuery } from "@/lib/search";
 import {
   type DemaaProNetwork,
@@ -175,19 +176,13 @@ export default function ProNetworkDirectoryClient({
                 <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-brand-blue/65">
                   {network.bestFor}
                 </p>
-                <div className="mt-4 flex flex-wrap items-center gap-2">
-                  <span className="inline-flex rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-medium text-brand-blue/70">
-                    {network.category}
-                  </span>
-                  {getDisplayTags(network).map((tag) => (
-                    <span
-                      key={tag}
-                      className="inline-flex rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-medium text-brand-blue/70"
-                    >
-                      {tag}
+                {getProNetworkCardBadge(network) ? (
+                  <div className="mt-4 flex flex-wrap items-center gap-2">
+                    <span className="inline-flex rounded-full bg-dema-sage/75 px-3 py-1 text-[10px] font-medium text-brand-blue/70">
+                      {getProNetworkCardBadge(network)}
                     </span>
-                  ))}
-                </div>
+                  </div>
+                ) : null}
               </Link>
             ))}
           </div>
@@ -219,12 +214,4 @@ function handleNetworkCardClick(
 
   event.preventDefault();
   onOpenDetails(network);
-}
-
-function getDisplayTags(network: DemaaProNetwork): string[] {
-  const normalizedCategory = network.category.toLowerCase();
-
-  return network.tags
-    .filter((tag) => tag.toLowerCase() !== normalizedCategory)
-    .slice(0, 2);
 }

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState, type MouseEvent } from "react";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { getSupplierCardBadge } from "@/lib/card-badges";
 import SearchFilterControls from "@/components/SearchFilterControls";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import SupplierDetailDialog from "@/components/SupplierDetailDialog";
@@ -188,19 +189,13 @@ function SupplierCard({
       <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-brand-blue/65">
         {supplier.bestFor}
       </p>
-      <div className="mt-4 flex flex-wrap items-center gap-2">
-        <span className="inline-flex rounded-full bg-dema-sage/75 px-3 py-1 text-[10px] font-medium text-brand-blue/70">
-          {supplier.offerHint}
-        </span>
-        <span className="inline-flex rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-medium lowercase text-brand-blue/70">
-          {supplier.category}
-        </span>
-        {supplier.partner ? (
-          <span className="inline-flex rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-medium lowercase text-brand-blue/70">
-            partenaire
+      {getSupplierCardBadge(supplier) ? (
+        <div className="mt-4 flex flex-wrap items-center gap-2">
+          <span className="inline-flex rounded-full bg-dema-sage/75 px-3 py-1 text-[10px] font-medium text-brand-blue/70">
+            {getSupplierCardBadge(supplier)}
           </span>
-        ) : null}
-      </div>
+        </div>
+      ) : null}
       <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-dema-forest">
         {supplier.cta}
         <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
