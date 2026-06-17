@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState, type MouseEvent } from "react";
-import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import FinanceDetailDialog from "@/components/FinanceDetailDialog";
 import SearchFilterControls from "@/components/SearchFilterControls";
 import { ServiceIcon } from "@/components/ServiceIcon";
@@ -174,11 +174,6 @@ function FinanceCard({
         <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper">
           <ServiceIcon icon={item.icon} className="h-4 w-4" aria-hidden="true" />
         </span>
-        {item.partner ? (
-          <span className="rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-medium text-brand-blue/70">
-            partenaire
-          </span>
-        ) : null}
       </div>
 
       <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
@@ -199,9 +194,6 @@ function FinanceCard({
         ) : (
           <span />
         )}
-                    <span className="inline-flex items-center text-dema-forest" aria-hidden="true">
-                      <ArrowUpRight className="h-3.5 w-3.5" />
-                    </span>
       </div>
     </>
   );
