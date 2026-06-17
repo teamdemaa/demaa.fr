@@ -2,16 +2,16 @@ import type { Metadata } from "next";
 import HomeHubPage from "@/components/HomeHubPage";
 
 export const metadata: Metadata = {
-  title: "Structurez efficacement votre entreprise | Organisation TPE - Demaa",
+  title: "Structurez votre entreprise avec les bons systèmes | Organisation TPE - Demaa",
   description:
-    "Pour que votre entreprise ne repose plus uniquement sur vous, mettez en place les bons systèmes et créez les conditions d'une croissance durable.",
+    "Organisez votre entreprise avec les bons processus et outils pour reprendre le contrôle, mieux déléguer et soutenir une croissance durable.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Structurez efficacement votre entreprise | Organisation TPE - Demaa",
+    title: "Structurez votre entreprise avec les bons systèmes | Organisation TPE - Demaa",
     description:
-      "Pour que votre entreprise ne repose plus uniquement sur vous, mettez en place les bons systèmes et créez les conditions d'une croissance durable.",
+      "Organisez votre entreprise avec les bons processus et outils pour reprendre le contrôle, mieux déléguer et soutenir une croissance durable.",
     url: "/",
     siteName: "Demaa",
     locale: "fr_FR",
@@ -19,9 +19,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Structurez efficacement votre entreprise | Organisation TPE - Demaa",
+    title: "Structurez votre entreprise avec les bons systèmes | Organisation TPE - Demaa",
     description:
-      "Pour que votre entreprise ne repose plus uniquement sur vous, mettez en place les bons systèmes et créez les conditions d'une croissance durable.",
+      "Organisez votre entreprise avec les bons processus et outils pour reprendre le contrôle, mieux déléguer et soutenir une croissance durable.",
   },
 };
 

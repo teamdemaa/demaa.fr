@@ -17,16 +17,16 @@ export function BrandMiniaturePreview() {
         <div className="max-w-5xl">
           <h1 className="text-[clamp(3.8rem,8vw,6.2rem)] leading-[0.94] tracking-tight">
             <span className="demaa-hero-title text-dema-forest">
-              Structurez efficacement
+              Structurez votre entreprise
             </span>
             <br />
             <span className="font-sans text-brand-blue/86">
-              votre entreprise
+              avec les bons systèmes
             </span>
           </h1>
           <p className="mx-auto mt-7 max-w-3xl text-2xl leading-[1.45] text-dema-muted">
-            Pour que tout ne repose plus uniquement sur vous, mettez en place
-            les bons systèmes et créez les conditions d&apos;une croissance
+            Organisez votre entreprise avec les bons processus et outils pour
+            reprendre le contrôle, mieux déléguer et soutenir une croissance
             durable.
           </p>
         </div>

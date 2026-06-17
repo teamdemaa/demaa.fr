@@ -354,7 +354,7 @@ export default function SystemsCatalogClient({
             </p>
           </div>
         ) : (
-          <div className="mt-8 space-y-8 md:mt-10 md:space-y-9">
+          <div className="mt-6 space-y-8 md:mt-8 md:space-y-9">
             {systemSections.map((section) => (
               <section key={section.title}>
                 <div className="mb-3 flex items-end justify-between gap-4">
