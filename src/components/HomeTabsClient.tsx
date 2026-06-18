@@ -75,8 +75,18 @@ export default function HomeTabsClient({
         `}</style>
       </noscript>
 
-      <section className="ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] w-screen bg-dema-cream px-4 pb-3 pt-3.5 text-center md:px-8 md:pb-3 md:pt-11">
-        <div className="mx-auto max-w-6xl space-y-6 md:space-y-7">
+      <section
+        className={`ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] w-screen bg-dema-cream px-4 text-center transition-[padding] duration-[1200ms] [transition-timing-function:cubic-bezier(0.19,1,0.22,1)] md:px-8 ${
+          revealDiscovery ? "pb-3 pt-3.5 md:pb-3 md:pt-11" : "pb-10 pt-6 md:pb-14 md:pt-10"
+        }`}
+      >
+        <div
+          className={`mx-auto max-w-6xl space-y-6 transition-[padding,transform] duration-[1400ms] [transition-timing-function:cubic-bezier(0.19,1,0.22,1)] md:space-y-7 ${
+            revealDiscovery
+              ? "translate-y-0 pb-0 pt-0"
+              : "translate-y-0 pb-[18vh] pt-[18vh] md:pb-[20vh] md:pt-[19vh]"
+          }`}
+        >
           <div className="mx-auto max-w-5xl">
             <h1 className="text-[clamp(2.25rem,9vw,4.2rem)] leading-[0.98] tracking-tight">
               <span className="font-sans font-light not-italic text-brand-blue/42">
@@ -92,7 +102,7 @@ export default function HomeTabsClient({
             <button
               type="button"
               onClick={() => handleAnswer("yes")}
-              className={`inline-flex min-h-[3.3rem] min-w-0 flex-1 items-center justify-center rounded-full border px-5 text-base font-medium transition sm:min-h-[3.45rem] sm:flex-none sm:px-9 sm:text-lg ${
+              className={`inline-flex min-h-[2.8rem] min-w-0 flex-1 items-center justify-center rounded-full border px-4 text-[0.95rem] font-medium transition sm:min-h-[2.95rem] sm:flex-none sm:px-7 sm:text-base ${
                 answer === "yes"
                   ? "border-dema-forest bg-dema-forest text-dema-paper shadow-[0_10px_24px_rgba(49,95,70,0.18)]"
                   : "border-dema-forest/45 bg-dema-paper text-dema-forest hover:border-dema-forest hover:text-dema-forest"
@@ -103,7 +113,7 @@ export default function HomeTabsClient({
             <button
               type="button"
               onClick={() => handleAnswer("no")}
-              className={`inline-flex min-h-[3.3rem] min-w-0 flex-1 items-center justify-center rounded-full border px-5 text-base font-medium transition sm:min-h-[3.45rem] sm:flex-none sm:px-9 sm:text-lg ${
+              className={`inline-flex min-h-[2.8rem] min-w-0 flex-1 items-center justify-center rounded-full border px-4 text-[0.95rem] font-medium transition sm:min-h-[2.95rem] sm:flex-none sm:px-7 sm:text-base ${
                 answer === "no"
                   ? "border-dema-forest bg-dema-forest text-dema-paper shadow-[0_10px_24px_rgba(49,95,70,0.18)]"
                   : "border-dema-forest/45 bg-dema-paper text-dema-forest hover:border-dema-forest hover:text-dema-forest"
@@ -113,32 +123,40 @@ export default function HomeTabsClient({
             </button>
           </div>
 
-          {selectedResponse ? (
-            <div className="mx-auto max-w-3xl">
-              <p className="text-base font-semibold text-brand-blue">{selectedResponse.title}</p>
-              {selectedResponse.body ? (
-                <p className="mt-2 text-sm leading-6 text-brand-blue/62 sm:text-base">
-                  {selectedResponse.body}
-                </p>
-              ) : null}
-              <div className="pointer-events-none mt-2 flex justify-center">
-                <Image
-                  src="/images/home/hand-arrow.png"
-                  alt=""
-                  aria-hidden="true"
-                  width={112}
-                  height={70}
-                  className="h-12 w-28 object-contain demaa-arrow-nudge"
-                />
+          <div
+            className={`transition-all duration-[950ms] delay-75 [transition-timing-function:cubic-bezier(0.19,1,0.22,1)] ${
+              revealDiscovery
+                ? "max-h-48 translate-y-0 opacity-100"
+                : "max-h-0 translate-y-1 overflow-hidden opacity-0 pointer-events-none"
+            }`}
+          >
+            {selectedResponse ? (
+              <div className="mx-auto max-w-3xl">
+                <p className="text-base font-semibold text-brand-blue">{selectedResponse.title}</p>
+                {selectedResponse.body ? (
+                  <p className="mt-2 text-sm leading-6 text-brand-blue/62 sm:text-base">
+                    {selectedResponse.body}
+                  </p>
+                ) : null}
+                <div className="pointer-events-none mt-2 flex justify-center">
+                  <Image
+                    src="/images/home/hand-arrow.png"
+                    alt=""
+                    aria-hidden="true"
+                    width={112}
+                    height={70}
+                    className="h-12 w-28 object-contain demaa-arrow-nudge"
+                  />
+                </div>
               </div>
-            </div>
-          ) : null}
+            ) : null}
+          </div>
 
           <div
-            className={`demaa-discovery-hidden transition-all duration-500 ease-out ${
+            className={`demaa-discovery-hidden transition-all duration-[1050ms] delay-150 [transition-timing-function:cubic-bezier(0.19,1,0.22,1)] ${
               revealDiscovery
                 ? "mt-0 max-h-40 translate-y-0 opacity-100"
-                : "mt-[-0.75rem] max-h-0 translate-y-2 overflow-hidden opacity-0 pointer-events-none"
+                : "mt-[-0.35rem] max-h-0 translate-y-2 overflow-hidden opacity-0 pointer-events-none"
             }`}
             aria-hidden={!revealDiscovery}
           >
@@ -158,7 +176,7 @@ export default function HomeTabsClient({
       </section>
 
       <div
-        className={`demaa-discovery-hidden transition-all duration-500 ease-out ${
+        className={`demaa-discovery-hidden transition-all duration-[1200ms] delay-200 [transition-timing-function:cubic-bezier(0.19,1,0.22,1)] ${
           revealDiscovery
             ? "max-h-[220rem] translate-y-0 opacity-100"
             : "max-h-0 translate-y-3 overflow-hidden opacity-0 pointer-events-none"
