@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import SearchFilterControls from "@/components/SearchFilterControls";
 import SystemsCatalogClient from "@/components/SystemsCatalogClient";
 import { ALL_SECTORS_LABEL } from "@/lib/public-sectors";
@@ -30,6 +30,10 @@ export default function HomeTabsClient({
   systems,
   detailsBySlug,
 }: HomeTabsClientProps) {
+  const [typedTitle, setTypedTitle] = useState("");
+  const [showArrow, setShowArrow] = useState(false);
+  const [showDiscoveryControls, setShowDiscoveryControls] = useState(false);
+  const [showSystems, setShowSystems] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeSector, setActiveSector] = useState(ALL_SECTORS_LABEL);
   const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false);
@@ -49,12 +53,98 @@ export default function HomeTabsClient({
       ? "Entrez votre activité pour renforcer vos systèmes"
       : "Entrez votre activité pour voir les bons systèmes";
 
+  useEffect(() => {
+    if (!selectedResponse) {
+      return;
+    }
+
+    const fullTitle = selectedResponse.title;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (prefersReducedMotion) {
+      const revealImmediately = window.setTimeout(() => {
+        setTypedTitle(fullTitle);
+        setShowArrow(true);
+      }, 0);
+
+      return () => {
+        window.clearTimeout(revealImmediately);
+      };
+    }
+
+    let titleIndex = 0;
+    let typingTimer: number | null = null;
+    let arrowTimer: number | null = null;
+    const frameDelay = fullTitle.length > 50 ? 18 : 24;
+    const typingStart = window.setTimeout(() => {
+      typingTimer = window.setInterval(() => {
+        titleIndex += 1;
+        setTypedTitle(fullTitle.slice(0, titleIndex));
+
+        if (titleIndex >= fullTitle.length) {
+          if (typingTimer) {
+            window.clearInterval(typingTimer);
+          }
+          arrowTimer = window.setTimeout(() => {
+            setShowArrow(true);
+          }, 180);
+        }
+      }, frameDelay);
+    }, 120);
+
+    return () => {
+      window.clearTimeout(typingStart);
+      if (typingTimer) {
+        window.clearInterval(typingTimer);
+      }
+      if (arrowTimer) {
+        window.clearTimeout(arrowTimer);
+      }
+    };
+  }, [selectedResponse]);
+
+  useEffect(() => {
+    if (!selectedResponse || !showArrow) {
+      return;
+    }
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (prefersReducedMotion) {
+      const revealImmediately = window.setTimeout(() => {
+        setShowDiscoveryControls(true);
+        setShowSystems(true);
+      }, 0);
+
+      return () => {
+        window.clearTimeout(revealImmediately);
+      };
+    }
+
+    const controlsTimer = window.setTimeout(() => {
+      setShowDiscoveryControls(true);
+    }, 140);
+
+    const systemsTimer = window.setTimeout(() => {
+      setShowSystems(true);
+    }, 280);
+
+    return () => {
+      window.clearTimeout(controlsTimer);
+      window.clearTimeout(systemsTimer);
+    };
+  }, [selectedResponse, showArrow]);
+
   function selectSector(sector: string) {
     setActiveSector(sector);
     setIsFilterPanelOpen(false);
   }
 
   function handleAnswer(nextAnswer: Exclude<DiagnosticAnswer, null>) {
+    setTypedTitle("");
+    setShowArrow(false);
+    setShowDiscoveryControls(false);
+    setShowSystems(false);
     setAnswer(nextAnswer);
   }
 
@@ -132,20 +222,32 @@ export default function HomeTabsClient({
           >
             {selectedResponse ? (
               <div className="mx-auto max-w-3xl">
-                <p className="text-base font-semibold text-brand-blue">{selectedResponse.title}</p>
+                <p
+                  className="text-base font-semibold text-brand-blue"
+                  aria-label={selectedResponse.title}
+                >
+                  <span>{typedTitle}</span>
+                  {!showArrow ? (
+                    <span className="ml-0.5 inline-block h-[1em] w-px translate-y-[2px] animate-pulse bg-brand-blue/70 align-baseline" />
+                  ) : null}
+                </p>
                 {selectedResponse.body ? (
                   <p className="mt-2 text-sm leading-6 text-brand-blue/62 sm:text-base">
                     {selectedResponse.body}
                   </p>
                 ) : null}
-                <div className="pointer-events-none mt-2 flex justify-center">
+                <div
+                  className={`pointer-events-none mt-2 flex justify-center transition-all duration-500 ${
+                    showArrow ? "translate-y-0 opacity-100" : "translate-y-1 opacity-0"
+                  }`}
+                >
                   <Image
                     src="/images/home/hand-arrow.png"
                     alt=""
                     aria-hidden="true"
                     width={112}
                     height={70}
-                    className="h-12 w-28 object-contain demaa-arrow-nudge"
+                    className={`h-12 w-28 object-contain ${showArrow ? "demaa-arrow-nudge" : ""}`}
                   />
                 </div>
               </div>
@@ -154,11 +256,11 @@ export default function HomeTabsClient({
 
           <div
             className={`demaa-discovery-hidden transition-all duration-[1050ms] delay-150 [transition-timing-function:cubic-bezier(0.19,1,0.22,1)] ${
-              revealDiscovery
+              showDiscoveryControls
                 ? "mt-0 max-h-40 translate-y-0 opacity-100"
                 : "mt-[-0.35rem] max-h-0 translate-y-2 overflow-hidden opacity-0 pointer-events-none"
             }`}
-            aria-hidden={!revealDiscovery}
+            aria-hidden={!showDiscoveryControls}
           >
             <SearchFilterControls
               value={searchQuery}
@@ -177,11 +279,11 @@ export default function HomeTabsClient({
 
       <div
         className={`demaa-discovery-hidden transition-all duration-[1200ms] delay-200 [transition-timing-function:cubic-bezier(0.19,1,0.22,1)] ${
-          revealDiscovery
+          showSystems
             ? "max-h-[220rem] translate-y-0 opacity-100"
             : "max-h-0 translate-y-3 overflow-hidden opacity-0 pointer-events-none"
         }`}
-        aria-hidden={!revealDiscovery}
+        aria-hidden={!showSystems}
       >
         <SystemsCatalogClient
           systems={systems}
