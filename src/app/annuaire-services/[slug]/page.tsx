@@ -37,14 +37,19 @@ export async function generateMetadata({
     };
   }
 
+  const isAssistantLanding = service.slug === "assistant-polyvalent";
+  const metadataTitle = isAssistantLanding
+    ? `${service.name} - Demaa`
+    : `${service.name} - Annuaire services Demaa`;
+
   return {
-    title: `${service.name} - Annuaire services Demaa`,
+    title: metadataTitle,
     description: service.description,
     alternates: {
       canonical: `/annuaire-services/${service.slug}`,
     },
     openGraph: {
-      title: `${service.name} - Annuaire services Demaa`,
+      title: metadataTitle,
       description: service.description,
       url: `/annuaire-services/${service.slug}`,
       siteName: "Demaa",
@@ -53,7 +58,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: `${service.name} - Annuaire services Demaa`,
+      title: metadataTitle,
       description: service.description,
     },
   };

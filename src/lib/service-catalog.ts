@@ -251,22 +251,23 @@ export const demaaServices = [
   },
   {
     slug: "assistant-polyvalent",
-    name: "Assistant polyvalent",
+    name: "Recruter un assistant polyvalent",
     category: "Support opérationnel",
-    shortDescription: "Déléguer les tâches récurrentes du quotidien.",
+    shortDescription:
+      "Déléguez vos tâches administratives à une professionnelle formée, sans supporter le coût d'une embauche classique.",
     description:
-      "Support opérationnel pour traiter les tâches administratives, suivi client, relances, coordination, saisie, préparation de documents ou back-office.",
+      "Déléguez vos tâches administratives à une professionnelle formée, sans supporter le coût d'une embauche classique.",
     bestFor:
-      "Les dirigeants qui manquent de temps et veulent déléguer sans recruter immédiatement.",
+      "Les dirigeants qui veulent récupérer du temps sans supporter le coût plein d'une embauche classique.",
     price: "Sur devis",
-    tags: ["Assistant", "Back-office", "Support"],
+    tags: ["Assistant", "Recrutement", "Délégation"],
     icon: "UserRoundCheck",
     deliverables: [
-      "Liste de tâches déléguables",
-      "Rituel de suivi",
-      "Exécution opérationnelle",
+      "Tâches administratives déléguées",
+      "Parcours encadré et sécurisé",
+      "Renfort adapté à vos besoins réels",
     ],
-    usefulFor: ["Admin", "Relances", "Coordination", "Back-office"],
+    usefulFor: ["Délégation", "Admin", "Temps gagné", "Renfort"],
   },
 ] satisfies DemaaService[];
 

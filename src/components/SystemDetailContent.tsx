@@ -3,11 +3,9 @@
 import Link from "next/link";
 import { startTransition, useMemo, useState, type MouseEvent } from "react";
 import { FileText, GraduationCap } from "lucide-react";
-import DeleguerPricingPreviewModal from "@/components/DeleguerPricingPreviewModal";
 import FinanceDetailDialog from "@/components/FinanceDetailDialog";
 import PartnerOffersForm from "@/components/PartnerOffersForm";
 import ProNetworkDetailDialog from "@/components/ProNetworkDetailDialog";
-import ServiceDetailDialog from "@/components/ServiceDetailDialog";
 import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
 import SupplierDetailDialog from "@/components/SupplierDetailDialog";
 import { ServiceIcon } from "@/components/ServiceIcon";
@@ -377,11 +375,9 @@ export default function SystemDetailContent({
         : "outils";
   const [activeTab, setActiveTab] = useState<SystemDetailTab>(defaultTab);
   const [selectedToolDetail, setSelectedToolDetail] = useState<ToolDirectoryItem | null>(null);
-  const [selectedServiceDetail, setSelectedServiceDetail] = useState<DemaaService | null>(null);
   const [selectedSupplierDetail, setSelectedSupplierDetail] = useState<DemaaSupplier | null>(null);
   const [selectedFinanceDetail, setSelectedFinanceDetail] = useState<DemaaFinanceItem | null>(null);
   const [selectedProNetworkDetail, setSelectedProNetworkDetail] = useState<DemaaProNetwork | null>(null);
-  const [isDeleguerPricingOpen, setIsDeleguerPricingOpen] = useState(false);
   const recommendedServices = useMemo(
     () => (activeTab === "services" ? getRecommendedServicesForSystem(system.slug) : []),
     [activeTab, system.slug]
@@ -461,18 +457,15 @@ export default function SystemDetailContent({
   }
 
   function renderServiceCard(service: DemaaService) {
-    return (
-      <button
-        type="button"
-        key={service.slug}
-        onClick={() => {
-          if (service.slug === "organisation-automatisation") {
-            setIsDeleguerPricingOpen(true);
-            return;
-          }
+    const href =
+      service.slug === "organisation-automatisation"
+        ? "/organisation-automatisation"
+        : `/annuaire-services/${service.slug}`;
 
-          setSelectedServiceDetail(service);
-        }}
+    return (
+      <Link
+        key={service.slug}
+        href={href}
         className="demaa-card group flex min-h-[15rem] flex-col rounded-[1.15rem] p-5 text-left"
       >
         <div className="flex items-start justify-between gap-4">
@@ -496,7 +489,7 @@ export default function SystemDetailContent({
             </span>
           </div>
         ) : null}
-      </button>
+      </Link>
     );
   }
 
@@ -819,10 +812,6 @@ export default function SystemDetailContent({
           </div>
         ) : activeTab === "services" ? (
           <div className="space-y-5">
-            {renderBrowseAllLink({
-              browseHref: `/annuaire-services?retourSysteme=${encodeURIComponent(system.slug)}`,
-              browseLabel: "Voir tous les services",
-            })}
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
               {recommendedServices.map(renderServiceCard)}
             </div>
@@ -886,14 +875,6 @@ export default function SystemDetailContent({
         <SoftwareDetailDialog tool={selectedToolDetail} onClose={() => setSelectedToolDetail(null)} />
       ) : null}
 
-      {selectedServiceDetail ? (
-        <ServiceDetailDialog
-          service={selectedServiceDetail}
-          source={`Système ${system.name}`}
-          onClose={() => setSelectedServiceDetail(null)}
-        />
-      ) : null}
-
       {selectedSupplierDetail ? (
         <SupplierDetailDialog
           supplier={selectedSupplierDetail}
@@ -913,10 +894,6 @@ export default function SystemDetailContent({
           network={selectedProNetworkDetail}
           onClose={() => setSelectedProNetworkDetail(null)}
         />
-      ) : null}
-
-      {isDeleguerPricingOpen ? (
-        <DeleguerPricingPreviewModal onClose={() => setIsDeleguerPricingOpen(false)} />
       ) : null}
     </>
   );

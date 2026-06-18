@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import { ArrowRight, Check, CircleDollarSign, Clock3, FolderKanban, Mail, ShieldCheck } from "lucide-react";
 import Navbar from "@/components/Navbar";
@@ -80,7 +79,7 @@ export default function AssistantPolyvalentLanding({
               <h1 className="mt-4 text-[clamp(3rem,14.5vw,3.36rem)] leading-[0.92] tracking-tight sm:text-[2.75rem] md:text-[3.75rem] lg:text-[4.5rem]">
                 <span className="demaa-hero-title text-brand-blue/86">Recrutez</span>
                 <br />
-                <span className="demaa-hero-title text-dema-forest">une assistante</span>
+                <span className="demaa-hero-title text-brand-blue/86">une assistante</span>
                 <br />
                 <span className="font-sans font-light not-italic text-brand-blue/56">
                   polyvalente.
@@ -104,19 +103,20 @@ export default function AssistantPolyvalentLanding({
               </div>
 
               <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
-                <a
-                  href="#comparaison"
-                  className="inline-flex min-w-[13rem] items-center justify-center rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper transition hover:bg-brand-blue"
-                >
-                  Voir l&apos;estimation
-                </a>
                 <button
                   type="button"
                   onClick={() => setIsIntroductionOpen(true)}
+                  className="inline-flex min-w-[13rem] items-center justify-center rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper transition hover:bg-brand-blue"
+                >
+                  Prendre rendez-vous
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </button>
+                <a
+                  href="#comparaison"
                   className="inline-flex min-w-[13rem] items-center justify-center rounded-full border border-dema-line bg-dema-paper px-5 py-3 text-sm font-semibold text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
                 >
-                  Parler à un conseiller
-                </button>
+                  Voir l&apos;estimation
+                </a>
               </div>
               <p className="mt-3 text-xs leading-relaxed text-dema-muted">
                 Simulation indicative et sans engagement.
@@ -236,15 +236,9 @@ export default function AssistantPolyvalentLanding({
                     onClick={() => setIsIntroductionOpen(true)}
                     className="demaa-primary-button inline-flex items-center gap-2 px-5 py-3"
                   >
-                    Parler à un conseiller
+                    Prendre rendez-vous
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </button>
-                  <Link
-                    href="/annuaire-services"
-                    className="inline-flex items-center justify-center rounded-full border border-dema-line bg-dema-paper px-5 py-3 text-sm font-semibold text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
-                  >
-                    Retour aux services
-                  </Link>
                 </div>
               </div>
             </div>

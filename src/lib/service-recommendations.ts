@@ -1,5 +1,4 @@
 import {
-  demaaServices,
   getDemaaServiceBySlug,
   type DemaaService,
   type DemaaServiceSlug,
@@ -9,12 +8,14 @@ type ServiceRecommendationRule = {
   order: readonly DemaaServiceSlug[];
 };
 
-const DEFAULT_SERVICE_ORDER = [
-  "site-web",
-  "marketing-vente",
+const SYSTEM_VISIBLE_SERVICE_SLUGS = [
   "organisation-automatisation",
   "assistant-polyvalent",
-  "publicite-google",
+] satisfies DemaaServiceSlug[];
+
+const DEFAULT_SERVICE_ORDER = [
+  "organisation-automatisation",
+  "assistant-polyvalent",
 ] satisfies DemaaServiceSlug[];
 
 const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRule> = {
@@ -609,13 +610,19 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
 
 export function getRecommendedServicesForSystem(systemSlug: string): DemaaService[] {
   const rule = SERVICE_RECOMMENDATIONS_BY_SYSTEM[systemSlug];
-  const order = [
-    "organisation-automatisation",
-    ...(rule?.order ?? DEFAULT_SERVICE_ORDER),
-  ].filter((slug, index, list) => list.indexOf(slug) === index);
+  const order = (rule?.order ?? DEFAULT_SERVICE_ORDER).filter(
+    (slug, index, list) =>
+      SYSTEM_VISIBLE_SERVICE_SLUGS.includes(slug) && list.indexOf(slug) === index
+  );
   const recommended = order
     .map((slug) => getDemaaServiceBySlug(slug))
     .filter((service): service is DemaaService => Boolean(service));
 
-  return recommended.length ? recommended : [...demaaServices.slice(0, 6)];
+  if (recommended.length) {
+    return recommended;
+  }
+
+  return SYSTEM_VISIBLE_SERVICE_SLUGS
+    .map((slug) => getDemaaServiceBySlug(slug))
+    .filter((service): service is DemaaService => Boolean(service));
 }
