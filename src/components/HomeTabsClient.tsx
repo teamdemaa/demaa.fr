@@ -44,6 +44,10 @@ export default function HomeTabsClient({
 
   const effectiveActiveSector = sectorFilters.includes(activeSector) ? activeSector : ALL_SECTORS_LABEL;
   const selectedResponse = answer ? responseContent[answer] : null;
+  const searchPlaceholder =
+    answer === "yes"
+      ? "Entrez votre activité pour renforcer vos systèmes"
+      : "Entrez votre activité pour voir les bons systèmes";
 
   function selectSector(sector: string) {
     setActiveSector(sector);
@@ -54,8 +58,23 @@ export default function HomeTabsClient({
     setAnswer(nextAnswer);
   }
 
+  const revealDiscovery = Boolean(answer);
+
   return (
     <>
+      <noscript>
+        <style>{`
+          .demaa-discovery-hidden {
+            opacity: 1 !important;
+            max-height: none !important;
+            overflow: visible !important;
+            transform: none !important;
+            pointer-events: auto !important;
+            margin-top: 0 !important;
+          }
+        `}</style>
+      </noscript>
+
       <section className="ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] w-screen bg-dema-cream px-4 pb-3 pt-3.5 text-center md:px-8 md:pb-3 md:pt-11">
         <div className="mx-auto max-w-6xl space-y-6 md:space-y-7">
           <div className="mx-auto max-w-5xl">
@@ -115,10 +134,17 @@ export default function HomeTabsClient({
             </div>
           ) : null}
 
-          <div>
+          <div
+            className={`demaa-discovery-hidden transition-all duration-500 ease-out ${
+              revealDiscovery
+                ? "mt-0 max-h-40 translate-y-0 opacity-100"
+                : "mt-[-0.75rem] max-h-0 translate-y-2 overflow-hidden opacity-0 pointer-events-none"
+            }`}
+            aria-hidden={!revealDiscovery}
+          >
             <SearchFilterControls
               value={searchQuery}
-              placeholder="Entrez votre activité pour voir les bons systèmes"
+              placeholder={searchPlaceholder}
               activeFilter={effectiveActiveSector}
               defaultFilter={ALL_SECTORS_LABEL}
               isFilterOpen={isFilterPanelOpen}
@@ -131,16 +157,25 @@ export default function HomeTabsClient({
         </div>
       </section>
 
-      <SystemsCatalogClient
-        systems={systems}
-        detailsBySlug={detailsBySlug}
-        showIntro={false}
-        searchQuery={searchQuery}
-        onSearchQueryChange={setSearchQuery}
-        activeSector={effectiveActiveSector}
-        onActiveSectorChange={selectSector}
-        showSearchBar={false}
-      />
+      <div
+        className={`demaa-discovery-hidden transition-all duration-500 ease-out ${
+          revealDiscovery
+            ? "max-h-[220rem] translate-y-0 opacity-100"
+            : "max-h-0 translate-y-3 overflow-hidden opacity-0 pointer-events-none"
+        }`}
+        aria-hidden={!revealDiscovery}
+      >
+        <SystemsCatalogClient
+          systems={systems}
+          detailsBySlug={detailsBySlug}
+          showIntro={false}
+          searchQuery={searchQuery}
+          onSearchQueryChange={setSearchQuery}
+          activeSector={effectiveActiveSector}
+          onActiveSectorChange={selectSector}
+          showSearchBar={false}
+        />
+      </div>
     </>
   );
 }
