@@ -1,4 +1,12 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import {
+  HOME_DISCOVERY_UNLOCKED_EVENT,
+  readHomeDiscoveryState,
+} from "@/lib/home-discovery";
 import { visiblePrimaryNavigationItems } from "@/lib/navigation";
 
 const mainLinks = [
@@ -13,12 +21,40 @@ const mainLinks = [
 const contentLinks = [
   { label: "Ressources", href: "/ressources" },
   { label: "Cours", href: "/cours" },
-  { label: "Recevoir les tarifs négociés", href: "/offres-partenaires" },
 ];
 
 export default function Footer() {
+  const pathname = usePathname();
   const currentYear = new Date().getFullYear();
   const linkClass = "text-sm text-neutral-500 transition-colors hover:text-neutral-950";
+  const [isHomeVisible, setIsHomeVisible] = useState(false);
+
+  useEffect(() => {
+    if (pathname !== "/") {
+      return;
+    }
+
+    const syncTimer = window.setTimeout(() => {
+      setIsHomeVisible(Boolean(readHomeDiscoveryState()?.seen));
+    }, 0);
+
+    function handleHomeDiscoveryUnlocked() {
+      setIsHomeVisible(true);
+    }
+
+    window.addEventListener(HOME_DISCOVERY_UNLOCKED_EVENT, handleHomeDiscoveryUnlocked);
+
+    return () => {
+      window.clearTimeout(syncTimer);
+      window.removeEventListener(HOME_DISCOVERY_UNLOCKED_EVENT, handleHomeDiscoveryUnlocked);
+    };
+  }, [pathname]);
+
+  const isVisible = pathname !== "/" || isHomeVisible;
+
+  if (!isVisible) {
+    return null;
+  }
 
   return (
     <footer className="mt-auto border-t border-neutral-200 bg-white py-16 text-neutral-950">

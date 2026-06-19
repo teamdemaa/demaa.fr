@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { ArrowUpRight, Check, X } from "lucide-react";
 import { useState } from "react";
-import DeleguerPricingPreviewModal from "@/components/DeleguerPricingPreviewModal";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import ServiceIntroductionModal from "@/components/ServiceIntroductionModal";
 import type { DemaaService } from "@/lib/service-catalog";
@@ -20,7 +19,6 @@ export default function ServiceDetailDialog({
   onClose,
 }: ServiceDetailDialogProps) {
   const [isIntroductionOpen, setIsIntroductionOpen] = useState(false);
-  const [isPricingPreviewOpen, setIsPricingPreviewOpen] = useState(false);
   const serviceSource =
     service.slug === "organisation-automatisation" ? "Demaa" : "Partenaire";
   const isOrganisationService = service.slug === "organisation-automatisation";
@@ -103,14 +101,13 @@ export default function ServiceDetailDialog({
                   {service.bestFor}
                 </p>
                 {isOrganisationService ? (
-                  <button
-                    type="button"
-                    onClick={() => setIsPricingPreviewOpen(true)}
+                  <Link
+                    href="/organisation-automatisation"
                     className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper transition hover:bg-brand-blue"
                   >
-                    Voir le pricing
+                    Voir l&apos;offre
                     <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-                  </button>
+                  </Link>
                 ) : isAssistantLanding ? (
                   <Link
                     href={`/annuaire-services/${service.slug}`}
@@ -140,9 +137,6 @@ export default function ServiceDetailDialog({
           source={source}
           onClose={() => setIsIntroductionOpen(false)}
         />
-      ) : null}
-      {isPricingPreviewOpen ? (
-        <DeleguerPricingPreviewModal onClose={() => setIsPricingPreviewOpen(false)} />
       ) : null}
     </>
   );

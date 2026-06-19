@@ -8,15 +8,18 @@ type ServiceRecommendationRule = {
   order: readonly DemaaServiceSlug[];
 };
 
-const SYSTEM_VISIBLE_SERVICE_SLUGS = [
-  "organisation-automatisation",
+const UNIVERSAL_SERVICE_SLUGS = [
   "assistant-polyvalent",
 ] satisfies DemaaServiceSlug[];
 
 const DEFAULT_SERVICE_ORDER = [
-  "organisation-automatisation",
   "assistant-polyvalent",
+  "site-web",
+  "marketing-vente",
+  "previsionnel-financier",
 ] satisfies DemaaServiceSlug[];
+
+const MAX_SERVICES_PER_SYSTEM = 4;
 
 const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRule> = {
   "cabinet-comptable": {
@@ -610,11 +613,19 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
 
 export function getRecommendedServicesForSystem(systemSlug: string): DemaaService[] {
   const rule = SERVICE_RECOMMENDATIONS_BY_SYSTEM[systemSlug];
-  const order = (rule?.order ?? DEFAULT_SERVICE_ORDER).filter(
-    (slug, index, list) =>
-      SYSTEM_VISIBLE_SERVICE_SLUGS.includes(slug) && list.indexOf(slug) === index
+  const dedupedOrder = (rule?.order ?? DEFAULT_SERVICE_ORDER).filter(
+    (slug, index, list) => list.indexOf(slug) === index
   );
-  const recommended = order
+  const specificServiceSlugs = dedupedOrder.filter(
+    (slug) => !UNIVERSAL_SERVICE_SLUGS.includes(slug)
+  );
+  const universalServiceSlugs = UNIVERSAL_SERVICE_SLUGS.filter(
+    (slug) =>
+      dedupedOrder.includes(slug) ||
+      (!rule && DEFAULT_SERVICE_ORDER.includes(slug))
+  );
+  const recommended = [...universalServiceSlugs, ...specificServiceSlugs]
+    .slice(0, MAX_SERVICES_PER_SYSTEM)
     .map((slug) => getDemaaServiceBySlug(slug))
     .filter((service): service is DemaaService => Boolean(service));
 
@@ -622,7 +633,7 @@ export function getRecommendedServicesForSystem(systemSlug: string): DemaaServic
     return recommended;
   }
 
-  return SYSTEM_VISIBLE_SERVICE_SLUGS
+  return DEFAULT_SERVICE_ORDER.slice(0, MAX_SERVICES_PER_SYSTEM)
     .map((slug) => getDemaaServiceBySlug(slug))
     .filter((service): service is DemaaService => Boolean(service));
 }

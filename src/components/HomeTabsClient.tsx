@@ -1,9 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import SearchFilterControls from "@/components/SearchFilterControls";
 import SystemsCatalogClient from "@/components/SystemsCatalogClient";
+import {
+  HOME_DISCOVERY_UNLOCKED_EVENT,
+  readHomeDiscoveryState,
+  writeHomeDiscoveryState,
+  type HomeDiscoveryAnswer,
+} from "@/lib/home-discovery";
 import { ALL_SECTORS_LABEL } from "@/lib/public-sectors";
 import type { OperationalSystemDetail } from "@/lib/system-operations";
 import type { System } from "@/lib/types";
@@ -13,7 +19,7 @@ type HomeTabsClientProps = {
   detailsBySlug: Record<string, OperationalSystemDetail>;
 };
 
-type DiagnosticAnswer = "yes" | "no" | null;
+type DiagnosticAnswer = HomeDiscoveryAnswer | null;
 
 const responseContent: Record<Exclude<DiagnosticAnswer, null>, { title: string; body: string }> = {
   yes: {
@@ -31,9 +37,11 @@ export default function HomeTabsClient({
   detailsBySlug,
 }: HomeTabsClientProps) {
   const [typedTitle, setTypedTitle] = useState("");
+  const [isRestoredFromStorage, setIsRestoredFromStorage] = useState(false);
   const [showArrow, setShowArrow] = useState(false);
   const [showDiscoveryControls, setShowDiscoveryControls] = useState(false);
   const [showSystems, setShowSystems] = useState(false);
+  const [isDiscoveryInitialized, setIsDiscoveryInitialized] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeSector, setActiveSector] = useState(ALL_SECTORS_LABEL);
   const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false);
@@ -53,8 +61,35 @@ export default function HomeTabsClient({
       ? "Entrez votre activité pour renforcer vos systèmes"
       : "Entrez votre activité pour voir les bons systèmes";
 
+  useLayoutEffect(() => {
+    const storedState = readHomeDiscoveryState();
+    const restoreTimer = window.setTimeout(() => {
+      if (storedState?.seen) {
+        const storedResponse = responseContent[storedState.answer];
+
+        setIsRestoredFromStorage(true);
+        setAnswer(storedState.answer);
+        setTypedTitle(storedResponse.title);
+        setShowArrow(true);
+        setShowDiscoveryControls(true);
+        setShowSystems(true);
+      }
+
+      setIsDiscoveryInitialized(true);
+    }, 0);
+
+    return () => {
+      window.clearTimeout(restoreTimer);
+    };
+  }, []);
+
   useEffect(() => {
-    if (!selectedResponse) {
+    if (
+      !selectedResponse ||
+      !isDiscoveryInitialized ||
+      isRestoredFromStorage ||
+      typedTitle === selectedResponse.title
+    ) {
       return;
     }
 
@@ -75,7 +110,7 @@ export default function HomeTabsClient({
     let titleIndex = 0;
     let typingTimer: number | null = null;
     let arrowTimer: number | null = null;
-    const frameDelay = fullTitle.length > 50 ? 18 : 24;
+    const frameDelay = fullTitle.length > 50 ? 34 : 42;
     const typingStart = window.setTimeout(() => {
       typingTimer = window.setInterval(() => {
         titleIndex += 1;
@@ -87,10 +122,10 @@ export default function HomeTabsClient({
           }
           arrowTimer = window.setTimeout(() => {
             setShowArrow(true);
-          }, 180);
+          }, 420);
         }
       }, frameDelay);
-    }, 120);
+    }, 220);
 
     return () => {
       window.clearTimeout(typingStart);
@@ -101,7 +136,7 @@ export default function HomeTabsClient({
         window.clearTimeout(arrowTimer);
       }
     };
-  }, [selectedResponse]);
+  }, [isDiscoveryInitialized, isRestoredFromStorage, selectedResponse, typedTitle]);
 
   useEffect(() => {
     if (!selectedResponse || !showArrow) {
@@ -123,11 +158,11 @@ export default function HomeTabsClient({
 
     const controlsTimer = window.setTimeout(() => {
       setShowDiscoveryControls(true);
-    }, 140);
+    }, 320);
 
     const systemsTimer = window.setTimeout(() => {
       setShowSystems(true);
-    }, 280);
+    }, 760);
 
     return () => {
       window.clearTimeout(controlsTimer);
@@ -141,11 +176,14 @@ export default function HomeTabsClient({
   }
 
   function handleAnswer(nextAnswer: Exclude<DiagnosticAnswer, null>) {
+    setIsRestoredFromStorage(false);
     setTypedTitle("");
     setShowArrow(false);
     setShowDiscoveryControls(false);
     setShowSystems(false);
     setAnswer(nextAnswer);
+    writeHomeDiscoveryState(nextAnswer);
+    window.dispatchEvent(new Event(HOME_DISCOVERY_UNLOCKED_EVENT));
   }
 
   const revealDiscovery = Boolean(answer);
@@ -166,7 +204,9 @@ export default function HomeTabsClient({
       </noscript>
 
       <section
-        className={`ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] w-screen bg-dema-cream px-4 text-center transition-[padding] duration-[1200ms] [transition-timing-function:cubic-bezier(0.19,1,0.22,1)] md:px-8 ${
+        className={`ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] w-screen bg-dema-cream px-4 text-center transition-[padding,opacity] duration-[1200ms] [transition-timing-function:cubic-bezier(0.19,1,0.22,1)] md:px-8 ${
+          isDiscoveryInitialized ? "opacity-100" : "opacity-0"
+        } ${
           revealDiscovery ? "pb-3 pt-3.5 md:pb-3 md:pt-11" : "pb-10 pt-6 md:pb-14 md:pt-10"
         }`}
       >
@@ -255,10 +295,10 @@ export default function HomeTabsClient({
           </div>
 
           <div
-            className={`demaa-discovery-hidden transition-all duration-[1050ms] delay-150 [transition-timing-function:cubic-bezier(0.19,1,0.22,1)] ${
+            className={`demaa-discovery-hidden transition-all duration-[1500ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] ${
               showDiscoveryControls
                 ? "mt-0 max-h-40 translate-y-0 opacity-100"
-                : "mt-[-0.35rem] max-h-0 translate-y-2 overflow-hidden opacity-0 pointer-events-none"
+                : "mt-[-0.2rem] max-h-0 translate-y-1 overflow-hidden opacity-0 pointer-events-none"
             }`}
             aria-hidden={!showDiscoveryControls}
           >
@@ -278,10 +318,10 @@ export default function HomeTabsClient({
       </section>
 
       <div
-        className={`demaa-discovery-hidden transition-all duration-[1200ms] delay-200 [transition-timing-function:cubic-bezier(0.19,1,0.22,1)] ${
+        className={`demaa-discovery-hidden transition-all duration-[1800ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] ${
           showSystems
             ? "max-h-[220rem] translate-y-0 opacity-100"
-            : "max-h-0 translate-y-3 overflow-hidden opacity-0 pointer-events-none"
+            : "max-h-0 translate-y-1 overflow-hidden opacity-0 pointer-events-none"
         }`}
         aria-hidden={!showSystems}
       >

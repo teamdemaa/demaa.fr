@@ -100,7 +100,14 @@ export default function AssistantsCatalogClient() {
               </span>
             </h1>
           </div>
-
+          <div className="demaa-fade-up demaa-delay-1">
+            <Link
+              href={GOOGLE_AUDIT_BOOKING_URL}
+              className="demaa-primary-button"
+            >
+              Audit organisation gratuit
+            </Link>
+          </div>
         </div>
       </section>
 

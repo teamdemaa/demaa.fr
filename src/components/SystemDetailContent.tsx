@@ -4,7 +4,6 @@ import Link from "next/link";
 import { startTransition, useMemo, useState, type MouseEvent } from "react";
 import { FileText, GraduationCap } from "lucide-react";
 import FinanceDetailDialog from "@/components/FinanceDetailDialog";
-import PartnerOffersForm from "@/components/PartnerOffersForm";
 import ProNetworkDetailDialog from "@/components/ProNetworkDetailDialog";
 import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
 import SupplierDetailDialog from "@/components/SupplierDetailDialog";
@@ -379,7 +378,12 @@ export default function SystemDetailContent({
   const [selectedFinanceDetail, setSelectedFinanceDetail] = useState<DemaaFinanceItem | null>(null);
   const [selectedProNetworkDetail, setSelectedProNetworkDetail] = useState<DemaaProNetwork | null>(null);
   const recommendedServices = useMemo(
-    () => (activeTab === "services" ? getRecommendedServicesForSystem(system.slug) : []),
+    () =>
+      activeTab === "services"
+        ? getRecommendedServicesForSystem(system.slug).filter(
+            (service) => service.slug === "assistant-polyvalent"
+          )
+        : [],
     [activeTab, system.slug]
   );
   const recommendedSuppliers = useMemo(
@@ -644,35 +648,6 @@ export default function SystemDetailContent({
     );
   }
 
-  function renderPartnerOffersBlock({
-    source,
-  }: {
-    source: string;
-  }) {
-    return (
-      <div>
-        <div className="w-full md:w-2/3 lg:w-1/2 xl:w-1/3">
-          <div className="rounded-[1.15rem] border border-dema-line bg-dema-cream/70 p-5 text-left">
-            <h3 className="text-lg font-semibold text-brand-blue">
-              Bénéficier de tarifs négociés
-            </h3>
-            <p className="mt-2 text-sm leading-relaxed text-dema-muted">
-              Plus on est nombreux, plus on peut faire valoir des réductions
-              intéressantes. Rejoignez la liste pour être informé des tarifs négociés
-              et des offres partenaires utiles.
-            </p>
-            <PartnerOffersForm
-              compact
-              source={source}
-              submitLabel="Recevoir les tarifs négociés"
-              submitClassName="bg-dema-forest hover:bg-[#284f3a] disabled:bg-dema-forest/60"
-            />
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   function renderBrowseAllLink({
     browseHref,
     browseLabel,
@@ -745,7 +720,7 @@ export default function SystemDetailContent({
               ["fournisseurs", "Fournisseurs"],
               ["financement", "Financement"],
               ["reseaux-pro", "Réseaux Pro"],
-              ["services", "Services"],
+              ["services", "Déléguer"],
             ] as Array<[SystemDetailTab, string]>
           ).map(([tab, label]) => (
             <button
@@ -775,18 +750,9 @@ export default function SystemDetailContent({
                 <>
                   {businessTools.length ? (
                     <div>
-                      <div className="flex items-baseline justify-between gap-4">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-                          Outils métier
-                        </p>
-                        <Link
-                          href={`/annuaire-outils?retourSysteme=${encodeURIComponent(system.slug)}`}
-                          className="inline-flex items-center gap-2 text-sm font-medium text-dema-forest transition hover:text-brand-blue"
-                        >
-                          Voir tous les outils
-                          <span aria-hidden="true">→</span>
-                        </Link>
-                      </div>
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
+                        Outils métier
+                      </p>
                       <div className="mt-3 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
                         {businessTools.map(renderToolCard)}
                       </div>
@@ -803,70 +769,76 @@ export default function SystemDetailContent({
                       </div>
                     </div>
                   ) : null}
+
+                  {businessTools.length || transverseTools.length ? (
+                    renderBrowseAllLink({
+                      browseHref: `/annuaire-outils?retourSysteme=${encodeURIComponent(system.slug)}`,
+                      browseLabel: "Voir tous les outils",
+                    })
+                  ) : null}
                 </>
               );
             })()}
-            {renderPartnerOffersBlock({
-              source: `system_tools_${system.slug}`,
-            })}
           </div>
         ) : activeTab === "services" ? (
           <div className="space-y-5">
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
               {recommendedServices.map(renderServiceCard)}
             </div>
-
-            {renderPartnerOffersBlock({
-              source: `system_services_${system.slug}`,
-            })}
+            {recommendedServices.length ? (
+              renderBrowseAllLink({
+                browseHref: `/annuaire-services?retourSysteme=${encodeURIComponent(system.slug)}`,
+                browseLabel: "Voir l'annuaire services",
+              })
+            ) : null}
           </div>
         ) : activeTab === "fournisseurs" ? (
           <div className="space-y-5">
-            {renderBrowseAllLink({
-              browseHref: `/annuaire-fournisseurs?retourSysteme=${encodeURIComponent(system.slug)}`,
-              browseLabel: "Voir tous les fournisseurs",
-            })}
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
               {recommendedSuppliers.map(renderSupplierCard)}
             </div>
-
-            {renderPartnerOffersBlock({
-              source: `system_suppliers_${system.slug}`,
-            })}
+            {recommendedSuppliers.length ? (
+              renderBrowseAllLink({
+                browseHref: `/annuaire-fournisseurs?retourSysteme=${encodeURIComponent(system.slug)}`,
+                browseLabel: "Voir l'annuaire fournisseurs",
+              })
+            ) : null}
           </div>
         ) : activeTab === "financement" ? (
           <div className="space-y-5">
-            {renderBrowseAllLink({
-              browseHref: `/annuaire-financement?retourSysteme=${encodeURIComponent(system.slug)}`,
-              browseLabel: "Voir tous les financements",
-            })}
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
               {recommendedFinance.map(renderFinanceCard)}
             </div>
-
-            {renderPartnerOffersBlock({
-              source: `system_finance_${system.slug}`,
-            })}
+            {recommendedFinance.length ? (
+              renderBrowseAllLink({
+                browseHref: `/annuaire-financement?retourSysteme=${encodeURIComponent(system.slug)}`,
+                browseLabel: "Voir l'annuaire financement",
+              })
+            ) : null}
           </div>
         ) : activeTab === "reseaux-pro" ? (
           <div className="space-y-5">
-            {renderBrowseAllLink({
-              browseHref: `/annuaire-reseaux-pro?retourSysteme=${encodeURIComponent(system.slug)}`,
-              browseLabel: "Voir tous les réseaux pro",
-            })}
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {recommendedProNetworks.map(renderProNetworkCard)}
             </div>
+            {recommendedProNetworks.length ? (
+              renderBrowseAllLink({
+                browseHref: `/annuaire-reseaux-pro?retourSysteme=${encodeURIComponent(system.slug)}`,
+                browseLabel: "Voir l'annuaire réseaux pro",
+              })
+            ) : null}
           </div>
         ) : (
           <div className="space-y-5">
-            {renderBrowseAllLink({
-              browseHref: `/cours?retourSysteme=${encodeURIComponent(system.slug)}`,
-              browseLabel: "Voir tous les cours",
-            })}
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {courses.map(renderCourseCard)}
             </div>
+            {courses.length ? (
+              renderBrowseAllLink({
+                browseHref: `/cours?retourSysteme=${encodeURIComponent(system.slug)}`,
+                browseLabel: "Voir tous les cours",
+              })
+            ) : null}
           </div>
         )}
       </div>

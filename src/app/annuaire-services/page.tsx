@@ -61,7 +61,7 @@ export default async function AnnuaireServicesPage({
           initialCategory={getParamValue(params.category)}
           initialSearch={getParamValue(params.q) ?? ""}
           backLink={backLink}
-          title="Annuaire Services"
+          title="Déléguez avec Sérénité"
           description="Les services Demaa pour confier ce qui prend du temps, sécuriser l'exécution et libérer la croissance."
         />
       </main>

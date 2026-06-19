@@ -119,17 +119,6 @@ export default function ServiceDirectoryClient({
               <PrimaryMobileNav activeTab={activePrimaryTab} />
             </div>
           ) : null}
-          {backLink ? (
-            <div className="mb-4 flex justify-start">
-              <Link
-                href={backLink.href}
-                className="inline-flex items-center gap-2 rounded-full border border-dema-line bg-dema-paper px-3.5 py-2 text-xs font-medium text-brand-blue/70 transition hover:border-dema-forest/25 hover:text-dema-forest"
-              >
-                <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
-                {backLink.label}
-              </Link>
-            </div>
-          ) : null}
           {heroTitleLines ? (
             <div className="mx-auto max-w-5xl">
               <h1 className="text-[clamp(3rem,14.5vw,3.36rem)] tracking-tight leading-[0.92] sm:text-[2.75rem] md:text-[3.75rem] lg:text-[4.5rem]">
@@ -150,15 +139,6 @@ export default function ServiceDirectoryClient({
               <p className="mx-auto mt-2 max-w-2xl text-sm font-normal leading-relaxed text-dema-muted">
                 {description}
               </p>
-              {!backLink ? (
-                <p className="mx-auto mt-3 max-w-2xl text-xs leading-relaxed text-dema-muted">
-                  Vous pouvez aussi partir d&apos;un métier depuis{" "}
-                  <Link href="/" className="font-medium text-dema-forest transition hover:text-brand-blue">
-                    l&apos;annuaire des systèmes
-                  </Link>
-                  .
-                </p>
-              ) : null}
             </>
           )}
 
@@ -212,6 +192,18 @@ export default function ServiceDirectoryClient({
             ))}
           </div>
         )}
+
+        {backLink ? (
+          <div className="mt-8 flex justify-start">
+            <Link
+              href={backLink.href}
+              className="inline-flex items-center gap-2 rounded-full border border-dema-line bg-dema-paper px-3.5 py-2 text-xs font-medium text-brand-blue/70 transition hover:border-dema-forest/25 hover:text-dema-forest"
+            >
+              <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
+              {backLink.label}
+            </Link>
+          </div>
+        ) : null}
       </section>
 
       {selectedService ? (
