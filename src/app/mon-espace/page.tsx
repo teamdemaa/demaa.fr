@@ -55,8 +55,8 @@ export default async function MonEspacePage({ searchParams }: MonEspacePageProps
               Accéder à votre espace membre
             </h1>
             <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-dema-muted">
-              Retrouvez vos tarifs négociés, vos demandes en cours et les offres utiles à
-              votre activité via les annuaires Demaa. Entrez votre email pour recevoir un lien sécurisé.
+              Retrouvez vos demandes en cours et l&apos;accès aux annuaires utiles à votre
+              activité via Demaa. Entrez votre email pour recevoir un lien sécurisé.
             </p>
             {error ? (
               <p className="mt-4 rounded-[0.9rem] border border-dema-forest/15 bg-dema-sage/70 px-4 py-3 text-sm text-dema-forest">

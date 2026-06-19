@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import DemaaWordmark from "@/components/DemaaWordmark";
 import {
   HOME_DISCOVERY_UNLOCKED_EVENT,
   readHomeDiscoveryState,
@@ -63,8 +64,11 @@ export default function Footer() {
           
           {/* Brand Info */}
           <div className="space-y-4">
-            <Link href="/" className="demaa-brand-logo block text-3xl tracking-tight text-neutral-950">
-              Demaa
+            <Link href="/" className="inline-flex">
+              <DemaaWordmark
+                className="text-[2.55rem]"
+                colorClassName="text-brand-blue/56"
+              />
             </Link>
             <p className="demaa-section-title max-w-xs text-lg leading-snug text-neutral-500">
               Utiliser les systèmes à votre avantage pour alléger la charge, libérer du temps et avancer avec plus de sérénité.

@@ -20,6 +20,10 @@ type HomeTabsClientProps = {
 };
 
 type DiagnosticAnswer = HomeDiscoveryAnswer | null;
+type HomeViewMode = "intro" | "landing";
+
+const RETURNING_SEARCH_PLACEHOLDER =
+  "Recherchez votre activité pour trouver les bons systèmes";
 
 const responseContent: Record<Exclude<DiagnosticAnswer, null>, { title: string; body: string }> = {
   yes: {
@@ -36,6 +40,7 @@ export default function HomeTabsClient({
   systems,
   detailsBySlug,
 }: HomeTabsClientProps) {
+  const [homeViewMode, setHomeViewMode] = useState<HomeViewMode>("intro");
   const [typedTitle, setTypedTitle] = useState("");
   const [isRestoredFromStorage, setIsRestoredFromStorage] = useState(false);
   const [showArrow, setShowArrow] = useState(false);
@@ -65,14 +70,13 @@ export default function HomeTabsClient({
     const storedState = readHomeDiscoveryState();
     const restoreTimer = window.setTimeout(() => {
       if (storedState?.seen) {
-        const storedResponse = responseContent[storedState.answer];
-
+        setHomeViewMode("landing");
         setIsRestoredFromStorage(true);
         setAnswer(storedState.answer);
-        setTypedTitle(storedResponse.title);
-        setShowArrow(true);
         setShowDiscoveryControls(true);
         setShowSystems(true);
+      } else {
+        setHomeViewMode("intro");
       }
 
       setIsDiscoveryInitialized(true);
@@ -84,12 +88,7 @@ export default function HomeTabsClient({
   }, []);
 
   useEffect(() => {
-    if (
-      !selectedResponse ||
-      !isDiscoveryInitialized ||
-      isRestoredFromStorage ||
-      typedTitle === selectedResponse.title
-    ) {
+    if (!selectedResponse || !isDiscoveryInitialized || isRestoredFromStorage) {
       return;
     }
 
@@ -136,7 +135,7 @@ export default function HomeTabsClient({
         window.clearTimeout(arrowTimer);
       }
     };
-  }, [isDiscoveryInitialized, isRestoredFromStorage, selectedResponse, typedTitle]);
+  }, [isDiscoveryInitialized, isRestoredFromStorage, selectedResponse]);
 
   useEffect(() => {
     if (!selectedResponse || !showArrow) {
@@ -176,6 +175,7 @@ export default function HomeTabsClient({
   }
 
   function handleAnswer(nextAnswer: Exclude<DiagnosticAnswer, null>) {
+    setHomeViewMode("intro");
     setIsRestoredFromStorage(false);
     setTypedTitle("");
     setShowArrow(false);
@@ -187,6 +187,7 @@ export default function HomeTabsClient({
   }
 
   const revealDiscovery = Boolean(answer);
+  const isReturningVisitorLanding = homeViewMode === "landing";
 
   return (
     <>
@@ -203,119 +204,160 @@ export default function HomeTabsClient({
         `}</style>
       </noscript>
 
-      <section
-        className={`ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] w-screen bg-dema-cream px-4 text-center transition-[padding,opacity] duration-[1200ms] [transition-timing-function:cubic-bezier(0.19,1,0.22,1)] md:px-8 ${
-          isDiscoveryInitialized ? "opacity-100" : "opacity-0"
-        } ${
-          revealDiscovery ? "pb-3 pt-3.5 md:pb-3 md:pt-11" : "pb-10 pt-6 md:pb-14 md:pt-10"
-        }`}
-      >
-        <div
-          className={`mx-auto max-w-6xl space-y-6 transition-[padding,transform] duration-[1400ms] [transition-timing-function:cubic-bezier(0.19,1,0.22,1)] md:space-y-7 ${
-            revealDiscovery
-              ? "translate-y-0 pb-0 pt-0"
-              : "translate-y-0 pb-[18vh] pt-[18vh] md:pb-[20vh] md:pt-[19vh]"
+      {isReturningVisitorLanding ? (
+        <section
+          className={`ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] w-screen bg-dema-cream px-4 pb-6 pt-8 text-center transition-opacity duration-700 md:px-8 md:pb-8 md:pt-14 ${
+            isDiscoveryInitialized ? "opacity-100" : "opacity-0"
           }`}
         >
-          <div className="mx-auto max-w-5xl">
-            <h1 className="text-[clamp(2.25rem,9vw,4.2rem)] leading-[0.98] tracking-tight">
-              <span className="font-sans font-light not-italic text-brand-blue/42">
-                Est-ce que votre entreprise tourne
-              </span>{" "}
-              <span className="demaa-hero-title text-brand-blue/88">
-                même quand vous n&apos;êtes pas là ?
-              </span>
-            </h1>
-          </div>
+          <div className="mx-auto max-w-6xl space-y-6 md:space-y-8">
+            <div className="mx-auto max-w-4xl">
+              <h1 className="text-[clamp(2.4rem,8vw,4.4rem)] leading-[0.96] tracking-tight">
+                <span className="demaa-hero-title text-brand-blue/88">
+                  Structurer efficacement
+                </span>
+                <br />
+                <span className="font-sans font-light not-italic text-brand-blue/56">
+                  votre entreprise
+                </span>
+              </h1>
+              <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-dema-muted md:text-base">
+                Pour que votre entreprise tourne même quand vous n&apos;êtes pas là,
+                <br />
+                mettez en place des systèmes adaptés.
+              </p>
+            </div>
 
-          <div className="flex flex-row items-center justify-center gap-3">
-            <button
-              type="button"
-              onClick={() => handleAnswer("yes")}
-              className={`inline-flex min-h-[2.8rem] min-w-0 flex-1 items-center justify-center rounded-full border px-4 text-[0.95rem] font-medium transition sm:min-h-[2.95rem] sm:flex-none sm:px-7 sm:text-base ${
-                answer === "yes"
-                  ? "border-dema-forest bg-dema-forest text-dema-paper shadow-[0_10px_24px_rgba(49,95,70,0.18)]"
-                  : "border-dema-forest/45 bg-dema-paper text-dema-forest hover:border-dema-forest hover:text-dema-forest"
-              }`}
-            >
-              Oui à peu près
-            </button>
-            <button
-              type="button"
-              onClick={() => handleAnswer("no")}
-              className={`inline-flex min-h-[2.8rem] min-w-0 flex-1 items-center justify-center rounded-full border px-4 text-[0.95rem] font-medium transition sm:min-h-[2.95rem] sm:flex-none sm:px-7 sm:text-base ${
-                answer === "no"
-                  ? "border-dema-forest bg-dema-forest text-dema-paper shadow-[0_10px_24px_rgba(49,95,70,0.18)]"
-                  : "border-dema-forest/45 bg-dema-paper text-dema-forest hover:border-dema-forest hover:text-dema-forest"
-              }`}
-            >
-              Non pas encore
-            </button>
+            <div className="mx-auto max-w-4xl">
+              <SearchFilterControls
+                value={searchQuery}
+                placeholder={RETURNING_SEARCH_PLACEHOLDER}
+                activeFilter={effectiveActiveSector}
+                defaultFilter={ALL_SECTORS_LABEL}
+                isFilterOpen={isFilterPanelOpen}
+                filters={sectorFilters}
+                onChange={setSearchQuery}
+                onFilterClick={() => setIsFilterPanelOpen((current) => !current)}
+                onFilterSelect={selectSector}
+              />
+            </div>
           </div>
-
+        </section>
+      ) : (
+        <section
+          className={`ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] w-screen bg-dema-cream px-4 text-center transition-[padding,opacity] duration-[1200ms] [transition-timing-function:cubic-bezier(0.19,1,0.22,1)] md:px-8 ${
+            isDiscoveryInitialized ? "opacity-100" : "opacity-0"
+          } ${
+            revealDiscovery ? "pb-3 pt-3.5 md:pb-3 md:pt-11" : "pb-10 pt-6 md:pb-14 md:pt-10"
+          }`}
+        >
           <div
-            className={`transition-all duration-[950ms] delay-75 [transition-timing-function:cubic-bezier(0.19,1,0.22,1)] ${
+            className={`mx-auto max-w-6xl space-y-6 transition-[padding,transform] duration-[1400ms] [transition-timing-function:cubic-bezier(0.19,1,0.22,1)] md:space-y-7 ${
               revealDiscovery
-                ? "max-h-48 translate-y-0 opacity-100"
-                : "max-h-0 translate-y-1 overflow-hidden opacity-0 pointer-events-none"
+                ? "translate-y-0 pb-0 pt-0"
+                : "translate-y-0 pb-[18vh] pt-[18vh] md:pb-[20vh] md:pt-[19vh]"
             }`}
           >
-            {selectedResponse ? (
-              <div className="mx-auto max-w-3xl">
-                <p
-                  className="text-base font-semibold text-brand-blue"
-                  aria-label={selectedResponse.title}
-                >
-                  <span>{typedTitle}</span>
-                  {!showArrow ? (
-                    <span className="ml-0.5 inline-block h-[1em] w-px translate-y-[2px] animate-pulse bg-brand-blue/70 align-baseline" />
-                  ) : null}
-                </p>
-                {selectedResponse.body ? (
-                  <p className="mt-2 text-sm leading-6 text-brand-blue/62 sm:text-base">
-                    {selectedResponse.body}
-                  </p>
-                ) : null}
-                <div
-                  className={`pointer-events-none mt-2 flex justify-center transition-all duration-500 ${
-                    showArrow ? "translate-y-0 opacity-100" : "translate-y-1 opacity-0"
-                  }`}
-                >
-                  <Image
-                    src="/images/home/hand-arrow.png"
-                    alt=""
-                    aria-hidden="true"
-                    width={112}
-                    height={70}
-                    className={`h-12 w-28 object-contain ${showArrow ? "demaa-arrow-nudge" : ""}`}
-                  />
-                </div>
-              </div>
-            ) : null}
-          </div>
+            <div className="mx-auto max-w-5xl">
+              <h1 className="text-[clamp(2.25rem,9vw,4.2rem)] leading-[0.98] tracking-tight">
+                <span className="font-sans font-light not-italic text-brand-blue/42">
+                  Est-ce que votre entreprise tourne
+                </span>{" "}
+                <span className="demaa-hero-title text-brand-blue/88">
+                  même quand vous n&apos;êtes pas là ?
+                </span>
+              </h1>
+            </div>
 
-          <div
-            className={`demaa-discovery-hidden transition-all duration-[1500ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] ${
-              showDiscoveryControls
-                ? "mt-0 max-h-40 translate-y-0 opacity-100"
-                : "mt-[-0.2rem] max-h-0 translate-y-1 overflow-hidden opacity-0 pointer-events-none"
-            }`}
-            aria-hidden={!showDiscoveryControls}
-          >
-            <SearchFilterControls
-              value={searchQuery}
-              placeholder={searchPlaceholder}
-              activeFilter={effectiveActiveSector}
-              defaultFilter={ALL_SECTORS_LABEL}
-              isFilterOpen={isFilterPanelOpen}
-              filters={sectorFilters}
-              onChange={setSearchQuery}
-              onFilterClick={() => setIsFilterPanelOpen((current) => !current)}
-              onFilterSelect={selectSector}
-            />
+            <div className="flex flex-row items-center justify-center gap-3">
+              <button
+                type="button"
+                onClick={() => handleAnswer("yes")}
+                className={`inline-flex min-h-[2.8rem] min-w-0 flex-1 items-center justify-center rounded-full border px-4 text-[0.95rem] font-medium transition sm:min-h-[2.95rem] sm:flex-none sm:px-7 sm:text-base ${
+                  answer === "yes"
+                    ? "border-dema-forest bg-dema-forest text-dema-paper shadow-[0_10px_24px_rgba(49,95,70,0.18)]"
+                    : "border-dema-forest/45 bg-dema-paper text-dema-forest hover:border-dema-forest hover:text-dema-forest"
+                }`}
+              >
+                Oui à peu près
+              </button>
+              <button
+                type="button"
+                onClick={() => handleAnswer("no")}
+                className={`inline-flex min-h-[2.8rem] min-w-0 flex-1 items-center justify-center rounded-full border px-4 text-[0.95rem] font-medium transition sm:min-h-[2.95rem] sm:flex-none sm:px-7 sm:text-base ${
+                  answer === "no"
+                    ? "border-dema-forest bg-dema-forest text-dema-paper shadow-[0_10px_24px_rgba(49,95,70,0.18)]"
+                    : "border-dema-forest/45 bg-dema-paper text-dema-forest hover:border-dema-forest hover:text-dema-forest"
+                }`}
+              >
+                Non pas encore
+              </button>
+            </div>
+
+            <div
+              className={`transition-all duration-[950ms] delay-75 [transition-timing-function:cubic-bezier(0.19,1,0.22,1)] ${
+                revealDiscovery
+                  ? "max-h-48 translate-y-0 opacity-100"
+                  : "max-h-0 translate-y-1 overflow-hidden opacity-0 pointer-events-none"
+              }`}
+            >
+              {selectedResponse ? (
+                <div className="mx-auto max-w-3xl">
+                  <p
+                    className="text-base font-semibold text-brand-blue"
+                    aria-label={selectedResponse.title}
+                  >
+                    <span>{typedTitle}</span>
+                    {!showArrow ? (
+                      <span className="ml-0.5 inline-block h-[1em] w-px translate-y-[2px] animate-pulse bg-brand-blue/70 align-baseline" />
+                    ) : null}
+                  </p>
+                  {selectedResponse.body ? (
+                    <p className="mt-2 text-sm leading-6 text-brand-blue/62 sm:text-base">
+                      {selectedResponse.body}
+                    </p>
+                  ) : null}
+                  <div
+                    className={`pointer-events-none mt-2 flex justify-center transition-all duration-500 ${
+                      showArrow ? "translate-y-0 opacity-100" : "translate-y-1 opacity-0"
+                    }`}
+                  >
+                    <Image
+                      src="/images/home/hand-arrow.png"
+                      alt=""
+                      aria-hidden="true"
+                      width={112}
+                      height={70}
+                      className={`h-12 w-28 object-contain ${showArrow ? "demaa-arrow-nudge" : ""}`}
+                    />
+                  </div>
+                </div>
+              ) : null}
+            </div>
+
+            <div
+              className={`demaa-discovery-hidden transition-all duration-[1500ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] ${
+                showDiscoveryControls
+                  ? "mt-0 max-h-40 translate-y-0 opacity-100"
+                  : "mt-[-0.2rem] max-h-0 translate-y-1 overflow-hidden opacity-0 pointer-events-none"
+              }`}
+              aria-hidden={!showDiscoveryControls}
+            >
+              <SearchFilterControls
+                value={searchQuery}
+                placeholder={searchPlaceholder}
+                activeFilter={effectiveActiveSector}
+                defaultFilter={ALL_SECTORS_LABEL}
+                isFilterOpen={isFilterPanelOpen}
+                filters={sectorFilters}
+                onChange={setSearchQuery}
+                onFilterClick={() => setIsFilterPanelOpen((current) => !current)}
+                onFilterSelect={selectSector}
+              />
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <div
         className={`demaa-discovery-hidden transition-all duration-[1800ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] ${

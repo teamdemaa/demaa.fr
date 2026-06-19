@@ -4,7 +4,7 @@ export function BrandLogoPreview() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-dema-cream px-6 py-16">
       <div className="flex w-full max-w-5xl items-center justify-center rounded-[2rem] border border-dema-line/70 bg-dema-cream px-10 py-24">
-        <DemaaWordmark className="text-[clamp(5rem,15vw,10rem)]" />
+        <DemaaWordmark className="text-[clamp(4.25rem,12.75vw,8.5rem)]" />
       </div>
     </div>
   );

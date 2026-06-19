@@ -5,6 +5,7 @@ import { Suspense, useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { Boxes, HandHelping, Search, type LucideIcon } from "lucide-react";
 import DemaaWordmark from "@/components/DemaaWordmark";
+import { readHomeDiscoveryState } from "@/lib/home-discovery";
 import {
   visiblePrimaryNavigationItems,
   type PrimaryNavigationId,
@@ -19,6 +20,7 @@ const tabIcons: Record<PrimaryNavigationId, LucideIcon> = {
 };
 
 const HOME_TAB_SELECT_EVENT = "demaa:home-tab-select";
+const GOOGLE_AUDIT_BOOKING_URL = "https://calendar.app.google/E9WX9qfHxViWZ3uq8";
 
 function getVisibleTab(tabId: string) {
   return visiblePrimaryNavigationItems.find((tab) => tab.id === tabId);
@@ -34,23 +36,30 @@ export default function Navbar({
   const router = useRouter();
   const pathname = usePathname();
   const hasDesktopTabs = !minimal && visiblePrimaryNavigationItems.length > 0;
+  const [showOnHome, setShowOnHome] = useState(pathname !== "/");
 
   useEffect(() => {
     if (pathname === "/") {
-      return;
+      const syncTimer = window.setTimeout(() => {
+        setShowOnHome(Boolean(readHomeDiscoveryState()?.seen));
+      }, 0);
+
+      return () => {
+        window.clearTimeout(syncTimer);
+      };
     }
 
     router.prefetch("/");
   }, [pathname, router]);
 
+  if (pathname === "/" && !showOnHome) {
+    return null;
+  }
+
   return (
     <nav className="sticky top-0 z-40 border-b border-dema-line/70 bg-dema-cream/92 py-1 backdrop-blur-md">
       <div className="mx-auto w-full px-6 md:px-10 lg:px-24">
-        <div
-          className={`relative flex items-center justify-center gap-4 py-3 md:py-4 ${
-            hasDesktopTabs ? "md:justify-between" : "md:justify-center"
-          }`}
-        >
+        <div className="relative flex items-center justify-between gap-4 py-3 md:py-4">
           <Link
             href="/"
             aria-label="Retour à l'accueil"
@@ -58,7 +67,7 @@ export default function Navbar({
             onMouseEnter={() => router.prefetch("/")}
             onFocus={() => router.prefetch("/")}
           >
-            <DemaaWordmark className="text-[1.65rem] sm:text-[2rem]" />
+            <DemaaWordmark className="text-[1.4rem] sm:text-[1.7rem]" />
           </Link>
 
           {hasDesktopTabs && (
@@ -66,6 +75,13 @@ export default function Navbar({
               <DesktopHomeTabsNav mode={homeTabsMode} />
             </Suspense>
           )}
+
+          <Link
+            href={GOOGLE_AUDIT_BOOKING_URL}
+            className="demaa-primary-button shrink-0 px-4 py-2 text-xs sm:px-5 sm:py-2.5 sm:text-sm"
+          >
+            Audit organisation gratuit
+          </Link>
         </div>
       </div>
     </nav>

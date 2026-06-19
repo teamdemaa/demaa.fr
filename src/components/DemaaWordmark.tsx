@@ -5,7 +5,7 @@ type DemaaWordmarkProps = {
 
 export default function DemaaWordmark({
   className = "",
-  colorClassName = "text-brand-blue/86",
+  colorClassName = "text-brand-blue/56",
 }: DemaaWordmarkProps) {
   return (
     <span

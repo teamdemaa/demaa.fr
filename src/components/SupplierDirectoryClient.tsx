@@ -86,17 +86,6 @@ export default function SupplierDirectoryClient({
     <div className="w-full">
       <section className="w-full border-b border-dema-line/65 bg-dema-cream px-4 pb-5 pt-8 md:pt-10">
         <div className="mx-auto max-w-5xl text-center">
-          {backLink ? (
-            <div className="mb-4 flex justify-start">
-              <Link
-                href={backLink.href}
-                className="inline-flex items-center gap-2 rounded-full border border-dema-line bg-dema-paper px-3.5 py-2 text-xs font-medium text-brand-blue/70 transition hover:border-dema-forest/25 hover:text-dema-forest"
-              >
-                <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
-                {backLink.label}
-              </Link>
-            </div>
-          ) : null}
           <h1 className="demaa-section-title text-4xl tracking-tight text-brand-blue md:text-5xl">
             Annuaire fournisseurs
           </h1>
@@ -157,6 +146,18 @@ export default function SupplierDirectoryClient({
             ))}
           </div>
         )}
+
+        {backLink ? (
+          <div className="mt-8 flex justify-start">
+            <Link
+              href={backLink.href}
+              className="inline-flex items-center gap-2 rounded-full border border-dema-line bg-dema-paper px-3.5 py-2 text-xs font-medium text-brand-blue/70 transition hover:border-dema-forest/25 hover:text-dema-forest"
+            >
+              <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
+              {backLink.label}
+            </Link>
+          </div>
+        ) : null}
       </section>
 
       {selectedSupplier ? (

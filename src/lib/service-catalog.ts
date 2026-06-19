@@ -254,11 +254,11 @@ export const demaaServices = [
     name: "Recruter un assistant polyvalent",
     category: "Support opérationnel",
     shortDescription:
-      "Déléguez vos tâches administratives à une professionnelle formée, sans supporter le coût d'une embauche classique.",
+      "Déléguez vos tâches administratives à une professionnelle formée, prête à reprendre les bases utiles de la gestion d'entreprise.",
     description:
-      "Déléguez vos tâches administratives à une professionnelle formée, sans supporter le coût d'une embauche classique.",
+      "Déléguez vos tâches administratives à une professionnelle formée, prête à reprendre les bases utiles de la gestion d'entreprise.",
     bestFor:
-      "Les dirigeants qui veulent récupérer du temps sans supporter le coût plein d'une embauche classique.",
+      "Les dirigeants qui veulent déléguer à la bonne personne, déjà opérationnelle, sans porter seuls toute la montée en compétence.",
     price: "Sur devis",
     tags: ["Assistant", "Recrutement", "Délégation"],
     icon: "UserRoundCheck",
