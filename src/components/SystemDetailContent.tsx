@@ -656,7 +656,7 @@ export default function SystemDetailContent({
     browseLabel: string;
   }) {
     return (
-      <div className="flex justify-start md:justify-end">
+      <div className="flex justify-start">
         <Link
           href={browseHref}
           className="inline-flex items-center gap-2 text-sm font-medium text-dema-forest transition hover:text-brand-blue"
