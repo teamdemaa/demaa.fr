@@ -261,10 +261,10 @@ export default function HomeTabsClient({
             <div className="mx-auto max-w-5xl">
               <h1 className="text-[clamp(2.25rem,9vw,4.2rem)] leading-[0.98] tracking-tight">
                 <span className="font-sans font-light not-italic text-brand-blue/42">
-                  Est-ce que votre entreprise tourne
+                  Est-ce que votre entreprise peut tourner
                 </span>{" "}
                 <span className="demaa-hero-title text-brand-blue/88">
-                  même quand vous n&apos;êtes pas là ?
+                  3 mois sans vous ?
                 </span>
               </h1>
             </div>
@@ -362,7 +362,7 @@ export default function HomeTabsClient({
       <div
         className={`demaa-discovery-hidden transition-all duration-[1800ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] ${
           showSystems
-            ? "max-h-[220rem] translate-y-0 opacity-100"
+            ? "max-h-none translate-y-0 opacity-100"
             : "max-h-0 translate-y-1 overflow-hidden opacity-0 pointer-events-none"
         }`}
         aria-hidden={!showSystems}

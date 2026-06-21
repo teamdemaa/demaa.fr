@@ -117,6 +117,25 @@ export const demaaServices = [
     usefulFor: ["TVA", "Caisse", "Contrôle", "Volume"],
   },
   {
+    slug: "expert-comptable",
+    name: "Expert-comptable",
+    category: "Finance",
+    shortDescription: "Être mis en relation avec le bon cabinet selon votre contexte.",
+    description:
+      "Mise en relation avec un expert-comptable selon votre activité, votre stade, vos enjeux et le type d'accompagnement recherché.",
+    bestFor:
+      "Les dirigeants qui veulent trouver un cabinet adapté pour la création, le suivi courant, la paie, la fiscalité ou un changement d'interlocuteur.",
+    price: "Sur devis",
+    tags: ["Comptabilité", "Mise en relation", "Cabinet"],
+    icon: "Calculator",
+    deliverables: [
+      "Qualification rapide du besoin",
+      "Mise en relation avec un cabinet pertinent",
+      "Prise de rendez-vous cadrée selon le contexte",
+    ],
+    usefulFor: ["Création", "Comptabilité", "Paie", "Fiscalité"],
+  },
+  {
     slug: "site-web",
     name: "Site web",
     category: "Acquisition",
