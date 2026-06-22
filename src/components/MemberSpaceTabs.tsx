@@ -49,6 +49,7 @@ type SavedBriefPayload = {
 type MemberSpaceTabsProps = {
   clearPurchasedCart?: boolean;
   requestCards: RequestCard[];
+  showPaymentSuccess?: boolean;
 };
 
 type MemberTab = "requests";
@@ -136,6 +137,7 @@ function getRequestStatus(input: {
 export default function MemberSpaceTabs({
   clearPurchasedCart = false,
   requestCards,
+  showPaymentSuccess = false,
 }: MemberSpaceTabsProps) {
   const [activeTab, setActiveTab] = useState<MemberTab>("requests");
   const [cards, setCards] = useState<RequestCard[]>(requestCards);
@@ -148,6 +150,12 @@ export default function MemberSpaceTabs({
 
   return (
     <div className="mt-8">
+      {showPaymentSuccess ? (
+        <div className="mb-6 rounded-[1.15rem] border border-dema-forest/15 bg-dema-sage/75 px-5 py-4 text-sm text-dema-forest">
+          Paiement confirmé. Votre commande est bien enregistrée dans votre espace membre.
+        </div>
+      ) : null}
+
       <div className="inline-flex rounded-full border border-dema-line/75 bg-dema-paper p-1 shadow-[0_8px_24px_rgba(23,35,29,0.04)]">
         {tabs.map((tab) => {
           const isActive = activeTab === tab.id;
