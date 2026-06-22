@@ -16,7 +16,7 @@ export const newsletters: NewsletterEntry[] = [
       "Une fois par mois, un résumé des évolutions juridiques, fiscales et comptables à maîtriser, avec les informations clés du mois précédent.",
     frequency: "1 fois par mois",
     publisher: "La veille du Cabinet",
-    href: "https://laveilleducabinet.kessel.media/",
+    href: "https://tiimora.com",
     systemSlugs: ["cabinet-comptable"],
   },
 ];
