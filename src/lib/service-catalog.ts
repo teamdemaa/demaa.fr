@@ -82,7 +82,8 @@ export const demaaServices = [
     slug: "previsionnel-financier",
     name: "Prévisionnel financier",
     category: "Finance",
-    shortDescription: "Un modèle financier clair et défendable.",
+    shortDescription:
+      "Un prévisionnel clair pour défendre votre projet, piloter vos chiffres et sécuriser vos décisions.",
     description:
       "Construction d'un prévisionnel avec hypothèses, chiffre d'affaires, charges, trésorerie, seuil de rentabilité et besoin de financement.",
     bestFor:
@@ -101,7 +102,8 @@ export const demaaServices = [
     slug: "audit-conformite-fiscale",
     name: "Audit d'optimisation et conformité fiscale",
     category: "Finance",
-    shortDescription: "Identifier les risques avant qu'ils coûtent cher.",
+    shortDescription:
+      "Un audit ciblé pour repérer les risques fiscaux, corriger les écarts et éviter les mauvaises surprises.",
     description:
       "Revue des zones sensibles : TVA, caisse, justificatifs, notes de frais, cohérence bancaire et pratiques administratives.",
     bestFor:
@@ -139,7 +141,8 @@ export const demaaServices = [
     slug: "site-web",
     name: "Site web & visibilité digitale",
     category: "Acquisition",
-    shortDescription: "Une présence claire pour inspirer confiance.",
+    shortDescription:
+      "Une présence digitale claire pour rassurer, expliquer votre offre et transformer les visites en contacts.",
     description:
       "Tout le nécessaire pour présenter votre entreprise proprement : site vitrine, page LinkedIn dirigeant, présentation entreprise, carte de visite et signature email.",
     bestFor:
@@ -273,7 +276,7 @@ export const demaaServices = [
     name: "Recruter un assistant polyvalent",
     category: "Support opérationnel",
     shortDescription:
-      "Déléguez vos tâches administratives à une professionnelle formée, prête à reprendre les bases utiles de la gestion d'entreprise.",
+      "Une assistante déjà formée pour reprendre votre administratif, soulager votre charge mentale et vous faire gagner du temps dès le départ.",
     description:
       "Déléguez vos tâches administratives à une professionnelle formée, prête à reprendre les bases utiles de la gestion d'entreprise.",
     bestFor:

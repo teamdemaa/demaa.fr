@@ -16,7 +16,6 @@ import {
 } from "lucide-react";
 import FinanceDetailDialog from "@/components/FinanceDetailDialog";
 import HorizontalScrollHint from "@/components/HorizontalScrollHint";
-import PartnerOffersModal from "@/components/PartnerOffersModal";
 import ProNetworkDetailDialog from "@/components/ProNetworkDetailDialog";
 import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
 import SupplierDetailDialog from "@/components/SupplierDetailDialog";
@@ -65,6 +64,7 @@ const SYSTEM_CARD_TITLE_CLASS =
 const SYSTEM_CARD_DESCRIPTION_CLASS =
   "mt-3 line-clamp-3 text-sm leading-relaxed text-dema-muted";
 const GENERIC_TOOL_CATEGORIES = new Set(["Outils métier", "Outils transverses"]);
+const GOOGLE_AUDIT_BOOKING_URL = "https://calendar.app.google/E9WX9qfHxViWZ3uq8";
 const INDUSTRY_TOOL_TAGS = new Set([
   "Avocat",
   "Bâtiment",
@@ -298,7 +298,6 @@ export default function SystemDetailContent({
   const [selectedSupplierDetail, setSelectedSupplierDetail] = useState<DemaaSupplier | null>(null);
   const [selectedFinanceDetail, setSelectedFinanceDetail] = useState<DemaaFinanceItem | null>(null);
   const [selectedProNetworkDetail, setSelectedProNetworkDetail] = useState<DemaaProNetwork | null>(null);
-  const [isPartnerOffersModalOpen, setIsPartnerOffersModalOpen] = useState(false);
   const recommendedSuppliers = useMemo(
     () => (activeTab === "fournisseurs" ? getRecommendedSuppliersForSystem(system.slug) : []),
     [activeTab, system.slug]
@@ -751,13 +750,12 @@ export default function SystemDetailContent({
       </div>
 
       <div className="mt-4 flex flex-col gap-2 text-left sm:flex-row sm:flex-wrap">
-        <button
-          type="button"
-          onClick={() => setIsPartnerOffersModalOpen(true)}
+        <Link
+          href={GOOGLE_AUDIT_BOOKING_URL}
           className="demaa-primary-button"
         >
-          Recevoir les tarifs négociés
-        </button>
+          Audit organisation gratuit
+        </Link>
       </div>
 
       <div className="mt-5 -mx-2 overflow-x-auto px-2 pb-2 soft-scroll">
@@ -1035,14 +1033,6 @@ export default function SystemDetailContent({
         <ProNetworkDetailDialog
           network={selectedProNetworkDetail}
           onClose={() => setSelectedProNetworkDetail(null)}
-        />
-      ) : null}
-
-      {isPartnerOffersModalOpen ? (
-        <PartnerOffersModal
-          onClose={() => setIsPartnerOffersModalOpen(false)}
-          initialSector={system.name}
-          source="system_detail_partner_offers"
         />
       ) : null}
     </>
