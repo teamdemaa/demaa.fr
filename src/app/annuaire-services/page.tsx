@@ -76,6 +76,7 @@ function getParamValue(value?: string | string[]) {
 
 function getDelegationServices() {
   const hiddenSlugs = new Set([
+    "organisation-automatisation",
     "creation-societe",
     "modification-societe",
     "fermeture-societe",
@@ -87,7 +88,6 @@ function getDelegationServices() {
     "montage-video",
   ]);
   const pinnedOrder = [
-    "organisation-automatisation",
     "assistant-polyvalent",
     "site-web",
     "previsionnel-financier",
