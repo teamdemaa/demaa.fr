@@ -2,6 +2,7 @@
 
 import { ArrowRight, Check, CircleDollarSign, Clock3, FolderKanban, Mail } from "lucide-react";
 import Navbar from "@/components/Navbar";
+import ServicePurchaseCta from "@/components/ServicePurchaseCta";
 import type { DemaaService } from "@/lib/service-catalog";
 
 const ASSISTANT_BOOKING_URL = "https://calendar.app.google/Ka6UkXZeQ7keLKcLA";
@@ -107,6 +108,12 @@ export default function AssistantPolyvalentLanding({
                 >
                   Voir les missions
                 </a>
+              </div>
+              <div className="mx-auto mt-4 max-w-sm">
+                <ServicePurchaseCta
+                  serviceName="Recruter un assistant polyvalent"
+                  serviceSlug="assistant-polyvalent"
+                />
               </div>
               <p className="mt-3 text-xs leading-relaxed text-dema-muted">
                 Simulation indicative et sans engagement.
@@ -281,6 +288,12 @@ export default function AssistantPolyvalentLanding({
                     Prendre rendez-vous
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </a>
+                </div>
+                <div className="mx-auto mt-4 max-w-sm">
+                  <ServicePurchaseCta
+                    serviceName="Recruter un assistant polyvalent"
+                    serviceSlug="assistant-polyvalent"
+                  />
                 </div>
               </div>
             </div>

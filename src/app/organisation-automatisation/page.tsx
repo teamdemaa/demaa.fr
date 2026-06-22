@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import AssistantsCatalogClient from "@/components/AssistantsCatalogClient";
+import OrganisationAutonomyDiscovery from "@/components/OrganisationAutonomyDiscovery";
 
 export const metadata: Metadata = {
   title: "Organisation et automatisation pour TPE - Demaa",
@@ -26,13 +29,48 @@ export const metadata: Metadata = {
   },
 };
 
-export default function OrganisationAutomatisationPage() {
+type OrganisationAutomatisationPageProps = {
+  searchParams: Promise<{
+    retour?: string | string[];
+  }>;
+};
+
+export default async function OrganisationAutomatisationPage({
+  searchParams,
+}: OrganisationAutomatisationPageProps) {
+  const params = await searchParams;
+  const retour = getParamValue(params.retour);
+  const backLink =
+    retour === "annuaire-services"
+      ? {
+          href: "/annuaire-services",
+          label: "Retour à Déléguer",
+        }
+      : {
+          href: "/",
+          label: "Retour à l'accueil",
+        };
+
   return (
     <>
       <Navbar />
       <main className="min-h-screen bg-dema-cream text-brand-blue">
+        <section className="mx-auto w-full max-w-6xl px-4 pt-6 md:px-8 md:pt-8">
+          <Link
+            href={backLink.href}
+            className="inline-flex items-center gap-2 text-sm font-medium text-brand-blue/50 transition hover:text-dema-forest"
+          >
+            <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
+            {backLink.label}
+          </Link>
+        </section>
+        <OrganisationAutonomyDiscovery />
         <AssistantsCatalogClient />
       </main>
     </>
   );
+}
+
+function getParamValue(value?: string | string[]) {
+  return Array.isArray(value) ? value[0] : value;
 }

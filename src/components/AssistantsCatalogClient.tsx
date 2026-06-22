@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { BadgeEuro, Blocks, Check, ChevronDown, FileCheck, Users } from "lucide-react";
-import PrimaryMobileNav from "@/components/PrimaryMobileNav";
+import ServicePurchaseCta from "@/components/ServicePurchaseCta";
 
 const howItWorksSteps = [
   {
@@ -26,7 +26,7 @@ const howItWorksSteps = [
 const structurationSignals = [
   {
     icon: FileCheck,
-    title: "Vous répondez à des appels d’offres",
+    title: "Vous souhaitez répondre à des appels d'offres",
     description:
       "Si les documents, références, validations et responsabilités ne sont pas prêts, chaque réponse devient un sprint.",
   },
@@ -87,31 +87,10 @@ export default function AssistantsCatalogClient() {
 
   return (
     <>
-      <section className="ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] w-screen bg-dema-cream px-4 pb-8 pt-5 text-center md:px-8 md:pb-10 md:pt-16">
-        <div className="mx-auto max-w-6xl space-y-6 md:space-y-7">
-          <PrimaryMobileNav activeTab="structurer" />
-
-          <div className="mx-auto max-w-5xl demaa-fade-up">
-            <h1 className="text-[clamp(3rem,14.5vw,3.36rem)] tracking-tight leading-[0.92] sm:text-[2.75rem] md:text-[3.75rem] lg:text-[4.5rem]">
-              <span className="demaa-hero-title text-brand-blue/86">Organisation</span>
-              <br />
-              <span className="font-sans font-light not-italic text-brand-blue/44">
-                & automatisation
-              </span>
-            </h1>
-          </div>
-          <div className="demaa-fade-up demaa-delay-1">
-            <Link
-              href={GOOGLE_AUDIT_BOOKING_URL}
-              className="demaa-primary-button"
-            >
-              Audit organisation gratuit
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-auto w-full max-w-6xl px-4 pb-24 md:px-8 md:pb-36">
+      <section
+        id="organisation-offer-content"
+        className="mx-auto w-full max-w-6xl px-4 pb-24 md:px-8 md:pb-36"
+      >
         <div className="border-t border-dema-line/65 pt-14 md:pt-20">
           <div>
             <div className="max-w-3xl demaa-fade-up demaa-delay-1">
@@ -256,6 +235,12 @@ export default function AssistantsCatalogClient() {
                 >
                   Demander l&apos;audit gratuit
                 </Link>
+                <div className="mt-4">
+                  <ServicePurchaseCta
+                    serviceName="Organisation & Automatisation"
+                    serviceSlug="organisation-automatisation"
+                  />
+                </div>
               </article>
             </div>
           </div>

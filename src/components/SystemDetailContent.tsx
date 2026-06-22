@@ -750,7 +750,7 @@ export default function SystemDetailContent({
 
       <div className="mt-4 flex flex-col gap-2 text-left sm:flex-row sm:flex-wrap">
         <Link href="/annuaire-services" className="demaa-primary-button">
-          Déléguez efficacement
+          Déléguez avec sérénité
         </Link>
       </div>
 
