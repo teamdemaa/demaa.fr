@@ -51,12 +51,9 @@ export default function MiniCoursesModal({
           <X className="h-4 w-4" />
         </button>
 
-        <p className="text-xs font-black uppercase tracking-[0.22em] text-brand-coral">
-          Mini-cours Demaa
-        </p>
         <h2
           id="mini-courses-modal-title"
-          className="mt-3 text-3xl font-semibold tracking-tight text-brand-blue"
+          className="text-3xl font-semibold tracking-tight text-brand-blue"
         >
           Recevoir des mini-cours gratuits
         </h2>

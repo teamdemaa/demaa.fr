@@ -33,6 +33,7 @@ import {
 } from "@/lib/card-badges";
 import type { CourseEntry } from "@/lib/course-content";
 import type { DemaaFinanceItem } from "@/lib/finance-catalog";
+import { getRelatedNewslettersForSystemSlug, type NewsletterEntry } from "@/lib/newsletters";
 import type { DemaaPartnerKey } from "@/lib/partner-key-catalog";
 import { getRecommendedFinanceForSystem } from "@/lib/finance-recommendations";
 import type { DemaaProNetwork } from "@/lib/pro-network-catalog";
@@ -328,6 +329,10 @@ export default function SystemDetailContent({
   );
   const courses = useMemo(
     () => (activeTab === "ressources" ? getRelatedCoursesForSystemSlug(system.slug) : []),
+    [activeTab, system.slug]
+  );
+  const newsletters = useMemo(
+    () => (activeTab === "ressources" ? getRelatedNewslettersForSystemSlug(system.slug) : []),
     [activeTab, system.slug]
   );
   const documentModels = useMemo(
@@ -712,6 +717,33 @@ export default function SystemDetailContent({
     );
   }
 
+  function renderNewsletterCard(newsletter: NewsletterEntry) {
+    return (
+      <a
+        key={newsletter.slug}
+        href={newsletter.href}
+        target="_blank"
+        rel="noreferrer"
+        className={SYSTEM_CARD_CLASS}
+      >
+        <div className="flex items-start justify-between gap-4">
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper">
+            <CalendarDays className="h-4 w-4" aria-hidden="true" />
+          </span>
+        </div>
+        <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
+          {newsletter.frequency} · Newsletter
+        </p>
+        <h3 className={SYSTEM_CARD_TITLE_CLASS}>
+          {newsletter.title}
+        </h3>
+        <p className={SYSTEM_CARD_DESCRIPTION_CLASS}>
+          {newsletter.description}
+        </p>
+      </a>
+    );
+  }
+
   function renderFreeToolCard(tool: ToolDirectoryItem) {
     return (
       <Link
@@ -962,35 +994,9 @@ export default function SystemDetailContent({
           </div>
         ) : activeTab === "ressources" ? (
           <div className="space-y-5">
-            {documentModels.length ? (
-              <div className="space-y-4">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-                  Modèles de documents
-                </p>
-                <HorizontalScrollHint
-                  className="-mx-4 overflow-x-auto px-4 pb-4 pt-1 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
-                  controlsClassName="absolute -right-2 -top-9 z-10 flex items-center gap-1.5 sm:-right-3"
-                >
-                  <div className="flex w-max snap-x snap-mandatory gap-4">
-                    {documentModels.map((model) => (
-                      <div
-                        key={model.slug}
-                        className="w-[18rem] shrink-0 snap-start sm:w-[19rem] lg:w-[20rem]"
-                      >
-                        {renderDocumentModelCard(model)}
-                      </div>
-                    ))}
-                  </div>
-                </HorizontalScrollHint>
-                {renderBrowseAllLink({
-                  browseHref: "/modeles-de-documents",
-                  browseLabel: "Voir tous les modèles de documents",
-                })}
-              </div>
-            ) : null}
             {courses.length ? (
               <div className="space-y-4">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-muted">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
                   Cours
                 </p>
                 <HorizontalScrollHint
@@ -1011,6 +1017,42 @@ export default function SystemDetailContent({
                 {renderBrowseAllLink({
                   browseHref: `/cours?retourSysteme=${encodeURIComponent(system.slug)}`,
                   browseLabel: "Voir tous les cours",
+                })}
+              </div>
+            ) : null}
+            {newsletters.length ? (
+              <div className="space-y-4">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-muted">
+                  Newsletters recommandées
+                </p>
+                <div className="max-w-[20rem]">
+                  {renderNewsletterCard(newsletters[0])}
+                </div>
+              </div>
+            ) : null}
+            {documentModels.length ? (
+              <div className="space-y-4">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-muted">
+                  Modèles de documents
+                </p>
+                <HorizontalScrollHint
+                  className="-mx-4 overflow-x-auto px-4 pb-4 pt-1 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
+                  controlsClassName="absolute -right-2 -top-9 z-10 flex items-center gap-1.5 sm:-right-3"
+                >
+                  <div className="flex w-max snap-x snap-mandatory gap-4">
+                    {documentModels.map((model) => (
+                      <div
+                        key={model.slug}
+                        className="w-[18rem] shrink-0 snap-start sm:w-[19rem] lg:w-[20rem]"
+                      >
+                        {renderDocumentModelCard(model)}
+                      </div>
+                    ))}
+                  </div>
+                </HorizontalScrollHint>
+                {renderBrowseAllLink({
+                  browseHref: "/modeles-de-documents",
+                  browseLabel: "Voir tous les modèles de documents",
                 })}
               </div>
             ) : null}
