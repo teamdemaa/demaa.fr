@@ -198,12 +198,16 @@ function OrganisationExpandedContent({
 }: {
   variant: "modal" | "page";
 }) {
-  const sectionGap = variant === "modal" ? "space-y-6" : "space-y-8";
+  const sectionGap = variant === "modal" ? "space-y-5 sm:space-y-6" : "space-y-8";
+  const sectionClass =
+    variant === "modal"
+      ? "rounded-[1.05rem] border border-dema-line bg-dema-paper p-4 sm:rounded-[1.15rem] sm:p-5"
+      : "rounded-[1.15rem] border border-dema-line bg-dema-paper p-5";
 
   return (
     <div className={sectionGap}>
-      <section className="rounded-[1.15rem] border border-dema-line bg-dema-paper p-5">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+      <section className={sectionClass}>
+        <div className="flex flex-col gap-4">
           <div className="max-w-2xl">
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
               Récap de l&apos;offre
@@ -217,7 +221,7 @@ function OrganisationExpandedContent({
               l&apos;exécution.
             </p>
           </div>
-          <Link href={GOOGLE_AUDIT_BOOKING_URL} className="demaa-primary-button">
+          <Link href={GOOGLE_AUDIT_BOOKING_URL} className="demaa-primary-button w-fit">
             Audit organisation gratuit
           </Link>
         </div>
@@ -225,7 +229,7 @@ function OrganisationExpandedContent({
           {organisationSignals.map((item) => (
             <article
               key={item.title}
-              className="rounded-[1rem] border border-dema-line/70 bg-dema-cream/60 px-4 py-4"
+              className="rounded-[0.95rem] border border-dema-line/70 bg-dema-cream/60 px-4 py-4 sm:rounded-[1rem]"
             >
               <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage/55 text-dema-forest">
                 <item.icon className="h-4.5 w-4.5" aria-hidden="true" />
@@ -241,7 +245,7 @@ function OrganisationExpandedContent({
         </div>
       </section>
 
-      <section className="rounded-[1.15rem] border border-dema-line bg-dema-paper p-5">
+      <section className={sectionClass}>
         <h3 className="text-xl font-semibold tracking-tight text-brand-blue md:text-2xl">
           Comment ça se passe concrètement
         </h3>
@@ -249,7 +253,7 @@ function OrganisationExpandedContent({
           {organisationSteps.map((step, index) => (
             <article
               key={step.title}
-              className="rounded-[1rem] border border-dema-line/70 bg-dema-paper px-4 py-4"
+              className="rounded-[0.95rem] border border-dema-line/70 bg-dema-paper px-4 py-4 sm:rounded-[1rem]"
             >
               <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-dema-sage/55 text-sm font-semibold text-dema-forest">
                 {index + 1}
@@ -265,18 +269,18 @@ function OrganisationExpandedContent({
         </div>
       </section>
 
-      <section className="rounded-[1.15rem] border border-dema-line bg-dema-paper p-5">
+      <section className={sectionClass}>
         <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
           Repères de résultat
         </p>
         <h3 className="mt-2 text-xl font-semibold tracking-tight text-brand-blue md:text-2xl">
           Ce type de mission vise à libérer du temps utile
         </h3>
-        <div className="mt-4 grid gap-3 md:grid-cols-3">
+        <div className="mt-4 grid gap-3 sm:grid-cols-2 md:grid-cols-3">
           {organisationResults.map((result) => (
             <div
               key={result}
-              className="rounded-[1rem] border border-dema-line/70 bg-dema-sage/35 px-4 py-4 text-sm font-medium text-brand-blue"
+              className="rounded-[0.95rem] border border-dema-line/70 bg-dema-sage/35 px-4 py-4 text-sm font-medium text-brand-blue sm:rounded-[1rem]"
             >
               {result}
             </div>
@@ -294,11 +298,15 @@ function AssistantExpandedContent({
 }: {
   variant: "modal" | "page";
 }) {
-  const sectionGap = variant === "modal" ? "space-y-6" : "space-y-8";
+  const sectionGap = variant === "modal" ? "space-y-5 sm:space-y-6" : "space-y-8";
+  const sectionClass =
+    variant === "modal"
+      ? "rounded-[1.05rem] border border-dema-line bg-dema-paper p-4 sm:rounded-[1.15rem] sm:p-5"
+      : "rounded-[1.15rem] border border-dema-line bg-dema-paper p-5";
 
   return (
     <div className={sectionGap}>
-      <section className="rounded-[1.15rem] border border-dema-line bg-dema-paper p-5">
+      <section className={sectionClass}>
         <div className="max-w-3xl">
           <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
             Récap de l&apos;offre
@@ -326,7 +334,7 @@ function AssistantExpandedContent({
           {assistantTimeline.map((item) => (
             <article
               key={item.step}
-              className="rounded-[1rem] border border-dema-line/70 bg-dema-sage/35 px-4 py-4"
+              className="rounded-[0.95rem] border border-dema-line/70 bg-dema-sage/35 px-4 py-4 sm:rounded-[1rem]"
             >
               <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest/80">
                 {item.step}
@@ -342,7 +350,7 @@ function AssistantExpandedContent({
         </div>
       </section>
 
-      <section className="rounded-[1.15rem] border border-dema-line bg-dema-paper p-5">
+      <section className={sectionClass}>
         <h3 className="text-xl font-semibold tracking-tight text-brand-blue md:text-2xl">
           Ce qui peut être repris
         </h3>
@@ -350,7 +358,7 @@ function AssistantExpandedContent({
           {assistantResponsibilities.map((item) => (
             <article
               key={item.title}
-              className="rounded-[1rem] border border-dema-line/70 bg-dema-paper px-4 py-4"
+              className="rounded-[0.95rem] border border-dema-line/70 bg-dema-paper px-4 py-4 sm:rounded-[1rem]"
             >
               <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage/55 text-dema-forest">
                 <item.icon className="h-4.5 w-4.5" aria-hidden="true" />
@@ -366,7 +374,7 @@ function AssistantExpandedContent({
         </div>
       </section>
 
-      <section className="rounded-[1.15rem] border border-dema-line bg-dema-paper p-5">
+      <section className={sectionClass}>
         <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
           Repère de coût
         </p>
@@ -377,7 +385,7 @@ function AssistantExpandedContent({
           {assistantComparison.map((item) => (
             <article
               key={item.title}
-              className={`rounded-[1rem] border px-4 py-4 ${
+              className={`rounded-[0.95rem] border px-4 py-4 sm:rounded-[1rem] ${
                 item.emphasis
                   ? "border-dema-forest/15 bg-dema-sage/35"
                   : "border-dema-line/70 bg-dema-paper"
@@ -415,9 +423,11 @@ function FaqSection({
   }[];
 }) {
   const [openIndex, setOpenIndex] = useState(0);
+  const sectionClass =
+    "rounded-[1.05rem] border border-dema-line bg-dema-paper p-4 sm:rounded-[1.15rem] sm:p-5";
 
   return (
-    <section className="rounded-[1.15rem] border border-dema-line bg-dema-paper p-5">
+    <section className={sectionClass}>
       <h3 className="text-xl font-semibold tracking-tight text-brand-blue md:text-2xl">
         {title}
       </h3>
@@ -431,7 +441,7 @@ function FaqSection({
               <button
                 type="button"
                 onClick={() => setOpenIndex(isOpen ? -1 : index)}
-                className="flex w-full items-center justify-between gap-4 px-4 py-4 text-left transition hover:bg-dema-sage/35"
+                className="flex w-full items-center justify-between gap-4 px-4 py-4 text-left transition hover:bg-dema-sage/35 sm:px-5"
                 aria-expanded={isOpen}
                 aria-controls={answerId}
               >
@@ -446,7 +456,7 @@ function FaqSection({
                 />
               </button>
               {isOpen ? (
-                <div id={answerId} className="px-4 pb-4">
+                <div id={answerId} className="px-4 pb-4 sm:px-5">
                   <p className="text-sm leading-relaxed text-dema-muted">{item.answer}</p>
                 </div>
               ) : null}

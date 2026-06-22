@@ -2,6 +2,8 @@ import { getPurchasableServiceConfig } from "@/lib/service-purchase";
 
 export const CART_STORAGE_KEY = "demaa-service-cart";
 export const CART_UPDATED_EVENT = "demaa-cart-updated";
+export const CART_MODAL_OPEN_EVENT = "demaa-cart-modal-open";
+export const CART_MODAL_CLOSE_EVENT = "demaa-cart-modal-close";
 
 export function readServiceCartSlugs() {
   try {
@@ -29,4 +31,12 @@ export function writeServiceCartSlugs(slugs: string[]) {
     JSON.stringify([...new Set(slugs)])
   );
   window.dispatchEvent(new CustomEvent(CART_UPDATED_EVENT));
+}
+
+export function openServiceCartModal() {
+  window.dispatchEvent(new CustomEvent(CART_MODAL_OPEN_EVENT));
+}
+
+export function closeServiceCartModal() {
+  window.dispatchEvent(new CustomEvent(CART_MODAL_CLOSE_EVENT));
 }

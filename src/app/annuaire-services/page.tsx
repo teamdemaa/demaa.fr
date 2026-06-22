@@ -31,7 +31,6 @@ export const metadata: Metadata = {
 type AnnuaireServicesPageProps = {
   searchParams: Promise<{
     category?: string | string[];
-    panier?: string | string[];
     q?: string | string[];
     retourSysteme?: string | string[];
   }>;
@@ -60,12 +59,11 @@ export default async function AnnuaireServicesPage({
         <ServiceDirectoryClient
           services={services}
           categories={serviceCategories}
-          focusCartOnLoad={getParamValue(params.panier) === "1"}
           initialCategory={getParamValue(params.category)}
           initialSearch={getParamValue(params.q) ?? ""}
           backLink={backLink}
           title="Déléguez avec Sérénité"
-          description="Les services Demaa pour confier ce qui prend du temps, sécuriser l'exécution et libérer la croissance."
+          description="Confiez-nous ce qui prend du temps, on exécute comme si c'était notre entreprise."
         />
       </main>
     </>

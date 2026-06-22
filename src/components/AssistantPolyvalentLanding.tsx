@@ -109,15 +109,6 @@ export default function AssistantPolyvalentLanding({
                   Voir les missions
                 </a>
               </div>
-              <div className="mx-auto mt-4 max-w-sm">
-                <ServicePurchaseCta
-                  serviceName="Recruter un assistant polyvalent"
-                  serviceSlug="assistant-polyvalent"
-                />
-              </div>
-              <p className="mt-3 text-xs leading-relaxed text-dema-muted">
-                Simulation indicative et sans engagement.
-              </p>
             </div>
           </div>
         </section>
@@ -126,9 +117,6 @@ export default function AssistantPolyvalentLanding({
           <div className="border-t border-dema-line/65 pt-14 md:pt-20">
             <div>
               <article className="demaa-fade-up rounded-[1.2rem] border border-dema-line/70 bg-dema-paper px-5 py-6 md:px-7 md:py-8">
-                <p className="inline-flex rounded-full bg-dema-forest/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
-                  Offre Demaa
-                </p>
                 <div className="mt-5 grid gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(20rem,0.95fr)] lg:items-start">
                   <div>
                     <h2 className="max-w-2xl text-2xl font-semibold tracking-tight text-brand-blue md:text-3xl">

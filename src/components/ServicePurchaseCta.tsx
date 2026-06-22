@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Check, ShoppingBag } from "lucide-react";
 import {
   CART_UPDATED_EVENT,
+  openServiceCartModal,
   readServiceCartSlugs,
   writeServiceCartSlugs,
 } from "@/lib/service-cart";
@@ -47,6 +48,7 @@ export default function ServicePurchaseCta({
     }
 
     writeServiceCartSlugs([...current, serviceSlug]);
+    openServiceCartModal();
   }
 
   return (
@@ -68,11 +70,11 @@ export default function ServicePurchaseCta({
         )}
         {isSelected ? "Ajouté au panier" : "Ajouter au panier"}
       </button>
-      <p className="mt-2 text-xs leading-relaxed text-dema-muted">
-        {isSelected
-          ? `${serviceName} est prêt dans votre panier.`
-          : "Retrouvez votre sélection dans le panier discret depuis l’annuaire services."}
-      </p>
+      {isSelected ? (
+        <p className="mt-2 text-xs leading-relaxed text-dema-muted">
+          {serviceName} est prêt dans votre panier.
+        </p>
+      ) : null}
     </div>
   );
 }
