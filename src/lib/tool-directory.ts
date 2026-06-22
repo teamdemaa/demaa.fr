@@ -12,8 +12,6 @@ export type ToolDirectoryItem = {
   tags: string[];
   bestFor: string;
   pricingHint: string;
-  memberDealLabel?: string;
-  memberDealDescription?: string;
   scope?: ToolScope;
   status?: "active" | "hidden" | "deprecated";
 };

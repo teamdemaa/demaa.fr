@@ -31,6 +31,25 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
+## Validation
+
+For the sector taxonomy, SEO routing, fallback coverage, and system-page foundations, run:
+
+```bash
+npm run audit:seo-foundations
+```
+
+This project also exposes:
+
+- `npm run validate:data`
+- `npm run audit:seo-foundations:ci`
+- `npm run audit:system-pages`
+- `npm run audit:internal-linking`
+- `npm run build:stable`
+
+If `next build` ever flakes locally because of a Turbopack temp-file issue, use `npm run build:stable`.
+The production `build` and `start` scripts both use the isolated `.next-build` directory.
+
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More

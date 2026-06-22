@@ -443,20 +443,6 @@
 }
 
 @media print {
-  :global(html),
-  :global(body) {
-    width: 210mm !important;
-    min-width: 210mm !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: visible !important;
-    background: var(--color-dema-cream) !important;
-  }
-
-  :global(body) {
-    display: block !important;
-  }
-
   .shell,
   .shell * {
     print-color-adjust: exact;

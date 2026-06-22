@@ -92,6 +92,44 @@ npm run lint
 npm run build
 ```
 
+Si `next build` panique localement sur un fichier temporaire Turbopack, utiliser:
+
+```bash
+npm run build:stable
+```
+
+Le cycle `npm run build` -> `npm run start` utilise volontairement le dossier `.next-build` pour ne pas se battre avec un `next dev` local.
+
+Si le changement touche la taxonomie secteur, les pages SEO, les fallbacks outils, les hubs secteur ou les pages systeme, lancer aussi:
+
+```bash
+npm run audit:seo-foundations
+```
+
+Pour un usage CI explicite, utiliser:
+
+```bash
+npm run audit:seo-foundations:ci
+```
+
+Ce script rejoue en une fois:
+
+- `validate:data`
+- validation taxonomie secteur
+- validation routes SEO
+- validation liens editoriaux secteur
+- validation coherence build/start/distDir
+- audit couverture free tools / fallbacks
+- audit maillage interne
+- audit qualite pages systeme
+
+Regles utiles sur ce lot:
+
+- `src/lib/sector-taxonomy.json` est la source de verite pour les secteurs publics et leur mode de fallback.
+- `src/lib/free-tool-fallbacks.json` centralise les priorites exactes, generiques et manuelles.
+- si un secteur `generic` devient trop faible, preferer un mapping systeme dedie avant de dupliquer la taxonomie.
+- ne pas reintroduire `/ressources/[slug]`; l'index legacy `/ressources` doit seulement rediriger vers `/modeles-de-documents`.
+
 Puis verifier manuellement les parcours touches:
 
 - page modifiee charge sans erreur;

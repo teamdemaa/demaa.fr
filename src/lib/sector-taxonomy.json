@@ -1,0 +1,100 @@
+{
+  "sectors": [
+    {
+      "publicLabel": "Conseil & services aux entreprises",
+      "publicSlug": "conseil-services",
+      "toolSectorLabel": "Services & conseil",
+      "seoSlug": "conseil-services",
+      "fallbackMode": "exact"
+    },
+    {
+      "publicLabel": "Tech & Digital",
+      "publicSlug": "tech-digital",
+      "seoSlug": "tech-digital",
+      "fallbackMode": "generic"
+    },
+    {
+      "publicLabel": "BTP & services techniques",
+      "publicSlug": "btp-services-techniques",
+      "toolSectorLabel": "Artisanat & BTP",
+      "seoSlug": "btp-services-techniques",
+      "fallbackMode": "exact"
+    },
+    {
+      "publicLabel": "Immobilier",
+      "publicSlug": "immobilier",
+      "toolSectorLabel": "Immobilier",
+      "seoSlug": "immobilier",
+      "fallbackMode": "exact"
+    },
+    {
+      "publicLabel": "Hébergement & tourisme",
+      "publicSlug": "hebergement-tourisme",
+      "seoSlug": "hebergement-tourisme",
+      "fallbackMode": "generic"
+    },
+    {
+      "publicLabel": "Patrimoine",
+      "publicSlug": "patrimoine",
+      "seoSlug": "patrimoine",
+      "fallbackMode": "generic"
+    },
+    {
+      "publicLabel": "Mobilité & logistique",
+      "publicSlug": "mobilite-logistique",
+      "seoSlug": "mobilite-logistique",
+      "fallbackMode": "generic"
+    },
+    {
+      "publicLabel": "Restauration",
+      "publicSlug": "restauration",
+      "toolSectorLabel": "Restauration",
+      "seoSlug": "restauration",
+      "fallbackMode": "exact"
+    },
+    {
+      "publicLabel": "Commerce & retail",
+      "publicSlug": "commerce-retail",
+      "toolSectorLabel": "Commerce local",
+      "seoSlug": "commerce-retail",
+      "fallbackMode": "exact"
+    },
+    {
+      "publicLabel": "Santé, bien-être & esthétique",
+      "publicSlug": "sante-bien-etre-esthetique",
+      "toolSectorLabel": "Santé & bien-être",
+      "seoSlug": "sante-bien-etre-esthetique",
+      "fallbackMode": "exact"
+    },
+    {
+      "publicLabel": "Services aux particuliers",
+      "publicSlug": "services-aux-particuliers",
+      "seoSlug": "services-aux-particuliers",
+      "fallbackMode": "generic"
+    },
+    {
+      "publicLabel": "Éducation & formation",
+      "publicSlug": "education-formation",
+      "seoSlug": "education-formation",
+      "fallbackMode": "generic"
+    },
+    {
+      "publicLabel": "Industrie & production",
+      "publicSlug": "industrie-production",
+      "seoSlug": "industrie-production",
+      "fallbackMode": "generic"
+    },
+    {
+      "publicLabel": "Automobile & réparation",
+      "publicSlug": "automobile-reparation",
+      "seoSlug": "automobile-reparation",
+      "fallbackMode": "generic"
+    },
+    {
+      "publicLabel": "Associations & événements",
+      "publicSlug": "associations-evenements",
+      "seoSlug": "associations-evenements",
+      "fallbackMode": "generic"
+    }
+  ]
+}

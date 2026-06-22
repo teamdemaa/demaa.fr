@@ -15,11 +15,13 @@
 
 # next.js
 /.next/
+/.next-build/
 /out/
 
 # production
 /build
 /data
+/outputs
 /tmp/
 
 # local working files

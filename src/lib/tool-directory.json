@@ -71,8 +71,6 @@
       "bestFor": "Créer un mini système interne sans logiciel métier lourd.",
       "pricingHint": "Freemium",
       "status": "active",
-      "memberDealLabel": "Offre membre",
-      "memberDealDescription": "Accédez à l’espace membre pour vérifier les conditions utiles à votre organisation et à votre équipe.",
       "scope": "transverse"
     },
     {
@@ -391,8 +389,6 @@
       "bestFor": "Gérer les paiements et dépenses avec plus de souplesse.",
       "pricingHint": "Payant",
       "status": "hidden",
-      "memberDealLabel": "Offre membre",
-      "memberDealDescription": "Accédez à l’espace membre pour consulter l’offre disponible et les conditions applicables.",
       "scope": "transverse"
     },
     {
@@ -415,8 +411,6 @@
       "bestFor": "Centraliser la gestion financière et comptable.",
       "pricingHint": "Payant",
       "status": "active",
-      "memberDealLabel": "Offre membre",
-      "memberDealDescription": "Demandez les conditions disponibles depuis l’espace membre Team Demaa avant de choisir votre outil comptable.",
       "scope": "transverse"
     },
     {

@@ -62,7 +62,7 @@ export default async function SystemDetailPage({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <div className="mx-auto w-full max-w-7xl px-4 pb-16 pt-6 sm:px-6 lg:px-8">
+        <div className="mx-auto w-full max-w-7xl px-4 pb-16 pt-3 sm:px-6 lg:px-8">
           <Link
             href="/"
             className="group inline-flex items-center gap-2 text-sm font-medium text-gray-400 transition-colors hover:text-neutral-700"
@@ -71,7 +71,7 @@ export default async function SystemDetailPage({
             Revenir à l&apos;annuaire des systèmes
           </Link>
 
-          <div className="mt-6">
+          <div className="mt-4">
             <SystemDetailContent
               system={data.system}
               detail={data.detail}

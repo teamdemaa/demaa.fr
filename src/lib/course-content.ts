@@ -19,6 +19,174 @@ export interface CourseEntry {
 
 const courseEntries: CourseEntry[] = [
   {
+    slug: "maitriser-obligations-tpe",
+    title: "Maitriser les obligations d'une TPE",
+    seoTitle: "Maitriser les obligations d'une TPE : fiscal, social, comptable et juridique",
+    date: "2026-06-26",
+    description:
+      "Le cours pour comprendre les obligations fiscales, sociales, comptables et juridiques a ne pas oublier quand on pilote une petite entreprise.",
+    seoDescription:
+      "Maitrisez les obligations d'une TPE : fiscal, social, comptable et juridique, avec un cadre simple pour ne plus oublier les sujets importants.",
+    category: "Obligations & conformite",
+    tags: ["cours", "obligations", "conformite", "tpe"],
+    duration: "18 min",
+    content: `
+## Le vrai sujet
+
+Dans beaucoup de petites entreprises, les obligations ne sont pas ignorees par mauvaise volonte.
+
+Elles sont plutot traitees au fil de l'eau, quand une echeance approche, quand un partenaire relance ou quand un probleme apparait.
+
+Le risque, c'est qu'a force de reagir tard :
+
+- certaines obligations sont oubliees ;
+- des pieces ne sont pas rangees au bon endroit ;
+- des controles deviennent plus stressants ;
+- le dirigeant garde trop de charge mentale ;
+- la conformite repose sur la memoire plutot que sur un cadre.
+
+## Ce qu'il faut comprendre tout de suite
+
+Les obligations d'une TPE ne se limitent pas a un seul sujet.
+
+Elles touchent en general :
+
+- le fiscal ;
+- le social ;
+- le comptable ;
+- le juridique ;
+- les preuves et archives a conserver ;
+- certains affichages ou registres selon l'activite et l'equipe.
+
+Le sujet n'est donc pas de tout memoriser.
+
+Le sujet est plutot de savoir :
+
+- ce qui existe ;
+- ce qui revient regulierement ;
+- ce qui doit etre conserve ;
+- qui suit quoi ;
+- comment eviter les oublis.
+
+## Les 4 grands blocs a garder en tete
+
+### 1. Fiscal
+
+On parle ici des declarations, paiements ou obligations liees a l'activite et a sa forme.
+
+Tres souvent, une petite entreprise doit au minimum avoir une vision claire de :
+
+- la TVA ;
+- l'impot sur les societes ou l'impot sur le revenu selon le cas ;
+- la CFE ;
+- certaines taxes ou formalites complementaires selon l'activite.
+
+### 2. Social
+
+Dès qu'il y a des salaires, des independants ou des obligations RH, le cadre doit etre suivi serieusement.
+
+Cela peut inclure :
+
+- les declarations sociales ;
+- les cotisations ;
+- la mutuelle ou la prevoyance ;
+- les documents employeur ;
+- les obligations liees a l'embauche et au suivi des salaries.
+
+### 3. Comptable
+
+Une petite entreprise doit aussi garder une base propre sur ses flux et ses justificatifs.
+
+Cela veut dire concretement :
+
+- factures de vente ;
+- factures d'achat ;
+- notes de frais ;
+- releves bancaires ;
+- pieces justificatives ;
+- coherence entre ce qui est encaisse, paye et archive.
+
+### 4. Juridique et administratif
+
+Selon la structure, il faut aussi penser a :
+
+- certaines decisions formelles ;
+- les documents societaires ;
+- les depots ou mises a jour obligatoires ;
+- les registres utiles ;
+- les obligations d'information ou d'affichage.
+
+## Pourquoi le sujet devient vite lourd
+
+Le sujet devient lourd quand :
+
+- tout repose sur une seule personne ;
+- il n'y a pas de routine visible ;
+- les documents sont disperses ;
+- les echeances ne sont pas centralisees ;
+- personne ne sait ce qui a deja ete fait ou non ;
+- on ne distingue pas obligations recurrentes et obligations ponctuelles.
+
+Le probleme n'est donc pas seulement la quantite d'obligations.
+
+Le probleme, c'est l'absence de systeme simple pour les suivre.
+
+## Ce qu'il faut mettre en place simplement
+
+Une petite entreprise gagne beaucoup a poser une base tres simple :
+
+- une liste claire des obligations recurrentes ;
+- un point de controle mensuel ou trimestriel ;
+- un espace unique pour les documents importants ;
+- un responsable identifie par sujet ;
+- une verification avant les grandes echeances.
+
+Le but n'est pas de transformer l'entreprise en machine administrative.
+
+Le but est de reduire les oublis, la charge mentale et les mauvaises surprises.
+
+## Les erreurs les plus frequentes
+
+- croire que l'expert-comptable couvre tout automatiquement ;
+- confondre suivi comptable et suivi juridique ;
+- archiver sans logique claire ;
+- ne pas verifier les obligations sociales apres une embauche ;
+- repousser les sujets administratifs jusqu'au dernier moment ;
+- supposer que ce qui etait vrai l'an dernier l'est encore sans controle.
+
+## Quoi faire cette semaine
+
+1. listez les obligations que vous savez deja suivre ;
+2. reperez celles qui restent floues ;
+3. centralisez les documents importants au meme endroit ;
+4. posez une routine de verification reguliere ;
+5. clarifiez qui suit quoi si vous n'etes pas seul.
+
+## En une phrase
+
+Maitriser les obligations d'une TPE, ce n'est pas tout connaitre par coeur.
+
+**C'est mettre en place un cadre simple pour ne plus laisser l'administratif, le fiscal, le social et le juridique vous tomber dessus au dernier moment.**
+    `.trim(),
+    faq: [
+      {
+        question: "Est-ce que l'expert-comptable suffit pour gerer toutes les obligations ?",
+        answer:
+          "Non. Il aide beaucoup, mais une TPE doit quand meme garder une vision claire des sujets fiscaux, sociaux, comptables et juridiques qui la concernent.",
+      },
+      {
+        question: "Par quoi commencer si tout est flou ?",
+        answer:
+          "Commencez par lister les obligations recurrentes, centraliser les documents et poser une routine simple de verification.",
+      },
+      {
+        question: "Quel est le risque principal quand rien n'est structure ?",
+        answer:
+          "Le plus gros risque est l'oubli : pieces manquantes, echeances ratees, charge mentale trop forte et reactions trop tardives.",
+      },
+    ],
+  },
+  {
     slug: "urgent-important-tpe",
     title: "Priorités d'entreprise : arrêter de subir l'urgent toute la semaine",
     seoTitle: "Priorités d'entreprise : arrêter de subir l'urgent toute la semaine",

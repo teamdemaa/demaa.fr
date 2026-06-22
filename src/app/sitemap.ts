@@ -1,14 +1,16 @@
 import type { MetadataRoute } from "next";
 import { getAllCourseEntries } from "@/lib/course-content";
+import { getAllDocumentModels } from "@/lib/document-models";
+import { aidFamilies, demaaAidItems } from "@/lib/aid-catalog";
 import {
   accountingDirectorySeoPages,
 } from "@/lib/accounting-directory-seo";
 import { getAccountingFirms } from "@/lib/accounting-directory";
-import { getAllEditorialEntries } from "@/lib/editorial-content";
 import { getEnterpriseCatalog } from "@/lib/enterprise-annuaire";
 import { demaaFinanceItems } from "@/lib/finance-catalog";
 import { demaaProNetworks } from "@/lib/pro-network-catalog";
 import { sectorPageDefinitions } from "@/lib/sector-pages";
+import { sectorTaxonomy } from "@/lib/sector-taxonomy";
 import { demaaServices } from "@/lib/service-catalog";
 import { demaaSuppliers } from "@/lib/supplier-catalog";
 import { getToolDirectorySlug, hasStandaloneToolPage } from "@/lib/tool-directory";
@@ -50,9 +52,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/annuaire-services`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-fournisseurs`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-financement`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
+    { url: `${base}/aides-et-subventions`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-reseaux-pro`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
+    { url: `${base}/annuaire-partenaires-cles`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-experts-comptables`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${base}/ressources`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${base}/modeles-de-documents`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/organisation-automatisation`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
     { url: `${base}/cours`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/mentions-legales`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
@@ -61,9 +65,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/cgv`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
   ];
 
-  const editorialEntries = getAllEditorialEntries();
-  const editorialContentEntries: MetadataRoute.Sitemap = editorialEntries.map((entry) => ({
-    url: `${base}/ressources/${entry.slug}`,
+  const documentModelEntries = getAllDocumentModels();
+  const documentModelSitemapEntries: MetadataRoute.Sitemap = documentModelEntries.map((entry) => ({
+    url: `${base}/modeles-de-documents/${entry.slug}`,
     lastModified: new Date(entry.date),
     changeFrequency: "monthly" as const,
     priority: 0.7,
@@ -127,6 +131,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
+  const aidFamilyEntries: MetadataRoute.Sitemap = aidFamilies.map((family) => ({
+    url: `${base}/aides-et-subventions/${family.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.72,
+  }));
+
+  const aidEntries: MetadataRoute.Sitemap = demaaAidItems.map((item) => ({
+    url: `${base}/aides-et-subventions/${item.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.72,
+  }));
+
   const proNetworkEntries: MetadataRoute.Sitemap = demaaProNetworks.map((network) => ({
     url: `${base}/annuaire-reseaux-pro/${network.slug}`,
     lastModified: now,
@@ -155,6 +173,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
+  const toolSectorEntries: MetadataRoute.Sitemap = sectorTaxonomy.map((sector) => ({
+    url: `${base}/annuaire-outils/secteur/${sector.seoSlug}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.76,
+  }));
+
   const systemEntries: MetadataRoute.Sitemap = enterprises.map((enterprise) => ({
     url: `${base}/systemes/${enterprise.slug}`,
     lastModified: now,
@@ -164,17 +189,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     ...staticRoutes,
-    ...editorialContentEntries,
+    ...documentModelSitemapEntries,
     ...courseContentEntries,
     ...toolEntries,
     ...freeToolEntries,
     ...serviceEntries,
     ...supplierEntries,
     ...financeEntries,
+    ...aidFamilyEntries,
+    ...aidEntries,
     ...proNetworkEntries,
     ...accountingFirmEntries,
     ...accountingDirectorySeoEntries,
     ...sectorEntries,
+    ...toolSectorEntries,
     ...systemEntries,
   ];
 }

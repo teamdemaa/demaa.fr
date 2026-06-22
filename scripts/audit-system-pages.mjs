@@ -10,8 +10,16 @@ const supplierRulesSource = fs.readFileSync(
   path.join(process.cwd(), "src/lib/supplier-recommendations.ts"),
   "utf8"
 );
-const resourcesSource = fs.readFileSync(
-  path.join(process.cwd(), "src/lib/system-resources.ts"),
+const contentRelationshipsSource = fs.readFileSync(
+  path.join(process.cwd(), "src/lib/content-relationships.ts"),
+  "utf8"
+);
+const courseContentSource = fs.readFileSync(
+  path.join(process.cwd(), "src/lib/course-content.ts"),
+  "utf8"
+);
+const documentModelsSource = fs.readFileSync(
+  path.join(process.cwd(), "src/lib/document-models.ts"),
   "utf8"
 );
 
@@ -23,24 +31,43 @@ function extractRuleKeys(source) {
   );
 }
 
-function extractFlexibleResourceSlugs(source) {
-  const match = source.match(/const flexibleSystemSlugs = \[(.*?)\];/s);
+function extractContentRelationships(source) {
+  const relationships = new Map();
+  const blockPattern = /"([^"]+)":\s*\[([\s\S]*?)\]/g;
 
-  if (!match) {
-    return new Set();
+  for (const match of source.matchAll(blockPattern)) {
+    const [, contentSlug, slugsSource] = match;
+    relationships.set(
+      contentSlug,
+      [...slugsSource.matchAll(/"([^"]+)"/g)].map((slugMatch) => slugMatch[1]),
+    );
   }
 
-  return new Set(
-    [...match[1].matchAll(/"([^"]+)"/g)].map((slugMatch) => slugMatch[1])
-  );
+  return relationships;
 }
 
 const serviceRuleKeys = extractRuleKeys(serviceRulesSource);
 const supplierRuleKeys = extractRuleKeys(supplierRulesSource);
-const flexibleResourceSlugs = extractFlexibleResourceSlugs(resourcesSource);
+const contentRelationships = extractContentRelationships(contentRelationshipsSource);
+const courseSlugs = [...courseContentSource.matchAll(/slug:\s*"([^"]+)"/g)].map((match) => match[1]);
+const documentModelSlugs = [...documentModelsSource.matchAll(/slug:\s*"([^"]+)"/g)].map((match) => match[1]);
 
-function getResourceCount(slug) {
-  return flexibleResourceSlugs.has(slug) ? 3 : 2;
+function getRelatedContentCount(systemSlug) {
+  let count = 0;
+
+  for (const courseSlug of courseSlugs) {
+    if ((contentRelationships.get(courseSlug) ?? []).includes(systemSlug)) {
+      count += 1;
+    }
+  }
+
+  for (const documentModelSlug of documentModelSlugs) {
+    if ((contentRelationships.get(documentModelSlug) ?? []).includes(systemSlug)) {
+      count += 1;
+    }
+  }
+
+  return count;
 }
 
 function getCoverageTier(score) {
@@ -57,12 +84,13 @@ const systems = enterpriseAnnuaire.enterprises
     const tools = enterprise.toolRefs?.length || enterprise.tools?.length || 0;
     const hasCustomServiceRule = serviceRuleKeys.has(enterprise.slug);
     const hasCustomSupplierRule = supplierRuleKeys.has(enterprise.slug);
-    const resourceCount = getResourceCount(enterprise.slug);
+    const resourceCount = getRelatedContentCount(enterprise.slug);
     const specificityScore =
       processes +
       tools +
       (hasCustomServiceRule ? 2 : 0) +
-      (hasCustomSupplierRule ? 2 : 0);
+      (hasCustomSupplierRule ? 2 : 0) +
+      resourceCount;
 
     return {
       slug: enterprise.slug,

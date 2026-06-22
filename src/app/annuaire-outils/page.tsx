@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { permanentRedirect } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import ToolDirectoryClient from "@/components/ToolDirectoryClient";
 import {
@@ -8,6 +9,7 @@ import {
 } from "@/lib/tool-directory-page";
 import { getUnifiedToolDirectoryMeta } from "@/lib/tool-directory-firestore";
 import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire";
+import { getToolDirectorySectorSeoPath } from "@/lib/sector-taxonomy";
 
 export const metadata: Metadata = {
   title: "Annuaire outils TPE - Demaa",
@@ -43,7 +45,22 @@ export default async function AnnuaireOutilsPage({
   searchParams,
 }: AnnuaireOutilsPageProps) {
   const params = await searchParams;
+  const rawSector = getParamValue(params.secteur);
+  const rawCategory = getParamValue(params.categorie);
+  const rawSearchQuery = getParamValue(params.q);
   const retourSysteme = getParamValue(params.retourSysteme);
+
+  if (rawSector && !rawCategory && !rawSearchQuery) {
+    const sectorPath = getToolDirectorySectorSeoPath(rawSector);
+
+    if (sectorPath) {
+      const retourSystemeQuery = retourSysteme
+        ? `?retourSysteme=${encodeURIComponent(retourSysteme)}`
+        : "";
+      permanentRedirect(`${sectorPath}${retourSystemeQuery}`);
+    }
+  }
+
   const [{ initialCategory, initialSector }, toolDirectoryMeta, returnEnterprise] = await Promise.all([
     getToolDirectoryInitialFilters(Promise.resolve(params)),
     getUnifiedToolDirectoryMeta(),

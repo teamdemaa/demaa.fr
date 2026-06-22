@@ -42,11 +42,47 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   allowedDevOrigins: ['127.0.0.1'],
+  distDir: process.env.DEMAA_BUILD_DIST_DIR || '.next',
   experimental: {
     optimizePackageImports: ['lucide-react', 'framer-motion']
   },
   async redirects() {
     return [
+      {
+        source: '/ressources',
+        destination: '/modeles-de-documents',
+        permanent: true,
+      },
+      {
+        source: '/ressources/obligations-tpe',
+        destination: '/cours/maitriser-obligations-tpe',
+        permanent: true,
+      },
+      {
+        source: '/ressources/obligations-tpe-template',
+        destination: '/cours/maitriser-obligations-tpe',
+        permanent: true,
+      },
+      {
+        source: '/ressources/previsionnel-financier',
+        destination: '/modeles-de-documents/suivi-previsionnel-financier',
+        permanent: true,
+      },
+      {
+        source: '/ressources/suivi-previsionnel-financier-template',
+        destination: '/modeles-de-documents/suivi-previsionnel-financier',
+        permanent: true,
+      },
+      {
+        source: '/ressources/systeme-operationnel-airtable',
+        destination: '/modeles-de-documents/systeme-operationnel',
+        permanent: true,
+      },
+      {
+        source: '/ressources/systeme-operationnel-template',
+        destination: '/modeles-de-documents/systeme-operationnel',
+        permanent: true,
+      },
       {
         source: '/documents-structuration/:slug',
         destination: '/plans-organisation/:slug',

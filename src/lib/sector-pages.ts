@@ -1,3 +1,7 @@
+import {
+  getSectorTaxonomyByPublicLabel,
+  getToolDirectorySectorSeoPath,
+} from "@/lib/sector-taxonomy";
 import { publicSectorLabels, type PublicSectorLabel } from "@/lib/public-sectors";
 
 export type SectorPageHighlight = {
@@ -16,10 +20,31 @@ export type SectorPageDefinition = {
   highlights: SectorPageHighlight[];
 };
 
+type SectorPageEditorialDefinition = Omit<SectorPageDefinition, "label" | "slug">;
+
+function getSectorToolDirectoryHref(sectorLabel: PublicSectorLabel): string {
+  return getToolDirectorySectorSeoPath(sectorLabel) ?? "/annuaire-outils";
+}
+
+function createSectorPageDefinition(
+  label: PublicSectorLabel,
+  editorial: SectorPageEditorialDefinition,
+): SectorPageDefinition {
+  const sector = getSectorTaxonomyByPublicLabel(label);
+
+  if (!sector) {
+    throw new Error(`Missing sector taxonomy entry for "${label}".`);
+  }
+
+  return {
+    slug: sector.publicSlug,
+    label,
+    ...editorial,
+  };
+}
+
 const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
-  {
-    slug: "conseil-services",
-    label: "Conseil & services aux entreprises",
+  createSectorPageDefinition("Conseil & services aux entreprises", {
     title: "Systèmes pour le conseil et les services aux entreprises",
     description:
       "Explorez les systèmes, outils, services et ressources utiles pour structurer une activité de conseil ou de services B2B.",
@@ -32,19 +57,36 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     ],
     featuredSystemSlugs: [
       "cabinet-de-conseil",
+      "freelance",
       "daf-externalise",
       "assistant-administratif-externalise",
       "agence-de-recrutement",
+      "cabinet-davocat",
+      "courtier-credit-assurance",
+      "agence-seo",
+      "agence-acquisition-paid-ads",
+      "cabinet-assurance",
+      "cabinet-rh-externalise",
+      "bureau-etudes",
+      "cabinet-etudes",
+      "centre-appels-support-client",
+      "centre-affaires-coworking",
+      "coach-professionnel",
+      "entreprise-de-securite",
+      "evenementiel",
+      "fleuriste",
+      "notaire",
+      "societe-domiciliation",
+      "societe-recouvrement",
+      "studio-branding-design",
     ],
     highlights: [
-      { label: "Voir la ressource organisation", href: "/ressources/systeme-operationnel-airtable" },
+      { label: "Voir le modele organisation", href: "/modeles-de-documents/systeme-operationnel" },
       { label: "Voir le service organisation", href: "/annuaire-services/organisation-automatisation" },
-      { label: "Voir les outils utiles", href: "/annuaire-outils" },
+      { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Conseil & services aux entreprises") },
     ],
-  },
-  {
-    slug: "tech-digital",
-    label: "Tech & Digital",
+  }),
+  createSectorPageDefinition("Tech & Digital", {
     title: "Systèmes pour les activités tech et digitales",
     description:
       "Explorez les systèmes, outils, services et ressources utiles pour structurer une activité tech, digitale ou logicielle.",
@@ -60,16 +102,21 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
       "agence-web",
       "infogerance-informatique",
       "integrateur-crm-erp",
+      "creation-de-contenu",
+      "cybersecurite-pme",
+      "consultant-data-bi",
+      "reparation-informatique-mobile",
+      "marketplace",
+      "media",
+      "photographe-videaste",
     ],
     highlights: [
-      { label: "Voir la ressource organisation", href: "/ressources/systeme-operationnel-airtable" },
+      { label: "Voir le modele organisation", href: "/modeles-de-documents/systeme-operationnel" },
       { label: "Voir les services acquisition", href: "/annuaire-services" },
-      { label: "Voir les outils utiles", href: "/annuaire-outils" },
+      { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Tech & Digital") },
     ],
-  },
-  {
-    slug: "btp-services-techniques",
-    label: "BTP & services techniques",
+  }),
+  createSectorPageDefinition("BTP & services techniques", {
     title: "Systèmes pour le BTP et les services techniques",
     description:
       "Explorez les systèmes, outils, services et ressources utiles pour structurer une activité BTP, chantier ou technique.",
@@ -81,20 +128,31 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
       "Cadrer les urgences, la conformité et les routines d'execution.",
     ],
     featuredSystemSlugs: [
+      "batiment",
       "plomberie-chauffage",
       "electricite-generale",
       "renovation-interieur",
       "couvreur",
+      "architecte-maitre-oeuvre",
+      "carreleur",
+      "climatisation",
+      "menuiserie-agencement",
+      "maconnerie-gros-oeuvre",
+      "nettoyage-professionnel",
+      "geometre",
+      "paysagiste",
+      "peintre-en-batiment",
+      "pisciniste",
+      "serrurier",
     ],
     highlights: [
-      { label: "Voir le modèle obligations", href: "/ressources/obligations-tpe" },
-      { label: "Voir le prévisionnel financier", href: "/ressources/previsionnel-financier" },
+      { label: "Voir le cours obligations", href: "/cours/maitriser-obligations-tpe" },
+      { label: "Voir le previsionnel financier", href: "/modeles-de-documents/suivi-previsionnel-financier" },
+      { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("BTP & services techniques") },
       { label: "Voir les partenaires utiles", href: "/annuaire-fournisseurs" },
     ],
-  },
-  {
-    slug: "immobilier",
-    label: "Immobilier",
+  }),
+  createSectorPageDefinition("Immobilier", {
     title: "Systèmes pour les activités immobilières",
     description:
       "Explorez les systèmes, outils, services et ressources utiles pour structurer une activité immobilière, locative ou de transaction.",
@@ -110,16 +168,17 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
       "gestion-locative",
       "syndic",
       "chasseur-immobilier",
+      "diagnostiqueur-immobilier",
+      "investissement-locatif",
+      "marchand-de-biens",
     ],
     highlights: [
-      { label: "Voir la ressource organisation", href: "/ressources/systeme-operationnel-airtable" },
-      { label: "Voir les outils utiles", href: "/annuaire-outils" },
+      { label: "Voir le modele organisation", href: "/modeles-de-documents/systeme-operationnel" },
+      { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Immobilier") },
       { label: "Voir les services utiles", href: "/annuaire-services" },
     ],
-  },
-  {
-    slug: "hebergement-tourisme",
-    label: "Hébergement & tourisme",
+  }),
+  createSectorPageDefinition("Hébergement & tourisme", {
     title: "Systèmes pour l'hébergement et le tourisme",
     description:
       "Explorez les systèmes, outils, services et ressources utiles pour structurer une activité d'hébergement, de conciergerie ou de voyage.",
@@ -136,14 +195,12 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
       "agence-de-voyage",
     ],
     highlights: [
-      { label: "Voir les outils utiles", href: "/annuaire-outils" },
+      { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Hébergement & tourisme") },
       { label: "Voir les partenaires utiles", href: "/annuaire-fournisseurs" },
       { label: "Voir les services utiles", href: "/annuaire-services" },
     ],
-  },
-  {
-    slug: "patrimoine",
-    label: "Patrimoine",
+  }),
+  createSectorPageDefinition("Patrimoine", {
     title: "Systèmes pour les activités patrimoniales",
     description:
       "Explorez les systèmes, outils, services et ressources utiles pour structurer une activité de patrimoine, investissement ou conseil patrimonial.",
@@ -161,14 +218,12 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
       "investissement-immobilier",
     ],
     highlights: [
-      { label: "Voir le prévisionnel financier", href: "/ressources/previsionnel-financier" },
+      { label: "Voir le previsionnel financier", href: "/modeles-de-documents/suivi-previsionnel-financier" },
       { label: "Voir les services finance", href: "/annuaire-services" },
-      { label: "Voir les outils utiles", href: "/annuaire-outils" },
+      { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Patrimoine") },
     ],
-  },
-  {
-    slug: "mobilite-logistique",
-    label: "Mobilité & logistique",
+  }),
+  createSectorPageDefinition("Mobilité & logistique", {
     title: "Systèmes pour la mobilité et la logistique",
     description:
       "Explorez les systèmes, outils, services et ressources utiles pour structurer une activité de transport, mobilité ou livraison.",
@@ -181,19 +236,18 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     ],
     featuredSystemSlugs: [
       "livraison-dernier-kilometre",
+      "demenagement",
       "transport-de-marchandise",
       "transport-de-personnes",
       "vtc",
     ],
     highlights: [
-      { label: "Voir les outils utiles", href: "/annuaire-outils" },
+      { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Mobilité & logistique") },
       { label: "Voir les partenaires utiles", href: "/annuaire-fournisseurs" },
       { label: "Voir les services utiles", href: "/annuaire-services" },
     ],
-  },
-  {
-    slug: "restauration",
-    label: "Restauration",
+  }),
+  createSectorPageDefinition("Restauration", {
     title: "Systèmes pour les activités de restauration",
     description:
       "Explorez les systèmes, outils, services et ressources utiles pour structurer un restaurant, fast-food, traiteur ou food truck.",
@@ -208,17 +262,17 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
       "restaurant",
       "fast-food",
       "traiteur",
+      "dark-kitchen",
+      "bar-cafe",
       "food-truck",
     ],
     highlights: [
-      { label: "Voir le modèle obligations", href: "/ressources/obligations-tpe" },
+      { label: "Voir le cours obligations", href: "/cours/maitriser-obligations-tpe" },
       { label: "Voir le cours facture électronique", href: "/cours/facture-electronique" },
-      { label: "Voir les outils utiles", href: "/annuaire-outils" },
+      { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Restauration") },
     ],
-  },
-  {
-    slug: "commerce-retail",
-    label: "Commerce & retail",
+  }),
+  createSectorPageDefinition("Commerce & retail", {
     title: "Systèmes pour le commerce et le retail",
     description:
       "Explorez les systèmes, outils, services et ressources utiles pour structurer un commerce, une boutique ou une activité e-commerce.",
@@ -230,20 +284,21 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
       "Structurer le suivi client et les routines du point de vente ou du e-commerce.",
     ],
     featuredSystemSlugs: [
+      "boulangerie",
       "commerce-de-detail",
       "boutique-specialisee",
       "e-commerce",
       "commerce-alimentaire",
+      "librairie",
+      "tabac-presse-point-relais",
     ],
     highlights: [
-      { label: "Voir le modèle obligations", href: "/ressources/obligations-tpe" },
+      { label: "Voir le cours obligations", href: "/cours/maitriser-obligations-tpe" },
       { label: "Voir le cours facture électronique", href: "/cours/facture-electronique" },
-      { label: "Voir les outils utiles", href: "/annuaire-outils" },
+      { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Commerce & retail") },
     ],
-  },
-  {
-    slug: "sante-bien-etre-esthetique",
-    label: "Santé, bien-être & esthétique",
+  }),
+  createSectorPageDefinition("Santé, bien-être & esthétique", {
     title: "Systèmes pour la santé, le bien-être et l'esthétique",
     description:
       "Explorez les systèmes, outils, services et ressources utiles pour structurer un cabinet, une activité de soin, de beauté ou de suivi patient.",
@@ -259,16 +314,24 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
       "cabinet-paramedical",
       "institut-de-beaute",
       "salon-de-coiffure",
+      "coach-sportif",
+      "psychologue",
+      "dentiste",
+      "infirmier-liberal",
+      "esthetique",
+      "opticien",
+      "osteopathe",
+      "pharmacie",
+      "salle-de-sport",
+      "veterinaire",
     ],
     highlights: [
-      { label: "Voir les outils utiles", href: "/annuaire-outils" },
+      { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Santé, bien-être & esthétique") },
       { label: "Voir les services utiles", href: "/annuaire-services" },
       { label: "Voir les partenaires utiles", href: "/annuaire-fournisseurs" },
     ],
-  },
-  {
-    slug: "services-aux-particuliers",
-    label: "Services aux particuliers",
+  }),
+  createSectorPageDefinition("Services aux particuliers", {
     title: "Systèmes pour les services aux particuliers",
     description:
       "Explorez les systèmes, outils, services et ressources utiles pour structurer une activité de service récurrent ou terrain auprès des particuliers.",
@@ -286,14 +349,12 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
       "laverie-automatique",
     ],
     highlights: [
-      { label: "Voir la ressource organisation", href: "/ressources/systeme-operationnel-airtable" },
+      { label: "Voir le modele organisation", href: "/modeles-de-documents/systeme-operationnel" },
       { label: "Voir les services utiles", href: "/annuaire-services" },
-      { label: "Voir les outils utiles", href: "/annuaire-outils" },
+      { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Services aux particuliers") },
     ],
-  },
-  {
-    slug: "education-formation",
-    label: "Éducation & formation",
+  }),
+  createSectorPageDefinition("Éducation & formation", {
     title: "Systèmes pour l'éducation et la formation",
     description:
       "Explorez les systèmes, outils, services et ressources utiles pour structurer un organisme de formation, un CFA ou une offre éducative.",
@@ -309,16 +370,15 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
       "cfa",
       "formation-en-ligne",
       "auto-ecole",
+      "creche",
     ],
     highlights: [
       { label: "Voir le cours facture électronique", href: "/cours/facture-electronique" },
-      { label: "Voir les outils utiles", href: "/annuaire-outils" },
+      { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Éducation & formation") },
       { label: "Voir les services utiles", href: "/annuaire-services" },
     ],
-  },
-  {
-    slug: "industrie-production",
-    label: "Industrie & production",
+  }),
+  createSectorPageDefinition("Industrie & production", {
     title: "Systèmes pour l'industrie et la production",
     description:
       "Explorez les systèmes, outils, services et ressources utiles pour structurer une activité de production, atelier ou industrie.",
@@ -333,14 +393,12 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
       "production-industrie",
     ],
     highlights: [
-      { label: "Voir le prévisionnel financier", href: "/ressources/previsionnel-financier" },
-      { label: "Voir les outils utiles", href: "/annuaire-outils" },
+      { label: "Voir le previsionnel financier", href: "/modeles-de-documents/suivi-previsionnel-financier" },
+      { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Industrie & production") },
       { label: "Voir les partenaires utiles", href: "/annuaire-fournisseurs" },
     ],
-  },
-  {
-    slug: "automobile-reparation",
-    label: "Automobile & réparation",
+  }),
+  createSectorPageDefinition("Automobile & réparation", {
     title: "Systèmes pour l'automobile et la réparation",
     description:
       "Explorez les systèmes, outils, services et ressources utiles pour structurer un garage, une carrosserie ou une activité de réparation.",
@@ -357,13 +415,11 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     ],
     highlights: [
       { label: "Voir le cours facture électronique", href: "/cours/facture-electronique" },
-      { label: "Voir les outils utiles", href: "/annuaire-outils" },
+      { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Automobile & réparation") },
       { label: "Voir les partenaires utiles", href: "/annuaire-fournisseurs" },
     ],
-  },
-  {
-    slug: "associations-evenements",
-    label: "Associations & événements",
+  }),
+  createSectorPageDefinition("Associations & événements", {
     title: "Systèmes pour les associations et l'événementiel",
     description:
       "Explorez les systèmes, outils, services et ressources utiles pour structurer une association ou une activité événementielle.",
@@ -376,14 +432,13 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     ],
     featuredSystemSlugs: [
       "association",
-      "evenementiel",
     ],
     highlights: [
-      { label: "Voir la ressource organisation", href: "/ressources/systeme-operationnel-airtable" },
+      { label: "Voir le modele organisation", href: "/modeles-de-documents/systeme-operationnel" },
       { label: "Voir les services utiles", href: "/annuaire-services" },
-      { label: "Voir les outils utiles", href: "/annuaire-outils" },
+      { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Associations & événements") },
     ],
-  },
+  }),
 ];
 
 export const sectorPageDefinitions = SECTOR_PAGE_DEFINITIONS;

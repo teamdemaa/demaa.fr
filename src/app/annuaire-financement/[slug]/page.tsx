@@ -94,6 +94,7 @@ export default async function FinanceDetailPage({
             <RelatedSystemsLinks
               systems={relatedSystems}
               description="Quelques pages système où ce sujet financement revient souvent."
+              systemTab="financement"
             />
           </section>
         </div>

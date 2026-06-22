@@ -1,10 +1,13 @@
+import {
+  getAidFamilyBySlug,
+  getDemaaAidBySlug,
+} from "@/lib/aid-catalog";
 import { enterpriseCatalog, enterpriseCatalogBySlug, enterpriseToSystem } from "@/lib/enterprise-annuaire";
 import { RELATED_SYSTEM_SLUGS_BY_CONTENT_SLUG } from "@/lib/content-relationships";
 import { getRecommendedFinanceForSystem } from "@/lib/finance-recommendations";
 import { getRecommendedProNetworksForSystem } from "@/lib/pro-network-recommendations";
 import { getRecommendedServicesForSystem } from "@/lib/service-recommendations";
 import { getRecommendedSuppliersForSystem } from "@/lib/supplier-recommendations";
-import { systemResources } from "@/lib/system-resources";
 import type { System } from "@/lib/types";
 
 function uniqueSystemsFromSlugs(slugs: string[], limit = 6): System[] {
@@ -18,12 +21,6 @@ function uniqueSystemsFromSlugs(slugs: string[], limit = 6): System[] {
 }
 
 export function getRelatedSystemsForContentSlug(slug: string, limit = 6): System[] {
-  const resource = systemResources.find((entry) => entry.id === slug);
-
-  if (resource?.systemSlugs?.length) {
-    return uniqueSystemsFromSlugs(resource.systemSlugs, limit);
-  }
-
   return uniqueSystemsFromSlugs(RELATED_SYSTEM_SLUGS_BY_CONTENT_SLUG[slug] ?? [], limit);
 }
 
@@ -113,4 +110,24 @@ export function getRelatedSystemsForFinanceSlug(financeSlug: string, limit = 6):
     .slice(0, limit);
 
   return matches.map(({ enterprise }) => enterpriseToSystem(enterprise));
+}
+
+export function getRelatedSystemsForAidSlug(aidSlug: string, limit = 6): System[] {
+  const item = getDemaaAidBySlug(aidSlug);
+
+  if (!item) {
+    return [];
+  }
+
+  return uniqueSystemsFromSlugs(item.relatedSystems, limit);
+}
+
+export function getRelatedSystemsForAidFamilySlug(familySlug: string, limit = 6): System[] {
+  const family = getAidFamilyBySlug(familySlug);
+
+  if (!family) {
+    return [];
+  }
+
+  return uniqueSystemsFromSlugs(family.relatedSystems, limit);
 }

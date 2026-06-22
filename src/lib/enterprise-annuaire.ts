@@ -73,6 +73,7 @@ type EnterpriseFirestoreDocument = EnterpriseDefinition & {
 };
 
 const ENTERPRISE_ANNUAIRE_COLLECTION = "enterprise_annuaire";
+const FORCE_LOCAL_DATA = process.env.DEMAA_FORCE_LOCAL_DATA === "true";
 
 const enterpriseAnnuaire = rawEnterpriseAnnuaire as EnterpriseAnnuairePayload;
 
@@ -231,6 +232,10 @@ function mergeCatalogWithFallbacks(
 }
 
 export async function getEnterpriseCatalog(): Promise<EnterpriseDefinition[]> {
+  if (FORCE_LOCAL_DATA) {
+    return fallbackEnterpriseCatalog();
+  }
+
   try {
     const firestore = getAdminFirestore();
     const snapshot = await firestore.collection(ENTERPRISE_ANNUAIRE_COLLECTION).get();
@@ -274,6 +279,11 @@ export async function getEnterpriseBySlug(slug: string): Promise<EnterpriseDefin
 
   if (!normalizedSlug) {
     return null;
+  }
+
+  if (FORCE_LOCAL_DATA) {
+    const fallback = enterpriseCatalogBySlug[normalizedSlug];
+    return fallback ? enrichEnterpriseBusinessModel(fallback) : null;
   }
 
   try {

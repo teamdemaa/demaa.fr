@@ -3,6 +3,7 @@ import {
   hasStandaloneToolPage,
   type ToolDirectoryItem,
 } from "@/lib/tool-directory";
+import { getToolDirectorySectorLabel } from "@/lib/public-sectors";
 
 export type ToolDirectoryCardItem = ToolDirectoryItem & {
   detailUrl?: string;
@@ -31,7 +32,9 @@ export async function getToolDirectoryInitialFilters(
 
   return {
     initialCategory: getParamValue(params.categorie),
-    initialSector: getParamValue(params.secteur),
+    initialSector: getParamValue(params.secteur)
+      ? getToolDirectorySectorLabel(getParamValue(params.secteur) as string)
+      : undefined,
   };
 }
 

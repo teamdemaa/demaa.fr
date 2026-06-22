@@ -5,12 +5,14 @@ type RelatedSystemsLinksProps = {
   systems: System[];
   title?: string;
   description?: string;
+  systemTab?: string;
 };
 
 export default function RelatedSystemsLinks({
   systems,
   title = "Systèmes liés",
   description = "Explorer les pages système les plus proches de ce sujet.",
+  systemTab,
 }: RelatedSystemsLinksProps) {
   if (!systems.length) {
     return null;
@@ -24,7 +26,7 @@ export default function RelatedSystemsLinks({
         {systems.map((system) => (
           <Link
             key={system.slug}
-            href={`/systemes/${system.slug}`}
+            href={`/systemes/${system.slug}${systemTab ? `?tab=${encodeURIComponent(systemTab)}` : ""}`}
             className="inline-flex rounded-full border border-dema-line bg-dema-paper px-3 py-1.5 text-xs font-medium text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
           >
             {system.name}

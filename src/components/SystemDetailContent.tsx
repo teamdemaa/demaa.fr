@@ -1,28 +1,43 @@
 "use client";
 
 import Link from "next/link";
-import { startTransition, useMemo, useState, type MouseEvent } from "react";
-import { FileText, GraduationCap } from "lucide-react";
+import { startTransition, useMemo, useState, type MouseEvent, type ReactNode } from "react";
+import {
+  Bot,
+  Briefcase,
+  CalendarDays,
+  FileSignature,
+  FileText,
+  FolderKanban,
+  FormInput,
+  GraduationCap,
+  Scale,
+  Wrench,
+} from "lucide-react";
 import FinanceDetailDialog from "@/components/FinanceDetailDialog";
+import HorizontalScrollHint from "@/components/HorizontalScrollHint";
 import ProNetworkDetailDialog from "@/components/ProNetworkDetailDialog";
 import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
 import SupplierDetailDialog from "@/components/SupplierDetailDialog";
+import type { DemaaAidItem } from "@/lib/aid-catalog";
+import { getRecommendedAidsForSystem } from "@/lib/aid-recommendations";
+import { getDocumentModelsForSystem, type DocumentModel } from "@/lib/document-models";
+import { getFreeToolsForSystem } from "@/lib/free-tools";
+import { getRecommendedPartnerKeysForSystem } from "@/lib/partner-key-recommendations";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import {
   getFinanceCardBadge,
   getProNetworkCardBadge,
-  getServiceCardBadge,
   getSupplierCardBadge,
 } from "@/lib/card-badges";
 import type { CourseEntry } from "@/lib/course-content";
 import type { DemaaFinanceItem } from "@/lib/finance-catalog";
+import type { DemaaPartnerKey } from "@/lib/partner-key-catalog";
 import { getRecommendedFinanceForSystem } from "@/lib/finance-recommendations";
 import type { DemaaProNetwork } from "@/lib/pro-network-catalog";
 import { getRecommendedProNetworksForSystem } from "@/lib/pro-network-recommendations";
 import { getRelatedCoursesForSystemSlug } from "@/lib/related-courses";
-import { getSectorPageByLabel } from "@/lib/sector-pages";
-import { getRecommendedServicesForSystem } from "@/lib/service-recommendations";
-import type { DemaaService } from "@/lib/service-catalog";
+import { getToolDirectorySectorSeoPath } from "@/lib/sector-taxonomy";
 import { type OperationalSystemDetail } from "@/lib/system-operations";
 import { getRecommendedSuppliersForSystem } from "@/lib/supplier-recommendations";
 import type { DemaaSupplier } from "@/lib/supplier-catalog";
@@ -30,7 +45,7 @@ import {
   isSystemDetailTab,
   type SystemDetailTab,
 } from "@/lib/system-detail-tabs";
-import type { ToolDirectoryItem } from "@/lib/tool-directory";
+import { getToolDirectorySlug, type ToolDirectoryItem } from "@/lib/tool-directory";
 import type { System } from "@/lib/types";
 
 type SystemDetailContentProps = {
@@ -42,234 +57,32 @@ type SystemDetailContentProps = {
   headingId?: string;
 };
 
-const GOOGLE_AUDIT_BOOKING_URL = "https://calendar.app.google/E9WX9qfHxViWZ3uq8";
-const PILOTING_SHEET_URLS: Partial<Record<System["slug"], string>> = {
-  batiment: "https://docs.google.com/spreadsheets/d/1hThXGp-YMvO69dQIyAbFNMQVByzE973tbrnjIUMkYMs/edit",
-  "plomberie-chauffage":
-    "https://docs.google.com/spreadsheets/d/1cruI9aFuuP4ggbbQ2nQKxA2Pcv1dJGL9K3SZ-gJGKGQ/edit",
-  "electricite-generale":
-    "https://docs.google.com/spreadsheets/d/1cGtxwRceldfZlFjokVTfkuOJyXrKw0zZ8E87Ue7F7FE/edit",
-  "renovation-interieur":
-    "https://docs.google.com/spreadsheets/d/1Mj_cU-we__AkIv3VetPPLCdE88bhPsgzPW9863y9ZzM/edit",
-  "menuiserie-agencement":
-    "https://docs.google.com/spreadsheets/d/1Cv_zaCfuDH8APYRgbVoWQajSZwcjWknhvMxUN1HWSNY/edit",
-  "maconnerie-gros-oeuvre":
-    "https://docs.google.com/spreadsheets/d/1g8znKrrHg28-aOS2yBce_VNpE4g5_jdgbAi7hvB-vic/edit",
-  "architecte-maitre-oeuvre":
-    "https://docs.google.com/spreadsheets/d/11MyBHnQIB_7ClHQOZakw20fKE8bY_SevzmJw7HUVrO4/edit",
-  "peintre-en-batiment":
-    "https://docs.google.com/spreadsheets/d/1WL5ZBbGQWTSEdjaHIz7C70EPzuTM5VN2RSLmqbbddxI/edit",
-  couvreur: "https://docs.google.com/spreadsheets/d/1TxpREzqwewHhFFB4zUeLfGJRgMBqJi5J8pNj-aBF1RY/edit",
-  carreleur: "https://docs.google.com/spreadsheets/d/1rslN-Iquxm6Cp3D8SBz_ZXoCRCylhiUlFMYhP_oz6uk/edit",
-  climatisation:
-    "https://docs.google.com/spreadsheets/d/1Acdluq7dc-H_34fkWd4vJXxYuJXPXUzdD464eICiTcQ/edit",
-  paysagiste: "https://docs.google.com/spreadsheets/d/1XQfyE_Fk4PpR24Gyf4Fsv_PSHrtLwPWjHHu0GEI6hno/edit",
-  pisciniste: "https://docs.google.com/spreadsheets/d/1hHscXb9BBiCsfkpcxuQ5k2EzHb3Z3s52a-TuTOlHFzM/edit",
-  serrurier: "https://docs.google.com/spreadsheets/d/1sznkKMKpSdzNr4scE1usEIgpNyGH0ibXlAyqEh_ilcg/edit",
-  "garage-automobile":
-    "https://docs.google.com/spreadsheets/d/1-O-rNsfSwNcCtU1Zaab0kWkcTsNBUDzMT0YpG3PZka0/edit",
-  carrosserie:
-    "https://docs.google.com/spreadsheets/d/1yzTeRFlzWNSMQ1xvsbqCQx0rRqVuUULaoa1Jly4ucfA/edit",
-  demenagement:
-    "https://docs.google.com/spreadsheets/d/10iF9BBFFOUjV8-W9atnptqjo4ssIjGuyTWCr2YfnCMA/edit",
-  "livraison-dernier-kilometre":
-    "https://docs.google.com/spreadsheets/d/1vcZsHocv0svXHqbT1r5Jn768DAp4KqgQ1bsh1Lwyieo/edit",
-  "transport-de-marchandise":
-    "https://docs.google.com/spreadsheets/d/19oKO19pRSZwua2UeGvVzyZnHlOwqCtgS8kBI6CU89Pc/edit",
-  "transport-de-personnes":
-    "https://docs.google.com/spreadsheets/d/1oyp7LcTYBhd_YnSG6hRkogFXuByQV3SNL8oRVOY5h3E/edit",
-  "nettoyage-professionnel":
-    "https://docs.google.com/spreadsheets/d/1GyxXzsewMbpSQTVie0w53MLLY1U5ph9f0uZV6LNMfzg/edit",
-  "entreprise-de-securite":
-    "https://docs.google.com/spreadsheets/d/1wxpRpc4MdgauiTF5MgwJjokgfdHr2OiG9yhBzZJ2Bic/edit",
-  "services-a-la-personne":
-    "https://docs.google.com/spreadsheets/d/1s4fhzbwG4avCkwWm1jSyC2cGjSrBAzAajGvuS8Ze5fE/edit",
-  "aide-a-domicile-menage":
-    "https://docs.google.com/spreadsheets/d/1_089awA6PYuNg6_1TOCXeugHTbnGl2jYxW0wXFNS5qs/edit",
-  pressing:
-    "https://docs.google.com/spreadsheets/d/1fzn8qDag7cTqr7PxeFTHW5tRdTnMb_M5UPIhFMU6trc/edit",
-  librairie:
-    "https://docs.google.com/spreadsheets/d/1i0NDKw6NedG7zQyBv1UKX8UVoo0QKNkU6sEyPA_iRqk/edit",
-  "laverie-automatique":
-    "https://docs.google.com/spreadsheets/d/18rjmkDUbiU56tQUPeG79SycFCRKZmMVZnmgmqgVC8KY/edit",
-  "agence-de-voyage":
-    "https://docs.google.com/spreadsheets/d/135A-PoG2b-AkRuPkzlJeGMuiZLeWThW5h-NUPVPKMTE/edit",
-  "agence-marketing":
-    "https://docs.google.com/spreadsheets/d/1yqWnO8QnI6MJcjcXQNbsVnptJ8hSEKT56hZcu651RJc/edit",
-  "agence-de-recrutement":
-    "https://docs.google.com/spreadsheets/d/19NSmKSObnN8Qxhqiv_RQ0b2nKWdKj40hFz1F1f9NSNY/edit",
-  "agence-acquisition-paid-ads":
-    "https://docs.google.com/spreadsheets/d/1tWbqKgcrnB_J8A06PeEbg6th6f56_p-uc8lOgnk5LHc/edit",
-  "agence-seo":
-    "https://docs.google.com/spreadsheets/d/1i88Az0ktbbFLPJ5WZQw2cHUwXX4cp_saMkhMl40tCa0/edit",
-  "agence-web":
-    "https://docs.google.com/spreadsheets/d/1Omv_CKGGgu5F5PRgeNxyQhdRvguOdHyM8tO8vyrxI8w/edit",
-  "agence-immobiliere":
-    "https://docs.google.com/spreadsheets/d/12sr80ns8ErZEJLyg2N-MKv_aMcWD0_lv6FQMxpcaG0s/edit",
-  "cabinet-assurance":
-    "https://docs.google.com/spreadsheets/d/1G_ARDtLbJ9SRlFYudXjs_8xCFCqAqn__F0B1koC0p5g/edit",
-  "cabinet-comptable":
-    "https://docs.google.com/spreadsheets/d/1iZuJ1hSCNksaJC_gTOCdKKg-60MoJj12iZVaqKrgg6c/edit",
-  "cabinet-davocat":
-    "https://docs.google.com/spreadsheets/d/1LwnvOas8DUG286sZ3jOS-_fBr6Bj1Q8I6ZpE_lYigJw/edit",
-  "cabinet-de-conseil":
-    "https://docs.google.com/spreadsheets/d/1dULvdh9xRouDhPswybmSSx0c_lSsvENxjT3_8fM3sKM/edit",
-  "cabinet-etudes":
-    "https://docs.google.com/spreadsheets/d/1KduSKkYqxuSNQ-kbg7-aJzmlvOC4lpaoCbjABuzDqwM/edit",
-  "cabinet-rh-externalise":
-    "https://docs.google.com/spreadsheets/d/1BgjJeSV4UvuX1S70qJkN0k0lx4veOCAS1kcKu8j5u44/edit",
-  "cabinet-qhse-conformite":
-    "https://docs.google.com/spreadsheets/d/1hzZG0zRseYmaLxWi1zlkyvWwcO3mHvpXxUBljmpLP6A/edit",
-  "bureau-etudes":
-    "https://docs.google.com/spreadsheets/d/1zPkMx1zP-zlJ9JOydiPmuhh0UKeJeP3wwhwcqKXDGjI/edit",
-  "centre-appels-support-client":
-    "https://docs.google.com/spreadsheets/d/1UFj5h5n6EPsbH82I48eXO82wiL91j0KCpR0YSXUfT7g/edit",
-  "centre-affaires-coworking":
-    "https://docs.google.com/spreadsheets/d/1J0aUXnRoS6xv4-fB_hy1WRdOwMr51jZ_VUtfW5PqE6k/edit",
-  "conciergerie-airbnb":
-    "https://docs.google.com/spreadsheets/d/1dUVPKmHIPJ84kegJcAGo5mNXe7VS3DzTDFquXClK9j4/edit",
-  "consultant-data-bi":
-    "https://docs.google.com/spreadsheets/d/1_cYmT--CD78uqmzR44ikO6IQtiqt-1Go6tTx67MnXhs/edit",
-  "creation-de-contenu":
-    "https://docs.google.com/spreadsheets/d/1dEh8EYDF-6g9locyx_cr0ymyN4CKf9EMFdQ_qlhjR-g/edit",
-  "courtier-credit-assurance":
-    "https://docs.google.com/spreadsheets/d/1-R2zsH5AM3hBzAyPK_tpTx9f4lp3R9dgGdDdoYLhk-w/edit",
-  "chasseur-immobilier":
-    "https://docs.google.com/spreadsheets/d/11BCqTUOvy9mMWmrpNfW8nVqjsdvU_NTkMRw5za1vKeA/edit",
-  "daf-externalise":
-    "https://docs.google.com/spreadsheets/d/1q43O4HiuvNEDkg14ymOu7V_36Q-_0mDgJ9Q8DuBrSbk/edit",
-  freelance:
-    "https://docs.google.com/spreadsheets/d/1k2CNX0UAPQUuET8Bt2qr717d-Qu9BseSjbln9GwtpRo/edit",
-  "gestion-locative":
-    "https://docs.google.com/spreadsheets/d/1f_USNIdVd2HDbc9IX0URqcB28WAitK09iGybZ79YrE8/edit",
-  "infogerance-informatique":
-    "https://docs.google.com/spreadsheets/d/1sg55lZzB5e3pmECzBJb8v6OZta3lW3GWU_B01PgypbU/edit",
-  "integrateur-crm-erp":
-    "https://docs.google.com/spreadsheets/d/1IRb4prGgMTngEynE43AvtbhDJWxYp5mj6kAqoXZ3O1c/edit",
-  "production-industrie":
-    "https://docs.google.com/spreadsheets/d/14hxGrhgKmvVwi2hDgfvpoIj_5MyWQCntCrum-Ecx49A/edit",
-  opticien:
-    "https://docs.google.com/spreadsheets/d/1Y5xucGB1VYR9mgaghtJHdfEjbcKdv7E1vG8OaFFfFzo/edit",
-  "reparation-informatique-mobile":
-    "https://docs.google.com/spreadsheets/d/141GolGHKmeiodlgLT4Oag0izsknAiupsJ8WQnfTn61s/edit",
-  "food-truck":
-    "https://docs.google.com/spreadsheets/d/1bajbua9QbzR7BbN4Uwv9T2FMAEJe9l__RyLJTesUBo0/edit",
-  "fast-food":
-    "https://docs.google.com/spreadsheets/d/1361pkoJg5lIRzqIITtkpLRJrV9C1M9bdHJTebKKbRwA/edit",
-  association:
-    "https://docs.google.com/spreadsheets/d/1UfDMsanJisonen5FhemaLmx8UC3EPDBgGcW_Tt-EFpE/edit",
-  "assistant-administratif-externalise":
-    "https://docs.google.com/spreadsheets/d/1vck7xSY3Sps-PKBtmJk3mp6scVeCbLRrZgmFAcycXi8/edit",
-  "auto-ecole":
-    "https://docs.google.com/spreadsheets/d/1PpXP5_cMoD3xuW-_UFAoyJsl_oW8b8WBkNFCg-jfRg4/edit",
-  boulangerie:
-    "https://docs.google.com/spreadsheets/d/19dPItRbIxwkqJHSFnMxs16vuV7Jlz6q_B9y1YeQdpBU/edit",
-  "consultant-independant":
-    "https://docs.google.com/spreadsheets/d/1UCsrZLWdqK2hacju3d0R3vGGqoQCaaqCGobTAHyUL9M/edit",
-  "coach-sportif":
-    "https://docs.google.com/spreadsheets/d/10Rhl25jSUF2EF65jo7o3Tn4KldKGvbHiFgHlZFoOZm8/edit",
-  esthetique:
-    "https://docs.google.com/spreadsheets/d/1k0CLoflmb0Pjz-oGDOImP9dtyH8oalwEEkGjacIiiE0/edit",
-  fleuriste:
-    "https://docs.google.com/spreadsheets/d/1ecldvmUcc5FcjfYqpAE1w3nrwEzsZexIOOfiqAuJZ9A/edit",
-  geometre:
-    "https://docs.google.com/spreadsheets/d/1c7RVCT8RO2LsKYaRa22JBpN9h8tMj0kxmT_Sx4MVgkU/edit",
-  "gestionnaire-de-patrimoine":
-    "https://docs.google.com/spreadsheets/d/1njcpGOvPyxjB8vFKL3IkonLuuBYBr4Ze1hU7gp7zvwc/edit",
-  "institut-de-beaute":
-    "https://docs.google.com/spreadsheets/d/1uISQC-lgk-Z1XMnxLv5xUpZ0wDznI66_KqPTAEU3hZ8/edit",
-  "investissement-immobilier":
-    "https://docs.google.com/spreadsheets/d/165YRnh7RQlD6AGPHFhzfmVsdwB6PHIhKkEJbZEYaKQw/edit",
-  "investissement-financier":
-    "https://docs.google.com/spreadsheets/d/19YlJNFLjIZ6yiiSly4cHzumxywpMKhaZM46UmYTZEfg/edit",
-  "investissement-entreprise":
-    "https://docs.google.com/spreadsheets/d/1pJz24sdIn99CbNWScfCpSXxWIIrWMYkczkIPjoJinYk/edit",
-  "investissement-locatif":
-    "https://docs.google.com/spreadsheets/d/1fa4I_52Kb67-wwVked_wtyWcY2t-pZvr_mIwRg-SsuU/edit",
-  "salon-de-coiffure":
-    "https://docs.google.com/spreadsheets/d/1u7Jc7e8k8ieTcCtgBdZpHoAkhkHUo9k6h6aPDw12_g0/edit",
-  osteopathe:
-    "https://docs.google.com/spreadsheets/d/1jTOYEviY77seifxcsqwkKf3Jy_5CJ0yUoBITKCGFrPI/edit",
-  psychologue:
-    "https://docs.google.com/spreadsheets/d/1DDgOoJeY7vQNpdQCmMG2zldk0gwChcqaaYVhYmfQQSw/edit",
-  "photographe-videaste":
-    "https://docs.google.com/spreadsheets/d/1wq3PMusokw-ygWM0SmG5yR4eg5LEe3eyvATtp33bj6s/edit",
-  restaurant:
-    "https://docs.google.com/spreadsheets/d/1mQ_GEMFXeoazFJgF5ebk62RxdCrAOAoOflfGt5TiQtA/edit",
-  evenementiel:
-    "https://docs.google.com/spreadsheets/d/177pRqRiT0Cx2jc7qXHjskeCRsQJp8z226LdH7EfQ5ZE/edit",
-  "marchand-de-biens":
-    "https://docs.google.com/spreadsheets/d/1SY9bazlrgCgrroMze3xz9jcE5wrurtOFjI9URCBe1MQ/edit",
-  "salle-de-sport":
-    "https://docs.google.com/spreadsheets/d/1Go83i5omdkOPqyK26EhYmfQ4U3RAocsJw3TPCxk4pyk/edit",
-  syndic:
-    "https://docs.google.com/spreadsheets/d/1P5gBjJ24XdEf5LXdDVZOHoAgTNQ8ieWGydEpPg4zs4Q/edit",
-  traiteur:
-    "https://docs.google.com/spreadsheets/d/1zfRDDlnXKpeA_nEPFNpkJrfZSS7u7hPxFXj4xMmbm9c/edit",
-  creche:
-    "https://docs.google.com/spreadsheets/d/1UTy1QoDyLGY5rRin5ZL0mCoSYE8Ag1EXdAI0uiwfjbk/edit",
-  "hotel-hebergement-independant":
-    "https://docs.google.com/spreadsheets/d/1uKY1zb79mZf9Y_tZqaNOYfKOcs_9E6rEmzP70m3F--g/edit",
-  marketplace:
-    "https://docs.google.com/spreadsheets/d/16H6fMYFTa6GY-0weaEMw7aMRNAwYinApeQNhkDasSVY/edit",
-  media:
-    "https://docs.google.com/spreadsheets/d/1VHgTQR6b3sUVXr65tdyi1eZIi8JFz0jlmyYZMgXYRl8/edit",
-  saas:
-    "https://docs.google.com/spreadsheets/d/1qlJpu6vPz7Q2I7MJFLRV78kXAhCgJTyin4Kt8xWrSJc/edit",
-  "e-commerce":
-    "https://docs.google.com/spreadsheets/d/1TcgjRg3Ff_Dj3LFw-Uuj_mEZxkxnthHhGOC00oqz1Ss/edit",
-  "commerce-de-detail":
-    "https://docs.google.com/spreadsheets/d/1IU2Hi_wgzWHuw4J3bfVwN55cN1yMpEojl0q1C6RqR0U/edit",
-  "commerce-alimentaire":
-    "https://docs.google.com/spreadsheets/d/1cLZct6fu5OQKOEFR8lW2k9yoA_jYf-creJ-XnZsLaFk/edit",
-  "boutique-specialisee":
-    "https://docs.google.com/spreadsheets/d/1xxc4hPw3soN-a5wNe-Dn_rTrRrMRxx6HcPoDG6lETCc/edit",
-  "tabac-presse-point-relais":
-    "https://docs.google.com/spreadsheets/d/1vrooQQ19Tc9X3FYBjB6h2HSHyOEiF0VoUpe4eDJembI/edit",
-  "bar-cafe":
-    "https://docs.google.com/spreadsheets/d/1D3G1sJo94YUVfMehzPu6qNcjRwYJCZc7LyjHIQr4zC8/edit",
-  "organisme-de-formation":
-    "https://docs.google.com/spreadsheets/d/1g1MA7kT-wEF6DzA7qqZnsE-ytHutwQ_a5ig6-o9bln0/edit",
-  cfa:
-    "https://docs.google.com/spreadsheets/d/1yrY1G9i4HvDRad9IoFAi83w8OFDDQdOvkjlIijPkcLM/edit",
-  "formation-en-ligne":
-    "https://docs.google.com/spreadsheets/d/1tMTxH2dwX_0h7WGwpithPmxaZxrCO-zVOcMZ4QYp8YM/edit",
-  "cabinet-medical":
-    "https://docs.google.com/spreadsheets/d/17k_K8bpmTl8AKHWDZ6YFq-Tggri0T4EBPTO8xuCV1CM/edit",
-  "cabinet-paramedical":
-    "https://docs.google.com/spreadsheets/d/1HuP079tcNHQsRQ5MTrffrqxjyqPx7hdtWBdh5fvepHg/edit",
-  "infirmier-liberal":
-    "https://docs.google.com/spreadsheets/d/1aOFFRE5nxrGT2IOUoOxARGyl-961Ooi5vnb7ppa-vGA/edit",
-  dentiste:
-    "https://docs.google.com/spreadsheets/d/1CYzKS93Mxp38OwEG2Q8Cv0Na6d-ZFsJD3TMHLSiX9TU/edit",
-  "diagnostiqueur-immobilier":
-    "https://docs.google.com/spreadsheets/d/1IvQtD9xAKFO1F1d3kPKSdIiJ1mvc4w3XeAIPR0fKCyg/edit",
-  "cybersecurite-pme":
-    "https://docs.google.com/spreadsheets/d/1-YOB_kWCf7mUwWtrbqBMwVDOq-yBySeTBFGvRhRlqQw/edit",
-  "coach-professionnel":
-    "https://docs.google.com/spreadsheets/d/1XmT26JywgoKiUmjRR7L_eidgpr3vrD6ooya7TywbGwM/edit",
-  notaire:
-    "https://docs.google.com/spreadsheets/d/1tu64JaQ-1GzI3G-x2eQzf-VA2QbfpH23ALi_c2pYnCI/edit",
-  "office-manager-externalise":
-    "https://docs.google.com/spreadsheets/d/14lHWvqZEFIaE592xy3AhDarFwb2OM2Orvw638NVGcYI/edit",
-  pharmacie:
-    "https://docs.google.com/spreadsheets/d/1gp9dkNjO7XfCoNJpaYqKVdvxJYn3jH5Of9DjSs_9ByI/edit",
-  "secretariat-externalise":
-    "https://docs.google.com/spreadsheets/d/1qmcoO9pXZERg6SCZnenoXe-nBHXNC20bNCLLlQZpagA/edit",
-  "gestionnaire-paie-independant":
-    "https://docs.google.com/spreadsheets/d/1LcbspnthRbINhj2clk8ZcWpiamTYtDaRpuhvxHPz9GM/edit",
-  "societe-recouvrement":
-    "https://docs.google.com/spreadsheets/d/1rwdzarxVtubuQvBFfIC7SKQkmOJWCYVPLCari3iNudY/edit",
-  "societe-domiciliation":
-    "https://docs.google.com/spreadsheets/d/1O2Aneru5HhZXXRdbMNkyJffW6ul4QDQQ3CJlnt3QvGI/edit",
-  "studio-branding-design":
-    "https://docs.google.com/spreadsheets/d/1xi5Jgqy3HKgIYuVo4aCjyBbUjsXixL0h73Y-hrX5diE/edit",
-  veterinaire:
-    "https://docs.google.com/spreadsheets/d/1utHAzn-H0xAvFW5Y8G4bUYYGBtAJ3Q8jVpKGEYw6w3Q/edit",
-  vtc:
-    "https://docs.google.com/spreadsheets/d/1sTFRXvQebtA7S5U-K2aTgMeKyjcXhGhKqB2Nl6f5KNA/edit",
-  "dark-kitchen":
-    "https://docs.google.com/spreadsheets/d/1-FGCoBYIr_wchNlP8dEjG-BldVB0tamjUtvSBpwD-Ck/edit",
+const SYSTEM_CARD_CLASS =
+  "demaa-card group flex h-full min-h-[14rem] flex-col rounded-[1.15rem] p-5 text-left";
+const SYSTEM_CARD_TITLE_CLASS =
+  "mt-2 line-clamp-2 text-lg font-semibold leading-snug text-brand-blue";
+const SYSTEM_CARD_DESCRIPTION_CLASS =
+  "mt-3 line-clamp-3 text-sm leading-relaxed text-dema-muted";
+const GENERIC_TOOL_CATEGORIES = new Set(["Outils métier", "Outils transverses"]);
+const INDUSTRY_TOOL_TAGS = new Set([
+  "Avocat",
+  "Bâtiment",
+  "Immobilier",
+  "Restaurant",
+  "Commerce",
+  "Santé",
+  "Artisanat",
+  "Droit",
+]);
+
+type SupplierSection = {
+  title: string;
+  items: DemaaSupplier[];
+};
+
+type FinanceSection = {
+  title: string;
+  items: DemaaFinanceItem[];
 };
 
 function isTransverseTool(tool: OperationalSystemDetail["tools"][number]): boolean {
@@ -296,6 +109,113 @@ function getFallbackToolDetail(tool: OperationalSystemDetail["tools"][number]): 
     tags: [],
     url: tool.url ?? "#",
   };
+}
+
+function getToolEyebrow(tool: OperationalSystemDetail["tools"][number]): string | null {
+  const category = tool.detail?.category ?? tool.type;
+
+  if (category && !GENERIC_TOOL_CATEGORIES.has(category)) {
+    return category;
+  }
+
+  const informativeTag = tool.detail?.tags?.find((tag) => !INDUSTRY_TOOL_TAGS.has(tag));
+  return informativeTag ?? null;
+}
+
+function getToolIcon(tool: OperationalSystemDetail["tools"][number]) {
+  const category = (tool.detail?.category ?? tool.type).toLowerCase();
+  const tags = tool.detail?.tags?.map((tag) => tag.toLowerCase()) ?? [];
+
+  if (category.includes("formulaire")) {
+    return FormInput;
+  }
+
+  if (category.includes("gestion") || tags.includes("dossiers") || tags.includes("documents")) {
+    return FolderKanban;
+  }
+
+  if (category.includes("signature") || category.includes("document")) {
+    return FileSignature;
+  }
+
+  if (category.includes("ia") || tags.some((tag) => tag.includes("ia"))) {
+    return Bot;
+  }
+
+  if (tags.some((tag) => tag.includes("agenda") || tag.includes("planification") || tag.includes("rendez-vous"))) {
+    return CalendarDays;
+  }
+
+  if (tags.some((tag) => tag.includes("juridique") || tag.includes("jurisprudence") || tag.includes("doctrine"))) {
+    return Scale;
+  }
+
+  if (category.includes("outil")) {
+    return Briefcase;
+  }
+
+  return Wrench;
+}
+
+function getSupplierSectionKey(supplier: DemaaSupplier): string {
+  if (supplier.category === "Assurance" || supplier.slug === "protection-juridique") {
+    return "protection";
+  }
+
+  if (
+    supplier.category === "Mutuelle" ||
+    supplier.slug === "swile" ||
+    supplier.tags.some((tag) => ["RH", "Avantages", "Mutuelle"].includes(tag))
+  ) {
+    return "team";
+  }
+
+  if (supplier.category === "Paiement" || supplier.category === "Téléphonie") {
+    return "payments";
+  }
+
+  return "operations";
+}
+
+function groupSuppliersBySection(suppliers: DemaaSupplier[]): SupplierSection[] {
+  const sections = new Map<string, SupplierSection>([
+    ["protection", { title: "Protection & conformité", items: [] }],
+    ["team", { title: "Équipe & avantages", items: [] }],
+    ["operations", { title: "Exploitation & matériel", items: [] }],
+    ["payments", { title: "Encaissement & téléphonie", items: [] }],
+  ]);
+
+  suppliers.forEach((supplier) => {
+    sections.get(getSupplierSectionKey(supplier))?.items.push(supplier);
+  });
+
+  return Array.from(sections.values()).filter((section) => section.items.length > 0);
+}
+
+function getFinanceSectionKey(item: DemaaFinanceItem): FinanceSection["title"] {
+  if (item.category === "Compte pro & crédit") {
+    return "Compte pro & crédit";
+  }
+
+  if (item.category === "Leasing & flotte") {
+    return "Véhicules & flotte";
+  }
+
+  return "Trésorerie & factures";
+}
+
+function groupFinanceBySection(items: DemaaFinanceItem[]): FinanceSection[] {
+  const sections = new Map<FinanceSection["title"], FinanceSection>([
+    ["Compte pro & crédit", { title: "Compte pro & crédit", items: [] }],
+    ["Trésorerie & factures", { title: "Trésorerie & factures", items: [] }],
+    ["Véhicules & flotte", { title: "Véhicules & flotte", items: [] }],
+  ]);
+
+  items.forEach((item) => {
+    sections.get(getFinanceSectionKey(item))?.items.push(item);
+  });
+
+  return Array.from(sections.values()).filter((section) => section.items.length > 0);
 }
 
 function handleToolDetailClick(
@@ -368,7 +288,7 @@ export default function SystemDetailContent({
 }: SystemDetailContentProps) {
   const defaultTab =
     initialActiveTab === "cours"
-      ? "outils"
+      ? "ressources"
       : isSystemDetailTab(initialActiveTab)
         ? initialActiveTab
         : "outils";
@@ -377,15 +297,6 @@ export default function SystemDetailContent({
   const [selectedSupplierDetail, setSelectedSupplierDetail] = useState<DemaaSupplier | null>(null);
   const [selectedFinanceDetail, setSelectedFinanceDetail] = useState<DemaaFinanceItem | null>(null);
   const [selectedProNetworkDetail, setSelectedProNetworkDetail] = useState<DemaaProNetwork | null>(null);
-  const recommendedServices = useMemo(
-    () =>
-      activeTab === "services"
-        ? getRecommendedServicesForSystem(system.slug).filter(
-            (service) => service.slug === "assistant-polyvalent"
-          )
-        : [],
-    [activeTab, system.slug]
-  );
   const recommendedSuppliers = useMemo(
     () => (activeTab === "fournisseurs" ? getRecommendedSuppliersForSystem(system.slug) : []),
     [activeTab, system.slug]
@@ -394,21 +305,41 @@ export default function SystemDetailContent({
     () => (activeTab === "financement" ? getRecommendedFinanceForSystem(system.slug) : []),
     [activeTab, system.slug]
   );
+  const recommendedAids = useMemo(
+    () => (activeTab === "financement"
+      ? getRecommendedAidsForSystem(system.slug, detail.sectorLabel)
+      : []),
+    [activeTab, detail.sectorLabel, system.slug]
+  );
   const recommendedProNetworks = useMemo(
     () => (activeTab === "reseaux-pro" ? getRecommendedProNetworksForSystem(system.slug) : []),
     [activeTab, system.slug]
   );
-  const courses = useMemo(
-    () => (activeTab === "cours" ? getRelatedCoursesForSystemSlug(system.slug) : []),
+  const recommendedPartnerKeys = useMemo(
+    () => (activeTab === "reseaux-pro" ? getRecommendedPartnerKeysForSystem(system.slug) : []),
     [activeTab, system.slug]
   );
+  const freeTools = useMemo(
+    () => (activeTab === "outils" ? getFreeToolsForSystem(system.slug, detail.sectorLabel) : []),
+    [activeTab, detail.sectorLabel, system.slug]
+  );
+  const courses = useMemo(
+    () => (activeTab === "ressources" ? getRelatedCoursesForSystemSlug(system.slug) : []),
+    [activeTab, system.slug]
+  );
+  const documentModels = useMemo(
+    () => (activeTab === "ressources" ? getDocumentModelsForSystem(system.slug) : []),
+    [activeTab, system.slug]
+  );
+  const supplierSections = useMemo(
+    () => (activeTab === "fournisseurs" ? groupSuppliersBySection(recommendedSuppliers) : []),
+    [activeTab, recommendedSuppliers]
+  );
+  const financeSections = useMemo(
+    () => (activeTab === "financement" ? groupFinanceBySection(recommendedFinance) : []),
+    [activeTab, recommendedFinance]
+  );
   const Heading = headingAs;
-  const sectorPage = getSectorPageByLabel(detail.sectorLabel);
-  const pilotingSheetUrl = PILOTING_SHEET_URLS[system.slug];
-  const documentHref = pilotingSheetUrl ?? `/plans-organisation/${system.slug}`;
-  const documentLabel = pilotingSheetUrl
-    ? "Obtenir le Tableau de pilotage"
-    : "Obtenir le Plan d'organisation";
 
   function selectTab(tab: SystemDetailTab) {
     startTransition(() => {
@@ -417,22 +348,31 @@ export default function SystemDetailContent({
   }
 
   function renderToolCard(tool: OperationalSystemDetail["tools"][number]) {
+    const eyebrow = getToolEyebrow(tool);
+    const ToolIcon = getToolIcon(tool);
     const content = (
       <>
+        <div className="flex items-start justify-between gap-4">
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper">
+            <ToolIcon className="h-4 w-4" aria-hidden="true" />
+          </span>
+        </div>
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
-            {tool.type}
-          </p>
-          <h3 className="mt-2 text-lg font-semibold text-brand-blue">
+          {eyebrow ? (
+            <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
+              {eyebrow}
+            </p>
+          ) : null}
+          <h3 className={SYSTEM_CARD_TITLE_CLASS}>
             {tool.name}
           </h3>
         </div>
-        <p className="mt-3 text-sm leading-relaxed text-dema-muted">
+        <p className={SYSTEM_CARD_DESCRIPTION_CLASS}>
           {tool.usage}
         </p>
       </>
     );
-    const className = "demaa-card block rounded-[1.15rem] p-5 text-left";
+    const className = SYSTEM_CARD_CLASS;
 
     if (!tool.slug) {
       return (
@@ -460,40 +400,94 @@ export default function SystemDetailContent({
     );
   }
 
-  function renderServiceCard(service: DemaaService) {
-    const href =
-      service.slug === "organisation-automatisation"
-        ? "/organisation-automatisation"
-        : `/annuaire-services/${service.slug}`;
+  function renderToolCarousel(
+    tools: OperationalSystemDetail["tools"],
+    tone: "forest" | "muted",
+    title: string,
+  ) {
+    return (
+      <div>
+        <p
+          className={`text-[11px] font-semibold uppercase tracking-[0.16em] ${
+            tone === "forest" ? "text-dema-forest" : "text-dema-muted"
+          }`}
+        >
+          {title}
+        </p>
+        <HorizontalScrollHint
+          className="-mx-4 overflow-x-auto px-4 pb-4 pt-3 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
+          controlsClassName="absolute -right-2 -top-9 z-10 flex items-center gap-1.5 sm:-right-3"
+        >
+          <div className="flex w-max snap-x snap-mandatory gap-4">
+            {tools.map((tool) => (
+              <div
+                key={tool.slug ?? tool.name}
+                className="w-[18rem] shrink-0 snap-start sm:w-[19rem] lg:w-[20rem]"
+              >
+                {renderToolCard(tool)}
+              </div>
+            ))}
+          </div>
+        </HorizontalScrollHint>
+      </div>
+    );
+  }
+
+  function renderCardSection<T>({
+    items,
+    title,
+    tone,
+    getKey,
+    renderCard,
+  }: {
+    items: T[];
+    title: string;
+    tone: "forest" | "muted";
+    getKey: (item: T) => string;
+    renderCard: (item: T) => ReactNode;
+  }) {
+    if (items.length <= 1) {
+      return (
+        <div className="space-y-4">
+          <p
+            className={`text-[11px] font-semibold uppercase tracking-[0.16em] ${
+              tone === "forest" ? "text-dema-forest" : "text-dema-muted"
+            }`}
+          >
+            {title}
+          </p>
+          <div className="max-w-[20rem]">
+            {items[0] ? renderCard(items[0]) : null}
+          </div>
+        </div>
+      );
+    }
 
     return (
-      <Link
-        key={service.slug}
-        href={href}
-        className="demaa-card group flex min-h-[15rem] flex-col rounded-[1.15rem] p-5 text-left"
-      >
-        <div className="flex items-start justify-between gap-4">
-          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper">
-            <ServiceIcon icon={service.icon} className="h-4 w-4" aria-hidden="true" />
-          </span>
-        </div>
-        <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
-          {service.category}
+      <div className="space-y-4">
+        <p
+          className={`text-[11px] font-semibold uppercase tracking-[0.16em] ${
+            tone === "forest" ? "text-dema-forest" : "text-dema-muted"
+          }`}
+        >
+          {title}
         </p>
-        <h3 className="mt-2 text-lg font-semibold leading-snug text-brand-blue">
-          {service.name}
-        </h3>
-        <p className="mt-3 text-sm leading-relaxed text-dema-muted">
-          {service.shortDescription}
-        </p>
-        {getServiceCardBadge(service) ? (
-          <div className="mt-auto pt-4">
-            <span className="inline-flex rounded-full bg-dema-sage/75 px-3 py-1 text-[10px] font-medium text-brand-blue/70">
-              {getServiceCardBadge(service)}
-            </span>
+        <HorizontalScrollHint
+          className="-mx-4 overflow-x-auto px-4 pb-4 pt-1 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
+          controlsClassName="absolute -right-2 -top-9 z-10 flex items-center gap-1.5 sm:-right-3"
+        >
+          <div className="flex w-max snap-x snap-mandatory gap-4">
+            {items.map((item) => (
+              <div
+                key={getKey(item)}
+                className="w-[18rem] shrink-0 snap-start sm:w-[19rem] lg:w-[20rem]"
+              >
+                {renderCard(item)}
+              </div>
+            ))}
           </div>
-        ) : null}
-      </Link>
+        </HorizontalScrollHint>
+      </div>
     );
   }
 
@@ -508,10 +502,10 @@ export default function SystemDetailContent({
         <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
           {supplier.category}
         </p>
-        <h3 className="mt-2 text-lg font-semibold leading-snug text-brand-blue">
+        <h3 className={SYSTEM_CARD_TITLE_CLASS}>
           {supplier.name}
         </h3>
-        <p className="mt-3 text-sm leading-relaxed text-dema-muted">
+        <p className={SYSTEM_CARD_DESCRIPTION_CLASS}>
           {supplier.shortDescription}
         </p>
         {getSupplierCardBadge(supplier) ? (
@@ -527,7 +521,7 @@ export default function SystemDetailContent({
       <Link
         key={supplier.slug}
         href={`/annuaire-fournisseurs/${supplier.slug}`}
-        className="demaa-card group flex min-h-[15rem] flex-col rounded-[1.15rem] p-5 text-left"
+        className={SYSTEM_CARD_CLASS}
         onClick={(event) => {
           handleSupplierDetailClick(event, supplier, setSelectedSupplierDetail);
         }}
@@ -542,7 +536,7 @@ export default function SystemDetailContent({
       <Link
         key={network.slug}
         href={`/annuaire-reseaux-pro/${network.slug}`}
-        className="demaa-card group flex min-h-[15rem] flex-col rounded-[1.15rem] p-5 text-left"
+        className={SYSTEM_CARD_CLASS}
         onClick={(event) => {
           handleProNetworkDetailClick(event, network, setSelectedProNetworkDetail);
         }}
@@ -555,10 +549,10 @@ export default function SystemDetailContent({
         <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
           {network.category}
         </p>
-        <h3 className="mt-2 text-lg font-semibold leading-snug text-brand-blue">
+        <h3 className={SYSTEM_CARD_TITLE_CLASS}>
           {network.name}
         </h3>
-        <p className="mt-3 text-sm leading-relaxed text-dema-muted">
+        <p className={SYSTEM_CARD_DESCRIPTION_CLASS}>
           {network.shortDescription}
         </p>
         {getProNetworkCardBadge(network) ? (
@@ -577,7 +571,7 @@ export default function SystemDetailContent({
       <Link
         key={item.slug}
         href={`/annuaire-financement/${item.slug}`}
-        className="demaa-card group flex min-h-[15rem] flex-col rounded-[1.15rem] p-5 text-left"
+        className={SYSTEM_CARD_CLASS}
         onClick={(event) => {
           event.preventDefault();
           setSelectedFinanceDetail(item);
@@ -591,10 +585,10 @@ export default function SystemDetailContent({
         <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
           {item.category}
         </p>
-        <h3 className="mt-2 text-lg font-semibold leading-snug text-brand-blue">
+        <h3 className={SYSTEM_CARD_TITLE_CLASS}>
           {item.name}
         </h3>
-        <p className="mt-3 text-sm leading-relaxed text-dema-muted">
+        <p className={SYSTEM_CARD_DESCRIPTION_CLASS}>
           {item.shortDescription}
         </p>
         {getFinanceCardBadge(item) ? (
@@ -608,28 +602,75 @@ export default function SystemDetailContent({
     );
   }
 
+  function renderAidCard(item: DemaaAidItem) {
+    return (
+      <Link
+        key={item.slug}
+        href={`/aides-et-subventions/${item.slug}`}
+        className={SYSTEM_CARD_CLASS}
+      >
+        <div className="flex items-start justify-between gap-4">
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper">
+            <ServiceIcon icon={item.icon} className="h-4 w-4" aria-hidden="true" />
+          </span>
+        </div>
+        <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
+          {item.family}
+        </p>
+        <h3 className={SYSTEM_CARD_TITLE_CLASS}>
+          {item.name}
+        </h3>
+        <p className={SYSTEM_CARD_DESCRIPTION_CLASS}>
+          {item.shortDescription}
+        </p>
+      </Link>
+    );
+  }
+
+  function renderPartnerKeyCard(partner: DemaaPartnerKey) {
+    return (
+      <Link
+        key={partner.slug}
+        href={partner.href}
+        className={SYSTEM_CARD_CLASS}
+      >
+        <div className="flex items-start justify-between gap-4">
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper">
+            <ServiceIcon icon={partner.icon} className="h-4 w-4" aria-hidden="true" />
+          </span>
+        </div>
+        <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
+          {partner.category}
+        </p>
+        <h3 className={SYSTEM_CARD_TITLE_CLASS}>
+          {partner.name}
+        </h3>
+        <p className={SYSTEM_CARD_DESCRIPTION_CLASS}>
+          {partner.shortDescription}
+        </p>
+      </Link>
+    );
+  }
+
   function renderCourseCard(course: CourseEntry) {
     return (
       <Link
         key={course.slug}
         href={`/cours/${course.slug}?retourSysteme=${encodeURIComponent(system.slug)}`}
-        className="demaa-card group flex h-full flex-col rounded-[1.15rem] p-5 text-left"
+        className={SYSTEM_CARD_CLASS}
       >
         <div className="flex items-start justify-between gap-4">
           <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper">
             <GraduationCap className="h-4 w-4" aria-hidden="true" />
           </span>
-          <span className="rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-medium text-brand-blue/70">
-            {course.duration}
-          </span>
         </div>
         <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
-          {course.category}
+          {course.category} · {course.duration}
         </p>
-        <h3 className="mt-2 text-lg font-semibold leading-snug text-brand-blue">
+        <h3 className={SYSTEM_CARD_TITLE_CLASS}>
           {course.title}
         </h3>
-        <p className="mt-3 text-sm leading-relaxed text-dema-muted">
+        <p className={SYSTEM_CARD_DESCRIPTION_CLASS}>
           {course.description}
         </p>
         <div className="mt-auto pt-4">
@@ -668,24 +709,37 @@ export default function SystemDetailContent({
     );
   }
 
+  function renderFreeToolCard(tool: ToolDirectoryItem) {
+    return (
+      <Link
+        key={getToolDirectorySlug(tool)}
+        href={tool.url}
+        className={SYSTEM_CARD_CLASS}
+      >
+        <div className="flex items-start justify-between gap-4">
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper">
+            <FileText className="h-4 w-4" aria-hidden="true" />
+          </span>
+        </div>
+        <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
+          {tool.category}
+        </p>
+        <h3 className={SYSTEM_CARD_TITLE_CLASS}>
+          {tool.name}
+        </h3>
+        <p className={SYSTEM_CARD_DESCRIPTION_CLASS}>
+          {tool.description}
+        </p>
+      </Link>
+    );
+  }
+
   return (
     <>
       <div className="text-left">
-        {sectorPage ? (
-          <Link
-            href={`/secteurs/${sectorPage.slug}`}
-            className="text-left text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest transition hover:text-brand-blue"
-          >
-            {detail.sectorLabel}
-          </Link>
-        ) : (
-          <p className="text-left text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
-            {detail.sectorLabel}
-          </p>
-        )}
         <Heading
           id={headingId}
-          className="mt-2 text-3xl font-normal tracking-tight text-brand-blue md:text-4xl"
+          className="text-3xl font-normal tracking-tight text-brand-blue md:text-4xl"
         >
           {system.name}
         </Heading>
@@ -695,20 +749,8 @@ export default function SystemDetailContent({
       </div>
 
       <div className="mt-4 flex flex-col gap-2 text-left sm:flex-row sm:flex-wrap">
-        <Link
-          href={documentHref}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="demaa-secondary-button gap-2 bg-dema-paper"
-        >
-          <FileText className="h-4 w-4" />
-          {documentLabel}
-        </Link>
-        <Link
-          href={GOOGLE_AUDIT_BOOKING_URL}
-          className="demaa-primary-button"
-        >
-          Audit organisation gratuit
+        <Link href="/annuaire-services" className="demaa-primary-button">
+          Déléguez efficacement
         </Link>
       </div>
 
@@ -719,8 +761,8 @@ export default function SystemDetailContent({
               ["outils", "Outils"],
               ["fournisseurs", "Fournisseurs"],
               ["financement", "Financement"],
-              ["reseaux-pro", "Réseaux Pro"],
-              ["services", "Déléguer"],
+              ["reseaux-pro", "Partenaires"],
+              ["ressources", "Ressources"],
             ] as Array<[SystemDetailTab, string]>
           ).map(([tab, label]) => (
             <button
@@ -749,30 +791,41 @@ export default function SystemDetailContent({
               return (
                 <>
                   {businessTools.length ? (
-                    <div>
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-                        Outils métier
-                      </p>
-                      <div className="mt-3 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-                        {businessTools.map(renderToolCard)}
-                      </div>
-                    </div>
+                    renderToolCarousel(businessTools, "forest", "Outils métier")
                   ) : null}
 
                   {transverseTools.length ? (
+                    renderToolCarousel(transverseTools, "muted", "Outils transverses")
+                  ) : null}
+
+                  {freeTools.length ? (
                     <div>
                       <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-muted">
-                        Outils transverses
+                        Outils gratuits
                       </p>
-                      <div className="mt-3 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-                        {transverseTools.map(renderToolCard)}
-                      </div>
+                      <HorizontalScrollHint
+                        className="-mx-4 overflow-x-auto px-4 pb-4 pt-3 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
+                        controlsClassName="absolute -right-2 -top-9 z-10 flex items-center gap-1.5 sm:-right-3"
+                      >
+                        <div className="flex w-max snap-x snap-mandatory gap-4">
+                          {freeTools.map((tool) => (
+                            <div
+                              key={getToolDirectorySlug(tool)}
+                              className="w-[18rem] shrink-0 snap-start sm:w-[19rem] lg:w-[20rem]"
+                            >
+                              {renderFreeToolCard(tool)}
+                            </div>
+                          ))}
+                        </div>
+                      </HorizontalScrollHint>
                     </div>
                   ) : null}
 
-                  {businessTools.length || transverseTools.length ? (
+                  {businessTools.length || transverseTools.length || freeTools.length ? (
                     renderBrowseAllLink({
-                      browseHref: `/annuaire-outils?retourSysteme=${encodeURIComponent(system.slug)}`,
+                      browseHref: `${
+                        getToolDirectorySectorSeoPath(detail.sectorLabel) ?? "/annuaire-outils"
+                      }?retourSysteme=${encodeURIComponent(system.slug)}`,
                       browseLabel: "Voir tous les outils",
                     })
                   ) : null}
@@ -780,23 +833,19 @@ export default function SystemDetailContent({
               );
             })()}
           </div>
-        ) : activeTab === "services" ? (
-          <div className="space-y-5">
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-              {recommendedServices.map(renderServiceCard)}
-            </div>
-            {recommendedServices.length ? (
-              renderBrowseAllLink({
-                browseHref: `/annuaire-services?retourSysteme=${encodeURIComponent(system.slug)}`,
-                browseLabel: "Voir l'annuaire services",
-              })
-            ) : null}
-          </div>
         ) : activeTab === "fournisseurs" ? (
           <div className="space-y-5">
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-              {recommendedSuppliers.map(renderSupplierCard)}
-            </div>
+            {supplierSections.map((section, index) => (
+              <div key={section.title}>
+                {renderCardSection({
+                  items: section.items,
+                  title: section.title,
+                  tone: index === 0 ? "forest" : "muted",
+                  getKey: (supplier) => supplier.slug,
+                  renderCard: renderSupplierCard,
+                })}
+              </div>
+            ))}
             {recommendedSuppliers.length ? (
               renderBrowseAllLink({
                 browseHref: `/annuaire-fournisseurs?retourSysteme=${encodeURIComponent(system.slug)}`,
@@ -806,21 +855,91 @@ export default function SystemDetailContent({
           </div>
         ) : activeTab === "financement" ? (
           <div className="space-y-5">
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-              {recommendedFinance.map(renderFinanceCard)}
-            </div>
+            {financeSections.map((section, index) => (
+              <div key={section.title}>
+                {renderCardSection({
+                  items: section.items,
+                  title: section.title,
+                  tone: index === 0 ? "forest" : "muted",
+                  getKey: (item) => item.slug,
+                  renderCard: renderFinanceCard,
+                })}
+              </div>
+            ))}
+            {recommendedAids.length ? (
+              <div>
+                {renderCardSection({
+                  items: recommendedAids,
+                  title: "Aides & subventions",
+                  tone: "muted",
+                  getKey: (item) => item.slug,
+                  renderCard: renderAidCard,
+                })}
+              </div>
+            ) : null}
             {recommendedFinance.length ? (
               renderBrowseAllLink({
                 browseHref: `/annuaire-financement?retourSysteme=${encodeURIComponent(system.slug)}`,
                 browseLabel: "Voir l'annuaire financement",
               })
             ) : null}
+            {recommendedAids.length ? (
+              renderBrowseAllLink({
+                browseHref: `/aides-et-subventions?retourSysteme=${encodeURIComponent(system.slug)}`,
+                browseLabel: "Voir toutes les aides & subventions",
+              })
+            ) : null}
           </div>
         ) : activeTab === "reseaux-pro" ? (
           <div className="space-y-5">
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-              {recommendedProNetworks.map(renderProNetworkCard)}
-            </div>
+            {recommendedPartnerKeys.length ? (
+              <div className="space-y-4">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
+                  Partenaires clés
+                </p>
+                <HorizontalScrollHint
+                  className="-mx-4 overflow-x-auto px-4 pb-4 pt-1 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
+                  controlsClassName="absolute -right-2 -top-9 z-10 flex items-center gap-1.5 sm:-right-3"
+                >
+                  <div className="flex w-max snap-x snap-mandatory gap-4">
+                    {recommendedPartnerKeys.map((partner) => (
+                      <div
+                        key={partner.slug}
+                        className="w-[18rem] shrink-0 snap-start sm:w-[19rem] lg:w-[20rem]"
+                      >
+                        {renderPartnerKeyCard(partner)}
+                      </div>
+                    ))}
+                  </div>
+                </HorizontalScrollHint>
+                {renderBrowseAllLink({
+                  browseHref: `/annuaire-partenaires-cles?retourSysteme=${encodeURIComponent(system.slug)}`,
+                  browseLabel: "Voir tous les partenaires clés",
+                })}
+              </div>
+            ) : null}
+            {recommendedProNetworks.length ? (
+              <div className="space-y-4">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-muted">
+                  Réseau pro
+                </p>
+                <HorizontalScrollHint
+                  className="-mx-4 overflow-x-auto px-4 pb-4 pt-1 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
+                  controlsClassName="absolute -right-2 -top-9 z-10 flex items-center gap-1.5 sm:-right-3"
+                >
+                  <div className="flex w-max snap-x snap-mandatory gap-4">
+                    {recommendedProNetworks.map((network) => (
+                      <div
+                        key={network.slug}
+                        className="w-[18rem] shrink-0 snap-start sm:w-[19rem] lg:w-[20rem]"
+                      >
+                        {renderProNetworkCard(network)}
+                      </div>
+                    ))}
+                  </div>
+                </HorizontalScrollHint>
+              </div>
+            ) : null}
             {recommendedProNetworks.length ? (
               renderBrowseAllLink({
                 browseHref: `/annuaire-reseaux-pro?retourSysteme=${encodeURIComponent(system.slug)}`,
@@ -828,18 +947,63 @@ export default function SystemDetailContent({
               })
             ) : null}
           </div>
-        ) : (
+        ) : activeTab === "ressources" ? (
           <div className="space-y-5">
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-              {courses.map(renderCourseCard)}
-            </div>
+            {documentModels.length ? (
+              <div className="space-y-4">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
+                  Modèles de documents
+                </p>
+                <HorizontalScrollHint
+                  className="-mx-4 overflow-x-auto px-4 pb-4 pt-1 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
+                  controlsClassName="absolute -right-2 -top-9 z-10 flex items-center gap-1.5 sm:-right-3"
+                >
+                  <div className="flex w-max snap-x snap-mandatory gap-4">
+                    {documentModels.map((model) => (
+                      <div
+                        key={model.slug}
+                        className="w-[18rem] shrink-0 snap-start sm:w-[19rem] lg:w-[20rem]"
+                      >
+                        {renderDocumentModelCard(model)}
+                      </div>
+                    ))}
+                  </div>
+                </HorizontalScrollHint>
+                {renderBrowseAllLink({
+                  browseHref: "/modeles-de-documents",
+                  browseLabel: "Voir tous les modèles de documents",
+                })}
+              </div>
+            ) : null}
             {courses.length ? (
-              renderBrowseAllLink({
-                browseHref: `/cours?retourSysteme=${encodeURIComponent(system.slug)}`,
-                browseLabel: "Voir tous les cours",
-              })
+              <div className="space-y-4">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-muted">
+                  Cours
+                </p>
+                <HorizontalScrollHint
+                  className="-mx-4 overflow-x-auto px-4 pb-4 pt-1 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
+                  controlsClassName="absolute -right-2 -top-9 z-10 flex items-center gap-1.5 sm:-right-3"
+                >
+                  <div className="flex w-max snap-x snap-mandatory gap-4">
+                    {courses.map((course) => (
+                      <div
+                        key={course.slug}
+                        className="w-[18rem] shrink-0 snap-start sm:w-[19rem] lg:w-[20rem]"
+                      >
+                        {renderCourseCard(course)}
+                      </div>
+                    ))}
+                  </div>
+                </HorizontalScrollHint>
+                {renderBrowseAllLink({
+                  browseHref: `/cours?retourSysteme=${encodeURIComponent(system.slug)}`,
+                  browseLabel: "Voir tous les cours",
+                })}
+              </div>
             ) : null}
           </div>
+        ) : (
+          <div className="space-y-5" />
         )}
       </div>
 
@@ -870,3 +1034,27 @@ export default function SystemDetailContent({
     </>
   );
 }
+  function renderDocumentModelCard(model: DocumentModel) {
+    return (
+      <Link
+        key={model.slug}
+        href={`/modeles-de-documents/${model.slug}`}
+        className={SYSTEM_CARD_CLASS}
+      >
+        <div className="flex items-start justify-between gap-4">
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper">
+            <FileText className="h-4 w-4" aria-hidden="true" />
+          </span>
+        </div>
+        <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
+          {model.category}
+        </p>
+        <h3 className={SYSTEM_CARD_TITLE_CLASS}>
+          {model.title}
+        </h3>
+        <p className={SYSTEM_CARD_DESCRIPTION_CLASS}>
+          {model.description}
+        </p>
+      </Link>
+    );
+  }

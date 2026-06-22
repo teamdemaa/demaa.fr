@@ -6,8 +6,8 @@ const currentDir = dirname(fileURLToPath(import.meta.url));
 const rootDir = resolve(currentDir, "..");
 const toolDirectoryPath = resolve(rootDir, "src/lib/tool-directory.json");
 const enterpriseAnnuairePath = resolve(rootDir, "src/lib/enterprise-annuaire.json");
-const customerDealsPath = resolve(rootDir, "src/lib/customer-deals.ts");
-const systemResourcesPath = resolve(rootDir, "src/lib/system-resources.ts");
+const sectorTaxonomyPath = resolve(rootDir, "src/lib/sector-taxonomy.json");
+const freeToolFallbacksPath = resolve(rootDir, "src/lib/free-tool-fallbacks.json");
 
 function readJson(path) {
   return JSON.parse(fs.readFileSync(path, "utf8"));
@@ -23,28 +23,10 @@ function resolveToolScope(tool, ref) {
   return ref?.scope ?? tool?.scope;
 }
 
-function extractCustomerDealToolSlugs() {
-  if (!fs.existsSync(customerDealsPath)) {
-    return [];
-  }
-
-  const source = fs.readFileSync(customerDealsPath, "utf8");
-  return [...source.matchAll(/toolSlug:\s*"([^"]+)"/g)].map((match) => match[1]);
-}
-
-function extractSystemResourceSlugs() {
-  const source = fs.readFileSync(systemResourcesPath, "utf8");
-  const match = source.match(/const flexibleSystemSlugs = \[([\s\S]*?)\];/);
-
-  if (!match) {
-    return [];
-  }
-
-  return [...match[1].matchAll(/"([^"]+)"/g)].map((slugMatch) => slugMatch[1]);
-}
-
 const toolPayload = readJson(toolDirectoryPath);
 const enterprisePayload = readJson(enterpriseAnnuairePath);
+const sectorTaxonomyPayload = readJson(sectorTaxonomyPath);
+const freeToolFallbacksPayload = readJson(freeToolFallbacksPath);
 
 if (!Array.isArray(toolPayload.tools)) {
   throw new Error("Invalid tool-directory.json: expected tools array.");
@@ -53,6 +35,25 @@ if (!Array.isArray(toolPayload.tools)) {
 if (!Array.isArray(enterprisePayload.enterprises)) {
   throw new Error("Invalid enterprise-annuaire.json: expected enterprises array.");
 }
+
+if (!Array.isArray(sectorTaxonomyPayload.sectors)) {
+  throw new Error("Invalid sector-taxonomy.json: expected sectors array.");
+}
+
+const sectorTaxonomyByLabel = new Map(
+  sectorTaxonomyPayload.sectors.map((sector) => [sector.publicLabel, sector]),
+);
+const sectorTaxonomyByToolSectorLabel = new Map(
+  sectorTaxonomyPayload.sectors
+    .filter((sector) => sector.toolSectorLabel)
+    .map((sector) => [sector.toolSectorLabel, sector]),
+);
+const exactFallbacksByToolSector =
+  freeToolFallbacksPayload.exactSectorPriorityByToolSector ?? {};
+const genericFallbacksByPublicSector =
+  freeToolFallbacksPayload.genericFallbackPriorityByPublicSector ?? {};
+const manualFallbacksBySystem =
+  freeToolFallbacksPayload.manualSystemPriorityBySystem ?? {};
 
 const errors = [];
 const warnings = [];
@@ -101,6 +102,23 @@ for (const tool of toolPayload.tools) {
 
 const enterpriseSlugs = new Set();
 const onlyTransverseSystems = [];
+const onlyTransverseSystemsCoveredByFallback = [];
+
+function hasSectorFallbackCoverage(sectorLabel) {
+  const sector = sectorTaxonomyByLabel.get(sectorLabel);
+
+  if (!sector) {
+    return false;
+  }
+
+  if (sector.fallbackMode === "exact") {
+    const exactFallback = exactFallbacksByToolSector[sector.toolSectorLabel ?? ""];
+    return Array.isArray(exactFallback) && exactFallback.length > 0;
+  }
+
+  const genericFallback = genericFallbacksByPublicSector[sector.publicLabel];
+  return Array.isArray(genericFallback) && genericFallback.length > 0;
+}
 
 for (const enterprise of enterprisePayload.enterprises) {
   if (!enterprise.slug) {
@@ -149,27 +167,13 @@ for (const enterprise of enterprisePayload.enterprises) {
   }
 
   if (businessCount === 0) {
-    onlyTransverseSystems.push(`${enterprise.slug} (${enterprise.name})`);
-  }
-}
+    const label = `${enterprise.slug} (${enterprise.name})`;
 
-const dealToolSlugs = extractCustomerDealToolSlugs();
-for (const slug of dealToolSlugs) {
-  if (!toolSlugs.has(slug)) {
-    addUnique(errors, `Customer deal references unknown tool ${slug}.`);
-  }
-}
-
-for (const tool of toolPayload.tools.filter((item) => item.memberDealLabel)) {
-  if (!dealToolSlugs.includes(tool.slug)) {
-    addUnique(warnings, `Tool ${tool.slug} has memberDealLabel but no customer deal toolSlug.`);
-  }
-}
-
-const resourceSystemSlugs = extractSystemResourceSlugs();
-for (const slug of resourceSystemSlugs) {
-  if (!enterpriseSlugs.has(slug)) {
-    addUnique(errors, `System resource references unknown enterprise ${slug}.`);
+    if (hasSectorFallbackCoverage(enterprise.sectorLabel)) {
+      onlyTransverseSystemsCoveredByFallback.push(label);
+    } else {
+      onlyTransverseSystems.push(label);
+    }
   }
 }
 
@@ -177,12 +181,88 @@ for (const slug of onlyTransverseSystems) {
   addUnique(warnings, `System has only transverse tools: ${slug}`);
 }
 
+for (const [toolSectorLabel, fallbackSlugs] of Object.entries(exactFallbacksByToolSector)) {
+  if (!sectorTaxonomyByToolSectorLabel.has(toolSectorLabel)) {
+    addUnique(
+      errors,
+      `Exact fallback sector "${toolSectorLabel}" does not exist in sector taxonomy.`,
+    );
+  }
+
+  if (!Array.isArray(fallbackSlugs) || !fallbackSlugs.length) {
+    addUnique(errors, `Exact fallback sector "${toolSectorLabel}" must declare at least one tool.`);
+    continue;
+  }
+
+  for (const fallbackSlug of fallbackSlugs) {
+    if (!activeToolSlugs.has(fallbackSlug)) {
+      addUnique(
+        errors,
+        `Exact fallback sector "${toolSectorLabel}" references unknown or inactive tool "${fallbackSlug}".`,
+      );
+    }
+  }
+}
+
+for (const [publicSectorLabel, fallbackSlugs] of Object.entries(genericFallbacksByPublicSector)) {
+  const sector = sectorTaxonomyByLabel.get(publicSectorLabel);
+
+  if (!sector) {
+    addUnique(
+      errors,
+      `Generic fallback sector "${publicSectorLabel}" does not exist in sector taxonomy.`,
+    );
+  } else if (sector.fallbackMode !== "generic") {
+    addUnique(
+      errors,
+      `Generic fallback sector "${publicSectorLabel}" is not marked as generic in sector taxonomy.`,
+    );
+  }
+
+  if (!Array.isArray(fallbackSlugs) || !fallbackSlugs.length) {
+    addUnique(
+      errors,
+      `Generic fallback sector "${publicSectorLabel}" must declare at least one tool.`,
+    );
+    continue;
+  }
+
+  for (const fallbackSlug of fallbackSlugs) {
+    if (!activeToolSlugs.has(fallbackSlug)) {
+      addUnique(
+        errors,
+        `Generic fallback sector "${publicSectorLabel}" references unknown or inactive tool "${fallbackSlug}".`,
+      );
+    }
+  }
+}
+
+for (const [systemSlug, fallbackSlugs] of Object.entries(manualFallbacksBySystem)) {
+  if (!enterpriseSlugs.has(systemSlug)) {
+    addUnique(errors, `Manual fallback system "${systemSlug}" does not exist in enterprise annuaire.`);
+  }
+
+  if (!Array.isArray(fallbackSlugs) || !fallbackSlugs.length) {
+    addUnique(errors, `Manual fallback system "${systemSlug}" must declare at least one tool.`);
+    continue;
+  }
+
+  for (const fallbackSlug of fallbackSlugs) {
+    if (!activeToolSlugs.has(fallbackSlug)) {
+      addUnique(
+        errors,
+        `Manual fallback system "${systemSlug}" references unknown or inactive tool "${fallbackSlug}".`,
+      );
+    }
+  }
+}
+
 const result = {
   tools: toolPayload.tools.length,
   activeTools: activeToolSlugs.size,
   enterprises: enterprisePayload.enterprises.length,
-  customerDealToolSlugs: dealToolSlugs.length,
-  resourceSystemSlugs: resourceSystemSlugs.length,
+  transverseOnlySystemsCoveredByFallback: onlyTransverseSystemsCoveredByFallback.length,
+  transverseOnlySystemsWithoutFallback: onlyTransverseSystems.length,
   errors,
   warnings,
 };

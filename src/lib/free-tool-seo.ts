@@ -251,7 +251,7 @@ export const freeToolSeo = {
     ],
     related: [
       { label: "Signer un document électroniquement", href: "/outils/signez-un-document-electroniquement" },
-      { label: "Les obligations d’une TPE", href: "/ressources/obligations-tpe-template" },
+      { label: "Les obligations d’une TPE", href: "/cours/maitriser-obligations-tpe" },
       { label: "Générateur de tampon", href: "/outils/generation-de-tampon" },
     ],
   },
@@ -285,7 +285,7 @@ export const freeToolSeo = {
     ],
     related: [
       { label: "Signature email pro", href: "/outils/signature-pro" },
-      { label: "Système opérationnel", href: "/ressources/systeme-operationnel-template" },
+      { label: "Système opérationnel", href: "/modeles-de-documents/systeme-operationnel" },
       { label: "Signer un document électroniquement", href: "/outils/signez-un-document-electroniquement" },
     ],
   },
@@ -353,7 +353,7 @@ export const freeToolSeo = {
     ],
     related: [
       { label: "Générateur de tampon", href: "/outils/generation-de-tampon" },
-      { label: "Suivi et prévisionnel financier", href: "/ressources/suivi-previsionnel-financier-template" },
+      { label: "Suivi et prévisionnel financier", href: "/modeles-de-documents/suivi-previsionnel-financier" },
       { label: "Signature email pro", href: "/outils/signature-pro" },
     ],
   },

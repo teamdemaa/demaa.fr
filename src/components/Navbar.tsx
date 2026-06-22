@@ -20,8 +20,6 @@ const tabIcons: Record<PrimaryNavigationId, LucideIcon> = {
 };
 
 const HOME_TAB_SELECT_EVENT = "demaa:home-tab-select";
-const GOOGLE_AUDIT_BOOKING_URL = "https://calendar.app.google/E9WX9qfHxViWZ3uq8";
-
 function getVisibleTab(tabId: string) {
   return visiblePrimaryNavigationItems.find((tab) => tab.id === tabId);
 }
@@ -76,12 +74,6 @@ export default function Navbar({
             </Suspense>
           )}
 
-          <Link
-            href={GOOGLE_AUDIT_BOOKING_URL}
-            className="demaa-primary-button shrink-0 px-4 py-2 text-xs sm:px-5 sm:py-2.5 sm:text-sm"
-          >
-            Audit organisation gratuit
-          </Link>
         </div>
       </div>
     </nav>

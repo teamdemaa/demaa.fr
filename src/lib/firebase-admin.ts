@@ -7,6 +7,10 @@ function getPrivateKey() {
   return process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n");
 }
 
+function shouldUseApplicationDefaultCredential() {
+  return process.env.FIREBASE_USE_APPLICATION_DEFAULT === "true";
+}
+
 function getFirebaseCredential() {
   const serviceAccountKey = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
 
@@ -24,6 +28,12 @@ function getFirebaseCredential() {
       clientEmail,
       privateKey,
     });
+  }
+
+  if (!shouldUseApplicationDefaultCredential()) {
+    throw new Error(
+      "Firebase admin credentials are not configured. Set explicit FIREBASE_* credentials or FIREBASE_USE_APPLICATION_DEFAULT=true.",
+    );
   }
 
   return applicationDefault();

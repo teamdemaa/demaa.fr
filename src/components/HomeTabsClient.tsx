@@ -221,10 +221,13 @@ export default function HomeTabsClient({
                   votre entreprise
                 </span>
               </h1>
-              <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-dema-muted md:text-base">
-                Pour que votre entreprise tourne même quand vous n&apos;êtes pas là,
-                <br />
-                mettez en place des systèmes adaptés.
+              <p className="mx-auto mt-5 max-w-fit text-[13px] leading-relaxed text-dema-muted sm:text-sm md:max-w-2xl md:text-base">
+                <span className="block whitespace-nowrap">
+                  Mettez en place des systèmes adaptés pour que
+                </span>
+                <span className="block whitespace-nowrap">
+                  votre entreprise tourne même quand vous n&apos;êtes pas là
+                </span>
               </p>
             </div>
 

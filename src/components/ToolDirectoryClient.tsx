@@ -42,6 +42,7 @@ type ToolDirectoryClientProps = {
   showHeader?: boolean;
   showSearchBar?: boolean;
   cardClickMode?: "modal" | "navigate";
+  showSectorTags?: boolean;
   backLink?: {
     href: string;
     label: string;
@@ -65,6 +66,7 @@ export default function ToolDirectoryClient({
   showHeader = true,
   showSearchBar = true,
   cardClickMode = "modal",
+  showSectorTags = true,
   backLink,
 }: ToolDirectoryClientProps) {
   const initialFilters = getValidFilters(
@@ -263,20 +265,22 @@ export default function ToolDirectoryClient({
                 </p>
 
                 <div className="mt-3 flex flex-wrap gap-2">
-                  {(tool.sectors.length > 2 ? ["Transverse"] : tool.sectors)
-                    .slice(0, 2)
-                    .map((sector) => (
-                      <span
-                        key={sector}
-                        className={`rounded-full px-2.5 py-1 text-[10px] font-normal ${
-                          sector === "Transverse"
-                            ? "bg-dema-paper text-brand-blue/65"
-                            : "bg-dema-sage/75 text-brand-blue/75"
-                        }`}
-                      >
-                        {sector}
-                      </span>
-                    ))}
+                  {showSectorTags
+                    ? (tool.sectors.length > 2 ? ["Transverse"] : tool.sectors)
+                        .slice(0, 2)
+                        .map((sector) => (
+                          <span
+                            key={sector}
+                            className={`rounded-full px-2.5 py-1 text-[10px] font-normal ${
+                              sector === "Transverse"
+                                ? "bg-dema-paper text-brand-blue/65"
+                                : "bg-dema-sage/75 text-brand-blue/75"
+                            }`}
+                          >
+                            {sector}
+                          </span>
+                        ))
+                    : null}
                   {tool.tags.slice(0, 2).map((tag) => (
                     <span
                       key={tag}

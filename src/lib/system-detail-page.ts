@@ -568,6 +568,8 @@ export function buildSystemPageMetadata(data: SystemDetailPageData): Metadata {
 export function buildSystemPageJsonLd(data: SystemDetailPageData) {
   const url = `https://demaa.fr/systemes/${data.system.slug}`;
   const description = buildSystemPageDescription(data);
+  const listedProcesses = data.detail.processes.slice(0, 8);
+  const listedTools = data.detail.tools.slice(0, 8);
 
   return [
     {
@@ -591,18 +593,16 @@ export function buildSystemPageJsonLd(data: SystemDetailPageData) {
       "@context": "https://schema.org",
       "@type": "ItemList",
       name: `Ressources du système ${data.system.name}`,
-      numberOfItems:
-        data.detail.processes.length +
-        data.detail.tools.length,
+      numberOfItems: listedProcesses.length + listedTools.length,
       itemListElement: [
-        ...data.detail.processes.slice(0, 8).map((process, index) => ({
+        ...listedProcesses.map((process, index) => ({
           "@type": "ListItem",
           position: index + 1,
           name: process.title,
         })),
-        ...data.detail.tools.slice(0, 8).map((tool, index) => ({
+        ...listedTools.map((tool, index) => ({
           "@type": "ListItem",
-          position: data.detail.processes.slice(0, 8).length + index + 1,
+          position: listedProcesses.length + index + 1,
           name: tool.name,
           url: tool.slug ? `https://demaa.fr/annuaire-outils/${tool.slug}` : undefined,
         })),

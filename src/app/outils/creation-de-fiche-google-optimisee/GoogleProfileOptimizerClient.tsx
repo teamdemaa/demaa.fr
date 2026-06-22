@@ -41,11 +41,11 @@ export default function GoogleProfileOptimizer() {
   ];
 
   return (
-    <div className="min-h-screen md:h-screen bg-[#ffffff] flex flex-col overflow-y-auto md:overflow-hidden text-[#141414]">
+    <div className="min-h-screen bg-[#ffffff] flex flex-col text-[#141414]">
       <Navbar />
       <FreeToolBackLink />
       
-      <main className="flex-1 flex flex-col md:flex-row w-full overflow-y-auto md:overflow-hidden">
+      <main className="flex-1 flex flex-col md:flex-row w-full">
         
         {/* LEFT PANE: CONFIGURATION */}
         <div className="w-full md:w-[45%] pl-12 md:pl-24 lg:pl-40 pr-6 flex flex-col justify-center space-y-7 md:border-r border-brand-coral/5 overflow-y-auto no-scrollbar py-12">
@@ -225,12 +225,6 @@ export default function GoogleProfileOptimizer() {
           </div>
         </div>
       </main>
-
-      <style jsx global>{`
-        @media (min-width: 768px) {
-          body { overflow: hidden; }
-        }
-      `}</style>
     </div>
   );
 }

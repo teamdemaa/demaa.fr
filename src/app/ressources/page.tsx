@@ -1,38 +1,36 @@
-import Navbar from "@/components/Navbar";
 import { Metadata } from "next";
-import { getAllEditorialEntries } from "@/lib/editorial-content";
-import ResourcesIndexClient from "@/components/ResourcesIndexClient";
+import { permanentRedirect } from "next/navigation";
 
 export const metadata: Metadata = {
-  title: "Ressources pour structurer son entreprise - Demaa",
-  description: "Retrouvez les articles, ressources et templates utiles pour structurer, piloter et développer votre activité.",
+  title: "Modèles de documents pour structurer son entreprise - Demaa",
+  description:
+    "Cette page redirige vers les modèles de documents Demaa pour piloter, organiser et structurer votre activité.",
   alternates: {
-    canonical: "/ressources",
+    canonical: "/modeles-de-documents",
+  },
+  robots: {
+    index: false,
+    follow: true,
   },
   openGraph: {
-    title: "Ressources pour structurer son entreprise - Demaa",
-    description: "Retrouvez les articles, ressources et templates utiles pour structurer, piloter et développer votre activité.",
-    url: "/ressources",
+    title: "Modèles de documents pour structurer son entreprise - Demaa",
+    description:
+      "Cette page redirige vers les modèles de documents Demaa pour piloter, organiser et structurer votre activité.",
+    url: "/modeles-de-documents",
     siteName: "Demaa",
     locale: "fr_FR",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ressources pour structurer son entreprise - Demaa",
-    description: "Retrouvez les articles, ressources et templates utiles pour structurer, piloter et développer votre activité.",
+    title: "Modèles de documents pour structurer son entreprise - Demaa",
+    description:
+      "Cette page redirige vers les modèles de documents Demaa pour piloter, organiser et structurer votre activité.",
   },
 };
 
 export default function ResourcesIndexPage() {
-  const entries = getAllEditorialEntries();
+  permanentRedirect("/modeles-de-documents");
 
-  return (
-    <>
-      <Navbar />
-      <main className="flex-1 w-full bg-background min-h-[85vh]">
-        <ResourcesIndexClient entries={entries} />
-      </main>
-    </>
-  );
+  return null;
 }

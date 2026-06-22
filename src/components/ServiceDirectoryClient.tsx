@@ -142,7 +142,12 @@ export default function ServiceDirectoryClient({
             </>
           )}
 
-          <div className={heroTitleLines ? "" : "mt-5"}>
+          <div className={heroTitleLines ? "" : "mt-5 space-y-4"}>
+            <div className="flex justify-center">
+              <Link href="/organisation-automatisation" className="demaa-primary-button">
+                Audit organisation gratuit
+              </Link>
+            </div>
             <SearchFilterControls
               value={searchQuery}
               placeholder="Rechercher un service, un besoin, une activité..."
@@ -159,6 +164,53 @@ export default function ServiceDirectoryClient({
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-7 sm:px-6 lg:px-8">
+        <div className="mb-6 rounded-[1.35rem] border border-dema-line bg-dema-paper p-5 text-left shadow-[0_12px_32px_rgba(23,35,29,0.04)] sm:p-6">
+          <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+            <div className="max-w-3xl">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
+                Espace membres
+              </p>
+              <h2 className="mt-2 text-2xl font-semibold tracking-tight text-brand-blue md:text-3xl">
+                Rejoignez le réseau Demaa
+              </h2>
+              <p className="mt-3 text-sm leading-relaxed text-dema-muted md:text-base">
+                Un espace membres pour networker avec les personnes du secteur, profiter d&apos;avantages concrets et échanger régulièrement avec vos pairs.
+              </p>
+            </div>
+            <div className="shrink-0 rounded-[1rem] bg-dema-sage/75 px-4 py-3 text-left md:min-w-[10rem]">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
+                Tarif
+              </p>
+              <p className="mt-1 text-2xl font-semibold tracking-tight text-brand-blue">
+                1000 €/an
+              </p>
+            </div>
+          </div>
+          <div className="mt-5 grid gap-3 md:grid-cols-2">
+            {[
+              "Opportunité de networker avec les personnes du secteur",
+              "-20% sur tous les services",
+              "Tarifs négociés fournisseurs",
+              "1 call tous les mois avec les pairs",
+            ].map((benefit) => (
+              <div
+                key={benefit}
+                className="rounded-[1rem] border border-dema-line bg-dema-cream px-4 py-3 text-sm text-brand-blue/78"
+              >
+                {benefit}
+              </div>
+            ))}
+          </div>
+          <div className="mt-5">
+            <Link
+              href="/mon-espace"
+              className="inline-flex items-center rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper transition hover:bg-brand-blue"
+            >
+              Découvrir l&apos;espace membres
+            </Link>
+          </div>
+        </div>
+
         <div className="flex items-center justify-end pb-5">
           {(activeCategory !== "Tous" || searchQuery) ? (
             <button
@@ -244,8 +296,13 @@ function ServiceCard({
       <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-brand-blue/65">
         {service.bestFor}
       </p>
+      <div className="mt-4">
+        <span className="inline-flex rounded-full bg-dema-forest px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-paper">
+          -20% membres
+        </span>
+      </div>
       {getServiceCardBadge(service) ? (
-        <div className="mt-4">
+        <div className="mt-2">
           <span className="inline-flex rounded-full bg-dema-sage/75 px-3 py-1 text-[10px] font-medium text-brand-blue/70">
             {getServiceCardBadge(service)}
           </span>

@@ -94,11 +94,11 @@
   }
 
   .demaa-primary-button {
-    @apply inline-flex items-center justify-center rounded-full bg-dema-forest px-4 py-2 text-sm font-medium text-dema-paper shadow-[0_4px_12px_rgba(49,95,70,0.08)] transition hover:bg-[#284f3a];
+    @apply inline-flex items-center justify-center rounded-full bg-dema-forest px-4 py-2 text-sm font-semibold text-dema-paper shadow-[0_4px_12px_rgba(49,95,70,0.08)] transition hover:bg-[#284f3a];
   }
 
   .demaa-secondary-button {
-    @apply inline-flex items-center justify-center rounded-full border border-brand-blue/28 bg-dema-paper px-4 py-2 text-sm font-medium text-brand-blue transition hover:border-brand-blue/40 hover:text-dema-forest;
+    @apply inline-flex items-center justify-center rounded-full border border-brand-blue/28 bg-dema-paper px-4 py-2 text-sm font-normal text-brand-blue/80 transition hover:border-brand-blue/40 hover:text-dema-forest;
   }
 
   .demaa-input {

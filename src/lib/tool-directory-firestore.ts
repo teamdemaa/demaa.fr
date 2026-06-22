@@ -8,6 +8,7 @@ import {
 } from "./tool-directory";
 
 const TOOL_DIRECTORY_COLLECTION = "tool_directory";
+const FORCE_LOCAL_DATA = process.env.DEMAA_FORCE_LOCAL_DATA === "true";
 const TRANSFERRED_SUPPLIER_TOOL_SLUGS = new Set([
   "qonto",
   "revolut-business",
@@ -26,6 +27,10 @@ function normalizeTool(data: DocumentData | undefined): ToolDirectoryItem | null
 }
 
 export async function getUnifiedToolDirectory(): Promise<ToolDirectoryItem[]> {
+  if (FORCE_LOCAL_DATA) {
+    return toolDirectory;
+  }
+
   try {
     const firestore = getAdminFirestore();
     const snapshot = await firestore.collection(TOOL_DIRECTORY_COLLECTION).get();

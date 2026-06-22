@@ -5,11 +5,11 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { ArrowRight, BookOpen } from "lucide-react";
 import LibraryIndexHeader from "@/components/LibraryIndexHeader";
+import type { DocumentModel } from "@/lib/document-models";
 import { matchesSearchQuery } from "@/lib/search";
-import type { EditorialEntry } from "@/lib/editorial-content";
 
 type ResourcesIndexClientProps = {
-  entries: EditorialEntry[];
+  entries: DocumentModel[];
 };
 
 export default function ResourcesIndexClient({
@@ -20,14 +20,11 @@ export default function ResourcesIndexClient({
   const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false);
 
   const filters = useMemo(() => {
-    const typeFilters: string[] = Array.from(
-      new Set(entries.map((entry) => entry.type)),
-    );
     const categoryFilters = Array.from(
       new Set(entries.map((entry) => entry.category).filter(Boolean)),
     );
 
-    return ["Tous", ...typeFilters, ...categoryFilters.filter((item) => !typeFilters.includes(item))];
+    return ["Tous", ...categoryFilters];
   }, [entries]);
 
   const filteredEntries = useMemo(() => {
@@ -36,15 +33,11 @@ export default function ResourcesIndexClient({
         entry.title,
         entry.description,
         entry.category,
-        entry.type,
         entry.slug,
         ...entry.tags,
       ]);
 
-      const matchesFilter =
-        activeFilter === "Tous" ||
-        entry.type === activeFilter ||
-        entry.category === activeFilter;
+      const matchesFilter = activeFilter === "Tous" || entry.category === activeFilter;
 
       return matchesSearch && matchesFilter;
     });
@@ -53,10 +46,10 @@ export default function ResourcesIndexClient({
   return (
     <div className="w-full">
       <LibraryIndexHeader
-        title="Ressources"
-        description="Retrouvez les contenus, ressources et templates utiles pour structurer, piloter et développer votre activité."
+        title="Modèles de documents"
+        description="Retrouvez les modèles de documents Demaa pour piloter, organiser et structurer votre activité avec une base exploitable."
         searchValue={searchQuery}
-        searchPlaceholder="Rechercher une ressource, un template, un sujet..."
+        searchPlaceholder="Rechercher un modèle, un tableau de pilotage, un sujet..."
         activeFilter={activeFilter}
         defaultFilter="Tous"
         isFilterOpen={isFilterPanelOpen}
@@ -87,17 +80,17 @@ export default function ResourcesIndexClient({
 
         {filteredEntries.length === 0 ? (
           <div className="rounded-[1.25rem] border border-dashed border-dema-line bg-dema-paper p-10 text-center">
-            <h2 className="text-xl font-bold text-brand-blue">Aucune ressource trouvée</h2>
+            <h2 className="text-xl font-bold text-brand-blue">Aucun modèle trouvé</h2>
             <p className="mt-3 text-sm font-normal text-dema-muted">
               Essayez un autre mot-clé ou un filtre plus large.
             </p>
           </div>
         ) : (
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {filteredEntries.map((entry) => (
+            {filteredEntries.map((entry, index) => (
               <Link
                 key={entry.slug}
-                href={`/ressources/${entry.slug}`}
+                href={`/modeles-de-documents/${entry.slug}`}
                 className="block h-full group"
               >
                 <article className="flex h-full flex-col overflow-hidden rounded-3xl border border-gray-100 bg-white transition-all duration-300 group-hover:-translate-y-0.5 group-hover:shadow-[0_6px_18px_rgba(0,0,0,0.045)]">
@@ -107,13 +100,14 @@ export default function ResourcesIndexClient({
                         src={entry.image}
                         alt={entry.title}
                         fill
+                        loading={index === 0 ? "eager" : undefined}
                         sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                     ) : (
                       <div className="flex h-full items-end bg-[linear-gradient(135deg,#f8f5ef_0%,#f3efe6_100%)] p-5">
                         <span className="rounded-full bg-white/80 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-brand-blue">
-                          {entry.type}
+                          Modèle
                         </span>
                       </div>
                     )}
@@ -131,7 +125,7 @@ export default function ResourcesIndexClient({
                         </span>
                       </div>
                       <span className="rounded-full bg-neutral-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-neutral-700">
-                        {entry.type}
+                        Modèle
                       </span>
                     </div>
                     <h2 className="mt-4 text-[1.85rem] font-normal leading-tight text-brand-blue transition-colors group-hover:text-neutral-700">

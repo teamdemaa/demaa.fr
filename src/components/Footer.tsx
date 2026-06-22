@@ -15,8 +15,9 @@ const mainLinks = [
 ];
 
 const contentLinks = [
-  { label: "Ressources", href: "/ressources" },
+  { label: "Modèles de documents", href: "/modeles-de-documents" },
   { label: "Cours", href: "/cours" },
+  { label: "Aides & subventions", href: "/aides-et-subventions" },
 ];
 
 export default function Footer() {
