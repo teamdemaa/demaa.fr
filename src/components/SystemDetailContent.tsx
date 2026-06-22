@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import FinanceDetailDialog from "@/components/FinanceDetailDialog";
 import HorizontalScrollHint from "@/components/HorizontalScrollHint";
+import MiniCoursesModal from "@/components/MiniCoursesModal";
 import ProNetworkDetailDialog from "@/components/ProNetworkDetailDialog";
 import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
 import SupplierDetailDialog from "@/components/SupplierDetailDialog";
@@ -298,6 +299,7 @@ export default function SystemDetailContent({
   const [selectedSupplierDetail, setSelectedSupplierDetail] = useState<DemaaSupplier | null>(null);
   const [selectedFinanceDetail, setSelectedFinanceDetail] = useState<DemaaFinanceItem | null>(null);
   const [selectedProNetworkDetail, setSelectedProNetworkDetail] = useState<DemaaProNetwork | null>(null);
+  const [isMiniCoursesModalOpen, setIsMiniCoursesModalOpen] = useState(false);
   const recommendedSuppliers = useMemo(
     () => (activeTab === "fournisseurs" ? getRecommendedSuppliersForSystem(system.slug) : []),
     [activeTab, system.slug]
@@ -756,6 +758,13 @@ export default function SystemDetailContent({
         >
           Audit organisation gratuit
         </Link>
+        <button
+          type="button"
+          onClick={() => setIsMiniCoursesModalOpen(true)}
+          className="inline-flex items-center justify-center rounded-full border border-dema-line bg-dema-paper px-5 py-3 text-sm font-medium text-brand-blue/72 transition hover:border-dema-forest/25 hover:text-dema-forest"
+        >
+          Recevoir des mini-cours gratuits
+        </button>
       </div>
 
       <div className="mt-5 -mx-2 overflow-x-auto px-2 pb-2 soft-scroll">
@@ -1033,6 +1042,14 @@ export default function SystemDetailContent({
         <ProNetworkDetailDialog
           network={selectedProNetworkDetail}
           onClose={() => setSelectedProNetworkDetail(null)}
+        />
+      ) : null}
+
+      {isMiniCoursesModalOpen ? (
+        <MiniCoursesModal
+          initialSector={system.name}
+          onClose={() => setIsMiniCoursesModalOpen(false)}
+          source="system_detail_mini_courses"
         />
       ) : null}
     </>

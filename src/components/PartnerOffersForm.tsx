@@ -6,10 +6,12 @@ import { useState } from "react";
 type FormState = "idle" | "submitting" | "success" | "error";
 
 interface PartnerOffersFormProps {
+  action?: string;
   compact?: boolean;
   initialSector?: string;
   onSuccess?: (firstName: string) => void;
   source?: string;
+  successAriaLabel?: string;
   submitLabel?: string;
   submitClassName?: string;
   submittingLabel?: string;
@@ -17,10 +19,12 @@ interface PartnerOffersFormProps {
 }
 
 export default function PartnerOffersForm({
+  action = "/api/offres-partenaires",
   compact = false,
   initialSector = "",
   onSuccess,
   source = "partner_offers_page",
+  successAriaLabel,
   submitLabel = "Recevoir les tarifs négociés",
   submitClassName,
   submittingLabel = "Inscription...",
@@ -39,7 +43,7 @@ export default function PartnerOffersForm({
     const submittedFirstName = firstName.trim();
 
     try {
-      const response = await fetch("/api/offres-partenaires", {
+      const response = await fetch(action, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -120,6 +124,7 @@ export default function PartnerOffersForm({
 
       {message && (
         <p
+          aria-label={successAriaLabel}
           className={`text-center ${status === "success" && compact ? "font-normal leading-relaxed" : "font-medium"} ${compact ? "text-[13px]" : "text-sm"} ${
             status === "success" ? "text-brand-blue" : "text-brand-coral"
           }`}
