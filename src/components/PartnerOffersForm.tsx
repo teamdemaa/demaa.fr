@@ -7,6 +7,7 @@ type FormState = "idle" | "submitting" | "success" | "error";
 
 interface PartnerOffersFormProps {
   compact?: boolean;
+  initialSector?: string;
   onSuccess?: (firstName: string) => void;
   source?: string;
   submitLabel?: string;
@@ -17,6 +18,7 @@ interface PartnerOffersFormProps {
 
 export default function PartnerOffersForm({
   compact = false,
+  initialSector = "",
   onSuccess,
   source = "partner_offers_page",
   submitLabel = "Recevoir les tarifs négociés",
@@ -25,7 +27,7 @@ export default function PartnerOffersForm({
   successMessage,
 }: PartnerOffersFormProps) {
   const [firstName, setFirstName] = useState("");
-  const [sector, setSector] = useState("");
+  const [sector, setSector] = useState(initialSector);
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<FormState>("idle");
   const [message, setMessage] = useState("");
@@ -59,7 +61,7 @@ export default function PartnerOffersForm({
           "C'est noté. Vous recevrez les tarifs négociés et les offres partenaires Demaa."
       );
       setFirstName("");
-      setSector("");
+      setSector(initialSector);
       setEmail("");
       onSuccess?.(submittedFirstName);
     } catch (error) {
@@ -111,7 +113,7 @@ export default function PartnerOffersForm({
       <button
         type="submit"
         disabled={status === "submitting"}
-        className={`inline-flex w-full items-center justify-center px-6 text-white transition-colors disabled:cursor-not-allowed ${submitClassName ?? "bg-brand-blue hover:bg-brand-coral disabled:bg-brand-blue/40"} ${compact ? "h-11 rounded-full text-[13px] font-semibold" : "h-14 rounded-full text-sm font-semibold"}`}
+        className={`inline-flex w-full items-center justify-center px-6 text-white transition-colors disabled:cursor-not-allowed ${submitClassName ?? "bg-dema-forest hover:bg-brand-blue disabled:bg-dema-forest/40"} ${compact ? "h-11 rounded-full text-[13px] font-semibold" : "h-14 rounded-full text-sm font-semibold"}`}
       >
         {status === "submitting" ? submittingLabel : submitLabel}
       </button>

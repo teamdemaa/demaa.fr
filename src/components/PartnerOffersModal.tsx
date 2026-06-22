@@ -6,11 +6,13 @@ import PartnerOffersForm from "@/components/PartnerOffersForm";
 
 export default function PartnerOffersModal({
   onClose,
+  initialSector,
   source = "partner_offers_modal",
   title = "Être informé des tarifs négociés",
   description = "Recevez les tarifs négociés, offres partenaires et opportunités utiles selon votre secteur d'activité.",
 }: {
   onClose: () => void;
+  initialSector?: string;
   source?: string;
   title?: string;
   description?: string;
@@ -66,7 +68,7 @@ export default function PartnerOffersModal({
           {description}
         </p>
 
-        <PartnerOffersForm source={source} />
+        <PartnerOffersForm source={source} initialSector={initialSector} />
       </section>
     </div>
   );
