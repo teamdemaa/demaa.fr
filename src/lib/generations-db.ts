@@ -4,7 +4,12 @@ import { getAdminFirestore } from "./firebase-admin";
 
 interface PaymentRow {
   stripe_session_id: string;
+  cart_summary?: string | null;
+  customer_name?: string | null;
   email_sent_at: string | null;
+  email?: string | null;
+  order_type?: string | null;
+  service_names?: string[] | null;
   slack_notified_at?: string | null;
 }
 
@@ -23,14 +28,22 @@ interface AssistantDelegationRequestRow {
 
 interface StripePaymentRow {
   amount_total?: number | null;
+  cart_summary?: string | null;
   checkout_status?: string | null;
   created_at?: string | null;
   currency?: string | null;
   customer_name?: string | null;
   email?: string | null;
+  item_count?: number | null;
   livemode?: boolean | null;
   offer_label?: string | null;
+  order_type?: string | null;
   payment_status?: string | null;
+  slack_notified_at?: string | null;
+  service_brief?: string | null;
+  service_brief_submitted_at?: string | null;
+  service_names?: string[] | null;
+  service_slugs?: string[] | null;
   stripe_session_id?: string | null;
   updated_at?: string | null;
   assistant_tasks?: string | null;
@@ -59,6 +72,11 @@ interface StripePaymentInput {
   livemode: boolean;
   paymentStatus?: string | null;
   checkoutStatus?: string | null;
+  orderType?: string | null;
+  cartSummary?: string | null;
+  serviceNames?: string[] | null;
+  serviceSlugs?: string[] | null;
+  itemCount?: number | null;
 }
 
 interface StripeCreditGrantInput {
@@ -90,6 +108,12 @@ function getStableKey(value: string) {
   return createHash("sha256").update(value.trim().toLowerCase()).digest("hex");
 }
 
+function normalizeStringList(values?: string[] | null) {
+  if (!Array.isArray(values)) return [];
+
+  return [...new Set(values.map((value) => value.trim()).filter(Boolean))];
+}
+
 export async function upsertConfirmedStripePayment(input: StripePaymentInput) {
   const database = getAdminFirestore();
   const now = new Date().toISOString();
@@ -113,6 +137,14 @@ export async function upsertConfirmedStripePayment(input: StripePaymentInput) {
         livemode: input.livemode,
         payment_status: input.paymentStatus?.trim() || null,
         checkout_status: input.checkoutStatus?.trim() || null,
+        order_type: input.orderType?.trim() || null,
+        cart_summary: input.cartSummary?.trim() || null,
+        service_names: normalizeStringList(input.serviceNames),
+        service_slugs: normalizeStringList(input.serviceSlugs),
+        item_count:
+          typeof input.itemCount === "number" && Number.isFinite(input.itemCount)
+            ? input.itemCount
+            : normalizeStringList(input.serviceSlugs).length || null,
         created_at: paymentDoc.exists ? paymentDoc.data()?.created_at || now : now,
         updated_at: now,
       },
@@ -133,7 +165,12 @@ export async function getStripePaymentBySessionId(sessionId: string) {
 
   return {
     stripe_session_id: payment?.stripe_session_id || sessionId,
+    cart_summary: payment?.cart_summary || null,
+    customer_name: payment?.customer_name || null,
     email_sent_at: payment?.email_sent_at || null,
+    email: payment?.email || null,
+    order_type: payment?.order_type || null,
+    service_names: payment?.service_names || [],
     slack_notified_at: payment?.slack_notified_at || null,
   };
 }
@@ -219,14 +256,22 @@ export async function getStripePaymentsByEmail(email: string) {
         amountTotal: payment?.amount_total ?? null,
         assistantTasks: payment?.assistant_tasks || null,
         assistantTasksSubmittedAt: payment?.assistant_tasks_submitted_at || null,
+        cartSummary: payment?.cart_summary || null,
         checkoutStatus: payment?.checkout_status || null,
         createdAt: payment?.created_at || null,
         currency: payment?.currency || "eur",
         customerName: payment?.customer_name || null,
         email: payment?.email || null,
+        itemCount: payment?.item_count ?? null,
         livemode: Boolean(payment?.livemode),
         offerLabel: payment?.offer_label || "Commande Demaa",
+        orderType: payment?.order_type || null,
         paymentStatus: payment?.payment_status || null,
+        slackNotifiedAt: payment?.slack_notified_at || null,
+        serviceBrief: payment?.service_brief || null,
+        serviceBriefSubmittedAt: payment?.service_brief_submitted_at || null,
+        serviceNames: payment?.service_names || [],
+        serviceSlugs: payment?.service_slugs || [],
         stripeSessionId: payment?.stripe_session_id || doc.id,
         updatedAt: payment?.updated_at || null,
       };
@@ -470,4 +515,26 @@ export async function savePartnerOffersSubscriber(input: PartnerOffersSubscriber
   });
 
   return { email };
+}
+
+export async function saveServiceBundleBrief(input: {
+  stripeSessionId: string;
+  brief: string;
+}) {
+  const database = getAdminFirestore();
+  const now = new Date().toISOString();
+
+  await database.collection("stripe_payments").doc(input.stripeSessionId).set(
+    {
+      service_brief: input.brief.trim(),
+      service_brief_submitted_at: now,
+      updated_at: now,
+    },
+    { merge: true }
+  );
+
+  return {
+    brief: input.brief.trim(),
+    serviceBriefSubmittedAt: now,
+  };
 }

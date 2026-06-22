@@ -32,12 +32,13 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 type MonEspacePageProps = {
-  searchParams: Promise<{ error?: string | string[] }>;
+  searchParams: Promise<{ error?: string | string[]; paid?: string | string[] }>;
 };
 
 export default async function MonEspacePage({ searchParams }: MonEspacePageProps) {
   const params = await searchParams;
   const error = Array.isArray(params.error) ? params.error[0] : params.error;
+  const paid = Array.isArray(params.paid) ? params.paid[0] : params.paid;
   const cookieStore = await cookies();
   const sessionToken = cookieStore.get(CUSTOMER_SPACE_COOKIE)?.value || null;
   const email = await getEmailFromCustomerSessionToken(sessionToken);
@@ -98,7 +99,10 @@ export default async function MonEspacePage({ searchParams }: MonEspacePageProps
             <p className="text-sm text-dema-muted">{email}</p>
           </div>
 
-          <MemberSpaceTabs requestCards={requestCards} />
+          <MemberSpaceTabs
+            clearPurchasedCart={paid === "1"}
+            requestCards={requestCards}
+          />
         </section>
       </main>
     </div>

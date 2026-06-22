@@ -19,7 +19,12 @@ type StripeCheckoutSession = {
   currency?: string | null;
   livemode?: boolean | null;
   metadata?: {
+    cart_summary?: string | null;
+    item_count?: string | null;
     offer_label?: string | null;
+    order_type?: string | null;
+    service_names?: string | null;
+    service_slugs?: string | null;
   } | null;
   status?: string | null;
   payment_status?: string | null;
@@ -28,6 +33,15 @@ type StripeCheckoutSession = {
     email?: string | null;
   } | null;
 };
+
+function getMetadataList(value?: string | null, separator = ",") {
+  if (!value) return [];
+
+  return value
+    .split(separator)
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
 
 function getStripeSecretKey(sessionId: string) {
   const isTestSession = sessionId.startsWith("cs_test_");
@@ -103,10 +117,15 @@ export async function GET(request: Request) {
     livemode: Boolean(session.livemode),
     paymentStatus: session.payment_status ?? null,
     checkoutStatus: session.status ?? null,
+    orderType: session.metadata?.order_type || null,
+    cartSummary: session.metadata?.cart_summary || null,
+    serviceNames: getMetadataList(session.metadata?.service_names, "|"),
+    serviceSlugs: getMetadataList(session.metadata?.service_slugs, ","),
+    itemCount: Number(session.metadata?.item_count || 0) || null,
   });
 
   const sessionToken = await createCustomerSession(email);
-  const response = NextResponse.redirect(new URL("/mon-espace", request.url));
+  const response = NextResponse.redirect(new URL("/mon-espace?paid=1", request.url));
 
   response.cookies.set(
     CUSTOMER_SPACE_COOKIE,
