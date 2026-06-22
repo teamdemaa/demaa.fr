@@ -4,32 +4,20 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { useState } from "react";
 import ServiceIntroductionModal from "@/components/ServiceIntroductionModal";
+import ServicePurchaseCta from "@/components/ServicePurchaseCta";
 import type { DemaaService } from "@/lib/service-catalog";
+import { getPurchasableServiceConfig } from "@/lib/service-purchase";
 
 export default function ServiceRequestCta({ service }: { service: DemaaService }) {
   const [isIntroductionOpen, setIsIntroductionOpen] = useState(false);
+  const purchaseConfig = getPurchasableServiceConfig(service.slug);
 
-  if (service.slug === "organisation-automatisation") {
+  if (purchaseConfig) {
     return (
-      <Link
-        href="/organisation-automatisation"
-        className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper transition hover:bg-brand-blue"
-      >
-        Voir l&apos;offre
-        <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-      </Link>
-    );
-  }
-
-  if (service.slug === "assistant-polyvalent") {
-    return (
-      <Link
-        href={`/annuaire-services/${service.slug}`}
-        className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper transition hover:bg-brand-blue"
-      >
-        Voir l&apos;offre
-        <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-      </Link>
+      <ServicePurchaseCta
+        serviceName={service.name}
+        serviceSlug={service.slug}
+      />
     );
   }
 

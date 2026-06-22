@@ -31,6 +31,7 @@ export const metadata: Metadata = {
 type AnnuaireServicesPageProps = {
   searchParams: Promise<{
     category?: string | string[];
+    panier?: string | string[];
     q?: string | string[];
     retourSysteme?: string | string[];
   }>;
@@ -50,14 +51,16 @@ export default async function AnnuaireServicesPage({
         label: `Retour à ${returnEnterprise.name}`,
       }
     : undefined;
+  const services = getDelegationServices();
 
   return (
     <>
       <Navbar />
       <main className="flex-1 w-full bg-background animate-in fade-in duration-700">
         <ServiceDirectoryClient
-          services={getDemaaServices()}
+          services={services}
           categories={serviceCategories}
+          focusCartOnLoad={getParamValue(params.panier) === "1"}
           initialCategory={getParamValue(params.category)}
           initialSearch={getParamValue(params.q) ?? ""}
           backLink={backLink}
@@ -71,4 +74,39 @@ export default async function AnnuaireServicesPage({
 
 function getParamValue(value?: string | string[]) {
   return Array.isArray(value) ? value[0] : value;
+}
+
+function getDelegationServices() {
+  const hiddenSlugs = new Set([
+    "creation-societe",
+    "modification-societe",
+    "fermeture-societe",
+    "expert-comptable",
+    "marketing-vente",
+    "publicite-google",
+    "publicite-facebook-instagram",
+    "publicite-tiktok",
+    "montage-video",
+  ]);
+  const pinnedOrder = ["organisation-automatisation", "assistant-polyvalent"];
+  const services = getDemaaServices().filter((service) => !hiddenSlugs.has(service.slug));
+
+  return services.sort((left, right) => {
+    const leftIndex = pinnedOrder.indexOf(left.slug);
+    const rightIndex = pinnedOrder.indexOf(right.slug);
+
+    if (leftIndex === -1 && rightIndex === -1) {
+      return 0;
+    }
+
+    if (leftIndex === -1) {
+      return 1;
+    }
+
+    if (rightIndex === -1) {
+      return -1;
+    }
+
+    return leftIndex - rightIndex;
+  });
 }

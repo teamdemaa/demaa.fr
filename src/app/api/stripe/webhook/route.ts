@@ -32,9 +32,14 @@ type StripeEvent = {
         } | null;
       }> | null;
       metadata?: {
+        cart_summary?: string | null;
         credits?: string | null;
+        item_count?: string | null;
         offer_label?: string | null;
         offer_type?: string | null;
+        order_type?: string | null;
+        service_names?: string | null;
+        service_slugs?: string | null;
       } | null;
     };
   };
@@ -56,6 +61,15 @@ function getOfferCredits(metadata?: StripeSessionMetadata | null) {
   const credits = Number(metadata?.credits);
 
   return Number.isFinite(credits) && credits > 0 ? credits : 0;
+}
+
+function getMetadataList(value?: string | null, separator = ",") {
+  if (!value) return [];
+
+  return value
+    .split(separator)
+    .map((item) => item.trim())
+    .filter(Boolean);
 }
 
 function getCustomFieldValue(
@@ -164,6 +178,11 @@ export async function POST(request: Request) {
       metadata: session?.metadata,
     });
     const offerCredits = getOfferCredits(session?.metadata);
+    const orderType = session?.metadata?.order_type || null;
+    const cartSummary = session?.metadata?.cart_summary || null;
+    const serviceSlugs = getMetadataList(session?.metadata?.service_slugs, ",");
+    const serviceNames = getMetadataList(session?.metadata?.service_names, "|");
+    const itemCount = Number(session?.metadata?.item_count);
 
     if (!event.id || !sessionId) {
       console.error("[stripe-webhook] checkout.session.completed missing ids", {
@@ -197,6 +216,11 @@ export async function POST(request: Request) {
         livemode: Boolean(event.livemode),
         paymentStatus: session?.payment_status ?? null,
         checkoutStatus: session?.status ?? null,
+        orderType,
+        cartSummary,
+        serviceNames,
+        serviceSlugs,
+        itemCount: Number.isFinite(itemCount) ? itemCount : serviceSlugs.length,
       });
 
       if (email && offerCredits > 0) {

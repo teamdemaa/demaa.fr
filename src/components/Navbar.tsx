@@ -4,8 +4,8 @@ import Link from "next/link";
 import { Suspense, useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { Boxes, HandHelping, Search, type LucideIcon } from "lucide-react";
+import NavbarCartIndicator from "@/components/NavbarCartIndicator";
 import DemaaWordmark from "@/components/DemaaWordmark";
-import { readHomeDiscoveryState } from "@/lib/home-discovery";
 import {
   visiblePrimaryNavigationItems,
   type PrimaryNavigationId,
@@ -34,25 +34,7 @@ export default function Navbar({
   const router = useRouter();
   const pathname = usePathname();
   const hasDesktopTabs = !minimal && visiblePrimaryNavigationItems.length > 0;
-  const [showOnHome, setShowOnHome] = useState(pathname !== "/");
-
-  useEffect(() => {
-    if (pathname === "/") {
-      const syncTimer = window.setTimeout(() => {
-        setShowOnHome(Boolean(readHomeDiscoveryState()?.seen));
-      }, 0);
-
-      return () => {
-        window.clearTimeout(syncTimer);
-      };
-    }
-
-    router.prefetch("/");
-  }, [pathname, router]);
-
-  if (pathname === "/" && !showOnHome) {
-    return null;
-  }
+  const showHomeDelegationCta = pathname === "/" && !minimal;
 
   return (
     <nav className="sticky top-0 z-40 border-b border-dema-line/70 bg-dema-cream/92 py-1 backdrop-blur-md">
@@ -73,7 +55,16 @@ export default function Navbar({
               <DesktopHomeTabsNav mode={homeTabsMode} />
             </Suspense>
           )}
-
+          {showHomeDelegationCta ? (
+            <Link
+              href="/annuaire-services"
+              className="inline-flex min-h-10 items-center justify-center rounded-full bg-dema-forest px-4 py-2 text-sm font-semibold text-dema-paper transition hover:bg-brand-blue md:px-5"
+            >
+              Déléguez avec sérénité
+            </Link>
+          ) : (
+            <NavbarCartIndicator />
+          )}
         </div>
       </div>
     </nav>

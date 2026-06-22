@@ -6,6 +6,9 @@ import Navbar from "@/components/Navbar";
 import RelatedSystemsLinks from "@/components/RelatedSystemsLinks";
 import ServiceDetailContent from "@/components/ServiceDetailContent";
 import AssistantPolyvalentLanding from "@/components/AssistantPolyvalentLanding";
+import ServiceExpandedContent from "@/components/ServiceExpandedContent";
+import { hasExpandedServiceContent } from "@/lib/service-expanded-content";
+import { getServicePageMetadata } from "@/lib/service-metadata";
 import { getRelatedSystemsForServiceSlug } from "@/lib/related-systems";
 import { demaaServices, getDemaaServiceBySlug } from "@/lib/service-catalog";
 
@@ -37,31 +40,7 @@ export async function generateMetadata({
     };
   }
 
-  const isAssistantLanding = service.slug === "assistant-polyvalent";
-  const metadataTitle = isAssistantLanding
-    ? `${service.name} - Demaa`
-    : `${service.name} - Annuaire services Demaa`;
-
-  return {
-    title: metadataTitle,
-    description: service.description,
-    alternates: {
-      canonical: `/annuaire-services/${service.slug}`,
-    },
-    openGraph: {
-      title: metadataTitle,
-      description: service.description,
-      url: `/annuaire-services/${service.slug}`,
-      siteName: "Demaa",
-      locale: "fr_FR",
-      type: "article",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: metadataTitle,
-      description: service.description,
-    },
-  };
+  return getServicePageMetadata(service);
 }
 
 export default async function ServiceDetailPage({
@@ -96,6 +75,12 @@ export default async function ServiceDetailPage({
           <div className="mt-5">
             <ServiceDetailContent service={service} />
           </div>
+
+          {hasExpandedServiceContent(service.slug) ? (
+            <section className="mt-5">
+              <ServiceExpandedContent serviceSlug={service.slug} variant="page" />
+            </section>
+          ) : null}
 
           <section className="mt-5">
             <RelatedSystemsLinks

@@ -99,14 +99,14 @@ export const demaaServices = [
   },
   {
     slug: "audit-conformite-fiscale",
-    name: "Audit de conformité fiscale",
+    name: "Audit d'optimisation et conformité fiscale",
     category: "Finance",
     shortDescription: "Identifier les risques avant qu'ils coûtent cher.",
     description:
       "Revue des zones sensibles : TVA, caisse, justificatifs, notes de frais, cohérence bancaire et pratiques administratives.",
     bestFor:
       "Les activités avec caisse, TVA, volume, historique désorganisé ou risque documentaire.",
-    price: "1 250 €",
+    price: "850 €",
     tags: ["Fiscalité", "Audit", "TVA"],
     icon: "FileSearch",
     deliverables: [
@@ -137,14 +137,14 @@ export const demaaServices = [
   },
   {
     slug: "site-web",
-    name: "Site web",
+    name: "Site web & visibilité digitale",
     category: "Acquisition",
     shortDescription: "Une présence claire pour inspirer confiance.",
     description:
-      "Création d'un site vitrine sobre, rapide et orienté conversion avec structure, contenus, pages essentielles et configuration technique.",
+      "Tout le nécessaire pour présenter votre entreprise proprement : site vitrine, page LinkedIn dirigeant, présentation entreprise, carte de visite et signature email.",
     bestFor:
       "Les activités qui doivent rassurer, être trouvées, expliquer leur offre et convertir les visiteurs en contacts.",
-    price: "750 €",
+    price: "1 350 €",
     tags: ["Web", "SEO", "Confiance"],
     icon: "Laptop",
     deliverables: [
@@ -163,7 +163,7 @@ export const demaaServices = [
       "Offre Demaa pour organiser les flux de travail, choisir les bons outils, connecter les étapes et automatiser les tâches répétitives.",
     bestFor:
       "Les entreprises qui perdent du temps sur relances, devis, documents, reporting, planning ou suivi client.",
-    price: "Sur devis",
+    price: "1 500 €",
     tags: ["Organisation", "Automatisation", "Demaa"],
     icon: "Workflow",
     deliverables: [
@@ -201,7 +201,7 @@ export const demaaServices = [
       "Création et pilotage de campagnes Google Search, Shopping ou Display selon l'activité et l'intention de recherche.",
     bestFor:
       "Les métiers avec une demande active : urgence, local, devis, réservation ou achat comparé.",
-    price: "Frais de gestion %",
+    price: "450 € / mois",
     tags: ["Google Ads", "Search", "Local"],
     icon: "Search",
     deliverables: [
@@ -278,7 +278,7 @@ export const demaaServices = [
       "Déléguez vos tâches administratives à une professionnelle formée, prête à reprendre les bases utiles de la gestion d'entreprise.",
     bestFor:
       "Les dirigeants qui veulent déléguer à la bonne personne, déjà opérationnelle, sans porter seuls toute la montée en compétence.",
-    price: "Sur devis",
+    price: "500 €",
     tags: ["Assistant", "Recrutement", "Délégation"],
     icon: "UserRoundCheck",
     deliverables: [

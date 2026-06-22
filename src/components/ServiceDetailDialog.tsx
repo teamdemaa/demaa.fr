@@ -1,16 +1,20 @@
 "use client";
 
-import Link from "next/link";
-import { ArrowUpRight, Check, X } from "lucide-react";
+import { Check, X } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import ServiceExpandedContent from "@/components/ServiceExpandedContent";
+import ServicePurchaseCta from "@/components/ServicePurchaseCta";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import ServiceIntroductionModal from "@/components/ServiceIntroductionModal";
+import { hasExpandedServiceContent } from "@/lib/service-expanded-content";
 import type { DemaaService } from "@/lib/service-catalog";
+import { getPurchasableServiceConfig } from "@/lib/service-purchase";
 
 type ServiceDetailDialogProps = {
   service: DemaaService;
   source?: string;
-  onClose: () => void;
+  onClose?: () => void;
 };
 
 export default function ServiceDetailDialog({
@@ -18,11 +22,13 @@ export default function ServiceDetailDialog({
   source,
   onClose,
 }: ServiceDetailDialogProps) {
+  const router = useRouter();
   const [isIntroductionOpen, setIsIntroductionOpen] = useState(false);
   const serviceSource =
     service.slug === "organisation-automatisation" ? "Demaa" : "Partenaire";
-  const isOrganisationService = service.slug === "organisation-automatisation";
-  const isAssistantLanding = service.slug === "assistant-polyvalent";
+  const isPurchasable = Boolean(getPurchasableServiceConfig(service.slug));
+  const closeDialog = onClose ?? (() => router.back());
+  const hasExpandedContent = hasExpandedServiceContent(service.slug);
 
   return (
     <>
@@ -31,10 +37,12 @@ export default function ServiceDetailDialog({
         role="dialog"
         aria-modal="true"
         aria-label={service.name}
-        onClick={onClose}
+        onClick={closeDialog}
       >
         <div
-          className="relative flex max-h-[92vh] w-full max-w-4xl flex-col overflow-hidden rounded-[1.25rem] border border-dema-line bg-dema-paper shadow-[0_24px_70px_rgba(23,35,29,0.2)]"
+          className={`relative flex max-h-[92vh] w-full flex-col overflow-hidden rounded-[1.25rem] border border-dema-line bg-dema-paper shadow-[0_24px_70px_rgba(23,35,29,0.2)] ${
+            hasExpandedContent ? "max-w-5xl" : "max-w-4xl"
+          }`}
           onClick={(event) => event.stopPropagation()}
         >
           <div className="flex items-start justify-between gap-4 border-b border-dema-line px-5 py-4">
@@ -53,7 +61,7 @@ export default function ServiceDetailDialog({
             </div>
             <button
               type="button"
-              onClick={onClose}
+              onClick={closeDialog}
               className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
               aria-label="Fermer"
             >
@@ -100,22 +108,11 @@ export default function ServiceDetailDialog({
                 <p className="mt-3 text-sm leading-relaxed text-dema-muted">
                   {service.bestFor}
                 </p>
-                {isOrganisationService ? (
-                  <Link
-                    href="/organisation-automatisation"
-                    className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper transition hover:bg-brand-blue"
-                  >
-                    Voir l&apos;offre
-                    <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-                  </Link>
-                ) : isAssistantLanding ? (
-                  <Link
-                    href={`/annuaire-services/${service.slug}`}
-                    className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper transition hover:bg-brand-blue"
-                  >
-                    Voir l&apos;offre
-                    <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-                  </Link>
+                {isPurchasable ? (
+                  <ServicePurchaseCta
+                    serviceName={service.name}
+                    serviceSlug={service.slug}
+                  />
                 ) : (
                   <button
                     type="button"
@@ -127,6 +124,12 @@ export default function ServiceDetailDialog({
                 )}
               </aside>
             </div>
+
+            {hasExpandedContent ? (
+              <div className="mt-6">
+                <ServiceExpandedContent serviceSlug={service.slug} variant="modal" />
+              </div>
+            ) : null}
           </div>
         </div>
       </div>
