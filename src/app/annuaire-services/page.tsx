@@ -86,7 +86,12 @@ function getDelegationServices() {
     "publicite-tiktok",
     "montage-video",
   ]);
-  const pinnedOrder = ["organisation-automatisation", "assistant-polyvalent"];
+  const pinnedOrder = [
+    "organisation-automatisation",
+    "assistant-polyvalent",
+    "site-web",
+    "previsionnel-financier",
+  ];
   const services = getDemaaServices().filter((service) => !hiddenSlugs.has(service.slug));
 
   return services.sort((left, right) => {
