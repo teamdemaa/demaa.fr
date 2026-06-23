@@ -17,6 +17,7 @@ const mainLinks = [
 const contentLinks = [
   { label: "Modèles de documents", href: "/modeles-de-documents" },
   { label: "Cours", href: "/cours" },
+  { label: "Annuaire newsletters", href: "/annuaire-newsletters" },
   { label: "Aides & subventions", href: "/aides-et-subventions" },
 ];
 

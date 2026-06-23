@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getAllCourseEntries } from "@/lib/course-content";
 import { getAllDocumentModels } from "@/lib/document-models";
+import { getAllNewsletterArticles, getAllNewsletters } from "@/lib/newsletter-content";
 import { aidFamilies, demaaAidItems } from "@/lib/aid-catalog";
 import {
   accountingDirectorySeoPages,
@@ -56,6 +57,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/annuaire-reseaux-pro`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-partenaires-cles`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-experts-comptables`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${base}/annuaire-newsletters`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/modeles-de-documents`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/organisation-automatisation`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
     { url: `${base}/cours`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
@@ -76,6 +78,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const courseEntries = getAllCourseEntries();
   const courseContentEntries: MetadataRoute.Sitemap = courseEntries.map((entry) => ({
     url: `${base}/cours/${entry.slug}`,
+    lastModified: new Date(entry.date),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  const newsletterEntries = getAllNewsletters();
+  const newsletterSitemapEntries: MetadataRoute.Sitemap = newsletterEntries.map((entry) => ({
+    url: `${base}/annuaire-newsletters/${entry.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.72,
+  }));
+
+  const newsletterArticleEntries = getAllNewsletterArticles();
+  const newsletterArticleSitemapEntries: MetadataRoute.Sitemap = newsletterArticleEntries.map((entry) => ({
+    url: `${base}/annuaire-newsletters/${entry.newsletterSlug}/${entry.slug}`,
     lastModified: new Date(entry.date),
     changeFrequency: "monthly" as const,
     priority: 0.7,
@@ -191,6 +209,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...staticRoutes,
     ...documentModelSitemapEntries,
     ...courseContentEntries,
+    ...newsletterSitemapEntries,
+    ...newsletterArticleSitemapEntries,
     ...toolEntries,
     ...freeToolEntries,
     ...serviceEntries,
