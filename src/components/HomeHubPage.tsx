@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import HomeTabsClient from "@/components/HomeTabsClient";
-import { enterpriseToSystem, getEnterpriseCatalog } from "@/lib/enterprise-annuaire";
+import { enterpriseToSystem } from "@/lib/enterprise-annuaire";
+import { getEnterpriseCatalog } from "@/lib/enterprise-annuaire-server";
 import { buildOperationalSystemDetails } from "@/lib/system-operations";
 import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
 

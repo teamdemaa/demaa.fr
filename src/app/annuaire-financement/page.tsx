@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import FinanceDirectoryClient from "@/components/FinanceDirectoryClient";
 import Navbar from "@/components/Navbar";
-import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire";
+import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 import {
   financeFamilies,
   getDemaaFinanceItems,

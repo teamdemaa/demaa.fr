@@ -7,7 +7,7 @@ import {
   accountingDirectorySeoPages,
 } from "@/lib/accounting-directory-seo";
 import { getAccountingFirms } from "@/lib/accounting-directory";
-import { getEnterpriseCatalog } from "@/lib/enterprise-annuaire";
+import { getEnterpriseCatalog } from "@/lib/enterprise-annuaire-server";
 import { demaaFinanceItems } from "@/lib/finance-catalog";
 import { demaaProNetworks } from "@/lib/pro-network-catalog";
 import { sectorPageDefinitions } from "@/lib/sector-pages";

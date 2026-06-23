@@ -1,7 +1,8 @@
 import "server-only";
 
 import type { Metadata } from "next";
-import { enterpriseToSystem, getEnterpriseBySlug, type EnterpriseDefinition } from "@/lib/enterprise-annuaire";
+import { enterpriseToSystem, type EnterpriseDefinition } from "@/lib/enterprise-annuaire";
+import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 import {
   buildOperationalSystemDetail,
   type OperationalSystemDetail,

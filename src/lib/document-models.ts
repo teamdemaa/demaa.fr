@@ -50,6 +50,28 @@ export type DocumentModel = {
   featuredRank?: number;
 };
 
+function getGoogleDriveFileId(url: string): string | null {
+  const match = url.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
+
+  return match?.[1] ?? null;
+}
+
+export function getDocumentModelPreviewSrc(model: DocumentModel): string | null {
+  const slidePreview = model.slides?.[0] ?? model.image;
+
+  if (slidePreview) {
+    return slidePreview;
+  }
+
+  const fileId = getGoogleDriveFileId(model.ctaHref);
+
+  if (!fileId) {
+    return null;
+  }
+
+  return `https://drive.google.com/thumbnail?id=${fileId}&sz=w1600`;
+}
+
 export const PILOTING_SHEET_URLS: Partial<Record<string, string>> = {
   batiment: "https://docs.google.com/spreadsheets/d/1hThXGp-YMvO69dQIyAbFNMQVByzE973tbrnjIUMkYMs/edit",
   "plomberie-chauffage":

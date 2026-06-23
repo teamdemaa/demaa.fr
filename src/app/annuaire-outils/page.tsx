@@ -8,7 +8,7 @@ import {
   withSoftwareDetailUrls,
 } from "@/lib/tool-directory-page";
 import { getUnifiedToolDirectoryMeta } from "@/lib/tool-directory-firestore";
-import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire";
+import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 import { getToolDirectorySectorSeoPath } from "@/lib/sector-taxonomy";
 
 export const metadata: Metadata = {

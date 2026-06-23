@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { startTransition, useMemo, useState, type MouseEvent, type ReactNode } from "react";
 import {
@@ -10,7 +11,6 @@ import {
   FileText,
   FolderKanban,
   FormInput,
-  GraduationCap,
   Scale,
   Wrench,
 } from "lucide-react";
@@ -25,6 +25,8 @@ import { getDocumentModelsForSystem, type DocumentModel } from "@/lib/document-m
 import { getFreeToolsForSystem } from "@/lib/free-tools";
 import { getRecommendedPartnerKeysForSystem } from "@/lib/partner-key-recommendations";
 import { ServiceIcon } from "@/components/ServiceIcon";
+import CourseSlidesDialog from "@/components/CourseSlidesDialog";
+import DocumentModelPreview from "@/components/DocumentModelPreview";
 import {
   getFinanceCardBadge,
   getProNetworkCardBadge,
@@ -299,6 +301,7 @@ export default function SystemDetailContent({
   const [selectedSupplierDetail, setSelectedSupplierDetail] = useState<DemaaSupplier | null>(null);
   const [selectedFinanceDetail, setSelectedFinanceDetail] = useState<DemaaFinanceItem | null>(null);
   const [selectedProNetworkDetail, setSelectedProNetworkDetail] = useState<DemaaProNetwork | null>(null);
+  const [selectedCourse, setSelectedCourse] = useState<CourseEntry | null>(null);
   const recommendedSuppliers = useMemo(
     () => (activeTab === "fournisseurs" ? getRecommendedSuppliersForSystem(system.slug) : []),
     [activeTab, system.slug]
@@ -663,34 +666,42 @@ export default function SystemDetailContent({
       <Link
         key={course.slug}
         href={`/cours/${course.slug}?retourSysteme=${encodeURIComponent(system.slug)}`}
-        className={SYSTEM_CARD_CLASS}
+        className={`${SYSTEM_CARD_CLASS} shadow-[0_2px_10px_rgba(23,35,29,0.012)] hover:shadow-[0_10px_22px_rgba(23,35,29,0.03)]`}
+        onClick={(event) => {
+          handleToolDetailClick(
+            event,
+            {
+              slug: course.slug,
+              name: course.title,
+              category: course.category,
+              description: course.description,
+              sectors: [],
+              bestFor: course.description,
+              pricingHint: course.duration,
+              tags: course.tags,
+              url: `/cours/${course.slug}?retourSysteme=${encodeURIComponent(system.slug)}`,
+            },
+            () => setSelectedCourse(course),
+          );
+        }}
       >
-        <div className="flex items-start justify-between gap-4">
-          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper">
-            <GraduationCap className="h-4 w-4" aria-hidden="true" />
-          </span>
+        <div className="-m-5 mb-0 relative aspect-[16/9] overflow-hidden rounded-t-[1.15rem] border-b border-dema-line bg-white">
+          {course.image ? (
+            <Image
+              src={course.image}
+              alt={course.title}
+              fill
+              sizes="320px"
+              className="object-contain object-center transition-transform duration-500 group-hover:scale-[1.02]"
+            />
+          ) : null}
         </div>
         <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
-          {course.category} · {course.duration}
+          {course.category}
         </p>
-        <h3 className={SYSTEM_CARD_TITLE_CLASS}>
-          {course.title}
-        </h3>
         <p className={SYSTEM_CARD_DESCRIPTION_CLASS}>
           {course.description}
         </p>
-        <div className="mt-auto pt-4">
-          <div className="flex flex-wrap gap-2">
-            {course.tags.slice(0, 3).map((tag) => (
-              <span
-                key={tag}
-                className="inline-flex rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-medium text-brand-blue/70"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        </div>
       </Link>
     );
   }
@@ -1058,6 +1069,15 @@ export default function SystemDetailContent({
         <SoftwareDetailDialog tool={selectedToolDetail} onClose={() => setSelectedToolDetail(null)} />
       ) : null}
 
+      {selectedCourse ? (
+        <CourseSlidesDialog
+          key={selectedCourse.slug}
+          course={selectedCourse}
+          detailHref={`/cours/${selectedCourse.slug}?retourSysteme=${encodeURIComponent(system.slug)}`}
+          onClose={() => setSelectedCourse(null)}
+        />
+      ) : null}
+
       {selectedSupplierDetail ? (
         <SupplierDetailDialog
           supplier={selectedSupplierDetail}
@@ -1089,10 +1109,8 @@ export default function SystemDetailContent({
         href={`/modeles-de-documents/${model.slug}`}
         className={SYSTEM_CARD_CLASS}
       >
-        <div className="flex items-start justify-between gap-4">
-          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper">
-            <FileText className="h-4 w-4" aria-hidden="true" />
-          </span>
+        <div className="-m-5 mb-0 relative aspect-[16/9] overflow-hidden rounded-t-[1.15rem] border-b border-dema-line bg-white">
+          <DocumentModelPreview model={model} />
         </div>
         <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
           {model.category}

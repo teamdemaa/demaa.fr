@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import { ArrowLeft, Calendar, GraduationCap } from "lucide-react";
@@ -61,6 +62,7 @@ export default async function CourseDetailPage(
   const returnSystemSlug = Array.isArray(searchParams.retourSysteme)
     ? searchParams.retourSysteme[0]
     : searchParams.retourSysteme;
+  const slides = entry.slides?.length ? entry.slides : entry.image ? [entry.image] : [];
   const backHref = returnSystemSlug
     ? `/systemes/${returnSystemSlug}?tab=outils`
     : "/cours";
@@ -138,9 +140,40 @@ export default async function CourseDetailPage(
             </div>
           </header>
 
-          <div className="[&>p]:mb-6 [&>p]:text-lg [&>p]:leading-8 [&>p]:text-gray-700 [&>h2]:mt-12 [&>h2]:mb-6 [&>h2]:text-3xl [&>h2]:font-bold [&>h2]:text-brand-blue [&>h3]:mt-10 [&>h3]:mb-4 [&>h3]:text-2xl [&>h3]:font-bold [&>h3]:text-brand-blue [&>ul]:mb-7 [&>ul]:list-disc [&>ul]:space-y-3 [&>ul]:pl-6 [&>ul>li]:text-lg [&>ul>li]:leading-8 [&>ul>li]:text-gray-700 [&>ol]:mb-7 [&>ol]:list-decimal [&>ol]:space-y-3 [&>ol]:pl-6 [&>ol>li]:text-lg [&>ol>li]:leading-8 [&>ol>li]:text-gray-700 [&>blockquote]:my-8 [&>blockquote]:rounded-3xl [&>blockquote]:border [&>blockquote]:border-dema-sage/60 [&>blockquote]:bg-dema-sage/15 [&>blockquote]:px-6 [&>blockquote]:py-5 [&>blockquote]:text-base [&>blockquote]:leading-8 [&>blockquote]:text-brand-blue [&>blockquote]:shadow-[0_10px_30px_rgba(29,78,61,0.08)] [&>blockquote_p]:mb-3 [&>blockquote_p:last-child]:mb-0 [&>strong]:font-semibold [&>strong]:text-brand-blue">
-            <ReactMarkdown>{entry.content}</ReactMarkdown>
-          </div>
+          {slides.length ? (
+            <section className="mb-10">
+              <div className="-mx-4 overflow-x-auto px-4 pb-4 soft-scroll sm:-mx-6 sm:px-6">
+                <div className="flex w-max snap-x snap-mandatory gap-4">
+                  {slides.map((slide, index) => (
+                    <div key={slide} className="w-[min(88vw,56rem)] shrink-0 snap-start">
+                      <div className="relative aspect-[16/9] overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-[0_10px_30px_rgba(20,20,20,0.05)]">
+                        <Image
+                          src={slide}
+                          alt={`${entry.title} - slide ${index + 1}`}
+                          fill
+                          sizes="(max-width: 768px) 88vw, 56rem"
+                          className="object-contain bg-white"
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          ) : null}
+
+          {entry.content ? (
+            <div className="[&>p]:mb-6 [&>p]:text-lg [&>p]:leading-8 [&>p]:text-gray-700 [&>h2]:mt-12 [&>h2]:mb-6 [&>h2]:text-3xl [&>h2]:font-bold [&>h2]:text-brand-blue [&>h3]:mt-10 [&>h3]:mb-4 [&>h3]:text-2xl [&>h3]:font-bold [&>h3]:text-brand-blue [&>ul]:mb-7 [&>ul]:list-disc [&>ul]:space-y-3 [&>ul]:pl-6 [&>ul>li]:text-lg [&>ul>li]:leading-8 [&>ul>li]:text-gray-700 [&>ol]:mb-7 [&>ol]:list-decimal [&>ol]:space-y-3 [&>ol]:pl-6 [&>ol>li]:text-lg [&>ol>li]:leading-8 [&>ol>li]:text-gray-700 [&>blockquote]:my-8 [&>blockquote]:rounded-3xl [&>blockquote]:border [&>blockquote]:border-dema-sage/60 [&>blockquote]:bg-dema-sage/15 [&>blockquote]:px-6 [&>blockquote]:py-5 [&>blockquote]:text-base [&>blockquote]:leading-8 [&>blockquote]:text-brand-blue [&>blockquote]:shadow-[0_10px_30px_rgba(29,78,61,0.08)] [&>blockquote_p]:mb-3 [&>blockquote_p:last-child]:mb-0 [&>strong]:font-semibold [&>strong]:text-brand-blue">
+              <ReactMarkdown>{entry.content}</ReactMarkdown>
+            </div>
+          ) : (
+            <section className="rounded-[1.15rem] border border-dema-line bg-dema-cream/70 p-5">
+              <h2 className="text-lg font-semibold text-brand-blue">Article détaillé à venir</h2>
+              <p className="mt-2 text-sm leading-relaxed text-dema-muted">
+                Pour l&apos;instant, cette ressource est disponible en format slides. Le contenu détaillé pourra être ajouté ensuite sous le diaporama.
+              </p>
+            </section>
+          )}
 
           {entry.tags.length ? (
             <div className="mt-10 flex flex-wrap gap-2">

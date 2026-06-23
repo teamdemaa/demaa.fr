@@ -42,7 +42,7 @@
   }
 
   .demaa-card {
-    @apply border border-dema-line/70 bg-dema-paper shadow-[0_4px_14px_rgba(23,35,29,0.018)] transition hover:-translate-y-0.5 hover:border-dema-forest/14 hover:shadow-[0_14px_32px_rgba(23,35,29,0.045)];
+    @apply border border-dema-line/70 bg-dema-paper shadow-[0_4px_14px_rgba(23,35,29,0.018)] transition hover:-translate-y-px hover:border-dema-forest/14 hover:shadow-[0_14px_32px_rgba(23,35,29,0.045)];
   }
 
   .demaa-accordion {
@@ -90,7 +90,7 @@
   }
 
   .demaa-nav-item:hover .demaa-nav-icon {
-    @apply -translate-y-0.5;
+    @apply -translate-y-px;
   }
 
   .demaa-primary-button {

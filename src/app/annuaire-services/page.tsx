@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import ServiceDirectoryClient from "@/components/ServiceDirectoryClient";
-import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire";
+import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 import { getDemaaServices, serviceCategories } from "@/lib/service-catalog";
 
 export const metadata: Metadata = {

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import ProNetworkDirectoryClient from "@/components/ProNetworkDirectoryClient";
-import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire";
+import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 import { getDemaaProNetworks, proNetworkCategories } from "@/lib/pro-network-catalog";
 
 export const metadata: Metadata = {

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import SystemDocument from "@/components/SystemDocument";
-import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire";
+import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 import { getSystemProcessTemplates } from "@/lib/system-process-templates";
 
 type StructuringDocumentPageProps = {

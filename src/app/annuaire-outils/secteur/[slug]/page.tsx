@@ -6,9 +6,11 @@ import Navbar from "@/components/Navbar";
 import ToolDirectoryClient from "@/components/ToolDirectoryClient";
 import {
   enterpriseToSystem,
+} from "@/lib/enterprise-annuaire";
+import {
   getEnterpriseBySlug,
   getEnterpriseCatalog,
-} from "@/lib/enterprise-annuaire";
+} from "@/lib/enterprise-annuaire-server";
 import { getFreeToolsForSector } from "@/lib/free-tools";
 import { getSectorPageByLabel } from "@/lib/sector-pages";
 import {

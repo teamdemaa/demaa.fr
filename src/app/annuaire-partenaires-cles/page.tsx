@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import PartnerKeyDirectoryClient from "@/components/PartnerKeyDirectoryClient";
-import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire";
+import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 import { getDemaaPartnerKeys, partnerKeyCategories } from "@/lib/partner-key-catalog";
 
 export const metadata: Metadata = {

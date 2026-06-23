@@ -3,7 +3,7 @@
 import Link from "next/link";
 import type { EnterpriseDefinition } from "@/lib/enterprise-annuaire";
 import { buildBusinessBlockChecklists, type BusinessBlockChecklist } from "@/lib/business-block-checklists";
-import type { SystemProcessTemplate } from "@/lib/system-process-templates";
+import type { SystemProcessTemplate } from "@/lib/system-process-types";
 import { ChevronDown } from "lucide-react";
 import { type ReactNode, useEffect } from "react";
 import SystemDocumentPrintButton from "@/components/SystemDocumentPrintButton";

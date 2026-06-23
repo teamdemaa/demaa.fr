@@ -1,19 +1,13 @@
 import type { System } from "@/lib/types";
 import { publicSectorLabels } from "@/lib/public-sectors";
-import {
-  getEnterpriseCatalog,
-  getEnterpriseBySlug,
-  type EnterpriseDefinition,
-  type EnterpriseTool,
-  type EnterpriseToolReference,
+import type {
+  EnterpriseDefinition,
+  EnterpriseTool,
+  EnterpriseToolReference,
 } from "@/lib/enterprise-annuaire";
+import { getEnterpriseCatalog, getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 import type { BusinessModelBlock, BusinessModelSignals } from "@/lib/business-models";
-import {
-  getSystemProcessTemplates,
-  type SystemPillar,
-  type SystemProcessTemplate,
-} from "@/lib/system-process-templates";
-import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
+import type { SystemPillar, SystemProcessTemplate } from "@/lib/system-process-types";
 import {
   findToolDirectoryItemBySlug,
   getToolDirectoryItemBySlug,
@@ -48,6 +42,18 @@ type OperationalSystemDetailSources = {
   templates: SystemProcessTemplate[];
   toolDirectory: ToolDirectoryItem[];
 };
+
+async function loadSystemOperationSources() {
+  const [{ getSystemProcessTemplates }, { getUnifiedToolDirectory }] = await Promise.all([
+    import("@/lib/system-process-templates"),
+    import("@/lib/tool-directory-firestore"),
+  ]);
+
+  return {
+    getSystemProcessTemplates,
+    getUnifiedToolDirectory,
+  };
+}
 
 function normalizePillar(pillar: string): SystemPillar {
   if (pillar === "Finance & Juridique") {
@@ -96,8 +102,11 @@ function resolveEnterpriseTools(
 
 export async function buildOperationalSystemDetail(system: System): Promise<OperationalSystemDetail> {
   const enterprise = await getEnterpriseBySlug(system.slug);
-  const templates = await getSystemProcessTemplates();
-  const toolDirectory = await getUnifiedToolDirectory();
+  const { getSystemProcessTemplates, getUnifiedToolDirectory } = await loadSystemOperationSources();
+  const [templates, toolDirectory] = await Promise.all([
+    getSystemProcessTemplates(),
+    getUnifiedToolDirectory(),
+  ]);
 
   return buildOperationalSystemDetailFromSources(system, {
     enterprisesBySlug: enterprise ? { [system.slug]: enterprise } : {},
@@ -166,6 +175,7 @@ export async function buildOperationalSystemDetails(
   enterpriseCatalog?: EnterpriseDefinition[],
   loadedToolDirectory?: ToolDirectoryItem[],
 ): Promise<Record<string, OperationalSystemDetail>> {
+  const { getSystemProcessTemplates, getUnifiedToolDirectory } = await loadSystemOperationSources();
   const [enterprises, templates, toolDirectory] = await Promise.all([
     enterpriseCatalog ? Promise.resolve(enterpriseCatalog) : getEnterpriseCatalog(),
     getSystemProcessTemplates(),

@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, Calendar } from "lucide-react";
 import ReactMarkdown from "react-markdown";
+import DocumentModelPreview from "@/components/DocumentModelPreview";
 import Navbar from "@/components/Navbar";
 import RelatedSystemsLinks from "@/components/RelatedSystemsLinks";
 import {
@@ -64,7 +65,7 @@ export default async function DocumentModelDetailPage({
     <>
       <Navbar />
       <main className="min-h-[85vh] w-full flex-1 bg-background px-4 py-16">
-        <article className="mx-auto max-w-3xl animate-in slide-in-from-bottom-4 duration-500">
+        <article className="mx-auto max-w-5xl animate-in slide-in-from-bottom-4 duration-500">
           <Link
             href="/modeles-de-documents"
             className="mb-10 inline-flex items-center font-medium text-brand-blue transition-colors hover:text-neutral-700"
@@ -88,32 +89,49 @@ export default async function DocumentModelDetailPage({
                   })}
                 </time>
               </div>
-              <span className="rounded-full bg-neutral-100 px-4 py-2 text-[11px] font-bold uppercase tracking-widest text-neutral-700">
+              <span className="rounded-full border border-dema-line bg-dema-paper px-4 py-2 text-[11px] font-bold uppercase tracking-widest text-brand-blue/72">
                 Modele
               </span>
-              <span className="rounded-full bg-dema-sage/75 px-4 py-2 text-[11px] font-semibold text-brand-blue/75">
+              <span className="rounded-full border border-dema-line bg-dema-paper px-4 py-2 text-[11px] font-semibold text-brand-blue/72">
                 {entry.category}
               </span>
             </div>
+            <div className="mt-6">
+              <a
+                href={entry.ctaHref}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 rounded-full bg-brand-blue px-5 py-3 text-sm font-semibold text-white transition hover:bg-neutral-800"
+              >
+                {entry.ctaLabel}
+                <ArrowUpRight className="h-4 w-4" />
+              </a>
+            </div>
           </header>
 
-          {mediaSlides.length ? (
+          {mediaSlides.length || entry.systemSlug ? (
             <section className="mb-10">
               <div className="-mx-4 overflow-x-auto px-4 pb-4 soft-scroll sm:-mx-6 sm:px-6">
                 <div className="flex w-max snap-x snap-mandatory gap-4">
-                  {mediaSlides.map((slide, index) => (
-                    <div key={slide} className="w-[min(86vw,44rem)] shrink-0 snap-start">
-                      <div className="relative aspect-[16/10] overflow-hidden rounded-3xl border border-gray-100 bg-dema-cream shadow-[0_10px_30px_rgba(20,20,20,0.05)]">
+                  {mediaSlides.length ? mediaSlides.map((slide, index) => (
+                    <div key={slide} className="w-[min(92vw,72rem)] shrink-0 snap-start">
+                      <div className="relative aspect-[16/9] overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-[0_10px_30px_rgba(20,20,20,0.05)]">
                         <Image
                           src={slide}
                           alt={`${entry.title} - visuel ${index + 1}`}
                           fill
-                          sizes="(max-width: 768px) 86vw, 44rem"
-                          className="object-cover"
+                          sizes="(max-width: 768px) 92vw, 72rem"
+                          className="object-contain bg-white"
                         />
                       </div>
                     </div>
-                  ))}
+                  )) : (
+                    <div className="w-[min(92vw,72rem)] shrink-0 snap-start">
+                      <div className="relative aspect-[16/9] overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-[0_10px_30px_rgba(20,20,20,0.05)]">
+                        <DocumentModelPreview model={entry} />
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </section>
@@ -135,18 +153,6 @@ export default async function DocumentModelDetailPage({
               ))}
             </div>
           ) : null}
-
-          <div className="mt-10">
-            <a
-              href={entry.ctaHref}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-brand-blue px-5 py-3 text-sm font-semibold text-white transition hover:bg-neutral-800"
-            >
-              {entry.ctaLabel}
-              <ArrowUpRight className="h-4 w-4" />
-            </a>
-          </div>
 
           <div className="mt-10">
             <RelatedSystemsLinks

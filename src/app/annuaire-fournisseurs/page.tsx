@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import SupplierDirectoryClient from "@/components/SupplierDirectoryClient";
-import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire";
+import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 import { getDemaaSuppliers, supplierFamilies } from "@/lib/supplier-catalog";
 
 export const metadata: Metadata = {

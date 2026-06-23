@@ -1,8 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useMemo, useState, type MouseEvent } from "react";
 import { ArrowRight, BookOpen, GraduationCap } from "lucide-react";
+import CourseSlidesDialog from "@/components/CourseSlidesDialog";
 import LibraryIndexHeader from "@/components/LibraryIndexHeader";
 import { matchesSearchQuery } from "@/lib/search";
 import type { CourseEntry } from "@/lib/course-content";
@@ -21,6 +23,7 @@ export default function CoursesIndexClient({
   backLink,
   returnSystemSlug,
 }: CoursesIndexClientProps) {
+  const [selectedCourse, setSelectedCourse] = useState<CourseEntry | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("Tous");
   const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false);
@@ -78,24 +81,53 @@ export default function CoursesIndexClient({
       : `/cours/${entry.slug}`;
   }
 
+  function handleCourseClick(event: MouseEvent<HTMLAnchorElement>, entry: CourseEntry) {
+    if (
+      event.defaultPrevented ||
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    ) {
+      return;
+    }
+
+    event.preventDefault();
+    setSelectedCourse(entry);
+  }
+
   function renderCourseCard(entry: CourseEntry, accentLabel?: string) {
     return (
       <Link
         key={entry.slug}
         href={getCourseHref(entry)}
         className="block h-full group"
+        onClick={(event) => handleCourseClick(event, entry)}
       >
         <article className="flex h-full flex-col overflow-hidden rounded-3xl border border-gray-100 bg-white transition-all duration-300 group-hover:-translate-y-0.5 group-hover:shadow-[0_6px_18px_rgba(0,0,0,0.045)]">
-          <div className="flex aspect-[16/10] items-end justify-between gap-3 border-b border-gray-100 bg-[linear-gradient(135deg,#f8f5ef_0%,#f3efe6_100%)] p-5">
-            <span className="inline-flex items-center gap-2 rounded-full bg-white/80 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-brand-blue">
-              <GraduationCap className="h-3.5 w-3.5" />
-              Cours
-            </span>
-            {accentLabel ? (
-              <span className="rounded-full bg-brand-blue px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white">
-                {accentLabel}
-              </span>
+          <div className="relative aspect-[16/10] overflow-hidden border-b border-gray-100 bg-dema-cream">
+            {entry.image ? (
+              <Image
+                src={entry.image}
+                alt={entry.title}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+              />
             ) : null}
+            <div className="absolute inset-0 bg-gradient-to-t from-brand-blue/42 via-transparent to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-5">
+              <span className="inline-flex items-center gap-2 rounded-full bg-white/88 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-brand-blue">
+                <GraduationCap className="h-3.5 w-3.5" />
+                Slides
+              </span>
+              {accentLabel ? (
+                <span className="rounded-full bg-brand-blue px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white">
+                  {accentLabel}
+                </span>
+              ) : null}
+            </div>
           </div>
           <div className="flex flex-1 flex-col p-6">
             <div className="flex items-center justify-between gap-4">
@@ -219,6 +251,15 @@ export default function CoursesIndexClient({
           </div>
         )}
       </section>
+
+      {selectedCourse ? (
+        <CourseSlidesDialog
+          key={selectedCourse.slug}
+          course={selectedCourse}
+          detailHref={getCourseHref(selectedCourse)}
+          onClose={() => setSelectedCourse(null)}
+        />
+      ) : null}
     </div>
   );
 }
