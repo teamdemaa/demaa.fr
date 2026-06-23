@@ -6,14 +6,14 @@ import AssistantsCatalogClient from "@/components/AssistantsCatalogClient";
 import OrganisationAutonomyDiscovery from "@/components/OrganisationAutonomyDiscovery";
 
 export const metadata: Metadata = {
-  title: "Organisation et automatisation pour TPE - Demaa",
+  title: "Organisation pour TPE - Demaa",
   description:
     "Organisez votre entreprise avec les bons systèmes, process et automatisations pour mieux piloter l'activité, déléguer plus sereinement et soutenir une croissance durable.",
   alternates: {
     canonical: "/organisation-automatisation",
   },
   openGraph: {
-    title: "Organisation et automatisation pour TPE - Demaa",
+    title: "Organisation pour TPE - Demaa",
     description:
       "Organisez votre entreprise avec les bons systèmes, process et automatisations pour mieux piloter l'activité, déléguer plus sereinement et soutenir une croissance durable.",
     url: "/organisation-automatisation",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Organisation et automatisation : systèmes, process et automatisations - Demaa",
+    title: "Organisation : systèmes, process et automatisations - Demaa",
     description:
       "Organisez votre entreprise avec les bons systèmes, process et automatisations pour mieux piloter l'activité, déléguer plus sereinement et soutenir une croissance durable.",
   },

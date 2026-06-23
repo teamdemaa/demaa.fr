@@ -159,7 +159,7 @@ export const demaaServices = [
   },
   {
     slug: "organisation-automatisation",
-    name: "Organisation & Automatisation",
+    name: "Organisation",
     category: "Systèmes",
     shortDescription: "Organiser l'activité puis automatiser ce qui se répète.",
     description:

@@ -198,10 +198,10 @@ function OrganisationExpandedContent({
 }: {
   variant: "modal" | "page";
 }) {
-  const sectionGap = variant === "modal" ? "space-y-5 sm:space-y-6" : "space-y-8";
+  const sectionGap = variant === "modal" ? "space-y-8" : "space-y-8";
   const sectionClass =
     variant === "modal"
-      ? "rounded-[1.05rem] border border-dema-line bg-dema-paper p-4 sm:rounded-[1.15rem] sm:p-5"
+      ? ""
       : "rounded-[1.15rem] border border-dema-line bg-dema-paper p-5";
 
   return (
@@ -225,7 +225,7 @@ function OrganisationExpandedContent({
             Audit organisation gratuit
           </Link>
         </div>
-        <div className="mt-5 grid gap-4 md:grid-cols-2">
+        <div className="mt-6 grid gap-4 md:grid-cols-2">
           {organisationSignals.map((item) => (
             <article
               key={item.title}
@@ -249,11 +249,11 @@ function OrganisationExpandedContent({
         <h3 className="text-xl font-semibold tracking-tight text-brand-blue md:text-2xl">
           Comment ça se passe concrètement
         </h3>
-        <div className="mt-5 grid gap-4 md:grid-cols-3">
+        <div className="mt-6 grid gap-4 md:grid-cols-3">
           {organisationSteps.map((step, index) => (
             <article
               key={step.title}
-              className="rounded-[0.95rem] border border-dema-line/70 bg-dema-paper px-4 py-4 sm:rounded-[1rem]"
+              className="rounded-[0.95rem] border border-dema-line/70 bg-dema-paper/95 px-4 py-4 sm:rounded-[1rem]"
             >
               <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-dema-sage/55 text-sm font-semibold text-dema-forest">
                 {index + 1}
@@ -276,7 +276,7 @@ function OrganisationExpandedContent({
         <h3 className="mt-2 text-xl font-semibold tracking-tight text-brand-blue md:text-2xl">
           Ce type de mission vise à libérer du temps utile
         </h3>
-        <div className="mt-4 grid gap-3 sm:grid-cols-2 md:grid-cols-3">
+        <div className="mt-5 grid gap-3 sm:grid-cols-2 md:grid-cols-3">
           {organisationResults.map((result) => (
             <div
               key={result}

@@ -237,7 +237,7 @@ export default function AssistantsCatalogClient() {
                 </Link>
                 <div className="mt-4">
                   <ServicePurchaseCta
-                    serviceName="Organisation & Automatisation"
+                    serviceName="Organisation"
                     serviceSlug="organisation-automatisation"
                   />
                 </div>

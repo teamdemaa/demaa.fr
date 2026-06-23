@@ -7,7 +7,7 @@ export function getServicePageMetadata(service: DemaaService): Metadata {
   const metadataTitle = isAssistantLanding
     ? `${service.name} - Demaa`
     : isOrganisationLanding
-      ? "Organisation et automatisation pour TPE - Demaa"
+      ? "Organisation pour TPE - Demaa"
       : `${service.name} - Annuaire services Demaa`;
   const canonicalPath = isOrganisationLanding
     ? "/organisation-automatisation"
