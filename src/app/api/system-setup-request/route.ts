@@ -16,7 +16,7 @@ type SystemSetupRequestBody = {
 
 export async function POST(request: Request) {
   try {
-    const limited = enforceRateLimit(request, {
+    const limited = await enforceRateLimit(request, {
       keyPrefix: "system-setup",
       limit: 8,
       windowMs: 10 * 60 * 1000,

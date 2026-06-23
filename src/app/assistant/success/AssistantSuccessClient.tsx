@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import { CheckCircle2, LoaderCircle, Send, UserRound, X } from "lucide-react";
 
@@ -10,12 +10,7 @@ type VerificationState =
       status: "success";
       cartSummary: string;
       credits: number | null;
-      email: string | null;
-      firstName: string | null;
-      lastName: string | null;
-      name: string | null;
       offerLabel: string;
-      whatsappPhone: string | null;
     }
   | { status: "error"; message: string };
 
@@ -69,14 +64,9 @@ export default function AssistantSuccessClient({
           | {
               cartSummary?: string;
               credits?: number | null;
-              email?: string | null;
               error?: string;
-              firstName?: string | null;
-              lastName?: string | null;
-              name?: string | null;
               offerLabel?: string;
               paid?: boolean;
-              whatsappPhone?: string | null;
             }
           | null;
 
@@ -91,12 +81,7 @@ export default function AssistantSuccessClient({
           status: "success",
           cartSummary: payload.cartSummary || payload.offerLabel || "Packs assistant",
           credits: payload.credits ?? null,
-          email: payload.email || null,
-          firstName: payload.firstName || null,
-          lastName: payload.lastName || null,
-          name: payload.name || null,
           offerLabel: payload.offerLabel || "Packs assistant",
-          whatsappPhone: payload.whatsappPhone || null,
         });
         setIsModalOpen(true);
       } catch (paymentError) {
@@ -110,16 +95,6 @@ export default function AssistantSuccessClient({
       }
     })();
   }, [sessionId]);
-
-  const displayName = useMemo(() => {
-    if (verification.status !== "success") return null;
-
-    return (
-      [verification.firstName, verification.lastName].filter(Boolean).join(" ") ||
-      verification.name ||
-      null
-    );
-  }, [verification]);
 
   const handleChange =
     (field: keyof OnboardingForm) =>
@@ -236,8 +211,7 @@ export default function AssistantSuccessClient({
                 Paiement confirmé
               </h1>
               <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-gray-600 md:text-base">
-                {displayName ? `Merci ${displayName}, ` : ""}
-                votre commande assistant est validée. Ajoutez les tâches à déléguer,
+                Votre commande assistant est validée. Ajoutez les tâches à déléguer,
                 puis on vous contacte sur WhatsApp sous 24h.
               </p>
               <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -305,7 +279,7 @@ export default function AssistantSuccessClient({
               </p>
               <p>
                 <span className="font-medium text-brand-blue">Client :</span>{" "}
-                {verification.email || displayName || "non renseigné"}
+                non renseigné
               </p>
             </div>
 

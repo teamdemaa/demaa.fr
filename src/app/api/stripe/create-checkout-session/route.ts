@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { enforceRateLimit, readJsonBody } from "@/lib/api-security";
 import { getPurchasableServices } from "@/lib/service-purchase";
+import { getCanonicalSiteUrl } from "@/lib/site-url";
+import { getDefaultStripeSecretKey } from "@/lib/stripe-server";
 
 export const runtime = "nodejs";
 
@@ -9,16 +11,11 @@ type CreateCheckoutSessionBody = {
 };
 
 function getStripeSecretKey() {
-  return (
-    process.env.STRIPE_SECRET_KEY ||
-    process.env.STRIPE_SECRET_KEY_TEST ||
-    process.env.STRIPE_TEST_SECRET_KEY ||
-    null
-  );
+  return getDefaultStripeSecretKey();
 }
 
 export async function POST(request: Request) {
-  const limited = enforceRateLimit(request, {
+  const limited = await enforceRateLimit(request, {
     keyPrefix: "stripe-create-checkout-session",
     limit: 10,
     windowMs: 10 * 60 * 1000,
@@ -61,7 +58,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const origin = new URL(request.url).origin;
+  const siteUrl = getCanonicalSiteUrl();
   const cartSummary = purchasableServices.map((service) => service.name).join(" · ");
   const serviceNames = purchasableServices.map((service) => service.name).join("|");
   const serviceSlugs = purchasableServices.map((service) => service.slug).join(",");
@@ -72,8 +69,8 @@ export async function POST(request: Request) {
 
   const formData = new URLSearchParams({
     mode: "payment",
-    success_url: `${origin}/api/customer-space/stripe-entry?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${origin}/annuaire-services`,
+    success_url: `${siteUrl}/api/customer-space/stripe-entry?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${siteUrl}/annuaire-services`,
     "billing_address_collection": "auto",
     "phone_number_collection[enabled]": "true",
     "metadata[order_type]": "service_bundle",

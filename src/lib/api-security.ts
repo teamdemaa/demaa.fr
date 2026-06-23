@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { NextResponse } from "next/server";
 
 type RateLimitOptions = {
@@ -13,6 +14,7 @@ type RateLimitBucket = {
 
 const rateLimitBuckets = new Map<string, RateLimitBucket>();
 const textEncoder = new TextEncoder();
+let distributedRateLimitWarningShown = false;
 
 function getClientIp(request: Request) {
   const forwardedFor = request.headers.get("x-forwarded-for");
@@ -36,16 +38,22 @@ function cleanupExpiredBuckets(now: number) {
   }
 }
 
-export function enforceRateLimit(
-  request: Request,
-  options: RateLimitOptions,
-  keySuffix?: string
-) {
-  const now = Date.now();
-  cleanupExpiredBuckets(now);
+function createRateLimitResponse(resetAt: number, now: number) {
+  const retryAfterSeconds = Math.max(1, Math.ceil((resetAt - now) / 1000));
 
-  const identity = keySuffix || getClientIp(request);
-  const key = `${options.keyPrefix}:${identity}`;
+  return NextResponse.json(
+    { error: "Trop de tentatives. Merci de réessayer dans quelques minutes." },
+    {
+      status: 429,
+      headers: {
+        "Retry-After": String(retryAfterSeconds),
+      },
+    }
+  );
+}
+
+function enforceInMemoryRateLimit(key: string, options: RateLimitOptions, now: number) {
+  cleanupExpiredBuckets(now);
   const current = rateLimitBuckets.get(key);
 
   if (!current || current.resetAt <= now) {
@@ -62,17 +70,86 @@ export function enforceRateLimit(
     return null;
   }
 
-  const retryAfterSeconds = Math.max(1, Math.ceil((current.resetAt - now) / 1000));
+  return createRateLimitResponse(current.resetAt, now);
+}
 
-  return NextResponse.json(
-    { error: "Trop de tentatives. Merci de réessayer dans quelques minutes." },
-    {
-      status: 429,
-      headers: {
-        "Retry-After": String(retryAfterSeconds),
-      },
+function getRateLimitDocId(key: string) {
+  return createHash("sha256").update(key).digest("hex");
+}
+
+async function enforceDistributedRateLimit(
+  key: string,
+  options: RateLimitOptions,
+  now: number
+) {
+  try {
+    const { getAdminFirestore } = await import("@/lib/firebase-admin");
+    const database = getAdminFirestore();
+    const bucketRef = database.collection("rate_limits").doc(getRateLimitDocId(key));
+    const nextResetAt = now + options.windowMs;
+
+    let count = 0;
+    let resetAt = nextResetAt;
+
+    await database.runTransaction(async (transaction) => {
+      const bucketDoc = await transaction.get(bucketRef);
+      const bucket = bucketDoc.data() as Partial<RateLimitBucket> | undefined;
+      const storedResetAt =
+        typeof bucket?.resetAt === "number" ? bucket.resetAt : nextResetAt;
+
+      if (!bucketDoc.exists || storedResetAt <= now) {
+        count = 1;
+        resetAt = nextResetAt;
+      } else {
+        count = typeof bucket?.count === "number" ? bucket.count + 1 : 1;
+        resetAt = storedResetAt;
+      }
+
+      transaction.set(
+        bucketRef,
+        {
+          count,
+          keyPrefix: options.keyPrefix,
+          resetAt,
+          updatedAt: new Date(now).toISOString(),
+        },
+        { merge: true }
+      );
+    });
+
+    if (count <= options.limit) {
+      return null;
     }
-  );
+
+    return createRateLimitResponse(resetAt, now);
+  } catch (error) {
+    if (!distributedRateLimitWarningShown) {
+      distributedRateLimitWarningShown = true;
+      console.warn(
+        "[rate-limit] Shared rate limit unavailable, falling back to in-memory buckets.",
+        error
+      );
+    }
+
+    return null;
+  }
+}
+
+export async function enforceRateLimit(
+  request: Request,
+  options: RateLimitOptions,
+  keySuffix?: string
+) {
+  const now = Date.now();
+  const identity = keySuffix || getClientIp(request);
+  const key = `${options.keyPrefix}:${identity}`;
+  const distributedResult = await enforceDistributedRateLimit(key, options, now);
+
+  if (distributedResult) {
+    return distributedResult;
+  }
+
+  return enforceInMemoryRateLimit(key, options, now);
 }
 
 export async function readJsonBody<T>(

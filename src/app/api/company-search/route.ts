@@ -19,7 +19,7 @@ type CompanySearchApiResponse = {
 };
 
 export async function GET(request: Request) {
-  const limited = enforceRateLimit(request, {
+  const limited = await enforceRateLimit(request, {
     keyPrefix: "company-search",
     limit: 25,
     windowMs: 5 * 60 * 1000,

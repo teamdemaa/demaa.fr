@@ -8,10 +8,7 @@ import SearchFilterControls from "@/components/SearchFilterControls";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import { getServiceCardBadge } from "@/lib/card-badges";
 import { matchesSearchQuery } from "@/lib/search";
-import {
-  formatPurchasableServicePrice,
-  getPurchasableServiceConfig,
-} from "@/lib/service-purchase";
+import { getPurchasableServiceConfig } from "@/lib/service-purchase";
 import {
   CART_UPDATED_EVENT,
   openServiceCartModal,

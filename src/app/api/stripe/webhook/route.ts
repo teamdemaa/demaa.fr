@@ -4,6 +4,15 @@ import {
   grantStripePaymentCredits,
   upsertConfirmedStripePayment,
 } from "@/lib/generations-db";
+import {
+  getStripeCredits,
+  getStripeCustomerEmail,
+  getStripeCustomerName,
+  getStripeCustomFieldValue,
+  getStripeMetadataList,
+  getStripeOfferLabel,
+  type StripeCheckoutSession,
+} from "@/lib/stripe-server";
 
 export const runtime = "nodejs";
 
@@ -14,75 +23,9 @@ type StripeEvent = {
   livemode?: boolean;
   type?: string;
   data?: {
-    object?: {
-      id?: string;
-      status?: string | null;
-      payment_status?: string | null;
-      currency?: string | null;
-      amount_total?: number | null;
-      customer_email?: string | null;
-      customer_details?: {
-        email?: string | null;
-        name?: string | null;
-      } | null;
-      custom_fields?: Array<{
-        key?: string | null;
-        text?: {
-          value?: string | null;
-        } | null;
-      }> | null;
-      metadata?: {
-        cart_summary?: string | null;
-        credits?: string | null;
-        item_count?: string | null;
-        offer_label?: string | null;
-        offer_type?: string | null;
-        order_type?: string | null;
-        service_names?: string | null;
-        service_slugs?: string | null;
-      } | null;
-    };
+    object?: StripeCheckoutSession;
   };
 };
-
-type StripeSessionMetadata = NonNullable<
-  NonNullable<NonNullable<StripeEvent["data"]>["object"]>["metadata"]
->;
-
-function getOfferLabel(input: {
-  amountTotal: number | null | undefined;
-  metadata?: StripeSessionMetadata | null;
-}) {
-  if (input.metadata?.offer_label) return input.metadata.offer_label;
-  return "Offre Demaa";
-}
-
-function getOfferCredits(metadata?: StripeSessionMetadata | null) {
-  const credits = Number(metadata?.credits);
-
-  return Number.isFinite(credits) && credits > 0 ? credits : 0;
-}
-
-function getMetadataList(value?: string | null, separator = ",") {
-  if (!value) return [];
-
-  return value
-    .split(separator)
-    .map((item) => item.trim())
-    .filter(Boolean);
-}
-
-function getCustomFieldValue(
-  customFields: NonNullable<
-    NonNullable<NonNullable<StripeEvent["data"]>["object"]>["custom_fields"]
-  > | null | undefined,
-  key: string
-) {
-  return (
-    customFields?.find((field) => field.key === key)?.text?.value?.trim() ||
-    null
-  );
-}
 
 function verifyStripeSignature(
   payload: string,
@@ -163,25 +106,31 @@ export async function POST(request: Request) {
     );
   }
 
-  const event = JSON.parse(payload) as StripeEvent;
+  let event: StripeEvent;
+
+  try {
+    event = JSON.parse(payload) as StripeEvent;
+  } catch {
+    console.error("[stripe-webhook] Invalid JSON payload");
+    return NextResponse.json(
+      { error: "Invalid Stripe payload." },
+      { status: 400 }
+    );
+  }
 
   if (event.type === "checkout.session.completed") {
     const session = event.data?.object;
     const sessionId = session?.id || null;
-    const email =
-      session?.customer_details?.email || session?.customer_email || null;
-    const name = session?.customer_details?.name || null;
+    const email = session ? getStripeCustomerEmail(session) : null;
+    const name = session ? getStripeCustomerName(session) : null;
     const amountTotal = session?.amount_total ?? null;
-    const whatsappPhone = getCustomFieldValue(session?.custom_fields, "whatsapp_phone");
-    const offerLabel = getOfferLabel({
-      amountTotal,
-      metadata: session?.metadata,
-    });
-    const offerCredits = getOfferCredits(session?.metadata);
+    const whatsappPhone = getStripeCustomFieldValue(session?.custom_fields, "whatsapp_phone");
+    const offerLabel = session ? getStripeOfferLabel(session, "Offre Demaa") : "Offre Demaa";
+    const offerCredits = session ? (getStripeCredits(session) ?? 0) : 0;
     const orderType = session?.metadata?.order_type || null;
     const cartSummary = session?.metadata?.cart_summary || null;
-    const serviceSlugs = getMetadataList(session?.metadata?.service_slugs, ",");
-    const serviceNames = getMetadataList(session?.metadata?.service_names, "|");
+    const serviceSlugs = getStripeMetadataList(session?.metadata?.service_slugs, ",");
+    const serviceNames = getStripeMetadataList(session?.metadata?.service_names, "|");
     const itemCount = Number(session?.metadata?.item_count);
 
     if (!event.id || !sessionId) {

@@ -31,7 +31,7 @@ export async function POST(request: Request) {
   const sessionId = normalizeText(body?.sessionId, 160);
   const brief = normalizeText(body?.brief, 2500, { multiline: true });
 
-  const limited = enforceRateLimit(
+  const limited = await enforceRateLimit(
     request,
     {
       keyPrefix: "customer-space-service-brief",

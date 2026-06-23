@@ -2,6 +2,9 @@
   "name": "demaa",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "DEMAA_FORCE_LOCAL_DATA=true DEMAA_BUILD_DIST_DIR=.next-build next build",
@@ -9,6 +12,9 @@
     "build:stable": "DEMAA_FORCE_LOCAL_DATA=true DEMAA_BUILD_DIST_DIR=.next-build TMPDIR=/private/tmp next build",
     "start": "DEMAA_BUILD_DIST_DIR=.next-build next start",
     "lint": "eslint",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
     "validate:data": "node scripts/validate-data.mjs && node scripts/validate-sector-taxonomy.mjs && node scripts/validate-seo-routes.mjs && node scripts/validate-sector-editorial-links.mjs && node scripts/validate-build-runtime.mjs && node scripts/audit-business-checklists.mjs --strict",
     "audit:seo-foundations": "npm run validate:data && node scripts/audit-free-tools-coverage.mjs && node scripts/audit-generic-fallbacks.mjs && node scripts/audit-system-tool-quality.mjs && node scripts/audit-internal-linking.mjs && node scripts/audit-system-pages.mjs",
     "audit:seo-foundations:ci": "npm run audit:seo-foundations",
@@ -29,9 +35,8 @@
     "@anthropic-ai/sdk": "^0.102.0",
     "@stripe/stripe-js": "^9.7.0",
     "@vercel/analytics": "^2.0.1",
-    "firebase-admin": "^13.10.0",
+    "firebase-admin": "^14.0.0",
     "framer-motion": "^12.38.0",
-    "gray-matter": "^4.0.3",
     "html-to-image": "^1.11.13",
     "jspdf": "^4.2.1",
     "lucide-react": "^1.7.0",
@@ -42,6 +47,7 @@
     "react-markdown": "^10.1.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.61.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -49,9 +55,11 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.7",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^4.1.9"
   },
   "overrides": {
+    "dompurify": "^3.4.11",
     "postcss": "^8.5.15"
   }
 }

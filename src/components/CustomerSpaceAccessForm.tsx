@@ -40,7 +40,13 @@ export default function CustomerSpaceAccessForm({
         | null;
 
       if (!response.ok) {
+        setDevLink(payload?.devLink || null);
         throw new Error(payload?.error || "Impossible d'envoyer le lien.");
+      }
+
+      if (!payload?.sent) {
+        setDevLink(payload?.devLink || null);
+        throw new Error("Impossible d'envoyer le lien.");
       }
 
       setSent(true);

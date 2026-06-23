@@ -18,7 +18,7 @@ type MiniCoursesRequestBody = {
 
 export async function POST(request: Request) {
   try {
-    const limited = enforceRateLimit(request, {
+    const limited = await enforceRateLimit(request, {
       keyPrefix: "mini_courses",
       limit: 10,
       windowMs: 10 * 60 * 1000,

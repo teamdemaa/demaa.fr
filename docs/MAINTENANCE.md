@@ -89,6 +89,8 @@ Helpers utiles:
 
 ```bash
 npm run lint
+npm test
+npm run test:e2e
 npm run build
 ```
 
@@ -136,3 +138,42 @@ Puis verifier manuellement les parcours touches:
 - formulaire modifie affiche bien succes/erreur;
 - route API modifiee garde ses statuts attendus;
 - lien Stripe ou webhook non modifie sans besoin clair.
+
+## Tests
+
+Le projet dispose maintenant de trois couches de verification:
+
+- `npm test`: unitaires et integration API avec Vitest
+- `npm run test:e2e`: parcours navigateur Playwright
+- `npm run validate:data`: verifications data, taxonomie, SEO et build runtime
+
+Conventions utiles:
+
+- les tests Playwright demarrent automatiquement un serveur local Next.js;
+- les artefacts Playwright sont ecrits dans `/private/tmp/demaa-playwright`;
+- les services externes sont testes via mocks cote Vitest quand l'objectif est de valider le comportement applicatif plutot que l'integration reseau brute.
+
+Couverture forte deja en place:
+
+- routes Stripe checkout / lookup / webhook;
+- magic links et espace membre;
+- delegation assistant;
+- briefs service;
+- formulaires secondaires Slack / newsletter / partner offers / mini-cours / system setup / annuaire comptable;
+- endpoint `generate-doc` avec mock Anthropic.
+
+## Dette securite
+
+Le reliquat `npm audit --omit=dev` actuellement accepte est concentre sur la dependance optionnelle `@google-cloud/storage` embarquee par `firebase-admin`.
+
+Etat retenu:
+
+- aucune vulnerabilite `high` restante;
+- residuel `moderate` uniquement;
+- pas d'usage direct de `firebase-admin/storage` dans l'application auditée.
+
+Decision pratique: garder un ticket de dette dependances ouvert et reevaluer lors des prochaines mises a jour `firebase-admin`.
+
+Suivi detaille:
+
+- `docs/DEPENDENCY-DEBT-firebase-admin.md`

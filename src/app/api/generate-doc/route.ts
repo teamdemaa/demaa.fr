@@ -58,7 +58,7 @@ function normalizeMessages(value: unknown) {
 
 export async function POST(req: Request) {
   try {
-    const limited = enforceRateLimit(req, {
+    const limited = await enforceRateLimit(req, {
       keyPrefix: "generate-doc",
       limit: 4,
       windowMs: 10 * 60 * 1000,

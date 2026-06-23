@@ -120,12 +120,6 @@ export default function ServiceCartTray() {
     setSelectedSlugs(next);
   }
 
-  function clearServiceSelection() {
-    setCheckoutError(null);
-    writeServiceCartSlugs([]);
-    setSelectedSlugs([]);
-  }
-
   async function handleCheckout() {
     if (selectedSlugs.length === 0 || isCheckoutLoading) return;
 
@@ -188,7 +182,6 @@ export default function ServiceCartTray() {
             error={checkoutError}
             highlight={highlightCart}
             isCheckoutLoading={isCheckoutLoading}
-            onClear={clearServiceSelection}
             onCheckout={handleCheckout}
             onCloseDesktop={() => setIsDesktopCartOpen(false)}
             onRemove={removeServiceSelection}
@@ -208,7 +201,6 @@ export default function ServiceCartTray() {
           error={checkoutError}
           highlight={highlightCart}
           isCheckoutLoading={isCheckoutLoading}
-          onClear={clearServiceSelection}
           onCheckout={handleCheckout}
           onCloseMobile={() => setIsMobileCartOpen(false)}
           onRemove={removeServiceSelection}
@@ -224,7 +216,6 @@ function CartContent({
   selectedServices,
   total,
   onRemove,
-  onClear,
   onCheckout,
   onCloseDesktop,
   onCloseMobile,
@@ -242,7 +233,6 @@ function CartContent({
   >;
   total: number;
   onRemove: (slug: string) => void;
-  onClear: () => void;
   onCheckout: () => void;
   onCloseDesktop?: () => void;
   onCloseMobile?: () => void;

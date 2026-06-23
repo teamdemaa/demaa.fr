@@ -2,7 +2,7 @@ import "server-only";
 
 import { getAdminFirestore } from "./firebase-admin";
 import rawProcessTemplates from "./system-process-templates.json";
-import type { SystemPillar, SystemProcessTemplate } from "./system-process-types";
+import type { SystemProcessTemplate } from "./system-process-types";
 
 export type { SystemPillar, SystemProcessTemplate } from "./system-process-types";
 

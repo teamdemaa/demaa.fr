@@ -18,7 +18,7 @@ type PartnerOffersRequestBody = {
 
 export async function POST(request: Request) {
   try {
-    const limited = enforceRateLimit(request, {
+    const limited = await enforceRateLimit(request, {
       keyPrefix: "partner_offers",
       limit: 10,
       windowMs: 10 * 60 * 1000,

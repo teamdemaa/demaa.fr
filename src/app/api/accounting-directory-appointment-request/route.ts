@@ -31,7 +31,7 @@ type AppointmentRequestBody = {
 
 export async function POST(request: Request) {
   try {
-    const limited = enforceRateLimit(request, {
+    const limited = await enforceRateLimit(request, {
       keyPrefix: "accounting-directory-appointment",
       limit: 6,
       windowMs: 10 * 60 * 1000,

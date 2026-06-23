@@ -46,6 +46,15 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ['lucide-react', 'framer-motion']
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'drive.google.com',
+        pathname: '/thumbnail',
+      },
+    ],
+  },
   async redirects() {
     return [
       {

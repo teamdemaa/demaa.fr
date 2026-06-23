@@ -6,23 +6,13 @@ import {
 } from "@/lib/api-security";
 import { isValidEmail, normalizeEmail } from "@/lib/email";
 import { createMagicLinkToken } from "@/lib/customer-space-auth";
+import { getCanonicalSiteUrl } from "@/lib/site-url";
 
 export const runtime = "nodejs";
 
 type MagicLinkRequestBody = {
   email?: unknown;
 };
-
-function getBaseUrl(request: Request) {
-  const requestOrigin = new URL(request.url).origin;
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
-
-  if (siteUrl && !siteUrl.includes("vercel.app")) {
-    return siteUrl;
-  }
-
-  return requestOrigin;
-}
 
 async function sendMagicLinkEmail(input: {
   email: string;
@@ -85,7 +75,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const limited = enforceRateLimit(
+  const limited = await enforceRateLimit(
     request,
     {
       keyPrefix: "customer-magic-link",
@@ -97,13 +87,25 @@ export async function POST(request: Request) {
   if (limited) return limited;
 
   const token = await createMagicLinkToken(email);
-  const magicLink = `${getBaseUrl(request)}/api/customer-space/consume?token=${encodeURIComponent(
+  const magicLink = `${getCanonicalSiteUrl()}/api/customer-space/consume?token=${encodeURIComponent(
     token
   )}`;
   const emailResult = await sendMagicLinkEmail({ email, magicLink });
 
+  if (!emailResult.sent) {
+    return NextResponse.json(
+      {
+        error:
+          "Impossible d'envoyer le lien pour le moment. Merci de réessayer dans quelques minutes.",
+        devLink: process.env.NODE_ENV === "production" ? null : magicLink,
+        sent: false,
+      },
+      { status: 503 }
+    );
+  }
+
   return NextResponse.json({
-    sent: emailResult.sent,
+    sent: true,
     devLink: process.env.NODE_ENV === "production" ? null : magicLink,
   });
 }

@@ -46,9 +46,47 @@ This project also exposes:
 - `npm run audit:system-pages`
 - `npm run audit:internal-linking`
 - `npm run build:stable`
+- `npm test`
+- `npm run test:e2e`
 
 If `next build` ever flakes locally because of a Turbopack temp-file issue, use `npm run build:stable`.
 The production `build` and `start` scripts both use the isolated `.next-build` directory.
+
+## Tests
+
+The project now has three complementary layers of automated checks:
+
+- `npm test`: Vitest unit and API-route tests
+- `npm run test:e2e`: Playwright browser scenarios against a local Next.js server
+- `npm run validate:data`: editorial/data/runtime consistency checks
+
+Recommended local validation before opening a PR:
+
+```bash
+npm run lint
+npm test
+npm run test:e2e
+npm run validate:data
+npm run build
+```
+
+Notes:
+
+- Playwright writes artifacts to `/private/tmp/demaa-playwright` to avoid filling the repository workspace.
+- The current browser scenarios cover member-space access and assistant-success payment flows.
+- Most API routes are covered with mocked external services such as Stripe, Slack, Resend, Anthropic, and Firestore-facing persistence wrappers.
+
+## Security Note
+
+`npm audit --omit=dev` still reports a small residual set of moderate vulnerabilities through the optional `@google-cloud/storage` subtree pulled by `firebase-admin`.
+
+Current status:
+
+- `0` high severity vulnerabilities
+- residual `moderate` findings only
+- no direct use of `firebase-admin/storage` in the application code audited here
+
+This residual risk should stay tracked as dependency debt unless a future upstream fix removes it cleanly.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 

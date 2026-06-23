@@ -11,7 +11,7 @@ import { consumeCustomerMagicLink } from "@/lib/generations-db";
 export const runtime = "nodejs";
 
 export async function GET(request: Request) {
-  const limited = enforceRateLimit(request, {
+  const limited = await enforceRateLimit(request, {
     keyPrefix: "customer-magic-consume",
     limit: 20,
     windowMs: 10 * 60 * 1000,
