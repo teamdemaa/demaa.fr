@@ -32,26 +32,6 @@ function getSystemSlugsForSectorLabel(sectorLabel: string) {
 
 const specificNewsletters: NewsletterDirectoryEntry[] = [
   {
-    slug: "veille-du-cabinet-tiimora",
-    title: "Veille du cabinet",
-    description:
-      "La veille de Tiimora pour les cabinets comptables : fiscal, social, reglementaire et organisation du cabinet.",
-    seoTitle: "Veille du cabinet comptable par Tiimora | Demaa",
-    seoDescription:
-      "Découvrez la veille du cabinet recommandee par Demaa pour les experts-comptables, editee par Tiimora.",
-    kind: "specific",
-    sectorLabel: "Conseil & services aux entreprises",
-    sectorSlug: "conseil-services-entreprises",
-    frequency: "Tiimora",
-    tags: ["cabinet comptable", "tiimora", "fiscal", "conformité"],
-    systemSlugs: ["cabinet-comptable"],
-    publisher: "Tiimora",
-    externalUrl: "https://www.tiimora.fr/",
-    externalLabel: "Voir sur Tiimora",
-    sourceType: "partner",
-    confidence: "high",
-  },
-  {
     slug: "daf-mag",
     title: "DAF Mag",
     description:

@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import FinanceDetailDialog from "@/components/FinanceDetailDialog";
 import HorizontalScrollHint from "@/components/HorizontalScrollHint";
+import PartnerOffersModal from "@/components/PartnerOffersModal";
 import ProNetworkDetailDialog from "@/components/ProNetworkDetailDialog";
 import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
 import SupplierDetailDialog from "@/components/SupplierDetailDialog";
@@ -302,6 +303,7 @@ export default function SystemDetailContent({
   const [selectedFinanceDetail, setSelectedFinanceDetail] = useState<DemaaFinanceItem | null>(null);
   const [selectedProNetworkDetail, setSelectedProNetworkDetail] = useState<DemaaProNetwork | null>(null);
   const [selectedCourse, setSelectedCourse] = useState<CourseEntry | null>(null);
+  const [isPartnerOffersModalOpen, setIsPartnerOffersModalOpen] = useState(false);
   const recommendedSuppliers = useMemo(
     () => (activeTab === "fournisseurs" ? getRecommendedSuppliersForSystem(system.slug) : []),
     [activeTab, system.slug]
@@ -801,6 +803,13 @@ export default function SystemDetailContent({
         >
           Audit organisation gratuit
         </Link>
+        <button
+          type="button"
+          onClick={() => setIsPartnerOffersModalOpen(true)}
+          className="inline-flex min-h-11 items-center justify-center rounded-full border border-dema-forest/30 bg-dema-paper px-5 py-2.5 text-sm font-medium text-dema-forest transition hover:border-dema-forest hover:bg-dema-sage/45"
+        >
+          Être informé des tarifs négociés
+        </button>
       </div>
 
       <div className="mt-5 -mx-2 overflow-x-auto px-2 pb-2 soft-scroll">
@@ -1109,6 +1118,14 @@ export default function SystemDetailContent({
         <ProNetworkDetailDialog
           network={selectedProNetworkDetail}
           onClose={() => setSelectedProNetworkDetail(null)}
+        />
+      ) : null}
+
+      {isPartnerOffersModalOpen ? (
+        <PartnerOffersModal
+          onClose={() => setIsPartnerOffersModalOpen(false)}
+          initialSector={system.name}
+          source="system_detail_partner_offers"
         />
       ) : null}
 

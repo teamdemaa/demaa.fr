@@ -1,4 +1,5 @@
-import Navbar from "@/components/Navbar";
+import LegalPageLayout from "@/components/LegalPageLayout";
+import { LEGAL, LEGAL_COPY } from "@/lib/legal";
 
 export const metadata = {
   title: "Mentions légales - Demaa",
@@ -24,96 +25,89 @@ function LegalSection({
 
 export default function MentionsLegalesPage() {
   return (
-    <>
-      <Navbar />
-      <main className="min-h-screen bg-[#ffffff] pb-20">
-        <section className="border-b border-brand-coral/10 bg-white px-4 pb-12 pt-16 text-center md:pb-14 md:pt-20">
-          <h1 className="text-4xl font-black tracking-tight text-brand-blue md:text-5xl">
-            Mentions <span className="text-brand-coral">légales</span>
-          </h1>
-          <p className="mx-auto mt-4 max-w-3xl text-sm leading-relaxed text-gray-500 md:text-base">
-            Informations légales applicables au site Demaa.fr, à son éditeur et à son hébergement.
-          </p>
-        </section>
-
-        <div className="mx-auto flex max-w-5xl flex-col gap-6 px-4 pt-10 md:gap-8 md:pt-14">
-          <LegalSection title="1. Éditeur du site">
+    <LegalPageLayout
+      title="Mentions"
+      titleAccent="légales"
+      description="Informations légales applicables au site Demaa.fr, à son éditeur et à son hébergement."
+    >
+      <LegalSection title="1. Éditeur du site">
             <p>
-              Le site <strong>Demaa.fr</strong> est édité par <strong>Oumou Gory</strong>, entrepreneur individuel exerçant sous l&apos;enseigne <strong>Demaa</strong>.
+              {LEGAL_COPY.sitePublisherSentence} {LEGAL_COPY.brandOperatorSentence}
             </p>
             <ul className="list-disc space-y-2 pl-5">
-              <li><strong>Forme juridique :</strong> Entrepreneur individuel</li>
+              <li><strong>Entité juridique :</strong> {LEGAL.legalEntityName}</li>
+              <li><strong>Marque exploitée :</strong> {LEGAL.brandName}</li>
+              <li><strong>Forme juridique :</strong> {LEGAL.legalStatus}</li>
               <li><strong>Régime :</strong> Micro-entreprise</li>
-              <li><strong>SIREN :</strong> 889 656 906</li>
-              <li><strong>SIRET (siège) :</strong> 889 656 906 00027</li>
-              <li><strong>TVA intracommunautaire :</strong> FR16889656906</li>
-              <li><strong>Inscription au RCS :</strong> inscrit au greffe de Bobigny le 23/10/2024</li>
-              <li><strong>Numéro RCS :</strong> 889 656 906 R.C.S. Bobigny</li>
+              <li><strong>Représentante légale :</strong> {LEGAL.legalRepresentative}</li>
+              <li><strong>SIREN :</strong> {LEGAL.siren}</li>
+              <li><strong>SIRET (siège) :</strong> {LEGAL.siret}</li>
+              <li><strong>TVA intracommunautaire :</strong> {LEGAL.vatNumber}</li>
+              <li><strong>Inscription au RCS :</strong> inscrit au greffe de {LEGAL.rcsCity} le {LEGAL.rcsRegistrationDate}</li>
+              <li><strong>Numéro RCS :</strong> {LEGAL.rcsNumber}</li>
               <li><strong>Inscription au RNE :</strong> inscrite</li>
-              <li><strong>Responsable de la publication :</strong> Oumou Gory</li>
-              <li><strong>Email de contact :</strong> team@demaa.fr</li>
-              <li><strong>Téléphone :</strong> +33 7 82 84 24 35</li>
-              <li><strong>Adresse de l&apos;entreprise :</strong> 6 rue du maréchal juin, 95210 Saint Gratien, France</li>
+              <li><strong>Responsable de la publication :</strong> {LEGAL.legalRepresentative}</li>
+              <li><strong>Email de contact :</strong> {LEGAL.email}</li>
+              <li><strong>Téléphone :</strong> {LEGAL.phone}</li>
+              <li><strong>Adresse de l&apos;entreprise :</strong> {LEGAL.address}</li>
             </ul>
-          </LegalSection>
+      </LegalSection>
 
-          <LegalSection title="2. Hébergement">
+      <LegalSection title="2. Hébergement">
             <p>
-              Le site est hébergé par <strong>Vercel Inc.</strong>, 340 S Lemon Ave #1135, Walnut, CA 91789, États-Unis.
+              Le site est hébergé par <strong>{LEGAL.hostingProviderName}</strong>, {LEGAL.hostingProviderAddress}.
             </p>
             <p>
               Site de l&apos;hébergeur :{" "}
               <a
-                href="https://vercel.com"
+                href={LEGAL.hostingProviderUrl}
                 className="text-brand-coral underline decoration-brand-coral/30 underline-offset-4"
                 target="_blank"
                 rel="noreferrer"
               >
-                vercel.com
+                {LEGAL.hostingProviderUrl.replace("https://", "")}
               </a>
             </p>
-          </LegalSection>
+      </LegalSection>
 
-          <LegalSection title="3. Activité du site">
+      <LegalSection title="3. Activité du site">
             <p>
               Demaa.fr propose des contenus, outils gratuits, ressources, formulaires de contact, demandes d&apos;audit, demandes d&apos;automatisation et accompagnements autour de l&apos;organisation, de l&apos;automatisation et des systèmes business.
             </p>
             <p>
               Les informations publiées sur le site sont fournies à titre informatif. Elles ne constituent pas un conseil juridique, fiscal, comptable ou financier individualisé.
             </p>
-          </LegalSection>
+      </LegalSection>
 
-          <LegalSection title="4. Propriété intellectuelle">
+      <LegalSection title="4. Propriété intellectuelle">
             <p>
               L&apos;ensemble des éléments présents sur le site, notamment les textes, structures, visuels, composants, marques, logos, contenus éditoriaux et ressources, est protégé par le droit de la propriété intellectuelle.
             </p>
             <p>
               Sauf autorisation écrite préalable, toute reproduction, représentation, adaptation, extraction ou réutilisation, totale ou partielle, est interdite.
             </p>
-          </LegalSection>
+      </LegalSection>
 
-          <LegalSection title="5. Responsabilité">
+      <LegalSection title="5. Responsabilité">
             <p>
               L&apos;éditeur s&apos;efforce d&apos;assurer l&apos;exactitude et la mise à jour des informations diffusées sur le site. Toutefois, il ne peut garantir l&apos;absence totale d&apos;erreurs, d&apos;omissions ou d&apos;indisponibilités.
             </p>
             <p>
               L&apos;utilisateur reste responsable de l&apos;usage qu&apos;il fait des informations et outils proposés. L&apos;éditeur ne pourra être tenu responsable des dommages directs ou indirects résultant de l&apos;utilisation du site ou de l&apos;impossibilité d&apos;y accéder.
             </p>
-          </LegalSection>
+      </LegalSection>
 
-          <LegalSection title="6. Liens externes">
+      <LegalSection title="6. Liens externes">
             <p>
               Le site peut contenir des liens vers des sites tiers, outils ou services externes. Demaa ne contrôle pas leur contenu ni leurs politiques et décline toute responsabilité à leur sujet.
             </p>
-          </LegalSection>
+      </LegalSection>
 
-          <LegalSection title="7. Contact">
+      <LegalSection title="7. Contact">
             <p>
-              Pour toute question relative au site ou à son éditeur, vous pouvez écrire à <strong>team@demaa.fr</strong>.
+              Pour toute question relative au site ou à son éditeur, vous pouvez écrire à <strong>{LEGAL.email}</strong>.
             </p>
-          </LegalSection>
-        </div>
-      </main>
-    </>
+      </LegalSection>
+    </LegalPageLayout>
   );
 }

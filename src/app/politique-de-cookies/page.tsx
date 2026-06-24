@@ -1,4 +1,6 @@
-import Navbar from "@/components/Navbar";
+import CookiePreferencesPanel from "@/components/CookiePreferencesPanel";
+import LegalPageLayout from "@/components/LegalPageLayout";
+import { LEGAL, LEGAL_COPY } from "@/lib/legal";
 
 export const metadata = {
   title: "Politique de cookies - Demaa",
@@ -24,61 +26,66 @@ function CookieSection({
 
 export default function PolitiqueCookiesPage() {
   return (
-    <>
-      <Navbar />
-      <main className="min-h-screen bg-[#ffffff] pb-20">
-        <section className="border-b border-brand-coral/10 bg-white px-4 pb-12 pt-16 text-center md:pb-14 md:pt-20">
-          <h1 className="text-4xl font-black tracking-tight text-brand-blue md:text-5xl">
-            Politique de <span className="text-brand-coral">cookies</span>
-          </h1>
-          <p className="mx-auto mt-4 max-w-3xl text-sm leading-relaxed text-gray-500 md:text-base">
-            Cette page explique les traceurs, cookies et stockages locaux utilisés sur Demaa.fr, ainsi que vos choix.
-          </p>
-        </section>
+    <LegalPageLayout
+      title="Politique de"
+      titleAccent="cookies"
+      description="Cette page explique les traceurs, cookies et stockages locaux utilisés sur Demaa.fr, ainsi que vos choix."
+    >
+      <CookieSection title="1. Responsable et périmètre">
+            <p>
+              Cette politique s&apos;applique au site {LEGAL.domain}, exploité sous la marque <strong>{LEGAL.brandName}</strong> par <strong>{LEGAL.legalEntityName}</strong>.
+            </p>
+            <p>{LEGAL_COPY.brandOperatorSentence}</p>
+      </CookieSection>
 
-        <div className="mx-auto flex max-w-5xl flex-col gap-6 px-4 pt-10 md:gap-8 md:pt-14">
-          <CookieSection title="1. Qu&apos;est-ce qu&apos;un cookie ?">
+      <CookieSection title="2. Qu&apos;est-ce qu&apos;un cookie ?">
             <p>
               Un cookie est un petit fichier déposé sur votre terminal lorsque vous consultez un site. D&apos;autres technologies proches
               peuvent également être utilisées, comme le stockage local du navigateur ou certains identifiants techniques.
             </p>
-          </CookieSection>
+      </CookieSection>
 
-          <CookieSection title="2. Cookies et traceurs utilisés sur Demaa.fr">
+      <CookieSection title="3. Cookies et traceurs utilisés sur Demaa.fr">
             <p>À la date de publication de cette page, Demaa.fr utilise principalement :</p>
             <ul className="list-disc space-y-2 pl-5">
-              <li><strong>des traceurs de mesure d&apos;audience</strong> liés à l&apos;hébergement et à l&apos;analyse de fréquentation du site ;</li>
+              <li><strong>Vercel Analytics</strong> pour la mesure d&apos;audience du site ;</li>
+              <li><strong>Google Analytics</strong> pour l&apos;analyse de fréquentation et des parcours ;</li>
+              <li><strong>Meta Pixel</strong> pour la mesure marketing et publicitaire ;</li>
               <li><strong>du stockage local navigateur</strong> pour mémoriser certaines informations utiles à l&apos;assistant et à l&apos;expérience utilisateur ;</li>
               <li><strong>des éléments techniques de session ou de sécurité</strong> nécessaires au bon fonctionnement du site.</li>
             </ul>
-          </CookieSection>
+      </CookieSection>
 
-          <CookieSection title="3. Finalités">
+      <CookieSection title="4. Finalités">
             <ul className="list-disc space-y-2 pl-5">
               <li>mesurer l&apos;usage du site et améliorer les contenus et outils proposés ;</li>
+              <li>évaluer l&apos;efficacité des campagnes et des sources d&apos;acquisition ;</li>
               <li>mémoriser certaines préférences ou informations temporaires côté navigateur ;</li>
               <li>assurer la sécurité, la stabilité et le bon fonctionnement technique du site.</li>
             </ul>
-          </CookieSection>
+      </CookieSection>
 
-          <CookieSection title="4. Consentement">
+      <CookieSection title="5. Consentement">
             <p>
-              Lorsque les traceurs utilisés sont strictement nécessaires au fonctionnement du site, ils peuvent être déposés sans consentement préalable.
+              Les traceurs strictement nécessaires au fonctionnement du site peuvent être déposés sans consentement préalable.
             </p>
             <p>
-              Si Demaa ajoute des cookies marketing, publicitaires, de retargeting ou des outils soumis au consentement, un mécanisme de recueil de consentement
-              adapté devra être mis en place avant leur dépôt.
+              Les outils de mesure d&apos;audience et les traceurs publicitaires non nécessaires, notamment Google Analytics, Meta Pixel et Vercel Analytics lorsqu&apos;ils sont activés,
+              ne sont chargés qu&apos;après votre acceptation via le bandeau de consentement.
             </p>
-          </CookieSection>
+      </CookieSection>
 
-          <CookieSection title="5. Durée de conservation">
+      <CookieSection title="6. Durée de conservation">
             <p>
               Les cookies et stockages locaux sont conservés pendant la durée strictement nécessaire à leur finalité, dans la limite des règles applicables
               et des paramètres techniques retenus par les services utilisés.
             </p>
-          </CookieSection>
+            <p>
+              Votre choix de consentement est également mémorisé localement pour éviter de vous redemander votre préférence à chaque visite.
+            </p>
+      </CookieSection>
 
-          <CookieSection title="6. Gérer vos choix">
+      <CookieSection title="7. Gérer vos choix">
             <p>
               Vous pouvez à tout moment supprimer les cookies et les données stockées localement depuis les réglages de votre navigateur.
             </p>
@@ -86,15 +93,19 @@ export default function PolitiqueCookiesPage() {
               Vous pouvez également configurer votre navigateur pour bloquer tout ou partie des cookies. Certaines fonctionnalités du site peuvent alors
               être dégradées.
             </p>
-          </CookieSection>
-
-          <CookieSection title="7. Contact">
             <p>
-              Pour toute question liée aux cookies ou aux traceurs utilisés sur Demaa.fr, vous pouvez écrire à <strong>team@demaa.fr</strong>.
+              Si vous souhaitez modifier votre choix après acceptation ou refus, vous pouvez effacer les données locales du navigateur liées à Demaa puis recharger le site.
             </p>
-          </CookieSection>
-        </div>
-      </main>
-    </>
+            <div className="pt-2">
+              <CookiePreferencesPanel />
+            </div>
+      </CookieSection>
+
+      <CookieSection title="8. Contact">
+            <p>
+              Pour toute question liée aux cookies ou aux traceurs utilisés sur Demaa.fr, vous pouvez écrire à <strong>{LEGAL.email}</strong>.
+            </p>
+      </CookieSection>
+    </LegalPageLayout>
   );
 }

@@ -67,9 +67,7 @@ type AccountingDirectoryApiFirm = Partial<AccountingFirm> & {
 };
 
 const DIRECTORY_FIRMS_ENDPOINT =
-  process.env.DEMAA_ACCOUNTING_DIRECTORY_FIRMS_ENDPOINT?.trim() ||
-  process.env.TIIMORA_DIRECTORY_FIRMS_ENDPOINT?.trim() ||
-  "";
+  process.env.DEMAA_ACCOUNTING_DIRECTORY_FIRMS_ENDPOINT?.trim() || "";
 
 export const getAccountingFirms = cache(async () => {
   if (!DIRECTORY_FIRMS_ENDPOINT) {

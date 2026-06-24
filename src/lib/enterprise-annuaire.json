@@ -80,10 +80,6 @@
           "scope": "business"
         },
         {
-          "slug": "tiimora",
-          "usage": "Piloter les opérations et les processus d’un cabinet."
-        },
-        {
           "slug": "cegid",
           "usage": "Structurer une gestion plus robuste quand l’activité grandit."
         },

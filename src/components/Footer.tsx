@@ -78,6 +78,7 @@ export default function Footer() {
             </h3>
             <ul className="space-y-3">
               <li><Link href="/mentions-legales" className={linkClass}>Mentions légales</Link></li>
+              <li><Link href="/conditions-d-utilisation" className={linkClass}>Conditions d&apos;utilisation</Link></li>
               <li><Link href="/politique-de-confidentialite" className={linkClass}>Politique de confidentialité</Link></li>
               <li><Link href="/politique-de-cookies" className={linkClass}>Cookies</Link></li>
               <li><Link href="/cgv" className={linkClass}>CGV</Link></li>

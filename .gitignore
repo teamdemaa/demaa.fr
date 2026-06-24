@@ -16,6 +16,7 @@
 # next.js
 /.next/
 /.next-build/
+/.next-build-webpack/
 /.next-build-verify/
 /out/
 

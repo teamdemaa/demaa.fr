@@ -2,8 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 const INPUT_PATH =
-  process.argv[2] ||
-  "/Users/oumougory/Apps/Tiimora landing page/annuaire-aurea-complet.csv";
+  process.argv[2] || path.resolve("/Users/oumougory/Apps/Demaa.fr/annuaire-aurea-complet.csv");
 const OUTPUT_PATH = path.resolve(
   "/Users/oumougory/Apps/Demaa.fr/src/lib/generated-accounting-directory-firms.ts"
 );

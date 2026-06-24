@@ -414,25 +414,6 @@
       "scope": "transverse"
     },
     {
-      "slug": "tiimora",
-      "name": "Tiimora",
-      "url": "https://tiimora.com/",
-      "category": "Outils métier",
-      "sectors": [
-        "Services & conseil"
-      ],
-      "description": "Outil métier pour structurer les opérations des cabinets comptables.",
-      "tags": [
-        "Cabinet",
-        "Process",
-        "Pilotage"
-      ],
-      "bestFor": "Piloter les opérations et les processus d’un cabinet.",
-      "pricingHint": "Payant",
-      "status": "active",
-      "scope": "business"
-    },
-    {
       "slug": "cegid",
       "name": "Cegid",
       "url": "https://www.cegid.com/fr/",
