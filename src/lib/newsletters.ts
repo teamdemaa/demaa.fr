@@ -15,14 +15,14 @@ export const newsletters: NewsletterEntry[] = getAllNewsletters().map((entry) =>
   title: entry.title,
   description: entry.description,
   frequency: entry.frequency,
-  publisher: "Demaa",
+  publisher: entry.publisher,
   href: `/annuaire-newsletters/${entry.slug}`,
   systemSlugs: entry.systemSlugs,
 }));
 
 export function getRelatedNewslettersForSystemSlug(
   systemSlug: string,
-  limit = 3,
+  limit = 6,
 ): NewsletterEntry[] {
   return newsletters
     .filter((entry) => entry.systemSlugs.includes(systemSlug))

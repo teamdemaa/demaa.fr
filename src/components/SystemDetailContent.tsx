@@ -728,11 +728,9 @@ export default function SystemDetailContent({
 
   function renderNewsletterCard(newsletter: NewsletterEntry) {
     return (
-      <a
+      <Link
         key={newsletter.slug}
         href={newsletter.href}
-        target="_blank"
-        rel="noreferrer"
         className={SYSTEM_CARD_CLASS}
       >
         <div className="flex items-start justify-between gap-4">
@@ -749,7 +747,10 @@ export default function SystemDetailContent({
         <p className={SYSTEM_CARD_DESCRIPTION_CLASS}>
           {newsletter.description}
         </p>
-      </a>
+        <p className="mt-4 text-xs font-medium text-dema-muted">
+          Editeur recommande : <span className="text-brand-blue">{newsletter.publisher}</span>
+        </p>
+      </Link>
     );
   }
 
@@ -1028,9 +1029,21 @@ export default function SystemDetailContent({
                 <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-muted">
                   Newsletters recommandées
                 </p>
-                <div className="max-w-[20rem]">
-                  {renderNewsletterCard(newsletters[0])}
-                </div>
+                <HorizontalScrollHint
+                  className="-mx-4 overflow-x-auto px-4 pb-4 pt-1 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
+                  controlsClassName="absolute -right-2 -top-9 z-10 flex items-center gap-1.5 sm:-right-3"
+                >
+                  <div className="flex w-max snap-x snap-mandatory gap-4">
+                    {newsletters.map((newsletter) => (
+                      <div
+                        key={newsletter.slug}
+                        className="w-[18rem] shrink-0 snap-start sm:w-[19rem] lg:w-[20rem]"
+                      >
+                        {renderNewsletterCard(newsletter)}
+                      </div>
+                    ))}
+                  </div>
+                </HorizontalScrollHint>
               </div>
             ) : null}
             {documentModels.length ? (

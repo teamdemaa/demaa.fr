@@ -27,9 +27,7 @@
     "audit:business-checklists:ci": "node scripts/audit-business-checklists.mjs --strict && node scripts/audit-business-checklists-semantic.mjs --strict --fail-on-warning",
     "seed:enterprise-annuaire": "node scripts/seed-enterprise-annuaire.mjs",
     "sync:enterprise-annuaire": "node scripts/sync-enterprise-annuaire.mjs",
-    "sync:tool-directory": "node scripts/sync-tool-directory.mjs",
-    "newsletter:status": "node scripts/update-newsletter-article-status.mjs",
-    "newsletter:generate": "node scripts/generate-newsletter-draft.mjs"
+    "sync:tool-directory": "node scripts/sync-tool-directory.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.102.0",

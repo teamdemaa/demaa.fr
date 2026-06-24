@@ -93,12 +93,6 @@ interface PartnerOffersSubscriberInput {
   source?: string;
 }
 
-interface NewsletterSubscriberInput {
-  firstName: string;
-  email: string;
-  newsletterSlug: string;
-}
-
 interface AssistantDelegationRequestInput {
   stripeSessionId: string;
   email?: string | null;
@@ -517,34 +511,6 @@ export async function savePartnerOffersSubscriber(input: PartnerOffersSubscriber
         updated_at: now,
       },
       { merge: true }
-    );
-  });
-
-  return { email };
-}
-
-export async function saveNewsletterSubscriber(input: NewsletterSubscriberInput) {
-  const database = getAdminFirestore();
-  const now = new Date().toISOString();
-  const email = normalizeEmail(input.email);
-  const subscriberRef = database
-    .collection("newsletter_subscribers")
-    .doc(getStableKey(`${input.newsletterSlug}:${email}`));
-
-  await database.runTransaction(async (transaction) => {
-    const subscriberDoc = await transaction.get(subscriberRef);
-
-    transaction.set(
-      subscriberRef,
-      {
-        email,
-        first_name: input.firstName.trim(),
-        newsletter_slug: input.newsletterSlug.trim(),
-        status: "subscribed",
-        created_at: subscriberDoc.exists ? subscriberDoc.data()?.created_at || now : now,
-        updated_at: now,
-      },
-      { merge: true },
     );
   });
 
