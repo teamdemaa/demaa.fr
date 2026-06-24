@@ -55,7 +55,7 @@ export default function HomeTabsClient({
               </span>
             </h1>
             <p className="mx-auto mt-5 max-w-2xl text-[13px] leading-relaxed text-dema-muted sm:text-sm md:text-base">
-              Tout ce qu&apos;il vous faut pour prendre le contrôle de votre entreprise et croitre sur des bases solides
+              Les bons systèmes pour construire une entreprise plus stable, plus autonome et moins dépendante de vous.
             </p>
           </div>
 
