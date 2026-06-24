@@ -1,5 +1,8 @@
 import type { NextConfig } from "next";
 
+const scriptSrcUnsafeEval =
+  process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : "";
+
 const securityHeaders = [
   {
     key: 'X-Content-Type-Options',
@@ -28,7 +31,7 @@ const securityHeaders = [
       "base-uri 'self'",
       "object-src 'none'",
       "frame-ancestors 'none'",
-      "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://connect.facebook.net https://js.stripe.com",
+      `script-src 'self' 'unsafe-inline'${scriptSrcUnsafeEval} https://www.googletagmanager.com https://connect.facebook.net https://js.stripe.com`,
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: blob: https://www.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://drive.google.com https://lh3.googleusercontent.com https://*.googleusercontent.com",
       "font-src 'self' data:",
@@ -48,6 +51,21 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      {
+        source: '/annuaire-newsletters/:newsletterSlug/:articleSlug',
+        destination: '/annuaire-newsletters/:newsletterSlug',
+        permanent: true,
+      },
+      {
+        source: '/newsletters-a-valider',
+        destination: '/annuaire-newsletters',
+        permanent: true,
+      },
+      {
+        source: '/newsletters-a-valider/:newsletterSlug/:articleSlug',
+        destination: '/annuaire-newsletters/:newsletterSlug',
+        permanent: true,
+      },
       {
         source: '/ressources',
         destination: '/modeles-de-documents',

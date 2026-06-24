@@ -6,14 +6,14 @@ import { getAllNewsletters } from "@/lib/newsletter-content";
 export const metadata: Metadata = {
   title: "Annuaire newsletters par secteur - Demaa",
   description:
-    "Explorez les newsletters Demaa par secteur d'activité, consultez les articles publiés et abonnez-vous aux prochaines éditions.",
+    "Explorez les newsletters recommandees par Demaa par secteur d'activite et accedez aux sources editoriales deja actives sur leur site d'origine.",
   alternates: {
     canonical: "/annuaire-newsletters",
   },
   openGraph: {
     title: "Annuaire newsletters par secteur - Demaa",
     description:
-      "Explorez les newsletters Demaa par secteur d'activité, consultez les articles publiés et abonnez-vous aux prochaines éditions.",
+      "Explorez les newsletters recommandees par Demaa par secteur d'activite et accedez aux sources editoriales deja actives sur leur site d'origine.",
     url: "/annuaire-newsletters",
     siteName: "Demaa",
     locale: "fr_FR",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Annuaire newsletters par secteur - Demaa",
     description:
-      "Explorez les newsletters Demaa par secteur d'activité, consultez les articles publiés et abonnez-vous aux prochaines éditions.",
+      "Explorez les newsletters recommandees par Demaa par secteur d'activite et accedez aux sources editoriales deja actives sur leur site d'origine.",
   },
 };
 
