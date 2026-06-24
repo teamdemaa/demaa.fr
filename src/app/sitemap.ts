@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getAllCourseEntries } from "@/lib/course-content";
 import { getAllDocumentModels } from "@/lib/document-models";
-import { getAllNewsletterArticles, getAllNewsletters } from "@/lib/newsletter-content";
+import { getAllNewsletters } from "@/lib/newsletter-content";
 import { aidFamilies, demaaAidItems } from "@/lib/aid-catalog";
 import {
   accountingDirectorySeoPages,
@@ -89,14 +89,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: now,
     changeFrequency: "monthly" as const,
     priority: 0.72,
-  }));
-
-  const newsletterArticleEntries = getAllNewsletterArticles();
-  const newsletterArticleSitemapEntries: MetadataRoute.Sitemap = newsletterArticleEntries.map((entry) => ({
-    url: `${base}/annuaire-newsletters/${entry.newsletterSlug}/${entry.slug}`,
-    lastModified: new Date(entry.date),
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
   }));
 
   const toolEntries: MetadataRoute.Sitemap = tools
@@ -210,7 +202,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...documentModelSitemapEntries,
     ...courseContentEntries,
     ...newsletterSitemapEntries,
-    ...newsletterArticleSitemapEntries,
     ...toolEntries,
     ...freeToolEntries,
     ...serviceEntries,
