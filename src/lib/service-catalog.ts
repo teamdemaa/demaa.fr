@@ -107,7 +107,7 @@ export const demaaServices = [
     description:
       "Revue des zones sensibles pour repérer les écarts, sécuriser les pratiques et identifier les optimisations fiscales ou administratives possibles.",
     bestFor:
-      "Les activités avec caisse, TVA, volume, historique désorganisé ou risque documentaire.",
+      "Les entreprises qui veulent vérifier qu'elles sont carrées, éviter les erreurs coûteuses et repérer ce qui peut être optimisé.",
     price: "850 €",
     tags: ["Fiscalité", "Audit", "TVA"],
     icon: "FileSearch",
@@ -143,11 +143,11 @@ export const demaaServices = [
     name: "Site web & visibilité digitale",
     category: "Acquisition",
     shortDescription:
-      "Des supports clairs pour présenter votre activité et faciliter la prise de contact.",
+      "Tous les supports utiles pour présenter votre entreprise, rassurer vos prospects et faciliter la prise de contact.",
     description:
       "Les supports essentiels pour présenter votre entreprise et faciliter la prise de contact.",
     bestFor:
-      "Les activités qui doivent rassurer, être visibles et mieux présenter leur offre.",
+      "Les dirigeants qui ont besoin d'une présence claire et sérieuse pour être trouvés, rassurer et mieux présenter leur activité.",
     price: "1 350 €",
     tags: ["Web", "SEO", "Confiance"],
     icon: "Laptop",
@@ -185,11 +185,11 @@ export const demaaServices = [
     name: "Système Marketing & Vente",
     category: "Acquisition",
     shortDescription:
-      "Mettre en place un système marketing et vente régulier, puis le tester et l'ajuster.",
+      "Clarifier l'offre, poser un plan d'actions marketing et vente, puis mettre en place un suivi plus régulier.",
     description:
       "Un système marketing et vente avec offre clarifiée, actions séquencées, suivi commercial, tests et ajustements.",
     bestFor:
-      "Les activités qui veulent structurer leur acquisition et garder un rythme commercial plus régulier.",
+      "Les activités qui veulent structurer leur acquisition, mieux suivre leurs actions et garder un rythme marketing et commercial plus régulier.",
     price: "450 €",
     tags: ["Marketing", "Vente", "CRM"],
     icon: "Target",
@@ -204,14 +204,14 @@ export const demaaServices = [
   },
   {
     slug: "organisation-equipes",
-    name: "Organisation des équipes",
+    name: "Organisation des équipes et des tâches",
     category: "Systèmes",
     shortDescription:
-      "Clarifier les rôles, les responsabilités et les besoins d'organisation de l'équipe.",
+      "Clarifier qui fait quoi, mieux répartir les tâches et remettre de l'ordre dans le fonctionnement quotidien.",
     description:
       "Analyse de l'organisation actuelle pour clarifier qui fait quoi, repérer les zones floues et proposer les ajustements utiles.",
     bestFor:
-      "Les dirigeants qui sentent que l'équipe manque de clarté ou que l'organisation doit être recadrée.",
+      "Les dirigeants qui sentent que les rôles ne sont pas clairs, que certaines tâches sont mal réparties ou que l'équipe perd du temps dans l'organisation du quotidien.",
     price: "350 €",
     tags: ["Organisation", "Équipe", "Management"],
     icon: "Users",
