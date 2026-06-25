@@ -5,16 +5,18 @@ export function getServicePageMetadata(service: DemaaService): Metadata {
   const isAssistantLanding = service.slug === "assistant-polyvalent";
   const isOrganisationLanding = service.slug === "organisation-automatisation";
   const metadataTitle = isAssistantLanding
-    ? `${service.name} - Demaa`
+    ? "Déléguez à un assistant de confiance - Demaa"
     : isOrganisationLanding
       ? "Audit d'organisation pour TPE - Demaa"
       : `${service.name} - Annuaire services Demaa`;
   const canonicalPath = isOrganisationLanding
     ? "/organisation"
     : `/annuaire-services/${service.slug}`;
-  const metadataDescription = isOrganisationLanding
-    ? "Faites un audit d'organisation pour identifier les blocages, clarifier les priorités et repérer les besoins les plus utiles pour la suite."
-    : service.description;
+  const metadataDescription = isAssistantLanding
+    ? "Demaa vous aide à déléguer l'administratif à une personne de confiance, formée et cadrée pour reprendre efficacement ce qui vous ralentit au quotidien."
+    : isOrganisationLanding
+      ? "Faites un audit d'organisation pour identifier les blocages, clarifier les priorités et repérer les besoins les plus utiles pour la suite."
+      : service.description;
 
   return {
     title: metadataTitle,

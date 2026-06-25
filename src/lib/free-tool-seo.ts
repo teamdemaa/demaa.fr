@@ -251,7 +251,7 @@ export const freeToolSeo = {
     ],
     related: [
       { label: "Signer un document électroniquement", href: "/outils/signez-un-document-electroniquement" },
-      { label: "Les obligations d’une TPE", href: "/cours/maitriser-obligations-tpe" },
+      { label: "Les obligations d’une TPE", href: "/cours/obligations-finances-entreprise" },
       { label: "Générateur de tampon", href: "/outils/generation-de-tampon" },
     ],
   },

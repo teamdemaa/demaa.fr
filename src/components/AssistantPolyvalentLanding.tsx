@@ -77,18 +77,18 @@ export default function AssistantPolyvalentLanding({
             <div className="mx-auto max-w-5xl demaa-fade-up">
               <h1 className="mt-4 text-[clamp(2.3rem,8vw,4.5rem)] leading-[0.96] tracking-tight">
                 <span className="demaa-hero-title text-brand-blue/86">
-                  Recrutez un assistant
+                  Déléguez ce qui vous ralentit
                 </span>
                 <br />
                 <span className="font-sans font-light not-italic text-brand-blue/56">
-                  formé
+                  à une personne de confiance
                 </span>
               </h1>
               <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-dema-muted md:text-base">
-                Une assistante formée dans le cadre d&apos;une POEI puis intégrée en
-                alternance, pour reprendre l&apos;administratif utile de votre entreprise.
-                Le profil est sélectionné pour sa motivation, sa maturité et vient souvent
-                d&apos;une reconversion professionnelle.
+                Une assistante formée puis intégrée avec méthode pour reprendre
+                l&apos;administratif utile de votre entreprise. Le profil est sélectionné
+                pour sa motivation, sa maturité et sa fiabilité, afin que vous puissiez
+                déléguer plus sereinement.
               </p>
               <div className="mt-7 flex items-center justify-center">
                 <a
@@ -109,13 +109,14 @@ export default function AssistantPolyvalentLanding({
                 <div className="mt-5 grid gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(20rem,0.95fr)] lg:items-start">
                   <div>
                     <h2 className="max-w-2xl text-[1.8rem] font-semibold tracking-tight text-brand-blue md:text-[2.25rem]">
-                      Un profil formé, motivé et cadré pour reprendre l&apos;administratif utile.
+                      Un profil formé et cadré pour vous aider à déléguer efficacement.
                     </h2>
                     <p className="mt-4 max-w-2xl text-sm leading-relaxed text-dema-muted md:text-base">
                       Le parcours est pensé pour que vous n&apos;ayez pas à tout construire seul.
                       La POEI pose les bases en amont, puis l&apos;alternance permet une reprise
                       progressive dans votre entreprise avec un profil souvent en reconversion,
-                      sélectionné pour sa stabilité et sa motivation.
+                      sélectionné pour sa stabilité, sa motivation et sa capacité à devenir
+                      rapidement une personne de confiance dans votre quotidien.
                     </p>
                     <div className="mt-6 space-y-3">
                       {offerHighlights.map((item) => (
@@ -163,8 +164,8 @@ export default function AssistantPolyvalentLanding({
                 </h2>
                 <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-dema-muted md:text-base">
                   L&apos;objectif n&apos;est pas seulement d&apos;ajouter un renfort. C&apos;est de
-                  vous permettre de déléguer à la bonne personne, déjà opérationnelle sur
-                  les routines administratives d&apos;une petite entreprise.
+                  vous permettre de déléguer à la bonne personne, déjà préparée pour
+                  reprendre les routines administratives d&apos;une petite entreprise.
                 </p>
               </div>
 
@@ -249,15 +250,15 @@ export default function AssistantPolyvalentLanding({
                   Prochaine étape
                 </p>
                 <h2 className="mx-auto mt-4 max-w-3xl text-3xl font-semibold tracking-tight text-brand-blue md:text-4xl">
-                  Passez à la délégation avec un profil déjà opérationnel.
+                  Passez à une délégation plus sereine et mieux cadrée.
                 </h2>
                 <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-dema-muted md:text-lg">
                   On regarde ensemble si ce format correspond à vos besoins, à vos tâches
-                  et au niveau d&apos;autonomie que vous cherchez.
+                  et au niveau de confiance et d&apos;autonomie que vous cherchez.
                 </p>
                 <div className="mx-auto mt-4 max-w-sm">
                   <ServicePurchaseCta
-                    serviceName="Recrutez un assistant formé"
+                    serviceName="Déléguez à un assistant de confiance"
                     serviceSlug="assistant-polyvalent"
                     defaultLabel="Sélectionner"
                     selectedLabel="Sélectionné"

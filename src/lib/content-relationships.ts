@@ -1,5 +1,5 @@
 export const RELATED_SYSTEM_SLUGS_BY_CONTENT_SLUG: Record<string, string[]> = {
-  "maitriser-obligations-tpe": [
+  "obligations-finances-entreprise": [
     "cabinet-comptable",
     "daf-externalise",
     "assistant-administratif-externalise",

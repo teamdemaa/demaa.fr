@@ -301,14 +301,14 @@ export const demaaServices = [
   },
   {
     slug: "assistant-polyvalent",
-    name: "Recrutez un assistant formé",
+    name: "Déléguez à un assistant de confiance",
     category: "Support opérationnel",
     shortDescription:
-      "Une assistante formée via POEI puis intégrée en alternance pour reprendre l'administratif utile avec un profil motivé, mature et sélectionné.",
+      "Une assistante formée, sélectionnée et intégrée avec méthode pour reprendre l'administratif utile et vous aider à déléguer avec sérénité.",
     description:
-      "Une assistante formée dans le cadre d'une POEI puis intégrée en alternance pour reprendre l'administratif utile de votre entreprise et vous soulager rapidement.",
+      "Demaa vous aide à déléguer efficacement à une assistante formée, sélectionnée et intégrée avec méthode pour reprendre l'administratif utile de votre entreprise.",
     bestFor:
-      "Les dirigeants qui veulent déléguer à un profil sélectionné, souvent en reconversion, sans porter seuls toute la montée en compétence.",
+      "Les dirigeants qui veulent déléguer à une personne de confiance, sans porter seuls tout le recrutement, le cadrage et la montée en compétence.",
     price: "500 €",
     tags: ["Assistant", "Recrutement", "Délégation"],
     icon: "UserRoundCheck",

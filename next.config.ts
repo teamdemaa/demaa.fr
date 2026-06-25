@@ -67,18 +67,13 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: '/ressources',
-        destination: '/modeles-de-documents',
-        permanent: true,
-      },
-      {
         source: '/ressources/obligations-tpe',
-        destination: '/cours/maitriser-obligations-tpe',
+        destination: '/cours/obligations-finances-entreprise',
         permanent: true,
       },
       {
         source: '/ressources/obligations-tpe-template',
-        destination: '/cours/maitriser-obligations-tpe',
+        destination: '/cours/obligations-finances-entreprise',
         permanent: true,
       },
       {
@@ -104,16 +99,6 @@ const nextConfig: NextConfig = {
       {
         source: '/documents-structuration/:slug',
         destination: '/plans-organisation/:slug',
-        permanent: true,
-      },
-      {
-        source: '/services/structuration-automatisation',
-        destination: '/annuaire-services/organisation-automatisation',
-        permanent: true,
-      },
-      {
-        source: '/services/:slug',
-        destination: '/annuaire-services/:slug',
         permanent: true,
       },
     ];

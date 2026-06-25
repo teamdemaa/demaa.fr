@@ -8,16 +8,16 @@ import { ORGANISATION_AUDIT_MODAL_HREF } from "@/lib/organisation-audit";
 import { serviceCategories } from "@/lib/service-catalog";
 
 export const metadata: Metadata = {
-  title: "Services Demaa pour déléguer avec sérénité",
+  title: "Déléguez ce qui vous ralentit | Services Demaa",
   description:
-    "Découvrez les services Demaa pour déléguer l'administratif, structurer l'organisation et avancer avec plus de sérénité.",
+    "Découvrez les services Demaa pour déléguer efficacement l'administratif et l'opérationnel à des personnes de confiance, avec un cadre clair et plus de sérénité.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Services Demaa pour déléguer avec sérénité",
+    title: "Déléguez ce qui vous ralentit | Services Demaa",
     description:
-      "Découvrez les services Demaa pour déléguer l'administratif, structurer l'organisation et avancer avec plus de sérénité.",
+      "Découvrez les services Demaa pour déléguer efficacement l'administratif et l'opérationnel à des personnes de confiance, avec un cadre clair et plus de sérénité.",
     url: "/",
     siteName: "Demaa",
     locale: "fr_FR",
@@ -25,9 +25,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Services Demaa pour déléguer avec sérénité",
+    title: "Déléguez ce qui vous ralentit | Services Demaa",
     description:
-      "Découvrez les services Demaa pour déléguer l'administratif, structurer l'organisation et avancer avec plus de sérénité.",
+      "Découvrez les services Demaa pour déléguer efficacement l'administratif et l'opérationnel à des personnes de confiance, avec un cadre clair et plus de sérénité.",
   },
 };
 
@@ -72,7 +72,8 @@ export default async function HomePage({ searchParams }: HomePageProps) {
           invertHeroTitleStyles
           heroDescriptionLines={{
             primary: "Votre entreprise ne devrait pas reposer que sur vous.",
-            secondary: "",
+            secondary:
+              "Demaa vous aide à déléguer efficacement ce qui vous ralentit, à des personnes de confiance, avec un cadre plus clair et plus de sérénité.",
           }}
           heroActions={
             <Link

@@ -53,23 +53,23 @@ const gambetta = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Demaa - Déléguer, structurer, s'équiper",
+  title: "Demaa - Déléguer avec sérénité",
   description:
-    "Demaa aide les dirigeants de TPE à déléguer les tâches opérationnelles, structurer leur activité et s'équiper avec les bons outils.",
+    "Demaa aide les dirigeants de TPE à déléguer efficacement l'administratif et les opérations à des personnes de confiance, avec plus de sérénité.",
   metadataBase: new URL('https://demaa.fr'),
   openGraph: {
-    title: "Demaa - Déléguer, structurer, s'équiper",
+    title: "Demaa - Déléguer avec sérénité",
     description:
-      "Demaa aide les dirigeants de TPE à déléguer les tâches opérationnelles, structurer leur activité et s'équiper avec les bons outils.",
+      "Demaa aide les dirigeants de TPE à déléguer efficacement l'administratif et les opérations à des personnes de confiance, avec plus de sérénité.",
     siteName: "Demaa",
     locale: "fr_FR",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Demaa - Déléguer, structurer, s'équiper",
+    title: "Demaa - Déléguer avec sérénité",
     description:
-      "Demaa aide les dirigeants de TPE à déléguer les tâches opérationnelles, structurer leur activité et s'équiper avec les bons outils.",
+      "Demaa aide les dirigeants de TPE à déléguer efficacement l'administratif et les opérations à des personnes de confiance, avec plus de sérénité.",
   },
   applicationName: "Demaa",
   appleWebApp: {

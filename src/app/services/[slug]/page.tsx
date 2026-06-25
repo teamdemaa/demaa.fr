@@ -10,5 +10,10 @@ export default async function LegacyServiceDetailPage({
   params,
 }: ServiceDetailPageProps) {
   const { slug } = await params;
-  permanentRedirect(`/annuaire-services/${slug}`);
+  const normalizedSlug =
+    slug === "structuration-automatisation"
+      ? "organisation"
+      : slug;
+
+  permanentRedirect(`/annuaire-services/${normalizedSlug}`);
 }
