@@ -14,6 +14,7 @@ import { sectorPageDefinitions } from "@/lib/sector-pages";
 import { sectorTaxonomy } from "@/lib/sector-taxonomy";
 import { demaaServices } from "@/lib/service-catalog";
 import { demaaSuppliers } from "@/lib/supplier-catalog";
+import { getDemaaRecruitmentItems } from "@/lib/recruitment-catalog";
 import { getDemaaTrainings } from "@/lib/training-catalog";
 import { getToolDirectorySlug, hasStandaloneToolPage } from "@/lib/tool-directory";
 import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
@@ -58,6 +59,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/annuaire-reseaux-pro`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-experts-comptables`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/annuaire-formations`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
+    { url: `${base}/annuaire-recrutement`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-newsletters`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/modeles-de-documents`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/organisation`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
@@ -171,6 +173,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
+  const recruitmentEntries: MetadataRoute.Sitemap = getDemaaRecruitmentItems().map((item) => ({
+    url: `${base}/annuaire-recrutement/${item.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
   const accountingFirmEntries: MetadataRoute.Sitemap = accountingFirms.map((firm) => ({
     url: `${base}/annuaire-experts-comptables/cabinets/${firm.slug}`,
     lastModified: now,
@@ -220,6 +229,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...aidEntries,
     ...proNetworkEntries,
     ...trainingEntries,
+    ...recruitmentEntries,
     ...accountingFirmEntries,
     ...accountingDirectorySeoEntries,
     ...sectorEntries,

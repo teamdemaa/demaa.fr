@@ -223,7 +223,7 @@ export default function AssistantsCatalogClient() {
                     Diagnostic
                   </p>
                   <h3 className="mt-2 text-2xl font-semibold leading-tight tracking-tight text-brand-blue">
-                    Audit organisation
+                    Diagnostic d’organisation offert
                   </h3>
                 </div>
                 <div className="mt-6">
@@ -299,7 +299,7 @@ export default function AssistantsCatalogClient() {
                 scroll={false}
                 className="demaa-primary-button mx-auto mt-8 px-5 py-3"
               >
-                Audit organisation gratuit
+                Diagnostic d’organisation offert
               </Link>
             </div>
           </div>

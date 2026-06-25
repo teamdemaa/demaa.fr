@@ -63,32 +63,25 @@ export default async function HomePage({ searchParams }: HomePageProps) {
           categories={serviceCategories}
           initialCategory={getParamValue(params.category)}
           initialSearch={getParamValue(params.q) ?? ""}
+          hideSearchControls
           backLink={backLink}
           heroTitleLines={{
-            primary: "Votre entreprise",
-            secondary: "ne devrait pas reposer que sur vous",
+            primary: "Déléguez",
+            secondary: "ce qui vous ralentit",
           }}
           invertHeroTitleStyles
           heroDescriptionLines={{
-            primary: "Déléguez ce qui vous ralentit.",
+            primary: "Votre entreprise ne devrait pas reposer que sur vous.",
             secondary: "",
           }}
           heroActions={
-            <>
-              <Link
-                href={ORGANISATION_AUDIT_MODAL_HREF}
-                scroll={false}
-                className="demaa-primary-button px-5 py-3"
-              >
-                Audit organisation gratuit
-              </Link>
-              <Link
-                href="/systemes"
-                className="inline-flex items-center justify-center rounded-full border border-dema-forest/25 bg-dema-paper px-5 py-3 text-sm font-semibold text-brand-blue transition hover:border-dema-forest hover:text-dema-forest"
-              >
-                Voir la boîte à outils du dirigeant
-              </Link>
-            </>
+            <Link
+              href={ORGANISATION_AUDIT_MODAL_HREF}
+              scroll={false}
+              className="demaa-primary-button px-5 py-3"
+            >
+              Diagnostic d’organisation offert
+            </Link>
           }
         />
       </main>

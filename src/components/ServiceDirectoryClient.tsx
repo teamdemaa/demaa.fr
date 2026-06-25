@@ -20,6 +20,7 @@ type ServiceDirectoryClientProps = {
   categories: readonly ServiceCategory[];
   initialCategory?: string;
   initialSearch?: string;
+  hideSearchControls?: boolean;
   backLink?: {
     href: string;
     label: string;
@@ -45,6 +46,7 @@ export default function ServiceDirectoryClient({
   categories,
   initialCategory,
   initialSearch = "",
+  hideSearchControls = false,
   backLink,
   title = "Annuaire Services",
   description = "Les services Demaa pour lancer, structurer, déléguer et développer une activité.",
@@ -200,19 +202,21 @@ export default function ServiceDirectoryClient({
             </>
           )}
 
-          <div className={heroTitleLines ? "" : "mt-5 space-y-4"}>
-            <SearchFilterControls
-              value={searchQuery}
-              placeholder="Rechercher un service, un besoin, une activité..."
-              activeFilter={activeCategory}
-              defaultFilter="Tous"
-              isFilterOpen={isFilterPanelOpen}
-              filters={serviceFilters}
-              onChange={setSearchQuery}
-              onFilterClick={() => setIsFilterPanelOpen((current) => !current)}
-              onFilterSelect={selectCategory}
-            />
-          </div>
+          {!hideSearchControls ? (
+            <div className={heroTitleLines ? "" : "mt-5 space-y-4"}>
+              <SearchFilterControls
+                value={searchQuery}
+                placeholder="Rechercher un service, un besoin, une activité..."
+                activeFilter={activeCategory}
+                defaultFilter="Tous"
+                isFilterOpen={isFilterPanelOpen}
+                filters={serviceFilters}
+                onChange={setSearchQuery}
+                onFilterClick={() => setIsFilterPanelOpen((current) => !current)}
+                onFilterSelect={selectCategory}
+              />
+            </div>
+          ) : null}
         </div>
       </section>
 

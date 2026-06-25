@@ -20,6 +20,7 @@ import FinanceDetailDialog from "@/components/FinanceDetailDialog";
 import HorizontalScrollHint from "@/components/HorizontalScrollHint";
 import PartnerOffersModal from "@/components/PartnerOffersModal";
 import ProNetworkDetailDialog from "@/components/ProNetworkDetailDialog";
+import RecruitmentDetailDialog from "@/components/RecruitmentDetailDialog";
 import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
 import SupplierDetailDialog from "@/components/SupplierDetailDialog";
 import TrainingDetailDialog from "@/components/TrainingDetailDialog";
@@ -42,6 +43,8 @@ import { getRelatedNewslettersForSystemSlug, type NewsletterEntry } from "@/lib/
 import { getRecommendedFinanceForSystem } from "@/lib/finance-recommendations";
 import type { DemaaProNetwork } from "@/lib/pro-network-catalog";
 import { getRecommendedProNetworksForSystem } from "@/lib/pro-network-recommendations";
+import { getGroupedRecommendedRecruitmentItemsForSystem } from "@/lib/recruitment-recommendations";
+import type { DemaaRecruitmentItem } from "@/lib/recruitment-catalog";
 import { getRelatedCoursesForSystemSlug } from "@/lib/related-courses";
 import { getGroupedRecommendedTrainingsForSystem } from "@/lib/training-recommendations";
 import type { DemaaTraining } from "@/lib/training-catalog";
@@ -308,6 +311,7 @@ export default function SystemDetailContent({
   const [selectedSupplierDetail, setSelectedSupplierDetail] = useState<DemaaSupplier | null>(null);
   const [selectedFinanceDetail, setSelectedFinanceDetail] = useState<DemaaFinanceItem | null>(null);
   const [selectedProNetworkDetail, setSelectedProNetworkDetail] = useState<DemaaProNetwork | null>(null);
+  const [selectedRecruitmentDetail, setSelectedRecruitmentDetail] = useState<DemaaRecruitmentItem | null>(null);
   const [selectedTrainingDetail, setSelectedTrainingDetail] = useState<DemaaTraining | null>(null);
   const [selectedCourse, setSelectedCourse] = useState<CourseEntry | null>(null);
   const [isPartnerOffersModalOpen, setIsPartnerOffersModalOpen] = useState(false);
@@ -350,6 +354,12 @@ export default function SystemDetailContent({
       ? getGroupedRecommendedTrainingsForSystem(system.slug, detail.sectorLabel)
       : { metier: [], transverse: [] }),
     [activeTab, detail.sectorLabel, system.slug]
+  );
+  const recommendedRecruitmentItems = useMemo(
+    () => (activeTab === "recrutement"
+      ? getGroupedRecommendedRecruitmentItemsForSystem(detail.sectorLabel)
+      : { alternance: [], recrutement: [] }),
+    [activeTab, detail.sectorLabel]
   );
   const supplierSections = useMemo(
     () => (activeTab === "fournisseurs" ? groupSuppliersBySection(recommendedSuppliers) : []),
@@ -832,6 +842,39 @@ export default function SystemDetailContent({
     );
   }
 
+  function renderRecruitmentCard(item: DemaaRecruitmentItem) {
+    return (
+      <Link
+        key={item.slug}
+        href={`/annuaire-recrutement/${item.slug}`}
+        className={SYSTEM_CARD_CLASS}
+        onClick={(event) => {
+          handleRecruitmentDetailClick(event, item, setSelectedRecruitmentDetail);
+        }}
+      >
+        <div className="flex items-start justify-between gap-4">
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper">
+            <ServiceIcon icon={item.icon} className="h-4 w-4" aria-hidden="true" />
+          </span>
+        </div>
+        <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
+          {item.family}
+        </p>
+        <h3 className={SYSTEM_CARD_TITLE_CLASS}>
+          {item.name}
+        </h3>
+        <p className={SYSTEM_CARD_DESCRIPTION_CLASS}>
+          {item.shortDescription}
+        </p>
+        <span className="mt-auto inline-flex items-center gap-2 pt-4 text-sm font-medium text-dema-forest">
+          {item.provider}
+          {item.format ? ` · ${item.format}` : ""}
+          <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+        </span>
+      </Link>
+    );
+  }
+
   return (
     <>
       <div className="text-left">
@@ -874,6 +917,7 @@ export default function SystemDetailContent({
                 : []),
               ["financement", "Financement"],
               ["reseaux-pro", "Réseau pro"],
+              ["recrutement", "Recrutement"],
               ["ressources", "Ressources"],
               ["formation", "Formation"],
             ] as Array<[SystemDetailTab, string]>
@@ -1052,6 +1096,35 @@ export default function SystemDetailContent({
               })
             ) : null}
           </div>
+        ) : activeTab === "recrutement" ? (
+          <div className="space-y-5">
+            {recommendedRecruitmentItems.alternance.length || recommendedRecruitmentItems.recrutement.length ? (
+              <>
+                {recommendedRecruitmentItems.alternance.length ? (
+                  renderCardSection({
+                    items: recommendedRecruitmentItems.alternance,
+                    title: "Alternance",
+                    tone: "forest",
+                    getKey: (item) => item.slug,
+                    renderCard: renderRecruitmentCard,
+                  })
+                ) : null}
+                {recommendedRecruitmentItems.recrutement.length ? (
+                  renderCardSection({
+                    items: recommendedRecruitmentItems.recrutement,
+                    title: "Recrutement",
+                    tone: recommendedRecruitmentItems.alternance.length ? "muted" : "forest",
+                    getKey: (item) => item.slug,
+                    renderCard: renderRecruitmentCard,
+                  })
+                ) : null}
+                {renderBrowseAllLink({
+                  browseHref: `/annuaire-recrutement?retourSysteme=${encodeURIComponent(system.slug)}`,
+                  browseLabel: "Voir l'annuaire recrutement",
+                })}
+              </>
+            ) : null}
+          </div>
         ) : activeTab === "formation" ? (
           <div className="space-y-5">
             {recommendedTrainings.metier.length || recommendedTrainings.transverse.length ? (
@@ -1197,6 +1270,13 @@ export default function SystemDetailContent({
         />
       ) : null}
 
+      {selectedRecruitmentDetail ? (
+        <RecruitmentDetailDialog
+          item={selectedRecruitmentDetail}
+          onClose={() => setSelectedRecruitmentDetail(null)}
+        />
+      ) : null}
+
       {selectedTrainingDetail ? (
         <TrainingDetailDialog
           training={selectedTrainingDetail}
@@ -1234,6 +1314,26 @@ function handleTrainingDetailClick(
 
   event.preventDefault();
   onOpenDetails(training);
+}
+
+function handleRecruitmentDetailClick(
+  event: MouseEvent<HTMLAnchorElement>,
+  item: DemaaRecruitmentItem,
+  onOpenDetails: (item: DemaaRecruitmentItem) => void,
+) {
+  if (
+    event.defaultPrevented ||
+    event.button !== 0 ||
+    event.metaKey ||
+    event.ctrlKey ||
+    event.shiftKey ||
+    event.altKey
+  ) {
+    return;
+  }
+
+  event.preventDefault();
+  onOpenDetails(item);
 }
 
   function renderDocumentModelCard(model: DocumentModel) {

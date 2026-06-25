@@ -6,6 +6,7 @@ import { enterpriseCatalog, enterpriseCatalogBySlug, enterpriseToSystem } from "
 import { RELATED_SYSTEM_SLUGS_BY_CONTENT_SLUG } from "@/lib/content-relationships";
 import { getRecommendedFinanceForSystem } from "@/lib/finance-recommendations";
 import { getRecommendedProNetworksForSystem } from "@/lib/pro-network-recommendations";
+import { getRecommendedRecruitmentItemsForSystem } from "@/lib/recruitment-recommendations";
 import { getRecommendedServicesForSystem } from "@/lib/service-recommendations";
 import { getRecommendedSuppliersForSystem } from "@/lib/supplier-recommendations";
 import { getRecommendedTrainingsForSystem } from "@/lib/training-recommendations";
@@ -118,6 +119,28 @@ export function getRelatedSystemsForTrainingSlug(trainingSlug: string, limit = 6
     .map((enterprise) => {
       const recommendations = getRecommendedTrainingsForSystem(enterprise.slug, enterprise.sectorLabel);
       const index = recommendations.findIndex((training) => training.slug === trainingSlug);
+
+      if (index === -1) {
+        return null;
+      }
+
+      return {
+        enterprise,
+        index,
+      };
+    })
+    .filter((match): match is { enterprise: (typeof enterpriseCatalog)[number]; index: number } => Boolean(match))
+    .sort((a, b) => a.index - b.index || a.enterprise.name.localeCompare(b.enterprise.name, "fr"))
+    .slice(0, limit);
+
+  return matches.map(({ enterprise }) => enterpriseToSystem(enterprise));
+}
+
+export function getRelatedSystemsForRecruitmentSlug(recruitmentSlug: string, limit = 6): System[] {
+  const matches = enterpriseCatalog
+    .map((enterprise) => {
+      const recommendations = getRecommendedRecruitmentItemsForSystem(enterprise.sectorLabel);
+      const index = recommendations.findIndex((item) => item.slug === recruitmentSlug);
 
       if (index === -1) {
         return null;

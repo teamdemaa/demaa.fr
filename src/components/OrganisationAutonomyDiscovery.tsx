@@ -174,7 +174,7 @@ export default function OrganisationAutonomyDiscovery() {
                       scroll={false}
                       className="demaa-primary-button"
                     >
-                      Audit organisation gratuit
+                      Diagnostic d’organisation offert
                     </Link>
                   </div>
                 ) : null}
