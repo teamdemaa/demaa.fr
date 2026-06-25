@@ -5,6 +5,7 @@ import {
   getAccountingDirectoryFacets,
   getAccountingFirms,
 } from "@/lib/accounting-directory";
+import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 
 export const metadata: Metadata = {
   title: "Annuaire experts-comptables - Demaa",
@@ -30,11 +31,30 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function AccountingDirectoryPage() {
+type AccountingDirectoryPageProps = {
+  searchParams: Promise<{
+    retourSysteme?: string | string[];
+  }>;
+};
+
+export default async function AccountingDirectoryPage({
+  searchParams,
+}: AccountingDirectoryPageProps) {
+  const params = await searchParams;
+  const retourSysteme = getParamValue(params.retourSysteme);
   const [firms, facets] = await Promise.all([
     getAccountingFirms(),
     getAccountingDirectoryFacets(),
   ]);
+  const returnEnterprise = retourSysteme
+    ? await getEnterpriseBySlug(retourSysteme)
+    : null;
+  const backLink = returnEnterprise
+    ? {
+        href: `/systemes/${encodeURIComponent(returnEnterprise.slug)}?tab=expert-comptable`,
+        label: `Retour à ${returnEnterprise.name}`,
+      }
+    : undefined;
 
   return (
     <>
@@ -45,8 +65,13 @@ export default async function AccountingDirectoryPage() {
           facets={facets}
           title="Annuaire experts-comptables"
           description="Un annuaire pensé pour aider les dirigeants à trouver un cabinet selon leur contexte, leur activité et leur besoin réel, sans se perdre dans des listes trop génériques."
+          backLink={backLink}
         />
       </main>
     </>
   );
+}
+
+function getParamValue(value?: string | string[]) {
+  return Array.isArray(value) ? value[0] : value;
 }

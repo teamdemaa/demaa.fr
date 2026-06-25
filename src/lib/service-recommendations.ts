@@ -8,12 +8,9 @@ type ServiceRecommendationRule = {
   order: readonly DemaaServiceSlug[];
 };
 
-const UNIVERSAL_SERVICE_SLUGS = [
-  "assistant-polyvalent",
-] satisfies DemaaServiceSlug[];
+const UNIVERSAL_SERVICE_SLUGS: readonly DemaaServiceSlug[] = [];
 
 const DEFAULT_SERVICE_ORDER = [
-  "assistant-polyvalent",
   "site-web",
   "marketing-vente",
   "previsionnel-financier",
@@ -21,6 +18,7 @@ const DEFAULT_SERVICE_ORDER = [
 
 const MAX_SERVICES_PER_SYSTEM = 4;
 const NON_RECOMMENDED_SERVICE_SLUGS = new Set<DemaaServiceSlug>([
+  "assistant-polyvalent",
   "organisation-automatisation",
 ]);
 

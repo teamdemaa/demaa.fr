@@ -1,9 +1,11 @@
 export const SYSTEM_DETAIL_TABS = [
   "outils",
   "fournisseurs",
+  "expert-comptable",
   "financement",
   "reseaux-pro",
   "ressources",
+  "formation",
 ] as const;
 
 export type SystemDetailTab = (typeof SYSTEM_DETAIL_TABS)[number];

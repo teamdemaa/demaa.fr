@@ -1,7 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import {
+  ArrowLeft,
   Map,
   PanelRightClose,
   PanelRightOpen,
@@ -27,6 +29,10 @@ type AccountingDirectoryClientProps = {
   title: string;
   description?: string;
   initialFilters?: AccountingDirectoryFilters;
+  backLink?: {
+    href: string;
+    label: string;
+  };
 };
 
 type ActiveFilterChip = {
@@ -44,6 +50,7 @@ export default function AccountingDirectoryClient({
   title,
   description,
   initialFilters = {},
+  backLink,
 }: AccountingDirectoryClientProps) {
   const [filters, setFilters] = useState<AccountingDirectoryFilters>(initialFilters);
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
@@ -192,6 +199,17 @@ export default function AccountingDirectoryClient({
       <div className="min-h-screen bg-dema-cream text-brand-blue">
         <section className="w-full border-b border-dema-line/65 bg-dema-cream px-4 pb-5 pt-8 md:px-8 md:pt-10">
           <div className="mx-auto max-w-5xl text-center">
+            {backLink ? (
+              <div className="mb-4 flex justify-start">
+                <Link
+                  href={backLink.href}
+                  className="inline-flex items-center gap-2 rounded-full border border-dema-line bg-dema-paper px-3.5 py-2 text-xs font-medium text-brand-blue/70 transition hover:border-dema-forest/25 hover:text-dema-forest"
+                >
+                  <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
+                  {backLink.label}
+                </Link>
+              </div>
+            ) : null}
             <h1 className="demaa-section-title text-4xl tracking-tight text-brand-blue md:text-5xl">
               {title}
             </h1>

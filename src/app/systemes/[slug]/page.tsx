@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import SystemDetailContent from "@/components/SystemDetailContent";
 import { isSystemDetailTab } from "@/lib/system-detail-tabs";
+import { getRecommendedAccountingFirmsForSystem } from "@/lib/accounting-recommendations";
 import {
   buildSystemPageIntro,
   buildSystemPageJsonLd,
@@ -53,6 +54,10 @@ export default async function SystemDetailPage({
 
   const initialTab = getParamValue(resolvedSearchParams.tab);
   const jsonLd = buildSystemPageJsonLd(data);
+  const recommendedAccountingFirms = await getRecommendedAccountingFirmsForSystem(
+    data.system.slug,
+    data.detail.sectorLabel,
+  );
 
   return (
     <>
@@ -75,6 +80,7 @@ export default async function SystemDetailPage({
             <SystemDetailContent
               system={data.system}
               detail={data.detail}
+              recommendedAccountingFirms={recommendedAccountingFirms}
               intro={buildSystemPageIntro(data)}
               initialActiveTab={isSystemDetailTab(initialTab) ? initialTab : undefined}
               headingAs="h1"

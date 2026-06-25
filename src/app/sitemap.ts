@@ -14,6 +14,7 @@ import { sectorPageDefinitions } from "@/lib/sector-pages";
 import { sectorTaxonomy } from "@/lib/sector-taxonomy";
 import { demaaServices } from "@/lib/service-catalog";
 import { demaaSuppliers } from "@/lib/supplier-catalog";
+import { demaaTrainings } from "@/lib/training-catalog";
 import { getToolDirectorySlug, hasStandaloneToolPage } from "@/lib/tool-directory";
 import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
 
@@ -55,8 +56,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/annuaire-financement`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/aides-et-subventions`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-reseaux-pro`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
-    { url: `${base}/annuaire-partenaires-cles`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-experts-comptables`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${base}/annuaire-formations`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-newsletters`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/modeles-de-documents`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/organisation`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
@@ -163,6 +164,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
+  const trainingEntries: MetadataRoute.Sitemap = demaaTrainings.map((training) => ({
+    url: `${base}/annuaire-formations/${training.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
   const accountingFirmEntries: MetadataRoute.Sitemap = accountingFirms.map((firm) => ({
     url: `${base}/annuaire-experts-comptables/cabinets/${firm.slug}`,
     lastModified: now,
@@ -211,6 +219,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...aidFamilyEntries,
     ...aidEntries,
     ...proNetworkEntries,
+    ...trainingEntries,
     ...accountingFirmEntries,
     ...accountingDirectorySeoEntries,
     ...sectorEntries,

@@ -68,15 +68,24 @@ type AccountingDirectoryApiFirm = Partial<AccountingFirm> & {
 
 const DIRECTORY_FIRMS_ENDPOINT =
   process.env.DEMAA_ACCOUNTING_DIRECTORY_FIRMS_ENDPOINT?.trim() || "";
+const DIRECTORY_FIRMS_FETCH_TIMEOUT_MS = 2500;
 
 export const getAccountingFirms = cache(async () => {
   if (!DIRECTORY_FIRMS_ENDPOINT) {
     return localFallbackFirms;
   }
 
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => {
+    controller.abort();
+  }, DIRECTORY_FIRMS_FETCH_TIMEOUT_MS);
+
   const response = await fetch(DIRECTORY_FIRMS_ENDPOINT, {
     next: { revalidate: 300 },
+    signal: controller.signal,
   }).catch(() => null);
+
+  clearTimeout(timeoutId);
 
   if (!response?.ok) {
     return localFallbackFirms;

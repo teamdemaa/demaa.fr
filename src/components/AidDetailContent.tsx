@@ -63,31 +63,16 @@ export default function AidDetailContent({ item, returnSystemSlug }: AidDetailCo
           <p className="mt-4 text-sm leading-relaxed text-dema-muted md:text-base">
             {item.shortDescription}
           </p>
-          <h2 className="mt-6 text-xl font-semibold text-brand-blue">Utile pour</h2>
-          <div className="mt-4 flex flex-wrap gap-2">
-            {item.usefulFor.map((entry) => (
-              <span
-                key={entry}
-                className="rounded-full bg-dema-sage/75 px-3 py-1.5 text-xs font-medium text-brand-blue/75"
-              >
-                {entry}
-              </span>
-            ))}
-          </div>
+          <p className="mt-5 text-sm leading-relaxed text-dema-muted md:text-base">
+            {item.bestFor}
+          </p>
         </div>
 
         <div className="rounded-[1.25rem] border border-dema-line bg-dema-paper p-6">
-          <h2 className="text-xl font-semibold text-brand-blue">Mots-clés</h2>
-          <div className="mt-4 flex flex-wrap gap-2">
-            {item.tags.map((tag) => (
-              <span
-                key={tag}
-                className="rounded-full border border-dema-line bg-dema-paper px-3 py-1.5 text-xs font-medium text-dema-muted"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
+          <h2 className="text-xl font-semibold text-brand-blue">Accès</h2>
+          <p className="mt-4 text-sm leading-relaxed text-dema-muted">
+            Consultez la source officielle pour vérifier les conditions, les montants et les modalités de demande.
+          </p>
           <div className="mt-6 flex flex-wrap items-center gap-3">
             <a
               href={item.sourceUrl}

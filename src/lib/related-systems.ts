@@ -8,6 +8,7 @@ import { getRecommendedFinanceForSystem } from "@/lib/finance-recommendations";
 import { getRecommendedProNetworksForSystem } from "@/lib/pro-network-recommendations";
 import { getRecommendedServicesForSystem } from "@/lib/service-recommendations";
 import { getRecommendedSuppliersForSystem } from "@/lib/supplier-recommendations";
+import { getRecommendedTrainingsForSystem } from "@/lib/training-recommendations";
 import type { System } from "@/lib/types";
 
 function uniqueSystemsFromSlugs(slugs: string[], limit = 6): System[] {
@@ -95,6 +96,28 @@ export function getRelatedSystemsForFinanceSlug(financeSlug: string, limit = 6):
     .map((enterprise) => {
       const recommendations = getRecommendedFinanceForSystem(enterprise.slug);
       const index = recommendations.findIndex((item) => item.slug === financeSlug);
+
+      if (index === -1) {
+        return null;
+      }
+
+      return {
+        enterprise,
+        index,
+      };
+    })
+    .filter((match): match is { enterprise: (typeof enterpriseCatalog)[number]; index: number } => Boolean(match))
+    .sort((a, b) => a.index - b.index || a.enterprise.name.localeCompare(b.enterprise.name, "fr"))
+    .slice(0, limit);
+
+  return matches.map(({ enterprise }) => enterpriseToSystem(enterprise));
+}
+
+export function getRelatedSystemsForTrainingSlug(trainingSlug: string, limit = 6): System[] {
+  const matches = enterpriseCatalog
+    .map((enterprise) => {
+      const recommendations = getRecommendedTrainingsForSystem(enterprise.slug, enterprise.sectorLabel);
+      const index = recommendations.findIndex((training) => training.slug === trainingSlug);
 
       if (index === -1) {
         return null;

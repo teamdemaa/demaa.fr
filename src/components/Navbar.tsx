@@ -43,11 +43,10 @@ export default function Navbar({
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex min-h-10 items-center gap-2 rounded-full border border-dema-forest/45 bg-dema-paper px-3 py-2 text-sm font-medium text-brand-blue/78 transition hover:border-dema-forest hover:text-dema-forest sm:px-4"
-                  aria-label="Des questions ? Contactez-nous sur WhatsApp au +33 7 82 84 24 35"
+                  aria-label="WhatsApp au +33 7 82 84 24 35"
                 >
                   <MessageCircle className="h-4 w-4 shrink-0" aria-hidden="true" />
-                  <span className="hidden lg:inline">Des questions ? Contactez-nous sur WhatsApp</span>
-                  <span className="lg:hidden">WhatsApp</span>
+                  <span>WhatsApp</span>
                 </a>
               ) : null}
               <NavbarCartIndicator />

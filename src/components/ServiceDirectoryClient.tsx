@@ -5,7 +5,6 @@ import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { ArrowLeft, Check } from "lucide-react";
 import SearchFilterControls from "@/components/SearchFilterControls";
 import { ServiceIcon } from "@/components/ServiceIcon";
-import { getServiceCardBadge } from "@/lib/card-badges";
 import { matchesSearchQuery } from "@/lib/search";
 import { getPurchasableServiceConfig } from "@/lib/service-purchase";
 import {
@@ -281,7 +280,6 @@ function ServiceCard({
   isSelected: boolean;
 }) {
   const purchaseConfig = getPurchasableServiceConfig(service.slug);
-  const badge = getServiceCardBadge(service);
 
   return (
     <article className="demaa-card flex min-h-[18rem] flex-col rounded-[1.25rem] p-6 text-left">
@@ -289,12 +287,9 @@ function ServiceCard({
         href={`/annuaire-services/${service.slug}`}
         className="flex flex-1 flex-col text-left"
       >
-        <div className="flex items-start justify-between gap-4">
+        <div className="flex items-start gap-4">
           <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition hover:bg-dema-forest hover:text-dema-paper">
             <ServiceIcon icon={service.icon} className="h-4.5 w-4.5" aria-hidden="true" />
-          </span>
-          <span className="rounded-full bg-dema-sage/70 px-3 py-1 text-[10px] font-medium uppercase tracking-[0.12em] text-brand-blue/72">
-            {service.category}
           </span>
         </div>
         <h2 className="mt-5 text-[1.35rem] font-semibold leading-tight tracking-tight text-brand-blue">
@@ -303,7 +298,7 @@ function ServiceCard({
         <p className="mt-3 line-clamp-3 text-[0.98rem] leading-relaxed text-dema-muted">
           {service.shortDescription}
         </p>
-        <div className="mt-auto flex items-end justify-between gap-3 pt-5">
+        <div className="mt-auto flex items-end gap-3 pt-5">
           {purchaseConfig ? (
             <p className="text-[1.15rem] font-medium tracking-tight text-brand-blue">
               {service.price}
@@ -311,11 +306,6 @@ function ServiceCard({
           ) : (
             <p className="text-sm font-medium text-dema-muted">Sur devis</p>
           )}
-          {badge ? (
-            <span className="inline-flex rounded-full bg-dema-sage/75 px-3 py-1 text-[10px] font-medium text-brand-blue/70">
-              {badge}
-            </span>
-          ) : null}
         </div>
       </Link>
 

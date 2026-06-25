@@ -77,36 +77,34 @@ export default function SupplierDetailContent({
         </div>
       </section>
 
-      <section className="grid gap-5 lg:grid-cols-[1fr_0.9fr]">
+      <section className={`grid gap-5 ${compact ? "" : "lg:grid-cols-[1fr_0.9fr]"}`}>
         <div className="rounded-[1.25rem] border border-dema-line bg-dema-paper p-6">
           <h2 className="text-xl font-semibold text-brand-blue">À quoi ça sert ?</h2>
           <p className="mt-4 text-sm leading-relaxed text-dema-muted md:text-base">
             {supplier.shortDescription}
           </p>
-          <h2 className="mt-6 text-xl font-semibold text-brand-blue">Utile pour</h2>
-          <div className="mt-4 flex flex-wrap gap-2">
-            {supplier.usefulFor.map((item) => (
-              <span
-                key={item}
-                className="rounded-full bg-dema-sage/75 px-3 py-1.5 text-xs font-medium text-brand-blue/75"
-              >
-                {item}
-              </span>
-            ))}
-          </div>
+          <p className="mt-5 text-sm leading-relaxed text-dema-muted md:text-base">
+            {supplier.bestFor}
+          </p>
         </div>
 
         <div className="rounded-[1.25rem] border border-dema-line bg-dema-paper p-6">
-          <h2 className="text-xl font-semibold text-brand-blue">Mots-clés</h2>
-          <div className="mt-4 flex flex-wrap gap-2">
-            {supplier.tags.map((tag) => (
-              <span
-                key={tag}
-                className="rounded-full border border-dema-line bg-dema-paper px-3 py-1.5 text-xs font-medium text-dema-muted"
-              >
-                {tag}
-              </span>
-            ))}
+          <h2 className="text-xl font-semibold text-brand-blue">Accès</h2>
+          <div className="mt-4 space-y-3 text-sm leading-relaxed text-dema-muted">
+            <p>
+              <span className="font-medium text-brand-blue">Offre</span>
+              {` · ${supplier.offerHint}`}
+            </p>
+            <p>
+              <span className="font-medium text-brand-blue">Famille</span>
+              {` · ${supplier.family}`}
+            </p>
+            {supplier.partner ? (
+              <p>
+                <span className="font-medium text-brand-blue">Statut</span>
+                {" · partenaire"}
+              </p>
+            ) : null}
           </div>
           <div className="mt-6 flex flex-wrap items-center gap-3">
             {primaryCta}

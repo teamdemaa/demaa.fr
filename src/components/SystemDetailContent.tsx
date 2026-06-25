@@ -4,9 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { startTransition, useMemo, useState, type MouseEvent, type ReactNode } from "react";
 import {
+  ArrowUpRight,
   Bot,
   Briefcase,
   CalendarDays,
+  Calculator,
   FileSignature,
   FileText,
   FolderKanban,
@@ -20,11 +22,12 @@ import PartnerOffersModal from "@/components/PartnerOffersModal";
 import ProNetworkDetailDialog from "@/components/ProNetworkDetailDialog";
 import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
 import SupplierDetailDialog from "@/components/SupplierDetailDialog";
+import TrainingDetailDialog from "@/components/TrainingDetailDialog";
 import type { DemaaAidItem } from "@/lib/aid-catalog";
+import type { AccountingFirm } from "@/lib/accounting-directory";
 import { getRecommendedAidsForSystem } from "@/lib/aid-recommendations";
 import { getDocumentModelsForSystem, type DocumentModel } from "@/lib/document-models";
 import { getFreeToolsForSystem } from "@/lib/free-tools";
-import { getRecommendedPartnerKeysForSystem } from "@/lib/partner-key-recommendations";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import CourseSlidesDialog from "@/components/CourseSlidesDialog";
 import DocumentModelPreview from "@/components/DocumentModelPreview";
@@ -36,11 +39,12 @@ import {
 import type { CourseEntry } from "@/lib/course-content";
 import type { DemaaFinanceItem } from "@/lib/finance-catalog";
 import { getRelatedNewslettersForSystemSlug, type NewsletterEntry } from "@/lib/newsletters";
-import type { DemaaPartnerKey } from "@/lib/partner-key-catalog";
 import { getRecommendedFinanceForSystem } from "@/lib/finance-recommendations";
 import type { DemaaProNetwork } from "@/lib/pro-network-catalog";
 import { getRecommendedProNetworksForSystem } from "@/lib/pro-network-recommendations";
 import { getRelatedCoursesForSystemSlug } from "@/lib/related-courses";
+import { getGroupedRecommendedTrainingsForSystem } from "@/lib/training-recommendations";
+import type { DemaaTraining } from "@/lib/training-catalog";
 import { ORGANISATION_AUDIT_MODAL_HREF } from "@/lib/organisation-audit";
 import { getToolDirectorySectorSeoPath } from "@/lib/sector-taxonomy";
 import { type OperationalSystemDetail } from "@/lib/system-operations";
@@ -56,6 +60,7 @@ import type { System } from "@/lib/types";
 type SystemDetailContentProps = {
   system: System;
   detail: OperationalSystemDetail;
+  recommendedAccountingFirms: AccountingFirm[];
   intro: string;
   initialActiveTab?: string;
   headingAs?: "h1" | "h2";
@@ -286,6 +291,7 @@ function handleProNetworkDetailClick(
 export default function SystemDetailContent({
   system,
   detail,
+  recommendedAccountingFirms,
   intro,
   initialActiveTab,
   headingAs = "h1",
@@ -302,6 +308,7 @@ export default function SystemDetailContent({
   const [selectedSupplierDetail, setSelectedSupplierDetail] = useState<DemaaSupplier | null>(null);
   const [selectedFinanceDetail, setSelectedFinanceDetail] = useState<DemaaFinanceItem | null>(null);
   const [selectedProNetworkDetail, setSelectedProNetworkDetail] = useState<DemaaProNetwork | null>(null);
+  const [selectedTrainingDetail, setSelectedTrainingDetail] = useState<DemaaTraining | null>(null);
   const [selectedCourse, setSelectedCourse] = useState<CourseEntry | null>(null);
   const [isPartnerOffersModalOpen, setIsPartnerOffersModalOpen] = useState(false);
   const recommendedSuppliers = useMemo(
@@ -322,10 +329,6 @@ export default function SystemDetailContent({
     () => (activeTab === "reseaux-pro" ? getRecommendedProNetworksForSystem(system.slug) : []),
     [activeTab, system.slug]
   );
-  const recommendedPartnerKeys = useMemo(
-    () => (activeTab === "reseaux-pro" ? getRecommendedPartnerKeysForSystem(system.slug) : []),
-    [activeTab, system.slug]
-  );
   const freeTools = useMemo(
     () => (activeTab === "outils" ? getFreeToolsForSystem(system.slug, detail.sectorLabel) : []),
     [activeTab, detail.sectorLabel, system.slug]
@@ -342,6 +345,12 @@ export default function SystemDetailContent({
     () => (activeTab === "ressources" ? getDocumentModelsForSystem(system.slug) : []),
     [activeTab, system.slug]
   );
+  const recommendedTrainings = useMemo(
+    () => (activeTab === "formation"
+      ? getGroupedRecommendedTrainingsForSystem(system.slug, detail.sectorLabel)
+      : { metier: [], transverse: [] }),
+    [activeTab, detail.sectorLabel, system.slug]
+  );
   const supplierSections = useMemo(
     () => (activeTab === "fournisseurs" ? groupSuppliersBySection(recommendedSuppliers) : []),
     [activeTab, recommendedSuppliers]
@@ -350,6 +359,7 @@ export default function SystemDetailContent({
     () => (activeTab === "financement" ? groupFinanceBySection(recommendedFinance) : []),
     [activeTab, recommendedFinance]
   );
+  const showAccountingTab = system.slug !== "cabinet-comptable";
   const Heading = headingAs;
 
   function selectTab(tab: SystemDetailTab) {
@@ -638,31 +648,6 @@ export default function SystemDetailContent({
     );
   }
 
-  function renderPartnerKeyCard(partner: DemaaPartnerKey) {
-    return (
-      <Link
-        key={partner.slug}
-        href={partner.href}
-        className={SYSTEM_CARD_CLASS}
-      >
-        <div className="flex items-start justify-between gap-4">
-          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper">
-            <ServiceIcon icon={partner.icon} className="h-4 w-4" aria-hidden="true" />
-          </span>
-        </div>
-        <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
-          {partner.category}
-        </p>
-        <h3 className={SYSTEM_CARD_TITLE_CLASS}>
-          {partner.name}
-        </h3>
-        <p className={SYSTEM_CARD_DESCRIPTION_CLASS}>
-          {partner.shortDescription}
-        </p>
-      </Link>
-    );
-  }
-
   function renderCourseCard(course: CourseEntry) {
     return (
       <Link
@@ -781,6 +766,72 @@ export default function SystemDetailContent({
     );
   }
 
+  function renderAccountingFirmCard(firm: AccountingFirm) {
+    const industryLabel = firm.industries[0] ?? "Cabinet recommandé";
+    const cityLabel = firm.city && firm.city !== "Ville non renseignée" ? firm.city : null;
+
+    return (
+      <Link
+        key={firm.slug}
+        href={`/annuaire-experts-comptables/cabinets/${firm.slug}`}
+        className={SYSTEM_CARD_CLASS}
+      >
+        <div className="flex items-start justify-between gap-4">
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper">
+            <Calculator className="h-4 w-4" aria-hidden="true" />
+          </span>
+        </div>
+        <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
+          {industryLabel}
+        </p>
+        <h3 className={SYSTEM_CARD_TITLE_CLASS}>
+          {firm.name}
+        </h3>
+        <p className={SYSTEM_CARD_DESCRIPTION_CLASS}>
+          {firm.description}
+        </p>
+        {cityLabel ? (
+          <p className="mt-auto pt-4 text-xs font-medium text-dema-muted">
+            {cityLabel}
+          </p>
+        ) : null}
+      </Link>
+    );
+  }
+
+  function renderTrainingCard(training: DemaaTraining) {
+    return (
+      <Link
+        key={training.slug}
+        href={`/annuaire-formations/${training.slug}`}
+        className={SYSTEM_CARD_CLASS}
+        onClick={(event) => {
+          handleTrainingDetailClick(event, training, setSelectedTrainingDetail);
+        }}
+      >
+        <div className="flex items-start justify-between gap-4">
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper">
+            <ServiceIcon icon={training.icon} className="h-4 w-4" aria-hidden="true" />
+          </span>
+        </div>
+        <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
+          {training.family}
+        </p>
+        <h3 className={SYSTEM_CARD_TITLE_CLASS}>
+          {training.name}
+        </h3>
+        <p className={SYSTEM_CARD_DESCRIPTION_CLASS}>
+          {training.shortDescription}
+        </p>
+        <span className="mt-auto inline-flex items-center gap-2 pt-4 text-sm font-medium text-dema-forest">
+          {training.provider}
+          {training.format ? ` · ${training.format}` : ""}
+          <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+        </span>
+      </Link>
+    );
+  }
+
   return (
     <>
       <div className="text-left">
@@ -818,9 +869,13 @@ export default function SystemDetailContent({
             [
               ["outils", "Outils"],
               ["fournisseurs", "Fournisseurs"],
+              ...(showAccountingTab
+                ? ([["expert-comptable", "Expert comptable"]] as Array<[SystemDetailTab, string]>)
+                : []),
               ["financement", "Financement"],
-              ["reseaux-pro", "Partenaires"],
+              ["reseaux-pro", "Réseau pro"],
               ["ressources", "Ressources"],
+              ["formation", "Formation"],
             ] as Array<[SystemDetailTab, string]>
           ).map(([tab, label]) => (
             <button
@@ -911,6 +966,24 @@ export default function SystemDetailContent({
               })
             ) : null}
           </div>
+        ) : activeTab === "expert-comptable" && showAccountingTab ? (
+          <div className="space-y-5">
+            {recommendedAccountingFirms.length ? (
+              <>
+                {renderCardSection({
+                  items: recommendedAccountingFirms,
+                  title: "Cabinets recommandés",
+                  tone: "forest",
+                  getKey: (firm) => firm.slug,
+                  renderCard: renderAccountingFirmCard,
+                })}
+                {renderBrowseAllLink({
+                  browseHref: `/annuaire-experts-comptables?retourSysteme=${encodeURIComponent(system.slug)}`,
+                  browseLabel: "Voir l'annuaire experts-comptables",
+                })}
+              </>
+            ) : null}
+          </div>
         ) : activeTab === "financement" ? (
           <div className="space-y-5">
             {financeSections.map((section, index) => (
@@ -950,35 +1023,9 @@ export default function SystemDetailContent({
           </div>
         ) : activeTab === "reseaux-pro" ? (
           <div className="space-y-5">
-            {recommendedPartnerKeys.length ? (
-              <div className="space-y-4">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-                  Partenaires clés
-                </p>
-                <HorizontalScrollHint
-                  className="-mx-4 overflow-x-auto px-4 pb-4 pt-1 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
-                  controlsClassName="absolute -right-2 -top-9 z-10 flex items-center gap-1.5 sm:-right-3"
-                >
-                  <div className="flex w-max snap-x snap-mandatory gap-4">
-                    {recommendedPartnerKeys.map((partner) => (
-                      <div
-                        key={partner.slug}
-                        className="w-[18rem] shrink-0 snap-start sm:w-[19rem] lg:w-[20rem]"
-                      >
-                        {renderPartnerKeyCard(partner)}
-                      </div>
-                    ))}
-                  </div>
-                </HorizontalScrollHint>
-                {renderBrowseAllLink({
-                  browseHref: `/annuaire-partenaires-cles?retourSysteme=${encodeURIComponent(system.slug)}`,
-                  browseLabel: "Voir tous les partenaires clés",
-                })}
-              </div>
-            ) : null}
             {recommendedProNetworks.length ? (
               <div className="space-y-4">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-muted">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
                   Réseau pro
                 </p>
                 <HorizontalScrollHint
@@ -1003,6 +1050,35 @@ export default function SystemDetailContent({
                 browseHref: `/annuaire-reseaux-pro?retourSysteme=${encodeURIComponent(system.slug)}`,
                 browseLabel: "Voir l'annuaire réseaux pro",
               })
+            ) : null}
+          </div>
+        ) : activeTab === "formation" ? (
+          <div className="space-y-5">
+            {recommendedTrainings.metier.length || recommendedTrainings.transverse.length ? (
+              <>
+                {recommendedTrainings.metier.length ? (
+                  renderCardSection({
+                    items: recommendedTrainings.metier,
+                    title: "Formations métier",
+                    tone: "forest",
+                    getKey: (training) => training.slug,
+                    renderCard: renderTrainingCard,
+                  })
+                ) : null}
+                {recommendedTrainings.transverse.length ? (
+                  renderCardSection({
+                    items: recommendedTrainings.transverse,
+                    title: "Formations transverses",
+                    tone: recommendedTrainings.metier.length ? "muted" : "forest",
+                    getKey: (training) => training.slug,
+                    renderCard: renderTrainingCard,
+                  })
+                ) : null}
+                {renderBrowseAllLink({
+                  browseHref: `/annuaire-formations?retourSysteme=${encodeURIComponent(system.slug)}`,
+                  browseLabel: "Voir l'annuaire formations",
+                })}
+              </>
             ) : null}
           </div>
         ) : activeTab === "ressources" ? (
@@ -1121,6 +1197,13 @@ export default function SystemDetailContent({
         />
       ) : null}
 
+      {selectedTrainingDetail ? (
+        <TrainingDetailDialog
+          training={selectedTrainingDetail}
+          onClose={() => setSelectedTrainingDetail(null)}
+        />
+      ) : null}
+
       {isPartnerOffersModalOpen ? (
         <PartnerOffersModal
           onClose={() => setIsPartnerOffersModalOpen(false)}
@@ -1132,6 +1215,27 @@ export default function SystemDetailContent({
     </>
   );
 }
+
+function handleTrainingDetailClick(
+  event: MouseEvent<HTMLAnchorElement>,
+  training: DemaaTraining,
+  onOpenDetails: (training: DemaaTraining) => void,
+) {
+  if (
+    event.defaultPrevented ||
+    event.button !== 0 ||
+    event.metaKey ||
+    event.ctrlKey ||
+    event.shiftKey ||
+    event.altKey
+  ) {
+    return;
+  }
+
+  event.preventDefault();
+  onOpenDetails(training);
+}
+
   function renderDocumentModelCard(model: DocumentModel) {
     return (
       <Link
