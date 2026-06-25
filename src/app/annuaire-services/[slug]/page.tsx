@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import RelatedSystemsLinks from "@/components/RelatedSystemsLinks";
 import ServiceDetailContent from "@/components/ServiceDetailContent";
@@ -28,7 +28,9 @@ export async function generateMetadata({
   params,
 }: ServiceDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const service = getDemaaServiceBySlug(slug);
+  const normalizedSlug =
+    slug === "organisation" ? "organisation-automatisation" : slug;
+  const service = getDemaaServiceBySlug(normalizedSlug);
 
   if (!service) {
     return {
@@ -47,7 +49,13 @@ export default async function ServiceDetailPage({
   params,
 }: ServiceDetailPageProps) {
   const { slug } = await params;
-  const service = getDemaaServiceBySlug(slug);
+  if (slug === "organisation-automatisation") {
+    permanentRedirect("/annuaire-services/organisation");
+  }
+
+  const normalizedSlug =
+    slug === "organisation" ? "organisation-automatisation" : slug;
+  const service = getDemaaServiceBySlug(normalizedSlug);
 
   if (!service) {
     notFound();

@@ -20,6 +20,9 @@ const DEFAULT_SERVICE_ORDER = [
 ] satisfies DemaaServiceSlug[];
 
 const MAX_SERVICES_PER_SYSTEM = 4;
+const NON_RECOMMENDED_SERVICE_SLUGS = new Set<DemaaServiceSlug>([
+  "organisation-automatisation",
+]);
 
 const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRule> = {
   "cabinet-comptable": {
@@ -614,7 +617,8 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
 export function getRecommendedServicesForSystem(systemSlug: string): DemaaService[] {
   const rule = SERVICE_RECOMMENDATIONS_BY_SYSTEM[systemSlug];
   const dedupedOrder = (rule?.order ?? DEFAULT_SERVICE_ORDER).filter(
-    (slug, index, list) => list.indexOf(slug) === index
+    (slug, index, list) =>
+      list.indexOf(slug) === index && !NON_RECOMMENDED_SERVICE_SLUGS.has(slug)
   );
   const specificServiceSlugs = dedupedOrder.filter(
     (slug) => !UNIVERSAL_SERVICE_SLUGS.includes(slug)
@@ -633,7 +637,9 @@ export function getRecommendedServicesForSystem(systemSlug: string): DemaaServic
     return recommended;
   }
 
-  return DEFAULT_SERVICE_ORDER.slice(0, MAX_SERVICES_PER_SYSTEM)
+  return DEFAULT_SERVICE_ORDER
+    .filter((slug) => !NON_RECOMMENDED_SERVICE_SLUGS.has(slug))
+    .slice(0, MAX_SERVICES_PER_SYSTEM)
     .map((slug) => getDemaaServiceBySlug(slug))
     .filter((service): service is DemaaService => Boolean(service));
 }

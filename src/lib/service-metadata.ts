@@ -10,7 +10,7 @@ export function getServicePageMetadata(service: DemaaService): Metadata {
       ? "Audit d'organisation pour TPE - Demaa"
       : `${service.name} - Annuaire services Demaa`;
   const canonicalPath = isOrganisationLanding
-    ? "/organisation-automatisation"
+    ? "/organisation"
     : `/annuaire-services/${service.slug}`;
   const metadataDescription = isOrganisationLanding
     ? "Faites un audit d'organisation pour identifier les blocages, clarifier les priorités et repérer les besoins les plus utiles pour la suite."

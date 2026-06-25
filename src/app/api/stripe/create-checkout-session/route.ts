@@ -73,7 +73,7 @@ export async function POST(request: Request) {
   const formData = new URLSearchParams({
     mode: "payment",
     success_url: `${origin}/api/customer-space/stripe-entry?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${origin}/annuaire-services`,
+    cancel_url: `${origin}/`,
     "billing_address_collection": "auto",
     "phone_number_collection[enabled]": "true",
     "metadata[order_type]": "service_bundle",

@@ -82,7 +82,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     ],
     highlights: [
       { label: "Voir le modele organisation", href: "/modeles-de-documents/systeme-operationnel" },
-      { label: "Voir le service organisation", href: "/annuaire-services/organisation-automatisation" },
+      { label: "Voir le service organisation", href: "/annuaire-services/organisation" },
       { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Conseil & services aux entreprises") },
     ],
   }),
