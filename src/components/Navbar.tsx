@@ -38,7 +38,7 @@ export default function Navbar({
               {showSystemsCta ? (
                 <Link
                   href="/systemes"
-                  className="inline-flex min-h-10 items-center gap-2 rounded-full border border-dema-forest/45 bg-dema-paper px-3 py-2 text-sm font-medium text-brand-blue/78 transition hover:border-dema-forest hover:text-dema-forest sm:px-4"
+                  className="inline-flex min-h-10 items-center gap-2 rounded-full border border-dema-line bg-dema-paper px-3 py-2 text-sm font-medium text-brand-blue/56 transition hover:border-dema-forest/24 hover:text-brand-blue/72 sm:px-4"
                   aria-label="Boîte à outils du dirigeant"
                 >
                   <BriefcaseBusiness className="h-4 w-4 shrink-0" aria-hidden="true" />
