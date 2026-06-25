@@ -296,7 +296,7 @@ function ServiceCard({
             <ServiceIcon icon={service.icon} className="h-4.5 w-4.5" aria-hidden="true" />
           </span>
         </div>
-        <h2 className="mt-5 text-[1.35rem] font-semibold leading-tight tracking-tight text-brand-blue">
+        <h2 className="mt-5 text-[1.35rem] font-normal leading-tight tracking-tight text-brand-blue">
           {service.name}
         </h2>
         <p className="mt-3 line-clamp-3 text-[0.98rem] leading-relaxed text-dema-muted">
