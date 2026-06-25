@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { BadgeEuro, Blocks, Check, ChevronDown, FileCheck, Users } from "lucide-react";
-import ServicePurchaseCta from "@/components/ServicePurchaseCta";
+import { ORGANISATION_AUDIT_MODAL_HREF } from "@/lib/organisation-audit";
 
 const howItWorksSteps = [
   {
@@ -12,14 +12,14 @@ const howItWorksSteps = [
       "On identifie vos tâches répétitives, vos outils, vos documents, vos points de friction et les validations qui ralentissent l’équipe.",
   },
   {
-    title: "On priorise les process à structurer",
+    title: "On repère les priorités à traiter",
     description:
-      "On choisit les process à clarifier, les tableaux à créer, les formulaires utiles et les automatisations qui auront un vrai impact.",
+      "On clarifie ce qui bloque le plus, ce qui dépend trop du dirigeant et ce qui mérite d'être structuré en premier.",
   },
   {
-    title: "On met en place le système",
+    title: "On vous oriente vers la suite utile",
     description:
-      "On configure les outils, on teste les parcours avec vos cas réels, puis on vous transmet un système clair et exploitable.",
+      "Vous repartez avec une lecture claire des besoins. Si besoin, vous pourrez ensuite choisir le bon service à lancer.",
   },
 ] as const;
 
@@ -54,17 +54,22 @@ const faqItems = [
   {
     question: "Est-ce que l’audit gratuit m’engage à acheter quelque chose ?",
     answer:
-      "Non. L’audit gratuit ne vous engage à rien. Il sert à faire le point sur votre organisation si vous voulez commencer par clarifier les choses.",
+      "Non. L’audit gratuit ne vous engage à rien. Il sert à faire le point sur votre organisation et à clarifier les besoins.",
   },
   {
-    question: "Qu’est-ce que je dois fournir ?",
+    question: "Qu’est-ce que vous regardez pendant l’audit ?",
     answer:
-      "Les informations utiles à la mission : documents, accès, consignes, échéances et validations attendues.",
+      "On regarde les tâches répétitives, les outils, les documents, les validations, les zones de flou et les sujets qui vous font perdre du temps au quotidien.",
   },
   {
-    question: "Comment se passe la communication ?",
+    question: "Qu’est-ce que je récupère à la fin ?",
     answer:
-      "La communication se fait simplement sur WhatsApp, pour que les échanges soient rapides, faciles à suivre et proches de votre quotidien. Si un document ou une validation est nécessaire, on vous le précise clairement.",
+      "Vous repartez avec un regard extérieur, des priorités plus claires et une lecture concrète des actions ou services utiles pour la suite.",
+  },
+  {
+    question: "Quel gain peut-on espérer ?",
+    answer:
+      "En général, ce type d’audit permet d’identifier 20 à 30 % de temps récupérable sur les routines qui encombrent le quotidien.",
   },
 ] as const;
 
@@ -79,8 +84,6 @@ const em2aSteps = [
   "Reprise en main des demandes clients et de la collecte paie",
   "Mise en place d’un système opérationnel clair, centralisé et exploitable",
 ] as const;
-
-const GOOGLE_AUDIT_BOOKING_URL = "https://calendar.app.google/E9WX9qfHxViWZ3uq8";
 
 export default function AssistantsCatalogClient() {
   const [openFaqIndex, setOpenFaqIndex] = useState(0);
@@ -206,7 +209,7 @@ export default function AssistantsCatalogClient() {
                 Par où commencer ?
               </h2>
               <p className="mt-3 text-sm leading-relaxed text-dema-muted md:text-base">
-                Faites le point avec un audit offert ou lancez directement l&apos;organisation et l&apos;automatisation de votre activité.
+                Commencez par un audit offert pour clarifier les besoins, puis choisissez ensuite le bon service si une suite est utile.
               </p>
             </div>
 
@@ -230,17 +233,12 @@ export default function AssistantsCatalogClient() {
                   </p>
                 </div>
                 <Link
-                  href={GOOGLE_AUDIT_BOOKING_URL}
+                  href={ORGANISATION_AUDIT_MODAL_HREF}
+                  scroll={false}
                   className="mt-6 inline-flex w-full items-center justify-center rounded-full border border-dema-forest/20 bg-dema-sage/55 px-5 py-2.5 text-sm font-medium text-dema-forest transition hover:border-dema-forest/30 hover:bg-dema-sage disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   Demander l&apos;audit gratuit
                 </Link>
-                <div className="mt-4">
-                  <ServicePurchaseCta
-                    serviceName="Organisation"
-                    serviceSlug="organisation-automatisation"
-                  />
-                </div>
               </article>
             </div>
           </div>
@@ -297,7 +295,8 @@ export default function AssistantsCatalogClient() {
                 secteurs, accompagnés pour structurer leur organisation et alléger leur quotidien.
               </p>
               <Link
-                href={GOOGLE_AUDIT_BOOKING_URL}
+                href={ORGANISATION_AUDIT_MODAL_HREF}
+                scroll={false}
                 className="demaa-primary-button mx-auto mt-8 px-5 py-3"
               >
                 Audit organisation gratuit

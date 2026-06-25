@@ -6,16 +6,16 @@ import AssistantsCatalogClient from "@/components/AssistantsCatalogClient";
 import OrganisationAutonomyDiscovery from "@/components/OrganisationAutonomyDiscovery";
 
 export const metadata: Metadata = {
-  title: "Organisation pour TPE - Demaa",
+  title: "Audit d'organisation pour TPE - Demaa",
   description:
-    "Organisez votre entreprise avec les bons systèmes, process et automatisations pour mieux piloter l'activité, déléguer plus sereinement et soutenir une croissance durable.",
+    "Faites un audit d'organisation pour identifier les blocages, clarifier les priorités et repérer les besoins les plus utiles pour la suite.",
   alternates: {
     canonical: "/organisation-automatisation",
   },
   openGraph: {
-    title: "Organisation pour TPE - Demaa",
+    title: "Audit d'organisation pour TPE - Demaa",
     description:
-      "Organisez votre entreprise avec les bons systèmes, process et automatisations pour mieux piloter l'activité, déléguer plus sereinement et soutenir une croissance durable.",
+      "Faites un audit d'organisation pour identifier les blocages, clarifier les priorités et repérer les besoins les plus utiles pour la suite.",
     url: "/organisation-automatisation",
     siteName: "Demaa",
     locale: "fr_FR",
@@ -23,9 +23,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Organisation : systèmes, process et automatisations - Demaa",
+    title: "Audit d'organisation pour TPE - Demaa",
     description:
-      "Organisez votre entreprise avec les bons systèmes, process et automatisations pour mieux piloter l'activité, déléguer plus sereinement et soutenir une croissance durable.",
+      "Faites un audit d'organisation pour identifier les blocages, clarifier les priorités et repérer les besoins les plus utiles pour la suite.",
   },
 };
 
@@ -43,12 +43,12 @@ export default async function OrganisationAutomatisationPage({
   const backLink =
     retour === "annuaire-services"
       ? {
-          href: "/annuaire-services",
+          href: "/",
           label: "Retour à Déléguer",
         }
       : {
-          href: "/",
-          label: "Retour à l'accueil",
+          href: "/systemes",
+          label: "Retour aux systèmes",
         };
 
   return (

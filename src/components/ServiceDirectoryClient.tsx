@@ -1,17 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { ArrowLeft, Check } from "lucide-react";
-import PrimaryMobileNav, { type PrimaryNavTab } from "@/components/PrimaryMobileNav";
 import SearchFilterControls from "@/components/SearchFilterControls";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import { getServiceCardBadge } from "@/lib/card-badges";
 import { matchesSearchQuery } from "@/lib/search";
-import {
-  formatPurchasableServicePrice,
-  getPurchasableServiceConfig,
-} from "@/lib/service-purchase";
+import { getPurchasableServiceConfig } from "@/lib/service-purchase";
 import {
   CART_UPDATED_EVENT,
   openServiceCartModal,
@@ -31,17 +27,18 @@ type ServiceDirectoryClientProps = {
   };
   title?: string;
   description?: string;
-  activePrimaryTab?: PrimaryNavTab;
   heroTitleLines?: {
     primary: string;
-    secondary: string;
+    secondary?: string;
   };
+  invertHeroTitleStyles?: boolean;
   heroIntroEyebrow?: string;
   heroIntroText?: string;
   heroDescriptionLines?: {
     primary: string;
     secondary: string;
   };
+  heroActions?: ReactNode;
 };
 
 export default function ServiceDirectoryClient({
@@ -52,11 +49,12 @@ export default function ServiceDirectoryClient({
   backLink,
   title = "Annuaire Services",
   description = "Les services Demaa pour lancer, structurer, déléguer et développer une activité.",
-  activePrimaryTab,
   heroTitleLines,
   heroIntroEyebrow,
   heroIntroText,
   heroDescriptionLines,
+  heroActions,
+  invertHeroTitleStyles = false,
 }: ServiceDirectoryClientProps) {
   const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [activeCategory, setActiveCategory] = useState(
@@ -139,13 +137,6 @@ export default function ServiceDirectoryClient({
               : "mx-auto max-w-5xl text-center"
           }
         >
-          {activePrimaryTab && heroTitleLines ? (
-            <PrimaryMobileNav activeTab={activePrimaryTab} />
-          ) : activePrimaryTab ? (
-            <div className="mb-6">
-              <PrimaryMobileNav activeTab={activePrimaryTab} />
-            </div>
-          ) : null}
           {heroTitleLines ? (
             <div className="mx-auto max-w-5xl">
               {heroIntroEyebrow ? (
@@ -159,23 +150,44 @@ export default function ServiceDirectoryClient({
                 </p>
               ) : null}
               <h1 className="text-[clamp(3rem,14.5vw,3.36rem)] leading-[0.92] tracking-tight sm:text-[2.75rem] md:text-[3.75rem] lg:text-[4.5rem]">
-                <span className="demaa-hero-title text-brand-blue/86">
+                <span
+                  className={
+                    invertHeroTitleStyles
+                      ? "font-sans font-light not-italic text-brand-blue/44"
+                      : "demaa-hero-title text-brand-blue/86"
+                  }
+                >
                   {heroTitleLines.primary}
                 </span>
-                <br />
-                <span className="font-sans font-light not-italic text-brand-blue/44">
-                  {heroTitleLines.secondary}
-                </span>
+                {heroTitleLines.secondary ? (
+                  <>
+                    <br />
+                    <span
+                      className={
+                        invertHeroTitleStyles
+                          ? "demaa-hero-title text-brand-blue/86"
+                          : "font-sans font-light not-italic text-brand-blue/44"
+                      }
+                    >
+                      {heroTitleLines.secondary}
+                    </span>
+                  </>
+                ) : null}
               </h1>
               {heroDescriptionLines ? (
-                <p className="mx-auto mt-5 max-w-fit text-[13px] leading-relaxed text-dema-muted sm:text-sm md:max-w-2xl md:text-base">
-                  <span className="block whitespace-nowrap">
+                <div className="mx-auto mt-5 max-w-3xl">
+                  <p className="text-balance text-[1.05rem] font-light leading-relaxed text-brand-blue/78 sm:text-lg md:text-[1.32rem]">
                     {heroDescriptionLines.primary}
-                  </span>
-                  <span className="block whitespace-nowrap">
+                  </p>
+                  <p className="mx-auto mt-2 max-w-2xl text-balance text-[13px] leading-relaxed text-dema-muted sm:text-sm md:text-base">
                     {heroDescriptionLines.secondary}
-                  </span>
-                </p>
+                  </p>
+                </div>
+              ) : null}
+              {heroActions ? (
+                <div className="mx-auto mt-6 flex max-w-3xl flex-col items-center justify-center gap-3 sm:flex-row">
+                  {heroActions}
+                </div>
               ) : null}
             </div>
           ) : (
@@ -272,37 +284,47 @@ function ServiceCard({
   const badge = getServiceCardBadge(service);
 
   return (
-    <article className="demaa-card flex min-h-[16rem] flex-col rounded-[1.15rem] p-5 text-left">
+    <article className="demaa-card flex min-h-[18rem] flex-col rounded-[1.25rem] p-6 text-left">
       <Link
         href={`/annuaire-services/${service.slug}`}
         className="flex flex-1 flex-col text-left"
       >
-        <div className="flex items-center gap-4">
-          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition hover:bg-dema-forest hover:text-dema-paper">
-            <ServiceIcon icon={service.icon} className="h-4 w-4" aria-hidden="true" />
+        <div className="flex items-start justify-between gap-4">
+          <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition hover:bg-dema-forest hover:text-dema-paper">
+            <ServiceIcon icon={service.icon} className="h-4.5 w-4.5" aria-hidden="true" />
+          </span>
+          <span className="rounded-full bg-dema-sage/70 px-3 py-1 text-[10px] font-medium uppercase tracking-[0.12em] text-brand-blue/72">
+            {service.category}
           </span>
         </div>
-        <h2 className="mt-4 text-lg font-semibold tracking-tight text-brand-blue">
+        <h2 className="mt-5 text-[1.35rem] font-semibold leading-tight tracking-tight text-brand-blue">
           {service.name}
         </h2>
-        <p className="mt-2 text-sm leading-relaxed text-dema-muted">
+        <p className="mt-3 line-clamp-3 text-[0.98rem] leading-relaxed text-dema-muted">
           {service.shortDescription}
         </p>
-        {badge ? (
-          <div className="mt-3">
+        <div className="mt-5 flex items-end justify-between gap-3">
+          {purchaseConfig ? (
+            <p className="text-[1.15rem] font-semibold tracking-tight text-brand-blue">
+              {service.price}
+            </p>
+          ) : (
+            <p className="text-sm font-medium text-dema-muted">Sur devis</p>
+          )}
+          {badge ? (
             <span className="inline-flex rounded-full bg-dema-sage/75 px-3 py-1 text-[10px] font-medium text-brand-blue/70">
               {badge}
             </span>
-          </div>
-        ) : null}
+          ) : null}
+        </div>
       </Link>
 
-      <div className="mt-5 flex items-center gap-3">
+      <div className="mt-6 flex items-center gap-3">
         {purchaseConfig ? (
           <button
             type="button"
             onClick={() => onToggleSelection(service.slug)}
-            className={`inline-flex items-center gap-2 rounded-full border px-3 py-2 text-xs font-medium transition ${
+            className={`inline-flex items-center gap-2 rounded-full border px-3.5 py-2.5 text-xs font-medium transition ${
               isSelected
                 ? "border-dema-forest bg-dema-forest text-white"
                 : "border-dema-line bg-dema-paper text-brand-blue/75 hover:border-dema-forest/25 hover:text-dema-forest"

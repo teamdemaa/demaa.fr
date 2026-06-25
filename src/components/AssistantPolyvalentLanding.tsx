@@ -1,11 +1,9 @@
 "use client";
 
-import { ArrowRight, Check, CircleDollarSign, Clock3, FolderKanban, Mail } from "lucide-react";
+import { Check, CircleDollarSign, Clock3, FolderKanban, Mail } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import ServicePurchaseCta from "@/components/ServicePurchaseCta";
 import type { DemaaService } from "@/lib/service-catalog";
-
-const ASSISTANT_BOOKING_URL = "https://calendar.app.google/Ka6UkXZeQ7keLKcLA";
 
 const offerHighlights = [
   "Organisation, structuration, suivi et bases administratives travaillés en amont",
@@ -16,7 +14,7 @@ const offerHighlights = [
 const offerTimeline = [
   {
     step: "Étape 1",
-    title: "1 mois de formation à temps plein",
+    title: "2 mois de formation sur le contexte de votre entreprise",
     description:
       "Formation prise en charge pour poser les bases de l'organisation, de la structuration et des routines administratives.",
   },
@@ -37,8 +35,8 @@ const comparisonDetails = [
   },
   {
     title: "Avec Demaa (POEI + alternance)",
-    amount: "Entre ... et 1 450,35 € / mois",
-    description: "Aide déduite, selon l'âge et le profil recruté",
+    amount: "Entre 572,85 € et 1 450,35 € / mois",
+    description: "Aides déduites, selon l'âge et le profil recruté",
     emphasis: true,
   },
 ] as const;
@@ -61,8 +59,8 @@ const responsibilities = [
   },
   {
     icon: Clock3,
-    title: "Organisation & outils",
-    description: "Structurer les dossiers et fluidifier le travail administratif.",
+    title: "Structuration des processus clés",
+    description: "Structurer les routines, les dossiers et les outils utiles au quotidien.",
   },
 ] as const;
 
@@ -79,29 +77,20 @@ export default function AssistantPolyvalentLanding({
             <div className="mx-auto max-w-5xl demaa-fade-up">
               <h1 className="mt-4 text-[clamp(2.3rem,8vw,4.5rem)] leading-[0.96] tracking-tight">
                 <span className="demaa-hero-title text-brand-blue/86">
-                  Recrutez un(e) assistant(e)
+                  Recrutez un assistant
                 </span>
                 <br />
                 <span className="font-sans font-light not-italic text-brand-blue/56">
-                  polyvalent(e).
+                  formé
                 </span>
               </h1>
               <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-dema-muted md:text-base">
-                Déléguez votre administratif à la bonne personne, déjà opérationnelle pour
-                reprendre les bases utiles de la gestion d&apos;entreprise sans que tout
-                repose sur vous.
+                Une assistante formée dans le cadre d&apos;une POEI puis intégrée en
+                alternance, pour reprendre l&apos;administratif utile de votre entreprise.
+                Le profil est sélectionné pour sa motivation, sa maturité et vient souvent
+                d&apos;une reconversion professionnelle.
               </p>
-
-              <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
-                <a
-                  href={ASSISTANT_BOOKING_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex min-w-[13rem] items-center justify-center rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper transition hover:bg-brand-blue"
-                >
-                  Prendre rendez-vous
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </a>
+              <div className="mt-7 flex items-center justify-center">
                 <a
                   href="#missions"
                   className="inline-flex min-w-[13rem] items-center justify-center rounded-full border border-dema-line bg-dema-paper px-5 py-3 text-sm font-semibold text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
@@ -119,14 +108,14 @@ export default function AssistantPolyvalentLanding({
               <article className="demaa-fade-up rounded-[1.2rem] border border-dema-line/70 bg-dema-paper px-5 py-6 md:px-7 md:py-8">
                 <div className="mt-5 grid gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(20rem,0.95fr)] lg:items-start">
                   <div>
-                    <h2 className="max-w-2xl text-2xl font-semibold tracking-tight text-brand-blue md:text-3xl">
-                      Vous déléguez à la bonne personne, déjà opérationnelle pour reprendre l&apos;administratif.
+                    <h2 className="max-w-2xl text-[1.8rem] font-semibold tracking-tight text-brand-blue md:text-[2.25rem]">
+                      Un profil formé, motivé et cadré pour reprendre l&apos;administratif utile.
                     </h2>
                     <p className="mt-4 max-w-2xl text-sm leading-relaxed text-dema-muted md:text-base">
                       Le parcours est pensé pour que vous n&apos;ayez pas à tout construire seul.
-                      Nous formons d&apos;abord à l&apos;organisation et à la structuration, puis
-                      l&apos;alternance permet de prendre le relais directement dans votre
-                      entreprise, au rythme du terrain.
+                      La POEI pose les bases en amont, puis l&apos;alternance permet une reprise
+                      progressive dans votre entreprise avec un profil souvent en reconversion,
+                      sélectionné pour sa stabilité et sa motivation.
                     </p>
                     <div className="mt-6 space-y-3">
                       {offerHighlights.map((item) => (
@@ -140,7 +129,7 @@ export default function AssistantPolyvalentLanding({
                     </div>
                   </div>
 
-                  <div className="rounded-[1rem] bg-dema-sage/35 p-4 md:p-5">
+              <div className="rounded-[1rem] bg-dema-sage/35 p-4 md:p-5">
                     <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
                       Le parcours en 2 temps
                     </p>
@@ -169,7 +158,7 @@ export default function AssistantPolyvalentLanding({
 
             <div id="missions" className="mt-20 scroll-mt-24 md:mt-28">
               <div className="mx-auto max-w-3xl text-center demaa-fade-up">
-                <h2 className="text-2xl font-semibold tracking-tight text-brand-blue md:text-3xl">
+                <h2 className="text-[1.8rem] font-semibold tracking-tight text-brand-blue md:text-[2.25rem]">
                   Ce qu&apos;un(e) assistant(e) polyvalent(e) peut reprendre
                 </h2>
                 <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-dema-muted md:text-base">
@@ -183,7 +172,7 @@ export default function AssistantPolyvalentLanding({
                 {responsibilities.map((item, index) => (
                   <article
                     key={item.title}
-                    className={`demaa-fade-up demaa-lift-soft rounded-[1rem] border border-dema-line/70 bg-dema-paper px-4 py-5 md:min-h-[13rem] md:px-5 ${
+                    className={`demaa-fade-up demaa-lift-soft rounded-[1rem] bg-dema-sage/18 px-4 py-5 md:min-h-[13rem] md:px-5 ${
                       index === 0
                         ? "demaa-delay-1"
                         : index === 1
@@ -196,7 +185,7 @@ export default function AssistantPolyvalentLanding({
                     <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage/55 text-dema-forest">
                       <item.icon className="demaa-icon-float h-4.5 w-4.5" aria-hidden="true" />
                     </span>
-                    <h3 className="mt-4 text-[1.05rem] font-medium leading-snug text-brand-blue md:text-[1.2rem]">
+                    <h3 className="mt-4 text-[1.05rem] font-normal leading-snug text-brand-blue md:text-[1.2rem]">
                       {item.title}
                     </h3>
                     <p className="mt-2 text-sm leading-relaxed text-dema-muted">
@@ -215,7 +204,7 @@ export default function AssistantPolyvalentLanding({
                 <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
                   Repère de coût
                 </p>
-                <h2 className="mt-3 max-w-xl text-xl font-semibold tracking-tight text-brand-blue md:text-2xl">
+                <h2 className="mt-3 max-w-xl text-[1.5rem] font-semibold tracking-tight text-brand-blue md:text-[1.85rem]">
                   Un coût plus accessible qu&apos;une embauche classique
                 </h2>
                 <p className="mt-3 max-w-xl text-sm leading-relaxed text-dema-muted">
@@ -233,9 +222,9 @@ export default function AssistantPolyvalentLanding({
                           : "border-dema-line/70 bg-dema-paper"
                       }`}
                     >
-                      <p className="text-sm font-semibold text-brand-blue">{item.title}</p>
+                      <p className="text-sm font-medium text-brand-blue">{item.title}</p>
                       <p
-                        className={`mt-2 text-3xl font-semibold tracking-tight ${
+                        className={`mt-2 text-3xl font-medium tracking-tight ${
                           item.emphasis ? "text-dema-forest" : "text-brand-blue"
                         }`}
                       >
@@ -266,21 +255,12 @@ export default function AssistantPolyvalentLanding({
                   On regarde ensemble si ce format correspond à vos besoins, à vos tâches
                   et au niveau d&apos;autonomie que vous cherchez.
                 </p>
-                <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-                  <a
-                    href={ASSISTANT_BOOKING_URL}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="demaa-primary-button inline-flex items-center gap-2 px-5 py-3"
-                  >
-                    Prendre rendez-vous
-                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                  </a>
-                </div>
                 <div className="mx-auto mt-4 max-w-sm">
                   <ServicePurchaseCta
-                    serviceName="Recruter un assistant polyvalent"
+                    serviceName="Recrutez un assistant formé"
                     serviceSlug="assistant-polyvalent"
+                    defaultLabel="Sélectionner"
+                    selectedLabel="Sélectionné"
                   />
                 </div>
               </div>

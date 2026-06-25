@@ -2,14 +2,12 @@
 
 import Link from "next/link";
 import DemaaWordmark from "@/components/DemaaWordmark";
-import { visiblePrimaryNavigationItems } from "@/lib/navigation";
 
 const mainLinks = [
-  ...visiblePrimaryNavigationItems.map(({ label, href }) => ({ label, href })),
-  { label: "Annuaire systèmes", href: "/" },
+  { label: "Services", href: "/" },
+  { label: "Systèmes", href: "/systemes" },
   { label: "Annuaire outils", href: "/annuaire-outils" },
   { label: "Annuaire financement", href: "/annuaire-financement" },
-  { label: "Annuaire services", href: "/annuaire-services" },
   { label: "Annuaire fournisseurs", href: "/annuaire-fournisseurs" },
   { label: "Annuaire experts-comptables", href: "/annuaire-experts-comptables" },
 ];
@@ -39,7 +37,7 @@ export default function Footer() {
               />
             </Link>
             <p className="demaa-section-title max-w-xs text-lg leading-snug text-neutral-500">
-              Utiliser les systèmes à votre avantage pour alléger la charge, libérer du temps et avancer avec plus de sérénité.
+              Structurer, déléguer et avancer avec plus de clarté grâce à des services et des systèmes pensés pour les dirigeants.
             </p>
           </div>
 

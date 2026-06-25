@@ -1,6 +1,7 @@
 export const expandedServiceSlugs = [
   "organisation-automatisation",
   "assistant-polyvalent",
+  "audit-conformite-fiscale",
 ] as const;
 
 export function hasExpandedServiceContent(serviceSlug: string) {

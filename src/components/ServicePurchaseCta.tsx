@@ -13,9 +13,21 @@ import { getPurchasableServiceConfig } from "@/lib/service-purchase";
 export default function ServicePurchaseCta({
   serviceSlug,
   serviceName,
+  defaultLabel = "Ajouter au panier",
+  selectedLabel = "Ajouté au panier",
+  showHelperText = true,
+  fullWidth = true,
+  buttonClassName = "",
+  containerClassName = "mt-5",
 }: {
   serviceSlug: string;
   serviceName: string;
+  defaultLabel?: string;
+  selectedLabel?: string;
+  showHelperText?: boolean;
+  fullWidth?: boolean;
+  buttonClassName?: string;
+  containerClassName?: string;
 }) {
   const purchaseConfig = getPurchasableServiceConfig(serviceSlug);
   const [isSelected, setIsSelected] = useState(false);
@@ -52,15 +64,17 @@ export default function ServicePurchaseCta({
   }
 
   return (
-    <div className="mt-5">
+    <div className={containerClassName}>
       <button
         type="button"
         onClick={toggleSelection}
-        className={`inline-flex w-full items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition ${
+        className={`inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition ${
+          fullWidth ? "w-full" : ""
+        } ${
           isSelected
             ? "bg-dema-sage text-dema-forest hover:bg-dema-sage/85"
             : "bg-dema-forest text-dema-paper hover:bg-brand-blue"
-        }`}
+        } ${buttonClassName}`}
         aria-pressed={isSelected}
       >
         {isSelected ? (
@@ -68,9 +82,9 @@ export default function ServicePurchaseCta({
         ) : (
           <ShoppingBag className="h-4 w-4" aria-hidden="true" />
         )}
-        {isSelected ? "Ajouté au panier" : "Ajouter au panier"}
+        {isSelected ? selectedLabel : defaultLabel}
       </button>
-      {isSelected ? (
+      {isSelected && showHelperText ? (
         <p className="mt-2 text-xs leading-relaxed text-dema-muted">
           {serviceName} est prêt dans votre panier.
         </p>

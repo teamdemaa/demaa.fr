@@ -41,6 +41,7 @@ import { getRecommendedFinanceForSystem } from "@/lib/finance-recommendations";
 import type { DemaaProNetwork } from "@/lib/pro-network-catalog";
 import { getRecommendedProNetworksForSystem } from "@/lib/pro-network-recommendations";
 import { getRelatedCoursesForSystemSlug } from "@/lib/related-courses";
+import { ORGANISATION_AUDIT_MODAL_HREF } from "@/lib/organisation-audit";
 import { getToolDirectorySectorSeoPath } from "@/lib/sector-taxonomy";
 import { type OperationalSystemDetail } from "@/lib/system-operations";
 import { getRecommendedSuppliersForSystem } from "@/lib/supplier-recommendations";
@@ -68,7 +69,6 @@ const SYSTEM_CARD_TITLE_CLASS =
 const SYSTEM_CARD_DESCRIPTION_CLASS =
   "mt-3 line-clamp-3 text-sm leading-relaxed text-dema-muted";
 const GENERIC_TOOL_CATEGORIES = new Set(["Outils métier", "Outils transverses"]);
-const ORGANISATION_AUTOMATION_MODAL_HREF = "/annuaire-services/organisation-automatisation";
 const INDUSTRY_TOOL_TAGS = new Set([
   "Avocat",
   "Bâtiment",
@@ -797,11 +797,11 @@ export default function SystemDetailContent({
 
       <div className="mt-4 flex flex-col gap-2 text-left sm:flex-row sm:flex-wrap">
         <Link
-          href={ORGANISATION_AUTOMATION_MODAL_HREF}
+          href={ORGANISATION_AUDIT_MODAL_HREF}
           scroll={false}
           className="demaa-primary-button"
         >
-          Audit organisation gratuit
+          Déléguez ce qui vous ralentit
         </Link>
         <button
           type="button"

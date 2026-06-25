@@ -5,7 +5,7 @@ import { getEnterpriseCatalog } from "@/lib/enterprise-annuaire-server";
 import { buildOperationalSystemDetails } from "@/lib/system-operations";
 import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
 
-export default async function HomeHubPage() {
+export default async function SystemsHubPage() {
   const [enterprises, toolDirectory] = await Promise.all([
     getEnterpriseCatalog(),
     getUnifiedToolDirectory(),
@@ -15,8 +15,8 @@ export default async function HomeHubPage() {
 
   return (
     <>
-      <Navbar homeTabsMode="client" />
-      <main className="flex-1 w-full bg-dema-cream min-h-screen">
+      <Navbar />
+      <main className="flex-1 min-h-screen w-full bg-dema-cream">
         <HomeTabsClient systems={systems} detailsBySlug={detailsBySlug} />
       </main>
     </>

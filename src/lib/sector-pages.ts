@@ -112,7 +112,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     ],
     highlights: [
       { label: "Voir le modele organisation", href: "/modeles-de-documents/systeme-operationnel" },
-      { label: "Voir les services acquisition", href: "/annuaire-services" },
+      { label: "Voir les services acquisition", href: "/" },
       { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Tech & Digital") },
     ],
   }),
@@ -175,7 +175,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     highlights: [
       { label: "Voir le modele organisation", href: "/modeles-de-documents/systeme-operationnel" },
       { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Immobilier") },
-      { label: "Voir les services utiles", href: "/annuaire-services" },
+      { label: "Voir les services utiles", href: "/" },
     ],
   }),
   createSectorPageDefinition("Hébergement & tourisme", {
@@ -197,7 +197,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     highlights: [
       { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Hébergement & tourisme") },
       { label: "Voir les partenaires utiles", href: "/annuaire-fournisseurs" },
-      { label: "Voir les services utiles", href: "/annuaire-services" },
+      { label: "Voir les services utiles", href: "/" },
     ],
   }),
   createSectorPageDefinition("Patrimoine", {
@@ -219,7 +219,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     ],
     highlights: [
       { label: "Voir le previsionnel financier", href: "/modeles-de-documents/suivi-previsionnel-financier" },
-      { label: "Voir les services finance", href: "/annuaire-services" },
+      { label: "Voir les services finance", href: "/" },
       { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Patrimoine") },
     ],
   }),
@@ -244,7 +244,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     highlights: [
       { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Mobilité & logistique") },
       { label: "Voir les partenaires utiles", href: "/annuaire-fournisseurs" },
-      { label: "Voir les services utiles", href: "/annuaire-services" },
+      { label: "Voir les services utiles", href: "/" },
     ],
   }),
   createSectorPageDefinition("Restauration", {
@@ -327,7 +327,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     ],
     highlights: [
       { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Santé, bien-être & esthétique") },
-      { label: "Voir les services utiles", href: "/annuaire-services" },
+      { label: "Voir les services utiles", href: "/" },
       { label: "Voir les partenaires utiles", href: "/annuaire-fournisseurs" },
     ],
   }),
@@ -350,7 +350,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     ],
     highlights: [
       { label: "Voir le modele organisation", href: "/modeles-de-documents/systeme-operationnel" },
-      { label: "Voir les services utiles", href: "/annuaire-services" },
+      { label: "Voir les services utiles", href: "/" },
       { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Services aux particuliers") },
     ],
   }),
@@ -375,7 +375,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     highlights: [
       { label: "Voir le cours facture électronique", href: "/cours/facture-electronique" },
       { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Éducation & formation") },
-      { label: "Voir les services utiles", href: "/annuaire-services" },
+      { label: "Voir les services utiles", href: "/" },
     ],
   }),
   createSectorPageDefinition("Industrie & production", {
@@ -435,7 +435,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     ],
     highlights: [
       { label: "Voir le modele organisation", href: "/modeles-de-documents/systeme-operationnel" },
-      { label: "Voir les services utiles", href: "/annuaire-services" },
+      { label: "Voir les services utiles", href: "/" },
       { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Associations & événements") },
     ],
   }),

@@ -64,11 +64,11 @@ export default async function SystemDetailPage({
         />
         <div className="mx-auto w-full max-w-7xl px-4 pb-16 pt-3 sm:px-6 lg:px-8">
           <Link
-            href="/"
+            href="/systemes"
             className="group inline-flex items-center gap-2 text-sm font-medium text-gray-400 transition-colors hover:text-neutral-700"
           >
             <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-            Revenir à l&apos;annuaire des systèmes
+            Revenir
           </Link>
 
           <div className="mt-4">

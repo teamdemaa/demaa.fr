@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { ORGANISATION_AUDIT_MODAL_HREF } from "@/lib/organisation-audit";
 
 type DiscoveryAnswer = "yes" | "no" | null;
 
@@ -16,8 +17,6 @@ const responseContent: Record<Exclude<DiscoveryAnswer, null>, { title: string; b
     body: "",
   },
 };
-
-const GOOGLE_AUDIT_BOOKING_URL = "https://calendar.app.google/E9WX9qfHxViWZ3uq8";
 
 export default function OrganisationAutonomyDiscovery() {
   const [typedTitle, setTypedTitle] = useState("");
@@ -170,7 +169,11 @@ export default function OrganisationAutonomyDiscovery() {
                 ) : null}
                 {answer === "no" ? (
                   <div className="mt-5 flex justify-center">
-                    <Link href={GOOGLE_AUDIT_BOOKING_URL} className="demaa-primary-button">
+                    <Link
+                      href={ORGANISATION_AUDIT_MODAL_HREF}
+                      scroll={false}
+                      className="demaa-primary-button"
+                    >
                       Audit organisation gratuit
                     </Link>
                   </div>

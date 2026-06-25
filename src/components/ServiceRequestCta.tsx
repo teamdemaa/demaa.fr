@@ -5,6 +5,7 @@ import { ArrowUpRight } from "lucide-react";
 import { useState } from "react";
 import ServiceIntroductionModal from "@/components/ServiceIntroductionModal";
 import ServicePurchaseCta from "@/components/ServicePurchaseCta";
+import { ORGANISATION_AUDIT_BOOKING_URL } from "@/lib/organisation-audit";
 import type { DemaaService } from "@/lib/service-catalog";
 import { getPurchasableServiceConfig } from "@/lib/service-purchase";
 
@@ -29,6 +30,17 @@ export default function ServiceRequestCta({ service }: { service: DemaaService }
       >
         Voir l&apos;annuaire
         <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+      </Link>
+    );
+  }
+
+  if (service.slug === "organisation-automatisation") {
+    return (
+      <Link
+        href={ORGANISATION_AUDIT_BOOKING_URL}
+        className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper transition hover:bg-brand-blue"
+      >
+        Prendre RDV
       </Link>
     );
   }

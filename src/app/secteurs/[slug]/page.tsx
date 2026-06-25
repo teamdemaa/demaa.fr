@@ -88,7 +88,7 @@ export default async function SectorHubPage({
       <main className="min-h-screen bg-background pb-20">
         <div className="mx-auto max-w-7xl px-4 pb-8 pt-8 sm:px-6 lg:px-8">
           <Link
-            href="/"
+            href="/systemes"
             className="group inline-flex items-center gap-2 text-sm font-medium text-gray-400 transition-colors hover:text-neutral-700"
           >
             <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />

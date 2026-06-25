@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import {
   BadgeEuro,
@@ -14,13 +13,10 @@ import {
   Mail,
   Users,
 } from "lucide-react";
-
 type ServiceExpandedContentProps = {
   serviceSlug: string;
   variant?: "modal" | "page";
 };
-
-const GOOGLE_AUDIT_BOOKING_URL = "https://calendar.app.google/E9WX9qfHxViWZ3uq8";
 
 const organisationSignals = [
   {
@@ -51,63 +47,64 @@ const organisationSignals = [
 
 const organisationSteps = [
   {
-    title: "On analyse votre fonctionnement",
+    title: "On fait le point sur votre organisation",
     description:
       "On identifie les tâches répétitives, les outils, les documents, les validations et les points de friction.",
   },
   {
-    title: "On priorise les process utiles",
+    title: "On repère les priorités à traiter",
     description:
-      "On choisit les process à clarifier, les tableaux à créer et les automatisations qui auront un vrai impact.",
+      "On voit ce qui bloque vraiment, ce qui dépend trop de vous et ce qui mérite d'être structuré en premier.",
   },
   {
-    title: "On met en place le système",
+    title: "On vous oriente vers la suite utile",
     description:
-      "On configure, on teste sur vos cas réels, puis on vous transmet un système clair et exploitable.",
+      "Vous repartez avec une lecture claire des besoins. Si nécessaire, vous pourrez ensuite choisir le bon service à lancer.",
   },
 ] as const;
 
-const organisationResults = [
-  "36 jours/an gagnés côté comptabilité",
-  "30 jours/an gagnés côté paie",
-  "Jusqu'à 30 000 € de capacité récupérée/an",
+const organisationPillars = [
+  "Direction et priorités",
+  "Marketing et vente",
+  "Production et suivi client",
+  "Finance et administratif",
+  "Équipe et responsabilités",
 ] as const;
 
 const organisationFaq = [
   {
-    question: "Quelles tâches pouvez-vous organiser ou automatiser en priorité ?",
+    question: "Est-ce que l'audit gratuit m'engage à acheter quelque chose ?",
     answer:
-      "En général, on commence par les relances, les documents récurrents, les suivis clients, les tableaux, les validations internes et les routines administratives qui consomment du temps chaque semaine.",
+      "Non. L'audit sert à faire le point sur votre organisation et à clarifier vos besoins. Vous décidez ensuite librement de la suite.",
   },
   {
-    question: "Est-ce adapté si mon activité est encore très manuelle ?",
+    question: "Qu'est-ce que vous regardez pendant l'audit ?",
     answer:
-      "Oui. L'objectif n'est pas d'automatiser trop vite, mais d'abord de clarifier ce qui doit être structuré, puis de n'automatiser que ce qui se répète vraiment.",
+      "On regarde les tâches répétitives, les outils, les documents, les validations, les zones de flou et les sujets qui vous font perdre du temps au quotidien.",
   },
   {
-    question: "Est-ce que vous travaillez avec mes outils actuels ?",
+    question: "Est-ce utile si mon activité est encore très manuelle ?",
     answer:
-      "Oui, on part d'abord de votre réalité terrain. On regarde ce qui peut être amélioré avec vos outils actuels avant de recommander un changement.",
+      "Oui. Le but n'est pas de forcer une solution technique, mais d'identifier ce qui doit d'abord être clarifié, structuré ou mieux réparti.",
   },
   {
-    question: "L'audit gratuit m'engage-t-il à acheter quelque chose ?",
+    question: "Qu'est-ce que je récupère à la fin ?",
     answer:
-      "Non. L'audit sert à clarifier vos blocages et vos priorités. Vous repartez avec une lecture plus nette, même si vous ne lancez pas la mission ensuite.",
+      "Vous repartez avec un regard extérieur, des priorités plus claires et une lecture concrète des actions ou services utiles pour la suite.",
   },
-] as const;
-
-const assistantHighlights = [
-  "Organisation, structuration, suivi et bases administratives travaillés en amont.",
-  "Montée en compétence mieux cadrée pour éviter de tout porter seul.",
-  "Intégration plus fluide dans votre activité et vos outils.",
+  {
+    question: "Quel gain peut-on espérer ?",
+    answer:
+      "En général, ce type de travail permet d'identifier 20 à 30 % de temps récupérable sur les routines qui encombrent le quotidien.",
+  },
 ] as const;
 
 const assistantTimeline = [
   {
     step: "Étape 1",
-    title: "1 mois de formation à temps plein",
+    title: "2 mois de formation sur le contexte de votre entreprise",
     description:
-      "La formation pose les bases de l'organisation, de la structuration et des routines administratives utiles en entreprise.",
+      "La formation pose les bases de l'organisation, de la structuration et des routines administratives utiles avant l'arrivée en entreprise.",
   },
   {
     step: "Étape 2",
@@ -135,8 +132,8 @@ const assistantResponsibilities = [
   },
   {
     icon: Clock3,
-    title: "Organisation & outils",
-    description: "Structurer les dossiers et fluidifier le travail administratif.",
+    title: "Structuration des processus clés",
+    description: "Structurer les routines, les dossiers et les outils utiles au quotidien.",
   },
 ] as const;
 
@@ -149,7 +146,7 @@ const assistantComparison = [
   },
   {
     title: "Avec Demaa (POEI + alternance)",
-    amount: "Jusqu'à 1 450,35 € / mois",
+    amount: "Entre 572,85 € et 1 450,35 € / mois",
     description: "Aides déduites, selon l'âge et le profil recruté.",
     emphasis: true,
   },
@@ -178,6 +175,24 @@ const assistantFaq = [
   },
 ] as const;
 
+const fiscalAuditFaq = [
+  {
+    question: "À quoi sert cet audit si je travaille déjà avec un comptable ?",
+    answer:
+      "Il sert à prendre un regard complémentaire sur vos pratiques du quotidien : TVA, caisse, justificatifs, notes de frais, cohérence bancaire et zones de risque ou d'optimisation possibles.",
+  },
+  {
+    question: "Qu'est-ce que je récupère à la fin ?",
+    answer:
+      "Vous repartez avec les points sensibles identifiés, les optimisations fiscales ou administratives repérées, et une liste d'actions concrètes à corriger ou sécuriser.",
+  },
+  {
+    question: "Est-ce utile même sans contrôle fiscal en cours ?",
+    answer:
+      "Oui. L'intérêt est justement d'anticiper, de corriger ce qui doit l'être et de repérer les optimisations possibles avant qu'un problème ou un contrôle ne vous y oblige.",
+  },
+] as const;
+
 export default function ServiceExpandedContent({
   serviceSlug,
   variant = "modal",
@@ -188,6 +203,10 @@ export default function ServiceExpandedContent({
 
   if (serviceSlug === "assistant-polyvalent") {
     return <AssistantExpandedContent variant={variant} />;
+  }
+
+  if (serviceSlug === "audit-conformite-fiscale") {
+    return <FiscalAuditExpandedContent variant={variant} />;
   }
 
   return null;
@@ -210,20 +229,16 @@ function OrganisationExpandedContent({
         <div className="flex flex-col gap-4">
           <div className="max-w-2xl">
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
-              Récap de l&apos;offre
+              Audit d&apos;organisation
             </p>
             <h3 className="mt-2 text-xl font-semibold tracking-tight text-brand-blue md:text-2xl">
               Quand structurer devient prioritaire
             </h3>
             <p className="mt-3 text-sm leading-relaxed text-dema-muted">
-              Cette offre devient pertinente quand l&apos;activité repose encore trop sur le
-              dirigeant, que les validations se perdent et que les routines freinent
-              l&apos;exécution.
+              L&apos;audit sert à prendre du recul, voir où l&apos;activité repose encore trop
+              sur vous et identifier les besoins d&apos;organisation les plus utiles.
             </p>
           </div>
-          <Link href={GOOGLE_AUDIT_BOOKING_URL} className="demaa-primary-button w-fit">
-            Audit organisation gratuit
-          </Link>
         </div>
         <div className="mt-6 grid gap-4 md:grid-cols-2">
           {organisationSignals.map((item) => (
@@ -234,7 +249,7 @@ function OrganisationExpandedContent({
               <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage/55 text-dema-forest">
                 <item.icon className="h-4.5 w-4.5" aria-hidden="true" />
               </span>
-              <h4 className="mt-3 text-base font-semibold leading-snug text-brand-blue">
+              <h4 className="mt-3 text-base font-normal leading-snug text-brand-blue">
                 {item.title}
               </h4>
               <p className="mt-2 text-sm leading-relaxed text-dema-muted">
@@ -270,22 +285,41 @@ function OrganisationExpandedContent({
       </section>
 
       <section className={sectionClass}>
-        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
-          Repères de résultat
-        </p>
-        <h3 className="mt-2 text-xl font-semibold tracking-tight text-brand-blue md:text-2xl">
-          Ce type de mission vise à libérer du temps utile
+        <h3 className="text-xl font-semibold tracking-tight text-brand-blue md:text-2xl">
+          Ce qui va être analysé
         </h3>
-        <div className="mt-5 grid gap-3 sm:grid-cols-2 md:grid-cols-3">
-          {organisationResults.map((result) => (
+        <p className="mt-3 max-w-3xl text-sm leading-relaxed text-dema-muted">
+          On regarde les grands sujets qui ralentissent l&apos;entreprise, créent de la
+          dépendance au dirigeant ou rendent l&apos;exécution plus lourde qu&apos;elle ne devrait l&apos;être.
+        </p>
+        <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+          {organisationPillars.map((pillar, index) => (
             <div
-              key={result}
-              className="rounded-[0.95rem] border border-dema-line/70 bg-dema-sage/35 px-4 py-4 text-sm font-medium text-brand-blue sm:rounded-[1rem]"
+              key={pillar}
+              className="rounded-[0.95rem] border border-dema-line/70 bg-dema-cream/60 px-4 py-4"
             >
-              {result}
+              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest/75">
+                Pilier {index + 1}
+              </p>
+              <p className="mt-2 text-sm font-semibold leading-relaxed text-brand-blue">
+                {pillar}
+              </p>
             </div>
           ))}
         </div>
+      </section>
+
+      <section className={sectionClass}>
+        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
+          Repère de gain
+        </p>
+        <h3 className="mt-2 text-xl font-semibold tracking-tight text-brand-blue md:text-2xl">
+          En général, l&apos;audit permet d&apos;identifier 20 à 30 % de temps récupérable
+        </h3>
+        <p className="mt-3 max-w-3xl text-sm leading-relaxed text-dema-muted">
+          L&apos;objectif n&apos;est pas de promettre une transformation immédiate, mais de
+          repérer concrètement où du temps peut être récupéré grâce à une meilleure organisation.
+        </p>
       </section>
 
       <FaqSection title="Questions fréquentes" items={organisationFaq} />
@@ -311,30 +345,15 @@ function AssistantExpandedContent({
           <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
             Récap de l&apos;offre
           </p>
-          <h3 className="mt-2 text-xl font-semibold tracking-tight text-brand-blue md:text-2xl">
+          <h3 className="mt-2 text-[1.5rem] font-semibold tracking-tight text-brand-blue md:text-[1.85rem]">
             Un parcours pensé pour déléguer sans tout construire seul
           </h3>
-          <p className="mt-3 text-sm leading-relaxed text-dema-muted">
-            L&apos;idée n&apos;est pas seulement de recruter un renfort. Le parcours prépare
-            d&apos;abord les bases, puis l&apos;alternance permet une reprise progressive de
-            l&apos;administratif dans l&apos;entreprise.
-          </p>
-        </div>
-        <div className="mt-5 grid gap-3">
-          {assistantHighlights.map((item) => (
-            <div key={item} className="flex gap-3">
-              <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
-                <Check className="h-3.5 w-3.5" aria-hidden="true" />
-              </span>
-              <p className="text-sm leading-relaxed text-dema-muted">{item}</p>
-            </div>
-          ))}
         </div>
         <div className="mt-5 grid gap-4 md:grid-cols-2">
           {assistantTimeline.map((item) => (
             <article
               key={item.step}
-              className="rounded-[0.95rem] border border-dema-line/70 bg-dema-sage/35 px-4 py-4 sm:rounded-[1rem]"
+              className="rounded-[0.95rem] bg-dema-sage/35 px-4 py-4 sm:rounded-[1rem]"
             >
               <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest/80">
                 {item.step}
@@ -351,14 +370,14 @@ function AssistantExpandedContent({
       </section>
 
       <section className={sectionClass}>
-        <h3 className="text-xl font-semibold tracking-tight text-brand-blue md:text-2xl">
-          Ce qui peut être repris
+        <h3 className="text-[1.5rem] font-semibold tracking-tight text-brand-blue md:text-[1.85rem]">
+          Ce qui peut être pris en charge
         </h3>
         <div className="mt-5 grid gap-4 md:grid-cols-2">
           {assistantResponsibilities.map((item) => (
             <article
               key={item.title}
-              className="rounded-[0.95rem] border border-dema-line/70 bg-dema-paper px-4 py-4 sm:rounded-[1rem]"
+              className="rounded-[0.95rem] bg-dema-sage/18 px-4 py-4 sm:rounded-[1rem]"
             >
               <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage/55 text-dema-forest">
                 <item.icon className="h-4.5 w-4.5" aria-hidden="true" />
@@ -378,7 +397,7 @@ function AssistantExpandedContent({
         <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
           Repère de coût
         </p>
-        <h3 className="mt-2 text-xl font-semibold tracking-tight text-brand-blue md:text-2xl">
+        <h3 className="mt-2 text-[1.5rem] font-semibold tracking-tight text-brand-blue md:text-[1.85rem]">
           Un coût plus accessible qu&apos;une embauche classique
         </h3>
         <div className="mt-5 grid gap-4 md:grid-cols-2">
@@ -391,9 +410,9 @@ function AssistantExpandedContent({
                   : "border-dema-line/70 bg-dema-paper"
               }`}
             >
-              <p className="text-sm font-semibold text-brand-blue">{item.title}</p>
+              <p className="text-sm font-medium text-brand-blue">{item.title}</p>
               <p
-                className={`mt-2 text-2xl font-semibold tracking-tight ${
+                className={`mt-2 text-2xl font-medium tracking-tight ${
                   item.emphasis ? "text-dema-forest" : "text-brand-blue"
                 }`}
               >
@@ -408,6 +427,24 @@ function AssistantExpandedContent({
       </section>
 
       <FaqSection title="Questions fréquentes" items={assistantFaq} />
+    </div>
+  );
+}
+
+function FiscalAuditExpandedContent({
+  variant,
+}: {
+  variant: "modal" | "page";
+}) {
+  const sectionGap = variant === "modal" ? "space-y-5 sm:space-y-6" : "space-y-8";
+  const sectionClass =
+    variant === "modal"
+      ? "rounded-[1.05rem] border border-dema-line bg-dema-paper p-4 sm:rounded-[1.15rem] sm:p-5"
+      : "rounded-[1.15rem] border border-dema-line bg-dema-paper p-5";
+
+  return (
+    <div className={sectionGap}>
+      <FaqSection title="Questions fréquentes" items={fiscalAuditFaq} />
     </div>
   );
 }
@@ -428,7 +465,7 @@ function FaqSection({
 
   return (
     <section className={sectionClass}>
-      <h3 className="text-xl font-semibold tracking-tight text-brand-blue md:text-2xl">
+      <h3 className="text-[1.5rem] font-semibold tracking-tight text-brand-blue md:text-[1.85rem]">
         {title}
       </h3>
       <div className="mt-5 divide-y divide-dema-line/70 rounded-[1rem] border border-dema-line/70 bg-dema-paper">
@@ -445,7 +482,7 @@ function FaqSection({
                 aria-expanded={isOpen}
                 aria-controls={answerId}
               >
-                <span className="text-sm font-semibold leading-snug text-brand-blue">
+                <span className="text-sm font-medium leading-snug text-brand-blue">
                   {item.question}
                 </span>
                 <ChevronDown

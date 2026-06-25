@@ -85,16 +85,16 @@ export const demaaServices = [
     shortDescription:
       "Un prévisionnel clair pour défendre votre projet, piloter vos chiffres et sécuriser vos décisions.",
     description:
-      "Construction d'un prévisionnel avec hypothèses, chiffre d'affaires, charges, trésorerie, seuil de rentabilité et besoin de financement.",
+      "Un prévisionnel financier construit à partir de vos hypothèses pour clarifier chiffre d'affaires, charges, trésorerie et besoin de financement.",
     bestFor:
-      "Les lancements, demandes de financement, investissements et modèles avec coûts importants.",
+      "Les lancements, demandes de financement, investissements et activités qui ont besoin de repères chiffrés clairs.",
     price: "550 €",
     tags: ["Financement", "Business plan", "Trésorerie"],
     icon: "TrendingUp",
     deliverables: [
-      "Hypothèses structurées",
-      "Prévisionnel financier",
-      "Lecture des besoins de financement",
+      "Hypothèses de chiffre d'affaires et de charges",
+      "Prévisionnel financier complet",
+      "Besoin de financement et seuil de rentabilité",
     ],
     usefulFor: ["Financement", "Investissement", "Lancement"],
   },
@@ -103,18 +103,19 @@ export const demaaServices = [
     name: "Audit d'optimisation et conformité fiscale",
     category: "Finance",
     shortDescription:
-      "Un audit ciblé pour repérer les risques fiscaux, corriger les écarts et éviter les mauvaises surprises.",
+      "Un audit ciblé pour repérer les risques, identifier les optimisations possibles et éviter les mauvaises surprises.",
     description:
-      "Revue des zones sensibles : TVA, caisse, justificatifs, notes de frais, cohérence bancaire et pratiques administratives.",
+      "Revue des zones sensibles pour repérer les écarts, sécuriser les pratiques et identifier les optimisations fiscales ou administratives possibles.",
     bestFor:
       "Les activités avec caisse, TVA, volume, historique désorganisé ou risque documentaire.",
     price: "850 €",
     tags: ["Fiscalité", "Audit", "TVA"],
     icon: "FileSearch",
     deliverables: [
-      "Points de risque",
-      "Actions correctives",
-      "Synthèse de conformité",
+      "Points de risque fiscaux identifiés",
+      "Optimisations fiscales ou administratives possibles repérées",
+      "Liste d'actions correctives priorisées",
+      "Synthèse de conformité remise en fin d'audit",
     ],
     usefulFor: ["TVA", "Caisse", "Contrôle", "Volume"],
   },
@@ -142,18 +143,21 @@ export const demaaServices = [
     name: "Site web & visibilité digitale",
     category: "Acquisition",
     shortDescription:
-      "Une présence digitale claire pour rassurer, expliquer votre offre et transformer les visites en contacts.",
+      "Des supports clairs pour présenter votre activité et faciliter la prise de contact.",
     description:
-      "Tout le nécessaire pour présenter votre entreprise proprement : site vitrine, page LinkedIn dirigeant, présentation entreprise, carte de visite et signature email.",
+      "Les supports essentiels pour présenter votre entreprise et faciliter la prise de contact.",
     bestFor:
-      "Les activités qui doivent rassurer, être trouvées, expliquer leur offre et convertir les visiteurs en contacts.",
+      "Les activités qui doivent rassurer, être visibles et mieux présenter leur offre.",
     price: "1 350 €",
     tags: ["Web", "SEO", "Confiance"],
     icon: "Laptop",
     deliverables: [
-      "Structure du site",
-      "Pages essentielles",
-      "Mise en ligne et configuration",
+      "Site vitrine",
+      "Page LinkedIn entreprise",
+      "Page LinkedIn dirigeant",
+      "Présentation entreprise",
+      "Signature email",
+      "Carte de visite",
     ],
     usefulFor: ["Visibilité", "Crédibilité", "Prise de contact"],
   },
@@ -161,18 +165,18 @@ export const demaaServices = [
     slug: "organisation-automatisation",
     name: "Organisation",
     category: "Systèmes",
-    shortDescription: "Organiser l'activité puis automatiser ce qui se répète.",
+    shortDescription: "Un audit d'organisation pour repérer les blocages et les priorités.",
     description:
-      "Offre Demaa pour organiser les flux de travail, choisir les bons outils, connecter les étapes et automatiser les tâches répétitives.",
+      "Un audit d'organisation pour prendre du recul, identifier les points de blocage, clarifier les priorités et repérer les besoins de structuration les plus utiles.",
     bestFor:
       "Les entreprises qui perdent du temps sur relances, devis, documents, reporting, planning ou suivi client.",
-    price: "1 500 €",
-    tags: ["Organisation", "Automatisation", "Demaa"],
+    price: "Audit gratuit",
+    tags: ["Organisation", "Audit", "Demaa"],
     icon: "Workflow",
     deliverables: [
-      "Analyse de vos tâches et blocages",
-      "Organisation des outils et documents",
-      "Automatisations testées et documentées",
+      "Analyse de vos tâches, blocages et zones de dépendance",
+      "Lecture claire des priorités d'organisation",
+      "Recommandations concrètes sur les besoins à traiter ensuite",
     ],
     usefulFor: ["Relances", "Documents", "Reporting", "Planning"],
   },
@@ -180,20 +184,44 @@ export const demaaServices = [
     slug: "marketing-vente",
     name: "Système Marketing & Vente",
     category: "Acquisition",
-    shortDescription: "Transformer l'attention en demandes entrantes.",
+    shortDescription:
+      "Mettre en place un système marketing et vente régulier, puis le tester et l'ajuster.",
     description:
-      "Construction d'un système d'acquisition : offre, tunnel, page de conversion, CRM, séquences et suivi commercial.",
+      "Un système marketing et vente avec offre clarifiée, actions séquencées, suivi commercial, tests et ajustements.",
     bestFor:
-      "Les activités qui doivent générer des leads régulièrement et suivre les opportunités sans dispersion.",
-    price: "Sur devis",
+      "Les activités qui veulent structurer leur acquisition et garder un rythme commercial plus régulier.",
+    price: "450 €",
     tags: ["Marketing", "Vente", "CRM"],
     icon: "Target",
     deliverables: [
-      "Architecture du tunnel",
-      "CRM et suivi commercial",
-      "Séquences et points de conversion",
+      "Offres clarifiées",
+      "Plan d'actions marketing et vente sur 3 mois",
+      "Suivi commercial mis en place",
+      "Phase de test et d'ajustement",
+      "Suivi sur 1 mois",
     ],
-    usefulFor: ["Lead generation", "CRM", "Relance commerciale"],
+    usefulFor: ["Acquisition", "CRM", "Régularité commerciale"],
+  },
+  {
+    slug: "organisation-equipes",
+    name: "Organisation des équipes",
+    category: "Systèmes",
+    shortDescription:
+      "Clarifier les rôles, les responsabilités et les besoins d'organisation de l'équipe.",
+    description:
+      "Analyse de l'organisation actuelle pour clarifier qui fait quoi, repérer les zones floues et proposer les ajustements utiles.",
+    bestFor:
+      "Les dirigeants qui sentent que l'équipe manque de clarté ou que l'organisation doit être recadrée.",
+    price: "350 €",
+    tags: ["Organisation", "Équipe", "Management"],
+    icon: "Users",
+    deliverables: [
+      "Rôles et responsabilités clarifiés",
+      "Zones de flou et chevauchements identifiés",
+      "Besoins de formation repérés",
+      "Ajustements d'organisation ou de management recommandés",
+    ],
+    usefulFor: ["Rôles", "Management", "Structuration interne"],
   },
   {
     slug: "publicite-google",
@@ -273,21 +301,23 @@ export const demaaServices = [
   },
   {
     slug: "assistant-polyvalent",
-    name: "Recruter un assistant polyvalent",
+    name: "Recrutez un assistant formé",
     category: "Support opérationnel",
     shortDescription:
-      "Une assistante déjà formée pour reprendre votre administratif, soulager votre charge mentale et vous faire gagner du temps dès le départ.",
+      "Une assistante formée via POEI puis intégrée en alternance pour reprendre l'administratif utile avec un profil motivé, mature et sélectionné.",
     description:
-      "Déléguez vos tâches administratives à une professionnelle formée, prête à reprendre les bases utiles de la gestion d'entreprise.",
+      "Une assistante formée dans le cadre d'une POEI puis intégrée en alternance pour reprendre l'administratif utile de votre entreprise et vous soulager rapidement.",
     bestFor:
-      "Les dirigeants qui veulent déléguer à la bonne personne, déjà opérationnelle, sans porter seuls toute la montée en compétence.",
+      "Les dirigeants qui veulent déléguer à un profil sélectionné, souvent en reconversion, sans porter seuls toute la montée en compétence.",
     price: "500 €",
     tags: ["Assistant", "Recrutement", "Délégation"],
     icon: "UserRoundCheck",
     deliverables: [
-      "Tâches administratives déléguées",
-      "Parcours encadré et sécurisé",
-      "Renfort adapté à vos besoins réels",
+      "Profil présélectionné",
+      "Assistante formée aux bases administratives utiles via POEI",
+      "Structuration des processus clés",
+      "Intégration cadrée dans l'entreprise",
+      "Reprise progressive des tâches administratives",
     ],
     usefulFor: ["Délégation", "Admin", "Temps gagné", "Renfort"],
   },
@@ -310,4 +340,15 @@ export function getDemaaServices(): DemaaService[] {
 
 export function getDemaaServiceBySlug(slug: string): DemaaService | null {
   return demaaServices.find((service) => service.slug === slug) ?? null;
+}
+
+const demaaManagedServiceSlugs = new Set([
+  "organisation-automatisation",
+  "marketing-vente",
+  "organisation-equipes",
+  "assistant-polyvalent",
+]);
+
+export function isDemaaManagedService(slug: string) {
+  return demaaManagedServiceSlugs.has(slug);
 }

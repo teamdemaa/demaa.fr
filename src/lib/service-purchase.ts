@@ -12,13 +12,18 @@ export type PurchasableServiceConfig = {
 
 const purchasableServiceConfigs = [
   {
-    slug: "organisation-automatisation",
-    unitAmount: 1500_00,
+    slug: "assistant-polyvalent",
+    unitAmount: 500_00,
     currency: "eur",
   },
   {
-    slug: "assistant-polyvalent",
-    unitAmount: 500_00,
+    slug: "marketing-vente",
+    unitAmount: 450_00,
+    currency: "eur",
+  },
+  {
+    slug: "organisation-equipes",
+    unitAmount: 350_00,
     currency: "eur",
   },
   {

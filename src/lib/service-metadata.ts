@@ -7,13 +7,13 @@ export function getServicePageMetadata(service: DemaaService): Metadata {
   const metadataTitle = isAssistantLanding
     ? `${service.name} - Demaa`
     : isOrganisationLanding
-      ? "Organisation pour TPE - Demaa"
+      ? "Audit d'organisation pour TPE - Demaa"
       : `${service.name} - Annuaire services Demaa`;
   const canonicalPath = isOrganisationLanding
     ? "/organisation-automatisation"
     : `/annuaire-services/${service.slug}`;
   const metadataDescription = isOrganisationLanding
-    ? "Organisez votre entreprise avec les bons systèmes, process et automatisations pour mieux piloter l'activité, déléguer plus sereinement et soutenir une croissance durable."
+    ? "Faites un audit d'organisation pour identifier les blocages, clarifier les priorités et repérer les besoins les plus utiles pour la suite."
     : service.description;
 
   return {
