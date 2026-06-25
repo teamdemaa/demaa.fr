@@ -174,7 +174,7 @@ export default function OrganisationAutonomyDiscovery() {
                       scroll={false}
                       className="demaa-primary-button"
                     >
-                      Diagnostic d’organisation offert
+                      Diagnostic organisation offert
                     </Link>
                   </div>
                 ) : null}
