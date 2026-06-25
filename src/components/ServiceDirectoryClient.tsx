@@ -303,9 +303,9 @@ function ServiceCard({
         <p className="mt-3 line-clamp-3 text-[0.98rem] leading-relaxed text-dema-muted">
           {service.shortDescription}
         </p>
-        <div className="mt-5 flex items-end justify-between gap-3">
+        <div className="mt-auto flex items-end justify-between gap-3 pt-5">
           {purchaseConfig ? (
-            <p className="text-[1.15rem] font-semibold tracking-tight text-brand-blue">
+            <p className="text-[1.15rem] font-medium tracking-tight text-brand-blue">
               {service.price}
             </p>
           ) : (

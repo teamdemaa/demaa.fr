@@ -70,8 +70,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
           }}
           invertHeroTitleStyles
           heroDescriptionLines={{
-            primary:
-              "Déléguez ce qui vous ralentit. On s'occupe des actions clés, vous vous occupez du développement.",
+            primary: "Déléguez ce qui vous ralentit.",
             secondary: "",
           }}
           heroActions={
