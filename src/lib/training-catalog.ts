@@ -1728,15 +1728,25 @@ export const demaaTrainings = [
 
 export type DemaaTrainingSlug = (typeof demaaTrainings)[number]["slug"];
 
+const HIDDEN_TRAINING_SLUGS = new Set<DemaaTrainingSlug>([
+  "formation-organisation-systeme-process",
+]);
+
 const trainingBySlug = Object.fromEntries(
   demaaTrainings.map((training) => [training.slug, training]),
 ) as Partial<Record<DemaaTrainingSlug, DemaaTraining>>;
 
 export function getDemaaTrainings(): DemaaTraining[] {
-  return [...demaaTrainings];
+  return demaaTrainings.filter(
+    (training) => !HIDDEN_TRAINING_SLUGS.has(training.slug as DemaaTrainingSlug),
+  );
 }
 
 export function getDemaaTrainingBySlug(slug: string): DemaaTraining | null {
+  if (HIDDEN_TRAINING_SLUGS.has(slug as DemaaTrainingSlug)) {
+    return null;
+  }
+
   return trainingBySlug[slug as DemaaTrainingSlug] ?? null;
 }
 

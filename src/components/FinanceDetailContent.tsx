@@ -36,44 +36,21 @@ export default function FinanceDetailContent({
   return (
     <div className={compact ? "space-y-6" : "space-y-8"}>
       <section className={compact ? "" : "rounded-[1.25rem] border border-dema-line bg-dema-paper p-6 sm:p-8"}>
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-          <div className="max-w-3xl">
-            <div className="flex items-center gap-3">
-              <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
-                <ServiceIcon icon={item.icon} className="h-5 w-5" aria-hidden="true" />
-              </span>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
-                {item.category}
-              </p>
-            </div>
-            <h1 className="mt-4 text-4xl font-semibold tracking-tight text-brand-blue md:text-5xl">
-              {item.name}
-            </h1>
-            <p className="mt-4 text-base leading-relaxed text-dema-muted md:text-lg">
-              {item.description}
+        <div className="max-w-3xl">
+          <div className="flex items-center gap-3">
+            <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
+              <ServiceIcon icon={item.icon} className="h-5 w-5" aria-hidden="true" />
+            </span>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
+              {item.category}
             </p>
           </div>
-          {!compact ? (
-            <aside className="w-full rounded-[1.15rem] border border-dema-line bg-dema-cream/70 p-5 lg:max-w-sm">
-              <p className="text-sm font-semibold text-brand-blue">Repère utile</p>
-              <div className="mt-3 flex flex-wrap items-center gap-2">
-                <span className="inline-flex rounded-full bg-dema-sage/75 px-3 py-1 text-[10px] font-medium text-brand-blue/70">
-                  {item.offerHint}
-                </span>
-                <span className="inline-flex rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-medium text-brand-blue/70">
-                  {item.family}
-                </span>
-                {item.partner ? (
-                  <span className="inline-flex rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-medium lowercase text-brand-blue/70">
-                    partenaire
-                  </span>
-                ) : null}
-              </div>
-              <p className="mt-3 text-sm leading-relaxed text-dema-muted">
-                {item.bestFor}
-              </p>
-            </aside>
-          ) : null}
+          <h1 className="mt-4 text-4xl font-semibold tracking-tight text-brand-blue md:text-5xl">
+            {item.name}
+          </h1>
+          <p className="mt-4 text-base leading-relaxed text-dema-muted md:text-lg">
+            {item.description}
+          </p>
         </div>
       </section>
 

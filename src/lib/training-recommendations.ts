@@ -14,7 +14,6 @@ export type GroupedRecommendedTrainings = {
 };
 
 const DEFAULT_TRAINING_ORDER = [
-  "formation-organisation-systeme-process",
   "management-equipe-proximite",
   "communication-professionnelle-equipe",
   "documents-obligations-rgpd",
@@ -723,14 +722,13 @@ function getOrderedRecommendedTrainingsForSystem(
 ): DemaaTraining[] {
   const systemOverrides = TRAINING_OVERRIDES_BY_SYSTEM[systemSlug] ?? [];
   const sectorRecommendations = TRAINING_RECOMMENDATIONS_BY_SECTOR[sectorLabel] ?? DEFAULT_TRAINING_ORDER;
-  const pinnedTrainings = ["formation-organisation-systeme-process"] satisfies DemaaTrainingSlug[];
   const sectorTransverseRecommendations = sectorRecommendations.filter((slug) => {
     const training = getDemaaTrainingBySlug(slug);
     return training ? getTrainingRecommendationGroup(training) === "transverse" : false;
   });
   const slugs = systemOverrides.length
-    ? [...pinnedTrainings, ...systemOverrides, ...sectorTransverseRecommendations, ...DEFAULT_TRAINING_ORDER]
-    : [...pinnedTrainings, ...sectorRecommendations];
+    ? [...systemOverrides, ...sectorTransverseRecommendations, ...DEFAULT_TRAINING_ORDER]
+    : [...sectorRecommendations];
 
   const seen = new Set<string>();
   const trainings: DemaaTraining[] = [];

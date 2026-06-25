@@ -36,44 +36,26 @@ export default function TrainingDetailContent({
   return (
     <div className={compact ? "space-y-6" : "space-y-8"}>
       <section className={compact ? "" : "rounded-[1.25rem] border border-dema-line bg-dema-paper p-6 sm:p-8"}>
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-          <div className="max-w-3xl">
-            <div className="flex items-center gap-3">
-              <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
-                <ServiceIcon icon={training.icon} className="h-5 w-5" aria-hidden="true" />
-              </span>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
-                {training.category}
-              </p>
-            </div>
-            <h1 className="mt-4 text-4xl font-semibold tracking-tight text-brand-blue md:text-5xl">
-              {training.name}
-            </h1>
-            <p className="mt-3 text-sm font-medium text-brand-blue/70">
-              {training.provider}
-              {training.format ? ` · ${training.format}` : ""}
-              {training.location ? ` · ${training.location}` : ""}
-            </p>
-            <p className="mt-4 text-base leading-relaxed text-dema-muted md:text-lg">
-              {training.description}
+        <div className="max-w-3xl">
+          <div className="flex items-center gap-3">
+            <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
+              <ServiceIcon icon={training.icon} className="h-5 w-5" aria-hidden="true" />
+            </span>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
+              {training.category}
             </p>
           </div>
-          {!compact ? (
-            <aside className="w-full rounded-[1.15rem] border border-dema-line bg-dema-cream/70 p-5 lg:max-w-sm">
-              <p className="text-sm font-semibold text-brand-blue">Repère utile</p>
-              <div className="mt-3 flex flex-wrap items-center gap-2">
-                <span className="inline-flex rounded-full bg-dema-sage/75 px-3 py-1 text-[10px] font-medium text-brand-blue/70">
-                  {training.family}
-                </span>
-                <span className="inline-flex rounded-full bg-dema-sage/75 px-3 py-1 text-[10px] font-medium text-brand-blue/70">
-                  {training.category}
-                </span>
-              </div>
-              <p className="mt-3 text-sm leading-relaxed text-dema-muted">
-                {training.bestFor}
-              </p>
-            </aside>
-          ) : null}
+          <h1 className="mt-4 text-4xl font-semibold tracking-tight text-brand-blue md:text-5xl">
+            {training.name}
+          </h1>
+          <p className="mt-3 text-sm font-medium text-brand-blue/70">
+            {training.provider}
+            {training.format ? ` · ${training.format}` : ""}
+            {training.location ? ` · ${training.location}` : ""}
+          </p>
+          <p className="mt-4 text-base leading-relaxed text-dema-muted md:text-lg">
+            {training.description}
+          </p>
         </div>
       </section>
 

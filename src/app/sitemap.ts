@@ -14,7 +14,7 @@ import { sectorPageDefinitions } from "@/lib/sector-pages";
 import { sectorTaxonomy } from "@/lib/sector-taxonomy";
 import { demaaServices } from "@/lib/service-catalog";
 import { demaaSuppliers } from "@/lib/supplier-catalog";
-import { demaaTrainings } from "@/lib/training-catalog";
+import { getDemaaTrainings } from "@/lib/training-catalog";
 import { getToolDirectorySlug, hasStandaloneToolPage } from "@/lib/tool-directory";
 import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
 
@@ -164,7 +164,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  const trainingEntries: MetadataRoute.Sitemap = demaaTrainings.map((training) => ({
+  const trainingEntries: MetadataRoute.Sitemap = getDemaaTrainings().map((training) => ({
     url: `${base}/annuaire-formations/${training.slug}`,
     lastModified: now,
     changeFrequency: "monthly" as const,

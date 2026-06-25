@@ -21,40 +21,29 @@ export default function ServiceDetailContent({
   return (
     <div className={compact ? "space-y-6" : "space-y-8"}>
       <section className={compact ? "" : "rounded-[1.25rem] border border-dema-line bg-dema-paper p-6 sm:p-8"}>
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-          <div className="max-w-3xl">
-            <div className="flex items-center gap-3">
-              <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
-                <ServiceIcon icon={service.icon} className="h-5 w-5" aria-hidden="true" />
-              </span>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
-                {service.category}
-              </p>
-            </div>
-            <h1 className="mt-4 text-[2.9rem] font-semibold tracking-tight text-brand-blue md:text-[3.75rem]">
-              {service.name}
-            </h1>
-            <p className="mt-4 text-[1.05rem] leading-relaxed text-dema-muted md:text-[1.28rem]">
-              {service.description}
+        <div className="max-w-3xl">
+          <div className="flex items-center gap-3">
+            <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
+              <ServiceIcon icon={service.icon} className="h-5 w-5" aria-hidden="true" />
+            </span>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
+              {service.category}
             </p>
-            {isOrganisationAudit ? (
-              <Link
-                href={ORGANISATION_AUDIT_BOOKING_URL}
-                className="demaa-primary-button mt-5 w-fit"
-              >
-                Prendre RDV
-              </Link>
-            ) : null}
           </div>
-          {isOrganisationAudit ? null : (
-            <aside className="w-full rounded-[1.15rem] border border-dema-line bg-dema-cream/70 p-5 lg:max-w-sm">
-              <p className="text-base font-semibold text-brand-blue">Tarif</p>
-              <p className="mt-3 text-[1.9rem] font-semibold tracking-tight text-brand-blue md:text-[2.15rem]">
-                {service.price}
-              </p>
-              <ServiceRequestCta service={service} />
-            </aside>
-          )}
+          <h1 className="mt-4 text-[2.9rem] font-semibold tracking-tight text-brand-blue md:text-[3.75rem]">
+            {service.name}
+          </h1>
+          <p className="mt-4 text-[1.05rem] leading-relaxed text-dema-muted md:text-[1.28rem]">
+            {service.description}
+          </p>
+          {isOrganisationAudit ? (
+            <Link
+              href={ORGANISATION_AUDIT_BOOKING_URL}
+              className="demaa-primary-button mt-5 w-fit"
+            >
+              Prendre RDV
+            </Link>
+          ) : null}
         </div>
       </section>
 
@@ -75,16 +64,15 @@ export default function ServiceDetailContent({
           </div>
 
           <div className="rounded-[1.25rem] border border-dema-line bg-dema-paper p-6">
-            <h2 className="text-2xl font-semibold text-brand-blue md:text-[1.7rem]">Utile pour</h2>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {service.usefulFor.map((item) => (
-                <span
-                  key={item}
-                  className="rounded-full bg-dema-sage/75 px-3 py-1.5 text-xs font-medium text-brand-blue/75"
-                >
-                  {item}
-                </span>
-              ))}
+            <h2 className="text-2xl font-semibold text-brand-blue md:text-[1.7rem]">Accès</h2>
+            <p className="mt-4 text-[1rem] leading-relaxed text-dema-muted md:text-[1.05rem]">
+              Tarif
+            </p>
+            <p className="mt-2 text-[1.9rem] font-semibold tracking-tight text-brand-blue md:text-[2.15rem]">
+              {service.price}
+            </p>
+            <div className="mt-5">
+              <ServiceRequestCta service={service} />
             </div>
           </div>
         </section>

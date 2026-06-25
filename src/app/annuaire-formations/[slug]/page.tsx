@@ -6,7 +6,7 @@ import Navbar from "@/components/Navbar";
 import RelatedSystemsLinks from "@/components/RelatedSystemsLinks";
 import TrainingDetailContent from "@/components/TrainingDetailContent";
 import { getRelatedSystemsForTrainingSlug } from "@/lib/related-systems";
-import { demaaTrainings, getDemaaTrainingBySlug } from "@/lib/training-catalog";
+import { getDemaaTrainings, getDemaaTrainingBySlug } from "@/lib/training-catalog";
 
 type TrainingDetailPageProps = {
   params: Promise<{
@@ -15,7 +15,7 @@ type TrainingDetailPageProps = {
 };
 
 export async function generateStaticParams() {
-  return demaaTrainings.map((training) => ({
+  return getDemaaTrainings().map((training) => ({
     slug: training.slug,
   }));
 }
