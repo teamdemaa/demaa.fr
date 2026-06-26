@@ -23,7 +23,7 @@ const purchasableServiceConfigs = [
   },
   {
     slug: "organisation-equipes",
-    unitAmount: 350_00,
+    unitAmount: 850_00,
     currency: "eur",
   },
   {

@@ -204,24 +204,24 @@ export const demaaServices = [
   },
   {
     slug: "organisation-equipes",
-    name: "Organisation des équipes et des tâches",
+    name: "Organisation opérationnelle",
     category: "Systèmes",
     shortDescription:
-      "Clarifier qui fait quoi, mieux répartir les tâches et remettre de l'ordre dans le fonctionnement quotidien.",
+      "Structurer l'organisation interne pour clarifier l'organigramme, les rôles, les responsabilités et la répartition des tâches.",
     description:
-      "Analyse de l'organisation actuelle pour clarifier qui fait quoi, repérer les zones floues et proposer les ajustements utiles.",
+      "Mise en place d'une organisation opérationnelle claire avec organigramme, rôles et responsabilités de chacun, politique de rémunération et répartition complète des tâches.",
     bestFor:
-      "Les dirigeants qui sentent que les rôles ne sont pas clairs, que certaines tâches sont mal réparties ou que l'équipe perd du temps dans l'organisation du quotidien.",
-    price: "350 €",
-    tags: ["Organisation", "Équipe", "Management"],
+      "Les dirigeants qui veulent sortir du flou, mieux cadrer leur équipe et poser un fonctionnement plus lisible, stable et autonome au quotidien.",
+    price: "850 €",
+    tags: ["Organisation", "Rôles", "Management"],
     icon: "Users",
     deliverables: [
-      "Rôles et responsabilités clarifiés",
-      "Zones de flou et chevauchements identifiés",
-      "Besoins de formation repérés",
-      "Ajustements d'organisation ou de management recommandés",
+      "Organigramme clair et lisible",
+      "Rôles et responsabilités de chacun formalisés",
+      "Politique de rémunération cadrée",
+      "Répartition complète des tâches",
     ],
-    usefulFor: ["Rôles", "Management", "Structuration interne"],
+    usefulFor: ["Structuration interne", "Management", "Croissance d'équipe"],
   },
   {
     slug: "publicite-google",
