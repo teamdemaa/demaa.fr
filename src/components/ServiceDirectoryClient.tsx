@@ -519,7 +519,7 @@ function ServiceTrustSection() {
             <Link
               href={ORGANISATION_AUDIT_MODAL_HREF}
               scroll={false}
-              className="demaa-secondary-button border-dema-cream/70 bg-dema-cream/50 text-brand-blue hover:border-dema-cream hover:bg-dema-cream/60 hover:text-dema-forest"
+              className="demaa-secondary-button border-dema-paper/25 bg-dema-paper/8 text-dema-paper hover:border-dema-paper/40 hover:bg-dema-paper/12 hover:text-dema-paper"
             >
               Demandez votre diagnostic organisation
             </Link>
