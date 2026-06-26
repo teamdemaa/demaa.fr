@@ -891,7 +891,7 @@ export default function SystemDetailContent({
         <Link
           href={ORGANISATION_AUDIT_MODAL_HREF}
           scroll={false}
-          className="demaa-primary-button"
+          className="demaa-secondary-button self-start"
         >
           Déléguez ce qui vous ralentit
         </Link>
