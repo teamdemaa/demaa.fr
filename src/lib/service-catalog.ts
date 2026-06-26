@@ -200,7 +200,7 @@ export const demaaServices = [
     bestFor:
       "Les activités qui veulent structurer leur acquisition, mieux suivre leurs actions et garder un rythme marketing et commercial plus régulier.",
     duration: "1 mois",
-    price: "850 €",
+    price: "750 €",
     tags: ["Marketing", "Vente", "CRM"],
     icon: "Target",
     deliverables: [
