@@ -18,6 +18,7 @@ import {
   readServiceCartSlugs,
   writeServiceCartSlugs,
 } from "@/lib/service-cart";
+import { ORGANISATION_AUDIT_MODAL_HREF } from "@/lib/organisation-audit";
 import type { DemaaService, ServiceCategory } from "@/lib/service-catalog";
 
 const serviceFlowSteps = [
@@ -514,6 +515,15 @@ function ServiceTrustSection() {
           <p className="mt-5 text-sm font-medium tracking-[0.01em] text-dema-paper/72">
             {serviceTestimonial.author}
           </p>
+          <div className="mt-7 flex justify-center">
+            <Link
+              href={ORGANISATION_AUDIT_MODAL_HREF}
+              scroll={false}
+              className="demaa-secondary-button border-dema-cream/70 bg-dema-cream/50 text-brand-blue hover:border-dema-cream hover:bg-dema-cream/60 hover:text-dema-forest"
+            >
+              Demandez votre diagnostic organisation
+            </Link>
+          </div>
         </div>
       </section>
     </div>
