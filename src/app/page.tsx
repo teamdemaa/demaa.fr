@@ -8,16 +8,16 @@ import { ORGANISATION_AUDIT_MODAL_HREF } from "@/lib/organisation-audit";
 import { serviceCategories } from "@/lib/service-catalog";
 
 export const metadata: Metadata = {
-  title: "Déléguez ce qui vous ralentit | Services Demaa",
+  title: "Demaa | Plateforme de services clés en main pour dirigeants de petites entreprises",
   description:
-    "Découvrez les services Demaa pour déléguer efficacement l'administratif et l'opérationnel à des personnes de confiance, avec un cadre clair et plus de sérénité.",
+    "Une plateforme de services transverse pour dirigeants de TPE qui veulent déléguer ce qui les ralentit, mieux organiser leur entreprise et libérer du temps.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Déléguez ce qui vous ralentit | Services Demaa",
+    title: "Demaa | Plateforme de services clés en main pour dirigeants de petites entreprises",
     description:
-      "Découvrez les services Demaa pour déléguer efficacement l'administratif et l'opérationnel à des personnes de confiance, avec un cadre clair et plus de sérénité.",
+      "Une plateforme de services transverse pour dirigeants de TPE qui veulent déléguer ce qui les ralentit, mieux organiser leur entreprise et libérer du temps.",
     url: "/",
     siteName: "Demaa",
     locale: "fr_FR",
@@ -25,9 +25,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Déléguez ce qui vous ralentit | Services Demaa",
+    title: "Demaa | Plateforme de services clés en main pour dirigeants de petites entreprises",
     description:
-      "Découvrez les services Demaa pour déléguer efficacement l'administratif et l'opérationnel à des personnes de confiance, avec un cadre clair et plus de sérénité.",
+      "Une plateforme de services transverse pour dirigeants de TPE qui veulent déléguer ce qui les ralentit, mieux organiser leur entreprise et libérer du temps.",
   },
 };
 

@@ -79,7 +79,7 @@ export default function AssistantPackSelector({
       <button
         type="button"
         onClick={() => setIsOpen((current) => !current)}
-        className={`inline-flex items-center justify-between gap-3 rounded-full border border-dema-line bg-dema-paper px-4 py-3 text-[1.15rem] font-medium text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest ${
+        className={`inline-flex items-center justify-between gap-3 rounded-full border border-dema-line bg-dema-paper px-4 py-3 text-[0.92rem] font-normal text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest ${
           fullWidth ? "w-full" : ""
         }`}
         aria-expanded={isOpen}
@@ -132,11 +132,11 @@ export default function AssistantPackSelector({
                       <Check className="h-3 w-3" aria-hidden="true" />
                     </span>
                     <div className="min-w-0">
-                      <p className="text-[1.15rem] font-medium text-brand-blue">{pack.label}</p>
+                      <p className="text-[0.92rem] font-normal text-brand-blue">{pack.label}</p>
                     </div>
                   </div>
                   <div className="shrink-0 text-right">
-                    <p className="text-[1.15rem] font-medium text-brand-blue">
+                    <p className="text-[0.92rem] font-normal text-brand-blue">
                       {formatPurchasableServicePrice(pack.unitAmount)} HT
                     </p>
                   </div>

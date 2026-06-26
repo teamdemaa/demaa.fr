@@ -53,23 +53,23 @@ const gambetta = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Demaa - Déléguer avec sérénité",
+  title: "Demaa | Plateforme de services clés en main pour dirigeants de petites entreprises",
   description:
-    "Demaa aide les dirigeants de TPE à déléguer efficacement l'administratif et les opérations à des personnes de confiance, avec plus de sérénité.",
+    "Une plateforme de services transverse pour dirigeants de TPE qui veulent déléguer ce qui les ralentit, mieux organiser leur entreprise et libérer du temps.",
   metadataBase: new URL('https://demaa.fr'),
   openGraph: {
-    title: "Demaa - Déléguer avec sérénité",
+    title: "Demaa | Plateforme de services clés en main pour dirigeants de petites entreprises",
     description:
-      "Demaa aide les dirigeants de TPE à déléguer efficacement l'administratif et les opérations à des personnes de confiance, avec plus de sérénité.",
+      "Une plateforme de services transverse pour dirigeants de TPE qui veulent déléguer ce qui les ralentit, mieux organiser leur entreprise et libérer du temps.",
     siteName: "Demaa",
     locale: "fr_FR",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Demaa - Déléguer avec sérénité",
+    title: "Demaa | Plateforme de services clés en main pour dirigeants de petites entreprises",
     description:
-      "Demaa aide les dirigeants de TPE à déléguer efficacement l'administratif et les opérations à des personnes de confiance, avec plus de sérénité.",
+      "Une plateforme de services transverse pour dirigeants de TPE qui veulent déléguer ce qui les ralentit, mieux organiser leur entreprise et libérer du temps.",
   },
   applicationName: "Demaa",
   appleWebApp: {

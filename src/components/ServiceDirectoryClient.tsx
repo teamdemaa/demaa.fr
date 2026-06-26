@@ -374,7 +374,7 @@ function ServiceCard({
           {isAssistantService ? (
             <p className="text-[1rem] font-medium text-dema-muted">3 packs disponibles</p>
           ) : purchaseConfig ? (
-            <p className="text-[1.15rem] font-medium tracking-tight text-brand-blue">
+            <p className="text-[0.92rem] font-normal tracking-tight text-brand-blue">
               {service.price}
             </p>
           ) : (
