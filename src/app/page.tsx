@@ -72,8 +72,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
           invertHeroTitleStyles
           heroDescriptionLines={{
             primary: "Votre entreprise ne devrait pas reposer que sur vous.",
-            secondary:
-              "Demaa vous aide à déléguer efficacement ce qui vous ralentit, à des personnes de confiance, avec un cadre plus clair et plus de sérénité.",
+            secondary: "",
           }}
           heroActions={
             <Link
