@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { BriefcaseBusiness } from "lucide-react";
+import { BriefcaseBusiness, UserRound } from "lucide-react";
 import NavbarCartIndicator from "@/components/NavbarCartIndicator";
 import ServiceCartTray from "@/components/ServiceCartTray";
 import DemaaWordmark from "@/components/DemaaWordmark";
@@ -35,6 +35,14 @@ export default function Navbar({
               <DemaaWordmark className="text-[1.4rem] sm:text-[1.7rem]" />
             </Link>
             <div className="flex items-center gap-2 sm:gap-3">
+              <Link
+                href="/mon-espace"
+                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-dema-line bg-dema-paper px-3 py-2 text-sm font-medium text-brand-blue/56 transition hover:border-dema-forest/24 hover:text-brand-blue/72 sm:px-3 md:px-4"
+                aria-label="Espace membre"
+              >
+                <UserRound className="h-4 w-4 shrink-0" aria-hidden="true" />
+                <span className="hidden md:inline">Mon espace</span>
+              </Link>
               {showSystemsCta ? (
                 <Link
                   href="/systemes"

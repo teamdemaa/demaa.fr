@@ -71,6 +71,12 @@ export default function ServiceDetailContent({
             <p className="mt-2 text-[1.9rem] font-semibold tracking-tight text-brand-blue md:text-[2.15rem]">
               {service.price}
             </p>
+            <p className="mt-4 text-[1rem] leading-relaxed text-dema-muted md:text-[1.05rem]">
+              Durée
+            </p>
+            <p className="mt-2 text-lg font-semibold tracking-tight text-brand-blue">
+              {service.duration}
+            </p>
             <div className="mt-5">
               <ServiceRequestCta service={service} />
             </div>

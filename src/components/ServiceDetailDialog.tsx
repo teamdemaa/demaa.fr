@@ -122,6 +122,10 @@ export default function ServiceDetailDialog({
                   <p className="mt-3 text-[1.9rem] font-semibold tracking-tight text-brand-blue md:text-[2.15rem]">
                     {service.price}
                   </p>
+                  <p className="mt-4 text-sm font-medium text-dema-muted">Durée</p>
+                  <p className="mt-1 text-lg font-semibold tracking-tight text-brand-blue">
+                    {service.duration}
+                  </p>
                   {!isPurchasable ? (
                     <button
                       type="button"
@@ -135,11 +139,9 @@ export default function ServiceDetailDialog({
               </div>
             ) : null}
 
-            {hasExpandedContent ? (
-              <div className="mt-8">
-                <ServiceExpandedContent serviceSlug={service.slug} variant="modal" />
-              </div>
-            ) : null}
+            <div className="mt-8">
+              <ServiceExpandedContent serviceSlug={service.slug} variant="modal" />
+            </div>
           </div>
         </div>
       </div>

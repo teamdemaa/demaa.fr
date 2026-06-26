@@ -18,7 +18,7 @@ const purchasableServiceConfigs = [
   },
   {
     slug: "marketing-vente",
-    unitAmount: 450_00,
+    unitAmount: 850_00,
     currency: "eur",
   },
   {

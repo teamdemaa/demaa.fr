@@ -4,7 +4,6 @@ import { useState } from "react";
 import {
   BadgeEuro,
   Blocks,
-  Check,
   ChevronDown,
   CircleDollarSign,
   Clock3,
@@ -13,6 +12,8 @@ import {
   Mail,
   Users,
 } from "lucide-react";
+import { getDemaaServiceBySlug } from "@/lib/service-catalog";
+
 type ServiceExpandedContentProps = {
   serviceSlug: string;
   variant?: "modal" | "page";
@@ -197,6 +198,12 @@ export default function ServiceExpandedContent({
   serviceSlug,
   variant = "modal",
 }: ServiceExpandedContentProps) {
+  const service = getDemaaServiceBySlug(serviceSlug);
+
+  if (!service) {
+    return null;
+  }
+
   if (serviceSlug === "organisation-automatisation") {
     return <OrganisationExpandedContent variant={variant} />;
   }
@@ -209,7 +216,43 @@ export default function ServiceExpandedContent({
     return <FiscalAuditExpandedContent variant={variant} />;
   }
 
-  return null;
+  return <GenericServiceExpandedContent serviceSlug={serviceSlug} variant={variant} />;
+}
+
+function GenericServiceExpandedContent({
+  serviceSlug,
+  variant,
+}: {
+  serviceSlug: string;
+  variant: "modal" | "page";
+}) {
+  const service = getDemaaServiceBySlug(serviceSlug);
+
+  if (!service) {
+    return null;
+  }
+
+  const faqItems = [
+    {
+      question: "Ce service est-il adapté à mon activité ?",
+      answer: service.bestFor,
+    },
+    {
+      question: "Qu'est-ce qui est inclus concrètement ?",
+      answer: `Le service inclut ${joinAsSentence(service.deliverables)}.`,
+    },
+    {
+      question: "Combien de temps faut-il prévoir ?",
+      answer: `Le cadrage prévu pour cette prestation est de ${service.duration}, avec un démarrage organisé autour de vos priorités et des éléments à réunir.`,
+    },
+    {
+      question: "Comment la mission démarre-t-elle ?",
+      answer:
+        "On commence par qualifier le besoin, valider le périmètre utile et rassembler les informations nécessaires pour lancer la mission de façon fluide.",
+    },
+  ] as const;
+
+  return <FaqSection title="Questions fréquentes" items={faqItems} variant={variant} />;
 }
 
 function OrganisationExpandedContent({
@@ -437,14 +480,10 @@ function FiscalAuditExpandedContent({
   variant: "modal" | "page";
 }) {
   const sectionGap = variant === "modal" ? "space-y-5 sm:space-y-6" : "space-y-8";
-  const sectionClass =
-    variant === "modal"
-      ? "rounded-[1.05rem] border border-dema-line bg-dema-paper p-4 sm:rounded-[1.15rem] sm:p-5"
-      : "rounded-[1.15rem] border border-dema-line bg-dema-paper p-5";
 
   return (
     <div className={sectionGap}>
-      <FaqSection title="Questions fréquentes" items={fiscalAuditFaq} />
+      <FaqSection title="Questions fréquentes" items={fiscalAuditFaq} variant={variant} />
     </div>
   );
 }
@@ -452,16 +491,20 @@ function FiscalAuditExpandedContent({
 function FaqSection({
   title,
   items,
+  variant = "modal",
 }: {
   title: string;
   items: readonly {
     question: string;
     answer: string;
   }[];
+  variant?: "modal" | "page";
 }) {
   const [openIndex, setOpenIndex] = useState(0);
   const sectionClass =
-    "rounded-[1.05rem] border border-dema-line bg-dema-paper p-4 sm:rounded-[1.15rem] sm:p-5";
+    variant === "modal"
+      ? "rounded-[1.05rem] border border-dema-line bg-dema-paper p-4 sm:rounded-[1.15rem] sm:p-5"
+      : "rounded-[1.15rem] border border-dema-line bg-dema-paper p-5";
 
   return (
     <section className={sectionClass}>
@@ -503,4 +546,23 @@ function FaqSection({
       </div>
     </section>
   );
+}
+
+function joinAsSentence(items: readonly string[]) {
+  if (items.length === 0) {
+    return "un accompagnement défini selon votre besoin";
+  }
+
+  if (items.length === 1) {
+    return items[0].toLowerCase();
+  }
+
+  if (items.length === 2) {
+    return `${items[0].toLowerCase()} et ${items[1].toLowerCase()}`;
+  }
+
+  return `${items
+    .slice(0, -1)
+    .map((item) => item.toLowerCase())
+    .join(", ")} et ${items[items.length - 1].toLowerCase()}`;
 }
