@@ -35,6 +35,16 @@ export default function Navbar({
               <DemaaWordmark className="text-[1.4rem] sm:text-[1.7rem]" />
             </Link>
             <div className="flex items-center gap-2 sm:gap-3">
+              {showSystemsCta ? (
+                <Link
+                  href="/systemes"
+                  className="inline-flex min-h-10 items-center gap-2 px-1 py-2 text-sm font-medium text-brand-blue/56 transition hover:text-brand-blue/72 sm:px-2"
+                  aria-label="Boîte à outil du dirigeant"
+                >
+                  <BriefcaseBusiness className="h-4 w-4 shrink-0" aria-hidden="true" />
+                  <span>Boîte à outil du dirigeant</span>
+                </Link>
+              ) : null}
               <Link
                 href="/mon-espace"
                 className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-dema-line bg-dema-paper px-3 py-2 text-sm font-medium text-brand-blue/56 transition hover:border-dema-forest/24 hover:text-brand-blue/72 sm:px-3 md:px-4"
@@ -43,16 +53,6 @@ export default function Navbar({
                 <UserRound className="h-4 w-4 shrink-0" aria-hidden="true" />
                 <span className="hidden md:inline">Mon espace</span>
               </Link>
-              {showSystemsCta ? (
-                <Link
-                  href="/systemes"
-                  className="inline-flex min-h-10 items-center gap-2 rounded-full border border-dema-line bg-dema-paper px-3 py-2 text-sm font-medium text-brand-blue/56 transition hover:border-dema-forest/24 hover:text-brand-blue/72 sm:px-4"
-                  aria-label="Boîte à outils du dirigeant"
-                >
-                  <BriefcaseBusiness className="h-4 w-4 shrink-0" aria-hidden="true" />
-                  <span>Boîte à outils du dirigeant</span>
-                </Link>
-              ) : null}
               <NavbarCartIndicator />
             </div>
           </div>
