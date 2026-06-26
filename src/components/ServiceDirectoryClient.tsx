@@ -423,7 +423,7 @@ function ServiceCard({
 
 function ServiceTrustSection() {
   return (
-    <div className="mt-20 space-y-24 pt-10 md:mt-26 md:space-y-32 md:pt-14">
+    <div className="mt-10 space-y-24 md:mt-14 md:space-y-32">
       <section className="border-t border-dema-line/80 pt-14 md:pt-18">
         <div className="max-w-2xl">
           <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">

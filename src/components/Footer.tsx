@@ -37,7 +37,7 @@ export default function Footer() {
               />
             </Link>
             <p className="demaa-section-title max-w-xs text-lg leading-snug text-neutral-500">
-              Demaa vous aide à déléguer efficacement ce qui vous ralentit, à des personnes de confiance, avec un cadre plus clair et plus de sérénité.
+              Structurer, déléguer et avancer avec plus de clarté grâce à des services et des systèmes pensés pour les dirigeants.
             </p>
           </div>
 

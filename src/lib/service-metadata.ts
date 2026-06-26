@@ -5,10 +5,11 @@ export function getServicePageMetadata(service: DemaaService): Metadata {
   const isAssistantPacks = service.slug === "assistant-polyvalent";
   const isAssistantLanding = service.slug === "recrutement-assistant-polyvalent";
   const isOrganisationLanding = service.slug === "organisation-automatisation";
+  const shouldNoIndex = isAssistantLanding || isOrganisationLanding;
   const metadataTitle = isAssistantPacks
     ? "Assistant polyvalent - Packs 20h, 30h ou 40h - Demaa"
     : isAssistantLanding
-    ? "Déléguez à un assistant de confiance - Demaa"
+    ? "Recrutement assistant polyvalent - Demaa"
     : isOrganisationLanding
       ? "Audit d'organisation pour TPE - Demaa"
       : `${service.name} - Annuaire services Demaa`;
@@ -18,7 +19,7 @@ export function getServicePageMetadata(service: DemaaService): Metadata {
   const metadataDescription = isAssistantPacks
     ? "Choisissez un pack de 20h, 30h ou 40h pour déléguer l'administratif utile, le suivi et les tâches de coordination à 30 € de l'heure HT."
     : isAssistantLanding
-    ? "Demaa vous aide à déléguer l'administratif à une personne de confiance, formée et cadrée pour reprendre efficacement ce qui vous ralentit au quotidien."
+    ? "Un accompagnement au recrutement d'un assistant polyvalent pour reprendre l'administratif utile avec une intégration plus claire et plus sereine."
     : isOrganisationLanding
       ? "Faites un audit d'organisation pour identifier les blocages, clarifier les priorités et repérer les besoins les plus utiles pour la suite."
       : service.description;
@@ -29,6 +30,12 @@ export function getServicePageMetadata(service: DemaaService): Metadata {
     alternates: {
       canonical: canonicalPath,
     },
+    robots: shouldNoIndex
+      ? {
+          index: false,
+          follow: false,
+        }
+      : undefined,
     openGraph: {
       title: metadataTitle,
       description: metadataDescription,

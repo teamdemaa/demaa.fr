@@ -101,7 +101,6 @@ export default async function MonEspacePage({ searchParams }: MonEspacePageProps
 
           <MemberSpaceTabs
             clearPurchasedCart={paid === "1"}
-            showPaymentSuccess={paid === "1"}
             requestCards={requestCards}
           />
         </section>

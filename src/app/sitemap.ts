@@ -19,6 +19,11 @@ import { getDemaaTrainings } from "@/lib/training-catalog";
 import { getToolDirectorySlug, hasStandaloneToolPage } from "@/lib/tool-directory";
 import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
 
+const HIDDEN_SERVICE_SLUGS = new Set([
+  "recrutement-assistant-polyvalent",
+  "organisation-automatisation",
+]);
+
 export const dynamic = "force-dynamic";
 
 function getBaseUrl(): string {
@@ -124,12 +129,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  const serviceEntries: MetadataRoute.Sitemap = demaaServices.map((service) => ({
-    url: `${base}/annuaire-services/${service.slug}`,
-    lastModified: now,
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
-  }));
+  const serviceEntries: MetadataRoute.Sitemap = demaaServices
+    .filter((service) => !HIDDEN_SERVICE_SLUGS.has(service.slug))
+    .map((service) => ({
+      url: `${base}/annuaire-services/${service.slug}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    }));
 
   const supplierEntries: MetadataRoute.Sitemap = demaaSuppliers.map((supplier) => ({
     url: `${base}/annuaire-fournisseurs/${supplier.slug}`,

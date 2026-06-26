@@ -343,7 +343,7 @@ export const demaaServices = [
     shortDescription:
       "Une assistante formée, sélectionnée et intégrée avec méthode pour reprendre l'administratif utile et vous aider à déléguer avec sérénité.",
     description:
-      "Demaa vous aide à déléguer efficacement à une assistante formée, sélectionnée et intégrée avec méthode pour reprendre l'administratif utile de votre entreprise.",
+      "Un accompagnement au recrutement d'un assistant polyvalent pour reprendre l'administratif utile avec une intégration plus claire et plus sereine.",
     bestFor:
       "Les dirigeants qui veulent déléguer à une personne de confiance, sans porter seuls tout le recrutement, le cadrage et la montée en compétence.",
     duration: "1 mois",

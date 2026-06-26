@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, ExternalLink, X } from "lucide-react";
 import type { CourseEntry } from "@/lib/course-content";
 
@@ -35,7 +35,7 @@ export default function CourseSlidesDialog({
     }, 420);
   }
 
-  function goToSlide(index: number) {
+  const goToSlide = useCallback((index: number) => {
     const nextIndex = Math.max(0, Math.min(index, slides.length - 1));
     const nextSlide = slideRefs.current[nextIndex];
 
@@ -52,7 +52,7 @@ export default function CourseSlidesDialog({
       inline: "center",
     });
     clearProgrammaticScrollLock();
-  }
+  }, [slides.length]);
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
@@ -76,7 +76,7 @@ export default function CourseSlidesDialog({
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [activeIndex, onClose, slides.length]);
+  }, [activeIndex, goToSlide, onClose, slides.length]);
 
   useEffect(() => {
     return () => {

@@ -3,8 +3,6 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import {
-  BadgeCheck,
-  CircleDashed,
   LoaderCircle,
   Send,
   X,
@@ -48,7 +46,6 @@ type SavedBriefPayload = {
 type MemberSpaceTabsProps = {
   clearPurchasedCart?: boolean;
   requestCards: RequestCard[];
-  showPaymentSuccess?: boolean;
 };
 
 function formatDate(value?: string | null) {
@@ -68,52 +65,18 @@ function formatDate(value?: string | null) {
 function formatAmount(amountTotal?: number | null, currency = "eur") {
   if (typeof amountTotal !== "number") return "Montant non renseigné";
 
-  return new Intl.NumberFormat("fr-FR", {
+  const formattedAmount = new Intl.NumberFormat("fr-FR", {
     style: "currency",
     currency: currency.toUpperCase(),
     maximumFractionDigits: 0,
   }).format(amountTotal / 100);
-}
 
-function getRequestStatus(input: {
-  hasAssistantRequest: boolean;
-  hasServiceBrief: boolean;
-  hasTeamNotification: boolean;
-  orderType?: string | null;
-  paymentStatus?: string | null;
-}) {
-  if (input.hasAssistantRequest || input.hasServiceBrief) {
-    return {
-      label: input.hasTeamNotification
-        ? "Prise de contact en cours"
-        : input.hasServiceBrief
-          ? "Brief reçu"
-          : "Demande envoyée",
-      className: "bg-dema-sage text-dema-forest",
-      icon: BadgeCheck,
-    };
-  }
-
-  if (input.paymentStatus === "paid") {
-    return {
-      label:
-        input.orderType === "service_bundle" ? "Commande payée" : "Paiement confirmé",
-      className: "bg-dema-sage text-dema-forest",
-      icon: CircleDashed,
-    };
-  }
-
-  return {
-    label: "En attente",
-    className: "bg-dema-sage text-brand-blue/65",
-    icon: CircleDashed,
-  };
+  return `${formattedAmount} HT`;
 }
 
 export default function MemberSpaceTabs({
   clearPurchasedCart = false,
   requestCards,
-  showPaymentSuccess = false,
 }: MemberSpaceTabsProps) {
   const [cards, setCards] = useState<RequestCard[]>(requestCards);
 
@@ -166,7 +129,6 @@ export default function MemberSpaceTabs({
           </div>
         )}
       </section>
-
     </div>
   );
 }
@@ -182,13 +144,6 @@ function RequestCardArticle({
   const hasServiceBundle = payment.orderType === "service_bundle";
   const hasServiceBrief = Boolean(payment.serviceBrief);
   const hasTeamNotification = Boolean(payment.slackNotifiedAt);
-  const status = getRequestStatus({
-    hasAssistantRequest: Boolean(request),
-    hasServiceBrief,
-    hasTeamNotification,
-    orderType: payment.orderType,
-    paymentStatus: payment.paymentStatus,
-  });
 
   return (
     <article className="demaa-card rounded-[1.15rem] p-5">
@@ -221,7 +176,7 @@ function RequestCardArticle({
           <p className="rounded-full bg-dema-sage px-4 py-2 text-center text-sm text-dema-forest">
             {hasTeamNotification
               ? "L’équipe Demaa a bien reçu votre brief et revient vers vous."
-              : "Brief transmis. Demaa vous contacte pour cadrer la suite."}
+              : "Brief transmis. Demaa vous tient informé de la suite sur WhatsApp."}
           </p>
           <ServiceBriefModalTrigger
             buttonLabel="Mettre à jour mon brief"
