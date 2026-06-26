@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { useState } from "react";
+import AssistantPackSelector from "@/components/AssistantPackSelector";
 import ServiceIntroductionModal from "@/components/ServiceIntroductionModal";
 import ServicePurchaseCta from "@/components/ServicePurchaseCta";
+import { ASSISTANT_SERVICE_SLUG } from "@/lib/assistant-service-packs";
 import { ORGANISATION_AUDIT_BOOKING_URL } from "@/lib/organisation-audit";
 import type { DemaaService } from "@/lib/service-catalog";
 import { getPurchasableServiceConfig } from "@/lib/service-purchase";
@@ -12,6 +14,10 @@ import { getPurchasableServiceConfig } from "@/lib/service-purchase";
 export default function ServiceRequestCta({ service }: { service: DemaaService }) {
   const [isIntroductionOpen, setIsIntroductionOpen] = useState(false);
   const purchaseConfig = getPurchasableServiceConfig(service.slug);
+
+  if (service.slug === ASSISTANT_SERVICE_SLUG) {
+    return <AssistantPackSelector className="mt-5" />;
+  }
 
   if (purchaseConfig) {
     return (

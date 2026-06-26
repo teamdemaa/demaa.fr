@@ -1,6 +1,6 @@
 export const expandedServiceSlugs = [
   "organisation-automatisation",
-  "assistant-polyvalent",
+  "recrutement-assistant-polyvalent",
   "audit-conformite-fiscale",
 ] as const;
 

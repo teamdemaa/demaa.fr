@@ -2,9 +2,12 @@ import type { Metadata } from "next";
 import type { DemaaService } from "@/lib/service-catalog";
 
 export function getServicePageMetadata(service: DemaaService): Metadata {
-  const isAssistantLanding = service.slug === "assistant-polyvalent";
+  const isAssistantPacks = service.slug === "assistant-polyvalent";
+  const isAssistantLanding = service.slug === "recrutement-assistant-polyvalent";
   const isOrganisationLanding = service.slug === "organisation-automatisation";
-  const metadataTitle = isAssistantLanding
+  const metadataTitle = isAssistantPacks
+    ? "Assistant polyvalent - Packs 20h, 30h ou 40h - Demaa"
+    : isAssistantLanding
     ? "Déléguez à un assistant de confiance - Demaa"
     : isOrganisationLanding
       ? "Audit d'organisation pour TPE - Demaa"
@@ -12,7 +15,9 @@ export function getServicePageMetadata(service: DemaaService): Metadata {
   const canonicalPath = isOrganisationLanding
     ? "/organisation"
     : `/annuaire-services/${service.slug}`;
-  const metadataDescription = isAssistantLanding
+  const metadataDescription = isAssistantPacks
+    ? "Choisissez un pack de 20h, 30h ou 40h pour déléguer l'administratif utile, le suivi et les tâches de coordination à 30 € de l'heure HT."
+    : isAssistantLanding
     ? "Demaa vous aide à déléguer l'administratif à une personne de confiance, formée et cadrée pour reprendre efficacement ce qui vous ralentit au quotidien."
     : isOrganisationLanding
       ? "Faites un audit d'organisation pour identifier les blocages, clarifier les priorités et repérer les besoins les plus utiles pour la suite."

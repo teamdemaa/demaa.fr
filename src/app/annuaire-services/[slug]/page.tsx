@@ -11,6 +11,7 @@ import { hasExpandedServiceContent } from "@/lib/service-expanded-content";
 import { getServicePageMetadata } from "@/lib/service-metadata";
 import { getRelatedSystemsForServiceSlug } from "@/lib/related-systems";
 import { demaaServices, getDemaaServiceBySlug } from "@/lib/service-catalog";
+import { RECRUITMENT_ASSISTANT_SERVICE_SLUG } from "@/lib/assistant-service-packs";
 
 type ServiceDetailPageProps = {
   params: Promise<{
@@ -61,7 +62,7 @@ export default async function ServiceDetailPage({
     notFound();
   }
 
-  if (service.slug === "assistant-polyvalent") {
+  if (service.slug === RECRUITMENT_ASSISTANT_SERVICE_SLUG) {
     return <AssistantPolyvalentLanding service={service} />;
   }
 

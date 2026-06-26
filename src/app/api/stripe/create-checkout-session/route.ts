@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { enforceRateLimit, readJsonBody } from "@/lib/api-security";
-import { getPurchasableServices } from "@/lib/service-purchase";
+import { getPurchasableServiceConfig } from "@/lib/service-purchase";
 
 export const runtime = "nodejs";
 
@@ -34,9 +34,9 @@ export async function POST(request: Request) {
     : [];
 
   const uniqueSlugs = [...new Set(inputSlugs)].slice(0, 10);
-  const purchasableServices = getPurchasableServices().filter((service) =>
-    uniqueSlugs.includes(service.slug)
-  );
+  const purchasableServices = uniqueSlugs
+    .map((slug) => getPurchasableServiceConfig(slug))
+    .filter((service): service is NonNullable<typeof service> => Boolean(service));
 
   if (purchasableServices.length === 0) {
     return NextResponse.json(

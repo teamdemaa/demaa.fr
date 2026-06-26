@@ -12,8 +12,8 @@ import {
 import {
   formatPurchasableServicePrice,
   getPurchasableServiceConfig,
+  type PurchasableServiceConfig,
 } from "@/lib/service-purchase";
-import { getDemaaServices, type DemaaService } from "@/lib/service-catalog";
 
 type CheckoutResponse =
   | { url: string }
@@ -84,19 +84,11 @@ export default function ServiceCartTray() {
   }, []);
 
   const selectedServices = useMemo(() => {
-    const services = getDemaaServices();
-
     return selectedSlugs
       .map((slug) => {
-        const service = services.find((entry) => entry.slug === slug);
         const purchase = getPurchasableServiceConfig(slug);
 
-        if (!service || !purchase) return null;
-
-        return {
-          ...service,
-          ...purchase,
-        };
+        return purchase;
       })
       .filter((service): service is NonNullable<typeof service> => Boolean(service));
   }, [selectedSlugs]);
@@ -118,12 +110,6 @@ export default function ServiceCartTray() {
 
     writeServiceCartSlugs(next);
     setSelectedSlugs(next);
-  }
-
-  function clearServiceSelection() {
-    setCheckoutError(null);
-    writeServiceCartSlugs([]);
-    setSelectedSlugs([]);
   }
 
   async function handleCheckout() {
@@ -188,7 +174,6 @@ export default function ServiceCartTray() {
             error={checkoutError}
             highlight={highlightCart}
             isCheckoutLoading={isCheckoutLoading}
-            onClear={clearServiceSelection}
             onCheckout={handleCheckout}
             onCloseDesktop={() => setIsDesktopCartOpen(false)}
             onRemove={removeServiceSelection}
@@ -208,7 +193,6 @@ export default function ServiceCartTray() {
           error={checkoutError}
           highlight={highlightCart}
           isCheckoutLoading={isCheckoutLoading}
-          onClear={clearServiceSelection}
           onCheckout={handleCheckout}
           onCloseMobile={() => setIsMobileCartOpen(false)}
           onRemove={removeServiceSelection}
@@ -224,7 +208,6 @@ function CartContent({
   selectedServices,
   total,
   onRemove,
-  onClear,
   onCheckout,
   onCloseDesktop,
   onCloseMobile,
@@ -234,15 +217,9 @@ function CartContent({
   desktop = false,
   highlight = false,
 }: {
-  selectedServices: Array<
-    DemaaService & {
-      currency: "eur";
-      unitAmount: number;
-    }
-  >;
+  selectedServices: PurchasableServiceConfig[];
   total: number;
   onRemove: (slug: string) => void;
-  onClear: () => void;
   onCheckout: () => void;
   onCloseDesktop?: () => void;
   onCloseMobile?: () => void;

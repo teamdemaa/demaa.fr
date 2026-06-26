@@ -3,15 +3,12 @@
 import Link from "next/link";
 import { Check, X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import ServiceExpandedContent from "@/components/ServiceExpandedContent";
 import { ServiceIcon } from "@/components/ServiceIcon";
-import ServiceIntroductionModal from "@/components/ServiceIntroductionModal";
+import ServiceRequestCta from "@/components/ServiceRequestCta";
 import { hasExpandedServiceContent } from "@/lib/service-expanded-content";
 import { ORGANISATION_AUDIT_BOOKING_URL } from "@/lib/organisation-audit";
 import { type DemaaService } from "@/lib/service-catalog";
-import { getPurchasableServiceConfig } from "@/lib/service-purchase";
-import ServicePurchaseCta from "@/components/ServicePurchaseCta";
 
 type ServiceDetailDialogProps = {
   service: DemaaService;
@@ -21,16 +18,12 @@ type ServiceDetailDialogProps = {
 
 export default function ServiceDetailDialog({
   service,
-  source,
   onClose,
 }: ServiceDetailDialogProps) {
   const router = useRouter();
-  const [isIntroductionOpen, setIsIntroductionOpen] = useState(false);
-  const isPurchasable = Boolean(getPurchasableServiceConfig(service.slug));
   const closeDialog = onClose ?? (() => router.back());
   const hasExpandedContent = hasExpandedServiceContent(service.slug);
   const isOrganisationAutomation = service.slug === "organisation-automatisation";
-  const isAssistantService = service.slug === "assistant-polyvalent";
 
   return (
     <>
@@ -62,18 +55,6 @@ export default function ServiceDetailDialog({
               </div>
             </div>
             <div className="flex shrink-0 items-center gap-2">
-              {isAssistantService ? (
-                <ServicePurchaseCta
-                  serviceName={service.name}
-                  serviceSlug={service.slug}
-                  defaultLabel="Sélectionner"
-                  selectedLabel="Sélectionné"
-                  showHelperText={false}
-                  fullWidth={false}
-                  containerClassName=""
-                  buttonClassName="px-4 py-2.5"
-                />
-              ) : null}
               <button
                 type="button"
                 onClick={closeDialog}
@@ -98,7 +79,7 @@ export default function ServiceDetailDialog({
               </Link>
             ) : null}
 
-            {!isOrganisationAutomation && !isAssistantService ? (
+            {!isOrganisationAutomation ? (
               <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,0.82fr)]">
                 <section className="rounded-[1.05rem] border border-dema-line bg-dema-paper p-4 sm:rounded-[1.15rem] sm:p-5">
                   <h3 className="text-[1.35rem] font-semibold text-brand-blue md:text-[1.55rem]">Ce qui est inclus</h3>
@@ -126,15 +107,7 @@ export default function ServiceDetailDialog({
                   <p className="mt-1 text-lg font-semibold tracking-tight text-brand-blue">
                     {service.duration}
                   </p>
-                  {!isPurchasable ? (
-                    <button
-                      type="button"
-                      onClick={() => setIsIntroductionOpen(true)}
-                      className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper transition hover:bg-brand-blue"
-                    >
-                      Demander ce service
-                    </button>
-                  ) : null}
+                  <ServiceRequestCta service={service} />
                 </aside>
               </div>
             ) : null}
@@ -146,13 +119,6 @@ export default function ServiceDetailDialog({
         </div>
       </div>
 
-      {isIntroductionOpen ? (
-        <ServiceIntroductionModal
-          service={service}
-          source={source}
-          onClose={() => setIsIntroductionOpen(false)}
-        />
-      ) : null}
     </>
   );
 }

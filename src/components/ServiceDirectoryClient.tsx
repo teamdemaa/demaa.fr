@@ -2,9 +2,14 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
-import { ArrowLeft, Check } from "lucide-react";
+import { ArrowLeft, Check, ChevronDown } from "lucide-react";
+import AssistantPackSelector from "@/components/AssistantPackSelector";
 import SearchFilterControls from "@/components/SearchFilterControls";
 import { ServiceIcon } from "@/components/ServiceIcon";
+import {
+  ASSISTANT_SERVICE_SLUG,
+  isAssistantPackSlug,
+} from "@/lib/assistant-service-packs";
 import { matchesSearchQuery } from "@/lib/search";
 import { getPurchasableServiceConfig } from "@/lib/service-purchase";
 import {
@@ -14,6 +19,62 @@ import {
   writeServiceCartSlugs,
 } from "@/lib/service-cart";
 import type { DemaaService, ServiceCategory } from "@/lib/service-catalog";
+
+const serviceFlowSteps = [
+  {
+    step: "01",
+    title: "Vous choisissez le bon service",
+    description:
+      "Vous prenez le service qui répond à votre besoin du moment: déléguer, structurer, débloquer ou avancer plus vite.",
+  },
+  {
+    step: "02",
+    title: "Demaa exécute et vous tient informé",
+    description:
+      "Le sujet est pris en charge, vous êtes tenu au courant simplement, et les échanges se font de façon fluide, notamment sur WhatsApp.",
+  },
+  {
+    step: "03",
+    title: "Vous êtes soulagé",
+    description:
+      "Vous arrêtez de porter seul ce qui vous ralentit, vous gagnez du temps mental, et l'entreprise avance plus sereinement.",
+  },
+] as const;
+
+const reliefPoints = [
+  "Vous arrêtez de tout porter seul.",
+  "Les sujets avancent sans revenir sur votre bureau à chaque étape.",
+  "Vous gardez de la visibilité, sans y passer votre journée.",
+] as const;
+
+const globalFaqItems = [
+  {
+    question: "Est-ce que c'est adapté à une petite entreprise ?",
+    answer:
+      "Oui. Les services sont pensés pour des dirigeants qui ont besoin d'avancer vite, sans complexifier davantage leur quotidien.",
+  },
+  {
+    question: "Qu'est-ce que j'achète exactement ?",
+    answer:
+      "Vous achetez une exécution claire sur un besoin précis, avec un résultat attendu et une communication simple tout au long du sujet.",
+  },
+  {
+    question: "Comment je suis tenu au courant ?",
+    answer:
+      "Demaa vous informe au fil de l'avancement, avec des échanges simples et rapides, notamment sur WhatsApp.",
+  },
+  {
+    question: "Qu'est-ce que ça change concrètement pour moi ?",
+    answer:
+      "Vous ne portez plus seul les sujets qui traînent, vous gagnez du temps, et vous respirez davantage au quotidien.",
+  },
+] as const;
+
+const serviceTestimonial = {
+  quote:
+    "Avant, tout passait par moi. Depuis qu'on a mis en place une vraie organisation, chacun sait ce qu'il peut décider. Je respire enfin.",
+  author: "D.K dirigeant d'une entreprise de nettoyage industrielle",
+} as const;
 
 type ServiceDirectoryClientProps = {
   services: DemaaService[];
@@ -250,7 +311,11 @@ export default function ServiceDirectoryClient({
             {filteredServices.map((service) => (
               <ServiceCard
                 key={service.slug}
-                isSelected={selectedSlugs.includes(service.slug)}
+                isSelected={
+                  service.slug === ASSISTANT_SERVICE_SLUG
+                    ? selectedSlugs.some((slug) => isAssistantPackSlug(slug))
+                    : selectedSlugs.includes(service.slug)
+                }
                 onToggleSelection={toggleServiceSelection}
                 service={service}
               />
@@ -269,6 +334,8 @@ export default function ServiceDirectoryClient({
             </Link>
           </div>
         ) : null}
+
+        <ServiceTrustSection />
       </section>
     </div>
   );
@@ -284,6 +351,7 @@ function ServiceCard({
   isSelected: boolean;
 }) {
   const purchaseConfig = getPurchasableServiceConfig(service.slug);
+  const isAssistantService = service.slug === ASSISTANT_SERVICE_SLUG;
 
   return (
     <article className="demaa-card flex min-h-[18rem] flex-col rounded-[1.25rem] p-6 text-left">
@@ -303,7 +371,9 @@ function ServiceCard({
           {service.shortDescription}
         </p>
         <div className="mt-auto flex items-end gap-3 pt-5">
-          {purchaseConfig ? (
+          {isAssistantService ? (
+            <p className="text-[1rem] font-medium text-dema-muted">3 packs disponibles</p>
+          ) : purchaseConfig ? (
             <p className="text-[1.15rem] font-medium tracking-tight text-brand-blue">
               {service.price}
             </p>
@@ -314,7 +384,14 @@ function ServiceCard({
       </Link>
 
       <div className="mt-6 flex items-center gap-3">
-        {purchaseConfig ? (
+        {isAssistantService ? (
+          <AssistantPackSelector
+            compact
+            className="w-full"
+            buttonLabel="Sélectionner"
+            showHelperText={false}
+          />
+        ) : purchaseConfig ? (
           <button
             type="button"
             onClick={() => onToggleSelection(service.slug)}
@@ -341,5 +418,104 @@ function ServiceCard({
         )}
       </div>
     </article>
+  );
+}
+
+function ServiceTrustSection() {
+  return (
+    <div className="mt-20 space-y-24 pt-10 md:mt-26 md:space-y-32 md:pt-14">
+      <section className="border-t border-dema-line/80 pt-14 md:pt-18">
+        <div className="max-w-2xl">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
+            Comment ça marche
+          </p>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-brand-blue md:text-[2.5rem]">
+            Vous choisissez. Demaa exécute.
+            <br />
+            Vous respirez.
+          </h2>
+        </div>
+        <div className="mt-8 grid gap-8 md:grid-cols-3 md:gap-10">
+          {serviceFlowSteps.map((item) => (
+            <article key={item.step} className="space-y-3">
+              <p className="text-[2.1rem] font-semibold uppercase leading-none tracking-[0.18em] text-dema-forest/55 md:text-[2.4rem]">
+                {item.step}
+              </p>
+              <h3 className="text-[1.22rem] font-medium leading-snug text-brand-blue">
+                {item.title}
+              </h3>
+              <p className="max-w-sm text-sm leading-relaxed text-dema-muted md:text-[0.98rem]">
+                {item.description}
+              </p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="rounded-[1.5rem] bg-dema-sage/55 px-6 py-13 md:px-8 md:py-16">
+        <div className="grid gap-10 md:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] md:items-start">
+          <div className="max-w-2xl md:pt-1">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
+              Ce que ça change
+            </p>
+            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-brand-blue md:text-[2.5rem]">
+              Moins de charge mentale.
+              <br />
+              Plus d&apos;avancement.
+            </h2>
+          </div>
+          <div className="space-y-4">
+            {reliefPoints.map((point) => (
+              <div
+                key={point}
+                className="border-b border-dema-line/80 pb-4 text-[1.05rem] leading-relaxed text-brand-blue/86"
+              >
+                {point}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-dema-line/80 pt-14 md:pt-18">
+        <div className="max-w-2xl">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
+            Questions fréquentes
+          </p>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-brand-blue md:text-[2.5rem]">
+            Ce que vous voulez savoir avant d&apos;acheter
+          </h2>
+        </div>
+        <div className="mx-auto mt-8 max-w-4xl space-y-3">
+          {globalFaqItems.map((item) => (
+            <details key={item.question} className="demaa-accordion px-5 py-4">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
+                <span className="text-base font-medium leading-snug text-brand-blue">
+                  {item.question}
+                </span>
+                <ChevronDown
+                  className="demaa-accordion-chevron h-4 w-4 shrink-0 text-dema-muted transition-transform"
+                  aria-hidden="true"
+                />
+              </summary>
+              <p className="demaa-accordion-content mt-3 max-w-xl pr-4 text-sm leading-relaxed text-dema-muted md:text-[0.98rem]">
+                {item.answer}
+              </p>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <section className="border-t border-dema-line/80 pt-14 md:pt-18">
+        <div className="mx-auto max-w-4xl rounded-[1.5rem] bg-dema-forest px-8 py-12 text-center text-dema-paper md:px-14 md:py-16">
+          <blockquote className="demaa-section-title text-[2rem] leading-tight tracking-tight text-dema-paper md:text-[2.7rem]">
+            “{serviceTestimonial.quote}”
+          </blockquote>
+          <p className="mt-5 text-sm font-medium tracking-[0.01em] text-dema-paper/72">
+            {serviceTestimonial.author}
+          </p>
+        </div>
+      </section>
+    </div>
   );
 }

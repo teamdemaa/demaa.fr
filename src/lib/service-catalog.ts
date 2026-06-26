@@ -32,7 +32,7 @@ export const demaaServices = [
     bestFor:
       "Les porteurs de projet qui veulent lancer proprement leur activité avec une structure adaptée.",
     duration: "1 mois",
-    price: "600 €",
+    price: "600 € HT",
     tags: ["Création", "Kbis", "Statuts"],
     icon: "Building2",
     deliverables: [
@@ -93,7 +93,7 @@ export const demaaServices = [
     bestFor:
       "Les lancements, demandes de financement, investissements et activités qui ont besoin de repères chiffrés clairs.",
     duration: "2 semaines",
-    price: "550 €",
+    price: "550 € HT",
     tags: ["Financement", "Business plan", "Trésorerie"],
     icon: "TrendingUp",
     deliverables: [
@@ -114,7 +114,7 @@ export const demaaServices = [
     bestFor:
       "Les entreprises qui veulent vérifier qu'elles sont carrées, éviter les erreurs coûteuses et repérer ce qui peut être optimisé.",
     duration: "2 semaines",
-    price: "850 €",
+    price: "850 € HT",
     tags: ["Fiscalité", "Audit", "TVA"],
     icon: "FileSearch",
     deliverables: [
@@ -156,7 +156,7 @@ export const demaaServices = [
     bestFor:
       "Les dirigeants qui ont besoin d'une présence claire et sérieuse pour être trouvés, rassurer et mieux présenter leur activité.",
     duration: "2 semaines",
-    price: "1 350 €",
+    price: "1 350 € HT",
     tags: ["Web", "SEO", "Confiance"],
     icon: "Laptop",
     deliverables: [
@@ -200,7 +200,7 @@ export const demaaServices = [
     bestFor:
       "Les activités qui veulent structurer leur acquisition, mieux suivre leurs actions et garder un rythme marketing et commercial plus régulier.",
     duration: "1 mois",
-    price: "750 €",
+    price: "750 € HT",
     tags: ["Marketing", "Vente", "CRM"],
     icon: "Target",
     deliverables: [
@@ -223,7 +223,7 @@ export const demaaServices = [
     bestFor:
       "Les dirigeants qui veulent sortir du flou, mieux cadrer leur équipe et poser un fonctionnement plus lisible, stable et autonome au quotidien.",
     duration: "1 mois",
-    price: "850 €",
+    price: "850 € HT",
     tags: ["Organisation", "Rôles", "Management"],
     icon: "Users",
     deliverables: [
@@ -244,7 +244,7 @@ export const demaaServices = [
     bestFor:
       "Les métiers avec une demande active : urgence, local, devis, réservation ou achat comparé.",
     duration: "1 mois",
-    price: "450 € / mois",
+    price: "450 € / mois HT",
     tags: ["Google Ads", "Search", "Local"],
     icon: "Search",
     deliverables: [
@@ -316,7 +316,29 @@ export const demaaServices = [
   },
   {
     slug: "assistant-polyvalent",
-    name: "Déléguez à un assistant de confiance",
+    name: "Assistant polyvalent",
+    category: "Support opérationnel",
+    shortDescription:
+      "Un appui souple pour déléguer l'administratif utile, le suivi et les tâches de coordination sans recruter tout de suite.",
+    description:
+      "Un appui souple pour déléguer l'administratif utile, le suivi et les tâches de coordination sans recruter tout de suite.",
+    bestFor:
+      "Les dirigeants qui veulent un renfort fiable sur des heures cadrées, sans lancer un recrutement complet dès maintenant.",
+    duration: "Selon le pack",
+    price: "30 € / heure HT",
+    tags: ["Assistant", "Support", "Délégation"],
+    icon: "UserRoundCheck",
+    deliverables: [
+      "Pack d'heures réservé selon votre besoin",
+      "Traitement des tâches administratives et de coordination prioritaires",
+      "Suivi plus clair des demandes confiées",
+      "Cadre simple pour déléguer sans friction",
+    ],
+    usefulFor: ["Délégation", "Admin", "Temps gagné", "Support ponctuel"],
+  },
+  {
+    slug: "recrutement-assistant-polyvalent",
+    name: "Recrutement assistant polyvalent",
     category: "Support opérationnel",
     shortDescription:
       "Une assistante formée, sélectionnée et intégrée avec méthode pour reprendre l'administratif utile et vous aider à déléguer avec sérénité.",
@@ -325,7 +347,7 @@ export const demaaServices = [
     bestFor:
       "Les dirigeants qui veulent déléguer à une personne de confiance, sans porter seuls tout le recrutement, le cadrage et la montée en compétence.",
     duration: "1 mois",
-    price: "500 €",
+    price: "500 € HT",
     tags: ["Assistant", "Recrutement", "Délégation"],
     icon: "UserRoundCheck",
     deliverables: [
@@ -363,6 +385,7 @@ const demaaManagedServiceSlugs = new Set([
   "marketing-vente",
   "organisation-equipes",
   "assistant-polyvalent",
+  "recrutement-assistant-polyvalent",
 ]);
 
 export function isDemaaManagedService(slug: string) {

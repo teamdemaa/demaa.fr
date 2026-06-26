@@ -208,7 +208,7 @@ export default function ServiceExpandedContent({
     return <OrganisationExpandedContent variant={variant} />;
   }
 
-  if (serviceSlug === "assistant-polyvalent") {
+  if (serviceSlug === "recrutement-assistant-polyvalent") {
     return <AssistantExpandedContent variant={variant} />;
   }
 
