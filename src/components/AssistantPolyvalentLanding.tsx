@@ -7,9 +7,9 @@ import { RECRUITMENT_ASSISTANT_SERVICE_SLUG } from "@/lib/assistant-service-pack
 import type { DemaaService } from "@/lib/service-catalog";
 
 const offerHighlights = [
-  "Organisation, structuration, suivi et bases administratives travaillés en amont",
-  "Montée en compétence mieux cadrée pour éviter de tout porter seul",
-  "Intégration plus fluide dans votre activité et vos outils",
+  "Cycle devis, facture, relance et transmission comptable cadré dès le départ",
+  "Montée en compétence plus nette sur une mission concrète et utile",
+  "Intégration plus fluide dans votre activité, vos outils et votre lien comptable",
 ] as const;
 
 const offerTimeline = [
@@ -17,19 +17,19 @@ const offerTimeline = [
     step: "Étape 1",
     title: "2 mois de formation sur le contexte de votre entreprise",
     description:
-      "Formation prise en charge pour poser les bases de l'organisation, de la structuration et des routines administratives.",
+      "Formation prise en charge pour poser les bases devis, facturation, relances, collecte des pièces et transmission comptable.",
   },
   {
     step: "Étape 2",
     title: "12 mois d'alternance",
     description:
-      "L'assistante est en entreprise 4 jours par semaine pour reprendre progressivement l'administratif du quotidien.",
+      "L'assistante est en entreprise 4 jours par semaine pour reprendre progressivement le cycle administratif lié à la facturation.",
   },
 ] as const;
 
 const comparisonDetails = [
   {
-    title: "Assistante polyvalente salariée",
+    title: "Assistante facturation salariée",
     amount: "2 579,56 € / mois",
     description: "Repère de coût employeur pour 1 700 € net / mois",
     emphasis: false,
@@ -45,23 +45,23 @@ const comparisonDetails = [
 const responsibilities = [
   {
     icon: FolderKanban,
-    title: "Devis, factures, documents",
-    description: "Préparer, trier, suivre et classer les documents du quotidien.",
+    title: "Devis, factures, suivi",
+    description: "Préparer les devis, émettre les factures et garder le fil sur chaque dossier.",
   },
   {
     icon: Mail,
-    title: "Emails, relances, suivi",
-    description: "Gérer les échanges, relancer et garder le fil au quotidien.",
+    title: "Relances et paiements",
+    description: "Suivre les échéances, relancer les retards et mettre à jour le statut des paiements.",
   },
   {
     icon: CircleDollarSign,
-    title: "Tableaux, CRM, coordination",
-    description: "Mettre à jour les tableaux et suivre les dossiers utiles à l'équipe.",
+    title: "Collecte et transmission comptable",
+    description: "Récupérer les pièces utiles puis intégrer dans l'outil comptable ou transmettre proprement au comptable.",
   },
   {
     icon: Clock3,
-    title: "Structuration des processus clés",
-    description: "Structurer les routines, les dossiers et les outils utiles au quotidien.",
+    title: "Routine de facturation cadrée",
+    description: "Structurer les routines, les dossiers et les outils pour éviter les oublis et les retards.",
   },
 ] as const;
 
@@ -87,9 +87,9 @@ export default function AssistantPolyvalentLanding({
               </h1>
               <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-dema-muted md:text-base">
                 Une assistante formée puis intégrée avec méthode pour reprendre
-                l&apos;administratif utile de votre entreprise. Le profil est sélectionné
-                pour sa motivation, sa maturité et sa fiabilité, afin que vous puissiez
-                déléguer plus sereinement.
+                vos devis, votre facturation, vos relances et la transmission
+                des éléments comptables. Le profil est sélectionné pour sa motivation,
+                sa maturité et sa fiabilité, afin que vous puissiez déléguer plus sereinement.
               </p>
               <div className="mt-7 flex items-center justify-center">
                 <a
@@ -110,14 +110,14 @@ export default function AssistantPolyvalentLanding({
                 <div className="mt-5 grid gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(20rem,0.95fr)] lg:items-start">
                   <div>
                     <h2 className="max-w-2xl text-[1.8rem] font-semibold tracking-tight text-brand-blue md:text-[2.25rem]">
-                      Un profil formé et cadré pour vous aider à déléguer efficacement.
+                      Un profil formé et cadré pour fiabiliser votre facturation.
                     </h2>
                     <p className="mt-4 max-w-2xl text-sm leading-relaxed text-dema-muted md:text-base">
                       Le parcours est pensé pour que vous n&apos;ayez pas à tout construire seul.
                       La POEI pose les bases en amont, puis l&apos;alternance permet une reprise
                       progressive dans votre entreprise avec un profil souvent en reconversion,
                       sélectionné pour sa stabilité, sa motivation et sa capacité à devenir
-                      rapidement une personne de confiance dans votre quotidien.
+                      rapidement une personne de confiance sur vos devis, vos factures et vos suivis.
                     </p>
                     <div className="mt-6 space-y-3">
                       {offerHighlights.map((item) => (
@@ -161,12 +161,12 @@ export default function AssistantPolyvalentLanding({
             <div id="missions" className="mt-20 scroll-mt-24 md:mt-28">
               <div className="mx-auto max-w-3xl text-center demaa-fade-up">
                 <h2 className="text-[1.8rem] font-semibold tracking-tight text-brand-blue md:text-[2.25rem]">
-                  Ce qu&apos;un(e) assistant(e) polyvalent(e) peut reprendre
+                  Ce qu&apos;une assistante facturation peut reprendre
                 </h2>
                 <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-dema-muted md:text-base">
                   L&apos;objectif n&apos;est pas seulement d&apos;ajouter un renfort. C&apos;est de
                   vous permettre de déléguer à la bonne personne, déjà préparée pour
-                  reprendre les routines administratives d&apos;une petite entreprise.
+                  reprendre les routines devis, facturation, relances et transmission comptable.
                 </p>
               </div>
 
@@ -259,7 +259,7 @@ export default function AssistantPolyvalentLanding({
                 </p>
                 <div className="mx-auto mt-4 max-w-sm">
                   <ServicePurchaseCta
-                    serviceName="Recrutement assistant polyvalent"
+                    serviceName="Recrutement assistante facturation"
                     serviceSlug={RECRUITMENT_ASSISTANT_SERVICE_SLUG}
                     defaultLabel="Sélectionner"
                     selectedLabel="Sélectionné"

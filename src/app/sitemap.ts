@@ -20,7 +20,7 @@ import { getToolDirectorySlug, hasStandaloneToolPage } from "@/lib/tool-director
 import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
 
 const HIDDEN_SERVICE_SLUGS = new Set([
-  "recrutement-assistant-polyvalent",
+  "recrutement-assistante-facturation",
   "organisation-automatisation",
 ]);
 

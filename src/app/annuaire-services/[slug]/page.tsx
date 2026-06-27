@@ -11,7 +11,12 @@ import { hasExpandedServiceContent } from "@/lib/service-expanded-content";
 import { getServicePageMetadata } from "@/lib/service-metadata";
 import { getRelatedSystemsForServiceSlug } from "@/lib/related-systems";
 import { demaaServices, getDemaaServiceBySlug } from "@/lib/service-catalog";
-import { RECRUITMENT_ASSISTANT_SERVICE_SLUG } from "@/lib/assistant-service-packs";
+import {
+  LEGACY_ASSISTANT_SERVICE_SLUG,
+  LEGACY_RECRUITMENT_ASSISTANT_SERVICE_SLUG,
+  RECRUITMENT_ASSISTANT_SERVICE_SLUG,
+  ASSISTANT_SERVICE_SLUG,
+} from "@/lib/assistant-service-packs";
 
 type ServiceDetailPageProps = {
   params: Promise<{
@@ -30,7 +35,13 @@ export async function generateMetadata({
 }: ServiceDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
   const normalizedSlug =
-    slug === "organisation" ? "organisation-automatisation" : slug;
+    slug === "organisation"
+      ? "organisation-automatisation"
+      : slug === LEGACY_ASSISTANT_SERVICE_SLUG
+        ? ASSISTANT_SERVICE_SLUG
+        : slug === LEGACY_RECRUITMENT_ASSISTANT_SERVICE_SLUG
+          ? RECRUITMENT_ASSISTANT_SERVICE_SLUG
+          : slug;
   const service = getDemaaServiceBySlug(normalizedSlug);
 
   if (!service) {
@@ -50,6 +61,14 @@ export default async function ServiceDetailPage({
   params,
 }: ServiceDetailPageProps) {
   const { slug } = await params;
+  if (slug === LEGACY_ASSISTANT_SERVICE_SLUG) {
+    permanentRedirect(`/annuaire-services/${ASSISTANT_SERVICE_SLUG}`);
+  }
+
+  if (slug === LEGACY_RECRUITMENT_ASSISTANT_SERVICE_SLUG) {
+    permanentRedirect(`/annuaire-services/${RECRUITMENT_ASSISTANT_SERVICE_SLUG}`);
+  }
+
   if (slug === "organisation-automatisation") {
     permanentRedirect("/annuaire-services/organisation");
   }

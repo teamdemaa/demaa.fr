@@ -315,49 +315,49 @@ export const demaaServices = [
     usefulFor: ["Réseaux sociaux", "Publicité", "Pédagogie"],
   },
   {
-    slug: "assistant-polyvalent",
-    name: "Assistant polyvalent",
+    slug: "assistante-facturation",
+    name: "Assistance facturation",
     category: "Support opérationnel",
     shortDescription:
-      "Un appui souple pour déléguer l'administratif utile, le suivi et les tâches de coordination sans recruter tout de suite.",
+      "Un appui souple pour reprendre devis, facturation, relances et transmission comptable sans recruter tout de suite.",
     description:
-      "Un appui souple pour déléguer l'administratif utile, le suivi et les tâches de coordination sans recruter tout de suite.",
+      "Un appui souple pour reprendre devis, facturation, suivi, relances, collecte documentaire et transmission comptable sans recruter tout de suite.",
     bestFor:
-      "Les dirigeants qui veulent un renfort fiable sur des heures cadrées, sans lancer un recrutement complet dès maintenant.",
+      "Les dirigeants qui veulent fiabiliser devis, factures et relances avec un renfort cadré, sans lancer un recrutement complet dès maintenant.",
     duration: "Selon le pack",
     price: "30 € / heure HT",
-    tags: ["Assistant", "Support", "Délégation"],
+    tags: ["Facturation", "Devis", "Relances"],
     icon: "UserRoundCheck",
     deliverables: [
-      "Pack d'heures réservé selon votre besoin",
-      "Traitement des tâches administratives et de coordination prioritaires",
-      "Suivi plus clair des demandes confiées",
-      "Cadre simple pour déléguer sans friction",
+      "Préparation et suivi des devis",
+      "Création, envoi et suivi des factures",
+      "Relances et suivi des paiements",
+      "Collecte des pièces et transmission à l'outil comptable ou au comptable",
     ],
-    usefulFor: ["Délégation", "Admin", "Temps gagné", "Support ponctuel"],
+    usefulFor: ["Devis", "Facturation", "Relances", "Transmission comptable"],
   },
   {
-    slug: "recrutement-assistant-polyvalent",
-    name: "Recrutement assistant polyvalent",
+    slug: "recrutement-assistante-facturation",
+    name: "Recrutement assistante facturation",
     category: "Support opérationnel",
     shortDescription:
-      "Une assistante formée, sélectionnée et intégrée avec méthode pour reprendre l'administratif utile et vous aider à déléguer avec sérénité.",
+      "Une assistante formée, sélectionnée et intégrée avec méthode pour reprendre devis, facturation, relances et transmission comptable.",
     description:
-      "Un accompagnement au recrutement d'un assistant polyvalent pour reprendre l'administratif utile avec une intégration plus claire et plus sereine.",
+      "Un accompagnement au recrutement d'une assistante facturation pour reprendre le cycle devis, facture, relance et transmission comptable avec une intégration plus claire et plus sereine.",
     bestFor:
-      "Les dirigeants qui veulent déléguer à une personne de confiance, sans porter seuls tout le recrutement, le cadrage et la montée en compétence.",
+      "Les dirigeants qui veulent déléguer la chaîne devis, facturation et relances à une personne de confiance, sans porter seuls le recrutement, le cadrage et la montée en compétence.",
     duration: "1 mois",
     price: "500 € HT",
-    tags: ["Assistant", "Recrutement", "Délégation"],
+    tags: ["Facturation", "Recrutement", "Délégation"],
     icon: "UserRoundCheck",
     deliverables: [
       "Profil présélectionné",
-      "Assistante formée aux bases administratives utiles via POEI",
-      "Structuration des processus clés",
-      "Intégration cadrée dans l'entreprise",
-      "Reprise progressive des tâches administratives",
+      "Assistante formée aux bases devis, facturation et relances via POEI",
+      "Structuration du cycle devis, facture, relance et transmission comptable",
+      "Intégration cadrée dans l'entreprise et dans vos outils",
+      "Reprise progressive des tâches de facturation et de suivi",
     ],
-    usefulFor: ["Délégation", "Admin", "Temps gagné", "Renfort"],
+    usefulFor: ["Facturation", "Relances", "Transmission comptable", "Renfort"],
   },
 ] satisfies DemaaService[];
 
@@ -384,8 +384,8 @@ const demaaManagedServiceSlugs = new Set([
   "organisation-automatisation",
   "marketing-vente",
   "organisation-equipes",
-  "assistant-polyvalent",
-  "recrutement-assistant-polyvalent",
+  "assistante-facturation",
+  "recrutement-assistante-facturation",
 ]);
 
 export function isDemaaManagedService(slug: string) {

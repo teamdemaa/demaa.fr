@@ -2,7 +2,7 @@ import { getDemaaServices } from "@/lib/service-catalog";
 
 export function getDelegationServices() {
   const hiddenSlugs = new Set([
-    "recrutement-assistant-polyvalent",
+    "recrutement-assistante-facturation",
     "organisation-automatisation",
     "creation-societe",
     "modification-societe",
@@ -15,7 +15,7 @@ export function getDelegationServices() {
   ]);
 
   const pinnedOrder = [
-    "assistant-polyvalent",
+    "assistante-facturation",
     "site-web",
     "previsionnel-financier",
   ];

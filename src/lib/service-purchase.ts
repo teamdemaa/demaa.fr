@@ -18,7 +18,7 @@ const purchasableServiceConfigs = [
   ...assistantServicePacks.map((pack) => ({
     slug: pack.slug,
     serviceSlug: ASSISTANT_SERVICE_SLUG,
-    name: `Assistant polyvalent - ${pack.label}`,
+    name: `Assistance facturation - ${pack.label}`,
     shortDescription: `${pack.summary} Tarif horaire : 30 € HT.`,
     unitAmount: pack.unitAmount,
     currency: "eur" as const,
@@ -26,9 +26,9 @@ const purchasableServiceConfigs = [
   {
     slug: RECRUITMENT_ASSISTANT_SERVICE_SLUG,
     serviceSlug: RECRUITMENT_ASSISTANT_SERVICE_SLUG,
-    name: "Recrutement assistant polyvalent",
+    name: "Recrutement assistante facturation",
     shortDescription:
-      "Un accompagnement pour sélectionner, former et intégrer une assistante avec méthode.",
+      "Un accompagnement pour sélectionner, former et intégrer une assistante facturation avec méthode.",
     unitAmount: 500_00,
     currency: "eur" as const,
   },

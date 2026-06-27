@@ -118,29 +118,29 @@ const assistantTimeline = [
 const assistantResponsibilities = [
   {
     icon: FolderKanban,
-    title: "Devis, factures, documents",
-    description: "Préparer, trier, suivre et classer les documents du quotidien.",
+    title: "Devis, factures, suivi",
+    description: "Préparer les devis, émettre les factures et suivre les dossiers en cours.",
   },
   {
     icon: Mail,
-    title: "Emails, relances, suivi",
-    description: "Gérer les échanges, relancer et garder le fil dans les dossiers.",
+    title: "Relances et paiements",
+    description: "Suivre les échéances, relancer les retards et garder le fil sur les encaissements.",
   },
   {
     icon: CircleDollarSign,
-    title: "Tableaux, CRM, coordination",
-    description: "Mettre à jour les tableaux et suivre les dossiers utiles à l'équipe.",
+    title: "Collecte et transmission comptable",
+    description: "Récupérer les pièces utiles et les intégrer dans l'outil comptable ou les envoyer au comptable.",
   },
   {
     icon: Clock3,
-    title: "Structuration des processus clés",
-    description: "Structurer les routines, les dossiers et les outils utiles au quotidien.",
+    title: "Routine de facturation cadrée",
+    description: "Structurer les routines, les dossiers et les outils pour éviter les retards et les oublis.",
   },
 ] as const;
 
 const assistantComparison = [
   {
-    title: "Assistante polyvalente salariée",
+    title: "Assistante facturation salariée",
     amount: "2 579,56 € / mois",
     description: "Repère de coût employeur pour 1 700 € net / mois.",
     emphasis: false,
@@ -157,7 +157,7 @@ const assistantFaq = [
   {
     question: "Quelles tâches l'assistant(e) peut-il ou elle reprendre concrètement ?",
     answer:
-      "Les tâches administratives récurrentes : devis, factures, classement documentaire, relances, emails, suivis, tableaux, CRM et coordination du quotidien.",
+      "Les tâches liées au cycle devis, facture, relance et transmission comptable : préparation des devis, émission des factures, suivi des paiements, relances, collecte des pièces et intégration dans l'outil comptable ou envoi au comptable.",
   },
   {
     question: "À partir de quand la personne peut-elle être opérationnelle dans l'entreprise ?",
@@ -167,7 +167,7 @@ const assistantFaq = [
   {
     question: "Pourquoi ce format est-il plus accessible qu'une embauche classique ?",
     answer:
-      "Le coût est allégé par le cadre du dispositif et les aides mobilisables, tout en sécurisant la montée en compétence sur les bases administratives utiles.",
+      "Le coût est allégé par le cadre du dispositif et les aides mobilisables, tout en sécurisant la montée en compétence sur un périmètre concret et utile dès le départ.",
   },
   {
     question: "Combien de temps dois-je prévoir de mon côté pour l'intégration ?",
@@ -208,7 +208,7 @@ export default function ServiceExpandedContent({
     return <OrganisationExpandedContent variant={variant} />;
   }
 
-  if (serviceSlug === "recrutement-assistant-polyvalent") {
+  if (serviceSlug === "recrutement-assistante-facturation") {
     return <AssistantExpandedContent variant={variant} />;
   }
 
@@ -232,25 +232,48 @@ function GenericServiceExpandedContent({
     return null;
   }
 
-  const faqItems = [
-    {
-      question: "Ce service est-il adapté à mon activité ?",
-      answer: service.bestFor,
-    },
-    {
-      question: "Qu'est-ce qui est inclus concrètement ?",
-      answer: `Le service inclut ${joinAsSentence(service.deliverables)}.`,
-    },
-    {
-      question: "Combien de temps faut-il prévoir ?",
-      answer: `Le cadrage prévu pour cette prestation est de ${service.duration}, avec un démarrage organisé autour de vos priorités et des éléments à réunir.`,
-    },
-    {
-      question: "Comment la mission démarre-t-elle ?",
-      answer:
-        "On commence par qualifier le besoin, valider le périmètre utile et rassembler les informations nécessaires pour lancer la mission de façon fluide.",
-    },
-  ] as const;
+  const faqItems =
+    serviceSlug === "assistante-facturation"
+      ? [
+          {
+            question: "Qu'est-ce que vous pouvez reprendre concrètement chez moi ?",
+            answer:
+              "Les devis, la création et l'envoi des factures, le suivi des paiements, les relances, la collecte des pièces et la transmission dans l'outil comptable ou au comptable.",
+          },
+          {
+            question: "Est-ce adapté à une petite entreprise sans équipe administrative ?",
+            answer: service.bestFor,
+          },
+          {
+            question: "Comment ça se passe avec mon comptable ou mon logiciel ?",
+            answer:
+              "L'objectif est de remettre de l'ordre dans le flux : récupérer les bonnes pièces, les classer proprement, puis les intégrer dans votre outil ou les transmettre au comptable sans vous laisser le suivi sur les bras.",
+          },
+          {
+            question: "Combien de temps faut-il pour que ce soit utile ?",
+            answer:
+              "Le service fonctionne par pack, avec un démarrage centré sur les sujets les plus urgents pour vous soulager vite : devis en retard, factures à envoyer, relances oubliées ou pièces à remettre au comptable.",
+          },
+        ] as const
+      : [
+          {
+            question: "Ce service est-il adapté à mon activité ?",
+            answer: service.bestFor,
+          },
+          {
+            question: "Qu'est-ce qui est inclus concrètement ?",
+            answer: `Le service inclut ${joinAsSentence(service.deliverables)}.`,
+          },
+          {
+            question: "Combien de temps faut-il prévoir ?",
+            answer: `Le cadrage prévu pour cette prestation est de ${service.duration}, avec un démarrage organisé autour de vos priorités et des éléments à réunir.`,
+          },
+          {
+            question: "Comment la mission démarre-t-elle ?",
+            answer:
+              "On commence par qualifier le besoin, valider le périmètre utile et rassembler les informations nécessaires pour lancer la mission de façon fluide.",
+          },
+        ] as const;
 
   return <FaqSection title="Questions fréquentes" items={faqItems} variant={variant} />;
 }
@@ -389,7 +412,7 @@ function AssistantExpandedContent({
             Récap de l&apos;offre
           </p>
           <h3 className="mt-2 text-[1.5rem] font-semibold tracking-tight text-brand-blue md:text-[1.85rem]">
-            Un parcours pensé pour déléguer sans tout construire seul
+            Un parcours pensé pour sécuriser la facturation sans tout construire seul
           </h3>
         </div>
         <div className="mt-5 grid gap-4 md:grid-cols-2">
@@ -525,7 +548,7 @@ function FaqSection({
                 aria-expanded={isOpen}
                 aria-controls={answerId}
               >
-                <span className="text-sm font-medium leading-snug text-brand-blue">
+                <span className="text-[1rem] font-medium leading-snug text-brand-blue md:text-[1.08rem]">
                   {item.question}
                 </span>
                 <ChevronDown
@@ -537,7 +560,9 @@ function FaqSection({
               </button>
               {isOpen ? (
                 <div id={answerId} className="px-4 pb-4 sm:px-5">
-                  <p className="text-sm leading-relaxed text-dema-muted">{item.answer}</p>
+                  <p className="text-[1rem] leading-relaxed text-dema-muted md:text-[1.05rem]">
+                    {item.answer}
+                  </p>
                 </div>
               ) : null}
             </div>
