@@ -43,6 +43,10 @@ export default function CustomerSpaceAccessForm({
         throw new Error(payload?.error || "Impossible d'envoyer le lien.");
       }
 
+      if (!payload?.sent) {
+        throw new Error("Impossible d'envoyer le lien.");
+      }
+
       setSent(true);
       setDevLink(payload?.devLink || null);
     } catch (submitError) {
