@@ -100,14 +100,19 @@ export default function ServiceDetailDialog({
 
                 <aside className="self-start rounded-[1.05rem] border border-dema-line bg-dema-cream/70 p-5 lg:sticky lg:top-0 sm:rounded-[1.15rem] sm:p-6">
                   <p className="text-base font-semibold text-brand-blue">Tarif</p>
-                  <p className="mt-3 text-[1.9rem] font-semibold tracking-tight text-brand-blue md:text-[2.15rem]">
+                  <p className="mt-3 text-[1.35rem] font-normal tracking-tight text-brand-blue md:text-[1.5rem]">
                     {service.price}
                   </p>
                   <p className="mt-4 text-sm font-medium text-dema-muted">Durée</p>
-                  <p className="mt-1 text-lg font-semibold tracking-tight text-brand-blue">
+                  <p className="mt-1 text-lg font-normal tracking-tight text-brand-blue">
                     {service.duration}
                   </p>
-                  <ServiceRequestCta service={service} />
+                  <ServiceRequestCta
+                    service={service}
+                    purchaseButtonLabel="Sélectionner"
+                    purchaseSelectedLabel="Sélectionné"
+                    purchaseButtonClassName="demaa-secondary-button border-dema-line bg-dema-paper text-brand-blue hover:border-dema-forest/25 hover:text-dema-forest"
+                  />
                 </aside>
               </div>
             ) : null}

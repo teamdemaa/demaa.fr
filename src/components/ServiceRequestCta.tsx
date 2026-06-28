@@ -8,10 +8,26 @@ import ServiceIntroductionModal from "@/components/ServiceIntroductionModal";
 import ServicePurchaseCta from "@/components/ServicePurchaseCta";
 import { ASSISTANT_SERVICE_SLUG } from "@/lib/assistant-service-packs";
 import { ORGANISATION_AUDIT_BOOKING_URL } from "@/lib/organisation-audit";
-import type { DemaaService } from "@/lib/service-catalog";
 import { getPurchasableServiceConfig } from "@/lib/service-purchase";
+import type { DemaaService } from "@/lib/service-catalog";
 
-export default function ServiceRequestCta({ service }: { service: DemaaService }) {
+type ServiceRequestCtaProps = {
+  service: DemaaService;
+  purchaseButtonLabel?: string;
+  purchaseSelectedLabel?: string;
+  purchaseButtonClassName?: string;
+};
+
+export default function ServiceRequestCta(props: ServiceRequestCtaProps) {
+  return <ServiceRequestCtaWithOptions {...props} />;
+}
+
+export function ServiceRequestCtaWithOptions({
+  service,
+  purchaseButtonLabel,
+  purchaseSelectedLabel,
+  purchaseButtonClassName,
+}: ServiceRequestCtaProps) {
   const [isIntroductionOpen, setIsIntroductionOpen] = useState(false);
   const purchaseConfig = getPurchasableServiceConfig(service.slug);
 
@@ -24,6 +40,9 @@ export default function ServiceRequestCta({ service }: { service: DemaaService }
       <ServicePurchaseCta
         serviceName={service.name}
         serviceSlug={service.slug}
+        defaultLabel={purchaseButtonLabel}
+        selectedLabel={purchaseSelectedLabel}
+        buttonClassName={purchaseButtonClassName}
       />
     );
   }

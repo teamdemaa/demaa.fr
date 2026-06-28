@@ -12,10 +12,7 @@ import { getServicePageMetadata } from "@/lib/service-metadata";
 import { getRelatedSystemsForServiceSlug } from "@/lib/related-systems";
 import { demaaServices, getDemaaServiceBySlug } from "@/lib/service-catalog";
 import {
-  LEGACY_ASSISTANT_SERVICE_SLUG,
-  LEGACY_RECRUITMENT_ASSISTANT_SERVICE_SLUG,
   RECRUITMENT_ASSISTANT_SERVICE_SLUG,
-  ASSISTANT_SERVICE_SLUG,
 } from "@/lib/assistant-service-packs";
 
 type ServiceDetailPageProps = {
@@ -37,11 +34,7 @@ export async function generateMetadata({
   const normalizedSlug =
     slug === "organisation"
       ? "organisation-automatisation"
-      : slug === LEGACY_ASSISTANT_SERVICE_SLUG
-        ? ASSISTANT_SERVICE_SLUG
-        : slug === LEGACY_RECRUITMENT_ASSISTANT_SERVICE_SLUG
-          ? RECRUITMENT_ASSISTANT_SERVICE_SLUG
-          : slug;
+      : slug;
   const service = getDemaaServiceBySlug(normalizedSlug);
 
   if (!service) {
@@ -61,14 +54,6 @@ export default async function ServiceDetailPage({
   params,
 }: ServiceDetailPageProps) {
   const { slug } = await params;
-  if (slug === LEGACY_ASSISTANT_SERVICE_SLUG) {
-    permanentRedirect(`/annuaire-services/${ASSISTANT_SERVICE_SLUG}`);
-  }
-
-  if (slug === LEGACY_RECRUITMENT_ASSISTANT_SERVICE_SLUG) {
-    permanentRedirect(`/annuaire-services/${RECRUITMENT_ASSISTANT_SERVICE_SLUG}`);
-  }
-
   if (slug === "organisation-automatisation") {
     permanentRedirect("/annuaire-services/organisation");
   }

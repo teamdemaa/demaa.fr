@@ -8,11 +8,19 @@ type ServiceModalPageProps = {
   params: Promise<{ slug: string }>;
 };
 
+function normalizeServiceSlug(slug: string) {
+  if (slug === "organisation") {
+    return "organisation-automatisation";
+  }
+
+  return slug;
+}
+
 export async function generateMetadata({
   params,
 }: ServiceModalPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const service = getDemaaServiceBySlug(slug);
+  const service = getDemaaServiceBySlug(normalizeServiceSlug(slug));
 
   if (!service) {
     return {
@@ -31,7 +39,7 @@ export default async function ServiceModalPage({
   params,
 }: ServiceModalPageProps) {
   const { slug } = await params;
-  const service = getDemaaServiceBySlug(slug);
+  const service = getDemaaServiceBySlug(normalizeServiceSlug(slug));
 
   if (!service) {
     notFound();

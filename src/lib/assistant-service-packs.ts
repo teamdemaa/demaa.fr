@@ -1,9 +1,6 @@
 export const ASSISTANT_SERVICE_SLUG = "assistante-facturation";
-export const LEGACY_ASSISTANT_SERVICE_SLUG = "assistant-polyvalent";
 export const RECRUITMENT_ASSISTANT_SERVICE_SLUG =
   "recrutement-assistante-facturation";
-export const LEGACY_RECRUITMENT_ASSISTANT_SERVICE_SLUG =
-  "recrutement-assistant-polyvalent";
 
 export type AssistantPack = {
   slug: string;
