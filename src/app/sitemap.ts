@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { getCanonicalBaseUrl } from "@/lib/site-url";
 import { getAllCourseEntries } from "@/lib/course-content";
 import { getAllDocumentModels } from "@/lib/document-models";
 import { getAllNewsletters } from "@/lib/newsletter-content";
@@ -26,27 +27,8 @@ const HIDDEN_SERVICE_SLUGS = new Set([
 
 export const dynamic = "force-dynamic";
 
-function getBaseUrl(): string {
-  // Priorité absolue au domaine principal
-  const productionDomain = "https://demaa.fr";
-
-  // En production, toujours utiliser le domaine principal
-  if (process.env.NODE_ENV === "production" || process.env.VERCEL_URL) {
-    return productionDomain;
-  }
-  
-  // Forcer le domaine principal si NEXT_PUBLIC_SITE_URL est défini
-  const fromEnv = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
-  if (fromEnv && !fromEnv.includes('vercel.app')) {
-    return fromEnv;
-  }
-  
-  // Fallback développement
-  return fromEnv || "http://localhost:3000";
-}
-
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const base = getBaseUrl();
+  const base = getCanonicalBaseUrl();
   const now = new Date();
   const [tools, enterprises] = await Promise.all([
     getUnifiedToolDirectory(),
@@ -116,7 +98,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "qr-code-commande-rapide",
     "generation-de-menu-qr-code",
     "creation-de-fiche-google-optimisee",
-    "generation-de-document",
     "generation-de-tampon",
     "signature-pro",
     "signez-un-document-electroniquement",

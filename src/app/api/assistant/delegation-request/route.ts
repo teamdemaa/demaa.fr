@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { resolveAssistantAccessToken } from "@/lib/assistant-access";
 import {
   enforceRateLimit,
   escapeSlackMrkdwn,
@@ -15,6 +16,7 @@ import { sendSlackMessage } from "@/lib/slack";
 export const runtime = "nodejs";
 
 type DelegationRequestBody = {
+  accessToken?: unknown;
   firstName?: unknown;
   lastName?: unknown;
   sessionId?: unknown;
@@ -154,11 +156,13 @@ export async function POST(request: Request) {
     await readJsonBody<DelegationRequestBody>(request, 16 * 1024);
   if (response) return response;
 
+  const accessToken = normalizeText(body?.accessToken, 120);
   const firstName = normalizeText(body?.firstName, 80);
   const lastName = normalizeText(body?.lastName, 80);
-  const sessionId = normalizeText(body?.sessionId, 120);
+  const rawSessionId = normalizeText(body?.sessionId, 120);
   const tasks = normalizeText(body?.tasks, 2500, { multiline: true });
   const whatsappPhone = normalizeText(body?.whatsappPhone, 60);
+  const sessionId = rawSessionId || await resolveAssistantAccessToken(accessToken);
 
   const limited = enforceRateLimit(
     request,
@@ -167,14 +171,14 @@ export async function POST(request: Request) {
       limit: 6,
       windowMs: 10 * 60 * 1000,
     },
-    sessionId || undefined
+    sessionId || accessToken || undefined
   );
   if (limited) return limited;
 
   if (!sessionId) {
     return NextResponse.json(
-      { error: "La session Stripe est manquante." },
-      { status: 400 }
+      { error: "Le lien d'acces assistant est invalide ou expire." },
+      { status: 401 }
     );
   }
 

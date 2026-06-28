@@ -9,15 +9,17 @@ export const metadata = {
 };
 
 type AssistantSuccessPageProps = {
-  searchParams: Promise<{ session_id?: string | string[] }>;
+  searchParams: Promise<{ access?: string | string[]; session_id?: string | string[] }>;
 };
 
 export default async function AssistantSuccessPage({
   searchParams,
 }: AssistantSuccessPageProps) {
   const resolvedSearchParams = await searchParams;
+  const rawAccessToken = resolvedSearchParams.access;
   const rawSessionId = resolvedSearchParams.session_id;
+  const accessToken = Array.isArray(rawAccessToken) ? rawAccessToken[0] : rawAccessToken ?? null;
   const sessionId = Array.isArray(rawSessionId) ? rawSessionId[0] : rawSessionId ?? null;
 
-  return <AssistantSuccessClient sessionId={sessionId} />;
+  return <AssistantSuccessClient accessToken={accessToken} sessionId={sessionId} />;
 }

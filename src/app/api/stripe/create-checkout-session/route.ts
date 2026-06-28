@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { enforceRateLimit, readJsonBody } from "@/lib/api-security";
+import { enforceAllowedHost } from "@/lib/request-guard";
 import { getPurchasableServiceConfig } from "@/lib/service-purchase";
+import { getCanonicalBaseUrl } from "@/lib/site-url";
 
 export const runtime = "nodejs";
 
@@ -18,6 +20,9 @@ function getStripeSecretKey() {
 }
 
 export async function POST(request: Request) {
+  const blockedHost = enforceAllowedHost(request);
+  if (blockedHost) return blockedHost;
+
   const limited = enforceRateLimit(request, {
     keyPrefix: "stripe-create-checkout-session",
     limit: 10,
@@ -61,7 +66,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const origin = new URL(request.url).origin;
+  const origin = getCanonicalBaseUrl(request);
   const cartSummary = purchasableServices.map((service) => service.name).join(" · ");
   const serviceNames = purchasableServices.map((service) => service.name).join("|");
   const serviceSlugs = purchasableServices.map((service) => service.slug).join(",");

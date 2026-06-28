@@ -2895,27 +2895,6 @@
       "scope": "transverse"
     },
     {
-      "slug": "generation-de-document",
-      "name": "Génération de document",
-      "url": "/outils/generation-de-document",
-      "category": "Signature & documents",
-      "sectors": [
-        "Services & conseil",
-        "Immobilier",
-        "Artisanat & BTP"
-      ],
-      "description": "Préparez une première base de document juridique ou administratif avec un assistant guidé.",
-      "tags": [
-        "Document",
-        "Juridique",
-        "Assistant"
-      ],
-      "bestFor": "Structurer rapidement un document courant avant adaptation ou relecture finale.",
-      "pricingHint": "Gratuit",
-      "status": "active",
-      "scope": "transverse"
-    },
-    {
       "slug": "signature-pro",
       "name": "Signature email pro",
       "url": "/outils/signature-pro",

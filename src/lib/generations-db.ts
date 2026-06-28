@@ -61,6 +61,12 @@ interface CustomerSessionRow {
   expires_at?: string | null;
 }
 
+interface AssistantAccessTokenRow {
+  consumed_at?: string | null;
+  expires_at?: string | null;
+  stripe_session_id?: string | null;
+}
+
 interface StripePaymentInput {
   stripeSessionId: string;
   stripeEventId: string;
@@ -358,6 +364,41 @@ export async function getCustomerSessionEmail(sessionHash: string) {
   }
 
   return normalizeEmail(session.email);
+}
+
+export async function saveAssistantAccessToken(input: {
+  stripeSessionId: string;
+  tokenHash: string;
+  expiresAt: string;
+}) {
+  const database = getAdminFirestore();
+  const now = new Date().toISOString();
+
+  await database.collection("assistant_access_tokens").doc(input.tokenHash).set({
+    stripe_session_id: input.stripeSessionId,
+    expires_at: input.expiresAt,
+    created_at: now,
+    consumed_at: null,
+    updated_at: now,
+  });
+}
+
+export async function getAssistantAccessTokenSessionId(tokenHash: string) {
+  const database = getAdminFirestore();
+  const tokenDoc = await database.collection("assistant_access_tokens").doc(tokenHash).get();
+  const token = tokenDoc.data() as AssistantAccessTokenRow | undefined;
+
+  if (!tokenDoc.exists || !token?.stripe_session_id) {
+    return null;
+  }
+
+  const expiresAt = Date.parse(token.expires_at || "");
+
+  if (!Number.isFinite(expiresAt) || expiresAt < Date.now()) {
+    return null;
+  }
+
+  return token.stripe_session_id.trim() || null;
 }
 
 export async function saveAssistantDelegationRequest(

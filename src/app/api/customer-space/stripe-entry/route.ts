@@ -5,11 +5,11 @@ import {
   normalizeText,
 } from "@/lib/api-security";
 import {
-  CUSTOMER_SPACE_COOKIE,
-  createCustomerSession,
-  getCustomerCookieOptions,
-} from "@/lib/customer-space-auth";
+  getMagicLinkErrorMessage,
+  sendCustomerMagicLinkEmail,
+} from "@/lib/customer-space-email";
 import { upsertConfirmedStripePayment } from "@/lib/generations-db";
+import { enforceAllowedHost } from "@/lib/request-guard";
 
 export const runtime = "nodejs";
 
@@ -79,6 +79,9 @@ async function retrieveCheckoutSession(sessionId: string) {
 }
 
 export async function GET(request: Request) {
+  const blockedHost = enforceAllowedHost(request);
+  if (blockedHost) return blockedHost;
+
   const limited = enforceRateLimit(request, {
     keyPrefix: "customer-stripe-entry",
     limit: 20,
@@ -124,14 +127,21 @@ export async function GET(request: Request) {
     itemCount: Number(session.metadata?.item_count || 0) || null,
   });
 
-  const sessionToken = await createCustomerSession(email);
-  const response = NextResponse.redirect(new URL("/mon-espace?paid=1", request.url));
+  const emailResult = await sendCustomerMagicLinkEmail({ email, request });
+  const redirectUrl = new URL("/mon-espace", request.url);
 
-  response.cookies.set(
-    CUSTOMER_SPACE_COOKIE,
-    sessionToken,
-    getCustomerCookieOptions()
+  redirectUrl.searchParams.set("paid", "1");
+
+  if (emailResult.sent) {
+    redirectUrl.searchParams.set("sent", "1");
+    return NextResponse.redirect(redirectUrl);
+  }
+
+  redirectUrl.searchParams.set("error", "email");
+  redirectUrl.searchParams.set(
+    "message",
+    getMagicLinkErrorMessage(emailResult.reason)
   );
 
-  return response;
+  return NextResponse.redirect(redirectUrl);
 }

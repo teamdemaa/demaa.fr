@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
+import Link from "next/link";
 import Navbar from "@/components/Navbar";
-import { CheckCircle2, LoaderCircle, Send, UserRound, X } from "lucide-react";
+import { CheckCircle2, LoaderCircle, Send, X } from "lucide-react";
 
 type VerificationState =
   | { status: "loading" }
@@ -10,12 +11,7 @@ type VerificationState =
       status: "success";
       cartSummary: string;
       credits: number | null;
-      email: string | null;
-      firstName: string | null;
-      lastName: string | null;
-      name: string | null;
       offerLabel: string;
-      whatsappPhone: string | null;
     }
   | { status: "error"; message: string };
 
@@ -33,14 +29,21 @@ const INITIAL_FORM: OnboardingForm = {
   problems: "",
 };
 
+const ASSISTANT_ACCESS_STORAGE_KEY = "demaa-assistant-access-token";
+
 export default function AssistantSuccessClient({
+  accessToken: initialAccessToken,
   sessionId,
 }: {
+  accessToken: string | null;
   sessionId: string | null;
 }) {
   const [verification, setVerification] = useState<VerificationState>({
     status: "loading",
   });
+  const [assistantAccessToken, setAssistantAccessToken] = useState<string | null>(
+    initialAccessToken
+  );
   const [formData, setFormData] = useState(INITIAL_FORM);
   const [error, setError] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -49,7 +52,13 @@ export default function AssistantSuccessClient({
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
-    if (!sessionId) {
+    const storedAccessToken =
+      typeof window !== "undefined"
+        ? window.sessionStorage.getItem(ASSISTANT_ACCESS_STORAGE_KEY)
+        : null;
+    const candidateAccessToken = initialAccessToken || storedAccessToken;
+
+    if (!sessionId && !candidateAccessToken) {
       setVerification({
         status: "error",
         message:
@@ -58,25 +67,34 @@ export default function AssistantSuccessClient({
       return;
     }
 
+    if (typeof window !== "undefined") {
+      if (candidateAccessToken) {
+        window.sessionStorage.setItem(
+          ASSISTANT_ACCESS_STORAGE_KEY,
+          candidateAccessToken
+        );
+        setAssistantAccessToken(candidateAccessToken);
+      }
+      window.history.replaceState({}, "", "/assistant/success");
+    }
+
     void (async () => {
       try {
-        const response = await fetch(
-          `/api/stripe/checkout-session?session_id=${encodeURIComponent(sessionId)}`,
-          { cache: "no-store" }
-        );
+        const query = candidateAccessToken
+          ? `access_token=${encodeURIComponent(candidateAccessToken)}`
+          : `session_id=${encodeURIComponent(sessionId || "")}`;
+        const response = await fetch(`/api/stripe/checkout-session?${query}`, {
+          cache: "no-store",
+        });
 
         const payload = (await response.json().catch(() => null)) as
           | {
+              accessToken?: string | null;
               cartSummary?: string;
               credits?: number | null;
-              email?: string | null;
               error?: string;
-              firstName?: string | null;
-              lastName?: string | null;
-              name?: string | null;
               offerLabel?: string;
               paid?: boolean;
-              whatsappPhone?: string | null;
             }
           | null;
 
@@ -87,16 +105,21 @@ export default function AssistantSuccessClient({
           );
         }
 
+        const nextAccessToken = payload?.accessToken || candidateAccessToken || null;
+
+        if (nextAccessToken && typeof window !== "undefined") {
+          window.sessionStorage.setItem(
+            ASSISTANT_ACCESS_STORAGE_KEY,
+            nextAccessToken
+          );
+        }
+
+        setAssistantAccessToken(nextAccessToken);
         setVerification({
           status: "success",
           cartSummary: payload.cartSummary || payload.offerLabel || "Packs assistant",
           credits: payload.credits ?? null,
-          email: payload.email || null,
-          firstName: payload.firstName || null,
-          lastName: payload.lastName || null,
-          name: payload.name || null,
           offerLabel: payload.offerLabel || "Packs assistant",
-          whatsappPhone: payload.whatsappPhone || null,
         });
         setIsModalOpen(true);
       } catch (paymentError) {
@@ -109,17 +132,7 @@ export default function AssistantSuccessClient({
         });
       }
     })();
-  }, [sessionId]);
-
-  const displayName = useMemo(() => {
-    if (verification.status !== "success") return null;
-
-    return (
-      [verification.firstName, verification.lastName].filter(Boolean).join(" ") ||
-      verification.name ||
-      null
-    );
-  }, [verification]);
+  }, [initialAccessToken, sessionId]);
 
   const handleChange =
     (field: keyof OnboardingForm) =>
@@ -164,6 +177,7 @@ export default function AssistantSuccessClient({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          accessToken: assistantAccessToken,
           sessionId,
           firstName: formData.firstName.trim(),
           lastName: formData.lastName.trim(),
@@ -236,7 +250,6 @@ export default function AssistantSuccessClient({
                 Paiement confirmé
               </h1>
               <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-gray-600 md:text-base">
-                {displayName ? `Merci ${displayName}, ` : ""}
                 votre commande assistant est validée. Ajoutez les tâches à déléguer,
                 puis on vous contacte sur WhatsApp sous 24h.
               </p>
@@ -249,17 +262,12 @@ export default function AssistantSuccessClient({
                 >
                   {isSubmitted ? "Demande envoyée" : "Ajouter les tâches à déléguer"}
                 </button>
-                {sessionId ? (
-                  <a
-                    href={`/api/customer-space/stripe-entry?session_id=${encodeURIComponent(
-                      sessionId
-                    )}`}
-                    className="inline-flex items-center gap-2 rounded-full border border-brand-blue/10 bg-white px-6 py-3 text-sm font-medium text-brand-blue transition hover:border-brand-coral/30 hover:text-brand-coral"
-                  >
-                    <UserRound className="h-4 w-4" aria-hidden="true" />
-                    Voir mon espace membre
-                  </a>
-                ) : null}
+                <Link
+                  href="/mon-espace"
+                  className="inline-flex items-center gap-2 rounded-full border border-brand-blue/10 bg-white px-6 py-3 text-sm font-medium text-brand-blue transition hover:border-brand-coral/30 hover:text-brand-coral"
+                >
+                  Accéder à mon espace membre
+                </Link>
               </div>
             </div>
           ) : null}
@@ -302,10 +310,6 @@ export default function AssistantSuccessClient({
               <p>
                 <span className="font-medium text-brand-blue">Paiement :</span>{" "}
                 {verification.cartSummary || verification.offerLabel}
-              </p>
-              <p>
-                <span className="font-medium text-brand-blue">Client :</span>{" "}
-                {verification.email || displayName || "non renseigné"}
               </p>
             </div>
 

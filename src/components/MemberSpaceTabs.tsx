@@ -11,6 +11,7 @@ import { writeServiceCartSlugs } from "@/lib/service-cart";
 
 type MemberRequestPayment = {
   amountTotal: number | null;
+  assistantAccessToken?: string | null;
   assistantTasks: string | null;
   cartSummary: string | null;
   createdAt: string | null;
@@ -161,7 +162,11 @@ function RequestCardArticle({
 
       {!request && !hasServiceBundle ? (
         <Link
-          href={`/assistant/success?session_id=${encodeURIComponent(payment.stripeSessionId)}`}
+          href={
+            payment.assistantAccessToken
+              ? `/assistant/success?access=${encodeURIComponent(payment.assistantAccessToken)}`
+              : "/assistant/success"
+          }
           className="mt-5 inline-flex w-full items-center justify-center rounded-full bg-dema-forest px-5 py-3 text-sm font-medium text-dema-paper transition hover:bg-[#284f3a]"
         >
           Compléter ma demande

@@ -3,7 +3,6 @@
     "Services & conseil": [
       "signature-pro",
       "signez-un-document-electroniquement",
-      "generation-de-document",
       "generation-de-tampon",
       "generation-de-qr-code",
       "carte-de-visite-qr-code-whatsapp"
@@ -25,13 +24,11 @@
     "Artisanat & BTP": [
       "creation-de-fiche-google-optimisee",
       "qr-code-pour-avis-client",
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "signature-pro",
       "generation-de-tampon"
     ],
     "Immobilier": [
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "signature-pro",
       "creation-de-fiche-google-optimisee",
@@ -46,7 +43,6 @@
   },
   "genericFallbackPriorityByPublicSector": {
     "Tech & Digital": [
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "signature-pro",
       "creation-de-fiche-google-optimisee",
@@ -55,12 +51,10 @@
     "Hébergement & tourisme": [
       "creation-de-fiche-google-optimisee",
       "qr-code-pour-avis-client",
-      "generation-de-document",
       "generation-de-qr-code",
       "carte-de-visite-qr-code-whatsapp"
     ],
     "Patrimoine": [
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "creation-de-fiche-google-optimisee",
       "qr-code-pour-avis-client",
@@ -69,26 +63,22 @@
     "Mobilité & logistique": [
       "creation-de-fiche-google-optimisee",
       "qr-code-pour-avis-client",
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "carte-de-visite-qr-code-whatsapp"
     ],
     "Services aux particuliers": [
       "creation-de-fiche-google-optimisee",
       "qr-code-pour-avis-client",
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "signature-pro"
     ],
     "Éducation & formation": [
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "creation-de-fiche-google-optimisee",
       "generation-de-qr-code",
       "carte-de-visite-qr-code-whatsapp"
     ],
     "Industrie & production": [
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "signature-pro",
       "generation-de-tampon"
@@ -96,11 +86,9 @@
     "Automobile & réparation": [
       "creation-de-fiche-google-optimisee",
       "qr-code-pour-avis-client",
-      "generation-de-document",
       "signature-pro"
     ],
     "Associations & événements": [
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "signature-pro",
       "generation-de-qr-code",
@@ -111,76 +99,64 @@
     "cabinet-comptable": [
       "signature-pro",
       "signez-un-document-electroniquement",
-      "generation-de-document",
       "generation-de-tampon"
     ],
     "cabinet-davocat": [
       "signature-pro",
       "signez-un-document-electroniquement",
-      "generation-de-document",
       "generation-de-tampon"
     ],
     "cabinet-de-conseil": [
       "signature-pro",
       "signez-un-document-electroniquement",
-      "generation-de-document",
       "generation-de-tampon"
     ],
     "consultant-independant": [
       "signature-pro",
       "signez-un-document-electroniquement",
-      "generation-de-document",
       "generation-de-tampon"
     ],
     "freelance": [
       "signature-pro",
       "signez-un-document-electroniquement",
-      "generation-de-document",
       "generation-de-tampon"
     ],
     "agence-marketing": [
       "signature-pro",
-      "generation-de-document",
       "generation-de-qr-code",
       "carte-de-visite-qr-code-whatsapp"
     ],
     "agence-immobiliere": [
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "signature-pro",
       "creation-de-fiche-google-optimisee",
       "generation-de-tampon"
     ],
     "investissement-immobilier": [
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "signature-pro",
       "creation-de-fiche-google-optimisee",
       "generation-de-tampon"
     ],
     "investissement-locatif": [
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "signature-pro",
       "creation-de-fiche-google-optimisee",
       "generation-de-tampon"
     ],
     "marchand-de-biens": [
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "signature-pro",
       "creation-de-fiche-google-optimisee",
       "generation-de-tampon"
     ],
     "gestion-locative": [
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "signature-pro",
       "creation-de-fiche-google-optimisee",
       "generation-de-tampon"
     ],
     "syndic": [
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "signature-pro",
       "creation-de-fiche-google-optimisee",
@@ -223,179 +199,150 @@
       "generation-de-qr-code"
     ],
     "agence-web": [
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "signature-pro",
       "generation-de-qr-code"
     ],
     "creation-de-contenu": [
       "signature-pro",
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "generation-de-qr-code"
     ],
     "marketplace": [
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "signature-pro"
     ],
     "media": [
       "signature-pro",
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "generation-de-qr-code"
     ],
     "services-a-la-personne": [
       "creation-de-fiche-google-optimisee",
       "qr-code-pour-avis-client",
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "signature-pro"
     ],
     "aide-a-domicile-menage": [
       "creation-de-fiche-google-optimisee",
       "qr-code-pour-avis-client",
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "signature-pro"
     ],
     "pressing": [
       "creation-de-fiche-google-optimisee",
       "qr-code-pour-avis-client",
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "signature-pro"
     ],
     "laverie-automatique": [
       "creation-de-fiche-google-optimisee",
       "qr-code-pour-avis-client",
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "signature-pro"
     ],
     "organisme-de-formation": [
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "creation-de-fiche-google-optimisee",
       "generation-de-qr-code",
       "carte-de-visite-qr-code-whatsapp"
     ],
     "cfa": [
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "creation-de-fiche-google-optimisee",
       "generation-de-qr-code",
       "carte-de-visite-qr-code-whatsapp"
     ],
     "formation-en-ligne": [
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "signature-pro",
       "generation-de-qr-code",
       "carte-de-visite-qr-code-whatsapp"
     ],
     "auto-ecole": [
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "creation-de-fiche-google-optimisee",
       "generation-de-qr-code",
       "carte-de-visite-qr-code-whatsapp"
     ],
     "creche": [
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "creation-de-fiche-google-optimisee",
       "generation-de-qr-code",
       "carte-de-visite-qr-code-whatsapp"
     ],
     "association": [
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "signature-pro",
       "generation-de-qr-code",
       "carte-de-visite-qr-code-whatsapp"
     ],
     "saas": [
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "signature-pro"
     ],
     "reparation-informatique-mobile": [
       "creation-de-fiche-google-optimisee",
       "qr-code-pour-avis-client",
-      "generation-de-document",
       "signature-pro"
     ],
     "photographe-videaste": [
       "signature-pro",
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "generation-de-qr-code",
       "carte-de-visite-qr-code-whatsapp"
     ],
     "infogerance-informatique": [
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "signature-pro"
     ],
     "cybersecurite-pme": [
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "signature-pro"
     ],
     "integrateur-crm-erp": [
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "signature-pro"
     ],
     "consultant-data-bi": [
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "signature-pro"
     ],
     "demenagement": [
       "creation-de-fiche-google-optimisee",
       "qr-code-pour-avis-client",
-      "generation-de-document",
       "signature-pro",
       "carte-de-visite-qr-code-whatsapp"
     ],
     "livraison-dernier-kilometre": [
       "creation-de-fiche-google-optimisee",
-      "generation-de-document",
       "signature-pro"
     ],
     "transport-de-marchandise": [
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "signature-pro"
     ],
     "transport-de-personnes": [
       "creation-de-fiche-google-optimisee",
       "qr-code-pour-avis-client",
-      "generation-de-document",
       "signature-pro",
       "carte-de-visite-qr-code-whatsapp"
     ],
     "vtc": [
       "creation-de-fiche-google-optimisee",
       "qr-code-pour-avis-client",
-      "generation-de-document",
       "signature-pro",
       "carte-de-visite-qr-code-whatsapp"
     ],
     "investissement-financier": [
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "signature-pro"
     ],
     "investissement-entreprise": [
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "signature-pro"
     ],
     "gestionnaire-de-patrimoine": [
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "signature-pro",
       "carte-de-visite-qr-code-whatsapp"
@@ -403,7 +350,6 @@
     "conciergerie-airbnb": [
       "creation-de-fiche-google-optimisee",
       "qr-code-pour-avis-client",
-      "generation-de-document",
       "generation-de-qr-code",
       "carte-de-visite-qr-code-whatsapp"
     ],
@@ -415,7 +361,6 @@
     ],
     "agence-de-voyage": [
       "creation-de-fiche-google-optimisee",
-      "generation-de-document",
       "signature-pro",
       "generation-de-qr-code",
       "carte-de-visite-qr-code-whatsapp"
@@ -423,19 +368,16 @@
     "garage-automobile": [
       "creation-de-fiche-google-optimisee",
       "qr-code-pour-avis-client",
-      "generation-de-document",
       "signature-pro",
       "generation-de-tampon"
     ],
     "carrosserie": [
       "creation-de-fiche-google-optimisee",
       "qr-code-pour-avis-client",
-      "generation-de-document",
       "signature-pro",
       "generation-de-tampon"
     ],
     "production-industrie": [
-      "generation-de-document",
       "signez-un-document-electroniquement",
       "signature-pro",
       "generation-de-tampon",

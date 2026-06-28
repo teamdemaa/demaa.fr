@@ -7,10 +7,14 @@ import {
   hashToken,
 } from "@/lib/customer-space-auth";
 import { consumeCustomerMagicLink } from "@/lib/generations-db";
+import { enforceAllowedHost } from "@/lib/request-guard";
 
 export const runtime = "nodejs";
 
 export async function GET(request: Request) {
+  const blockedHost = enforceAllowedHost(request);
+  if (blockedHost) return blockedHost;
+
   const limited = enforceRateLimit(request, {
     keyPrefix: "customer-magic-consume",
     limit: 20,

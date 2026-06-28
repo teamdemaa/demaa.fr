@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import CustomerSpaceAccessForm from "@/components/CustomerSpaceAccessForm";
 import MemberSpaceTabs from "@/components/MemberSpaceTabs";
 import Navbar from "@/components/Navbar";
+import { createAssistantAccessToken } from "@/lib/assistant-access";
 import { CUSTOMER_SPACE_COOKIE, getEmailFromCustomerSessionToken } from "@/lib/customer-space-auth";
 import {
   getAssistantDelegationRequestsByEmail,
@@ -32,13 +33,20 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 type MonEspacePageProps = {
-  searchParams: Promise<{ error?: string | string[]; paid?: string | string[] }>;
+  searchParams: Promise<{
+    error?: string | string[];
+    message?: string | string[];
+    paid?: string | string[];
+    sent?: string | string[];
+  }>;
 };
 
 export default async function MonEspacePage({ searchParams }: MonEspacePageProps) {
   const params = await searchParams;
   const error = Array.isArray(params.error) ? params.error[0] : params.error;
+  const message = Array.isArray(params.message) ? params.message[0] : params.message;
   const paid = Array.isArray(params.paid) ? params.paid[0] : params.paid;
+  const sent = Array.isArray(params.sent) ? params.sent[0] : params.sent;
   const cookieStore = await cookies();
   const sessionToken = cookieStore.get(CUSTOMER_SPACE_COOKIE)?.value || null;
   const email = await getEmailFromCustomerSessionToken(sessionToken);
@@ -61,7 +69,14 @@ export default async function MonEspacePage({ searchParams }: MonEspacePageProps
             </p>
             {error ? (
               <p className="mt-4 rounded-[0.9rem] border border-dema-forest/15 bg-dema-sage/70 px-4 py-3 text-sm text-dema-forest">
-                Le lien n&apos;est plus valide. Demandez un nouveau lien.
+                {error === "lien-expire"
+                  ? "Le lien n&apos;est plus valide. Demandez un nouveau lien."
+                  : message || "Impossible de finaliser l&apos;accès. Demandez un nouveau lien."}
+              </p>
+            ) : null}
+            {paid === "1" && sent === "1" ? (
+              <p className="mt-4 rounded-[0.9rem] border border-dema-forest/15 bg-dema-sage/70 px-4 py-3 text-sm text-dema-forest">
+                Votre paiement est confirmé. Un lien d&apos;accès sécurisé vient d&apos;être envoyé par email.
               </p>
             ) : null}
             <div className="mt-6">
@@ -80,7 +95,16 @@ export default async function MonEspacePage({ searchParams }: MonEspacePageProps
   const requestsBySessionId = new Map(
     requests.map((request) => [request.stripeSessionId, request])
   );
-  const requestCards = payments.map((payment) => {
+  const paymentsWithAccessTokens = await Promise.all(
+    payments.map(async (payment) => ({
+      ...payment,
+      assistantAccessToken:
+        payment.orderType !== "service_bundle"
+          ? await createAssistantAccessToken(payment.stripeSessionId)
+          : null,
+    }))
+  );
+  const requestCards = paymentsWithAccessTokens.map((payment) => {
     const request = requestsBySessionId.get(payment.stripeSessionId) ?? null;
     return { payment, request };
   });
