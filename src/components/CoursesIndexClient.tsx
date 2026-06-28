@@ -95,7 +95,6 @@ export default function CoursesIndexClient({
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
             ) : null}
-            <div className="absolute inset-0 bg-gradient-to-t from-brand-blue/42 via-transparent to-transparent" />
           </div>
           <div className="flex flex-1 flex-col p-6">
             <div className="flex items-center justify-between gap-4">
