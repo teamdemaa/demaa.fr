@@ -72,7 +72,7 @@ const DIRECTORY_FIRMS_FETCH_TIMEOUT_MS = 2500;
 
 export const getAccountingFirms = cache(async () => {
   if (!DIRECTORY_FIRMS_ENDPOINT) {
-    return localFallbackFirms;
+    return mergePriorityAccountingFirms(localFallbackFirms);
   }
 
   const controller = new AbortController();
@@ -88,7 +88,7 @@ export const getAccountingFirms = cache(async () => {
   clearTimeout(timeoutId);
 
   if (!response?.ok) {
-    return localFallbackFirms;
+    return mergePriorityAccountingFirms(localFallbackFirms);
   }
 
   const payload = (await response.json().catch(() => null)) as
@@ -101,7 +101,9 @@ export const getAccountingFirms = cache(async () => {
         .filter((firm): firm is AccountingFirm => Boolean(firm))
     : [];
 
-  return firms.length > 0 ? firms : localFallbackFirms;
+  return firms.length > 0
+    ? mergePriorityAccountingFirms(firms)
+    : mergePriorityAccountingFirms(localFallbackFirms);
 });
 
 export async function getAccountingFirmBySlug(slug: string) {
@@ -272,7 +274,7 @@ function mapAccountingDirectoryApiFirm(
       "Cabinet d'expertise comptable référencé dans l'annuaire Demaa.",
     city: cleanText(firm.city),
     regions: cleanList(firm.regions),
-    isOecVerified: firm.isOecVerified === true,
+    isOecVerified: true,
     website: cleanOptional(firm.website),
     contactPage: cleanOptional(firm.contactPage),
     phone: cleanOptional(firm.phone),
@@ -325,4 +327,23 @@ function cleanList(value: unknown) {
     : [];
 }
 
-const localFallbackFirms: AccountingFirm[] = generatedAccountingDirectoryFirms;
+const localFallbackFirms: AccountingFirm[] = generatedAccountingDirectoryFirms.map((firm) => ({
+  ...firm,
+  isOecVerified: true,
+}));
+const priorityFallbackFirms = localFallbackFirms.filter(
+  (firm) => typeof firm.featuredRank === "number"
+);
+
+function mergePriorityAccountingFirms(firms: AccountingFirm[]) {
+  const firmsBySlug = new Map(firms.map((firm) => [firm.slug, firm]));
+
+  for (const priorityFirm of priorityFallbackFirms) {
+    firmsBySlug.set(priorityFirm.slug, {
+      ...firmsBySlug.get(priorityFirm.slug),
+      ...priorityFirm,
+    });
+  }
+
+  return [...firmsBySlug.values()];
+}

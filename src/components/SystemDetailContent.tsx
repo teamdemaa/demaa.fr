@@ -9,6 +9,7 @@ import {
   Briefcase,
   CalendarDays,
   Calculator,
+  CheckCircle2,
   FileSignature,
   FileText,
   FolderKanban,
@@ -775,13 +776,12 @@ export default function SystemDetailContent({
   }
 
   function renderAccountingFirmCard(firm: AccountingFirm) {
-    const industryLabel = firm.industries[0] ?? "Cabinet recommandé";
     const cityLabel = firm.city && firm.city !== "Ville non renseignée" ? firm.city : null;
 
     return (
       <Link
         key={firm.slug}
-        href={`/annuaire-experts-comptables/cabinets/${firm.slug}`}
+        href={`/annuaire-experts-comptables/cabinets/${firm.slug}?retourSysteme=${encodeURIComponent(system.slug)}`}
         className={SYSTEM_CARD_CLASS}
       >
         <div className="flex items-start justify-between gap-4">
@@ -789,12 +789,18 @@ export default function SystemDetailContent({
             <Calculator className="h-4 w-4" aria-hidden="true" />
           </span>
         </div>
-        <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
-          {industryLabel}
-        </p>
+        {firm.slug === "em2a-expertise" ? (
+          <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
+            Cabinet recommandé
+          </p>
+        ) : null}
         <h3 className={SYSTEM_CARD_TITLE_CLASS}>
           {firm.name}
         </h3>
+        <span className="mt-4 inline-flex w-fit items-center gap-1 rounded-full bg-dema-sage/80 px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.14em] text-dema-forest">
+          <CheckCircle2 className="h-3.5 w-3.5" aria-hidden="true" />
+          Vérifié OEC
+        </span>
         <p className={SYSTEM_CARD_DESCRIPTION_CLASS}>
           {firm.description}
         </p>

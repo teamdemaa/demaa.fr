@@ -5,7 +5,6 @@ import { useMemo, useState } from "react";
 import {
   ArrowLeft,
   Map,
-  PanelRightClose,
   PanelRightOpen,
   Search,
   SlidersHorizontal,
@@ -59,7 +58,7 @@ export default function AccountingDirectoryClient({
   const [selectionMessage, setSelectionMessage] = useState("");
   const [profileFirm, setProfileFirm] = useState<AccountingFirm | null>(null);
   const [previewFirmSlug, setPreviewFirmSlug] = useState<string | undefined>();
-  const [showMap, setShowMap] = useState(true);
+  const [showMap, setShowMap] = useState(false);
   const [showMobileMap, setShowMobileMap] = useState(false);
 
   const filteredFirms = useMemo(
@@ -314,23 +313,16 @@ export default function AccountingDirectoryClient({
               </div>
 
               <div className="flex flex-wrap gap-2">
-                <button
-                  type="button"
-                  className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition ${
-                    showMap
-                      ? "border-dema-forest bg-dema-forest text-dema-paper"
-                      : "border-dema-line bg-dema-paper text-brand-blue hover:border-dema-forest/25 hover:text-dema-forest"
-                  }`}
-                  onClick={() => setShowMap((current) => !current)}
-                >
-                  {showMap ? (
-                    <PanelRightClose className="h-4 w-4" aria-hidden="true" />
-                  ) : (
+                {!showMap ? (
+                  <button
+                    type="button"
+                    className="hidden items-center gap-2 rounded-full border border-dema-line bg-dema-paper px-4 py-2 text-sm font-medium text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest lg:inline-flex"
+                    onClick={() => setShowMap(true)}
+                  >
                     <PanelRightOpen className="h-4 w-4" aria-hidden="true" />
-                  )}
-                  {showMap ? "Masquer la carte" : "Afficher la carte"}
-                </button>
-
+                    Afficher la carte
+                  </button>
+                ) : null}
                 <button
                   type="button"
                   className="inline-flex items-center gap-2 rounded-full border border-dema-line bg-dema-paper px-4 py-2 text-sm font-medium text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest lg:hidden"

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useLinkStatus } from "next/link";
 import { useMemo, useState, type ReactNode } from "react";
 import {
   Aperture,
@@ -410,8 +411,9 @@ function SystemCard({
     <Link
       href={href}
       prefetch
-      className="demaa-card group flex min-h-[10rem] flex-[0_0_calc(50%-0.5rem)] cursor-pointer flex-col rounded-[1.15rem] p-5 text-left md:flex-[0_0_calc(25%-0.75rem)]"
+      className="demaa-card group relative flex min-h-[10rem] flex-[0_0_calc(50%-0.5rem)] cursor-pointer flex-col overflow-hidden rounded-[1.15rem] p-5 text-left md:flex-[0_0_calc(25%-0.75rem)]"
     >
+      <SystemCardPendingOverlay />
       {icon}
       <h3 className="mt-4 line-clamp-2 text-lg font-normal leading-tight tracking-tight text-brand-blue">
         {title}
@@ -420,5 +422,26 @@ function SystemCard({
         {description}
       </p>
     </Link>
+  );
+}
+
+function SystemCardPendingOverlay() {
+  const { pending } = useLinkStatus();
+
+  return (
+    <>
+      <span
+        aria-hidden="true"
+        className={`pointer-events-none absolute inset-0 z-0 bg-gradient-to-r from-dema-sage/0 via-dema-sage/25 to-dema-sage/0 transition-opacity duration-200 ${
+          pending ? "opacity-100" : "opacity-0"
+        }`}
+      />
+      <span
+        aria-hidden="true"
+        className={`pointer-events-none absolute inset-x-0 bottom-0 h-1 bg-dema-forest/70 transition-opacity duration-200 ${
+          pending ? "opacity-100" : "opacity-0"
+        }`}
+      />
+    </>
   );
 }

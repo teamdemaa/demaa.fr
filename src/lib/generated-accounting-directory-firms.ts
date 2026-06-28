@@ -2,35 +2,75 @@ import type { AccountingFirm } from "@/lib/accounting-directory";
 
 export const generatedAccountingDirectoryFirms: AccountingFirm[] = [
   {
-    id: "EM2A_1",
-    slug: "em2a",
-    name: "EM2A",
-    description: "Cabinet d'expertise comptable référencé sur Demaa, utile pour accompagner les dirigeants sur la comptabilité, le pilotage et les obligations courantes avec une affinite pour Pennylane.",
-    city: "Ville non renseignée",
-    regions: [],
-    isOecVerified: false,
+    id: "em2a-expertise",
+    slug: "em2a-expertise",
+    name: "EM2A Expertise",
+    description:
+      "Cabinet de proximité à Saint-Gracien, EM2A accompagne les TPE et PME avec un suivi clair, humain et pédagogique. L'équipe vulgarise les sujets comptables pour aider ses clients à comprendre leurs chiffres, piloter leur activité et avancer sereinement au quotidien.",
+    city: "Saint-Gracien",
+    regions: ["Île-de-France"],
+    isOecVerified: true,
     tools: [
-      "Pennylane"
+      "Pennylane",
+      "Silae",
+      "Tiimora"
     ],
     services: [
-      "Expertise comptable",
-      "Pilotage"
+      "Comptabilité",
+      "Paie",
+      "Juridique",
+      "Prévisionnel financier",
+      "Bilan comptable"
     ],
     industries: [
-      "Services"
+      "Bâtiment",
+      "Conseil",
+      "Entreprises de services"
     ],
     clientTypes: [
       "TPE",
-      "Indépendants"
+      "PME"
     ],
     languages: [
       "Français"
     ],
     hasCreationOffer: "unknown",
     acceptsNewClients: "likely",
-    teamSize: "1 à 9 salariés",
+    teamSize: "",
     officeCount: 1,
-    dataQuality: "A completer"
+    dataQuality: "Donnees solides",
+    featuredRank: 1
+  },
+  {
+    id: "ghm-consulting",
+    slug: "ghm-consulting",
+    name: "GHM CONSULTING",
+    description:
+      "Cabinet d'expertise comptable et d'audit à Noisy-le-Grand, GHM Consulting accompagne les entreprises sur leur comptabilité, leurs obligations fiscales et leur pilotage de gestion avec un suivi structuré et des conseils adaptés à leur activité.",
+    city: "Noisy-le-Grand",
+    regions: ["Île-de-France"],
+    isOecVerified: true,
+    website: "https://www.ghm-expert.com/",
+    tools: [
+      "Pennylane"
+    ],
+    services: [
+      "Expertise comptable",
+      "Audit",
+      "Fiscalité",
+      "Conseil / pilotage"
+    ],
+    industries: [],
+    clientTypes: [],
+    languages: [
+      "Français"
+    ],
+    hasCreationOffer: "unknown",
+    acceptsNewClients: "likely",
+    teamSize: "3 à 5 salariés",
+    officeCount: 1,
+    dataQuality: "Donnees solides",
+    featuredRank: 2
   },
   {
     id: "Inelys_2",

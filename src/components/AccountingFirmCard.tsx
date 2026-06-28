@@ -5,6 +5,8 @@ import type { AccountingFirm } from "@/lib/accounting-directory";
 
 type AccountingFirmCardProps = {
   firm: AccountingFirm;
+  profileUrl?: string;
+  eyebrow?: string;
   isSelected?: boolean;
   isSelectionDisabled?: boolean;
   isHighlighted?: boolean;
@@ -14,17 +16,16 @@ type AccountingFirmCardProps = {
 
 export default function AccountingFirmCard({
   firm,
+  profileUrl: providedProfileUrl,
+  eyebrow,
   isSelected = false,
   isSelectionDisabled = false,
   isHighlighted = false,
   onToggleSelection,
   onOpenProfile,
 }: AccountingFirmCardProps) {
-  const tags = [...firm.services.slice(0, 3), ...firm.industries.slice(0, 1)].slice(
-    0,
-    4
-  );
-  const profileUrl = `/annuaire-experts-comptables/cabinets/${firm.slug}`;
+  const tags = firm.services.slice(0, 4);
+  const profileUrl = providedProfileUrl ?? `/annuaire-experts-comptables/cabinets/${firm.slug}`;
 
   return (
     <article
@@ -79,14 +80,20 @@ export default function AccountingFirmCard({
             </span>
           </p>
         </div>
-
-        {firm.isOecVerified ? (
-          <span className="relative z-10 inline-flex shrink-0 items-center gap-1 rounded-full bg-dema-sage/80 px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.14em] text-dema-forest">
-            <CheckCircle2 className="h-3.5 w-3.5" aria-hidden="true" />
-            Vérifié
-          </span>
-        ) : null}
       </div>
+
+      {eyebrow ? (
+        <p className="relative z-10 mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
+          {eyebrow}
+        </p>
+      ) : null}
+
+      {firm.isOecVerified ? (
+        <span className="relative z-10 mt-4 inline-flex w-fit items-center gap-1 rounded-full bg-dema-sage/80 px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.14em] text-dema-forest">
+          <CheckCircle2 className="h-3.5 w-3.5" aria-hidden="true" />
+          Vérifié OEC
+        </span>
+      ) : null}
 
       <p className="relative z-10 mt-4 line-clamp-3 text-sm leading-relaxed text-dema-muted">
         {firm.description}

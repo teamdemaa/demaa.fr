@@ -8,25 +8,36 @@ import type { AccountingFirm } from "@/lib/accounting-directory";
 type AccountingFirmDetailContentProps = {
   firm: AccountingFirm;
   similarFirms: AccountingFirm[];
+  backLink?: {
+    href: string;
+    label: string;
+  };
+  relatedSystemSlug?: string;
   showBackLink?: boolean;
 };
 
 export default function AccountingFirmDetailContent({
   firm,
   similarFirms,
+  backLink,
+  relatedSystemSlug,
   showBackLink = true,
 }: AccountingFirmDetailContentProps) {
   const externalUrl = firm.website ?? firm.contactPage;
+  const effectiveBackLink = backLink ?? {
+    href: "/annuaire-experts-comptables",
+    label: "Retour à l'annuaire",
+  };
 
   return (
     <div className="mx-auto max-w-6xl">
       {showBackLink ? (
         <Link
-          href="/annuaire-experts-comptables"
+          href={effectiveBackLink.href}
           className="inline-flex items-center gap-2 rounded-full border border-dema-line bg-dema-paper px-3.5 py-2 text-xs font-medium text-brand-blue/70 transition hover:border-dema-forest/25 hover:text-dema-forest"
         >
           <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
-          Retour à l&apos;annuaire
+          {effectiveBackLink.label}
         </Link>
       ) : null}
 
@@ -134,7 +145,15 @@ export default function AccountingFirmDetailContent({
           </h2>
           <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {similarFirms.map((similarFirm) => (
-              <AccountingFirmCard key={similarFirm.id} firm={similarFirm} />
+              <AccountingFirmCard
+                key={similarFirm.id}
+                firm={similarFirm}
+                profileUrl={
+                  relatedSystemSlug
+                    ? `/annuaire-experts-comptables/cabinets/${similarFirm.slug}?retourSysteme=${encodeURIComponent(relatedSystemSlug)}`
+                    : undefined
+                }
+              />
             ))}
           </div>
         </section>

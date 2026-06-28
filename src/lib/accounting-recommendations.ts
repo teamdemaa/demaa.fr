@@ -74,6 +74,14 @@ export async function getRecommendedAccountingFirmsForSystem(
 
   return [...firms]
     .sort((left, right) => {
+      const featuredDifference =
+        (left.featuredRank ?? Number.MAX_SAFE_INTEGER) -
+        (right.featuredRank ?? Number.MAX_SAFE_INTEGER);
+
+      if (featuredDifference !== 0) {
+        return featuredDifference;
+      }
+
       const leftText = buildFirmSearchText(left);
       const rightText = buildFirmSearchText(right);
       const leftScore =
@@ -85,14 +93,6 @@ export async function getRecommendedAccountingFirmsForSystem(
 
       if (rightScore !== leftScore) {
         return rightScore - leftScore;
-      }
-
-      const featuredDifference =
-        (left.featuredRank ?? Number.MAX_SAFE_INTEGER) -
-        (right.featuredRank ?? Number.MAX_SAFE_INTEGER);
-
-      if (featuredDifference !== 0) {
-        return featuredDifference;
       }
 
       return left.name.localeCompare(right.name, "fr");

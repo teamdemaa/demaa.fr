@@ -7,10 +7,14 @@ import {
   getAccountingFirms,
   getSimilarAccountingFirms,
 } from "@/lib/accounting-directory";
+import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 
 type AccountingFirmDetailPageProps = {
   params: Promise<{
     slug: string;
+  }>;
+  searchParams: Promise<{
+    retourSysteme?: string | string[];
   }>;
 };
 
@@ -62,8 +66,9 @@ export async function generateMetadata({
 
 export default async function AccountingFirmDetailPage({
   params,
+  searchParams,
 }: AccountingFirmDetailPageProps) {
-  const { slug } = await params;
+  const [{ slug }, resolvedSearchParams] = await Promise.all([params, searchParams]);
   const firm = await getAccountingFirmBySlug(slug);
 
   if (!firm) {
@@ -71,13 +76,32 @@ export default async function AccountingFirmDetailPage({
   }
 
   const similarFirms = await getSimilarAccountingFirms(firm);
+  const retourSysteme = getParamValue(resolvedSearchParams.retourSysteme);
+  const returnEnterprise = retourSysteme
+    ? await getEnterpriseBySlug(retourSysteme)
+    : null;
+  const backLink = returnEnterprise
+    ? {
+        href: `/systemes/${encodeURIComponent(returnEnterprise.slug)}?tab=expert-comptable`,
+        label: `Retour à ${returnEnterprise.name}`,
+      }
+    : undefined;
 
   return (
     <>
       <Navbar />
       <main className="flex-1 w-full bg-dema-cream px-4 py-8 md:py-12">
-        <AccountingFirmDetailContent firm={firm} similarFirms={similarFirms} />
+        <AccountingFirmDetailContent
+          firm={firm}
+          similarFirms={similarFirms}
+          backLink={backLink}
+          relatedSystemSlug={returnEnterprise?.slug}
+        />
       </main>
     </>
   );
+}
+
+function getParamValue(value?: string | string[]) {
+  return Array.isArray(value) ? value[0] : value;
 }
