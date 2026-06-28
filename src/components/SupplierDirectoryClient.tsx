@@ -15,6 +15,7 @@ type SupplierDirectoryClientProps = {
   families: readonly SupplierFamily[];
   initialCategory?: string;
   initialSearch?: string;
+  returnSystemSlug?: string;
   backLink?: {
     href: string;
     label: string;
@@ -25,6 +26,7 @@ export default function SupplierDirectoryClient({
   suppliers,
   families,
   initialSearch = "",
+  returnSystemSlug,
   backLink,
 }: SupplierDirectoryClientProps) {
   const [searchQuery, setSearchQuery] = useState(initialSearch);
@@ -66,7 +68,7 @@ export default function SupplierDirectoryClient({
 
   function openSupplierDetails(supplier: DemaaSupplier) {
     setSelectedSupplier(supplier);
-    const detailUrl = `/annuaire-fournisseurs/${supplier.slug}`;
+    const detailUrl = `/annuaire-fournisseurs/${supplier.slug}${returnSystemSlug ? `?retourSysteme=${encodeURIComponent(returnSystemSlug)}` : ""}`;
 
     if (window.location.pathname !== detailUrl) {
       window.history.pushState({ demaaSupplierModal: true }, "", detailUrl);
@@ -141,6 +143,7 @@ export default function SupplierDirectoryClient({
               <SupplierCard
                 key={supplier.slug}
                 supplier={supplier}
+                returnSystemSlug={returnSystemSlug}
                 onOpenDetails={openSupplierDetails}
               />
             ))}
@@ -169,9 +172,11 @@ export default function SupplierDirectoryClient({
 
 function SupplierCard({
   supplier,
+  returnSystemSlug,
   onOpenDetails,
 }: {
   supplier: DemaaSupplier;
+  returnSystemSlug?: string;
   onOpenDetails: (supplier: DemaaSupplier) => void;
 }) {
   const content = (
@@ -206,7 +211,7 @@ function SupplierCard({
 
   return (
     <Link
-      href={`/annuaire-fournisseurs/${supplier.slug}`}
+      href={`/annuaire-fournisseurs/${supplier.slug}${returnSystemSlug ? `?retourSysteme=${encodeURIComponent(returnSystemSlug)}` : ""}`}
       onClick={(event) => handleSupplierCardClick(event, supplier, onOpenDetails)}
       className="demaa-card group flex min-h-[17rem] flex-col rounded-[1.15rem] p-5 text-left"
     >

@@ -61,6 +61,7 @@ export default async function AnnuaireFinancementPage({
           items={getDemaaFinanceItems()}
           families={financeFamilies}
           initialSearch={getParamValue(params.q) ?? ""}
+          returnSystemSlug={retourSysteme ?? undefined}
           backLink={backLink}
         />
       </main>

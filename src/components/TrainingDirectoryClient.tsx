@@ -17,6 +17,7 @@ type TrainingDirectoryClientProps = {
   families: readonly TrainingFamily[];
   initialFamily?: string;
   initialSearch?: string;
+  returnSystemSlug?: string;
   backLink?: {
     href: string;
     label: string;
@@ -28,6 +29,7 @@ export default function TrainingDirectoryClient({
   families,
   initialFamily,
   initialSearch = "",
+  returnSystemSlug,
   backLink,
 }: TrainingDirectoryClientProps) {
   const [searchQuery, setSearchQuery] = useState(initialSearch);
@@ -74,7 +76,7 @@ export default function TrainingDirectoryClient({
 
   function openTrainingDetails(training: DemaaTraining) {
     setSelectedTraining(training);
-    const detailUrl = `/annuaire-formations/${training.slug}`;
+    const detailUrl = `/annuaire-formations/${training.slug}${returnSystemSlug ? `?retourSysteme=${encodeURIComponent(returnSystemSlug)}` : ""}`;
 
     if (window.location.pathname !== detailUrl) {
       window.history.pushState({ demaaTrainingModal: true }, "", detailUrl);
@@ -159,7 +161,7 @@ export default function TrainingDirectoryClient({
             {filteredTrainings.map((training) => (
               <Link
                 key={training.slug}
-                href={`/annuaire-formations/${training.slug}`}
+                href={`/annuaire-formations/${training.slug}${returnSystemSlug ? `?retourSysteme=${encodeURIComponent(returnSystemSlug)}` : ""}`}
                 onClick={(event) => handleTrainingCardClick(event, training, openTrainingDetails)}
                 className="demaa-card group flex min-h-[17rem] flex-col rounded-[1.15rem] p-5 text-left"
               >

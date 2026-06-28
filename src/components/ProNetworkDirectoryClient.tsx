@@ -18,6 +18,7 @@ type ProNetworkDirectoryClientProps = {
   categories: readonly ProNetworkCategory[];
   initialCategory?: string;
   initialSearch?: string;
+  returnSystemSlug?: string;
   backLink?: {
     href: string;
     label: string;
@@ -29,6 +30,7 @@ export default function ProNetworkDirectoryClient({
   categories,
   initialCategory,
   initialSearch = "",
+  returnSystemSlug,
   backLink,
 }: ProNetworkDirectoryClientProps) {
   const [searchQuery, setSearchQuery] = useState(initialSearch);
@@ -73,7 +75,7 @@ export default function ProNetworkDirectoryClient({
 
   function openNetworkDetails(network: DemaaProNetwork) {
     setSelectedNetwork(network);
-    const detailUrl = `/annuaire-reseaux-pro/${network.slug}`;
+    const detailUrl = `/annuaire-reseaux-pro/${network.slug}${returnSystemSlug ? `?retourSysteme=${encodeURIComponent(returnSystemSlug)}` : ""}`;
 
     if (window.location.pathname !== detailUrl) {
       window.history.pushState({ demaaProNetworkModal: true }, "", detailUrl);
@@ -158,7 +160,7 @@ export default function ProNetworkDirectoryClient({
             {filteredNetworks.map((network) => (
               <Link
                 key={network.slug}
-                href={`/annuaire-reseaux-pro/${network.slug}`}
+                href={`/annuaire-reseaux-pro/${network.slug}${returnSystemSlug ? `?retourSysteme=${encodeURIComponent(returnSystemSlug)}` : ""}`}
                 className="demaa-card group flex min-h-[16rem] flex-col rounded-[1.15rem] p-5 text-left"
                 onClick={(event) => handleNetworkCardClick(event, network, openNetworkDetails)}
               >

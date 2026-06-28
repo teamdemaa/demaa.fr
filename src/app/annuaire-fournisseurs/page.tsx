@@ -60,6 +60,7 @@ export default async function AnnuaireFournisseursPage({
           families={supplierFamilies}
           initialCategory={getParamValue(params.category)}
           initialSearch={getParamValue(params.q) ?? ""}
+          returnSystemSlug={retourSysteme ?? undefined}
           backLink={backLink}
         />
       </main>

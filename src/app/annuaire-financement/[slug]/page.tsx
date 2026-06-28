@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import FinanceDetailContent from "@/components/FinanceDetailContent";
 import Navbar from "@/components/Navbar";
 import RelatedSystemsLinks from "@/components/RelatedSystemsLinks";
+import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 import {
   demaaFinanceItems,
   getDemaaFinanceBySlug,
@@ -14,6 +15,9 @@ import { getRelatedSystemsForFinanceSlug } from "@/lib/related-systems";
 type FinanceDetailPageProps = {
   params: Promise<{
     slug: string;
+  }>;
+  searchParams: Promise<{
+    retourSysteme?: string | string[];
   }>;
 };
 
@@ -63,8 +67,9 @@ export async function generateMetadata({
 
 export default async function FinanceDetailPage({
   params,
+  searchParams,
 }: FinanceDetailPageProps) {
-  const { slug } = await params;
+  const [{ slug }, resolvedSearchParams] = await Promise.all([params, searchParams]);
   const item = getDemaaFinanceBySlug(slug);
 
   if (!item) {
@@ -72,6 +77,19 @@ export default async function FinanceDetailPage({
   }
 
   const relatedSystems = getRelatedSystemsForFinanceSlug(item.slug);
+  const retourSysteme = getParamValue(resolvedSearchParams.retourSysteme);
+  const returnEnterprise = retourSysteme
+    ? await getEnterpriseBySlug(retourSysteme)
+    : null;
+  const backLink = returnEnterprise
+    ? {
+        href: `/systemes/${encodeURIComponent(returnEnterprise.slug)}?tab=financement`,
+        label: `Retour à ${returnEnterprise.name}`,
+      }
+    : {
+        href: "/annuaire-financement",
+        label: "Retour au financement",
+      };
 
   return (
     <>
@@ -79,11 +97,11 @@ export default async function FinanceDetailPage({
       <main className="flex-1 w-full bg-dema-cream px-4 py-8 md:py-12">
         <div className="mx-auto max-w-6xl">
           <Link
-            href="/annuaire-financement"
+            href={backLink.href}
             className="inline-flex items-center gap-2 rounded-full border border-dema-line bg-dema-paper px-3.5 py-2 text-xs font-medium text-brand-blue/70 transition hover:border-dema-forest/25 hover:text-dema-forest"
           >
             <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
-            Retour au financement
+            {backLink.label}
           </Link>
 
           <div className="mt-5">
@@ -101,4 +119,8 @@ export default async function FinanceDetailPage({
       </main>
     </>
   );
+}
+
+function getParamValue(value?: string | string[]) {
+  return Array.isArray(value) ? value[0] : value;
 }

@@ -14,6 +14,7 @@ type FinanceDirectoryClientProps = {
   items: DemaaFinanceItem[];
   families: readonly FinanceFamily[];
   initialSearch?: string;
+  returnSystemSlug?: string;
   backLink?: {
     href: string;
     label: string;
@@ -24,6 +25,7 @@ export default function FinanceDirectoryClient({
   items,
   families,
   initialSearch = "",
+  returnSystemSlug,
   backLink,
 }: FinanceDirectoryClientProps) {
   const [searchQuery, setSearchQuery] = useState(initialSearch);
@@ -65,7 +67,7 @@ export default function FinanceDirectoryClient({
 
   function openFinanceDetails(item: DemaaFinanceItem) {
     setSelectedItem(item);
-    const detailUrl = `/annuaire-financement/${item.slug}`;
+    const detailUrl = `/annuaire-financement/${item.slug}${returnSystemSlug ? `?retourSysteme=${encodeURIComponent(returnSystemSlug)}` : ""}`;
 
     if (window.location.pathname !== detailUrl) {
       window.history.pushState({ demaaFinanceModal: true }, "", detailUrl);
@@ -148,7 +150,12 @@ export default function FinanceDirectoryClient({
         ) : (
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
             {filteredItems.map((item) => (
-              <FinanceCard key={item.slug} item={item} onOpenDetails={openFinanceDetails} />
+              <FinanceCard
+                key={item.slug}
+                item={item}
+                returnSystemSlug={returnSystemSlug}
+                onOpenDetails={openFinanceDetails}
+              />
             ))}
           </div>
         )}
@@ -163,9 +170,11 @@ export default function FinanceDirectoryClient({
 
 function FinanceCard({
   item,
+  returnSystemSlug,
   onOpenDetails,
 }: {
   item: DemaaFinanceItem;
+  returnSystemSlug?: string;
   onOpenDetails: (item: DemaaFinanceItem) => void;
 }) {
   const content = (
@@ -200,7 +209,7 @@ function FinanceCard({
 
   return (
     <Link
-      href={`/annuaire-financement/${item.slug}`}
+      href={`/annuaire-financement/${item.slug}${returnSystemSlug ? `?retourSysteme=${encodeURIComponent(returnSystemSlug)}` : ""}`}
       className="demaa-card group flex min-h-[15rem] flex-col rounded-[1.15rem] p-5 text-left"
       onClick={(event: MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();

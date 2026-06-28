@@ -60,6 +60,7 @@ export default async function AnnuaireRecrutementPage({
           families={recruitmentFamilies}
           initialFamily={getParamValue(params.family)}
           initialSearch={getParamValue(params.q) ?? ""}
+          returnSystemSlug={retourSysteme ?? undefined}
           backLink={backLink}
         />
       </main>

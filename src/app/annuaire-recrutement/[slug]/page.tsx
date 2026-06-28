@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import RecruitmentDetailContent from "@/components/RecruitmentDetailContent";
 import RelatedSystemsLinks from "@/components/RelatedSystemsLinks";
+import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 import {
   getDemaaRecruitmentItemBySlug,
   getDemaaRecruitmentItems,
@@ -14,6 +15,9 @@ import { getRelatedSystemsForRecruitmentSlug } from "@/lib/related-systems";
 type RecruitmentDetailPageProps = {
   params: Promise<{
     slug: string;
+  }>;
+  searchParams: Promise<{
+    retourSysteme?: string | string[];
   }>;
 };
 
@@ -63,8 +67,9 @@ export async function generateMetadata({
 
 export default async function RecruitmentDetailPage({
   params,
+  searchParams,
 }: RecruitmentDetailPageProps) {
-  const { slug } = await params;
+  const [{ slug }, resolvedSearchParams] = await Promise.all([params, searchParams]);
   const item = getDemaaRecruitmentItemBySlug(slug);
 
   if (!item) {
@@ -72,6 +77,19 @@ export default async function RecruitmentDetailPage({
   }
 
   const relatedSystems = getRelatedSystemsForRecruitmentSlug(item.slug);
+  const retourSysteme = getParamValue(resolvedSearchParams.retourSysteme);
+  const returnEnterprise = retourSysteme
+    ? await getEnterpriseBySlug(retourSysteme)
+    : null;
+  const backLink = returnEnterprise
+    ? {
+        href: `/systemes/${encodeURIComponent(returnEnterprise.slug)}?tab=recrutement`,
+        label: `Retour à ${returnEnterprise.name}`,
+      }
+    : {
+        href: "/annuaire-recrutement",
+        label: "Retour au recrutement",
+      };
 
   return (
     <>
@@ -79,11 +97,11 @@ export default async function RecruitmentDetailPage({
       <main className="flex-1 w-full bg-dema-cream px-4 py-8 md:py-12">
         <div className="mx-auto max-w-6xl">
           <Link
-            href="/annuaire-recrutement"
+            href={backLink.href}
             className="inline-flex items-center gap-2 rounded-full border border-dema-line bg-dema-paper px-3.5 py-2 text-xs font-medium text-brand-blue/70 transition hover:border-dema-forest/25 hover:text-dema-forest"
           >
             <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
-            Retour au recrutement
+            {backLink.label}
           </Link>
 
           <div className="mt-5">
@@ -101,4 +119,8 @@ export default async function RecruitmentDetailPage({
       </main>
     </>
   );
+}
+
+function getParamValue(value?: string | string[]) {
+  return Array.isArray(value) ? value[0] : value;
 }

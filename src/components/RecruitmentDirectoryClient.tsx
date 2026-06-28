@@ -17,6 +17,7 @@ type RecruitmentDirectoryClientProps = {
   families: readonly RecruitmentFamily[];
   initialFamily?: string;
   initialSearch?: string;
+  returnSystemSlug?: string;
   backLink?: {
     href: string;
     label: string;
@@ -28,6 +29,7 @@ export default function RecruitmentDirectoryClient({
   families,
   initialFamily,
   initialSearch = "",
+  returnSystemSlug,
   backLink,
 }: RecruitmentDirectoryClientProps) {
   const [searchQuery, setSearchQuery] = useState(initialSearch);
@@ -71,7 +73,7 @@ export default function RecruitmentDirectoryClient({
 
   function openDetails(item: DemaaRecruitmentItem) {
     setSelectedItem(item);
-    const detailUrl = `/annuaire-recrutement/${item.slug}`;
+    const detailUrl = `/annuaire-recrutement/${item.slug}${returnSystemSlug ? `?retourSysteme=${encodeURIComponent(returnSystemSlug)}` : ""}`;
 
     if (window.location.pathname !== detailUrl) {
       window.history.pushState({ demaaRecruitmentModal: true }, "", detailUrl);
@@ -156,7 +158,7 @@ export default function RecruitmentDirectoryClient({
             {filteredItems.map((item) => (
               <Link
                 key={item.slug}
-                href={`/annuaire-recrutement/${item.slug}`}
+                href={`/annuaire-recrutement/${item.slug}${returnSystemSlug ? `?retourSysteme=${encodeURIComponent(returnSystemSlug)}` : ""}`}
                 onClick={(event) => handleRecruitmentCardClick(event, item, openDetails)}
                 className="demaa-card group flex min-h-[17rem] flex-col rounded-[1.15rem] p-5 text-left"
               >

@@ -550,7 +550,7 @@ export default function SystemDetailContent({
     return (
       <Link
         key={supplier.slug}
-        href={`/annuaire-fournisseurs/${supplier.slug}`}
+        href={`/annuaire-fournisseurs/${supplier.slug}?retourSysteme=${encodeURIComponent(system.slug)}`}
         className={SYSTEM_CARD_CLASS}
         onClick={(event) => {
           handleSupplierDetailClick(event, supplier, setSelectedSupplierDetail);
@@ -565,7 +565,7 @@ export default function SystemDetailContent({
     return (
       <Link
         key={network.slug}
-        href={`/annuaire-reseaux-pro/${network.slug}`}
+        href={`/annuaire-reseaux-pro/${network.slug}?retourSysteme=${encodeURIComponent(system.slug)}`}
         className={SYSTEM_CARD_CLASS}
         onClick={(event) => {
           handleProNetworkDetailClick(event, network, setSelectedProNetworkDetail);
@@ -600,7 +600,7 @@ export default function SystemDetailContent({
     return (
       <Link
         key={item.slug}
-        href={`/annuaire-financement/${item.slug}`}
+        href={`/annuaire-financement/${item.slug}?retourSysteme=${encodeURIComponent(system.slug)}`}
         className={SYSTEM_CARD_CLASS}
         onClick={(event) => {
           event.preventDefault();
@@ -636,7 +636,7 @@ export default function SystemDetailContent({
     return (
       <Link
         key={item.slug}
-        href={`/aides-et-subventions/${item.slug}`}
+        href={`/aides-et-subventions/${item.slug}?retourSysteme=${encodeURIComponent(system.slug)}`}
         className={SYSTEM_CARD_CLASS}
       >
         <div className="flex items-start justify-between gap-4">
@@ -817,7 +817,7 @@ export default function SystemDetailContent({
     return (
       <Link
         key={training.slug}
-        href={`/annuaire-formations/${training.slug}`}
+        href={`/annuaire-formations/${training.slug}?retourSysteme=${encodeURIComponent(system.slug)}`}
         className={SYSTEM_CARD_CLASS}
         onClick={(event) => {
           handleTrainingDetailClick(event, training, setSelectedTrainingDetail);
@@ -850,7 +850,7 @@ export default function SystemDetailContent({
     return (
       <Link
         key={item.slug}
-        href={`/annuaire-recrutement/${item.slug}`}
+        href={`/annuaire-recrutement/${item.slug}?retourSysteme=${encodeURIComponent(system.slug)}`}
         className={SYSTEM_CARD_CLASS}
         onClick={(event) => {
           handleRecruitmentDetailClick(event, item, setSelectedRecruitmentDetail);
