@@ -11,7 +11,7 @@ export function getServicePageMetadata(service: DemaaService): Metadata {
     : isAssistantLanding
     ? "Recrutement assistante facturation - Demaa"
     : isOrganisationLanding
-      ? "Audit d'organisation pour TPE - Demaa"
+      ? "Diagnostic organisation pour TPE - Demaa"
       : `${service.name} - Annuaire services Demaa`;
   const canonicalPath = isOrganisationLanding
     ? "/organisation"
@@ -21,7 +21,7 @@ export function getServicePageMetadata(service: DemaaService): Metadata {
     : isAssistantLanding
     ? "Un accompagnement au recrutement d'une assistante facturation pour reprendre devis, facturation, relances et transmission comptable avec une intégration plus claire et plus sereine."
     : isOrganisationLanding
-      ? "Faites un audit d'organisation pour identifier les blocages, clarifier les priorités et repérer les besoins les plus utiles pour la suite."
+      ? "Demandez un diagnostic organisation pour identifier les blocages, clarifier les priorités et repérer les besoins les plus utiles pour la suite."
       : service.description;
 
   return {

@@ -118,13 +118,13 @@ export default function SystemSetupModal({
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
-              Audit de votre organisation
+              Diagnostic organisation
             </p>
             <h2 className="mt-2 text-3xl font-semibold tracking-tight text-brand-blue">
-              Audit de votre organisation
+              Diagnostic organisation
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-dema-muted">
-              C&apos;est un appel gratuit de 30 minutes. Vous exposez votre
+              C&apos;est un appel de 30 minutes. Vous exposez votre
               organisation, vos blocages et on identifie les premières améliorations ensemble.
             </p>
           </div>

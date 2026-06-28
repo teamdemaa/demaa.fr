@@ -52,12 +52,12 @@ const structurationSignals = [
 
 const faqItems = [
   {
-    question: "Est-ce que l’audit gratuit m’engage à acheter quelque chose ?",
+    question: "Est-ce que le diagnostic offert m’engage à acheter quelque chose ?",
     answer:
-      "Non. L’audit gratuit ne vous engage à rien. Il sert à faire le point sur votre organisation et à clarifier les besoins.",
+      "Non. Le diagnostic offert ne vous engage à rien. Il sert à faire le point sur votre organisation et à clarifier les besoins.",
   },
   {
-    question: "Qu’est-ce que vous regardez pendant l’audit ?",
+    question: "Qu’est-ce que vous regardez pendant le diagnostic ?",
     answer:
       "On regarde les tâches répétitives, les outils, les documents, les validations, les zones de flou et les sujets qui vous font perdre du temps au quotidien.",
   },
@@ -69,7 +69,7 @@ const faqItems = [
   {
     question: "Quel gain peut-on espérer ?",
     answer:
-      "En général, ce type d’audit permet d’identifier 20 à 30 % de temps récupérable sur les routines qui encombrent le quotidien.",
+      "En général, ce type de diagnostic permet d’identifier 20 à 30 % de temps récupérable sur les routines qui encombrent le quotidien.",
   },
 ] as const;
 
@@ -80,7 +80,7 @@ const em2aResults = [
 ] as const;
 
 const em2aSteps = [
-  "Audit complet des frictions, des relances et des points de blocage",
+  "Diagnostic complet des frictions, des relances et des points de blocage",
   "Reprise en main des demandes clients et de la collecte paie",
   "Mise en place d’un système opérationnel clair, centralisé et exploitable",
 ] as const;
@@ -209,7 +209,7 @@ export default function AssistantsCatalogClient() {
                 Par où commencer ?
               </h2>
               <p className="mt-3 text-sm leading-relaxed text-dema-muted md:text-base">
-                Commencez par un audit offert pour clarifier les besoins, puis choisissez ensuite le bon service si une suite est utile.
+                Commencez par un diagnostic offert pour clarifier les besoins, puis choisissez ensuite le bon service si une suite est utile.
               </p>
             </div>
 
@@ -237,7 +237,7 @@ export default function AssistantsCatalogClient() {
                   scroll={false}
                   className="mt-6 inline-flex w-full items-center justify-center rounded-full border border-dema-forest/20 bg-dema-sage/55 px-5 py-2.5 text-sm font-medium text-dema-forest transition hover:border-dema-forest/30 hover:bg-dema-sage disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  Demander l&apos;audit gratuit
+                  Demander le diagnostic
                 </Link>
               </article>
             </div>

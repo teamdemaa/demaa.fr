@@ -30,7 +30,7 @@ export default function ServiceDetailContent({
               {service.category}
             </p>
           </div>
-          <h1 className="mt-4 text-[2.9rem] font-semibold tracking-tight text-brand-blue md:text-[3.75rem]">
+          <h1 className="mt-4 text-[2.3rem] font-semibold tracking-tight text-brand-blue md:text-[3rem]">
             {service.name}
           </h1>
           <p className="mt-4 text-[1.05rem] leading-relaxed text-dema-muted md:text-[1.28rem]">

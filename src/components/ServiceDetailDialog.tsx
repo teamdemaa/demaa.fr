@@ -49,7 +49,7 @@ export default function ServiceDetailDialog({
                 <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
                   {service.category}
                 </p>
-                <h2 className="mt-1 text-[2.1rem] font-semibold leading-[1.02] text-brand-blue sm:text-[2.4rem] md:text-[2.65rem]">
+                <h2 className="mt-1 text-[1.7rem] font-semibold leading-[1.02] text-brand-blue sm:text-[1.95rem] md:text-[2.1rem]">
                   {service.name}
                 </h2>
               </div>

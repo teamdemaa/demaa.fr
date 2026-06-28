@@ -171,16 +171,16 @@ export const demaaServices = [
   },
   {
     slug: "organisation-automatisation",
-    name: "Organisation",
+    name: "Diagnostic",
     category: "Systèmes",
-    shortDescription: "Un audit d'organisation pour repérer les blocages et les priorités.",
+    shortDescription: "Un diagnostic organisation pour repérer les blocages et les priorités.",
     description:
-      "Un audit d'organisation pour prendre du recul, identifier les points de blocage, clarifier les priorités et repérer les besoins de structuration les plus utiles.",
+      "Un diagnostic organisation pour prendre du recul, identifier les points de blocage, clarifier les priorités et repérer les besoins de structuration les plus utiles.",
     bestFor:
       "Les entreprises qui perdent du temps sur relances, devis, documents, reporting, planning ou suivi client.",
     duration: "1 mois",
-    price: "Audit gratuit",
-    tags: ["Organisation", "Audit", "Demaa"],
+    price: "Diagnostic offert",
+    tags: ["Organisation", "Diagnostic", "Demaa"],
     icon: "Workflow",
     deliverables: [
       "Analyse de vos tâches, blocages et zones de dépendance",

@@ -22,27 +22,21 @@ type ServiceExpandedContentProps = {
 const organisationSignals = [
   {
     icon: FileCheck,
-    title: "Appels d'offres et dossiers sensibles",
+    title: "Tout passe encore par vous",
     description:
-      "Quand les documents, validations et responsabilités ne sont pas cadrés, chaque réponse devient un sprint.",
+      "Quand chaque validation, relance ou décision revient vers vous, l’entreprise ralentit et vous épuise.",
   },
   {
     icon: Users,
-    title: "Croissance d'équipe",
+    title: "Votre quotidien est trop chargé",
     description:
-      "Sans cadre clair, chaque nouvelle arrivée recrée du flou, des questions et de la dépendance au dirigeant.",
+      "Vous passez trop de temps à gérer, rappeler, vérifier et rattraper au lieu d’avancer sur l’essentiel.",
   },
   {
     icon: Blocks,
-    title: "Plusieurs sociétés ou flux",
+    title: "L’activité avance, mais pas de façon autonome",
     description:
-      "Les doublons, oublis et validations croisées finissent par ralentir tout le monde.",
-  },
-  {
-    icon: BadgeEuro,
-    title: "Transmission ou revente",
-    description:
-      "Une entreprise plus autonome et plus lisible est aussi plus facile à valoriser.",
+      "Sans cadre clair, l’équipe dépend encore de vous pour faire tourner les sujets correctement.",
   },
 ] as const;
 
@@ -67,19 +61,19 @@ const organisationSteps = [
 const organisationPillars = [
   "Direction et priorités",
   "Marketing et vente",
-  "Production et suivi client",
+  "Opération et suivi client",
   "Finance et administratif",
   "Équipe et responsabilités",
 ] as const;
 
 const organisationFaq = [
   {
-    question: "Est-ce que l'audit gratuit m'engage à acheter quelque chose ?",
+    question: "Est-ce que le diagnostic offert m'engage à acheter quelque chose ?",
     answer:
-      "Non. L'audit sert à faire le point sur votre organisation et à clarifier vos besoins. Vous décidez ensuite librement de la suite.",
+      "Non. Le diagnostic sert à faire le point sur votre organisation et à clarifier vos besoins. Vous décidez ensuite librement de la suite.",
   },
   {
-    question: "Qu'est-ce que vous regardez pendant l'audit ?",
+    question: "Qu'est-ce que vous regardez pendant le diagnostic ?",
     answer:
       "On regarde les tâches répétitives, les outils, les documents, les validations, les zones de flou et les sujets qui vous font perdre du temps au quotidien.",
   },
@@ -292,21 +286,7 @@ function OrganisationExpandedContent({
   return (
     <div className={sectionGap}>
       <section className={sectionClass}>
-        <div className="flex flex-col gap-4">
-          <div className="max-w-2xl">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
-              Audit d&apos;organisation
-            </p>
-            <h3 className="mt-2 text-xl font-semibold tracking-tight text-brand-blue md:text-2xl">
-              Quand structurer devient prioritaire
-            </h3>
-            <p className="mt-3 text-sm leading-relaxed text-dema-muted">
-              L&apos;audit sert à prendre du recul, voir où l&apos;activité repose encore trop
-              sur vous et identifier les besoins d&apos;organisation les plus utiles.
-            </p>
-          </div>
-        </div>
-        <div className="mt-6 grid gap-4 md:grid-cols-2">
+        <div className="grid gap-4 md:grid-cols-2">
           {organisationSignals.map((item) => (
             <article
               key={item.title}

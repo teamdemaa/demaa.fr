@@ -50,7 +50,7 @@ export async function POST(request: Request) {
               `*Secteur* : ${escapeSlackMrkdwn(sector)}\n` +
               `*WhatsApp* : ${escapeSlackMrkdwn(whatsapp)}\n` +
               `*Disponibilités* : ${escapeSlackMrkdwn(availability)}\n` +
-              `*Source* : Audit de mon organisation`,
+              `*Source* : Diagnostic de mon organisation`,
           },
         },
         {
