@@ -290,12 +290,6 @@ export default function ToolDirectoryClient({
                     </span>
                   ))}
                 </div>
-
-                <div className="mt-auto pt-3">
-                  <span className="inline-flex rounded-full bg-dema-forest px-3 py-1 text-[10px] font-medium text-dema-paper">
-                    {tool.pricingHint}
-                  </span>
-                </div>
               </ToolCard>
             ))}
           </div>

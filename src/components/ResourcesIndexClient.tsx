@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { ArrowRight, BookOpen } from "lucide-react";
+import { BookOpen } from "lucide-react";
 import DocumentModelPreview from "@/components/DocumentModelPreview";
 import LibraryIndexHeader from "@/components/LibraryIndexHeader";
 import type { DocumentModel } from "@/lib/document-models";
@@ -126,11 +126,6 @@ export default function ResourcesIndexClient({
                             {tag}
                           </span>
                         ))}
-                      </div>
-                      <div className="mt-5 flex justify-end">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-50 text-brand-blue transition-colors group-hover:bg-neutral-100 group-hover:text-neutral-700">
-                          <ArrowRight className="h-5 w-5" />
-                        </div>
                       </div>
                     </div>
                   </article>

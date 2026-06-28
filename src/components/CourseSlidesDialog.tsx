@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ChevronLeft, ChevronRight, ExternalLink, X } from "lucide-react";
+import { ExternalLink, Minus, Plus, RotateCcw, X } from "lucide-react";
 import type { CourseEntry } from "@/lib/course-content";
 
 type CourseSlidesDialogProps = {
@@ -19,10 +19,12 @@ export default function CourseSlidesDialog({
 }: CourseSlidesDialogProps) {
   const slides = course.slides?.length ? course.slides : course.image ? [course.image] : [];
   const [activeIndex, setActiveIndex] = useState(0);
+  const [zoomLevels, setZoomLevels] = useState<Record<number, number>>({});
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const slideRefs = useRef<Array<HTMLDivElement | null>>([]);
   const isProgrammaticScrollRef = useRef(false);
   const scrollUnlockTimeoutRef = useRef<number | null>(null);
+  const activeZoom = zoomLevels[activeIndex] ?? 1;
 
   function clearProgrammaticScrollLock() {
     if (scrollUnlockTimeoutRef.current !== null) {
@@ -54,6 +56,34 @@ export default function CourseSlidesDialog({
     clearProgrammaticScrollLock();
   }, [slides.length]);
 
+  const setZoomForSlide = useCallback((index: number, nextZoom: number) => {
+    const boundedZoom = Math.max(1, Math.min(nextZoom, 3));
+    setZoomLevels((current) => {
+      if (boundedZoom === 1) {
+        const updated = { ...current };
+        delete updated[index];
+        return updated;
+      }
+
+      return {
+        ...current,
+        [index]: boundedZoom,
+      };
+    });
+  }, []);
+
+  const zoomIn = useCallback(() => {
+    setZoomForSlide(activeIndex, activeZoom + 0.25);
+  }, [activeIndex, activeZoom, setZoomForSlide]);
+
+  const zoomOut = useCallback(() => {
+    setZoomForSlide(activeIndex, activeZoom - 0.25);
+  }, [activeIndex, activeZoom, setZoomForSlide]);
+
+  const resetZoom = useCallback(() => {
+    setZoomForSlide(activeIndex, 1);
+  }, [activeIndex, setZoomForSlide]);
+
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
@@ -72,11 +102,21 @@ export default function CourseSlidesDialog({
       if (event.key === "ArrowLeft") {
         goToSlide(activeIndex - 1);
       }
+
+      if ((event.key === "+" || event.key === "=") && (event.metaKey || event.ctrlKey)) {
+        event.preventDefault();
+        zoomIn();
+      }
+
+      if (event.key === "-" && (event.metaKey || event.ctrlKey)) {
+        event.preventDefault();
+        zoomOut();
+      }
     }
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [activeIndex, goToSlide, onClose, slides.length]);
+  }, [activeIndex, goToSlide, onClose, slides.length, zoomIn, zoomOut]);
 
   useEffect(() => {
     return () => {
@@ -90,9 +130,6 @@ export default function CourseSlidesDialog({
     return null;
   }
 
-  const canGoPrevious = activeIndex > 0;
-  const canGoNext = activeIndex < slides.length - 1;
-
   return (
     <div
       className="fixed inset-0 z-[80] flex items-center justify-center bg-brand-blue/55 p-3 sm:p-5"
@@ -105,7 +142,39 @@ export default function CourseSlidesDialog({
         aria-modal="true"
         aria-label={course.title}
       >
-        <div className="flex items-center justify-end gap-2 border-b border-dema-line px-4 py-3 sm:px-6">
+        <div className="flex items-center justify-between gap-3 border-b border-dema-line px-4 py-3 sm:px-6">
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={zoomOut}
+              disabled={activeZoom <= 1}
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest disabled:cursor-not-allowed disabled:opacity-35"
+              aria-label="Réduire le zoom"
+            >
+              <Minus className="h-4 w-4" />
+            </button>
+            <button
+              type="button"
+              onClick={zoomIn}
+              disabled={activeZoom >= 3}
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest disabled:cursor-not-allowed disabled:opacity-35"
+              aria-label="Augmenter le zoom"
+            >
+              <Plus className="h-4 w-4" />
+            </button>
+            <button
+              type="button"
+              onClick={resetZoom}
+              disabled={activeZoom === 1}
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest disabled:cursor-not-allowed disabled:opacity-35"
+              aria-label="Réinitialiser le zoom"
+            >
+              <RotateCcw className="h-4 w-4" />
+            </button>
+            <span className="hidden text-sm font-medium text-dema-muted sm:inline">
+              {Math.round(activeZoom * 100)}%
+            </span>
+          </div>
           <div className="flex items-center gap-2">
             {detailHref ? (
               <Link
@@ -128,10 +197,10 @@ export default function CourseSlidesDialog({
           </div>
         </div>
 
-        <div className="relative flex-1 overflow-hidden bg-[#f7f6f1] p-2 sm:p-3">
+        <div className="relative flex-1 overflow-hidden bg-[#f7f6f1] p-1 sm:p-2">
           <div
             ref={scrollerRef}
-            className="flex h-full snap-x snap-mandatory gap-3 overflow-x-auto overflow-y-hidden scroll-smooth px-1 touch-pan-x sm:gap-4 sm:px-3 lg:px-6"
+            className="flex h-full snap-x snap-mandatory gap-2 overflow-x-auto overflow-y-hidden scroll-smooth px-0 touch-pan-x sm:gap-3 sm:px-1 lg:px-3"
             onScroll={(event) => {
               const target = event.currentTarget;
               const scrollerCenter = target.scrollLeft + target.clientWidth / 2;
@@ -171,41 +240,40 @@ export default function CourseSlidesDialog({
                 ref={(node) => {
                   slideRefs.current[index] = node;
                 }}
-                className="flex min-w-[100%] shrink-0 snap-center items-center justify-center py-1 sm:min-w-[92%] lg:min-w-[80%] xl:min-w-[78%]"
+                className="flex min-w-[100%] shrink-0 snap-center items-center justify-center py-0.5"
               >
-                <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[1.25rem] border border-dema-line bg-white shadow-[0_10px_28px_rgba(23,35,29,0.06)]">
-                  <Image
-                    src={slide}
-                    alt={`${course.title} - slide ${index + 1}`}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 92vw, 78vw"
-                    className="object-contain bg-white"
-                    priority={index === activeIndex}
-                  />
+                <div className="flex aspect-[16/9] w-full items-center justify-center overflow-auto rounded-[1rem] border border-dema-line/80 bg-white shadow-[0_8px_22px_rgba(23,35,29,0.045)]">
+                  <div
+                    className="relative shrink-0"
+                    style={{
+                      width: `${(zoomLevels[index] ?? 1) * 100}%`,
+                      aspectRatio: "16 / 9",
+                    }}
+                    onDoubleClick={() =>
+                      setZoomForSlide(index, (zoomLevels[index] ?? 1) > 1 ? 1 : 2)
+                    }
+                    onWheel={(event) => {
+                      if (!(event.ctrlKey || event.metaKey)) {
+                        return;
+                      }
+
+                      event.preventDefault();
+                      const nextZoom = (zoomLevels[index] ?? 1) + (event.deltaY < 0 ? 0.2 : -0.2);
+                      setZoomForSlide(index, nextZoom);
+                    }}
+                  >
+                    <Image
+                      src={slide}
+                      alt={`${course.title} - slide ${index + 1}`}
+                      fill
+                      sizes="100vw"
+                      className="object-contain bg-white"
+                      priority={index === activeIndex}
+                    />
+                  </div>
                 </div>
               </div>
             ))}
-          </div>
-
-          <div className="pointer-events-none absolute inset-y-0 left-0 right-0 flex items-center justify-between px-4 sm:px-6">
-            <button
-              type="button"
-              onClick={() => goToSlide(activeIndex - 1)}
-              disabled={!canGoPrevious}
-              className="pointer-events-auto inline-flex h-11 w-11 items-center justify-center rounded-full border border-dema-line/90 bg-white/92 text-brand-blue shadow-[0_8px_18px_rgba(23,35,29,0.08)] backdrop-blur transition hover:border-dema-forest/25 hover:text-dema-forest disabled:cursor-not-allowed disabled:opacity-35"
-              aria-label="Slide précédente"
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </button>
-            <button
-              type="button"
-              onClick={() => goToSlide(activeIndex + 1)}
-              disabled={!canGoNext}
-              className="pointer-events-auto inline-flex h-11 w-11 items-center justify-center rounded-full border border-dema-line/90 bg-white/92 text-brand-blue shadow-[0_8px_18px_rgba(23,35,29,0.08)] backdrop-blur transition hover:border-dema-forest/25 hover:text-dema-forest disabled:cursor-not-allowed disabled:opacity-35"
-              aria-label="Slide suivante"
-            >
-              <ChevronRight className="h-5 w-5" />
-            </button>
           </div>
 
           <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 flex-wrap gap-1.5 rounded-full border border-white/60 bg-white/72 px-2.5 py-1.5 shadow-[0_6px_14px_rgba(23,35,29,0.06)] backdrop-blur">
