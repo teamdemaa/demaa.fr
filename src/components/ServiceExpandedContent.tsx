@@ -61,7 +61,7 @@ const organisationSteps = [
 const organisationPillars = [
   "Direction et priorités",
   "Marketing et vente",
-  "Opération et suivi client",
+  "Opérations et suivi client",
   "Finance et administratif",
   "Équipe et responsabilités",
 ] as const;
