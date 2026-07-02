@@ -6,16 +6,16 @@ import AssistantsCatalogClient from "@/components/AssistantsCatalogClient";
 import OrganisationAutonomyDiscovery from "@/components/OrganisationAutonomyDiscovery";
 
 export const metadata: Metadata = {
-  title: "Diagnostic organisation pour TPE - Demaa",
+  title: "Diagnostic pour TPE - Demaa",
   description:
-    "Demandez un diagnostic organisation pour identifier les blocages, clarifier les priorités et repérer les besoins les plus utiles pour la suite.",
+    "Demandez un diagnostic pour identifier les blocages, clarifier les priorités et repérer les besoins les plus utiles pour la suite.",
   alternates: {
     canonical: "/organisation",
   },
   openGraph: {
-    title: "Diagnostic organisation pour TPE - Demaa",
+    title: "Diagnostic pour TPE - Demaa",
     description:
-      "Demandez un diagnostic organisation pour identifier les blocages, clarifier les priorités et repérer les besoins les plus utiles pour la suite.",
+      "Demandez un diagnostic pour identifier les blocages, clarifier les priorités et repérer les besoins les plus utiles pour la suite.",
     url: "/organisation",
     siteName: "Demaa",
     locale: "fr_FR",
@@ -23,9 +23,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Diagnostic organisation pour TPE - Demaa",
+    title: "Diagnostic pour TPE - Demaa",
     description:
-      "Demandez un diagnostic organisation pour identifier les blocages, clarifier les priorités et repérer les besoins les plus utiles pour la suite.",
+      "Demandez un diagnostic pour identifier les blocages, clarifier les priorités et repérer les besoins les plus utiles pour la suite.",
   },
 };
 

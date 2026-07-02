@@ -7,21 +7,21 @@ export function getServicePageMetadata(service: DemaaService): Metadata {
   const isOrganisationLanding = service.slug === "organisation-automatisation";
   const shouldNoIndex = isAssistantLanding || isOrganisationLanding;
   const metadataTitle = isAssistantPacks
-    ? "Assistance facturation - Packs 20h, 30h ou 40h - Demaa"
+    ? "Assistance facturation - Forfaits mensuels Standard et Confort - Demaa"
     : isAssistantLanding
     ? "Recrutement assistante facturation - Demaa"
     : isOrganisationLanding
-      ? "Diagnostic organisation pour TPE - Demaa"
+      ? "Diagnostic pour TPE - Demaa"
       : `${service.name} - Annuaire services Demaa`;
   const canonicalPath = isOrganisationLanding
     ? "/organisation"
     : `/annuaire-services/${service.slug}`;
   const metadataDescription = isAssistantPacks
-    ? "Choisissez un pack de 20h, 30h ou 40h pour reprendre devis, facturation, relances et transmission comptable à 30 € de l'heure HT."
+    ? "Choisissez un forfait mensuel Standard ou Confort pour reprendre les factures fournisseurs, les factures clients et la transmission comptable, avec relances et reporting dans le forfait Confort."
     : isAssistantLanding
     ? "Un accompagnement au recrutement d'une assistante facturation pour reprendre devis, facturation, relances et transmission comptable avec une intégration plus claire et plus sereine."
     : isOrganisationLanding
-      ? "Demandez un diagnostic organisation pour identifier les blocages, clarifier les priorités et repérer les besoins les plus utiles pour la suite."
+      ? "Demandez un diagnostic pour identifier les blocages, clarifier les priorités et repérer les besoins les plus utiles pour la suite."
       : service.description;
 
   return {

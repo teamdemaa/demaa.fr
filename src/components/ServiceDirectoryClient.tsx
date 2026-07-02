@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { ArrowLeft, Check, ChevronDown } from "lucide-react";
-import AssistantPackSelector from "@/components/AssistantPackSelector";
 import SearchFilterControls from "@/components/SearchFilterControls";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import {
@@ -76,6 +75,21 @@ const serviceTestimonial = {
     "Avant, tout passait par moi. Depuis qu'on a mis en place une vraie organisation, chacun sait ce qu'il peut décider. Je respire enfin.",
   author: "D.K dirigeant d'une entreprise de nettoyage industrielle",
 } as const;
+
+const SERVICE_SECTION_CONFIG = [
+  {
+    title: "Sécuriser l’entreprise",
+    description:
+      "Les sujets qui protègent la trésorerie, clarifient l’administratif et évitent que les blocages s’accumulent.",
+    categories: ["Juridique", "Finance", "Support opérationnel"] as const,
+  },
+  {
+    title: "Développer et organiser l’activité",
+    description:
+      "Les services pour structurer l’exécution, gagner en visibilité et faire avancer l’activité plus sereinement.",
+    categories: ["Systèmes", "Acquisition", "Contenu"] as const,
+  },
+] as const;
 
 type ServiceDirectoryClientProps = {
   services: DemaaService[];
@@ -160,6 +174,15 @@ export default function ServiceDirectoryClient({
       return matchesCategory && matchesSearch;
     });
   }, [activeCategory, searchQuery, services]);
+
+  const serviceSections = useMemo(
+    () =>
+      SERVICE_SECTION_CONFIG.map((section) => ({
+        ...section,
+        services: filteredServices.filter((service) => section.categories.includes(service.category)),
+      })).filter((section) => section.services.length > 0),
+    [filteredServices]
+  );
 
   const serviceFilters = useMemo(() => ["Tous", ...categories], [categories]);
 
@@ -308,18 +331,33 @@ export default function ServiceDirectoryClient({
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {filteredServices.map((service) => (
-              <ServiceCard
-                key={service.slug}
-                isSelected={
-                  service.slug === ASSISTANT_SERVICE_SLUG
-                    ? selectedSlugs.some((slug) => isAssistantPackSlug(slug))
-                    : selectedSlugs.includes(service.slug)
-                }
-                onToggleSelection={toggleServiceSelection}
-                service={service}
-              />
+          <div className="space-y-10 md:space-y-14">
+            {serviceSections.map((section) => (
+              <section key={section.title} className="space-y-5">
+                <div className="max-w-3xl">
+                  <h2 className="text-2xl font-semibold tracking-tight text-brand-blue md:text-[2rem]">
+                    {section.title}
+                  </h2>
+                  <p className="mt-2 text-sm leading-relaxed text-dema-muted md:text-[0.98rem]">
+                    {section.description}
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+                  {section.services.map((service) => (
+                    <ServiceCard
+                      key={service.slug}
+                      isSelected={
+                        service.slug === ASSISTANT_SERVICE_SLUG
+                          ? selectedSlugs.some((slug) => isAssistantPackSlug(slug))
+                          : selectedSlugs.includes(service.slug)
+                      }
+                      onToggleSelection={toggleServiceSelection}
+                      service={service}
+                    />
+                  ))}
+                </div>
+              </section>
             ))}
           </div>
         )}
@@ -355,7 +393,7 @@ function ServiceCard({
   const isAssistantService = service.slug === ASSISTANT_SERVICE_SLUG;
 
   return (
-    <article className="demaa-card flex min-h-[18rem] flex-col rounded-[1.25rem] p-6 text-left">
+    <article className="demaa-card flex min-h-[18rem] h-full flex-col rounded-[1.25rem] p-6 text-left">
       <Link
         href={`/annuaire-services/${service.slug}`}
         className="flex flex-1 flex-col text-left"
@@ -373,7 +411,7 @@ function ServiceCard({
         </p>
         <div className="mt-auto flex items-end gap-3 pt-5">
           {isAssistantService ? (
-            <p className="text-[1rem] font-medium text-dema-muted">3 packs disponibles</p>
+            <p className="text-[1rem] font-medium text-dema-muted">2 forfaits mensuels</p>
           ) : purchaseConfig ? (
             <p className="text-[0.92rem] font-normal tracking-tight text-brand-blue">
               {service.price}
@@ -386,12 +424,19 @@ function ServiceCard({
 
       <div className="mt-6 flex items-center gap-3">
         {isAssistantService ? (
-          <AssistantPackSelector
-            compact
-            className="w-full"
-            buttonLabel="Sélectionner"
-            showHelperText={false}
-          />
+          <div className="w-full">
+            <Link
+              href={`/annuaire-services/${service.slug}`}
+              className="inline-flex w-full items-center justify-center rounded-full border border-dema-line bg-dema-paper px-4 py-3 text-sm font-medium text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
+            >
+              Voir les forfaits
+            </Link>
+            {isSelected ? (
+              <p className="mt-2 text-xs leading-relaxed text-dema-muted">
+                Un forfait est déjà prêt dans votre panier.
+              </p>
+            ) : null}
+          </div>
         ) : purchaseConfig ? (
           <button
             type="button"
@@ -427,7 +472,7 @@ function ServiceTrustSection() {
     <div className="mt-10 space-y-24 md:mt-14 md:space-y-32">
       <section className="border-t border-dema-line/80 pt-14 md:pt-18">
         <div className="max-w-2xl">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
+          <p className="text-[14px] font-semibold uppercase tracking-[0.16em] text-dema-forest md:text-[15px]">
             Comment ça marche
           </p>
           <h2 className="mt-3 text-3xl font-semibold tracking-tight text-brand-blue md:text-[2.5rem]">
@@ -456,7 +501,7 @@ function ServiceTrustSection() {
       <section className="rounded-[1.5rem] bg-dema-sage/55 px-6 py-13 md:px-8 md:py-16">
         <div className="grid gap-10 md:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] md:items-start">
           <div className="max-w-2xl md:pt-1">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
+            <p className="text-[14px] font-semibold uppercase tracking-[0.16em] text-dema-forest md:text-[15px]">
               Ce que ça change
             </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight text-brand-blue md:text-[2.5rem]">
@@ -480,7 +525,7 @@ function ServiceTrustSection() {
 
       <section className="border-t border-dema-line/80 pt-14 md:pt-18">
         <div className="max-w-2xl">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
+          <p className="text-[14px] font-semibold uppercase tracking-[0.16em] text-dema-forest md:text-[15px]">
             Questions fréquentes
           </p>
           <h2 className="mt-3 text-3xl font-semibold tracking-tight text-brand-blue md:text-[2.5rem]">
@@ -521,7 +566,7 @@ function ServiceTrustSection() {
               scroll={false}
               className="demaa-secondary-button border-dema-paper/25 bg-dema-paper/8 text-dema-paper hover:border-dema-paper/40 hover:bg-dema-paper/12 hover:text-dema-paper"
             >
-              Demandez votre diagnostic organisation
+              Demandez votre diagnostic
             </Link>
           </div>
         </div>

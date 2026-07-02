@@ -70,13 +70,16 @@ export async function POST(request: Request) {
   const cartSummary = purchasableServices.map((service) => service.name).join(" · ");
   const serviceNames = purchasableServices.map((service) => service.name).join("|");
   const serviceSlugs = purchasableServices.map((service) => service.slug).join(",");
+  const hasRecurringServices = purchasableServices.some(
+    (service) => service.billingType === "monthly"
+  );
   const offerLabel =
     purchasableServices.length > 1
       ? `${purchasableServices.length} services Demaa`
       : purchasableServices[0]?.name || "Service Demaa";
 
   const formData = new URLSearchParams({
-    mode: "payment",
+    mode: hasRecurringServices ? "subscription" : "payment",
     success_url: `${origin}/api/customer-space/stripe-entry?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${origin}/`,
     "billing_address_collection": "auto",
@@ -88,6 +91,18 @@ export async function POST(request: Request) {
     "metadata[service_slugs]": serviceSlugs,
     "metadata[item_count]": String(purchasableServices.length),
   });
+
+  if (hasRecurringServices) {
+    formData.append("subscription_data[metadata][order_type]", "service_bundle");
+    formData.append("subscription_data[metadata][offer_label]", offerLabel);
+    formData.append("subscription_data[metadata][cart_summary]", cartSummary);
+    formData.append("subscription_data[metadata][service_names]", serviceNames);
+    formData.append("subscription_data[metadata][service_slugs]", serviceSlugs);
+    formData.append(
+      "subscription_data[metadata][item_count]",
+      String(purchasableServices.length)
+    );
+  }
 
   purchasableServices.forEach((service, index) => {
     formData.append(
@@ -106,6 +121,12 @@ export async function POST(request: Request) {
       `line_items[${index}][price_data][unit_amount]`,
       String(service.unitAmount)
     );
+    if (service.billingType === "monthly" && service.billingInterval) {
+      formData.append(
+        `line_items[${index}][price_data][recurring][interval]`,
+        service.billingInterval
+      );
+    }
     formData.append(`line_items[${index}][quantity]`, "1");
   });
 

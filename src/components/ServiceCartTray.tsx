@@ -11,6 +11,7 @@ import {
 } from "@/lib/service-cart";
 import {
   formatPurchasableServicePrice,
+  formatPurchasableServicePriceLabel,
   getPurchasableServiceConfig,
   type PurchasableServiceConfig,
 } from "@/lib/service-purchase";
@@ -229,6 +230,13 @@ function CartContent({
   desktop?: boolean;
   highlight?: boolean;
 }) {
+  const hasMonthlyServices = selectedServices.some(
+    (service) => service.billingType === "monthly"
+  );
+  const allMonthlyServices =
+    selectedServices.length > 0 &&
+    selectedServices.every((service) => service.billingType === "monthly");
+
   return (
     <div
       id="demaa-service-cart"
@@ -251,7 +259,7 @@ function CartContent({
                 desktop ? "text-white/58" : "text-dema-muted"
               }`}
             >
-              Panier
+              {hasMonthlyServices ? "Abonnement" : "Panier"}
             </p>
             <p
               className={`mt-1 text-[1.05rem] font-semibold ${
@@ -260,6 +268,7 @@ function CartContent({
             >
               {selectedServices.length} service{selectedServices.length > 1 ? "s" : ""} ·{" "}
               {formatPurchasableServicePrice(total)}
+              {allMonthlyServices ? " / mois" : ""}
             </p>
           </div>
         </div>
@@ -308,7 +317,7 @@ function CartContent({
                   {service.name}
                 </p>
                 <p className={`mt-1 text-xs ${desktop ? "text-white/62" : "text-dema-muted"}`}>
-                  {formatPurchasableServicePrice(service.unitAmount, service.currency)}
+                  {formatPurchasableServicePriceLabel(service)}
                 </p>
               </div>
               <button
@@ -359,7 +368,9 @@ function CartContent({
           ) : (
             <>
               <CheckCircle2 className="mr-2 h-4 w-4" aria-hidden="true" />
-              Payer {formatPurchasableServicePrice(total)}
+              {allMonthlyServices ? "S'abonner" : "Payer"}{" "}
+              {formatPurchasableServicePrice(total)}
+              {allMonthlyServices ? " / mois" : ""}
             </>
           )}
         </button>

@@ -5,38 +5,36 @@ export const RECRUITMENT_ASSISTANT_SERVICE_SLUG =
 export type AssistantPack = {
   slug: string;
   label: string;
-  hours: number;
-  hourlyRateCents: number;
   unitAmount: number;
   summary: string;
+  supplierInvoicesPerMonth: number;
+  customerInvoicesPerMonth: number;
+  includesClientRelances: boolean;
+  includesMonthlyReporting: boolean;
 };
-
-const ASSISTANT_HOURLY_RATE_CENTS = 30_00;
 
 export const assistantServicePacks = [
   {
-    slug: "assistante-facturation-20h",
-    label: "Pack 20h",
-    hours: 20,
-    hourlyRateCents: ASSISTANT_HOURLY_RATE_CENTS,
+    slug: "assistante-facturation-standard",
+    label: "Standard",
+    unitAmount: 350_00,
+    summary:
+      "Collecte WhatsApp des factures fournisseurs, émission des factures clients et transmission comptable / outil.",
+    supplierInvoicesPerMonth: 50,
+    customerInvoicesPerMonth: 5,
+    includesClientRelances: false,
+    includesMonthlyReporting: false,
+  },
+  {
+    slug: "assistante-facturation-confort",
+    label: "Confort",
     unitAmount: 600_00,
-    summary: "20 heures pour devis, facturation, relances et suivi administratif.",
-  },
-  {
-    slug: "assistante-facturation-30h",
-    label: "Pack 30h",
-    hours: 30,
-    hourlyRateCents: ASSISTANT_HOURLY_RATE_CENTS,
-    unitAmount: 900_00,
-    summary: "30 heures pour devis, facturation, relances et suivi administratif.",
-  },
-  {
-    slug: "assistante-facturation-40h",
-    label: "Pack 40h",
-    hours: 40,
-    hourlyRateCents: ASSISTANT_HOURLY_RATE_CENTS,
-    unitAmount: 1200_00,
-    summary: "40 heures pour devis, facturation, relances et suivi administratif.",
+    summary:
+      "Collecte WhatsApp des factures fournisseurs, émission des factures clients, transmission comptable / outil, relances clients et reporting mensuel.",
+    supplierInvoicesPerMonth: 100,
+    customerInvoicesPerMonth: 15,
+    includesClientRelances: true,
+    includesMonthlyReporting: true,
   },
 ] as const satisfies readonly AssistantPack[];
 

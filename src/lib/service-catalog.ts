@@ -173,9 +173,9 @@ export const demaaServices = [
     slug: "organisation-automatisation",
     name: "Diagnostic",
     category: "Systèmes",
-    shortDescription: "Un diagnostic organisation pour repérer les blocages et les priorités.",
+    shortDescription: "Un diagnostic pour repérer les blocages et les priorités.",
     description:
-      "Un diagnostic organisation pour prendre du recul, identifier les points de blocage, clarifier les priorités et repérer les besoins de structuration les plus utiles.",
+      "Un diagnostic pour prendre du recul, identifier les points de blocage, clarifier les priorités et repérer les besoins les plus utiles à traiter.",
     bestFor:
       "Les entreprises qui perdent du temps sur relances, devis, documents, reporting, planning ou suivi client.",
     duration: "1 mois",
@@ -319,22 +319,22 @@ export const demaaServices = [
     name: "Assistance facturation",
     category: "Support opérationnel",
     shortDescription:
-      "Un appui souple pour reprendre devis, facturation, relances et transmission comptable sans recruter tout de suite.",
+      "Deux forfaits mensuels pour reprendre factures clients, factures fournisseurs et transmission comptable sans recruter tout de suite.",
     description:
-      "Un appui souple pour reprendre devis, facturation, suivi, relances, collecte documentaire et transmission comptable sans recruter tout de suite.",
+      "Un appui mensuel pour reprendre la collecte WhatsApp des factures fournisseurs, l'émission des factures clients et la transmission comptable, avec un forfait Confort qui ajoute relances clients et reporting mensuel.",
     bestFor:
-      "Les dirigeants qui veulent fiabiliser devis, factures et relances avec un renfort cadré, sans lancer un recrutement complet dès maintenant.",
-    duration: "Selon le pack",
-    price: "30 € / heure HT",
+      "Les dirigeants qui veulent fiabiliser leur facturation et leur transmission comptable avec un cadre mensuel clair, sans lancer un recrutement complet dès maintenant.",
+    duration: "Abonnement mensuel",
+    price: "350 € à 600 € / mois HT",
     tags: ["Facturation", "Devis", "Relances"],
     icon: "UserRoundCheck",
     deliverables: [
-      "Préparation et suivi des devis",
-      "Création, envoi et suivi des factures",
-      "Relances et suivi des paiements",
-      "Collecte des pièces et transmission à l'outil comptable ou au comptable",
+      "Collecte WhatsApp des factures fournisseurs",
+      "Émission des factures clients",
+      "Transmission comptable à l'outil ou au comptable",
+      "Relances clients et reporting mensuel selon le forfait choisi",
     ],
-    usefulFor: ["Devis", "Facturation", "Relances", "Transmission comptable"],
+    usefulFor: ["Facturation", "Transmission comptable", "Relances", "Reporting"],
   },
   {
     slug: "recrutement-assistante-facturation",

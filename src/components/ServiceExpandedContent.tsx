@@ -230,23 +230,29 @@ function GenericServiceExpandedContent({
     serviceSlug === "assistante-facturation"
       ? [
           {
-            question: "Qu'est-ce que vous pouvez reprendre concrètement chez moi ?",
+            question: "Quelle est la différence entre Standard et Confort ?",
             answer:
-              "Les devis, la création et l'envoi des factures, le suivi des paiements, les relances, la collecte des pièces et la transmission dans l'outil comptable ou au comptable.",
+              "Les deux forfaits couvrent la collecte WhatsApp des factures fournisseurs, l'émission des factures clients et la transmission comptable. Le forfait Confort ajoute les relances clients et le reporting mensuel, avec un volume plus large.",
           },
           {
-            question: "Est-ce adapté à une petite entreprise sans équipe administrative ?",
-            answer: service.bestFor,
+            question: "Qu'est-ce qui est vraiment pris en charge chaque mois ?",
+            answer:
+              "Le cœur du service, c'est la reprise du flux de facturation courant : collecte des factures fournisseurs, émission des factures clients et transmission dans votre outil ou au comptable. L'objectif est que le sujet avance sans repasser par vous à chaque étape.",
           },
           {
-            question: "Comment ça se passe avec mon comptable ou mon logiciel ?",
+            question: "Est-ce que les relances clients sont incluses ?",
             answer:
-              "L'objectif est de remettre de l'ordre dans le flux : récupérer les bonnes pièces, les classer proprement, puis les intégrer dans votre outil ou les transmettre au comptable sans vous laisser le suivi sur les bras.",
+              "Oui, mais uniquement dans le forfait Confort. Le forfait Standard reste centré sur la gestion courante du flux fournisseurs et clients, sans relances ni reporting mensuel.",
           },
           {
-            question: "Combien de temps faut-il pour que ce soit utile ?",
+            question: "Est-ce que c'est adapté si je n'ai pas d'assistante en interne ?",
             answer:
-              "Le service fonctionne par pack, avec un démarrage centré sur les sujets les plus urgents pour vous soulager vite : devis en retard, factures à envoyer, relances oubliées ou pièces à remettre au comptable.",
+              "Oui. Ce service est justement pensé pour les petites entreprises qui veulent remettre de l'ordre dans la facturation sans recruter tout de suite, ni porter seules le suivi administratif.",
+          },
+          {
+            question: "Comment cela se passe avec mon comptable ou mon logiciel ?",
+            answer:
+              "Demaa reprend le flux, rassemble les bonnes pièces et les transmet proprement dans votre outil ou à votre comptable. Le but est de fluidifier le process, pas de rajouter une couche de complexité.",
           },
         ] as const
       : [

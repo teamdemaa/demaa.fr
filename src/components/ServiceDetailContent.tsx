@@ -17,6 +17,7 @@ export default function ServiceDetailContent({
   compact = false,
 }: ServiceDetailContentProps) {
   const isOrganisationAudit = service.slug === "organisation-automatisation";
+  const isBillingAssistant = service.slug === "assistante-facturation";
 
   return (
     <div className={compact ? "space-y-6" : "space-y-8"}>
@@ -65,18 +66,22 @@ export default function ServiceDetailContent({
 
           <div className="rounded-[1.25rem] border border-dema-line bg-dema-paper p-6">
             <h2 className="text-2xl font-semibold text-brand-blue md:text-[1.7rem]">Accès</h2>
-            <p className="mt-4 text-[1rem] leading-relaxed text-dema-muted md:text-[1.05rem]">
-              Tarif
-            </p>
-            <p className="mt-2 text-[1.9rem] font-semibold tracking-tight text-brand-blue md:text-[2.15rem]">
-              {service.price}
-            </p>
-            <p className="mt-4 text-[1rem] leading-relaxed text-dema-muted md:text-[1.05rem]">
-              Durée
-            </p>
-            <p className="mt-2 text-lg font-semibold tracking-tight text-brand-blue">
-              {service.duration}
-            </p>
+            {!isBillingAssistant ? (
+              <>
+                <p className="mt-4 text-[1rem] leading-relaxed text-dema-muted md:text-[1.05rem]">
+                  Tarif
+                </p>
+                <p className="mt-2 text-[1.9rem] font-semibold tracking-tight text-brand-blue md:text-[2.15rem]">
+                  {service.price}
+                </p>
+                <p className="mt-4 text-[1rem] leading-relaxed text-dema-muted md:text-[1.05rem]">
+                  Durée
+                </p>
+                <p className="mt-2 text-lg font-semibold tracking-tight text-brand-blue">
+                  {service.duration}
+                </p>
+              </>
+            ) : null}
             <div className="mt-5">
               <ServiceRequestCta service={service} />
             </div>

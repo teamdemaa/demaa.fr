@@ -12,16 +12,20 @@ export type PurchasableServiceConfig = {
   shortDescription: string;
   unitAmount: number;
   currency: "eur";
+  billingType: "one_time" | "monthly";
+  billingInterval?: "month";
 };
 
 const purchasableServiceConfigs = [
   ...assistantServicePacks.map((pack) => ({
     slug: pack.slug,
     serviceSlug: ASSISTANT_SERVICE_SLUG,
-    name: `Assistance facturation - ${pack.label}`,
-    shortDescription: `${pack.summary} Tarif horaire : 30 € HT.`,
+    name: `Assistance facturation - Forfait ${pack.label}`,
+    shortDescription: `${pack.summary} Jusqu'à ${pack.supplierInvoicesPerMonth} factures fournisseurs et ${pack.customerInvoicesPerMonth} factures clients par mois.`,
     unitAmount: pack.unitAmount,
     currency: "eur" as const,
+    billingType: "monthly" as const,
+    billingInterval: "month" as const,
   })),
   {
     slug: RECRUITMENT_ASSISTANT_SERVICE_SLUG,
@@ -31,6 +35,7 @@ const purchasableServiceConfigs = [
       "Un accompagnement pour sélectionner, former et intégrer une assistante facturation avec méthode.",
     unitAmount: 500_00,
     currency: "eur" as const,
+    billingType: "one_time" as const,
   },
   {
     slug: "marketing-vente",
@@ -41,6 +46,7 @@ const purchasableServiceConfigs = [
       "Clarifier l'offre et structurer le suivi marketing et vente.",
     unitAmount: 750_00,
     currency: "eur" as const,
+    billingType: "one_time" as const,
   },
   {
     slug: "organisation-equipes",
@@ -53,6 +59,7 @@ const purchasableServiceConfigs = [
       "Structurer l'organisation interne et les responsabilités.",
     unitAmount: 850_00,
     currency: "eur" as const,
+    billingType: "one_time" as const,
   },
   {
     slug: "site-web",
@@ -63,6 +70,7 @@ const purchasableServiceConfigs = [
       "Les supports essentiels pour présenter l'entreprise.",
     unitAmount: 1350_00,
     currency: "eur" as const,
+    billingType: "one_time" as const,
   },
   {
     slug: "previsionnel-financier",
@@ -73,6 +81,7 @@ const purchasableServiceConfigs = [
       "Un prévisionnel clair pour piloter vos chiffres.",
     unitAmount: 550_00,
     currency: "eur" as const,
+    billingType: "one_time" as const,
   },
   {
     slug: "audit-conformite-fiscale",
@@ -85,6 +94,7 @@ const purchasableServiceConfigs = [
       "Un audit ciblé pour repérer risques et optimisations.",
     unitAmount: 850_00,
     currency: "eur" as const,
+    billingType: "one_time" as const,
   },
 ] as const satisfies readonly PurchasableServiceConfig[];
 
@@ -113,4 +123,14 @@ export function formatPurchasableServicePrice(
     currency: currency.toUpperCase(),
     maximumFractionDigits: 0,
   }).format(amount / 100);
+}
+
+export function formatPurchasableServicePriceLabel(service: PurchasableServiceConfig) {
+  const amount = formatPurchasableServicePrice(service.unitAmount, service.currency);
+
+  if (service.billingType === "monthly") {
+    return `${amount} / mois`;
+  }
+
+  return amount;
 }
