@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "DEMAA_FORCE_LOCAL_DATA=true DEMAA_BUILD_DIST_DIR=.next-build next build",
-    "build:vercel": "DEMAA_FORCE_LOCAL_DATA=true next build",
+    "build:vercel": "DEMAA_FORCE_LOCAL_DATA=true next build --webpack",
     "build:stable": "DEMAA_FORCE_LOCAL_DATA=true DEMAA_BUILD_DIST_DIR=.next-build TMPDIR=/private/tmp next build",
     "start": "DEMAA_BUILD_DIST_DIR=.next-build next start",
     "lint": "eslint",

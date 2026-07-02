@@ -76,7 +76,11 @@ const serviceTestimonial = {
   author: "D.K dirigeant d'une entreprise de nettoyage industrielle",
 } as const;
 
-const SERVICE_SECTION_CONFIG = [
+const SERVICE_SECTION_CONFIG: ReadonlyArray<{
+  title: string;
+  description: string;
+  categories: readonly ServiceCategory[];
+}> = [
   {
     title: "Sécuriser l’entreprise",
     description:
