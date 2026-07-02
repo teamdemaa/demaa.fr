@@ -49,7 +49,7 @@ export default function ServiceDetailContent({
       </section>
 
       {isOrganisationAudit ? null : (
-        <section className="grid gap-5 lg:grid-cols-[1fr_0.9fr]">
+        <section className="space-y-5">
           <div className="rounded-[1.25rem] border border-dema-line bg-dema-paper p-6">
             <h2 className="text-2xl font-semibold text-brand-blue md:text-[1.7rem]">Ce qui est inclus</h2>
             <ul className="mt-4 space-y-3">
@@ -65,13 +65,10 @@ export default function ServiceDetailContent({
           </div>
 
           <div className="rounded-[1.25rem] border border-dema-line bg-dema-paper p-6">
-            <h2 className="text-2xl font-semibold text-brand-blue md:text-[1.7rem]">Accès</h2>
+            <h2 className="text-2xl font-semibold text-brand-blue md:text-[1.7rem]">Tarif</h2>
             {!isBillingAssistant ? (
               <>
-                <p className="mt-4 text-[1rem] leading-relaxed text-dema-muted md:text-[1.05rem]">
-                  Tarif
-                </p>
-                <p className="mt-2 text-[1.9rem] font-semibold tracking-tight text-brand-blue md:text-[2.15rem]">
+                <p className="mt-4 text-[1.9rem] font-semibold tracking-tight text-brand-blue md:text-[2.15rem]">
                   {service.price}
                 </p>
                 <p className="mt-4 text-[1rem] leading-relaxed text-dema-muted md:text-[1.05rem]">

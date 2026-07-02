@@ -24,6 +24,7 @@ export default function ServiceDetailDialog({
   const closeDialog = onClose ?? (() => router.back());
   const hasExpandedContent = hasExpandedServiceContent(service.slug);
   const isOrganisationAutomation = service.slug === "organisation-automatisation";
+  const isBillingAssistant = service.slug === "assistante-facturation";
 
   return (
     <>
@@ -80,7 +81,7 @@ export default function ServiceDetailDialog({
             ) : null}
 
             {!isOrganisationAutomation ? (
-              <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,0.82fr)]">
+              <div className="mt-8 space-y-6">
                 <section className="rounded-[1.05rem] border border-dema-line bg-dema-paper p-4 sm:rounded-[1.15rem] sm:p-5">
                   <h3 className="text-[1.35rem] font-semibold text-brand-blue md:text-[1.55rem]">Ce qui est inclus</h3>
                   <ul className="mt-5 space-y-3.5">
@@ -98,15 +99,19 @@ export default function ServiceDetailDialog({
                   </ul>
                 </section>
 
-                <aside className="self-start rounded-[1.05rem] border border-dema-line bg-dema-cream/70 p-5 lg:sticky lg:top-0 sm:rounded-[1.15rem] sm:p-6">
+                <aside className="rounded-[1.05rem] border border-dema-line bg-dema-cream/70 p-5 sm:rounded-[1.15rem] sm:p-6">
                   <p className="text-base font-semibold text-brand-blue">Tarif</p>
-                  <p className="mt-3 text-[1.35rem] font-normal tracking-tight text-brand-blue md:text-[1.5rem]">
-                    {service.price}
-                  </p>
-                  <p className="mt-4 text-sm font-medium text-dema-muted">Durée</p>
-                  <p className="mt-1 text-lg font-normal tracking-tight text-brand-blue">
-                    {service.duration}
-                  </p>
+                  {!isBillingAssistant ? (
+                    <>
+                      <p className="mt-3 text-[1.35rem] font-normal tracking-tight text-brand-blue md:text-[1.5rem]">
+                        {service.price}
+                      </p>
+                      <p className="mt-4 text-sm font-medium text-dema-muted">Durée</p>
+                      <p className="mt-1 text-lg font-normal tracking-tight text-brand-blue">
+                        {service.duration}
+                      </p>
+                    </>
+                  ) : null}
                   <ServiceRequestCta
                     service={service}
                     purchaseButtonLabel="Sélectionner"
