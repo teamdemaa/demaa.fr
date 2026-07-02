@@ -12,6 +12,11 @@ export type ToolDirectoryItem = {
   tags: string[];
   bestFor: string;
   pricingHint: string;
+  keyFeatures?: string[];
+  idealFor?: string[];
+  pricingNoteVerified?: string;
+  sources?: string[];
+  lastReviewedAt?: string;
   scope?: ToolScope;
   status?: "active" | "hidden" | "deprecated";
 };

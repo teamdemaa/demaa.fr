@@ -25,6 +25,22 @@
       ],
       "bestFor": "Centraliser les fichiers, les échanges et les suivis simples.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Gmail professionnel",
+        "Drive pour les fichiers",
+        "Docs, Sheets et Slides",
+        "Meet et Calendar",
+        "Administration et securite pour l'equipe"
+      ],
+      "idealFor": [
+        "Equipes qui veulent une base bureautique simple et partagee",
+        "Structures qui travaillent beaucoup avec fichiers et emails",
+        "Usages transverses de communication, documents et agenda"
+      ],
+      "sources": [
+        "https://workspace.google.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -48,6 +64,22 @@
       ],
       "bestFor": "Garder Excel et Outlook au centre de l’organisation.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Outlook",
+        "Word, Excel et PowerPoint",
+        "Teams",
+        "OneDrive et SharePoint",
+        "Administration et securite pour les utilisateurs"
+      ],
+      "idealFor": [
+        "Equipes deja organisees autour d'Excel et Outlook",
+        "Structures qui veulent combiner bureautique, fichiers et reunion",
+        "Usages transverses de travail collaboratif et administration IT"
+      ],
+      "sources": [
+        "https://www.microsoft.com/microsoft-365"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -70,6 +102,22 @@
       ],
       "bestFor": "Créer un mini système interne sans logiciel métier lourd.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Documents et notes",
+        "Wikis internes",
+        "Gestion de projets et taches",
+        "Bases de donnees",
+        "Edition collaborative"
+      ],
+      "idealFor": [
+        "Equipes qui veulent centraliser savoir, procedures et suivi",
+        "Structures qui cherchent un outil flexible sans dev",
+        "Usages transverses de documentation et organisation interne"
+      ],
+      "sources": [
+        "https://www.notion.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -94,6 +142,22 @@
       ],
       "bestFor": "Structurer un suivi plus propre qu’un tableur classique.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Bases de donnees collaboratives",
+        "Vues table, kanban, calendrier et galerie",
+        "Formulaires",
+        "Automatisations",
+        "Interfaces pour les equipes"
+      ],
+      "idealFor": [
+        "Equipes qui depassent le simple tableur",
+        "Structures qui veulent structurer des process sans outil sur mesure",
+        "Usages transverses de suivi, collecte et coordination"
+      ],
+      "sources": [
+        "https://www.airtable.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -115,6 +179,22 @@
       ],
       "bestFor": "Créer et valider des interfaces ou supports visuels.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Maquettes",
+        "Prototypes",
+        "Design collaboratif",
+        "Systemes de design",
+        "Commentaires et validation"
+      ],
+      "idealFor": [
+        "Equipes qui produisent interfaces ou supports visuels",
+        "Structures qui veulent mieux collaborer sur le design",
+        "Usages transverses de maquette, prototype et validation"
+      ],
+      "sources": [
+        "https://www.figma.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -142,6 +222,22 @@
       ],
       "bestFor": "Produire des supports propres sans dépendre d’un studio.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Visuels",
+        "Presentations",
+        "Documents",
+        "Templates",
+        "Edition collaborative"
+      ],
+      "idealFor": [
+        "Equipes qui veulent produire vite des supports propres",
+        "Structures sans designer interne permanent",
+        "Usages transverses de communication et marketing visuel"
+      ],
+      "sources": [
+        "https://www.canva.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -169,6 +265,23 @@
       ],
       "bestFor": "Gagner du temps sur la réflexion et la production de contenus.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Recherche web avec liens vers les sources",
+        "Collaboration sur l'ecriture et les revisions",
+        "Analyse de fichiers et creation de graphiques",
+        "Analyse d'images",
+        "Execution de taches sur le web via agent"
+      ],
+      "idealFor": [
+        "Dirigeants et equipes qui veulent produire plus vite",
+        "Structures qui ont besoin de resumer, cadrer ou reformuler des contenus",
+        "Usages transverses comme redaction, analyse et preparation de supports"
+      ],
+      "sources": [
+        "https://chatgpt.com/overview/",
+        "https://chatgpt.com/pricing/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -196,6 +309,24 @@
       ],
       "bestFor": "Clarifier des sujets complexes et produire des livrables plus propres.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Redaction, edition et creation de contenus",
+        "Analyse de fichiers et donnees",
+        "Creation de graphiques et visualisations",
+        "Recherche web",
+        "Connecteurs pour Slack et Google Workspace"
+      ],
+      "idealFor": [
+        "Dirigeants et equipes qui travaillent souvent sur des documents longs",
+        "Structures qui doivent analyser des fichiers avant de decider",
+        "Usages transverses de synthese, redaction et travail documentaire"
+      ],
+      "pricingNoteVerified": "La page officielle Claude Pricing affiche une offre Pro a 17 USD par mois avec engagement annuel, ou 20 USD en mensuel.",
+      "sources": [
+        "https://claude.com/product/overview",
+        "https://claude.com/pricing"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -265,6 +396,24 @@
       ],
       "bestFor": "Créer des automatisations lisibles et sur mesure pour TPE.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Automatisation visuelle en drag-and-drop",
+        "Connexion avec plus de 3 000 applications",
+        "Creation d'automatisations et d'agents IA",
+        "Scenarios avec routeurs et filtres",
+        "Execution et suivi des workflows dans une interface visuelle"
+      ],
+      "idealFor": [
+        "Equipes qui veulent automatiser sans coder",
+        "Structures qui relient plusieurs outils entre eux",
+        "Usages transverses comme marketing, ventes, operations ou finance"
+      ],
+      "pricingNoteVerified": "La page officielle Make Pricing affiche une offre Free a 0 USD par mois avec jusqu'a 1 000 credits par mois.",
+      "sources": [
+        "https://www.make.com/en",
+        "https://www.make.com/en/pricing"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -287,6 +436,24 @@
       ],
       "bestFor": "Automatiser vite quand les outils sont déjà compatibles.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Workflows d'automatisation multi-etapes",
+        "Connexion avec plus de 9 000 integrations",
+        "Webhooks",
+        "Tables et Forms dans la meme plateforme",
+        "Fonctions IA comme AI Workflows et Agents"
+      ],
+      "idealFor": [
+        "Equipes qui veulent connecter vite des outils existants",
+        "Structures qui ont beaucoup d'applications SaaS compatibles",
+        "Usages transverses de collecte, routage et automatisation simple"
+      ],
+      "pricingNoteVerified": "La page officielle Zapier Pricing affiche une offre Professional a partir de 19,99 USD par mois.",
+      "sources": [
+        "https://zapier.com/",
+        "https://zapier.com/pricing"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -311,6 +478,24 @@
       ],
       "bestFor": "Créer des formulaires propres et faciles à brancher.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Creation de formulaires en drag-and-drop",
+        "Logique conditionnelle et routage intelligent",
+        "Paiements, prise de rendez-vous et generation de PDF",
+        "Plus de 50 integrations natives",
+        "Analyse et collaboration sur les reponses"
+      ],
+      "idealFor": [
+        "Equipes qui veulent un formulaire plus robuste qu'un simple contact",
+        "Structures qui relient formulaires, paiements ou rendez-vous",
+        "Usages transverses de collecte, qualification et traitement"
+      ],
+      "pricingNoteVerified": "La page officielle Fillout Pricing affiche une offre Free a 0 USD par mois avec formulaires et utilisateurs illimites, plus 1 000 reponses par mois.",
+      "sources": [
+        "https://www.fillout.com/",
+        "https://www.fillout.com/pricing"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -334,6 +519,24 @@
       ],
       "bestFor": "Remplacer un email libre par un formulaire clair.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Formulaires saisis comme dans un document",
+        "Formulaires et soumissions illimites en gratuit",
+        "Paiements, signatures et uploads de fichiers",
+        "Logique conditionnelle, calculs et champs caches",
+        "Integrations comme Google Sheets, Notion, Zapier, Make et webhooks"
+      ],
+      "idealFor": [
+        "Independants et petites equipes qui veulent aller vite",
+        "Structures qui veulent un outil simple mais deja puissant",
+        "Usages transverses de brief, inscription, demande et collecte"
+      ],
+      "pricingNoteVerified": "La page officielle Tally Pricing indique que les formulaires et soumissions sont illimites en gratuit, dans le cadre de ses fair use guidelines.",
+      "sources": [
+        "https://tally.so/",
+        "https://tally.so/pricing"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -410,6 +613,22 @@
       ],
       "bestFor": "Centraliser la gestion financière et comptable.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Facturation simplifiée",
+        "Gestion des achats",
+        "Trésorerie en temps réel",
+        "Comptabilité complète",
+        "Compte pro et cartes"
+      ],
+      "idealFor": [
+        "Indépendants et TPE",
+        "PME et ETI",
+        "Dirigeants et directions financières qui veulent réunir finances et comptabilité au même endroit"
+      ],
+      "sources": [
+        "https://www.pennylane.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -431,6 +650,22 @@
       ],
       "bestFor": "Structurer une gestion plus robuste quand l’activité grandit.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Gestion",
+        "Comptabilite",
+        "Paie",
+        "Solutions metier",
+        "Pilotage d'entreprise"
+      ],
+      "idealFor": [
+        "Entreprises qui ont besoin d'un socle de gestion plus robuste",
+        "Structures qui veulent couvrir plusieurs besoins de gestion avec un meme editeur",
+        "Usages de pilotage, comptabilite et operations quand l'activite grandit"
+      ],
+      "sources": [
+        "https://www.cegid.com/fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -450,6 +685,22 @@
       ],
       "bestFor": "Automatiser la production comptable et fluidifier la relation cabinet-client.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Production comptable",
+        "Gestion interne cabinet",
+        "Collaboration client",
+        "Automatisation",
+        "Plateforme cabinet"
+      ],
+      "idealFor": [
+        "Cabinets comptables qui veulent gagner en fluidite",
+        "Equipes qui veulent rapprocher production et relation client",
+        "Usages cabinet avec besoin d'automatiser la production"
+      ],
+      "sources": [
+        "https://myunisoft.fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -469,6 +720,22 @@
       ],
       "bestFor": "Structurer production, révision, paie et pilotage d’un cabinet comptable.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Comptabilite",
+        "Paie",
+        "Fiscalite",
+        "Gestion cabinet",
+        "Production et revision"
+      ],
+      "idealFor": [
+        "Cabinets qui veulent structurer toute la chaine de production",
+        "Equipes qui gerent compta, paie et fiscalite au meme endroit",
+        "Usages cabinet avec besoin de cadre et de profondeur fonctionnelle"
+      ],
+      "sources": [
+        "https://www.acd-groupe.fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -488,6 +755,22 @@
       ],
       "bestFor": "Gérer production comptable, paie et relation client dans un même écosystème.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Compta",
+        "Paie",
+        "Pilotage cabinet",
+        "Outils collaboratifs",
+        "Ecosysteme cabinet"
+      ],
+      "idealFor": [
+        "Cabinets qui veulent unifier production et collaboration",
+        "Equipes qui cherchent un outil SaaS oriente cabinet",
+        "Usages de gestion cabinet avec relation client integree"
+      ],
+      "sources": [
+        "https://www.fulll.fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -507,6 +790,22 @@
       ],
       "bestFor": "Développer les missions de conseil et pilotage client du cabinet.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Conseil",
+        "Pilotage",
+        "Fiscalite",
+        "Previsionnel",
+        "RSE"
+      ],
+      "idealFor": [
+        "Cabinets qui veulent renforcer leurs missions de conseil",
+        "Equipes qui accompagnent davantage les decisions clients",
+        "Usages cabinet centres sur pilotage et previsionnel"
+      ],
+      "sources": [
+        "https://rca.fr/logiciels-experts/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -528,6 +827,23 @@
       ],
       "bestFor": "Simplifier la gestion administrative et comptable.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Devis et factures en illimité sur web et mobile",
+        "Compte pro et paiements intégrés",
+        "Suivi et prévisionnel de trésorerie",
+        "Gestion des achats et centralisation des justificatifs",
+        "Notes de frais et indemnités kilométriques"
+      ],
+      "idealFor": [
+        "Indépendants et freelances",
+        "TPE et micro-entreprises",
+        "Entrepreneurs qui veulent facturation, compta et compte pro dans un même outil"
+      ],
+      "pricingNoteVerified": "Offre Free gratuite, puis offres payantes affichées à partir de 17,99 EUR HT par mois.",
+      "sources": [
+        "https://www.tiime.fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -549,6 +865,22 @@
       ],
       "bestFor": "Réduire la saisie et sécuriser les pièces comptables.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Facturation gratuite",
+        "Comptabilité automatique",
+        "Stockage et tri automatique des documents",
+        "Suivi des dépenses et notes de frais",
+        "Intégrations logicielles et API"
+      ],
+      "idealFor": [
+        "Entreprises TPE et PME",
+        "Dirigeants, gérants, DAF et comptables en entreprise",
+        "Structures qui veulent centraliser les documents et automatiser les tâches comptables répétitives"
+      ],
+      "sources": [
+        "https://dext.com/fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -570,6 +902,23 @@
       ],
       "bestFor": "Mieux cadrer les dépenses et validations financières.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Pré-comptabilité automatisée",
+        "Association des justificatifs aux transactions",
+        "Facturation électronique conforme",
+        "Gestion des achats et suivi de trésorerie",
+        "Intégrations avec les logiciels comptables"
+      ],
+      "idealFor": [
+        "Cabinets comptables",
+        "Clients entrepreneurs des cabinets",
+        "Structures qui veulent relier pré-comptabilité, facturation électronique et logiciel comptable"
+      ],
+      "sources": [
+        "https://www.regate.io/",
+        "https://qonto.com/fr/accountants"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -591,6 +940,22 @@
       ],
       "bestFor": "Structurer la paie et les obligations sociales.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Gestion de la paie",
+        "Gestion RH",
+        "Conformite et automatisations",
+        "DSN",
+        "Modules comme absences, conges, entretiens, notes de frais et onboarding"
+      ],
+      "idealFor": [
+        "Entreprises qui veulent fiabiliser la paie",
+        "Cabinets et structures qui gerent des obligations sociales",
+        "Equipes RH qui veulent centraliser plusieurs processus autour de la paie"
+      ],
+      "sources": [
+        "https://www.silae.fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -664,6 +1029,22 @@
       ],
       "bestFor": "Gérer les devis et la facturation d’une activité BTP.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Devis",
+        "Factures",
+        "Suivi commercial",
+        "Activite BTP",
+        "Gestion artisan"
+      ],
+      "idealFor": [
+        "Artisans et entreprises BTP qui veulent cadrer devis et facturation",
+        "Equipes qui cherchent un outil simple oriente terrain et commerce",
+        "Usages de gestion commerciale pour activite batiment"
+      ],
+      "sources": [
+        "https://www.obat.fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -683,6 +1064,22 @@
       ],
       "bestFor": "Suivre les chantiers et la rentabilité plus facilement.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Gestion commerciale",
+        "Chantier",
+        "Planning",
+        "Rentabilite",
+        "Suivi entreprise BTP"
+      ],
+      "idealFor": [
+        "Entreprises BTP qui veulent mieux piloter les chantiers",
+        "Equipes qui cherchent a relier commerce, execution et planning",
+        "Usages de suivi chantier avec vision rentabilite"
+      ],
+      "sources": [
+        "https://www.vertuoza.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -823,6 +1220,22 @@
       ],
       "bestFor": "Lancer et structurer une boutique en ligne.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Boutique en ligne",
+        "Paiements",
+        "Produits et stock",
+        "Themes et apps",
+        "Commandes et ventes"
+      ],
+      "idealFor": [
+        "Marchands qui veulent lancer vite une boutique",
+        "Structures e-commerce qui veulent un socle tres standardise",
+        "Usages de vente en ligne avec peu de friction technique"
+      ],
+      "sources": [
+        "https://www.shopify.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -842,6 +1255,22 @@
       ],
       "bestFor": "Construire une boutique avec plus de contrôle technique.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Boutique e-commerce",
+        "Open source",
+        "Catalogue produits",
+        "Modules",
+        "Personnalisation technique"
+      ],
+      "idealFor": [
+        "Equipes qui veulent plus de controle technique sur la boutique",
+        "Structures avec besoins e-commerce plus specifiques",
+        "Usages de boutique open source plus configurable"
+      ],
+      "sources": [
+        "https://prestashop.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -861,6 +1290,22 @@
       ],
       "bestFor": "Centraliser les demandes client et commandes.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Support client pour e-commerce",
+        "Tickets",
+        "Chat et messagerie",
+        "Connexion aux commandes",
+        "Automatisations"
+      ],
+      "idealFor": [
+        "Marques e-commerce qui gerent beaucoup de demandes clients",
+        "Equipes support qui veulent relier conversations et commandes",
+        "Structures qui veulent accelerer le service client marchand"
+      ],
+      "sources": [
+        "https://www.gorgias.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -880,6 +1325,24 @@
       ],
       "bestFor": "Relancer les clients et mieux exploiter la donnée boutique.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Email marketing",
+        "SMS marketing",
+        "Segmentation client",
+        "Reporting et tableaux de bord",
+        "Integrations avec plus de 350 applications"
+      ],
+      "idealFor": [
+        "E-commerces qui veulent mieux relancer et fideliser",
+        "Marques B2C qui travaillent deja leur base clients",
+        "Equipes marketing qui veulent relier campagnes et donnees"
+      ],
+      "pricingNoteVerified": "La page officielle Klaviyo Pricing indique qu'un plan gratuit existe avec jusqu'a 500 emails par mois et 150 credits SMS/MMS mensuels.",
+      "sources": [
+        "https://www.klaviyo.com/",
+        "https://www.klaviyo.com/pricing"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -903,6 +1366,24 @@
       ],
       "bestFor": "Programmer les contenus et mesurer la visibilité.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Planification des publications",
+        "Analyses de performance",
+        "Reporting automatise",
+        "Inbox pour centraliser messages et commentaires",
+        "Gestion des campagnes publicitaires depuis un seul tableau de bord"
+      ],
+      "idealFor": [
+        "Equipes qui gerent plusieurs reseaux sociaux",
+        "Structures qui veulent gagner du temps sur la planification",
+        "Usages transverses de publication, analyse et reporting"
+      ],
+      "pricingNoteVerified": "La page officielle Metricool Tarifs affiche un plan Free a 0 EUR par mois et un plan Starter a partir de 16 EUR par mois.",
+      "sources": [
+        "https://metricool.com/fr/",
+        "https://metricool.com/fr/nos-tarifs/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -924,6 +1405,24 @@
       ],
       "bestFor": "Programmer les contenus sans outil complexe.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Programmation des publications",
+        "Vue simple de tous les posts",
+        "Analytics de performance",
+        "Community inbox",
+        "Assistant IA pour le contenu"
+      ],
+      "idealFor": [
+        "Petites equipes qui veulent rester simples",
+        "Structures qui publient regulierement sur les reseaux",
+        "Usages transverses de planification et suivi social media"
+      ],
+      "pricingNoteVerified": "La page officielle Buffer Pricing affiche un plan Free gratuit et un plan Essentials a 5 USD par mois pour 1 canal avec facturation annuelle.",
+      "sources": [
+        "https://buffer.com/",
+        "https://buffer.com/pricing"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -945,6 +1444,22 @@
       ],
       "bestFor": "Créer un site propre avec plus de liberté visuelle.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Creation visuelle de sites",
+        "CMS",
+        "Animations et design",
+        "Pages marketing",
+        "Edition collaborative"
+      ],
+      "idealFor": [
+        "Equipes qui veulent plus de controle visuel sur leur site",
+        "Structures qui produisent des sites marketing ou vitrines",
+        "Usages de site design sans developpement trop lourd"
+      ],
+      "sources": [
+        "https://webflow.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -966,6 +1481,22 @@
       ],
       "bestFor": "Lancer une page claire et élégante rapidement.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Creation de sites",
+        "Pages de presentation",
+        "Design moderne",
+        "Edition rapide",
+        "Publication web"
+      ],
+      "idealFor": [
+        "Equipes qui veulent lancer vite une presence web propre",
+        "Structures avec besoin de landing pages et mini-sites",
+        "Usages de site simple et rapide a iterer"
+      ],
+      "sources": [
+        "https://www.framer.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -985,6 +1516,22 @@
       ],
       "bestFor": "Structurer le recrutement sans perdre les candidatures.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "ATS",
+        "Suivi des candidatures",
+        "Pipeline de recrutement",
+        "Etapes d'entretien",
+        "Collaboration recrutement"
+      ],
+      "idealFor": [
+        "Equipes qui veulent cadrer leur process de recrutement",
+        "Structures qui ont plusieurs candidatures en parallele",
+        "Recrutements ou il faut mieux suivre les etapes et les retours"
+      ],
+      "sources": [
+        "https://recruitee.com/fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -1004,6 +1551,22 @@
       ],
       "bestFor": "Trouver des missions ou renforcer une équipe ponctuellement.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Mise en relation entreprises et freelances",
+        "Recherche de missions",
+        "Recherche de competences",
+        "Gestion des echanges",
+        "Cadre de collaboration"
+      ],
+      "idealFor": [
+        "Entreprises qui veulent sourcer rapidement des freelances",
+        "Independants qui cherchent des missions",
+        "Usages de renfort ponctuel ou de prospection freelance"
+      ],
+      "sources": [
+        "https://www.malt.fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -1025,6 +1588,22 @@
       ],
       "bestFor": "Ne plus perdre les opportunités commerciales.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Pipeline commercial visuel",
+        "Suivi des opportunites",
+        "Relances et activites",
+        "Automatisations",
+        "Reporting commercial"
+      ],
+      "idealFor": [
+        "Equipes qui veulent mieux suivre leur pipe commercial",
+        "Structures qui ont beaucoup de relances et d'opportunites a suivre",
+        "Usages transverses de prospection et pilotage ventes"
+      ],
+      "sources": [
+        "https://www.pipedrive.com/fr"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -1044,6 +1623,22 @@
       ],
       "bestFor": "Structurer une agence immobilière et ses biens.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Mandats",
+        "Biens",
+        "Diffusion",
+        "Relation client",
+        "Logiciel immobilier"
+      ],
+      "idealFor": [
+        "Agences immobilieres qui veulent structurer leur portefeuille",
+        "Equipes qui gerent mandats, biens et diffusion depuis un seul outil",
+        "Usages de transaction immobiliere avec suivi client"
+      ],
+      "sources": [
+        "https://apimo.pro/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -1064,6 +1659,22 @@
       ],
       "bestFor": "Centraliser logements, réservations, messages voyageurs et opérations terrain.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Locations courte duree",
+        "Reservations",
+        "Calendriers",
+        "Messages voyageurs",
+        "Operations"
+      ],
+      "idealFor": [
+        "Exploitants de locations courte duree",
+        "Equipes qui gerent plusieurs logements ou operations terrain",
+        "Usages de centralisation reservation et communication voyageur"
+      ],
+      "sources": [
+        "https://www.guesty.com/fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -1085,6 +1696,20 @@
       ],
       "bestFor": "Structurer les flux et documents transport.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Planification transport",
+        "Facturation",
+        "Suivi Track and Trace"
+      ],
+      "idealFor": [
+        "Transporteurs qui veulent centraliser leurs operations",
+        "Equipes qui gerent planning, documents et execution ensemble",
+        "Structures qui veulent envoyer les missions aux chauffeurs"
+      ],
+      "sources": [
+        "https://www.dashdoc.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -1105,6 +1730,20 @@
       ],
       "bestFor": "Suivre les véhicules et améliorer les opérations terrain.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Gestion de flotte",
+        "Suivi GPS des vehicules",
+        "Pilotage des operations"
+      ],
+      "idealFor": [
+        "Flottes qui veulent mieux suivre leurs vehicules",
+        "Equipes terrain qui cherchent plus d'automatisation",
+        "Structures qui veulent une vision plus claire de leur exploitation"
+      ],
+      "sources": [
+        "https://www.geotab.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -1124,6 +1763,20 @@
       ],
       "bestFor": "Donner de la visibilité aux clients sur les expéditions et retards.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Visibilite transport en temps reel",
+        "Suivi multimodal",
+        "Suivi des livraisons"
+      ],
+      "idealFor": [
+        "Chargeurs et logisticiens qui veulent plus de visibilite",
+        "Equipes qui suivent des flux transport complexes",
+        "Structures qui veulent mieux informer leurs clients"
+      ],
+      "sources": [
+        "https://www.shippeo.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -1143,6 +1796,20 @@
       ],
       "bestFor": "Organiser les tournées et suivre les preuves de livraison.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Planification de tournees",
+        "Gestion multi-transporteurs",
+        "Preuve de livraison"
+      ],
+      "idealFor": [
+        "Equipes qui gerent des livraisons du dernier kilometre",
+        "Structures qui veulent mieux dispatcher les missions",
+        "Operations qui ont besoin de visibilite sur les livraisons"
+      ],
+      "sources": [
+        "https://urbantz.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -1203,6 +1870,22 @@
       ],
       "bestFor": "Centraliser plusieurs briques métier dans un seul système.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "CRM",
+        "Ventes et facturation",
+        "Stock et operations",
+        "Production",
+        "Suite modulaire"
+      ],
+      "idealFor": [
+        "Structures qui veulent regrouper plusieurs outils dans un meme systeme",
+        "PME avec besoins de gestion plus larges qu'un simple CRM",
+        "Organisations qui veulent faire evoluer leur socle au fil du besoin"
+      ],
+      "sources": [
+        "https://www.odoo.com/fr_FR"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -1242,6 +1925,22 @@
       ],
       "bestFor": "Suivre réunions, réserves, photos et comptes rendus de chantier.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Suivi de chantier",
+        "Reunions",
+        "Reserves",
+        "Photos",
+        "Comptes rendus"
+      ],
+      "idealFor": [
+        "Architectes, maitres d'oeuvre et pros du BTP",
+        "Equipes qui veulent mieux formaliser le suivi chantier",
+        "Usages de visites, reserves et comptes rendus terrain"
+      ],
+      "sources": [
+        "https://archipad.com/fr/logiciel-suivi-chantier/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -1338,7 +2037,21 @@
         "Cashless"
       ],
       "bestFor": "Gérer inscriptions, billets, accès et communication événementielle.",
+      "keyFeatures": [
+        "Billetterie et inscriptions en ligne",
+        "Contrôle d’accès et cashless",
+        "Gestion des publics et communication événementielle"
+      ],
+      "idealFor": [
+        "Festivals et salons",
+        "Organisateurs qui gèrent des flux sur site",
+        "Equipes qui veulent un seul outil pour billetterie et accès"
+      ],
       "pricingHint": "Payant",
+      "sources": [
+        "https://weezevent.com/fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -1486,17 +2199,31 @@
       "sectors": [
         "Hébergement & tourisme"
       ],
-      "description": "Plateforme logicielle pour les acteurs du tourisme de loisir.",
-      "tags": [
-        "Voyage",
-        "Tourisme",
-        "Réservation"
-      ],
-      "bestFor": "Structurer offres, réservations, dossiers voyageurs et production touristique.",
-      "pricingHint": "Payant",
-      "status": "active",
-      "scope": "business"
-    },
+    "description": "Plateforme logicielle pour les acteurs du tourisme de loisir.",
+    "tags": [
+      "Voyage",
+      "Tourisme",
+      "Réservation"
+    ],
+    "bestFor": "Structurer offres, réservations, dossiers voyageurs et production touristique.",
+    "keyFeatures": [
+      "Plateforme SaaS dédiée au tourisme",
+      "Gestion des problématiques métiers du tourisme de loisirs",
+      "Digitalisation et automatisation des opérations"
+    ],
+    "idealFor": [
+      "Acteurs du tourisme de loisirs",
+      "Structures qui veulent centraliser leur production touristique",
+      "Equipes qui gèrent une complexité métier forte"
+    ],
+    "pricingHint": "Payant",
+    "sources": [
+      "https://www.orchestra.eu/"
+    ],
+    "lastReviewedAt": "2026-07-02",
+    "status": "active",
+    "scope": "business"
+  },
     {
       "slug": "winoptics",
       "name": "WinOptics",
@@ -1533,6 +2260,22 @@
       ],
       "bestFor": "Gérer devis, contrats d’entretien, interventions, SAV et saisonnalité.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "CRM",
+        "Devis",
+        "Chantiers",
+        "SAV",
+        "Entretien"
+      ],
+      "idealFor": [
+        "Piscinistes et activites BTP avec saisonnalite",
+        "Equipes qui doivent suivre interventions et contrats d'entretien",
+        "Usages de gestion terrain avec service apres-vente"
+      ],
+      "sources": [
+        "https://www.extrabat.com/piscine/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -1553,6 +2296,22 @@
       ],
       "bestFor": "Produire diagnostics, rapports, mesures terrain et suivis réglementaires.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Diagnostics",
+        "DPE",
+        "Rapports",
+        "Mesures terrain",
+        "Suivi reglementaire"
+      ],
+      "idealFor": [
+        "Diagnostiqueurs immobiliers",
+        "Equipes qui produisent beaucoup de rapports et de mesures",
+        "Usages de conformite et rendu documentaire terrain"
+      ],
+      "sources": [
+        "https://www.liciel.fr/logiciel.html"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -1806,7 +2565,21 @@
         "Terrain"
       ],
       "bestFor": "Planifier les équipes terrain et suivre les interventions en mobilité.",
+      "keyFeatures": [
+        "Planification des équipes terrain",
+        "Suivi d’activité en temps réel",
+        "Optimisation des tournées et mobilité"
+      ],
+      "idealFor": [
+        "SAV et maintenance",
+        "Equipes d’intervention terrain",
+        "Structures qui pilotent des plannings et tournées"
+      ],
       "pricingHint": "Payant",
+      "sources": [
+        "https://www.praxedo.fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -1827,7 +2600,21 @@
         "Facturation"
       ],
       "bestFor": "Suivre les interventions, documents et retours terrain sans multiplier les fichiers.",
+      "keyFeatures": [
+        "Gestion d’interventions en temps réel",
+        "Suivi maintenance, contrats et terrain",
+        "Pilotage des équipes avec une solution centralisée"
+      ],
+      "idealFor": [
+        "Maintenance et services terrain",
+        "Entreprises avec techniciens mobiles",
+        "Structures qui veulent sortir des fichiers dispersés"
+      ],
       "pricingHint": "Payant",
+      "sources": [
+        "https://fr.organilog.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -1904,6 +2691,20 @@
       ],
       "bestFor": "Planifier les équipes et suivre l’avancement des chantiers.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Suivi de chantier",
+        "Planning d'equipe",
+        "Suivi des heures"
+      ],
+      "idealFor": [
+        "Entreprises BTP qui coordonnent plusieurs chantiers",
+        "Equipes qui veulent centraliser les infos terrain",
+        "Structures qui cherchent un suivi simple du planning et des heures"
+      ],
+      "sources": [
+        "https://www.alobees.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -1923,6 +2724,20 @@
       ],
       "bestFor": "Piloter rentabilité, achats et marges par chantier.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "ERP BTP",
+        "Pilotage de la rentabilite",
+        "Suivi des marges"
+      ],
+      "idealFor": [
+        "PME du BTP qui veulent mieux proteger leur rentabilite",
+        "Equipes qui pilotent plusieurs chantiers avec une logique ERP",
+        "Structures qui suivent leurs marges plus finement"
+      ],
+      "sources": [
+        "https://www.graneet.fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -1942,6 +2757,20 @@
       ],
       "bestFor": "Structurer les chantiers et la gestion d'entreprise dans un même outil.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Devis",
+        "Factures",
+        "Gestion de chantier"
+      ],
+      "idealFor": [
+        "Artisans du BTP qui veulent un outil tout-en-un",
+        "TPE et PME qui gerent devis, factures et chantiers ensemble",
+        "Structures qui veulent mieux organiser leur activite"
+      ],
+      "sources": [
+        "https://www.progbat.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -1980,6 +2809,22 @@
       ],
       "bestFor": "Gérer devis et factures avec des modèles adaptés aux artisans du bâtiment.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Devis",
+        "Factures",
+        "Bibliotheque de prix",
+        "Suivi de rentabilite",
+        "Gestion batiment"
+      ],
+      "idealFor": [
+        "Artisans du batiment qui veulent des modeles adaptes",
+        "Equipes qui ont besoin d'une bibliotheque de prix integree",
+        "Usages de devis-facturation avec pilotage rentabilite"
+      ],
+      "sources": [
+        "https://www.batappli.fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -1999,6 +2844,20 @@
       ],
       "bestFor": "Structurer les chantiers et le pilotage d’une entreprise BTP plus organisée.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Devis",
+        "Factures",
+        "Pilotage de chantier"
+      ],
+      "idealFor": [
+        "Entreprises BTP qui veulent suivre leurs chantiers plus proprement",
+        "Equipes qui ont besoin de garder un oeil sur les budgets",
+        "Structures qui veulent regrouper devis, factures et suivi projet"
+      ],
+      "sources": [
+        "https://www.onaya.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -2138,6 +2997,24 @@
       ],
       "bestFor": "Relancer les clients et automatiser les campagnes marketing simples.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Email marketing",
+        "SMS marketing",
+        "Marketing automation sans code",
+        "Segmentation avancee",
+        "Formulaires d'inscription"
+      ],
+      "idealFor": [
+        "TPE et PME qui veulent gerer email et SMS au meme endroit",
+        "Structures qui veulent automatiser des campagnes sans complexite",
+        "Usages transverses de relance, newsletter et acquisition"
+      ],
+      "pricingNoteVerified": "La page officielle Brevo Tarifs mentionne une offre gratuite permanente et un plan Starter avec des envois a partir de 5 000 emails par mois.",
+      "sources": [
+        "https://www.brevo.com/fr/",
+        "https://www.brevo.com/fr/tarifs/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -2158,6 +3035,22 @@
       ],
       "bestFor": "Vendre en ligne sur un site WordPress existant.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Boutique sur WordPress",
+        "Produits et commandes",
+        "Paiements",
+        "Extensions",
+        "Personnalisation"
+      ],
+      "idealFor": [
+        "Equipes qui ont deja un site WordPress",
+        "Structures qui veulent vendre sans changer tout leur socle",
+        "Usages e-commerce sur environnement WordPress"
+      ],
+      "sources": [
+        "https://woocommerce.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -2178,6 +3071,22 @@
       ],
       "bestFor": "Lancer une boutique en ligne avec accompagnement et outils intégrés.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Boutique en ligne",
+        "Accompagnement",
+        "SEO",
+        "Outils integres",
+        "Pilotage e-commerce"
+      ],
+      "idealFor": [
+        "Marchands qui veulent etre accompagnes au lancement",
+        "Structures qui cherchent une solution e-commerce guidee",
+        "Usages de boutique avec aide integree et outillage SEO"
+      ],
+      "sources": [
+        "https://www.wizishop.fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -2216,6 +3125,20 @@
       ],
       "bestFor": "Gérer les dossiers patients et l’activité d’un cabinet médical.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Dossiers patients",
+        "Gestion des consultations",
+        "Facturation"
+      ],
+      "idealFor": [
+        "Professionnels de sante qui veulent un logiciel medical en ligne",
+        "Cabinets qui centralisent consultations et dossiers patients",
+        "Equipes qui veulent mieux suivre l'activite medicale au quotidien"
+      ],
+      "sources": [
+        "https://weda.fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -2255,6 +3178,20 @@
       ],
       "bestFor": "Structurer les dossiers patients et le suivi d’un cabinet médical.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Dossiers patients",
+        "Sesam-Vitale",
+        "Donnees securisees"
+      ],
+      "idealFor": [
+        "Professionnels de sante equipes sur iPad et Mac",
+        "Cabinets qui veulent un logiciel medical natif Apple",
+        "Structures qui veulent mieux suivre leurs dossiers patients"
+      ],
+      "sources": [
+        "https://medistory.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -2313,6 +3250,24 @@
       ],
       "bestFor": "Diffuser les annonces sur plusieurs portails et suivre les contacts entrants.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Diffusion intelligente d'annonces",
+        "Centralisation des contacts",
+        "Gestion des reseaux sociaux",
+        "Statistiques centralisees",
+        "Accompagnement humain et support en France"
+      ],
+      "idealFor": [
+        "Professionnels de l'immobilier",
+        "Professionnels de l'automobile",
+        "Structures qui veulent mieux piloter leur visibilite digitale sectorielle"
+      ],
+      "pricingNoteVerified": "La page officielle Ubiflow Tarifs immobilier affiche une monodiffusion a partir de 25 EUR HT par mois et un pack initial a 45 EUR HT par mois.",
+      "sources": [
+        "https://www.ubiflow.net/",
+        "https://www.ubiflow.net/tarifs-immobilier"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -2332,6 +3287,22 @@
       ],
       "bestFor": "Sécuriser les documents et obligations d’une activité immobilière.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Documents",
+        "Formulaires",
+        "Registres",
+        "Signatures",
+        "Conformite immobiliere"
+      ],
+      "idealFor": [
+        "Professionnels de l'immobilier qui gerent beaucoup de documents",
+        "Equipes qui veulent mieux cadrer leurs obligations administratives",
+        "Usages documentaires et conformite metier"
+      ],
+      "sources": [
+        "https://www.modelo.fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -2351,6 +3322,22 @@
       ],
       "bestFor": "Gérer loyers, baux, appels, documents et suivi locatif.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Gestion locative",
+        "Transaction",
+        "Syndic",
+        "Location saisonniere",
+        "Suivi des documents et appels"
+      ],
+      "idealFor": [
+        "Professionnels qui gerent de la location ou plusieurs activites immobilieres",
+        "Equipes qui veulent regrouper gestion locative et suivi operationnel",
+        "Usages de pilotage immobilier plus complet"
+      ],
+      "sources": [
+        "https://www.lockimmo.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -2370,6 +3357,22 @@
       ],
       "bestFor": "Fluidifier la gestion locative et les échanges locataires/propriétaires.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Gestion locative",
+        "Relation locataires",
+        "Relation proprietaires",
+        "Plateforme administrateurs de biens",
+        "Echanges centralises"
+      ],
+      "idealFor": [
+        "Administrateurs de biens",
+        "Equipes qui veulent mieux gerer les echanges locatifs",
+        "Usages de gestion locative avec forte dimension relationnelle"
+      ],
+      "sources": [
+        "https://www.ublo.immo/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -2389,7 +3392,21 @@
         "Terrain"
       ],
       "bestFor": "Planifier les équipes terrain et suivre les interventions client.",
+      "keyFeatures": [
+        "Gestion d’interventions de maintenance",
+        "Optimisation du planning",
+        "Mobilité pour techniciens SAV"
+      ],
+      "idealFor": [
+        "Maintenance et SAV",
+        "Equipes de techniciens terrain",
+        "Structures qui veulent mieux piloter planning et mobilité"
+      ],
       "pricingHint": "Payant",
+      "sources": [
+        "https://www.synchroteam.fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -2428,6 +3445,22 @@
       ],
       "bestFor": "Gérer un hébergement indépendant et développer les réservations directes.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Reservations directes",
+        "Site",
+        "Channel manager",
+        "Gestion d'etablissement",
+        "Solution hoteliere"
+      ],
+      "idealFor": [
+        "Hebergements independants qui veulent plus de reservations directes",
+        "Equipes qui cherchent un outil hotelier assez central",
+        "Usages de distribution et de gestion d'etablissement"
+      ],
+      "sources": [
+        "https://www.amenitiz.com/fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -2447,6 +3480,22 @@
       ],
       "bestFor": "Centraliser opérations hôtelières, réservations et distribution.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "PMS",
+        "Distribution",
+        "Reservations",
+        "Paiements",
+        "Experience client"
+      ],
+      "idealFor": [
+        "Hotels et hebergements qui veulent mieux centraliser l'exploitation",
+        "Equipes qui gerent distribution et operations dans un meme outil",
+        "Usages hoteliers avec besoin de PMS cloud"
+      ],
+      "sources": [
+        "https://www.cloudbeds.com/fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -2467,6 +3516,22 @@
       ],
       "bestFor": "Synchroniser calendriers, annonces et messages pour locations courte durée.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Channel manager",
+        "Reservations",
+        "Messages voyageurs",
+        "Calendriers",
+        "Location courte duree"
+      ],
+      "idealFor": [
+        "Loueurs courte duree qui veulent synchroniser plusieurs canaux",
+        "Equipes qui gerent annonces et messages voyageurs",
+        "Usages de gestion legere et centralisee des locations"
+      ],
+      "sources": [
+        "https://www.smoobu.com/fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -2487,6 +3552,22 @@
       ],
       "bestFor": "Gérer réservations directes et canaux de location saisonnière.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Location saisonniere",
+        "Site de reservation",
+        "Channel manager",
+        "Paiements",
+        "Reservations directes"
+      ],
+      "idealFor": [
+        "Loueurs saisonniers qui veulent mieux gerer direct et OTA",
+        "Equipes qui veulent site de reservation et distribution ensemble",
+        "Usages de location saisonniere avec paiements integres"
+      ],
+      "sources": [
+        "https://www.lodgify.com/fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -2505,7 +3586,22 @@
         "Billetterie"
       ],
       "bestFor": "Collecter dons, adhésions et inscriptions sans outil technique complexe.",
+      "keyFeatures": [
+        "Adhésions, dons et billetterie en ligne",
+        "Crowdfunding, boutique et paiements",
+        "Outils clés en main gratuits pour les associations"
+      ],
+      "idealFor": [
+        "Associations qui veulent lancer vite",
+        "Structures qui collectent dons et adhésions",
+        "Equipes bénévoles sans stack technique"
+      ],
       "pricingHint": "Gratuit",
+      "pricingNoteVerified": "HelloAsso présente ses solutions comme 100% gratuites pour les associations.",
+      "sources": [
+        "https://www.helloasso.com/associations"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -2543,7 +3639,21 @@
         "Événements"
       ],
       "bestFor": "Gérer membres, adhésions et événements associatifs dans un même outil.",
+      "keyFeatures": [
+        "Plateforme de paiement et de gestion pour association",
+        "Outils pour faciliter la gestion quotidienne",
+        "Expérience plus fluide pour la communauté et les membres"
+      ],
+      "idealFor": [
+        "Associations qui centralisent leur gestion",
+        "Structures qui gèrent membres et paiements",
+        "Equipes qui veulent simplifier leurs tâches du quotidien"
+      ],
       "pricingHint": "Freemium",
+      "sources": [
+        "https://www.yapla.fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -2562,7 +3672,21 @@
         "Inscription"
       ],
       "bestFor": "Vendre ou gérer des inscriptions à des événements simplement.",
+      "keyFeatures": [
+        "Billetterie en ligne personnalisable",
+        "Contrôle d’accès et cashless",
+        "CRM pour mieux connaître son public"
+      ],
+      "idealFor": [
+        "Organisateurs d’événements",
+        "Associations et lieux culturels",
+        "Structures qui veulent une billetterie simple à lancer"
+      ],
       "pricingHint": "Payant",
+      "sources": [
+        "https://www.billetweb.fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -2584,6 +3708,22 @@
       ],
       "bestFor": "Structurer le suivi commercial et marketing d’une activité de services ou SaaS.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "CRM",
+        "Marketing",
+        "Ventes",
+        "Service client",
+        "Suivi des contacts et pipeline"
+      ],
+      "idealFor": [
+        "Structures qui veulent un socle CRM assez large",
+        "Equipes qui combinent marketing, ventes et suivi client",
+        "Usages transverses de croissance et relation client"
+      ],
+      "sources": [
+        "https://www.hubspot.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -2605,6 +3745,22 @@
       ],
       "bestFor": "Éviter les allers-retours pour caler appels, rendez-vous et entretiens.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Liens de prise de rendez-vous",
+        "Synchronisation avec les agendas",
+        "Rappels automatiques",
+        "Workflows de planification",
+        "Pages de reservation partageables"
+      ],
+      "idealFor": [
+        "Equipes qui passent beaucoup de temps a caler des rendez-vous",
+        "Structures avec appels decouverte, demos ou entretiens",
+        "Usages transverses de planification client et interne"
+      ],
+      "sources": [
+        "https://calendly.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -2626,6 +3782,24 @@
       ],
       "bestFor": "Créer des formulaires soignés pour qualifier demandes et collecter des informations.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Formulaires conversationnels adaptes a chaque repondant",
+        "Creation de formulaires avec IA",
+        "Analytics avances et analyse des abandons",
+        "Paiements, prise de rendez-vous et signatures dans le formulaire",
+        "Automatisations de suivi et segmentation"
+      ],
+      "idealFor": [
+        "Equipes qui veulent une experience plus premium cote repondant",
+        "Structures qui cherchent a mieux qualifier des leads",
+        "Usages transverses de collecte, feedback et conversion"
+      ],
+      "pricingNoteVerified": "La page officielle Typeform Pricing affiche un plan Basic a 29 USD par mois, ou 25 USD par mois avec engagement annuel.",
+      "sources": [
+        "https://www.typeform.com/",
+        "https://www.typeform.com/pricing"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -2952,6 +4126,20 @@
       ],
       "bestFor": "Structurer la gestion quotidienne d’un cabinet d’avocat.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Gestion des dossiers",
+        "Facturation",
+        "Pilotage du cabinet"
+      ],
+      "idealFor": [
+        "Cabinets d'avocats qui veulent un logiciel de gestion eprouve",
+        "Equipes qui veulent reduire les taches a faible valeur ajoutee",
+        "Structures qui veulent mieux organiser leur quotidien"
+      ],
+      "sources": [
+        "https://www.secib.fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -2990,6 +4178,20 @@
       ],
       "bestFor": "Piloter les dossiers et la production d’un cabinet moderne.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Gestion des dossiers",
+        "IA juridique",
+        "Facturation"
+      ],
+      "idealFor": [
+        "Cabinets d'avocats qui veulent un logiciel tout-en-un",
+        "Equipes qui veulent gagner du temps sur leur production",
+        "Structures qui cherchent plus de productivite sans perdre la maitrise des donnees"
+      ],
+      "sources": [
+        "https://www.jarvis-legal.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -3299,6 +4501,22 @@
       ],
       "bestFor": "Construire un média ou une newsletter propriétaire.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Publication",
+        "Site editorial",
+        "Newsletter",
+        "Abonnements",
+        "Monetisation"
+      ],
+      "idealFor": [
+        "Equipes qui veulent posseder leur media et leur audience",
+        "Structures qui publient regulierement du contenu editorial",
+        "Usages de newsletter et publication proprietaire"
+      ],
+      "sources": [
+        "https://ghost.org/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -3318,6 +4536,22 @@
       ],
       "bestFor": "Lancer rapidement une newsletter ou publication payante.",
       "pricingHint": "Commission",
+      "keyFeatures": [
+        "Newsletter",
+        "Publication",
+        "Abonnements",
+        "Monetisation",
+        "Audience"
+      ],
+      "idealFor": [
+        "Createurs ou medias qui veulent aller vite",
+        "Structures qui veulent tester une offre newsletter payante",
+        "Usages de publication simple avec monetisation integree"
+      ],
+      "sources": [
+        "https://substack.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -3337,6 +4571,22 @@
       ],
       "bestFor": "Faire grandir une newsletter avec analytics et outils de croissance.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Newsletter",
+        "Audience",
+        "Analytics",
+        "Outils de croissance",
+        "Monetisation"
+      ],
+      "idealFor": [
+        "Equipes qui veulent faire grandir une newsletter",
+        "Structures qui cherchent plus d'outils de croissance qu'une simple plateforme email",
+        "Usages de publication et developpement d'audience"
+      ],
+      "sources": [
+        "https://www.beehiiv.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -3356,6 +4606,22 @@
       ],
       "bestFor": "Produire plus vite podcasts, interviews et vidéos courtes.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Montage audio et video",
+        "Edition basee sur le texte",
+        "Transcription",
+        "Podcasts et interviews",
+        "Clips et contenus courts"
+      ],
+      "idealFor": [
+        "Equipes qui produisent podcasts ou interviews",
+        "Structures qui veulent accelerer le montage de contenu",
+        "Usages de production audio-video avec workflow simple"
+      ],
+      "sources": [
+        "https://www.descript.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -3375,6 +4641,22 @@
       ],
       "bestFor": "Créer rapidement des vidéos verticales et contenus sociaux.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Montage video",
+        "Formats verticaux",
+        "Templates",
+        "Effets et sous-titres",
+        "Contenus sociaux"
+      ],
+      "idealFor": [
+        "Equipes qui publient des contenus video courts",
+        "Structures qui veulent aller vite sur les reseaux sociaux",
+        "Usages de creation video simple et repetitive"
+      ],
+      "sources": [
+        "https://www.capcut.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -3512,6 +4794,22 @@
       ],
       "bestFor": "Structurer le suivi des candidatures et le site carrière.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "ATS",
+        "Site carriere",
+        "Suivi des candidatures",
+        "Pipeline de recrutement",
+        "Marque employeur"
+      ],
+      "idealFor": [
+        "Equipes qui veulent lier recrutement et image employeur",
+        "Structures qui publient regulierement des offres",
+        "Recrutements ou l'experience candidat compte vraiment"
+      ],
+      "sources": [
+        "https://www.teamtailor.com/fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -3531,6 +4829,22 @@
       ],
       "bestFor": "Centraliser les offres et candidatures d’une équipe recrutement.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Publication des offres",
+        "Centralisation des candidatures",
+        "Suivi des recrutements",
+        "ATS",
+        "Gestion collaborative du recrutement"
+      ],
+      "idealFor": [
+        "Equipes RH qui veulent centraliser offres et candidatures",
+        "Structures qui recrutent sur plusieurs postes",
+        "Recrutements ou il faut mieux repartir le travail entre RH et managers"
+      ],
+      "sources": [
+        "https://www.flatchr.io/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -3612,6 +4926,22 @@
       ],
       "bestFor": "Structurer le dealflow et les relations d’investissement.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "CRM relationnel",
+        "Dealflow",
+        "Suivi des opportunites",
+        "Reseau et relations",
+        "Collaboration equipe"
+      ],
+      "idealFor": [
+        "Equipes d'investissement ou de business development",
+        "Structures qui pilotent un reseau relationnel important",
+        "Usages de suivi d'opportunites a forte composante relationnelle"
+      ],
+      "sources": [
+        "https://www.affinity.co/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -3633,6 +4963,22 @@
       ],
       "bestFor": "Créer un CRM sur mesure pour opportunités et relations clés.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "CRM flexible",
+        "Pipelines",
+        "Relations",
+        "Workflows",
+        "Base d'opportunites"
+      ],
+      "idealFor": [
+        "Equipes qui veulent modeler un CRM plus librement",
+        "Structures avec processus commerciaux ou relationnels evolutifs",
+        "Usages de pipeline et de suivi relationnel sur mesure"
+      ],
+      "sources": [
+        "https://attio.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -3652,6 +4998,20 @@
       ],
       "bestFor": "Structurer un cabinet de courtage assurance avec conformité intégrée.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Gestion client et contrats",
+        "Automatisation des relances et taches",
+        "Facturation et suivi des encaissements"
+      ],
+      "idealFor": [
+        "Courtiers en assurance qui veulent tout centraliser dans un seul CRM",
+        "Cabinets qui gerent devis, conformite et sinistres au quotidien",
+        "Equipes qui veulent reduire la saisie manuelle et les oublis"
+      ],
+      "sources": [
+        "https://courtigo.fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -3671,6 +5031,20 @@
       ],
       "bestFor": "Gérer portefeuille, contrats et relances d’un cabinet assurance.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Suivi des clients, contrats et sinistres",
+        "Tableau de bord d'activite",
+        "Suivi de la conformite ACPR"
+      ],
+      "idealFor": [
+        "Courtiers et agents qui veulent un CRM metier plus simple a piloter",
+        "Cabinets qui ont besoin de mieux suivre activite et conformite",
+        "Equipes qui veulent une vision plus claire de leurs assures"
+      ],
+      "sources": [
+        "https://www.maia-logiciels.fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -3691,6 +5065,20 @@
       ],
       "bestFor": "Gérer inscriptions, présences, familles et facturation d’une crèche.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Inscriptions et pre-inscriptions",
+        "Pointage des presences",
+        "Facturation et suivi financier"
+      ],
+      "idealFor": [
+        "Creches et micro-creches qui veulent centraliser l'administratif",
+        "Structures qui doivent suivre familles, plannings et taux d'occupation",
+        "Equipes qui ont besoin d'un cadre PSU et PAJE mieux gere"
+      ],
+      "sources": [
+        "https://www.aiga.fr/logiciel-gestion-creches-relais-petite-enfance-inoe/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -3711,6 +5099,20 @@
       ],
       "bestFor": "Améliorer les transmissions et la communication avec les familles.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Communication avec les parents",
+        "Transmissions et pointage",
+        "Gestion des plannings et facturation"
+      ],
+      "idealFor": [
+        "Creches qui veulent un meilleur lien quotidien avec les parents",
+        "Equipes qui veulent digitaliser arrivees, departs et transmissions",
+        "Structures qui cherchent a gagner du temps sur l'organisation interne"
+      ],
+      "sources": [
+        "https://kidizz.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -3878,17 +5280,31 @@
       "sectors": [
         "Hébergement & tourisme"
       ],
-      "description": "Plateforme de réservation et distribution pour activités, excursions et offres touristiques.",
-      "tags": [
-        "Tourisme",
-        "Réservation",
-        "Distribution"
-      ],
-      "bestFor": "Gérer réservations et distribution d’activités touristiques.",
-      "pricingHint": "Payant",
-      "status": "active",
-      "scope": "business"
-    },
+    "description": "Plateforme de réservation et distribution pour activités, excursions et offres touristiques.",
+    "tags": [
+      "Tourisme",
+      "Réservation",
+      "Distribution"
+    ],
+    "bestFor": "Gérer réservations et distribution d’activités touristiques.",
+    "keyFeatures": [
+      "Réservation en ligne pour activités et excursions",
+      "Channel manager pour synchroniser les ventes sur plusieurs plateformes",
+      "Gestion des disponibilités, ressources et communications clients"
+    ],
+    "idealFor": [
+      "Tours opérateurs",
+      "Prestataires d’activités et d’excursions",
+      "Structures qui veulent vendre en direct et via des revendeurs"
+    ],
+    "pricingHint": "Payant",
+    "sources": [
+      "https://www.bokun.io/"
+    ],
+    "lastReviewedAt": "2026-07-02",
+    "status": "active",
+    "scope": "business"
+  },
     {
       "slug": "rezdy",
       "name": "Rezdy",
@@ -3897,17 +5313,31 @@
       "sectors": [
         "Hébergement & tourisme"
       ],
-      "description": "Logiciel de réservation pour tours, activités, expériences et opérateurs touristiques.",
-      "tags": [
-        "Tourisme",
-        "Réservation",
-        "Activités"
-      ],
-      "bestFor": "Centraliser réservations et disponibilités d’activités touristiques.",
-      "pricingHint": "Payant",
-      "status": "active",
-      "scope": "business"
-    },
+    "description": "Logiciel de réservation pour tours, activités, expériences et opérateurs touristiques.",
+    "tags": [
+      "Tourisme",
+      "Réservation",
+      "Activités"
+    ],
+    "bestFor": "Centraliser réservations et disponibilités d’activités touristiques.",
+    "keyFeatures": [
+      "Logiciel de réservation pour tours et activités",
+      "Channel manager et distribution via partenaires",
+      "Outils de communication, reporting et site de réservation"
+    ],
+    "idealFor": [
+      "Opérateurs de tours et d’activités",
+      "Prestataires qui vendent sur plusieurs canaux",
+      "Equipes qui veulent centraliser ventes et planning"
+    ],
+    "pricingHint": "Payant",
+    "sources": [
+      "https://www.rezdy.com/"
+    ],
+    "lastReviewedAt": "2026-07-02",
+    "status": "active",
+    "scope": "business"
+  },
     {
       "slug": "regiondo",
       "name": "Regiondo",
@@ -3916,17 +5346,31 @@
       "sectors": [
         "Hébergement & tourisme"
       ],
-      "description": "Système de réservation pour activités de loisirs, visites, expériences et tourisme.",
-      "tags": [
-        "Tourisme",
-        "Booking",
-        "Loisirs"
-      ],
-      "bestFor": "Vendre et organiser des activités touristiques ou loisirs.",
-      "pricingHint": "Payant",
-      "status": "active",
-      "scope": "business"
-    },
+    "description": "Système de réservation pour activités de loisirs, visites, expériences et tourisme.",
+    "tags": [
+      "Tourisme",
+      "Booking",
+      "Loisirs"
+    ],
+    "bestFor": "Vendre et organiser des activités touristiques ou loisirs.",
+    "keyFeatures": [
+      "Système de réservation tout-en-un pour tours et activités",
+      "Vente en ligne de billets et gestion des réservations",
+      "Site web, marketing et pilotage des canaux de vente"
+    ],
+    "idealFor": [
+      "Activités de loisirs",
+      "Tours et visites",
+      "Attractions et destinations qui veulent vendre en ligne"
+    ],
+    "pricingHint": "Payant",
+    "sources": [
+      "https://pro.regiondo.com/"
+    ],
+    "lastReviewedAt": "2026-07-02",
+    "status": "active",
+    "scope": "business"
+  },
     {
       "slug": "covadis",
       "name": "COVADIS",
@@ -4488,6 +5932,22 @@
       ],
       "bestFor": "Structurer les données produits pour e-commerce, marketplaces et retail omnicanal.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "PIM",
+        "Donnees produits",
+        "Catalogues",
+        "Omnicanal",
+        "Enrichissement produit"
+      ],
+      "idealFor": [
+        "Equipes avec beaucoup de references produits",
+        "Structures qui diffusent sur plusieurs canaux",
+        "Usages de gouvernance et qualite de donnees produit"
+      ],
+      "sources": [
+        "https://www.akeneo.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -4507,6 +5967,20 @@
       ],
       "bestFor": "Connecter chantier et bureau avec plans, tâches et suivi terrain en temps réel.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Suivi des taches",
+        "Mise a jour des plans",
+        "Suivi de chantier"
+      ],
+      "idealFor": [
+        "Equipes terrain qui veulent mieux suivre l'execution chantier",
+        "Structures qui veulent relier le chantier et le bureau",
+        "Operations BTP qui veulent limiter les reprises"
+      ],
+      "sources": [
+        "https://www.fieldwire.com/fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -4527,6 +6001,20 @@
       ],
       "bestFor": "Produire comptes rendus, réserves et suivi chantier depuis le terrain.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Suivi de chantier",
+        "Comptes rendus",
+        "Gestion des reserves"
+      ],
+      "idealFor": [
+        "Architectes et maitres d'oeuvre qui travaillent souvent sur site",
+        "Equipes qui veulent gagner du temps sur les comptes rendus",
+        "Structures qui suivent photos, reserves et intervenants"
+      ],
+      "sources": [
+        "https://www.archireport.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -4548,6 +6036,20 @@
       ],
       "bestFor": "Remplacer les formulaires papier par des rapports terrain structurés.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Formulaires terrain sur mesure",
+        "Collecte de donnees",
+        "Automatisation des rapports"
+      ],
+      "idealFor": [
+        "Equipes terrain qui veulent digitaliser leurs releves",
+        "Structures qui remplacent encore des formulaires papier",
+        "Usages d'intervention, controle ou chantier avec besoins de traces"
+      ],
+      "sources": [
+        "https://www.kizeo-forms.com/fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -4607,6 +6109,20 @@
       ],
       "bestFor": "Piloter planning, heures, photos et suivi terrain d’une équipe paysage.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Planning des equipes",
+        "Pointage mobile des heures",
+        "Suivi des chantiers et de la rentabilite"
+      ],
+      "idealFor": [
+        "Paysagistes qui veulent sortir d'Excel pour le suivi quotidien",
+        "Equipes terrain qui doivent pointer et remonter des infos chantier",
+        "Structures qui veulent mieux suivre marges et reste a facturer"
+      ],
+      "sources": [
+        "https://paysag.io/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -4626,6 +6142,20 @@
       ],
       "bestFor": "Piloter planning, intervenants, bénéficiaires et conformité SAP.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Planning des interventions",
+        "Facturation et paie",
+        "Telegestion terrain"
+      ],
+      "idealFor": [
+        "Structures d'aide a domicile qui veulent tout piloter dans un seul outil",
+        "Equipes qui gerent intervenants, beneficiaires et remplacements",
+        "Organisations SAP qui ont besoin de back-office et mobile terrain"
+      ],
+      "sources": [
+        "https://www.ximi.fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -4645,6 +6175,20 @@
       ],
       "bestFor": "Structurer interventions, planning et pilotage d’une structure SAP.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Planning optimise",
+        "CRM avec devis",
+        "Tableaux de bord d'activite"
+      ],
+      "idealFor": [
+        "Structures SAP qui veulent mieux organiser les interventions",
+        "Equipes qui veulent suivre prospection, devis et qualite de service",
+        "Directions qui ont besoin d'un pilotage plus lisible de l'activite"
+      ],
+      "sources": [
+        "https://arche-mc2.fr/cibles/sap/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -4664,6 +6208,20 @@
       ],
       "bestFor": "Gérer agents, plannings, rondes et rapports de sécurité privée.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Pointage QR code",
+        "Planning centralise des agents",
+        "Tracabilite des rondes"
+      ],
+      "idealFor": [
+        "Agences de securite privee qui veulent sortir du papier",
+        "Equipes qui doivent suivre presences, rondes et affectations",
+        "Structures qui ont besoin de rapports exportables pour leurs donneurs d'ordre"
+      ],
+      "sources": [
+        "https://www.securigest.fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -4683,25 +6241,20 @@
       ],
       "bestFor": "Planifier agents, missions, rondes et prises de poste sur mobile.",
       "pricingHint": "Payant",
-      "status": "active",
-      "scope": "business"
-    },
-    {
-      "slug": "julie",
-      "name": "Julie",
-      "url": "https://www.julie.fr/",
-      "category": "Outils métier",
-      "sectors": [
-        "Santé & bien-être"
+      "keyFeatures": [
+        "Planning drag and drop",
+        "Application mobile agent",
+        "Facturation a partir des pointages"
       ],
-      "description": "Logiciel de gestion pour cabinets dentaires : agenda, dossiers, soins, imagerie et facturation.",
-      "tags": [
-        "Dentiste",
-        "Agenda",
-        "Dossier patient"
+      "idealFor": [
+        "Societes de securite qui remplacent Excel, WhatsApp et les emails disperses",
+        "Equipes qui veulent mieux gerer conformite legale et prises de poste",
+        "Structures avec terrain fort qui ont besoin d'une app agent simple"
       ],
-      "bestFor": "Gérer l’activité quotidienne d’un cabinet dentaire.",
-      "pricingHint": "Payant",
+      "sources": [
+        "https://banetteone.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -4721,6 +6274,20 @@
       ],
       "bestFor": "Structurer les dossiers patients et le pilotage d’un cabinet dentaire.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Agenda multi-praticiens",
+        "Courriers relies au dossier patient",
+        "Tracabilite de la sterilisation"
+      ],
+      "idealFor": [
+        "Cabinets dentaires qui veulent mieux organiser rendez-vous et suivi patient",
+        "Equipes qui produisent souvent devis, comptes-rendus et courriers",
+        "Structures qui veulent lier agenda, radios et tracabilite dans un seul outil"
+      ],
+      "sources": [
+        "https://www.logosw.net/logiciel-dentaire/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -4740,6 +6307,20 @@
       ],
       "bestFor": "Gérer dossiers, soins et activité dentaire avec une solution cloud.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Gestion cloud du cabinet",
+        "Travail a distance",
+        "Tiers-payant et rapprochement bancaire"
+      ],
+      "idealFor": [
+        "Cabinets dentaires qui veulent une solution plus simple a maintenir",
+        "Structures qui gerent activite, planning et dossiers a distance",
+        "Equipes qui veulent gagner du temps sur l'administratif et les rejets"
+      ],
+      "sources": [
+        "https://www.visiodent.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -4759,6 +6340,20 @@
       ],
       "bestFor": "Gérer facturation, cotations et obligations d’une infirmière libérale.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Teletransmission",
+        "Gestion comptable",
+        "Agenda synchronise"
+      ],
+      "idealFor": [
+        "IDEL qui veulent reduire la paperasse au quotidien",
+        "Praticiens qui doivent mieux suivre facturation et rejets",
+        "Activites liberales qui veulent un outil complet avec support metier"
+      ],
+      "sources": [
+        "https://www.vega-logiciel.fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -4778,6 +6373,20 @@
       ],
       "bestFor": "Gérer patientèle et facturation IDEL depuis le terrain.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Facturation en mobilite",
+        "Dossier de soins",
+        "Cotation intelligente"
+      ],
+      "idealFor": [
+        "IDEL qui veulent tout gerer pendant leurs tournees",
+        "Praticiens qui cherchent plus de mobilite meme hors connexion",
+        "Cabinets qui veulent mieux suivre rejets, impayes et administratif"
+      ],
+      "sources": [
+        "https://www.albus.fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -4797,6 +6406,20 @@
       ],
       "bestFor": "Simplifier cotations, télétransmission et suivi quotidien IDEL.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Facturation et teletransmission en mobilite",
+        "Coordination et suivi patient",
+        "Gestion des impayes"
+      ],
+      "idealFor": [
+        "IDEL qui veulent gagner du temps en fin de tournee",
+        "Praticiens qui veulent mieux lier soins, rendez-vous et facturation",
+        "Activites liberales qui ont besoin d'un accompagnement metier fort"
+      ],
+      "sources": [
+        "https://www.agatheyou.fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -5031,6 +6654,22 @@
       ],
       "bestFor": "Structurer bugs, roadmap et exécution produit d’une équipe tech.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Tickets",
+        "Roadmaps",
+        "Cycles",
+        "Suivi des bugs",
+        "Collaboration produit et engineering"
+      ],
+      "idealFor": [
+        "Equipes produit et dev",
+        "Structures SaaS qui pilotent roadmap et execution",
+        "Organisations qui veulent un outil plus net et plus rapide pour le delivery"
+      ],
+      "sources": [
+        "https://linear.app/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -5069,6 +6708,22 @@
       ],
       "bestFor": "Comprendre l’usage produit et piloter l’amélioration d’un SaaS.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Analytics produit",
+        "Feature flags",
+        "Session replay",
+        "Experimentation",
+        "Suivi produit"
+      ],
+      "idealFor": [
+        "Equipes SaaS et produit",
+        "Structures qui veulent mieux comprendre l'usage reel du produit",
+        "Usages d'analyse produit et d'amelioration continue"
+      ],
+      "sources": [
+        "https://posthog.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -5090,6 +6745,22 @@
       ],
       "bestFor": "Créer sites éditoriaux, vitrines ou contenus administrables.",
       "pricingHint": "Open source",
+      "keyFeatures": [
+        "CMS",
+        "Sites vitrines et editoriaux",
+        "Themes et extensions",
+        "Gestion de contenu",
+        "Administration"
+      ],
+      "idealFor": [
+        "Equipes qui veulent garder la main sur le contenu",
+        "Structures qui ont besoin d'un socle flexible et extensible",
+        "Usages de site, blog ou contenu administrable"
+      ],
+      "sources": [
+        "https://wordpress.org/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -5110,6 +6781,22 @@
       ],
       "bestFor": "Produire plus vite des sites WordPress pour clients.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Builder WordPress",
+        "Pages et templates",
+        "Creation visuelle",
+        "Landing pages",
+        "Production rapide"
+      ],
+      "idealFor": [
+        "Equipes qui livrent des sites WordPress plus vite",
+        "Structures qui veulent accelerer la production de pages",
+        "Usages de creation visuelle sur WordPress"
+      ],
+      "sources": [
+        "https://elementor.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -5130,6 +6817,22 @@
       ],
       "bestFor": "Développer une audience créateur et monétiser via email.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Email marketing",
+        "Newsletter",
+        "Automatisations",
+        "Produits numeriques",
+        "Sponsoring"
+      ],
+      "idealFor": [
+        "Createurs qui veulent monetiser une audience email",
+        "Structures qui vendent contenu ou produits numeriques",
+        "Usages de newsletter et croissance createur"
+      ],
+      "sources": [
+        "https://kit.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -5149,6 +6852,22 @@
       ],
       "bestFor": "Enregistrer podcasts et interviews vidéo avec bonne qualité à distance.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Enregistrement a distance",
+        "Qualite audio et video",
+        "Podcasts et interviews",
+        "Transcription",
+        "Edition et clips"
+      ],
+      "idealFor": [
+        "Equipes qui enregistrent a distance",
+        "Structures qui produisent podcasts ou interviews video",
+        "Usages de captation et reutilisation de contenu conversationnel"
+      ],
+      "sources": [
+        "https://riverside.fm/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -5168,6 +6887,22 @@
       ],
       "bestFor": "Accélérer production vidéo, effets et contenus créatifs avec IA.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Generation video",
+        "Edition video",
+        "Effets visuels",
+        "Outils IA creatifs",
+        "Workflows media"
+      ],
+      "idealFor": [
+        "Equipes qui veulent accelerer la production video",
+        "Structures qui explorent des workflows creatifs avec IA",
+        "Usages de creation visuelle et montage augmente"
+      ],
+      "sources": [
+        "https://runwayml.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -5208,6 +6943,22 @@
       ],
       "bestFor": "Construire une plateforme commerce ou marketplace technique sur mesure.",
       "pricingHint": "Open source",
+      "keyFeatures": [
+        "Commerce open source",
+        "Architecture sur mesure",
+        "API",
+        "Marketplace ou boutique complexe",
+        "Back-end e-commerce"
+      ],
+      "idealFor": [
+        "Equipes techniques qui veulent construire un stack commerce sur mesure",
+        "Structures avec besoins e-commerce plus complexes",
+        "Usages de plateforme commerce headless ou composee"
+      ],
+      "sources": [
+        "https://medusajs.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -5247,6 +6998,20 @@
       ],
       "bestFor": "Fluidifier les candidatures locataires et sécuriser les dossiers de location.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Dossier locataire en ligne",
+        "Assurance loyers impayes",
+        "Plateforme securisee"
+      ],
+      "idealFor": [
+        "Professionnels de l'immobilier qui traitent beaucoup de dossiers locataires",
+        "Proprietaires qui veulent mieux securiser la mise en location",
+        "Equipes qui veulent simplifier les echanges location"
+      ],
+      "sources": [
+        "https://www.zelok.fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -5266,6 +7031,20 @@
       ],
       "bestFor": "Suivre loyers, documents et obligations locatives sans tableur dispersé.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Gestion locative en ligne",
+        "Suivi des loyers",
+        "Gestion des documents locatifs"
+      ],
+      "idealFor": [
+        "Particuliers bailleurs qui veulent un outil simple",
+        "Structures qui suivent loyers et quittances au meme endroit",
+        "Usages de gestion locative legere sans tableur disperse"
+      ],
+      "sources": [
+        "https://www.rentila.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -5285,6 +7064,22 @@
       ],
       "bestFor": "Moderniser la gestion opérationnelle d’un hôtel ou hébergement indépendant.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "PMS cloud",
+        "Operations",
+        "Reservations",
+        "Paiements",
+        "Experience client"
+      ],
+      "idealFor": [
+        "Hotels qui veulent moderniser leur exploitation",
+        "Equipes qui cherchent un PMS centre sur le cloud",
+        "Usages hoteliers avec besoin d'automatisation operationnelle"
+      ],
+      "sources": [
+        "https://www.mews.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -5304,6 +7099,22 @@
       ],
       "bestFor": "Centraliser réservations, distribution et paiements d’un hébergement indépendant.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "PMS",
+        "Channel manager",
+        "Moteur de reservation",
+        "Paiements",
+        "Logiciel hotelier tout-en-un"
+      ],
+      "idealFor": [
+        "Hebergements independants qui veulent un outil tout-en-un",
+        "Equipes qui gerent a la fois reservation et distribution",
+        "Usages hoteliers avec besoin de centralisation commerciale"
+      ],
+      "sources": [
+        "https://roomraccoon.fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -5323,6 +7134,22 @@
       ],
       "bestFor": "Optimiser distribution, réservations directes et visibilité d’un hôtel.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Distribution hoteliere",
+        "CRS",
+        "Channel manager",
+        "Moteur de reservation",
+        "Marketing hotelier"
+      ],
+      "idealFor": [
+        "Hotels qui veulent mieux piloter distribution et reservation directe",
+        "Equipes qui travaillent la visibilite et le revenu direct",
+        "Usages hoteliers centres sur la distribution"
+      ],
+      "sources": [
+        "https://www.d-edge.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -5342,6 +7169,20 @@
       ],
       "bestFor": "Planifier, optimiser et suivre les tournées de livraison ou d’intervention.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Optimisation de tournees",
+        "Gestion des livraisons et interventions",
+        "Suivi terrain"
+      ],
+      "idealFor": [
+        "Entreprises qui organisent des tournees du dernier kilometre",
+        "Equipes qui veulent mieux planifier leurs passages terrain",
+        "Structures qui cherchent a gagner du temps au quotidien"
+      ],
+      "sources": [
+        "https://antsroute.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -5361,6 +7202,20 @@
       ],
       "bestFor": "Construire des plans de tournées fiables avec contraintes, secteurs et équipes.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Optimisation de tournees",
+        "Reduction des couts",
+        "Gain de temps au quotidien"
+      ],
+      "idealFor": [
+        "Equipes qui planifient des visites, livraisons ou interventions",
+        "Structures qui veulent des tournees plus fiables",
+        "Operations terrain qui cherchent plus de souplesse"
+      ],
+      "sources": [
+        "https://www.nomadia.com/tarifs/tarifs-toursolver/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -5399,6 +7254,22 @@
       ],
       "bestFor": "Structurer les recrutements PME, pipelines candidats et collaboration recruteur-manager.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "ATS francais",
+        "Centralisation des candidatures",
+        "Multidiffusion des offres",
+        "Pipeline candidat",
+        "Collaboration recruteur-manager"
+      ],
+      "idealFor": [
+        "PME qui veulent professionnaliser leurs recrutements",
+        "Equipes qui veulent multidiffuser et suivre en un seul endroit",
+        "Recrutements ou la coordination recruteur-manager est importante"
+      ],
+      "sources": [
+        "https://taleez.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -5418,6 +7289,22 @@
       ],
       "bestFor": "Gérer des recrutements récurrents avec vivier, scoring et suivi candidat.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Gestion des offres",
+        "Vivier candidats",
+        "Multidiffusion",
+        "Suivi candidat",
+        "Collaboration RH"
+      ],
+      "idealFor": [
+        "Equipes qui recrutent de facon recurrente",
+        "Structures qui veulent garder un vivier actif",
+        "Recrutements ou le suivi et la qualification des candidats comptent beaucoup"
+      ],
+      "sources": [
+        "https://beetween.fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -5494,7 +7381,21 @@
         "Automation"
       ],
       "bestFor": "Gérer événements professionnels, invitations, inscriptions et engagement participant.",
+      "keyFeatures": [
+        "Plateforme all-in-one d’event automation",
+        "Inscription et billetterie événementielle",
+        "Site et application événementiels pour formats physiques, digitaux ou hybrides"
+      ],
+      "idealFor": [
+        "Evénements professionnels",
+        "Agences événementielles",
+        "Equipes qui gèrent des formats hybrides ou digitaux"
+      ],
       "pricingHint": "Payant",
+      "sources": [
+        "https://www.eventmaker.com/fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -5745,6 +7646,22 @@
       ],
       "bestFor": "Créer rapidement un site vitrine ou une petite boutique sans équipe technique.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Creation de site",
+        "Templates",
+        "Boutique simple",
+        "Edition visuelle",
+        "Publication rapide"
+      ],
+      "idealFor": [
+        "Petites structures sans equipe technique",
+        "Equipes qui veulent lancer vite un site ou une petite boutique",
+        "Usages de presence web simple avec peu de maintenance"
+      ],
+      "sources": [
+        "https://www.wix.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -5766,6 +7683,22 @@
       ],
       "bestFor": "Créer un site élégant pour une activité de service, créative ou une petite boutique.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Creation de site",
+        "Portfolio et pages vitrines",
+        "Blog",
+        "Petite boutique",
+        "Templates design"
+      ],
+      "idealFor": [
+        "Activites de service, creatifs et independants",
+        "Equipes qui veulent un rendu plus premium sans dev lourd",
+        "Usages de site elegant avec boutique legere"
+      ],
+      "sources": [
+        "https://www.squarespace.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -5785,6 +7718,22 @@
       ],
       "bestFor": "Structurer une boutique e-commerce plus avancée avec besoins de catalogue et intégrations.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Boutique e-commerce",
+        "Catalogue avance",
+        "Ventes multicanales",
+        "Integrations",
+        "Croissance internationale"
+      ],
+      "idealFor": [
+        "Equipes e-commerce avec besoins plus avances",
+        "Structures qui veulent gerer un catalogue plus riche",
+        "Usages de boutique multicanale et scalable"
+      ],
+      "sources": [
+        "https://www.bigcommerce.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -5805,6 +7754,22 @@
       ],
       "bestFor": "Ajouter une boutique simple à un site ou une activité locale sans refonte lourde.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Boutique simple",
+        "Ajout a un site existant",
+        "Multicanal",
+        "Produits et commandes",
+        "E-commerce leger"
+      ],
+      "idealFor": [
+        "Activites locales ou petites equipes",
+        "Structures qui veulent vendre sans refaire tout le site",
+        "Usages e-commerce leger et progressif"
+      ],
+      "sources": [
+        "https://www.ecwid.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -5836,17 +7801,32 @@
         "Hébergement & tourisme",
         "Immobilier"
       ],
-      "description": "Plateforme de location courte durée pour publier des logements, gérer demandes et réservations voyageurs.",
-      "tags": [
-        "Location courte durée",
-        "Voyageurs",
-        "Réservations"
-      ],
-      "bestFor": "Commercialiser des logements courte durée et gérer la demande voyageur.",
-      "pricingHint": "Commission",
-      "status": "active",
-      "scope": "business"
-    },
+    "description": "Plateforme de location courte durée pour publier des logements, gérer demandes et réservations voyageurs.",
+    "tags": [
+      "Location courte durée",
+      "Voyageurs",
+      "Réservations"
+    ],
+    "bestFor": "Commercialiser des logements courte durée et gérer la demande voyageur.",
+    "keyFeatures": [
+      "Publication d’annonce et prise de réservation",
+      "Messagerie et gestion des demandes voyageurs",
+      "Protections hôte et options de co-hôte"
+    ],
+    "idealFor": [
+      "Hôtes en location courte durée",
+      "Propriétaires qui veulent tester la location saisonnière",
+      "Structures qui gèrent un ou plusieurs logements"
+    ],
+    "pricingHint": "Commission",
+    "pricingNoteVerified": "Création d’annonce gratuite; Airbnb prélève généralement des frais de service après réservation.",
+    "sources": [
+      "https://www.airbnb.com/host/homes"
+    ],
+    "lastReviewedAt": "2026-07-02",
+    "status": "active",
+    "scope": "business"
+  },
     {
       "slug": "deliveroo",
       "name": "Deliveroo",
@@ -5896,17 +7876,32 @@
         "Associations & événements",
         "Services & conseil"
       ],
-      "description": "Plateforme de création, promotion, billetterie et gestion d’événements en ligne ou physiques.",
-      "tags": [
-        "Événementiel",
-        "Billetterie",
-        "Inscription"
-      ],
-      "bestFor": "Créer un événement public, gérer inscriptions et vendre des billets simplement.",
-      "pricingHint": "Freemium",
-      "status": "active",
-      "scope": "business"
-    },
+    "description": "Plateforme de création, promotion, billetterie et gestion d’événements en ligne ou physiques.",
+    "tags": [
+      "Événementiel",
+      "Billetterie",
+      "Inscription"
+    ],
+    "bestFor": "Créer un événement public, gérer inscriptions et vendre des billets simplement.",
+    "keyFeatures": [
+      "Création d’événements et billetterie en ligne",
+      "Paiement, check-in et gestion des participants",
+      "Outils marketing email et promotion"
+    ],
+    "idealFor": [
+      "Organisateurs d’événements",
+      "Associations et collectifs",
+      "Equipes qui veulent lancer une billetterie rapidement"
+    ],
+    "pricingHint": "Freemium",
+    "pricingNoteVerified": "Publication gratuite; frais de billetterie appliqués sur les billets payants.",
+    "sources": [
+      "https://www.eventbrite.com/organizer/pricing/"
+    ],
+    "lastReviewedAt": "2026-07-02",
+    "status": "active",
+    "scope": "business"
+  },
     {
       "slug": "asana",
       "name": "Asana",
@@ -5925,6 +7920,22 @@
       ],
       "bestFor": "Piloter des projets clients ou internes avec responsabilités et délais visibles.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Projets et taches",
+        "Vues liste, calendrier et timeline",
+        "Objectifs et suivi d'avancement",
+        "Workflows et automatisations",
+        "Collaboration equipe"
+      ],
+      "idealFor": [
+        "Equipes qui veulent clarifier qui fait quoi et pour quand",
+        "Structures qui pilotent plusieurs projets en parallele",
+        "Usages transverses de gestion de projet et coordination"
+      ],
+      "sources": [
+        "https://asana.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -5946,6 +7957,22 @@
       ],
       "bestFor": "Mettre en place un suivi visuel simple sans complexité projet.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Tableaux kanban",
+        "Cartes et checklists",
+        "Vues calendrier et timeline",
+        "Automatisations",
+        "Collaboration equipe"
+      ],
+      "idealFor": [
+        "Equipes qui veulent un suivi visuel tres simple",
+        "Structures qui n'ont pas besoin d'un outil projet trop lourd",
+        "Usages transverses de coordination et suivi operationnel"
+      ],
+      "sources": [
+        "https://trello.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -5965,6 +7992,22 @@
       ],
       "bestFor": "Suivre bugs, tickets produit, sprints et roadmap d’une équipe tech.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Tickets et backlog",
+        "Sprints et boards agiles",
+        "Suivi des bugs",
+        "Roadmaps",
+        "Workflows personnalises"
+      ],
+      "idealFor": [
+        "Equipes produit et tech",
+        "Structures qui pilotent backlog, tickets et sprints",
+        "Organisations ou le suivi de delivery doit etre rigoureux"
+      ],
+      "sources": [
+        "https://www.atlassian.com/software/jira"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -5985,6 +8028,22 @@
       ],
       "bestFor": "Centraliser projets, tâches et documents quand l’équipe veut un outil tout-en-un.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Taches et projets",
+        "Documents",
+        "Objectifs",
+        "Automatisations",
+        "Vues multiples comme liste, board et calendrier"
+      ],
+      "idealFor": [
+        "Equipes qui veulent tout centraliser dans un seul outil",
+        "Structures qui gerent projets, documents et execution ensemble",
+        "Usages transverses de pilotage et productivite"
+      ],
+      "sources": [
+        "https://clickup.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -6005,6 +8064,22 @@
       ],
       "bestFor": "Coordonner une équipe avec canaux, notifications et intégrations métier.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Canaux de discussion",
+        "Messagerie d'equipe",
+        "Huddles et appels",
+        "Integrations avec d'autres outils",
+        "Recherche dans les conversations et fichiers"
+      ],
+      "idealFor": [
+        "Equipes qui veulent centraliser les echanges du quotidien",
+        "Structures qui utilisent deja plusieurs outils connectes",
+        "Usages transverses de communication et coordination rapide"
+      ],
+      "sources": [
+        "https://slack.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -6025,6 +8100,22 @@
       ],
       "bestFor": "Organiser réunions client, sessions de formation ou rendez-vous à distance.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Reunions video",
+        "Chat et collaboration",
+        "Webinars",
+        "Prise de notes par IA",
+        "Planification et salle de reunion"
+      ],
+      "idealFor": [
+        "Equipes qui font beaucoup de reunions a distance",
+        "Structures avec rendez-vous client, formations ou demos",
+        "Usages transverses de visio et coordination synchrone"
+      ],
+      "sources": [
+        "https://zoom.us/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -6067,6 +8158,22 @@
       ],
       "bestFor": "Permettre aux clients de réserver un créneau avec rappels et paiement si besoin.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Prise de rendez-vous en ligne",
+        "Synchronisation des disponibilites",
+        "Rappels automatiques",
+        "Formulaires avant rendez-vous",
+        "Paiements a la reservation"
+      ],
+      "idealFor": [
+        "Activites qui vendent du temps ou des rendez-vous",
+        "Structures qui veulent laisser les clients reserver seuls",
+        "Usages transverses de reservation avec rappels et encaissement"
+      ],
+      "sources": [
+        "https://www.squarespace.com/scheduling"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -6088,6 +8195,24 @@
       ],
       "bestFor": "Automatiser des flux métier avancés avec plus de contrôle technique.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Workflows et agents IA visibles sur canvas",
+        "Possibilite de meler interface visuelle et code",
+        "Toutes les integrations incluses",
+        "Option cloud ou self-hosted",
+        "Code JavaScript ou Python dans les workflows"
+      ],
+      "idealFor": [
+        "Equipes techniques ou operations avec besoins avances",
+        "Structures qui veulent plus de controle sur l'hebergement",
+        "Automatisations metier avec logique plus complexe"
+      ],
+      "pricingNoteVerified": "La page officielle n8n Pricing affiche une offre Starter a 20 EUR par mois avec engagement annuel.",
+      "sources": [
+        "https://n8n.io/",
+        "https://n8n.io/pricing/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -6110,6 +8235,24 @@
       ],
       "bestFor": "Lancer newsletters, campagnes email et séquences marketing simples.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Email marketing",
+        "SMS marketing",
+        "Marketing automations",
+        "Reporting et analytics",
+        "Plus de 300 integrations"
+      ],
+      "idealFor": [
+        "Petites structures qui lancent leur marketing CRM",
+        "Equipes qui veulent combiner email, SMS et automatisation",
+        "Usages transverses de newsletter, audience et campagnes"
+      ],
+      "pricingNoteVerified": "La page officielle Mailchimp Pricing indique qu'en dessous de 250 contacts, le plan Free est disponible, et que le plan Standard demarre a 20 USD par mois pour 12 mois.",
+      "sources": [
+        "https://mailchimp.com/",
+        "https://mailchimp.com/pricing/marketing/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -6131,6 +8274,24 @@
       ],
       "bestFor": "Ajouter un moyen de paiement reconnu pour vendre en ligne ou à l’international.",
       "pricingHint": "Commission",
+      "keyFeatures": [
+        "PayPal Checkout",
+        "Facturation",
+        "Liens de paiement",
+        "Traitement des paiements internationaux",
+        "Outils de reporting et protection des marchands"
+      ],
+      "idealFor": [
+        "Petites entreprises",
+        "Entrepreneurs individuels",
+        "Activités qui veulent accepter des paiements en ligne en France et à l'international"
+      ],
+      "pricingNoteVerified": "Sur la page de frais PayPal FR, certains paiements en ligne standards sont affichés à 2,9 % + 0,35 EUR par transaction.",
+      "sources": [
+        "https://www.paypal.com/fr/business",
+        "https://www.paypal.com/fr/business/fees"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -6194,6 +8355,22 @@
       ],
       "bestFor": "Gérer paie et RH d’une équipe sans complexité excessive.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Paie",
+        "Gestion des conges et absences",
+        "Notes de frais",
+        "Entretiens et suivi RH",
+        "Declarations sociales et pilotage RH"
+      ],
+      "idealFor": [
+        "PME qui veulent gerer paie et RH dans un meme outil",
+        "Equipes qui veulent reduire la charge administrative RH",
+        "Structures qui cherchent un outil transverse pour l'equipe"
+      ],
+      "sources": [
+        "https://payfit.com/fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -6214,6 +8391,22 @@
       ],
       "bestFor": "Structurer les processus RH quand l’équipe grandit.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Conges et absences",
+        "Notes de frais",
+        "Temps et activites",
+        "Entretiens",
+        "Administration du personnel"
+      ],
+      "idealFor": [
+        "Equipes qui veulent structurer leur SIRH par briques",
+        "PME et ETI qui ont plusieurs processus RH a cadrer",
+        "Structures qui veulent mieux organiser la vie RH du quotidien"
+      ],
+      "sources": [
+        "https://www.lucca.fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -6235,6 +8428,22 @@
       ],
       "bestFor": "Gérer comptabilité ou gestion commerciale avec un outil installé sur le marché.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Gestion comptable et financière",
+        "Gestion commerciale",
+        "Trésorerie",
+        "Paie et RH",
+        "Solutions cloud et ERP selon la taille de l’entreprise"
+      ],
+      "idealFor": [
+        "Petites entreprises",
+        "TPE et PME",
+        "Entreprises qui veulent une gamme de solutions selon leur stade de croissance"
+      ],
+      "sources": [
+        "https://www.sage.com/fr-fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -6255,6 +8464,24 @@
       ],
       "bestFor": "Suivre factures, dépenses et comptabilité simple d’une petite entreprise.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Comptabilité automatisée",
+        "Facturation et encaissement en ligne",
+        "Suivi des factures et dépenses",
+        "Reporting financier",
+        "Intégrations avec plus de 800 applications"
+      ],
+      "idealFor": [
+        "Petites entreprises",
+        "Entrepreneurs individuels",
+        "Structures qui veulent gérer comptabilité, paiements et flux financiers dans une seule plateforme"
+      ],
+      "pricingNoteVerified": "La page officielle QuickBooks Pricing affiche un plan Simple Start à 19 USD par mois en offre promotionnelle, au lieu de 38 USD.",
+      "sources": [
+        "https://quickbooks.intuit.com/",
+        "https://quickbooks.intuit.com/pricing/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -6276,6 +8503,22 @@
       ],
       "bestFor": "Centraliser prospection, devis, factures et suivi commercial dans une TPE/PME.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "CRM",
+        "Devis et factures",
+        "Opportunites commerciales",
+        "Relances",
+        "Suivi commercial"
+      ],
+      "idealFor": [
+        "TPE et PME qui veulent relier commerce et facturation",
+        "Equipes qui veulent un outil francais pour piloter la vente",
+        "Usages transverses de prospection, devis et suivi client"
+      ],
+      "sources": [
+        "https://www.sellsy.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -6296,6 +8539,22 @@
       ],
       "bestFor": "Piloter commercial, facturation et gestion interne dans une petite entreprise.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "CRM",
+        "Devis et factures",
+        "Tresorerie",
+        "Projets",
+        "Gestion interne TPE/PME"
+      ],
+      "idealFor": [
+        "Petites entreprises qui veulent un outil tout-en-un orienté gestion",
+        "Equipes qui veulent relier commercial, facturation et operationnel",
+        "Usages transverses de pilotage d'activite"
+      ],
+      "sources": [
+        "https://axonaut.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "transverse"
     },
@@ -6316,6 +8575,22 @@
       ],
       "bestFor": "Gérer support client, chat et self-service pour SaaS ou activité digitale.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Support client",
+        "Messagerie et chat",
+        "Base de connaissance",
+        "Automatisation du service client",
+        "Self-service"
+      ],
+      "idealFor": [
+        "SaaS et activites digitales avec support continu",
+        "Equipes qui veulent combiner chat et aide en libre-service",
+        "Structures qui cherchent un support client plus conversationnel"
+      ],
+      "sources": [
+        "https://www.intercom.com/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -6337,6 +8612,22 @@
       ],
       "bestFor": "Structurer un support client multicanal avec tickets et base de connaissance.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Tickets",
+        "Help center",
+        "Chat",
+        "Support multicanal",
+        "Reporting"
+      ],
+      "idealFor": [
+        "Equipes support qui gerent plusieurs canaux de contact",
+        "Structures qui veulent un cadre plus formel pour le service client",
+        "Organisations avec besoin de suivi et de reporting support"
+      ],
+      "sources": [
+        "https://www.zendesk.fr/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     },
@@ -6358,6 +8649,22 @@
       ],
       "bestFor": "Mettre en place un support client simple et structuré sans outil trop lourd.",
       "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Tickets",
+        "Emails et chat",
+        "Base de connaissance",
+        "Automatisations",
+        "Support client"
+      ],
+      "idealFor": [
+        "Equipes qui veulent structurer un support sans trop de complexite",
+        "PME ou SaaS qui demarrent leur organisation service client",
+        "Structures qui veulent un outil support plus accessible"
+      ],
+      "sources": [
+        "https://www.freshworks.com/freshdesk/"
+      ],
+      "lastReviewedAt": "2026-07-02",
       "status": "active",
       "scope": "business"
     }

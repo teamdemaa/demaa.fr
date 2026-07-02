@@ -26,6 +26,34 @@ function normalizeTool(data: DocumentData | undefined): ToolDirectoryItem | null
   return data as ToolDirectoryItem;
 }
 
+function mergeToolRecords(
+  remoteTool: ToolDirectoryItem,
+  localTool?: ToolDirectoryItem,
+): ToolDirectoryItem {
+  if (!localTool) {
+    return remoteTool;
+  }
+
+  return {
+    ...localTool,
+    ...remoteTool,
+    keyFeatures:
+      remoteTool.keyFeatures && remoteTool.keyFeatures.length > 0
+        ? remoteTool.keyFeatures
+        : localTool.keyFeatures,
+    idealFor:
+      remoteTool.idealFor && remoteTool.idealFor.length > 0
+        ? remoteTool.idealFor
+        : localTool.idealFor,
+    pricingNoteVerified: remoteTool.pricingNoteVerified || localTool.pricingNoteVerified,
+    sources:
+      remoteTool.sources && remoteTool.sources.length > 0
+        ? remoteTool.sources
+        : localTool.sources,
+    lastReviewedAt: remoteTool.lastReviewedAt || localTool.lastReviewedAt,
+  };
+}
+
 export async function getUnifiedToolDirectory(): Promise<ToolDirectoryItem[]> {
   if (FORCE_LOCAL_DATA) {
     return toolDirectory;
@@ -49,8 +77,14 @@ export async function getUnifiedToolDirectory(): Promise<ToolDirectoryItem[]> {
       return toolDirectory;
     }
 
+    const localToolsBySlug = new Map(
+      toolDirectory.map((tool) => [tool.slug || tool.name, tool])
+    );
     const toolsBySlug = new Map(
-      tools.map((tool) => [tool.slug || tool.name, tool])
+      tools.map((tool) => {
+        const key = tool.slug || tool.name;
+        return [key, mergeToolRecords(tool, localToolsBySlug.get(key))];
+      })
     );
 
     for (const localTool of toolDirectory) {

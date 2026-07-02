@@ -17,6 +17,7 @@
     "audit:internal-linking": "node scripts/audit-internal-linking.mjs",
     "audit:system-pages": "node scripts/audit-system-pages.mjs",
     "audit:system-tool-quality": "node scripts/audit-system-tool-quality.mjs",
+    "audit:tool-modal-readiness": "node scripts/audit-tool-modal-readiness.mjs",
     "audit:business-checklists": "node scripts/audit-business-checklists.mjs --strict && node scripts/audit-business-checklists-semantic.mjs",
     "audit:business-checklists:ci": "node scripts/audit-business-checklists.mjs --strict && node scripts/audit-business-checklists-semantic.mjs --strict --fail-on-warning",
     "seed:enterprise-annuaire": "node scripts/seed-enterprise-annuaire.mjs",

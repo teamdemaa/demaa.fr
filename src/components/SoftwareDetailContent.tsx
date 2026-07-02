@@ -3,7 +3,11 @@
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { getToolPricingInfo } from "@/lib/tool-pricing";
-import type { ToolDirectoryItem } from "@/lib/tool-directory";
+import {
+  getToolDirectorySlug,
+  hasStandaloneToolPage,
+  type ToolDirectoryItem,
+} from "@/lib/tool-directory";
 
 type SoftwareDetailContentProps = {
   tool: ToolDirectoryItem;
@@ -15,8 +19,15 @@ export default function SoftwareDetailContent({
   compact = false,
 }: SoftwareDetailContentProps) {
   const pricing = getToolPricingInfo(tool);
+  const keyFeatures = tool.keyFeatures?.filter(Boolean) ?? [];
+  const idealFor = tool.idealFor?.filter(Boolean) ?? [];
   const isInternalTool = tool.url.startsWith("/");
-  const primaryCtaLabel = isInternalTool ? "Ouvrir l'outil" : "Visiter le site de l'outil";
+  const detailHref = hasStandaloneToolPage(tool)
+    ? null
+    : `/annuaire-outils/${getToolDirectorySlug(tool)}`;
+  const showCompactDetailCta = compact && Boolean(detailHref);
+  const showPricingCta = Boolean(pricing.sourceUrl && pricing.sourceUrl !== tool.url);
+  const toolCtaLabel = isInternalTool ? "Ouvrir l'outil" : "Voir l'outil";
 
   return (
     <div className={compact ? "space-y-6" : "space-y-8"}>
@@ -38,6 +49,34 @@ export default function SoftwareDetailContent({
           <p className="mt-3 text-sm font-normal leading-relaxed text-dema-muted md:text-base">
             {tool.bestFor}
           </p>
+          {keyFeatures.length ? (
+            <div className="mt-4">
+              <h3 className="text-sm font-semibold text-brand-blue">
+                Fonctionnalités principales
+              </h3>
+              <ul className="mt-2 space-y-2 text-sm font-normal leading-relaxed text-dema-muted">
+                {keyFeatures.slice(0, 5).map((feature) => (
+                  <li key={feature} className="flex gap-2">
+                    <span className="mt-[0.45rem] h-1.5 w-1.5 shrink-0 rounded-full bg-dema-forest" />
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+          {idealFor.length ? (
+            <div className="mt-4">
+              <h3 className="text-sm font-semibold text-brand-blue">Idéal pour</h3>
+              <ul className="mt-2 space-y-2 text-sm font-normal leading-relaxed text-dema-muted">
+                {idealFor.slice(0, 3).map((item) => (
+                  <li key={item} className="flex gap-2">
+                    <span className="mt-[0.45rem] h-1.5 w-1.5 shrink-0 rounded-full bg-dema-forest" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
         </div>
 
         <aside className="rounded-[1.25rem] border border-dema-line bg-dema-paper p-5 sm:p-6">
@@ -45,6 +84,11 @@ export default function SoftwareDetailContent({
           <p className="mt-3 text-sm font-normal leading-relaxed text-dema-muted">
             {pricing.summary}
           </p>
+          {tool.pricingNoteVerified ? (
+            <p className="mt-3 text-xs leading-relaxed text-dema-muted">
+              {tool.pricingNoteVerified}
+            </p>
+          ) : null}
           <div className="mt-4 space-y-2">
             {pricing.plans.map((plan) => (
               <div
@@ -68,9 +112,14 @@ export default function SoftwareDetailContent({
       </section>
 
       <div className="flex flex-wrap items-center gap-3">
-        {isInternalTool ? (
+        {showCompactDetailCta && detailHref ? (
+          <Link href={detailHref} className="demaa-primary-button gap-2 px-5 py-3">
+            Voir la fiche complète
+            <ArrowUpRight className="h-4 w-4" />
+          </Link>
+        ) : isInternalTool ? (
           <Link href={tool.url} className="demaa-primary-button gap-2 px-5 py-3">
-            {primaryCtaLabel}
+            {toolCtaLabel}
             <ArrowUpRight className="h-4 w-4" />
           </Link>
         ) : (
@@ -80,11 +129,21 @@ export default function SoftwareDetailContent({
             rel="noreferrer"
             className="demaa-primary-button gap-2 px-5 py-3"
           >
-            {primaryCtaLabel}
+            {toolCtaLabel}
             <ArrowUpRight className="h-4 w-4" />
           </a>
         )}
-        {pricing.sourceUrl ? (
+        {showCompactDetailCta ? (
+          <a
+            href={tool.url}
+            target="_blank"
+            rel="noreferrer"
+            className="demaa-secondary-button gap-2 px-5 py-3"
+          >
+            {toolCtaLabel}
+            <ArrowUpRight className="h-4 w-4" />
+          </a>
+        ) : showPricingCta && pricing.sourceUrl ? (
           <a
             href={pricing.sourceUrl}
             target="_blank"
