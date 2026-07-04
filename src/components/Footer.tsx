@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { UserRound } from "lucide-react";
 import DemaaWordmark from "@/components/DemaaWordmark";
 
 const mainLinks = [
@@ -9,7 +10,6 @@ const mainLinks = [
   { label: "Annuaire outils", href: "/annuaire-outils" },
   { label: "Annuaire financement", href: "/annuaire-financement" },
   { label: "Annuaire fournisseurs", href: "/annuaire-fournisseurs" },
-  { label: "Annuaire experts-comptables", href: "/annuaire-experts-comptables" },
 ];
 
 const contentLinks = [
@@ -85,9 +85,22 @@ export default function Footer() {
           
         </div>
 
-        <div className="mt-16 pt-8 border-t border-neutral-200 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500">
-          <p>© {currentYear} Demaa. Tous droits réservés.</p>
-          <p className="mt-4 sm:mt-0">Structure simplifiée pour une navigation plus claire.</p>
+        <div className="mt-16 border-t border-neutral-200 pt-8">
+          <div className="flex justify-center">
+            <Link
+              href="/mon-espace"
+              className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-dema-line bg-dema-paper px-4 py-2 text-sm font-medium text-brand-blue/56 transition hover:border-dema-forest/24 hover:text-brand-blue/72"
+              aria-label="Espace membre"
+            >
+              <UserRound className="h-4 w-4 shrink-0" aria-hidden="true" />
+              <span>Mon espace</span>
+            </Link>
+          </div>
+
+          <div className="mt-8 flex flex-col items-center justify-between text-xs text-gray-500 sm:flex-row">
+            <p>© {currentYear} Demaa. Tous droits réservés.</p>
+            <p className="mt-4 sm:mt-0">Structure simplifiée pour une navigation plus claire.</p>
+          </div>
         </div>
       </div>
     </footer>

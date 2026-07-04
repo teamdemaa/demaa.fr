@@ -1,10 +1,8 @@
-import Link from "next/link";
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import ServiceDirectoryClient from "@/components/ServiceDirectoryClient";
 import { getDelegationServices } from "@/lib/delegation-services";
 import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
-import { ORGANISATION_AUDIT_MODAL_HREF } from "@/lib/organisation-audit";
 import { serviceCategories } from "@/lib/service-catalog";
 
 export const metadata: Metadata = {
@@ -74,15 +72,6 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             primary: "Votre entreprise ne devrait pas reposer que sur vous.",
             secondary: "",
           }}
-          heroActions={
-            <Link
-              href={ORGANISATION_AUDIT_MODAL_HREF}
-              scroll={false}
-              className="demaa-primary-button px-5 py-3"
-            >
-              Diagnostic offert
-            </Link>
-          }
         />
       </main>
     </>

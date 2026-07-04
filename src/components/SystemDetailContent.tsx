@@ -8,8 +8,6 @@ import {
   Bot,
   Briefcase,
   CalendarDays,
-  Calculator,
-  CheckCircle2,
   FileSignature,
   FileText,
   FolderKanban,
@@ -25,7 +23,6 @@ import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
 import SupplierDetailDialog from "@/components/SupplierDetailDialog";
 import TrainingDetailDialog from "@/components/TrainingDetailDialog";
 import type { DemaaAidItem } from "@/lib/aid-catalog";
-import type { AccountingFirm } from "@/lib/accounting-directory";
 import { getRecommendedAidsForSystem } from "@/lib/aid-recommendations";
 import { getDocumentModelsForSystem, type DocumentModel } from "@/lib/document-models";
 import { getFreeToolsForSystem } from "@/lib/free-tools";
@@ -63,7 +60,6 @@ import type { System } from "@/lib/types";
 type SystemDetailContentProps = {
   system: System;
   detail: OperationalSystemDetail;
-  recommendedAccountingFirms: AccountingFirm[];
   intro: string;
   initialActiveTab?: string;
   headingAs?: "h1" | "h2";
@@ -294,7 +290,6 @@ function handleProNetworkDetailClick(
 export default function SystemDetailContent({
   system,
   detail,
-  recommendedAccountingFirms,
   intro,
   initialActiveTab,
   headingAs = "h1",
@@ -368,7 +363,6 @@ export default function SystemDetailContent({
     () => (activeTab === "financement" ? groupFinanceBySection(recommendedFinance) : []),
     [activeTab, recommendedFinance]
   );
-  const showAccountingTab = system.slug !== "cabinet-comptable";
   const Heading = headingAs;
 
   function selectTab(tab: SystemDetailTab) {
@@ -775,44 +769,6 @@ export default function SystemDetailContent({
     );
   }
 
-  function renderAccountingFirmCard(firm: AccountingFirm) {
-    const cityLabel = firm.city && firm.city !== "Ville non renseignée" ? firm.city : null;
-
-    return (
-      <Link
-        key={firm.slug}
-        href={`/annuaire-experts-comptables/cabinets/${firm.slug}?retourSysteme=${encodeURIComponent(system.slug)}`}
-        className={SYSTEM_CARD_CLASS}
-      >
-        <div className="flex items-start justify-between gap-4">
-          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper">
-            <Calculator className="h-4 w-4" aria-hidden="true" />
-          </span>
-        </div>
-        {firm.slug === "em2a-expertise" ? (
-          <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
-            Cabinet recommandé
-          </p>
-        ) : null}
-        <h3 className={SYSTEM_CARD_TITLE_CLASS}>
-          {firm.name}
-        </h3>
-        <span className="mt-4 inline-flex w-fit items-center gap-1 rounded-full bg-dema-sage/80 px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.14em] text-dema-forest">
-          <CheckCircle2 className="h-3.5 w-3.5" aria-hidden="true" />
-          Vérifié OEC
-        </span>
-        <p className={SYSTEM_CARD_DESCRIPTION_CLASS}>
-          {firm.description}
-        </p>
-        {cityLabel ? (
-          <p className="mt-auto pt-4 text-xs font-medium text-dema-muted">
-            {cityLabel}
-          </p>
-        ) : null}
-      </Link>
-    );
-  }
-
   function renderTrainingCard(training: DemaaTraining) {
     return (
       <Link
@@ -897,9 +853,9 @@ export default function SystemDetailContent({
         <Link
           href={ORGANISATION_AUDIT_MODAL_HREF}
           scroll={false}
-          className="demaa-secondary-button self-start"
+          className="demaa-primary-button self-start"
         >
-          Déléguez ce qui vous ralentit
+          Diagnostic organisation offert
         </Link>
       </div>
 
@@ -909,9 +865,6 @@ export default function SystemDetailContent({
             [
               ["outils", "Outils"],
               ["fournisseurs", "Fournisseurs"],
-              ...(showAccountingTab
-                ? ([["expert-comptable", "Expert comptable"]] as Array<[SystemDetailTab, string]>)
-                : []),
               ["financement", "Financement"],
               ["reseaux-pro", "Réseau pro"],
               ["recrutement", "Recrutement"],
@@ -1005,24 +958,6 @@ export default function SystemDetailContent({
                 browseHref: `/annuaire-fournisseurs?retourSysteme=${encodeURIComponent(system.slug)}`,
                 browseLabel: "Voir l'annuaire fournisseurs",
               })
-            ) : null}
-          </div>
-        ) : activeTab === "expert-comptable" && showAccountingTab ? (
-          <div className="space-y-5">
-            {recommendedAccountingFirms.length ? (
-              <>
-                {renderCardSection({
-                  items: recommendedAccountingFirms,
-                  title: "Cabinets recommandés",
-                  tone: "forest",
-                  getKey: (firm) => firm.slug,
-                  renderCard: renderAccountingFirmCard,
-                })}
-                {renderBrowseAllLink({
-                  browseHref: `/annuaire-experts-comptables?retourSysteme=${encodeURIComponent(system.slug)}`,
-                  browseLabel: "Voir l'annuaire experts-comptables",
-                })}
-              </>
             ) : null}
           </div>
         ) : activeTab === "financement" ? (

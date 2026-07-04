@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { BriefcaseBusiness, UserRound } from "lucide-react";
+import { BriefcaseBusiness } from "lucide-react";
 import NavbarCartIndicator from "@/components/NavbarCartIndicator";
 import ServiceCartTray from "@/components/ServiceCartTray";
 import DemaaWordmark from "@/components/DemaaWordmark";
+import { ORGANISATION_AUDIT_MODAL_HREF } from "@/lib/organisation-audit";
 
 export default function Navbar({
   minimal = false,
@@ -19,6 +20,7 @@ export default function Navbar({
     (pathname === "/" ||
       pathname === "/annuaire-services" ||
       pathname.startsWith("/annuaire-services/"));
+  const showDelegationCta = !minimal && pathname.startsWith("/systemes");
 
   return (
     <>
@@ -38,21 +40,23 @@ export default function Navbar({
               {showSystemsCta ? (
                 <Link
                   href="/systemes"
-                  className="inline-flex min-h-10 items-center gap-2 px-1 py-2 text-sm font-medium text-brand-blue/56 transition hover:text-brand-blue/72 sm:px-2"
-                  aria-label="Boîte à outil du dirigeant"
+                  className="demaa-secondary-button inline-flex min-h-10 items-center justify-center gap-2 px-4 py-2 sm:px-4"
+                  aria-label="Voir les bons systèmes"
                 >
                   <BriefcaseBusiness className="h-4 w-4 shrink-0" aria-hidden="true" />
-                  <span>Boîte à outil du dirigeant</span>
+                  <span>Voir les bons systèmes</span>
                 </Link>
               ) : null}
-              <Link
-                href="/mon-espace"
-                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-dema-line bg-dema-paper px-3 py-2 text-sm font-medium text-brand-blue/56 transition hover:border-dema-forest/24 hover:text-brand-blue/72 sm:px-3 md:px-4"
-                aria-label="Espace membre"
-              >
-                <UserRound className="h-4 w-4 shrink-0" aria-hidden="true" />
-                <span className="hidden md:inline">Mon espace</span>
-              </Link>
+              {showDelegationCta ? (
+                <Link
+                  href={ORGANISATION_AUDIT_MODAL_HREF}
+                  scroll={false}
+                  className="demaa-secondary-button inline-flex min-h-10 items-center justify-center px-4 py-2 sm:px-4"
+                  aria-label="Déléguez ce qui vous ralentit"
+                >
+                  <span>Déléguez ce qui vous ralentit</span>
+                </Link>
+              ) : null}
               <NavbarCartIndicator />
             </div>
           </div>
