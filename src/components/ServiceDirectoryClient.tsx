@@ -587,20 +587,6 @@ function ServiceTrustSection({
         </div>
       </section>
 
-      <section id="services-showcase" className="border-t border-dema-line/80 pt-14 md:pt-18">
-        <div className="max-w-3xl">
-          <p className="text-[14px] font-semibold uppercase tracking-[0.16em] text-dema-forest md:text-[15px]">
-            Ce que vous pouvez déléguer
-          </p>
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-brand-blue md:text-[2.5rem]">
-            Les sujets à reprendre maintenant
-          </h2>
-        </div>
-        <div className="mt-8">
-          {servicesShowcase}
-        </div>
-      </section>
-
       <section className="rounded-[1.5rem] bg-dema-sage/55 px-6 py-13 md:px-8 md:py-16">
         <div className="grid gap-10 md:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] md:items-start">
           <div className="max-w-2xl md:pt-1">
@@ -666,6 +652,20 @@ function ServiceTrustSection({
           <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-dema-muted md:text-base">
             C&apos;est souvent ce qu&apos;on arrive à repérer sur les routines qui encombrent le quotidien.
           </p>
+        </div>
+      </section>
+
+      <section id="services-showcase" className="border-t border-dema-line/80 pt-14 md:pt-18">
+        <div className="max-w-3xl">
+          <p className="text-[14px] font-semibold uppercase tracking-[0.16em] text-dema-forest md:text-[15px]">
+            Ce que vous pouvez déléguer
+          </p>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-brand-blue md:text-[2.5rem]">
+            Les sujets à reprendre maintenant
+          </h2>
+        </div>
+        <div className="mt-8">
+          {servicesShowcase}
         </div>
       </section>
 
