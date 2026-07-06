@@ -75,21 +75,13 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             secondary: "",
           }}
           heroActions={
-            <>
-              <Link
-                href="#services-showcase"
-                className="demaa-primary-button px-5 py-2.5"
-              >
-                Voir par où commencer
-              </Link>
-              <Link
-                href={ORGANISATION_AUDIT_MODAL_HREF}
-                scroll={false}
-                className="demaa-secondary-button px-5 py-2.5"
-              >
-                Diagnostic organisation offert
-              </Link>
-            </>
+            <Link
+              href={ORGANISATION_AUDIT_MODAL_HREF}
+              scroll={false}
+              className="demaa-primary-button px-5 py-2.5"
+            >
+              Diagnostic organisation offert
+            </Link>
           }
         />
       </main>

@@ -47,6 +47,19 @@ const reliefPoints = [
   "Vous gardez de la visibilité, sans y passer votre journée.",
 ] as const;
 
+const organisationDiagnosticHighlights = [
+  {
+    label: "Offert",
+    value: "Premier diagnostic",
+    description: "Un point rapide pour comprendre vos blocages et vos priorités.",
+  },
+  {
+    label: "Sans engagement",
+    value: "Vous décidez de la suite",
+    description: "Le diagnostic sert à clarifier, pas à vous forcer à acheter.",
+  },
+] as const;
+
 const globalFaqItems = [
   {
     question: "Est-ce que c'est adapté à une petite entreprise ?",
@@ -235,6 +248,53 @@ export default function ServiceDirectoryClient({
     </div>
   );
 
+  const organisationDiagnosticSection = (
+    <section className="rounded-[1.5rem] border border-dema-line/80 bg-dema-paper px-6 py-8 md:px-8 md:py-10">
+      <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] md:items-start">
+        <div className="max-w-xl">
+          <p className="text-[14px] font-semibold uppercase tracking-[0.16em] text-dema-forest md:text-[15px]">
+            Diagnostic organisation offert
+          </p>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-brand-blue md:text-[2.3rem]">
+            Un premier point simple pour savoir par où commencer
+          </h2>
+          <p className="mt-4 text-sm leading-relaxed text-dema-muted md:text-base">
+            On regarde vos routines, vos blocages et les sujets qui reposent trop sur vous,
+            puis on vous aide à voir les premières priorités utiles.
+          </p>
+          <div className="mt-6">
+            <Link
+              href={ORGANISATION_AUDIT_MODAL_HREF}
+              scroll={false}
+              className="demaa-primary-button px-5 py-2.5"
+            >
+              Demander le diagnostic
+            </Link>
+          </div>
+        </div>
+
+        <div className="grid gap-4">
+          {organisationDiagnosticHighlights.map((item) => (
+            <article
+              key={item.value}
+              className="rounded-[1rem] border border-dema-line/70 bg-dema-cream/50 px-4 py-4"
+            >
+              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest/80">
+                {item.label}
+              </p>
+              <h3 className="mt-2 text-lg font-semibold leading-snug text-brand-blue">
+                {item.value}
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-dema-muted">
+                {item.description}
+              </p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+
   function selectCategory(category: string) {
     setActiveCategory(category);
     setIsFilterPanelOpen(false);
@@ -380,7 +440,10 @@ export default function ServiceDirectoryClient({
             </p>
           </div>
         ) : (
-          <ServiceTrustSection servicesShowcase={servicesShowcase} />
+          <ServiceTrustSection
+            servicesShowcase={servicesShowcase}
+            organisationDiagnosticSection={organisationDiagnosticSection}
+          />
         )}
 
         {backLink ? (
@@ -487,7 +550,13 @@ function ServiceCard({
   );
 }
 
-function ServiceTrustSection({ servicesShowcase }: { servicesShowcase: ReactNode }) {
+function ServiceTrustSection({
+  servicesShowcase,
+  organisationDiagnosticSection,
+}: {
+  servicesShowcase: ReactNode;
+  organisationDiagnosticSection: ReactNode;
+}) {
   return (
     <div className="mt-8 space-y-24 md:mt-11 md:space-y-32">
       <section className="border-t border-dema-line/80 pt-14 md:pt-18">
@@ -585,6 +654,22 @@ function ServiceTrustSection({ servicesShowcase }: { servicesShowcase: ReactNode
           ))}
         </div>
       </section>
+
+      <section className="rounded-[1.5rem] border border-dema-line/80 bg-dema-sage/40 px-6 py-7 text-center md:px-8 md:py-8">
+        <p className="text-[14px] font-semibold uppercase tracking-[0.16em] text-dema-forest md:text-[15px]">
+          Repère de gain
+        </p>
+        <div className="mt-3">
+          <h2 className="text-3xl font-semibold tracking-tight text-brand-blue md:text-[2.4rem]">
+            20 à 30 % de temps récupérable
+          </h2>
+          <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-dema-muted md:text-base">
+            C&apos;est souvent ce qu&apos;on arrive à repérer sur les routines qui encombrent le quotidien.
+          </p>
+        </div>
+      </section>
+
+      {organisationDiagnosticSection}
 
       <section className="border-t border-dema-line/80 pt-14 md:pt-18">
         <div className="mx-auto max-w-4xl rounded-[1.5rem] bg-dema-forest px-8 py-12 text-center text-dema-paper md:px-14 md:py-16">

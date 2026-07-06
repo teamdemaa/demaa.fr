@@ -127,7 +127,7 @@ export default function SystemCompleteModal({
           type="button"
           onClick={onClose}
           aria-label="Fermer"
-          className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
+          className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-transparent text-brand-blue transition hover:text-dema-forest"
         >
           <X className="h-4 w-4" aria-hidden="true" />
         </button>
@@ -135,7 +135,7 @@ export default function SystemCompleteModal({
         <div className="min-h-0 overflow-y-auto p-5 soft-scroll sm:p-6 md:p-7">
           <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8">
             <div>
-              <div className="overflow-hidden rounded-[1.25rem] border border-dema-line bg-[linear-gradient(180deg,rgba(238,244,239,0.96)_0%,rgba(245,241,232,0.92)_100%)] p-4 sm:p-5">
+              <div className="overflow-hidden rounded-[1.25rem] border border-dema-line bg-[#f6f4ee] p-4 sm:p-5">
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
@@ -169,14 +169,11 @@ export default function SystemCompleteModal({
                 </div>
 
                 {activeCard ? (
-                  <div className="mt-5 flex min-h-[24rem] flex-col rounded-[1.2rem] bg-transparent p-1 sm:min-h-[26rem]">
+                  <div className="mt-5 flex min-h-[15.5rem] flex-col rounded-[1.2rem] bg-transparent p-1 sm:min-h-[17rem]">
                     <div className="flex items-start justify-between gap-3">
                       <div>
                         <p className="text-lg font-semibold tracking-tight text-brand-blue">
                           {activeCard.pillar}
-                        </p>
-                        <p className="mt-1 text-sm text-dema-muted">
-                          {activeCard.items.length} document{activeCard.items.length > 1 ? "s" : ""}
                         </p>
                       </div>
                       {cards.length > 1 ? (
@@ -217,7 +214,7 @@ export default function SystemCompleteModal({
                     ) : null}
                   </div>
                 ) : (
-                  <div className="mt-5 min-h-[24rem] rounded-[1.2rem] bg-transparent p-1 text-sm text-dema-muted sm:min-h-[26rem]">
+                  <div className="mt-5 min-h-[15.5rem] rounded-[1.2rem] bg-transparent p-1 text-sm text-dema-muted sm:min-h-[17rem]">
                     Aucun document disponible pour ce système.
                   </div>
                 )}

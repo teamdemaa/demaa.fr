@@ -96,6 +96,33 @@ const organisationFaq = [
   },
 ] as const;
 
+const organisationKeyFacts = [
+  {
+    label: "Offert",
+    title: "Premier diagnostic",
+    description:
+      "Le diagnostic sert à faire le point sur votre organisation avant de décider quoi lancer ensuite.",
+  },
+  {
+    label: "Sans engagement",
+    title: "Vous choisissez la suite",
+    description:
+      "Vous repartez avec une lecture plus claire, sans obligation d'acheter un service derrière.",
+  },
+  {
+    label: "Résultat attendu",
+    title: "Priorités plus lisibles",
+    description:
+      "On repère ce qui bloque le plus, ce qui dépend trop de vous et ce qu'il faut traiter d'abord.",
+  },
+  {
+    label: "Repère de gain",
+    title: "20 à 30 % de temps",
+    description:
+      "C'est souvent le volume de temps récupérable qu'on arrive à identifier sur les routines qui encombrent le quotidien.",
+  },
+] as const;
+
 const assistantTimeline = [
   {
     step: "Étape 1",
@@ -384,15 +411,29 @@ function OrganisationExpandedContent({
 
       <section className={sectionClass}>
         <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
-          Repère de gain
+          Infos clés du diagnostic
         </p>
         <h3 className="mt-2 text-xl font-semibold tracking-tight text-brand-blue md:text-2xl">
-          En général, l&apos;audit permet d&apos;identifier 20 à 30 % de temps récupérable
+          Ce que vous devez savoir avant de le demander
         </h3>
-        <p className="mt-3 max-w-3xl text-sm leading-relaxed text-dema-muted">
-          L&apos;objectif n&apos;est pas de promettre une transformation immédiate, mais de
-          repérer concrètement où du temps peut être récupéré grâce à une meilleure organisation.
-        </p>
+        <div className="mt-6 grid gap-4 md:grid-cols-2">
+          {organisationKeyFacts.map((item) => (
+            <article
+              key={item.title}
+              className="rounded-[0.95rem] border border-dema-line/70 bg-dema-cream/60 px-4 py-4"
+            >
+              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest/75">
+                {item.label}
+              </p>
+              <h4 className="mt-2 text-base font-semibold leading-snug text-brand-blue">
+                {item.title}
+              </h4>
+              <p className="mt-2 text-sm leading-relaxed text-dema-muted">
+                {item.description}
+              </p>
+            </article>
+          ))}
+        </div>
       </section>
 
       <FaqSection title="Questions fréquentes" items={organisationFaq} />
