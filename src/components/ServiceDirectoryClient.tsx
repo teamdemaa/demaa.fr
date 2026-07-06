@@ -558,8 +558,8 @@ function ServiceTrustSection({
   organisationDiagnosticSection: ReactNode;
 }) {
   return (
-    <div className="mt-8 space-y-20 md:mt-11 md:space-y-26">
-      <section className="border-t border-dema-line/80 pt-14 md:pt-18">
+    <div className="mt-7 space-y-20 md:mt-9 md:space-y-26">
+      <section className="border-t border-dema-line/80 pt-12 md:pt-16">
         <div className="max-w-2xl">
           <p className="text-[14px] font-semibold uppercase tracking-[0.16em] text-dema-forest md:text-[15px]">
             Comment ça marche

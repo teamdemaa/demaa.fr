@@ -388,26 +388,28 @@ function OrganisationExpandedContent({
         </div>
       </section>
 
-      <section className={sectionClass}>
-        <h3 className="text-xl font-semibold tracking-tight text-brand-blue md:text-2xl">
-          {contextualTitle}
-        </h3>
-        <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-          {pillarCards.map((pillar, index) => (
-            <div
-              key={pillar}
-              className="rounded-[0.95rem] border border-dema-line/70 bg-dema-cream/60 px-4 py-4"
-            >
-              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest/75">
-                Pilier {index + 1}
-              </p>
-              <p className="mt-2 text-sm font-semibold leading-relaxed text-brand-blue">
-                {pillar}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
+      {variant === "page" ? (
+        <section className={sectionClass}>
+          <h3 className="text-xl font-semibold tracking-tight text-brand-blue md:text-2xl">
+            {contextualTitle}
+          </h3>
+          <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+            {pillarCards.map((pillar, index) => (
+              <div
+                key={pillar}
+                className="rounded-[0.95rem] border border-dema-line/70 bg-dema-cream/60 px-4 py-4"
+              >
+                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest/75">
+                  Pilier {index + 1}
+                </p>
+                <p className="mt-2 text-sm font-semibold leading-relaxed text-brand-blue">
+                  {pillar}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       {variant === "page" ? (
         <section className={sectionClass}>
