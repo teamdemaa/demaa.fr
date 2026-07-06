@@ -122,7 +122,7 @@ export default function ServiceDetailDialog({
               </div>
             ) : null}
 
-            <div className="mt-8">
+            <div className={isOrganisationAutomation ? "mt-16" : "mt-8"}>
               <ServiceExpandedContent serviceSlug={service.slug} variant="modal" />
             </div>
           </div>
