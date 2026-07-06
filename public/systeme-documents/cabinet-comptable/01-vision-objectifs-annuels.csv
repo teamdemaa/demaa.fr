@@ -15,5 +15,5 @@ Indicateur,Temps subi sur urgences,26 h,Equipe comptable,Mensuel,A suivre,"Cible
 Indicateur,Taux de satisfaction client,4.7/5,Expert-comptable,Trimestriel,A suivre,"Base avis et retours clients"
 Point de vigilance,Risque 1,"Les urgences de derniere minute desorganisent encore trop la production mensuelle",Expert-comptable,Immediat,Ouvert,"Formaliser une regle d'escalade"
 Point de vigilance,Risque 2,"Les pieces clients arrivent trop tard et les relances ne sont pas assez structurees",Responsable de portefeuille,Immediat,Ouvert,"Mettre une cadence de relance standard"
-Point de vigilance,Risque 3,"La facturation complementaire n'est pas toujours sortie au bon moment",Responsable administrative,Immediat,Ouvert,"Controle hebdo des travaux hors forfait"
+Point de vigilance,Risque 3,"La facturation complementaire n'est pas toujours sortie au bon moment",Responsable administrative,Immediat,Ouvert,"Controle hebdo des prestations hors forfait"
 Point de vigilance,Risque 4,"Le cabinet depend encore trop de l'expert-comptable pour arbitrer des decisions courantes",Expert-comptable,Immediat,Ouvert,"Sujet cle du trimestre"

@@ -3,6 +3,6 @@ Relance piece client manquante,Collaborateur comptable,Oui,,Responsable de porte
 Priorisation dossier en retard,Responsable de portefeuille,Oui,,Expert-comptable,"Si echeance < 10 jours"
 Decalage rendez-vous client,Responsable de portefeuille,Oui,,Collaborateur concerne,"Si pas d'impact fiscal critique"
 Remise honoraires exceptionnelle,Expert-comptable,Non,Expert-comptable,Responsable administrative,"Au-dela de 10 %"
-Facturation mission complementaire,Responsable administrative,Oui,,Expert-comptable,"Si travaux hors lettre de mission confirmes"
+Facturation mission complementaire,Responsable administrative,Oui,,Expert-comptable,"Si prestation hors lettre de mission confirmee"
 Escalade dossier sensible,Responsable de portefeuille,Non,Expert-comptable,Equipe concernee,"Si risque client, social ou fiscal eleve"
 Cloture dossier mensuel,Collaborateur comptable,Oui,,Responsable de portefeuille,"Si pieces recues et controles faits"
