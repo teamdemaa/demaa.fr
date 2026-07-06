@@ -143,6 +143,7 @@ function RequestCardArticle({
 }) {
   const { payment, request } = card;
   const hasServiceBundle = payment.orderType === "service_bundle";
+  const hasSectorSystem = payment.orderType === "sector_system";
   const hasServiceBrief = Boolean(payment.serviceBrief);
   const hasTeamNotification = Boolean(payment.slackNotifiedAt);
 
@@ -160,7 +161,11 @@ function RequestCardArticle({
         </div>
       </div>
 
-      {!request && !hasServiceBundle ? (
+      {hasSectorSystem ? (
+        <p className="mt-5 rounded-full bg-dema-sage px-4 py-2 text-center text-sm text-dema-forest">
+          Achat confirmé. Demaa vous envoie la suite pour accéder au système acheté.
+        </p>
+      ) : !request && !hasServiceBundle ? (
         <Link
           href={
             payment.assistantAccessToken

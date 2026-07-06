@@ -1,4 +1,5 @@
 export const SYSTEM_DETAIL_TABS = [
+  "systeme",
   "outils",
   "fournisseurs",
   "financement",

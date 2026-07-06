@@ -1,5 +1,6 @@
 import type { System } from "@/lib/types";
 import { publicSectorLabels } from "@/lib/public-sectors";
+import { buildSystemeDetail, type SystemeDetail } from "@/lib/systeme-catalog";
 import type {
   EnterpriseDefinition,
   EnterpriseTool,
@@ -30,6 +31,7 @@ export type OperationalSystemDetail = {
   imageTitle: string;
   imageSubtitle: string;
   processes: SystemProcessCard[];
+  systeme: SystemeDetail | null;
   businessModelId?: string;
   businessVariant?: string;
   businessBlocks: BusinessModelBlock[];
@@ -112,12 +114,17 @@ export async function buildOperationalSystemDetail(system: System): Promise<Oper
     enterprisesBySlug: enterprise ? { [system.slug]: enterprise } : {},
     templates,
     toolDirectory,
+  }, {
+    includeSysteme: true,
   });
 }
 
 function buildOperationalSystemDetailFromSources(
   system: System,
   sources: OperationalSystemDetailSources,
+  options?: {
+    includeSysteme?: boolean;
+  },
 ): OperationalSystemDetail {
   const enterprise = sources.enterprisesBySlug[system.slug] ?? null;
   const templates = sources.templates;
@@ -151,6 +158,7 @@ function buildOperationalSystemDetailFromSources(
       imageTitle: enterprise.imageTitle,
       imageSubtitle: enterprise.imageSubtitle,
       processes: [...sharedProcesses, ...operationProcesses],
+      systeme: options?.includeSysteme ? buildSystemeDetail(enterprise) : null,
       businessModelId: enterprise.businessModelId,
       businessVariant: enterprise.businessVariant,
       businessBlocks: enterprise.businessBlocks ?? [],
@@ -165,6 +173,7 @@ function buildOperationalSystemDetailFromSources(
     imageTitle: system.name,
     imageSubtitle: `Aperçu du système opérationnel pour ${system.name.toLowerCase()}`,
     processes: templates.map((template) => ({ ...template })),
+    systeme: null,
     businessBlocks: [],
     tools: [],
   };

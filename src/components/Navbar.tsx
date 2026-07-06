@@ -6,7 +6,6 @@ import { BriefcaseBusiness } from "lucide-react";
 import NavbarCartIndicator from "@/components/NavbarCartIndicator";
 import ServiceCartTray from "@/components/ServiceCartTray";
 import DemaaWordmark from "@/components/DemaaWordmark";
-import { ORGANISATION_AUDIT_MODAL_HREF } from "@/lib/organisation-audit";
 
 export default function Navbar({
   minimal = false,
@@ -49,8 +48,7 @@ export default function Navbar({
               ) : null}
               {showDelegationCta ? (
                 <Link
-                  href={ORGANISATION_AUDIT_MODAL_HREF}
-                  scroll={false}
+                  href="/"
                   className="demaa-secondary-button inline-flex min-h-10 items-center justify-center px-4 py-2 sm:px-4"
                   aria-label="Déléguez ce qui vous ralentit"
                 >

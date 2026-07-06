@@ -9,7 +9,7 @@
     "build:stable": "DEMAA_FORCE_LOCAL_DATA=true DEMAA_BUILD_DIST_DIR=.next-build TMPDIR=/private/tmp next build",
     "start": "DEMAA_BUILD_DIST_DIR=.next-build next start",
     "lint": "eslint",
-    "validate:data": "node scripts/validate-data.mjs && node scripts/validate-sector-taxonomy.mjs && node scripts/validate-seo-routes.mjs && node scripts/validate-sector-editorial-links.mjs && node scripts/validate-build-runtime.mjs && node scripts/audit-business-checklists.mjs --strict",
+    "validate:data": "node scripts/validate-data.mjs && node scripts/validate-systeme-catalog.mjs && node scripts/validate-sector-taxonomy.mjs && node scripts/validate-seo-routes.mjs && node scripts/validate-sector-editorial-links.mjs && node scripts/validate-build-runtime.mjs && node scripts/audit-business-checklists.mjs --strict",
     "audit:seo-foundations": "npm run validate:data && node scripts/audit-free-tools-coverage.mjs && node scripts/audit-generic-fallbacks.mjs && node scripts/audit-system-tool-quality.mjs && node scripts/audit-internal-linking.mjs && node scripts/audit-system-pages.mjs",
     "audit:seo-foundations:ci": "npm run audit:seo-foundations",
     "audit:free-tools-coverage": "node scripts/audit-free-tools-coverage.mjs",

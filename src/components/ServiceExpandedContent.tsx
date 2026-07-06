@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import {
-  BadgeEuro,
   Blocks,
   ChevronDown,
   CircleDollarSign,
@@ -13,10 +12,13 @@ import {
   Users,
 } from "lucide-react";
 import { getDemaaServiceBySlug } from "@/lib/service-catalog";
+import type { SystemeDetail } from "@/lib/systeme-catalog";
 
 type ServiceExpandedContentProps = {
   serviceSlug: string;
   variant?: "modal" | "page";
+  systemName?: string;
+  systeme?: SystemeDetail | null;
 };
 
 const organisationSignals = [
@@ -191,6 +193,8 @@ const fiscalAuditFaq = [
 export default function ServiceExpandedContent({
   serviceSlug,
   variant = "modal",
+  systemName,
+  systeme,
 }: ServiceExpandedContentProps) {
   const service = getDemaaServiceBySlug(serviceSlug);
 
@@ -199,7 +203,13 @@ export default function ServiceExpandedContent({
   }
 
   if (serviceSlug === "organisation-automatisation") {
-    return <OrganisationExpandedContent variant={variant} />;
+    return (
+      <OrganisationExpandedContent
+        variant={variant}
+        systemName={systemName}
+        systeme={systeme}
+      />
+    );
   }
 
   if (serviceSlug === "recrutement-assistante-facturation") {
@@ -280,23 +290,38 @@ function GenericServiceExpandedContent({
 
 function OrganisationExpandedContent({
   variant,
+  systemName,
+  systeme,
 }: {
   variant: "modal" | "page";
+  systemName?: string;
+  systeme?: SystemeDetail | null;
 }) {
-  const sectionGap = variant === "modal" ? "space-y-8" : "space-y-8";
+  const sectionGap = variant === "modal" ? "space-y-16" : "space-y-8";
   const sectionClass =
     variant === "modal"
       ? ""
       : "rounded-[1.15rem] border border-dema-line bg-dema-paper p-5";
+  const pillarCards = systeme?.cards?.length
+    ? systeme.cards.map((card) => card.pillar)
+    : organisationPillars;
+  const contextualTitle = systemName
+    ? `Les grands piliers analysés pour ${withArticle(systemName)}`
+    : "Ce qui va être analysé";
 
   return (
     <div className={sectionGap}>
       <section className={sectionClass}>
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="max-w-3xl">
+          <h3 className="text-xl font-semibold tracking-tight text-brand-blue md:text-2xl">
+            Quand l’organisation devient indispensable
+          </h3>
+        </div>
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {organisationSignals.map((item) => (
             <article
               key={item.title}
-              className="rounded-[0.95rem] border border-dema-line/70 bg-dema-cream/60 px-4 py-4 sm:rounded-[1rem]"
+              className="rounded-[0.95rem] border border-dema-line/70 bg-dema-cream/60 px-5 py-5 sm:rounded-[1rem] sm:px-6 sm:py-6"
             >
               <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage/55 text-dema-forest">
                 <item.icon className="h-4.5 w-4.5" aria-hidden="true" />
@@ -338,14 +363,10 @@ function OrganisationExpandedContent({
 
       <section className={sectionClass}>
         <h3 className="text-xl font-semibold tracking-tight text-brand-blue md:text-2xl">
-          Ce qui va être analysé
+          {contextualTitle}
         </h3>
-        <p className="mt-3 max-w-3xl text-sm leading-relaxed text-dema-muted">
-          On regarde les grands sujets qui ralentissent l&apos;entreprise, créent de la
-          dépendance au dirigeant ou rendent l&apos;exécution plus lourde qu&apos;elle ne devrait l&apos;être.
-        </p>
         <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-          {organisationPillars.map((pillar, index) => (
+          {pillarCards.map((pillar, index) => (
             <div
               key={pillar}
               className="rounded-[0.95rem] border border-dema-line/70 bg-dema-cream/60 px-4 py-4"
@@ -481,6 +502,21 @@ function AssistantExpandedContent({
       <FaqSection title="Questions fréquentes" items={assistantFaq} />
     </div>
   );
+}
+
+function withArticle(systemName: string) {
+  const lowerName = systemName.trim().toLowerCase();
+
+  if (
+    lowerName.startsWith("cabinet ") ||
+    lowerName.startsWith("agence ") ||
+    lowerName.startsWith("entreprise ") ||
+    lowerName.startsWith("organisme ")
+  ) {
+    return `un ${lowerName}`;
+  }
+
+  return lowerName;
 }
 
 function FiscalAuditExpandedContent({

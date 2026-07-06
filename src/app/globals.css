@@ -46,7 +46,7 @@
   }
 
   .demaa-accordion {
-    @apply rounded-[1.25rem] border border-dema-line bg-dema-paper shadow-[0_8px_24px_rgba(23,35,29,0.035)] transition;
+    @apply rounded-[1.25rem] border border-dema-line bg-dema-paper shadow-[0_3px_10px_rgba(23,35,29,0.018)] transition;
   }
 
   .demaa-accordion:hover {

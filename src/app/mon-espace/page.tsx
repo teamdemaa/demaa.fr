@@ -99,7 +99,8 @@ export default async function MonEspacePage({ searchParams }: MonEspacePageProps
     payments.map(async (payment) => ({
       ...payment,
       assistantAccessToken:
-        payment.orderType !== "service_bundle"
+        payment.orderType !== "service_bundle" &&
+        payment.orderType !== "sector_system"
           ? await createAssistantAccessToken(payment.stripeSessionId)
           : null,
     }))

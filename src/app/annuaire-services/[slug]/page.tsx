@@ -10,6 +10,9 @@ import ServiceExpandedContent from "@/components/ServiceExpandedContent";
 import { hasExpandedServiceContent } from "@/lib/service-expanded-content";
 import { getServicePageMetadata } from "@/lib/service-metadata";
 import { getRelatedSystemsForServiceSlug } from "@/lib/related-systems";
+import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
+import { enterpriseToSystem } from "@/lib/enterprise-annuaire";
+import { buildOperationalSystemDetail } from "@/lib/system-operations";
 import { demaaServices, getDemaaServiceBySlug } from "@/lib/service-catalog";
 import {
   RECRUITMENT_ASSISTANT_SERVICE_SLUG,
@@ -19,7 +22,14 @@ type ServiceDetailPageProps = {
   params: Promise<{
     slug: string;
   }>;
+  searchParams: Promise<{
+    retourSysteme?: string | string[];
+  }>;
 };
+
+function getParamValue(value?: string | string[]) {
+  return Array.isArray(value) ? value[0] : value;
+}
 
 export async function generateStaticParams() {
   return demaaServices.map((service) => ({
@@ -52,8 +62,9 @@ export async function generateMetadata({
 
 export default async function ServiceDetailPage({
   params,
+  searchParams,
 }: ServiceDetailPageProps) {
-  const { slug } = await params;
+  const [{ slug }, resolvedSearchParams] = await Promise.all([params, searchParams]);
   if (slug === "organisation-automatisation") {
     permanentRedirect("/annuaire-services/organisation");
   }
@@ -71,6 +82,14 @@ export default async function ServiceDetailPage({
   }
 
   const relatedSystems = getRelatedSystemsForServiceSlug(service.slug);
+  const returnSystemSlug = getParamValue(resolvedSearchParams.retourSysteme);
+  const returnEnterprise = returnSystemSlug
+    ? await getEnterpriseBySlug(returnSystemSlug)
+    : null;
+  const returnSystemDetail =
+    service.slug === "organisation-automatisation" && returnEnterprise
+      ? await buildOperationalSystemDetail(enterpriseToSystem(returnEnterprise))
+      : null;
 
   return (
     <>
@@ -91,7 +110,12 @@ export default async function ServiceDetailPage({
 
           {hasExpandedServiceContent(service.slug) ? (
             <section className="mt-5">
-              <ServiceExpandedContent serviceSlug={service.slug} variant="page" />
+              <ServiceExpandedContent
+                serviceSlug={service.slug}
+                variant="page"
+                systemName={returnEnterprise?.name}
+                systeme={returnSystemDetail?.systeme}
+              />
             </section>
           ) : null}
 

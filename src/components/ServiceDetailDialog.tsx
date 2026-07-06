@@ -41,7 +41,7 @@ export default function ServiceDetailDialog({
           }`}
           onClick={(event) => event.stopPropagation()}
         >
-          <div className="flex items-start justify-between gap-3 border-b border-dema-line px-4 py-4 sm:gap-4 sm:px-5">
+          <div className="flex items-start justify-between gap-3 border-b border-dema-line px-5 py-5 sm:gap-4 sm:px-6 sm:py-5">
             <div className="flex min-w-0 items-center gap-3">
               <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest sm:h-12 sm:w-12">
                 <ServiceIcon icon={service.icon} className="h-5 w-5" aria-hidden="true" />
@@ -67,7 +67,7 @@ export default function ServiceDetailDialog({
             </div>
           </div>
 
-          <div className="min-h-0 overflow-y-auto p-5 soft-scroll sm:p-6 md:p-7">
+          <div className="min-h-0 overflow-y-auto p-6 soft-scroll sm:p-7 md:p-8">
             <p className="max-w-3xl text-[1.02rem] leading-relaxed text-dema-muted sm:text-[1.08rem] md:text-[1.15rem]">
               {service.description}
             </p>

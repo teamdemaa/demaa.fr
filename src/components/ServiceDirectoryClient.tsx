@@ -78,19 +78,14 @@ const serviceTestimonial = {
 
 const SERVICE_SECTION_CONFIG: ReadonlyArray<{
   title: string;
-  description: string;
   categories: readonly ServiceCategory[];
 }> = [
   {
     title: "Sécuriser l’entreprise",
-    description:
-      "Les sujets qui protègent la trésorerie, clarifient l’administratif et évitent que les blocages s’accumulent.",
     categories: ["Juridique", "Finance", "Support opérationnel"] as const,
   },
   {
     title: "Développer et organiser l’activité",
-    description:
-      "Les services pour structurer l’exécution, gagner en visibilité et faire avancer l’activité plus sereinement.",
     categories: ["Systèmes", "Acquisition", "Contenu"] as const,
   },
 ] as const;
@@ -216,7 +211,7 @@ export default function ServiceDirectoryClient({
       <section
         className={
           heroTitleLines
-            ? "ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] w-screen bg-dema-cream px-4 pb-5 pt-5 text-center md:px-8 md:pb-6 md:pt-16"
+            ? "ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] w-screen bg-dema-cream px-4 pb-5 pt-9 text-center md:px-8 md:pb-6 md:pt-16"
             : "w-full border-b border-dema-line/65 bg-dema-cream px-4 pb-5 pt-8 md:pt-10"
         }
       >
@@ -309,7 +304,7 @@ export default function ServiceDirectoryClient({
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 pb-7 pt-4 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 pb-7 pt-8 sm:px-6 md:pt-10 lg:px-8">
         {activeCategory !== "Tous" || searchQuery ? (
           <div className="flex flex-col gap-3 pb-4 sm:flex-row sm:items-center sm:justify-end">
             <div className="flex items-center justify-end">
@@ -339,12 +334,9 @@ export default function ServiceDirectoryClient({
             {serviceSections.map((section) => (
               <section key={section.title} className="space-y-5">
                 <div className="max-w-3xl">
-                  <h2 className="text-2xl font-semibold tracking-tight text-brand-blue md:text-[2rem]">
+                  <h2 className="text-2xl font-normal tracking-tight text-brand-blue md:text-[2rem]">
                     {section.title}
                   </h2>
-                  <p className="mt-2 text-sm leading-relaxed text-dema-muted md:text-[0.98rem]">
-                    {section.description}
-                  </p>
                 </div>
 
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-3">

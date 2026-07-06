@@ -39,13 +39,12 @@ export default function Loading() {
 
             <div className="mt-4 flex gap-2 overflow-x-auto pb-2">
               {[
+                "Systèmes",
                 "Outils",
                 "Fournisseurs",
-                "Expert comptable",
                 "Financement",
                 "Réseau pro",
-                "Ressources",
-                "Formation",
+                "Cours",
               ].map((label, index) => (
                 <div
                   key={label}

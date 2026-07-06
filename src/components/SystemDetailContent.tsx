@@ -21,14 +21,13 @@ import ProNetworkDetailDialog from "@/components/ProNetworkDetailDialog";
 import RecruitmentDetailDialog from "@/components/RecruitmentDetailDialog";
 import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
 import SupplierDetailDialog from "@/components/SupplierDetailDialog";
+import SystemeTabContent from "@/components/SystemeTabContent";
 import TrainingDetailDialog from "@/components/TrainingDetailDialog";
 import type { DemaaAidItem } from "@/lib/aid-catalog";
 import { getRecommendedAidsForSystem } from "@/lib/aid-recommendations";
-import { getDocumentModelsForSystem, type DocumentModel } from "@/lib/document-models";
 import { getFreeToolsForSystem } from "@/lib/free-tools";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import CourseSlidesDialog from "@/components/CourseSlidesDialog";
-import DocumentModelPreview from "@/components/DocumentModelPreview";
 import {
   getFinanceCardBadge,
   getProNetworkCardBadge,
@@ -36,7 +35,6 @@ import {
 } from "@/lib/card-badges";
 import type { CourseEntry } from "@/lib/course-content";
 import type { DemaaFinanceItem } from "@/lib/finance-catalog";
-import { getRelatedNewslettersForSystemSlug, type NewsletterEntry } from "@/lib/newsletters";
 import { getRecommendedFinanceForSystem } from "@/lib/finance-recommendations";
 import type { DemaaProNetwork } from "@/lib/pro-network-catalog";
 import { getRecommendedProNetworksForSystem } from "@/lib/pro-network-recommendations";
@@ -296,11 +294,11 @@ export default function SystemDetailContent({
   headingId,
 }: SystemDetailContentProps) {
   const defaultTab =
-    initialActiveTab === "cours"
+    initialActiveTab === "cours" || initialActiveTab === "formation"
       ? "ressources"
       : isSystemDetailTab(initialActiveTab)
         ? initialActiveTab
-        : "outils";
+        : "systeme";
   const [activeTab, setActiveTab] = useState<SystemDetailTab>(defaultTab);
   const [selectedToolDetail, setSelectedToolDetail] = useState<ToolDirectoryItem | null>(null);
   const [selectedSupplierDetail, setSelectedSupplierDetail] = useState<DemaaSupplier | null>(null);
@@ -309,6 +307,10 @@ export default function SystemDetailContent({
   const [selectedRecruitmentDetail, setSelectedRecruitmentDetail] = useState<DemaaRecruitmentItem | null>(null);
   const [selectedTrainingDetail, setSelectedTrainingDetail] = useState<DemaaTraining | null>(null);
   const [selectedCourse, setSelectedCourse] = useState<CourseEntry | null>(null);
+  const systemeDetail = useMemo(
+    () => (activeTab === "systeme" ? detail.systeme : null),
+    [activeTab, detail.systeme]
+  );
   const recommendedSuppliers = useMemo(
     () => (activeTab === "fournisseurs" ? getRecommendedSuppliersForSystem(system.slug) : []),
     [activeTab, system.slug]
@@ -333,14 +335,6 @@ export default function SystemDetailContent({
   );
   const courses = useMemo(
     () => (activeTab === "ressources" ? getRelatedCoursesForSystemSlug(system.slug) : []),
-    [activeTab, system.slug]
-  );
-  const newsletters = useMemo(
-    () => (activeTab === "ressources" ? getRelatedNewslettersForSystemSlug(system.slug) : []),
-    [activeTab, system.slug]
-  );
-  const documentModels = useMemo(
-    () => (activeTab === "ressources" ? getDocumentModelsForSystem(system.slug) : []),
     [activeTab, system.slug]
   );
   const recommendedTrainings = useMemo(
@@ -716,34 +710,6 @@ export default function SystemDetailContent({
     );
   }
 
-  function renderNewsletterCard(newsletter: NewsletterEntry) {
-    return (
-      <Link
-        key={newsletter.slug}
-        href={newsletter.href}
-        className={SYSTEM_CARD_CLASS}
-      >
-        <div className="flex items-start justify-between gap-4">
-          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper">
-            <CalendarDays className="h-4 w-4" aria-hidden="true" />
-          </span>
-        </div>
-        <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
-          {newsletter.frequency} · Newsletter
-        </p>
-        <h3 className={SYSTEM_CARD_TITLE_CLASS}>
-          {newsletter.title}
-        </h3>
-        <p className={SYSTEM_CARD_DESCRIPTION_CLASS}>
-          {newsletter.description}
-        </p>
-        <p className="mt-4 text-xs font-medium text-dema-muted">
-          Editeur recommande : <span className="text-brand-blue">{newsletter.publisher}</span>
-        </p>
-      </Link>
-    );
-  }
-
   function renderFreeToolCard(tool: ToolDirectoryItem) {
     return (
       <Link
@@ -851,7 +817,7 @@ export default function SystemDetailContent({
 
       <div className="mt-4 flex flex-col gap-2 text-left sm:flex-row sm:flex-wrap">
         <Link
-          href={ORGANISATION_AUDIT_MODAL_HREF}
+          href={`${ORGANISATION_AUDIT_MODAL_HREF}?retourSysteme=${encodeURIComponent(system.slug)}`}
           scroll={false}
           className="demaa-primary-button self-start"
         >
@@ -863,13 +829,12 @@ export default function SystemDetailContent({
         <div className="flex min-w-max items-center gap-2 whitespace-nowrap">
           {(
             [
+              ["systeme", "Systèmes"],
               ["outils", "Outils"],
               ["fournisseurs", "Fournisseurs"],
               ["financement", "Financement"],
               ["reseaux-pro", "Réseau pro"],
-              ["recrutement", "Recrutement"],
-              ["ressources", "Ressources"],
-              ["formation", "Formation"],
+              ["ressources", "Cours"],
             ] as Array<[SystemDetailTab, string]>
           ).map(([tab, label]) => (
             <button
@@ -889,7 +854,9 @@ export default function SystemDetailContent({
       </div>
 
       <div className="mt-5">
-        {activeTab === "outils" ? (
+        {activeTab === "systeme" ? (
+          <SystemeTabContent systemName={system.name} systeme={systemeDetail} />
+        ) : activeTab === "outils" ? (
           <div className="space-y-5">
             {(() => {
               const businessTools = detail.tools.filter((tool) => !isTransverseTool(tool));
@@ -1089,12 +1056,9 @@ export default function SystemDetailContent({
         ) : activeTab === "ressources" ? (
           <div className="space-y-5">
             {courses.length ? (
-              <div className="space-y-4">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-                  Cours
-                </p>
+              <div>
                 <HorizontalScrollHint
-                  className="-mx-4 overflow-x-auto px-4 pb-4 pt-1 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
+                  className="-mx-4 overflow-x-auto px-4 pb-4 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
                   controlsClassName="absolute -right-2 -top-9 z-10 flex items-center gap-1.5 sm:-right-3"
                 >
                   <div className="flex w-max snap-x snap-mandatory gap-4">
@@ -1111,54 +1075,6 @@ export default function SystemDetailContent({
                 {renderBrowseAllLink({
                   browseHref: `/cours?retourSysteme=${encodeURIComponent(system.slug)}`,
                   browseLabel: "Voir tous les cours",
-                })}
-              </div>
-            ) : null}
-            {newsletters.length ? (
-              <div className="space-y-4">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-muted">
-                  Newsletters recommandées
-                </p>
-                <HorizontalScrollHint
-                  className="-mx-4 overflow-x-auto px-4 pb-4 pt-1 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
-                  controlsClassName="absolute -right-2 -top-9 z-10 flex items-center gap-1.5 sm:-right-3"
-                >
-                  <div className="flex w-max snap-x snap-mandatory gap-4">
-                    {newsletters.map((newsletter) => (
-                      <div
-                        key={newsletter.slug}
-                        className="w-[18rem] shrink-0 snap-start sm:w-[19rem] lg:w-[20rem]"
-                      >
-                        {renderNewsletterCard(newsletter)}
-                      </div>
-                    ))}
-                  </div>
-                </HorizontalScrollHint>
-              </div>
-            ) : null}
-            {documentModels.length ? (
-              <div className="space-y-4">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-muted">
-                  Modèles de documents
-                </p>
-                <HorizontalScrollHint
-                  className="-mx-4 overflow-x-auto px-4 pb-4 pt-1 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
-                  controlsClassName="absolute -right-2 -top-9 z-10 flex items-center gap-1.5 sm:-right-3"
-                >
-                  <div className="flex w-max snap-x snap-mandatory gap-4">
-                    {documentModels.map((model) => (
-                      <div
-                        key={model.slug}
-                        className="w-[18rem] shrink-0 snap-start sm:w-[19rem] lg:w-[20rem]"
-                      >
-                        {renderDocumentModelCard(model)}
-                      </div>
-                    ))}
-                  </div>
-                </HorizontalScrollHint>
-                {renderBrowseAllLink({
-                  browseHref: "/modeles-de-documents",
-                  browseLabel: "Voir tous les modèles de documents",
                 })}
               </div>
             ) : null}
@@ -1259,26 +1175,3 @@ function handleRecruitmentDetailClick(
   event.preventDefault();
   onOpenDetails(item);
 }
-
-  function renderDocumentModelCard(model: DocumentModel) {
-    return (
-      <Link
-        key={model.slug}
-        href={`/modeles-de-documents/${model.slug}`}
-        className={SYSTEM_CARD_CLASS}
-      >
-        <div className="-m-5 mb-0 relative aspect-[16/9] overflow-hidden rounded-t-[1.15rem] border-b border-dema-line bg-white">
-          <DocumentModelPreview model={model} />
-        </div>
-        <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
-          {model.category}
-        </p>
-        <h3 className={SYSTEM_CARD_TITLE_CLASS}>
-          {model.title}
-        </h3>
-        <p className={SYSTEM_CARD_DESCRIPTION_CLASS}>
-          {model.description}
-        </p>
-      </Link>
-    );
-  }

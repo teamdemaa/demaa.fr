@@ -52,6 +52,7 @@ export default async function SystemDetailPage({
   }
 
   const initialTab = getParamValue(resolvedSearchParams.tab);
+  const normalizedInitialTab = initialTab === "cours" ? "ressources" : initialTab;
   const jsonLd = buildSystemPageJsonLd(data);
 
   return (
@@ -76,7 +77,7 @@ export default async function SystemDetailPage({
               system={data.system}
               detail={data.detail}
               intro={buildSystemPageIntro(data)}
-              initialActiveTab={isSystemDetailTab(initialTab) ? initialTab : undefined}
+              initialActiveTab={isSystemDetailTab(normalizedInitialTab) ? normalizedInitialTab : undefined}
               headingAs="h1"
             />
           </div>
