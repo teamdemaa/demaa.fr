@@ -46,12 +46,13 @@ export async function GET(
   await Promise.all(
     downloadableEntries.map(async (entry) => {
       const extension = path.extname(entry.href) || ".csv";
+      const pillarFolder = normalizeFileSegment(entry.pillar);
       const filename = `${String(entry.index + 1).padStart(2, "0")}-${normalizeFileSegment(
         entry.document,
       )}${extension}`;
       const fileBuffer = await readFile(getPublicFilePath(entry.href));
 
-      zip.file(path.posix.join(rootFolderName, filename), fileBuffer);
+      zip.file(path.posix.join(rootFolderName, pillarFolder, filename), fileBuffer);
     }),
   );
 
