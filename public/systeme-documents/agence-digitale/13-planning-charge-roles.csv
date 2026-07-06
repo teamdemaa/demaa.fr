@@ -1,0 +1,5 @@
+Collaborateur,Rôle principal,Charge actuelle,Back-up 1,Back-up 2,Niveau autonomie,Point de vigilance,Notes
+Dirigeant,Vente et arbitrages,"Charge elevee sur closing et recadrage client",Chef de projet,,Elevé,"Sortir des micro-validations",
+Chef de projet,Coordination delivery,"6 projets actifs",Dirigeant,Designer,Elevé,"Mieux lisser validations client",
+Designer / DA,Creation visuelle,"4 projets simultanes",Chef de projet,Freelance,Intermediaire,"Attention aux pics fin de semaine",
+Traffic / CM,Activation et suivi perf,"3 comptes actifs + reporting",Chef de projet,Freelance,Bon,"Verifier temps recurrent invisible",

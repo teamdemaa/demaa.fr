@@ -1,0 +1,7 @@
+Sujet,Responsable,Peut decider seul,Doit valider avec,À informer,Condition / seuil
+Achat d'une opportunité,Dirigeant,Non,Comite d'investissement,Responsable portefeuille,"Si prix > 250000 EUR"
+Lancement de travaux,Chef de projet,Oui,Dirigeant,Responsable portefeuille,"Si budget respecte le plan valide"
+Changement de stratégie de sortie,Dirigeant,Non,Responsable portefeuille,Partenaires financiers,"Si impact sur rendement ou delai"
+Remise commerciale locataire ou acquéreur,Responsable portefeuille,Oui,Dirigeant,Responsable admin,"Dans la limite de 1000 EUR"
+Refacturation d'un imprévu chantier,Chef de projet,Oui,Dirigeant,Responsable admin,"Si justificatif disponible"
+Choix d'un nouveau partenaire,Responsable portefeuille,Non,Dirigeant,Equipe projet,"Pour tout nouveau prestataire critique"

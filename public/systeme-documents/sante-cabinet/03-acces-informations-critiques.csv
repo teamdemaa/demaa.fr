@@ -1,0 +1,6 @@
+Type,Element,Ou trouver,Responsable,Acces,Verification,Notes
+Agenda,Acces logiciel RDV,"Gestionnaire mots de passe",Responsable accueil,Accueil + praticiens,Mensuel,"Verifier droits par role"
+Dossiers,Acces dossier patient / logiciel,"Gestionnaire mots de passe + procedure",Dirigeant,Praticiens + assistante,Mensuel,"Tracer les acces"
+Paiement,Terminal et facturation,"Classeur accueil + coffre mots de passe",Assistante,Accueil,Hebdomadaire,"Tester procedure panne"
+Conformite,Modeles consentement et affichages,Drive conformite,Dirigeant,Assistante + praticiens,Trimestriel,"Version unique"
+Urgence,Contacts support logiciel / maintenance,Classeur urgence,Assistante,Equipe,Trimestriel,"Afficher a l'accueil"

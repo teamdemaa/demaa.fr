@@ -1,0 +1,4 @@
+Client,Contrat,Montant facture,Date échéance,Réglé,Relance,Responsable,Statut
+Immeuble Nova,Mensuel juillet,1450 EUR,2026-07-10,Oui,Non,Assistante admin,Clos
+Site Atlas,Mensuel juillet,2200 EUR,2026-07-12,Non,Oui,Assistante admin,Ouvert
+Boutique Centre,Mensuel juillet,520 EUR,2026-07-09,Oui,Non,Assistante admin,Clos

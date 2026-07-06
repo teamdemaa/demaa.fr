@@ -1,0 +1,7 @@
+Bloc,Sujet,Emplacement,Responsable,Acces,Vérification,Notes
+Outils,Messagerie et agenda,Google Workspace / Outlook,Dirigeant,Equipe autorisee,Mensuel,"Verifier acces entrants / sortants"
+Missions,Planning et dossier mission,Tableau suivi / Drive,Responsable mission,Equipe mission,Hebdomadaire,"Source unique du statut"
+Terrain,Plans, relevés, photos, compte rendu,Dossier mission partage,Referent terrain,Equipe mission,Hebdomadaire,"Arborescence standard"
+Finance,Devis, factures et encours,Tableau administratif,Responsable admin,Direction + admin,Hebdomadaire,"Base relances"
+Conformité,Attestations et assurances,Dossier conformite,Dirigeant,Direction + admin,Trimestriel,"RC pro, habilitations, attestations"
+Continuite,Contacts site / client / notaire,Fiche contacts critiques,Responsable admin,Equipe cle,Mensuel,"Interlocuteurs terrain et validation"

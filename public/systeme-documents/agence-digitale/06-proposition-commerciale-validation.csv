@@ -1,0 +1,8 @@
+Bloc,Sujet,Contenu exemple,Responsable,Statut,Notes
+Offre,Positionnement,"Agence qui clarifie l'offre, produit les livrables et tient les delais sans chaos",Dirigeant,A jour,
+Offre,Promesse claire,"Plus de lisibilite, moins d'allers-retours et un rendu plus simple a valider",Dirigeant,A jour,
+Proposition,Périmètre,"Cadrage, production, allers-retours inclus, livrables et dates",Chef de projet,A verifier,
+Proposition,Ce qui n'est pas inclus,"Demandes hors perimetre, ajouts non prevus, nouvelles versions majeures",Chef de projet,A verifier,
+Validation,Circuit de validation,"1 interlocuteur client, 1 retour consolide, 1 date butoir",Dirigeant,A jour,
+Validation,Jalons de facturation,"Acompte, jalon intermediaire, solde a livraison",Office manager,A jour,
+Validation,Conditions de lancement,"Devis signe, acompte recu, brief complet, acces fournis",Office manager,A jour,

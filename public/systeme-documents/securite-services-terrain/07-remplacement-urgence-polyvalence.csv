@@ -1,0 +1,4 @@
+Personne,Role,Sait site 1,Sait site 2,Sait site 3,Remplacant 1,Remplacant 2,Consigne clé
+Celine,Intervenante nettoyage,Oui,Non,Oui,Laura,Karim,Photographier écarts si besoin
+Karim,Agent terrain,Oui,Oui,Non,Laura,Celine,Tracer tout incident
+Laura,Intervenante polyvalente,Oui,Oui,Oui,Celine,Karim,Confirmer prise de poste par SMS

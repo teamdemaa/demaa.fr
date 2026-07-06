@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import ServiceDirectoryClient from "@/components/ServiceDirectoryClient";
 import { getDelegationServices } from "@/lib/delegation-services";
 import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
+import { ORGANISATION_AUDIT_MODAL_HREF } from "@/lib/organisation-audit";
 import { serviceCategories } from "@/lib/service-catalog";
 
 export const metadata: Metadata = {
@@ -64,14 +66,31 @@ export default async function HomePage({ searchParams }: HomePageProps) {
           hideSearchControls
           backLink={backLink}
           heroTitleLines={{
-            primary: "Déléguez",
-            secondary: "ce qui vous ralentit",
+            primary: "Structurez",
+            secondary: "votre entreprise",
           }}
           invertHeroTitleStyles
           heroDescriptionLines={{
-            primary: "Votre entreprise ne devrait pas reposer que sur vous.",
+            primary: "Votre entreprise doit pouvoir grandir sans reposer uniquement sur vous.",
             secondary: "",
           }}
+          heroActions={
+            <>
+              <Link
+                href="#services-showcase"
+                className="demaa-primary-button px-5 py-2.5"
+              >
+                Voir par où commencer
+              </Link>
+              <Link
+                href={ORGANISATION_AUDIT_MODAL_HREF}
+                scroll={false}
+                className="demaa-secondary-button px-5 py-2.5"
+              >
+                Diagnostic organisation offert
+              </Link>
+            </>
+          }
         />
       </main>
     </>

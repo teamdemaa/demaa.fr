@@ -1,0 +1,8 @@
+Bloc,Sujet,Emplacement,Responsable,Acces,Vérification,Notes
+Outils,Messagerie et agenda,Google Workspace / Outlook,Dirigeant,Equipe autorisee,Mensuel,"Verifier acces entrants / sortants"
+Commercial,Prospects et devis,CRM ou tableau commercial,Dirigeant,Direction + commerce,Hebdomadaire,"Source unique du pipe"
+Production,Briefs et livrables,Drive / Notion projets,Chef de projet,Equipe projet,Hebdomadaire,"Arborescence commune"
+Finance,Facturation et encours,Tableau administratif,Office manager,Direction + admin,Hebdomadaire,"Base des relances"
+Création,Acces outils design / pub / analytics,Tableau acces outils,Chef de projet,Equipe concernee,Mensuel,"Meta, Ads, GA4, CMS, Figma"
+Conformité,Contrats et cessions de droits,Dossier contractuel,Dirigeant,Direction + admin,Trimestriel,"Verifier versions signees"
+Continuite,Contacts clients et freelances critiques,Fiche contacts critiques,Office manager,Equipe cle,Mensuel,"Inclure numeros directs"

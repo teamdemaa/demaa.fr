@@ -1,0 +1,5 @@
+Collaborateur,Rôle principal,Charge actuelle,Back-up,Passation clé,Niveau autonomie,Notes
+Dirigeant,Arbitrages propriétaires sensibles,"Charge forte sur arbitrages tarifs/remboursements",Responsable exploitation,"Dossiers sensibles et incidents ouverts",Elevé,
+Responsable exploitation,Planning logements et incidents,"18 séjours en cours / semaine",Responsable admin,"Arrivées, départs, urgences, propriétaires à rappeler",Elevé,
+Responsable admin,Reversements et suivi plateforme,"Suivi versements / frais / pièces",Responsable exploitation,"Reversements en attente, justificatifs",Bon,
+Equipe ménage / terrain,Préparation logements,"Turnovers quotidiens",Responsable exploitation,"Consignes logement, stock, anomalies constatées",Intermediaire,

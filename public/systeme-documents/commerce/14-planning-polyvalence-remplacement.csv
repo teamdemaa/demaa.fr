@@ -1,0 +1,4 @@
+Personne,Poste principal,Sait tenir caisse,Sait faire vitrine,Sait receptionner livraison,Remplacant 1,Remplacant 2,Notes
+Camille,Responsable boutique,Oui,Oui,Oui,Laura,Dirigeant,"Pilote samedi"
+Laura,Vendeuse,Oui,Non,Oui,Camille,Dirigeant,"Peut ouvrir seule"
+Nina,Vendeuse et mise en rayon,Oui,Oui,Non,Laura,Camille,"Besoin d'autonomie sur reserve"

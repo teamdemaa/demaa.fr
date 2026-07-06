@@ -1,0 +1,5 @@
+Date,Client,Demande,Canal,Priorité,SLA cible,Responsable,Statut,Notes
+2026-07-06,PME Atlas,Contrat de travail a corriger,Email,Haute,J+1,Responsable operations,A traiter,
+2026-07-06,Startup Nilo,Tri CV commerciaux,Slack,Moyenne,J+2,Referent recrutement,A traiter,
+2026-07-06,Societe Lumen,Ticket client escalade,Helpdesk,Haute,J+0,Referent support,A traiter,
+2026-07-06,Cabinet Verdanis,Onboarding nouveau salarie,Email,Moyenne,J+2,Referent RH,A planifier,

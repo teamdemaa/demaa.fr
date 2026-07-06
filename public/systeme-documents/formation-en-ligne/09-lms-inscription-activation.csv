@@ -1,0 +1,5 @@
+Étape,Action,Responsable,Échéance,Statut,Notes
+Inscription,Créer compte apprenant,Responsable support,J0,A suivre,
+Activation,Vérifier email automatique,Responsable support,J0,A suivre,
+Support,Tester accès module 1,Responsable support,J0,A suivre,
+Archivage,Exporter preuve inscription,Responsable admin,J+1,A suivre,

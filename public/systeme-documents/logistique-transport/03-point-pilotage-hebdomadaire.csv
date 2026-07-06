@@ -1,0 +1,7 @@
+Bloc,Question,Valeur semaine,Responsable,Decision / action,Echeance
+Service,Taux de service a l'heure,93 %,Exploitant,"Revoir planning lundi et vendredi",Cette semaine
+Missions,Nombre de missions,118,Exploitant,"Comparer au previsionnel",Fin semaine
+Incidents,Retards / pannes / refus client,7,Exploitant,"Traiter top 3 causes",Immediat
+Flotte,Vehicules indisponibles,1,Dirigeant,"Verifier maintenance preventive",Semaine suivante
+Marge,Missions sous-margees,4,Dirigeant,"Revoir tarification ou tournées",Cette semaine
+Tresorerie,Encaissements en attente,6400 EUR,Assistante admin,"Relancer comptes echus",Mardi

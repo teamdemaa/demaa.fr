@@ -1,0 +1,8 @@
+Bloc,Sujet,Valeur,Responsable,Echeance,Statut,Notes
+Vision,Nom de l'etablissement,"Studio Alma - beaute et bien-etre",Dirigeant,2026-12-31,Exemple,"Equipe de 4 personnes"
+Vision,Cap sur 12 mois,"Fluidifier les rendez-vous, reduire les no-show, standardiser les prestations et mieux suivre le chiffre au quotidien",Dirigeant,2026-12-31,Valide,"A revoir chaque trimestre"
+Vision,Objectif principal,"Atteindre 85 % de taux de remplissage avec un no-show < 4 % et une experience cliente stable",Dirigeant,2026-12-31,Valide,"Base de pilotage annuel"
+Vision,Positionnement,"Offrir une experience soignee, ponctuelle et rassurante avec des prestations bien executees",Dirigeant,2026-12-31,Valide,"A reprendre dans les scripts d'accueil"
+Priorite trimestrielle,Priorite 1,"Mettre a jour les protocoles des 10 prestations les plus vendues",Responsable prestation,2026-09-15,En cours,"Version unique"
+Priorite trimestrielle,Priorite 2,"Structurer la relance no-show et confirmation RDV",Responsable accueil,2026-09-10,A lancer,"Automatiser si possible"
+Priorite trimestrielle,Priorite 3,"Suivre le CA quotidien et les creux planning",Dirigeant,2026-09-30,A lancer,"Lecture chaque soir"

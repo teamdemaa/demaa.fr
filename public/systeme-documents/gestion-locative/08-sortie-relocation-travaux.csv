@@ -1,0 +1,7 @@
+Étape,Sujet,Responsable,Statut attendu,Échéance,Notes
+Sortie,Préavis et date de sortie confirmés,Responsable gestion,Fait,Avant EDL sortie,
+Sortie,État des lieux de sortie planifié,Responsable gestion,Fait,Sous 7 jours,
+Travaux,Devis travaux ou remise en état reçus,Responsable gestion,Recu,Sous 5 jours,
+Relocation,Nouvelle annonce / diffusion prête,Responsable gestion,Fait,Apres arbitrage travaux,
+Relocation,Dossier candidats relancé,Responsable gestion,Fait,Apres remise en location,
+Clôture,Dépôt de garantie et comptes clôturés,Responsable admin,Fait,Fin de cycle,

@@ -1,0 +1,8 @@
+Étape,Sujet,Responsable,Statut attendu,Échéance,Notes
+Ouverture,Identite et profil client verifies,Responsable portefeuille,Fait,Avant lancement,
+Ouverture,Mandat ou devis signe,Responsable admin,Fait,Avant lancement,
+Pieces,Pieces minimales recues,Referent dossier,Recu,Sous 48h,
+Pieces,Partenaires ou assureurs identifies,Responsable portefeuille,Fait,Sous 48h,
+Validation,Perimetre mission confirme,Dirigeant,Fait,Avant production,
+Suivi,Dossier cree dans l'arborescence unique,Referent dossier,Fait,Immediat,
+Suivi,Date de prochaine action planifiee,Responsable portefeuille,Fait,Immediat,

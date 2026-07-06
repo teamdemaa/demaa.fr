@@ -1,0 +1,6 @@
+Type,Element,Ou trouver,Responsable,Acces,Verification,Notes
+Planning,Outil de tournées / interventions,"Gestionnaire mots de passe",Responsable coordination,Coordination + intervenantes,Hebdomadaire,"Version unique"
+Dossiers,Fiches bénéficiaires / patients,Drive sécurisé,Dirigeant,Coordination + personnel autorisé,Hebdomadaire,"Acces limite"
+Paiement,Facturation et règlements,"Outil facturation + procedure",Assistante admin,Admin,Hebdomadaire,"Tester procedure panne"
+Urgence,Contacts proches / medecin / referent,Classeur urgence + fiche dossier,Responsable coordination,Equipe,Hebdomadaire,"Verifier numéros"
+Conformite,Justificatifs / prescriptions / contrats,Drive conformite,Dirigeant,Admin + coordination,Trimestriel,"Version unique"

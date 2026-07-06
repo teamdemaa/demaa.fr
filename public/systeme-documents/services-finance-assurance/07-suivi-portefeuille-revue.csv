@@ -1,0 +1,6 @@
+Moment,Déclencheur,Message type,Canal,Responsable,Échéance,Statut,Notes
+Mensuel,Revue portefeuille,"Partager dossiers ouverts, points de vigilance et prochaines actions",Email,Responsable portefeuille,Mensuel,A planifier,
+Trimestriel,Revue client,"Faire le point sur besoins, encours ou ajustements de couverture",Visio,Dirigeant,Trimestriel,A planifier,
+Incident,Sinistre ou tension,"Informer le client du statut, des pieces manquantes et de la suite",Email + appel,Responsable portefeuille,Immediat,A faire,
+Satisfaction,Issue positive ou arbitrage clos,"Demander retour ou recommandation",Email,Responsable admin,Sous 72h,A faire,
+Reactivation,Client inactif,"Proposer un point portefeuille ou mise a jour",Email,Dirigeant,Mensuel,A planifier,

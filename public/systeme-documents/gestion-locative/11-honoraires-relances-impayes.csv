@@ -1,0 +1,5 @@
+Client / lot,Facture / impayé,Montant,Échéance,Niveau de relance,Action type,Responsable,Statut,Notes
+Lot 8 M. T.,Impayé loyer,420 EUR,2026-07-03,Niveau 2,Appel + mail rappel,Responsable admin,En cours,
+SCI Dumas,Facture honoraires juin,180 EUR,2026-06-30,Niveau 1,Email rappel facture,Responsable admin,A lancer,
+Lot 5 Mme B.,Régularisation charges,95 EUR,2026-07-12,A venir,Preparation appel,Responsable admin,A venir,
+Lot 2 M. R.,Impayé ancien,760 EUR,2026-06-18,Niveau 3,Relance formelle et arbitrage,Dirigeant,Sous surveillance,

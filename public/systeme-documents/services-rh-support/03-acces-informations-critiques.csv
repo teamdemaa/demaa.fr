@@ -1,0 +1,7 @@
+Bloc,Sujet,Emplacement,Responsable,Acces,Vérification,Notes
+Outils,Messagerie et agenda,Google Workspace / Outlook,Dirigeant,Equipe autorisee,Mensuel,"Verifier acces entrants / sortants"
+Production,Demandes clients et tickets,Outil support / tableau suivi,Responsable operations,Equipe production,Hebdomadaire,"Source unique de traitement"
+Clients,Contrats et perimetres,Dossier client partage,Responsable admin,Direction + operations,Mensuel,"Base pour arbitrer les demandes"
+Finance,Facturation et encours,Tableau administratif,Responsable admin,Direction + admin,Hebdomadaire,"Base des relances"
+Connaissance,Modeles et procedures,Base interne / Notion,Responsable operations,Equipe,Hebdomadaire,"Eviter les reponses ad hoc"
+Continuite,Contacts clients et escalade,Fiche contacts critiques,Responsable admin,Equipe cle,Mensuel,"Inclure remplaçants cote client"

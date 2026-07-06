@@ -1,0 +1,6 @@
+Sujet,Responsable,Peut decider seul,Doit valider avec,À informer,Condition / seuil
+Ouverture d'une session,Responsable pédagogique,Oui,Dirigeant,Equipe admin,"Si seuil minimum d'inscrits atteint"
+Annulation ou report,Dirigeant,Non,Responsable pédagogique,Apprenants et formateurs,"Si remplissage insuffisant"
+Remise commerciale,Responsable commercial,Oui,Dirigeant,Responsable admin,"Dans la limite de 10 %"
+Choix d'un nouveau formateur,Responsable pédagogique,Non,Dirigeant,Responsable admin,"Après vérification habilitations"
+Relance financeur,Responsable financement,Oui,Responsable admin,Dirigeant,"Selon échéance dépassée"

@@ -1,0 +1,5 @@
+Sujet,Responsable,Peut decider seul,Doit valider avec,À informer,Condition / seuil
+Signature devis,Responsable commercial,Oui,Dirigeant,Chef de projet,"Si marge > seuil cible"
+Ajout prestataire,Chef de projet,Oui,Dirigeant,Responsable admin,"Si budget respecté"
+Changement majeur jour J,Chef de projet,Non,Dirigeant,Client,"Si impact programme ou budget"
+Geste commercial,Responsable commercial,Oui,Dirigeant,Responsable admin,"Dans la limite de 10 %"

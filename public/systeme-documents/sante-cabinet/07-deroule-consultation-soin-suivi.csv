@@ -1,0 +1,4 @@
+Date,Patient,Motif,Praticien,Acte / soin realise,Suite recommandee,Prochain RDV,Document remis,Notes
+2026-07-01,Claire M,Suivi,Dr Martin,Consultation bilan,Controle dans 3 mois,2026-10-01,Compte rendu,Stabilite constatee
+2026-07-02,Nadia P,Douleur localisee,Dr Simon,Examen + orientation,Examens complementaires,2026-07-16,Ordonnance,Appel si aggravation
+2026-07-03,Lucas T,Controle,Dr Martin,Soin rapide,Aucune,,-,"Retour normal"

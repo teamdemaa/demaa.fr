@@ -1,0 +1,7 @@
+Type,Element,Ou trouver,Responsable,Acces,Verification,Notes
+Encaissement,Acces caisse / logiciel,"Gestionnaire mots de passe + classeur bureau",Dirigeant,Dirigeant + responsable,Mensuel,"Changer a chaque depart"
+Banque,Compte principal et acces web,"Gestionnaire mots de passe",Dirigeant,Dirigeant,Mensuel,"Double verification activee"
+Fournisseurs,Contacts et conditions achats,"Google Drive / Dossier fournisseurs",Responsable boutique,Equipe supporte,Mensuel,"Mettre a jour delais et franco"
+Stock,Inventaire et seuils de reassort,"Google Sheet stock",Responsable boutique,Equipe,Hebdomadaire,"Version unique"
+Urgence,Procedure panne caisse / terminal,"Classeur comptoir + Drive",Responsable boutique,Equipe,Trimestriel,"Faire test a blanc"
+Administratif,Assurance / bail / contrats,"Drive admin",Dirigeant,Dirigeant + responsable,Trimestriel,"Verifier echeances"

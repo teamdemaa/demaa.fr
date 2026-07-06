@@ -1,0 +1,7 @@
+Bloc,Document,Emplacement,Responsable,Fréquence de contrôle,Statut,Notes
+KYC,Dossier identité et justificatifs,Dossier conformité investisseur,Responsable conformité,À chaque entrée,A verifier,
+Mandats,Mandats signés et lettres d'engagement,Dossier juridique / mandats,Dirigeant,À chaque signature,A verifier,
+RGPD,Registre de traitement,Dossier conformité,Responsable conformité,Trimestriel,A verifier,
+Reporting,Historique communications investisseurs,Dossier reporting / archive,Responsable portefeuille,Mensuel,A verifier,
+Conformité métier,Contrôles périodiques et attestations,Dossier conformité / contrôles,Responsable conformité,Trimestriel,A verifier,
+Archivage,Preuves d'arbitrage et validations,Dossier gouvernance,Dirigeant,Mensuel,A verifier,

@@ -1,0 +1,12 @@
+Bloc,Sujet,Valeur,Responsable,Echeance,Statut,Notes
+Vision,Nom du cabinet,"Cabinet Horizon Sante - consultations pluridisciplinaires",Dirigeant,2026-12-31,Exemple,"Cabinet avec 4 praticiens et 1 assistante"
+Vision,Cap sur 12 mois,"Fluidifier l'accueil, reduire les retards, mieux suivre les dossiers et limiter les dependances au dirigeant",Dirigeant,2026-12-31,Valide,"A revoir chaque trimestre"
+Vision,Objectif principal,"Atteindre un planning rempli a 85 % avec moins de 5 % de no-show et une facturation securisee",Dirigeant,2026-12-31,Valide,"Base de pilotage annuel"
+Vision,Positionnement,"Offrir une prise en charge claire, rassurante et ponctuelle avec un suivi simple pour les patients",Dirigeant,2026-12-31,Valide,"A reprendre dans l'accueil et les supports"
+Priorite trimestrielle,Priorite 1,"Formaliser le parcours patient de la prise de rendez-vous au compte rendu",Responsable accueil,2026-09-15,En cours,"Limiter les oublis et les attentes"
+Priorite trimestrielle,Priorite 2,"Mettre a jour les consentements et pieces obligatoires sur 100 % des nouveaux dossiers",Assistante,2026-09-30,A lancer,"Controle hebdomadaire"
+Priorite trimestrielle,Priorite 3,"Clarifier qui gere les urgences, annulations et arbitrages planning",Dirigeant,2026-09-20,A lancer,"A ecrire dans la grille d'autorite"
+Indicateur,Taux de remplissage agenda,78 %,Responsable accueil,Hebdomadaire,A suivre,"Objectif 85 %"
+Indicateur,No-show,7 %,Responsable accueil,Mensuel,Sous surveillance,"Cible < 5 %"
+Indicateur,Retard moyen consultation,9 min,Dirigeant,Hebdomadaire,A suivre,"A reduire sous 5 min"
+Indicateur,Factures en attente,3200 EUR,Assistante,Hebdomadaire,Sous surveillance,"Verifier relances"

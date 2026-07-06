@@ -1,0 +1,8 @@
+Sujet,Responsable,Peut decider seul,Valider avec,A informer,Condition ou seuil
+Qualification nouvelle demande,Dirigeant,Oui,,Office manager,"Si besoin clairement formule"
+Lancement mission signee,Consultant senior,Oui,,Dirigeant,"Si note de cadrage validee"
+Ajustement planning mission,Consultant senior,Oui,,Client + dirigeant,"Si sans impact budget ou delai final"
+Extension de perimetre mission,Dirigeant,Non,Dirigeant,Consultant senior,"Si impact budget ou delai"
+Emission facture intermediaire,Office manager,Oui,,Dirigeant,"Si jalon contractuel atteint"
+Escalade client sensible,Consultant senior,Non,Dirigeant,Equipe concernee,"Si tension client ou risque marge"
+Cloture mission,Consultant senior,Oui,,Office manager,"Si livrable final remis et retours integres"

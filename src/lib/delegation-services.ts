@@ -2,8 +2,10 @@ import { getDemaaServices } from "@/lib/service-catalog";
 
 export function getDelegationServices() {
   const hiddenSlugs = new Set([
+    "assistante-facturation",
     "recrutement-assistante-facturation",
     "organisation-automatisation",
+    "marketing-vente",
     "creation-societe",
     "modification-societe",
     "fermeture-societe",

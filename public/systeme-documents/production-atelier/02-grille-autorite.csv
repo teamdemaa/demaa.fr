@@ -1,0 +1,6 @@
+Sujet,Responsable,Peut decider seul,Doit valider avec,A informer,Condition / seuil
+Lancement ordre standard,Responsable atelier,Oui,Dirigeant,Equipe,"Si dossier complet"
+Achat urgence matière,Responsable appro,Oui,Dirigeant,Atelier,"Dans budget seuil"
+Reprise non prévue,Responsable atelier,Oui,Dirigeant,Commercial,"Tracer cause et temps"
+Geste commercial client,Dirigeant,Oui,Responsable atelier,Admin,"Selon impact dossier"
+Arrêt machine sécurité,Chef d'équipe,Oui,Dirigeant,Equipe,"Priorité absolue"

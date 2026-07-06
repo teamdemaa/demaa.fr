@@ -1,0 +1,7 @@
+Bloc,Sujet,Emplacement,Responsable,Acces,Vérification,Notes
+Outils,Messagerie et agenda,Google Workspace / Outlook,Dirigeant,Equipe autorisee,Mensuel,"Verifier acces entrants / sortants"
+Mandats,Portefeuille biens et mandats,CRM / tableau gestion,Responsable gestion,Equipe gestion,Hebdomadaire,"Source unique lots geres"
+Locations,Dossiers locataires et baux,Dossier location partage,Responsable gestion,Equipe dossier,Hebdomadaire,"Pieces locatives et historiques"
+Finance,Loyers, honoraires et reglements,Tableau administratif,Responsable admin,Direction + admin,Hebdomadaire,"Base des relances"
+Conformité,Documents reglementaires et diagnostics,Dossier conformite,Responsable gestion,Equipe gestion,Mensuel,"Baux, EDL, diagnostics, assurances"
+Continuite,Contacts proprietaires, locataires et artisans,Fiche contacts critiques,Responsable admin,Equipe cle,Mensuel,"Inclure artisans recurrents"

@@ -1,0 +1,7 @@
+Bloc,Sujet,Emplacement,Responsable,Acces,Vérification,Notes
+Outils,Messagerie et agenda,Google Workspace / Outlook,Dirigeant,Equipe autorisee,Mensuel,"Verifier acces entrants / sortants"
+Clients,Dossiers et pieces clients,Drive / GED portefeuille,Responsable portefeuille,Equipe dossier,Hebdomadaire,"Arborescence unique"
+Commercial,Devis, mandats et contrats,Dossier commercial / contractuel,Dirigeant,Direction + admin,Mensuel,"Source de verite"
+Finance,Facturation, encours et commissions,Tableau administratif,Responsable admin,Direction + admin,Hebdomadaire,"Base relances"
+Conformite,Registres et controles,Dossier conformite,Dirigeant,Direction + admin,Trimestriel,"RGPD, LCB-FT, controle interne"
+Continuite,Contacts clients et partenaires,Fiche contacts critiques,Responsable admin,Equipe cle,Mensuel,"Banques, assureurs, partenaires"

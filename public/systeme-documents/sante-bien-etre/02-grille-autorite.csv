@@ -1,0 +1,6 @@
+Sujet,Responsable,Peut decider seul,Doit valider avec,A informer,Condition / seuil
+Deplacement RDV simple,Responsable accueil,Oui,Dirigeant,Equipe,"Si pas d'impact planning majeur"
+Geste commercial client,Responsable accueil,Oui,Dirigeant,Equipe,"Jusqu'a 15 EUR"
+Commande produits cabine,Responsable prestation,Oui,Dirigeant,Equipe,"Dans budget mensuel"
+Annulation tardive,Responsable accueil,Oui,Dirigeant,Equipe,"Appliquer politique en vigueur"
+Blocage agenda demi-journee,Dirigeant,Oui,Responsable accueil,Equipe,"Toujours tracer le motif"

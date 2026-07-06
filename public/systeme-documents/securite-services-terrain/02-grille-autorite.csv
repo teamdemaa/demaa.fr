@@ -1,0 +1,6 @@
+Sujet,Responsable,Peut decider seul,Doit valider avec,A informer,Condition / seuil
+Réaffectation intervenant site,Responsable exploitation,Oui,Dirigeant,Equipe,"Si continuité assurée"
+Achat consommables urgence,Chef d'équipe,Oui,Dirigeant,Admin,"Dans enveloppe validée"
+Report intervention non critique,Responsable exploitation,Oui,Dirigeant,Client,"Si client informé"
+Geste commercial contrat,Dirigeant,Oui,Responsable exploitation,Admin,"Selon impact qualité"
+Escalade incident client sensible,Chef d'équipe,Oui,Dirigeant,Client,"Tracer immédiatement"

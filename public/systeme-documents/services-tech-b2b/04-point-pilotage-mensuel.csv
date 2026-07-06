@@ -1,0 +1,9 @@
+Bloc,Sujet,Valeur,Responsable,Prochaine action,Statut,Notes
+Commercial,Opportunites en cours,8,Dirigeant,"Relancer les 3 plus proches de la signature",A suivre,
+Support,Tickets traites,164,Responsable support,"Identifier les tickets repetitifs",A suivre,
+Support,Tickets hors SLA,5,Responsable support,"Revoir routage et charge",Sous surveillance,
+Projet,Interventions / projets actifs,9,Responsable technique,"Reprioriser les 2 plus tendus",A suivre,
+Finance,CA facture,58 000 EUR,Dirigeant,"Verifier les interventions non encore facturees",A suivre,
+Finance,Encours > 30 jours,13 400 EUR,Responsable admin,"Passer 3 comptes en relance niveau 2",Sous surveillance,
+Equipe,Charge astreinte,Tendue sur le pole support,Dirigeant,"Redistribuer astreintes et docs de reprise",Ouvert,
+Conformité,Revues securite en retard,2,Responsable technique,"Clore avant fin de mois",En cours,

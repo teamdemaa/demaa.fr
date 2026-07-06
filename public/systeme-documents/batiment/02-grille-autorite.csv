@@ -1,0 +1,8 @@
+Sujet,Responsable,Peut decider seul,Valider avec,A informer,Condition ou seuil
+Acceptation nouveau chantier,Dirigeant,Oui,,Conducteur de travaux,"Si marge cible et capacite equipe compatibles"
+Ajustement planning chantier,Conducteur de travaux,Oui,,Chef d'equipe + client,"Si sans impact budget majeur"
+Achat materiaux courant,Conducteur de travaux,Oui,,Dirigeant,"Sous seuil budget defini"
+Travaux supplementaires,Dirigeant,Non,Dirigeant,Conducteur de travaux,"Si hors devis initial"
+Appel acompte / situation,Responsable admin,Oui,,Dirigeant,"Si jalon chantier atteint"
+Escalade litige client,Conducteur de travaux,Non,Dirigeant,Equipe concernee,"Si tension client ou reprise couteuse"
+Reception chantier,Conducteur de travaux,Oui,,Dirigeant + client,"Si points de controle valides"

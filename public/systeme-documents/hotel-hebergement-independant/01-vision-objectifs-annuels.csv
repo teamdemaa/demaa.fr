@@ -1,0 +1,9 @@
+Bloc,Sujet,Valeur,Responsable,Échéance,Statut,Notes
+Vision,Cap 12 mois,"Avoir un hébergement mieux noté, mieux rempli et plus fluide à exploiter",Dirigeant,2026-12-31,A definir,
+Vision,Objectif principal,"Sécuriser réservations, expérience client, ménage et encaissements",Dirigeant,2026-12-31,A definir,
+Priorité trimestrielle,Priorite 1,"Réduire les problèmes d'arrivée et de confirmation",Responsable accueil,2026-09-30,A lancer,
+Priorité trimestrielle,Priorite 2,"Rendre visible ménage, maintenance et remplacements",Responsable exploitation,2026-09-30,A lancer,
+Priorité trimestrielle,Priorite 3,"Suivre occupation et panier moyen par période",Responsable admin,2026-09-30,A lancer,
+Indicateur,Taux d'occupation,0 %,Dirigeant,Mensuel,A suivre,
+Indicateur,Panier moyen,0 EUR,Responsable admin,Mensuel,A suivre,
+Indicateur,Avis négatifs ouverts,0,Responsable accueil,Hebdomadaire,A suivre,

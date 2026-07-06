@@ -1,0 +1,5 @@
+Sujet,Responsable,Peut decider seul,Doit valider avec,À informer,Condition / seuil
+Inscription élève,Responsable commercial,Oui,Responsable admin,Dirigeant,"Si dossier complet"
+Changement de moniteur,Responsable planning,Oui,Dirigeant,Élève concerné,"Si absence ou surcharge"
+Passage examen anticipé,Moniteur référent,Non,Dirigeant,Responsable admin,"Selon niveau de préparation"
+Geste commercial forfait,Responsable commercial,Oui,Dirigeant,Responsable admin,"Dans la limite de 10 %"

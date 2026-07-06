@@ -1,0 +1,7 @@
+Mission,Point de contrôle,Responsable,Fréquence,Statut,Notes
+Rapport,Perimetre traite conforme au devis,Responsable mission,A chaque mission,A verifier,
+Rapport,Données terrain relues et cohérentes,Referent terrain,A chaque mission,A verifier,
+Rapport,Annexes et justificatifs joints,Responsable admin,A chaque mission,A verifier,
+Qualité,Format livrable standard respecté,Dirigeant,A chaque mission,A verifier,
+Qualité,Reserve ou limite explicitée si besoin,Responsable mission,A chaque mission,A verifier,
+Envoi,Destinataire et version finale tracés,Responsable admin,A chaque mission,A verifier,

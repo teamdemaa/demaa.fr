@@ -1,0 +1,4 @@
+Sujet,Responsable,Peut decider seul,Doit valider avec,À informer,Condition / seuil
+Intervention maintenance,Responsable exploitation,Oui,Dirigeant,Prestataire,"Si machine hors service"
+Remboursement client,Accueil / hotline,Oui,Responsable admin,Dirigeant,"Selon incident constaté"
+Fermeture machine,Responsable exploitation,Oui,Dirigeant,Support,"Jusqu'à remise en état"

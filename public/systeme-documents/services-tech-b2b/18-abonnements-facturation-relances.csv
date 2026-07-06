@@ -1,0 +1,5 @@
+Client,Facture / abonnement,Montant,Échéance,Niveau de relance,Action type,Responsable,Statut,Notes
+PME A,FAC-2026-122,1800,2026-07-05,Niveau 1,Email rappel facture,Responsable admin,A lancer,
+SaaS B,MRR juillet,2400,2026-07-07,Niveau 1,Verification prelevement et relance si rejet,Responsable admin,A suivre,
+ETI C,FAC-2026-128,3200,2026-07-14,A venir,Preparation facture jalon projet,Responsable admin,A venir,
+Boutique D,FAC-2026-111,900,2026-06-20,Niveau 3,Relance formelle et arbitrage dirigeant,Dirigeant,Sous surveillance,

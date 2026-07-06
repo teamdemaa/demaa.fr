@@ -1,0 +1,8 @@
+Mission,Point de contrôle,Responsable,Fréquence,Statut,Notes
+Consultation,Question client clairement reformulee,Avocat referent,A chaque dossier,A verifier,
+Consultation,Sources et pieces cles relues,Avocat referent,A chaque dossier,A verifier,
+Rédaction,Version validee avant envoi,Associe gerant,Avant envoi,A verifier,
+Contentieux,Echeances controlees dans agenda partage,Assistante juridique,Hebdomadaire,A verifier,
+Contentieux,Decision de procedure tracee,Avocat referent,A chaque etape,A verifier,
+Facturation,Temps ou jalon renseignes,Responsable administrative,Hebdomadaire,A verifier,
+Cloture,Compte rendu final ou mail de synthese envoye,Avocat referent,Fin de dossier,A verifier,

@@ -1,0 +1,5 @@
+Client,Facture,Montant,Échéance,Niveau de relance,Action type,Responsable,Statut,Notes
+Societe Atlas,FAC-2026-071,2400,2026-07-05,Niveau 1,Email rappel courtois,Responsable administrative,A lancer,
+Particulier D.,FAC-2026-064,900,2026-06-28,Niveau 2,Appel + mail detail,Responsable administrative,En cours,
+Verdanis,FAC-2026-052,1800,2026-06-20,Niveau 3,Courrier formel / escalation,Associe gerant,Sous surveillance,
+SARL Horizon,FAC-2026-073,1200,2026-07-12,A venir,Preparation facture intermediaire,Responsable administrative,A venir,

@@ -1,0 +1,6 @@
+Bloc,Élément,Emplacement,Responsable,Fréquence de contrôle,Statut,Notes
+AG,Convocations, PV et décisions,Dossier AG,Responsable copro,Mensuel,A verifier,
+Contrats,Prestataires et assurances,Dossier copropriété,Responsable admin,Mensuel,A verifier,
+Réglementaire,Pièces obligatoires immeuble,Dossier conformite,Responsable copro,Mensuel,A verifier,
+Archivage,Dossiers copro complets et traçables,Arborescence syndic,Responsable admin,Mensuel,A verifier,
+Suivi,Historique décisions et obligations,Tableau suivi copro,Responsable copro,Mensuel,A verifier,

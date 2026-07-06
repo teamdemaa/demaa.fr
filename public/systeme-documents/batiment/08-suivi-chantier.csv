@@ -1,0 +1,5 @@
+Chantier,Chef de chantier,Avancement,Blocage,Action suivante,Responsable,Échéance,Statut
+Maison L.,Chef A.,Maçonnerie 80 %,"Menuiseries en retard",Relancer fournisseur + replanifier pose,Conducteur de travaux,2026-07-08,En cours
+Immeuble Rive,Chef B.,Démolition terminée,"Validation client sur lot elec",Obtenir arbitrage client,Conducteur de travaux,2026-07-07,A faire
+Appartement Centre,Chef C.,Peinture en cours,"Aucun",Préparer réception,Chef d'equipe,2026-07-09,A suivre
+Local Pro Nord,Chef A.,Placo 60 %,"Accès livraison compliqué",Réorganiser approvisionnement,Conducteur de travaux,2026-07-08,En cours

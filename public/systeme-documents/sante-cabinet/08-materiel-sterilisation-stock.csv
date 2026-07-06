@@ -1,0 +1,6 @@
+Element,Categorie,Stock mini / controle,Stock actuel / etat,Frequence verification,Responsable,Action
+Gants taille M,Consommable,20 boites,14 boites,Hebdomadaire,Assistante,Commander
+Masques chirurgicaux,Consommable,10 boites,12 boites,Hebdomadaire,Assistante,Rien a faire
+Autoclave,Sterilisation,Test conforme,Conforme,Hebdomadaire,Praticien referent,Tracer test
+Desinfectant surface,Hygiene,6 flacons,3 flacons,Hebdomadaire,Assistante,Commander
+Petit materiel soin,Technique,Controle etat,Bon etat,Hebdomadaire,Praticien referent,Rien a faire

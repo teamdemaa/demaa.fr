@@ -1,0 +1,4 @@
+Personne,Role,Sait accueil,Sait prestation 1,Sait prestation 2,Remplacant 1,Remplacant 2,Notes
+Lea,Responsable accueil,Oui,Non,Non,Emma,Dirigeant,"Tient la caisse et l'agenda"
+Emma,Praticienne,Partiel,Oui,Oui,Sarah,Lea,"Peut prendre accueil ponctuel"
+Sarah,Praticienne,Partiel,Oui,Oui,Emma,Lea,"Peut ouvrir seule"

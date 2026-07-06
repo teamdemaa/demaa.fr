@@ -1,0 +1,6 @@
+Moment,Déclencheur,Message type,Canal,Responsable,Échéance,Statut,Notes
+Debut mission,"Onboarding termine","Confirmer que tout est en place et rappeler le circuit d'envoi des pieces",Email,Responsable de portefeuille,Sous 24h,A faire,
+Mensuel,"Pieces manquantes recurrentes","Relancer avec liste claire et date butoir",Email + SMS,Collaborateur comptable,Sous 48h,A faire,
+Point bilan,"Rendez-vous annuel passe","Envoyer synthese, decisions prises et prochains points de vigilance",Email,Expert-comptable,Sous 24h,A faire,
+Satisfaction,"Client satisfait apres bilan ou paie fluide","Demander un avis ou une recommandation",Email,Responsable administrative,Sous 72h,A faire,
+Reactivation,"Client sans mission complementaire depuis 9 mois","Proposer point tresorerie ou previsionnel",Email,Expert-comptable,Mensuel,A planifier,

@@ -1,0 +1,5 @@
+Client,Facture,Montant,Échéance,Niveau de relance,Action type,Responsable,Statut,Notes
+Client A,FAC-2026-132,1200,2026-07-05,Niveau 1,Email rappel facture,Responsable admin,A lancer,
+Client B,FAC-2026-127,950,2026-06-27,Niveau 2,Appel + recap livrable remis,Responsable admin,En cours,
+Client C,FAC-2026-136,1800,2026-07-14,A venir,Preparation facture fin mission,Responsable admin,A venir,
+Client D,FAC-2026-118,2100,2026-06-20,Niveau 3,Relance formelle et arbitrage dirigeant,Dirigeant,Sous surveillance,

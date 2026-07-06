@@ -1,0 +1,4 @@
+Client,Type,Montant,Échéance,Responsable,Statut,Prochaine action
+Julie R.,Paiement 1x,490 EUR,2026-07-07,Responsable admin,Recu,Aucune
+Marc T.,Remboursement,290 EUR,2026-07-08,Responsable admin,A traiter,Valider motif
+Anne P.,Paiement 3x échéance 2,160 EUR,2026-07-10,Responsable admin,A suivre,Relancer si échec

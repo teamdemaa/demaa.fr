@@ -1,0 +1,8 @@
+Sujet,Responsable,Peut decider seul,Doit valider avec,A informer,Condition / seuil
+Remise exceptionnelle en caisse,Responsable boutique,Oui,Dirigeant,Equipe,"Jusqu'a 10 % si article defectueux ou geste commercial"
+Commande fournisseur de reassort,Responsable boutique,Oui,Dirigeant,Equipe,"Dans la limite du budget achat hebdo"
+Changement de vitrine,Responsable boutique,Oui,Dirigeant,Equipe,"Si coherent avec l'offre prioritaire du mois"
+Retour client sans ticket,Equipe,Non,Responsable boutique,Dirigeant,"A accepter seulement si article revendable et montant < 30 EUR"
+Annulation commande speciale client,Responsable boutique,Non,Dirigeant,Equipe,"Toujours tracer la raison"
+Recrutement extra vente,Dirigeant,Oui,,Responsable boutique,"Selon planning et budget"
+Liquidation reference lente,Dirigeant,Oui,Responsable boutique,Equipe,"Si stock > 90 jours et marge preservee"

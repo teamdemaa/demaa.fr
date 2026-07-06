@@ -1,0 +1,5 @@
+Collaborateur,Rôle principal,Charge actuelle,Back-up 1,Back-up 2,Niveau autonomie,Point de vigilance,Notes
+Dirigeant,Arbitrages et vente,"Charge elevee sur validation offres et dossiers sensibles",Responsable portefeuille,,Elevé,"Sortir des validations de detail",
+Responsable portefeuille,Suivi dossiers et partenaires,"10 dossiers actifs + renouvellements",Dirigeant,Referent dossier,Elevé,"Mieux lisser les urgences de fin de mois",
+Referent dossier,Collecte pieces et suivi,"8 dossiers courants",Responsable portefeuille,Responsable admin,Intermediaire,"Monter en autonomie sur coordination partenaires",
+Responsable admin,Facturation et encours,"Suivi primes, honoraires et commissions",Dirigeant,Responsable portefeuille,Bon,"Renforcer cadencement relances",

@@ -1,0 +1,8 @@
+Bloc,Sujet,Valeur,Responsable,Echeance,Statut,Notes
+Vision,Nom de l'atelier,"Atelier Delta - production et interventions techniques",Dirigeant,2026-12-31,Exemple,"Equipe de 7 personnes"
+Vision,Cap sur 12 mois,"Mieux suivre chaque ordre, limiter les reprises, fluidifier les postes et rendre la marge visible dossier par dossier",Dirigeant,2026-12-31,Valide,"A revoir chaque trimestre"
+Vision,Objectif principal,"Atteindre 95 % d'ordres clotures sans reprise et une marge cible stable sur les dossiers",Dirigeant,2026-12-31,Valide,"Base de pilotage annuel"
+Vision,Positionnement,"Livrer un travail propre, trace et fiable avec moins d'improvisation atelier",Dirigeant,2026-12-31,Valide,"A reprendre dans les devis"
+Priorite trimestrielle,Priorite 1,"Standardiser les ordres de fabrication / intervention",Responsable atelier,2026-09-15,En cours,"Version unique"
+Priorite trimestrielle,Priorite 2,"Mettre a jour les seuils de stock critiques",Responsable appro,2026-09-20,A lancer,"Aucune rupture surprise"
+Priorite trimestrielle,Priorite 3,"Suivre la marge reelle sur les 15 prochains dossiers",Dirigeant,2026-09-30,A lancer,"Controle hebdo"

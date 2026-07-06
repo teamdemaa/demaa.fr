@@ -1,0 +1,6 @@
+Bloc,Sujet,Statut / valeur,Responsable,Prochaine action,Fréquence,Notes
+Matériel,Mini-pelle entretien,Contrôle à faire,Chef d'equipe,Programmer entretien,Mensuel,
+Matériel,Niveau stock EPI,Correct,Conducteur de travaux,Verifier avant prochain gros chantier,Hebdomadaire,
+Fournisseur,Béton Sud,Fiable / délai 48h,Conducteur de travaux,Maintenir en fournisseur prioritaire,Mensuel,
+Fournisseur,Menuiserie Est,Risque retard,Conducteur de travaux,Prévoir plan B,Hebdomadaire,
+Réception,Contrôle livraison chantier,À faire,Chef d'equipe,Verifier quantité / qualité / réserves,A chaque livraison,

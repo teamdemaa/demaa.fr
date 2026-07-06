@@ -1,17 +1,164 @@
 "use client";
 
-import { ChevronDown } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ChevronDown, FileText, X } from "lucide-react";
+import { getSystemDocumentAsset } from "@/lib/system-document-assets";
 import type { SystemeDetail } from "@/lib/systeme-catalog";
 
 type SystemeTabContentProps = {
   systemName: string;
+  systemSlug: string;
   systeme: SystemeDetail | null | undefined;
+  openViewerSignal?: number;
 };
+
+function parseCsvLine(line: string) {
+  const cells: string[] = [];
+  let current = "";
+  let insideQuotes = false;
+
+  for (let index = 0; index < line.length; index += 1) {
+    const char = line[index];
+    const nextChar = line[index + 1];
+
+    if (char === '"') {
+      if (insideQuotes && nextChar === '"') {
+        current += '"';
+        index += 1;
+      } else {
+        insideQuotes = !insideQuotes;
+      }
+      continue;
+    }
+
+    if (char === "," && !insideQuotes) {
+      cells.push(current.trim());
+      current = "";
+      continue;
+    }
+
+    current += char;
+  }
+
+  cells.push(current.trim());
+  return cells;
+}
+
+function parseCsvTable(content: string) {
+  const lines = content
+    .replace(/^\uFEFF/, "")
+    .split(/\r?\n/)
+    .filter((line) => line.trim().length > 0);
+
+  if (!lines.length) {
+    return { headers: [] as string[], rows: [] as string[][] };
+  }
+
+  const [headerLine, ...rowLines] = lines;
+
+  return {
+    headers: parseCsvLine(headerLine),
+    rows: rowLines.map(parseCsvLine),
+  };
+}
+
+function getFirstSystemDocumentSelection(systeme: SystemeDetail) {
+  for (const card of systeme.cards) {
+    for (const item of card.items) {
+      return {
+        process: item.process,
+        document: item.document,
+      };
+    }
+  }
+
+  return null;
+}
 
 export default function SystemeTabContent({
   systemName,
+  systemSlug,
   systeme,
+  openViewerSignal = 0,
 }: SystemeTabContentProps) {
+  const [selectedDocument, setSelectedDocument] = useState<{
+    process: string;
+    document: string;
+  } | null>(null);
+  const [documentPreview, setDocumentPreview] = useState<{
+    headers: string[];
+    rows: string[][];
+  } | null>(null);
+  const [documentPreviewState, setDocumentPreviewState] = useState<
+    "idle" | "loading" | "ready" | "error"
+  >("idle");
+
+  useEffect(() => {
+    if (!selectedDocument) {
+      setDocumentPreview(null);
+      setDocumentPreviewState("idle");
+      return;
+    }
+
+    const asset = getSystemDocumentAsset(systemSlug, selectedDocument.document);
+
+    if (!asset?.csvHref) {
+      setDocumentPreview(null);
+      setDocumentPreviewState("idle");
+      return;
+    }
+
+    const csvHref = asset.csvHref;
+
+    let cancelled = false;
+
+    async function loadPreview() {
+      setDocumentPreviewState("loading");
+
+      try {
+        const response = await fetch(csvHref, { cache: "no-store" });
+
+        if (!response.ok) {
+          throw new Error(`Unable to load ${csvHref}`);
+        }
+
+        const content = await response.text();
+
+        if (cancelled) {
+          return;
+        }
+
+        setDocumentPreview(parseCsvTable(content));
+        setDocumentPreviewState("ready");
+      } catch {
+        if (cancelled) {
+          return;
+        }
+
+        setDocumentPreview(null);
+        setDocumentPreviewState("error");
+      }
+    }
+
+    void loadPreview();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [selectedDocument, systemSlug]);
+
+  useEffect(() => {
+    if (!systeme?.cards.length || openViewerSignal === 0) {
+      return;
+    }
+
+    const firstSelection = getFirstSystemDocumentSelection(systeme);
+
+    if (firstSelection) {
+      setSelectedDocument(firstSelection);
+    }
+  }, [openViewerSignal, systeme]);
+
   if (!systeme?.cards.length) {
     return (
       <div className="demaa-surface rounded-[1.35rem] px-5 py-6 sm:px-6">
@@ -58,20 +205,132 @@ export default function SystemeTabContent({
             </summary>
 
             <div className="demaa-accordion-content mt-4 space-y-4">
-              {card.items.map((item) => (
-                <div
-                  key={`${card.pillar}-${item.process}`}
-                  className="border-t border-dema-line/80 pt-4 first:border-t-0 first:pt-0"
-                >
-                  <p className="text-sm font-medium leading-relaxed text-brand-blue">
-                    {item.process}
-                  </p>
-                </div>
-              ))}
+              {card.items.map((item) => {
+                return (
+                  <div
+                    key={`${card.pillar}-${item.process}`}
+                    className="flex items-center justify-between gap-4 border-t border-dema-line/80 pt-4 first:border-t-0 first:pt-0"
+                  >
+                    <p className="min-w-0 flex-1 text-sm font-medium leading-relaxed text-brand-blue">
+                      {item.process}
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedDocument({
+                          process: item.process,
+                          document: item.document,
+                        });
+                      }}
+                      className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-dema-muted transition hover:bg-dema-sage/35 hover:text-dema-muted"
+                      aria-label={`Voir le document pour ${item.process}`}
+                    >
+                      <FileText className="h-4 w-4" aria-hidden="true" />
+                    </button>
+                  </div>
+                );
+              })}
             </div>
           </details>
         ))}
       </div>
+
+      {selectedDocument ? (
+        <div
+          className="fixed inset-0 z-[80] flex items-center justify-center bg-brand-blue/45 p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-label={selectedDocument.document}
+          onClick={() => {
+            setSelectedDocument(null);
+          }}
+        >
+          {(() => {
+            const asset = getSystemDocumentAsset(systemSlug, selectedDocument.document);
+
+            return (
+          <div
+            className="relative w-full max-w-xl rounded-[1.25rem] border border-dema-line bg-dema-paper p-6 pt-14 shadow-[0_24px_60px_rgba(23,35,29,0.14)] sm:p-7 sm:pt-14"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedDocument(null);
+              }}
+              className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
+              aria-label="Fermer"
+            >
+              <X className="h-4 w-4" aria-hidden="true" />
+            </button>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-muted">
+              Document
+            </p>
+            <h3 className="mt-3 text-xl font-semibold tracking-tight text-brand-blue">
+              {selectedDocument.document}
+            </h3>
+            <p className="mt-3 text-sm leading-relaxed text-dema-muted">
+              Process associé : {selectedDocument.process}
+            </p>
+            {!asset ? (
+              <div className="mt-5 rounded-[1rem] border border-dema-line bg-white/70 px-4 py-6 text-sm text-dema-muted">
+                L&apos;aperçu et le téléchargement de ce document sont en préparation pour {systemName}.
+              </div>
+            ) : null}
+            {documentPreviewState === "loading" ? (
+              <div className="mt-5 rounded-[1rem] border border-dema-line bg-white/70 px-4 py-6 text-sm text-dema-muted">
+                Chargement du document...
+              </div>
+            ) : null}
+
+            {documentPreviewState === "ready" && documentPreview ? (
+              <div className="mt-5 overflow-hidden rounded-[1rem] border border-dema-line bg-white">
+                <div className="max-h-[48vh] overflow-auto">
+                  <table className="min-w-full border-collapse text-left text-[13px] leading-relaxed text-brand-blue">
+                    <thead className="sticky top-0 bg-dema-forest text-[11px] uppercase tracking-[0.12em] text-white">
+                      <tr>
+                        {documentPreview.headers.map((header) => (
+                          <th
+                            key={header}
+                            className="border-b border-dema-line px-3 py-3 font-semibold"
+                          >
+                            {header}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {documentPreview.rows.map((row, rowIndex) => (
+                        <tr
+                          key={`${selectedDocument.document}-${rowIndex}`}
+                          className="align-top odd:bg-white even:bg-dema-sage"
+                        >
+                          {documentPreview.headers.map((header, cellIndex) => (
+                            <td
+                              key={`${header}-${rowIndex}`}
+                              className="border-b border-dema-line/70 px-3 py-3 text-sm text-dema-muted"
+                            >
+                              {row[cellIndex] ?? ""}
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            ) : null}
+
+            {documentPreviewState === "error" ? (
+              <div className="mt-5 rounded-[1rem] border border-dema-line bg-white/70 px-4 py-6 text-sm text-dema-muted">
+                L’aperçu du document n’a pas pu être chargé pour le moment.
+              </div>
+            ) : null}
+          </div>
+            );
+          })()}
+        </div>
+      ) : null}
     </div>
   );
 }

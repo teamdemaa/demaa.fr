@@ -1,0 +1,6 @@
+Sujet,Responsable,Peut decider seul,Doit valider avec,A informer,Condition / seuil
+Reaffectation mission jour J,Exploitant,Oui,Dirigeant,Chauffeurs,"Si impact limité et client informe"
+Achat carburant exceptionnel,Chauffeur,Oui,Exploitant,Dirigeant,"Sur mission longue ou imprévu"
+Remise commerciale sur retard,Dirigeant,Oui,Exploitant,Assistante,"Selon gravite et contrat"
+Report de mission non urgente,Exploitant,Oui,Dirigeant,Client,"Si risque securite ou impossibilite terrain"
+Passage atelier non prevu,Exploitant,Oui,Dirigeant,Chauffeur,"Si sécurité ou immobilisation probable"

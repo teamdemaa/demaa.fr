@@ -1,0 +1,4 @@
+Client,Ordre,Montant facture,Date echeance,Regle,Relance,Responsable,Statut
+Société Nova,OF-245,1850 EUR,2026-07-12,Oui,Non,Assistante admin,Clos
+Garage Atlas,INT-118,620 EUR,2026-07-10,Non,Oui,Assistante admin,Ouvert
+Cabinet Rho,CAR-302,1280 EUR,2026-07-15,Non,Non,Assistante admin,A suivre

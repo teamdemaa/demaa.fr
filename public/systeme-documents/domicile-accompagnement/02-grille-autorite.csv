@@ -1,0 +1,6 @@
+Sujet,Responsable,Peut decider seul,Doit valider avec,A informer,Condition / seuil
+Replanification intervention simple,Responsable coordination,Oui,Dirigeant,Famille / patient,"Si pas d'impact majeur"
+Ajustement duree intervention,Responsable coordination,Oui,Dirigeant,Intervenante,"Selon besoin et cadre contractuel"
+Remplacement urgence,Responsable coordination,Oui,Dirigeant,Equipe,"Priorite continuite"
+Signalement sensible terrain,Intervenante,Oui,Responsable coordination,Dirigeant,"Tracer immediatement"
+Achat petit materiel,Assistante admin,Oui,Dirigeant,Equipe,"Dans budget mensuel"

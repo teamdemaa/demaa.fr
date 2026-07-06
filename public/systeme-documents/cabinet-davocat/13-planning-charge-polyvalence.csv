@@ -1,0 +1,5 @@
+Collaborateur,Rôle principal,Dossiers / charge actuelle,Back-up 1,Back-up 2,Niveau autonomie,Point de vigilance,Notes
+Associe gerant,Arbitrages et dossiers sensibles,"Charge elevee sur contentieux et developpement",Avocat referent,,Elevé,"Trop sollicite sur validations finales",
+Avocat referent,Suivi dossiers actifs,"12 dossiers dont 4 urgents",Associe gerant,Juriste,Elevé,"Prevoir relais sur 2 dossiers social",
+Juriste,Preparation dossiers et recherches,"8 dossiers en support",Avocat referent,Assistante juridique,Intermediaire,"Monter en autonomie sur conclusions simples",
+Assistante juridique,Agenda, pieces, relances,"Gestion quotidienne des echeances",Juriste,Avocat referent,Bon,"Maintenir agenda audience a jour",

@@ -1,0 +1,5 @@
+Client,Besoin identifié,Profil / situation,Pieces attendues,Responsable,Prochaine action,Statut,Notes
+Client A,Financement acquisition,"TPE en croissance",Bilans, relevés, Kbis, plan de financement,Responsable portefeuille,Programmer appel decouverte,A qualifier,
+Client B,Audit assurance,"PME multisite",Contrats actuels, sinistralite, tableau garanties,Dirigeant,Envoyer checklist pieces,A envoyer,
+Client C,Allocation patrimoniale,"Dirigeant 45 ans",Situation patrimoniale, revenus, objectifs,Responsable portefeuille,Preparer note de cadrage,A qualifier,
+Client D,Recouvrement amiable,"Creances anciennes",Factures, CGV, historique relances,Responsable portefeuille,Verifier dossier complet,A qualifier,

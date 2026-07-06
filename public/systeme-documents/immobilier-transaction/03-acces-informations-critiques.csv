@@ -1,0 +1,7 @@
+Bloc,Sujet,Emplacement,Responsable,Acces,Vérification,Notes
+Outils,Messagerie et agenda,Google Workspace / Outlook,Dirigeant,Equipe autorisee,Mensuel,"Verifier acces entrants / sortants"
+Mandats,Portefeuille biens et mandats,CRM immobilier / tableau suivi,Responsable transaction,Equipe transaction,Hebdomadaire,"Source unique du pipe"
+Clients,Dossiers acquereurs et vendeurs,Drive / GED transaction,Agent referent,Equipe dossier,Hebdomadaire,"Pieces et comptes rendus"
+Finance,Commissions et reglements,Tableau administratif,Responsable admin,Direction + admin,Hebdomadaire,"Base encaissements"
+Conformité,Diagnostics, mandats et affichages,Dossier conformite,Responsable transaction,Equipe transaction,Mensuel,"Verifier dates et validite"
+Continuite,Contacts notaire / vendeurs / acquereurs,Fiche contacts critiques,Responsable admin,Equipe cle,Mensuel,"Inclure prescripteurs actifs"

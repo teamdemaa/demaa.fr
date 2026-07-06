@@ -1,0 +1,5 @@
+Client / dossier,Type,Temps passé (h),Montant facturé / commission,Coût estimé,Marge estimée,Responsable,Statut,Notes
+Client A,Financement,15,4200,1800,2400,Dirigeant,A suivre,
+Client B,Audit assurance,11,2800,1300,1500,Responsable portefeuille,A suivre,
+Client C,Conseil patrimonial,13,3600,1650,1950,Responsable portefeuille,A suivre,
+Client D,Recouvrement,18,3900,2400,1500,Sous surveillance,"Temps de relance eleve"

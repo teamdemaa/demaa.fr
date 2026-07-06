@@ -1,0 +1,5 @@
+Mission,Type,Temps passé (h),Montant devisé / facturé,Coût estimé,Marge estimée,Responsable,Statut,Notes
+Client A,Diagnostic technique,12,2400,1200,1200,Dirigeant,A suivre,
+Client B,Relevé / plan,9,1800,900,900,Responsable mission,A suivre,
+Client C,Expertise parcelle,15,3600,1800,1800,Responsable mission,A suivre,
+Client D,Maitre d'oeuvre amont,20,5200,3100,2100,Sous surveillance,"Temps de coordination important"

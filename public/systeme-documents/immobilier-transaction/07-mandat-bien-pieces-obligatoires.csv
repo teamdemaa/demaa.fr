@@ -1,0 +1,7 @@
+Étape,Sujet,Responsable,Statut attendu,Échéance,Notes
+Mandat,Identite vendeur verifiee,Agent referent,Fait,Avant diffusion,
+Mandat,Mandat signe et complet,Responsable transaction,Fait,Avant diffusion,
+Bien,Diagnostics disponibles ou planifies,Agent referent,Fait,Sous 48h,
+Bien,Titre / infos copro / taxe / surface collectes,Agent referent,Recu,Sous 48h,
+Diffusion,Photos et descriptif valides,Responsable transaction,Fait,Avant mise en ligne,
+Suivi,Dossier bien cree dans arborescence unique,Responsable admin,Fait,Immediat,

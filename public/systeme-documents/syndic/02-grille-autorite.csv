@@ -1,0 +1,8 @@
+Sujet,Responsable,Peut decider seul,Valider avec,A informer,Condition ou seuil
+Qualification nouveau mandat,Responsable copro,Oui,,Dirigeant,"Si pieces minimales disponibles"
+Priorisation incident immeuble,Responsable copro,Oui,,Equipe concernee,"Selon urgence et impact occupants"
+Lancement petite intervention,Responsable copro,Oui,,Conseil syndical,"Sous seuil budget defini"
+Arbitrage gros travaux,Dirigeant,Non,Dirigeant,Conseil syndical,"Si montant ou impact majeur"
+Escalade impaye sensible,Responsable admin,Non,Dirigeant,Responsable copro,"Si plus de 30 jours ou contentieux"
+Facturation honoraires / appels,Responsable admin,Oui,,Dirigeant,"Si echeance ou jalon atteint"
+Réponse reclamation sensible,Responsable copro,Non,Dirigeant,Equipe concernee,"Si risque reput ou juridique"

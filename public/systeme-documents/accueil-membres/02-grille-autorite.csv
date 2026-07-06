@@ -1,0 +1,6 @@
+Sujet,Responsable,Peut decider seul,Doit valider avec,A informer,Condition / seuil
+Modification reservation simple,Responsable accueil,Oui,Dirigeant,Equipe,"Si pas d'impact financier"
+Geste commercial standard,Responsable accueil,Oui,Dirigeant,Assistante,"Jusqu'a 20 EUR"
+Renouvellement contrat standard,Assistante admin,Oui,Dirigeant,Accueil,"Selon trame validee"
+Annulation service payant,Dirigeant,Oui,Responsable accueil,Admin,"Toujours tracer le motif"
+Acces provisoire service / espace,Responsable accueil,Oui,Dirigeant,Equipe,"Selon disponibilite et regles"

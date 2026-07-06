@@ -1,0 +1,9 @@
+Bloc,Sujet,Valeur,Responsable,Prochaine action,Statut,Notes
+Activite,Dossiers actifs,47,Associe gerant,"Reprioriser les 8 dossiers les plus tendus",A suivre,"Vue globale du portefeuille"
+Activite,Dossiers en retard d'action,6,Juriste referent,"Passer en revue lundi matin",Sous surveillance,"Cible < 3"
+Commercial,Nouveaux dossiers signes,5,Associe gerant,"Suivre conversions des 7 propositions en cours",A suivre,"Mensuel"
+Finance,Honoraires factures,78 000 EUR,Responsable administrative,"Sortir la facturation intermediaire manquante",A suivre,"Objectif 85 000 EUR"
+Finance,Encours > 30 jours,24 500 EUR,Responsable administrative,"Lancer relances niveau 2",Sous surveillance,"Point du mardi"
+Equipe,Charge equipe,Tendue sur contentieux commercial,Associe gerant,"Redistribuer 2 dossiers cette semaine",Ouvert,"Verifier disponibilites"
+Qualite,Reclamations ouvertes,1,Associe gerant,"Clore avec reponse formelle client",En cours,"Suivi mensuel"
+Decisions,Arbitrages a prendre,"Remise honoraire dossier X / renfort support / modele de relance standard",Associe gerant,"Decision vendredi",Ouvert,"A trancher en reunion"

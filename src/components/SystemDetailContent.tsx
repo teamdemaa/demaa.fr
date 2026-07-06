@@ -21,6 +21,7 @@ import ProNetworkDetailDialog from "@/components/ProNetworkDetailDialog";
 import RecruitmentDetailDialog from "@/components/RecruitmentDetailDialog";
 import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
 import SupplierDetailDialog from "@/components/SupplierDetailDialog";
+import SystemCompleteModal from "@/components/SystemCompleteModal";
 import SystemeTabContent from "@/components/SystemeTabContent";
 import TrainingDetailDialog from "@/components/TrainingDetailDialog";
 import type { DemaaAidItem } from "@/lib/aid-catalog";
@@ -43,7 +44,6 @@ import type { DemaaRecruitmentItem } from "@/lib/recruitment-catalog";
 import { getRelatedCoursesForSystemSlug } from "@/lib/related-courses";
 import { getGroupedRecommendedTrainingsForSystem } from "@/lib/training-recommendations";
 import type { DemaaTraining } from "@/lib/training-catalog";
-import { ORGANISATION_AUDIT_MODAL_HREF } from "@/lib/organisation-audit";
 import { getToolDirectorySectorSeoPath } from "@/lib/sector-taxonomy";
 import { type OperationalSystemDetail } from "@/lib/system-operations";
 import { getRecommendedSuppliersForSystem } from "@/lib/supplier-recommendations";
@@ -165,20 +165,16 @@ function getToolIcon(tool: OperationalSystemDetail["tools"][number]) {
 }
 
 function getSupplierSectionKey(supplier: DemaaSupplier): string {
-  if (supplier.category === "Assurance" || supplier.slug === "protection-juridique") {
-    return "protection";
-  }
-
   if (
+    supplier.category === "Assurance" ||
     supplier.category === "Mutuelle" ||
+    supplier.category === "Paiement" ||
+    supplier.category === "Téléphonie" ||
+    supplier.slug === "protection-juridique" ||
     supplier.slug === "swile" ||
     supplier.tags.some((tag) => ["RH", "Avantages", "Mutuelle"].includes(tag))
   ) {
-    return "team";
-  }
-
-  if (supplier.category === "Paiement" || supplier.category === "Téléphonie") {
-    return "payments";
+    return "transverse";
   }
 
   return "operations";
@@ -186,10 +182,8 @@ function getSupplierSectionKey(supplier: DemaaSupplier): string {
 
 function groupSuppliersBySection(suppliers: DemaaSupplier[]): SupplierSection[] {
   const sections = new Map<string, SupplierSection>([
-    ["protection", { title: "Protection & conformité", items: [] }],
-    ["team", { title: "Équipe & avantages", items: [] }],
     ["operations", { title: "Exploitation & matériel", items: [] }],
-    ["payments", { title: "Encaissement & téléphonie", items: [] }],
+    ["transverse", { title: "Transverses", items: [] }],
   ]);
 
   suppliers.forEach((supplier) => {
@@ -200,21 +194,19 @@ function groupSuppliersBySection(suppliers: DemaaSupplier[]): SupplierSection[] 
 }
 
 function getFinanceSectionKey(item: DemaaFinanceItem): FinanceSection["title"] {
-  if (item.category === "Compte pro & crédit") {
-    return "Compte pro & crédit";
-  }
-
   if (item.category === "Leasing & flotte") {
     return "Véhicules & flotte";
   }
 
-  return "Trésorerie & factures";
+  return "Trésorerie, compte pro & crédit";
 }
 
 function groupFinanceBySection(items: DemaaFinanceItem[]): FinanceSection[] {
   const sections = new Map<FinanceSection["title"], FinanceSection>([
-    ["Compte pro & crédit", { title: "Compte pro & crédit", items: [] }],
-    ["Trésorerie & factures", { title: "Trésorerie & factures", items: [] }],
+    [
+      "Trésorerie, compte pro & crédit",
+      { title: "Trésorerie, compte pro & crédit", items: [] },
+    ],
     ["Véhicules & flotte", { title: "Véhicules & flotte", items: [] }],
   ]);
 
@@ -223,6 +215,13 @@ function groupFinanceBySection(items: DemaaFinanceItem[]): FinanceSection[] {
   });
 
   return Array.from(sections.values()).filter((section) => section.items.length > 0);
+}
+
+function sortFinanceSections(sections: FinanceSection[]): FinanceSection[] {
+  const primarySections = sections.filter((section) => section.title !== "Véhicules & flotte");
+  const vehicleSection = sections.find((section) => section.title === "Véhicules & flotte");
+
+  return vehicleSection ? [...primarySections, vehicleSection] : primarySections;
 }
 
 function handleToolDetailClick(
@@ -307,6 +306,7 @@ export default function SystemDetailContent({
   const [selectedRecruitmentDetail, setSelectedRecruitmentDetail] = useState<DemaaRecruitmentItem | null>(null);
   const [selectedTrainingDetail, setSelectedTrainingDetail] = useState<DemaaTraining | null>(null);
   const [selectedCourse, setSelectedCourse] = useState<CourseEntry | null>(null);
+  const [isSystemKitModalOpen, setIsSystemKitModalOpen] = useState(false);
   const systemeDetail = useMemo(
     () => (activeTab === "systeme" ? detail.systeme : null),
     [activeTab, detail.systeme]
@@ -354,8 +354,18 @@ export default function SystemDetailContent({
     [activeTab, recommendedSuppliers]
   );
   const financeSections = useMemo(
-    () => (activeTab === "financement" ? groupFinanceBySection(recommendedFinance) : []),
+    () => (activeTab === "financement"
+      ? sortFinanceSections(groupFinanceBySection(recommendedFinance))
+      : []),
     [activeTab, recommendedFinance]
+  );
+  const primaryFinanceSections = useMemo(
+    () => financeSections.filter((section) => section.title !== "Véhicules & flotte"),
+    [financeSections]
+  );
+  const vehicleFinanceSection = useMemo(
+    () => financeSections.find((section) => section.title === "Véhicules & flotte") ?? null,
+    [financeSections]
   );
   const Heading = headingAs;
 
@@ -816,13 +826,15 @@ export default function SystemDetailContent({
       </div>
 
       <div className="mt-4 flex flex-col gap-2 text-left sm:flex-row sm:flex-wrap">
-        <Link
-          href={`${ORGANISATION_AUDIT_MODAL_HREF}?retourSysteme=${encodeURIComponent(system.slug)}`}
-          scroll={false}
+        <button
+          type="button"
+          onClick={() => {
+            setIsSystemKitModalOpen(true);
+          }}
           className="demaa-primary-button self-start"
         >
-          Diagnostic organisation offert
-        </Link>
+          Recevoir le système {system.name}
+        </button>
       </div>
 
       <div className="mt-5 -mx-2 overflow-x-auto px-2 pb-2 soft-scroll">
@@ -855,7 +867,11 @@ export default function SystemDetailContent({
 
       <div className="mt-5">
         {activeTab === "systeme" ? (
-          <SystemeTabContent systemName={system.name} systeme={systemeDetail} />
+          <SystemeTabContent
+            systemName={system.name}
+            systemSlug={system.slug}
+            systeme={systemeDetail}
+          />
         ) : activeTab === "outils" ? (
           <div className="space-y-5">
             {(() => {
@@ -929,7 +945,7 @@ export default function SystemDetailContent({
           </div>
         ) : activeTab === "financement" ? (
           <div className="space-y-5">
-            {financeSections.map((section, index) => (
+            {primaryFinanceSections.map((section, index) => (
               <div key={section.title}>
                 {renderCardSection({
                   items: section.items,
@@ -948,6 +964,17 @@ export default function SystemDetailContent({
                   tone: "muted",
                   getKey: (item) => item.slug,
                   renderCard: renderAidCard,
+                })}
+              </div>
+            ) : null}
+            {vehicleFinanceSection ? (
+              <div>
+                {renderCardSection({
+                  items: vehicleFinanceSection.items,
+                  title: vehicleFinanceSection.title,
+                  tone: "muted",
+                  getKey: (item) => item.slug,
+                  renderCard: renderFinanceCard,
                 })}
               </div>
             ) : null}
@@ -1129,6 +1156,15 @@ export default function SystemDetailContent({
         <TrainingDetailDialog
           training={selectedTrainingDetail}
           onClose={() => setSelectedTrainingDetail(null)}
+        />
+      ) : null}
+
+      {isSystemKitModalOpen ? (
+        <SystemCompleteModal
+          systemSlug={system.slug}
+          systemName={system.name}
+          systeme={detail.systeme}
+          onClose={() => setIsSystemKitModalOpen(false)}
         />
       ) : null}
 

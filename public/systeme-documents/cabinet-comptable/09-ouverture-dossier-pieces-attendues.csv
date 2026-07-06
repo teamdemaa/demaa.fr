@@ -1,0 +1,9 @@
+Étape,Sujet,Responsable,Statut attendu,Échéance,Notes
+Ouverture,Lettre de mission signee,Responsable administrative,Fait,Avant lancement,
+Ouverture,Acces aux outils client recupere,Responsable de portefeuille,Fait,Avant production,"Banque, logiciel, coffre-fort, paie"
+Ouverture,Dernier bilan et FEC disponibles,Collaborateur comptable,Recu,Sous 48h,
+Pieces,Kbis et informations societaires,Client / admin,Recu,Sous 24h,
+Pieces,Pieces comptables du mois ou trimestre,Client,Recu,Selon calendrier,
+Pieces,Etat paie / social si besoin,Client,Recu,Selon mission,
+Suivi,Dossier cree dans l'arborescence cabinet,Collaborateur comptable,Fait,Immediat,
+Suivi,Echeances fiscales/sociales parametrees,Responsable de portefeuille,Fait,Immediat,

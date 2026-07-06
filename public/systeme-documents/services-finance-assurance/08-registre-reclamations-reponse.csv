@@ -1,0 +1,4 @@
+Date,Client,Objet,Risque perçu,Responsable,Action immédiate,Réponse type,Échéance,Statut
+2026-07-02,Client A,"Manque de visibilite sur l'avancement dossier",Moyen,Responsable portefeuille,Envoyer point d'etape complet,"Voici l'etat exact du dossier, les pieces manquantes et la prochaine date cle.",2026-07-03,En cours
+2026-06-25,Client B,"Desaccord sur le perimetre d'accompagnement",Moyen,Dirigeant,Reprendre mandat et attendus,"Nous reprenons le cadre signe et les actions effectivement incluses.",2026-06-26,Clos
+2026-06-18,Client D,"Relances jugees trop faibles",Faible,Responsable portefeuille,Monter cadence et tracer les etapes,"Nous renforçons le rythme de relance et vous partageons le suivi mis a jour.",2026-06-19,Clos

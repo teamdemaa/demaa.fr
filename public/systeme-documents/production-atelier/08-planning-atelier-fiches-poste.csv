@@ -1,0 +1,4 @@
+Personne,Poste principal,Sait poste 2,Sait poste 3,Remplacant 1,Remplacant 2,Consigne clé
+Mehdi,Chef atelier,Controle qualite,Montage,Yanis,Karim,Valider chaque ordre avant lancement
+Yanis,Technicien,Montage,Finition,Karim,Mehdi,Tracer temps reel
+Karim,Operateur,Finition,Reception,Yanis,Mehdi,Signaler rupture immediatement

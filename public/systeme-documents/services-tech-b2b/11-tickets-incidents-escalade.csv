@@ -1,0 +1,5 @@
+Client,Ticket / incident,Priorité,SLA,Responsable,Escalade prévue,Statut,Notes
+PME A,VPN instable,Haute,J+0,Responsable support,Dirigeant si non resolu a 16h,En cours,
+SaaS B,Erreur recurrente compte client,Moyenne,J+1,Referent support,Responsable technique si repetition,A traiter,
+ETI C,Blocage import CRM,Haute,J+0,Responsable technique,Dirigeant si impact mise en prod,A traiter,
+Boutique D,Alerte MFA non deployee,Moyenne,J+2,Technicien,Responsable technique si non conforme,A planifier,

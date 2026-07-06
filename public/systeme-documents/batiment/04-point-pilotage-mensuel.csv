@@ -1,0 +1,9 @@
+Bloc,Sujet,Valeur,Responsable,Prochaine action,Statut,Notes
+Commercial,Devis en cours,11,Dirigeant,"Relancer les 4 plus proches signature",A suivre,
+Commercial,Chantiers signés,4,Dirigeant,"Verifier capacite de lancement sur 2 chantiers",A suivre,
+Production,Chantiers actifs,7,Conducteur de travaux,"Reprioriser les 2 plus tendus",A suivre,
+Production,Chantiers en retard,2,Conducteur de travaux,"Recadrer planning et fournisseurs",Sous surveillance,
+Finance,CA facture,92000 EUR,Dirigeant,"Sortir 2 situations en attente",A suivre,
+Finance,Encours > 30 jours,21400 EUR,Responsable admin,"Passer en relance niveau 2",Sous surveillance,
+Equipe,Charge terrain,Tendue sur gros œuvre,Dirigeant,"Réaffecter 1 binôme",Ouvert,
+Sécurité,Ecarts sécurité ouverts,1,Conducteur de travaux,"Clore avant fin de semaine",En cours,

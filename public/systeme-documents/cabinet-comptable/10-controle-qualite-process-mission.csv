@@ -1,0 +1,8 @@
+Mission,Point de contrôle,Responsable,Fréquence,Statut,Notes
+Tenue,Toutes les pieces traitees ou relancees,Collaborateur comptable,Mensuel,A verifier,
+Révision,Rapprochements et comptes sensibles revus,Responsable de portefeuille,Mensuel,A verifier,
+Fiscal,Declarations revues avant depot,Expert-comptable,A chaque echeance,A verifier,
+Paie,Variables controlees avant edition,Gestionnaire paie,A chaque cycle,A verifier,
+Client,Synthese ou point de vigilance prepare,Responsable de portefeuille,Mensuel,A verifier,
+Facturation,Travaux exceptionnels signales,Responsable administrative,Hebdomadaire,A verifier,
+Cloture,Bilan ou dossier final valide,Expert-comptable,Annuel,A verifier,

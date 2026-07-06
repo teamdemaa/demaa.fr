@@ -50,9 +50,9 @@ export default function Navbar({
                 <Link
                   href="/"
                   className="demaa-secondary-button inline-flex min-h-10 items-center justify-center px-4 py-2 sm:px-4"
-                  aria-label="Déléguez ce qui vous ralentit"
+                  aria-label="On vous aide à structurer votre entreprise"
                 >
-                  <span>Déléguez ce qui vous ralentit</span>
+                  <span>On vous aide à structurer votre entreprise</span>
                 </Link>
               ) : null}
               <NavbarCartIndicator />

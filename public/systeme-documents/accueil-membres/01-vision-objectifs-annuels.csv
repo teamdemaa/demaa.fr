@@ -1,0 +1,8 @@
+Bloc,Sujet,Valeur,Responsable,Echeance,Statut,Notes
+Vision,Nom de la structure,"Maison Central - accueil, services et contrats membres",Dirigeant,2026-12-31,Exemple,"Structure mixte accueil / services / abonnements"
+Vision,Cap sur 12 mois,"Rendre l'accueil plus fluide, mieux suivre les contrats et limiter les blocages sur les reservations et renouvellements",Dirigeant,2026-12-31,Valide,"A revoir chaque trimestre"
+Vision,Objectif principal,"Atteindre 90 % de taux de renouvellement et un suivi sans oubli sur 100 % des contrats",Dirigeant,2026-12-31,Valide,"Base de pilotage annuel"
+Vision,Positionnement,"Offrir une experience d'accueil claire, fiable et simple du premier contact au renouvellement",Dirigeant,2026-12-31,Valide,"A reprendre dans les scripts d'accueil"
+Priorite trimestrielle,Priorite 1,"Formaliser le parcours d'entree client ou membre",Responsable accueil,2026-09-15,En cours,"Limiter les oublis administratifs"
+Priorite trimestrielle,Priorite 2,"Mettre a jour les conditions et offres par type de service",Dirigeant,2026-09-20,A lancer,"Version unique"
+Priorite trimestrielle,Priorite 3,"Suivre chaque contrat a renouveler 30 jours avant echeance",Assistante admin,2026-09-30,A lancer,"Alerte hebdomadaire"

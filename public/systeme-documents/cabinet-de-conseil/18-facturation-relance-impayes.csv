@@ -1,0 +1,5 @@
+Client,Facture,Montant,Échéance,Niveau de relance,Action type,Responsable,Statut,Notes
+Novaxis,FAC-2026-081,3200,2026-07-06,Niveau 1,Email rappel jalon atteint,Office manager,A lancer,
+Helios,FAC-2026-074,2100,2026-06-27,Niveau 2,Appel + recap livrable remis,Office manager,En cours,
+Karta,FAC-2026-088,1800,2026-07-14,A venir,Preparation facture prochaine etape,Office manager,A venir,
+Atelier Nord,FAC-2026-069,950,2026-06-19,Niveau 3,Relance formelle et arbitrage dirigeant,Dirigeant,Sous surveillance,

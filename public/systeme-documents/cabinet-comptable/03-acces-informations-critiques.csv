@@ -1,0 +1,8 @@
+Bloc,Sujet,Emplacement,Responsable,Acces,Vérification,Notes
+Acces outils,Logiciel comptable principal,Dossier outils cabinet,Expert-comptable,Equipe autorisee,Mensuel,"Verifier comptes actifs"
+Acces outils,Planning echeances fiscales et sociales,Tableau production partage,Responsable de portefeuille,Equipe production,Hebdomadaire,"Source unique des priorites"
+Clients,Documents et pieces clients,Drive / GED cabinet,Collaborateurs dossier,Equipe dossier,Hebdomadaire,"Arborescence standard"
+Finance,Suivi facturation et encours,Tableau administratif,Responsable administrative,Expert-comptable + admin,Hebdomadaire,"Base relance impayes"
+Commercial,Lettres de mission et avenants,Dossier juridique/commercial,Expert-comptable,Expert-comptable + admin,Mensuel,"Controler signatures"
+Conformite,Registre RGPD et procedures internes,Dossier conformite,Expert-comptable,Direction + admin,Trimestriel,"Verifier version"
+Continuite,Contacts urgence clients / SIE / URSSAF,Fiche contacts critiques,Responsable administrative,Direction + admin,Mensuel,"A garder a jour"

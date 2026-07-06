@@ -1,0 +1,4 @@
+Ordre,Client,Type,Date ouverture,Date cloture,Responsable,Controle final,Statut,Notes
+OF-245,Société Nova,Fabrication,2026-07-01,2026-07-04,Chef atelier,OK,Clos,
+INT-118,Garage Atlas,Intervention,2026-07-02,2026-07-03,Technicien ref,OK,Clos,
+CAR-302,Cabinet Rho,Carrosserie,2026-07-03,,Chef atelier,En attente,En cours,Attente peinture

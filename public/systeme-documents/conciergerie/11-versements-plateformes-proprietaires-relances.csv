@@ -1,0 +1,5 @@
+Logement / propriétaire,Sujet,Montant,Échéance,Niveau de relance,Action type,Responsable,Statut,Notes
+Appartement Centre,Versement plateforme attendu,640 EUR,2026-07-09,Niveau 1,Vérifier statut et relancer si retard,Responsable admin,A suivre,
+Maison Jardin,Reversement propriétaire,880 EUR,2026-07-10,A venir,Préparer virement et détail,Responsable admin,A venir,
+Studio Gare,Frais exceptionnels à justifier,120 EUR,2026-07-08,Niveau 1,Envoyer justificatifs au propriétaire,Responsable admin,A lancer,
+Loft Vieux Port,Retard reversement ancien,430 EUR,2026-06-20,Niveau 3,Relance formelle et arbitrage,Dirigeant,Sous surveillance,

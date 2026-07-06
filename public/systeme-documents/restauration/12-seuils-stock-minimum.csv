@@ -1,0 +1,6 @@
+Produit,Categorie,Stock mini,Stock actuel,Delai fournisseur,Rotation,Action,Responsable
+Poulet marine,Frais,18 kg,11 kg,2 jours,Elevee,Commander,Responsable cuisine
+Pain burger,Boulangerie,80 unites,42 unites,1 jour,Elevee,Commander,Responsable cuisine
+Sauce maison,Sauces,6 bacs,3 bacs,1 jour,Elevee,Relancer production,Equipe
+Boissons 33cl,Boissons,72 unites,60 unites,3 jours,Moyenne,Rien a faire,Responsable salle
+Emballages tacos,Consommables,300 unites,120 unites,5 jours,Elevee,Commander,Responsable salle

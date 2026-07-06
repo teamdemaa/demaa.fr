@@ -1,0 +1,8 @@
+Sujet,Responsable,Peut decider seul,Valider avec,A informer,Condition ou seuil
+Qualification nouveau mandat,Responsable gestion,Oui,,Dirigeant,"Si pieces minimales disponibles"
+Priorisation incident locataire,Responsable gestion,Oui,,Equipe concernee,"Selon urgence et impact logement"
+Lancement relocation,Responsable gestion,Oui,,Proprietaire,"Si sortie locataire confirmee"
+Ajustement honoraires exceptionnel,Dirigeant,Non,Dirigeant,Responsable admin,"Au-dela de 10 %"
+Accord petit travaux,Responsable gestion,Oui,,Proprietaire,"Sous seuil budget defini"
+Escalade impaye sensible,Responsable admin,Non,Dirigeant,Responsable gestion,"Si plus de 30 jours ou tension juridique"
+Facturation honoraires,Responsable admin,Oui,,Dirigeant,"Si periode ou jalon atteint"

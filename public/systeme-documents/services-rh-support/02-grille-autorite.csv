@@ -1,0 +1,8 @@
+Sujet,Responsable,Peut decider seul,Valider avec,A informer,Condition ou seuil
+Qualification nouvelle demande,Responsable operations,Oui,,Dirigeant,"Si besoin clairement formule"
+Priorisation ticket ou dossier,Responsable operations,Oui,,Equipe concernee,"Selon SLA et urgence"
+Reaffectation charge equipe,Responsable operations,Oui,,Dirigeant,"Si sans impact client majeur"
+Remise commerciale exceptionnelle,Dirigeant,Non,Dirigeant,Responsable admin,"Au-dela de 10 %"
+Facturation mission complementaire,Responsable admin,Oui,,Dirigeant,"Si perimetre additionnel valide"
+Escalade client sensible,Responsable operations,Non,Dirigeant,Equipe concernee,"Si tension client ou risque resiliation"
+Cloture dossier ou ticket,Referent dossier,Oui,,Client + admin,"Si action terminee et tracee"

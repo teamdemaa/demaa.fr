@@ -1,0 +1,5 @@
+Personne,Poste principal,Sait tenir caisse,Sait assembler,Sait cuire,Sait ouvrir,Sait fermer,Remplacant 1,Remplacant 2
+Lina,Responsable salle,Oui,Oui,Non,Oui,Oui,Mehdi,Dirigeant
+Mehdi,Responsable cuisine,Non,Oui,Oui,Oui,Oui,Lina,Dirigeant
+Yanis,Equipier polyvalent,Oui,Oui,Non,Non,Oui,Lina,Mehdi
+Sara,Equipiere prep,Non,Oui,Oui,Non,Non,Mehdi,Yanis

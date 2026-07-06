@@ -84,24 +84,24 @@ export const demaaServices = [
   },
   {
     slug: "previsionnel-financier",
-    name: "Prévisionnel financier",
+    name: "Pilotage financier",
     category: "Finance",
     shortDescription:
-      "Un prévisionnel clair pour défendre votre projet, piloter vos chiffres et sécuriser vos décisions.",
+      "Un pilotage financier plus clair pour suivre votre trésorerie, voir venir, anticiper et ajuster vos décisions.",
     description:
-      "Un prévisionnel financier construit à partir de vos hypothèses pour clarifier chiffre d'affaires, charges, trésorerie et besoin de financement.",
+      "Un accompagnement pour mieux piloter votre trésorerie, anticiper les écarts, voir venir plus sereinement et ajuster vos choix en fonction de votre activité.",
     bestFor:
-      "Les lancements, demandes de financement, investissements et activités qui ont besoin de repères chiffrés clairs.",
+      "Les dirigeants qui veulent mieux suivre leurs chiffres, anticiper les tensions de trésorerie et décider plus tôt au lieu de subir.",
     duration: "2 semaines",
     price: "550 € HT",
-    tags: ["Financement", "Business plan", "Trésorerie"],
+    tags: ["Pilotage", "Trésorerie", "Anticipation"],
     icon: "TrendingUp",
     deliverables: [
-      "Hypothèses de chiffre d'affaires et de charges",
-      "Prévisionnel financier complet",
-      "Besoin de financement et seuil de rentabilité",
+      "Lecture claire des entrées et sorties de trésorerie",
+      "Projection simple pour voir venir et anticiper",
+      "Ajustements concrets selon votre activité",
     ],
-    usefulFor: ["Financement", "Investissement", "Lancement"],
+    usefulFor: ["Trésorerie", "Pilotage", "Anticipation"],
   },
   {
     slug: "audit-conformite-fiscale",

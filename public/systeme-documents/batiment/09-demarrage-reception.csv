@@ -1,0 +1,7 @@
+Étape,Sujet,Responsable,Statut attendu,Échéance,Notes
+Démarrage,Devis signé et acompte reçu,Responsable admin,Fait,Avant lancement,
+Démarrage,Plans / accès / contacts chantier confirmés,Conducteur de travaux,Fait,Avant lancement,
+Démarrage,Matériaux de départ commandés,Conducteur de travaux,Fait,Sous 48h,
+Démarrage,Consignes sécurité rappelées,Chef d'equipe,Fait,Avant chantier,
+Réception,Réserves listées et tracées,Conducteur de travaux,Fait,Fin chantier,
+Réception,Documents finaux remis au client,Responsable admin,Fait,Fin chantier,

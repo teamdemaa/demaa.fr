@@ -183,7 +183,57 @@ export default function ServiceDirectoryClient({
     [filteredServices]
   );
 
+  const shouldUseSingleRowLayout =
+    activeCategory === "Tous" &&
+    !searchQuery &&
+    filteredServices.length > 0 &&
+    filteredServices.length <= 4;
+
   const serviceFilters = useMemo(() => ["Tous", ...categories], [categories]);
+
+  const servicesShowcase = shouldUseSingleRowLayout ? (
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+      {filteredServices.map((service) => (
+        <ServiceCard
+          key={service.slug}
+          isSelected={
+            service.slug === ASSISTANT_SERVICE_SLUG
+              ? selectedSlugs.some((slug) => isAssistantPackSlug(slug))
+              : selectedSlugs.includes(service.slug)
+          }
+          onToggleSelection={toggleServiceSelection}
+          service={service}
+        />
+      ))}
+    </div>
+  ) : (
+    <div className="space-y-10 md:space-y-14">
+      {serviceSections.map((section) => (
+        <section key={section.title} className="space-y-5">
+          <div className="max-w-3xl">
+            <h2 className="text-2xl font-normal tracking-tight text-brand-blue md:text-[2rem]">
+              {section.title}
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+            {section.services.map((service) => (
+              <ServiceCard
+                key={service.slug}
+                isSelected={
+                  service.slug === ASSISTANT_SERVICE_SLUG
+                    ? selectedSlugs.some((slug) => isAssistantPackSlug(slug))
+                    : selectedSlugs.includes(service.slug)
+                }
+                onToggleSelection={toggleServiceSelection}
+                service={service}
+              />
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  );
 
   function selectCategory(category: string) {
     setActiveCategory(category);
@@ -330,32 +380,7 @@ export default function ServiceDirectoryClient({
             </p>
           </div>
         ) : (
-          <div className="space-y-10 md:space-y-14">
-            {serviceSections.map((section) => (
-              <section key={section.title} className="space-y-5">
-                <div className="max-w-3xl">
-                  <h2 className="text-2xl font-normal tracking-tight text-brand-blue md:text-[2rem]">
-                    {section.title}
-                  </h2>
-                </div>
-
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                  {section.services.map((service) => (
-                    <ServiceCard
-                      key={service.slug}
-                      isSelected={
-                        service.slug === ASSISTANT_SERVICE_SLUG
-                          ? selectedSlugs.some((slug) => isAssistantPackSlug(slug))
-                          : selectedSlugs.includes(service.slug)
-                      }
-                      onToggleSelection={toggleServiceSelection}
-                      service={service}
-                    />
-                  ))}
-                </div>
-              </section>
-            ))}
-          </div>
+          <ServiceTrustSection servicesShowcase={servicesShowcase} />
         )}
 
         {backLink ? (
@@ -370,7 +395,6 @@ export default function ServiceDirectoryClient({
           </div>
         ) : null}
 
-        <ServiceTrustSection />
       </section>
     </div>
   );
@@ -463,9 +487,9 @@ function ServiceCard({
   );
 }
 
-function ServiceTrustSection() {
+function ServiceTrustSection({ servicesShowcase }: { servicesShowcase: ReactNode }) {
   return (
-    <div className="mt-10 space-y-24 md:mt-14 md:space-y-32">
+    <div className="mt-8 space-y-24 md:mt-11 md:space-y-32">
       <section className="border-t border-dema-line/80 pt-14 md:pt-18">
         <div className="max-w-2xl">
           <p className="text-[14px] font-semibold uppercase tracking-[0.16em] text-dema-forest md:text-[15px]">
@@ -491,6 +515,20 @@ function ServiceTrustSection() {
               </p>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section id="services-showcase" className="border-t border-dema-line/80 pt-14 md:pt-18">
+        <div className="max-w-3xl">
+          <p className="text-[14px] font-semibold uppercase tracking-[0.16em] text-dema-forest md:text-[15px]">
+            Ce que vous pouvez déléguer
+          </p>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-brand-blue md:text-[2.5rem]">
+            Les sujets à reprendre maintenant
+          </h2>
+        </div>
+        <div className="mt-8">
+          {servicesShowcase}
         </div>
       </section>
 
@@ -560,7 +598,7 @@ function ServiceTrustSection() {
             <Link
               href={ORGANISATION_AUDIT_MODAL_HREF}
               scroll={false}
-              className="demaa-secondary-button border-dema-paper/25 bg-dema-paper/8 text-dema-paper hover:border-dema-paper/40 hover:bg-dema-paper/12 hover:text-dema-paper"
+              className="demaa-secondary-button border-dema-paper bg-dema-paper text-brand-blue hover:border-dema-paper hover:bg-dema-paper hover:text-dema-forest"
             >
               Demandez votre diagnostic
             </Link>

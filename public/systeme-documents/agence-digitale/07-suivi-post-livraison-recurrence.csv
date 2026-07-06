@@ -1,0 +1,6 @@
+Moment,Déclencheur,Message type,Canal,Responsable,Échéance,Statut,Notes
+Livraison,Jour de remise,"Confirmer reception, rappeler le perimetre et les prochaines etapes",Email,Chef de projet,Sous 24h,A faire,
+J+7,Projet livre,"Verifier si tout est bien deploye et compris",Email + appel,Chef de projet,J+7,A faire,
+J+15,Projet termine,"Proposer ajustement mineur ou suivi recurrent",Email,Dirigeant,J+15,A faire,
+Satisfaction,Client satisfait,"Demander retour, avis ou recommandation",Email,Office manager,Sous 72h,A faire,
+Reactivation,Client inactif 6 mois,"Proposer revue perf / nouveaux besoins",Email,Dirigeant,Mensuel,A planifier,

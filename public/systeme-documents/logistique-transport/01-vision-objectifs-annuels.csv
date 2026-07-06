@@ -1,0 +1,12 @@
+Bloc,Sujet,Valeur,Responsable,Echeance,Statut,Notes
+Vision,Nom de l'entreprise,"Transit Express Ouest - tournées locales et missions urgentes",Dirigeant,2026-12-31,Exemple,"Petite flotte de 4 vehicules"
+Vision,Cap sur 12 mois,"Avoir une exploitation plus previsible, moins de retards non anticipes et une rentabilite visible mission par mission",Dirigeant,2026-12-31,Valide,"A revoir chaque trimestre"
+Vision,Objectif principal,"Atteindre 62 000 EUR de chiffre d'affaires mensuel avec un taux de service a l'heure > 96 %",Dirigeant,2026-12-31,Valide,"Base de pilotage annuel"
+Vision,Positionnement,"Etre reconnu pour des missions fiables, suivies et tracees avec une information client rapide",Dirigeant,2026-12-31,Valide,"A reprendre dans les devis et supports"
+Priorite trimestrielle,Priorite 1,"Mettre a jour le planning d'exploitation chaque fin de journee pour le lendemain",Exploitant,2026-09-05,En cours,"Rituel 17h30"
+Priorite trimestrielle,Priorite 2,"Formaliser les consignes terrain et la procedure incident pour tous les chauffeurs",Dirigeant,2026-09-20,A lancer,"Version papier + Drive"
+Priorite trimestrielle,Priorite 3,"Suivre la marge par mission avec kilometrage et carburant reels",Assistante admin,2026-09-30,A lancer,"Controle hebdomadaire"
+Indicateur,Taux de service a l'heure,93 %,Exploitant,Hebdomadaire,Sous surveillance,"Cible 96 %"
+Indicateur,Missions avec incident,5,Exploitant,Hebdomadaire,A suivre,"Analyser les causes"
+Indicateur,Cout carburant mensuel,4860 EUR,Dirigeant,Mensuel,A suivre,"Comparer par vehicule"
+Indicateur,Factures echues non reglees,6400 EUR,Assistante admin,Hebdomadaire,Sous surveillance,"Relance tous les mardis"

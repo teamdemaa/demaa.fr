@@ -1,0 +1,4 @@
+Sujet,Responsable,Peut decider seul,Doit valider avec,À informer,Condition / seuil
+Refus d'un article à risque,Responsable atelier,Oui,Dirigeant,Accueil,"Si textile fragile ou non traitable"
+Geste commercial,Accueil,Oui,Dirigeant,Responsable admin,"Dans la limite de 15 EUR"
+Sous-traitance exceptionnelle,Responsable atelier,Non,Dirigeant,Accueil,"Si surcharge ou panne"

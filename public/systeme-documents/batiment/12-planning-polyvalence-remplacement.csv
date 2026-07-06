@@ -1,0 +1,5 @@
+Collaborateur,Rôle principal,Charge actuelle,Back-up 1,Back-up 2,Niveau autonomie,Point de vigilance,Notes
+Dirigeant,Arbitrages et vente,"Charge forte sur devis et arbitrages",Conducteur de travaux,,Elevé,"Sortir des micro-validations chantier",
+Conducteur de travaux,Pilotage chantiers,"7 chantiers actifs",Chef d'equipe,Dirigeant,Elevé,"Mieux lisser les urgences terrain",
+Chef d'equipe,Exécution et coordination lot,"2 à 3 chantiers terrain",Conducteur de travaux,Ouvrier polyvalent,Intermediaire,"Renforcer passation fin de journee",
+Responsable admin,Facturation et relances,"Situations, acomptes, fournisseurs",Dirigeant,Conducteur de travaux,Bon,"Cadencer relances impayés",

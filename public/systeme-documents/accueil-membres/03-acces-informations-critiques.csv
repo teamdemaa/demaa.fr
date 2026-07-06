@@ -1,0 +1,6 @@
+Type,Element,Ou trouver,Responsable,Acces,Verification,Notes
+CRM,Base clients / membres,"Gestionnaire mots de passe",Dirigeant,Accueil + admin,Mensuel,"Verifier droits par role"
+Reservations,Outil planning / disponibilites,"Gestionnaire mots de passe",Responsable accueil,Accueil,Hebdomadaire,"Version unique"
+Contrats,Modeles et contrats signes,Drive contrats,Assistante admin,Accueil + admin,Hebdomadaire,"Toujours classement client"
+Paiements,Outil de facturation / terminal,Procedure accueil + coffre mots de passe,Assistante admin,Accueil,Hebdomadaire,"Tester procedure incident"
+Conformite,CGV / RGPD / justificatifs,Drive conformite,Dirigeant,Admin + accueil,Trimestriel,"Version unique"

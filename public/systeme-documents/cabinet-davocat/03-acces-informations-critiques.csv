@@ -1,0 +1,8 @@
+Bloc,Sujet,Emplacement,Responsable,Acces,Vérification,Notes
+Acces outils,Messagerie cabinet,Google Workspace / Outlook,Associe gerant,Associes + equipe autorisee,Mensuel,"Verifier acces nouveaux arrivants / sortants"
+Acces outils,Calendrier audiences et echeances,Agenda partage cabinet,Assistante juridique,Equipe dossier,Hebdomadaire,"Source unique des dates"
+Acces outils,Dossiers clients actifs,Drive / DMS cabinet,Avocat referent,Equipe dossier,Hebdomadaire,"Arborescence normalisee par dossier"
+Finance,Suivi facturation et encours,Tableau administratif,Responsable administrative,Associe gerant + admin,Hebdomadaire,"Base des relances"
+Juridique,Modeles convention d'honoraires,Dossier modeles cabinet,Associe gerant,Associes + assistantes,Trimestriel,"Mettre a jour selon pratiques"
+Conformite,Registre RGPD et confidentialite,Dossier conformite,Associe gerant,Associe gerant + admin,Trimestriel,"Verifier version et diffusion"
+Continuite,Contacts urgence clients et partenaires,Fiche urgence cabinet,Assistante juridique,Associes + equipe cle,Mensuel,"Inclure huissier, greffe, experts"

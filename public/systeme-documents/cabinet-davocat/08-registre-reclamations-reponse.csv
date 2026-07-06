@@ -1,0 +1,4 @@
+Date,Client,Objet,Risque perçu,Responsable,Action immédiate,Réponse type,Échéance,Statut
+2026-07-02,Societe Atlas,"Manque de visibilite sur le dossier",Moyen,Associe gerant,Appel de reprise,"Nous reprenons avec vous l'etat exact du dossier et les prochaines etapes aujourd'hui.",2026-07-03,En cours
+2026-06-24,Particulier D.,"Desaccord sur honoraires",Eleve,Responsable administrative,Envoyer detail facturation,"Nous vous adressons le detail des diligences realisees et proposons un point si necessaire.",2026-06-25,Clos
+2026-06-18,Societe Verdanis,"Delai percu comme trop long",Moyen,Avocat referent,Envoyer point d'avancement,"Voici ce qui est deja fait, ce qui manque et la date de prochaine action engagee.",2026-06-19,Clos

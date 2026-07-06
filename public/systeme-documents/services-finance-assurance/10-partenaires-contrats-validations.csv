@@ -1,0 +1,5 @@
+Date,Dossier,Partenaire / contrat,Action / validation,Responsable,Suite,Statut,Notes
+2026-07-03,Client A,Banque X,Dossier transmis pour etude,Responsable portefeuille,Attendre retour sous 5 jours,En cours,
+2026-07-02,Client B,Assureur Y,Comparatif garanties valide,Dirigeant,Envoyer recommandation client,A faire,
+2026-07-01,Client C,Contrat allocation,Version de mandat validee,Responsable admin,Envoyer signature,En cours,
+2026-06-30,Client D,Huissier partenaire,Escalade amiable decidee,Responsable portefeuille,Lancer sequence formelle,Clos,

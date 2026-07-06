@@ -1,0 +1,7 @@
+Étape,Sujet,Responsable,Statut attendu,Échéance,Notes
+Cadrage,Objectif du projet / run reformule,Responsable technique,Fait,Avant lancement,
+Cadrage,Perimetre et exclusions valides,Dirigeant,Fait,Avant lancement,
+Inventaire,Comptes, postes, serveurs ou outils recenses,Responsable technique,Fait,Sous 48h,
+Acces,Comptes admin et MFA verifies,Responsable technique,Fait,Sous 48h,
+Planning,Premier jalon ou intervention reserves,Responsable support,Fait,Sous 48h,
+Continuite,Contact urgence et escalade confirmes,Responsable admin,Fait,Immediat,

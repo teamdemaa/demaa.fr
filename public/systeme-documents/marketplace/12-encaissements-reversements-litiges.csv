@@ -1,0 +1,4 @@
+Vendeur / dossier,Type,Montant,Échéance,Responsable,Statut,Prochaine action
+Vendeur A,Reversement semaine 27,3200 EUR,2026-07-09,Responsable admin,A payer,Valider rapprochement
+LIT-301,Remboursement acheteur,85 EUR,2026-07-07,Responsable admin,A traiter,Valider médiation
+Vendeur C,Commission due,240 EUR,2026-07-10,Responsable admin,A encaisser,Relancer justificatif

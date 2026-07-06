@@ -1,0 +1,4 @@
+Client,Dossier,Besoin,Prix propose,Delai,Argument 1,Argument 2,Responsable,Statut
+Société Nova,OF-245,Serie courte pièces,1850 EUR,8 jours,"Delai tenu","Controle qualité trace",Commercial,Envoye
+Garage Atlas,INT-118,Intervention atelier,620 EUR,48h,"Diagnostic clair","Piece dispo",Commercial,Valide
+Cabinet Rho,CAR-302,Reprise carrosserie,1280 EUR,5 jours,"Planning fiable","Photo avant/apres",Commercial,A relancer

@@ -1,0 +1,8 @@
+Bloc,Sujet,Contenu à transmettre,Responsable,Statut,Notes
+Dossier,Nom du client / sujet,"PME A - infogerance poste + reseau",Responsable technique,A completer,
+Contexte,Objet,"Stabiliser le parc et reduire les tickets recurrents",Dirigeant,A completer,
+Échéances,Dates clés,"Revue parc le 09/07, sauvegarde a verifier le 08/07",Responsable support,A completer,
+Acces,Comptes / outils critiques,"M365 admin, firewall, VPN, sauvegarde",Responsable technique,A completer,
+Décisions,Arbitrages deja pris,"Priorite sur hygiene poste et doc support",Dirigeant,A completer,
+Prochaine action,Etape suivante,"Lancer l'audit poste et tracer les ecarts",Technicien,A completer,
+Checklist reprise,Points a verifier,"Acces, tickets ouverts, derniere sauvegarde, prochain jalon",Responsable support,A completer,

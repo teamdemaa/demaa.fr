@@ -1,0 +1,6 @@
+Moment,Déclencheur,Message type,Canal,Responsable,Échéance,Statut,Notes
+Hebdo,Revue tickets / run,"Partager incidents ouverts, resolus et points de vigilance",Email,Responsable support,Hebdomadaire,A faire,
+Mensuel,Revue compte,"Faire le point sur volume, incidents, securite et priorites",Visio,Dirigeant,Mensuel,A planifier,
+Incident,Interruption ou risque securite,"Informer vite, cadrer la cause, la suite et la prochaine mise a jour",Email + appel,Responsable technique,Immediat,A faire,
+Satisfaction,Projet ou incident bien resolu,"Demander retour et point d'amelioration",Email,Responsable admin,Sous 72h,A faire,
+Reactivation,Compte peu actif,"Proposer revue parc / securite / roadmap",Email,Dirigeant,Mensuel,A planifier,

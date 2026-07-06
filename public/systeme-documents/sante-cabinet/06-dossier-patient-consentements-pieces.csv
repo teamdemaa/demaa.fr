@@ -1,0 +1,4 @@
+Patient,Piece identite,Coordonnees,Consentement signe,Document medical / ordonnance,Feuille de soins,RGPD / info patient,Statut dossier
+Claire M,Oui,Oui,Oui,Oui,Oui,Oui,Complet
+Nadia P,Oui,Oui,Oui,Non,Oui,Oui,A completer
+Lucas T,Oui,Oui,Oui,Oui,Non,Oui,A completer

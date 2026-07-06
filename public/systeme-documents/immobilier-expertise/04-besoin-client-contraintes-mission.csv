@@ -1,0 +1,5 @@
+Client,Type de mission,Besoin identifié,Contraintes mission,Responsable,Prochaine action,Statut,Notes
+Client A,Diagnostic technique,"Besoin d'un rapport avant mise en vente","Acces site limite, delai 5 jours",Responsable mission,Verifier pieces d'entree,A qualifier,
+Client B,Relevé / plan,"Releve complet d'un local commercial","Intervention hors horaires d'ouverture",Referent terrain,Programmer visite,A planifier,
+Client C,Expertise lotissement,"Verifier limites et contraintes parcelle","Coordination mairie / voisinage",Dirigeant,Recueillir docs urbanisme,A qualifier,
+Client D,Maitre d'oeuvre,"Cadrage avant travaux","Plusieurs intervenants et jalons",Responsable mission,Valider interlocuteur unique,A qualifier,

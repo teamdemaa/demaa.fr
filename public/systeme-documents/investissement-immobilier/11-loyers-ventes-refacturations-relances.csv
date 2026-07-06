@@ -1,0 +1,6 @@
+Opération,Flux,Montant,Échéance,Responsable,Statut,Prochaine action,Notes
+Immeuble Lille,Acompte vente lot 2,18000 EUR,2026-07-11,Responsable admin,A recevoir,Relancer acquéreur si non reçu,
+Maison Angers,Loyer juillet,1850 EUR,2026-07-05,Responsable admin,Recu,Aucune,
+T2 Nantes,Refacturation mobilier,1250 EUR,2026-07-09,Responsable portefeuille,A suivre,Envoyer facture,
+SCI Reims,Honoraires asset management,3200 EUR,2026-07-15,Dirigeant,A facturer,Valider support,
+Local Montreuil,Solde travaux refacturable,4800 EUR,2026-07-20,Chef de projet,A preparer,Consolider justificatifs,

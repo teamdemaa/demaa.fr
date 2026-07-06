@@ -1,0 +1,4 @@
+Sujet,Responsable,Peut decider seul,Doit valider avec,À informer,Condition / seuil
+Admission famille,Direction,Oui,Référente admin,Équipe,
+Modification planning enfant,Référente admin,Oui,Direction,Famille,
+Signalement sensible,Référente terrain,Non,Direction,Autorité compétente,"Immédiat si besoin"

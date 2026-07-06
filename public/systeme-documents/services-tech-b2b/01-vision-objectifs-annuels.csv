@@ -1,0 +1,11 @@
+Bloc,Sujet,Valeur,Responsable,Échéance,Statut,Notes
+Vision,Cap 12 mois,"Avoir une activite plus rentable, plus documentee et moins dependante du dirigeant",Dirigeant,2026-12-31,A definir,
+Vision,Objectif principal,"Mieux cadrer les projets, tenir les SLA et industrialiser la documentation",Dirigeant,2026-12-31,A definir,
+Priorité trimestrielle,Priorite 1,"Clarifier l'offre et les niveaux de service",Dirigeant,2026-09-30,A lancer,
+Priorité trimestrielle,Priorite 2,"Formaliser les circuits d'intervention et d'escalade",Responsable technique,2026-09-30,A lancer,
+Priorité trimestrielle,Priorite 3,"Rendre visibles marge, licences et charge support",Dirigeant,2026-09-30,A lancer,
+Indicateur,Comptes actifs,0,Dirigeant,Mensuel,A suivre,
+Indicateur,Tickets hors SLA,0,Responsable support,Hebdomadaire,A suivre,
+Indicateur,Marge moyenne compte/projet,0,Dirigeant,Mensuel,A suivre,
+Point de vigilance,Risque 1,"Trop de savoir oral non documente",Responsable technique,Immediat,Ouvert,
+Point de vigilance,Risque 2,"Trop de dependance aux urgences du client",Dirigeant,Immediat,Ouvert,

@@ -1,0 +1,5 @@
+Date,Point controle,Matin,Service midi,Soir,Conforme,Responsable,Action si ecart
+2026-07-01,Chambre froide positive,3.2 C,3.8 C,3.5 C,Oui,Responsable cuisine,
+2026-07-01,Congelateur,-19 C,-18.5 C,-18.7 C,Oui,Responsable cuisine,
+2026-07-01,Plan de travail chaud,N/A,N/A,Nettoye,Oui,Equipe,
+2026-07-01,Sol cuisine,N/A,N/A,Nettoye,Oui,Equipe,

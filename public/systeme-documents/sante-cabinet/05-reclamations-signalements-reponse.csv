@@ -1,0 +1,4 @@
+Date,Patient / source,Type,Resume,Decision,Responsable,Date cloture,Statut
+2026-07-01,Patient A,Reclamation,"Attente trop longue a l'accueil",Rappel procedure + excuse,Responsable accueil,2026-07-01,Clos
+2026-07-02,Patient B,Signalement,"Erreur administrative sur feuille de soin",Correction immediate,Assistante,2026-07-02,Clos
+2026-07-03,Patient C,Reclamation,"Compte rendu recu trop tard",Revue delai praticien,Dirigeant,2026-07-04,Clos

@@ -1,0 +1,5 @@
+Commande,Étape,Responsable,Échéance,Statut,Notes
+CMD-1024,Picking,Préparateur,J0,En cours,
+CMD-1024,Contrôle emballage,Responsable opérations,J0,A faire,
+CMD-1024,Étiquette transport,Préparateur,J0,A faire,
+CMD-1024,Confirmation client,Support,J0,A faire,

@@ -1,0 +1,5 @@
+Sujet,Responsable,Peut decider seul,Doit valider avec,À informer,Condition / seuil
+Surclassement client,Responsable accueil,Oui,Dirigeant,Responsable admin,"Selon disponibilité"
+Geste commercial suite réclamation,Responsable accueil,Oui,Dirigeant,Responsable admin,"Dans la limite de 50 EUR"
+Intervention maintenance urgente,Responsable exploitation,Oui,Dirigeant,Accueil,"Si impact client immédiat"
+Fermeture d'une chambre / logement,Responsable exploitation,Non,Dirigeant,Accueil,"En cas de panne ou non-conformité"

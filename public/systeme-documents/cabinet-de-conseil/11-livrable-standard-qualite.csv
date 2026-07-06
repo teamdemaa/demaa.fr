@@ -1,0 +1,7 @@
+Bloc,Point de contrôle,Responsable,Fréquence,Statut,Notes
+Livrable,Probleme formule en une phrase,Consultant senior,A chaque livrable,A verifier,
+Livrable,Analyse mene a une decision claire,Consultant senior,A chaque livrable,A verifier,
+Livrable,Plan d'action concret inclus,Consultant senior,A chaque livrable,A verifier,
+Qualité,Exemples terrain ou chiffres presentes,Dirigeant,A chaque livrable,A verifier,
+Qualité,Slides ou doc lisibles sans oral,Consultant senior,A chaque livrable,A verifier,
+Client,Prochaine etape explicite,Dirigeant,A chaque restitution,A verifier,

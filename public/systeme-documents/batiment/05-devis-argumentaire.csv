@@ -1,0 +1,8 @@
+Bloc,Sujet,Contenu exemple,Responsable,Statut,Notes
+Offre,Positionnement,"Entreprise qui exécute proprement, tient les délais et cadre les chantiers",Dirigeant,A jour,
+Offre,Promesse claire,"Moins d'imprévus, un chantier mieux suivi et des points d'avancement lisibles",Dirigeant,A jour,
+Argumentaire,Pourquoi nous,"Cadre de chantier, suivi clair, interlocuteur identifié, finitions contrôlées",Conducteur de travaux,A jour,
+Argumentaire,Points à qualifier,"Plans, délais, accès chantier, budget, contraintes voisinage, lots concernés",Conducteur de travaux,A jour,
+Devis,Périmètre,"Travaux inclus, exclusions, délais, jalons, situations et réception",Responsable admin,A verifier,
+Devis,Hors périmètre,"Travaux supplémentaires, reprises hors devis, retard d'accès chantier",Responsable admin,A verifier,
+Lancement,Conditions,"Devis signé, acompte reçu, accès confirmé, plans validés",Dirigeant,A jour,

@@ -1,0 +1,7 @@
+Sujet,Responsable,Peut decider seul,Doit valider avec,A informer,Condition / seuil
+Geste commercial client en caisse,Responsable salle,Oui,Dirigeant,Equipe,"Jusqu'a 10 EUR"
+Commande urgente matieres premieres,Responsable cuisine,Oui,Dirigeant,Equipe,"Si rupture sur produit coeur de carte"
+Suppression temporaire d'un plat,Responsable cuisine,Oui,Responsable salle,Equipe,"Si ingredient indisponible ou qualite non conforme"
+Modification planning du lendemain,Responsable salle,Oui,Dirigeant,Equipe,"Si conforme au volume de service"
+Maintenance petit materiel,Responsable cuisine,Oui,Dirigeant,Equipe,"Sous 150 EUR"
+Reponse a avis negatif,Responsable salle,Oui,Dirigeant,Equipe,"Utiliser la trame commune"

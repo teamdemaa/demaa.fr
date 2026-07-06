@@ -1,0 +1,6 @@
+Type,Element,Ou trouver,Responsable,Acces,Verification,Notes
+Agenda,Outil de reservation,"Gestionnaire mots de passe",Responsable accueil,Accueil + equipe,Hebdomadaire,"Version unique"
+Paiement,Caisse / terminal / outil facture,"Procedure accueil + coffre mots de passe",Dirigeant,Accueil,Hebdomadaire,"Tester procedure panne"
+Produits,Fournisseurs et stocks critiques,Drive produits,Responsable prestation,Equipe,Hebdomadaire,"Verifier references sensibles"
+Conformite,Diplomes / assurances / affichages,Drive conformite,Dirigeant,Dirigeant + admin,Trimestriel,"Version unique"
+Urgence,Contacts maintenance / hygiene,Classeur urgence,Responsable accueil,Equipe,Trimestriel,"Afficher en reserve"
