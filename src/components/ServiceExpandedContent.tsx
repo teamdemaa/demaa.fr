@@ -409,32 +409,34 @@ function OrganisationExpandedContent({
         </div>
       </section>
 
-      <section className={sectionClass}>
-        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
-          Infos clés du diagnostic
-        </p>
-        <h3 className="mt-2 text-xl font-semibold tracking-tight text-brand-blue md:text-2xl">
-          Ce que vous devez savoir avant de le demander
-        </h3>
-        <div className="mt-6 grid gap-4 md:grid-cols-2">
-          {organisationKeyFacts.map((item) => (
-            <article
-              key={item.title}
-              className="rounded-[0.95rem] border border-dema-line/70 bg-dema-cream/60 px-4 py-4"
-            >
-              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest/75">
-                {item.label}
-              </p>
-              <h4 className="mt-2 text-base font-semibold leading-snug text-brand-blue">
-                {item.title}
-              </h4>
-              <p className="mt-2 text-sm leading-relaxed text-dema-muted">
-                {item.description}
-              </p>
-            </article>
-          ))}
-        </div>
-      </section>
+      {variant === "page" ? (
+        <section className={sectionClass}>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
+            Infos clés du diagnostic
+          </p>
+          <h3 className="mt-2 text-xl font-semibold tracking-tight text-brand-blue md:text-2xl">
+            Ce que vous devez savoir avant de le demander
+          </h3>
+          <div className="mt-6 grid gap-4 md:grid-cols-2">
+            {organisationKeyFacts.map((item) => (
+              <article
+                key={item.title}
+                className="rounded-[0.95rem] border border-dema-line/70 bg-dema-cream/60 px-4 py-4"
+              >
+                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest/75">
+                  {item.label}
+                </p>
+                <h4 className="mt-2 text-base font-semibold leading-snug text-brand-blue">
+                  {item.title}
+                </h4>
+                <p className="mt-2 text-sm leading-relaxed text-dema-muted">
+                  {item.description}
+                </p>
+              </article>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <FaqSection title="Questions fréquentes" items={organisationFaq} />
     </div>

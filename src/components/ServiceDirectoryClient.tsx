@@ -49,7 +49,7 @@ const reliefPoints = [
 
 const organisationDiagnosticHighlights = [
   {
-    label: "Offert",
+    label: "Diagnostic",
     value: "Premier diagnostic",
     description: "Un point rapide pour comprendre vos blocages et vos priorités.",
   },
@@ -558,7 +558,7 @@ function ServiceTrustSection({
   organisationDiagnosticSection: ReactNode;
 }) {
   return (
-    <div className="mt-8 space-y-24 md:mt-11 md:space-y-32">
+    <div className="mt-8 space-y-20 md:mt-11 md:space-y-26">
       <section className="border-t border-dema-line/80 pt-14 md:pt-18">
         <div className="max-w-2xl">
           <p className="text-[14px] font-semibold uppercase tracking-[0.16em] text-dema-forest md:text-[15px]">
