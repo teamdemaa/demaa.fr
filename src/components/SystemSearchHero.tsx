@@ -171,7 +171,7 @@ export default function SystemSearchHero({
         <div className="mx-auto max-w-4xl">
           <h1 className="text-[clamp(2.8rem,8vw,5.4rem)] leading-[0.94] tracking-tight text-brand-blue">
             <span className="demaa-hero-title text-dema-forest">
-              Trouvez les bons systèmes
+              Trouver votre Boîte à outils
             </span>
             <br />
             <span className="font-sans font-light not-italic text-brand-blue/62">

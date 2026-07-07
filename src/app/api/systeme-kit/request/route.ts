@@ -7,7 +7,10 @@ import {
 import { isValidEmail, normalizeEmail } from "@/lib/email";
 import { enterpriseToSystem } from "@/lib/enterprise-annuaire";
 import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
-import { savePartnerOffersSubscriber } from "@/lib/generations-db";
+import {
+  savePartnerOffersSubscriber,
+  scheduleSystemKitSequence,
+} from "@/lib/generations-db";
 import { enforceAllowedHost } from "@/lib/request-guard";
 import {
   getSystemKitEmailErrorMessage,
@@ -99,6 +102,13 @@ export async function POST(request: Request) {
       { status: 502 }
     );
   }
+
+  await scheduleSystemKitSequence({
+    email,
+    firstName,
+    systemName: resolvedSystemName,
+    systemSlug: sectorSlug,
+  });
 
   return NextResponse.json({ ok: true });
 }

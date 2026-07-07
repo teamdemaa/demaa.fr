@@ -40,10 +40,10 @@ export default function Navbar({
                 <Link
                   href="/systemes"
                   className="demaa-secondary-button inline-flex min-h-10 items-center justify-center gap-2 px-4 py-2 sm:px-4"
-                  aria-label="Voir les bons systèmes"
+                  aria-label="Voir la Boîte à outils du dirigeant"
                 >
                   <BriefcaseBusiness className="h-4 w-4 shrink-0" aria-hidden="true" />
-                  <span>Voir les bons systèmes</span>
+                  <span>Voir la Boîte à outils du dirigeant</span>
                 </Link>
               ) : null}
               {showDelegationCta ? (

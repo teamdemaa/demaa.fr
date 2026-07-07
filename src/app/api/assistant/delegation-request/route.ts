@@ -207,7 +207,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         error:
-          "Merci d'indiquer votre WhatsApp pour que l'équipe Demaa puisse vous contacter.",
+          "Merci d'indiquer votre WhatsApp pour que Team Demaa puisse vous contacter.",
       },
       { status: 400 }
     );

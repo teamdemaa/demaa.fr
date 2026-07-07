@@ -99,6 +99,23 @@ interface PartnerOffersSubscriberInput {
   source?: string;
 }
 
+interface PartnerOffersSubscriberRow {
+  created_at?: string | null;
+  email?: string | null;
+  first_name?: string | null;
+  next_email_at?: string | null;
+  sector?: string | null;
+  sequence_completed_at?: string | null;
+  sequence_last_email_sent_at?: string | null;
+  sequence_step?: number | null;
+  sequence_type?: string | null;
+  source?: string | null;
+  status?: string | null;
+  system_name?: string | null;
+  system_slug?: string | null;
+  updated_at?: string | null;
+}
+
 interface AssistantDelegationRequestInput {
   stripeSessionId: string;
   email?: string | null;
@@ -118,6 +135,12 @@ function normalizeStringList(values?: string[] | null) {
   if (!Array.isArray(values)) return [];
 
   return [...new Set(values.map((value) => value.trim()).filter(Boolean))];
+}
+
+function addDaysToIsoDate(fromIso: string, days: number) {
+  const date = new Date(fromIso);
+  date.setUTCDate(date.getUTCDate() + days);
+  return date.toISOString();
 }
 
 export async function upsertConfirmedStripePayment(input: StripePaymentInput) {
@@ -556,6 +579,116 @@ export async function savePartnerOffersSubscriber(input: PartnerOffersSubscriber
   });
 
   return { email };
+}
+
+export async function scheduleSystemKitSequence(input: {
+  email: string;
+  firstName: string;
+  systemName: string;
+  systemSlug: string;
+}) {
+  const database = getAdminFirestore();
+  const now = new Date().toISOString();
+  const email = normalizeEmail(input.email);
+  const subscriberRef = database.collection("abonnes").doc(getStableKey(email));
+
+  await database.runTransaction(async (transaction) => {
+    const subscriberDoc = await transaction.get(subscriberRef);
+
+    transaction.set(
+      subscriberRef,
+      {
+        email,
+        first_name: input.firstName.trim(),
+        sector: input.systemName.trim(),
+        source: subscriberDoc.data()?.source || `systeme_kit_${input.systemSlug}`,
+        status: "subscribed",
+        system_name: input.systemName.trim(),
+        system_slug: input.systemSlug.trim(),
+        sequence_type: "kit_systeme",
+        sequence_step: 1,
+        sequence_last_email_sent_at: now,
+        next_email_at: addDaysToIsoDate(now, 7),
+        sequence_completed_at: null,
+        created_at: subscriberDoc.exists ? subscriberDoc.data()?.created_at || now : now,
+        updated_at: now,
+      },
+      { merge: true }
+    );
+  });
+
+  return { email };
+}
+
+export type SystemKitSequenceSubscriber = {
+  id: string;
+  email: string;
+  firstName: string;
+  systemName: string;
+  systemSlug: string;
+  sequenceStep: number;
+};
+
+export async function getDueSystemKitSequenceSubscribers(limit = 50) {
+  const database = getAdminFirestore();
+  const now = new Date().toISOString();
+  const snapshot = await database
+    .collection("abonnes")
+    .where("next_email_at", "<=", now)
+    .limit(limit)
+    .get();
+
+  return snapshot.docs
+    .map((doc) => {
+      const subscriber = doc.data() as PartnerOffersSubscriberRow | undefined;
+
+      if (
+        subscriber?.sequence_type !== "kit_systeme" ||
+        subscriber?.status !== "subscribed" ||
+        !subscriber.email ||
+        !subscriber.system_slug ||
+        !subscriber.system_name
+      ) {
+        return null;
+      }
+
+      const sequenceStep = Number(subscriber.sequence_step ?? 0);
+
+      if (!Number.isFinite(sequenceStep) || sequenceStep < 1) {
+        return null;
+      }
+
+      return {
+        id: doc.id,
+        email: normalizeEmail(subscriber.email),
+        firstName: subscriber.first_name?.trim() || "",
+        systemName: subscriber.system_name.trim(),
+        systemSlug: subscriber.system_slug.trim(),
+        sequenceStep,
+      } satisfies SystemKitSequenceSubscriber;
+    })
+    .filter((subscriber): subscriber is SystemKitSequenceSubscriber => Boolean(subscriber));
+}
+
+export async function advanceSystemKitSequenceSubscriber(input: {
+  subscriberId: string;
+  nextStep: number;
+  completed: boolean;
+}) {
+  const database = getAdminFirestore();
+  const now = new Date().toISOString();
+
+  await database.collection("abonnes").doc(input.subscriberId).set(
+    {
+      sequence_step: input.nextStep,
+      sequence_last_email_sent_at: now,
+      next_email_at: input.completed ? null : addDaysToIsoDate(now, 7),
+      status: input.completed ? "completed" : "subscribed",
+      sequence_completed_at: input.completed ? now : null,
+      updated_at: now,
+    },
+    { merge: true }
+  );
 }
 
 export async function saveServiceBundleBrief(input: {

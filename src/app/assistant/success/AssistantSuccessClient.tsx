@@ -159,7 +159,7 @@ export default function AssistantSuccessClient({
     }
 
     if (!formData.whatsappPhone.trim()) {
-      setError("Merci d'indiquer votre WhatsApp pour que l'équipe Demaa puisse vous contacter.");
+      setError("Merci d'indiquer votre WhatsApp pour que Team Demaa puisse vous contacter.");
       return;
     }
 

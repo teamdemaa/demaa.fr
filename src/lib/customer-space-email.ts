@@ -1,5 +1,5 @@
 import { createMagicLinkToken } from "@/lib/customer-space-auth";
-import { getCanonicalBaseUrl } from "@/lib/site-url";
+import { getCanonicalOrigin } from "@/lib/site-url";
 
 function renderMagicLinkEmail(input: { magicLink: string }) {
   return `
@@ -10,18 +10,13 @@ function renderMagicLinkEmail(input: { magicLink: string }) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Votre lien d'accès Demaa</title>
       </head>
-      <body style="margin:0;padding:0;background-color:#f5f1e8;">
-        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;background-color:#f5f1e8;">
+      <body style="margin:0;padding:0;background-color:#f9faf8;">
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;background-color:#f9faf8;">
           <tr>
             <td align="center" style="padding:32px 16px;">
               <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;max-width:560px;">
                 <tr>
-                  <td style="padding-bottom:18px;font-family:Arial,sans-serif;font-size:28px;line-height:1;color:#213547;font-weight:700;letter-spacing:-0.03em;">
-                    Demaa
-                  </td>
-                </tr>
-                <tr>
-                  <td style="border:1px solid #e3ddd0;border-radius:28px;background-color:#fffdf8;padding:36px 32px;font-family:Arial,sans-serif;color:#17231d;">
+                  <td style="border:1px solid #e7ece6;border-radius:28px;background-color:#ffffff;padding:36px 32px;font-family:Arial,sans-serif;color:#17231d;">
                     <div style="font-size:11px;line-height:1.4;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#315f46;">
                       Espace membre
                     </div>
@@ -46,7 +41,7 @@ function renderMagicLinkEmail(input: { magicLink: string }) {
                         </td>
                       </tr>
                     </table>
-                    <div style="margin:0 0 20px;border-radius:20px;background-color:#eef4ef;padding:16px 18px;">
+                    <div style="margin:0 0 20px;border-radius:20px;background-color:#f9faf8;padding:16px 18px;">
                       <p style="margin:0;font-size:13px;line-height:1.7;color:#315f46;">
                         Si le bouton ne fonctionne pas, copiez-collez ce lien dans votre navigateur :
                       </p>
@@ -59,11 +54,6 @@ function renderMagicLinkEmail(input: { magicLink: string }) {
                     <p style="margin:0;font-size:13px;line-height:1.7;color:#7a847f;">
                       Si vous n'avez pas demandé cet accès, vous pouvez simplement ignorer cet email.
                     </p>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding:16px 8px 0;font-family:Arial,sans-serif;font-size:12px;line-height:1.7;color:#7a847f;text-align:center;">
-                    Demaa · Accès sécurisé à votre espace membre
                   </td>
                 </tr>
               </table>
@@ -100,7 +90,7 @@ export async function sendCustomerMagicLinkEmail(input: {
   }
 
   const token = await createMagicLinkToken(input.email);
-  const magicLink = `${getCanonicalBaseUrl(input.request)}/api/customer-space/consume?token=${encodeURIComponent(
+  const magicLink = `${getCanonicalOrigin()}/api/customer-space/consume?token=${encodeURIComponent(
     token
   )}`;
 

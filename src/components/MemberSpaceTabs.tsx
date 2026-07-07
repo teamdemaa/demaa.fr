@@ -185,7 +185,7 @@ function RequestCardArticle({
         <div className="mt-5 space-y-2">
           <p className="rounded-full bg-dema-sage px-4 py-2 text-center text-sm text-dema-forest">
             {hasTeamNotification
-              ? "L’équipe Demaa a bien reçu votre brief et revient vers vous."
+              ? "Team Demaa a bien reçu votre brief et revient vers vous."
               : "Brief transmis. Demaa vous tient informé de la suite sur WhatsApp."}
           </p>
           <ServiceBriefModalTrigger
