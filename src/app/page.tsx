@@ -80,7 +80,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
               scroll={false}
               className="demaa-primary-button px-5 py-2.5"
             >
-              Demander un diagnostic
+              Demander un diagnostic organisation
             </Link>
           }
         />
