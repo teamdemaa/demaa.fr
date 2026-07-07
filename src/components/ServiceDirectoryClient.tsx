@@ -255,7 +255,7 @@ export default function ServiceDirectoryClient({
           <p className="text-[14px] font-semibold uppercase tracking-[0.16em] text-dema-forest md:text-[15px]">
             Diagnostic organisation offert
           </p>
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-brand-blue md:text-[2.3rem]">
+          <h2 className="mt-3 text-3xl font-normal tracking-tight text-brand-blue md:text-[2.3rem]">
             Un premier point simple pour savoir par où commencer
           </h2>
           <p className="mt-4 text-sm leading-relaxed text-dema-muted md:text-base">
@@ -282,7 +282,7 @@ export default function ServiceDirectoryClient({
               <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest/80">
                 {item.label}
               </p>
-              <h3 className="mt-2 text-lg font-semibold leading-snug text-brand-blue">
+              <h3 className="mt-2 text-lg font-normal leading-snug text-brand-blue">
                 {item.value}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-dema-muted">
@@ -434,7 +434,7 @@ export default function ServiceDirectoryClient({
 
         {filteredServices.length === 0 ? (
           <div className="rounded-[1.25rem] border border-dashed border-dema-line bg-dema-paper p-10 text-center">
-            <h2 className="text-xl font-bold text-brand-blue">Aucun service trouvé</h2>
+            <h2 className="text-xl font-normal text-brand-blue">Aucun service trouvé</h2>
             <p className="mt-3 text-sm font-normal text-dema-muted">
               Essayez un autre mot-clé ou une catégorie plus large.
             </p>
@@ -564,7 +564,7 @@ function ServiceTrustSection({
           <p className="text-[14px] font-semibold uppercase tracking-[0.16em] text-dema-forest md:text-[15px]">
             Comment ça marche
           </p>
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-brand-blue md:text-[2.5rem]">
+          <h2 className="mt-3 text-3xl font-normal tracking-tight text-brand-blue md:text-[2.5rem]">
             Vous choisissez. Demaa exécute.
             <br />
             Vous respirez.
@@ -576,7 +576,7 @@ function ServiceTrustSection({
               <p className="text-[2.1rem] font-semibold uppercase leading-none tracking-[0.18em] text-dema-forest/55 md:text-[2.4rem]">
                 {item.step}
               </p>
-              <h3 className="text-[1.22rem] font-medium leading-snug text-brand-blue">
+              <h3 className="text-[1.22rem] font-normal leading-snug text-brand-blue">
                 {item.title}
               </h3>
               <p className="max-w-sm text-sm leading-relaxed text-dema-muted md:text-[0.98rem]">
@@ -593,7 +593,7 @@ function ServiceTrustSection({
             <p className="text-[14px] font-semibold uppercase tracking-[0.16em] text-dema-forest md:text-[15px]">
               Ce que ça change
             </p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-brand-blue md:text-[2.5rem]">
+            <h2 className="mt-3 text-3xl font-normal tracking-tight text-brand-blue md:text-[2.5rem]">
               Moins de charge mentale.
               <br />
               Plus d&apos;avancement.
@@ -617,7 +617,7 @@ function ServiceTrustSection({
           <p className="text-[14px] font-semibold uppercase tracking-[0.16em] text-dema-forest md:text-[15px]">
             Questions fréquentes
           </p>
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-brand-blue md:text-[2.5rem]">
+          <h2 className="mt-3 text-3xl font-normal tracking-tight text-brand-blue md:text-[2.5rem]">
             Ce que vous voulez savoir avant d&apos;acheter
           </h2>
         </div>
@@ -646,7 +646,7 @@ function ServiceTrustSection({
           Repère de gain
         </p>
         <div className="mt-3">
-          <h2 className="text-3xl font-semibold tracking-tight text-brand-blue md:text-[2.4rem]">
+          <h2 className="text-3xl font-normal tracking-tight text-brand-blue md:text-[2.4rem]">
             20 à 30 % de temps récupérable
           </h2>
           <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-dema-muted md:text-base">
@@ -660,7 +660,7 @@ function ServiceTrustSection({
           <p className="text-[14px] font-semibold uppercase tracking-[0.16em] text-dema-forest md:text-[15px]">
             Ce que vous pouvez déléguer
           </p>
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-brand-blue md:text-[2.5rem]">
+          <h2 className="mt-3 text-3xl font-normal tracking-tight text-brand-blue md:text-[2.5rem]">
             Les sujets à reprendre maintenant
           </h2>
         </div>
