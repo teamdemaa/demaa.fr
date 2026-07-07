@@ -618,7 +618,7 @@ function ServiceTrustSection({
             Questions fréquentes
           </p>
           <h2 className="mt-3 text-3xl font-normal tracking-tight text-brand-blue md:text-[2.5rem]">
-            Ce que vous voulez savoir avant d&apos;acheter
+            Ce que vous voulez savoir
           </h2>
         </div>
         <div className="mx-auto mt-8 max-w-4xl space-y-3">
