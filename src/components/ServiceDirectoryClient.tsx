@@ -2,7 +2,15 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
-import { ArrowLeft, Check, ChevronDown } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Check,
+  ChevronDown,
+  FolderKanban,
+  Target,
+  Users,
+} from "lucide-react";
 import SearchFilterControls from "@/components/SearchFilterControls";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import {
@@ -23,21 +31,36 @@ import type { DemaaService, ServiceCategory } from "@/lib/service-catalog";
 const serviceFlowSteps = [
   {
     step: "01",
-    title: "Vous choisissez le bon service",
+    title: "Diagnostic organisation",
     description:
-      "Vous prenez le service qui répond à votre besoin du moment: déléguer, structurer, débloquer ou avancer plus vite.",
+      "On identifie ce qui repose trop sur le dirigeant et les points de blocage prioritaires.",
   },
   {
     step: "02",
-    title: "Demaa exécute et vous tient informé",
+    title: "Priorisation des sujets",
     description:
-      "Le sujet est pris en charge, vous êtes tenu au courant simplement, et les échanges se font de façon fluide, notamment sur WhatsApp.",
+      "On choisit les sujets les plus utiles pour redonner du cadre, du suivi et de l'autonomie.",
   },
   {
     step: "03",
-    title: "Vous êtes soulagé",
+    title: "Accompagnement sur 3 mois",
     description:
-      "Vous arrêtez de porter seul ce qui vous ralentit, vous gagnez du temps mental, et l'entreprise avance plus sereinement.",
+      "On avance avec un suivi toutes les 2 semaines, comme bras droit du dirigeant.",
+  },
+] as const;
+
+const organisationPriorityLines = [
+  {
+    icon: Target,
+    label: "Ce qui revient toujours vers le dirigeant",
+  },
+  {
+    icon: FolderKanban,
+    label: "Ce qui manque de cadre ou de suivi",
+  },
+  {
+    icon: Users,
+    label: "Ce qui bloque l'autonomie de l'équipe",
   },
 ] as const;
 
@@ -64,22 +87,22 @@ const globalFaqItems = [
   {
     question: "Est-ce que c'est adapté à une petite entreprise ?",
     answer:
-      "Oui. Les services sont pensés pour des dirigeants qui ont besoin d'avancer vite, sans complexifier davantage leur quotidien.",
+      "Oui. Cet accompagnement est pensé pour les petites entreprises où beaucoup de sujets reposent encore sur le dirigeant, et où il faut remettre du cadre sans alourdir le quotidien.",
   },
   {
-    question: "Qu'est-ce que j'achète exactement ?",
+    question: "Comment savoir si c'est le bon moment ?",
     answer:
-      "Vous achetez une exécution claire sur un besoin précis, avec un résultat attendu et une communication simple tout au long du sujet.",
+      "C'est le bon moment quand trop de décisions, de validations ou de relances reviennent toujours vers vous, et que l'entreprise manque encore de cadre pour avancer plus sereinement.",
   },
   {
-    question: "Comment je suis tenu au courant ?",
+    question: "Qu'est-ce qui est traité pendant l'accompagnement ?",
     answer:
-      "Demaa vous informe au fil de l'avancement, avec des échanges simples et rapides, notamment sur WhatsApp.",
+      "On traite en priorité les sujets qui bloquent le plus l'autonomie de l'entreprise. Cela peut concerner la direction, l'organisation, les opérations, l'équipe, le commercial ou le pilotage, selon votre situation.",
   },
   {
-    question: "Qu'est-ce que ça change concrètement pour moi ?",
+    question: "Comment se passe l'accompagnement sur 3 mois ?",
     answer:
-      "Vous ne portez plus seul les sujets qui traînent, vous gagnez du temps, et vous respirez davantage au quotidien.",
+      "L'accompagnement commence par un diagnostic organisation, puis on priorise les chantiers les plus utiles. Ensuite, on avance avec un suivi toutes les 2 semaines, comme bras droit du dirigeant, pour remettre du cadre et des relais concrets.",
   },
 ] as const;
 
@@ -557,6 +580,8 @@ function ServiceTrustSection({
   servicesShowcase: ReactNode;
   organisationDiagnosticSection: ReactNode;
 }) {
+  void servicesShowcase;
+
   return (
     <div className="mt-7 space-y-20 md:mt-9 md:space-y-26">
       <section className="border-t border-dema-line/80 pt-12 md:pt-16">
@@ -565,9 +590,11 @@ function ServiceTrustSection({
             Comment ça marche
           </p>
           <h2 className="mt-3 text-3xl font-normal tracking-tight text-brand-blue md:text-[2.5rem]">
-            Vous choisissez. Demaa exécute.
+            On diagnostique.
             <br />
-            Vous respirez.
+            On structure.
+            <br />
+            On vous aide à reprendre la main.
           </h2>
         </div>
         <div className="mt-8 grid gap-8 md:grid-cols-3 md:gap-10">
@@ -655,17 +682,48 @@ function ServiceTrustSection({
         </div>
       </section>
 
-      <section id="services-showcase" className="border-t border-dema-line/80 pt-14 md:pt-18">
+      <section className="border-t border-dema-line/80 pt-14 md:pt-18">
         <div className="max-w-3xl">
           <p className="text-[14px] font-semibold uppercase tracking-[0.16em] text-dema-forest md:text-[15px]">
-            Ce que vous pouvez déléguer
+            Ce qu&apos;on traite en priorité
           </p>
           <h2 className="mt-3 text-3xl font-normal tracking-tight text-brand-blue md:text-[2.5rem]">
-            Les sujets à reprendre maintenant
+            Les sujets qui bloquent le plus l&apos;autonomie de l&apos;entreprise
           </h2>
+          <p className="mt-3 text-sm leading-relaxed text-dema-muted md:text-base">
+            On ne déroule pas un modèle standard: on priorise les sujets qui bloquent le plus l&apos;autonomie de l&apos;entreprise.
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-dema-muted md:text-base">
+            Cela peut concerner la direction, l&apos;organisation, les opérations, l&apos;équipe, le commercial ou le pilotage.
+          </p>
         </div>
-        <div className="mt-8">
-          {servicesShowcase}
+
+        <div className="mt-8 grid gap-4 md:grid-cols-3 md:gap-5">
+          {organisationPriorityLines.map((item) => (
+            <article
+              key={item.label}
+              className="rounded-[1rem] border border-dema-line/70 bg-dema-paper px-5 py-6"
+            >
+              <div className="flex items-start gap-3">
+                <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-dema-sage/55 text-dema-forest">
+                  <item.icon className="h-4.5 w-4.5" aria-hidden="true" />
+                </span>
+                <p className="pt-1 text-[1.05rem] font-medium leading-snug text-brand-blue md:text-[1.2rem]">
+                  {item.label}
+                </p>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div className="mt-8 flex justify-start">
+          <Link
+            href="/systemes"
+            className="demaa-secondary-button inline-flex items-center gap-2 px-4 py-2.5 text-sm"
+          >
+            Voir la Boîte à outils du dirigeant
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
         </div>
       </section>
 
