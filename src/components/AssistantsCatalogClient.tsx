@@ -98,7 +98,7 @@ export default function AssistantsCatalogClient() {
           <div>
             <div className="max-w-3xl demaa-fade-up demaa-delay-1">
               <h2 className="text-2xl font-semibold tracking-tight text-brand-blue md:text-3xl">
-                Quand l&apos;organisation devient indispensable
+                Comment savoir si vous en avez besoin ?
               </h2>
               <p className="mt-3 text-sm leading-relaxed text-dema-muted md:text-base">
                 Certains moments rendent l&apos;organisation indispensable. Pas parce

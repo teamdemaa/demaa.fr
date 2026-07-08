@@ -341,7 +341,7 @@ function OrganisationExpandedContent({
       <section className={sectionClass}>
         <div className="max-w-3xl">
           <h3 className="text-xl font-semibold tracking-tight text-brand-blue md:text-2xl">
-            Quand l’organisation devient indispensable
+            Comment savoir si vous en avez besoin ?
           </h3>
         </div>
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
