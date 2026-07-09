@@ -40,12 +40,19 @@ function mergeToolRefs(
   fallbackRefs: EnterpriseToolReference[] | undefined,
   enterpriseRefs: EnterpriseToolReference[] | undefined,
 ): EnterpriseToolReference[] {
-  const mergedRefs = [...(enterpriseRefs ?? [])];
-  const existingSlugs = new Set(mergedRefs.map((ref) => ref.slug));
+  const remoteRefsBySlug = new Map((enterpriseRefs ?? []).map((ref) => [ref.slug, ref]));
+  const mergedRefs: EnterpriseToolReference[] = [];
+  const seenSlugs = new Set<string>();
 
   for (const fallbackRef of fallbackRefs ?? []) {
-    if (!existingSlugs.has(fallbackRef.slug)) {
-      mergedRefs.push(fallbackRef);
+    const remoteRef = remoteRefsBySlug.get(fallbackRef.slug);
+    mergedRefs.push(remoteRef ? { ...fallbackRef, ...remoteRef } : fallbackRef);
+    seenSlugs.add(fallbackRef.slug);
+  }
+
+  for (const remoteRef of enterpriseRefs ?? []) {
+    if (!seenSlugs.has(remoteRef.slug)) {
+      mergedRefs.push(remoteRef);
     }
   }
 

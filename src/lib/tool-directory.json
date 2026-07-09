@@ -810,6 +810,42 @@
       "scope": "business"
     },
     {
+      "slug": "tiimora",
+      "name": "Tiimora",
+      "url": "https://app.tiimora.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "Application operationnelle pour cabinet comptable qui centralise clients, demandes, documents, signatures et suivis.",
+      "tags": [
+        "Cabinet comptable",
+        "Dossiers clients",
+        "Documents",
+        "Signatures"
+      ],
+      "bestFor": "Structurer la production et les suivis d'un cabinet comptable sans disperser les informations.",
+      "pricingHint": "Sur demande",
+      "keyFeatures": [
+        "Centralisation des clients et demandes",
+        "Suivi des documents et dossiers",
+        "Signatures et communications traceables",
+        "Vision comptable et sociale partagee",
+        "Historique clair par dossier"
+      ],
+      "idealFor": [
+        "Cabinets comptables qui veulent reduire les allers-retours",
+        "Equipes qui veulent garder une trace claire de chaque dossier",
+        "Usages cabinet avec besoin de centraliser suivi client et production"
+      ],
+      "sources": [
+        "https://app.tiimora.com/"
+      ],
+      "lastReviewedAt": "2026-07-09",
+      "status": "active",
+      "scope": "business"
+    },
+    {
       "slug": "tiime",
       "name": "Tiime",
       "url": "https://www.tiime.fr/",

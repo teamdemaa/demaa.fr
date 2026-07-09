@@ -71,6 +71,11 @@
       },
       "toolRefs": [
         {
+          "slug": "tiimora",
+          "usage": "Centraliser clients, demandes, documents, signatures et suivis du cabinet.",
+          "scope": "business"
+        },
+        {
           "slug": "google-workspace",
           "usage": "Centraliser les fichiers, les échanges et les suivis simples."
         },
