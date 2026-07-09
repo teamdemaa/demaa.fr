@@ -180,7 +180,7 @@ export default function SystemDocument({ system, templates }: SystemDocumentProp
     <main className={styles.shell}>
       <div className={styles.screenActions}>
         <div>
-          <Link className={styles.backLink} href="/systemes">
+          <Link className={styles.backLink} href="/">
             Retour aux systèmes
           </Link>
           <p className={styles.screenEyebrow}>Plan d&apos;organisation</p>

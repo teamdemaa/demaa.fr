@@ -1,23 +1,17 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import Navbar from "@/components/Navbar";
-import ServiceDirectoryClient from "@/components/ServiceDirectoryClient";
-import { getDelegationServices } from "@/lib/delegation-services";
-import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
-import { ORGANISATION_AUDIT_MODAL_HREF } from "@/lib/organisation-audit";
-import { serviceCategories } from "@/lib/service-catalog";
+import SystemsHubPage from "@/components/SystemsHubPage";
 
 export const metadata: Metadata = {
-  title: "Demaa | Plateforme de services clés en main pour dirigeants de petites entreprises",
+  title: "La Boîte à Outils du dirigeant | Systèmes d'organisation - Demaa",
   description:
-    "Une plateforme de services transverse pour dirigeants de TPE qui veulent déléguer ce qui les ralentit, mieux organiser leur entreprise et libérer du temps.",
+    "Découvrez les bons systèmes pour structurer votre entreprise, mieux déléguer et construire une activité plus stable et plus autonome.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Demaa | Plateforme de services clés en main pour dirigeants de petites entreprises",
+    title: "La Boîte à Outils du dirigeant | Systèmes d'organisation - Demaa",
     description:
-      "Une plateforme de services transverse pour dirigeants de TPE qui veulent déléguer ce qui les ralentit, mieux organiser leur entreprise et libérer du temps.",
+      "Découvrez les bons systèmes pour structurer votre entreprise, mieux déléguer et construire une activité plus stable et plus autonome.",
     url: "/",
     siteName: "Demaa",
     locale: "fr_FR",
@@ -25,70 +19,12 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Demaa | Plateforme de services clés en main pour dirigeants de petites entreprises",
+    title: "La Boîte à Outils du dirigeant | Systèmes d'organisation - Demaa",
     description:
-      "Une plateforme de services transverse pour dirigeants de TPE qui veulent déléguer ce qui les ralentit, mieux organiser leur entreprise et libérer du temps.",
+      "Découvrez les bons systèmes pour structurer votre entreprise, mieux déléguer et construire une activité plus stable et plus autonome.",
   },
 };
 
-export const dynamic = "force-dynamic";
-
-type HomePageProps = {
-  searchParams: Promise<{
-    category?: string | string[];
-    q?: string | string[];
-    retourSysteme?: string | string[];
-  }>;
-};
-
-export default async function HomePage({ searchParams }: HomePageProps) {
-  const params = await searchParams;
-  const retourSysteme = getParamValue(params.retourSysteme);
-  const returnEnterprise = retourSysteme
-    ? await getEnterpriseBySlug(retourSysteme)
-    : null;
-  const backLink = returnEnterprise
-    ? {
-        href: `/systemes/${encodeURIComponent(returnEnterprise.slug)}?tab=services`,
-        label: `Retour à ${returnEnterprise.name}`,
-      }
-    : undefined;
-
-  return (
-    <>
-      <Navbar />
-      <main className="flex-1 w-full bg-background animate-in fade-in duration-700">
-        <ServiceDirectoryClient
-          services={getDelegationServices()}
-          categories={serviceCategories}
-          initialCategory={getParamValue(params.category)}
-          initialSearch={getParamValue(params.q) ?? ""}
-          hideSearchControls
-          backLink={backLink}
-          heroTitleLines={{
-            primary: "Structurez",
-            secondary: "votre entreprise",
-          }}
-          invertHeroTitleStyles
-          heroDescriptionLines={{
-            primary: "Votre entreprise doit pouvoir grandir sans reposer uniquement sur vous.",
-            secondary: "",
-          }}
-          heroActions={
-            <Link
-              href={ORGANISATION_AUDIT_MODAL_HREF}
-              scroll={false}
-              className="demaa-primary-button px-5 py-2.5"
-            >
-              Demander un diagnostic organisation
-            </Link>
-          }
-        />
-      </main>
-    </>
-  );
-}
-
-function getParamValue(value?: string | string[]) {
-  return Array.isArray(value) ? value[0] : value;
+export default async function HomePage() {
+  return <SystemsHubPage />;
 }

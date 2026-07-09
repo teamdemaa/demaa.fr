@@ -1,21 +1,23 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
 import Navbar from "@/components/Navbar";
-import AssistantsCatalogClient from "@/components/AssistantsCatalogClient";
-import OrganisationAutonomyDiscovery from "@/components/OrganisationAutonomyDiscovery";
+import ServiceDirectoryClient from "@/components/ServiceDirectoryClient";
+import { getDelegationServices } from "@/lib/delegation-services";
+import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
+import { ORGANISATION_AUDIT_MODAL_HREF } from "@/lib/organisation-audit";
+import { serviceCategories } from "@/lib/service-catalog";
 
 export const metadata: Metadata = {
-  title: "Diagnostic pour TPE - Demaa",
+  title: "Demaa | Plateforme de services clés en main pour dirigeants de petites entreprises",
   description:
-    "Demandez un diagnostic pour identifier les blocages, clarifier les priorités et repérer les besoins les plus utiles pour la suite.",
+    "Une plateforme de services transverse pour dirigeants de TPE qui veulent déléguer ce qui les ralentit, mieux organiser leur entreprise et libérer du temps.",
   alternates: {
     canonical: "/organisation",
   },
   openGraph: {
-    title: "Diagnostic pour TPE - Demaa",
+    title: "Demaa | Plateforme de services clés en main pour dirigeants de petites entreprises",
     description:
-      "Demandez un diagnostic pour identifier les blocages, clarifier les priorités et repérer les besoins les plus utiles pour la suite.",
+      "Une plateforme de services transverse pour dirigeants de TPE qui veulent déléguer ce qui les ralentit, mieux organiser leur entreprise et libérer du temps.",
     url: "/organisation",
     siteName: "Demaa",
     locale: "fr_FR",
@@ -23,15 +25,19 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Diagnostic pour TPE - Demaa",
+    title: "Demaa | Plateforme de services clés en main pour dirigeants de petites entreprises",
     description:
-      "Demandez un diagnostic pour identifier les blocages, clarifier les priorités et repérer les besoins les plus utiles pour la suite.",
+      "Une plateforme de services transverse pour dirigeants de TPE qui veulent déléguer ce qui les ralentit, mieux organiser leur entreprise et libérer du temps.",
   },
 };
 
+export const dynamic = "force-dynamic";
+
 type OrganisationPageProps = {
   searchParams: Promise<{
-    retour?: string | string[];
+    category?: string | string[];
+    q?: string | string[];
+    retourSysteme?: string | string[];
   }>;
 };
 
@@ -39,33 +45,47 @@ export default async function OrganisationPage({
   searchParams,
 }: OrganisationPageProps) {
   const params = await searchParams;
-  const retour = getParamValue(params.retour);
-  const backLink =
-    retour === "annuaire-services"
-      ? {
-          href: "/",
-          label: "Retour à Déléguer",
-        }
-      : {
-          href: "/systemes",
-          label: "Retour aux systèmes",
-        };
+  const retourSysteme = getParamValue(params.retourSysteme);
+  const returnEnterprise = retourSysteme
+    ? await getEnterpriseBySlug(retourSysteme)
+    : null;
+  const backLink = returnEnterprise
+    ? {
+        href: `/systemes/${encodeURIComponent(returnEnterprise.slug)}?tab=services`,
+        label: `Retour à ${returnEnterprise.name}`,
+      }
+    : undefined;
 
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-dema-cream text-brand-blue">
-        <section className="mx-auto w-full max-w-6xl px-4 pt-6 md:px-8 md:pt-8">
-          <Link
-            href={backLink.href}
-            className="inline-flex items-center gap-2 text-sm font-medium text-brand-blue/50 transition hover:text-dema-forest"
-          >
-            <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
-            {backLink.label}
-          </Link>
-        </section>
-        <OrganisationAutonomyDiscovery />
-        <AssistantsCatalogClient />
+      <main className="flex-1 w-full bg-background animate-in fade-in duration-700">
+        <ServiceDirectoryClient
+          services={getDelegationServices()}
+          categories={serviceCategories}
+          initialCategory={getParamValue(params.category)}
+          initialSearch={getParamValue(params.q) ?? ""}
+          hideSearchControls
+          backLink={backLink}
+          heroTitleLines={{
+            primary: "On vous aide à organiser",
+            secondary: "votre entreprise",
+          }}
+          invertHeroTitleStyles
+          heroDescriptionLines={{
+            primary: "Votre entreprise doit pouvoir grandir sans reposer uniquement sur vous.",
+            secondary: "",
+          }}
+          heroActions={
+            <Link
+              href={ORGANISATION_AUDIT_MODAL_HREF}
+              scroll={false}
+              className="demaa-primary-button px-5 py-2.5"
+            >
+              Demander un diagnostic organisation
+            </Link>
+          }
+        />
       </main>
     </>
   );

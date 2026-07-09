@@ -18,7 +18,11 @@ export default async function OrganisationAutomatisationRedirectPage({
 }: OrganisationAutomatisationRedirectPageProps) {
   const params = await searchParams;
   const retour = getParamValue(params.retour);
-  permanentRedirect(retour ? `/organisation?retour=${encodeURIComponent(retour)}` : "/organisation");
+  permanentRedirect(
+    retour
+      ? `/annuaire-services/organisation?retour=${encodeURIComponent(retour)}`
+      : "/annuaire-services/organisation",
+  );
 }
 
 function getParamValue(value?: string | string[]) {

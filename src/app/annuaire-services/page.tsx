@@ -29,7 +29,8 @@ export default async function AnnuaireServicesPage({
     nextSearchParams.set("retourSysteme", retourSysteme);
   }
 
-  const destination = nextSearchParams.size > 0 ? `/?${nextSearchParams.toString()}` : "/";
+  const destination =
+    nextSearchParams.size > 0 ? `/organisation?${nextSearchParams.toString()}` : "/organisation";
 
   permanentRedirect(destination);
 }

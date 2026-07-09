@@ -639,35 +639,6 @@ function ServiceTrustSection({
         </div>
       </section>
 
-      <section className="border-t border-dema-line/80 pt-14 md:pt-18">
-        <div className="max-w-2xl">
-          <p className="text-[14px] font-semibold uppercase tracking-[0.16em] text-dema-forest md:text-[15px]">
-            Questions fréquentes
-          </p>
-          <h2 className="mt-3 text-3xl font-normal tracking-tight text-brand-blue md:text-[2.5rem]">
-            Ce que vous voulez savoir
-          </h2>
-        </div>
-        <div className="mx-auto mt-8 max-w-4xl space-y-3">
-          {globalFaqItems.map((item) => (
-            <details key={item.question} className="demaa-accordion px-5 py-4">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
-                <span className="text-base font-medium leading-snug text-brand-blue">
-                  {item.question}
-                </span>
-                <ChevronDown
-                  className="demaa-accordion-chevron h-4 w-4 shrink-0 text-dema-muted transition-transform"
-                  aria-hidden="true"
-                />
-              </summary>
-              <p className="demaa-accordion-content mt-3 max-w-xl pr-4 text-sm leading-relaxed text-dema-muted md:text-[0.98rem]">
-                {item.answer}
-              </p>
-            </details>
-          ))}
-        </div>
-      </section>
-
       <section className="rounded-[1.5rem] border border-dema-line/80 bg-dema-sage/40 px-6 py-7 text-center md:px-8 md:py-8">
         <p className="text-[14px] font-semibold uppercase tracking-[0.16em] text-dema-forest md:text-[15px]">
           Repère de gain
@@ -718,7 +689,7 @@ function ServiceTrustSection({
 
         <div className="mt-8 flex justify-start">
           <Link
-            href="/systemes"
+            href="/"
             className="demaa-secondary-button inline-flex items-center gap-2 px-4 py-2.5 text-sm"
           >
             Voir la Boîte à outils du dirigeant
@@ -746,6 +717,35 @@ function ServiceTrustSection({
               Demandez votre diagnostic
             </Link>
           </div>
+        </div>
+      </section>
+
+      <section className="border-t border-dema-line/80 pt-14 md:pt-18">
+        <div className="max-w-2xl">
+          <p className="text-[14px] font-semibold uppercase tracking-[0.16em] text-dema-forest md:text-[15px]">
+            Questions fréquentes
+          </p>
+          <h2 className="mt-3 text-3xl font-normal tracking-tight text-brand-blue md:text-[2.5rem]">
+            Ce que vous voulez savoir
+          </h2>
+        </div>
+        <div className="mx-auto mt-8 max-w-4xl space-y-3">
+          {globalFaqItems.map((item) => (
+            <details key={item.question} className="demaa-accordion px-5 py-4">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
+                <span className="text-base font-medium leading-snug text-brand-blue">
+                  {item.question}
+                </span>
+                <ChevronDown
+                  className="demaa-accordion-chevron h-4 w-4 shrink-0 text-dema-muted transition-transform"
+                  aria-hidden="true"
+                />
+              </summary>
+              <p className="demaa-accordion-content mt-3 max-w-xl pr-4 text-sm leading-relaxed text-dema-muted md:text-[0.98rem]">
+                {item.answer}
+              </p>
+            </details>
+          ))}
         </div>
       </section>
     </div>

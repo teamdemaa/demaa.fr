@@ -11,17 +11,17 @@ export function getServicePageMetadata(service: DemaaService): Metadata {
     : isAssistantLanding
     ? "Recrutement assistante facturation - Demaa"
     : isOrganisationLanding
-      ? "Diagnostic pour TPE - Demaa"
+      ? "Organisation - Annuaire services Demaa"
       : `${service.name} - Annuaire services Demaa`;
   const canonicalPath = isOrganisationLanding
-    ? "/organisation"
+    ? "/annuaire-services/organisation"
     : `/annuaire-services/${service.slug}`;
   const metadataDescription = isAssistantPacks
     ? "Choisissez un forfait mensuel Standard ou Confort pour reprendre les factures fournisseurs, les factures clients et la transmission comptable, avec relances et reporting dans le forfait Confort."
     : isAssistantLanding
     ? "Un accompagnement au recrutement d'une assistante facturation pour reprendre devis, facturation, relances et transmission comptable avec une intégration plus claire et plus sereine."
     : isOrganisationLanding
-      ? "Demandez un diagnostic pour identifier les blocages, clarifier les priorités et repérer les besoins les plus utiles pour la suite."
+      ? service.description
       : service.description;
 
   return {

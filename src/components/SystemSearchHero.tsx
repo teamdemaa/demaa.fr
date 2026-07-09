@@ -175,7 +175,7 @@ export default function SystemSearchHero({
             </span>
             <br />
             <span className="font-sans font-light not-italic text-brand-blue/62">
-              de votre entreprise
+              pour votre entreprise
             </span>
           </h1>
 

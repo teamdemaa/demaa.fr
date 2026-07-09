@@ -16,10 +16,11 @@ export default function Navbar({
   const pathname = usePathname();
   const showSystemsCta =
     !minimal &&
-    (pathname === "/" ||
+    (pathname === "/organisation" ||
       pathname === "/annuaire-services" ||
       pathname.startsWith("/annuaire-services/"));
-  const showDelegationCta = !minimal && pathname.startsWith("/systemes");
+  const showOrganisationCta =
+    !minimal && (pathname === "/" || pathname.startsWith("/systemes"));
 
   return (
     <>
@@ -38,7 +39,7 @@ export default function Navbar({
             <div className="flex items-center gap-2 sm:gap-3">
               {showSystemsCta ? (
                 <Link
-                  href="/systemes"
+                  href="/"
                   className="demaa-secondary-button inline-flex min-h-10 items-center justify-center gap-2 px-4 py-2 sm:px-4"
                   aria-label="Voir la Boîte à outils du dirigeant"
                 >
@@ -46,13 +47,13 @@ export default function Navbar({
                   <span>Voir la Boîte à outils du dirigeant</span>
                 </Link>
               ) : null}
-              {showDelegationCta ? (
+              {showOrganisationCta ? (
                 <Link
-                  href="/"
+                  href="/organisation"
                   className="demaa-secondary-button inline-flex min-h-10 items-center justify-center px-4 py-2 sm:px-4"
-                  aria-label="Structurez votre entreprise"
+                  aria-label="Organisez votre entreprise"
                 >
-                  <span>Structurez votre entreprise</span>
+                  <span>Organisez votre entreprise</span>
                 </Link>
               ) : null}
               <NavbarCartIndicator />
