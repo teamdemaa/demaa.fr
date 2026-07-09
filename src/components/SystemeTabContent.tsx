@@ -10,6 +10,7 @@ type SystemeTabContentProps = {
   systemSlug: string;
   systeme: SystemeDetail | null | undefined;
   openViewerSignal?: number;
+  onRequestSystemComplete?: () => void;
 };
 
 function parseCsvLine(line: string) {
@@ -80,6 +81,7 @@ export default function SystemeTabContent({
   systemSlug,
   systeme,
   openViewerSignal = 0,
+  onRequestSystemComplete,
 }: SystemeTabContentProps) {
   const [selectedDocument, setSelectedDocument] = useState<{
     process: string;
@@ -179,7 +181,7 @@ export default function SystemeTabContent({
     <div className="space-y-5">
       <div>
         <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-          Systèmes
+          Documents et process cles
         </p>
       </div>
 
@@ -211,9 +213,18 @@ export default function SystemeTabContent({
                     key={`${card.pillar}-${item.process}`}
                     className="flex items-center justify-between gap-4 border-t border-dema-line/80 pt-4 first:border-t-0 first:pt-0"
                   >
-                    <p className="min-w-0 flex-1 text-sm font-medium leading-relaxed text-brand-blue">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedDocument({
+                          process: item.process,
+                          document: item.document,
+                        });
+                      }}
+                      className="min-w-0 flex-1 text-left text-sm font-medium leading-relaxed text-brand-blue transition hover:text-dema-forest"
+                    >
                       {item.process}
-                    </p>
+                    </button>
                     <button
                       type="button"
                       onClick={() => {
@@ -277,6 +288,21 @@ export default function SystemeTabContent({
                 L&apos;aperçu et le téléchargement de ce document sont en préparation pour {systemName}.
               </div>
             ) : null}
+
+            {onRequestSystemComplete ? (
+              <div className="mt-5 flex justify-start">
+                <button
+                  type="button"
+                  onClick={() => {
+                    onRequestSystemComplete();
+                  }}
+                  className="demaa-secondary-button"
+                >
+                  Recevoir le système complet
+                </button>
+              </div>
+            ) : null}
+
             {documentPreviewState === "loading" ? (
               <div className="mt-5 rounded-[1rem] border border-dema-line bg-white/70 px-4 py-6 text-sm text-dema-muted">
                 Chargement du document...
@@ -326,6 +352,7 @@ export default function SystemeTabContent({
                 L’aperçu du document n’a pas pu être chargé pour le moment.
               </div>
             ) : null}
+
           </div>
             );
           })()}

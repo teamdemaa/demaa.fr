@@ -825,18 +825,6 @@ export default function SystemDetailContent({
         </p>
       </div>
 
-      <div className="mt-4 flex flex-col gap-2 text-left sm:flex-row sm:flex-wrap">
-        <button
-          type="button"
-          onClick={() => {
-            setIsSystemKitModalOpen(true);
-          }}
-          className="demaa-primary-button self-start"
-        >
-          Recevoir le système {system.name}
-        </button>
-      </div>
-
       <div className="mt-5 -mx-2 overflow-x-auto px-2 pb-2 soft-scroll">
         <div className="flex min-w-max items-center gap-2 whitespace-nowrap">
           {(
@@ -871,6 +859,7 @@ export default function SystemDetailContent({
             systemName={system.name}
             systemSlug={system.slug}
             systeme={systemeDetail}
+            onRequestSystemComplete={() => setIsSystemKitModalOpen(true)}
           />
         ) : activeTab === "outils" ? (
           <div className="space-y-5">
