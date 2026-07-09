@@ -90,7 +90,7 @@ const globalFaqItems = [
       "Oui. Cet accompagnement est pensé pour les petites entreprises où beaucoup de sujets reposent encore sur le dirigeant, et où il faut remettre du cadre sans alourdir le quotidien.",
   },
   {
-    question: "Comment savoir si c'est le bon moment ?",
+    question: "Comment savoir si vous en avez besoin ?",
     answer:
       "C'est le bon moment quand trop de décisions, de validations ou de relances reviennent toujours vers vous, et que l'entreprise manque encore de cadre pour avancer plus sereinement.",
   },
