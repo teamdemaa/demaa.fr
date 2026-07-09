@@ -592,7 +592,7 @@ function ServiceTrustSection({
           <h2 className="mt-3 text-3xl font-normal tracking-tight text-brand-blue md:text-[2.5rem]">
             On diagnostique.
             <br />
-            On structure.
+            On met de l&apos;ordre.
             <br />
             On vous aide à reprendre la main.
           </h2>
