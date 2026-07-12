@@ -16,12 +16,16 @@ type CoursesIndexClientProps = {
     label: string;
   };
   returnSystemSlug?: string;
+  headingAs?: "h1" | "h2";
+  embedded?: boolean;
 };
 
 export default function CoursesIndexClient({
   entries,
   backLink,
   returnSystemSlug,
+  headingAs = "h1",
+  embedded = false,
 }: CoursesIndexClientProps) {
   const [selectedCourse, setSelectedCourse] = useState<CourseEntry | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -76,7 +80,7 @@ export default function CoursesIndexClient({
     setSelectedCourse(entry);
   }
 
-  function renderCourseCard(entry: CourseEntry) {
+  function renderCourseCard(entry: CourseEntry, eagerImage = false) {
     return (
       <Link
         key={entry.slug}
@@ -91,6 +95,7 @@ export default function CoursesIndexClient({
                 src={entry.image}
                 alt={entry.title}
                 fill
+                loading={eagerImage ? "eager" : "lazy"}
                 sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
@@ -132,6 +137,8 @@ export default function CoursesIndexClient({
           setActiveFilter(filter);
           setIsFilterPanelOpen(false);
         }}
+        headingAs={headingAs}
+        embedded={embedded}
       />
 
       <section className="mx-auto max-w-6xl px-4 py-7">
@@ -169,7 +176,7 @@ export default function CoursesIndexClient({
           </div>
         ) : (
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {filteredEntries.map((entry) => renderCourseCard(entry))}
+            {filteredEntries.map((entry, index) => renderCourseCard(entry, index < 3))}
           </div>
         )}
       </section>

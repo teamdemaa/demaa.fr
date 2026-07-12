@@ -495,7 +495,7 @@ function compareDocumentModels(left: DocumentModel, right: DocumentModel) {
 }
 
 export function getAllDocumentModels(): DocumentModel[] {
-  return [...documentModels].sort(compareDocumentModels);
+  return [...globalDocumentModels].sort(compareDocumentModels);
 }
 
 export function getDocumentModelBySlug(slug: string): DocumentModel | null {

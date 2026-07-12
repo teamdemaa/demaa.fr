@@ -10,10 +10,14 @@ import { matchesSearchQuery } from "@/lib/search";
 
 type ResourcesIndexClientProps = {
   entries: DocumentModel[];
+  headingAs?: "h1" | "h2";
+  embedded?: boolean;
 };
 
 export default function ResourcesIndexClient({
   entries,
+  headingAs = "h1",
+  embedded = false,
 }: ResourcesIndexClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("Tous");
@@ -60,6 +64,8 @@ export default function ResourcesIndexClient({
           setActiveFilter(filter);
           setIsFilterPanelOpen(false);
         }}
+        headingAs={headingAs}
+        embedded={embedded}
       />
 
       <section className="mx-auto max-w-6xl px-4 py-7">

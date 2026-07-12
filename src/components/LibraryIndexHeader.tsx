@@ -14,6 +14,8 @@ type LibraryIndexHeaderProps = {
   onSearchChange: (value: string) => void;
   onFilterClick: () => void;
   onFilterSelect: (filter: string) => void;
+  headingAs?: "h1" | "h2";
+  embedded?: boolean;
 };
 
 export default function LibraryIndexHeader({
@@ -28,13 +30,37 @@ export default function LibraryIndexHeader({
   onSearchChange,
   onFilterClick,
   onFilterSelect,
+  headingAs = "h1",
+  embedded = false,
 }: LibraryIndexHeaderProps) {
+  const Heading = headingAs;
+
+  if (embedded) {
+    return (
+      <div className="w-full bg-dema-cream px-4 pb-6 pt-4">
+        <div className="mx-auto max-w-5xl">
+          <SearchFilterControls
+            value={searchValue}
+            placeholder={searchPlaceholder}
+            activeFilter={activeFilter}
+            defaultFilter={defaultFilter}
+            isFilterOpen={isFilterOpen}
+            filters={filters}
+            onChange={onSearchChange}
+            onFilterClick={onFilterClick}
+            onFilterSelect={onFilterSelect}
+          />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <section className="w-full border-b border-dema-line/65 bg-dema-cream px-4 pb-5 pt-8 md:pt-10">
       <div className="mx-auto max-w-5xl text-center">
-        <h1 className="demaa-section-title text-4xl tracking-tight text-brand-blue md:text-5xl">
+        <Heading className="demaa-section-title text-4xl tracking-tight text-brand-blue md:text-5xl">
           {title}
-        </h1>
+        </Heading>
         <p className="mx-auto mt-2 max-w-2xl text-sm font-normal leading-relaxed text-dema-muted">
           {description}
         </p>

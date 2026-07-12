@@ -9,8 +9,12 @@ type SystemeTabContentProps = {
   systemName: string;
   systemSlug: string;
   systeme: SystemeDetail | null | undefined;
-  openViewerSignal?: number;
   onRequestSystemComplete?: () => void;
+};
+
+export type SelectedSystemDocument = {
+  process: string;
+  document: string;
 };
 
 function parseCsvLine(line: string) {
@@ -63,30 +67,21 @@ function parseCsvTable(content: string) {
   };
 }
 
-function getFirstSystemDocumentSelection(systeme: SystemeDetail) {
-  for (const card of systeme.cards) {
-    for (const item of card.items) {
-      return {
-        process: item.process,
-        document: item.document,
-      };
-    }
-  }
+type SystemDocumentPreviewModalProps = {
+  selectedDocument: SelectedSystemDocument;
+  systemName: string;
+  systemSlug: string;
+  onClose: () => void;
+  onRequestSystemComplete?: () => void;
+};
 
-  return null;
-}
-
-export default function SystemeTabContent({
+export function SystemDocumentPreviewModal({
+  selectedDocument,
   systemName,
   systemSlug,
-  systeme,
-  openViewerSignal = 0,
+  onClose,
   onRequestSystemComplete,
-}: SystemeTabContentProps) {
-  const [selectedDocument, setSelectedDocument] = useState<{
-    process: string;
-    document: string;
-  } | null>(null);
+}: SystemDocumentPreviewModalProps) {
   const [documentPreview, setDocumentPreview] = useState<{
     headers: string[];
     rows: string[][];
@@ -95,15 +90,23 @@ export default function SystemeTabContent({
     "idle" | "loading" | "ready" | "error"
   >("idle");
 
+  const asset = getSystemDocumentAsset(systemSlug, selectedDocument.document);
+
   useEffect(() => {
-    if (!selectedDocument) {
-      setDocumentPreview(null);
-      setDocumentPreviewState("idle");
-      return;
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        onClose();
+      }
     }
 
-    const asset = getSystemDocumentAsset(systemSlug, selectedDocument.document);
+    window.addEventListener("keydown", handleKeyDown);
 
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [onClose]);
+
+  useEffect(() => {
     if (!asset?.csvHref) {
       setDocumentPreview(null);
       setDocumentPreviewState("idle");
@@ -111,7 +114,6 @@ export default function SystemeTabContent({
     }
 
     const csvHref = asset.csvHref;
-
     let cancelled = false;
 
     async function loadPreview() {
@@ -147,19 +149,118 @@ export default function SystemeTabContent({
     return () => {
       cancelled = true;
     };
-  }, [selectedDocument, systemSlug]);
+  }, [asset?.csvHref]);
 
-  useEffect(() => {
-    if (!systeme?.cards.length || openViewerSignal === 0) {
-      return;
-    }
+  return (
+    <div
+      className="fixed inset-0 z-[90] flex items-center justify-center bg-brand-blue/45 p-4"
+      data-system-document-preview="true"
+      role="dialog"
+      aria-modal="true"
+      aria-label={selectedDocument.document}
+      onClick={onClose}
+    >
+      <div
+        className="relative w-full max-w-xl rounded-[1.25rem] border border-dema-line bg-dema-paper p-6 pt-14 shadow-[0_24px_60px_rgba(23,35,29,0.14)] sm:p-7 sm:pt-14"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <button
+          type="button"
+          onClick={onClose}
+          className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
+          aria-label="Fermer"
+        >
+          <X className="h-4 w-4" aria-hidden="true" />
+        </button>
+        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-muted">
+          Document
+        </p>
+        <h3 className="mt-3 text-xl font-semibold tracking-tight text-brand-blue">
+          {selectedDocument.document}
+        </h3>
+        <p className="mt-3 text-sm leading-relaxed text-dema-muted">
+          Process associé : {selectedDocument.process}
+        </p>
 
-    const firstSelection = getFirstSystemDocumentSelection(systeme);
+        {!asset ? (
+          <div className="mt-5 rounded-[1rem] border border-dema-line bg-white/70 px-4 py-6 text-sm text-dema-muted">
+            L&apos;aperçu et le téléchargement de ce document sont en préparation pour {systemName}.
+          </div>
+        ) : null}
 
-    if (firstSelection) {
-      setSelectedDocument(firstSelection);
-    }
-  }, [openViewerSignal, systeme]);
+        {onRequestSystemComplete ? (
+          <div className="mt-5 flex justify-start">
+            <button
+              type="button"
+              onClick={onRequestSystemComplete}
+              className="demaa-secondary-button"
+            >
+              Recevoir le système complet
+            </button>
+          </div>
+        ) : null}
+
+        {documentPreviewState === "loading" ? (
+          <div className="mt-5 rounded-[1rem] border border-dema-line bg-white/70 px-4 py-6 text-sm text-dema-muted">
+            Chargement du document...
+          </div>
+        ) : null}
+
+        {documentPreviewState === "ready" && documentPreview ? (
+          <div className="mt-5 overflow-hidden rounded-[1rem] border border-dema-line bg-white">
+            <div className="max-h-[48vh] overflow-auto">
+              <table className="min-w-full border-collapse text-left text-[13px] leading-relaxed text-brand-blue">
+                <thead className="sticky top-0 bg-dema-forest text-[11px] uppercase tracking-[0.12em] text-white">
+                  <tr>
+                    {documentPreview.headers.map((header) => (
+                      <th
+                        key={header}
+                        className="border-b border-dema-line px-3 py-3 font-semibold"
+                      >
+                        {header}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {documentPreview.rows.map((row, rowIndex) => (
+                    <tr
+                      key={`${selectedDocument.document}-${rowIndex}`}
+                      className="align-top odd:bg-white even:bg-dema-sage"
+                    >
+                      {documentPreview.headers.map((header, cellIndex) => (
+                        <td
+                          key={`${header}-${rowIndex}`}
+                          className="border-b border-dema-line/70 px-3 py-3 text-sm text-dema-muted"
+                        >
+                          {row[cellIndex] ?? ""}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ) : null}
+
+        {documentPreviewState === "error" ? (
+          <div className="mt-5 rounded-[1rem] border border-dema-line bg-white/70 px-4 py-6 text-sm text-dema-muted">
+            L’aperçu du document n’a pas pu être chargé pour le moment.
+          </div>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
+export default function SystemeTabContent({
+  systemName,
+  systemSlug,
+  systeme,
+  onRequestSystemComplete,
+}: SystemeTabContentProps) {
+  const [selectedDocument, setSelectedDocument] = useState<SelectedSystemDocument | null>(null);
 
   if (!systeme?.cards.length) {
     return (
@@ -247,116 +348,13 @@ export default function SystemeTabContent({
       </div>
 
       {selectedDocument ? (
-        <div
-          className="fixed inset-0 z-[80] flex items-center justify-center bg-brand-blue/45 p-4"
-          role="dialog"
-          aria-modal="true"
-          aria-label={selectedDocument.document}
-          onClick={() => {
-            setSelectedDocument(null);
-          }}
-        >
-          {(() => {
-            const asset = getSystemDocumentAsset(systemSlug, selectedDocument.document);
-
-            return (
-          <div
-            className="relative w-full max-w-xl rounded-[1.25rem] border border-dema-line bg-dema-paper p-6 pt-14 shadow-[0_24px_60px_rgba(23,35,29,0.14)] sm:p-7 sm:pt-14"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <button
-              type="button"
-              onClick={() => {
-                setSelectedDocument(null);
-              }}
-              className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
-              aria-label="Fermer"
-            >
-              <X className="h-4 w-4" aria-hidden="true" />
-            </button>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-muted">
-              Document
-            </p>
-            <h3 className="mt-3 text-xl font-semibold tracking-tight text-brand-blue">
-              {selectedDocument.document}
-            </h3>
-            <p className="mt-3 text-sm leading-relaxed text-dema-muted">
-              Process associé : {selectedDocument.process}
-            </p>
-            {!asset ? (
-              <div className="mt-5 rounded-[1rem] border border-dema-line bg-white/70 px-4 py-6 text-sm text-dema-muted">
-                L&apos;aperçu et le téléchargement de ce document sont en préparation pour {systemName}.
-              </div>
-            ) : null}
-
-            {onRequestSystemComplete ? (
-              <div className="mt-5 flex justify-start">
-                <button
-                  type="button"
-                  onClick={() => {
-                    onRequestSystemComplete();
-                  }}
-                  className="demaa-secondary-button"
-                >
-                  Recevoir le système complet
-                </button>
-              </div>
-            ) : null}
-
-            {documentPreviewState === "loading" ? (
-              <div className="mt-5 rounded-[1rem] border border-dema-line bg-white/70 px-4 py-6 text-sm text-dema-muted">
-                Chargement du document...
-              </div>
-            ) : null}
-
-            {documentPreviewState === "ready" && documentPreview ? (
-              <div className="mt-5 overflow-hidden rounded-[1rem] border border-dema-line bg-white">
-                <div className="max-h-[48vh] overflow-auto">
-                  <table className="min-w-full border-collapse text-left text-[13px] leading-relaxed text-brand-blue">
-                    <thead className="sticky top-0 bg-dema-forest text-[11px] uppercase tracking-[0.12em] text-white">
-                      <tr>
-                        {documentPreview.headers.map((header) => (
-                          <th
-                            key={header}
-                            className="border-b border-dema-line px-3 py-3 font-semibold"
-                          >
-                            {header}
-                          </th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {documentPreview.rows.map((row, rowIndex) => (
-                        <tr
-                          key={`${selectedDocument.document}-${rowIndex}`}
-                          className="align-top odd:bg-white even:bg-dema-sage"
-                        >
-                          {documentPreview.headers.map((header, cellIndex) => (
-                            <td
-                              key={`${header}-${rowIndex}`}
-                              className="border-b border-dema-line/70 px-3 py-3 text-sm text-dema-muted"
-                            >
-                              {row[cellIndex] ?? ""}
-                            </td>
-                          ))}
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            ) : null}
-
-            {documentPreviewState === "error" ? (
-              <div className="mt-5 rounded-[1rem] border border-dema-line bg-white/70 px-4 py-6 text-sm text-dema-muted">
-                L’aperçu du document n’a pas pu être chargé pour le moment.
-              </div>
-            ) : null}
-
-          </div>
-            );
-          })()}
-        </div>
+        <SystemDocumentPreviewModal
+          selectedDocument={selectedDocument}
+          systemName={systemName}
+          systemSlug={systemSlug}
+          onClose={() => setSelectedDocument(null)}
+          onRequestSystemComplete={onRequestSystemComplete}
+        />
       ) : null}
     </div>
   );
