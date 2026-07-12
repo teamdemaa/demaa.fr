@@ -167,7 +167,7 @@ export default function SystemSearchHero({
 
   return (
     <section className="relative ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] flex min-h-[calc(100vh-4.5rem)] w-screen items-center overflow-hidden bg-dema-cream px-4 py-12 text-center md:px-8 md:py-16">
-      <div className="relative mx-auto w-full max-w-6xl -translate-y-[15%]">
+      <div className="relative mx-auto w-full max-w-6xl -translate-y-[35%] md:-translate-y-[15%]">
         <div className="mx-auto max-w-4xl">
           <h1 className="text-[clamp(2.8rem,8vw,5.4rem)] leading-[0.94] tracking-tight text-brand-blue">
             <span className="demaa-hero-title text-dema-forest">
