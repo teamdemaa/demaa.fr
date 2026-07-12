@@ -1,4 +1,4 @@
-import { permanentRedirect } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 
 type ServiceDetailPageProps = {
   params: Promise<{
@@ -14,6 +14,10 @@ export default async function LegacyServiceDetailPage({
     slug === "structuration-automatisation"
       ? "organisation"
       : slug;
+
+  if (normalizedSlug === "organisation" || normalizedSlug === "organisation-automatisation") {
+    notFound();
+  }
 
   permanentRedirect(`/annuaire-services/${normalizedSlug}`);
 }

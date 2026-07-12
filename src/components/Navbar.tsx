@@ -16,12 +16,8 @@ export default function Navbar({
   const pathname = usePathname();
   const showSystemsCta =
     !minimal &&
-    (pathname === "/organisation" ||
-      pathname === "/annuaire-services" ||
+    (pathname === "/annuaire-services" ||
       pathname.startsWith("/annuaire-services/"));
-  const showOrganisationCta =
-    !minimal && (pathname === "/" || pathname.startsWith("/systemes"));
-
   return (
     <>
       <nav className="sticky top-0 z-40 border-b border-dema-line/70 bg-dema-cream/92 py-1 backdrop-blur-md">
@@ -45,15 +41,6 @@ export default function Navbar({
                 >
                   <BriefcaseBusiness className="h-4 w-4 shrink-0" aria-hidden="true" />
                   <span>Voir la Boîte à outils du dirigeant</span>
-                </Link>
-              ) : null}
-              {showOrganisationCta ? (
-                <Link
-                  href="/organisation"
-                  className="demaa-secondary-button inline-flex min-h-10 items-center justify-center px-4 py-2 sm:px-4"
-                  aria-label="Organisez votre entreprise"
-                >
-                  <span>Organisez votre entreprise</span>
                 </Link>
               ) : null}
               <NavbarCartIndicator />

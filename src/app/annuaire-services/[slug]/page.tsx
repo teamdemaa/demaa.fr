@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
-import { notFound, permanentRedirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import RelatedSystemsLinks from "@/components/RelatedSystemsLinks";
 import ServiceDetailContent from "@/components/ServiceDetailContent";
@@ -11,8 +9,6 @@ import { hasExpandedServiceContent } from "@/lib/service-expanded-content";
 import { getServicePageMetadata } from "@/lib/service-metadata";
 import { getRelatedSystemsForServiceSlug } from "@/lib/related-systems";
 import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
-import { enterpriseToSystem } from "@/lib/enterprise-annuaire";
-import { buildOperationalSystemDetail } from "@/lib/system-operations";
 import { demaaServices, getDemaaServiceBySlug } from "@/lib/service-catalog";
 import {
   RECRUITMENT_ASSISTANT_SERVICE_SLUG,
@@ -31,21 +27,33 @@ function getParamValue(value?: string | string[]) {
   return Array.isArray(value) ? value[0] : value;
 }
 
+function isHiddenOrganisationSlug(slug: string) {
+  return slug === "organisation" || slug === "organisation-automatisation";
+}
+
 export async function generateStaticParams() {
-  return demaaServices.map((service) => ({
-    slug: service.slug,
-  }));
+  return demaaServices
+    .filter((service) => !isHiddenOrganisationSlug(service.slug))
+    .map((service) => ({
+      slug: service.slug,
+    }));
 }
 
 export async function generateMetadata({
   params,
 }: ServiceDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const normalizedSlug =
-    slug === "organisation"
-      ? "organisation-automatisation"
-      : slug;
-  const service = getDemaaServiceBySlug(normalizedSlug);
+  if (isHiddenOrganisationSlug(slug)) {
+    return {
+      title: "Page introuvable - Demaa",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
+
+  const service = getDemaaServiceBySlug(slug);
 
   if (!service) {
     return {
@@ -65,13 +73,11 @@ export default async function ServiceDetailPage({
   searchParams,
 }: ServiceDetailPageProps) {
   const [{ slug }, resolvedSearchParams] = await Promise.all([params, searchParams]);
-  if (slug === "organisation-automatisation") {
-    permanentRedirect("/annuaire-services/organisation");
+  if (isHiddenOrganisationSlug(slug)) {
+    notFound();
   }
 
-  const normalizedSlug =
-    slug === "organisation" ? "organisation-automatisation" : slug;
-  const service = getDemaaServiceBySlug(normalizedSlug);
+  const service = getDemaaServiceBySlug(slug);
 
   if (!service) {
     notFound();
@@ -86,25 +92,13 @@ export default async function ServiceDetailPage({
   const returnEnterprise = returnSystemSlug
     ? await getEnterpriseBySlug(returnSystemSlug)
     : null;
-  const returnSystemDetail =
-    service.slug === "organisation-automatisation" && returnEnterprise
-      ? await buildOperationalSystemDetail(enterpriseToSystem(returnEnterprise))
-      : null;
 
   return (
     <>
       <Navbar />
       <main className="flex-1 w-full bg-dema-cream px-4 py-8 md:py-12">
         <div className="mx-auto max-w-6xl">
-          <Link
-            href="/organisation"
-            className="inline-flex items-center gap-2 rounded-full border border-dema-line bg-dema-paper px-3.5 py-2 text-xs font-medium text-brand-blue/70 transition hover:border-dema-forest/25 hover:text-dema-forest"
-          >
-            <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
-            Retour aux services
-          </Link>
-
-          <div className="mt-5">
+          <div>
             <ServiceDetailContent service={service} />
           </div>
 
@@ -114,7 +108,6 @@ export default async function ServiceDetailPage({
                 serviceSlug={service.slug}
                 variant="page"
                 systemName={returnEnterprise?.name}
-                systeme={returnSystemDetail?.systeme}
               />
             </section>
           ) : null}

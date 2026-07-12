@@ -8,19 +8,25 @@ type ServiceModalPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-function normalizeServiceSlug(slug: string) {
-  if (slug === "organisation") {
-    return "organisation-automatisation";
-  }
-
-  return slug;
+function isHiddenOrganisationSlug(slug: string) {
+  return slug === "organisation" || slug === "organisation-automatisation";
 }
 
 export async function generateMetadata({
   params,
 }: ServiceModalPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const service = getDemaaServiceBySlug(normalizeServiceSlug(slug));
+  if (isHiddenOrganisationSlug(slug)) {
+    return {
+      title: "Page introuvable - Demaa",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
+
+  const service = getDemaaServiceBySlug(slug);
 
   if (!service) {
     return {
@@ -39,7 +45,11 @@ export default async function ServiceModalPage({
   params,
 }: ServiceModalPageProps) {
   const { slug } = await params;
-  const service = getDemaaServiceBySlug(normalizeServiceSlug(slug));
+  if (isHiddenOrganisationSlug(slug)) {
+    notFound();
+  }
+
+  const service = getDemaaServiceBySlug(slug);
 
   if (!service) {
     notFound();

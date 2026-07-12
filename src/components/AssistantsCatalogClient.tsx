@@ -1,9 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
-import { BadgeEuro, Blocks, Check, ChevronDown, FileCheck, Users } from "lucide-react";
-import { ORGANISATION_AUDIT_MODAL_HREF } from "@/lib/organisation-audit";
+import { BadgeEuro, Blocks, ChevronDown, FileCheck, Users } from "lucide-react";
 
 const howItWorksSteps = [
   {
@@ -203,46 +201,6 @@ export default function AssistantsCatalogClient() {
             </div>
           </div>
 
-          <div id="pricing" className="mx-auto mt-20 max-w-[50.5rem] scroll-mt-24 md:mt-28">
-            <div className="mx-auto max-w-3xl text-center">
-              <h2 className="text-3xl font-semibold tracking-tight text-brand-blue md:text-4xl">
-                Par où commencer ?
-              </h2>
-              <p className="mt-3 text-sm leading-relaxed text-dema-muted md:text-base">
-                Commencez par un diagnostic offert pour clarifier les besoins, puis choisissez ensuite le bon service si une suite est utile.
-              </p>
-            </div>
-
-            <div className="mt-6 grid gap-4">
-              <article className="demaa-card mx-auto flex h-full w-full max-w-[32rem] flex-col rounded-[1.15rem] p-5 text-left">
-                <div>
-                  <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
-                    <Check className="h-5 w-5" aria-hidden="true" />
-                  </span>
-                  <p className="mt-4 text-[10px] font-medium uppercase tracking-[0.16em] text-dema-forest">
-                    Diagnostic
-                  </p>
-                  <h3 className="mt-2 text-2xl font-semibold leading-tight tracking-tight text-brand-blue">
-                    Diagnostic offert
-                  </h3>
-                </div>
-                <div className="mt-6">
-                  <p className="text-sm leading-relaxed text-dema-muted">
-                    Un échange pour comprendre vos tâches récurrentes, vos outils, vos documents,
-                    vos blocages et les premières priorités à traiter.
-                  </p>
-                </div>
-                <Link
-                  href={ORGANISATION_AUDIT_MODAL_HREF}
-                  scroll={false}
-                  className="mt-6 inline-flex w-full items-center justify-center rounded-full border border-dema-forest/20 bg-dema-sage/55 px-5 py-2.5 text-sm font-medium text-dema-forest transition hover:border-dema-forest/30 hover:bg-dema-sage disabled:cursor-not-allowed disabled:opacity-60"
-                >
-                  Demander le diagnostic
-                </Link>
-              </article>
-            </div>
-          </div>
-
           <div className="mt-20 md:mt-28">
             <h2 className="text-3xl font-semibold tracking-tight text-brand-blue md:text-4xl">
               On répond aux questions fréquentes
@@ -294,13 +252,6 @@ export default function AssistantsCatalogClient() {
                 Des dirigeants de TPE, cabinets, indépendants et petites équipes, dans différents
                 secteurs, accompagnés pour structurer leur organisation et alléger leur quotidien.
               </p>
-              <Link
-                href={ORGANISATION_AUDIT_MODAL_HREF}
-                scroll={false}
-                className="demaa-primary-button mx-auto mt-8 px-5 py-3"
-              >
-                Diagnostic offert
-              </Link>
             </div>
           </div>
         </div>

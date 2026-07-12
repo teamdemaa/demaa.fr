@@ -5,7 +5,6 @@ import { UserRound } from "lucide-react";
 import DemaaWordmark from "@/components/DemaaWordmark";
 
 const mainLinks = [
-  { label: "Organisation", href: "/organisation" },
   { label: "Systèmes", href: "/" },
   { label: "Annuaire outils", href: "/annuaire-outils" },
   { label: "Annuaire financement", href: "/annuaire-financement" },
