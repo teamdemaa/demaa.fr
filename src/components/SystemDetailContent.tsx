@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { startTransition, useMemo, useState, type MouseEvent, type ReactNode } from "react";
 import {
@@ -22,26 +21,23 @@ import RecruitmentDetailDialog from "@/components/RecruitmentDetailDialog";
 import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
 import SupplierDetailDialog from "@/components/SupplierDetailDialog";
 import SystemCompleteModal from "@/components/SystemCompleteModal";
-import SystemeTabContent from "@/components/SystemeTabContent";
+import SystemKitContentModal from "@/components/SystemKitContentModal";
 import TrainingDetailDialog from "@/components/TrainingDetailDialog";
 import type { DemaaAidItem } from "@/lib/aid-catalog";
 import { getRecommendedAidsForSystem } from "@/lib/aid-recommendations";
 import { getFreeToolsForSystem } from "@/lib/free-tools";
 import { ServiceIcon } from "@/components/ServiceIcon";
-import CourseSlidesDialog from "@/components/CourseSlidesDialog";
 import {
   getFinanceCardBadge,
   getProNetworkCardBadge,
   getSupplierCardBadge,
 } from "@/lib/card-badges";
-import type { CourseEntry } from "@/lib/course-content";
 import type { DemaaFinanceItem } from "@/lib/finance-catalog";
 import { getRecommendedFinanceForSystem } from "@/lib/finance-recommendations";
 import type { DemaaProNetwork } from "@/lib/pro-network-catalog";
 import { getRecommendedProNetworksForSystem } from "@/lib/pro-network-recommendations";
 import { getGroupedRecommendedRecruitmentItemsForSystem } from "@/lib/recruitment-recommendations";
 import type { DemaaRecruitmentItem } from "@/lib/recruitment-catalog";
-import { getRelatedCoursesForSystemSlug } from "@/lib/related-courses";
 import { getGroupedRecommendedTrainingsForSystem } from "@/lib/training-recommendations";
 import type { DemaaTraining } from "@/lib/training-catalog";
 import { getToolDirectorySectorSeoPath } from "@/lib/sector-taxonomy";
@@ -60,6 +56,7 @@ type SystemDetailContentProps = {
   detail: OperationalSystemDetail;
   intro: string;
   initialActiveTab?: string;
+  hasPilotingSheet?: boolean;
   headingAs?: "h1" | "h2";
   headingId?: string;
 };
@@ -289,15 +286,16 @@ export default function SystemDetailContent({
   detail,
   intro,
   initialActiveTab,
+  hasPilotingSheet,
   headingAs = "h1",
   headingId,
 }: SystemDetailContentProps) {
   const defaultTab =
-    initialActiveTab === "cours" || initialActiveTab === "formation"
-      ? "ressources"
-      : isSystemDetailTab(initialActiveTab)
-        ? initialActiveTab
-        : "systeme";
+    isSystemDetailTab(initialActiveTab) &&
+    initialActiveTab !== "systeme" &&
+    initialActiveTab !== "ressources"
+      ? initialActiveTab
+      : "outils";
   const [activeTab, setActiveTab] = useState<SystemDetailTab>(defaultTab);
   const [selectedToolDetail, setSelectedToolDetail] = useState<ToolDirectoryItem | null>(null);
   const [selectedSupplierDetail, setSelectedSupplierDetail] = useState<DemaaSupplier | null>(null);
@@ -305,12 +303,8 @@ export default function SystemDetailContent({
   const [selectedProNetworkDetail, setSelectedProNetworkDetail] = useState<DemaaProNetwork | null>(null);
   const [selectedRecruitmentDetail, setSelectedRecruitmentDetail] = useState<DemaaRecruitmentItem | null>(null);
   const [selectedTrainingDetail, setSelectedTrainingDetail] = useState<DemaaTraining | null>(null);
-  const [selectedCourse, setSelectedCourse] = useState<CourseEntry | null>(null);
   const [isSystemKitModalOpen, setIsSystemKitModalOpen] = useState(false);
-  const systemeDetail = useMemo(
-    () => (activeTab === "systeme" ? detail.systeme : null),
-    [activeTab, detail.systeme]
-  );
+  const [isSystemRequestModalOpen, setIsSystemRequestModalOpen] = useState(false);
   const recommendedSuppliers = useMemo(
     () => (activeTab === "fournisseurs" ? getRecommendedSuppliersForSystem(system.slug) : []),
     [activeTab, system.slug]
@@ -332,10 +326,6 @@ export default function SystemDetailContent({
   const freeTools = useMemo(
     () => (activeTab === "outils" ? getFreeToolsForSystem(system.slug, detail.sectorLabel) : []),
     [activeTab, detail.sectorLabel, system.slug]
-  );
-  const courses = useMemo(
-    () => (activeTab === "ressources" ? getRelatedCoursesForSystemSlug(system.slug) : []),
-    [activeTab, system.slug]
   );
   const recommendedTrainings = useMemo(
     () => (activeTab === "formation"
@@ -655,51 +645,6 @@ export default function SystemDetailContent({
     );
   }
 
-  function renderCourseCard(course: CourseEntry) {
-    return (
-      <Link
-        key={course.slug}
-        href={`/cours/${course.slug}?retourSysteme=${encodeURIComponent(system.slug)}`}
-        className={`${SYSTEM_CARD_CLASS} shadow-[0_2px_10px_rgba(23,35,29,0.012)] hover:shadow-[0_10px_22px_rgba(23,35,29,0.03)]`}
-        onClick={(event) => {
-          handleToolDetailClick(
-            event,
-            {
-              slug: course.slug,
-              name: course.title,
-              category: course.category,
-              description: course.description,
-              sectors: [],
-              bestFor: course.description,
-              pricingHint: course.duration,
-              tags: course.tags,
-              url: `/cours/${course.slug}?retourSysteme=${encodeURIComponent(system.slug)}`,
-            },
-            () => setSelectedCourse(course),
-          );
-        }}
-      >
-        <div className="-m-5 mb-0 relative aspect-[16/9] overflow-hidden rounded-t-[1.15rem] border-b border-dema-line bg-white">
-          {course.image ? (
-            <Image
-              src={course.image}
-              alt={course.title}
-              fill
-              sizes="320px"
-              className="object-contain object-center transition-transform duration-500 group-hover:scale-[1.02]"
-            />
-          ) : null}
-        </div>
-        <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
-          {course.category}
-        </p>
-        <p className={SYSTEM_CARD_DESCRIPTION_CLASS}>
-          {course.description}
-        </p>
-      </Link>
-    );
-  }
-
   function renderBrowseAllLink({
     browseHref,
     browseLabel,
@@ -823,18 +768,23 @@ export default function SystemDetailContent({
         <p className="mt-3 max-w-2xl text-sm leading-6 text-dema-muted">
           {intro}
         </p>
+        <button
+          type="button"
+          onClick={() => setIsSystemKitModalOpen(true)}
+          className="demaa-primary-button mt-4"
+        >
+          Voir le Kit Process &amp; Système {system.name}
+        </button>
       </div>
 
       <div className="mt-5 -mx-2 overflow-x-auto px-2 pb-2 soft-scroll">
         <div className="flex min-w-max items-center gap-2 whitespace-nowrap">
           {(
             [
-              ["systeme", "Systèmes"],
               ["outils", "Outils"],
               ["fournisseurs", "Fournisseurs"],
               ["financement", "Financement"],
               ["reseaux-pro", "Réseau pro"],
-              ["ressources", "Cours"],
             ] as Array<[SystemDetailTab, string]>
           ).map(([tab, label]) => (
             <button
@@ -854,14 +804,7 @@ export default function SystemDetailContent({
       </div>
 
       <div className="mt-5">
-        {activeTab === "systeme" ? (
-          <SystemeTabContent
-            systemName={system.name}
-            systemSlug={system.slug}
-            systeme={systemeDetail}
-            onRequestSystemComplete={() => setIsSystemKitModalOpen(true)}
-          />
-        ) : activeTab === "outils" ? (
+        {activeTab === "outils" ? (
           <div className="space-y-5">
             {(() => {
               const businessTools = detail.tools.filter((tool) => !isTransverseTool(tool));
@@ -1069,32 +1012,6 @@ export default function SystemDetailContent({
               </>
             ) : null}
           </div>
-        ) : activeTab === "ressources" ? (
-          <div className="space-y-5">
-            {courses.length ? (
-              <div>
-                <HorizontalScrollHint
-                  className="-mx-4 overflow-x-auto px-4 pb-4 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
-                  controlsClassName="absolute -right-2 -top-9 z-10 flex items-center gap-1.5 sm:-right-3"
-                >
-                  <div className="flex w-max snap-x snap-mandatory gap-4">
-                    {courses.map((course) => (
-                      <div
-                        key={course.slug}
-                        className="w-[18rem] shrink-0 snap-start sm:w-[19rem] lg:w-[20rem]"
-                      >
-                        {renderCourseCard(course)}
-                      </div>
-                    ))}
-                  </div>
-                </HorizontalScrollHint>
-                {renderBrowseAllLink({
-                  browseHref: `/cours?retourSysteme=${encodeURIComponent(system.slug)}`,
-                  browseLabel: "Voir tous les cours",
-                })}
-              </div>
-            ) : null}
-          </div>
         ) : (
           <div className="space-y-5" />
         )}
@@ -1102,15 +1019,6 @@ export default function SystemDetailContent({
 
       {selectedToolDetail ? (
         <SoftwareDetailDialog tool={selectedToolDetail} onClose={() => setSelectedToolDetail(null)} />
-      ) : null}
-
-      {selectedCourse ? (
-        <CourseSlidesDialog
-          key={selectedCourse.slug}
-          course={selectedCourse}
-          detailHref={`/cours/${selectedCourse.slug}?retourSysteme=${encodeURIComponent(system.slug)}`}
-          onClose={() => setSelectedCourse(null)}
-        />
       ) : null}
 
       {selectedSupplierDetail ? (
@@ -1149,11 +1057,25 @@ export default function SystemDetailContent({
       ) : null}
 
       {isSystemKitModalOpen ? (
+        <SystemKitContentModal
+          systemSlug={system.slug}
+          systemName={system.name}
+          systeme={detail.systeme}
+          hasPilotingSheet={hasPilotingSheet}
+          onClose={() => setIsSystemKitModalOpen(false)}
+          onRequestDocuments={() => {
+            setIsSystemKitModalOpen(false);
+            setIsSystemRequestModalOpen(true);
+          }}
+        />
+      ) : null}
+
+      {isSystemRequestModalOpen ? (
         <SystemCompleteModal
           systemSlug={system.slug}
           systemName={system.name}
           systeme={detail.systeme}
-          onClose={() => setIsSystemKitModalOpen(false)}
+          onClose={() => setIsSystemRequestModalOpen(false)}
         />
       ) : null}
 

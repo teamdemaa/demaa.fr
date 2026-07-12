@@ -1,14 +1,19 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, Download, FileText } from "lucide-react";
+import { ArrowLeft, Download, FileSpreadsheet, FileText } from "lucide-react";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
+import { PILOTING_SHEET_URLS } from "@/lib/document-models";
 import { getSystemDetailPageData } from "@/lib/system-detail-page";
 import { getSystemKitDocumentEntries } from "@/lib/system-kit";
 
 type SystemKitPageProps = {
   params: Promise<{ slug: string }>;
 };
+
+function getSpreadsheetDownloadHref(href: string) {
+  return href.replace(/\/edit(?:\?.*)?$/, "/export?format=xlsx");
+}
 
 export async function generateMetadata({
   params,
@@ -41,6 +46,7 @@ export default async function SystemKitPage({ params }: SystemKitPageProps) {
   }
 
   const documents = getSystemKitDocumentEntries(data.system.slug, data.detail.systeme);
+  const pilotingSheetHref = PILOTING_SHEET_URLS[data.system.slug];
   return (
     <>
       <Navbar minimal />
@@ -88,6 +94,32 @@ export default async function SystemKitPage({ params }: SystemKitPageProps) {
                 </h2>
 
                 <div className="mt-5 space-y-3">
+                  {card.pillar === "Direction" && pilotingSheetHref ? (
+                    <div className="rounded-[1rem] border border-dema-line bg-dema-sage/40 px-4 py-4">
+                      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                        <div className="min-w-0">
+                          <p className="text-base font-semibold text-brand-blue">
+                            Organiser les routines de pilotage
+                          </p>
+                          <div className="mt-2 inline-flex items-center gap-2 text-sm text-dema-muted">
+                            <FileSpreadsheet className="h-4 w-4" aria-hidden="true" />
+                            <span>Plan des tâches de pilotage</span>
+                          </div>
+                          <p className="mt-2 text-xs leading-relaxed text-dema-muted">
+                            Tâches récurrentes, responsables, fréquences et priorités.
+                          </p>
+                        </div>
+                        <a
+                          href={getSpreadsheetDownloadHref(pilotingSheetHref)}
+                          className="inline-flex shrink-0 items-center gap-2 self-start rounded-full border border-dema-line bg-dema-paper px-4 py-2 text-sm font-medium text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
+                        >
+                          <Download className="h-4 w-4" aria-hidden="true" />
+                          Télécharger
+                        </a>
+                      </div>
+                    </div>
+                  ) : null}
+
                   {card.items.map((item) => {
                     const entry = documents.find(
                       (documentEntry) =>
