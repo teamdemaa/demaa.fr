@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ChevronDown, FileText, X } from "lucide-react";
+import { ChevronDown, FileSpreadsheet, FileText, X } from "lucide-react";
 import { getSystemDocumentAsset } from "@/lib/system-document-assets";
 import type { SystemeDetail } from "@/lib/systeme-catalog";
 
@@ -9,6 +9,7 @@ type SystemeTabContentProps = {
   systemName: string;
   systemSlug: string;
   systeme: SystemeDetail | null | undefined;
+  includePilotingDocument?: boolean;
   onRequestSystemComplete?: () => void;
 };
 
@@ -258,6 +259,7 @@ export default function SystemeTabContent({
   systemName,
   systemSlug,
   systeme,
+  includePilotingDocument,
   onRequestSystemComplete,
 }: SystemeTabContentProps) {
   const [selectedDocument, setSelectedDocument] = useState<SelectedSystemDocument | null>(null);
@@ -298,7 +300,7 @@ export default function SystemeTabContent({
                   {card.pillar}
                 </h3>
                 <p className="mt-1 text-xs text-dema-muted">
-                  {card.items.length} process
+                  {card.items.length + (card.pillar === "Direction" && includePilotingDocument ? 1 : 0)} process
                 </p>
               </div>
               <ChevronDown
@@ -308,6 +310,25 @@ export default function SystemeTabContent({
             </summary>
 
             <div className="demaa-accordion-content mt-4 space-y-4">
+              {card.pillar === "Direction" && includePilotingDocument ? (
+                <div className="flex items-center justify-between gap-4 border-t border-dema-line/80 pt-4 first:border-t-0 first:pt-0">
+                  <div className="min-w-0 flex-1">
+                    <p className="text-sm font-medium leading-relaxed text-brand-blue">
+                      Organiser les routines de pilotage
+                    </p>
+                    <p className="mt-1 text-xs leading-relaxed text-dema-muted">
+                      Plan des tâches de pilotage
+                    </p>
+                  </div>
+                  <span
+                    className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-dema-muted"
+                    aria-label="Document inclus après le formulaire"
+                  >
+                    <FileSpreadsheet className="h-4 w-4" aria-hidden="true" />
+                  </span>
+                </div>
+              ) : null}
+
               {card.items.map((item) => {
                 return (
                   <div

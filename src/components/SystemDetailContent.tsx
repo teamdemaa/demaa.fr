@@ -56,7 +56,7 @@ type SystemDetailContentProps = {
   detail: OperationalSystemDetail;
   intro: string;
   initialActiveTab?: string;
-  pilotingSheetHref?: string;
+  hasPilotingSheet?: boolean;
   headingAs?: "h1" | "h2";
   headingId?: string;
 };
@@ -286,7 +286,7 @@ export default function SystemDetailContent({
   detail,
   intro,
   initialActiveTab,
-  pilotingSheetHref,
+  hasPilotingSheet,
   headingAs = "h1",
   headingId,
 }: SystemDetailContentProps) {
@@ -1061,7 +1061,7 @@ export default function SystemDetailContent({
           systemSlug={system.slug}
           systemName={system.name}
           systeme={detail.systeme}
-          pilotingSheetHref={pilotingSheetHref}
+          hasPilotingSheet={hasPilotingSheet}
           onClose={() => setIsSystemKitModalOpen(false)}
           onRequestDocuments={() => {
             setIsSystemKitModalOpen(false);

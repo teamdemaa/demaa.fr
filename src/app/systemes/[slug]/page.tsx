@@ -81,7 +81,7 @@ export default async function SystemDetailPage({
               detail={data.detail}
               intro={buildSystemPageIntro(data)}
               initialActiveTab={isSystemDetailTab(normalizedInitialTab) ? normalizedInitialTab : undefined}
-              pilotingSheetHref={PILOTING_SHEET_URLS[data.system.slug]}
+              hasPilotingSheet={Boolean(PILOTING_SHEET_URLS[data.system.slug])}
               headingAs="h1"
             />
           </div>

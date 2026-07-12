@@ -244,7 +244,7 @@ export default function SystemCompleteModal({
                   </p>
                   <div className="mt-5 flex flex-col gap-3 sm:flex-row">
                     <a href={kitHref} className="demaa-primary-button">
-                      Voir le système
+                      Accéder aux téléchargements
                     </a>
                     <button
                       type="button"

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { ArrowUpRight, FileSpreadsheet, X } from "lucide-react";
+import { X } from "lucide-react";
 import SystemeTabContent from "@/components/SystemeTabContent";
 import type { SystemeDetail } from "@/lib/systeme-catalog";
 
@@ -9,7 +9,7 @@ type SystemKitContentModalProps = {
   systemSlug: string;
   systemName: string;
   systeme: SystemeDetail | null | undefined;
-  pilotingSheetHref?: string;
+  hasPilotingSheet?: boolean;
   onClose: () => void;
   onRequestDocuments: () => void;
 };
@@ -18,7 +18,7 @@ export default function SystemKitContentModal({
   systemSlug,
   systemName,
   systeme,
-  pilotingSheetHref,
+  hasPilotingSheet,
   onClose,
   onRequestDocuments,
 }: SystemKitContentModalProps) {
@@ -86,43 +86,12 @@ export default function SystemKitContentModal({
         </div>
 
         <div className="min-h-0 flex-1 overflow-y-auto px-5 py-6 soft-scroll sm:px-7 sm:py-7">
-          {pilotingSheetHref ? (
-            <section className="rounded-[1.25rem] border border-dema-line bg-dema-sage/40 p-5 sm:p-6">
-              <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-                <div className="flex items-start gap-4">
-                  <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-dema-forest text-dema-paper">
-                    <FileSpreadsheet className="h-5 w-5" aria-hidden="true" />
-                  </span>
-                  <div>
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-                      Plan de pilotage métier
-                    </p>
-                    <h3 className="mt-2 text-xl font-semibold tracking-tight text-brand-blue">
-                      Tableau de pilotage {systemName}
-                    </h3>
-                    <p className="mt-2 max-w-2xl text-sm leading-relaxed text-dema-muted">
-                      Les tâches récurrentes, responsables, fréquences et priorités utiles pour piloter cette activité.
-                    </p>
-                  </div>
-                </div>
-                <a
-                  href={pilotingSheetHref}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="demaa-secondary-button shrink-0 gap-2"
-                >
-                  Ouvrir le tableau de pilotage
-                  <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-                </a>
-              </div>
-            </section>
-          ) : null}
-
-          <div className={pilotingSheetHref ? "mt-6" : undefined}>
+          <div>
             <SystemeTabContent
               systemName={systemName}
               systemSlug={systemSlug}
               systeme={systeme}
+              includePilotingDocument={hasPilotingSheet}
             />
           </div>
         </div>
