@@ -20,8 +20,7 @@ import ProNetworkDetailDialog from "@/components/ProNetworkDetailDialog";
 import RecruitmentDetailDialog from "@/components/RecruitmentDetailDialog";
 import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
 import SupplierDetailDialog from "@/components/SupplierDetailDialog";
-import SystemCompleteModal from "@/components/SystemCompleteModal";
-import SystemKitContentModal from "@/components/SystemKitContentModal";
+import { SystemAcademyContent } from "@/components/SystemAcademyContent";
 import TrainingDetailDialog from "@/components/TrainingDetailDialog";
 import type { DemaaAidItem } from "@/lib/aid-catalog";
 import { getRecommendedAidsForSystem } from "@/lib/aid-recommendations";
@@ -56,7 +55,6 @@ type SystemDetailContentProps = {
   detail: OperationalSystemDetail;
   intro: string;
   initialActiveTab?: string;
-  hasPilotingSheet?: boolean;
   headingAs?: "h1" | "h2";
   headingId?: string;
 };
@@ -286,7 +284,6 @@ export default function SystemDetailContent({
   detail,
   intro,
   initialActiveTab,
-  hasPilotingSheet,
   headingAs = "h1",
   headingId,
 }: SystemDetailContentProps) {
@@ -303,8 +300,6 @@ export default function SystemDetailContent({
   const [selectedProNetworkDetail, setSelectedProNetworkDetail] = useState<DemaaProNetwork | null>(null);
   const [selectedRecruitmentDetail, setSelectedRecruitmentDetail] = useState<DemaaRecruitmentItem | null>(null);
   const [selectedTrainingDetail, setSelectedTrainingDetail] = useState<DemaaTraining | null>(null);
-  const [isSystemKitModalOpen, setIsSystemKitModalOpen] = useState(false);
-  const [isSystemRequestModalOpen, setIsSystemRequestModalOpen] = useState(false);
   const recommendedSuppliers = useMemo(
     () => (activeTab === "fournisseurs" ? getRecommendedSuppliersForSystem(system.slug) : []),
     [activeTab, system.slug]
@@ -768,13 +763,6 @@ export default function SystemDetailContent({
         <p className="mt-3 max-w-2xl text-sm leading-6 text-dema-muted">
           {intro}
         </p>
-        <button
-          type="button"
-          onClick={() => setIsSystemKitModalOpen(true)}
-          className="demaa-primary-button mt-4"
-        >
-          Voir le Kit Process &amp; Système {system.name}
-        </button>
       </div>
 
       <div className="mt-5 -mx-2 overflow-x-auto px-2 pb-2 soft-scroll">
@@ -784,6 +772,7 @@ export default function SystemDetailContent({
               ["outils", "Outils"],
               ["fournisseurs", "Fournisseurs"],
               ["financement", "Financement"],
+              ["academie", "Académie"],
               ["reseaux-pro", "Réseau pro"],
             ] as Array<[SystemDetailTab, string]>
           ).map(([tab, label]) => (
@@ -923,6 +912,8 @@ export default function SystemDetailContent({
               })
             ) : null}
           </div>
+        ) : activeTab === "academie" ? (
+          <SystemAcademyContent systemSlug={system.slug} />
         ) : activeTab === "reseaux-pro" ? (
           <div className="space-y-5">
             {recommendedProNetworks.length ? (
@@ -1053,29 +1044,6 @@ export default function SystemDetailContent({
         <TrainingDetailDialog
           training={selectedTrainingDetail}
           onClose={() => setSelectedTrainingDetail(null)}
-        />
-      ) : null}
-
-      {isSystemKitModalOpen ? (
-        <SystemKitContentModal
-          systemSlug={system.slug}
-          systemName={system.name}
-          systeme={detail.systeme}
-          hasPilotingSheet={hasPilotingSheet}
-          onClose={() => setIsSystemKitModalOpen(false)}
-          onRequestDocuments={() => {
-            setIsSystemKitModalOpen(false);
-            setIsSystemRequestModalOpen(true);
-          }}
-        />
-      ) : null}
-
-      {isSystemRequestModalOpen ? (
-        <SystemCompleteModal
-          systemSlug={system.slug}
-          systemName={system.name}
-          systeme={detail.systeme}
-          onClose={() => setIsSystemRequestModalOpen(false)}
         />
       ) : null}
 

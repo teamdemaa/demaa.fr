@@ -165,7 +165,11 @@ export async function POST(request: Request) {
 
   const event = JSON.parse(payload) as StripeEvent;
 
-  if (event.type === "checkout.session.completed") {
+  const isSuccessfulCheckoutEvent =
+    event.type === "checkout.session.completed" ||
+    event.type === "checkout.session.async_payment_succeeded";
+
+  if (isSuccessfulCheckoutEvent) {
     const session = event.data?.object;
     const sessionId = session?.id || null;
     const email =
@@ -185,14 +189,25 @@ export async function POST(request: Request) {
     const itemCount = Number(session?.metadata?.item_count);
 
     if (!event.id || !sessionId) {
-      console.error("[stripe-webhook] checkout.session.completed missing ids", {
+      console.error("[stripe-webhook] Checkout event missing ids", {
+        eventType: event.type,
         eventId: event.id,
         sessionId,
       });
       return NextResponse.json(
-        { error: "Invalid checkout.session.completed payload." },
+        { error: "Invalid Checkout event payload." },
         { status: 400 }
       );
+    }
+
+    if (session?.payment_status !== "paid") {
+      console.info("[stripe-webhook] Checkout completed before payment", {
+        eventType: event.type,
+        eventId: event.id,
+        sessionId,
+        paymentStatus: session?.payment_status ?? null,
+      });
+      return NextResponse.json({ received: true });
     }
 
     try {

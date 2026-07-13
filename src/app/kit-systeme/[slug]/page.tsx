@@ -34,6 +34,10 @@ export async function generateMetadata({
   return {
     title: `Kit système ${data.system.name} | Demaa`,
     description: `Tous les documents du kit système pour ${data.system.name}.`,
+    robots: {
+      index: false,
+      follow: false,
+    },
   };
 }
 

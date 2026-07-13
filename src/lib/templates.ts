@@ -29,10 +29,10 @@ export const templatesData: TemplateRecord[] = [
   },
   {
     id: "m3",
-    name: "Système opérationnel",
-    category: "Opérations",
-    description: "La structure dont vous avez besoin pour que votre activité soit solide et scalable.",
-    shortDescription: "Sans système en place, tout est fragile",
+    name: "Système Marketing & Vente",
+    category: "Marketing & Vente",
+    description: "Une base Airtable pour suivre le pipeline commercial, les relances et les conversions.",
+    shortDescription: "Pipeline, actions, relances et conversions",
     link: "https://airtable.com/app3fRlYVjiFAnrjW/shraiL72hO4EvQoh2",
     image: "/images/templates/systeme_operationnel.png"
   }

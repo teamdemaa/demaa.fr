@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { enforceRateLimit, readJsonBody } from "@/lib/api-security";
 import { enforceAllowedHost } from "@/lib/request-guard";
+import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 import { getPurchasableServiceConfig } from "@/lib/service-purchase";
 import { getCanonicalBaseUrl } from "@/lib/site-url";
 
@@ -57,6 +58,25 @@ export async function POST(request: Request) {
     );
   }
 
+  const sourceSystemSlugs = [
+    ...new Set(
+      purchasableServices
+        .filter((service) => service.kind === "live_session")
+        .map((service) => service.sourceSystemSlug)
+        .filter((slug): slug is string => Boolean(slug)),
+    ),
+  ];
+  const sourceSystems = await Promise.all(
+    sourceSystemSlugs.map((slug) => getEnterpriseBySlug(slug)),
+  );
+
+  if (sourceSystems.some((system) => !system)) {
+    return NextResponse.json(
+      { error: "Le système associé à une formation n’est plus disponible." },
+      { status: 400 },
+    );
+  }
+
   const secretKey = getStripeSecretKey();
 
   if (!secretKey) {
@@ -73,8 +93,13 @@ export async function POST(request: Request) {
   const hasRecurringServices = purchasableServices.some(
     (service) => service.billingType === "monthly"
   );
-  const offerLabel =
-    purchasableServices.length > 1
+  const allLiveSessions = purchasableServices.every(
+    (service) => service.kind === "live_session"
+  );
+  const orderType = allLiveSessions ? "live_session" : "service_bundle";
+  const offerLabel = allLiveSessions
+    ? `${purchasableServices.length} session${purchasableServices.length > 1 ? "s" : ""} en direct Demaa`
+    : purchasableServices.length > 1
       ? `${purchasableServices.length} services Demaa`
       : purchasableServices[0]?.name || "Service Demaa";
 
@@ -84,7 +109,7 @@ export async function POST(request: Request) {
     cancel_url: `${origin}/`,
     "billing_address_collection": "auto",
     "phone_number_collection[enabled]": "true",
-    "metadata[order_type]": "service_bundle",
+    "metadata[order_type]": orderType,
     "metadata[offer_label]": offerLabel,
     "metadata[cart_summary]": cartSummary,
     "metadata[service_names]": serviceNames,
@@ -93,7 +118,7 @@ export async function POST(request: Request) {
   });
 
   if (hasRecurringServices) {
-    formData.append("subscription_data[metadata][order_type]", "service_bundle");
+    formData.append("subscription_data[metadata][order_type]", orderType);
     formData.append("subscription_data[metadata][offer_label]", offerLabel);
     formData.append("subscription_data[metadata][cart_summary]", cartSummary);
     formData.append("subscription_data[metadata][service_names]", serviceNames);

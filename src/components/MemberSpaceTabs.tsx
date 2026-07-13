@@ -17,6 +17,19 @@ type MemberRequestPayment = {
   createdAt: string | null;
   currency: string;
   itemCount: number | null;
+  liveSessionAccesses: Array<{
+    purchaseSlug: string;
+    trainingTitle: string;
+    sessionDate: string;
+    systemName: string | null;
+    assets: Array<{
+      id: string;
+      label: string;
+      description: string;
+      href: string;
+      external?: boolean;
+    }>;
+  }>;
   offerLabel: string;
   orderType: string | null;
   paymentStatus: string | null;
@@ -144,6 +157,10 @@ function RequestCardArticle({
   const { payment, request } = card;
   const hasServiceBundle = payment.orderType === "service_bundle";
   const hasSectorSystem = payment.orderType === "sector_system";
+  const hasLiveSession =
+    payment.orderType === "live_session" ||
+    payment.serviceSlugs.some((slug) => slug.startsWith("session-direct-"));
+  const shouldShowServiceFollowUp = !hasLiveSession || hasServiceBundle;
   const hasServiceBrief = Boolean(payment.serviceBrief);
   const hasTeamNotification = Boolean(payment.slackNotifiedAt);
 
@@ -165,39 +182,98 @@ function RequestCardArticle({
         <p className="mt-5 rounded-full bg-dema-sage px-4 py-2 text-center text-sm text-dema-forest">
           Achat confirmé. Demaa vous envoie la suite pour accéder au système acheté.
         </p>
-      ) : !request && !hasServiceBundle ? (
-        <Link
-          href={
-            payment.assistantAccessToken
-              ? `/assistant/success?access=${encodeURIComponent(payment.assistantAccessToken)}`
-              : "/assistant/success"
-          }
-          className="mt-5 inline-flex w-full items-center justify-center rounded-full bg-dema-forest px-5 py-3 text-sm font-medium text-dema-paper transition hover:bg-[#284f3a]"
-        >
-          Compléter ma demande
-        </Link>
-      ) : hasServiceBundle && !hasServiceBrief ? (
-        <ServiceBriefModalTrigger
-          onSaved={onBriefSaved}
-          payment={payment}
-        />
-      ) : hasServiceBundle ? (
-        <div className="mt-5 space-y-2">
-          <p className="rounded-full bg-dema-sage px-4 py-2 text-center text-sm text-dema-forest">
-            {hasTeamNotification
-              ? "Team Demaa a bien reçu votre brief et revient vers vous."
-              : "Brief transmis. Demaa vous tient informé de la suite sur WhatsApp."}
-          </p>
-          <ServiceBriefModalTrigger
-            buttonLabel="Mettre à jour mon brief"
-            onSaved={onBriefSaved}
-            payment={payment}
-          />
-        </div>
       ) : (
-        <p className="mt-5 rounded-full bg-dema-sage px-4 py-2 text-center text-sm text-dema-forest">
-          Demaa vous contacte sur WhatsApp sous 24h.
-        </p>
+        <>
+          {hasLiveSession ? (
+            <>
+              <p className="mt-5 rounded-full bg-dema-sage px-4 py-2 text-center text-sm text-dema-forest">
+                Inscription confirmée. Demaa vous transmettra les informations pratiques avant la session.
+              </p>
+              {payment.liveSessionAccesses.map((access) => (
+                <section
+                  key={access.purchaseSlug}
+                  className="mt-5 rounded-[1rem] border border-dema-line bg-dema-paper p-4"
+                  aria-label={`Modèles inclus avec ${access.trainingTitle}`}
+                >
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
+                    Modèles opérationnels + session Q&amp;A
+                  </p>
+                  <h3 className="mt-2 text-base font-semibold text-brand-blue">
+                    {access.trainingTitle}
+                  </h3>
+                  <p className="mt-1 text-xs leading-relaxed text-dema-muted">
+                    {access.sessionDate}
+                    {access.systemName ? ` · Modèles adaptés à ${access.systemName}` : ""}
+                  </p>
+                  {access.assets.length > 0 ? (
+                    <div className="mt-4 space-y-2.5">
+                      {access.assets.map((asset) => (
+                        <Link
+                          key={asset.id}
+                          href={asset.href}
+                          target={asset.external ? "_blank" : undefined}
+                          rel={asset.external ? "noreferrer" : undefined}
+                          className="block rounded-[0.85rem] border border-dema-line px-4 py-3 transition hover:border-dema-forest/30 hover:bg-dema-sage/35"
+                        >
+                          <span className="block text-sm font-medium text-dema-forest">
+                            {asset.label}
+                          </span>
+                          <span className="mt-1 block text-xs leading-relaxed text-dema-muted">
+                            {asset.description}
+                          </span>
+                        </Link>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="mt-4 text-sm leading-relaxed text-dema-muted">
+                      Les modèles personnalisés seront ajoutés ici avant la session.
+                    </p>
+                  )}
+                  <p className="mt-4 text-xs leading-relaxed text-dema-muted">
+                    La session comprend un temps de Q&amp;A pour adapter ces modèles à votre entreprise.
+                  </p>
+                </section>
+              ))}
+            </>
+          ) : null}
+
+          {shouldShowServiceFollowUp ? (
+            !request && !hasServiceBundle ? (
+              <Link
+                href={
+                  payment.assistantAccessToken
+                    ? `/assistant/success?access=${encodeURIComponent(payment.assistantAccessToken)}`
+                    : "/assistant/success"
+                }
+                className="mt-5 inline-flex w-full items-center justify-center rounded-full bg-dema-forest px-5 py-3 text-sm font-medium text-dema-paper transition hover:bg-[#284f3a]"
+              >
+                Compléter ma demande
+              </Link>
+            ) : hasServiceBundle && !hasServiceBrief ? (
+              <ServiceBriefModalTrigger
+                onSaved={onBriefSaved}
+                payment={payment}
+              />
+            ) : hasServiceBundle ? (
+              <div className="mt-5 space-y-2">
+                <p className="rounded-full bg-dema-sage px-4 py-2 text-center text-sm text-dema-forest">
+                  {hasTeamNotification
+                    ? "Team Demaa a bien reçu votre brief et revient vers vous."
+                    : "Brief transmis. Demaa vous tient informé de la suite sur WhatsApp."}
+                </p>
+                <ServiceBriefModalTrigger
+                  buttonLabel="Mettre à jour mon brief"
+                  onSaved={onBriefSaved}
+                  payment={payment}
+                />
+              </div>
+            ) : (
+              <p className="mt-5 rounded-full bg-dema-sage px-4 py-2 text-center text-sm text-dema-forest">
+                Demaa vous contacte sur WhatsApp sous 24h.
+              </p>
+            )
+          ) : null}
+        </>
       )}
     </article>
   );

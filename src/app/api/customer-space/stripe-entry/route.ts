@@ -97,9 +97,7 @@ export async function GET(request: Request) {
   }
 
   const session = sessionId ? await retrieveCheckoutSession(sessionId) : null;
-  const paid =
-    session?.payment_status === "paid" ||
-    session?.status === "complete";
+  const paid = session?.payment_status === "paid";
   const email =
     session?.customer_details?.email ||
     session?.customer_email ||

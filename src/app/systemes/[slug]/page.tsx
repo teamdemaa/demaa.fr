@@ -4,7 +4,6 @@ import { ArrowLeft } from "lucide-react";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import SystemDetailContent from "@/components/SystemDetailContent";
-import { PILOTING_SHEET_URLS } from "@/lib/document-models";
 import { isSystemDetailTab } from "@/lib/system-detail-tabs";
 import {
   buildSystemPageIntro,
@@ -53,9 +52,12 @@ export default async function SystemDetailPage({
   }
 
   const initialTab = getParamValue(resolvedSearchParams.tab);
-  const normalizedInitialTab = initialTab === "cours" || initialTab === "ressources"
-    ? "outils"
-    : initialTab;
+  const normalizedInitialTab =
+    initialTab === "cours" || initialTab === "formation"
+      ? "academie"
+      : initialTab === "ressources"
+        ? "outils"
+        : initialTab;
   const jsonLd = buildSystemPageJsonLd(data);
 
   return (
@@ -81,7 +83,6 @@ export default async function SystemDetailPage({
               detail={data.detail}
               intro={buildSystemPageIntro(data)}
               initialActiveTab={isSystemDetailTab(normalizedInitialTab) ? normalizedInitialTab : undefined}
-              hasPilotingSheet={Boolean(PILOTING_SHEET_URLS[data.system.slug])}
               headingAs="h1"
             />
           </div>

@@ -3,6 +3,7 @@ export const SYSTEM_DETAIL_TABS = [
   "outils",
   "fournisseurs",
   "financement",
+  "academie",
   "reseaux-pro",
   "recrutement",
   "ressources",

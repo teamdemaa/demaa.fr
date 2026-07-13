@@ -361,43 +361,43 @@ Ce modèle est particulièrement utile si vous voulez :
   },
   {
     slug: "systeme-operationnel",
-    title: "Système opérationnel",
-    seoTitle: "Système opérationnel pour TPE | Modèle Demaa",
+    title: "Système Marketing & Vente",
+    seoTitle: "Système Marketing & Vente pour TPE | Modèle Airtable Demaa",
     description:
-      "La structure dont vous avez besoin pour que votre activité soit plus stable, plus lisible et moins dépendante de votre mémoire.",
+      "Une base Airtable pour structurer votre pipeline commercial, vos relances et le suivi des conversions.",
     seoDescription:
-      "Découvrez un modèle de système opérationnel pour structurer le quotidien d'une TPE : priorités, process, ressources et routines de pilotage.",
+      "Découvrez un modèle Airtable pour structurer le marketing et les ventes d'une TPE : pipeline, actions, relances et conversions.",
     content: `
 ## Pourquoi ce modèle existe
 
-Beaucoup d'entreprises avancent avec de bonnes intentions, mais sans structure claire entre ce qu'il faut faire, qui doit le faire et comment on le suit.
+Beaucoup d'entreprises multiplient les actions commerciales sans vision claire des opportunités, des relances et des conversions.
 
 Ce modèle sert à poser une base concrète pour :
 
-- clarifier les priorités ;
-- mieux organiser les sujets récurrents ;
-- documenter les process utiles ;
-- rendre l'activité moins fragile ;
-- mieux transmettre l'information.
+- centraliser les prospects et les opportunités ;
+- organiser les actions marketing et commerciales ;
+- planifier les relances ;
+- suivre les étapes du pipeline ;
+- mesurer les conversions.
 
 ## Ce que vous allez trouver
 
-- une structure simple à adapter à votre activité ;
-- un cadre pour organiser les sujets clés ;
-- un support pour relier vision, exécution et suivi ;
-- une base utile si vous voulez déléguer progressivement.
+- une structure Airtable simple à adapter ;
+- un pipeline commercial lisible ;
+- un suivi des actions et des relances ;
+- une base commune pour piloter Marketing & Vente.
 
 ## Pour qui c'est utile
 
 Ce modèle est particulièrement utile si vous voulez :
 
-- arrêter de tout garder dans votre tête ;
-- rendre vos routines plus solides ;
-- mieux cadrer l'exécution ;
-- préparer une montée en charge ;
-- déléguer sans perdre le fil.
+- arrêter de perdre des opportunités faute de relance ;
+- rendre votre acquisition plus régulière ;
+- mieux suivre la conversion ;
+- partager un pipeline clair avec votre équipe ;
+- piloter les prochaines actions commerciales.
     `.trim(),
-    category: "Organisation",
+    category: "Marketing & Vente",
     date: "2026-02-12",
     image: "/images/academy/organisation-1.png",
     slides: [
@@ -407,7 +407,7 @@ Ce modèle est particulièrement utile si vous voulez :
     ],
     ctaLabel: "Ouvrir le modèle",
     ctaHref: "https://airtable.com/app3fRlYVjiFAnrjW/shraiL72hO4EvQoh2",
-    tags: ["modele", "organisation", "systeme", "pilotage"],
+    tags: ["modele", "marketing", "vente", "pipeline", "airtable"],
     relatedSystemSlugs:
       RELATED_SYSTEM_SLUGS_BY_CONTENT_SLUG["systeme-operationnel"] ??
       [],

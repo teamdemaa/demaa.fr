@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { CheckCircle2, LoaderCircle, ShoppingBag, X } from "lucide-react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { CalendarCheck2, CheckCircle2, LoaderCircle, ShoppingBag, X } from "lucide-react";
 import {
   CART_MODAL_CLOSE_EVENT,
   CART_MODAL_OPEN_EVENT,
@@ -27,6 +27,23 @@ export default function ServiceCartTray() {
   const [highlightCart, setHighlightCart] = useState(false);
   const [isDesktopCartOpen, setIsDesktopCartOpen] = useState(false);
   const [isMobileCartOpen, setIsMobileCartOpen] = useState(false);
+  const cartTriggerRef = useRef<HTMLElement | null>(null);
+
+  const restoreCartTriggerFocus = useCallback(() => {
+    const trigger = cartTriggerRef.current;
+    cartTriggerRef.current = null;
+
+    window.requestAnimationFrame(() => {
+      if (trigger?.isConnected) {
+        trigger.focus();
+        return;
+      }
+
+      document
+        .querySelector<HTMLElement>('[data-service-cart-focus-fallback="true"]')
+        ?.focus();
+    });
+  }, []);
 
   useEffect(() => {
     const syncCart = () => {
@@ -34,16 +51,27 @@ export default function ServiceCartTray() {
     };
 
     const openCart = () => {
+      cartTriggerRef.current =
+        document.activeElement instanceof HTMLElement ? document.activeElement : null;
       syncCart();
       setIsDesktopCartOpen(true);
       setIsMobileCartOpen(true);
       setHighlightCart(true);
       window.setTimeout(() => setHighlightCart(false), 2200);
+      window.requestAnimationFrame(() => {
+        const closeButtons = Array.from(
+          document.querySelectorAll<HTMLButtonElement>(
+            '[data-service-cart-close="true"]',
+          ),
+        );
+        closeButtons.find((button) => button.offsetParent !== null)?.focus();
+      });
     };
 
     const closeCart = () => {
       setIsDesktopCartOpen(false);
       setIsMobileCartOpen(false);
+      restoreCartTriggerFocus();
     };
 
     syncCart();
@@ -58,7 +86,7 @@ export default function ServiceCartTray() {
       window.removeEventListener(CART_MODAL_OPEN_EVENT, openCart);
       window.removeEventListener(CART_MODAL_CLOSE_EVENT, closeCart);
     };
-  }, []);
+  }, [restoreCartTriggerFocus]);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -103,7 +131,8 @@ export default function ServiceCartTray() {
 
     setIsDesktopCartOpen(false);
     setIsMobileCartOpen(false);
-  }, [selectedSlugs.length]);
+    restoreCartTriggerFocus();
+  }, [restoreCartTriggerFocus, selectedSlugs.length]);
 
   function removeServiceSelection(slug: string) {
     setCheckoutError(null);
@@ -163,11 +192,19 @@ export default function ServiceCartTray() {
               : "pointer-events-none opacity-0"
           }`}
           aria-hidden="true"
-          onClick={() => setIsDesktopCartOpen(false)}
+          onClick={() => {
+            setIsDesktopCartOpen(false);
+            setIsMobileCartOpen(false);
+            restoreCartTriggerFocus();
+          }}
         />
         <aside
+          aria-hidden={!isDesktopCartOpen}
+          inert={!isDesktopCartOpen}
           className={`fixed bottom-4 right-4 top-[5.35rem] z-40 w-[27.75rem] overflow-hidden rounded-[1.7rem] border border-white/8 bg-[#2f4f3f] text-dema-paper shadow-[0_18px_38px_rgba(23,35,29,0.12)] transition-transform duration-300 ease-out ${
-            isDesktopCartOpen ? "translate-x-0" : "translate-x-[110%]"
+            isDesktopCartOpen
+              ? "translate-x-0"
+              : "pointer-events-none translate-x-[110%]"
           }`}
         >
           <CartContent
@@ -176,7 +213,11 @@ export default function ServiceCartTray() {
             highlight={highlightCart}
             isCheckoutLoading={isCheckoutLoading}
             onCheckout={handleCheckout}
-            onCloseDesktop={() => setIsDesktopCartOpen(false)}
+            onCloseDesktop={() => {
+              setIsDesktopCartOpen(false);
+              setIsMobileCartOpen(false);
+              restoreCartTriggerFocus();
+            }}
             onRemove={removeServiceSelection}
             selectedServices={selectedServices}
             total={cartTotal}
@@ -185,8 +226,12 @@ export default function ServiceCartTray() {
       </div>
 
       <aside
+        aria-hidden={!isMobileCartOpen}
+        inert={!isMobileCartOpen}
         className={`fixed inset-x-0 bottom-0 z-40 border-t border-dema-line bg-dema-paper/95 shadow-[0_-14px_40px_rgba(23,35,29,0.12)] backdrop-blur transition-transform duration-300 md:hidden ${
-          isMobileCartOpen ? "translate-y-0" : "translate-y-[105%]"
+          isMobileCartOpen
+            ? "translate-y-0"
+            : "pointer-events-none translate-y-[105%]"
         }`}
       >
         <CartContent
@@ -195,7 +240,11 @@ export default function ServiceCartTray() {
           highlight={highlightCart}
           isCheckoutLoading={isCheckoutLoading}
           onCheckout={handleCheckout}
-          onCloseMobile={() => setIsMobileCartOpen(false)}
+          onCloseMobile={() => {
+            setIsDesktopCartOpen(false);
+            setIsMobileCartOpen(false);
+            restoreCartTriggerFocus();
+          }}
           onRemove={removeServiceSelection}
           selectedServices={selectedServices}
           total={cartTotal}
@@ -236,10 +285,14 @@ function CartContent({
   const allMonthlyServices =
     selectedServices.length > 0 &&
     selectedServices.every((service) => service.billingType === "monthly");
+  const allLiveSessions =
+    selectedServices.length > 0 &&
+    selectedServices.every((service) => service.kind === "live_session");
+  const SelectionIcon = allLiveSessions ? CalendarCheck2 : ShoppingBag;
 
   return (
     <div
-      id="demaa-service-cart"
+      id={compact ? "demaa-service-cart-mobile" : "demaa-service-cart-desktop"}
       className={`${compact ? "p-4" : desktop ? "flex h-full flex-col px-6 pb-6 pt-5" : "p-5"} transition-shadow duration-500 ${
         highlight ? "shadow-[0_0_0_3px_rgba(49,95,70,0.2)]" : ""
       }`}
@@ -251,7 +304,7 @@ function CartContent({
               desktop ? "bg-white/12 text-dema-paper" : "bg-dema-sage text-dema-forest"
             }`}
           >
-            <ShoppingBag className="h-4 w-4" aria-hidden="true" />
+            <SelectionIcon className="h-4 w-4" aria-hidden="true" />
           </span>
           <div>
             <p
@@ -259,14 +312,21 @@ function CartContent({
                 desktop ? "text-white/58" : "text-dema-muted"
               }`}
             >
-              {hasMonthlyServices ? "Abonnement" : "Panier"}
+              {allLiveSessions
+                ? "Votre sélection"
+                : hasMonthlyServices
+                  ? "Abonnement"
+                  : "Panier"}
             </p>
             <p
               className={`mt-1 text-[1.05rem] font-semibold ${
                 desktop ? "text-dema-paper" : "text-brand-blue"
               }`}
             >
-              {selectedServices.length} service{selectedServices.length > 1 ? "s" : ""} ·{" "}
+              {selectedServices.length}{" "}
+              {allLiveSessions
+                ? `session${selectedServices.length > 1 ? "s" : ""}`
+                : `service${selectedServices.length > 1 ? "s" : ""}`} ·{" "}
               {formatPurchasableServicePrice(total)}
               {allMonthlyServices ? " / mois" : ""}
             </p>
@@ -276,6 +336,7 @@ function CartContent({
           <button
             type="button"
             onClick={onCloseDesktop}
+            data-service-cart-close="true"
             className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/12 bg-white/8 text-white/82 transition hover:bg-white/14 hover:text-white"
             aria-label="Fermer le panier"
           >
@@ -285,6 +346,7 @@ function CartContent({
           <button
             type="button"
             onClick={onCloseMobile}
+            data-service-cart-close="true"
             className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-dema-line bg-white text-brand-blue/70 transition hover:border-dema-forest/25 hover:text-dema-forest"
             aria-label="Fermer le panier"
           >
@@ -368,7 +430,11 @@ function CartContent({
           ) : (
             <>
               <CheckCircle2 className="mr-2 h-4 w-4" aria-hidden="true" />
-              {allMonthlyServices ? "S'abonner" : "Payer"}{" "}
+              {allLiveSessions
+                ? "Finaliser l’inscription"
+                : allMonthlyServices
+                  ? "S'abonner"
+                  : "Payer"}{" "}
               {formatPurchasableServicePrice(total)}
               {allMonthlyServices ? " / mois" : ""}
             </>

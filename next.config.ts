@@ -53,6 +53,11 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: '/academy/:path*',
+        destination: '/',
+        permanent: true,
+      },
+      {
         source: '/annuaire-newsletters/:newsletterSlug/:articleSlug',
         destination: '/annuaire-newsletters/:newsletterSlug',
         permanent: true,

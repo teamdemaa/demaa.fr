@@ -46,7 +46,7 @@ export default async function AnnuaireFormationsPage({
     : null;
   const backLink = returnEnterprise
     ? {
-        href: `/systemes/${encodeURIComponent(returnEnterprise.slug)}?tab=formation`,
+        href: `/systemes/${encodeURIComponent(returnEnterprise.slug)}?tab=academie`,
         label: `Retour à ${returnEnterprise.name}`,
       }
     : undefined;

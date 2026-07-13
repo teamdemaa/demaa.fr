@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { BriefcaseBusiness, GraduationCap } from "lucide-react";
+import { BriefcaseBusiness } from "lucide-react";
 import NavbarCartIndicator from "@/components/NavbarCartIndicator";
 import ServiceCartTray from "@/components/ServiceCartTray";
 import DemaaWordmark from "@/components/DemaaWordmark";
@@ -18,12 +18,12 @@ export default function Navbar({
     !minimal &&
     (pathname === "/annuaire-services" ||
       pathname.startsWith("/annuaire-services/"));
-  const isAcademyPage = pathname === "/academy" || pathname.startsWith("/academy/");
-  const discoveryHref = isAcademyPage ? "/" : "/academy";
-  const discoveryLabel = isAcademyPage
+  const showToolboxDiscovery = pathname === "/structuration";
+  const discoveryHref = showToolboxDiscovery ? "/" : "/structuration";
+  const discoveryLabel = showToolboxDiscovery
     ? "Découvrir la Boîte à outils"
-    : "Découvrir l’Academy";
-  const DiscoveryIcon = isAcademyPage ? BriefcaseBusiness : GraduationCap;
+    : "Structurer votre entreprise pour mieux vendre";
+  const discoveryMobileLabel = showToolboxDiscovery ? "Boîte à outils" : "Structurer";
   return (
     <>
       <nav className="sticky top-0 z-40 border-b border-dema-line/70 bg-dema-cream/92 py-1 backdrop-blur-md">
@@ -32,6 +32,7 @@ export default function Navbar({
             <Link
               href="/"
               aria-label="Retour à l'accueil"
+              data-service-cart-focus-fallback="true"
               className="inline-flex items-center shrink-0 z-50 cursor-pointer"
               onMouseEnter={() => router.prefetch("/")}
               onFocus={() => router.prefetch("/")}
@@ -44,11 +45,9 @@ export default function Navbar({
                 className="demaa-secondary-button inline-flex min-h-10 items-center justify-center gap-2 px-3 py-2 sm:px-4"
                 aria-label={discoveryLabel}
               >
-                <DiscoveryIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
+                <BriefcaseBusiness className="h-4 w-4 shrink-0" aria-hidden="true" />
                 <span className="hidden sm:inline">{discoveryLabel}</span>
-                <span className="sm:hidden">
-                  {isAcademyPage ? "Boîte à outils" : "Academy"}
-                </span>
+                <span className="sm:hidden">{discoveryMobileLabel}</span>
               </Link>
               {showSystemsCta ? (
                 <Link

@@ -3,6 +3,10 @@ import {
   RECRUITMENT_ASSISTANT_SERVICE_SLUG,
   assistantServicePacks,
 } from "@/lib/assistant-service-packs";
+import {
+  getAllLiveSessionPurchaseConfigs,
+  getLiveSessionPurchaseDetails,
+} from "@/lib/live-session-catalog";
 import { getDemaaServiceBySlug } from "@/lib/service-catalog";
 
 export type PurchasableServiceConfig = {
@@ -14,6 +18,9 @@ export type PurchasableServiceConfig = {
   currency: "eur";
   billingType: "one_time" | "monthly";
   billingInterval?: "month";
+  kind?: "service" | "live_session";
+  sessionStartsAt?: string;
+  sourceSystemSlug?: string;
 };
 
 const purchasableServiceConfigs = [
@@ -96,6 +103,7 @@ const purchasableServiceConfigs = [
     currency: "eur" as const,
     billingType: "one_time" as const,
   },
+  ...getAllLiveSessionPurchaseConfigs(),
 ] as const satisfies readonly PurchasableServiceConfig[];
 
 const purchasableServiceConfigMap = new Map<string, PurchasableServiceConfig>(
@@ -103,11 +111,32 @@ const purchasableServiceConfigMap = new Map<string, PurchasableServiceConfig>(
 );
 
 export function getPurchasableServiceConfig(slug: string) {
-  return purchasableServiceConfigMap.get(slug) ?? null;
+  const staticConfig = purchasableServiceConfigMap.get(slug);
+
+  if (staticConfig) {
+    return staticConfig;
+  }
+
+  const liveSessionDetails = getLiveSessionPurchaseDetails(slug);
+
+  if (!liveSessionDetails?.sourceSystemSlug) {
+    return null;
+  }
+
+  const baseSlug = `session-direct-${liveSessionDetails.training.slug}-${liveSessionDetails.slot.id}`;
+  const baseConfig = purchasableServiceConfigMap.get(baseSlug);
+
+  return baseConfig
+    ? {
+        ...baseConfig,
+        slug,
+        sourceSystemSlug: liveSessionDetails.sourceSystemSlug,
+      }
+    : null;
 }
 
 export function isPurchasableServiceSlug(slug: string) {
-  return purchasableServiceConfigMap.has(slug);
+  return Boolean(getPurchasableServiceConfig(slug));
 }
 
 export function getPurchasableServices() {

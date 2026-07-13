@@ -9,6 +9,7 @@ import {
   getAssistantDelegationRequestsByEmail,
   getStripePaymentsByEmail,
 } from "@/lib/generations-db";
+import { getLiveSessionAccessForPurchaseSlug } from "@/lib/live-session-assets";
 
 export const metadata: Metadata = {
   title: "Espace membre Demaa",
@@ -96,14 +97,22 @@ export default async function MonEspacePage({ searchParams }: MonEspacePageProps
     requests.map((request) => [request.stripeSessionId, request])
   );
   const paymentsWithAccessTokens = await Promise.all(
-    payments.map(async (payment) => ({
-      ...payment,
-      assistantAccessToken:
-        payment.orderType !== "service_bundle" &&
-        payment.orderType !== "sector_system"
-          ? await createAssistantAccessToken(payment.stripeSessionId)
-          : null,
-    }))
+    payments.map(async (payment) => {
+      const liveSessionAccesses = payment.serviceSlugs
+        .map((slug) => getLiveSessionAccessForPurchaseSlug(slug))
+        .filter((access): access is NonNullable<typeof access> => Boolean(access));
+
+      return {
+        ...payment,
+        liveSessionAccesses,
+        assistantAccessToken:
+          payment.orderType !== "service_bundle" &&
+          payment.orderType !== "sector_system" &&
+          payment.orderType !== "live_session"
+            ? await createAssistantAccessToken(payment.stripeSessionId)
+            : null,
+      };
+    })
   );
   const requestCards = paymentsWithAccessTokens.map((payment) => {
     const request = requestsBySessionId.get(payment.stripeSessionId) ?? null;

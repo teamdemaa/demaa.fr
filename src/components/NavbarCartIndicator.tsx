@@ -1,19 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ShoppingBag } from "lucide-react";
+import { CalendarCheck2, ShoppingBag } from "lucide-react";
 import {
   CART_UPDATED_EVENT,
   openServiceCartModal,
   readServiceCartSlugs,
 } from "@/lib/service-cart";
+import { getPurchasableServiceConfig } from "@/lib/service-purchase";
 
 export default function NavbarCartIndicator() {
-  const [count, setCount] = useState(0);
+  const [selectedSlugs, setSelectedSlugs] = useState<string[]>([]);
 
   useEffect(() => {
     const syncCart = () => {
-      setCount(readServiceCartSlugs().length);
+      setSelectedSlugs(readServiceCartSlugs());
     };
 
     syncCart();
@@ -26,7 +27,12 @@ export default function NavbarCartIndicator() {
     };
   }, []);
 
-  if (count === 0) return null;
+  if (selectedSlugs.length === 0) return null;
+
+  const allLiveSessions = selectedSlugs.every(
+    (slug) => getPurchasableServiceConfig(slug)?.kind === "live_session",
+  );
+  const IndicatorIcon = allLiveSessions ? CalendarCheck2 : ShoppingBag;
 
   return (
     <button
@@ -34,10 +40,10 @@ export default function NavbarCartIndicator() {
       onClick={openServiceCartModal}
       className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-dema-line bg-dema-paper px-3 py-2 text-sm font-medium text-brand-blue/75 transition hover:border-dema-forest/25 hover:text-dema-forest"
     >
-      <ShoppingBag className="h-4 w-4" aria-hidden="true" />
-      Panier
+      <IndicatorIcon className="h-4 w-4" aria-hidden="true" />
+      {allLiveSessions ? "Sélection" : "Panier"}
       <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-dema-forest px-1.5 text-[11px] font-semibold text-white">
-        {count}
+        {selectedSlugs.length}
       </span>
     </button>
   );
