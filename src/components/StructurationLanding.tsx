@@ -21,11 +21,9 @@ type DiscoveryAnswer = "yes" | "no" | null;
 const responseContent = {
   yes: {
     title: "Bravo. Votre entreprise peut déjà respirer sans vous.",
-    body: "Voyons maintenant comment rendre cette autonomie plus solide et plus durable.",
   },
   no: {
     title: "C’est le signal qu’il faut commencer à structurer maintenant.",
-    body: "Nous vous aidons à remettre du cadre sans alourdir le quotidien.",
   },
 } as const;
 
@@ -206,15 +204,12 @@ export function StructurationLanding() {
             <div className="overflow-hidden">
               {selectedResponse ? (
                 <div>
-                  <p className="text-base font-semibold text-brand-blue">
+                  <p className="text-base font-normal text-brand-blue">
                     {selectedResponse.title}
-                  </p>
-                  <p className="mt-2 text-sm leading-relaxed text-dema-muted sm:text-base">
-                    {selectedResponse.body}
                   </p>
                   <a
                     href="#methode"
-                    className="demaa-primary-button mt-5 min-h-11 px-5"
+                    className="demaa-primary-button mt-4 min-h-11 px-5"
                   >
                     Voir comment nous vous aidons
                   </a>
@@ -245,9 +240,8 @@ export function StructurationLanding() {
               Votre entreprise doit pouvoir grandir sans reposer uniquement sur vous.
             </h2>
             <p className="mt-5 max-w-3xl text-base leading-relaxed text-dema-muted md:text-lg">
-              Lorsque les informations, les décisions et les validations passent toutes par le dirigeant,
-              l’entreprise finit par ralentir. L’objectif n’est pas d’ajouter des procédures partout, mais
-              de mettre en place une organisation simple, claire et utilisable par toute l’équipe.
+              L’objectif n’est pas d’ajouter des procédures partout, mais de mettre en place une organisation
+              simple, claire et utilisable par toute l’équipe.
             </p>
           </div>
 
@@ -256,10 +250,6 @@ export function StructurationLanding() {
               <h2 className="text-2xl font-semibold tracking-tight text-brand-blue md:text-3xl">
                 Quand l’organisation devient indispensable
               </h2>
-              <p className="mt-3 text-sm leading-relaxed text-dema-muted md:text-base">
-                Certains moments rendent l’organisation incontournable, non parce que l’entreprise va mal,
-                mais parce qu’elle repose encore trop sur son dirigeant.
-              </p>
             </div>
 
             <div className="mt-8 grid gap-4 md:grid-cols-2 md:gap-5 xl:grid-cols-4">
@@ -413,6 +403,16 @@ export function StructurationLanding() {
             </div>
           </div>
 
+          <div className="mx-auto mt-10 max-w-4xl rounded-[1.5rem] bg-dema-forest px-7 py-11 text-center text-dema-paper md:mt-14 md:px-14 md:py-14">
+            <blockquote className="demaa-section-title text-[1.8rem] leading-tight tracking-tight text-dema-paper md:text-[2.4rem]">
+              “Avant, tout passait par moi. Depuis qu’on a mis en place une vraie organisation,
+              chacun sait ce qu’il peut décider. Je respire enfin.”
+            </blockquote>
+            <p className="mt-5 text-sm font-medium tracking-[0.01em] text-dema-paper/72">
+              D.K, dirigeant d’une entreprise de nettoyage industriel
+            </p>
+          </div>
+
           <section id="diagnostic" className="scroll-mt-28 pt-20 md:pt-28">
             <div className="mx-auto max-w-4xl rounded-[1.5rem] bg-dema-forest px-6 py-12 text-center text-dema-paper md:px-14 md:py-16">
               <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-dema-paper/70">
@@ -436,35 +436,6 @@ export function StructurationLanding() {
               </a>
             </div>
           </section>
-
-          <div className="mt-20 md:mt-28">
-            <div className="max-w-3xl">
-              <p className="text-[13px] font-semibold uppercase tracking-[0.16em] text-dema-forest md:text-[15px]">
-                Questions fréquentes
-              </p>
-              <h2 className="mt-4 text-3xl font-normal tracking-tight text-brand-blue md:text-[2.6rem]">
-                Ce que vous voulez savoir
-              </h2>
-            </div>
-            <div className="mx-auto mt-8 max-w-4xl space-y-3">
-              {faqItems.map((item) => (
-                <details key={item.question} className="demaa-accordion px-5 py-4">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
-                    <span className="text-base font-medium leading-snug text-brand-blue">
-                      {item.question}
-                    </span>
-                    <ChevronDown
-                      className="demaa-accordion-chevron h-4 w-4 shrink-0 text-dema-muted transition-transform"
-                      aria-hidden="true"
-                    />
-                  </summary>
-                  <p className="demaa-accordion-content mt-3 max-w-2xl pr-4 text-sm leading-relaxed text-dema-muted md:text-[0.98rem]">
-                    {item.answer}
-                  </p>
-                </details>
-              ))}
-            </div>
-          </div>
 
           <div className="mx-auto mt-20 max-w-4xl rounded-[1.5rem] border border-dema-line/70 bg-dema-paper px-6 py-12 text-center shadow-[0_18px_50px_rgba(23,35,29,0.04)] md:mt-28 md:px-12 md:py-16">
             <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-dema-forest">
@@ -494,6 +465,35 @@ export function StructurationLanding() {
             >
               Demander un diagnostic offert
             </a>
+          </div>
+
+          <div className="mt-20 md:mt-28">
+            <div className="max-w-3xl">
+              <p className="text-[13px] font-semibold uppercase tracking-[0.16em] text-dema-forest md:text-[15px]">
+                Questions fréquentes
+              </p>
+              <h2 className="mt-4 text-3xl font-normal tracking-tight text-brand-blue md:text-[2.6rem]">
+                Ce que vous voulez savoir
+              </h2>
+            </div>
+            <div className="mx-auto mt-8 max-w-4xl space-y-3">
+              {faqItems.map((item) => (
+                <details key={item.question} className="demaa-accordion px-5 py-4">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
+                    <span className="text-base font-medium leading-snug text-brand-blue">
+                      {item.question}
+                    </span>
+                    <ChevronDown
+                      className="demaa-accordion-chevron h-4 w-4 shrink-0 text-dema-muted transition-transform"
+                      aria-hidden="true"
+                    />
+                  </summary>
+                  <p className="demaa-accordion-content mt-3 max-w-2xl pr-4 text-sm leading-relaxed text-dema-muted md:text-[0.98rem]">
+                    {item.answer}
+                  </p>
+                </details>
+              ))}
+            </div>
           </div>
         </div>
       </section>
