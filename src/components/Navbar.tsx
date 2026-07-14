@@ -2,12 +2,11 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
 import { BriefcaseBusiness } from "lucide-react";
 import NavbarCartIndicator from "@/components/NavbarCartIndicator";
 import ServiceCartTray from "@/components/ServiceCartTray";
 import DemaaWordmark from "@/components/DemaaWordmark";
-import SystemSetupModal from "@/components/SystemSetupModal";
+import { ORGANISATION_AUDIT_MODAL_HREF } from "@/lib/organisation-audit";
 
 export default function Navbar({
   minimal = false,
@@ -16,7 +15,6 @@ export default function Navbar({
 }) {
   const router = useRouter();
   const pathname = usePathname();
-  const [isDiagnosticModalOpen, setIsDiagnosticModalOpen] = useState(false);
   const showSystemsCta =
     !minimal &&
     (pathname === "/annuaire-services" ||
@@ -37,15 +35,15 @@ export default function Navbar({
               <DemaaWordmark className="text-[1.4rem] sm:text-[1.7rem]" />
             </Link>
             <div className="flex items-center gap-2 sm:gap-3">
-              <button
-                type="button"
-                onClick={() => setIsDiagnosticModalOpen(true)}
+              <Link
+                href={ORGANISATION_AUDIT_MODAL_HREF}
+                scroll={false}
                 className="demaa-secondary-button inline-flex min-h-10 items-center justify-center px-3 py-2 text-xs sm:px-4 sm:text-sm"
                 aria-label="Diagnostic organisation offert"
               >
                 <span className="hidden lg:inline">Diagnostic organisation offert</span>
                 <span className="lg:hidden">Diagnostic offert</span>
-              </button>
+              </Link>
               {showSystemsCta ? (
                 <Link
                   href="/"
@@ -62,10 +60,6 @@ export default function Navbar({
         </div>
       </nav>
       <ServiceCartTray />
-      <SystemSetupModal
-        isOpen={isDiagnosticModalOpen}
-        onClose={() => setIsDiagnosticModalOpen(false)}
-      />
     </>
   );
 }

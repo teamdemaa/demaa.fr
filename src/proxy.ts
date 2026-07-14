@@ -6,8 +6,6 @@ const HIDDEN_ORGANISATION_PATHS = new Set([
   "/organisation",
   "/organisation-automatisation",
   "/annuaire-services",
-  "/annuaire-services/organisation",
-  "/annuaire-services/organisation-automatisation",
   "/services/organisation",
   "/services/organisation-automatisation",
   "/services/structuration-automatisation",
