@@ -209,7 +209,7 @@ export function StructurationLanding() {
                   </p>
                   <a
                     href="#methode"
-                    className="demaa-secondary-button mt-4 min-h-11 px-5"
+                    className="mt-4 inline-flex text-sm font-semibold text-dema-forest transition hover:text-brand-blue sm:text-base"
                   >
                     Voir comment nous vous aidons
                   </a>
