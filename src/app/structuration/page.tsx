@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import { StructurationLanding } from "@/components/StructurationLanding";
+
+const STRUCTURATION_PAGE_ENABLED = false;
 
 export const metadata: Metadata = {
   title: "Prévisualisation organisation - Demaa",
@@ -14,6 +17,10 @@ export const metadata: Metadata = {
 };
 
 export default function StructurationPage() {
+  if (!STRUCTURATION_PAGE_ENABLED) {
+    notFound();
+  }
+
   return (
     <>
       <Navbar />
