@@ -18,12 +18,6 @@ export default function Navbar({
     !minimal &&
     (pathname === "/annuaire-services" ||
       pathname.startsWith("/annuaire-services/"));
-  const showToolboxDiscovery = pathname === "/structuration";
-  const discoveryHref = showToolboxDiscovery ? "/" : "/structuration";
-  const discoveryLabel = showToolboxDiscovery
-    ? "Découvrir les Kits opérationnels"
-    : "Structurer votre entreprise pour mieux vendre";
-  const discoveryMobileLabel = showToolboxDiscovery ? "Kits opérationnels" : "Structurer";
   return (
     <>
       <nav className="sticky top-0 z-40 border-b border-dema-line/70 bg-dema-cream/92 py-1 backdrop-blur-md">
@@ -40,15 +34,6 @@ export default function Navbar({
               <DemaaWordmark className="text-[1.4rem] sm:text-[1.7rem]" />
             </Link>
             <div className="flex items-center gap-2 sm:gap-3">
-              <Link
-                href={discoveryHref}
-                className="demaa-secondary-button inline-flex min-h-10 items-center justify-center gap-2 px-3 py-2 sm:px-4"
-                aria-label={discoveryLabel}
-              >
-                <BriefcaseBusiness className="h-4 w-4 shrink-0" aria-hidden="true" />
-                <span className="hidden sm:inline">{discoveryLabel}</span>
-                <span className="sm:hidden">{discoveryMobileLabel}</span>
-              </Link>
               {showSystemsCta ? (
                 <Link
                   href="/"
