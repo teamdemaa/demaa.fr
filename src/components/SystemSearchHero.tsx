@@ -234,14 +234,12 @@ export default function SystemSearchHero({
             </span>
             <br />
             <span
-              className="font-sans font-light not-italic text-brand-blue/62"
+              className="demaa-hero-title text-[1.15em] text-dema-forest"
               aria-hidden="true"
             >
               pour votre{` `}
               <span className="inline-flex items-baseline">
-                <span className="demaa-hero-title text-[1.15em] text-dema-forest">
-                  {typedBusinessType}
-                </span>
+                <span>{typedBusinessType}</span>
                 <span className="demaa-typewriter-caret ml-[0.08em] inline-block h-[0.8em] w-px bg-current" />
               </span>
             </span>
