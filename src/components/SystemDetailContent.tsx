@@ -21,6 +21,7 @@ import RecruitmentDetailDialog from "@/components/RecruitmentDetailDialog";
 import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
 import SupplierDetailDialog from "@/components/SupplierDetailDialog";
 import { SystemAcademyContent } from "@/components/SystemAcademyContent";
+import SystemeTabContent from "@/components/SystemeTabContent";
 import TrainingDetailDialog from "@/components/TrainingDetailDialog";
 import type { DemaaAidItem } from "@/lib/aid-catalog";
 import { getRecommendedAidsForSystem } from "@/lib/aid-recommendations";
@@ -289,10 +290,9 @@ export default function SystemDetailContent({
 }: SystemDetailContentProps) {
   const defaultTab =
     isSystemDetailTab(initialActiveTab) &&
-    initialActiveTab !== "systeme" &&
     initialActiveTab !== "ressources"
       ? initialActiveTab
-      : "outils";
+      : "systeme";
   const [activeTab, setActiveTab] = useState<SystemDetailTab>(defaultTab);
   const [selectedToolDetail, setSelectedToolDetail] = useState<ToolDirectoryItem | null>(null);
   const [selectedSupplierDetail, setSelectedSupplierDetail] = useState<DemaaSupplier | null>(null);
@@ -769,6 +769,7 @@ export default function SystemDetailContent({
         <div className="flex min-w-max items-center gap-2 whitespace-nowrap">
           {(
             [
+              ["systeme", "Systèmes"],
               ["outils", "Outils"],
               ["fournisseurs", "Fournisseurs"],
               ["financement", "Financement"],
@@ -793,7 +794,13 @@ export default function SystemDetailContent({
       </div>
 
       <div className="mt-5">
-        {activeTab === "outils" ? (
+        {activeTab === "systeme" ? (
+          <SystemeTabContent
+            systemName={system.name}
+            systemSlug={system.slug}
+            systeme={detail.systeme}
+          />
+        ) : activeTab === "outils" ? (
           <div className="space-y-5">
             {(() => {
               const businessTools = detail.tools.filter((tool) => !isTransverseTool(tool));

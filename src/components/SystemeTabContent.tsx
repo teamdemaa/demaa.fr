@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ChevronDown, FileSpreadsheet, FileText, X } from "lucide-react";
+import { ChevronDown, Download, Eye, FileSpreadsheet, X } from "lucide-react";
 import { getSystemDocumentAsset } from "@/lib/system-document-assets";
 import type { SystemeDetail } from "@/lib/systeme-catalog";
 
@@ -358,7 +358,7 @@ export default function SystemeTabContent({
                       className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-dema-muted transition hover:bg-dema-sage/35 hover:text-dema-muted"
                       aria-label={`Voir le document pour ${item.process}`}
                     >
-                      <FileText className="h-4 w-4" aria-hidden="true" />
+                      <Eye className="h-4 w-4" aria-hidden="true" />
                     </button>
                   </div>
                 );
@@ -366,6 +366,17 @@ export default function SystemeTabContent({
             </div>
           </details>
         ))}
+      </div>
+
+      <div className="flex justify-start">
+        <a
+          href={`/api/kit-systeme/${encodeURIComponent(systemSlug)}/download`}
+          className="demaa-primary-button inline-flex items-center gap-2"
+          aria-label={`Télécharger tous les documents du système ${systemName}`}
+        >
+          <Download className="h-4 w-4" aria-hidden="true" />
+          Télécharger tous les documents
+        </a>
       </div>
 
       {selectedDocument ? (
