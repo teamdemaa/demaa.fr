@@ -169,7 +169,7 @@ export default function SystemSearchHero({
       <div className="relative mx-auto w-full max-w-6xl -translate-y-[35%] md:-translate-y-[15%]">
         <div className="mx-auto max-w-4xl">
           <h1
-            className="text-[clamp(2.8rem,8vw,5.4rem)] leading-[0.94] tracking-tight text-brand-blue"
+            className="text-[clamp(2.38rem,6.8vw,4.59rem)] leading-[0.94] tracking-tight text-brand-blue"
             aria-label="Trouvez le Kit opérationnel pour votre entreprise"
           >
             <span className="font-sans font-light not-italic text-brand-blue/62">
