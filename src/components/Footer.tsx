@@ -36,7 +36,7 @@ export default function Footer() {
               />
             </Link>
             <p className="demaa-section-title max-w-xs text-lg leading-snug text-neutral-500">
-              Structurer, déléguer et avancer avec plus de clarté grâce à des services et des systèmes pensés pour les dirigeants.
+              Structurez votre entreprise pour qu’elle avance avec plus d’autonomie, même lorsque vous n’êtes pas là.
             </p>
           </div>
 

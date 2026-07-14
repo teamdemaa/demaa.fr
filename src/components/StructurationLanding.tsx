@@ -140,7 +140,7 @@ export function StructurationLanding() {
       <section
         className={`flex items-center px-4 text-center transition-[min-height,padding] duration-1000 md:px-8 ${
           selectedResponse
-            ? "min-h-[calc(78svh-4.5rem)] pb-10 pt-10 md:pb-14 md:pt-14"
+            ? "min-h-0 pb-4 pt-8 md:pb-6 md:pt-10"
             : "min-h-[calc(100svh-4.5rem)] py-12 md:py-18"
         }`}
       >
@@ -209,7 +209,7 @@ export function StructurationLanding() {
                   </p>
                   <a
                     href="#methode"
-                    className="demaa-primary-button mt-4 min-h-11 px-5"
+                    className="demaa-secondary-button mt-4 min-h-11 px-5"
                   >
                     Voir comment nous vous aidons
                   </a>
@@ -231,13 +231,13 @@ export function StructurationLanding() {
 
       {selectedResponse ? (
       <section className="mx-auto w-full max-w-6xl px-4 pb-24 demaa-fade-up md:px-8 md:pb-36">
-        <div className="border-t border-dema-line/80 pt-14 md:pt-20">
+        <div className="border-t border-dema-line/80 pt-10 md:pt-14">
           <div className="max-w-4xl">
             <p className="text-[13px] font-semibold uppercase tracking-[0.16em] text-dema-forest md:text-[15px]">
               Organiser pour mieux avancer
             </p>
             <h2 className="mt-4 text-3xl font-normal leading-tight tracking-tight text-brand-blue md:text-[2.8rem]">
-              Votre entreprise doit pouvoir grandir sans reposer uniquement sur vous.
+              Votre entreprise doit pouvoir avancer, même lorsque vous n’êtes pas là.
             </h2>
             <p className="mt-5 max-w-3xl text-base leading-relaxed text-dema-muted md:text-lg">
               L’objectif n’est pas d’ajouter des procédures partout, mais de mettre en place une organisation
@@ -413,15 +413,28 @@ export function StructurationLanding() {
             </p>
           </div>
 
+          <div className="mt-20 max-w-4xl md:mt-28">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-dema-forest">
+              Expérience
+            </p>
+            <h2 className="mt-4 max-w-3xl text-3xl font-semibold tracking-tight text-brand-blue md:text-4xl">
+              Plus de 200 dirigeants accompagnés.
+            </h2>
+            <p className="mt-5 max-w-2xl text-base leading-relaxed text-dema-muted md:text-lg">
+              Des dirigeants de TPE, des cabinets, des indépendants et des petites équipes accompagnés
+              pour structurer leur organisation et alléger leur quotidien.
+            </p>
+          </div>
+
           <section id="diagnostic" className="scroll-mt-28 pt-20 md:pt-28">
-            <div className="mx-auto max-w-4xl rounded-[1.5rem] bg-dema-forest px-6 py-12 text-center text-dema-paper md:px-14 md:py-16">
-              <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-dema-paper/70">
+            <div className="max-w-4xl rounded-[1.5rem] bg-dema-sage/65 px-6 py-12 text-left text-brand-blue md:px-14 md:py-16">
+              <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
                 Par où commencer ?
               </p>
-              <h2 className="mx-auto mt-4 max-w-3xl text-3xl font-normal tracking-tight md:text-[2.75rem]">
+              <h2 className="mt-4 max-w-3xl text-3xl font-normal tracking-tight md:text-[2.75rem]">
                 Commencez par un diagnostic offert.
               </h2>
-              <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-dema-paper/75">
+              <p className="mt-5 max-w-2xl text-base leading-relaxed text-dema-muted">
                 Nous faisons le point sur votre organisation, vos outils, vos documents, vos tâches
                 récurrentes et les sujets qui vous ralentissent. Vous repartez avec un regard extérieur
                 et des premières priorités concrètes, sans engagement.
@@ -430,42 +443,12 @@ export function StructurationLanding() {
                 href={ORGANISATION_AUDIT_BOOKING_URL}
                 target="_blank"
                 rel="noreferrer"
-                className="demaa-secondary-button mt-8 min-h-12 border-dema-paper bg-dema-paper px-6 text-brand-blue hover:border-dema-paper hover:bg-dema-paper hover:text-dema-forest"
+                className="demaa-primary-button mt-8 min-h-12 px-6"
               >
                 Demander mon diagnostic organisation
               </a>
             </div>
           </section>
-
-          <div className="mx-auto mt-20 max-w-4xl rounded-[1.5rem] border border-dema-line/70 bg-dema-paper px-6 py-12 text-center shadow-[0_18px_50px_rgba(23,35,29,0.04)] md:mt-28 md:px-12 md:py-16">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-dema-forest">
-              Expérience
-            </p>
-            <h2 className="mx-auto mt-4 max-w-3xl text-3xl font-semibold tracking-tight text-brand-blue md:text-4xl">
-              Plus de 200 dirigeants accompagnés.
-            </h2>
-            <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-dema-muted md:text-lg">
-              Des dirigeants de TPE, des cabinets, des indépendants et des petites équipes accompagnés
-              pour structurer leur organisation et alléger leur quotidien.
-            </p>
-          </div>
-
-          <div className="mx-auto mt-20 max-w-4xl text-center md:mt-28">
-            <h2 className="text-3xl font-normal tracking-tight text-brand-blue md:text-[2.8rem]">
-              Votre entreprise doit pouvoir avancer, même lorsque vous n’êtes pas là.
-            </h2>
-            <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-dema-muted">
-              Faisons le point sur ce qui repose encore trop sur vous et sur ce qu’il faut structurer en priorité.
-            </p>
-            <a
-              href={ORGANISATION_AUDIT_BOOKING_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="demaa-primary-button mt-7 min-h-12 px-6"
-            >
-              Demander un diagnostic offert
-            </a>
-          </div>
 
           <div className="mt-20 md:mt-28">
             <div className="max-w-3xl">
