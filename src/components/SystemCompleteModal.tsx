@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, type FormEvent } from "react";
+import { useRouter } from "next/navigation";
 import { ChevronLeft, ChevronRight, FileText, LoaderCircle, Mail, X } from "lucide-react";
 import type { SystemeDetail } from "@/lib/systeme-catalog";
 
@@ -19,6 +20,7 @@ export default function SystemCompleteModal({
   systeme,
   onClose,
 }: SystemCompleteModalProps) {
+  const router = useRouter();
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [submitState, setSubmitState] = useState<SubmitState>("idle");
@@ -103,6 +105,7 @@ export default function SystemCompleteModal({
       }
 
       setSubmitState("success");
+      router.push(kitHref);
     } catch (error) {
       setErrorMessage(
         error instanceof Error ? error.message : "Impossible d'envoyer le kit pour le moment."

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ChevronDown, Download, Eye, FileSpreadsheet, X } from "lucide-react";
+import { ChevronDown, Eye, FileSpreadsheet, Mail, X } from "lucide-react";
 import { getSystemDocumentAsset } from "@/lib/system-document-assets";
 import type { SystemeDetail } from "@/lib/systeme-catalog";
 
@@ -264,6 +264,11 @@ export default function SystemeTabContent({
 }: SystemeTabContentProps) {
   const [selectedDocument, setSelectedDocument] = useState<SelectedSystemDocument | null>(null);
 
+  function requestSystemComplete() {
+    setSelectedDocument(null);
+    onRequestSystemComplete?.();
+  }
+
   if (!systeme?.cards.length) {
     return (
       <div className="demaa-surface rounded-[1.35rem] px-5 py-6 sm:px-6">
@@ -368,16 +373,19 @@ export default function SystemeTabContent({
         ))}
       </div>
 
-      <div className="flex justify-start">
-        <a
-          href={`/api/kit-systeme/${encodeURIComponent(systemSlug)}/download`}
-          className="demaa-primary-button inline-flex items-center gap-2"
-          aria-label={`Télécharger tous les documents du système ${systemName}`}
-        >
-          <Download className="h-4 w-4" aria-hidden="true" />
-          Télécharger tous les documents
-        </a>
-      </div>
+      {onRequestSystemComplete ? (
+        <div className="flex justify-start">
+          <button
+            type="button"
+            onClick={requestSystemComplete}
+            className="demaa-primary-button inline-flex items-center gap-2"
+            aria-label={`Recevoir les documents du système ${systemName}`}
+          >
+            <Mail className="h-4 w-4" aria-hidden="true" />
+            Recevoir les documents
+          </button>
+        </div>
+      ) : null}
 
       {selectedDocument ? (
         <SystemDocumentPreviewModal
@@ -385,7 +393,9 @@ export default function SystemeTabContent({
           systemName={systemName}
           systemSlug={systemSlug}
           onClose={() => setSelectedDocument(null)}
-          onRequestSystemComplete={onRequestSystemComplete}
+          onRequestSystemComplete={
+            onRequestSystemComplete ? requestSystemComplete : undefined
+          }
         />
       ) : null}
     </div>
