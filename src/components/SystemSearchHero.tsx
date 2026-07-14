@@ -227,10 +227,10 @@ export default function SystemSearchHero({
         <div className="mx-auto max-w-4xl">
           <h1
             className="text-[clamp(2.8rem,8vw,5.4rem)] leading-[0.94] tracking-tight text-brand-blue"
-            aria-label="Trouver la Boîte à outils pour votre entreprise"
+            aria-label="Trouvez le Kit opérationnel pour votre entreprise"
           >
-            <span className="demaa-hero-title text-dema-forest">
-              Trouver la Boîte à outils
+            <span className="font-sans font-light not-italic text-brand-blue/62">
+              Trouvez le Kit opérationnel
             </span>
             <br />
             <span
@@ -239,7 +239,9 @@ export default function SystemSearchHero({
             >
               pour votre{` `}
               <span className="inline-flex items-baseline">
-                <span>{typedBusinessType}</span>
+                <span className="demaa-hero-title text-[1.15em] text-dema-forest">
+                  {typedBusinessType}
+                </span>
                 <span className="demaa-typewriter-caret ml-[0.08em] inline-block h-[0.8em] w-px bg-current" />
               </span>
             </span>

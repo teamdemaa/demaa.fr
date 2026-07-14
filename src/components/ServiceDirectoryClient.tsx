@@ -692,7 +692,7 @@ function ServiceTrustSection({
             href="/"
             className="demaa-secondary-button inline-flex items-center gap-2 px-4 py-2.5 text-sm"
           >
-            Voir la Boîte à outils du dirigeant
+            Voir les Kits opérationnels
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
         </div>
