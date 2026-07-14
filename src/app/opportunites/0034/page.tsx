@@ -2,26 +2,56 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 
+const portfolio = {
+  activeClients: 47,
+  monthlyClients: 44,
+  annualClients: 3,
+  valuedMonthlyClientsBeforeEstimate: 41,
+  documentedMonthlyBase: 9_000,
+  estimatedMonthlyClients: 3,
+  estimatedMonthlyFee: 250,
+  top10MonthlyBase: 3_130,
+  top5MonthlyBase: 1_740,
+  top1MonthlyBase: 480,
+} as const;
+
+const monthlyBase =
+  portfolio.documentedMonthlyBase +
+  portfolio.estimatedMonthlyClients * portfolio.estimatedMonthlyFee;
+const annualizedMonthlyBase = monthlyBase * 12;
+const averageMonthlyFee = Math.round(monthlyBase / portfolio.monthlyClients);
+const monthlyClientShare = Math.round(
+  (portfolio.monthlyClients / portfolio.activeClients) * 100,
+);
+
+function formatInteger(value: number) {
+  return new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 0 }).format(value);
+}
+
+function formatShare(value: number, total: number) {
+  return ((value / total) * 100).toFixed(1).replace(".", ",");
+}
+
 const keyMetrics = [
   {
     label: "Clients actifs",
-    value: "47",
+    value: `${portfolio.activeClients}`,
     detail: "Sociétés externes • cabinet lui-même exclu",
   },
   {
     label: "Socle mensuel",
-    value: "9 000 €",
-    detail: "Forfaits actifs documentés",
+    value: `${formatInteger(monthlyBase)} €`,
+    detail: `${portfolio.monthlyClients} forfaits valorisés • ${portfolio.estimatedMonthlyClients} estimés à ${portfolio.estimatedMonthlyFee} €`,
   },
   {
     label: "Socle annualisé",
-    value: "108 k€",
-    detail: "Hors missions ponctuelles et annuelles",
+    value: `${formatInteger(annualizedMonthlyBase / 1_000)} k€`,
+    detail: "Base mensuelle × 12 • hors ponctuel et annuel",
   },
   {
     label: "Panier mensuel moyen",
-    value: "220 €",
-    detail: "41 clients avec forfait renseigné",
+    value: `${averageMonthlyFee} €`,
+    detail: `${formatInteger(monthlyBase)} € ÷ ${portfolio.monthlyClients} forfaits`,
   },
   {
     label: "Implantation clientèle",
@@ -31,9 +61,21 @@ const keyMetrics = [
 ] as const;
 
 const portfolioLegend = [
-  { value: "44", label: "clients mensuels", color: "bg-dema-forest" },
-  { value: "3", label: "clients annuels", color: "bg-dema-line" },
-  { value: "41", label: "forfaits valorisés", color: "bg-dema-forest/55" },
+  {
+    value: `${portfolio.monthlyClients}`,
+    label: "clients mensuels",
+    color: "bg-dema-forest",
+  },
+  {
+    value: `${portfolio.annualClients}`,
+    label: "clients annuels",
+    color: "bg-dema-line",
+  },
+  {
+    value: `${portfolio.monthlyClients}`,
+    label: "forfaits valorisés",
+    color: "bg-dema-forest/55",
+  },
 ] as const;
 
 const services = [
@@ -169,6 +211,10 @@ export default function Opportunity0034Page() {
             ))}
           </section>
 
+          <p className="mt-3 text-xs font-light leading-relaxed text-dema-muted">
+            Hypothèse de valorisation : {portfolio.valuedMonthlyClientsBeforeEstimate} forfaits renseignés + {portfolio.estimatedMonthlyClients} forfaits estimés à {portfolio.estimatedMonthlyFee} €/mois.
+          </p>
+
           <div className="mt-5 grid gap-4 xl:grid-cols-[0.95fr_1.08fr_1fr]">
             <section className="rounded-[1.35rem] border border-dema-line p-5 sm:p-6">
               <PanelTitle>Portefeuille & récurrence</PanelTitle>
@@ -176,16 +222,15 @@ export default function Opportunity0034Page() {
               <div className="mt-6 grid items-center gap-6 sm:grid-cols-[auto_1fr]">
                 <div
                   role="img"
-                  aria-label="94 % des clients sont mensuels"
+                  aria-label={`${monthlyClientShare} % des clients sont mensuels`}
                   className="relative mx-auto size-40 rounded-full sm:size-44"
                   style={{
-                    background:
-                      "conic-gradient(#315f46 0 94%, #eceeed 94% 100%)",
+                    background: `conic-gradient(#315f46 0 ${monthlyClientShare}%, #eceeed ${monthlyClientShare}% 100%)`,
                   }}
                 >
                   <div className="absolute inset-[18px] flex flex-col items-center justify-center rounded-full bg-dema-paper">
                     <span className="text-3xl font-normal tabular-nums tracking-[-0.04em]">
-                      94 %
+                      {monthlyClientShare} %
                     </span>
                     <span className="mt-1 text-xs font-light text-dema-muted">
                       mensuels
@@ -263,13 +308,13 @@ export default function Opportunity0034Page() {
 
               <div className="mt-5 rounded-[1rem] border border-dema-forest/10 bg-dema-sage px-5 py-5">
                 <p className="text-[10px] font-normal uppercase tracking-[0.16em] text-dema-forest/70 sm:text-[11px]">
-                  Concentration du socle mensuel
+                  Concentration du socle mensuel valorisé
                 </p>
                 <p className="mt-3 text-2xl font-normal tabular-nums tracking-[-0.03em] text-dema-forest sm:text-3xl">
-                  Top 10 : 34,8 %
+                  Top 10 : {formatShare(portfolio.top10MonthlyBase, monthlyBase)} %
                 </p>
                 <p className="mt-2 text-xs font-light text-dema-muted sm:text-sm">
-                  Top 5 : 19,3 % • 1er client : 5,3 %
+                  Top 5 : {formatShare(portfolio.top5MonthlyBase, monthlyBase)} % • 1er client : {formatShare(portfolio.top1MonthlyBase, monthlyBase)} %
                 </p>
               </div>
 
