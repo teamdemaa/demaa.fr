@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { X } from "lucide-react";
 
 type SystemSetupModalProps = {
@@ -26,6 +26,12 @@ export default function SystemSetupModal({
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
+  const handleClose = useCallback(() => {
+    setError(null);
+    setSuccessMessage(null);
+    onClose();
+  }, [onClose]);
+
   useEffect(() => {
     if (!isOpen) return;
 
@@ -34,6 +40,25 @@ export default function SystemSetupModal({
       sector: initialSector ?? "",
     }));
   }, [initialSector, isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        handleClose();
+      }
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [handleClose, isOpen]);
 
   if (!isOpen) return null;
 
@@ -47,12 +72,6 @@ export default function SystemSetupModal({
         [field]: event.target.value,
       }));
     };
-
-  const handleClose = () => {
-    setError(null);
-    setSuccessMessage(null);
-    onClose();
-  };
 
   const validateForm = () => {
     if (!formData.firstName.trim()) return "Merci d'indiquer votre prénom.";
@@ -110,6 +129,9 @@ export default function SystemSetupModal({
     <div
       className="fixed inset-0 z-[60] flex items-center justify-center bg-brand-blue/35 px-4 py-8"
       onClick={handleClose}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="system-setup-modal-title"
     >
       <div
         className="w-full max-w-xl rounded-[1.25rem] border border-dema-line bg-dema-paper p-6 shadow-[0_24px_60px_rgba(23,35,29,0.14)] md:p-8"
@@ -120,7 +142,10 @@ export default function SystemSetupModal({
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
               Diagnostic organisation
             </p>
-            <h2 className="mt-2 text-3xl font-semibold tracking-tight text-brand-blue">
+            <h2
+              id="system-setup-modal-title"
+              className="mt-2 text-3xl font-semibold tracking-tight text-brand-blue"
+            >
               Diagnostic organisation
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-dema-muted">
