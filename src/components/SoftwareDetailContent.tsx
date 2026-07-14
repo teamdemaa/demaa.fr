@@ -27,7 +27,11 @@ export default function SoftwareDetailContent({
     : `/annuaire-outils/${getToolDirectorySlug(tool)}`;
   const showCompactDetailCta = compact && Boolean(detailHref);
   const showPricingCta = Boolean(pricing.sourceUrl && pricing.sourceUrl !== tool.url);
-  const toolCtaLabel = isInternalTool ? "Ouvrir l'outil" : "Voir l'outil";
+  const toolCtaLabel = compact
+    ? "Voir l'outil"
+    : isInternalTool
+      ? "Ouvrir l'outil"
+      : "Voir l'outil";
 
   return (
     <div className={compact ? "space-y-6" : "space-y-8"}>
@@ -112,12 +116,7 @@ export default function SoftwareDetailContent({
       </section>
 
       <div className="flex flex-wrap items-center gap-3">
-        {showCompactDetailCta && detailHref ? (
-          <Link href={detailHref} className="demaa-primary-button gap-2 px-5 py-3">
-            Voir la fiche complète
-            <ArrowUpRight className="h-4 w-4" />
-          </Link>
-        ) : isInternalTool ? (
+        {isInternalTool ? (
           <Link href={tool.url} className="demaa-primary-button gap-2 px-5 py-3">
             {toolCtaLabel}
             <ArrowUpRight className="h-4 w-4" />
@@ -133,16 +132,14 @@ export default function SoftwareDetailContent({
             <ArrowUpRight className="h-4 w-4" />
           </a>
         )}
-        {showCompactDetailCta ? (
-          <a
-            href={tool.url}
-            target="_blank"
-            rel="noreferrer"
+        {showCompactDetailCta && detailHref ? (
+          <Link
+            href={detailHref}
             className="demaa-secondary-button gap-2 px-5 py-3"
           >
-            {toolCtaLabel}
+            Voir la fiche complète
             <ArrowUpRight className="h-4 w-4" />
-          </a>
+          </Link>
         ) : showPricingCta && pricing.sourceUrl ? (
           <a
             href={pricing.sourceUrl}
