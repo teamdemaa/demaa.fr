@@ -4,7 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import SystemDetailContent from "@/components/SystemDetailContent";
-import { isSystemDetailTab } from "@/lib/system-detail-tabs";
+import { isVisibleSystemDetailTab } from "@/lib/system-detail-tabs";
 import {
   buildSystemPageIntro,
   buildSystemPageJsonLd,
@@ -82,7 +82,11 @@ export default async function SystemDetailPage({
               system={data.system}
               detail={data.detail}
               intro={buildSystemPageIntro(data)}
-              initialActiveTab={isSystemDetailTab(normalizedInitialTab) ? normalizedInitialTab : undefined}
+              initialActiveTab={
+                isVisibleSystemDetailTab(normalizedInitialTab)
+                  ? normalizedInitialTab
+                  : undefined
+              }
               headingAs="h1"
             />
           </div>

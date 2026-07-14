@@ -21,6 +21,7 @@ import RecruitmentDetailDialog from "@/components/RecruitmentDetailDialog";
 import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
 import SupplierDetailDialog from "@/components/SupplierDetailDialog";
 import { SystemAcademyContent } from "@/components/SystemAcademyContent";
+import SystemCompleteModal from "@/components/SystemCompleteModal";
 import SystemeTabContent from "@/components/SystemeTabContent";
 import TrainingDetailDialog from "@/components/TrainingDetailDialog";
 import type { DemaaAidItem } from "@/lib/aid-catalog";
@@ -45,7 +46,7 @@ import { type OperationalSystemDetail } from "@/lib/system-operations";
 import { getRecommendedSuppliersForSystem } from "@/lib/supplier-recommendations";
 import type { DemaaSupplier } from "@/lib/supplier-catalog";
 import {
-  isSystemDetailTab,
+  isVisibleSystemDetailTab,
   type SystemDetailTab,
 } from "@/lib/system-detail-tabs";
 import { getToolDirectorySlug, type ToolDirectoryItem } from "@/lib/tool-directory";
@@ -289,11 +290,12 @@ export default function SystemDetailContent({
   headingId,
 }: SystemDetailContentProps) {
   const defaultTab =
-    isSystemDetailTab(initialActiveTab) &&
+    isVisibleSystemDetailTab(initialActiveTab) &&
     initialActiveTab !== "ressources"
       ? initialActiveTab
       : "systeme";
   const [activeTab, setActiveTab] = useState<SystemDetailTab>(defaultTab);
+  const [isSystemCompleteModalOpen, setIsSystemCompleteModalOpen] = useState(false);
   const [selectedToolDetail, setSelectedToolDetail] = useState<ToolDirectoryItem | null>(null);
   const [selectedSupplierDetail, setSelectedSupplierDetail] = useState<DemaaSupplier | null>(null);
   const [selectedFinanceDetail, setSelectedFinanceDetail] = useState<DemaaFinanceItem | null>(null);
@@ -776,20 +778,22 @@ export default function SystemDetailContent({
               ["academie", "Académie"],
               ["reseaux-pro", "Réseau pro"],
             ] as Array<[SystemDetailTab, string]>
-          ).map(([tab, label]) => (
-            <button
-              key={tab}
-              type="button"
-              onClick={() => selectTab(tab)}
-              className={`relative shrink-0 rounded-full px-4 py-2 text-sm font-medium transition after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:rounded-full after:transition ${
-                activeTab === tab
-                  ? "bg-transparent text-brand-blue after:bg-dema-forest"
-                  : "bg-transparent text-brand-blue/55 after:bg-transparent hover:text-brand-blue/75"
-              }`}
-            >
-              {label}
-            </button>
-          ))}
+          )
+            .filter(([tab]) => isVisibleSystemDetailTab(tab))
+            .map(([tab, label]) => (
+              <button
+                key={tab}
+                type="button"
+                onClick={() => selectTab(tab)}
+                className={`relative shrink-0 rounded-full px-4 py-2 text-sm font-medium transition after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:rounded-full after:transition ${
+                  activeTab === tab
+                    ? "bg-transparent text-brand-blue after:bg-dema-forest"
+                    : "bg-transparent text-brand-blue/55 after:bg-transparent hover:text-brand-blue/75"
+                }`}
+              >
+                {label}
+              </button>
+            ))}
         </div>
       </div>
 
@@ -799,6 +803,7 @@ export default function SystemDetailContent({
             systemName={system.name}
             systemSlug={system.slug}
             systeme={detail.systeme}
+            onRequestSystemComplete={() => setIsSystemCompleteModalOpen(true)}
           />
         ) : activeTab === "outils" ? (
           <div className="space-y-5">
@@ -1051,6 +1056,15 @@ export default function SystemDetailContent({
         <TrainingDetailDialog
           training={selectedTrainingDetail}
           onClose={() => setSelectedTrainingDetail(null)}
+        />
+      ) : null}
+
+      {isSystemCompleteModalOpen ? (
+        <SystemCompleteModal
+          systemSlug={system.slug}
+          systemName={system.name}
+          systeme={detail.systeme}
+          onClose={() => setIsSystemCompleteModalOpen(false)}
         />
       ) : null}
 
