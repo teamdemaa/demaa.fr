@@ -29,13 +29,6 @@ type SystemSuggestion = {
 };
 
 const MAX_SUGGESTIONS = 6;
-const BUSINESS_TYPES = ["entreprise", "agence", "cabinet"] as const;
-const TYPEWRITER_HOLD_DELAY = 2100;
-const TYPEWRITER_START_DELAY = 320;
-const TYPEWRITER_WRITE_DELAY = 95;
-const TYPEWRITER_ERASE_DELAY = 58;
-
-type TypewriterPhase = "holding" | "erasing" | "writing";
 
 function getSuggestionScore(system: System, sectorLabel: string, query: string): number {
   const normalizedQuery = normalizeSearchText(query);
@@ -69,9 +62,6 @@ export default function SystemSearchHero({
   const [query, setQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [businessTypeIndex, setBusinessTypeIndex] = useState(0);
-  const [typedBusinessType, setTypedBusinessType] = useState<string>(BUSINESS_TYPES[0]);
-  const [typewriterPhase, setTypewriterPhase] = useState<TypewriterPhase>("holding");
   const deferredQuery = useDeferredValue(query);
 
   const suggestions = useMemo(() => {
@@ -126,53 +116,6 @@ export default function SystemSearchHero({
       document.removeEventListener("pointerdown", handlePointerDown);
     };
   }, []);
-
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      return;
-    }
-
-    const targetBusinessType = BUSINESS_TYPES[businessTypeIndex];
-    let delay = TYPEWRITER_HOLD_DELAY;
-
-    if (typewriterPhase === "erasing") {
-      delay = typedBusinessType.length > 0 ? TYPEWRITER_ERASE_DELAY : TYPEWRITER_START_DELAY;
-    } else if (typewriterPhase === "writing") {
-      delay =
-        typedBusinessType.length < targetBusinessType.length
-          ? TYPEWRITER_WRITE_DELAY
-          : TYPEWRITER_HOLD_DELAY;
-    }
-
-    const animationTimer = window.setTimeout(() => {
-      if (typewriterPhase === "holding") {
-        setTypewriterPhase("erasing");
-        return;
-      }
-
-      if (typewriterPhase === "erasing") {
-        if (typedBusinessType.length > 0) {
-          setTypedBusinessType((current) => current.slice(0, -1));
-          return;
-        }
-
-        setBusinessTypeIndex((current) => (current + 1) % BUSINESS_TYPES.length);
-        setTypewriterPhase("writing");
-        return;
-      }
-
-      if (typedBusinessType.length < targetBusinessType.length) {
-        setTypedBusinessType(targetBusinessType.slice(0, typedBusinessType.length + 1));
-        return;
-      }
-
-      setTypewriterPhase("erasing");
-    }, delay);
-
-    return () => {
-      window.clearTimeout(animationTimer);
-    };
-  }, [businessTypeIndex, typedBusinessType, typewriterPhase]);
 
   function openSuggestion(index: number) {
     const suggestion = suggestions[index];
@@ -237,11 +180,7 @@ export default function SystemSearchHero({
               className="demaa-hero-title text-[1.15em] text-dema-forest"
               aria-hidden="true"
             >
-              pour votre{` `}
-              <span className="inline-flex items-baseline">
-                <span>{typedBusinessType}</span>
-                <span className="demaa-typewriter-caret ml-[0.08em] inline-block h-[0.8em] w-px bg-current" />
-              </span>
+              pour votre entreprise
             </span>
           </h1>
 

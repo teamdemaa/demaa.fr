@@ -196,15 +196,6 @@
     }
   }
 
-  @keyframes demaa-typewriter-caret {
-    0%, 48% {
-      opacity: 1;
-    }
-    49%, 100% {
-      opacity: 0;
-    }
-  }
-  
   .animate-marquee {
     animation: marquee 10s linear infinite;
   }
@@ -219,10 +210,6 @@
 
   .demaa-arrow-nudge {
     animation: demaa-arrow-nudge 2.4s ease-in-out infinite;
-  }
-
-  .demaa-typewriter-caret {
-    animation: demaa-typewriter-caret 1s step-end infinite;
   }
 
   .demaa-delay-1 {
@@ -279,7 +266,6 @@
 
     .demaa-fade-up,
     .demaa-arrow-nudge,
-    .demaa-typewriter-caret,
     .demaa-delay-1,
     .demaa-delay-2,
     .demaa-delay-3,
