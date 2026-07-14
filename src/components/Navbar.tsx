@@ -21,9 +21,9 @@ export default function Navbar({
   const showToolboxDiscovery = pathname === "/structuration";
   const discoveryHref = showToolboxDiscovery ? "/" : "/structuration";
   const discoveryLabel = showToolboxDiscovery
-    ? "Découvrir la Boîte à outils"
+    ? "Découvrir les Kits opérationnels"
     : "Structurer votre entreprise pour mieux vendre";
-  const discoveryMobileLabel = showToolboxDiscovery ? "Boîte à outils" : "Structurer";
+  const discoveryMobileLabel = showToolboxDiscovery ? "Kits opérationnels" : "Structurer";
   return (
     <>
       <nav className="sticky top-0 z-40 border-b border-dema-line/70 bg-dema-cream/92 py-1 backdrop-blur-md">
@@ -53,10 +53,10 @@ export default function Navbar({
                 <Link
                   href="/"
                   className="demaa-secondary-button inline-flex min-h-10 items-center justify-center gap-2 px-4 py-2 sm:px-4"
-                  aria-label="Voir la Boîte à outils du dirigeant"
+                  aria-label="Voir les Kits opérationnels"
                 >
                   <BriefcaseBusiness className="h-4 w-4 shrink-0" aria-hidden="true" />
-                  <span>Voir la Boîte à outils du dirigeant</span>
+                  <span>Voir les Kits opérationnels</span>
                 </Link>
               ) : null}
               <NavbarCartIndicator />

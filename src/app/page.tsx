@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 import SystemsHubPage from "@/components/SystemsHubPage";
 
 export const metadata: Metadata = {
-  title: "La Boîte à Outils du dirigeant | Systèmes d'organisation - Demaa",
+  title: "Kits opérationnels pour dirigeants | Demaa",
   description:
     "Découvrez les bons systèmes pour structurer votre entreprise, mieux déléguer et construire une activité plus stable et plus autonome.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "La Boîte à Outils du dirigeant | Systèmes d'organisation - Demaa",
+    title: "Kits opérationnels pour dirigeants | Demaa",
     description:
       "Découvrez les bons systèmes pour structurer votre entreprise, mieux déléguer et construire une activité plus stable et plus autonome.",
     url: "/",
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "La Boîte à Outils du dirigeant | Systèmes d'organisation - Demaa",
+    title: "Kits opérationnels pour dirigeants | Demaa",
     description:
       "Découvrez les bons systèmes pour structurer votre entreprise, mieux déléguer et construire une activité plus stable et plus autonome.",
   },
