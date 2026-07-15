@@ -39,7 +39,9 @@ function normalizeEnterpriseDocument(data: unknown): EnterpriseFirestoreDocument
 function mergeToolRefs(
   fallbackRefs: EnterpriseToolReference[] | undefined,
   enterpriseRefs: EnterpriseToolReference[] | undefined,
+  excludedToolSlugs: string[] | undefined,
 ): EnterpriseToolReference[] {
+  const excludedSlugs = new Set(excludedToolSlugs ?? []);
   const remoteRefsBySlug = new Map((enterpriseRefs ?? []).map((ref) => [ref.slug, ref]));
   const mergedRefs: EnterpriseToolReference[] = [];
   const seenSlugs = new Set<string>();
@@ -51,7 +53,7 @@ function mergeToolRefs(
   }
 
   for (const remoteRef of enterpriseRefs ?? []) {
-    if (!seenSlugs.has(remoteRef.slug)) {
+    if (!seenSlugs.has(remoteRef.slug) && !excludedSlugs.has(remoteRef.slug)) {
       mergedRefs.push(remoteRef);
     }
   }
@@ -81,7 +83,11 @@ function mergeEnterpriseFallback(
   enterprise: EnterpriseFirestoreDocument,
 ): EnterpriseDefinition {
   const fallback = enterpriseCatalogBySlug[enterprise.slug];
-  const mergedToolRefs = mergeToolRefs(fallback?.toolRefs, enterprise.toolRefs);
+  const mergedToolRefs = mergeToolRefs(
+    fallback?.toolRefs,
+    enterprise.toolRefs,
+    fallback?.excludedToolSlugs,
+  );
   const mergedTools = mergeEnterpriseTools(fallback?.tools, enterprise.tools);
 
   return {

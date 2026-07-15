@@ -143,7 +143,7 @@ export const demaaFinanceItems: readonly DemaaFinanceItem[] = [
     tags: ["Leasing", "Flotte", "Utilitaires"],
     icon: "CarFront",
     usefulFor: ["Flotte", "Utilitaires", "Mobilité"],
-    href: "http://www.arval.fr/",
+    href: "https://www.arval.fr/",
     cta: "Voir le financement",
   },
 ] as const;

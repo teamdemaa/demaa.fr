@@ -15,6 +15,7 @@ export type EnterpriseTool = {
   usage: string;
   url?: string;
   scope?: ToolScope;
+  recommended?: boolean;
   detail?: ToolDirectoryItem;
 };
 
@@ -48,6 +49,8 @@ export type EnterpriseDefinition = {
   processExamples?: Record<string, string>;
   tools?: EnterpriseTool[];
   toolRefs?: EnterpriseToolReference[];
+  recommendedToolSlugs?: string[];
+  excludedToolSlugs?: string[];
   businessModelId?: string;
   businessVariant?: string;
   businessBlocks?: BusinessModelBlock[];

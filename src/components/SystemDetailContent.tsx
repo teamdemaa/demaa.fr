@@ -7,6 +7,7 @@ import {
   Bot,
   Briefcase,
   CalendarDays,
+  ChevronDown,
   FileSignature,
   FileText,
   FolderKanban,
@@ -16,6 +17,7 @@ import {
 } from "lucide-react";
 import FinanceDetailDialog from "@/components/FinanceDetailDialog";
 import HorizontalScrollHint from "@/components/HorizontalScrollHint";
+import AccountingRecommendationDialog from "@/components/AccountingRecommendationDialog";
 import ProNetworkDetailDialog from "@/components/ProNetworkDetailDialog";
 import RecruitmentDetailDialog from "@/components/RecruitmentDetailDialog";
 import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
@@ -25,7 +27,10 @@ import SystemCompleteModal from "@/components/SystemCompleteModal";
 import SystemeTabContent from "@/components/SystemeTabContent";
 import TrainingDetailDialog from "@/components/TrainingDetailDialog";
 import type { DemaaAidItem } from "@/lib/aid-catalog";
-import { getRecommendedAidsForSystem } from "@/lib/aid-recommendations";
+import {
+  getRecommendedAidsForSystem,
+  splitAidRecommendationsForDisplay,
+} from "@/lib/aid-recommendations";
 import { getFreeToolsForSystem } from "@/lib/free-tools";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import {
@@ -34,14 +39,16 @@ import {
   getSupplierCardBadge,
 } from "@/lib/card-badges";
 import type { DemaaFinanceItem } from "@/lib/finance-catalog";
-import { getRecommendedFinanceForSystem } from "@/lib/finance-recommendations";
+import {
+  getRecommendedFinanceForSystem,
+  getVisibleFinanceRecommendationCountForSystem,
+} from "@/lib/finance-recommendations";
 import type { DemaaProNetwork } from "@/lib/pro-network-catalog";
 import { getRecommendedProNetworksForSystem } from "@/lib/pro-network-recommendations";
-import { getGroupedRecommendedRecruitmentItemsForSystem } from "@/lib/recruitment-recommendations";
+import { getRecommendedRecruitmentItemsForSystem } from "@/lib/recruitment-recommendations";
 import type { DemaaRecruitmentItem } from "@/lib/recruitment-catalog";
 import { getGroupedRecommendedTrainingsForSystem } from "@/lib/training-recommendations";
 import type { DemaaTraining } from "@/lib/training-catalog";
-import { getToolDirectorySectorSeoPath } from "@/lib/sector-taxonomy";
 import { type OperationalSystemDetail } from "@/lib/system-operations";
 import { getRecommendedSuppliersForSystem } from "@/lib/supplier-recommendations";
 import type { DemaaSupplier } from "@/lib/supplier-catalog";
@@ -67,6 +74,7 @@ const SYSTEM_CARD_TITLE_CLASS =
   "mt-2 line-clamp-2 text-lg font-semibold leading-snug text-brand-blue";
 const SYSTEM_CARD_DESCRIPTION_CLASS =
   "mt-3 line-clamp-3 text-sm leading-relaxed text-dema-muted";
+const MAX_VISIBLE_RECOMMENDATIONS = 3;
 const GENERIC_TOOL_CATEGORIES = new Set(["Outils métier", "Outils transverses"]);
 const INDUSTRY_TOOL_TAGS = new Set([
   "Avocat",
@@ -84,10 +92,13 @@ type SupplierSection = {
   items: DemaaSupplier[];
 };
 
-type FinanceSection = {
-  title: string;
-  items: DemaaFinanceItem[];
-};
+type SupplierPriorityItem =
+  | { kind: "accounting" }
+  | { kind: "supplier"; item: DemaaSupplier };
+
+type FundingPriorityItem =
+  | { kind: "finance"; item: DemaaFinanceItem }
+  | { kind: "aid"; item: DemaaAidItem };
 
 function isTransverseTool(tool: OperationalSystemDetail["tools"][number]): boolean {
   if (tool.scope) {
@@ -167,7 +178,7 @@ function getSupplierSectionKey(supplier: DemaaSupplier): string {
     supplier.category === "Mutuelle" ||
     supplier.category === "Paiement" ||
     supplier.category === "Téléphonie" ||
-    supplier.slug === "protection-juridique" ||
+    supplier.slug === "insify" ||
     supplier.slug === "swile" ||
     supplier.tags.some((tag) => ["RH", "Avantages", "Mutuelle"].includes(tag))
   ) {
@@ -188,37 +199,6 @@ function groupSuppliersBySection(suppliers: DemaaSupplier[]): SupplierSection[] 
   });
 
   return Array.from(sections.values()).filter((section) => section.items.length > 0);
-}
-
-function getFinanceSectionKey(item: DemaaFinanceItem): FinanceSection["title"] {
-  if (item.category === "Leasing & flotte") {
-    return "Véhicules & flotte";
-  }
-
-  return "Trésorerie, compte pro & crédit";
-}
-
-function groupFinanceBySection(items: DemaaFinanceItem[]): FinanceSection[] {
-  const sections = new Map<FinanceSection["title"], FinanceSection>([
-    [
-      "Trésorerie, compte pro & crédit",
-      { title: "Trésorerie, compte pro & crédit", items: [] },
-    ],
-    ["Véhicules & flotte", { title: "Véhicules & flotte", items: [] }],
-  ]);
-
-  items.forEach((item) => {
-    sections.get(getFinanceSectionKey(item))?.items.push(item);
-  });
-
-  return Array.from(sections.values()).filter((section) => section.items.length > 0);
-}
-
-function sortFinanceSections(sections: FinanceSection[]): FinanceSection[] {
-  const primarySections = sections.filter((section) => section.title !== "Véhicules & flotte");
-  const vehicleSection = sections.find((section) => section.title === "Véhicules & flotte");
-
-  return vehicleSection ? [...primarySections, vehicleSection] : primarySections;
 }
 
 function handleToolDetailClick(
@@ -302,19 +282,32 @@ export default function SystemDetailContent({
   const [selectedProNetworkDetail, setSelectedProNetworkDetail] = useState<DemaaProNetwork | null>(null);
   const [selectedRecruitmentDetail, setSelectedRecruitmentDetail] = useState<DemaaRecruitmentItem | null>(null);
   const [selectedTrainingDetail, setSelectedTrainingDetail] = useState<DemaaTraining | null>(null);
+  const [expandedRecommendationSections, setExpandedRecommendationSections] = useState<
+    Record<string, boolean>
+  >({});
   const recommendedSuppliers = useMemo(
-    () => (activeTab === "fournisseurs" ? getRecommendedSuppliersForSystem(system.slug) : []),
-    [activeTab, system.slug]
+    () => (activeTab === "fournisseurs"
+      ? getRecommendedSuppliersForSystem(system.slug, detail.sectorLabel)
+      : []),
+    [activeTab, detail.sectorLabel, system.slug]
   );
   const recommendedFinance = useMemo(
     () => (activeTab === "financement" ? getRecommendedFinanceForSystem(system.slug) : []),
     [activeTab, system.slug]
+  );
+  const visibleFinanceRecommendationCount = useMemo(
+    () => getVisibleFinanceRecommendationCountForSystem(system.slug),
+    [system.slug],
   );
   const recommendedAids = useMemo(
     () => (activeTab === "financement"
       ? getRecommendedAidsForSystem(system.slug, detail.sectorLabel)
       : []),
     [activeTab, detail.sectorLabel, system.slug]
+  );
+  const prioritizedAids = useMemo(
+    () => splitAidRecommendationsForDisplay(recommendedAids),
+    [recommendedAids],
   );
   const recommendedProNetworks = useMemo(
     () => (activeTab === "reseaux-pro" ? getRecommendedProNetworksForSystem(system.slug) : []),
@@ -332,27 +325,81 @@ export default function SystemDetailContent({
   );
   const recommendedRecruitmentItems = useMemo(
     () => (activeTab === "recrutement"
-      ? getGroupedRecommendedRecruitmentItemsForSystem(detail.sectorLabel)
-      : { alternance: [], recrutement: [] }),
+      ? getRecommendedRecruitmentItemsForSystem(detail.sectorLabel)
+      : []),
     [activeTab, detail.sectorLabel]
   );
-  const supplierSections = useMemo(
-    () => (activeTab === "fournisseurs" ? groupSuppliersBySection(recommendedSuppliers) : []),
-    [activeTab, recommendedSuppliers]
+  const displayedRecruitmentItems = useMemo(() => {
+    return {
+      visible: recommendedRecruitmentItems.slice(0, MAX_VISIBLE_RECOMMENDATIONS),
+      additional: recommendedRecruitmentItems.slice(MAX_VISIBLE_RECOMMENDATIONS),
+    };
+  }, [recommendedRecruitmentItems]);
+  const displayedTrainings = useMemo(() => {
+    const visibleMetierLimit = recommendedTrainings.transverse.length
+      ? MAX_VISIBLE_RECOMMENDATIONS - 1
+      : MAX_VISIBLE_RECOMMENDATIONS;
+    const visibleMetier = recommendedTrainings.metier.slice(0, visibleMetierLimit);
+    const remainingSlots = MAX_VISIBLE_RECOMMENDATIONS - visibleMetier.length;
+    const visibleTransverse = recommendedTrainings.transverse.slice(0, remainingSlots);
+
+    return {
+      visibleMetier,
+      visibleTransverse,
+      additionalMetier: recommendedTrainings.metier.slice(visibleMetier.length),
+      additionalTransverse: recommendedTrainings.transverse.slice(visibleTransverse.length),
+    };
+  }, [recommendedTrainings]);
+  const visibleSupplierCount = system.slug === "cabinet-comptable"
+    ? MAX_VISIBLE_RECOMMENDATIONS
+    : MAX_VISIBLE_RECOMMENDATIONS - 1;
+  const prioritySupplierItems = useMemo<SupplierPriorityItem[]>(
+    () => activeTab === "fournisseurs"
+      ? [
+        ...(system.slug === "cabinet-comptable"
+          ? []
+          : [{ kind: "accounting" as const }]),
+        ...recommendedSuppliers
+          .slice(0, visibleSupplierCount)
+          .map((item) => ({ kind: "supplier" as const, item })),
+      ]
+      : [],
+    [activeTab, recommendedSuppliers, system.slug, visibleSupplierCount],
   );
-  const financeSections = useMemo(
-    () => (activeTab === "financement"
-      ? sortFinanceSections(groupFinanceBySection(recommendedFinance))
+  const additionalSupplierSections = useMemo(
+    () => (activeTab === "fournisseurs"
+      ? groupSuppliersBySection(recommendedSuppliers.slice(visibleSupplierCount))
       : []),
-    [activeTab, recommendedFinance]
+    [activeTab, recommendedSuppliers, visibleSupplierCount]
   );
-  const primaryFinanceSections = useMemo(
-    () => financeSections.filter((section) => section.title !== "Véhicules & flotte"),
-    [financeSections]
+  const visibleFinanceItems = useMemo(
+    () => recommendedFinance.slice(0, visibleFinanceRecommendationCount),
+    [recommendedFinance, visibleFinanceRecommendationCount],
   );
-  const vehicleFinanceSection = useMemo(
-    () => financeSections.find((section) => section.title === "Véhicules & flotte") ?? null,
-    [financeSections]
+  const displayedAids = useMemo(() => {
+    const visibleAidSlots = Math.max(
+      0,
+      MAX_VISIBLE_RECOMMENDATIONS - visibleFinanceItems.length,
+    );
+
+    return {
+      recommended: prioritizedAids.recommended.slice(0, visibleAidSlots),
+      secondary: [
+        ...prioritizedAids.recommended.slice(visibleAidSlots),
+        ...prioritizedAids.secondary,
+      ],
+    };
+  }, [prioritizedAids, visibleFinanceItems.length]);
+  const priorityFundingItems = useMemo<FundingPriorityItem[]>(
+    () => [
+      ...visibleFinanceItems.map((item) => ({ kind: "finance" as const, item })),
+      ...displayedAids.recommended.map((item) => ({ kind: "aid" as const, item })),
+    ].slice(0, MAX_VISIBLE_RECOMMENDATIONS),
+    [displayedAids.recommended, visibleFinanceItems],
+  );
+  const additionalFinanceItems = useMemo(
+    () => recommendedFinance.slice(visibleFinanceRecommendationCount),
+    [recommendedFinance, visibleFinanceRecommendationCount],
   );
   const Heading = headingAs;
 
@@ -360,6 +407,44 @@ export default function SystemDetailContent({
     startTransition(() => {
       setActiveTab(tab);
     });
+  }
+
+  function toggleRecommendationSection(sectionKey: string) {
+    setExpandedRecommendationSections((current) => ({
+      ...current,
+      [sectionKey]: !current[sectionKey],
+    }));
+  }
+
+  function renderShowMoreButton({
+    sectionKey,
+    hiddenCount,
+    label,
+  }: {
+    sectionKey: string;
+    hiddenCount: number;
+    label: string;
+  }) {
+    if (!hiddenCount) {
+      return null;
+    }
+
+    const isExpanded = Boolean(expandedRecommendationSections[sectionKey]);
+
+    return (
+      <button
+        type="button"
+        aria-expanded={isExpanded}
+        onClick={() => toggleRecommendationSection(sectionKey)}
+        className="inline-flex items-center gap-2 text-sm font-medium text-dema-forest transition hover:text-brand-blue"
+      >
+        {isExpanded ? "Voir moins" : `${label} (${hiddenCount})`}
+        <ChevronDown
+          className={`h-4 w-4 transition-transform ${isExpanded ? "rotate-180" : ""}`}
+          aria-hidden="true"
+        />
+      </button>
+    );
   }
 
   function renderToolCard(tool: OperationalSystemDetail["tools"][number]) {
@@ -642,26 +727,6 @@ export default function SystemDetailContent({
     );
   }
 
-  function renderBrowseAllLink({
-    browseHref,
-    browseLabel,
-  }: {
-    browseHref: string;
-    browseLabel: string;
-  }) {
-    return (
-      <div className="flex justify-start">
-        <Link
-          href={browseHref}
-          className="inline-flex items-center gap-2 text-sm font-medium text-dema-forest transition hover:text-brand-blue"
-        >
-          {browseLabel}
-          <span aria-hidden="true">→</span>
-        </Link>
-      </div>
-    );
-  }
-
   function renderFreeToolCard(tool: ToolDirectoryItem) {
     return (
       <Link
@@ -775,6 +840,8 @@ export default function SystemDetailContent({
               ["outils", "Outils"],
               ["fournisseurs", "Fournisseurs"],
               ["financement", "Financement"],
+              ["recrutement", "Recrutement"],
+              ["formation", "Formation"],
               ["academie", "Académie"],
               ["reseaux-pro", "Réseau pro"],
             ] as Array<[SystemDetailTab, string]>
@@ -808,120 +875,166 @@ export default function SystemDetailContent({
         ) : activeTab === "outils" ? (
           <div className="space-y-5">
             {(() => {
-              const businessTools = detail.tools.filter((tool) => !isTransverseTool(tool));
-              const transverseTools = detail.tools.filter(isTransverseTool);
+              const recommendedTools = detail.tools
+                .filter((tool) => tool.recommended)
+                .slice(0, MAX_VISIBLE_RECOMMENDATIONS);
+              const recommendedToolSlugs = new Set(
+                recommendedTools.map((tool) => tool.slug ?? tool.name),
+              );
+              const additionalBusinessTools = detail.tools.filter(
+                (tool) =>
+                  !recommendedToolSlugs.has(tool.slug ?? tool.name) && !isTransverseTool(tool),
+              );
+              const additionalTransverseTools = detail.tools.filter(
+                (tool) =>
+                  !recommendedToolSlugs.has(tool.slug ?? tool.name) && isTransverseTool(tool),
+              );
+              const hiddenToolCount =
+                additionalBusinessTools.length + additionalTransverseTools.length + freeTools.length;
+              const isExpanded = Boolean(expandedRecommendationSections.tools);
 
               return (
                 <>
-                  {businessTools.length ? (
-                    renderToolCarousel(businessTools, "forest", "Outils métier")
+                  {recommendedTools.length ? (
+                    renderToolCarousel(
+                      recommendedTools,
+                      "forest",
+                      "Outils recommandés",
+                    )
+                  ) : hiddenToolCount ? (
+                    <p className="max-w-2xl text-sm leading-6 text-dema-muted">
+                      Aucun outil n’est recommandé pour ce kit à ce jour. Les solutions disponibles
+                      restent consultables ci-dessous sans label de recommandation.
+                    </p>
                   ) : null}
 
-                  {transverseTools.length ? (
-                    renderToolCarousel(transverseTools, "muted", "Outils transverses")
-                  ) : null}
+                  {renderShowMoreButton({
+                    sectionKey: "tools",
+                    hiddenCount: hiddenToolCount,
+                    label: "Voir plus d’outils",
+                  })}
 
-                  {freeTools.length ? (
-                    <div>
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-muted">
-                        Outils gratuits
-                      </p>
-                      <HorizontalScrollHint
-                        className="-mx-4 overflow-x-auto px-4 pb-4 pt-3 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
-                        controlsClassName="absolute -right-2 -top-9 z-10 flex items-center gap-1.5 sm:-right-3"
-                      >
-                        <div className="flex w-max snap-x snap-mandatory gap-4">
-                          {freeTools.map((tool) => (
-                            <div
-                              key={getToolDirectorySlug(tool)}
-                              className="w-[18rem] shrink-0 snap-start sm:w-[19rem] lg:w-[20rem]"
-                            >
-                              {renderFreeToolCard(tool)}
+                  {isExpanded ? (
+                    <div className="space-y-5 border-t border-dema-line/70 pt-5">
+                      {additionalBusinessTools.length
+                        ? renderToolCarousel(additionalBusinessTools, "muted", "Autres outils métier")
+                        : null}
+
+                      {additionalTransverseTools.length
+                        ? renderToolCarousel(additionalTransverseTools, "muted", "Outils transverses")
+                        : null}
+
+                      {freeTools.length ? (
+                        <div>
+                          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-muted">
+                            Outils gratuits
+                          </p>
+                          <HorizontalScrollHint
+                            className="-mx-4 overflow-x-auto px-4 pb-4 pt-3 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
+                            controlsClassName="absolute -right-2 -top-9 z-10 flex items-center gap-1.5 sm:-right-3"
+                          >
+                            <div className="flex w-max snap-x snap-mandatory gap-4">
+                              {freeTools.map((tool) => (
+                                <div
+                                  key={getToolDirectorySlug(tool)}
+                                  className="w-[18rem] shrink-0 snap-start sm:w-[19rem] lg:w-[20rem]"
+                                >
+                                  {renderFreeToolCard(tool)}
+                                </div>
+                              ))}
                             </div>
-                          ))}
+                          </HorizontalScrollHint>
                         </div>
-                      </HorizontalScrollHint>
+                      ) : null}
                     </div>
                   ) : null}
 
-                  {businessTools.length || transverseTools.length || freeTools.length ? (
-                    renderBrowseAllLink({
-                      browseHref: `${
-                        getToolDirectorySectorSeoPath(detail.sectorLabel) ?? "/annuaire-outils"
-                      }?retourSysteme=${encodeURIComponent(system.slug)}`,
-                      browseLabel: "Voir tous les outils",
-                    })
-                  ) : null}
                 </>
               );
             })()}
           </div>
         ) : activeTab === "fournisseurs" ? (
           <div className="space-y-5">
-            {supplierSections.map((section, index) => (
-              <div key={section.title}>
-                {renderCardSection({
-                  items: section.items,
-                  title: section.title,
-                  tone: index === 0 ? "forest" : "muted",
-                  getKey: (supplier) => supplier.slug,
-                  renderCard: renderSupplierCard,
-                })}
-              </div>
-            ))}
-            {recommendedSuppliers.length ? (
-              renderBrowseAllLink({
-                browseHref: `/annuaire-fournisseurs?retourSysteme=${encodeURIComponent(system.slug)}`,
-                browseLabel: "Voir l'annuaire fournisseurs",
+            {prioritySupplierItems.length
+              ? renderCardSection({
+                items: prioritySupplierItems,
+                title: "À regarder en priorité",
+                tone: "forest",
+                getKey: (entry) => entry.kind === "accounting"
+                  ? "expert-comptable"
+                  : entry.item.slug,
+                renderCard: (entry) => entry.kind === "accounting"
+                  ? (
+                    <AccountingRecommendationDialog
+                      buttonClassName={SYSTEM_CARD_CLASS}
+                      sectorLabel={detail.sectorLabel}
+                      systemName={system.name}
+                      systemSlug={system.slug}
+                    />
+                  )
+                  : renderSupplierCard(entry.item),
               })
+              : null}
+            {renderShowMoreButton({
+              sectionKey: "suppliers",
+              hiddenCount: recommendedSuppliers.slice(visibleSupplierCount).length,
+              label: "Voir plus de fournisseurs",
+            })}
+            {expandedRecommendationSections.suppliers ? (
+              <div className="space-y-5 border-t border-dema-line/70 pt-5">
+                {additionalSupplierSections.map((section) => (
+                  <div key={section.title}>
+                    {renderCardSection({
+                      items: section.items,
+                      title: `Autres — ${section.title}`,
+                      tone: "muted",
+                      getKey: (supplier) => supplier.slug,
+                      renderCard: renderSupplierCard,
+                    })}
+                  </div>
+                ))}
+              </div>
             ) : null}
           </div>
         ) : activeTab === "financement" ? (
           <div className="space-y-5">
-            {primaryFinanceSections.map((section, index) => (
-              <div key={section.title}>
-                {renderCardSection({
-                  items: section.items,
-                  title: section.title,
-                  tone: index === 0 ? "forest" : "muted",
-                  getKey: (item) => item.slug,
-                  renderCard: renderFinanceCard,
-                })}
-              </div>
-            ))}
-            {recommendedAids.length ? (
-              <div>
-                {renderCardSection({
-                  items: recommendedAids,
-                  title: "Aides & subventions",
-                  tone: "muted",
-                  getKey: (item) => item.slug,
-                  renderCard: renderAidCard,
-                })}
-              </div>
-            ) : null}
-            {vehicleFinanceSection ? (
-              <div>
-                {renderCardSection({
-                  items: vehicleFinanceSection.items,
-                  title: vehicleFinanceSection.title,
-                  tone: "muted",
-                  getKey: (item) => item.slug,
-                  renderCard: renderFinanceCard,
-                })}
-              </div>
-            ) : null}
-            {recommendedFinance.length ? (
-              renderBrowseAllLink({
-                browseHref: `/annuaire-financement?retourSysteme=${encodeURIComponent(system.slug)}`,
-                browseLabel: "Voir l'annuaire financement",
+            {priorityFundingItems.length
+              ? renderCardSection({
+                items: priorityFundingItems,
+                title: "À regarder en priorité",
+                tone: "forest",
+                getKey: ({ kind, item }) => `${kind}-${item.slug}`,
+                renderCard: ({ kind, item }) => kind === "finance"
+                  ? renderFinanceCard(item)
+                  : renderAidCard(item),
               })
-            ) : null}
-            {recommendedAids.length ? (
-              renderBrowseAllLink({
-                browseHref: `/aides-et-subventions?retourSysteme=${encodeURIComponent(system.slug)}`,
-                browseLabel: "Voir toutes les aides & subventions",
-              })
+              : null}
+            {renderShowMoreButton({
+              sectionKey: "funding",
+              hiddenCount: additionalFinanceItems.length + displayedAids.secondary.length,
+              label: "Voir plus de financements et d’aides",
+            })}
+            {expandedRecommendationSections.funding ? (
+              <div className="space-y-5 border-t border-dema-line/70 pt-5">
+                {additionalFinanceItems.length
+                  ? renderCardSection({
+                    items: additionalFinanceItems,
+                    title: "Financer l’activité",
+                    tone: "muted",
+                    getKey: (item) => item.slug,
+                    renderCard: renderFinanceCard,
+                  })
+                  : null}
+                {displayedAids.secondary.length
+                  ? renderCardSection({
+                    items: displayedAids.secondary,
+                    title: "Aides publiques",
+                    tone: "muted",
+                    getKey: (item) => item.slug,
+                    renderCard: renderAidCard,
+                  })
+                  : null}
+              </div>
             ) : null}
           </div>
         ) : activeTab === "academie" ? (
@@ -938,7 +1051,7 @@ export default function SystemDetailContent({
                   controlsClassName="absolute -right-2 -top-9 z-10 flex items-center gap-1.5 sm:-right-3"
                 >
                   <div className="flex w-max snap-x snap-mandatory gap-4">
-                    {recommendedProNetworks.map((network) => (
+                    {recommendedProNetworks.slice(0, MAX_VISIBLE_RECOMMENDATIONS).map((network) => (
                       <div
                         key={network.slug}
                         className="w-[18rem] shrink-0 snap-start sm:w-[19rem] lg:w-[20rem]"
@@ -950,39 +1063,55 @@ export default function SystemDetailContent({
                 </HorizontalScrollHint>
               </div>
             ) : null}
-            {recommendedProNetworks.length ? (
-              renderBrowseAllLink({
-                browseHref: `/annuaire-reseaux-pro?retourSysteme=${encodeURIComponent(system.slug)}`,
-                browseLabel: "Voir l'annuaire réseaux pro",
-              })
+            {renderShowMoreButton({
+              sectionKey: "networks",
+              hiddenCount: recommendedProNetworks.slice(MAX_VISIBLE_RECOMMENDATIONS).length,
+              label: "Voir plus de réseaux",
+            })}
+            {expandedRecommendationSections.networks &&
+            recommendedProNetworks.length > MAX_VISIBLE_RECOMMENDATIONS ? (
+              <div className="border-t border-dema-line/70 pt-5">
+                {renderCardSection({
+                  items: recommendedProNetworks.slice(MAX_VISIBLE_RECOMMENDATIONS),
+                  title: "Autres réseaux professionnels",
+                  tone: "muted",
+                  getKey: (network) => network.slug,
+                  renderCard: renderProNetworkCard,
+                })}
+              </div>
             ) : null}
           </div>
         ) : activeTab === "recrutement" ? (
           <div className="space-y-5">
-            {recommendedRecruitmentItems.alternance.length || recommendedRecruitmentItems.recrutement.length ? (
+            {recommendedRecruitmentItems.length ? (
               <>
-                {recommendedRecruitmentItems.alternance.length ? (
+                {displayedRecruitmentItems.visible.length ? (
                   renderCardSection({
-                    items: recommendedRecruitmentItems.alternance,
-                    title: "Alternance",
+                    items: displayedRecruitmentItems.visible,
+                    title: "Solutions de recrutement",
                     tone: "forest",
                     getKey: (item) => item.slug,
                     renderCard: renderRecruitmentCard,
                   })
                 ) : null}
-                {recommendedRecruitmentItems.recrutement.length ? (
-                  renderCardSection({
-                    items: recommendedRecruitmentItems.recrutement,
-                    title: "Recrutement",
-                    tone: recommendedRecruitmentItems.alternance.length ? "muted" : "forest",
-                    getKey: (item) => item.slug,
-                    renderCard: renderRecruitmentCard,
-                  })
-                ) : null}
-                {renderBrowseAllLink({
-                  browseHref: `/annuaire-recrutement?retourSysteme=${encodeURIComponent(system.slug)}`,
-                  browseLabel: "Voir l'annuaire recrutement",
+                {renderShowMoreButton({
+                  sectionKey: "recruitment",
+                  hiddenCount: displayedRecruitmentItems.additional.length,
+                  label: "Voir plus de solutions de recrutement",
                 })}
+                {expandedRecommendationSections.recruitment ? (
+                  <div className="border-t border-dema-line/70 pt-5">
+                    {displayedRecruitmentItems.additional.length
+                      ? renderCardSection({
+                        items: displayedRecruitmentItems.additional,
+                        title: "Autres solutions de recrutement",
+                        tone: "muted",
+                        getKey: (item) => item.slug,
+                        renderCard: renderRecruitmentCard,
+                      })
+                      : null}
+                  </div>
+                ) : null}
               </>
             ) : null}
           </div>
@@ -990,28 +1119,53 @@ export default function SystemDetailContent({
           <div className="space-y-5">
             {recommendedTrainings.metier.length || recommendedTrainings.transverse.length ? (
               <>
-                {recommendedTrainings.metier.length ? (
+                {displayedTrainings.visibleMetier.length ? (
                   renderCardSection({
-                    items: recommendedTrainings.metier,
+                    items: displayedTrainings.visibleMetier,
                     title: "Formations métier",
                     tone: "forest",
                     getKey: (training) => training.slug,
                     renderCard: renderTrainingCard,
                   })
                 ) : null}
-                {recommendedTrainings.transverse.length ? (
+                {displayedTrainings.visibleTransverse.length ? (
                   renderCardSection({
-                    items: recommendedTrainings.transverse,
+                    items: displayedTrainings.visibleTransverse,
                     title: "Formations transverses",
-                    tone: recommendedTrainings.metier.length ? "muted" : "forest",
+                    tone: displayedTrainings.visibleMetier.length ? "muted" : "forest",
                     getKey: (training) => training.slug,
                     renderCard: renderTrainingCard,
                   })
                 ) : null}
-                {renderBrowseAllLink({
-                  browseHref: `/annuaire-formations?retourSysteme=${encodeURIComponent(system.slug)}`,
-                  browseLabel: "Voir l'annuaire formations",
+                {renderShowMoreButton({
+                  sectionKey: "trainings",
+                  hiddenCount:
+                    displayedTrainings.additionalMetier.length +
+                    displayedTrainings.additionalTransverse.length,
+                  label: "Voir plus de formations",
                 })}
+                {expandedRecommendationSections.trainings ? (
+                  <div className="space-y-5 border-t border-dema-line/70 pt-5">
+                    {displayedTrainings.additionalMetier.length
+                      ? renderCardSection({
+                        items: displayedTrainings.additionalMetier,
+                        title: "Autres formations métier",
+                        tone: "muted",
+                        getKey: (training) => training.slug,
+                        renderCard: renderTrainingCard,
+                      })
+                      : null}
+                    {displayedTrainings.additionalTransverse.length
+                      ? renderCardSection({
+                        items: displayedTrainings.additionalTransverse,
+                        title: "Autres formations transverses",
+                        tone: "muted",
+                        getKey: (training) => training.slug,
+                        renderCard: renderTrainingCard,
+                      })
+                      : null}
+                  </div>
+                ) : null}
               </>
             ) : null}
           </div>

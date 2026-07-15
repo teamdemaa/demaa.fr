@@ -9,6 +9,7 @@ import type {
 import { getEnterpriseCatalog, getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 import type { BusinessModelBlock, BusinessModelSignals } from "@/lib/business-models";
 import type { SystemPillar, SystemProcessTemplate } from "@/lib/system-process-types";
+import { getCuratedToolRecommendationsForSystem } from "@/lib/system-tool-recommendations";
 import {
   findToolDirectoryItemBySlug,
   getToolDirectoryItemBySlug,
@@ -69,8 +70,11 @@ function resolveEnterpriseTools(
   enterpriseTools: EnterpriseToolReference[] | undefined,
   fallbackTools: EnterpriseTool[] | undefined,
   toolDirectory: ToolDirectoryItem[],
+  recommendedToolSlugs: readonly string[] | undefined,
 ): EnterpriseTool[] {
   const toolsBySlug = Object.fromEntries(toolDirectory.map((tool) => [getToolDirectorySlug(tool), tool]));
+  const hasExplicitRecommendationSelection = recommendedToolSlugs !== undefined;
+  const explicitRecommendations = new Set(recommendedToolSlugs ?? []);
 
   if (enterpriseTools?.length) {
     const resolvedTools: EnterpriseTool[] = [];
@@ -91,15 +95,58 @@ function resolveEnterpriseTools(
           usage: toolRef.usage || tool.bestFor,
           url: tool.url,
           scope: toolRef.scope ?? tool.scope,
+          recommended: explicitRecommendations.has(getToolDirectorySlug(tool)),
           detail: tool,
         });
       }
     }
 
-    return resolvedTools;
+    if (hasExplicitRecommendationSelection) {
+      const recommendationRank = new Map(
+        (recommendedToolSlugs ?? []).map((slug, index) => [slug, index]),
+      );
+
+      return resolvedTools.toSorted((left, right) => {
+        const leftRank = recommendationRank.get(left.slug ?? "") ?? Number.POSITIVE_INFINITY;
+        const rightRank = recommendationRank.get(right.slug ?? "") ?? Number.POSITIVE_INFINITY;
+
+        return leftRank - rightRank;
+      });
+    }
+
+    let remainingRecommendations = 3;
+
+    return resolvedTools.map((tool) => {
+      const isBusinessTool = (tool.scope ?? tool.detail?.scope) !== "transverse";
+      const recommended = isBusinessTool && remainingRecommendations > 0;
+
+      if (recommended) {
+        remainingRecommendations -= 1;
+      }
+
+      return recommended ? { ...tool, recommended: true } : tool;
+    });
   }
 
-  return fallbackTools ?? [];
+  if (hasExplicitRecommendationSelection) {
+    return (fallbackTools ?? []).map((tool) => ({
+      ...tool,
+      recommended: Boolean(tool.slug && explicitRecommendations.has(tool.slug)),
+    }));
+  }
+
+  let remainingRecommendations = 3;
+
+  return (fallbackTools ?? []).map((tool) => {
+    const isBusinessTool = (tool.scope ?? tool.detail?.scope) !== "transverse";
+    const recommended = isBusinessTool && remainingRecommendations > 0;
+
+    if (recommended) {
+      remainingRecommendations -= 1;
+    }
+
+    return recommended ? { ...tool, recommended: true } : tool;
+  });
 }
 
 export async function buildOperationalSystemDetail(system: System): Promise<OperationalSystemDetail> {
@@ -163,7 +210,12 @@ function buildOperationalSystemDetailFromSources(
       businessVariant: enterprise.businessVariant,
       businessBlocks: enterprise.businessBlocks ?? [],
       businessSignals: enterprise.businessSignals,
-      tools: resolveEnterpriseTools(enterprise.toolRefs, enterprise.tools, toolDirectory),
+      tools: resolveEnterpriseTools(
+        enterprise.toolRefs,
+        enterprise.tools,
+        toolDirectory,
+        enterprise.recommendedToolSlugs ?? getCuratedToolRecommendationsForSystem(system.slug),
+      ),
     };
   }
 

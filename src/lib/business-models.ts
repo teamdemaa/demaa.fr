@@ -1739,15 +1739,6 @@ export const enterpriseBusinessBlockOverrides = {
     { title: "Dossiers sensibles & preuves", internalPillar: "compliance" },
     { title: "Commissions & encaissements", internalPillar: "finance" },
   ],
-  "societe-domiciliation": [
-    { title: "Offres domiciliation & services", internalPillar: "strategy" },
-    { title: "Entrée client & conformité", internalPillar: "sales" },
-    { title: "Contrats & dossiers clients", internalPillar: "operations" },
-    { title: "Courrier & services", internalPillar: "operations" },
-    { title: "Obligations & justificatifs", internalPillar: "compliance" },
-    { title: "Abonnements & paiements", internalPillar: "finance" },
-    { title: "Équipe & traitement courrier", internalPillar: "team" },
-  ],
   "centre-affaires-coworking": [
     { title: "Offres espaces & services", internalPillar: "strategy" },
     { title: "Prospects & visites", internalPillar: "sales" },
@@ -1946,7 +1937,6 @@ export const enterpriseBusinessModelMap = {
   "cabinet-rh-externalise": { businessModelId: "services-b2b-conseil", variant: "rh-externalise" },
   "centre-appels-support-client": { businessModelId: "services-b2b-conseil", variant: "support-client" },
   "societe-recouvrement": { businessModelId: "services-b2b-conseil", variant: "recouvrement" },
-  "societe-domiciliation": { businessModelId: "services-b2b-conseil", variant: "domiciliation" },
   "centre-affaires-coworking": { businessModelId: "services-b2b-conseil", variant: "centre-affaires" },
   "cabinet-qhse-conformite": { businessModelId: "cabinet-reglemente", variant: "qhse" },
   "bureau-etudes": { businessModelId: "services-b2b-conseil", variant: "bureau-etudes" },

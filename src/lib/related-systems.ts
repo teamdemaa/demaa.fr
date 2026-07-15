@@ -51,7 +51,10 @@ export function getRelatedSystemsForServiceSlug(serviceSlug: string, limit = 6):
 export function getRelatedSystemsForSupplierSlug(supplierSlug: string, limit = 6): System[] {
   const matches = enterpriseCatalog
     .map((enterprise) => {
-      const recommendations = getRecommendedSuppliersForSystem(enterprise.slug);
+      const recommendations = getRecommendedSuppliersForSystem(
+        enterprise.slug,
+        enterprise.sectorLabel,
+      );
       const index = recommendations.findIndex((supplier) => supplier.slug === supplierSlug);
 
       if (index === -1) {

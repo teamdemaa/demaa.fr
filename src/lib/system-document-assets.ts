@@ -42,7 +42,6 @@ const SYSTEM_DOCUMENT_GROUP_ALIASES: Record<string, string> = {
   "transport-de-personnes": "logistique-transport",
   vtc: "logistique-transport",
   "agence-de-voyage": "accueil-membres",
-  "societe-domiciliation": "accueil-membres",
   "centre-affaires-coworking": "accueil-membres",
   "services-a-la-personne": "domicile-accompagnement",
   "aide-a-domicile-menage": "domicile-accompagnement",

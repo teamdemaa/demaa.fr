@@ -4,9 +4,9 @@ import {
 } from "@/lib/finance-catalog";
 
 const DEFAULT_FINANCE_ORDER = [
+  "qonto",
   "defacto",
   "karmen",
-  "qonto",
   "factofrance",
   "bibby-factor",
   "ayvens",
@@ -14,29 +14,39 @@ const DEFAULT_FINANCE_ORDER = [
 ] as const;
 
 const FINANCE_RECOMMENDATIONS_BY_SYSTEM: Record<string, readonly string[]> = {
-  "cabinet-comptable": ["defacto", "karmen", "qonto", "factofrance", "arval"],
-  "cabinet-de-conseil": ["defacto", "karmen", "qonto", "arval"],
-  "daf-externalise": ["defacto", "karmen", "qonto", "factofrance", "arval"],
+  "cabinet-comptable": ["qonto", "defacto", "karmen", "factofrance", "arval"],
+  "cabinet-de-conseil": ["qonto", "defacto", "karmen", "arval"],
+  "daf-externalise": ["qonto", "defacto", "karmen", "factofrance", "arval"],
   freelance: ["qonto"],
   "consultant-independant": ["qonto"],
-  saas: ["defacto", "karmen", "qonto", "factofrance"],
-  "e-commerce": ["defacto", "karmen", "qonto", "factofrance"],
-  "commerce-de-detail": ["defacto", "qonto", "factofrance", "bibby-factor"],
+  saas: ["qonto", "defacto", "karmen", "factofrance"],
+  "e-commerce": ["qonto", "defacto", "karmen", "factofrance"],
+  "commerce-de-detail": ["qonto", "defacto", "factofrance", "bibby-factor"],
   restaurant: ["qonto", "karmen", "factofrance", "bibby-factor", "ayvens"],
   boulangerie: ["qonto", "karmen", "factofrance", "bibby-factor", "ayvens"],
   traiteur: ["qonto", "karmen", "factofrance", "ayvens", "arval"],
-  batiment: ["defacto", "karmen", "ayvens", "arval", "bibby-factor", "qonto"],
-  btp: ["defacto", "karmen", "ayvens", "arval", "bibby-factor", "qonto"],
-  artisanat: ["qonto", "defacto", "ayvens", "arval", "bibby-factor"],
+  batiment: ["qonto", "defacto", "ayvens", "karmen", "arval", "bibby-factor"],
   "services-a-la-personne": ["qonto", "ayvens", "arval"],
-  "livraison-dernier-kilometre": ["karmen", "defacto", "ayvens", "arval", "bibby-factor"],
-  "transport-de-marchandise": ["karmen", "defacto", "ayvens", "arval", "bibby-factor"],
-  "transport-de-personnes": ["karmen", "ayvens", "arval", "qonto"],
-  demenagement: ["karmen", "ayvens", "arval", "qonto", "bibby-factor"],
+  "livraison-dernier-kilometre": ["qonto", "karmen", "ayvens", "defacto", "arval", "bibby-factor"],
+  "transport-de-marchandise": ["qonto", "karmen", "ayvens", "defacto", "arval", "bibby-factor"],
+  "transport-de-personnes": ["qonto", "karmen", "ayvens", "arval"],
+  demenagement: ["qonto", "karmen", "ayvens", "arval", "bibby-factor"],
   "auto-ecole": ["qonto", "ayvens", "arval"],
   geometre: ["qonto", "ayvens", "arval"],
   "diagnostiqueur-immobilier": ["qonto", "ayvens", "arval"],
 };
+
+const SYSTEMS_WITH_THREE_VISIBLE_FINANCE_RECOMMENDATIONS = new Set([
+  "batiment",
+  "livraison-dernier-kilometre",
+  "transport-de-marchandise",
+  "transport-de-personnes",
+  "demenagement",
+]);
+
+export function getVisibleFinanceRecommendationCountForSystem(systemSlug: string): number {
+  return SYSTEMS_WITH_THREE_VISIBLE_FINANCE_RECOMMENDATIONS.has(systemSlug) ? 3 : 2;
+}
 
 export function getRecommendedFinanceForSystem(systemSlug: string): DemaaFinanceItem[] {
   const financeSlugs = FINANCE_RECOMMENDATIONS_BY_SYSTEM[systemSlug] ?? DEFAULT_FINANCE_ORDER;

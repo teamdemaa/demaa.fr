@@ -26,6 +26,43 @@ export const recruitmentFamilies = [
 
 export const demaaRecruitmentItems = [
   {
+    slug: "bravus-akademy",
+    name: "Bravus Akademy",
+    provider: "Bravus Akademy",
+    family: "Alternance",
+    category: "École & alternance",
+    shortDescription:
+      "Un partenaire pour identifier et former des profils en alternance dans la vente, le digital, l’audiovisuel et le management.",
+    description:
+      "Centre de formation en apprentissage proposant des parcours certifiants et diplômants, en initial ou en alternance, notamment dans la vente, le digital, l’audiovisuel et le management.",
+    bestFor:
+      "Les entreprises qui veulent accueillir un alternant sur des fonctions commerciales, digitales, audiovisuelles ou de management.",
+    tags: ["Alternance", "École", "Apprentissage"],
+    icon: "GraduationCap",
+    usefulFor: ["Alternance", "Sourcing", "Formation"],
+    sectors: [
+      "Conseil & services aux entreprises",
+      "Tech & Digital",
+      "BTP & services techniques",
+      "Immobilier",
+      "Hébergement & tourisme",
+      "Patrimoine",
+      "Mobilité & logistique",
+      "Restauration",
+      "Commerce & retail",
+      "Santé, bien-être & esthétique",
+      "Services aux particuliers",
+      "Éducation & formation",
+      "Industrie & production",
+      "Automobile & réparation",
+      "Associations & événements",
+    ],
+    href: "https://bravusakademy.com/",
+    cta: "Découvrir Bravus",
+    format: "École et CFA",
+    location: "Bagneux (92)",
+  },
+  {
     slug: "la-bonne-alternance",
     name: "La bonne alternance",
     provider: "Beta.gouv / Ministère du Travail",

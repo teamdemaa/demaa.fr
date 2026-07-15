@@ -122,7 +122,7 @@ export const demaaAidItems: readonly DemaaAidItem[] = [
     cta: "Voir la source officielle",
     sourceLabel: "Bpifrance Création",
     sourceUrl:
-      "https://bpifrance-creation.fr/encyclopedie/financements/aides-a-creation/lacre-aide-aux-createurs-repreneurs-dentreprise",
+      "https://bpifrance-creation.fr/encyclopedie/aides-a-creation-a-reprise-dentreprise/aides-sociales-financieres/acre-aide-aux",
     relatedSystems: [
       "cabinet-davocat",
       "cabinet-comptable",
@@ -148,7 +148,7 @@ export const demaaAidItems: readonly DemaaAidItem[] = [
     cta: "Voir la source officielle",
     sourceLabel: "France Travail",
     sourceUrl:
-      "https://www.francetravail.fr/candidat/mes-droits-aux-aides-et-allocati/le-versement-en-capital-arce.html",
+      "https://www.francetravail.fr/candidat/je-creereprends-une-entreprise/les-aides-financieres-creation-d/aide-a-la-reprise-et-a-la-creati.html",
     relatedSystems: [
       "cabinet-davocat",
       "cabinet-comptable",

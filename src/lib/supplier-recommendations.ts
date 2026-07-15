@@ -10,225 +10,322 @@ type SupplierRecommendationRule = {
 };
 
 const DEFAULT_SUPPLIER_ORDER = [
-  "assurance-pro",
+  "orus",
   "alan",
-  "telephonie-pro",
-  "terminal-paiement",
-  "protection-juridique",
+  "onoff-business",
+  "sumup",
+  "insify",
 ] satisfies readonly string[];
+
+const SUPPLIER_RECOMMENDATIONS_BY_SECTOR: Record<string, SupplierRecommendationRule> = {
+  "Conseil & services aux entreprises": {
+    order: ["orus", "onoff-business", "alan", "swile", "insify"],
+  },
+  "Tech & Digital": {
+    order: ["onoff-business", "orus", "alan", "swile", "insify"],
+  },
+  "BTP & services techniques": {
+    order: [
+      "plateforme-du-batiment",
+      "point-p",
+      "kiloutou",
+      "wurth",
+      "rexel",
+      "orus",
+      "onoff-business",
+      "insify",
+    ],
+  },
+  Immobilier: {
+    order: ["orus", "onoff-business", "edf-entreprises", "insify", "alan"],
+  },
+  "Hébergement & tourisme": {
+    order: ["edf-entreprises", "bernard", "sumup", "orus", "onoff-business"],
+  },
+  Patrimoine: {
+    order: ["orus", "insify", "onoff-business", "alan", "swile"],
+  },
+  "Mobilité & logistique": {
+    order: ["orus", "onoff-business", "alan", "insify"],
+  },
+  Restauration: {
+    order: [
+      "transgourmet",
+      "firplast",
+      "sumup",
+      "france-boissons",
+      "bernard",
+      "edf-entreprises",
+      "orus",
+    ],
+  },
+  "Commerce & retail": {
+    order: ["sumup", "raja", "edf-entreprises", "orus", "bernard", "onoff-business"],
+  },
+  "Santé, bien-être & esthétique": {
+    order: ["orus", "onoff-business", "insify", "alan", "sumup", "bernard"],
+  },
+  "Services aux particuliers": {
+    order: ["bernard", "orus", "onoff-business", "sumup", "insify"],
+  },
+  "Éducation & formation": {
+    order: ["onoff-business", "orus", "alan", "swile", "insify"],
+  },
+  "Industrie & production": {
+    order: ["wurth", "kiloutou", "edf-entreprises", "bernard", "orus", "onoff-business"],
+  },
+  "Automobile & réparation": {
+    order: ["autodistribution-pro", "wurth", "kiloutou", "edf-entreprises", "orus", "onoff-business"],
+  },
+  "Associations & événements": {
+    order: ["onoff-business", "orus", "alan", "swile", "insify"],
+  },
+};
 
 const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationRule> = {
   batiment: {
     order: [
-      "assurance-pro",
       "plateforme-du-batiment",
       "point-p",
       "kiloutou",
+      "orus",
       "wurth",
       "rexel",
       "alan",
-      "telephonie-pro",
-    ],
-  },
-  btp: {
-    order: [
-      "assurance-pro",
-      "plateforme-du-batiment",
-      "point-p",
-      "kiloutou",
-      "wurth",
-      "rexel",
-      "alan",
-      "telephonie-pro",
-    ],
-  },
-  artisanat: {
-    order: [
-      "assurance-pro",
-      "wurth",
-      "kiloutou",
-      "alan",
-      "telephonie-pro",
-      "protection-juridique",
+      "onoff-business",
     ],
   },
   restaurant: {
     order: [
-      "assurance-pro",
-      "terminal-paiement",
-      "grossiste-alimentaire",
-      "fournisseur-boissons",
-      "emballages-pro",
-      "energie-pro",
-      "hygiene-nettoyage",
+      "transgourmet",
+      "france-boissons",
+      "sumup",
+      "metro-france",
+      "firplast",
+      "orus",
+      "edf-entreprises",
+      "bernard",
       "alan",
-      "telephonie-pro",
+      "onoff-business",
     ],
   },
   boulangerie: {
     order: [
-      "assurance-pro",
-      "terminal-paiement",
-      "grossiste-alimentaire",
-      "emballages-pro",
-      "energie-pro",
-      "hygiene-nettoyage",
+      "transgourmet",
+      "firplast",
+      "sumup",
+      "orus",
+      "edf-entreprises",
+      "bernard",
       "alan",
     ],
   },
   traiteur: {
     order: [
-      "assurance-pro",
-      "terminal-paiement",
-      "grossiste-alimentaire",
-      "fournisseur-boissons",
-      "emballages-pro",
-      "hygiene-nettoyage",
+      "transgourmet",
+      "firplast",
+      "france-boissons",
+      "sumup",
+      "orus",
+      "bernard",
     ],
+  },
+  "fast-food": {
+    order: ["transgourmet", "firplast", "sumup", "bernard", "edf-entreprises", "orus"],
+  },
+  "dark-kitchen": {
+    order: ["transgourmet", "firplast", "bernard", "sumup", "edf-entreprises", "orus"],
+  },
+  "bar-cafe": {
+    order: ["france-boissons", "sumup", "bernard", "transgourmet", "edf-entreprises", "orus"],
+  },
+  "food-truck": {
+    order: ["firplast", "sumup", "transgourmet", "france-boissons", "orus"],
+  },
+  "commerce-alimentaire": {
+    order: ["transgourmet", "sumup", "bernard", "metro-france", "raja", "edf-entreprises", "orus"],
   },
   "commerce-de-detail": {
     order: [
-      "assurance-pro",
-      "terminal-paiement",
-      "emballages-pro",
-      "energie-pro",
-      "telephonie-pro",
-      "protection-juridique",
+      "sumup",
+      "raja",
+      "edf-entreprises",
+      "orus",
+      "onoff-business",
+      "insify",
     ],
   },
   "e-commerce": {
     order: [
-      "emballages-pro",
-      "assurance-pro",
-      "telephonie-pro",
-      "protection-juridique",
+      "raja",
+      "orus",
+      "onoff-business",
+      "insify",
     ],
   },
   "institut-de-beaute": {
     order: [
-      "assurance-pro",
-      "terminal-paiement",
-      "hygiene-nettoyage",
+      "gouiran-beaute-pro",
+      "sumup",
+      "bernard",
+      "orus",
       "alan",
-      "telephonie-pro",
-      "energie-pro",
+      "onoff-business",
+      "edf-entreprises",
     ],
   },
   "salon-de-coiffure": {
     order: [
-      "assurance-pro",
-      "terminal-paiement",
-      "hygiene-nettoyage",
-      "energie-pro",
+      "gouiran-beaute-pro",
+      "sumup",
+      "bernard",
+      "edf-entreprises",
+      "orus",
       "alan",
-      "telephonie-pro",
+      "onoff-business",
     ],
+  },
+  "electricite-generale": {
+    order: ["rexel", "wurth", "kiloutou", "plateforme-du-batiment", "orus", "onoff-business"],
+  },
+  "plomberie-chauffage": {
+    order: ["cedeo-pro", "wurth", "kiloutou", "plateforme-du-batiment", "point-p", "orus"],
+  },
+  "menuiserie-agencement": {
+    order: ["dispano-bois", "legallais-quincaillerie", "kiloutou", "plateforme-du-batiment", "point-p", "orus"],
+  },
+  couvreur: {
+    order: ["asturienne-toiture", "plateforme-du-batiment", "kiloutou", "point-p", "wurth", "orus"],
+  },
+  "peintre-en-batiment": {
+    order: ["tollens-pro", "plateforme-du-batiment", "kiloutou", "point-p", "wurth", "orus"],
+  },
+  serrurier: {
+    order: ["legallais-quincaillerie", "wurth", "kiloutou", "plateforme-du-batiment", "point-p", "orus"],
+  },
+  climatisation: {
+    order: ["clim-plus", "cedeo-pro", "kiloutou", "rexel", "wurth", "orus"],
+  },
+  paysagiste: {
+    order: ["dispano-bois", "kiloutou", "point-p", "plateforme-du-batiment", "wurth", "orus"],
+  },
+  "garage-automobile": {
+    order: ["autodistribution-pro", "wurth", "kiloutou", "edf-entreprises", "orus", "onoff-business"],
+  },
+  carrosserie: {
+    order: ["autodistribution-pro", "wurth", "kiloutou", "edf-entreprises", "orus", "onoff-business"],
+  },
+  pressing: {
+    order: ["edf-entreprises", "bernard", "sumup", "orus", "onoff-business"],
+  },
+  "laverie-automatique": {
+    order: ["edf-entreprises", "bernard", "sumup", "orus", "onoff-business"],
   },
   "services-a-la-personne": {
     order: [
-      "assurance-pro",
+      "orus",
       "alan",
-      "telephonie-pro",
-      "protection-juridique",
+      "onoff-business",
+      "insify",
     ],
   },
   "livraison-dernier-kilometre": {
     order: [
-      "assurance-pro",
-      "telephonie-pro",
+      "orus",
+      "onoff-business",
       "alan",
-      "protection-juridique",
+      "insify",
     ],
   },
   "transport-de-marchandise": {
     order: [
-      "assurance-pro",
-      "telephonie-pro",
+      "orus",
+      "onoff-business",
       "alan",
-      "protection-juridique",
+      "insify",
     ],
   },
   "transport-de-personnes": {
     order: [
-      "assurance-pro",
-      "telephonie-pro",
+      "orus",
+      "onoff-business",
       "alan",
-      "protection-juridique",
+      "insify",
     ],
   },
   "agence-immobiliere": {
     order: [
-      "assurance-pro",
-      "telephonie-pro",
-      "protection-juridique",
+      "orus",
+      "onoff-business",
+      "insify",
       "alan",
     ],
   },
   freelance: {
     order: [
-      "assurance-pro",
+      "orus",
       "alan",
-      "telephonie-pro",
-      "protection-juridique",
+      "onoff-business",
+      "insify",
     ],
   },
   "cabinet-de-conseil": {
     order: [
-      "assurance-pro",
+      "orus",
       "alan",
-      "telephonie-pro",
+      "onoff-business",
       "swile",
-      "protection-juridique",
+      "insify",
     ],
   },
   notaire: {
     order: [
-      "assurance-pro",
-      "protection-juridique",
-      "telephonie-pro",
+      "orus",
+      "insify",
+      "onoff-business",
       "alan",
       "swile",
     ],
   },
   "daf-externalise": {
     order: [
-      "assurance-pro",
+      "orus",
       "alan",
       "swile",
-      "telephonie-pro",
-      "protection-juridique",
+      "onoff-business",
+      "insify",
     ],
   },
   "office-manager-externalise": {
     order: [
-      "telephonie-pro",
-      "assurance-pro",
+      "onoff-business",
+      "orus",
       "alan",
       "swile",
-      "protection-juridique",
+      "insify",
     ],
   },
   "assistant-administratif-externalise": {
     order: [
-      "telephonie-pro",
-      "assurance-pro",
-      "protection-juridique",
+      "onoff-business",
+      "orus",
+      "insify",
       "alan",
     ],
   },
   "secretariat-externalise": {
     order: [
-      "telephonie-pro",
-      "assurance-pro",
+      "onoff-business",
+      "orus",
       "alan",
-      "protection-juridique",
+      "insify",
     ],
   },
   "gestionnaire-paie-independant": {
     order: [
-      "assurance-pro",
-      "protection-juridique",
-      "telephonie-pro",
+      "orus",
+      "insify",
+      "onoff-business",
       "alan",
     ],
   },
@@ -236,275 +333,332 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
     order: [
       "alan",
       "swile",
-      "assurance-pro",
-      "telephonie-pro",
-      "protection-juridique",
+      "orus",
+      "onoff-business",
+      "insify",
     ],
   },
   "centre-appels-support-client": {
     order: [
-      "telephonie-pro",
-      "assurance-pro",
+      "onoff-business",
+      "orus",
       "alan",
       "swile",
-      "protection-juridique",
+      "insify",
     ],
   },
   "societe-recouvrement": {
     order: [
-      "assurance-pro",
-      "protection-juridique",
-      "telephonie-pro",
-      "alan",
-    ],
-  },
-  "societe-domiciliation": {
-    order: [
-      "assurance-pro",
-      "telephonie-pro",
-      "protection-juridique",
-      "energie-pro",
+      "orus",
+      "insify",
+      "onoff-business",
       "alan",
     ],
   },
   "centre-affaires-coworking": {
     order: [
-      "terminal-paiement",
-      "energie-pro",
-      "telephonie-pro",
-      "assurance-pro",
-      "hygiene-nettoyage",
+      "sumup",
+      "edf-entreprises",
+      "onoff-business",
+      "orus",
+      "bernard",
       "alan",
     ],
   },
   "cabinet-qhse-conformite": {
     order: [
-      "assurance-pro",
-      "telephonie-pro",
+      "orus",
+      "onoff-business",
       "alan",
-      "protection-juridique",
+      "insify",
     ],
   },
   "bureau-etudes": {
     order: [
-      "assurance-pro",
-      "telephonie-pro",
+      "orus",
+      "onoff-business",
       "alan",
-      "protection-juridique",
+      "insify",
     ],
   },
   "cabinet-etudes": {
     order: [
-      "assurance-pro",
-      "telephonie-pro",
+      "orus",
+      "onoff-business",
       "alan",
-      "protection-juridique",
+      "insify",
     ],
   },
   "infogerance-informatique": {
     order: [
-      "telephonie-pro",
-      "assurance-pro",
+      "onoff-business",
+      "orus",
       "alan",
       "swile",
-      "protection-juridique",
+      "insify",
     ],
   },
   "cybersecurite-pme": {
     order: [
-      "assurance-pro",
-      "protection-juridique",
-      "telephonie-pro",
+      "orus",
+      "insify",
+      "onoff-business",
       "alan",
     ],
   },
   "integrateur-crm-erp": {
     order: [
-      "telephonie-pro",
-      "assurance-pro",
+      "onoff-business",
+      "orus",
       "alan",
       "swile",
-      "protection-juridique",
+      "insify",
     ],
   },
   "consultant-data-bi": {
     order: [
-      "telephonie-pro",
-      "assurance-pro",
+      "onoff-business",
+      "orus",
       "alan",
       "swile",
-      "protection-juridique",
+      "insify",
     ],
   },
   "studio-branding-design": {
     order: [
-      "assurance-pro",
-      "telephonie-pro",
+      "orus",
+      "onoff-business",
       "alan",
       "swile",
-      "protection-juridique",
+      "insify",
     ],
   },
   syndic: {
     order: [
-      "assurance-pro",
-      "telephonie-pro",
-      "energie-pro",
-      "protection-juridique",
+      "orus",
+      "onoff-business",
+      "edf-entreprises",
+      "insify",
       "alan",
     ],
   },
   "gestion-locative": {
     order: [
-      "assurance-pro",
-      "telephonie-pro",
-      "energie-pro",
-      "protection-juridique",
+      "orus",
+      "onoff-business",
+      "edf-entreprises",
+      "insify",
       "alan",
     ],
   },
   "cabinet-comptable": {
     order: [
-      "assurance-pro",
+      "orus",
       "alan",
       "swile",
-      "telephonie-pro",
-      "protection-juridique",
+      "onoff-business",
+      "insify",
     ],
+  },
+  esthetique: {
+    order: ["gouiran-beaute-pro", "sumup", "bernard", "orus", "alan", "onoff-business"],
+  },
+  pharmacie: {
+    order: ["ocp-repartition", "sumup", "bernard", "orus", "onoff-business", "insify"],
+  },
+  veterinaire: {
+    order: ["centravet", "orus", "sumup", "bernard", "onoff-business", "insify"],
+  },
+  opticien: {
+    order: ["bbgr-optique", "sumup", "orus", "onoff-business", "insify"],
+  },
+  pisciniste: {
+    order: ["scp-france-piscine", "kiloutou", "point-p", "orus", "onoff-business", "insify"],
+  },
+  fleuriste: {
+    order: ["france-fleurs-pro", "raja", "sumup", "orus", "onoff-business"],
+  },
+  creche: {
+    order: ["papouille-creche", "bernard", "orus", "onoff-business", "alan"],
   },
   "cabinet-davocat": {
     order: [
-      "assurance-pro",
-      "protection-juridique",
+      "orus",
+      "insify",
       "alan",
-      "telephonie-pro",
+      "onoff-business",
     ],
   },
   saas: {
     order: [
-      "assurance-pro",
+      "orus",
       "alan",
       "swile",
-      "telephonie-pro",
+      "onoff-business",
     ],
   },
   evenementiel: {
     order: [
-      "assurance-pro",
       "kiloutou",
-      "fournisseur-boissons",
-      "terminal-paiement",
-      "telephonie-pro",
-      "protection-juridique",
+      "france-boissons",
+      "sumup",
+      "orus",
+      "onoff-business",
+      "insify",
     ],
   },
   "cabinet-assurance": {
     order: [
-      "assurance-pro",
-      "telephonie-pro",
+      "orus",
+      "onoff-business",
       "alan",
       "swile",
-      "protection-juridique",
+      "insify",
     ],
   },
   "agence-seo": {
     order: [
-      "assurance-pro",
-      "telephonie-pro",
+      "orus",
+      "onoff-business",
       "alan",
       "swile",
-      "protection-juridique",
+      "insify",
     ],
   },
   "agence-acquisition-paid-ads": {
     order: [
-      "assurance-pro",
-      "telephonie-pro",
+      "orus",
+      "onoff-business",
       "alan",
       "swile",
-      "protection-juridique",
+      "insify",
     ],
   },
   "diagnostiqueur-immobilier": {
     order: [
-      "assurance-pro",
-      "telephonie-pro",
-      "protection-juridique",
+      "orus",
+      "onoff-business",
+      "insify",
       "alan",
     ],
   },
   geometre: {
     order: [
-      "assurance-pro",
-      "telephonie-pro",
-      "protection-juridique",
+      "orus",
+      "onoff-business",
+      "insify",
       "alan",
     ],
   },
   "architecte-maitre-oeuvre": {
     order: [
-      "assurance-pro",
-      "telephonie-pro",
+      "orus",
+      "onoff-business",
       "alan",
-      "protection-juridique",
+      "insify",
       "kiloutou",
     ],
   },
   "reparation-informatique-mobile": {
     order: [
-      "assurance-pro",
-      "telephonie-pro",
-      "protection-juridique",
+      "orus",
+      "onoff-business",
+      "insify",
       "alan",
     ],
   },
   "nettoyage-professionnel": {
     order: [
-      "assurance-pro",
-      "hygiene-nettoyage",
-      "telephonie-pro",
+      "bernard",
+      "orus",
+      "onoff-business",
       "alan",
-      "protection-juridique",
+      "insify",
     ],
   },
   demenagement: {
     order: [
-      "assurance-pro",
-      "telephonie-pro",
+      "orus",
+      "onoff-business",
       "alan",
-      "protection-juridique",
+      "insify",
     ],
   },
   "auto-ecole": {
     order: [
-      "assurance-pro",
-      "telephonie-pro",
+      "codes-rousseau-pro",
+      "orus",
+      "onoff-business",
       "alan",
-      "protection-juridique",
+      "insify",
     ],
   },
   "gestionnaire-de-patrimoine": {
     order: [
-      "assurance-pro",
-      "protection-juridique",
+      "orus",
+      "insify",
       "alan",
-      "telephonie-pro",
+      "onoff-business",
       "swile",
     ],
   },
   "courtier-credit-assurance": {
     order: [
-      "assurance-pro",
-      "telephonie-pro",
+      "orus",
+      "onoff-business",
       "alan",
-      "protection-juridique",
+      "insify",
     ],
+  },
+  "cabinet-medical": {
+    order: ["distrimed-medical", "orus", "onoff-business", "insify", "bernard"],
+  },
+  "cabinet-paramedical": {
+    order: ["distrimed-medical", "orus", "onoff-business", "insify", "bernard"],
+  },
+  "infirmier-liberal": {
+    order: ["distrimed-medical", "orus", "onoff-business", "insify", "bernard"],
+  },
+  dentiste: {
+    order: ["henry-schein-dentaire", "orus", "onoff-business", "distrimed-medical", "insify"],
+  },
+  osteopathe: {
+    order: ["distrimed-medical", "orus", "onoff-business", "insify"],
+  },
+  "salle-de-sport": {
+    order: ["decathlon-pro", "bernard", "sumup", "orus", "edf-entreprises"],
+  },
+  "coach-sportif": {
+    order: ["decathlon-pro", "sumup", "orus", "onoff-business", "insify"],
+  },
+  "tabac-presse-point-relais": {
+    order: ["logista-france", "sumup", "raja", "bernard", "edf-entreprises", "orus"],
+  },
+  librairie: {
+    order: ["dilisco-livres", "sumup", "raja", "bernard", "edf-entreprises", "orus"],
+  },
+  "hotel-hebergement-independant": {
+    order: ["metro-france", "bernard", "france-boissons", "edf-entreprises", "sumup", "orus"],
+  },
+  "conciergerie-airbnb": {
+    order: ["bernard", "onoff-business", "orus", "sumup", "edf-entreprises", "insify"],
+  },
+  "agence-de-voyage": {
+    order: ["onoff-business", "orus", "sumup", "insify", "alan"],
   },
 };
 
-export function getRecommendedSuppliersForSystem(systemSlug: string): DemaaSupplier[] {
+export function getRecommendedSuppliersForSystem(
+  systemSlug: string,
+  sectorLabel?: string,
+): DemaaSupplier[] {
   const rule = SUPPLIER_RECOMMENDATIONS_BY_SYSTEM[systemSlug];
-  const order = [...(rule?.order ?? []), ...DEFAULT_SUPPLIER_ORDER].filter(
+  const sectorRule = sectorLabel ? SUPPLIER_RECOMMENDATIONS_BY_SECTOR[sectorLabel] : undefined;
+  const order = [
+    ...(rule?.order ?? []),
+    ...(sectorRule?.order ?? []),
+    ...DEFAULT_SUPPLIER_ORDER,
+  ].filter(
     (slug, index, list) => list.indexOf(slug) === index,
   ) as string[];
   const recommended = order

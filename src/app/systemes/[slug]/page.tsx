@@ -53,8 +53,8 @@ export default async function SystemDetailPage({
 
   const initialTab = getParamValue(resolvedSearchParams.tab);
   const normalizedInitialTab =
-    initialTab === "cours" || initialTab === "formation"
-      ? "academie"
+    initialTab === "cours"
+      ? "formation"
       : initialTab === "ressources"
         ? "outils"
         : initialTab;

@@ -38,6 +38,10 @@ if (!buildScript.includes("DEMAA_BUILD_DIST_DIR=.next-build")) {
   addUnique(errors, 'The "build" script must target ".next-build".');
 }
 
+if (!buildScript.includes("next build --webpack")) {
+  addUnique(errors, 'The "build" script must use Webpack to avoid the Turbopack build deadlock.');
+}
+
 if (!buildStableScript.includes("DEMAA_FORCE_LOCAL_DATA=true")) {
   addUnique(
     errors,
@@ -51,6 +55,13 @@ if (!buildStableScript.includes("DEMAA_BUILD_DIST_DIR=.next-build")) {
 
 if (!buildStableScript.includes("TMPDIR=/private/tmp")) {
   addUnique(errors, 'The "build:stable" script must set TMPDIR=/private/tmp.');
+}
+
+if (!buildStableScript.includes("next build --webpack")) {
+  addUnique(
+    errors,
+    'The "build:stable" script must use Webpack to avoid the Turbopack build deadlock.',
+  );
 }
 
 if (!startScript.includes("DEMAA_BUILD_DIST_DIR=.next-build")) {

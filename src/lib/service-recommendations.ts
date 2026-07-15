@@ -135,15 +135,6 @@ const SERVICE_RECOMMENDATIONS_BY_SYSTEM: Record<string, ServiceRecommendationRul
       "audit-conformite-fiscale",
     ],
   },
-  "societe-domiciliation": {
-    order: [
-      "organisation-automatisation",
-      "site-web",
-      "marketing-vente",
-      "assistante-facturation",
-      "audit-conformite-fiscale",
-    ],
-  },
   "centre-affaires-coworking": {
     order: [
       "site-web",

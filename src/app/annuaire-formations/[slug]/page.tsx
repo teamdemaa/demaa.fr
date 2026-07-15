@@ -80,7 +80,7 @@ export default async function TrainingDetailPage({
     : null;
   const backLink = returnEnterprise
     ? {
-        href: `/systemes/${encodeURIComponent(returnEnterprise.slug)}?tab=academie`,
+        href: `/systemes/${encodeURIComponent(returnEnterprise.slug)}?tab=formation`,
         label: `Retour à ${returnEnterprise.name}`,
       }
     : {
