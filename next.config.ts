@@ -36,7 +36,7 @@ const securityHeaders = [
       "img-src 'self' data: blob: https://www.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://drive.google.com https://lh3.googleusercontent.com https://*.googleusercontent.com",
       "font-src 'self' data:",
       "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://api.stripe.com https://checkout.stripe.com https://api-adresse.data.gouv.fr",
-      "frame-src https://js.stripe.com https://checkout.stripe.com",
+      "frame-src https://js.stripe.com https://checkout.stripe.com https://embed.fillout.com",
       "form-action 'self' https://checkout.stripe.com",
       "upgrade-insecure-requests",
     ].join('; '),

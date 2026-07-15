@@ -32,6 +32,7 @@
     "sync:tool-directory": "node scripts/sync-tool-directory.mjs"
   },
   "dependencies": {
+    "@fillout/react": "^3.1.2",
     "@stripe/stripe-js": "^9.7.0",
     "@vercel/analytics": "^2.0.1",
     "firebase-admin": "^14.1.0",

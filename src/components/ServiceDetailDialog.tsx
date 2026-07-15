@@ -1,13 +1,13 @@
 "use client";
 
-import Link from "next/link";
+import { FilloutPopupEmbed } from "@fillout/react";
 import { Check, X } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import ServiceExpandedContent from "@/components/ServiceExpandedContent";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import ServiceRequestCta from "@/components/ServiceRequestCta";
 import { hasExpandedServiceContent } from "@/lib/service-expanded-content";
-import { ORGANISATION_AUDIT_BOOKING_URL } from "@/lib/organisation-audit";
 import { type DemaaService } from "@/lib/service-catalog";
 
 type ServiceDetailDialogProps = {
@@ -21,6 +21,7 @@ export default function ServiceDetailDialog({
   onClose,
 }: ServiceDetailDialogProps) {
   const router = useRouter();
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
   const closeDialog = onClose ?? (() => router.back());
   const hasExpandedContent = hasExpandedServiceContent(service.slug);
   const isOrganisationAutomation = service.slug === "organisation-automatisation";
@@ -72,12 +73,13 @@ export default function ServiceDetailDialog({
               {service.description}
             </p>
             {isOrganisationAutomation ? (
-              <Link
-                href={ORGANISATION_AUDIT_BOOKING_URL}
+              <button
+                type="button"
+                onClick={() => setIsBookingOpen(true)}
                 className="demaa-primary-button mt-5 w-fit"
               >
                 Prendre RDV
-              </Link>
+              </button>
             ) : null}
 
             {!isOrganisationAutomation ? (
@@ -129,6 +131,16 @@ export default function ServiceDetailDialog({
         </div>
       </div>
 
+      {isOrganisationAutomation ? (
+        <FilloutPopupEmbed
+          filloutId="sWP6PSPRVLus"
+          inheritParameters
+          isOpen={isBookingOpen}
+          onClose={() => setIsBookingOpen(false)}
+          width={720}
+          height={720}
+        />
+      ) : null}
     </>
   );
 }
