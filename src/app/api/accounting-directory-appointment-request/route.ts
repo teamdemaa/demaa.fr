@@ -157,6 +157,20 @@ export async function POST(request: Request) {
       );
     }
 
+    if (!isValidEmail(email)) {
+      return NextResponse.json(
+        { error: "Merci de saisir un email valide." },
+        { status: 400 },
+      );
+    }
+
+    if (!isValidPhone(phone)) {
+      return NextResponse.json(
+        { error: "Merci de saisir un numéro de téléphone valide." },
+        { status: 400 },
+      );
+    }
+
     const requestedFirms =
       requestedSlugs.length === 1
         ? [await getAccountingFirmBySlug(requestedSlugs[0])]

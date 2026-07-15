@@ -185,12 +185,12 @@ export default function AccountingRecommendationDialog({
 
       {isOpen ? (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-brand-blue/45 px-4 py-8"
+          className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-brand-blue/45 px-4 py-4 sm:py-8"
           onClick={closeDialog}
         >
           <div
             ref={dialogRef}
-            className="w-full max-w-xl rounded-[1.25rem] border border-dema-line bg-dema-paper p-6 shadow-[0_24px_70px_rgba(23,35,29,0.2)]"
+            className="my-auto max-h-[calc(100dvh-2rem)] w-full max-w-xl overflow-y-auto rounded-[1.25rem] border border-dema-line bg-dema-paper p-6 shadow-[0_24px_70px_rgba(23,35,29,0.2)] sm:max-h-[calc(100dvh-4rem)]"
             role="dialog"
             aria-modal="true"
             aria-labelledby={`${fieldId}-title`}
