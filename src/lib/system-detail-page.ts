@@ -188,8 +188,6 @@ const SYSTEM_PAGE_DESCRIPTION_OVERRIDES: Record<string, string> = {
     "Pilotez un systeme de centre d'appels et support client avec tickets, SLA, outils utiles et ressources concretes.",
   "societe-recouvrement":
     "Cadrez un systeme de societe de recouvrement avec creances, relances, preuves, outils utiles et ressources concretes.",
-  "societe-domiciliation":
-    "Structurez un systeme de societe de domiciliation avec contrats, courrier, conformite, outils utiles et ressources concretes.",
   "centre-affaires-coworking":
     "Organisez un systeme de centre d'affaires et coworking avec espaces, membres, contrats, outils utiles et ressources concretes.",
   "cabinet-qhse-conformite":

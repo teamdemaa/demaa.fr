@@ -289,8 +289,6 @@ export const PILOTING_SHEET_URLS: Partial<Record<string, string>> = {
     "https://docs.google.com/spreadsheets/d/1LcbspnthRbINhj2clk8ZcWpiamTYtDaRpuhvxHPz9GM/edit",
   "societe-recouvrement":
     "https://docs.google.com/spreadsheets/d/1rwdzarxVtubuQvBFfIC7SKQkmOJWCYVPLCari3iNudY/edit",
-  "societe-domiciliation":
-    "https://docs.google.com/spreadsheets/d/1O2Aneru5HhZXXRdbMNkyJffW6ul4QDQQ3CJlnt3QvGI/edit",
   "studio-branding-design":
     "https://docs.google.com/spreadsheets/d/1xi5Jgqy3HKgIYuVo4aCjyBbUjsXixL0h73Y-hrX5diE/edit",
   veterinaire:

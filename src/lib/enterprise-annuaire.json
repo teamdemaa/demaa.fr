@@ -128,26 +128,27 @@
           "usage": "Consulter documentation fiscale, sociale et juridique pour sécuriser les dossiers."
         },
         {
-          "slug": "canva",
-          "usage": "Produire des supports propres sans dépendre d’un studio."
+          "slug": "claude",
+          "usage": "Clarifier des sujets complexes et produire des livrables plus propres."
         },
         {
           "slug": "chatgpt",
           "usage": "Gagner du temps sur la réflexion et la production de contenus."
         },
         {
-          "slug": "claude",
-          "usage": "Clarifier des sujets complexes et produire des livrables plus propres."
-        },
-        {
           "slug": "sage",
           "usage": "Comparer une solution comptable installée sur le marché.",
           "scope": "business"
-        },
-        {
-          "slug": "quickbooks",
-          "usage": "Comparer une solution compta/facturation orientée petites entreprises."
         }
+      ],
+      "recommendedToolSlugs": [
+        "pennylane",
+        "tiimora",
+        "silae"
+      ],
+      "excludedToolSlugs": [
+        "canva",
+        "quickbooks"
       ],
       "audience": "b2b",
       "visibility": "primary",
@@ -1076,7 +1077,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -1207,7 +1208,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "platform"
     },
     {
@@ -1334,7 +1335,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "platform"
     },
     {
@@ -1501,7 +1502,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "platform"
     },
     {
@@ -1638,7 +1639,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -2157,7 +2158,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "investment"
     },
     {
@@ -2256,7 +2257,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "investment"
     },
     {
@@ -2466,7 +2467,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "investment"
     },
     {
@@ -2573,7 +2574,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "investment"
     },
     {
@@ -2684,7 +2685,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "investment"
     },
     {
@@ -3207,7 +3208,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "commerce"
     },
     {
@@ -3316,7 +3317,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "commerce"
     },
     {
@@ -3526,7 +3527,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "commerce"
     },
     {
@@ -3627,7 +3628,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "commerce"
     },
     {
@@ -3744,7 +3745,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "commerce"
     },
     {
@@ -3885,7 +3886,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "platform"
     },
     {
@@ -3986,7 +3987,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -4087,7 +4088,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -4188,7 +4189,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -4285,7 +4286,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -4882,7 +4883,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -4995,7 +4996,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -5116,7 +5117,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -5233,7 +5234,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -5346,7 +5347,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -5459,7 +5460,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -5552,7 +5553,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -5645,7 +5646,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -5754,7 +5755,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "commerce"
     },
     {
@@ -5867,7 +5868,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "commerce"
     },
     {
@@ -5968,7 +5969,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "commerce"
     },
     {
@@ -6069,7 +6070,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "commerce"
     },
     {
@@ -6174,7 +6175,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -6267,7 +6268,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -6364,7 +6365,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -6465,7 +6466,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -6562,7 +6563,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -7285,7 +7286,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -7382,7 +7383,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -7475,7 +7476,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "commerce"
     },
     {
@@ -7665,7 +7666,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -7766,7 +7767,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -7863,7 +7864,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "commerce"
     },
     {
@@ -7968,7 +7969,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -8246,10 +8247,6 @@
       ],
       "toolRefs": [
         {
-          "slug": "xinaya",
-          "usage": "Gérer pressing, linge, caisse et suivi client."
-        },
-        {
           "slug": "sumup-caisse",
           "usage": "Encaisser simplement prestations et ventes."
         },
@@ -8275,7 +8272,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -8376,7 +8373,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "commerce"
     },
     {
@@ -8697,7 +8694,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -8927,7 +8924,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -9024,7 +9021,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -9226,7 +9223,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -9339,7 +9336,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -9452,7 +9449,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -9565,7 +9562,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -9678,7 +9675,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -9787,7 +9784,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -9892,7 +9889,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "commerce"
     },
     {
@@ -9993,7 +9990,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -10098,7 +10095,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -10195,7 +10192,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -10397,7 +10394,7 @@
         }
       ],
       "audience": "mixed",
-      "visibility": "hidden",
+      "visibility": "secondary",
       "offerType": "service"
     },
     {
@@ -10868,6 +10865,10 @@
       ],
       "toolRefs": [
         {
+          "slug": "aircall",
+          "usage": "Gérer routage, files d’attente, supervision et analyse des appels."
+        },
+        {
           "slug": "zendesk",
           "usage": "Centraliser tickets et SLA."
         },
@@ -10923,6 +10924,10 @@
       ],
       "toolRefs": [
         {
+          "slug": "leanpay",
+          "usage": "Centraliser les créances, automatiser les relances et suivre les promesses de paiement."
+        },
+        {
           "slug": "sellsy",
           "usage": "Suivre clients, factures et relances."
         },
@@ -10933,61 +10938,6 @@
         {
           "slug": "airtable",
           "usage": "Piloter portefeuille de créances."
-        }
-      ],
-      "audience": "b2b",
-      "offerType": "service",
-      "visibility": "primary"
-    },
-    {
-      "id": "e106",
-      "slug": "societe-domiciliation",
-      "name": "Société de domiciliation",
-      "category": "Système opérationnel",
-      "description": "Structurez dossiers clients, contrats, courrier, conformité et renouvellements.",
-      "tags": [
-        "B2B",
-        "Admin",
-        "Domiciliation"
-      ],
-      "icon": "Building2",
-      "price": "",
-      "sectorLabel": "Conseil & services aux entreprises",
-      "imageTitle": "Société de domiciliation",
-      "imageSubtitle": "Aperçu du système opérationnel pour société de domiciliation",
-      "processes": [],
-      "operationProcesses": [
-        {
-          "pillar": "Opérations",
-          "title": "Entrée client & conformité",
-          "description": "Collecter pièces, vérifier identité, société, contrat et obligations.",
-          "examples": "Exemple : recevoir demande → vérifier pièces → valider conformité → signer contrat → créer dossier."
-        },
-        {
-          "pillar": "Opérations",
-          "title": "Courrier & services",
-          "description": "Suivre réception, notification, scan, transfert et demandes client.",
-          "examples": "Exemple : recevoir courrier → identifier client → scanner → notifier → archiver action."
-        },
-        {
-          "pillar": "Opérations",
-          "title": "Renouvellements",
-          "description": "Piloter échéances, paiements, changements d’adresse et résiliations.",
-          "examples": "Exemple : lister échéances → relancer paiement → mettre à jour contrat → confirmer renouvellement → archiver."
-        }
-      ],
-      "toolRefs": [
-        {
-          "slug": "airtable",
-          "usage": "Suivre dossiers, courriers et statuts."
-        },
-        {
-          "slug": "signez-un-document-electroniquement",
-          "usage": "Faire signer contrats et avenants."
-        },
-        {
-          "slug": "stripe",
-          "usage": "Encaisser abonnements et frais."
         }
       ],
       "audience": "b2b",
@@ -11032,6 +10982,10 @@
         }
       ],
       "toolRefs": [
+        {
+          "slug": "nexudus",
+          "usage": "Gérer membres, réservations, contrats, facturation et accès."
+        },
         {
           "slug": "calendly",
           "usage": "Gérer réservations et rendez-vous."
@@ -11088,6 +11042,10 @@
       ],
       "toolRefs": [
         {
+          "slug": "bluekango",
+          "usage": "Piloter audits, risques, écarts, preuves et plans d’action QHSE."
+        },
+        {
           "slug": "notion",
           "usage": "Centraliser référentiels et plans d’action."
         },
@@ -11142,6 +11100,10 @@
         }
       ],
       "toolRefs": [
+        {
+          "slug": "everwin",
+          "usage": "Piloter affaires, temps, ressources, facturation et marge projet."
+        },
         {
           "slug": "notion",
           "usage": "Suivre projets, décisions et livrables."
@@ -11198,6 +11160,14 @@
       ],
       "toolRefs": [
         {
+          "slug": "typeform",
+          "usage": "Collecter réponses, questionnaires et données d’étude."
+        },
+        {
+          "slug": "power-bi",
+          "usage": "Analyser les données et construire les tableaux de bord de restitution."
+        },
+        {
           "slug": "notion",
           "usage": "Centraliser recherche et livrables."
         },
@@ -11253,6 +11223,10 @@
       ],
       "toolRefs": [
         {
+          "slug": "ninjaone",
+          "usage": "Superviser, maintenir et sécuriser à distance les parcs clients."
+        },
+        {
           "slug": "zendesk",
           "usage": "Gérer tickets et SLA."
         },
@@ -11307,6 +11281,14 @@
         }
       ],
       "toolRefs": [
+        {
+          "slug": "tenable-vulnerability-management",
+          "usage": "Découvrir, analyser et prioriser les vulnérabilités des actifs clients."
+        },
+        {
+          "slug": "microsoft-defender-business",
+          "usage": "Déployer et piloter la protection des terminaux des PME."
+        },
         {
           "slug": "notion",
           "usage": "Centraliser risques, preuves et plans d’action."
@@ -11418,6 +11400,10 @@
       ],
       "toolRefs": [
         {
+          "slug": "power-bi",
+          "usage": "Connecter les sources et livrer des tableaux de bord interactifs."
+        },
+        {
           "slug": "airtable",
           "usage": "Structurer bases et référentiels."
         },
@@ -11490,6 +11476,14 @@
         }
       ],
       "toolRefs": [
+        {
+          "slug": "semrush",
+          "usage": "Auditer les sites, analyser mots-clés, concurrence, backlinks et positions."
+        },
+        {
+          "slug": "google-search-console",
+          "usage": "Suivre les requêtes, l’indexation et les problèmes techniques depuis les données Google."
+        },
         {
           "slug": "notion",
           "usage": "Suivre briefs, contenus et planning SEO."
@@ -11599,6 +11593,18 @@
         }
       ],
       "toolRefs": [
+        {
+          "slug": "google-ads",
+          "usage": "Créer et piloter les campagnes publicitaires sur les canaux Google."
+        },
+        {
+          "slug": "meta-ads-manager",
+          "usage": "Gérer les campagnes, audiences et budgets Facebook et Instagram."
+        },
+        {
+          "slug": "google-tag-manager",
+          "usage": "Déployer et contrôler les balises de conversion et d’attribution."
+        },
         {
           "slug": "hubspot",
           "usage": "Suivre leads et conversion commerciale."

@@ -348,7 +348,7 @@ export const demaaTrainings = [
       "Santé, bien-être & esthétique",
       "Services aux particuliers",
     ],
-    href: "https://www.cegos.fr/formations/effectivite-professionnelle",
+    href: "https://www.cegos.fr/formations/efficacite-professionnelle",
     cta: "Voir la formation",
   },
   {
@@ -398,7 +398,7 @@ export const demaaTrainings = [
       "Immobilier",
       "Patrimoine",
     ],
-    href: "https://www.cnfce.com/formations/cybersecurite",
+    href: "https://www.cnfce.com/formations/securite-des-personnes-entreprise/formation-cybersecurite",
     cta: "Voir la formation",
   },
   {
@@ -920,20 +920,20 @@ export const demaaTrainings = [
   },
   {
     slug: "esthetique-hygiene-protocoles",
-    name: "Hygiène et protocoles en esthétique",
-    provider: "CNFCE",
-    family: "Réglementaire",
+    name: "Pack formation beauté",
+    provider: "C3 Paris",
+    family: "Métier",
     category: "Beauté",
-    shortDescription: "Formation utile pour renforcer les pratiques d'hygiène et de sécurité en institut.",
+    shortDescription: "Parcours pratique sur les soins du visage, l'épilation et la beauté des mains et des pieds.",
     description:
-      "Formation orientée protocoles, hygiène, sécurité et cadre de travail pour les activités de beauté et de bien-être.",
+      "Parcours de quatre modules pour apprendre des protocoles de soin directement applicables en institut ou en activité indépendante.",
     bestFor:
-      "Les instituts, salons, activités esthétiques et métiers du soin non médical.",
-    tags: ["Beauté", "Hygiène", "Protocoles"],
+      "Les instituts et professionnels de la beauté qui veulent consolider leurs protocoles de base.",
+    tags: ["Beauté", "Soins", "Protocoles"],
     icon: "Sparkles",
-    usefulFor: ["Hygiène", "Équipe", "Cadre"],
+    usefulFor: ["Soins", "Pratique", "Institut"],
     sectors: ["Santé, bien-être & esthétique"],
-    href: "https://www.cnfce.com/formations/esthetique",
+    href: "https://c3paris.com/pack-formation-beaute/",
     cta: "Voir la formation",
   },
   {
@@ -1155,6 +1155,106 @@ export const demaaTrainings = [
     href: "https://www.agencedpc.fr/formations-dpc-rechercher-un-dpc",
     cta: "Voir la formation",
     format: "Moteur officiel DPC",
+  },
+  {
+    slug: "adf-dpc-chirurgien-dentiste",
+    name: "Formations DPC pour chirurgiens-dentistes",
+    provider: "ADFDPC-Formation",
+    family: "Formation continue",
+    category: "Santé",
+    shortDescription:
+      "L'offre métier de l'Association dentaire française pour suivre des formations DPC conçues pour la pratique du chirurgien-dentiste.",
+    description:
+      "Espace d'inscription d'ADFDPC-Formation, la structure dédiée de l'Association dentaire française, pour consulter et suivre ses actions de développement professionnel continu.",
+    bestFor:
+      "Les chirurgiens-dentistes qui veulent choisir une formation continue réellement conçue pour leur profession et suivre leurs inscriptions DPC.",
+    tags: ["Chirurgien-dentiste", "DPC", "Formation continue"],
+    icon: "HeartPulse",
+    usefulFor: ["Pratique dentaire", "DPC", "Mise à jour des compétences"],
+    sectors: ["Santé, bien-être & esthétique"],
+    href: "https://www.adfdpc.fr/nos-formations/",
+    cta: "Voir les formations",
+    format: "E-learning et présentiel selon la session",
+  },
+  {
+    slug: "utip-formation-pharmacie-officine",
+    name: "Formations pour la pharmacie d'officine",
+    provider: "UTIP Association",
+    family: "Formation continue",
+    category: "Santé",
+    shortDescription:
+      "Un catalogue métier destiné aux pharmaciens, préparateurs et équipes officinales, avec des sujets directement liés à la pratique en pharmacie.",
+    description:
+      "Catalogue de l'UTIP Association consacré à la formation des équipes officinales, avec des sessions et contenus adaptés aux enjeux concrets de la pharmacie.",
+    bestFor:
+      "Les titulaires de pharmacie qui veulent former leur équipe sur des sujets réellement liés à l'officine.",
+    tags: ["Pharmacie", "Officine", "Formation continue"],
+    icon: "HeartPulse",
+    usefulFor: ["Pratique officinale", "Équipe", "Mise à jour des compétences"],
+    sectors: ["Santé, bien-être & esthétique"],
+    href: "https://www.utip-association.org/formations",
+    cta: "Voir les formations",
+    format: "Sessions et contenus métier",
+  },
+  {
+    slug: "envf-formation-continue-veterinaire",
+    name: "Catalogue de formation continue vétérinaire",
+    provider: "Écoles nationales vétérinaires de France",
+    family: "Formation continue",
+    category: "Santé",
+    shortDescription:
+      "Le catalogue commun des quatre Écoles nationales vétérinaires françaises pour approfondir une pratique clinique ou développer une compétence métier.",
+    description:
+      "Catalogue de formation continue porté par l'ENVA, VetAgro Sup, Oniris et l'ENVT, avec des parcours qualifiants, certifiants et diplômants pour les vétérinaires.",
+    bestFor:
+      "Les cabinets et cliniques vétérinaires qui recherchent une offre académique structurée et directement liée à leur profession.",
+    tags: ["Vétérinaire", "Formation continue", "Écoles nationales"],
+    icon: "HeartPulse",
+    usefulFor: ["Pratique vétérinaire", "Compétences cliniques", "Équipe"],
+    sectors: ["Santé, bien-être & esthétique"],
+    href: "https://formation-continue.envf.fr/",
+    cta: "Voir les formations",
+    format: "Présentiel et parcours spécialisés",
+  },
+  {
+    slug: "afvac-formation-veterinaire",
+    name: "Formations pour vétérinaires praticiens",
+    provider: "AFVAC",
+    family: "Formation continue",
+    category: "Santé",
+    shortDescription:
+      "Une offre de formation continue centrée sur la pratique quotidienne des vétérinaires pour animaux de compagnie.",
+    description:
+      "Catalogue de l'Association française des vétérinaires pour animaux de compagnie, avec des formations cliniques et pratiques destinées aux vétérinaires.",
+    bestFor:
+      "Les cabinets vétérinaires qui veulent des formats concrets et directement applicables à la prise en charge de leurs patients.",
+    tags: ["Vétérinaire", "Animaux de compagnie", "Formation pratique"],
+    icon: "HeartPulse",
+    usefulFor: ["Pratique clinique", "Animaux de compagnie", "Formation continue"],
+    sectors: ["Santé, bien-être & esthétique"],
+    href: "https://afvac.com/les-formations",
+    cta: "Voir les formations",
+    format: "Présentiel, distanciel et congrès",
+  },
+  {
+    slug: "ico-formation-continue-opticien",
+    name: "Formation continue pour opticiens",
+    provider: "ICO-CMO",
+    family: "Formation continue",
+    category: "Santé",
+    shortDescription:
+      "Un catalogue métier pour les opticiens, de la réfraction à la basse vision, la législation, le montage et la relation client.",
+    description:
+      "Offre de formation continue de l'ICO-CMO destinée aux professionnels de l'optique-lunetterie, avec des formats en présentiel, classe virtuelle et e-learning.",
+    bestFor:
+      "Les magasins d'optique qui veulent développer les compétences techniques, réglementaires ou commerciales de leur équipe.",
+    tags: ["Opticien", "Optique-lunetterie", "DPC"],
+    icon: "GraduationCap",
+    usefulFor: ["Optique", "DPC", "Compétences magasin"],
+    sectors: ["Santé, bien-être & esthétique"],
+    href: "https://ico.asso.fr/formation-continue-opticien/la-formation-continue-a-lico/",
+    cta: "Voir les formations",
+    format: "Présentiel, classe virtuelle et e-learning",
   },
   {
     slug: "catalogue-medecin-santeacademie",
@@ -1405,7 +1505,7 @@ export const demaaTrainings = [
     icon: "Target",
     usefulFor: ["Prospection", "Vente", "Régularité commerciale"],
     sectors: ["Conseil & services aux entreprises", "Tech & Digital"],
-    href: "https://www.cegos.fr/formations/vente",
+    href: "https://www.cegos.fr/formations/commercial-ventes",
     cta: "Voir la formation",
   },
   {
@@ -1521,7 +1621,7 @@ export const demaaTrainings = [
     icon: "Boxes",
     usefulFor: ["Logistique", "Sécurité", "Terrain"],
     sectors: ["Mobilité & logistique", "Industrie & production"],
-    href: "https://www.apave.com/formations",
+    href: "https://france.apave.com/Vos-besoins/Former-vos-equipes/CACES-LEVAGE-MANUTENTION",
     cta: "Voir la formation",
   },
   {
@@ -1539,7 +1639,7 @@ export const demaaTrainings = [
     icon: "Car",
     usefulFor: ["Garage", "Sécurité", "Compétence métier"],
     sectors: ["Automobile & réparation"],
-    href: "https://www.bureauveritas.fr/formations",
+    href: "https://formation.bureauveritas.fr/formation/electricite/habilitation-electrique-vehicules-ou-engins-electrique",
     cta: "Voir la formation",
   },
   {

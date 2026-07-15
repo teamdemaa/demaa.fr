@@ -76,7 +76,6 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
       "evenementiel",
       "fleuriste",
       "notaire",
-      "societe-domiciliation",
       "societe-recouvrement",
       "studio-branding-design",
     ],

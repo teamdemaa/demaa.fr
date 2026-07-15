@@ -6,6 +6,8 @@ import {
   readJsonBody,
 } from "@/lib/api-security";
 import { getAccountingFirmBySlug, getAccountingFirms } from "@/lib/accounting-directory";
+import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
+import { isValidEmail, normalizeEmail } from "@/lib/email";
 import { sendSlackMessage, SlackMessageError } from "@/lib/slack";
 
 type AppointmentRequestBody = {
@@ -21,13 +23,26 @@ type AppointmentRequestBody = {
     siret?: unknown;
   };
   email?: unknown;
+  firstName?: unknown;
   firmSlug?: unknown;
   firmSlugs?: unknown;
   firmNames?: unknown;
+  lastName?: unknown;
   message?: unknown;
   phone?: unknown;
+  recommendationRequest?: unknown;
+  systemSlug?: unknown;
   website?: unknown;
 };
+
+function isValidPhone(phone: string) {
+  if (!/^\+?[0-9\s().-]+$/.test(phone)) {
+    return false;
+  }
+
+  const digitCount = phone.replace(/\D/g, "").length;
+  return digitCount >= 8 && digitCount <= 15;
+}
 
 export async function POST(request: Request) {
   try {
@@ -53,8 +68,12 @@ export async function POST(request: Request) {
           .map((value) => normalizeText(value, 120))
           .filter((value): value is string => Boolean(value))
       : [];
-    const email = normalizeText(body?.email, 160);
+    const email = normalizeEmail(normalizeText(body?.email, 160));
     const phone = normalizeText(body?.phone, 60);
+    const firstName = normalizeText(body?.firstName, 100);
+    const lastName = normalizeText(body?.lastName, 100);
+    const systemSlug = normalizeText(body?.systemSlug, 160);
+    const recommendationRequest = body?.recommendationRequest === true;
     const message = normalizeText(body?.message, 2000, { multiline: true });
     const companyName = normalizeText(body?.company?.name, 160);
     const companyActivity = normalizeText(body?.company?.activity, 120);
@@ -67,6 +86,67 @@ export async function POST(request: Request) {
     const companyCategory = normalizeText(body?.company?.category, 80);
     const requestedSlugs = [...new Set([firmSlug, ...firmSlugs].filter(Boolean))];
 
+    if (recommendationRequest) {
+      if (!firstName || !lastName || !email || !phone || !systemSlug) {
+        return NextResponse.json(
+          {
+            error: "Merci de remplir vos nom, prénom, téléphone et email.",
+          },
+          { status: 400 },
+        );
+      }
+
+      if (!isValidEmail(email)) {
+        return NextResponse.json({ error: "Merci de saisir un email valide." }, { status: 400 });
+      }
+
+      if (!isValidPhone(phone)) {
+        return NextResponse.json(
+          { error: "Merci de saisir un numéro de téléphone valide." },
+          { status: 400 },
+        );
+      }
+
+      const enterprise = await getEnterpriseBySlug(systemSlug);
+
+      if (!enterprise) {
+        return NextResponse.json({ error: "Activité introuvable." }, { status: 400 });
+      }
+
+      await sendSlackMessage({
+        text: "📗 Nouvelle demande de recommandation expert-comptable",
+        blocks: [
+          {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text:
+                `*Nom* : ${escapeSlackMrkdwn(lastName)}\n` +
+                `*Prénom* : ${escapeSlackMrkdwn(firstName)}\n` +
+                `*Téléphone* : ${escapeSlackMrkdwn(phone)}\n` +
+                `*Email* : ${escapeSlackMrkdwn(email)}\n` +
+                `*Activité / kit* : ${escapeSlackMrkdwn(enterprise.name)}\n` +
+                `*Slug du kit* : ${escapeSlackMrkdwn(systemSlug)}\n` +
+                `*Secteur automatique* : ${escapeSlackMrkdwn(enterprise.sectorLabel)}`,
+            },
+          },
+          {
+            type: "context",
+            elements: [
+              {
+                type: "mrkdwn",
+                text: `⏰ ${new Date().toLocaleString("fr-FR", {
+                  timeZone: "Europe/Paris",
+                })}`,
+              },
+            ],
+          },
+        ],
+      });
+
+      return NextResponse.json({ ok: true });
+    }
+
     if (requestedSlugs.length === 0 || !companyName || !email || !phone) {
       return NextResponse.json(
         {
@@ -74,6 +154,20 @@ export async function POST(request: Request) {
             "Merci de remplir les informations principales pour demander une mise en relation.",
         },
         { status: 400 }
+      );
+    }
+
+    if (!isValidEmail(email)) {
+      return NextResponse.json(
+        { error: "Merci de saisir un email valide." },
+        { status: 400 },
+      );
+    }
+
+    if (!isValidPhone(phone)) {
+      return NextResponse.json(
+        { error: "Merci de saisir un numéro de téléphone valide." },
+        { status: 400 },
       );
     }
 

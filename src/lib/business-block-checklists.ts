@@ -1984,7 +1984,6 @@ const CONTEXTUAL_TITLE_ACTIONS: Record<string, string[]> = {
     "Rapprocher mandat, preuves, paiements débiteur et reversement client",
     "Ajuster scénario de relance, seuils ou conditions de commission",
   ],
-  [`societe-domiciliation::${normalizeChecklistTitle("Abonnements & paiements")}`]: B2B_SUBSCRIPTION_MARGIN_ACTIONS,
   [`cabinet-qhse-conformite::${normalizeChecklistTitle("Offres QHSE & référentiels")}`]: [
     "Clarifier les référentiels couverts, le niveau d'accompagnement et les limites",
     "Mettre à jour format de mission, livrables, délais et conditions d'intervention",

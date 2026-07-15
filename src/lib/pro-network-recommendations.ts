@@ -110,10 +110,10 @@ const PRO_NETWORK_RECOMMENDATIONS_BY_SECTOR: Record<string, ProNetworkRecommenda
   "Commerce & retail": {
     order: [
       "union-commercants-locaux",
-      "cci-locale",
       "cma",
       "bni",
-      "salons-commerce-restauration",
+      "cpme-locale",
+      "cci-locale",
     ],
   },
   "Santé, bien-être & esthétique": {
@@ -155,9 +155,9 @@ const PRO_NETWORK_RECOMMENDATIONS_BY_SECTOR: Record<string, ProNetworkRecommenda
   "Automobile & réparation": {
     order: [
       "mobilians",
-      "reseaux-assureurs-auto",
       "cci-locale",
       "cma",
+      "reseaux-assureurs-auto",
       "bni",
     ],
   },
@@ -319,7 +319,7 @@ const PRO_NETWORK_OVERRIDES_BY_SYSTEM: Record<string, ProNetworkRecommendationRu
     order: [
       "cci-locale",
       "bni",
-      "union-commercants-locaux",
+      "cpme-locale",
     ],
   },
   "reparation-informatique-mobile": {
@@ -451,7 +451,7 @@ const PRO_NETWORK_OVERRIDES_BY_SYSTEM: Record<string, ProNetworkRecommendationRu
     order: [
       "fnaim",
       "notaires",
-      "agences-immobilieres-locales",
+      "unis",
       "cci-locale",
     ],
   },
@@ -532,46 +532,46 @@ const PRO_NETWORK_OVERRIDES_BY_SYSTEM: Record<string, ProNetworkRecommendationRu
     order: [
       "cma",
       "cci-locale",
-      "union-commercants-locaux",
       "salons-commerce-restauration",
+      "bni",
     ],
   },
   "commerce-de-detail": {
     order: [
       "union-commercants-locaux",
-      "cci-locale",
       "bni",
-      "salons-commerce-restauration",
+      "cpme-locale",
+      "cma",
     ],
   },
   "commerce-alimentaire": {
     order: [
       "union-commercants-locaux",
-      "cci-locale",
       "salons-commerce-restauration",
       "bni",
+      "cma",
     ],
   },
   "boutique-specialisee": {
     order: [
       "union-commercants-locaux",
-      "cci-locale",
       "bni",
-      "salons-commerce-restauration",
+      "cpme-locale",
+      "cma",
     ],
   },
   librairie: {
     order: [
       "union-commercants-locaux",
-      "cci-locale",
       "bni",
+      "cpme-locale",
     ],
   },
   "tabac-presse-point-relais": {
     order: [
       "union-commercants-locaux",
-      "cci-locale",
       "bni",
+      "cpme-locale",
     ],
   },
   "e-commerce": {
@@ -579,7 +579,7 @@ const PRO_NETWORK_OVERRIDES_BY_SYSTEM: Record<string, ProNetworkRecommendationRu
       "france-digitale",
       "french-tech",
       "cci-locale",
-      "salons-commerce-restauration",
+      "cpme-locale",
     ],
   },
   "cabinet-medical": {
@@ -641,14 +641,13 @@ const PRO_NETWORK_OVERRIDES_BY_SYSTEM: Record<string, ProNetworkRecommendationRu
   "institut-de-beaute": {
     order: [
       "cci-locale",
-      "union-commercants-locaux",
       "bni",
+      "cpme-locale",
     ],
   },
   "salon-de-coiffure": {
     order: [
       "cma",
-      "union-commercants-locaux",
       "cci-locale",
       "bni",
     ],
@@ -656,22 +655,22 @@ const PRO_NETWORK_OVERRIDES_BY_SYSTEM: Record<string, ProNetworkRecommendationRu
   esthetique: {
     order: [
       "cci-locale",
-      "union-commercants-locaux",
       "bni",
+      "cpme-locale",
     ],
   },
   "salle-de-sport": {
     order: [
       "cci-locale",
       "bni",
-      "union-commercants-locaux",
+      "cpme-locale",
     ],
   },
   "coach-sportif": {
     order: [
       "bni",
       "cci-locale",
-      "union-commercants-locaux",
+      "cpme-locale",
     ],
   },
   "services-a-la-personne": {
@@ -693,14 +692,14 @@ const PRO_NETWORK_OVERRIDES_BY_SYSTEM: Record<string, ProNetworkRecommendationRu
     order: [
       "cma",
       "cci-locale",
-      "union-commercants-locaux",
+      "bni",
     ],
   },
   "laverie-automatique": {
     order: [
       "cci-locale",
-      "union-commercants-locaux",
       "bni",
+      "cpme-locale",
     ],
   },
   "organisme-de-formation": {
@@ -811,17 +810,17 @@ const PRO_NETWORK_OVERRIDES_BY_SYSTEM: Record<string, ProNetworkRecommendationRu
   "garage-automobile": {
     order: [
       "mobilians",
-      "reseaux-assureurs-auto",
       "cci-locale",
       "cma",
+      "reseaux-assureurs-auto",
     ],
   },
   carrosserie: {
     order: [
       "mobilians",
-      "reseaux-assureurs-auto",
       "cci-locale",
       "cma",
+      "reseaux-assureurs-auto",
     ],
   },
   association: {

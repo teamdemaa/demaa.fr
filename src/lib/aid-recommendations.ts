@@ -148,8 +148,6 @@ const AID_RECOMMENDATIONS_BY_SECTOR: Record<string, readonly string[]> = {
 
 const AID_RECOMMENDATIONS_BY_SYSTEM: Record<string, readonly string[]> = {
   batiment: ["mon-pass-crea", "aides-apprentissage", "apprentissage-handicap", "aide-accueil-integration-handicap", "adaptation-situation-travail-handicap", "diagnostic-360-transition-ecologique"],
-  btp: ["diagnostic-360-transition-ecologique", "plan-action-economies-energie", "aides-apprentissage", "transition-ecologique-entreprises", "acre", "arce"],
-  artisanat: ["diagnostic-360-transition-ecologique", "plan-action-economies-energie", "aides-apprentissage", "transition-ecologique-entreprises", "acre", "arce"],
   restaurant: ["mon-pass-crea", "aides-apprentissage", "apprentissage-handicap", "aide-accueil-integration-handicap", "diagnostic-360-transition-ecologique", "reduction-emballages"],
   boulangerie: ["diagnostic-360-transition-ecologique", "plan-action-economies-energie", "reduction-emballages", "isolation-thermique", "eclairage-led", "panneaux-solaires"],
   traiteur: ["diagnostic-360-transition-ecologique", "plan-action-economies-energie", "reduction-emballages", "chauffe-eau-solaire", "transition-ecologique-entreprises", "acre"],
@@ -185,7 +183,7 @@ const AID_RECOMMENDATIONS_BY_SYSTEM: Record<string, readonly string[]> = {
   "garage-automobile": ["aides-apprentissage", "apprentissage-handicap", "aide-accueil-integration-handicap", "acquisition-voiture-propre", "aeth-travailleur-handicape", "transition-ecologique-entreprises"],
   carrosserie: ["aides-apprentissage", "apprentissage-handicap", "aide-accueil-integration-handicap", "acquisition-voiture-propre", "aeth-travailleur-handicape", "transition-ecologique-entreprises"],
   "cabinet-davocat": ["acre", "arce", "aides-apprentissage", "aide-accueil-integration-handicap", "aeth-travailleur-handicape"],
-  "cabinet-comptable": ["mon-pass-crea", "aides-apprentissage", "aide-accueil-integration-handicap", "aeth-travailleur-handicape", "cir", "cii"],
+  "cabinet-comptable": ["mon-pass-crea", "aides-apprentissage", "transition-ecologique-entreprises", "aide-accueil-integration-handicap", "aeth-travailleur-handicape", "cir"],
   "cabinet-de-conseil": ["jei", "jec", "jeu", "cir", "cii", "cifre"],
   "agence-de-recrutement": ["aides-apprentissage", "apprentissage-handicap", "aide-accueil-integration-handicap", "aeth-travailleur-handicape", "transition-ecologique-entreprises", "mon-pass-crea"],
   "courtier-credit-assurance": ["mon-pass-crea", "aides-apprentissage", "aide-accueil-integration-handicap", "transition-ecologique-entreprises", "acre", "arce"],
@@ -203,7 +201,6 @@ const AID_RECOMMENDATIONS_BY_SYSTEM: Record<string, readonly string[]> = {
   "cabinet-rh-externalise": ["aides-apprentissage", "apprentissage-handicap", "aide-accueil-integration-handicap", "aeth-travailleur-handicape", "transition-ecologique-entreprises", "mon-pass-crea"],
   "centre-appels-support-client": ["aides-apprentissage", "apprentissage-handicap", "aide-accueil-integration-handicap", "aeth-travailleur-handicape", "transition-ecologique-entreprises", "mon-pass-crea"],
   "societe-recouvrement": ["mon-pass-crea", "aides-apprentissage", "aide-accueil-integration-handicap", "transition-ecologique-entreprises", "acre", "arce"],
-  "societe-domiciliation": ["mon-pass-crea", "aides-apprentissage", "aide-accueil-integration-handicap", "transition-ecologique-entreprises", "acre", "arce"],
   "centre-affaires-coworking": ["mon-pass-crea", "aides-apprentissage", "aide-accueil-integration-handicap", "transition-ecologique-entreprises", "acre", "arce"],
   "cabinet-qhse-conformite": ["mon-pass-crea", "aides-apprentissage", "aide-accueil-integration-handicap", "transition-ecologique-entreprises", "cir", "cii"],
   "bureau-etudes": ["jei", "jeu", "cir", "cii", "cifre", "aides-apprentissage"],
@@ -276,4 +273,22 @@ export function getRecommendedAidsForSystem(systemSlug: string, sectorLabel?: st
     .map((slug) => getDemaaAidBySlug(slug))
     .filter((item): item is DemaaAidItem => Boolean(item))
     .slice(0, 6);
+}
+
+export function splitAidRecommendationsForDisplay(items: DemaaAidItem[]): {
+  recommended: DemaaAidItem[];
+  secondary: DemaaAidItem[];
+} {
+  const recommended = items
+    .filter(
+      (item, index, list) =>
+        list.findIndex((candidate) => candidate.family === item.family) === index,
+    )
+    .slice(0, 3);
+  const recommendedSlugs = new Set(recommended.map((item) => item.slug));
+
+  return {
+    recommended,
+    secondary: items.filter((item) => !recommendedSlugs.has(item.slug)),
+  };
 }

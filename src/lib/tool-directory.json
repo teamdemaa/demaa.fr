@@ -1122,7 +1122,11 @@
     {
       "slug": "planity",
       "name": "Planity",
-      "url": "https://www.planity.com/",
+      "url": "https://info.planity.com/",
+      "sources": [
+        "https://info.planity.com/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Caisse & réservation",
       "sectors": [
         "Santé & bien-être",
@@ -1162,7 +1166,11 @@
     {
       "slug": "square",
       "name": "Square",
-      "url": "https://squareup.com/",
+      "url": "https://squareup.com/fr/fr",
+      "sources": [
+        "https://squareup.com/fr/fr"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Caisse & réservation",
       "sectors": [
         "Commerce local",
@@ -1184,6 +1192,10 @@
       "slug": "lightspeed",
       "name": "Lightspeed",
       "url": "https://www.lightspeedhq.fr/",
+      "sources": [
+        "https://www.lightspeedhq.fr/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Caisse & réservation",
       "sectors": [
         "Commerce local",
@@ -1204,6 +1216,10 @@
       "slug": "zenchef",
       "name": "Zenchef",
       "url": "https://www.zenchef.com/",
+      "sources": [
+        "https://www.zenchef.com/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Caisse & réservation",
       "sectors": [
         "Restauration"
@@ -1222,7 +1238,11 @@
     {
       "slug": "deliverect",
       "name": "Deliverect",
-      "url": "https://www.deliverect.com/",
+      "url": "https://www.deliverect.com/fr-fr/customer-type/restaurant",
+      "sources": [
+        "https://www.deliverect.com/fr-fr/customer-type/restaurant"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Caisse & réservation",
       "sectors": [
         "Restauration",
@@ -1853,6 +1873,10 @@
       "slug": "digiforma",
       "name": "Digiforma",
       "url": "https://www.digiforma.com/",
+      "sources": [
+        "https://www.digiforma.com/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Formation",
       "sectors": [
         "Éducation & formation"
@@ -1872,6 +1896,10 @@
       "slug": "kajabi",
       "name": "Kajabi",
       "url": "https://kajabi.com/",
+      "sources": [
+        "https://kajabi.com/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Formation",
       "sectors": [
         "Éducation & formation",
@@ -1929,6 +1957,10 @@
       "slug": "katana",
       "name": "Katana",
       "url": "https://katanamrp.com/",
+      "sources": [
+        "https://katanamrp.com/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Artisanat & BTP"
@@ -1984,6 +2016,10 @@
       "slug": "kopilo",
       "name": "Kopilo",
       "url": "https://www.kopilo.fr/",
+      "sources": [
+        "https://www.kopilo.fr/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Éducation & formation"
@@ -2003,6 +2039,10 @@
       "slug": "lya",
       "name": "Lya",
       "url": "https://www.lyaprotect.com/",
+      "sources": [
+        "https://www.lyaprotect.com/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Services & conseil"
@@ -2022,6 +2062,10 @@
       "slug": "kiilt",
       "name": "Kiilt",
       "url": "https://kiilt.com/",
+      "sources": [
+        "https://kiilt.com/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Services & conseil",
@@ -2041,7 +2085,7 @@
     {
       "slug": "picstudio",
       "name": "PicStudio",
-      "url": "https://piccloud.fr/",
+      "url": "https://picstudio.fr/",
       "category": "Outils métier",
       "sectors": [
         "Services & conseil",
@@ -2095,6 +2139,10 @@
       "slug": "gesfit",
       "name": "Gesfit",
       "url": "https://gesfit.fr/",
+      "sources": [
+        "https://gesfit.fr/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Santé & bien-être"
@@ -2114,6 +2162,10 @@
       "slug": "ogust",
       "name": "Ogust",
       "url": "https://ogust.com/logiciel-services-a-la-personne/",
+      "sources": [
+        "https://ogust.com/logiciel-services-a-la-personne/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Services aux particuliers"
@@ -2133,6 +2185,10 @@
       "slug": "repairdesk",
       "name": "RepairDesk",
       "url": "https://www.repairdesk.co/",
+      "sources": [
+        "https://www.repairdesk.co/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Services aux particuliers",
@@ -2153,6 +2209,10 @@
       "slug": "doctolib",
       "name": "Doctolib",
       "url": "https://info.doctolib.fr/chirurgien-dentiste/",
+      "sources": [
+        "https://info.doctolib.fr/chirurgien-dentiste/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Santé & bien-être"
@@ -2192,6 +2252,10 @@
       "slug": "genapi",
       "name": "Genapi",
       "url": "https://www.genapi.septeo.com/",
+      "sources": [
+        "https://www.genapi.septeo.com/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Services & conseil",
@@ -2212,6 +2276,10 @@
       "slug": "vetup",
       "name": "Vetup",
       "url": "https://www.vetup.com/",
+      "sources": [
+        "https://www.vetup.com/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Santé & bien-être"
@@ -2264,6 +2332,10 @@
       "slug": "winoptics",
       "name": "WinOptics",
       "url": "https://winoptics.com/",
+      "sources": [
+        "https://winoptics.com/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Santé & bien-être",
@@ -2355,6 +2427,10 @@
       "slug": "fleuracompta",
       "name": "Fleuracompta",
       "url": "https://fleuracompta.com/",
+      "sources": [
+        "https://fleuracompta.com/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Commerce local"
@@ -2374,6 +2450,10 @@
       "slug": "xinaya",
       "name": "Xinaya",
       "url": "https://www.xinaya.fr/",
+      "sources": [
+        "https://www.xinaya.fr/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Services aux particuliers",
@@ -2387,13 +2467,17 @@
       ],
       "bestFor": "Suivre dépôts, traitements, délais, livraisons, caisse et clients.",
       "pricingHint": "Payant",
-      "status": "active",
+      "status": "hidden",
       "scope": "business"
     },
     {
       "slug": "nomad-caisse",
       "name": "Nomad",
       "url": "https://www.nomadcaisse.fr/",
+      "sources": [
+        "https://www.nomadcaisse.fr/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Caisse & réservation",
       "sectors": [
         "Restauration"
@@ -2413,6 +2497,10 @@
       "slug": "vtc-gestion",
       "name": "VTC Gestion",
       "url": "https://www.vtcgestion.com/",
+      "sources": [
+        "https://www.vtcgestion.com/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Commerce local"
@@ -2432,6 +2520,10 @@
       "slug": "cognito-app",
       "name": "Cognito App",
       "url": "https://www.cognito-app.com/",
+      "sources": [
+        "https://www.cognito-app.com/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Services & conseil",
@@ -2451,7 +2543,11 @@
     {
       "slug": "maliora",
       "name": "Maliora",
-      "url": "https://www.maliora.fr/",
+      "url": "https://maliora.fr/fonctionnalites",
+      "sources": [
+        "https://maliora.fr/fonctionnalites"
+      ],
+      "lastReviewedAt": "2026-07-15",
       "category": "Outils métier",
       "sectors": [
         "Santé & bien-être"
@@ -2509,6 +2605,10 @@
       "slug": "booknroll",
       "name": "Book’n Roll",
       "url": "https://www.booknroll.net/",
+      "sources": [
+        "https://www.booknroll.net/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Caisse & réservation",
       "sectors": [
         "Commerce local"
@@ -2528,6 +2628,10 @@
       "slug": "meeko",
       "name": "Meeko",
       "url": "https://www.meeko.pro/",
+      "sources": [
+        "https://www.meeko.pro/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Éducation & formation",
@@ -2548,6 +2652,10 @@
       "slug": "harvest-patrimoine",
       "name": "Harvest",
       "url": "https://www.harvest.fr/",
+      "sources": [
+        "https://www.harvest.fr/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Services & conseil",
@@ -2568,6 +2676,10 @@
       "slug": "geofoncier",
       "name": "Géofoncier",
       "url": "https://www.geofoncier.fr/",
+      "sources": [
+        "https://www.geofoncier.fr/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Immobilier",
@@ -2676,7 +2788,11 @@
     {
       "slug": "esabora",
       "name": "Esabora",
-      "url": "https://www.esabora.fr/",
+      "url": "https://www.esabora-digital-services.com/",
+      "sources": [
+        "https://www.esabora-digital-services.com/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Artisanat & BTP"
@@ -2696,6 +2812,10 @@
       "slug": "tolteck",
       "name": "Tolteck",
       "url": "https://www.tolteck.com/",
+      "sources": [
+        "https://www.tolteck.com/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Artisanat & BTP"
@@ -2921,6 +3041,10 @@
       "slug": "zelty",
       "name": "Zelty",
       "url": "https://www.zelty.fr/",
+      "sources": [
+        "https://www.zelty.fr/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Caisse & réservation",
       "sectors": [
         "Restauration"
@@ -2958,7 +3082,11 @@
     {
       "slug": "sumup-caisse",
       "name": "SumUp Caisse",
-      "url": "https://www.sumup.com/fr-fr/apercu-caisse-enregistreuse/caisse-enregistreuse-pro/",
+      "url": "https://www.sumup.com/fr-fr/logiciel-de-caisse-sumup/",
+      "sources": [
+        "https://www.sumup.com/fr-fr/logiciel-de-caisse-sumup/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Caisse & réservation",
       "sectors": [
         "Commerce local",
@@ -2979,6 +3107,10 @@
       "slug": "sendcloud",
       "name": "Sendcloud",
       "url": "https://www.sendcloud.com/fr/",
+      "sources": [
+        "https://www.sendcloud.com/fr/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Livraison & expédition",
       "sectors": [
         "E-commerce",
@@ -3130,6 +3262,10 @@
       "slug": "maiia",
       "name": "Maiia",
       "url": "https://www.maiia.com/",
+      "sources": [
+        "https://www.maiia.com/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Santé & bien-être"
@@ -3182,6 +3318,10 @@
       "slug": "simplybook",
       "name": "SimplyBook.me",
       "url": "https://simplybook.me/fr/",
+      "sources": [
+        "https://simplybook.me/fr/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Caisse & réservation",
       "sectors": [
         "Santé & bien-être",
@@ -3234,7 +3374,7 @@
     {
       "slug": "hektor",
       "name": "Hektor",
-      "url": "https://www.la-boite-immo.com/hektor/",
+      "url": "https://www.la-boite-immo.com/logiciel-immobilier",
       "category": "Outils métier",
       "sectors": [
         "Immobilier"
@@ -3645,6 +3785,10 @@
       "slug": "assoconnect",
       "name": "AssoConnect",
       "url": "https://www.assoconnect.com/",
+      "sources": [
+        "https://www.assoconnect.com/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Associations & événements"
@@ -3843,6 +3987,10 @@
       "slug": "stripe",
       "name": "Stripe",
       "url": "https://stripe.com/fr",
+      "sources": [
+        "https://stripe.com/fr"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Paiement & revenus",
       "sectors": [
         "Tech & Digital",
@@ -3864,6 +4012,10 @@
       "slug": "keralpha",
       "name": "Keralpha",
       "url": "https://keralpha.fr/",
+      "sources": [
+        "https://keralpha.fr/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Automobile & réparation"
@@ -3883,6 +4035,10 @@
       "slug": "embray",
       "name": "Embray",
       "url": "https://www.embray.fr/",
+      "sources": [
+        "https://www.embray.fr/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Automobile & réparation"
@@ -3902,6 +4058,10 @@
       "slug": "autoprogestion",
       "name": "AutoProGestion",
       "url": "https://www.autoprogestion.fr/",
+      "sources": [
+        "https://www.autoprogestion.fr/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Automobile & réparation"
@@ -3921,6 +4081,10 @@
       "slug": "repairsoft",
       "name": "Repair Soft",
       "url": "https://www.repairsoft.fr/",
+      "sources": [
+        "https://www.repairsoft.fr/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Automobile & réparation"
@@ -4272,7 +4436,11 @@
     {
       "slug": "doctrine",
       "name": "Doctrine",
-      "url": "https://www.doctrine.eu/",
+      "url": "https://www.doctrine.fr/",
+      "sources": [
+        "https://www.doctrine.fr/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Services & conseil"
@@ -4330,6 +4498,10 @@
       "slug": "everwin",
       "name": "Everwin",
       "url": "https://www.everwin.fr/",
+      "sources": [
+        "https://www.everwin.fr/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Services & conseil"
@@ -4368,6 +4540,10 @@
       "slug": "furious",
       "name": "Furious",
       "url": "https://www.furious-squad.com/",
+      "sources": [
+        "https://www.furious-squad.com/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Services & conseil",
@@ -4427,6 +4603,10 @@
       "slug": "freebe",
       "name": "Freebe",
       "url": "https://www.freebe.me/",
+      "sources": [
+        "https://www.freebe.me/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Services & conseil"
@@ -4465,6 +4645,10 @@
       "slug": "sharetribe",
       "name": "Sharetribe",
       "url": "https://www.sharetribe.com/",
+      "sources": [
+        "https://www.sharetribe.com/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Tech & Digital",
@@ -4504,7 +4688,7 @@
     {
       "slug": "mirakl",
       "name": "Mirakl",
-      "url": "https://www.mirakl.com/fr/",
+      "url": "https://www.mirakl.com/fr-FR/products/mirakl-marketplace-platform",
       "category": "Outils métier",
       "sectors": [
         "Tech & Digital",
@@ -4780,6 +4964,10 @@
       "slug": "360learning",
       "name": "360Learning",
       "url": "https://360learning.com/fr/",
+      "sources": [
+        "https://360learning.com/fr/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Formation",
       "sectors": [
         "Éducation & formation"
@@ -4888,6 +5076,10 @@
       "slug": "pixieset",
       "name": "Pixieset",
       "url": "https://pixieset.com/",
+      "sources": [
+        "https://pixieset.com/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Tech & Digital",
@@ -4908,6 +5100,10 @@
       "slug": "studio-ninja",
       "name": "Studio Ninja",
       "url": "https://www.studioninja.co/",
+      "sources": [
+        "https://www.studioninja.co/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Tech & Digital",
@@ -5194,6 +5390,10 @@
       "slug": "smart-rx",
       "name": "Smart Rx",
       "url": "https://www.smart-rx.com/",
+      "sources": [
+        "https://www.smart-rx.com/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Santé & bien-être",
@@ -5214,6 +5414,10 @@
       "slug": "winpharma",
       "name": "Winpharma",
       "url": "https://www.winpharma.com/",
+      "sources": [
+        "https://www.winpharma.com/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Santé & bien-être",
@@ -5234,6 +5438,10 @@
       "slug": "dr-veto",
       "name": "dr.veto",
       "url": "https://www.drveto.com/",
+      "sources": [
+        "https://www.drveto.com/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Santé & bien-être"
@@ -5272,6 +5480,10 @@
       "slug": "hiboutik",
       "name": "Hiboutik",
       "url": "https://www.hiboutik.com/",
+      "sources": [
+        "https://www.hiboutik.com/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Caisse & réservation",
       "sectors": [
         "Commerce local",
@@ -5410,7 +5622,11 @@
     {
       "slug": "covadis",
       "name": "COVADIS",
-      "url": "https://www.geo-media.com/covadis/",
+      "url": "https://www.sogelink.com/solution/covadis/",
+      "sources": [
+        "https://www.sogelink.com/solution/covadis/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Artisanat & BTP",
@@ -5490,6 +5706,10 @@
       "slug": "quai-des-notaires",
       "name": "Quai des Notaires",
       "url": "https://www.quaidesnotaires.com/",
+      "sources": [
+        "https://www.quaidesnotaires.com/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Services & conseil",
@@ -5510,6 +5730,10 @@
       "slug": "notalia",
       "name": "Notalia",
       "url": "https://www.notalia.fr/",
+      "sources": [
+        "https://www.notalia.fr/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Services & conseil",
@@ -5549,6 +5773,10 @@
       "slug": "ypareo",
       "name": "Ypareo",
       "url": "https://www.ypareo.com/",
+      "sources": [
+        "https://www.ypareo.com/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Formation",
       "sectors": [
         "Éducation & formation"
@@ -5646,6 +5874,10 @@
       "slug": "paperbell",
       "name": "Paperbell",
       "url": "https://paperbell.com/",
+      "sources": [
+        "https://paperbell.com/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Services & conseil"
@@ -5740,7 +5972,11 @@
     {
       "slug": "codes-rousseau",
       "name": "Codes Rousseau",
-      "url": "https://public.codesrousseau.fr/",
+      "url": "https://pro.codesrousseau.fr/",
+      "sources": [
+        "https://pro.codesrousseau.fr/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Éducation & formation"
@@ -5778,7 +6014,11 @@
     {
       "slug": "laddition",
       "name": "L’Addition",
-      "url": "https://www.laddition.com/",
+      "url": "https://www.laddition.com/fr",
+      "sources": [
+        "https://www.laddition.com/fr"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Caisse & réservation",
       "sectors": [
         "Restauration"
@@ -6092,7 +6332,7 @@
     {
       "slug": "letsbuild",
       "name": "LetsBuild",
-      "url": "https://www.aproplan.com/fr/home",
+      "url": "https://www.letsbuild.com/fr/letsbuild-logiciel-gestion-construction",
       "category": "Outils métier",
       "sectors": [
         "Artisanat & BTP"
@@ -6165,7 +6405,7 @@
     {
       "slug": "ximi",
       "name": "Ximi",
-      "url": "https://www.ximi.fr/",
+      "url": "https://www.ximi.fr/logiciel-services-a-la-personne/",
       "category": "Outils métier",
       "sectors": [
         "Services aux particuliers"
@@ -6189,7 +6429,7 @@
         "Organisations SAP qui ont besoin de back-office et mobile terrain"
       ],
       "sources": [
-        "https://www.ximi.fr/"
+        "https://www.ximi.fr/logiciel-services-a-la-personne/"
       ],
       "lastReviewedAt": "2026-07-02",
       "status": "active",
@@ -6463,6 +6703,10 @@
       "slug": "theram",
       "name": "therâm",
       "url": "https://theram.fr/logiciel-psychologue.html",
+      "sources": [
+        "https://theram.fr/logiciel-psychologue.html"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Santé & bien-être"
@@ -6558,6 +6802,10 @@
       "slug": "bsport",
       "name": "bsport",
       "url": "https://pro.bsport.io/",
+      "sources": [
+        "https://pro.bsport.io/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Santé & bien-être"
@@ -6577,6 +6825,10 @@
       "slug": "ivoirnet",
       "name": "iVoirNet",
       "url": "https://www.ivoirnet.com/",
+      "sources": [
+        "https://www.ivoirnet.com/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Santé & bien-être",
@@ -6637,6 +6889,10 @@
       "slug": "github",
       "name": "GitHub",
       "url": "https://github.com/",
+      "sources": [
+        "https://github.com/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "IA dev",
       "sectors": [
         "Tech & Digital",
@@ -6713,6 +6969,10 @@
       "slug": "sentry",
       "name": "Sentry",
       "url": "https://sentry.io/",
+      "sources": [
+        "https://sentry.io/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "IA dev",
       "sectors": [
         "Tech & Digital"
@@ -7347,7 +7607,11 @@
     {
       "slug": "oggo-data",
       "name": "OGGO Data",
-      "url": "https://oggo-data.net/",
+      "url": "https://www.oggodata.com/",
+      "sources": [
+        "https://www.oggodata.com/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Conseil & services aux entreprises"
@@ -7534,6 +7798,10 @@
       "slug": "quantalys",
       "name": "Quantalys",
       "url": "https://quantalys.com/",
+      "sources": [
+        "https://quantalys.com/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Patrimoine"
@@ -7591,6 +7859,10 @@
       "slug": "washonline",
       "name": "WashOnline",
       "url": "https://washonline.fr/",
+      "sources": [
+        "https://washonline.fr/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Services aux particuliers"
@@ -7629,6 +7901,10 @@
       "slug": "hangers-pressing",
       "name": "Hangers Pressing",
       "url": "https://hangers.io/Pressing",
+      "sources": [
+        "https://hangers.io/Pressing"
+      ],
+      "lastReviewedAt": "2026-07-15",
       "category": "Caisse & réservation",
       "sectors": [
         "Services aux particuliers"
@@ -7648,6 +7924,10 @@
       "slug": "blanchinet",
       "name": "BlanchiNet",
       "url": "https://blanchinet.fr/",
+      "sources": [
+        "https://blanchinet.fr/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Services aux particuliers"
@@ -7812,7 +8092,11 @@
     {
       "slug": "booking-com",
       "name": "Booking.com",
-      "url": "https://www.booking.com/",
+      "url": "https://join.booking.com/index.html?lang=fr",
+      "sources": [
+        "https://join.booking.com/index.html?lang=fr"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Outils métier",
       "sectors": [
         "Hébergement & tourisme"
@@ -7887,6 +8171,10 @@
       "slug": "uber-eats",
       "name": "Uber Eats",
       "url": "https://merchants.ubereats.com/",
+      "sources": [
+        "https://merchants.ubereats.com/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Caisse & réservation",
       "sectors": [
         "Restauration",
@@ -8159,6 +8447,10 @@
       "slug": "livestorm",
       "name": "Livestorm",
       "url": "https://livestorm.co/",
+      "sources": [
+        "https://livestorm.co/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "category": "Formation",
       "sectors": [
         "Éducation & formation",
@@ -8701,6 +8993,477 @@
         "https://www.freshworks.com/freshdesk/"
       ],
       "lastReviewedAt": "2026-07-02",
+      "status": "active",
+      "scope": "business"
+    },
+    {
+      "slug": "aircall",
+      "name": "Aircall",
+      "url": "https://aircall.io/fr/logiciel-centre-appels/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "Téléphonie cloud pour centres d’appels avec routage, files d’attente, supervision, enregistrement et analyse des performances.",
+      "tags": [
+        "Centre d’appels",
+        "Téléphonie cloud",
+        "Support client"
+      ],
+      "bestFor": "Piloter les appels entrants et sortants d’une équipe de support ou de relation client.",
+      "pricingHint": "Payant",
+      "keyFeatures": [
+        "Routage et files d’attente",
+        "SVI et horaires",
+        "Supervision et enregistrement",
+        "Analyse des appels",
+        "Intégrations CRM et helpdesk"
+      ],
+      "idealFor": [
+        "Centres d’appels et équipes support",
+        "Services clients qui utilisent un CRM ou un helpdesk",
+        "Équipes qui suivent la qualité et les délais de réponse"
+      ],
+      "sources": [
+        "https://aircall.io/fr/logiciel-centre-appels/"
+      ],
+      "lastReviewedAt": "2026-07-14",
+      "status": "active",
+      "scope": "business"
+    },
+    {
+      "slug": "leanpay",
+      "name": "LeanPay",
+      "url": "https://www.leanpay.io/",
+      "category": "Finance & paiement",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "Logiciel de recouvrement B2B pour centraliser les créances, automatiser les relances et suivre les promesses de paiement.",
+      "tags": [
+        "Recouvrement",
+        "Créances",
+        "Relances"
+      ],
+      "bestFor": "Structurer un portefeuille de créances et industrialiser les scénarios de relance.",
+      "pricingHint": "Sur demande",
+      "keyFeatures": [
+        "Portefeuille de créances",
+        "Scénarios de relance",
+        "Suivi des promesses de paiement",
+        "Priorisation des dossiers",
+        "Tableaux de bord de recouvrement"
+      ],
+      "idealFor": [
+        "Sociétés de recouvrement B2B",
+        "Équipes crédit client",
+        "Structures qui suivent un volume important de factures échues"
+      ],
+      "sources": [
+        "https://www.leanpay.io/"
+      ],
+      "lastReviewedAt": "2026-07-14",
+      "status": "active",
+      "scope": "business"
+    },
+    {
+      "slug": "nexudus",
+      "name": "Nexudus",
+      "url": "https://nexudus.com/fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "Plateforme de gestion de coworking pour les membres, contrats, réservations, facturation, accès et opérations multi-sites.",
+      "tags": [
+        "Coworking",
+        "Réservations",
+        "Membres"
+      ],
+      "bestFor": "Centraliser l’exploitation d’un centre d’affaires ou d’un espace de coworking.",
+      "pricingHint": "Payant",
+      "keyFeatures": [
+        "Gestion des membres",
+        "Réservation des espaces",
+        "Contrats et facturation",
+        "Contrôle des accès",
+        "Gestion multi-sites"
+      ],
+      "idealFor": [
+        "Espaces de coworking",
+        "Centres d’affaires",
+        "Réseaux d’espaces partagés"
+      ],
+      "sources": [
+        "https://nexudus.com/fr/"
+      ],
+      "lastReviewedAt": "2026-07-14",
+      "status": "active",
+      "scope": "business"
+    },
+    {
+      "slug": "bluekango",
+      "name": "BlueKanGo",
+      "url": "https://www.bluekango.com/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil",
+        "Artisanat & BTP"
+      ],
+      "description": "Logiciel QHSE et RSE pour gérer audits, risques, plans d’action, conformité et preuves dans un référentiel partagé.",
+      "tags": [
+        "QHSE",
+        "Conformité",
+        "Audits"
+      ],
+      "bestFor": "Piloter les missions QHSE avec des audits, écarts et plans d’action traçables.",
+      "pricingHint": "Sur demande",
+      "keyFeatures": [
+        "Audits et inspections",
+        "Gestion des risques",
+        "Plans d’action",
+        "Gestion documentaire",
+        "Reporting QHSE"
+      ],
+      "idealFor": [
+        "Cabinets QHSE",
+        "Responsables qualité et sécurité",
+        "Organisations multi-sites soumises à des référentiels"
+      ],
+      "sources": [
+        "https://www.bluekango.com/"
+      ],
+      "lastReviewedAt": "2026-07-14",
+      "status": "active",
+      "scope": "business"
+    },
+    {
+      "slug": "ninjaone",
+      "name": "NinjaOne",
+      "url": "https://www.ninjaone.com/fr/msp/",
+      "category": "Outils métier",
+      "sectors": [
+        "Tech & Digital",
+        "Services & conseil"
+      ],
+      "description": "Plateforme RMM pour les prestataires informatiques : surveillance, gestion des correctifs, automatisation, accès distant et alertes.",
+      "tags": [
+        "RMM",
+        "Infogérance",
+        "Parc informatique"
+      ],
+      "bestFor": "Superviser et maintenir à distance les terminaux de plusieurs clients.",
+      "pricingHint": "Sur demande",
+      "keyFeatures": [
+        "Surveillance à distance",
+        "Gestion des correctifs",
+        "Alertes et automatisations",
+        "Accès distant",
+        "Gestion multi-clients"
+      ],
+      "idealFor": [
+        "MSP et sociétés d’infogérance",
+        "Équipes qui gèrent plusieurs parcs clients",
+        "Techniciens qui automatisent la maintenance préventive"
+      ],
+      "sources": [
+        "https://www.ninjaone.com/fr/msp/"
+      ],
+      "lastReviewedAt": "2026-07-14",
+      "status": "active",
+      "scope": "business"
+    },
+    {
+      "slug": "microsoft-defender-business",
+      "name": "Microsoft Defender for Business",
+      "url": "https://learn.microsoft.com/fr-fr/defender-business/",
+      "category": "Outils métier",
+      "sectors": [
+        "Tech & Digital",
+        "Services & conseil"
+      ],
+      "description": "Protection des terminaux conçue pour les PME, avec gestion centralisée, réduction de la surface d’attaque et remédiation automatisée.",
+      "tags": [
+        "Cybersécurité",
+        "Terminaux",
+        "PME"
+      ],
+      "bestFor": "Déployer une protection des postes et appareils adaptée aux PME jusqu’à 300 utilisateurs.",
+      "pricingHint": "Payant",
+      "keyFeatures": [
+        "Protection des terminaux",
+        "Gestion centralisée",
+        "Réduction de la surface d’attaque",
+        "Investigation et remédiation",
+        "Support multiplateforme"
+      ],
+      "idealFor": [
+        "Consultants cybersécurité PME",
+        "Prestataires qui sécurisent des environnements Microsoft 365",
+        "PME qui veulent centraliser la protection de leurs appareils"
+      ],
+      "sources": [
+        "https://learn.microsoft.com/fr-fr/defender-business/"
+      ],
+      "lastReviewedAt": "2026-07-14",
+      "status": "active",
+      "scope": "business"
+    },
+    {
+      "slug": "tenable-vulnerability-management",
+      "name": "Tenable Vulnerability Management",
+      "url": "https://www.tenable.com/products/vulnerability-management",
+      "category": "Outils métier",
+      "sectors": [
+        "Tech & Digital",
+        "Services & conseil"
+      ],
+      "description": "Plateforme de gestion des vulnérabilités pour découvrir les actifs, lancer des scans, prioriser les risques et suivre leur correction.",
+      "tags": [
+        "Vulnérabilités",
+        "Audit sécurité",
+        "Remédiation"
+      ],
+      "bestFor": "Conduire des audits techniques et prioriser les vulnérabilités à corriger.",
+      "pricingHint": "Sur demande",
+      "keyFeatures": [
+        "Découverte des actifs",
+        "Scans de vulnérabilités",
+        "Priorisation des risques",
+        "Tableaux de bord",
+        "Suivi de la remédiation"
+      ],
+      "idealFor": [
+        "Cabinets de cybersécurité",
+        "Équipes de gestion des vulnérabilités",
+        "Prestataires qui réalisent des audits récurrents"
+      ],
+      "sources": [
+        "https://www.tenable.com/products/vulnerability-management",
+        "https://docs.tenable.com/vulnerability-management.htm"
+      ],
+      "lastReviewedAt": "2026-07-14",
+      "status": "active",
+      "scope": "business"
+    },
+    {
+      "slug": "power-bi",
+      "name": "Microsoft Power BI",
+      "url": "https://powerbi.microsoft.com/fr-fr/",
+      "category": "Outils métier",
+      "sectors": [
+        "Tech & Digital",
+        "Services & conseil"
+      ],
+      "description": "Plateforme de business intelligence pour connecter les données, créer des tableaux de bord et partager des analyses interactives.",
+      "tags": [
+        "BI",
+        "Tableaux de bord",
+        "Data"
+      ],
+      "bestFor": "Construire et diffuser des tableaux de bord décisionnels à partir de sources multiples.",
+      "pricingHint": "Freemium",
+      "keyFeatures": [
+        "Connexion aux sources de données",
+        "Modélisation",
+        "Visualisations interactives",
+        "Partage de tableaux de bord",
+        "Actualisation des données"
+      ],
+      "idealFor": [
+        "Consultants data et BI",
+        "Cabinets d’études quantitatives",
+        "Directions qui veulent suivre des KPI partagés"
+      ],
+      "sources": [
+        "https://powerbi.microsoft.com/fr-fr/"
+      ],
+      "lastReviewedAt": "2026-07-14",
+      "status": "active",
+      "scope": "business"
+    },
+    {
+      "slug": "semrush",
+      "name": "Semrush",
+      "url": "https://fr.semrush.com/",
+      "category": "Marketing & visibilité",
+      "sectors": [
+        "Tech & Digital",
+        "Services & conseil",
+        "E-commerce"
+      ],
+      "description": "Suite SEO pour la recherche de mots-clés, l’analyse concurrentielle, l’audit technique, les backlinks et le suivi de positions.",
+      "tags": [
+        "SEO",
+        "Mots-clés",
+        "Audit"
+      ],
+      "bestFor": "Piloter les audits et la stratégie SEO de plusieurs clients dans un même outil.",
+      "pricingHint": "Payant",
+      "keyFeatures": [
+        "Recherche de mots-clés",
+        "Audit technique",
+        "Analyse concurrentielle",
+        "Backlinks",
+        "Suivi des positions"
+      ],
+      "idealFor": [
+        "Agences SEO",
+        "Consultants en référencement",
+        "Équipes marketing qui suivent plusieurs domaines"
+      ],
+      "sources": [
+        "https://fr.semrush.com/"
+      ],
+      "lastReviewedAt": "2026-07-14",
+      "status": "active",
+      "scope": "business"
+    },
+    {
+      "slug": "google-search-console",
+      "name": "Google Search Console",
+      "url": "https://search.google.com/search-console/about?hl=fr",
+      "category": "Marketing & visibilité",
+      "sectors": [
+        "Tech & Digital",
+        "Services & conseil",
+        "E-commerce"
+      ],
+      "description": "Outil Google pour suivre la visibilité organique, les requêtes, l’indexation et les problèmes techniques d’un site.",
+      "tags": [
+        "SEO",
+        "Indexation",
+        "Performance"
+      ],
+      "bestFor": "Analyser les données SEO de première source et contrôler l’indexation d’un site.",
+      "pricingHint": "Gratuit",
+      "keyFeatures": [
+        "Requêtes et clics organiques",
+        "Couverture de l’index",
+        "Inspection d’URL",
+        "Alertes techniques",
+        "Liens externes et internes"
+      ],
+      "idealFor": [
+        "Agences SEO",
+        "Propriétaires de sites",
+        "Équipes qui suivent la santé technique de leur référencement"
+      ],
+      "sources": [
+        "https://search.google.com/search-console/about?hl=fr"
+      ],
+      "lastReviewedAt": "2026-07-14",
+      "status": "active",
+      "scope": "business"
+    },
+    {
+      "slug": "google-ads",
+      "name": "Google Ads",
+      "url": "https://ads.google.com/intl/fr_fr/home/",
+      "category": "Marketing & visibilité",
+      "sectors": [
+        "Tech & Digital",
+        "Services & conseil",
+        "E-commerce"
+      ],
+      "description": "Plateforme publicitaire Google pour créer, piloter et mesurer des campagnes Search, Shopping, Display, vidéo et Performance Max.",
+      "tags": [
+        "Publicité",
+        "Acquisition",
+        "Google"
+      ],
+      "bestFor": "Gérer les campagnes payantes et les budgets Google de plusieurs clients.",
+      "pricingHint": "Budget média",
+      "keyFeatures": [
+        "Campagnes Search",
+        "Performance Max",
+        "Display et vidéo",
+        "Suivi des conversions",
+        "Pilotage des budgets"
+      ],
+      "idealFor": [
+        "Agences d’acquisition",
+        "Consultants SEA",
+        "Annonceurs qui pilotent ventes ou génération de leads"
+      ],
+      "sources": [
+        "https://ads.google.com/intl/fr_fr/home/"
+      ],
+      "lastReviewedAt": "2026-07-14",
+      "status": "active",
+      "scope": "business"
+    },
+    {
+      "slug": "meta-ads-manager",
+      "name": "Meta Ads Manager",
+      "url": "https://www.facebook.com/business/tools/ads-manager",
+      "category": "Marketing & visibilité",
+      "sectors": [
+        "Tech & Digital",
+        "Services & conseil",
+        "E-commerce"
+      ],
+      "description": "Gestionnaire de publicités Meta pour créer et piloter des campagnes sur Facebook et Instagram, leurs audiences, budgets et résultats.",
+      "tags": [
+        "Publicité",
+        "Meta",
+        "Social ads"
+      ],
+      "bestFor": "Piloter l’acquisition payante sur Facebook et Instagram.",
+      "pricingHint": "Budget média",
+      "keyFeatures": [
+        "Création de campagnes",
+        "Gestion des audiences",
+        "Budgets et enchères",
+        "Formats Facebook et Instagram",
+        "Mesure des résultats"
+      ],
+      "idealFor": [
+        "Agences paid social",
+        "E-commerçants",
+        "Annonceurs qui génèrent des leads sur les réseaux sociaux"
+      ],
+      "sources": [
+        "https://www.facebook.com/business/tools/ads-manager"
+      ],
+      "lastReviewedAt": "2026-07-14",
+      "status": "active",
+      "scope": "business"
+    },
+    {
+      "slug": "google-tag-manager",
+      "name": "Google Tag Manager",
+      "url": "https://marketingplatform.google.com/intl/fr/about/tag-manager/",
+      "category": "Marketing & visibilité",
+      "sectors": [
+        "Tech & Digital",
+        "Services & conseil",
+        "E-commerce"
+      ],
+      "description": "Gestionnaire de balises pour déployer et administrer le tracking marketing et analytique sur les sites et applications.",
+      "tags": [
+        "Tracking",
+        "Balises",
+        "Attribution"
+      ],
+      "bestFor": "Fiabiliser le déploiement des balises de conversion et d’analyse sans modifier chaque fois le code du site.",
+      "pricingHint": "Gratuit",
+      "keyFeatures": [
+        "Gestion centralisée des balises",
+        "Déclencheurs et variables",
+        "Mode aperçu et débogage",
+        "Gestion des versions",
+        "Balises Web et mobile"
+      ],
+      "idealFor": [
+        "Agences d’acquisition",
+        "Spécialistes tracking et analytics",
+        "Équipes qui gèrent plusieurs plans de marquage"
+      ],
+      "sources": [
+        "https://marketingplatform.google.com/intl/fr/about/tag-manager/"
+      ],
+      "lastReviewedAt": "2026-07-14",
       "status": "active",
       "scope": "business"
     }

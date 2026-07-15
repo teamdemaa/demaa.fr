@@ -273,12 +273,6 @@ const TRAINING_OVERRIDES_BY_SYSTEM: Record<string, readonly DemaaTrainingSlug[]>
     "management-equipe-proximite",
     "documents-obligations-rgpd",
   ],
-  "societe-domiciliation": [
-    "documents-obligations-rgpd",
-    "vente-bpifrance-universite",
-    "management-equipe-proximite",
-    "communication-professionnelle-equipe",
-  ],
   "centre-affaires-coworking": [
     "vente-relation-client-terrain",
     "marketing-digital-bpifrance",
@@ -598,7 +592,6 @@ const TRAINING_OVERRIDES_BY_SYSTEM: Record<string, readonly DemaaTrainingSlug[]>
   ],
   "cabinet-paramedical": [
     "recherche-action-dpc-officiel",
-    "infirmier-liberal-santeacademie",
     "catalogue-soignants-santeacademie",
     "documents-obligations-rgpd",
     "communication-professionnelle-equipe",
@@ -668,31 +661,30 @@ const TRAINING_OVERRIDES_BY_SYSTEM: Record<string, readonly DemaaTrainingSlug[]>
     "communication-professionnelle-equipe",
   ],
   dentiste: [
+    "adf-dpc-chirurgien-dentiste",
     "recherche-action-dpc-officiel",
-    "catalogue-medecin-santeacademie",
-    "medecin-liberal-santeacademie",
     "documents-obligations-rgpd",
     "management-equipe-proximite",
   ],
   pharmacie: [
+    "utip-formation-pharmacie-officine",
     "recherche-action-dpc-officiel",
-    "catalogue-medecin-santeacademie",
     "management-equipe-proximite",
     "documents-obligations-rgpd",
     "communication-professionnelle-equipe",
   ],
   veterinaire: [
-    "catalogue-medecin-santeacademie",
+    "envf-formation-continue-veterinaire",
+    "afvac-formation-veterinaire",
     "management-equipe-proximite",
     "communication-professionnelle-equipe",
     "documents-obligations-rgpd",
-    "cybersecurite-sensibilisation-equipes",
   ],
   opticien: [
+    "ico-formation-continue-opticien",
+    "recherche-action-dpc-officiel",
     "vente-relation-client-terrain",
     "management-equipe-proximite",
-    "communication-professionnelle-equipe",
-    "documents-obligations-rgpd",
   ],
   "coach-sportif": [
     "bpjeps-af-encp",
@@ -701,14 +693,12 @@ const TRAINING_OVERRIDES_BY_SYSTEM: Record<string, readonly DemaaTrainingSlug[]>
     "vente-relation-client-terrain",
   ],
   osteopathe: [
-    "catalogue-soignants-santeacademie",
     "documents-obligations-rgpd",
     "communication-professionnelle-equipe",
     "management-equipe-proximite",
     "qvct-prevention-rh",
   ],
   psychologue: [
-    "catalogue-soignants-santeacademie",
     "documents-obligations-rgpd",
     "communication-professionnelle-equipe",
     "management-equipe-proximite",
@@ -722,12 +712,8 @@ function getOrderedRecommendedTrainingsForSystem(
 ): DemaaTraining[] {
   const systemOverrides = TRAINING_OVERRIDES_BY_SYSTEM[systemSlug] ?? [];
   const sectorRecommendations = TRAINING_RECOMMENDATIONS_BY_SECTOR[sectorLabel] ?? DEFAULT_TRAINING_ORDER;
-  const sectorTransverseRecommendations = sectorRecommendations.filter((slug) => {
-    const training = getDemaaTrainingBySlug(slug);
-    return training ? getTrainingRecommendationGroup(training) === "transverse" : false;
-  });
   const slugs = systemOverrides.length
-    ? [...systemOverrides, ...sectorTransverseRecommendations, ...DEFAULT_TRAINING_ORDER]
+    ? [...systemOverrides]
     : [...sectorRecommendations];
 
   const seen = new Set<string>();

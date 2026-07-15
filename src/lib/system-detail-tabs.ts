@@ -22,7 +22,7 @@ export const SYSTEM_DETAIL_TAB_VISIBILITY = {
   academie: false,
   "reseaux-pro": true,
   recrutement: true,
-  ressources: true,
+  ressources: false,
   formation: true,
 } satisfies Record<SystemDetailTab, boolean>;
 

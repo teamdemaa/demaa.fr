@@ -13,6 +13,7 @@ export type GroupedRecommendedRecruitmentItems = {
 };
 
 const DEFAULT_RECRUITMENT_ORDER = [
+  "bravus-akademy",
   "france-travail-pro",
   "hellowork-recruteur",
   "side-recrutement-flexible",
@@ -90,7 +91,7 @@ function getOrderedRecommendedRecruitmentItemsForSystem(
   const seen = new Set<string>();
   const items: DemaaRecruitmentItem[] = [];
 
-  for (const slug of [...slugs, ...DEFAULT_RECRUITMENT_ORDER]) {
+  for (const slug of ["bravus-akademy", ...slugs, ...DEFAULT_RECRUITMENT_ORDER]) {
     if (seen.has(slug)) continue;
     const item = getDemaaRecruitmentItemBySlug(slug);
     if (!item) continue;
@@ -134,10 +135,5 @@ export function getRecommendedRecruitmentItemsForSystem(
   sectorLabel: string,
   limit = MAX_RECRUITMENT_ITEMS_PER_SYSTEM,
 ): DemaaRecruitmentItem[] {
-  const grouped = getGroupedRecommendedRecruitmentItemsForSystem(
-    sectorLabel,
-    Math.max(limit, MAX_RECRUITMENT_ITEMS_PER_GROUP),
-  );
-
-  return [...grouped.alternance, ...grouped.recrutement].slice(0, limit);
+  return getOrderedRecommendedRecruitmentItemsForSystem(sectorLabel).slice(0, limit);
 }

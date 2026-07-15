@@ -53,6 +53,51 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: '/annuaire-fournisseurs/assurance-pro',
+        destination: '/annuaire-fournisseurs/orus',
+        permanent: true,
+      },
+      {
+        source: '/annuaire-fournisseurs/protection-juridique',
+        destination: '/annuaire-fournisseurs/insify',
+        permanent: true,
+      },
+      {
+        source: '/annuaire-fournisseurs/grossiste-alimentaire',
+        destination: '/annuaire-fournisseurs/transgourmet',
+        permanent: true,
+      },
+      {
+        source: '/annuaire-fournisseurs/fournisseur-boissons',
+        destination: '/annuaire-fournisseurs/france-boissons',
+        permanent: true,
+      },
+      {
+        source: '/annuaire-fournisseurs/emballages-pro',
+        destination: '/annuaire-fournisseurs/raja',
+        permanent: true,
+      },
+      {
+        source: '/annuaire-fournisseurs/terminal-paiement',
+        destination: '/annuaire-fournisseurs/sumup',
+        permanent: true,
+      },
+      {
+        source: '/annuaire-fournisseurs/telephonie-pro',
+        destination: '/annuaire-fournisseurs/onoff-business',
+        permanent: true,
+      },
+      {
+        source: '/annuaire-fournisseurs/energie-pro',
+        destination: '/annuaire-fournisseurs/edf-entreprises',
+        permanent: true,
+      },
+      {
+        source: '/annuaire-fournisseurs/hygiene-nettoyage',
+        destination: '/annuaire-fournisseurs/bernard',
+        permanent: true,
+      },
+      {
         source: '/academy/:path*',
         destination: '/',
         permanent: true,

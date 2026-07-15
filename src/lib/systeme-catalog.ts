@@ -115,26 +115,6 @@ const COMMERCE_ROWS: SystemeTemplateRow[] = [
   { pillar: "Finance et Admin", process: "Payer à temps", document: "Calendrier des échéances" },
 ];
 
-const SERVICES_PRO_ROWS: SystemeTemplateRow[] = [
-  { pillar: "Direction", process: "Savoir où va l'entreprise", document: "Fiche vision & objectifs annuels" },
-  { pillar: "Direction", process: "Décider au quotidien sans le dirigeant", document: "Grille d'autorité" },
-  { pillar: "Direction", process: "Donner accès à l'essentiel", document: "Fiche accès & informations critiques" },
-  { pillar: "Direction", process: "Garder une visibilité sans reprendre la main", document: "Point de pilotage mensuel" },
-  { pillar: "Marketing et Vente", process: "Développer de nouveaux clients", document: "Fiche suivi prospect/dossier commercial" },
-  { pillar: "Marketing et Vente", process: "Vendre (proposition commerciale)", document: "Fiche offre & argumentaire (grille tarifaire)" },
-  { pillar: "Marketing et Vente", process: "Faire revenir les clients", document: "Trame demande d'avis" },
-  { pillar: "Marketing et Vente", process: "Traiter une réclamation client", document: "Trame de traitement des réclamations" },
-  { pillar: "Opérations", process: "Ouvrir, suivre, clôturer un dossier", document: "Checklist dossier + Fiches process par mission" },
-  { pillar: "Opérations", process: "Contrôler la qualité des livrables", document: "Grille de contrôle qualité par mission" },
-  { pillar: "Équipe", process: "Organiser les équipes", document: "Grille de polyvalence" },
-  { pillar: "Équipe", process: "Transmettre un dossier en cas d'absence", document: "Fiche de passation de dossier" },
-  { pillar: "Équipe", process: "Intégrer un nouvel employé", document: "Parcours d'intégration écrit" },
-  { pillar: "Finance et Admin", process: "Suivre la rentabilité", document: "Suivi CA/facturation par dossier" },
-  { pillar: "Finance et Admin", process: "Payer à temps", document: "Calendrier des échéances" },
-  { pillar: "Finance et Admin", process: "Se faire payer", document: "Trame de relance impayés" },
-  { pillar: "Conformité & obligations", process: "Se protéger juridiquement", document: "Registre RGPD + RC pro + Confidentialité" },
-];
-
 const CABINETS_REGLEMENTES_ROWS: SystemeTemplateRow[] = [
   { pillar: "Direction", process: "Savoir où va le cabinet", document: "Fiche vision & objectifs annuels" },
   { pillar: "Direction", process: "Décider sans bloquer les dossiers", document: "Grille d'autorité" },
@@ -645,19 +625,6 @@ const AUTO_ECOLE_ROWS: SystemeTemplateRow[] = [
   { pillar: "Conformité métier", process: "Tenir dossiers élèves et véhicules en règle", document: "Contrôle pièces élèves + Documents véhicules + Registre incidents" },
 ];
 
-const IMMOBILIER_EXPLOITATION_ROWS: SystemeTemplateRow[] = [
-  { pillar: "Direction", process: "Savoir où va l'activité", document: "Fiche vision & objectifs annuels" },
-  { pillar: "Direction", process: "Décider sans bloquer le quotidien", document: "Grille d'autorité" },
-  { pillar: "Direction", process: "Donner accès à l'essentiel", document: "Fiche accès & informations critiques" },
-  { pillar: "Marketing et Vente", process: "Développer le portefeuille", document: "Fiche suivi prospects, mandats ou biens" },
-  { pillar: "Marketing et Vente", process: "Traiter une réclamation client ou occupant", document: "Trame de traitement des réclamations" },
-  { pillar: "Opérations", process: "Ouvrir, suivre et clôturer un dossier", document: "Checklist dossier + Fiche de suivi d'actif ou d'immeuble" },
-  { pillar: "Opérations", process: "Gérer un incident, un sinistre ou un travaux urgent", document: "Procédure de gestion des incidents et prestataires" },
-  { pillar: "Équipe", process: "Assurer la continuité en cas d'absence", document: "Fiche de passation + Grille de polyvalence" },
-  { pillar: "Finance et Admin", process: "Suivre les flux financiers", document: "Tableau de suivi encaissements, décaissements et rentabilité" },
-  { pillar: "Finance et Admin", process: "Se faire payer", document: "Trame de relance impayés + Suivi des échéances" },
-];
-
 const LOGISTIQUE_TRANSPORT_ROWS: SystemeTemplateRow[] = [
   { pillar: "Direction", process: "Savoir où va l'activité", document: "Fiche vision & objectifs annuels" },
   { pillar: "Direction", process: "Décider au quotidien sans tout centraliser", document: "Grille d'autorité" },
@@ -840,7 +807,6 @@ const SYSTEME_TEMPLATES: SystemeTemplate[] = [
   {
     slugs: [
       "agence-de-voyage",
-      "societe-domiciliation",
       "centre-affaires-coworking",
     ],
     rows: ACCUEIL_MEMBRES_ROWS,
