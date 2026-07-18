@@ -45,7 +45,7 @@ const accompagnements: readonly AccompagnementConfig[] = [
     title: "Comptabilité",
     description:
       "Trouver un accompagnement comptable adapté à votre activité et à votre situation.",
-    action: "Décrire mon besoin",
+    action: "Prendre rendez-vous",
     icon: Calculator,
     mode: "form",
   },
