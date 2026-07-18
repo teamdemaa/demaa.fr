@@ -81,6 +81,7 @@ function renderMagicLinkText(input: { magicLink: string }) {
 export async function sendCustomerMagicLinkEmail(input: {
   email: string;
   request?: Request;
+  returnTo?: string;
 }) {
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.RESEND_FROM_EMAIL;
@@ -90,9 +91,14 @@ export async function sendCustomerMagicLinkEmail(input: {
   }
 
   const token = await createMagicLinkToken(input.email);
-  const magicLink = `${getCanonicalOrigin()}/api/customer-space/consume?token=${encodeURIComponent(
-    token
-  )}`;
+  const magicLinkUrl = new URL("/api/customer-space/consume", getCanonicalOrigin());
+  magicLinkUrl.searchParams.set("token", token);
+
+  if (input.returnTo) {
+    magicLinkUrl.searchParams.set("returnTo", input.returnTo);
+  }
+
+  const magicLink = magicLinkUrl.toString();
 
   const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
