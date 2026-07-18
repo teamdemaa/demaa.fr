@@ -4,10 +4,11 @@ import Link from "next/link";
 import { startTransition, useMemo, useState, type MouseEvent, type ReactNode } from "react";
 import {
   ArrowLeft,
-  ArrowUpRight,
+  ArrowRight,
   Bot,
   Briefcase,
   CalendarDays,
+  ChevronRight,
   ChevronDown,
   CircleDollarSign,
   FileSignature,
@@ -843,7 +844,7 @@ export default function SystemDetailContent({
         <span className="mt-auto inline-flex items-center gap-2 pt-4 text-sm font-medium text-dema-forest">
           {training.provider}
           {training.format ? ` · ${training.format}` : ""}
-          <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+          <ArrowRight className="h-4 w-4" aria-hidden="true" />
         </span>
       </Link>
     );
@@ -876,7 +877,7 @@ export default function SystemDetailContent({
         <span className="mt-auto inline-flex items-center gap-2 pt-4 text-sm font-medium text-dema-forest">
           {item.provider}
           {item.format ? ` · ${item.format}` : ""}
-          <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+          <ArrowRight className="h-4 w-4" aria-hidden="true" />
         </span>
       </Link>
     );
@@ -912,17 +913,16 @@ export default function SystemDetailContent({
                   <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper">
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </span>
-                  <h2 className="mt-6 text-xl font-medium text-brand-blue">{section.label}</h2>
+                  <div className="mt-6 flex items-center justify-between gap-3">
+                    <h2 className="text-xl font-medium text-brand-blue">{section.label}</h2>
+                    <ChevronRight
+                      className="h-4 w-4 shrink-0 text-dema-forest/60 transition group-hover:translate-x-0.5"
+                      aria-hidden="true"
+                    />
+                  </div>
                   <p className="mt-2 text-sm leading-relaxed text-dema-muted">
                     {section.description}
                   </p>
-                  <span className="mt-auto inline-flex items-center gap-2 pt-5 text-sm font-semibold text-dema-forest">
-                    Voir
-                    <ArrowUpRight
-                      className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                      aria-hidden="true"
-                    />
-                  </span>
                 </button>
               );
             },

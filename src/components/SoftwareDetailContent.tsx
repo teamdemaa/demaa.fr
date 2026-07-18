@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { getToolPricingInfo } from "@/lib/tool-pricing";
 import {
@@ -119,7 +119,7 @@ export default function SoftwareDetailContent({
         {isInternalTool ? (
           <Link href={tool.url} className="demaa-primary-button gap-2 px-5 py-3">
             {toolCtaLabel}
-            <ArrowUpRight className="h-4 w-4" />
+            <ArrowRight className="h-4 w-4" />
           </Link>
         ) : (
           <a
@@ -129,7 +129,7 @@ export default function SoftwareDetailContent({
             className="demaa-primary-button gap-2 px-5 py-3"
           >
             {toolCtaLabel}
-            <ArrowUpRight className="h-4 w-4" />
+            <ArrowRight className="h-4 w-4" />
           </a>
         )}
         {showCompactDetailCta && detailHref ? (
@@ -138,7 +138,7 @@ export default function SoftwareDetailContent({
             className="demaa-secondary-button gap-2 px-5 py-3"
           >
             Voir la fiche complète
-            <ArrowUpRight className="h-4 w-4" />
+            <ArrowRight className="h-4 w-4" />
           </Link>
         ) : showPricingCta && pricing.sourceUrl ? (
           <a
@@ -148,7 +148,7 @@ export default function SoftwareDetailContent({
             className="demaa-secondary-button gap-2 px-5 py-3"
           >
             Voir les tarifs
-            <ArrowUpRight className="h-4 w-4" />
+            <ArrowRight className="h-4 w-4" />
           </a>
         ) : null}
       </div>

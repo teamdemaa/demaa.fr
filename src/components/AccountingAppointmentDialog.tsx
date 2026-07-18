@@ -2,7 +2,7 @@
 
 import type React from "react";
 import { useEffect, useId, useState } from "react";
-import { ArrowUpRight, LoaderCircle, Search, X } from "lucide-react";
+import { ArrowRight, LoaderCircle, Search, X } from "lucide-react";
 import type { AccountingFirm } from "@/lib/accounting-directory";
 
 type AccountingAppointmentDialogProps = {
@@ -194,7 +194,7 @@ export default function AccountingAppointmentDialog({
         disabled={selectedFirms.length === 0}
       >
         {buttonLabel}
-        <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+        <ArrowRight className="h-4 w-4" aria-hidden="true" />
       </button>
 
       {isOpen ? (

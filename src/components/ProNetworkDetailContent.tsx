@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import type { DemaaProNetwork } from "@/lib/pro-network-catalog";
 
@@ -62,12 +62,12 @@ export default function ProNetworkDetailContent({
                 className="demaa-primary-button gap-2 px-5 py-3"
               >
                 {network.cta}
-                <ArrowUpRight className="h-4 w-4" />
+                <ArrowRight className="h-4 w-4" />
               </a>
             ) : (
               <Link href={network.href} className="demaa-primary-button gap-2 px-5 py-3">
                 {network.cta}
-                <ArrowUpRight className="h-4 w-4" />
+                <ArrowRight className="h-4 w-4" />
               </Link>
             )}
           </div>

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useMemo } from "react";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import {
   getAidItemsByFamily,
@@ -68,7 +68,7 @@ export default function AidDetailContent({ item, returnSystemSlug }: AidDetailCo
               className="demaa-primary-button gap-2 px-5 py-3"
             >
               {item.cta}
-              <ArrowUpRight className="h-4 w-4" />
+              <ArrowRight className="h-4 w-4" />
             </a>
             <Link
               href={`/aides-et-subventions/${slugifyAidFamily(item.family)}${returnSystemQuery}`}
@@ -94,7 +94,7 @@ export default function AidDetailContent({ item, returnSystemSlug }: AidDetailCo
               className="inline-flex items-center gap-2 text-sm font-medium text-dema-forest transition hover:text-brand-blue"
             >
               Voir toute la famille
-              <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
 

@@ -2,7 +2,7 @@
 
 import { FilloutPopupEmbed } from "@fillout/react";
 import {
-  ArrowUpRight,
+  ArrowRight,
   Building2,
   Calculator,
   FilePenLine,
@@ -144,8 +144,8 @@ export default function AccompagnementServices({
               </p>
               <span className="mt-auto inline-flex items-center gap-2 pt-5 text-[0.9375rem] font-semibold text-dema-forest">
                 {item.action}
-                <ArrowUpRight
-                  className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                <ArrowRight
+                  className="h-4 w-4 transition group-hover:translate-x-0.5"
                   aria-hidden="true"
                 />
               </span>

@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowUpRight, Calendar } from "lucide-react";
+import { ArrowLeft, ArrowRight, Calendar } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import DocumentModelPreview from "@/components/DocumentModelPreview";
 import Navbar from "@/components/Navbar";
@@ -104,7 +104,7 @@ export default async function DocumentModelDetailPage({
                 className="inline-flex items-center gap-2 rounded-full bg-brand-blue px-5 py-3 text-sm font-semibold text-white transition hover:bg-neutral-800"
               >
                 {entry.ctaLabel}
-                <ArrowUpRight className="h-4 w-4" />
+                <ArrowRight className="h-4 w-4" />
               </a>
             </div>
           </header>

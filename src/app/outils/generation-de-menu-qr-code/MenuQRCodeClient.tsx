@@ -8,7 +8,7 @@ import {
   Wine, 
   Coffee, 
   Download, 
-  ExternalLink, 
+  ArrowRight,
   Palette, 
   Type, 
   ChefHat,
@@ -76,7 +76,7 @@ export default function MenuQRCode() {
               <div className="space-y-1.5">
                 <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue/30 ml-1">Lien du menu (URL ou PDF)</label>
                 <div className="relative">
-                  <ExternalLink className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
+                  <ArrowRight className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-300" />
                   <input type="text" value={menuUrl} onChange={(e) => setMenuUrl(e.target.value)} className="demaa-input demaa-input-with-icon text-xs" />
                 </div>
               </div>
