@@ -3,18 +3,26 @@
 import Link from "next/link";
 import { startTransition, useMemo, useState, type MouseEvent, type ReactNode } from "react";
 import {
+  ArrowLeft,
   ArrowUpRight,
   Bot,
   Briefcase,
   CalendarDays,
   ChevronDown,
+  CircleDollarSign,
   FileSignature,
   FileText,
   FolderKanban,
   FormInput,
+  GraduationCap,
+  Handshake,
+  HeartHandshake,
+  PackageSearch,
   Scale,
+  UsersRound,
   Wrench,
 } from "lucide-react";
+import AccompagnementServices from "@/components/AccompagnementServices";
 import FinanceDetailDialog from "@/components/FinanceDetailDialog";
 import HorizontalScrollHint from "@/components/HorizontalScrollHint";
 import AccountingRecommendationDialog from "@/components/AccountingRecommendationDialog";
@@ -86,6 +94,62 @@ const INDUSTRY_TOOL_TAGS = new Set([
   "Artisanat",
   "Droit",
 ]);
+
+const SYSTEM_SECTION_CARDS = [
+  {
+    tab: "systeme",
+    label: "Systèmes",
+    description: "Les processus et documents clés pour faire fonctionner l’activité.",
+    icon: FolderKanban,
+  },
+  {
+    tab: "outils",
+    label: "Outils",
+    description: "Les solutions métier et transverses recommandées pour cette activité.",
+    icon: Wrench,
+  },
+  {
+    tab: "fournisseurs",
+    label: "Fournisseurs",
+    description: "Les partenaires et prestataires utiles à regarder en priorité.",
+    icon: PackageSearch,
+  },
+  {
+    tab: "financement",
+    label: "Financement",
+    description: "Les solutions de financement et les aides adaptées à votre situation.",
+    icon: CircleDollarSign,
+  },
+  {
+    tab: "recrutement",
+    label: "Recrutement",
+    description: "Les bons canaux et services pour renforcer votre équipe.",
+    icon: UsersRound,
+  },
+  {
+    tab: "formation",
+    label: "Formation",
+    description: "Les formations métier et transverses utiles pour progresser.",
+    icon: GraduationCap,
+  },
+  {
+    tab: "reseaux-pro",
+    label: "Réseau pro",
+    description: "Les réseaux et organisations qui peuvent soutenir votre développement.",
+    icon: Handshake,
+  },
+  {
+    tab: "accompagnement",
+    label: "Accompagnement",
+    description: "Un appui humain pour structurer, gérer ou faire évoluer votre société.",
+    icon: HeartHandshake,
+  },
+] as const satisfies ReadonlyArray<{
+  tab: SystemDetailTab;
+  label: string;
+  description: string;
+  icon: typeof FolderKanban;
+}>;
 
 type SupplierSection = {
   title: string;
@@ -273,8 +337,8 @@ export default function SystemDetailContent({
     isVisibleSystemDetailTab(initialActiveTab) &&
     initialActiveTab !== "ressources"
       ? initialActiveTab
-      : "systeme";
-  const [activeTab, setActiveTab] = useState<SystemDetailTab>(defaultTab);
+      : null;
+  const [activeTab, setActiveTab] = useState<SystemDetailTab | null>(defaultTab);
   const [isSystemCompleteModalOpen, setIsSystemCompleteModalOpen] = useState(false);
   const [selectedToolDetail, setSelectedToolDetail] = useState<ToolDirectoryItem | null>(null);
   const [selectedSupplierDetail, setSelectedSupplierDetail] = useState<DemaaSupplier | null>(null);
@@ -832,39 +896,55 @@ export default function SystemDetailContent({
         </p>
       </div>
 
-      <div className="mt-5 -mx-2 overflow-x-auto px-2 pb-2 soft-scroll">
-        <div className="flex min-w-max items-center gap-2 whitespace-nowrap">
-          {(
-            [
-              ["systeme", "Systèmes"],
-              ["outils", "Outils"],
-              ["fournisseurs", "Fournisseurs"],
-              ["financement", "Financement"],
-              ["recrutement", "Recrutement"],
-              ["formation", "Formation"],
-              ["academie", "Académie"],
-              ["reseaux-pro", "Réseau pro"],
-            ] as Array<[SystemDetailTab, string]>
-          )
-            .filter(([tab]) => isVisibleSystemDetailTab(tab))
-            .map(([tab, label]) => (
-              <button
-                key={tab}
-                type="button"
-                onClick={() => selectTab(tab)}
-                className={`relative shrink-0 rounded-full px-4 py-2 text-sm font-medium transition after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:rounded-full after:transition ${
-                  activeTab === tab
-                    ? "bg-transparent text-brand-blue after:bg-dema-forest"
-                    : "bg-transparent text-brand-blue/55 after:bg-transparent hover:text-brand-blue/75"
-                }`}
-              >
-                {label}
-              </button>
-            ))}
-        </div>
-      </div>
+      {activeTab === null ? (
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {SYSTEM_SECTION_CARDS.filter((section) => isVisibleSystemDetailTab(section.tab)).map(
+            (section) => {
+              const Icon = section.icon;
 
-      <div className="mt-5">
+              return (
+                <button
+                  key={section.tab}
+                  type="button"
+                  onClick={() => selectTab(section.tab)}
+                  className="group flex min-h-[13rem] flex-col rounded-[1.25rem] border border-dema-line bg-dema-paper p-5 text-left transition hover:-translate-y-0.5 hover:border-dema-forest/25 hover:shadow-[0_16px_36px_rgba(23,35,29,0.06)] md:p-6"
+                >
+                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper">
+                    <Icon className="h-5 w-5" aria-hidden="true" />
+                  </span>
+                  <h2 className="mt-6 text-xl font-medium text-brand-blue">{section.label}</h2>
+                  <p className="mt-2 text-sm leading-relaxed text-dema-muted">
+                    {section.description}
+                  </p>
+                  <span className="mt-auto inline-flex items-center gap-2 pt-5 text-sm font-semibold text-dema-forest">
+                    Voir
+                    <ArrowUpRight
+                      className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                      aria-hidden="true"
+                    />
+                  </span>
+                </button>
+              );
+            },
+          )}
+        </div>
+      ) : (
+        <>
+          <div className="mt-7 flex flex-wrap items-center gap-3 border-t border-dema-line/70 pt-5">
+            <button
+              type="button"
+              onClick={() => setActiveTab(null)}
+              className="inline-flex min-h-10 items-center gap-2 rounded-full border border-dema-line bg-dema-paper px-4 py-2 text-sm font-medium text-brand-blue/65 transition hover:border-dema-forest/25 hover:text-dema-forest"
+            >
+              <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+              Toutes les sections
+            </button>
+            <p className="text-sm font-semibold text-dema-forest">
+              {SYSTEM_SECTION_CARDS.find((section) => section.tab === activeTab)?.label}
+            </p>
+          </div>
+
+          <div className="mt-5">
         {activeTab === "systeme" ? (
           <SystemeTabContent
             systemName={system.name}
@@ -1081,6 +1161,8 @@ export default function SystemDetailContent({
               </div>
             ) : null}
           </div>
+        ) : activeTab === "accompagnement" ? (
+          <AccompagnementServices source="Kit opérationnel" />
         ) : activeTab === "recrutement" ? (
           <div className="space-y-5">
             {recommendedRecruitmentItems.length ? (
@@ -1172,7 +1254,9 @@ export default function SystemDetailContent({
         ) : (
           <div className="space-y-5" />
         )}
-      </div>
+          </div>
+        </>
+      )}
 
       {selectedToolDetail ? (
         <SoftwareDetailDialog tool={selectedToolDetail} onClose={() => setSelectedToolDetail(null)} />
