@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState, type MouseEvent } from "react";
-import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import SearchFilterControls from "@/components/SearchFilterControls";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import TrainingDetailDialog from "@/components/TrainingDetailDialog";
@@ -185,7 +185,7 @@ export default function TrainingDirectoryClient({
                 </p>
                 <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-dema-forest">
                   {training.cta}
-                  <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </span>
               </Link>
             ))}

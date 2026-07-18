@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ExternalLink, Minus, Plus, RotateCcw, X } from "lucide-react";
+import { ArrowRight, Minus, Plus, RotateCcw, X } from "lucide-react";
 import type { CourseEntry } from "@/lib/course-content";
 
 type CourseSlidesDialogProps = {
@@ -183,7 +183,7 @@ export default function CourseSlidesDialog({
                 aria-label="Ouvrir la page"
               >
                 <span className="hidden sm:inline">Ouvrir la page</span>
-                <ExternalLink className="h-4 w-4" />
+                <ArrowRight className="h-4 w-4" />
               </Link>
             ) : null}
             <button

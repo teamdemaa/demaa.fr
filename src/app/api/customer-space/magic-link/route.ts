@@ -10,11 +10,13 @@ import {
 } from "@/lib/customer-space-email";
 import { isValidEmail, normalizeEmail } from "@/lib/email";
 import { enforceAllowedHost } from "@/lib/request-guard";
+import { getSafeCustomerReturnTo } from "@/lib/customer-space-redirect";
 
 export const runtime = "nodejs";
 
 type MagicLinkRequestBody = {
   email?: unknown;
+  returnTo?: unknown;
 };
 
 export async function POST(request: Request) {
@@ -26,6 +28,7 @@ export async function POST(request: Request) {
   if (response) return response;
 
   const email = normalizeEmail(normalizeText(body?.email, 160));
+  const returnTo = getSafeCustomerReturnTo(normalizeText(body?.returnTo, 200));
 
   if (!email || !isValidEmail(email)) {
     return NextResponse.json(
@@ -45,7 +48,7 @@ export async function POST(request: Request) {
   );
   if (limited) return limited;
 
-  const emailResult = await sendCustomerMagicLinkEmail({ email, request });
+  const emailResult = await sendCustomerMagicLinkEmail({ email, request, returnTo });
 
   if (!emailResult.sent) {
     return NextResponse.json(

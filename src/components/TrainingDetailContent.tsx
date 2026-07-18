@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import type { DemaaTraining } from "@/lib/training-catalog";
 
@@ -24,12 +24,12 @@ export default function TrainingDetailContent({
       className="demaa-primary-button gap-2 px-5 py-3"
     >
       {training.cta}
-      <ArrowUpRight className="h-4 w-4" />
+      <ArrowRight className="h-4 w-4" />
     </a>
   ) : (
     <Link href={training.href} className="demaa-primary-button gap-2 px-5 py-3">
       {training.cta}
-      <ArrowUpRight className="h-4 w-4" />
+      <ArrowRight className="h-4 w-4" />
     </Link>
   );
 

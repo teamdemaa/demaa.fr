@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight, Newspaper } from "lucide-react";
+import { ArrowLeft, ArrowRight, Newspaper } from "lucide-react";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import RelatedSystemsLinks from "@/components/RelatedSystemsLinks";
@@ -130,7 +130,7 @@ export default async function NewsletterDetailPage({
                   className="mt-5 inline-flex items-center gap-2 rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-blue"
                 >
                   {newsletter.externalLabel}
-                  <ArrowUpRight className="h-4 w-4" />
+                  <ArrowRight className="h-4 w-4" />
                 </a>
               </aside>
             </div>

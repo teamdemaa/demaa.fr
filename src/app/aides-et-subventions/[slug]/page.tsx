@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { notFound } from "next/navigation";
 import AidDetailContent from "@/components/AidDetailContent";
 import Navbar from "@/components/Navbar";
@@ -171,7 +171,7 @@ export default async function AidDetailPage({
                   <div className="mt-auto pt-4">
                     <span className="inline-flex items-center gap-1 text-xs font-medium text-dema-forest">
                       Voir la fiche
-                      <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+                      <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
                     </span>
                   </div>
                 </Link>

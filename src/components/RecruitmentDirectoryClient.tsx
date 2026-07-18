@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState, type MouseEvent } from "react";
-import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import SearchFilterControls from "@/components/SearchFilterControls";
 import RecruitmentDetailDialog from "@/components/RecruitmentDetailDialog";
 import { ServiceIcon } from "@/components/ServiceIcon";
@@ -182,7 +182,7 @@ export default function RecruitmentDirectoryClient({
                 </p>
                 <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-dema-forest">
                   {item.cta}
-                  <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </span>
               </Link>
             ))}

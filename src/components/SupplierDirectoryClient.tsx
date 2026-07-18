@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState, type MouseEvent } from "react";
-import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { getSupplierCardBadge } from "@/lib/card-badges";
 import SearchFilterControls from "@/components/SearchFilterControls";
 import { ServiceIcon } from "@/components/ServiceIcon";
@@ -204,7 +204,7 @@ function SupplierCard({
       ) : null}
       <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-dema-forest">
         {supplier.cta}
-        <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+        <ArrowRight className="h-4 w-4" aria-hidden="true" />
       </span>
     </>
   );

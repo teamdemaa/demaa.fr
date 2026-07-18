@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import type { DemaaSupplier } from "@/lib/supplier-catalog";
 
@@ -24,12 +24,12 @@ export default function SupplierDetailContent({
       className="demaa-primary-button gap-2 px-5 py-3"
     >
       {supplier.cta}
-      <ArrowUpRight className="h-4 w-4" />
+      <ArrowRight className="h-4 w-4" />
     </a>
   ) : (
     <Link href={supplier.href} className="demaa-primary-button gap-2 px-5 py-3">
       {supplier.cta}
-      <ArrowUpRight className="h-4 w-4" />
+      <ArrowRight className="h-4 w-4" />
     </Link>
   );
 
