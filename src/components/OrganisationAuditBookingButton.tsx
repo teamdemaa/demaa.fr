@@ -49,10 +49,8 @@ export default function OrganisationAuditBookingButton({
         parameters={parameters}
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        onSubmit={(submissionUuid) => {
+        onSubmit={() => {
           recordFilloutLeadSubmission({
-            source: inheritedSource,
-            submissionUuid,
             systemSlug: inheritedSystemSlug,
           });
         }}

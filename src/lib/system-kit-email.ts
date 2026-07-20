@@ -306,18 +306,28 @@ async function sendResendEmail(input: {
   idempotencyKey?: string;
   payload: ResendEmailPayload;
 }) {
-  const response = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${input.apiKey}`,
-      "Content-Type": "application/json",
-      ...(input.idempotencyKey
-        ? { "Idempotency-Key": input.idempotencyKey }
-        : {}),
-    },
-    body: JSON.stringify(input.payload),
-    cache: "no-store",
-  });
+  let response: Response;
+  try {
+    response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${input.apiKey}`,
+        "Content-Type": "application/json",
+        ...(input.idempotencyKey
+          ? { "Idempotency-Key": input.idempotencyKey }
+          : {}),
+      },
+      body: JSON.stringify(input.payload),
+      cache: "no-store",
+    });
+  } catch (error) {
+    return {
+      sent: false as const,
+      reason: "resend_error" as const,
+      errorText: error instanceof Error ? error.message.slice(0, 300) : "network error",
+      status: 0,
+    };
+  }
 
   if (!response.ok) {
     const errorText = await response.text().catch(() => "");

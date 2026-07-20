@@ -32,7 +32,7 @@ async function handleGet(request: Request) {
   const notificationRetries = await retryFailedLeadDeliveries(30);
   const cleanup = await cleanupExpiredOperationalData(50);
   const dueSubscribers = await getDueSystemKitSequenceSubscribers(50);
-  const results: Array<{ email: string; kind: string; sent: boolean }> = [];
+  const results: Array<{ reference: string; kind: string; sent: boolean }> = [];
 
   for (const subscriber of dueSubscribers) {
     if (subscriber.sequenceStep > 2) {
@@ -55,16 +55,15 @@ async function handleGet(request: Request) {
     });
 
     results.push({
-      email: subscriber.email,
+      reference: subscriber.id,
       kind,
       sent: emailResult.sent,
     });
 
     if (!emailResult.sent) {
-      console.error("[system-kit-sequence] followup send failed", {
-        email: subscriber.email,
+      logOperationalError("system_kit.followup.failed", new Error(emailResult.reason), {
+        reference: subscriber.id,
         kind,
-        reason: emailResult.reason,
       });
       continue;
     }

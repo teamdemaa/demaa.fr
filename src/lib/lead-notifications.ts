@@ -4,6 +4,7 @@ import { escapeSlackMrkdwn } from "@/lib/api-security";
 import type { LeadAttributionRecord } from "@/lib/lead-attribution";
 import { buildAttributionDisplayFields } from "@/lib/lead-attribution-server";
 import { chunkSlackLines } from "@/lib/lead-notification-format";
+import { MAX_LEAD_DELIVERY_ATTEMPTS } from "@/lib/lead-retry";
 import {
   logOperationalError,
   logOperationalEvent,
@@ -11,17 +12,18 @@ import {
 import type { LeadContext } from "@/lib/lead-context";
 import {
   createLeadRequest,
+  claimLeadDeliveryRetry,
   getFailedLeadRequests,
   markLeadDeliveryAbandoned,
   type LeadContact,
   type LeadDeliveryChannel,
   type LeadField,
-  type LeadNotificationChannel,
   type StoredLeadRequest,
   updateLeadDeliveryStatus,
 } from "@/lib/lead-storage";
 import { syncResendLeadContact } from "@/lib/resend-audience";
 import { sendSlackMessage } from "@/lib/slack";
+import { sendSystemKitEmail } from "@/lib/system-kit-email";
 
 type LeadSubmission = {
   attribution: LeadAttributionRecord;
@@ -253,9 +255,9 @@ function rebuildLeadSubmission(data: StoredLeadRequest): LeadSubmission {
   return {
     attribution: data.attribution,
     channels: {
-      email: data.notification_status.email.status !== "skipped",
-      resend: data.notification_status.resend.status !== "skipped",
-      slack: data.notification_status.slack.status !== "skipped",
+      email: data.notification_status.email?.status !== "skipped",
+      resend: data.notification_status.resend?.status !== "skipped",
+      slack: data.notification_status.slack?.status !== "skipped",
     },
     contact: {
       company: data.contact.company,
@@ -284,15 +286,16 @@ export async function retryFailedLeadDeliveries(limit = 30) {
   const failedLeads = await getFailedLeadRequests(limit);
   const now = Date.now();
   const results: Array<{
-    channel: LeadNotificationChannel;
+    channel: LeadDeliveryChannel;
     status: "failed" | "sent";
   }> = [];
 
   for (const lead of failedLeads) {
     const input = rebuildLeadSubmission(lead.data);
 
-    for (const channel of ["email", "resend", "slack"] as const) {
+    for (const channel of ["email", "kit_email", "resend", "slack"] as const) {
       const delivery = lead.data.notification_status[channel];
+      if (!delivery) continue;
       const attemptCount = delivery.attempt_count ?? 1;
       const retryAt = delivery.next_retry_at
         ? Date.parse(delivery.next_retry_at)
@@ -305,7 +308,7 @@ export async function retryFailedLeadDeliveries(limit = 30) {
         continue;
       }
 
-      if (attemptCount >= 4) {
+      if (attemptCount >= MAX_LEAD_DELIVERY_ATTEMPTS) {
         await markLeadDeliveryAbandoned({ channel, leadId: lead.id });
         logOperationalEvent("lead.delivery.abandoned", {
           channel,
@@ -314,13 +317,55 @@ export async function retryFailedLeadDeliveries(limit = 30) {
         continue;
       }
 
-      let result: { channel: LeadNotificationChannel; status: "failed" | "sent" } | null = null;
+      const missingRetryData =
+        (channel === "kit_email" && (
+          !input.contact.email
+          || !input.context.systemSlug
+          || !input.context.systemName
+        ))
+        || (channel === "resend" && !input.contact.email);
+      if (missingRetryData) {
+        await markLeadDeliveryAbandoned({ channel, leadId: lead.id });
+        logOperationalEvent("lead.delivery.abandoned", {
+          channel,
+          leadId: lead.id,
+          reason: "missing_retry_data",
+        });
+        continue;
+      }
+
+      const claimed = await claimLeadDeliveryRetry({ channel, leadId: lead.id });
+      if (!claimed) continue;
+
+      let result: { channel: LeadDeliveryChannel; status: "failed" | "sent" } | null = null;
 
       if (channel === "email") {
         result = await deliverChannel({
           channel,
           leadId: lead.id,
           operation: () => sendInternalLeadEmail(input, lead.id),
+        });
+      } else if (
+        channel === "kit_email"
+        && input.contact.email
+        && input.context.systemSlug
+        && input.context.systemName
+      ) {
+        result = await deliverChannel({
+          channel,
+          leadId: lead.id,
+          operation: async () => {
+            const emailResult = await sendSystemKitEmail({
+              email: input.contact.email ?? "",
+              firstName: input.contact.firstName ?? input.contact.name ?? "",
+              idempotencyKey: `lead-${lead.id}-kit`,
+              systemName: input.context.systemName ?? "",
+              systemSlug: input.context.systemSlug ?? "",
+            });
+            if (!emailResult.sent) {
+              throw new Error(`System kit email failed: ${emailResult.reason}`);
+            }
+          },
         });
       } else if (channel === "resend" && input.contact.email) {
         result = await deliverChannel({
@@ -345,7 +390,10 @@ export async function retryFailedLeadDeliveries(limit = 30) {
 
       if (result) {
         results.push(result);
-        if (result.status === "failed" && attemptCount >= 3) {
+        if (
+          result.status === "failed"
+          && attemptCount >= MAX_LEAD_DELIVERY_ATTEMPTS - 1
+        ) {
           await markLeadDeliveryAbandoned({ channel, leadId: lead.id });
           logOperationalEvent("lead.delivery.abandoned", {
             channel,

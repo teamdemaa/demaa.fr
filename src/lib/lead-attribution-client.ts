@@ -2,6 +2,11 @@ import "client-only";
 
 import { track } from "@vercel/analytics";
 import { getCookieConsentPreferences } from "@/lib/cookie-consent";
+import {
+  safeReadBrowserStorage,
+  safeRemoveBrowserStorage,
+  safeWriteBrowserStorage,
+} from "@/lib/browser-storage";
 import type {
   LeadAttributionPayload,
   LeadAttributionTouch,
@@ -108,7 +113,10 @@ function getInitialTouch() {
 }
 
 function readStoredAttribution() {
-  const rawValue = window.localStorage.getItem(ATTRIBUTION_STORAGE_KEY);
+  const rawValue = safeReadBrowserStorage(
+    () => window.localStorage,
+    ATTRIBUTION_STORAGE_KEY,
+  );
   if (!rawValue) return null;
 
   try {
@@ -120,19 +128,23 @@ function readStoredAttribution() {
       !Number.isFinite(Date.parse(value.expiresAt)) ||
       Date.parse(value.expiresAt) <= Date.now()
     ) {
-      window.localStorage.removeItem(ATTRIBUTION_STORAGE_KEY);
+      safeRemoveBrowserStorage(() => window.localStorage, ATTRIBUTION_STORAGE_KEY);
       return null;
     }
 
     return value;
   } catch {
-    window.localStorage.removeItem(ATTRIBUTION_STORAGE_KEY);
+    safeRemoveBrowserStorage(() => window.localStorage, ATTRIBUTION_STORAGE_KEY);
     return null;
   }
 }
 
 function persistAttribution(value: StoredAttribution) {
-  window.localStorage.setItem(ATTRIBUTION_STORAGE_KEY, JSON.stringify(value));
+  safeWriteBrowserStorage(
+    () => window.localStorage,
+    ATTRIBUTION_STORAGE_KEY,
+    JSON.stringify(value),
+  );
 }
 
 function buildCurrentAttribution() {
@@ -193,7 +205,7 @@ export function initializeLeadAttribution() {
 
 export function clearPersistedLeadAttribution() {
   if (typeof window === "undefined") return;
-  window.localStorage.removeItem(ATTRIBUTION_STORAGE_KEY);
+  safeRemoveBrowserStorage(() => window.localStorage, ATTRIBUTION_STORAGE_KEY);
   memoryAttribution = null;
   initialTouch = null;
 }
@@ -207,7 +219,10 @@ export function getFilloutAttributionParameters() {
   if (typeof window === "undefined") return {};
 
   const attribution = buildCurrentAttribution();
-  return buildFilloutAttributionParameters(attribution);
+  return {
+    ...buildFilloutAttributionParameters(attribution),
+    dem_conversion_page: window.location.pathname.slice(0, 700),
+  };
 }
 
 export function trackLeadConversion(input: {
