@@ -1,4 +1,4 @@
-export const expandedServiceSlugs = [
+const expandedServiceSlugs = [
   "organisation-automatisation",
   "recrutement-assistante-facturation",
   "audit-conformite-fiscale",

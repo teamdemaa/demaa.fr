@@ -17,9 +17,8 @@ import {
   type ToolDirectoryItem,
 } from "@/lib/tool-directory";
 
-export type { SystemPillar };
 
-export type SystemProcessCard = {
+type SystemProcessCard = {
   pillar: SystemPillar;
   title: string;
   description: string;

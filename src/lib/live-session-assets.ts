@@ -6,7 +6,7 @@ import {
   getLiveSessionPurchaseDetails,
 } from "@/lib/live-session-catalog";
 
-export type LiveSessionDeliveredAsset = {
+type LiveSessionDeliveredAsset = {
   id: string;
   label: string;
   description: string;

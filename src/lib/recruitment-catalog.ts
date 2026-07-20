@@ -24,7 +24,7 @@ export const recruitmentFamilies = [
   "Recrutement",
 ] as const satisfies readonly RecruitmentFamily[];
 
-export const demaaRecruitmentItems = [
+const demaaRecruitmentItems = [
   {
     slug: "bravus-akademy",
     name: "Bravus Akademy",

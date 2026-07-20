@@ -156,7 +156,7 @@ function normalizeText(value: string) {
     .toLowerCase();
 }
 
-export function getSystemProcessCategory(
+function getSystemProcessCategory(
   pillar: string,
   process: string,
   document: string,
@@ -190,4 +190,3 @@ export function getSystemProcessOrder(
     order: category ? (CATEGORY_ORDER_INDEX.get(category) ?? Number.POSITIVE_INFINITY) : Number.POSITIVE_INFINITY,
   };
 }
-

@@ -1,9 +1,9 @@
-export type LiveSessionSlot = {
+type LiveSessionSlot = {
   id: string;
   startsAt: string;
 };
 
-export type LiveTrainingSession = {
+type LiveTrainingSession = {
   slug: string;
   title: string;
   description: string;
@@ -14,19 +14,6 @@ export type LiveTrainingSession = {
   duration: "2 h 30";
   unitAmount: number;
   slots: readonly LiveSessionSlot[];
-};
-
-export type LiveSessionPurchaseConfig = {
-  slug: string;
-  serviceSlug: string;
-  name: string;
-  shortDescription: string;
-  unitAmount: number;
-  currency: "eur";
-  billingType: "one_time";
-  kind: "live_session";
-  sessionStartsAt: string;
-  sourceSystemSlug?: string;
 };
 
 export type LiveSessionPurchaseDetails = {
@@ -184,7 +171,7 @@ export function formatLiveSessionDate(startsAt: string) {
   return `${day} à ${time}`;
 }
 
-export function getLiveSessionPurchaseSlug(
+function getLiveSessionPurchaseSlug(
   trainingSlug: string,
   slotId: string,
   sourceSystemSlug?: string,
@@ -195,26 +182,6 @@ export function getLiveSessionPurchaseSlug(
   return normalizedSystemSlug
     ? `${baseSlug}${LIVE_SESSION_SYSTEM_SEPARATOR}${normalizedSystemSlug}`
     : baseSlug;
-}
-
-export function getLiveTrainingsForSystem() {
-  return [...liveTrainings];
-}
-
-export function getAllLiveSessionPurchaseConfigs(): LiveSessionPurchaseConfig[] {
-  return allLiveTrainings.flatMap((training) =>
-    training.slots.map((slot) => ({
-      slug: getLiveSessionPurchaseSlug(training.slug, slot.id),
-      serviceSlug: "session-en-direct",
-      name: `${training.title} · ${formatLiveSessionDate(slot.startsAt)}`,
-      shortDescription: `Session Demaa en direct de ${training.duration}.`,
-      unitAmount: training.unitAmount,
-      currency: "eur" as const,
-      billingType: "one_time" as const,
-      kind: "live_session" as const,
-      sessionStartsAt: slot.startsAt,
-    })),
-  );
 }
 
 export function getLiveSessionPurchaseDetails(

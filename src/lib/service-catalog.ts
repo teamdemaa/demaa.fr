@@ -1,4 +1,4 @@
-export type ServiceCategory =
+type ServiceCategory =
   | "Juridique"
   | "Finance"
   | "Systèmes"
@@ -361,33 +361,8 @@ export const demaaServices = [
   },
 ] satisfies DemaaService[];
 
-export const serviceCategories = [
-  "Juridique",
-  "Finance",
-  "Systèmes",
-  "Acquisition",
-  "Contenu",
-  "Support opérationnel",
-] satisfies ServiceCategory[];
-
 export type DemaaServiceSlug = (typeof demaaServices)[number]["slug"];
-
-export function getDemaaServices(): DemaaService[] {
-  return [...demaaServices];
-}
 
 export function getDemaaServiceBySlug(slug: string): DemaaService | null {
   return demaaServices.find((service) => service.slug === slug) ?? null;
-}
-
-const demaaManagedServiceSlugs = new Set([
-  "organisation-automatisation",
-  "marketing-vente",
-  "organisation-equipes",
-  "assistante-facturation",
-  "recrutement-assistante-facturation",
-]);
-
-export function isDemaaManagedService(slug: string) {
-  return demaaManagedServiceSlugs.has(slug);
 }

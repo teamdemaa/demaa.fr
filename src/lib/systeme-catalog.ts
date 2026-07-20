@@ -7,12 +7,12 @@ import {
   type SystemeRow,
 } from "@/lib/system-canon";
 
-export type SystemeProcessItem = {
+type SystemeProcessItem = {
   process: string;
   document: string;
 };
 
-export type SystemePillarCard = {
+type SystemePillarCard = {
   pillar: SystemePillar;
   items: SystemeProcessItem[];
 };

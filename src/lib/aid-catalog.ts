@@ -4,7 +4,7 @@ export type AidFamily =
   | "Transition écologique"
   | "Innovation & R&D";
 
-export type AidType =
+type AidType =
   | "Exonération"
   | "Versement en capital"
   | "Aide à l'embauche"

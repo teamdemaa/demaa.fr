@@ -5,13 +5,6 @@ import {
 } from "@/lib/recruitment-catalog";
 
 const MAX_RECRUITMENT_ITEMS_PER_SYSTEM = 5;
-const MAX_RECRUITMENT_ITEMS_PER_GROUP = 4;
-
-export type GroupedRecommendedRecruitmentItems = {
-  alternance: DemaaRecruitmentItem[];
-  recrutement: DemaaRecruitmentItem[];
-};
-
 const DEFAULT_RECRUITMENT_ORDER = [
   "bravus-akademy",
   "france-travail-pro",
@@ -80,10 +73,6 @@ const RECRUITMENT_RECOMMENDATIONS_BY_SECTOR: Record<string, readonly DemaaRecrui
   ],
 };
 
-function getRecruitmentGroup(item: DemaaRecruitmentItem): keyof GroupedRecommendedRecruitmentItems {
-  return item.family === "Alternance" ? "alternance" : "recrutement";
-}
-
 function getOrderedRecommendedRecruitmentItemsForSystem(
   sectorLabel: string,
 ): DemaaRecruitmentItem[] {
@@ -100,35 +89,6 @@ function getOrderedRecommendedRecruitmentItemsForSystem(
   }
 
   return items;
-}
-
-export function getGroupedRecommendedRecruitmentItemsForSystem(
-  sectorLabel: string,
-  limitPerGroup = MAX_RECRUITMENT_ITEMS_PER_GROUP,
-): GroupedRecommendedRecruitmentItems {
-  const grouped: GroupedRecommendedRecruitmentItems = {
-    alternance: [],
-    recrutement: [],
-  };
-
-  for (const item of getOrderedRecommendedRecruitmentItemsForSystem(sectorLabel)) {
-    const group = getRecruitmentGroup(item);
-
-    if (grouped[group].length >= limitPerGroup) {
-      continue;
-    }
-
-    grouped[group].push(item);
-
-    if (
-      grouped.alternance.length >= limitPerGroup &&
-      grouped.recrutement.length >= limitPerGroup
-    ) {
-      break;
-    }
-  }
-
-  return grouped;
 }
 
 export function getRecommendedRecruitmentItemsForSystem(
