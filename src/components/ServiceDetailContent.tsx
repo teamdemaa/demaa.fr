@@ -1,11 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { Check } from "lucide-react";
+import OrganisationAuditBookingButton from "@/components/OrganisationAuditBookingButton";
 import type { DemaaService } from "@/lib/service-catalog";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import ServiceRequestCta from "@/components/ServiceRequestCta";
-import { ORGANISATION_AUDIT_BOOKING_URL } from "@/lib/organisation-audit";
 
 type ServiceDetailContentProps = {
   service: DemaaService;
@@ -38,12 +37,7 @@ export default function ServiceDetailContent({
             {service.description}
           </p>
           {isOrganisationAudit ? (
-            <Link
-              href={ORGANISATION_AUDIT_BOOKING_URL}
-              className="demaa-primary-button mt-5 w-fit"
-            >
-              Prendre RDV
-            </Link>
+            <OrganisationAuditBookingButton />
           ) : null}
         </div>
       </section>

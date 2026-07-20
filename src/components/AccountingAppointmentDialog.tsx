@@ -94,6 +94,7 @@ export default function AccountingAppointmentDialog({
           email: formData.email,
           phone: formData.phone,
           message: formData.details,
+          sourceUrl: window.location.href,
           company: formData.companyName
             ? {
                 name: formData.companyName,

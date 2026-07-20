@@ -148,7 +148,7 @@ export default function FinanceDirectoryClient({
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
             {filteredItems.map((item) => (
               <FinanceCard
                 key={item.slug}

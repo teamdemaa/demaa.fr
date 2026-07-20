@@ -92,7 +92,7 @@ interface StripeCreditGrantInput {
   offerLabel: string;
 }
 
-interface PartnerOffersSubscriberInput {
+interface NewsletterSubscriberInput {
   firstName: string;
   sector: string;
   email: string;
@@ -554,11 +554,12 @@ export async function getCreditBalanceByEmail(email: string) {
   return Number.isFinite(balance) ? balance : 0;
 }
 
-export async function savePartnerOffersSubscriber(input: PartnerOffersSubscriberInput) {
+export async function saveNewsletterSubscriber(input: NewsletterSubscriberInput) {
   const database = getAdminFirestore();
   const now = new Date().toISOString();
   const email = normalizeEmail(input.email);
-  const subscriberRef = database.collection("abonnes").doc(getStableKey(email));
+  const subscriberId = getStableKey(email);
+  const subscriberRef = database.collection("abonnes").doc(subscriberId);
 
   await database.runTransaction(async (transaction) => {
     const subscriberDoc = await transaction.get(subscriberRef);
@@ -569,8 +570,12 @@ export async function savePartnerOffersSubscriber(input: PartnerOffersSubscriber
         email,
         first_name: input.firstName.trim(),
         sector: input.sector.trim(),
-        source: input.source?.trim() || "partner_offers",
+        source: input.source?.trim() || "newsletter",
         status: "subscribed",
+        newsletter_opt_in: true,
+        newsletter_opt_in_at: now,
+        newsletter_topics: ["mini-cours", "offres-partenaires"],
+        resend_sync_status: "pending",
         created_at: subscriberDoc.exists ? subscriberDoc.data()?.created_at || now : now,
         updated_at: now,
       },
@@ -578,7 +583,25 @@ export async function savePartnerOffersSubscriber(input: PartnerOffersSubscriber
     );
   });
 
-  return { email };
+  return { email, subscriberId };
+}
+
+export async function updateNewsletterResendSyncStatus(input: {
+  subscriberId: string;
+  status: "sent" | "failed" | "skipped";
+  error?: string | null;
+}) {
+  const now = new Date().toISOString();
+
+  await getAdminFirestore().collection("abonnes").doc(input.subscriberId).set(
+    {
+      resend_sync_status: input.status,
+      resend_synced_at: input.status === "sent" ? now : null,
+      resend_sync_error: input.error?.slice(0, 500) || null,
+      updated_at: now,
+    },
+    { merge: true },
+  );
 }
 
 export async function scheduleSystemKitSequence(input: {
@@ -590,7 +613,7 @@ export async function scheduleSystemKitSequence(input: {
   const database = getAdminFirestore();
   const now = new Date().toISOString();
   const email = normalizeEmail(input.email);
-  const subscriberRef = database.collection("abonnes").doc(getStableKey(email));
+  const subscriberRef = database.collection("system_kit_sequences").doc(getStableKey(email));
 
   await database.runTransaction(async (transaction) => {
     const subscriberDoc = await transaction.get(subscriberRef);
@@ -602,7 +625,7 @@ export async function scheduleSystemKitSequence(input: {
         first_name: input.firstName.trim(),
         sector: input.systemName.trim(),
         source: subscriberDoc.data()?.source || `systeme_kit_${input.systemSlug}`,
-        status: "subscribed",
+        status: "active",
         system_name: input.systemName.trim(),
         system_slug: input.systemSlug.trim(),
         sequence_type: "kit_systeme",
@@ -621,6 +644,7 @@ export async function scheduleSystemKitSequence(input: {
 }
 
 export type SystemKitSequenceSubscriber = {
+  collection: "abonnes" | "system_kit_sequences";
   id: string;
   email: string;
   firstName: string;
@@ -632,19 +656,27 @@ export type SystemKitSequenceSubscriber = {
 export async function getDueSystemKitSequenceSubscribers(limit = 50) {
   const database = getAdminFirestore();
   const now = new Date().toISOString();
-  const snapshot = await database
-    .collection("abonnes")
-    .where("next_email_at", "<=", now)
-    .limit(limit)
-    .get();
+  const [currentSnapshot, legacySnapshot] = await Promise.all([
+    database.collection("system_kit_sequences").where("next_email_at", "<=", now).limit(limit).get(),
+    database.collection("abonnes").where("next_email_at", "<=", now).limit(limit).get(),
+  ]);
+  const currentIds = new Set(currentSnapshot.docs.map((doc) => doc.id));
+  const documents = [
+    ...currentSnapshot.docs.map((doc) => ({ collection: "system_kit_sequences" as const, doc })),
+    ...legacySnapshot.docs
+      .filter((doc) => !currentIds.has(doc.id))
+      .map((doc) => ({ collection: "abonnes" as const, doc })),
+  ].slice(0, limit);
 
-  return snapshot.docs
-    .map((doc) => {
+  return documents
+    .map(({ collection, doc }) => {
       const subscriber = doc.data() as PartnerOffersSubscriberRow | undefined;
+      const isLegacyActive = collection === "abonnes" && subscriber?.status === "subscribed";
+      const isCurrentActive = collection === "system_kit_sequences" && subscriber?.status === "active";
 
       if (
         subscriber?.sequence_type !== "kit_systeme" ||
-        subscriber?.status !== "subscribed" ||
+        (!isLegacyActive && !isCurrentActive) ||
         !subscriber.email ||
         !subscriber.system_slug ||
         !subscriber.system_name
@@ -659,6 +691,7 @@ export async function getDueSystemKitSequenceSubscribers(limit = 50) {
       }
 
       return {
+        collection,
         id: doc.id,
         email: normalizeEmail(subscriber.email),
         firstName: subscriber.first_name?.trim() || "",
@@ -671,6 +704,7 @@ export async function getDueSystemKitSequenceSubscribers(limit = 50) {
 }
 
 export async function advanceSystemKitSequenceSubscriber(input: {
+  collection?: "abonnes" | "system_kit_sequences";
   subscriberId: string;
   nextStep: number;
   completed: boolean;
@@ -678,12 +712,14 @@ export async function advanceSystemKitSequenceSubscriber(input: {
   const database = getAdminFirestore();
   const now = new Date().toISOString();
 
-  await database.collection("abonnes").doc(input.subscriberId).set(
+  const collection = input.collection ?? "system_kit_sequences";
+
+  await database.collection(collection).doc(input.subscriberId).set(
     {
       sequence_step: input.nextStep,
       sequence_last_email_sent_at: now,
       next_email_at: input.completed ? null : addDaysToIsoDate(now, 7),
-      status: input.completed ? "completed" : "subscribed",
+      status: input.completed ? "completed" : collection === "abonnes" ? "subscribed" : "active",
       sequence_completed_at: input.completed ? now : null,
       updated_at: now,
     },

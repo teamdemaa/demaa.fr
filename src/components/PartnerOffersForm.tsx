@@ -6,7 +6,6 @@ import { useState } from "react";
 type FormState = "idle" | "submitting" | "success" | "error";
 
 interface PartnerOffersFormProps {
-  action?: string;
   compact?: boolean;
   initialSector?: string;
   onSuccess?: (firstName: string) => void;
@@ -19,13 +18,12 @@ interface PartnerOffersFormProps {
 }
 
 export default function PartnerOffersForm({
-  action = "/api/offres-partenaires",
   compact = false,
   initialSector = "",
   onSuccess,
   source = "partner_offers_page",
   successAriaLabel,
-  submitLabel = "Recevoir les tarifs négociés",
+  submitLabel = "Recevoir les offres et mini-cours",
   submitClassName,
   submittingLabel = "Inscription...",
   successMessage,
@@ -43,14 +41,16 @@ export default function PartnerOffersForm({
     const submittedFirstName = firstName.trim();
 
     try {
-      const response = await fetch(action, {
+      const response = await fetch("/api/newsletter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           firstName,
           sector,
           email,
+          newsletterOptIn: true,
           source,
+          sourceUrl: window.location.href,
         }),
       });
       const payload = await response.json().catch(() => ({}));
@@ -62,7 +62,7 @@ export default function PartnerOffersForm({
       setStatus("success");
       setMessage(
         successMessage?.(submittedFirstName) ||
-          "C'est noté. Vous recevrez les tarifs négociés et les offres partenaires Demaa."
+          "C'est noté. Vous recevrez les offres partenaires et les mini-cours Demaa."
       );
       setFirstName("");
       setSector(initialSector);
@@ -113,6 +113,11 @@ export default function PartnerOffersForm({
         required
         className={`${compact ? "h-11 rounded-xl px-4 text-[13px]" : "h-14 rounded-2xl px-5 text-sm"} w-full border border-brand-blue/10 bg-white font-medium text-brand-blue outline-none transition-colors placeholder:text-gray-400 focus:border-brand-coral/40`}
       />
+
+      <p className="text-left text-xs leading-relaxed text-brand-blue/55">
+        En vous inscrivant, vous acceptez de recevoir par e-mail les offres partenaires et
+        les mini-cours Demaa. Désinscription possible à tout moment.
+      </p>
 
       <button
         type="submit"

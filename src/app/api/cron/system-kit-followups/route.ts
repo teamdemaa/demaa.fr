@@ -29,6 +29,7 @@ export async function GET(request: Request) {
   for (const subscriber of dueSubscribers) {
     if (subscriber.sequenceStep > 2) {
       await advanceSystemKitSequenceSubscriber({
+        collection: subscriber.collection,
         subscriberId: subscriber.id,
         nextStep: subscriber.sequenceStep,
         completed: true,
@@ -61,6 +62,7 @@ export async function GET(request: Request) {
     }
 
     await advanceSystemKitSequenceSubscriber({
+      collection: subscriber.collection,
       subscriberId: subscriber.id,
       nextStep: subscriber.sequenceStep + 1,
       completed: subscriber.sequenceStep >= 2,

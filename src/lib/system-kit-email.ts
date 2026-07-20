@@ -1,3 +1,4 @@
+import { getPilotingSheetCopyUrl } from "@/lib/document-models";
 import { getCanonicalOrigin } from "@/lib/site-url";
 
 type SystemKitEmailButton = {
@@ -133,19 +134,20 @@ function renderSystemKitEmailLayout(input: {
 function renderSystemKitInitialEmail(input: {
   firstName: string;
   systemName: string;
-  downloadUrl: string;
+  copyUrl: string;
 }) {
   return renderSystemKitEmailLayout({
-    eyebrow: "Kit système",
-    title: "Votre kit est prêt",
+    eyebrow: "Kit opérationnel",
+    title: "Votre Google Sheet est prêt",
     greeting: `Bonjour ${input.firstName},`,
     paragraphs: [
-      `Voici votre accès au kit système pour <strong style="color:#17231d;">${input.systemName}</strong>.`,
-      "Vous y retrouverez les documents associés au système, regroupés sur une page simple à consulter et à télécharger.",
+      `Voici votre kit opérationnel pour <strong style="color:#17231d;">${input.systemName}</strong>.`,
+      "Il regroupe dans un seul Google Sheet les catégories, les process, les tâches, les responsables et les récurrences.",
+      "Connectez-vous à Google puis créez votre copie personnelle : elle sera directement modifiable dans votre Drive.",
     ],
     button: {
-      href: input.downloadUrl,
-      label: "Accéder au kit système",
+      href: input.copyUrl,
+      label: "Créer ma copie du Google Sheet",
     },
     linkNotice: "Si le bouton ne fonctionne pas, copiez-collez ce lien dans votre navigateur :",
   });
@@ -160,20 +162,20 @@ function renderSystemKitFollowupEmail(input: {
 }) {
   if (input.kind === "usage") {
     return renderSystemKitEmailLayout({
-      eyebrow: "Kit système",
+      eyebrow: "Kit opérationnel",
       title: "Comment utiliser votre kit concrètement",
       greeting: input.firstName ? `Bonjour ${input.firstName},` : "Bonjour,",
       paragraphs: [
         `Une semaine après l’envoi, voici la meilleure façon d’utiliser votre kit ${input.systemName.toLowerCase()} simplement.`,
-        "Le bon réflexe n’est pas de tout lire ni de tout remplir d’un coup.",
-        "Commencez plutôt par repérer le sujet qui vous fait perdre le plus de temps, choisissez un seul document, adaptez-le, puis testez-le dans le réel cette semaine.",
+        "Le bon réflexe n’est pas de compléter tous les process d’un coup.",
+        "Commencez par le process qui vous fait perdre le plus de temps, ajustez ses tâches, désignez un responsable et fixez sa récurrence.",
       ],
       secondaryBlock: {
         title: "Pour bien démarrer",
         lines: [
           "1. Repérez ce qui repose encore trop sur vous.",
-          "2. Choisissez un document à adapter en priorité.",
-          "3. Testez-le avant d’en ouvrir un autre.",
+          "2. Choisissez un process à structurer en priorité.",
+          "3. Complétez ses tâches, son responsable et sa récurrence.",
         ],
       },
       button: {
@@ -204,7 +206,7 @@ function renderSystemKitFollowupEmail(input: {
 function renderSystemKitEmail(input: {
   firstName: string;
   systemName: string;
-  downloadUrl: string;
+  copyUrl: string;
 }) {
   return renderSystemKitInitialEmail(input);
 }
@@ -212,15 +214,16 @@ function renderSystemKitEmail(input: {
 function renderSystemKitText(input: {
   firstName: string;
   systemName: string;
-  downloadUrl: string;
+  copyUrl: string;
 }) {
   return [
     `Bonjour ${input.firstName},`,
     "",
-    `Voici votre accès au kit système pour ${input.systemName} :`,
-    input.downloadUrl,
+    `Voici votre kit opérationnel pour ${input.systemName} :`,
+    input.copyUrl,
     "",
-    "Vous y retrouverez les documents associés au système, regroupés sur une page simple à consulter et à télécharger.",
+    "Ce Google Sheet regroupe les catégories, les process, les tâches, les responsables et les récurrences.",
+    "Connectez-vous à Google puis créez votre copie personnelle et modifiable dans votre Drive.",
   ].join("\n");
 }
 
@@ -238,25 +241,27 @@ export async function sendSystemKitEmail(input: {
     return { sent: false, reason: "missing_resend_config" as const };
   }
 
-  const downloadUrl = `${getCanonicalOrigin()}/kit-systeme/${encodeURIComponent(
-    input.systemSlug
-  )}`;
+  const copyUrl = getPilotingSheetCopyUrl(input.systemSlug);
+
+  if (!copyUrl) {
+    return { sent: false, reason: "missing_sheet" as const };
+  }
 
   return sendResendEmail({
     apiKey,
     payload: {
       from,
       to: input.email,
-      subject: `Votre kit système Demaa - ${input.systemName}`,
+      subject: `Votre kit opérationnel Demaa - ${input.systemName}`,
       html: renderSystemKitEmail({
         firstName: input.firstName,
         systemName: input.systemName,
-        downloadUrl,
+        copyUrl,
       }),
       text: renderSystemKitText({
         firstName: input.firstName,
         systemName: input.systemName,
-        downloadUrl,
+        copyUrl,
       }),
     },
   });
@@ -276,8 +281,8 @@ function renderSystemKitFollowupText(input: {
       `Une semaine après l’envoi, voici la meilleure façon d’utiliser votre kit ${input.systemName} simplement.`,
       "",
       "1. Repérez ce qui vous fait perdre le plus de temps.",
-      "2. Choisissez un seul document à adapter.",
-      "3. Testez-le cette semaine avant d’en ouvrir un autre.",
+      "2. Choisissez un seul process à structurer.",
+      "3. Complétez ses tâches, son responsable et sa récurrence.",
       "",
       `Revoir mon kit : ${input.kitUrl}`,
     ].join("\n");
@@ -334,11 +339,15 @@ export async function sendSystemKitFollowupEmail(input: {
     return { sent: false, reason: "missing_resend_config" as const };
   }
 
-  const kitUrl = `${getCanonicalOrigin()}/kit-systeme/${encodeURIComponent(input.systemSlug)}`;
-  const diagnosticUrl = `${getCanonicalOrigin()}/systemes/${encodeURIComponent(input.systemSlug)}`;
+  const kitUrl =
+    getPilotingSheetCopyUrl(input.systemSlug) ??
+    `${getCanonicalOrigin()}/kit-operationnel/${encodeURIComponent(input.systemSlug)}`;
+  const diagnosticUrl =
+    `${getCanonicalOrigin()}/annuaire-services/organisation?booking=1` +
+    `&source=kit-followup&systemSlug=${encodeURIComponent(input.systemSlug)}`;
   const subject =
     input.kind === "usage"
-      ? "Comment utiliser votre kit système concrètement"
+      ? "Comment utiliser votre kit opérationnel concrètement"
       : "On peut vous offrir un premier diagnostic";
 
   return sendResendEmail({
@@ -366,7 +375,7 @@ export async function sendSystemKitFollowupEmail(input: {
 }
 
 export function getSystemKitEmailErrorMessage(
-  reason: "missing_resend_config" | "resend_error" | null
+  reason: "missing_resend_config" | "missing_sheet" | "resend_error" | null
 ) {
   if (reason === "missing_resend_config") {
     return "La configuration email n'est pas encore prête.";
@@ -374,6 +383,10 @@ export function getSystemKitEmailErrorMessage(
 
   if (reason === "resend_error") {
     return "Impossible d'envoyer le kit pour le moment. Merci de réessayer dans quelques instants.";
+  }
+
+  if (reason === "missing_sheet") {
+    return "Le Google Sheet de ce métier est introuvable.";
   }
 
   return "Impossible d'envoyer le kit.";

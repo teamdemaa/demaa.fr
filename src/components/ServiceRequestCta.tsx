@@ -1,20 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
-import AssistantPackSelector from "@/components/AssistantPackSelector";
+import OrganisationAuditBookingButton from "@/components/OrganisationAuditBookingButton";
 import ServiceIntroductionModal from "@/components/ServiceIntroductionModal";
-import ServicePurchaseCta from "@/components/ServicePurchaseCta";
-import { ASSISTANT_SERVICE_SLUG } from "@/lib/assistant-service-packs";
-import { ORGANISATION_AUDIT_BOOKING_URL } from "@/lib/organisation-audit";
-import { getPurchasableServiceConfig } from "@/lib/service-purchase";
 import type { DemaaService } from "@/lib/service-catalog";
 
 type ServiceRequestCtaProps = {
   service: DemaaService;
-  purchaseButtonLabel?: string;
-  purchaseSelectedLabel?: string;
-  purchaseButtonClassName?: string;
 };
 
 export default function ServiceRequestCta(props: ServiceRequestCtaProps) {
@@ -23,37 +15,15 @@ export default function ServiceRequestCta(props: ServiceRequestCtaProps) {
 
 export function ServiceRequestCtaWithOptions({
   service,
-  purchaseButtonLabel,
-  purchaseSelectedLabel,
-  purchaseButtonClassName,
 }: ServiceRequestCtaProps) {
   const [isIntroductionOpen, setIsIntroductionOpen] = useState(false);
-  const purchaseConfig = getPurchasableServiceConfig(service.slug);
-
-  if (service.slug === ASSISTANT_SERVICE_SLUG) {
-    return <AssistantPackSelector className="mt-5" />;
-  }
-
-  if (purchaseConfig) {
-    return (
-      <ServicePurchaseCta
-        serviceName={service.name}
-        serviceSlug={service.slug}
-        defaultLabel={purchaseButtonLabel}
-        selectedLabel={purchaseSelectedLabel}
-        buttonClassName={purchaseButtonClassName}
-      />
-    );
-  }
 
   if (service.slug === "organisation-automatisation") {
     return (
-      <Link
-        href={ORGANISATION_AUDIT_BOOKING_URL}
+      <OrganisationAuditBookingButton
+        source="Page service"
         className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper transition hover:bg-brand-blue"
-      >
-        Prendre RDV
-      </Link>
+      />
     );
   }
 

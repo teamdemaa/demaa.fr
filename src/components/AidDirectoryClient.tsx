@@ -98,7 +98,7 @@ export default function AidDirectoryClient({
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-7 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
           {families.map((family) => (
             <Link
               key={family.slug}
@@ -144,7 +144,7 @@ export default function AidDirectoryClient({
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
             {filteredItems.map((item) => (
               <Link
                 key={item.slug}

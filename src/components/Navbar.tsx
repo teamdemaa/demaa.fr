@@ -3,8 +3,6 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { BriefcaseBusiness } from "lucide-react";
-import NavbarCartIndicator from "@/components/NavbarCartIndicator";
-import ServiceCartTray from "@/components/ServiceCartTray";
 import DemaaWordmark from "@/components/DemaaWordmark";
 import { ORGANISATION_AUDIT_MODAL_HREF } from "@/lib/organisation-audit";
 
@@ -58,12 +56,10 @@ export default function Navbar({
                   <span>Voir les Kits opérationnels</span>
                 </Link>
               ) : null}
-              <NavbarCartIndicator />
             </div>
           </div>
         </div>
       </nav>
-      <ServiceCartTray />
     </>
   );
 }

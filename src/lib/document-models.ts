@@ -299,6 +299,16 @@ export const PILOTING_SHEET_URLS: Partial<Record<string, string>> = {
     "https://docs.google.com/spreadsheets/d/1-FGCoBYIr_wchNlP8dEjG-BldVB0tamjUtvSBpwD-Ck/edit",
 };
 
+export function getPilotingSheetCopyUrl(systemSlug: string): string | null {
+  const sheetUrl = PILOTING_SHEET_URLS[systemSlug];
+
+  if (!sheetUrl) {
+    return null;
+  }
+
+  return sheetUrl.replace(/\/edit(?:\?.*)?$/, "/copy");
+}
+
 const globalDocumentModels: DocumentModel[] = [
   {
     slug: "suivi-previsionnel-financier",

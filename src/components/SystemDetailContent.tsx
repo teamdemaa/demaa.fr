@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { startTransition, useMemo, useState, type MouseEvent, type ReactNode } from "react";
 import {
   ArrowLeft,
@@ -26,7 +27,6 @@ import {
 import AccompagnementServices from "@/components/AccompagnementServices";
 import FinanceDetailDialog from "@/components/FinanceDetailDialog";
 import HorizontalScrollHint from "@/components/HorizontalScrollHint";
-import AccountingRecommendationDialog from "@/components/AccountingRecommendationDialog";
 import ProNetworkDetailDialog from "@/components/ProNetworkDetailDialog";
 import RecruitmentDetailDialog from "@/components/RecruitmentDetailDialog";
 import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
@@ -106,7 +106,7 @@ const SYSTEM_SECTION_CARDS = [
   {
     tab: "outils",
     label: "Outils",
-    description: "Les solutions métier et transverses recommandées pour cette activité.",
+    description: "Les solutions métier et transverses utiles pour cette activité.",
     icon: Wrench,
   },
   {
@@ -156,10 +156,6 @@ type SupplierSection = {
   title: string;
   items: DemaaSupplier[];
 };
-
-type SupplierPriorityItem =
-  | { kind: "accounting" }
-  | { kind: "supplier"; item: DemaaSupplier };
 
 type FundingPriorityItem =
   | { kind: "finance"; item: DemaaFinanceItem }
@@ -334,6 +330,7 @@ export default function SystemDetailContent({
   headingAs = "h1",
   headingId,
 }: SystemDetailContentProps) {
+  const router = useRouter();
   const defaultTab =
     isVisibleSystemDetailTab(initialActiveTab) &&
     initialActiveTab !== "ressources"
@@ -415,22 +412,7 @@ export default function SystemDetailContent({
       additionalTransverse: recommendedTrainings.transverse.slice(visibleTransverse.length),
     };
   }, [recommendedTrainings]);
-  const visibleSupplierCount = system.slug === "cabinet-comptable"
-    ? MAX_VISIBLE_RECOMMENDATIONS
-    : MAX_VISIBLE_RECOMMENDATIONS - 1;
-  const prioritySupplierItems = useMemo<SupplierPriorityItem[]>(
-    () => activeTab === "fournisseurs"
-      ? [
-        ...(system.slug === "cabinet-comptable"
-          ? []
-          : [{ kind: "accounting" as const }]),
-        ...recommendedSuppliers
-          .slice(0, visibleSupplierCount)
-          .map((item) => ({ kind: "supplier" as const, item })),
-      ]
-      : [],
-    [activeTab, recommendedSuppliers, system.slug, visibleSupplierCount],
-  );
+  const visibleSupplierCount = MAX_VISIBLE_RECOMMENDATIONS;
   const additionalSupplierSections = useMemo(
     () => (activeTab === "fournisseurs"
       ? groupSuppliersBySection(recommendedSuppliers.slice(visibleSupplierCount))
@@ -472,6 +454,25 @@ export default function SystemDetailContent({
     startTransition(() => {
       setActiveTab(tab);
     });
+  }
+
+  function returnToSections() {
+    startTransition(() => {
+      setActiveTab(null);
+    });
+
+    const url = new URL(window.location.href);
+    url.searchParams.delete("tab");
+    window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
+  }
+
+  function handleBack() {
+    if (activeTab === null) {
+      router.back();
+      return;
+    }
+
+    returnToSections();
   }
 
   function toggleRecommendationSection(sectionKey: string) {
@@ -602,12 +603,14 @@ export default function SystemDetailContent({
     items,
     title,
     tone,
+    layout = "carousel",
     getKey,
     renderCard,
   }: {
     items: T[];
     title: string;
     tone: "forest" | "muted";
+    layout?: "grid" | "carousel";
     getKey: (item: T) => string;
     renderCard: (item: T) => ReactNode;
   }) {
@@ -623,6 +626,27 @@ export default function SystemDetailContent({
           </p>
           <div className="max-w-[20rem]">
             {items[0] ? renderCard(items[0]) : null}
+          </div>
+        </div>
+      );
+    }
+
+    if (layout === "grid") {
+      return (
+        <div className="space-y-4">
+          <p
+            className={`text-[11px] font-semibold uppercase tracking-[0.16em] ${
+              tone === "forest" ? "text-dema-forest" : "text-dema-muted"
+            }`}
+          >
+            {title}
+          </p>
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+            {items.map((item) => (
+              <div key={getKey(item)} className="min-w-0">
+                {renderCard(item)}
+              </div>
+            ))}
           </div>
         </div>
       );
@@ -885,7 +909,16 @@ export default function SystemDetailContent({
 
   return (
     <>
-      <div className="text-left">
+      <button
+        type="button"
+        onClick={handleBack}
+        className="group inline-flex items-center gap-2 text-sm font-medium text-gray-400 transition-colors hover:text-neutral-700"
+      >
+        <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+        Revenir
+      </button>
+
+      <div className="mt-4 text-left">
         <Heading
           id={headingId}
           className="text-3xl font-normal tracking-tight text-brand-blue md:text-4xl"
@@ -898,7 +931,7 @@ export default function SystemDetailContent({
       </div>
 
       {activeTab === null ? (
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
           {SYSTEM_SECTION_CARDS.filter((section) => isVisibleSystemDetailTab(section.tab)).map(
             (section) => {
               const Icon = section.icon;
@@ -908,19 +941,21 @@ export default function SystemDetailContent({
                   key={section.tab}
                   type="button"
                   onClick={() => selectTab(section.tab)}
-                  className="group flex min-h-[13rem] flex-col rounded-[1.25rem] border border-dema-line bg-dema-paper p-5 text-left transition hover:-translate-y-0.5 hover:border-dema-forest/25 hover:shadow-[0_16px_36px_rgba(23,35,29,0.06)] md:p-6"
+                  className="group flex min-h-[13rem] min-w-0 flex-col rounded-[1.25rem] border border-dema-line bg-dema-paper p-4 text-left transition hover:-translate-y-0.5 hover:border-dema-forest/25 hover:shadow-[0_16px_36px_rgba(23,35,29,0.06)] sm:p-5 md:p-6"
                 >
-                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper">
-                    <Icon className="h-5 w-5" aria-hidden="true" />
+                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper sm:h-11 sm:w-11">
+                    <Icon className="h-4 w-4 sm:h-5 sm:w-5" aria-hidden="true" />
                   </span>
-                  <div className="mt-6 flex items-center justify-between gap-3">
-                    <h2 className="text-xl font-medium text-brand-blue">{section.label}</h2>
+                  <div className="mt-4 flex items-start justify-between gap-2 sm:mt-6 sm:items-center sm:gap-3">
+                    <h2 className="min-w-0 break-words text-base font-medium leading-snug text-brand-blue sm:text-xl">
+                      {section.label}
+                    </h2>
                     <ChevronRight
                       className="h-4 w-4 shrink-0 text-dema-forest/60 transition group-hover:translate-x-0.5"
                       aria-hidden="true"
                     />
                   </div>
-                  <p className="mt-2 text-sm leading-relaxed text-dema-muted">
+                  <p className="mt-2 line-clamp-4 text-xs leading-5 text-dema-muted sm:text-sm sm:leading-relaxed">
                     {section.description}
                   </p>
                 </button>
@@ -930,21 +965,7 @@ export default function SystemDetailContent({
         </div>
       ) : (
         <>
-          <div className="mt-7 flex flex-wrap items-center gap-3 border-t border-dema-line/70 pt-5">
-            <button
-              type="button"
-              onClick={() => setActiveTab(null)}
-              className="inline-flex min-h-10 items-center gap-2 rounded-full border border-dema-line bg-dema-paper px-4 py-2 text-sm font-medium text-brand-blue/65 transition hover:border-dema-forest/25 hover:text-dema-forest"
-            >
-              <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-              Toutes les sections
-            </button>
-            <p className="text-sm font-semibold text-dema-forest">
-              {SYSTEM_SECTION_CARDS.find((section) => section.tab === activeTab)?.label}
-            </p>
-          </div>
-
-          <div className="mt-5">
+          <div className="mt-7">
         {activeTab === "systeme" ? (
           <SystemeTabContent
             systemName={system.name}
@@ -976,15 +997,18 @@ export default function SystemDetailContent({
               return (
                 <>
                   {recommendedTools.length ? (
-                    renderToolCarousel(
-                      recommendedTools,
-                      "forest",
-                      "Outils recommandés",
-                    )
+                    renderCardSection({
+                      items: recommendedTools,
+                      title: "Outils métier",
+                      tone: "forest",
+                      layout: "grid",
+                      getKey: (tool) => tool.slug ?? tool.name,
+                      renderCard: renderToolCard,
+                    })
                   ) : hiddenToolCount ? (
                     <p className="max-w-2xl text-sm leading-6 text-dema-muted">
-                      Aucun outil n’est recommandé pour ce kit à ce jour. Les solutions disponibles
-                      restent consultables ci-dessous sans label de recommandation.
+                      Aucun outil métier n’est proposé pour ce kit à ce jour. Les solutions
+                      disponibles restent consultables ci-dessous.
                     </p>
                   ) : null}
 
@@ -1035,24 +1059,14 @@ export default function SystemDetailContent({
           </div>
         ) : activeTab === "fournisseurs" ? (
           <div className="space-y-5">
-            {prioritySupplierItems.length
+            {recommendedSuppliers.length
               ? renderCardSection({
-                items: prioritySupplierItems,
-                title: "À regarder en priorité",
+                items: recommendedSuppliers.slice(0, visibleSupplierCount),
+                title: "Fournisseurs",
                 tone: "forest",
-                getKey: (entry) => entry.kind === "accounting"
-                  ? "expert-comptable"
-                  : entry.item.slug,
-                renderCard: (entry) => entry.kind === "accounting"
-                  ? (
-                    <AccountingRecommendationDialog
-                      buttonClassName={SYSTEM_CARD_CLASS}
-                      sectorLabel={detail.sectorLabel}
-                      systemName={system.name}
-                      systemSlug={system.slug}
-                    />
-                  )
-                  : renderSupplierCard(entry.item),
+                layout: "grid",
+                getKey: (supplier) => supplier.slug,
+                renderCard: renderSupplierCard,
               })
               : null}
             {renderShowMoreButton({
@@ -1081,8 +1095,9 @@ export default function SystemDetailContent({
             {priorityFundingItems.length
               ? renderCardSection({
                 items: priorityFundingItems,
-                title: "À regarder en priorité",
+                title: "Financements et aides",
                 tone: "forest",
+                layout: "grid",
                 getKey: ({ kind, item }) => `${kind}-${item.slug}`,
                 renderCard: ({ kind, item }) => kind === "finance"
                   ? renderFinanceCard(item)
@@ -1121,28 +1136,16 @@ export default function SystemDetailContent({
           <SystemAcademyContent systemSlug={system.slug} />
         ) : activeTab === "reseaux-pro" ? (
           <div className="space-y-5">
-            {recommendedProNetworks.length ? (
-              <div className="space-y-4">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-                  Réseau pro
-                </p>
-                <HorizontalScrollHint
-                  className="-mx-4 overflow-x-auto px-4 pb-4 pt-1 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
-                  controlsClassName="absolute -right-2 -top-9 z-10 flex items-center gap-1.5 sm:-right-3"
-                >
-                  <div className="flex w-max snap-x snap-mandatory gap-4">
-                    {recommendedProNetworks.slice(0, MAX_VISIBLE_RECOMMENDATIONS).map((network) => (
-                      <div
-                        key={network.slug}
-                        className="w-[18rem] shrink-0 snap-start sm:w-[19rem] lg:w-[20rem]"
-                      >
-                        {renderProNetworkCard(network)}
-                      </div>
-                    ))}
-                  </div>
-                </HorizontalScrollHint>
-              </div>
-            ) : null}
+            {recommendedProNetworks.length
+              ? renderCardSection({
+                items: recommendedProNetworks.slice(0, MAX_VISIBLE_RECOMMENDATIONS),
+                title: "Réseaux professionnels",
+                tone: "forest",
+                layout: "grid",
+                getKey: (network) => network.slug,
+                renderCard: renderProNetworkCard,
+              })
+              : null}
             {renderShowMoreButton({
               sectionKey: "networks",
               hiddenCount: recommendedProNetworks.slice(MAX_VISIBLE_RECOMMENDATIONS).length,
@@ -1162,7 +1165,12 @@ export default function SystemDetailContent({
             ) : null}
           </div>
         ) : activeTab === "accompagnement" ? (
-          <AccompagnementServices source="Kit opérationnel" />
+          <AccompagnementServices
+            sectorLabel={detail.sectorLabel}
+            source="Kit opérationnel"
+            systemName={system.name}
+            systemSlug={system.slug}
+          />
         ) : activeTab === "recrutement" ? (
           <div className="space-y-5">
             {recommendedRecruitmentItems.length ? (
@@ -1172,6 +1180,7 @@ export default function SystemDetailContent({
                     items: displayedRecruitmentItems.visible,
                     title: "Solutions de recrutement",
                     tone: "forest",
+                    layout: "grid",
                     getKey: (item) => item.slug,
                     renderCard: renderRecruitmentCard,
                   })
@@ -1206,6 +1215,7 @@ export default function SystemDetailContent({
                     items: displayedTrainings.visibleMetier,
                     title: "Formations métier",
                     tone: "forest",
+                    layout: "grid",
                     getKey: (training) => training.slug,
                     renderCard: renderTrainingCard,
                   })
@@ -1215,6 +1225,7 @@ export default function SystemDetailContent({
                     items: displayedTrainings.visibleTransverse,
                     title: "Formations transverses",
                     tone: displayedTrainings.visibleMetier.length ? "muted" : "forest",
+                    layout: "grid",
                     getKey: (training) => training.slug,
                     renderCard: renderTrainingCard,
                   })

@@ -53,6 +53,11 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: '/assistant/success',
+        destination: '/annuaire-services/recrutement-assistante-facturation',
+        permanent: true,
+      },
+      {
         source: '/annuaire-fournisseurs/assurance-pro',
         destination: '/annuaire-fournisseurs/orus',
         permanent: true,
