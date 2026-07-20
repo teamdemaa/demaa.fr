@@ -1,8 +1,0 @@
-Sujet,Responsable,Peut decider seul,Valider avec,A informer,Condition ou seuil
-Qualification besoin technique,Responsable technique,Oui,,Dirigeant,"Si besoin et perimetre compris"
-Priorisation ticket incident,Responsable support,Oui,,Equipe concernee,"Selon criticite et SLA"
-Planification intervention,Responsable technique,Oui,,Client + dirigeant,"Si pas d'impact budget"
-Ajout hors perimetre,Dirigeant,Non,Dirigeant,Responsable technique,"Si demande supplementaire"
-Achat licence ou materiel,Responsable technique,Oui,,Dirigeant,"Sous seuil budget defini"
-Escalade incident critique,Responsable support,Non,Dirigeant,Equipe concernee,"Si interruption service ou securite"
-Facturation jalon ou abonnement,Responsable admin,Oui,,Dirigeant,"Si jalon / periode atteinte"

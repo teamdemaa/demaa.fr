@@ -1,52 +1,27 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-
-type CookieConsent = "accepted" | "rejected";
-
-const COOKIE_CONSENT_STORAGE_KEY = "demaa-cookie-consent";
-const COOKIE_CONSENT_EVENT = "demaa-cookie-consent-change";
-
-function readStoredConsent(): CookieConsent | null {
-  if (typeof window === "undefined") {
-    return null;
-  }
-
-  const rawValue = window.localStorage.getItem(COOKIE_CONSENT_STORAGE_KEY);
-  return rawValue === "accepted" || rawValue === "rejected" ? rawValue : null;
-}
-
-function updateConsent(value: CookieConsent | null) {
-  if (value === null) {
-    window.localStorage.removeItem(COOKIE_CONSENT_STORAGE_KEY);
-  } else {
-    window.localStorage.setItem(COOKIE_CONSENT_STORAGE_KEY, value);
-  }
-
-  window.dispatchEvent(new Event(COOKIE_CONSENT_EVENT));
-}
+import {
+  clearCookieConsentPreferences,
+  parseCookieConsentSnapshot,
+  readCookieConsentSnapshot,
+  subscribeToCookieConsent,
+  writeCookieConsentPreferences,
+} from "@/lib/cookie-consent";
 
 export default function CookiePreferencesPanel() {
-  const consent = useSyncExternalStore(
-    (onStoreChange) => {
-      window.addEventListener(COOKIE_CONSENT_EVENT, onStoreChange);
-      window.addEventListener("storage", onStoreChange);
-
-      return () => {
-        window.removeEventListener(COOKIE_CONSENT_EVENT, onStoreChange);
-        window.removeEventListener("storage", onStoreChange);
-      };
-    },
-    readStoredConsent,
-    () => null
+  const consentSnapshot = useSyncExternalStore(
+    subscribeToCookieConsent,
+    readCookieConsentSnapshot,
+    () => null,
   );
+  const preferences = parseCookieConsentSnapshot(consentSnapshot);
+  const analytics = preferences?.analytics ?? false;
+  const marketing = preferences?.marketing ?? false;
 
-  const statusLabel =
-    consent === "accepted"
-      ? "Vous avez accepté les traceurs optionnels."
-      : consent === "rejected"
-        ? "Vous avez refusé les traceurs optionnels."
-        : "Aucun choix n’est enregistré pour le moment.";
+  const statusLabel = preferences
+    ? `Mesure d’audience ${preferences.analytics ? "autorisée" : "refusée"} · Publicité ${preferences.marketing ? "autorisée" : "refusée"}.`
+    : "Aucun choix n’est enregistré pour le moment.";
 
   return (
     <div className="rounded-[1.25rem] border border-dema-line bg-dema-sage/35 p-4 md:p-5">
@@ -54,24 +29,55 @@ export default function CookiePreferencesPanel() {
         Préférences actuelles
       </p>
       <p className="mt-2 text-sm leading-relaxed text-dema-muted">{statusLabel}</p>
-      <div className="mt-4 flex flex-col gap-2 sm:flex-row">
+
+      <div className="mt-4 grid gap-3 sm:grid-cols-2">
+        <label className="flex cursor-pointer items-start gap-3 text-sm text-brand-blue">
+          <input
+            type="checkbox"
+            checked={analytics}
+            onChange={(event) => writeCookieConsentPreferences({
+              analytics: event.target.checked,
+              marketing,
+            })}
+            className="mt-1 h-4 w-4"
+          />
+          <span>
+            <strong className="block">Mesure d&apos;audience</strong>
+            <span className="mt-1 block text-xs text-dema-muted">
+              Parcours, sources d&apos;acquisition et statistiques anonymes.
+            </span>
+          </span>
+        </label>
+        <label className="flex cursor-pointer items-start gap-3 text-sm text-brand-blue">
+          <input
+            type="checkbox"
+            checked={marketing}
+            onChange={(event) => writeCookieConsentPreferences({
+              analytics,
+              marketing: event.target.checked,
+            })}
+            className="mt-1 h-4 w-4"
+          />
+          <span>
+            <strong className="block">Publicité</strong>
+            <span className="mt-1 block text-xs text-dema-muted">
+              Mesure des campagnes Meta et publicitaires.
+            </span>
+          </span>
+        </label>
+      </div>
+
+      <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
         <button
           type="button"
-          onClick={() => updateConsent("accepted")}
-          className="demaa-primary-button"
-        >
-          Autoriser les traceurs optionnels
-        </button>
-        <button
-          type="button"
-          onClick={() => updateConsent("rejected")}
+          onClick={() => writeCookieConsentPreferences({ analytics: false, marketing: false })}
           className="demaa-secondary-button"
         >
-          Refuser les traceurs optionnels
+          Tout refuser
         </button>
         <button
           type="button"
-          onClick={() => updateConsent(null)}
+          onClick={clearCookieConsentPreferences}
           className="demaa-secondary-button"
         >
           Réafficher le bandeau

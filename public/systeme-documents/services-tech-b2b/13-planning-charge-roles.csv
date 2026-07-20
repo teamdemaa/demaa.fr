@@ -1,5 +1,0 @@
-Collaborateur,Rôle principal,Charge actuelle,Back-up 1,Back-up 2,Niveau autonomie,Point de vigilance,Notes
-Dirigeant,Vente et arbitrages,"Charge forte sur arbitrages projets sensibles",Responsable technique,,Elevé,"Sortir des decisions detail run",
-Responsable technique,Cadrage et delivery,"7 projets / comptes actifs",Dirigeant,Responsable support,Elevé,"Mieux lisser les interventions urgentes",
-Responsable support,Tickets et escalades,"Backlog support quotidien",Responsable technique,Technicien,Intermediaire,"Risque saturation sur pics",
-Technicien / consultant,Execution terrain,"Interventions planifiees + astreinte",Responsable support,Responsable technique,Bon,"Renforcer documentation reprise",

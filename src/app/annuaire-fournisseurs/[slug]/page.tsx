@@ -108,7 +108,7 @@ export default async function SupplierDetailPage({
           <section className="mt-5">
             <RelatedSystemsLinks
               systems={relatedSystems}
-              description="Quelques pages système où ce fournisseur revient souvent."
+              description="Quelques kits opérationnels où ce fournisseur revient souvent."
             />
           </section>
         </div>

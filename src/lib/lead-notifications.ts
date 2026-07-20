@@ -1,6 +1,8 @@
 import "server-only";
 
 import { escapeSlackMrkdwn } from "@/lib/api-security";
+import type { LeadAttributionRecord } from "@/lib/lead-attribution";
+import { buildAttributionDisplayFields } from "@/lib/lead-attribution-server";
 import type { LeadContext } from "@/lib/lead-context";
 import {
   createLeadRequest,
@@ -13,6 +15,7 @@ import { syncResendLeadContact } from "@/lib/resend-audience";
 import { sendSlackMessage } from "@/lib/slack";
 
 type LeadSubmission = {
+  attribution: LeadAttributionRecord;
   channels: {
     email: boolean;
     resend: boolean;
@@ -52,6 +55,7 @@ function buildDisplayFields(input: LeadSubmission) {
     { label: "Secteur", value: input.context.sectorLabel },
     { label: "Source", value: input.context.source },
     { label: "Page d’origine", value: input.context.sourceUrl },
+    ...buildAttributionDisplayFields(input.attribution),
     ...(input.fields ?? []),
   ].filter((field) => field.value?.trim());
 }
@@ -133,6 +137,7 @@ async function deliverChannel(input: {
 export async function submitLeadRequest(input: LeadSubmission) {
   const fields = buildDisplayFields(input);
   const lead = await createLeadRequest({
+    attribution: input.attribution,
     channels: input.channels,
     contact: input.contact,
     context: input.context,

@@ -2,18 +2,32 @@ import { NextResponse, type NextRequest } from "next/server";
 
 const CANONICAL_HOST = "demaa.fr";
 const CANONICAL_ORIGIN = `https://${CANONICAL_HOST}`;
-const HIDDEN_ORGANISATION_PATHS = new Set([
+const RETIRED_EXACT_PATHS = new Set([
+  "/annuaire-experts-comptables",
+  "/annuaire-services",
+  "/cockpit-preview",
+  "/logo-preview",
+  "/manifest.webmanifest",
+  "/miniature-preview",
+  "/offline",
   "/organisation",
   "/organisation-automatisation",
-  "/annuaire-services",
-  "/services/organisation",
-  "/services/organisation-automatisation",
-  "/services/structuration-automatisation",
+  "/services",
+  "/structuration",
+  "/sw.js",
 ]);
+const RETIRED_PATH_PREFIXES = [
+  "/annuaire-experts-comptables/",
+  "/services/",
+];
+
 export function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
-  if (HIDDEN_ORGANISATION_PATHS.has(pathname)) {
+  if (
+    RETIRED_EXACT_PATHS.has(pathname) ||
+    RETIRED_PATH_PREFIXES.some((prefix) => pathname.startsWith(prefix))
+  ) {
     return NextResponse.rewrite(new URL("/_not-found", request.url), {
       status: 404,
       headers: {

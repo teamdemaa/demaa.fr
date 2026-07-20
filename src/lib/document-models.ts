@@ -45,7 +45,6 @@ export type DocumentModel = {
   ctaLabel: string;
   ctaHref: string;
   tags: string[];
-  systemSlug?: string;
   relatedSystemSlugs?: string[];
   featuredRank?: number;
 };
@@ -423,70 +422,7 @@ Ce modèle est particulièrement utile si vous voulez :
   },
 ];
 
-const systemDocumentModels: DocumentModel[] = Object.entries(PILOTING_SHEET_URLS).flatMap(
-  ([systemSlug, ctaHref]) => {
-    const enterprise = enterpriseCatalogBySlug[systemSlug];
-
-    if (!enterprise || !ctaHref) {
-      return [];
-    }
-
-    return [
-      {
-        slug: `tableau-de-pilotage-${systemSlug}`,
-        title: `Tableau de pilotage pour ${enterprise.name}`,
-        seoTitle: `Tableau de pilotage ${enterprise.name} | Modèle Demaa`,
-        description:
-          `Un modèle de pilotage concret pour suivre les indicateurs, les postes clés et les arbitrages utiles dans une activité de ${enterprise.name.toLowerCase()}.`,
-        seoDescription:
-          `Accédez à un tableau de pilotage pensé pour ${enterprise.name.toLowerCase()} afin de suivre les bons repères, mieux anticiper et décider plus sereinement.`,
-        content: `
-## Pourquoi ce modèle existe
-
-Dans ${enterprise.name.toLowerCase()}, le vrai sujet n'est pas seulement de travailler beaucoup.
-
-Le vrai sujet est de savoir ce qu'il faut suivre pour piloter correctement l'activité.
-
-Ce tableau de pilotage sert à :
-
-- rendre les chiffres plus visibles ;
-- suivre les postes importants ;
-- repérer les écarts plus tôt ;
-- mieux arbitrer semaine après semaine ;
-- garder une base de pilotage plus simple à tenir.
-
-## Ce que vous allez trouver
-
-- un support directement exploitable ;
-- une base structurée pour suivre l'activité ;
-- un document pensé pour le métier ${enterprise.name.toLowerCase()} ;
-- une aide pour piloter sans repartir d'une feuille blanche.
-
-## Pour qui c'est utile
-
-Ce modèle est utile si vous voulez :
-
-- reprendre la main sur vos indicateurs ;
-- mieux suivre votre activité ;
-- poser des routines de pilotage plus régulières ;
-- partager une base plus claire avec un partenaire ou un collaborateur.
-        `.trim(),
-        category: "Tableau de pilotage",
-        date: "2026-03-01",
-        ctaLabel: "Ouvrir le modèle",
-        ctaHref,
-        tags: ["modele", "pilotage", "tableau-de-bord", enterprise.slug],
-        systemSlug,
-        relatedSystemSlugs: [systemSlug],
-      },
-    ];
-  },
-);
-
-export const documentModels: DocumentModel[] = [
-  ...globalDocumentModels,
-  ...systemDocumentModels,
-];
+export const documentModels: DocumentModel[] = [...globalDocumentModels];
 
 function compareDocumentModels(left: DocumentModel, right: DocumentModel) {
   const leftRank = left.featuredRank ?? 999;
@@ -495,9 +431,6 @@ function compareDocumentModels(left: DocumentModel, right: DocumentModel) {
   if (leftRank !== rightRank) {
     return leftRank - rightRank;
   }
-
-  if (left.systemSlug && !right.systemSlug) return 1;
-  if (!left.systemSlug && right.systemSlug) return -1;
 
   return left.title.localeCompare(right.title, "fr");
 }
@@ -508,16 +441,6 @@ export function getAllDocumentModels(): DocumentModel[] {
 
 export function getDocumentModelBySlug(slug: string): DocumentModel | null {
   return documentModels.find((model) => model.slug === slug) ?? null;
-}
-
-export function getDocumentModelsForSystem(systemSlug: string): DocumentModel[] {
-  return [...documentModels]
-    .filter((model) => model.systemSlug === systemSlug || (!model.systemSlug && model.featuredRank))
-    .sort((left, right) => {
-      if (left.systemSlug === systemSlug && right.systemSlug !== systemSlug) return -1;
-      if (left.systemSlug !== systemSlug && right.systemSlug === systemSlug) return 1;
-      return compareDocumentModels(left, right);
-    });
 }
 
 export function getRelatedSystemsForDocumentModelSlug(slug: string, limit = 6): System[] {

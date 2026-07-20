@@ -9,7 +9,7 @@
     "build:stable": "DEMAA_FORCE_LOCAL_DATA=true DEMAA_BUILD_DIST_DIR=.next-build TMPDIR=/private/tmp next build --webpack",
     "start": "DEMAA_BUILD_DIST_DIR=.next-build next start",
     "lint": "eslint",
-    "validate:data": "node scripts/validate-data.mjs && node scripts/validate-systeme-catalog.mjs && node scripts/validate-sector-taxonomy.mjs && node scripts/validate-seo-routes.mjs && node scripts/validate-sector-editorial-links.mjs && node scripts/validate-build-runtime.mjs && node scripts/audit-supplier-placeholders.mjs && node scripts/audit-system-recommendations.mjs && node scripts/audit-system-discovery-recommendations.mjs && node scripts/audit-finance-network-recommendations.mjs && node scripts/audit-aid-recommendations.mjs && node scripts/audit-business-checklists.mjs --strict",
+    "validate:data": "node scripts/validate-data.mjs && node scripts/validate-systeme-catalog.mjs && node scripts/validate-sector-taxonomy.mjs && node scripts/validate-seo-routes.mjs && node scripts/validate-sector-editorial-links.mjs && node scripts/validate-build-runtime.mjs && node scripts/audit-supplier-placeholders.mjs && node scripts/audit-system-recommendations.mjs && node scripts/audit-system-discovery-recommendations.mjs && node scripts/audit-finance-network-recommendations.mjs && node scripts/audit-aid-recommendations.mjs",
     "audit:seo-foundations": "npm run validate:data && node scripts/audit-free-tools-coverage.mjs && node scripts/audit-generic-fallbacks.mjs && node scripts/audit-system-tool-quality.mjs && node scripts/audit-internal-linking.mjs && node scripts/audit-system-pages.mjs",
     "audit:seo-foundations:ci": "npm run audit:seo-foundations",
     "audit:free-tools-coverage": "node scripts/audit-free-tools-coverage.mjs",
@@ -26,21 +26,15 @@
     "audit:finance-network-recommendations": "node scripts/audit-finance-network-recommendations.mjs",
     "audit:aid-recommendations": "node scripts/audit-aid-recommendations.mjs",
     "audit:tool-modal-readiness": "node scripts/audit-tool-modal-readiness.mjs",
-    "audit:business-checklists": "node scripts/audit-business-checklists.mjs --strict && node scripts/audit-business-checklists-semantic.mjs",
-    "audit:business-checklists:ci": "node scripts/audit-business-checklists.mjs --strict && node scripts/audit-business-checklists-semantic.mjs --strict --fail-on-warning",
     "seed:enterprise-annuaire": "node scripts/seed-enterprise-annuaire.mjs",
     "sync:enterprise-annuaire": "node scripts/sync-enterprise-annuaire.mjs",
     "sync:tool-directory": "node scripts/sync-tool-directory.mjs"
   },
   "dependencies": {
     "@fillout/react": "^3.1.2",
-    "@stripe/stripe-js": "^9.7.0",
     "@vercel/analytics": "^2.0.1",
     "firebase-admin": "^14.1.0",
-    "framer-motion": "^12.38.0",
     "html-to-image": "^1.11.13",
-    "jspdf": "^4.2.1",
-    "jszip": "^3.10.1",
     "lucide-react": "^1.7.0",
     "next": "^16.2.7",
     "qrcode.react": "^4.2.0",
@@ -59,6 +53,7 @@
     "typescript": "^5"
   },
   "overrides": {
-    "postcss": "^8.5.15"
+    "postcss": "^8.5.15",
+    "uuid": "^11.1.1"
   }
 }

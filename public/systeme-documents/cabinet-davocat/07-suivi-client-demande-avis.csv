@@ -1,6 +1,0 @@
-Moment,Déclencheur,Message type,Canal,Responsable,Échéance,Statut,Notes
-Mi-dossier,"Etape importante franchie","Informer le client de l'avancement et de la prochaine etape",Email,Avocat referent,Sous 24h,A faire,
-Mi-dossier,"Client silencieux depuis 10 jours","Relancer avec point clair et liste courte de pieces",Email + appel,Assistante juridique,Sous 48h,A faire,
-Cloture,"Livrable final ou audience passee","Demander si tout est clair et s'il reste un point a traiter",Email,Avocat referent,Sous 24h,A faire,
-Cloture,"Client satisfait et dossier termine","Demander un avis ou une recommandation",Email,Assistante juridique,Sous 72h,A faire,"Ajouter lien avis"
-Reactivation,"Ancien client inactif depuis 6 mois","Prendre des nouvelles et rappeler les domaines accompagnes",Email,Associe gerant,Mensuel,A planifier,

@@ -1,4 +1,0 @@
-Personne,Role,Sait accueil,Sait cours collectif,Sait coaching individuel,Remplacant 1,Remplacant 2,Notes
-Emma,Coach collectif,Partiel,Oui,Non,Lucas,Lea,Peut ouvrir le soir
-Lucas,Coach individuel,Partiel,Oui,Oui,Emma,Lea,Peut reprendre un cours simple
-Lea,Accueil,Oui,Non,Non,Emma,Lucas,Gère les abonnements et annulations

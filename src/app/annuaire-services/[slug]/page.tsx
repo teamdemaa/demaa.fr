@@ -101,7 +101,7 @@ export default async function ServiceDetailPage({
           <section className="mt-5">
             <RelatedSystemsLinks
               systems={relatedSystems}
-              description="Quelques pages système où ce service est particulièrement pertinent."
+              description="Quelques kits opérationnels où ce service est particulièrement pertinent."
             />
           </section>
         </div>

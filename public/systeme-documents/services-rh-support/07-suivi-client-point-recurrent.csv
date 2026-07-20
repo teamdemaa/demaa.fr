@@ -1,6 +1,0 @@
-Moment,Déclencheur,Message type,Canal,Responsable,Échéance,Statut,Notes
-Hebdo,Point d'avancement,"Partager sujets traites, en attente et prochaines actions",Email,Responsable operations,Hebdomadaire,A faire,
-Mensuel,Revue compte,"Faire le point sur charge, demandes recurrentes et irritants",Visio,Dirigeant,Mensuel,A planifier,
-Incident,Retard ou blocage,"Informer tot, donner nouvelle date et action corrective",Email + appel,Responsable operations,Immediat,A faire,
-Satisfaction,Retour positif,"Demander retour ou recommandation",Email,Responsable admin,Sous 72h,A faire,
-Reactivation,Compte peu actif,"Proposer point de besoin ou mission complementaire",Email,Dirigeant,Mensuel,A planifier,

@@ -27,7 +27,6 @@ export default function Navbar({
             <Link
               href="/"
               aria-label="Retour à l'accueil"
-              data-service-cart-focus-fallback="true"
               className="inline-flex items-center shrink-0 z-50 cursor-pointer"
               onMouseEnter={() => router.prefetch("/")}
               onFocus={() => router.prefetch("/")}

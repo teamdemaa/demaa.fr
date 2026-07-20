@@ -1,30 +1,24 @@
 export const SYSTEM_DETAIL_TABS = [
-  "systeme",
+  "process",
   "outils",
   "fournisseurs",
   "financement",
-  "academie",
   "reseaux-pro",
   "accompagnement",
   "recrutement",
-  "ressources",
   "formation",
 ] as const;
 
 export type SystemDetailTab = (typeof SYSTEM_DETAIL_TABS)[number];
 
-// Keep tab availability centralized so temporarily hidden sections can be
-// restored without removing their routes or content.
 export const SYSTEM_DETAIL_TAB_VISIBILITY = {
-  systeme: true,
+  process: true,
   outils: true,
   fournisseurs: true,
   financement: true,
-  academie: false,
   "reseaux-pro": true,
   accompagnement: true,
   recrutement: true,
-  ressources: false,
   formation: true,
 } satisfies Record<SystemDetailTab, boolean>;
 

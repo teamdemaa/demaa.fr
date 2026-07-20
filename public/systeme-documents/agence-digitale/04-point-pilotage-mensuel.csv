@@ -1,9 +1,0 @@
-Bloc,Sujet,Valeur,Responsable,Prochaine action,Statut,Notes
-Commercial,Devis en cours,9,Dirigeant,"Relancer les 4 plus proches de la signature",A suivre,
-Commercial,Nouveaux briefs qualifies,6,Dirigeant,"Trier les briefs mal cadres",A suivre,
-Production,Projets actifs,11,Chef de projet,"Reprioriser les 3 plus tendus",A suivre,
-Production,Projets en retard,2,Chef de projet,"Recadrer planning et validations client",Sous surveillance,
-Finance,CA facture,54 000 EUR,Dirigeant,"Suivre les projets non encore factures",A suivre,
-Finance,Encours > 30 jours,9 800 EUR,Office manager,"Passer en relance niveau 2 sur 2 factures",Sous surveillance,
-Equipe,Charge equipe,Tendue sur social ads et motion,Dirigeant,"Redistribuer 1 projet et externaliser 1 tache",Ouvert,
-Qualite,Retours clients ouverts,3,Chef de projet,"Clore les ajustements avant vendredi",En cours,

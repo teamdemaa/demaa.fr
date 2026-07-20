@@ -1,6 +1,5 @@
 import "server-only";
 
-import { getAdminFirestore } from "@/lib/firebase-admin";
 import type { LeadContext } from "@/lib/lead-context";
 
 const RESEND_API_URL = "https://api.resend.com";
@@ -12,11 +11,6 @@ const CONTACT_PROPERTY_KEYS = [
   "sector_label",
   "sector_slug",
 ] as const;
-
-type ResendSegment = {
-  id: string;
-  name: string;
-};
 
 function getApiKey() {
   const apiKey = process.env.RESEND_API_KEY?.trim();
@@ -57,47 +51,6 @@ async function ensureContactProperties() {
       }),
     ),
   );
-}
-
-async function ensureNamedSegment(input: {
-  mappingKey: string;
-  name: string;
-  metadata?: Record<string, string>;
-}) {
-  const database = getAdminFirestore();
-  const mappingRef = database.collection("resend_segments").doc(input.mappingKey);
-  const mappingDoc = await mappingRef.get();
-  const existingId = mappingDoc.data()?.segment_id;
-
-  if (typeof existingId === "string" && existingId) {
-    return existingId;
-  }
-
-  const listed = await resendRequest<{ data?: ResendSegment[] }>("/segments?limit=100");
-  const existingSegment = (listed.data ?? []).find((segment) => segment.name === input.name);
-  const segment = existingSegment ?? await resendRequest<ResendSegment>("/segments", {
-    method: "POST",
-    body: JSON.stringify({ name: input.name }),
-  });
-
-  await mappingRef.set({
-    segment_id: segment.id,
-    name: input.name,
-    ...(input.metadata ?? {}),
-    updated_at: new Date().toISOString(),
-  }, { merge: true });
-
-  return segment.id;
-}
-
-async function ensureSectorSegment(context: LeadContext) {
-  if (!context.sectorSlug || !context.sectorLabel) return null;
-
-  return ensureNamedSegment({
-    mappingKey: `sector-${context.sectorSlug}`,
-    name: `Secteur — ${context.sectorLabel}`,
-    metadata: { sector_slug: context.sectorSlug },
-  });
 }
 
 async function upsertResendContact(input: {
@@ -142,13 +95,6 @@ async function upsertResendContact(input: {
   return email;
 }
 
-async function addContactToSegment(email: string, segmentId: string) {
-  await resendRequest(
-    `/contacts/${encodeURIComponent(email)}/segments/${encodeURIComponent(segmentId)}`,
-    { method: "POST" },
-  );
-}
-
 export async function syncResendLeadContact(input: {
   context: LeadContext;
   email: string;
@@ -173,56 +119,5 @@ export async function syncResendLeadContact(input: {
     properties,
   });
 
-  const segmentId = await ensureSectorSegment(input.context);
-  if (segmentId) {
-    await addContactToSegment(email, segmentId);
-  }
-
-  return { segmentId };
-}
-
-export async function subscribeResendNewsletter(input: {
-  email: string;
-  firstName: string;
-  context?: LeadContext | null;
-}) {
-  const properties = input.context
-    ? {
-        activity_name: input.context.systemName ?? "",
-        activity_slug: input.context.systemSlug ?? "",
-        last_request_at: new Date().toISOString(),
-        last_request_type: "newsletter",
-        sector_label: input.context.sectorLabel ?? "",
-        sector_slug: input.context.sectorSlug ?? "",
-      }
-    : undefined;
-  const email = await upsertResendContact({
-    email: input.email,
-    firstName: input.firstName,
-    properties,
-  });
-  const newsletterSegmentId = await ensureNamedSegment({
-    mappingKey: "newsletter-demaa",
-    name: "Newsletter Demaa",
-    metadata: { type: "newsletter" },
-  });
-
-  await addContactToSegment(email, newsletterSegmentId);
-
-  const sectorSegmentId = input.context ? await ensureSectorSegment(input.context) : null;
-  if (sectorSegmentId) {
-    await addContactToSegment(email, sectorSegmentId);
-  }
-
-  const newsletterTopicId = process.env.RESEND_NEWSLETTER_TOPIC_ID?.trim();
-  if (newsletterTopicId) {
-    await resendRequest(`/contacts/${encodeURIComponent(email)}/topics`, {
-      method: "PATCH",
-      body: JSON.stringify({
-        topics: [{ id: newsletterTopicId, subscription: "opt_in" }],
-      }),
-    });
-  }
-
-  return { newsletterSegmentId, sectorSegmentId };
+  return { email };
 }

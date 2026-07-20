@@ -31,7 +31,6 @@ import ProNetworkDetailDialog from "@/components/ProNetworkDetailDialog";
 import RecruitmentDetailDialog from "@/components/RecruitmentDetailDialog";
 import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
 import SupplierDetailDialog from "@/components/SupplierDetailDialog";
-import { SystemAcademyContent } from "@/components/SystemAcademyContent";
 import SystemCompleteModal from "@/components/SystemCompleteModal";
 import SystemeTabContent from "@/components/SystemeTabContent";
 import TrainingDetailDialog from "@/components/TrainingDetailDialog";
@@ -98,9 +97,9 @@ const INDUSTRY_TOOL_TAGS = new Set([
 
 const SYSTEM_SECTION_CARDS = [
   {
-    tab: "systeme",
+    tab: "process",
     label: "Process",
-    description: "Les process opérationnels classés par catégorie, avec leurs tâches dans un seul Google Sheet.",
+    description: "Les process opérationnels classés par catégorie, réunis dans un kit prêt à utiliser.",
     icon: FolderKanban,
   },
   {
@@ -331,11 +330,9 @@ export default function SystemDetailContent({
   headingId,
 }: SystemDetailContentProps) {
   const router = useRouter();
-  const defaultTab =
-    isVisibleSystemDetailTab(initialActiveTab) &&
-    initialActiveTab !== "ressources"
-      ? initialActiveTab
-      : null;
+  const defaultTab = isVisibleSystemDetailTab(initialActiveTab)
+    ? initialActiveTab
+    : null;
   const [activeTab, setActiveTab] = useState<SystemDetailTab | null>(defaultTab);
   const [isSystemCompleteModalOpen, setIsSystemCompleteModalOpen] = useState(false);
   const [selectedToolDetail, setSelectedToolDetail] = useState<ToolDirectoryItem | null>(null);
@@ -966,10 +963,9 @@ export default function SystemDetailContent({
       ) : (
         <>
           <div className="mt-7">
-        {activeTab === "systeme" ? (
+        {activeTab === "process" ? (
           <SystemeTabContent
             systemName={system.name}
-            systemSlug={system.slug}
             systeme={detail.systeme}
             onRequestSystemComplete={() => setIsSystemCompleteModalOpen(true)}
           />
@@ -1132,8 +1128,6 @@ export default function SystemDetailContent({
               </div>
             ) : null}
           </div>
-        ) : activeTab === "academie" ? (
-          <SystemAcademyContent systemSlug={system.slug} />
         ) : activeTab === "reseaux-pro" ? (
           <div className="space-y-5">
             {recommendedProNetworks.length

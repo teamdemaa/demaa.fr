@@ -1,6 +1,0 @@
-Bloc,Élément,Emplacement,Responsable,Fréquence de contrôle,Statut,Notes
-Sécurité,Procedure securite client et interne,Dossier securite,Responsable technique,Mensuel,A verifier,
-RGPD,Registre de traitement,Dossier conformite,Responsable admin,Trimestriel,A verifier,
-Sauvegardes,Controle sauvegardes critiques,Tableau sauvegardes,Responsable support,Hebdomadaire,A verifier,
-Continuité,PCA / reprise d'activite,Procedure continuite,Dirigeant,Trimestriel,A verifier,
-Accès,Revue comptes admin et MFA,Registre acces,Responsable technique,Mensuel,A verifier,

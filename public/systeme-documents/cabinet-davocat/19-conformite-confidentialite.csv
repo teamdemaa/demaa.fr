@@ -1,6 +1,0 @@
-Bloc,Élément,Emplacement,Responsable,Fréquence de contrôle,Statut,Notes
-RGPD,Registre de traitement,Dossier conformite,Associe gerant,Trimestriel,A verifier,
-Confidentialité,Procedure partage dossiers clients,Dossier interne cabinet,Associe gerant,Mensuel,A verifier,
-Assurance,Attestation RC pro,Dossier administratif,Responsable administrative,Annuel,A verifier,
-Accès,Liste utilisateurs outils sensibles,Tableau acces,Assistante juridique,Mensuel,A verifier,
-Archivage,Regle de cloture et archivage dossier,Procedure cabinet,Avocat referent,Mensuel,A verifier,

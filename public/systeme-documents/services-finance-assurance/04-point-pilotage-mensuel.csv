@@ -1,9 +1,0 @@
-Bloc,Sujet,Valeur,Responsable,Prochaine action,Statut,Notes
-Commercial,Opportunites en cours,12,Dirigeant,"Relancer les 5 plus proches de la signature",A suivre,
-Commercial,Nouveaux dossiers signes,4,Dirigeant,"Finaliser onboarding et collecte pieces",A suivre,
-Portefeuille,Dossiers sensibles,3,Responsable portefeuille,"Passer en revue mardi matin",Sous surveillance,
-Finance,CA facture,46 000 EUR,Dirigeant,"Verifier les honoraires ou commissions non encore factures",A suivre,
-Finance,Encours > 30 jours,11 200 EUR,Responsable admin,"Passer 3 dossiers en relance niveau 2",Sous surveillance,
-Equipe,Charge equipe,Tendue sur les revues annuelles,Dirigeant,"Repartir les arbitrages",Ouvert,
-Conformité,Points de controle en retard,2,Responsable portefeuille,"Clore avant fin de mois",En cours,
-Decisions,Arbitrages a prendre,"Priorisation portefeuille B / relance partenaire / revision offre",Dirigeant,"Decision lundi",Ouvert,

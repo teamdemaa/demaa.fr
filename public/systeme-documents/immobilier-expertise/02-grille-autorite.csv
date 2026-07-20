@@ -1,8 +1,0 @@
-Sujet,Responsable,Peut decider seul,Valider avec,A informer,Condition ou seuil
-Qualification mission,Responsable mission,Oui,,Dirigeant,"Si besoin, perimetre et site compris"
-Planification intervention,Responsable mission,Oui,,Client + equipe,"Si sans impact budget ou delai final"
-Ajustement technique terrain,Referent terrain,Oui,,Responsable mission,"Si sans impact rapport final"
-Ajout hors perimetre,Dirigeant,Non,Dirigeant,Responsable mission,"Si besoin supplementaire client"
-Validation livrable final,Dirigeant,Non,Dirigeant,Responsable mission,"Avant envoi sur mission sensible"
-Facturation jalon ou fin mission,Responsable admin,Oui,,Dirigeant,"Si etape contractuelle atteinte"
-Escalade litige ou reserve client,Responsable mission,Non,Dirigeant,Equipe concernee,"Si risque technique ou reput"

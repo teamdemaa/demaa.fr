@@ -1,5 +1,0 @@
-Type aléa,Situation,Réponse immédiate,Responsable,Escalade,Statut,Notes
-Retard fournisseur,Matériaux non livrés à date,Replanifier équipe et relancer fournisseur,Conducteur de travaux,Dirigeant si impact > 2 jours,En cours,
-Intempérie,Chantier extérieur bloqué,Sécuriser zone et décaler lot concerné,Chef d'equipe,Conducteur de travaux,A faire,
-Travaux supplémentaires,Demande client hors devis,Geler exécution et chiffrer ajout,Dirigeant,Validation écrite client,A faire,
-Absence clé,Ouvrier absent sur lot critique,Activer remplaçant et replanifier priorités,Chef d'equipe,Conducteur de travaux,A faire,

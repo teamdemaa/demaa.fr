@@ -148,7 +148,7 @@ export default function CoursesIndexClient({
               href={backLink.href}
               className="inline-flex items-center gap-2 text-sm font-medium text-brand-blue transition-colors hover:text-neutral-700"
             >
-              Retour au système
+              Retour au kit opérationnel
             </Link>
           </div>
         ) : null}

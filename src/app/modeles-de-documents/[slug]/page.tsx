@@ -4,7 +4,6 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, Calendar } from "lucide-react";
 import ReactMarkdown from "react-markdown";
-import DocumentModelPreview from "@/components/DocumentModelPreview";
 import Navbar from "@/components/Navbar";
 import RelatedSystemsLinks from "@/components/RelatedSystemsLinks";
 import {
@@ -109,7 +108,7 @@ export default async function DocumentModelDetailPage({
             </div>
           </header>
 
-          {mediaSlides.length || entry.systemSlug ? (
+          {mediaSlides.length ? (
             <section className="mb-10">
               <div className="-mx-4 overflow-x-auto px-4 pb-4 soft-scroll sm:-mx-6 sm:px-6">
                 <div className="flex w-max snap-x snap-mandatory gap-4">
@@ -125,13 +124,7 @@ export default async function DocumentModelDetailPage({
                         />
                       </div>
                     </div>
-                  )) : (
-                    <div className="w-[min(92vw,72rem)] shrink-0 snap-start">
-                      <div className="relative aspect-[16/9] overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-[0_10px_30px_rgba(20,20,20,0.05)]">
-                        <DocumentModelPreview model={entry} />
-                      </div>
-                    </div>
-                  )}
+                  )) : null}
                 </div>
               </div>
             </section>
@@ -157,7 +150,7 @@ export default async function DocumentModelDetailPage({
           <div className="mt-10">
             <RelatedSystemsLinks
               systems={relatedSystems}
-              description="Quelques pages système où ce modèle de document peut être particulièrement utile."
+              description="Quelques kits opérationnels où ce modèle de document peut être particulièrement utile."
             />
           </div>
         </article>

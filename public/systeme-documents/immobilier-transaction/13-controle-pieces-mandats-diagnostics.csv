@@ -1,6 +1,0 @@
-Bloc,Élément,Emplacement,Responsable,Fréquence de contrôle,Statut,Notes
-Mandats,Signatures et mentions obligatoires,Dossier mandat,Responsable transaction,Hebdomadaire,A verifier,
-Biens,Diagnostics valides,Dossier bien,Agent referent,Hebdomadaire,A verifier,
-Affichages,Honoraires et infos legales,Supports diffusion,Responsable admin,Mensuel,A verifier,
-Pièces,Titre, copro, surface, taxe,Dossier bien,Agent referent,Hebdomadaire,A verifier,
-Archivage,Dossier clos et complet,Arborescence transaction,Responsable admin,Mensuel,A verifier,

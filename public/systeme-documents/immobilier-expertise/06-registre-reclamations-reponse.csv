@@ -1,4 +1,0 @@
-Date,Client,Objet,Risque perçu,Responsable,Action immédiate,Réponse type,Échéance,Statut
-2026-07-02,Client A,"Delai rapport juge trop long",Moyen,Responsable mission,Envoyer point d'avancement et nouvelle date,"Nous vous confirmons l'etat d'avancement et la date engagee de remise.",2026-07-03,En cours
-2026-06-25,Client B,"Incomprehension sur perimetre du relevé",Faible,Dirigeant,Reprendre devis signe,"Nous reprenons le perimetre exact valide et les options hors cadre.",2026-06-26,Clos
-2026-06-18,Client C,"Reserve sur une mesure terrain",Moyen,Referent terrain,Verifier relevé et tracer controle,"Nous revérifions la mesure et vous partageons le contrôle documentaire associé.",2026-06-19,Clos

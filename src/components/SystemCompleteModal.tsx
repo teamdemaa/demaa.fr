@@ -2,6 +2,10 @@
 
 import { ExternalLink, LoaderCircle, Mail, X } from "lucide-react";
 import { useEffect, useState, type FormEvent } from "react";
+import {
+  getLeadAttributionPayload,
+  trackLeadConversion,
+} from "@/lib/lead-attribution-client";
 import type { SystemeDetail } from "@/lib/systeme-catalog";
 
 type SystemCompleteModalProps = {
@@ -52,6 +56,7 @@ export default function SystemCompleteModal({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          attribution: getLeadAttributionPayload(),
           email,
           firstName,
           sectorName: systemName,
@@ -67,6 +72,10 @@ export default function SystemCompleteModal({
       }
 
       setCopyUrl(payload.copyUrl);
+      trackLeadConversion({
+        requestType: "system_kit_request",
+        systemSlug,
+      });
     } catch (submissionError) {
       setError(
         submissionError instanceof Error
@@ -108,7 +117,7 @@ export default function SystemCompleteModal({
           id="system-complete-modal-title"
           className="mt-2 pr-10 text-2xl font-semibold tracking-tight text-brand-blue"
         >
-          Recevoir le Google Sheet {systemName}
+          Recevoir le kit opérationnel {systemName}
         </h2>
         <p className="mt-3 text-sm leading-relaxed text-dema-muted">
           Le fichier regroupe {processCount || "les"} process avec les tâches détaillées,
@@ -118,7 +127,7 @@ export default function SystemCompleteModal({
         {copyUrl ? (
           <div className="mt-6 rounded-[1rem] bg-dema-cream/55 p-5">
             <h3 className="text-lg font-semibold text-brand-blue">
-              Votre Google Sheet est prêt
+              Votre kit opérationnel est prêt
             </h3>
             <p className="mt-2 text-sm leading-relaxed text-dema-muted">
               Le lien vient aussi d’être envoyé à {email}. Connectez-vous à Google,
@@ -168,7 +177,7 @@ export default function SystemCompleteModal({
             className="demaa-primary-button mt-3 inline-flex w-full items-center justify-center gap-2 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {isSubmitting ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
-            {isSubmitting ? "Envoi…" : "Recevoir le Google Sheet"}
+            {isSubmitting ? "Envoi…" : "Recevoir le kit opérationnel"}
           </button>
           <p className="text-xs leading-relaxed text-dema-muted">
             Le modèle est partagé en lecture seule. Google créera une copie

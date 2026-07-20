@@ -1,5 +1,0 @@
-Personne,Role,Jours / plages,Sait gerer accueil,Sait gerer facturation,Remplacant 1,Remplacant 2,Notes
-Anna,Responsable accueil,Lun-Ven 8h30-17h30,Oui,Oui,Julie,Dirigeant,"Pointe du lundi matin"
-Julie,Assistante,Mar-Jeu 9h-18h,Oui,Oui,Anna,Dirigeant,"Peut tenir accueil seule"
-Dr Martin,Praticien,Lun-Mar-Jeu,Non,Non,Dr Simon,Dirigeant,"Informer annulations 24h avant"
-Dr Simon,Praticien,Mer-Ven,Non,Non,Dr Martin,Dirigeant,"Passation dossiers complexes"

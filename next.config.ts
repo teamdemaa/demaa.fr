@@ -31,13 +31,13 @@ const securityHeaders = [
       "base-uri 'self'",
       "object-src 'none'",
       "frame-ancestors 'none'",
-      `script-src 'self' 'unsafe-inline'${scriptSrcUnsafeEval} https://www.googletagmanager.com https://connect.facebook.net https://js.stripe.com`,
+      `script-src 'self' 'unsafe-inline'${scriptSrcUnsafeEval} https://www.googletagmanager.com https://connect.facebook.net`,
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: blob: https://www.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://drive.google.com https://lh3.googleusercontent.com https://*.googleusercontent.com",
       "font-src 'self' data:",
-      "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://api.stripe.com https://checkout.stripe.com https://api-adresse.data.gouv.fr",
-      "frame-src https://js.stripe.com https://checkout.stripe.com https://embed.fillout.com",
-      "form-action 'self' https://checkout.stripe.com",
+      "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://api-adresse.data.gouv.fr",
+      "frame-src https://embed.fillout.com",
+      "form-action 'self'",
       "upgrade-insecure-requests",
     ].join('; '),
   },
@@ -48,13 +48,13 @@ const nextConfig: NextConfig = {
   devIndicators: false,
   distDir: process.env.DEMAA_BUILD_DIST_DIR || '.next',
   experimental: {
-    optimizePackageImports: ['lucide-react', 'framer-motion']
+    optimizePackageImports: ['lucide-react']
   },
   async redirects() {
     return [
       {
-        source: '/assistant/success',
-        destination: '/annuaire-services/recrutement-assistante-facturation',
+        source: '/systemes',
+        destination: '/',
         permanent: true,
       },
       {
@@ -70,6 +70,26 @@ const nextConfig: NextConfig = {
       {
         source: '/modeles-de-documents/tableau-de-pilotage-:slug',
         destination: '/kit-operationnel/:slug',
+        permanent: true,
+      },
+      {
+        source: '/plans-organisation/:slug',
+        destination: '/kit-operationnel/:slug',
+        permanent: true,
+      },
+      {
+        source: '/documents-structuration/:slug',
+        destination: '/kit-operationnel/:slug',
+        permanent: true,
+      },
+      {
+        source: '/ressources',
+        destination: '/modeles-de-documents',
+        permanent: true,
+      },
+      {
+        source: '/offres-partenaires',
+        destination: '/',
         permanent: true,
       },
       {
@@ -167,11 +187,6 @@ const nextConfig: NextConfig = {
         destination: '/modeles-de-documents/systeme-operationnel',
         permanent: true,
       },
-      {
-        source: '/documents-structuration/:slug',
-        destination: '/plans-organisation/:slug',
-        permanent: true,
-      },
     ];
   },
   async headers() {
@@ -179,23 +194,6 @@ const nextConfig: NextConfig = {
       {
         source: '/(.*)',
         headers: securityHeaders,
-      },
-      {
-        source: '/sw.js',
-        headers: [
-          {
-            key: 'Content-Type',
-            value: 'application/javascript; charset=utf-8',
-          },
-          {
-            key: 'Cache-Control',
-            value: 'no-cache, no-store, must-revalidate',
-          },
-          {
-            key: 'Content-Security-Policy',
-            value: "default-src 'self'; script-src 'self'",
-          },
-        ],
       },
     ];
   },

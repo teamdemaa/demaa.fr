@@ -1,5 +1,0 @@
-Personne,Role,Disponible urgence,Sait tournée,Sait express,Sait mission client sensible,Remplacant 1,Remplacant 2,Consigne clé
-Yanis,Chauffeur,Oui,Oui,Oui,Non,Karim,Mehdi,Appeler l'exploitant a tout incident
-Karim,Chauffeur,Oui,Oui,Oui,Oui,Yanis,Julie,Envoyer preuve livraison avant fin mission
-Mehdi,Manutention / conduite,Oui,Non,Oui,Non,Yanis,Karim,Verifier acces site avant depart
-Julie,Support terrain,Partiel,Non,Oui,Oui,Karim,Yanis,Informer le client en cas de decalage

@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { FileSpreadsheet } from "lucide-react";
 import { useMemo, useState } from "react";
 import type { DocumentModel } from "@/lib/document-models";
 import { getDocumentModelPreviewSrc } from "@/lib/document-models";
@@ -11,18 +10,13 @@ type DocumentModelPreviewProps = {
   className?: string;
 };
 
-function formatPilotingTitle(title: string) {
-  return title.replace(/^Tableau de pilotage pour\s+/i, "");
-}
-
 export default function DocumentModelPreview({
   model,
   className = "",
 }: DocumentModelPreviewProps) {
   const previewSrc = useMemo(() => getDocumentModelPreviewSrc(model), [model]);
   const [hasPreviewError, setHasPreviewError] = useState(false);
-  const showImagePreview = Boolean(previewSrc) && !hasPreviewError && !model.systemSlug;
-  const displayTitle = model.systemSlug ? formatPilotingTitle(model.title) : model.title;
+  const showImagePreview = Boolean(previewSrc) && !hasPreviewError;
 
   if (showImagePreview) {
     return (
@@ -39,16 +33,6 @@ export default function DocumentModelPreview({
     );
   }
 
-  if (model.systemSlug) {
-    return (
-      <div
-        className={`flex h-full w-full items-center justify-center border border-[#d7e5dc] bg-[radial-gradient(circle_at_top,#f4faf6_0%,#e8f2eb_58%,#deebe3_100%)] ${className}`.trim()}
-      >
-        <FileSpreadsheet className="h-5 w-5 text-[#2d7b4f]/26" strokeWidth={1.5} />
-      </div>
-    );
-  }
-
   return (
     <div
       className={`flex h-full w-full flex-col justify-between bg-[linear-gradient(180deg,#fcfcfa_0%,#f4f5f1_100%)] p-5 text-left ${className}`.trim()}
@@ -61,12 +45,10 @@ export default function DocumentModelPreview({
 
       <div className="mt-6">
         <p className="max-w-[22ch] text-2xl font-semibold leading-tight text-brand-blue sm:text-3xl">
-          {displayTitle}
+          {model.title}
         </p>
         <p className="mt-3 max-w-[34ch] text-sm leading-relaxed text-brand-blue/62">
-          {model.systemSlug
-            ? "Tableau de pilotage metier relie au Google Sheet source."
-            : model.description}
+          {model.description}
         </p>
       </div>
 

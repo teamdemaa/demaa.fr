@@ -10,7 +10,7 @@ const requestTimeoutMs = Number.parseInt(process.env.DEMAA_AUDIT_TIMEOUT_MS ?? "
 const retryCount = Number.parseInt(process.env.DEMAA_AUDIT_RETRIES ?? "2", 10);
 
 const tabs = [
-  { slug: "systeme" },
+  { slug: "process" },
   { slug: "outils" },
   { slug: "fournisseurs" },
   { slug: "financement" },
@@ -33,7 +33,7 @@ function countOccurrences(source, value) {
   return source.split(value).length - 1;
 }
 
-function inspectPage({ response, html, enterprise, tab }) {
+function inspectPage({ response, html, tab }) {
   const errors = [];
   const renderedHtml = html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "");
   const recommendationBadgeCount = countOccurrences(renderedHtml, ">Recommandé</span>");
@@ -67,7 +67,7 @@ function inspectPage({ response, html, enterprise, tab }) {
     errors.push(`${recommendationBadgeCount} recommendation badges still visible`);
   }
 
-  if (tab.slug !== "systeme" && visibleCardCount > 3) {
+  if (tab.slug !== "process" && visibleCardCount > 3) {
     errors.push(`${visibleCardCount} recommendation cards visible before Voir plus`);
   }
 
@@ -89,33 +89,16 @@ function inspectPage({ response, html, enterprise, tab }) {
     }
   }
 
-  if (tab.slug === "financement" && !renderedHtml.includes("À regarder en priorité")) {
-    errors.push("missing simplified funding priority section");
-  }
-
-  if (tab.slug === "fournisseurs" && enterprise.slug !== "cabinet-comptable") {
-    if (!renderedHtml.includes("Trouver un expert-comptable")) {
-      errors.push("targeted accounting expert card is not visible");
+  if (tab.slug === "process") {
+    if (!renderedHtml.includes("process opérationnels")) {
+      errors.push("missing process summary");
     }
-
-    const firstCardStart = renderedHtml.indexOf("demaa-card group");
-    const secondCardStart = renderedHtml.indexOf("demaa-card group", firstCardStart + 1);
-    const firstCardHtml = renderedHtml.slice(
-      firstCardStart,
-      secondCardStart === -1 ? undefined : secondCardStart,
-    );
-
-    if (!firstCardHtml.includes("Trouver un expert-comptable")) {
-      errors.push("targeted accounting expert card is not first");
+    if (!renderedHtml.includes("Recevoir le Google Sheet")) {
+      errors.push("missing single Google Sheet CTA");
     }
-  }
-
-  if (
-    tab.slug === "fournisseurs" &&
-    enterprise.slug === "cabinet-comptable" &&
-    renderedHtml.includes("Trouver un expert-comptable")
-  ) {
-    errors.push("accounting expert card must be hidden from cabinet-comptable");
+    if (renderedHtml.includes("Aperçu du document")) {
+      errors.push("legacy document preview is still visible");
+    }
   }
 
   return {
@@ -138,7 +121,7 @@ async function inspectState(enterprise, tab) {
         },
       });
       const html = await response.text();
-      const inspection = inspectPage({ response, html, enterprise, tab });
+      const inspection = inspectPage({ response, html, tab });
 
       return {
         slug: enterprise.slug,

@@ -1,8 +1,0 @@
-Étape,Action,Responsable,Statut attendu,Échéance,Notes
-Entrée,Qualifier la demande,Responsable operations,Fait,Immediat,
-Entrée,Verifier le perimetre et le SLA,Responsable operations,Fait,Immediat,
-Traitement,Affecter le bon referent,Responsable operations,Fait,Sous 2h,
-Traitement,Executer ou produire,Referent dossier,En cours,Selon SLA,
-Suivi,Relancer si info manquante,Referent dossier,Fait,Selon besoin,
-Cloture,Tracer la resolution,Referent dossier,Fait,Avant cloture,
-Cloture,Informer le client,Referent dossier,Fait,Avant cloture,

@@ -1,0 +1,15 @@
+.git
+.next
+.next-build
+.next-build-webpack
+.next-build-verify
+.vercel
+node_modules
+data
+generated
+outputs
+tmp
+*.xlsx
+*.tsbuildinfo
+.DS_Store
+.env*

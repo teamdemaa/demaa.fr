@@ -1,9 +1,0 @@
-Étape,Sujet,Responsable,Statut attendu,Échéance,Notes
-Ouverture,Conflit d'interets verifie,Associe gerant,Fait,Avant ouverture,"Verifier parties, groupe et dirigeants"
-Ouverture,Convention ou lettre signee,Responsable administrative,Fait,Avant lancement,
-Ouverture,Provision recue,Responsable administrative,Fait,Avant premier travail,
-Pieces,Piece d'identite / Kbis client,Assistante juridique,Recu,Sous 24h,
-Pieces,Contrats ou actes utiles,Client / avocat referent,Recu,Sous 48h,
-Pieces,Echanges ou courriers deja recus,Client / avocat referent,Recu,Sous 48h,
-Pieces,Echeances procedurelles notees,Assistante juridique,Fait,Immediat,"Audience, date limite, prescription"
-Suivi,Dossier cree dans l'arborescence cabinet,Assistante juridique,Fait,Immediat,

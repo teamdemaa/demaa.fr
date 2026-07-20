@@ -108,7 +108,7 @@ export default async function ProNetworkDetailPage({
           <section className="mt-5">
             <RelatedSystemsLinks
               systems={relatedSystems}
-              description="Quelques pages système où ce réseau pro est particulièrement utile."
+              description="Quelques kits opérationnels où ce réseau pro est particulièrement utile."
             />
           </section>
         </div>

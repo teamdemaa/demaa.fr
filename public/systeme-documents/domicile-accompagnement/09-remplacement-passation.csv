@@ -1,4 +1,0 @@
-Personne,Role,Disponible urgence,Sait tournée soin,Sait aide domicile,Remplacant 1,Remplacant 2,Consigne clé
-Amina,Intervenante soin,Oui,Oui,Non,Celine,Laura,Tracer chaque soin immédiatement
-Celine,Intervenante domicile,Oui,Non,Oui,Laura,Amina,Appeler en cas de changement horaire
-Laura,Intervenante mixte,Partiel,Oui,Oui,Celine,Amina,Verifier consignes avant depart

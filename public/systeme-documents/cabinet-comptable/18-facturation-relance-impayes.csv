@@ -1,5 +1,0 @@
-Client,Facture,Montant,Échéance,Niveau de relance,Action type,Responsable,Statut,Notes
-SCI Bellevue,FAC-2026-114,1800,2026-06-30,Niveau 1,Email rappel facture,Responsable administrative,A lancer,
-Atelier Rive,FAC-2026-106,950,2026-06-24,Niveau 2,Appel + copie detail mission,Responsable administrative,En cours,
-SAS Lumina,FAC-2026-120,2400,2026-07-12,A venir,Emission facture mensuelle,Responsable administrative,A venir,
-EURL Martin,FAC-2026-099,620,2026-06-18,Niveau 3,Courrier de relance formel,Expert-comptable,Sous surveillance,

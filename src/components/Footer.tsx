@@ -1,12 +1,9 @@
-"use client";
-
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { UserRound } from "lucide-react";
 import DemaaWordmark from "@/components/DemaaWordmark";
 
 const mainLinks = [
-  { label: "Systèmes", href: "/" },
+  { label: "Kits opérationnels", href: "/" },
   { label: "Annuaire outils", href: "/annuaire-outils" },
   { label: "Annuaire financement", href: "/annuaire-financement" },
   { label: "Annuaire fournisseurs", href: "/annuaire-fournisseurs" },
@@ -20,13 +17,8 @@ const contentLinks = [
 ];
 
 export default function Footer() {
-  const pathname = usePathname();
   const currentYear = new Date().getFullYear();
   const linkClass = "text-sm text-neutral-500 transition-colors hover:text-neutral-950";
-
-  if (pathname.startsWith("/cockpit-preview")) {
-    return null;
-  }
 
   return (
     <footer className="mt-auto border-t border-neutral-200 bg-white py-16 text-neutral-950">

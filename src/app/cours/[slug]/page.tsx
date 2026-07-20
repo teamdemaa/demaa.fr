@@ -66,7 +66,7 @@ export default async function CourseDetailPage(
   const backHref = returnSystemSlug
     ? `/kit-operationnel/${returnSystemSlug}?tab=formation`
     : "/cours";
-  const backLabel = returnSystemSlug ? "Retour au système" : "Retour aux cours";
+  const backLabel = returnSystemSlug ? "Retour au kit opérationnel" : "Retour aux cours";
   const articleJsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -205,7 +205,7 @@ export default async function CourseDetailPage(
           <div className="mt-10">
             <RelatedSystemsLinks
               systems={relatedSystems}
-              description="Quelques pages système où ce cours est particulièrement utile."
+              description="Quelques kits opérationnels où ce cours est particulièrement utile."
             />
           </div>
         </article>

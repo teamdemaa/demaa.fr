@@ -6,10 +6,12 @@ import {
 } from "@/lib/api-security";
 import { getAccountingFirmBySlug, getAccountingFirms } from "@/lib/accounting-directory";
 import { isValidEmail, normalizeEmail } from "@/lib/email";
+import { resolveLeadAttribution } from "@/lib/lead-attribution-server";
 import { resolveLeadContext } from "@/lib/lead-context";
 import { submitLeadRequest } from "@/lib/lead-notifications";
 
 type AppointmentRequestBody = {
+  attribution?: unknown;
   company?: {
     address?: unknown;
     category?: unknown;
@@ -111,7 +113,7 @@ export async function POST(request: Request) {
       const context = await resolveLeadContext({
         systemSlug,
         source: "Kit opérationnel — Accompagnement",
-        sourceUrl,
+        sourceUrl: request.headers.get("referer") || sourceUrl,
       });
 
       if (!context) {
@@ -119,6 +121,7 @@ export async function POST(request: Request) {
       }
 
       const lead = await submitLeadRequest({
+        attribution: resolveLeadAttribution(request, body?.attribution),
         channels: { email: true, resend: true, slack: true },
         contact: { email, firstName, lastName, phone },
         context,
@@ -176,7 +179,7 @@ export async function POST(request: Request) {
 
     const context = await resolveLeadContext({
       source: "Annuaire experts-comptables",
-      sourceUrl,
+      sourceUrl: request.headers.get("referer") || sourceUrl,
     });
 
     if (!context) {
@@ -184,6 +187,7 @@ export async function POST(request: Request) {
     }
 
     const lead = await submitLeadRequest({
+      attribution: resolveLeadAttribution(request, body?.attribution),
       channels: { email: true, resend: true, slack: true },
       contact: { company: companyName, email, phone },
       context,

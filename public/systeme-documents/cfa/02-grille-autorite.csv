@@ -1,6 +1,0 @@
-Sujet,Responsable,Peut decider seul,Doit valider avec,À informer,Condition / seuil
-Ouverture d'une section,Dirigeant,Non,Responsable pédagogique,Equipe admin,"Si capacité et intervenants validés"
-Remplacement formateur,Responsable pédagogique,Oui,Dirigeant,Assistante CFA,"Si continuité immédiate requise"
-Signalement apprenti mineur,Référent conformité,Non,Dirigeant,Responsable pédagogique,"Traitement immédiat"
-Relance OPCO,Responsable admin,Oui,Dirigeant,Responsable pédagogique,"Selon dossier en retard"
-Rupture contrat d'apprentissage,Dirigeant,Non,Responsable pédagogique,Responsable admin,"Après analyse tripartite"

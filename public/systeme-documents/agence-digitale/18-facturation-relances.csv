@@ -1,5 +1,0 @@
-Client,Facture,Montant,Échéance,Niveau de relance,Action type,Responsable,Statut,Notes
-Atelier Nord,FAC-2026-054,3200,2026-07-05,Niveau 1,Email rappel acompte,Office manager,A lancer,
-Maison Lune,FAC-2026-049,1200,2026-06-26,Niveau 2,Appel + recap livrables remis,Office manager,En cours,
-Korsa,FAC-2026-061,1800,2026-07-14,A venir,Preparation facture jalon 2,Office manager,A venir,
-Mova,FAC-2026-038,900,2026-06-19,Niveau 3,Relance formelle et arbitrage dirigeant,Dirigeant,Sous surveillance,

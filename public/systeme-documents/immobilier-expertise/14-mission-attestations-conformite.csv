@@ -1,6 +1,0 @@
-Bloc,Élément,Emplacement,Responsable,Fréquence de contrôle,Statut,Notes
-Mission,Dossier mission complet,Dossier mission,Responsable mission,Hebdomadaire,A verifier,
-Assurances,Attestations a jour,Dossier conformite,Responsable admin,Trimestriel,A verifier,
-Conformité,Procedure et controle mission,Dossier conformite,Dirigeant,Mensuel,A verifier,
-Terrain,Traces relevé / mesures / photos,Dossier mission,Referent terrain,Hebdomadaire,A verifier,
-Archivage,Cloture et conservation dossiers,Arborescence expertise,Responsable admin,Mensuel,A verifier,
