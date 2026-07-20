@@ -1,12 +1,11 @@
 "use client";
 
-import { FilloutPopupEmbed } from "@fillout/react";
 import { Check, X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import ServiceExpandedContent from "@/components/ServiceExpandedContent";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import ServiceRequestCta from "@/components/ServiceRequestCta";
+import OrganisationAuditBookingButton from "@/components/OrganisationAuditBookingButton";
 import { hasExpandedServiceContent } from "@/lib/service-expanded-content";
 import { type DemaaService } from "@/lib/service-catalog";
 
@@ -18,10 +17,10 @@ type ServiceDetailDialogProps = {
 
 export default function ServiceDetailDialog({
   service,
+  source = "Annuaire services",
   onClose,
 }: ServiceDetailDialogProps) {
   const router = useRouter();
-  const [isBookingOpen, setIsBookingOpen] = useState(false);
   const closeDialog = onClose ?? (() => router.back());
   const hasExpandedContent = hasExpandedServiceContent(service.slug);
   const isOrganisationAutomation = service.slug === "organisation-automatisation";
@@ -73,13 +72,7 @@ export default function ServiceDetailDialog({
               {service.description}
             </p>
             {isOrganisationAutomation ? (
-              <button
-                type="button"
-                onClick={() => setIsBookingOpen(true)}
-                className="demaa-primary-button mt-5 w-fit"
-              >
-                Prendre RDV
-              </button>
+              <OrganisationAuditBookingButton source={source} />
             ) : null}
 
             {!isOrganisationAutomation ? (
@@ -116,9 +109,6 @@ export default function ServiceDetailDialog({
                   ) : null}
                   <ServiceRequestCta
                     service={service}
-                    purchaseButtonLabel="Sélectionner"
-                    purchaseSelectedLabel="Sélectionné"
-                    purchaseButtonClassName="demaa-secondary-button border-dema-line bg-dema-paper text-brand-blue hover:border-dema-forest/25 hover:text-dema-forest"
                   />
                 </aside>
               </div>
@@ -131,16 +121,6 @@ export default function ServiceDetailDialog({
         </div>
       </div>
 
-      {isOrganisationAutomation ? (
-        <FilloutPopupEmbed
-          filloutId="sWP6PSPRVLus"
-          inheritParameters
-          isOpen={isBookingOpen}
-          onClose={() => setIsBookingOpen(false)}
-          width={720}
-          height={720}
-        />
-      ) : null}
     </>
   );
 }

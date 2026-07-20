@@ -55,20 +55,21 @@ export default function MiniCoursesModal({
           id="mini-courses-modal-title"
           className="text-3xl font-semibold tracking-tight text-brand-blue"
         >
-          Recevoir des mini-cours gratuits
+          Offres partenaires et mini-cours
         </h2>
         <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-brand-blue/65 md:text-base">
-          Pas de spam. Juste des mini-cours utiles et concrets pour avancer plus
-          sereinement.
+          Recevez dans un même e-mail nos offres partenaires et des mini-cours utiles pour
+          avancer plus sereinement.
         </p>
 
         <PartnerOffersForm
-          action="/api/mini-cours"
           initialSector={initialSector}
           source={source}
-          submitLabel="Recevoir des mini-cours gratuits"
+          submitLabel="Recevoir les offres et mini-cours"
           submittingLabel="Inscription..."
-          successMessage={() => "C'est noté. Vous recevrez bientôt nos mini-cours gratuits."}
+          successMessage={() =>
+            "C'est noté. Vous recevrez bientôt nos offres partenaires et nos mini-cours."
+          }
         />
       </section>
     </div>

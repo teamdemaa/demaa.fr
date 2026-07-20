@@ -5,12 +5,14 @@ import {
   readJsonBody,
 } from "@/lib/api-security";
 import { isValidEmail, normalizeEmail } from "@/lib/email";
+import { getPilotingSheetCopyUrl } from "@/lib/document-models";
 import { enterpriseToSystem } from "@/lib/enterprise-annuaire";
 import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 import {
-  savePartnerOffersSubscriber,
   scheduleSystemKitSequence,
 } from "@/lib/generations-db";
+import { resolveLeadContext } from "@/lib/lead-context";
+import { submitLeadRequest } from "@/lib/lead-notifications";
 import { enforceAllowedHost } from "@/lib/request-guard";
 import {
   getSystemKitEmailErrorMessage,
@@ -80,12 +82,32 @@ export async function POST(request: Request) {
   }
 
   const resolvedSystemName = enterpriseToSystem(enterprise).name || requestedSectorName || sectorSlug;
+  const copyUrl = getPilotingSheetCopyUrl(sectorSlug);
 
-  await savePartnerOffersSubscriber({
-    firstName,
-    sector: resolvedSystemName,
-    email,
-    source: `systeme_kit_${sectorSlug}`,
+  if (!copyUrl) {
+    return NextResponse.json(
+      { error: "Le Google Sheet de ce métier est introuvable." },
+      { status: 404 },
+    );
+  }
+
+  const context = await resolveLeadContext({
+    systemSlug: sectorSlug,
+    source: "Réception du kit opérationnel",
+    sourceUrl: request.headers.get("referer"),
+  });
+
+  if (!context) {
+    return NextResponse.json({ error: "Le contexte du kit est introuvable." }, { status: 400 });
+  }
+
+  const lead = await submitLeadRequest({
+    channels: { email: false, resend: true, slack: true },
+    contact: { email, firstName },
+    context,
+    emoji: "📦",
+    requestType: "system_kit_request",
+    title: `Réception du kit opérationnel — ${resolvedSystemName}`,
   });
 
   const emailResult = await sendSystemKitEmail({
@@ -110,5 +132,5 @@ export async function POST(request: Request) {
     systemSlug: sectorSlug,
   });
 
-  return NextResponse.json({ ok: true });
+  return NextResponse.json({ ok: true, leadId: lead.leadId, copyUrl });
 }

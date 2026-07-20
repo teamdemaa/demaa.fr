@@ -8,8 +8,8 @@ export default function PartnerOffersModal({
   onClose,
   initialSector,
   source = "partner_offers_modal",
-  title = "Être informé des tarifs négociés",
-  description = "Recevez les tarifs négociés, offres partenaires et opportunités utiles selon votre secteur d'activité.",
+  title = "Offres partenaires et mini-cours",
+  description = "Recevez les offres partenaires et des mini-cours utiles selon votre secteur d'activité.",
 }: {
   onClose: () => void;
   initialSector?: string;
@@ -56,7 +56,7 @@ export default function PartnerOffersModal({
         </button>
 
         <p className="text-xs font-black uppercase tracking-[0.22em] text-brand-coral">
-          Offres partenaires
+          Newsletter Demaa
         </p>
         <h2
           id="partner-offers-modal-title"

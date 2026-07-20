@@ -1,14 +1,13 @@
 import { NextResponse } from "next/server";
 import {
   enforceRateLimit,
-  escapeSlackMrkdwn,
   normalizeText,
   readJsonBody,
 } from "@/lib/api-security";
 import { getAccountingFirmBySlug, getAccountingFirms } from "@/lib/accounting-directory";
-import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 import { isValidEmail, normalizeEmail } from "@/lib/email";
-import { sendSlackMessage, SlackMessageError } from "@/lib/slack";
+import { resolveLeadContext } from "@/lib/lead-context";
+import { submitLeadRequest } from "@/lib/lead-notifications";
 
 type AppointmentRequestBody = {
   company?: {
@@ -31,6 +30,7 @@ type AppointmentRequestBody = {
   message?: unknown;
   phone?: unknown;
   recommendationRequest?: unknown;
+  sourceUrl?: unknown;
   systemSlug?: unknown;
   website?: unknown;
 };
@@ -73,6 +73,7 @@ export async function POST(request: Request) {
     const firstName = normalizeText(body?.firstName, 100);
     const lastName = normalizeText(body?.lastName, 100);
     const systemSlug = normalizeText(body?.systemSlug, 160);
+    const sourceUrl = normalizeText(body?.sourceUrl, 500);
     const recommendationRequest = body?.recommendationRequest === true;
     const message = normalizeText(body?.message, 2000, { multiline: true });
     const companyName = normalizeText(body?.company?.name, 160);
@@ -107,44 +108,26 @@ export async function POST(request: Request) {
         );
       }
 
-      const enterprise = await getEnterpriseBySlug(systemSlug);
+      const context = await resolveLeadContext({
+        systemSlug,
+        source: "Kit opérationnel — Accompagnement",
+        sourceUrl,
+      });
 
-      if (!enterprise) {
+      if (!context) {
         return NextResponse.json({ error: "Activité introuvable." }, { status: 400 });
       }
 
-      await sendSlackMessage({
-        text: "📗 Nouvelle demande de recommandation expert-comptable",
-        blocks: [
-          {
-            type: "section",
-            text: {
-              type: "mrkdwn",
-              text:
-                `*Nom* : ${escapeSlackMrkdwn(lastName)}\n` +
-                `*Prénom* : ${escapeSlackMrkdwn(firstName)}\n` +
-                `*Téléphone* : ${escapeSlackMrkdwn(phone)}\n` +
-                `*Email* : ${escapeSlackMrkdwn(email)}\n` +
-                `*Activité / kit* : ${escapeSlackMrkdwn(enterprise.name)}\n` +
-                `*Slug du kit* : ${escapeSlackMrkdwn(systemSlug)}\n` +
-                `*Secteur automatique* : ${escapeSlackMrkdwn(enterprise.sectorLabel)}`,
-            },
-          },
-          {
-            type: "context",
-            elements: [
-              {
-                type: "mrkdwn",
-                text: `⏰ ${new Date().toLocaleString("fr-FR", {
-                  timeZone: "Europe/Paris",
-                })}`,
-              },
-            ],
-          },
-        ],
+      const lead = await submitLeadRequest({
+        channels: { email: true, resend: true, slack: true },
+        contact: { email, firstName, lastName, phone },
+        context,
+        emoji: "📗",
+        requestType: "accounting_recommendation",
+        title: "Trouver un comptable",
       });
 
-      return NextResponse.json({ ok: true });
+      return NextResponse.json({ ok: true, leadId: lead.leadId });
     }
 
     if (requestedSlugs.length === 0 || !companyName || !email || !phone) {
@@ -191,47 +174,38 @@ export async function POST(request: Request) {
     const firmNames = firms.map((firm) => firm.name).join(", ");
     const firmCities = [...new Set(firms.map((firm) => firm.city).filter(Boolean))].join(", ");
 
-    const payload = {
-      text: "📗 Nouvelle demande annuaire expert-comptable",
-      blocks: [
-        {
-          type: "section",
-          text: {
-            type: "mrkdwn",
-            text:
-              `*Cabinet(s)* : ${escapeSlackMrkdwn(firmNames)}\n` +
-              `*Ville(s)* : ${escapeSlackMrkdwn(firmCities || "_non renseigné_")}\n` +
-              `*Téléphone / WhatsApp* : ${escapeSlackMrkdwn(phone)}\n` +
-              `*Email* : ${escapeSlackMrkdwn(email)}\n` +
-              `*Entreprise* : ${escapeSlackMrkdwn(companyName)}\n` +
-              `*SIREN* : ${escapeSlackMrkdwn(companySiren || "_non renseigné_")}\n` +
-              `*SIRET* : ${escapeSlackMrkdwn(companySiret || "_non renseigné_")}\n` +
-              `*Adresse* : ${escapeSlackMrkdwn(companyAddress || "_non renseigné_")}\n` +
-              `*Code postal* : ${escapeSlackMrkdwn(companyPostalCode || "_non renseigné_")}\n` +
-              `*Ville entreprise* : ${escapeSlackMrkdwn(companyCity || "_non renseigné_")}\n` +
-              `*Secteur d'activité* : ${escapeSlackMrkdwn(companyActivity || "_non renseigné_")}\n` +
-              `*Forme juridique* : ${escapeSlackMrkdwn(companyLegalForm || "_non renseigné_")}\n` +
-              `*Catégorie* : ${escapeSlackMrkdwn(companyCategory || "_non renseigné_")}\n` +
-              `*Contexte* : ${escapeSlackMrkdwn(message || "_non renseigné_")}`,
-          },
-        },
-        {
-          type: "context",
-          elements: [
-            {
-              type: "mrkdwn",
-              text: `⏰ ${new Date().toLocaleString("fr-FR", {
-                timeZone: "Europe/Paris",
-              })}`,
-            },
-          ],
-        },
+    const context = await resolveLeadContext({
+      source: "Annuaire experts-comptables",
+      sourceUrl,
+    });
+
+    if (!context) {
+      return NextResponse.json({ error: "Contexte de demande invalide." }, { status: 400 });
+    }
+
+    const lead = await submitLeadRequest({
+      channels: { email: true, resend: true, slack: true },
+      contact: { company: companyName, email, phone },
+      context,
+      emoji: "📗",
+      fields: [
+        { label: "Cabinet(s)", value: firmNames },
+        { label: "Ville(s)", value: firmCities },
+        { label: "SIREN", value: companySiren },
+        { label: "SIRET", value: companySiret },
+        { label: "Adresse", value: companyAddress },
+        { label: "Code postal", value: companyPostalCode },
+        { label: "Ville entreprise", value: companyCity },
+        { label: "Secteur déclaré", value: companyActivity },
+        { label: "Forme juridique", value: companyLegalForm },
+        { label: "Catégorie", value: companyCategory },
+        { label: "Contexte", value: message },
       ],
-    };
+      requestType: "accounting_directory_introduction",
+      title: "Demande annuaire expert-comptable",
+    });
 
-    await sendSlackMessage(payload);
-
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true, leadId: lead.leadId });
   } catch (error) {
     console.error("Accounting directory appointment request error →", error);
     return NextResponse.json(
@@ -239,7 +213,7 @@ export async function POST(request: Request) {
         error:
           "Une erreur est survenue pendant l'envoi. Merci de réessayer dans quelques minutes.",
       },
-      { status: error instanceof SlackMessageError ? error.statusCode : 500 }
+      { status: 500 }
     );
   }
 }

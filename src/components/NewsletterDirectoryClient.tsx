@@ -126,7 +126,7 @@ export default function NewsletterDirectoryClient({
                 Une carte par newsletter reelle, avec acces direct vers sa source editoriale.
               </p>
             </div>
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            <div className="grid grid-cols-2 gap-3 sm:gap-6 xl:grid-cols-4">
               {filteredEntries.map((entry) => renderNewsletterCard(entry))}
             </div>
           </section>

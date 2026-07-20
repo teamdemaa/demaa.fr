@@ -2,8 +2,7 @@
 
 import { Check, CircleDollarSign, Clock3, FolderKanban, Mail } from "lucide-react";
 import Navbar from "@/components/Navbar";
-import ServicePurchaseCta from "@/components/ServicePurchaseCta";
-import { RECRUITMENT_ASSISTANT_SERVICE_SLUG } from "@/lib/assistant-service-packs";
+import ServiceRequestCta from "@/components/ServiceRequestCta";
 import type { DemaaService } from "@/lib/service-catalog";
 
 const offerHighlights = [
@@ -66,6 +65,7 @@ const responsibilities = [
 ] as const;
 
 export default function AssistantPolyvalentLanding({
+  service,
 }: {
   service: DemaaService;
 }) {
@@ -258,12 +258,7 @@ export default function AssistantPolyvalentLanding({
                   et au niveau de confiance et d&apos;autonomie que vous cherchez.
                 </p>
                 <div className="mx-auto mt-4 max-w-sm">
-                  <ServicePurchaseCta
-                    serviceName="Recrutement assistante facturation"
-                    serviceSlug={RECRUITMENT_ASSISTANT_SERVICE_SLUG}
-                    defaultLabel="Sélectionner"
-                    selectedLabel="Sélectionné"
-                  />
+                  <ServiceRequestCta service={service} />
                 </div>
               </div>
             </div>

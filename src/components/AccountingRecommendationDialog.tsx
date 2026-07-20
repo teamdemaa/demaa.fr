@@ -9,6 +9,7 @@ type AccountingRecommendationDialogProps = {
   sectorLabel: string;
   systemName: string;
   systemSlug: string;
+  triggerContent?: React.ReactNode;
 };
 
 const INITIAL_FORM = {
@@ -23,6 +24,7 @@ export default function AccountingRecommendationDialog({
   buttonClassName,
   sectorLabel,
   systemSlug,
+  triggerContent,
 }: AccountingRecommendationDialogProps) {
   const fieldId = useId();
   const triggerButtonRef = useRef<HTMLButtonElement>(null);
@@ -130,6 +132,7 @@ export default function AccountingRecommendationDialog({
           firstName: formData.firstName,
           phone: formData.phone,
           email: formData.email,
+          sourceUrl: window.location.href,
           systemSlug,
           website: formData.website,
         }),
@@ -167,20 +170,24 @@ export default function AccountingRecommendationDialog({
         onClick={() => setIsOpen(true)}
         aria-haspopup="dialog"
       >
-        <div className="flex items-start justify-between gap-4">
-          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper">
-            <Briefcase className="h-4 w-4" aria-hidden="true" />
-          </span>
-        </div>
-        <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
-          Comptabilité & pilotage
-        </p>
-        <h3 className="mt-2 line-clamp-2 text-lg font-semibold leading-snug text-brand-blue">
-          Trouver un expert-comptable
-        </h3>
-        <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-dema-muted">
-          Recevoir la recommandation d’un professionnel adapté à votre activité et à votre secteur.
-        </p>
+        {triggerContent ?? (
+          <>
+            <div className="flex items-start justify-between gap-4">
+              <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper">
+                <Briefcase className="h-4 w-4" aria-hidden="true" />
+              </span>
+            </div>
+            <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
+              Comptabilité & pilotage
+            </p>
+            <h3 className="mt-2 line-clamp-2 text-lg font-semibold leading-snug text-brand-blue">
+              Trouver un expert-comptable
+            </h3>
+            <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-dema-muted">
+              Recevoir la recommandation d’un professionnel adapté à votre activité et à votre secteur.
+            </p>
+          </>
+        )}
       </button>
 
       {isOpen ? (

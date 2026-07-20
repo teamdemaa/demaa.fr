@@ -7,6 +7,7 @@ import type { DemaaService } from "@/lib/service-catalog";
 type ServiceIntroductionModalProps = {
   service: DemaaService;
   source?: string;
+  systemSlug?: string;
   onClose: () => void;
 };
 
@@ -21,6 +22,7 @@ const INITIAL_FORM = {
 export default function ServiceIntroductionModal({
   service,
   source = "Service modal",
+  systemSlug,
   onClose,
 }: ServiceIntroductionModalProps) {
   const [formData, setFormData] = useState(INITIAL_FORM);
@@ -64,6 +66,8 @@ export default function ServiceIntroductionModal({
           serviceName: service.name,
           serviceSlug: service.slug,
           source,
+          sourceUrl: window.location.href,
+          systemSlug,
         }),
       });
       const payload = (await response.json().catch(() => null)) as

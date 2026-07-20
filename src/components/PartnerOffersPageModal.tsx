@@ -30,11 +30,11 @@ export default function PartnerOffersPageModal() {
           </button>
 
           <p className="text-xs font-black uppercase tracking-[0.22em] text-brand-coral">
-            Offres partenaires
+            Newsletter Demaa
           </p>
           <p className="mx-auto mt-5 max-w-lg text-sm leading-relaxed text-brand-blue/65 md:text-base">
-            Recevez les tarifs négociés, les offres partenaires et les opportunités utiles
-            selon votre secteur d&apos;activité.
+            Recevez les offres partenaires et des mini-cours utiles selon votre secteur
+            d&apos;activité.
           </p>
 
           <PartnerOffersForm source="partner_offers_page" />

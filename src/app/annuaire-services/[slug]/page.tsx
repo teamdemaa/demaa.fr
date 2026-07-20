@@ -27,33 +27,23 @@ function getParamValue(value?: string | string[]) {
   return Array.isArray(value) ? value[0] : value;
 }
 
-function isHiddenOrganisationSlug(slug: string) {
-  return slug === "organisation" || slug === "organisation-automatisation";
+function normalizeServiceSlug(slug: string) {
+  return slug === "organisation" ? "organisation-automatisation" : slug;
 }
 
 export async function generateStaticParams() {
   return demaaServices
-    .filter((service) => !isHiddenOrganisationSlug(service.slug))
     .map((service) => ({
       slug: service.slug,
-    }));
+    }))
+    .concat({ slug: "organisation" });
 }
 
 export async function generateMetadata({
   params,
 }: ServiceDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
-  if (isHiddenOrganisationSlug(slug)) {
-    return {
-      title: "Page introuvable - Demaa",
-      robots: {
-        index: false,
-        follow: false,
-      },
-    };
-  }
-
-  const service = getDemaaServiceBySlug(slug);
+  const service = getDemaaServiceBySlug(normalizeServiceSlug(slug));
 
   if (!service) {
     return {
@@ -73,11 +63,7 @@ export default async function ServiceDetailPage({
   searchParams,
 }: ServiceDetailPageProps) {
   const [{ slug }, resolvedSearchParams] = await Promise.all([params, searchParams]);
-  if (isHiddenOrganisationSlug(slug)) {
-    notFound();
-  }
-
-  const service = getDemaaServiceBySlug(slug);
+  const service = getDemaaServiceBySlug(normalizeServiceSlug(slug));
 
   if (!service) {
     notFound();
