@@ -12,12 +12,11 @@ import {
 } from "react";
 import { CornerDownLeft, Search } from "lucide-react";
 import { matchesSearchQuery, normalizeSearchText } from "@/lib/search";
-import type { OperationalSystemDetail } from "@/lib/system-operations";
 import type { System } from "@/lib/types";
 
 type SystemSearchHeroProps = {
   systems: System[];
-  detailsBySlug: Record<string, OperationalSystemDetail>;
+  sectorLabelsBySlug: Record<string, string>;
 };
 
 type SystemSuggestion = {
@@ -55,7 +54,7 @@ function getSuggestionScore(system: System, sectorLabel: string, query: string):
 
 export default function SystemSearchHero({
   systems,
-  detailsBySlug,
+  sectorLabelsBySlug,
 }: SystemSearchHeroProps) {
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -67,7 +66,7 @@ export default function SystemSearchHero({
   const suggestions = useMemo(() => {
     const visibleSystems = systems.map<SystemSuggestion>((system) => {
       const sectorLabel =
-        detailsBySlug[system.slug]?.sectorLabel ?? "Conseil & services aux entreprises";
+        sectorLabelsBySlug[system.slug] ?? "Conseil & services aux entreprises";
 
       return {
         slug: system.slug,
@@ -101,7 +100,7 @@ export default function SystemSearchHero({
         return left.name.localeCompare(right.name, "fr");
       })
       .slice(0, MAX_SUGGESTIONS);
-  }, [deferredQuery, detailsBySlug, systems]);
+  }, [deferredQuery, sectorLabelsBySlug, systems]);
 
   useEffect(() => {
     function handlePointerDown(event: PointerEvent) {

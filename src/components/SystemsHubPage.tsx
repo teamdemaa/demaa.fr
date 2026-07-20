@@ -2,22 +2,19 @@ import Navbar from "@/components/Navbar";
 import HomeTabsClient from "@/components/HomeTabsClient";
 import { enterpriseToSystem } from "@/lib/enterprise-annuaire";
 import { getEnterpriseCatalog } from "@/lib/enterprise-annuaire-server";
-import { buildOperationalSystemDetails } from "@/lib/system-operations";
-import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
 
 export default async function SystemsHubPage() {
-  const [enterprises, toolDirectory] = await Promise.all([
-    getEnterpriseCatalog(),
-    getUnifiedToolDirectory(),
-  ]);
+  const enterprises = await getEnterpriseCatalog();
   const systems = enterprises.map(enterpriseToSystem);
-  const detailsBySlug = await buildOperationalSystemDetails(systems, enterprises, toolDirectory);
+  const sectorLabelsBySlug = Object.fromEntries(
+    enterprises.map((enterprise) => [enterprise.slug, enterprise.sectorLabel]),
+  );
 
   return (
     <>
       <Navbar />
       <main className="flex-1 min-h-screen w-full bg-dema-cream">
-        <HomeTabsClient systems={systems} detailsBySlug={detailsBySlug} />
+        <HomeTabsClient systems={systems} sectorLabelsBySlug={sectorLabelsBySlug} />
       </main>
     </>
   );

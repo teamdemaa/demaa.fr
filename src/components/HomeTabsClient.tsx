@@ -1,17 +1,16 @@
 "use client";
 
 import SystemSearchHero from "@/components/SystemSearchHero";
-import type { OperationalSystemDetail } from "@/lib/system-operations";
 import type { System } from "@/lib/types";
 
 type HomeTabsClientProps = {
   systems: System[];
-  detailsBySlug: Record<string, OperationalSystemDetail>;
+  sectorLabelsBySlug: Record<string, string>;
 };
 
 export default function HomeTabsClient({
   systems,
-  detailsBySlug,
+  sectorLabelsBySlug,
 }: HomeTabsClientProps) {
-  return <SystemSearchHero systems={systems} detailsBySlug={detailsBySlug} />;
+  return <SystemSearchHero systems={systems} sectorLabelsBySlug={sectorLabelsBySlug} />;
 }

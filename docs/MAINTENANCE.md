@@ -74,7 +74,6 @@ Routes critiques:
 - `/api/cron/system-kit-followups`: envoie les suivis programmes.
 - `/api/customer-space/*`: acces securise a Mon espace.
 - `/api/service-introduction-request`: demande de mise en relation avec un service.
-- `/api/system-setup-request`: demande systeme vers Slack.
 
 Helpers utiles:
 
