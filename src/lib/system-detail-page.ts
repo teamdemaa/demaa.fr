@@ -271,7 +271,7 @@ function singularizeSectorLabel(label: string): string {
   return label.replace(/^les\s+/i, "").replace(/^la\s+/i, "").replace(/^le\s+/i, "").trim();
 }
 
-export function buildSystemPageTitle(data: SystemDetailPageData): string {
+function buildSystemPageTitle(data: SystemDetailPageData): string {
   return `Kit opérationnel ${data.system.name} : process, outils et services | Demaa`;
 }
 
@@ -279,7 +279,7 @@ export function buildSystemPageIntro(data: SystemDetailPageData): string {
   return data.enterprise.description;
 }
 
-export function buildSystemPageDescription(data: SystemDetailPageData): string {
+function buildSystemPageDescription(data: SystemDetailPageData): string {
   const override = SYSTEM_PAGE_DESCRIPTION_OVERRIDES[data.system.slug];
 
   if (override) {

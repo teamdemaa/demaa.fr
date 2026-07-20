@@ -46,7 +46,7 @@ export const trainingFamilies = [
   "Formation continue",
 ] as const satisfies readonly TrainingFamily[];
 
-export const demaaTrainings = [
+const demaaTrainings = [
   {
     slug: "formation-organisation-systeme-process",
     name: "Formation organisation, système et process",

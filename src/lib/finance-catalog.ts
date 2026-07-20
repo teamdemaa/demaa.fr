@@ -1,4 +1,4 @@
-export type FinanceCategory =
+type FinanceCategory =
   | "Compte pro & crédit"
   | "Affacturage & BFR"
   | "Leasing & flotte";

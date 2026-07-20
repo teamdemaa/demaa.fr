@@ -1,4 +1,4 @@
-export type SupplierCategory =
+type SupplierCategory =
   | "Banque"
   | "Assurance"
   | "Mutuelle"
@@ -15,7 +15,7 @@ export type SupplierFamily =
   | "Finance & protection"
   | "Équipement & exploitation";
 
-export type SupplierCta = "Voir le fournisseur" | "Demander une mise en relation" | "Comparer les options";
+type SupplierCta = "Voir le fournisseur" | "Demander une mise en relation" | "Comparer les options";
 
 export type DemaaSupplier = {
   slug: string;

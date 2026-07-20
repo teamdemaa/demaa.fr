@@ -71,7 +71,7 @@ export function getDocumentModelPreviewSrc(model: DocumentModel): string | null 
   return `https://drive.google.com/thumbnail?id=${fileId}&sz=w1600`;
 }
 
-export const PILOTING_SHEET_URLS: Partial<Record<string, string>> = {
+const PILOTING_SHEET_URLS: Partial<Record<string, string>> = {
   batiment: "https://docs.google.com/spreadsheets/d/1hThXGp-YMvO69dQIyAbFNMQVByzE973tbrnjIUMkYMs/edit",
   "plomberie-chauffage":
     "https://docs.google.com/spreadsheets/d/1cruI9aFuuP4ggbbQ2nQKxA2Pcv1dJGL9K3SZ-gJGKGQ/edit",
@@ -422,7 +422,7 @@ Ce modèle est particulièrement utile si vous voulez :
   },
 ];
 
-export const documentModels: DocumentModel[] = [...globalDocumentModels];
+const documentModels: DocumentModel[] = [...globalDocumentModels];
 
 function compareDocumentModels(left: DocumentModel, right: DocumentModel) {
   const leftRank = left.featuredRank ?? 999;

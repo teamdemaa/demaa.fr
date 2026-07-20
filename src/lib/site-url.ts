@@ -27,7 +27,7 @@ export function getCanonicalOrigin() {
   return new URL(getCanonicalSiteUrl()).origin;
 }
 
-export function getCanonicalHost() {
+function getCanonicalHost() {
   return new URL(getCanonicalSiteUrl()).host.toLowerCase();
 }
 

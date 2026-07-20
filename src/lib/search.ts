@@ -31,7 +31,7 @@ function expandAliasTerms(normalizedText: string): string[] {
   });
 }
 
-export function buildSearchableText(parts: Array<string | null | undefined>): string {
+function buildSearchableText(parts: Array<string | null | undefined>): string {
   const normalizedBase = normalizeSearchText(parts.filter(Boolean).join(" "));
 
   if (!normalizedBase) {

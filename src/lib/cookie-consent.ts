@@ -8,8 +8,8 @@ export type CookieConsentPreferences = {
   version: 2;
 };
 
-export const COOKIE_CONSENT_STORAGE_KEY = "demaa-cookie-consent";
-export const COOKIE_CONSENT_EVENT = "demaa-cookie-consent-change";
+const COOKIE_CONSENT_STORAGE_KEY = "demaa-cookie-consent";
+const COOKIE_CONSENT_EVENT = "demaa-cookie-consent-change";
 
 const CONSENT_LIFETIME_MS = 180 * 24 * 60 * 60 * 1000;
 

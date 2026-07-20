@@ -122,7 +122,7 @@ export function resolveLeadAttributionSource(
   return { campaign: null, confidence: "unknown", medium: "unknown", source: "direct" };
 }
 
-export function hasLeadAcquisitionSignal(
+function hasLeadAcquisitionSignal(
   touch: LeadAttributionTouch,
   currentHost: string,
 ) {

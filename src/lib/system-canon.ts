@@ -1,6 +1,6 @@
 import { getSystemProcessOrder } from "@/lib/system-process-order";
 
-export const SYSTEME_BASE_PILLARS = [
+const SYSTEME_BASE_PILLARS = [
   "Direction",
   "Marketing et Vente",
   "Opérations",
@@ -50,7 +50,7 @@ const PILLAR_ORDER_INDEX = new Map<string, number>(
   SYSTEME_BASE_PILLARS.map((pillar, index) => [pillar, index]),
 );
 
-export function sortSystemeRows(rows: SystemeRow[]): SystemeRow[] {
+function sortSystemeRows(rows: SystemeRow[]): SystemeRow[] {
   return [...rows].sort((left, right) => {
     const leftOrder = PILLAR_ORDER_INDEX.get(left.pillar) ?? Number.POSITIVE_INFINITY;
     const rightOrder = PILLAR_ORDER_INDEX.get(right.pillar) ?? Number.POSITIVE_INFINITY;

@@ -1,54 +1,16 @@
 import { ImageResponse } from "next/og";
 
-export const brandImageBackground = "#fafafa";
-export const brandImageGreen = "#315f46";
-export const brandImageText = "#17231d";
-export const brandImageMuted = "#6f756e";
+const brandImageBackground = "#fafafa";
+const brandImageGreen = "#315f46";
+const brandImageText = "#17231d";
+const brandImageMuted = "#6f756e";
 
 export const socialImageSize = {
   width: 1200,
   height: 630,
 };
 
-export const logoImageSize = {
-  width: 1200,
-  height: 630,
-};
-
 export const brandImageContentType = "image/png";
-
-export async function buildLogoImage() {
-  return new ImageResponse(
-    (
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          background: brandImageBackground,
-          color: brandImageGreen,
-        }}
-      >
-        <span
-          style={{
-            fontFamily: "Georgia, serif",
-            fontSize: 220,
-            fontStyle: "italic",
-            lineHeight: 1,
-            letterSpacing: "-0.05em",
-          }}
-        >
-          Demaa
-        </span>
-      </div>
-    ),
-    {
-      ...logoImageSize,
-    }
-  );
-}
 
 export async function buildSocialImage() {
   return new ImageResponse(

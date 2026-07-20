@@ -1,4 +1,4 @@
-export const CURATED_TOOL_RECOMMENDATIONS_BY_SYSTEM: Record<
+const CURATED_TOOL_RECOMMENDATIONS_BY_SYSTEM: Record<
   string,
   readonly string[]
 > = {

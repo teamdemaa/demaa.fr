@@ -25,7 +25,7 @@ export type EnterpriseToolReference = {
   scope?: ToolScope;
 };
 
-export type EnterpriseProcess = {
+type EnterpriseProcess = {
   pillar: SystemPillar | "Finance & Juridique";
   title: string;
   description: string;

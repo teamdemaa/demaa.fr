@@ -8,7 +8,7 @@ const EXACT_SECTOR_PRIORITY_BY_TOOL_SECTOR =
   freeToolFallbacks.exactSectorPriorityByToolSector as Record<string, string[]>;
 const GENERIC_FALLBACK_PRIORITY_BY_PUBLIC_SECTOR =
   freeToolFallbacks.genericFallbackPriorityByPublicSector as Record<string, string[]>;
-export const MANUAL_SYSTEM_PRIORITY_BY_SYSTEM =
+const MANUAL_SYSTEM_PRIORITY_BY_SYSTEM =
   freeToolFallbacks.manualSystemPriorityBySystem as Record<string, string[]>;
 
 const freeTools = toolDirectory.filter(

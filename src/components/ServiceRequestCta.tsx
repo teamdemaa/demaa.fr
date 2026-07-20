@@ -13,7 +13,7 @@ export default function ServiceRequestCta(props: ServiceRequestCtaProps) {
   return <ServiceRequestCtaWithOptions {...props} />;
 }
 
-export function ServiceRequestCtaWithOptions({
+function ServiceRequestCtaWithOptions({
   service,
 }: ServiceRequestCtaProps) {
   const [isIntroductionOpen, setIsIntroductionOpen] = useState(false);

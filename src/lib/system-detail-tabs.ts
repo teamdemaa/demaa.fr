@@ -1,4 +1,4 @@
-export const SYSTEM_DETAIL_TABS = [
+const SYSTEM_DETAIL_TABS = [
   "process",
   "outils",
   "fournisseurs",
@@ -11,7 +11,7 @@ export const SYSTEM_DETAIL_TABS = [
 
 export type SystemDetailTab = (typeof SYSTEM_DETAIL_TABS)[number];
 
-export const SYSTEM_DETAIL_TAB_VISIBILITY = {
+const SYSTEM_DETAIL_TAB_VISIBILITY = {
   process: true,
   outils: true,
   fournisseurs: true,
@@ -22,7 +22,7 @@ export const SYSTEM_DETAIL_TAB_VISIBILITY = {
   formation: true,
 } satisfies Record<SystemDetailTab, boolean>;
 
-export function isSystemDetailTab(tab?: string): tab is SystemDetailTab {
+function isSystemDetailTab(tab?: string): tab is SystemDetailTab {
   return SYSTEM_DETAIL_TABS.includes(tab as SystemDetailTab);
 }
 

@@ -4,7 +4,7 @@ import {
 } from "@/lib/sector-taxonomy";
 import { publicSectorLabels, type PublicSectorLabel } from "@/lib/public-sectors";
 
-export type SectorPageHighlight = {
+type SectorPageHighlight = {
   label: string;
   href: string;
 };
@@ -441,11 +441,11 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
 
 export const sectorPageDefinitions = SECTOR_PAGE_DEFINITIONS;
 
-export const sectorPageDefinitionsBySlug = Object.fromEntries(
+const sectorPageDefinitionsBySlug = Object.fromEntries(
   sectorPageDefinitions.map((definition) => [definition.slug, definition]),
 ) as Record<string, SectorPageDefinition>;
 
-export const sectorPageDefinitionsByLabel = Object.fromEntries(
+const sectorPageDefinitionsByLabel = Object.fromEntries(
   sectorPageDefinitions.map((definition) => [definition.label, definition]),
 ) as Record<PublicSectorLabel, SectorPageDefinition>;
 

@@ -4,14 +4,12 @@ import { getAdminFirestore } from "./firebase-admin";
 import {
   enterpriseCatalog,
   enterpriseCatalogBySlug,
-  enterpriseToSystem,
   enrichEnterpriseBusinessModel,
   type EnterpriseDefinition,
   type EnterpriseTool,
   type EnterpriseToolReference,
 } from "./enterprise-annuaire";
 import { publicSectorLabels } from "./public-sectors";
-import type { System } from "./types";
 
 type EnterpriseFirestoreDocument = EnterpriseDefinition & {
   sort_order?: number;
@@ -216,10 +214,4 @@ export async function getEnterpriseBySlug(slug: string): Promise<EnterpriseDefin
   const fallback = enterpriseCatalogBySlug[normalizedSlug];
 
   return fallback ? enrichEnterpriseBusinessModel(fallback) : null;
-}
-
-export async function getEnterpriseSystems(): Promise<System[]> {
-  const enterprises = await getEnterpriseCatalog();
-
-  return enterprises.map(enterpriseToSystem);
 }

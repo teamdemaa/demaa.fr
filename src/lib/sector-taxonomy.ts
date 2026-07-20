@@ -1,6 +1,6 @@
 import rawSectorTaxonomy from "@/lib/sector-taxonomy.json";
 
-export type SectorFallbackMode = "exact" | "generic";
+type SectorFallbackMode = "exact" | "generic";
 
 export type SectorTaxonomyEntry = {
   publicLabel: string;

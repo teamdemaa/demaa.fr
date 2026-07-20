@@ -1,6 +1,6 @@
 import { getToolDirectorySlug, type ToolDirectoryItem } from "@/lib/tool-directory";
 
-export type ToolPricingPlan = {
+type ToolPricingPlan = {
   name: string;
   price: string;
   detail?: string;

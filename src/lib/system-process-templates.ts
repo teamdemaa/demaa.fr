@@ -4,7 +4,7 @@ import { getAdminFirestore } from "./firebase-admin";
 import rawProcessTemplates from "./system-process-templates.json";
 import type { SystemProcessTemplate } from "./system-process-types";
 
-export type { SystemPillar, SystemProcessTemplate } from "./system-process-types";
+export type { SystemProcessTemplate } from "./system-process-types";
 
 type SystemProcessTemplatesPayload = {
   templates: SystemProcessTemplate[];
@@ -13,7 +13,7 @@ type SystemProcessTemplatesPayload = {
 const SYSTEM_PROCESS_TEMPLATES_COLLECTION = "system_process_templates";
 const processTemplates = rawProcessTemplates as SystemProcessTemplatesPayload;
 
-export const fallbackSystemProcessTemplates = processTemplates.templates;
+const fallbackSystemProcessTemplates = processTemplates.templates;
 const fallbackSystemProcessTemplateById = new Map(
   fallbackSystemProcessTemplates.map((template) => [template.id, template]),
 );

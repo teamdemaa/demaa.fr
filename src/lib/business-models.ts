@@ -1,4 +1,4 @@
-export type BusinessModelPillar =
+type BusinessModelPillar =
   | "strategy"
   | "sales"
   | "operations"
@@ -13,7 +13,7 @@ export type BusinessModelBlock = {
   coveredPillars?: BusinessModelPillar[];
 };
 
-export type BusinessModelDefinition = {
+type BusinessModelDefinition = {
   id: string;
   label: string;
   description: string;
@@ -25,12 +25,12 @@ export type BusinessModelSignals = {
   indicators: string[];
 };
 
-export type EnterpriseBusinessModelMapping = {
+type EnterpriseBusinessModelMapping = {
   businessModelId: string;
   variant?: string;
 };
 
-export const businessModels = [
+const businessModels = [
   {
     id: "services-b2b-conseil",
     label: "Services B2B & conseil",
@@ -333,11 +333,11 @@ export const businessModels = [
   },
 ] satisfies BusinessModelDefinition[];
 
-export const businessModelsById: Record<string, BusinessModelDefinition> = Object.fromEntries(
+const businessModelsById: Record<string, BusinessModelDefinition> = Object.fromEntries(
   businessModels.map((model) => [model.id, model]),
 );
 
-export const businessModelSignalsById: Record<string, BusinessModelSignals> = {
+const businessModelSignalsById: Record<string, BusinessModelSignals> = {
   "services-b2b-conseil": {
     documents: ["Proposition commerciale", "Lettre de mission", "Brief client", "Compte rendu", "Facture"],
     indicators: ["Taux de transformation", "Marge par mission", "Temps passé", "Reste à facturer", "Récurrence client"],
@@ -428,7 +428,7 @@ export const businessModelSignalsById: Record<string, BusinessModelSignals> = {
   },
 } satisfies Record<string, BusinessModelSignals>;
 
-export const enterpriseBusinessSignalOverrides = {
+const enterpriseBusinessSignalOverrides = {
   "organisme-de-formation": {
     documents: ["Programme", "Convention", "Convocation", "Émargement", "Attestation", "Dossier Qualiopi", "BPF"],
     indicators: ["Taux de remplissage", "Taux d’assiduité", "Satisfaction apprenants", "Marge par session", "Reste à facturer", "Dossiers incomplets"],
@@ -815,7 +815,7 @@ export const enterpriseBusinessSignalOverrides = {
   },
 } satisfies Record<string, BusinessModelSignals>;
 
-export const enterpriseBusinessBlockOverrides = {
+const enterpriseBusinessBlockOverrides = {
   "organisme-de-formation": [
     { title: "Offre & pédagogie", internalPillar: "strategy" },
     { title: "Commercial & admissions", internalPillar: "sales" },
@@ -1832,7 +1832,7 @@ export const enterpriseBusinessBlockOverrides = {
   ],
 } satisfies Record<string, BusinessModelBlock[]>;
 
-export const enterpriseBusinessModelMap = {
+const enterpriseBusinessModelMap = {
   "cabinet-comptable": { businessModelId: "cabinet-reglemente", variant: "expertise-comptable" },
   "cabinet-davocat": { businessModelId: "cabinet-reglemente", variant: "avocat" },
   "cabinet-de-conseil": { businessModelId: "services-b2b-conseil", variant: "conseil" },

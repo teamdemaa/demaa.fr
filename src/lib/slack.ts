@@ -5,7 +5,7 @@ type SlackPayload = {
   blocks?: unknown[];
 };
 
-export class SlackMessageError extends Error {
+class SlackMessageError extends Error {
   constructor(message: string, readonly statusCode: number) {
     super(message);
     this.name = "SlackMessageError";
