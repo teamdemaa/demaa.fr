@@ -1,7 +1,0 @@
-Sujet,Responsable,Peut decider seul,Doit valider avec,A informer,Condition / seuil
-Deplacement de rendez-vous simple,Responsable accueil,Oui,Praticien,Patient,"Si demande < 48h"
-Ajout d'un patient urgent,Praticien,Oui,Responsable accueil,Equipe,"Selon plage disponible"
-Geste commercial sur consultation,Dirigeant,Oui,Praticien,Assistante,"Cas exceptionnels uniquement"
-Commande petit materiel,Assistante,Oui,Dirigeant,Equipe,"Dans le budget mensuel"
-Blocage agenda pour formation,Dirigeant,Oui,Responsable accueil,Equipe,"A annoncer 2 semaines avant"
-Signalement sensible patient,Praticien,Oui,Dirigeant,Assistante,"Tracer immediatement"

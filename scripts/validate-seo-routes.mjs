@@ -7,7 +7,7 @@ const ROUTE_FILES = {
   toolSectorPage: "src/app/annuaire-outils/secteur/[slug]/page.tsx",
   sectorHubPage: "src/app/secteurs/[slug]/page.tsx",
   documentModelsIndex: "src/app/modeles-de-documents/page.tsx",
-  legacyResourcesIndex: "src/app/ressources/page.tsx",
+  redirectConfig: "next.config.ts",
   legacyResourcesDetail: "src/app/ressources/[slug]/page.tsx",
   sitemap: "src/app/sitemap.ts",
   sectorPages: "src/lib/sector-pages.ts",
@@ -95,8 +95,11 @@ if (fileExists(ROUTE_FILES.legacyResourcesDetail)) {
   );
 }
 
-const resourcesIndexSource = readFile(ROUTE_FILES.legacyResourcesIndex);
-if (!resourcesIndexSource.includes('permanentRedirect("/modeles-de-documents")')) {
+const redirectConfigSource = readFile(ROUTE_FILES.redirectConfig);
+if (
+  !redirectConfigSource.includes("source: '/ressources'") ||
+  !redirectConfigSource.includes("destination: '/modeles-de-documents'")
+) {
   addUnique(
     errors,
     'Legacy resources index must redirect to "/modeles-de-documents".',
@@ -184,7 +187,7 @@ for (const relativePath of legacyResourcesDetailMatches) {
 }
 
 const legacyResourcesIndexMatches = collectLegacyMatches(/href:\s*["']\/ressources["']|href=\{["']\/ressources["']\}|["']\/ressources["']/, {
-  allowlist: [ROUTE_FILES.legacyResourcesIndex],
+  allowlist: [],
 });
 for (const relativePath of legacyResourcesIndexMatches) {
   addUnique(

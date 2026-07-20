@@ -1,6 +1,0 @@
-Bloc,Élément,Emplacement,Responsable,Fréquence de contrôle,Statut,Notes
-Logement,Fiche logement et inventaire,Dossier logement,Responsable exploitation,Mensuel,A verifier,
-Accès,Consignes d'accès et codes,Dossier accès,Responsable exploitation,Hebdomadaire,A verifier,
-Règlement,Règlement intérieur et consignes,Dossier conformité,Responsable exploitation,Mensuel,A verifier,
-Preuves,Photos avant / après séjour,Dossier séjour,Equipe terrain,Hebdomadaire,A verifier,
-Archivage,Dossier complet séjour / propriétaire,Arborescence conciergerie,Responsable admin,Mensuel,A verifier,

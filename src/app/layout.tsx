@@ -3,7 +3,6 @@ import localFont from "next/font/local";
 import "./globals.css";
 import CookieConsentManager from "@/components/CookieConsentManager";
 import Footer from "@/components/Footer";
-import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
 
 const satoshi = localFont({
   src: [
@@ -53,30 +52,25 @@ const gambetta = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Demaa | Plateforme de services clés en main pour dirigeants de petites entreprises",
+  title: "Demaa | Kits opérationnels pour petites entreprises",
   description:
-    "Une plateforme de services transverse pour dirigeants de TPE qui veulent déléguer ce qui les ralentit, mieux organiser leur entreprise et libérer du temps.",
+    "Des kits opérationnels par activité pour structurer les process, répartir les responsabilités et rendre l’entreprise plus autonome.",
   metadataBase: new URL('https://demaa.fr'),
   openGraph: {
-    title: "Demaa | Plateforme de services clés en main pour dirigeants de petites entreprises",
+    title: "Demaa | Kits opérationnels pour petites entreprises",
     description:
-      "Une plateforme de services transverse pour dirigeants de TPE qui veulent déléguer ce qui les ralentit, mieux organiser leur entreprise et libérer du temps.",
+      "Des kits opérationnels par activité pour structurer les process, répartir les responsabilités et rendre l’entreprise plus autonome.",
     siteName: "Demaa",
     locale: "fr_FR",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Demaa | Plateforme de services clés en main pour dirigeants de petites entreprises",
+    title: "Demaa | Kits opérationnels pour petites entreprises",
     description:
-      "Une plateforme de services transverse pour dirigeants de TPE qui veulent déléguer ce qui les ralentit, mieux organiser leur entreprise et libérer du temps.",
+      "Des kits opérationnels par activité pour structurer les process, répartir les responsabilités et rendre l’entreprise plus autonome.",
   },
   applicationName: "Demaa",
-  appleWebApp: {
-    capable: true,
-    title: "Demaa",
-    statusBarStyle: "default",
-  },
   formatDetection: {
     telephone: false,
   },
@@ -107,7 +101,6 @@ export default function RootLayout({
         {modal}
         <Footer />
         <CookieConsentManager />
-        <ServiceWorkerRegister />
       </body>
     </html>
   );

@@ -1,5 +1,0 @@
-Client,Facture,Montant,Échéance,Niveau de relance,Action type,Responsable,Statut,Notes
-PME Atlas,FAC-2026-091,1400,2026-07-04,Niveau 1,Email rappel facture,Responsable admin,A lancer,
-Societe Lumen,FAC-2026-086,2200,2026-06-25,Niveau 2,Appel + recap mission,Responsable admin,En cours,
-Startup Nilo,FAC-2026-095,1800,2026-07-12,A venir,Preparation facture shortlist,Responsable admin,A venir,
-Cabinet Verdanis,FAC-2026-079,900,2026-06-18,Niveau 3,Relance formelle et arbitrage dirigeant,Dirigeant,Sous surveillance,

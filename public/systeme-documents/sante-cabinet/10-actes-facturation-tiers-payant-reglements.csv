@@ -1,4 +1,0 @@
-Date,Patient,Acte / soin,Montant,Mode,Tiers payant,Regle,Relance necessaire,Notes
-2026-07-01,Claire M,Consultation suivi,55 EUR,CB,Non,Oui,Non,
-2026-07-02,Nadia P,Consultation specialisee,70 EUR,Virement,Non,Non,Oui,"Attente reglement sous 7 jours"
-2026-07-03,Lucas T,Soin court,35 EUR,CB,Oui,Oui,Non,"Feuille teletransmise"

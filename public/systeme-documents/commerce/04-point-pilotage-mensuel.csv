@@ -1,9 +1,0 @@
-Bloc,Question,Valeur du mois,Responsable,Decision / action,Echeance
-Ventes,Chiffre d'affaires total,28600 EUR,Dirigeant,"Comparer au budget et au mois precedent",Fin de mois
-Ventes,Ticket moyen,34 EUR,Responsable boutique,"Ajouter 3 ventes additionnelles cibles",Semaine 1
-Marge,Taux de marge brute,51 %,Dirigeant,"Revoir les references a faible marge",Semaine 1
-Stock,Top ruptures du mois,"Bougies parfumees, carnets premium",Responsable boutique,"Commander et securiser le mini stock",Immediat
-Stock,Top invendus du mois,"Vases collection hiver",Responsable boutique,"Preparer offre de degagement",Semaine 2
-Equipe,Charge equipe et absences,"1 samedi sous tension",Responsable boutique,"Ajuster planning du mois suivant",Semaine 3
-Client,Retours / reclamations,4,Responsable boutique,"Traiter les causes recurrentes",Semaine 1
-Tresorerie,Achats a venir et tension cash,"Fete des meres + nouvelle collection",Dirigeant,"Valider budget achat prudent",Avant commande

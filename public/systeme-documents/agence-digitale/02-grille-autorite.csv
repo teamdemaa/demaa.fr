@@ -1,8 +1,0 @@
-Sujet,Responsable,Peut decider seul,Valider avec,A informer,Condition ou seuil
-Qualification nouveau brief,Dirigeant,Oui,,Chef de projet,"Si besoin client clairement formule"
-Emission proposition commerciale,Dirigeant,Oui,,Equipe concernee,"Si perimetre et prix valides"
-Ajustement planning production,Chef de projet,Oui,,Dirigeant,"Si pas d'impact budget ou date finale"
-Ajout hors perimetre,Dirigeant,Non,Dirigeant,Chef de projet,"Si demande supplementaire du client"
-Livraison version intermediaire,Chef de projet,Oui,,Client + dirigeant,"Si controle qualite fait"
-Remise commerciale exceptionnelle,Dirigeant,Non,Dirigeant,Office manager,"Au-dela de 10 %"
-Facturation acompte ou solde,Office manager,Oui,,Dirigeant,"Si jalon contractuel atteint"

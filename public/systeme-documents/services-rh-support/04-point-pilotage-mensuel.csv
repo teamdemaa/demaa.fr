@@ -1,9 +1,0 @@
-Bloc,Sujet,Valeur,Responsable,Prochaine action,Statut,Notes
-Activite,Demandes traitees ce mois,128,Responsable operations,"Identifier les 10 demandes les plus chronophages",A suivre,
-Activite,Demandes hors SLA,7,Responsable operations,"Revoir triage des urgences",Sous surveillance,
-Commercial,Nouveaux comptes signes,3,Dirigeant,"Finaliser onboarding des nouveaux comptes",A suivre,
-Finance,CA facture,38 000 EUR,Dirigeant,"Suivre les missions complementaires non encore facturees",A suivre,
-Finance,Encours > 30 jours,8 400 EUR,Responsable admin,"Passer 2 comptes en relance niveau 2",Sous surveillance,
-Equipe,Charge equipe,Tendue sur 2 poles,Dirigeant,"Redistribuer 1 referent dossier",Ouvert,
-Qualite,Reclamations ouvertes,2,Responsable operations,"Clore les points sensibles avant vendredi",En cours,
-Decisions,Arbitrages a prendre,"SLA premium / staffing / priorisation comptes B",Dirigeant,"Decision lundi",Ouvert,

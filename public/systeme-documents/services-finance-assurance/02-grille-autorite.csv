@@ -1,8 +1,0 @@
-Sujet,Responsable,Peut decider seul,Valider avec,A informer,Condition ou seuil
-Qualification nouveau dossier,Responsable portefeuille,Oui,,Dirigeant,"Si besoin et pieces initiales clairs"
-Priorisation dossier urgent,Responsable portefeuille,Oui,,Equipe concernee,"Selon risque client ou echeance"
-Emission devis ou mandat,Dirigeant,Oui,,Responsable admin,"Si offre et honoraires fixes"
-Ajustement commercial exceptionnel,Dirigeant,Non,Dirigeant,Responsable admin,"Au-dela de 10 %"
-Facturation jalon ou honoraires,Responsable admin,Oui,,Dirigeant,"Si etape contractuelle atteinte"
-Escalade dossier sensible,Responsable portefeuille,Non,Dirigeant,Equipe concernee,"Si risque reput ou reglementaire"
-Cloture dossier,Referent dossier,Oui,,Client + admin,"Si pieces, decisions et facturation tracees"

@@ -1,8 +1,0 @@
-Sujet,Responsable,Peut decider seul,Valider avec,A informer,Condition ou seuil
-Qualification nouveau logement,Responsable exploitation,Oui,,Dirigeant,"Si logement et conditions d'acces clairs"
-Mise en ligne annonce,Responsable exploitation,Oui,,Proprietaire,"Si photos, prix et regles valides"
-Priorisation incident voyageur,Responsable exploitation,Oui,,Equipe concernée,"Selon urgence et impact sejour"
-Remise commerciale exceptionnelle,Dirigeant,Non,Dirigeant,Responsable admin,"Au-dela de 10 %"
-Déclenchement petite intervention,Responsable exploitation,Oui,,Proprietaire,"Sous seuil budget défini"
-Escalade incident sensible,Responsable exploitation,Non,Dirigeant,Equipe concernée,"Si risque reput ou remboursement majeur"
-Reversement propriétaire,Responsable admin,Oui,,Dirigeant,"Si cycle de paiement clôturé"

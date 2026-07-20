@@ -1,17 +1,10 @@
-"use client";
-
-import { useEffect } from "react";
 import Link from "next/link";
-import { writeServiceCartSlugs } from "@/lib/service-cart";
 
 type MemberRequestPayment = {
   amountTotal: number | null;
-  assistantAccessToken?: string | null;
-  assistantTasks: string | null;
   cartSummary: string | null;
   createdAt: string | null;
   currency: string;
-  itemCount: number | null;
   liveSessionAccesses: Array<{
     purchaseSlug: string;
     trainingTitle: string;
@@ -27,11 +20,7 @@ type MemberRequestPayment = {
   }>;
   offerLabel: string;
   orderType: string | null;
-  paymentStatus: string | null;
-  slackNotifiedAt: string | null;
   serviceBrief: string | null;
-  serviceBriefSubmittedAt: string | null;
-  serviceNames: string[];
   serviceSlugs: string[];
   stripeSessionId: string;
 };
@@ -47,7 +36,6 @@ type RequestCard = {
 };
 
 type MemberSpaceTabsProps = {
-  clearPurchasedCart?: boolean;
   requestCards: RequestCard[];
 };
 
@@ -78,15 +66,8 @@ function formatAmount(amountTotal?: number | null, currency = "eur") {
 }
 
 export default function MemberSpaceTabs({
-  clearPurchasedCart = false,
   requestCards,
 }: MemberSpaceTabsProps) {
-  useEffect(() => {
-    if (!clearPurchasedCart) return;
-
-    writeServiceCartSlugs([]);
-  }, [clearPurchasedCart]);
-
   return (
     <div className="mt-8">
       <section className="mt-8">
@@ -140,7 +121,7 @@ function RequestCardArticle({
 
       {hasSectorSystem ? (
         <p className="mt-5 rounded-full bg-dema-sage px-4 py-2 text-center text-sm text-dema-forest">
-          Achat confirmé. Demaa vous envoie la suite pour accéder au système acheté.
+          Achat confirmé. Demaa vous envoie la suite pour accéder au kit opérationnel acheté.
         </p>
       ) : (
         <>

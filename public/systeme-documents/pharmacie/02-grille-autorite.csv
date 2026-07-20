@@ -1,4 +1,0 @@
-Sujet,Responsable,Peut decider seul,Doit valider avec,À informer,Condition / seuil
-Commande urgente,Responsable stock,Oui,Titulaire,Équipe officine,"Si produit manquant critique"
-Geste commercial,Pharmacien adjoint,Oui,Titulaire,Responsable admin,"Dans la limite de 20 EUR"
-Blocage délivrance,Pharmacien,Oui,Titulaire,Client concerné,"Si ordonnance non conforme"

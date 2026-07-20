@@ -139,7 +139,7 @@ export default async function NewsletterDetailPage({
           <div className="mt-10">
             <RelatedSystemsLinks
               systems={relatedSystems}
-              description="Quelques systemes particulierement proches de cette newsletter recommandee."
+              description="Quelques kits opérationnels particulièrement proches de cette newsletter recommandée."
             />
           </div>
         </div>

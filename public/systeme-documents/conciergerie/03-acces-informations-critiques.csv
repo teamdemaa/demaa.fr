@@ -1,7 +1,0 @@
-Bloc,Sujet,Emplacement,Responsable,Acces,Vérification,Notes
-Outils,Messagerie et agenda,Google Workspace / Outlook,Dirigeant,Equipe autorisee,Mensuel,"Verifier acces entrants / sortants"
-Logements,Fiches logements et accès,Base logements / Drive,Responsable exploitation,Equipe exploitation,Hebdomadaire,"Source unique des consignes"
-Réservations,Calendrier et voyageurs,Outil réservation / channel manager,Responsable exploitation,Equipe concernée,Quotidien,"Source unique du planning"
-Finance,Commissions, versements et dépenses,Tableau administratif,Responsable admin,Direction + admin,Hebdomadaire,"Base reversements"
-Conformité,Règlements, preuves et documents logement,Dossier conformité,Responsable exploitation,Equipe concernée,Mensuel,"Règlement intérieur, assurance, preuves"
-Continuite,Contacts propriétaires, voyageurs, prestataires,Fiche contacts critiques,Responsable admin,Equipe cle,Mensuel,"Ménage, maintenance, urgence"

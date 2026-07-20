@@ -1,6 +1,7 @@
 import "server-only";
 
 import { getAdminFirestore } from "@/lib/firebase-admin";
+import type { LeadAttributionRecord } from "@/lib/lead-attribution";
 import type { LeadContext } from "@/lib/lead-context";
 
 export type LeadDeliveryChannel = "email" | "resend" | "slack";
@@ -21,6 +22,7 @@ export type LeadField = {
 };
 
 export type LeadRequestInput = {
+  attribution: LeadAttributionRecord;
   channels: Record<LeadDeliveryChannel, boolean>;
   contact: LeadContact;
   context: LeadContext;
@@ -39,6 +41,7 @@ export async function createLeadRequest(input: LeadRequestInput) {
   const leadRef = database.collection("lead_requests").doc();
 
   await leadRef.set({
+    attribution: input.attribution,
     request_type: input.requestType,
     title: input.title,
     contact: {

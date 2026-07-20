@@ -118,7 +118,7 @@ export async function buildSocialImage() {
             }}
           >
             Pour que tout ne repose plus uniquement sur vous, mettez en place les
-            bons systemes et creez les conditions d&apos;une croissance durable.
+            bons process et creez les conditions d&apos;une croissance durable.
           </span>
         </div>
       </div>

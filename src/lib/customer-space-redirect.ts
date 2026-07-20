@@ -1,4 +1,4 @@
-const ALLOWED_CUSTOMER_RETURN_PATHS = ["/mon-espace", "/cockpit-preview"] as const;
+const ALLOWED_CUSTOMER_RETURN_PATHS = ["/mon-espace"] as const;
 
 export function getSafeCustomerReturnTo(value?: string | null) {
   const candidate = value?.trim();

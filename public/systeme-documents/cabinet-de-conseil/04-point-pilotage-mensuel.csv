@@ -1,9 +1,0 @@
-Bloc,Sujet,Valeur,Responsable,Prochaine action,Statut,Notes
-Activite,Missions actives,11,Dirigeant,"Reprioriser les 3 missions les plus tendues",A suivre,"Objectif confort 8 a 12"
-Activite,Livrables en retard,3,Consultant senior,"Recalibrer planning et points client",Sous surveillance,"Cible < 1"
-Commercial,Devis en cours,7,Dirigeant,"Relancer 3 arbitrages clients",A suivre,"Suivi hebdo"
-Finance,Chiffre d'affaires mensuel,64 000 EUR,Dirigeant,"Convertir les devis proches signature",A suivre,"Objectif 70 000 EUR"
-Finance,Encours > 30 jours,12 800 EUR,Office manager,"Passer 2 relances supplementaires",Sous surveillance,"Point du mardi"
-Equipe,Charge consultants,Tendue sur 2 missions longues,Dirigeant,"Reallouer la preparation livrables",Ouvert,"Verifier capacite semaine suivante"
-Qualite,Retours clients a traiter,2,Consultant senior,"Boucler les ajustements cette semaine",En cours,"Suivi mensuel"
-Decisions,Arbitrages a prendre,"Perimetre mission X / devis Y / rythme points client",Dirigeant,"Decision vendredi",Ouvert,"A trancher rapidement"

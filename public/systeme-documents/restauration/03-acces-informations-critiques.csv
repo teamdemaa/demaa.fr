@@ -1,7 +1,0 @@
-Type,Element,Ou trouver,Responsable,Acces,Verification,Notes
-Encaissement,Caisse et terminal,"Gestionnaire mots de passe + procedure comptoir",Dirigeant,Responsable salle,Mensuel,"Tester procedure panne"
-Banque,Compte principal,"Gestionnaire mots de passe",Dirigeant,Dirigeant,Mensuel,"Double verification activee"
-Fournisseurs,Contacts et jours de livraison,"Drive / Dossier fournisseurs",Responsable cuisine,Cuisine + direction,Hebdomadaire,"Mettre a jour delais"
-Hygiene,Plan HACCP et relevés,Classeur hygiene + Drive,Responsable cuisine,Cuisine,Hebdomadaire,"Version unique"
-Urgence,Contacts depannage froid / extraction / caisse,Classeur urgence,Dirigeant,Equipe,Trimestriel,"Afficher en reserve"
-Admin,Assurance / bail / contrats,Drive admin,Dirigeant,Dirigeant + responsable,Trimestriel,"Verifier echeances"

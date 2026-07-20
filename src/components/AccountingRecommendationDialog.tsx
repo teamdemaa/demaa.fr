@@ -3,6 +3,10 @@
 import type React from "react";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { Briefcase, LoaderCircle, X } from "lucide-react";
+import {
+  getLeadAttributionPayload,
+  trackLeadConversion,
+} from "@/lib/lead-attribution-client";
 
 type AccountingRecommendationDialogProps = {
   buttonClassName: string;
@@ -127,6 +131,7 @@ export default function AccountingRecommendationDialog({
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          attribution: getLeadAttributionPayload(),
           recommendationRequest: true,
           lastName: formData.lastName,
           firstName: formData.firstName,
@@ -149,6 +154,10 @@ export default function AccountingRecommendationDialog({
       }
 
       setSuccess("Demande envoyée. Nous revenons vers vous avec un expert-comptable adapté.");
+      trackLeadConversion({
+        requestType: "accounting_recommendation",
+        systemSlug,
+      });
       setFormData(INITIAL_FORM);
     } catch (submissionError) {
       setError(

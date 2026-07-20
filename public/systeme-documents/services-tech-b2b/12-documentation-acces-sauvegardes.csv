@@ -1,6 +1,0 @@
-Bloc,Sujet,Emplacement,Responsable,Fréquence,Statut,Notes
-Documentation,Fiches client et architecture,Base documentaire,Responsable technique,Mensuel,A verifier,
-Accès,Comptes admin critiques,Registre acces,Responsable technique,Hebdomadaire,A verifier,
-Sauvegardes,Etat des sauvegardes critiques,Tableau sauvegardes,Responsable support,Quotidien,A verifier,
-Continuité,Procedure reprise et escalation,Procedure interne,Dirigeant,Mensuel,A verifier,
-Sécurité,Journal MFA / exceptions,Registre securite,Responsable technique,Mensuel,A verifier,

@@ -8,6 +8,7 @@ import { isValidEmail, normalizeEmail } from "@/lib/email";
 import { getPilotingSheetCopyUrl } from "@/lib/document-models";
 import { enterpriseToSystem } from "@/lib/enterprise-annuaire";
 import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
+import { resolveLeadAttribution } from "@/lib/lead-attribution-server";
 import {
   scheduleSystemKitSequence,
 } from "@/lib/generations-db";
@@ -22,6 +23,7 @@ import {
 export const runtime = "nodejs";
 
 type SystemKitRequestBody = {
+  attribution?: unknown;
   email?: unknown;
   firstName?: unknown;
   sectorName?: unknown;
@@ -102,6 +104,7 @@ export async function POST(request: Request) {
   }
 
   const lead = await submitLeadRequest({
+    attribution: resolveLeadAttribution(request, body?.attribution),
     channels: { email: false, resend: true, slack: true },
     contact: { email, firstName },
     context,

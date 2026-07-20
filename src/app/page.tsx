@@ -4,14 +4,14 @@ import SystemsHubPage from "@/components/SystemsHubPage";
 export const metadata: Metadata = {
   title: "Kits opérationnels pour dirigeants | Demaa",
   description:
-    "Découvrez les bons systèmes pour structurer votre entreprise, mieux déléguer et construire une activité plus stable et plus autonome.",
+    "Découvrez des kits opérationnels avec des process concrets pour structurer votre entreprise, mieux déléguer et gagner en autonomie.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
     title: "Kits opérationnels pour dirigeants | Demaa",
     description:
-      "Découvrez les bons systèmes pour structurer votre entreprise, mieux déléguer et construire une activité plus stable et plus autonome.",
+      "Découvrez des kits opérationnels avec des process concrets pour structurer votre entreprise, mieux déléguer et gagner en autonomie.",
     url: "/",
     siteName: "Demaa",
     locale: "fr_FR",
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Kits opérationnels pour dirigeants | Demaa",
     description:
-      "Découvrez les bons systèmes pour structurer votre entreprise, mieux déléguer et construire une activité plus stable et plus autonome.",
+      "Découvrez des kits opérationnels avec des process concrets pour structurer votre entreprise, mieux déléguer et gagner en autonomie.",
   },
 };
 

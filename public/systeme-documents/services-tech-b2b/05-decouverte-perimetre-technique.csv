@@ -1,5 +1,0 @@
-Client,Besoin identifié,Périmètre technique,Pieces / accès attendus,Responsable,Prochaine action,Statut,Notes
-PME A,Infogerance poste + reseau,"20 postes, 1 serveur, M365",Inventaire, accès admin, contrats actuels,Responsable technique,Programmer audit initial,A qualifier,
-SaaS B,Support client technique,"N1/N2 + suivi incidents",Historique tickets, SLA, outils support,Dirigeant,Verifier volumetrie,A qualifier,
-ETI C,Projet CRM,"Migration CRM + automatisations",Liste users, process, environnement actuel,Responsable technique,Preparer cadrage,A qualifier,
-Boutique D,Cyber hygiene,"Audit et renforcement securite",Inventaire acces, MFA, sauvegardes,Responsable technique,Envoyer checklist acces,A envoyer,

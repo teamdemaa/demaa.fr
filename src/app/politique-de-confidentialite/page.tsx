@@ -54,10 +54,11 @@ export default function PolitiqueConfidentialitePage() {
               <li>numéro de téléphone / WhatsApp ;</li>
               <li>nom d&apos;entreprise ;</li>
               <li>secteur d&apos;activité ;</li>
-              <li>données d&apos;inscription à la newsletter Demaa (offres partenaires et mini-cours) : prénom, secteur d&apos;activité et adresse email ;</li>
               <li>contenu de votre demande, besoin métier, préférences outils et informations transmises dans les formulaires ;</li>
               <li>contenu saisi dans l&apos;assistant IA et plans générés ;</li>
               <li>données techniques liées à la navigation et à la mesure d&apos;audience ;</li>
+              <li>données d&apos;attribution liées aux demandes : première et dernière source, paramètres UTM, campagne, page d&apos;entrée, référent, page de conversion et statut du consentement ;</li>
+              <li>localisation approximative au niveau pays, région ou ville, ainsi que type d&apos;appareil, navigateur et système d&apos;exploitation, lorsque ces informations sont disponibles ;</li>
               <li>données conservées localement dans votre navigateur pour l&apos;expérience assistant.</li>
             </ul>
       </PrivacySection>
@@ -66,9 +67,9 @@ export default function PolitiqueConfidentialitePage() {
             <ul className="list-disc space-y-2 pl-5">
               <li><strong>Répondre à vos demandes, devis, audits et demandes d&apos;automatisation :</strong> exécution de mesures précontractuelles prises à votre demande.</li>
               <li><strong>Gérer les formulaires de contact, rappels et échanges commerciaux :</strong> intérêt légitime et, selon les cas, mesures précontractuelles.</li>
-              <li><strong>Envoyer les offres partenaires et mini-cours Demaa :</strong> consentement, avec possibilité de se désinscrire à tout moment.</li>
               <li><strong>Fournir l&apos;assistant IA et enregistrer vos générations :</strong> exécution du service demandé et intérêt légitime d&apos;amélioration et de suivi.</li>
               <li><strong>Gérer les listes d&apos;attente ou demandes d&apos;information sur un outil :</strong> consentement ou intérêt légitime selon le contexte de la demande.</li>
+              <li><strong>Comprendre l&apos;origine d&apos;une demande et mesurer l&apos;efficacité des contenus et campagnes :</strong> intérêt légitime pour les informations rattachées à la demande, et consentement préalable pour les traceurs ou stockages optionnels.</li>
               <li><strong>Mesure d&apos;audience, sécurité et maintenance :</strong> intérêt légitime, et consentement si la réglementation l&apos;impose pour certains traceurs.</li>
             </ul>
       </PrivacySection>
@@ -77,6 +78,10 @@ export default function PolitiqueConfidentialitePage() {
             <p>Les données peuvent être traitées ou hébergées par les prestataires techniques utilisés pour faire fonctionner le site et ses services, notamment :</p>
             <ul className="list-disc space-y-2 pl-5">
               <li><strong>Vercel</strong> pour l&apos;hébergement et la mesure d&apos;audience ;</li>
+              <li><strong>Google Analytics</strong> pour la mesure des parcours lorsque vous l&apos;autorisez ;</li>
+              <li><strong>Meta Pixel</strong> pour la mesure publicitaire lorsque vous l&apos;autorisez ;</li>
+              <li><strong>Google Firebase / Firestore</strong> pour le stockage sécurisé des demandes et de leur contexte d&apos;attribution ;</li>
+              <li><strong>Resend</strong> pour l&apos;envoi des emails demandés et la gestion des contacts concernés ;</li>
               <li><strong>Anthropic</strong> pour la génération des réponses de l&apos;assistant IA ;</li>
               <li><strong>Slack</strong> pour la réception interne de notifications liées à certaines demandes ;</li>
               <li>les outils de messagerie, de contact ou de support effectivement utilisés par Demaa pour répondre à votre demande.</li>
@@ -89,7 +94,9 @@ export default function PolitiqueConfidentialitePage() {
       <PrivacySection title="5. Durée de conservation">
             <ul className="list-disc space-y-2 pl-5">
               <li><strong>Demandes commerciales et de contact :</strong> jusqu&apos;à 3 ans à compter du dernier échange utile, sauf obligation légale contraire.</li>
-              <li><strong>Newsletter Demaa (offres partenaires et mini-cours) :</strong> jusqu&apos;à votre désinscription ou retrait de consentement.</li>
+              <li><strong>Données d&apos;attribution rattachées à une demande :</strong> même durée que la demande concernée, avec suppression ou anonymisation lors de sa suppression.</li>
+              <li><strong>Attribution enregistrée dans le navigateur après consentement :</strong> 90 jours maximum.</li>
+              <li><strong>Choix relatifs aux traceurs :</strong> 6 mois maximum avant une nouvelle demande de choix.</li>
               <li><strong>Générations de l&apos;assistant IA et historique associé :</strong> pendant la durée nécessaire au service et au suivi commercial, puis suppression ou anonymisation.</li>
               <li><strong>Données conservées localement dans votre navigateur :</strong> jusqu&apos;à suppression manuelle ou effacement par votre navigateur.</li>
               <li><strong>Données techniques de sécurité et journaux :</strong> pendant la durée nécessaire à l&apos;exploitation et à la sécurité du site.</li>
@@ -126,7 +133,7 @@ export default function PolitiqueConfidentialitePage() {
               Le site utilise des outils de mesure d&apos;audience, des traceurs marketing et des mécanismes de stockage local pour améliorer l&apos;expérience utilisateur, mesurer l&apos;usage du site et mémoriser certaines informations liées à l&apos;assistant.
             </p>
             <p>
-              Lorsqu&apos;un traceur nécessite votre consentement, notamment pour la mesure d&apos;audience ou la publicité, Demaa recueille ce consentement avant chargement via son bandeau cookies. Pour plus de détails, consultez la politique de cookies.
+              Lorsqu&apos;un traceur nécessite votre consentement, notamment pour la mesure d&apos;audience, l&apos;attribution persistante ou la publicité, Demaa recueille ce consentement avant chargement via son bandeau cookies. Les choix « mesure d&apos;audience » et « publicité » peuvent être modifiés séparément à tout moment depuis la politique de cookies.
             </p>
       </PrivacySection>
 

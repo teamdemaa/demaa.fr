@@ -1,5 +1,0 @@
-Client,Facture / prime,Montant,Échéance,Niveau de relance,Action type,Responsable,Statut,Notes
-Client A,FAC-2026-101,1800,2026-07-05,Niveau 1,Email rappel facture,Responsable admin,A lancer,
-Client B,Prime renouvellement,2400,2026-06-28,Niveau 2,Appel + recap garanties,Responsable portefeuille,En cours,
-Client C,FAC-2026-109,1500,2026-07-14,A venir,Preparation facture de conseil,Responsable admin,A venir,
-Client D,Encours dossier,3200,2026-06-20,Niveau 3,Relance formelle et arbitrage,Dirigeant,Sous surveillance,

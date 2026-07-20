@@ -1,5 +1,0 @@
-Sujet,Responsable,Peut decider seul,Doit valider avec,À informer,Condition / seuil
-Lancement d'une offre,Responsable marketing,Non,Dirigeant,Responsable contenu,"Si nouvelle promesse ou nouveau prix"
-Mise à jour module,Responsable contenu,Oui,Dirigeant,Support,"Si pas d'impact prix"
-Remboursement client,Responsable admin,Oui,Dirigeant,Support,"Selon CGV"
-Geste commercial,Responsable support,Non,Dirigeant,Responsable admin,"Au-delà de 50 EUR"

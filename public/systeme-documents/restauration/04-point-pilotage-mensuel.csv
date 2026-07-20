@@ -1,9 +1,0 @@
-Bloc,Question,Valeur du mois,Responsable,Decision / action,Echeance
-Ventes,Chiffre d'affaires total,43700 EUR,Dirigeant,"Comparer au budget et a l'annee N-1",Fin de mois
-Ventes,Ticket moyen,16.8 EUR,Responsable salle,"Pousser boissons / desserts",Semaine 1
-Marge,Food cost,31 %,Dirigeant,"Revoir 5 recettes sous-margees",Semaine 1
-Operation,Ruptures majeures,"Poulet marine, cookie maison",Responsable cuisine,"Augmenter stock mini",Immediat
-Qualite,Retours clients,6,Responsable salle,"Analyser temps d'attente et erreurs commande",Semaine 1
-Equipe,Absences et renforts,"2 samedis tendus",Responsable salle,"Ajuster planning",Semaine 3
-Hygiene,Ecarts HACCP,1,Responsable cuisine,"Corriger procedure chambre froide",Immediat
-Tresorerie,Achats a venir,8200 EUR,Dirigeant,"Lisser commandes",Avant fin de mois

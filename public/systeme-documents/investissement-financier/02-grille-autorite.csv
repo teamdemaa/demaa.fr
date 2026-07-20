@@ -1,7 +1,0 @@
-Sujet,Responsable,Peut decider seul,Doit valider avec,À informer,Condition / seuil
-Entrée sur une opportunité,Dirigeant,Non,Comite d'investissement,Responsable portefeuille,"Si ticket > 100000 EUR"
-Augmentation d'une position,Responsable portefeuille,Non,Dirigeant,Responsable conformité,"Si impacte allocation cible"
-Sortie d'un actif,Dirigeant,Non,Comite d'investissement,Investisseurs clés,"Si perte potentielle > 5 %"
-Décalage d'un appel de fonds,Responsable admin,Non,Dirigeant,Responsable portefeuille,"Pour toute demande exceptionnelle"
-Geste commercial investisseur,Responsable portefeuille,Oui,Dirigeant,Responsable admin,"Dans la limite de 500 EUR"
-Nouveau partenaire ou véhicule,Responsable conformité,Non,Dirigeant,Equipe projet,"Après vérifications documentaires"

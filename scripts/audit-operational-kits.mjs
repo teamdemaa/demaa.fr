@@ -30,7 +30,7 @@ async function inspectEnterprise(enterprise) {
   const errors = [];
 
   try {
-    const response = await fetchPage(`${canonicalPath}?tab=systeme`);
+    const response = await fetchPage(`${canonicalPath}?tab=process`);
     const html = await response.text();
 
     if (response.status !== 200) errors.push(`canonical HTTP ${response.status}`);

@@ -1,4 +1,0 @@
-Personne,Role,Sait accueillir,Sait gerer contrat,Sait gerer reservation,Remplacant 1,Remplacant 2,Notes
-Lea,Responsable accueil,Oui,Oui,Oui,Manon,Dirigeant,"Pilote ouverture"
-Manon,Assistante admin,Oui,Oui,Partiel,Lea,Dirigeant,"Peut tenir accueil seule"
-Hugo,Support site,Partiel,Non,Oui,Lea,Manon,"Orienter incidents vers accueil"

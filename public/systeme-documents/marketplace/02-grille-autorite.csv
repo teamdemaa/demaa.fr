@@ -1,5 +1,0 @@
-Sujet,Responsable,Peut decider seul,Doit valider avec,À informer,Condition / seuil
-Activation d'un vendeur,Responsable marketplace,Oui,Dirigeant,Support,"Si dossier complet"
-Suspension d'un compte,Responsable support,Non,Dirigeant,Responsable marketplace,"En cas de fraude ou litiges répétés"
-Geste commercial litige,Responsable support,Oui,Responsable admin,Dirigeant,"Dans la limite de 100 EUR"
-Changement de commission,Dirigeant,Non,Responsable admin,Vendeurs concernés,"Après validation modèle économique"

@@ -1,9 +1,0 @@
-Bloc,Sujet,Valeur,Responsable,Prochaine action,Statut,Notes
-Activite,Dossiers a jour,82 %,Responsable de portefeuille,"Reprioriser les 12 dossiers en retard",Sous surveillance,"Cible 95 %"
-Activite,Dossiers en attente de pieces,21,Equipe comptable,"Lancer relances standard J+2 J+5",Sous surveillance,"Suivi hebdo"
-Commercial,Nouvelles lettres de mission signees,4,Expert-comptable,"Relancer 3 propositions en attente",A suivre,"Mensuel"
-Finance,Chiffre d'affaires mensuel,88 000 EUR,Expert-comptable,"Suivre prestations complementaires non facturees",A suivre,"Objectif 95 000 EUR"
-Finance,Encours > 30 jours,18 700 EUR,Responsable administrative,"Passer en relance niveau 2",Sous surveillance,"Point du jeudi"
-Equipe,Charge production,Pic sur pole bilans,Expert-comptable,"Reaffecter 2 dossiers",Ouvert,"Verifier charge semaine prochaine"
-Qualite,Erreurs ou reprises majeures,2,Responsable de portefeuille,"Analyser causes et corriger checklist",En cours,"Revue mensuelle"
-Decisions,Arbitrages a prendre,"Renfort pole paie / priorisation bilans / process collecte pieces",Expert-comptable,"Decision lundi",Ouvert,"A trancher en CODIR"

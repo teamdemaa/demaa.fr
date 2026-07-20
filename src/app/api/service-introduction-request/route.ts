@@ -6,10 +6,12 @@ import {
 } from "@/lib/api-security";
 import { getDemaaServiceBySlug } from "@/lib/service-catalog";
 import { isValidEmail, normalizeEmail } from "@/lib/email";
+import { resolveLeadAttribution } from "@/lib/lead-attribution-server";
 import { resolveLeadContext } from "@/lib/lead-context";
 import { submitLeadRequest } from "@/lib/lead-notifications";
 
 type ServiceIntroductionRequestBody = {
+  attribution?: unknown;
   company?: unknown;
   details?: unknown;
   email?: unknown;
@@ -72,7 +74,7 @@ export async function POST(request: Request) {
     const context = await resolveLeadContext({
       systemSlug,
       source: source || "Service modal",
-      sourceUrl,
+      sourceUrl: request.headers.get("referer") || sourceUrl,
     });
 
     if (!context) {
@@ -80,6 +82,7 @@ export async function POST(request: Request) {
     }
 
     const lead = await submitLeadRequest({
+      attribution: resolveLeadAttribution(request, body?.attribution),
       channels: { email: true, resend: Boolean(email), slack: true },
       contact: { company, email, name, phone },
       context,

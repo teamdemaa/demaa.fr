@@ -52,8 +52,8 @@ export default async function OperationalKitPage({
   const normalizedInitialTab =
     initialTab === "cours"
       ? "formation"
-      : initialTab === "ressources"
-        ? "outils"
+      : initialTab === "systeme"
+        ? "process"
         : initialTab;
   const jsonLd = buildSystemPageJsonLd(data);
 

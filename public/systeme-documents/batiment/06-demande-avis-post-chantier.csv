@@ -1,5 +1,0 @@
-Moment,Déclencheur,Message type,Canal,Responsable,Échéance,Statut,Notes
-Réception,Fin chantier validée,"Demander un retour sur le déroulé et la réception",Email,Conducteur de travaux,Sous 24h,A faire,
-J+3,Client satisfait,"Demander un avis ou une recommandation",Email + SMS,Responsable admin,J+3,A faire,
-Après SAV,Sujet réglé proprement,"Vérifier satisfaction finale",Appel,Conducteur de travaux,Sous 48h,A faire,
-Réactivation,Ancien client satisfait,"Proposer entretien / nouveau besoin",Email,Dirigeant,Mensuel,A planifier,

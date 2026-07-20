@@ -1,4 +1,0 @@
-Date,Client,Objet,Risque perçu,Responsable,Action immédiate,Réponse type,Échéance,Statut
-2026-07-02,PME A,"Incident recurrent poste non trace",Moyen,Responsable support,Ouvrir ticket parent et documenter la recurrence,"Nous centralisons les occurrences et revenons avec cause, correctif et delai.",2026-07-03,En cours
-2026-06-25,SaaS B,"SLA juge trop lent",Moyen,Dirigeant,Revoir priorisation et volumetrie,"Nous reprenons le contrat de service et ajustons le dispositif si necessaire.",2026-06-26,Clos
-2026-06-19,ETI C,"Manque de lisibilite sur avancement projet",Faible,Responsable technique,Envoyer point d'avancement standard,"Voici les jalons, les blocages et la prochaine etape engagee.",2026-06-20,Clos

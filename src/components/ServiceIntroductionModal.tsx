@@ -2,6 +2,10 @@
 
 import { useState } from "react";
 import { X } from "lucide-react";
+import {
+  getLeadAttributionPayload,
+  trackLeadConversion,
+} from "@/lib/lead-attribution-client";
 import type { DemaaService } from "@/lib/service-catalog";
 
 type ServiceIntroductionModalProps = {
@@ -63,6 +67,7 @@ export default function ServiceIntroductionModal({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...formData,
+          attribution: getLeadAttributionPayload(),
           serviceName: service.name,
           serviceSlug: service.slug,
           source,
@@ -82,6 +87,10 @@ export default function ServiceIntroductionModal({
       }
 
       setSuccessMessage("Demande envoyée. On vous recontacte rapidement.");
+      trackLeadConversion({
+        requestType: "service_introduction",
+        systemSlug,
+      });
       setFormData(INITIAL_FORM);
     } catch (submissionError) {
       setError(

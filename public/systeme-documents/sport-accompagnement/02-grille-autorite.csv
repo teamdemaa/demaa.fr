@@ -1,5 +1,0 @@
-Sujet,Responsable,Peut decider seul,Doit valider avec,A informer,Condition / seuil
-Déplacement séance,Responsable accueil,Oui,Dirigeant,Coach,"Si pas d'impact abonnement"
-Offre essai / séance découverte,Coach,Oui,Dirigeant,Accueil,"Selon cadre validé"
-Geste commercial adhérent,Dirigeant,Oui,Accueil,Coach,"Selon motif"
-Remplacement coach urgence,Responsable planning,Oui,Dirigeant,Equipe,"Priorité continuité"

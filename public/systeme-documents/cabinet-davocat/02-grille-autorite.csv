@@ -1,8 +1,0 @@
-Sujet,Responsable,Peut decider seul,Valider avec,A informer,Condition ou seuil
-Acceptation nouveau dossier,Associe gerant,Oui,,Assistante juridique,"Si conflit d'interets verifie et convention possible"
-Relance piece manquante,Assistante juridique,Oui,,Juriste referent,"Des J+2 apres ouverture dossier"
-Demande de delai procedurel,Avocat referent,Oui,,Associe gerant,"Si pas d'impact majeur sur strategie dossier"
-Remise exceptionnelle honoraires,Associe gerant,Non,Associe gerant,Responsable administrative,"Au-dela de 10 % de remise"
-Facturation intermediaire,Responsable administrative,Oui,,Associe gerant,"Si etape de dossier atteinte"
-Escalade dossier sensible,Avocat referent,Non,Associe gerant,Equipe concernee,"Si enjeu reputationnel ou financier eleve"
-Cloture dossier,Avocat referent,Oui,,Responsable administrative,"Si livrable/envoi final fait et facture preparee"

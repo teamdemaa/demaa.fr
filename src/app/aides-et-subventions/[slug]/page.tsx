@@ -181,7 +181,7 @@ export default async function AidDetailPage({
             <section className="mt-5">
               <RelatedSystemsLinks
                 systems={relatedSystems}
-                description="Quelques pages système où cette famille d'aides peut être utile."
+                description="Quelques kits opérationnels où cette famille d'aides peut être utile."
                 systemTab="financement"
               />
             </section>
@@ -213,7 +213,7 @@ export default async function AidDetailPage({
           <section className="mt-5">
             <RelatedSystemsLinks
               systems={relatedSystems}
-              description="Quelques pages système où ce sujet d'aide ou de subvention peut être pertinent."
+              description="Quelques kits opérationnels où ce sujet d'aide ou de subvention peut être pertinent."
               systemTab="financement"
             />
           </section>

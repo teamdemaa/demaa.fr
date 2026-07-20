@@ -1,6 +1,0 @@
-Bloc,Élément,Emplacement,Responsable,Fréquence de contrôle,Statut,Notes
-Métier,Procedure conformité métier,Dossier conformite,Dirigeant,Trimestriel,A verifier,
-RGPD,Registre de traitement,Dossier conformite,Responsable admin,Trimestriel,A verifier,
-Contrôles,Revue periodique dossiers sensibles,Tableau controles,Responsable portefeuille,Mensuel,A verifier,
-Accès,Liste utilisateurs outils et dossiers,Tableau acces,Responsable admin,Mensuel,A verifier,
-Archivage,Procedure cloture et conservation dossiers,Procedure interne,Dirigeant,Trimestriel,A verifier,

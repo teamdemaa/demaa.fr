@@ -1,13 +1,11 @@
 "use client";
 
-import { ChevronDown, ListChecks, Mail } from "lucide-react";
+import { ChevronDown, Mail } from "lucide-react";
 import type { SystemeDetail } from "@/lib/systeme-catalog";
 
 type SystemeTabContentProps = {
   systemName: string;
-  systemSlug: string;
   systeme: SystemeDetail | null | undefined;
-  includePilotingDocument?: boolean;
   onRequestSystemComplete?: () => void;
 };
 
@@ -32,31 +30,8 @@ export default function SystemeTabContent({
     );
   }
 
-  const processCount = systeme.cards.reduce(
-    (total, card) => total + card.items.length,
-    0,
-  );
-
   return (
     <div className="space-y-5">
-      <div className="demaa-surface rounded-[1.35rem] px-5 py-5 sm:px-6">
-        <div className="flex items-start gap-3">
-          <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
-            <ListChecks className="h-5 w-5" aria-hidden="true" />
-          </span>
-          <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-              {processCount} process opérationnels
-            </p>
-            <p className="mt-2 max-w-3xl text-sm leading-relaxed text-dema-muted">
-              Retrouvez ici les process classés par catégorie. Les tâches détaillées,
-              le responsable et la récurrence sont regroupés dans un seul Google Sheet
-              prêt à copier et à compléter.
-            </p>
-          </div>
-        </div>
-      </div>
-
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {systeme.cards.map((card) => (
           <details
@@ -101,7 +76,7 @@ export default function SystemeTabContent({
             aria-label={`Recevoir le kit opérationnel ${systemName}`}
           >
             <Mail className="h-4 w-4" aria-hidden="true" />
-            Recevoir le Google Sheet
+            Recevoir le kit opérationnel
           </button>
         </div>
       ) : null}

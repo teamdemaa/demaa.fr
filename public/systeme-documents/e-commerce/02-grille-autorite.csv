@@ -1,5 +1,0 @@
-Sujet,Responsable,Peut decider seul,Doit valider avec,À informer,Condition / seuil
-Mise en promotion d'un produit,Responsable e-commerce,Oui,Dirigeant,Responsable stock,"Si remise < 20 %"
-Remboursement client,Responsable SAV,Oui,Responsable admin,Dirigeant,"Selon CGV"
-Rupture stock produit phare,Responsable stock,Non,Dirigeant,Responsable acquisition,"Si impact campagne en cours"
-Nouveau transporteur,Responsable opérations,Non,Dirigeant,Responsable admin,"Après test coût / qualité"

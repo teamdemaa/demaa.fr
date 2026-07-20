@@ -1,8 +1,0 @@
-Sujet,Responsable,Peut decider seul,Valider avec,A informer,Condition ou seuil
-Qualification bien / mandat,Responsable transaction,Oui,,Dirigeant,"Si pieces minimales reunies"
-Priorisation acquereur / projet,Responsable transaction,Oui,,Equipe concernee,"Selon capacite financement et urgence"
-Organisation visite,Agent referent,Oui,,Client vendeur / acquereur,"Si dossier complet"
-Ajustement commercial exceptionnel,Dirigeant,Non,Dirigeant,Responsable admin,"Au-dela de 10 %"
-Acceptation offre sensible,Dirigeant,Non,Dirigeant,Agent referent,"Si ecart prix important"
-Facturation honoraires / commission,Responsable admin,Oui,,Dirigeant,"Si etape contractuelle atteinte"
-Escalade litige ou reclamation,Responsable transaction,Non,Dirigeant,Equipe concernee,"Si risque reputationnel ou juridique"

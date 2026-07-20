@@ -1,8 +1,0 @@
-Bloc,Sujet,Emplacement,Responsable,Acces,Vérification,Notes
-Acces outils,Messagerie et agenda equipe,Google Workspace / Outlook,Dirigeant,Equipe autorisee,Mensuel,"Verifier acces entrants / sortants"
-Pilotage,Planning missions et livrables,Tableau de pilotage partage,Consultant senior,Equipe mission,Hebdomadaire,"Source unique"
-Clients,Notes de cadrage et livrables,Drive / Notion projets,Consultants,Equipe mission,Hebdomadaire,"Standardiser l'arborescence"
-Finance,Suivi devis, facturation et encours,Tableau administratif,Office manager,Dirigeant + admin,Hebdomadaire,"Base relances"
-Commercial,Modeles proposition commerciale,Dossier commercial,Dirigeant,Direction + consultants,Mensuel,"Mettre a jour cas clients"
-Conformite,Contrats, NDA et RGPD,Dossier contractuel,Dirigeant,Direction + admin,Trimestriel,"Verifier signatures"
-Continuite,Contacts urgents clients et partenaires,Fiche contacts critiques,Office manager,Equipe cle,Mensuel,"Inclure telephone direct"

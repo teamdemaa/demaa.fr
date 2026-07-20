@@ -1,6 +1,0 @@
-Moment,Déclencheur,Message type,Canal,Responsable,Échéance,Statut,Notes
-Mi-mission,"Livrable intermediaire envoye","Verifier comprehension et arbitrages a prendre",Email,Consultant senior,Sous 24h,A faire,
-Fin mission,"Restitution terminee","Envoyer synthese des decisions et prochaines etapes",Email,Dirigeant,Sous 24h,A faire,
-J+15,"Mise en place en cours","Demander ce qui a ete applique et ou ca bloque",Email + appel,Consultant senior,J+15,A faire,
-J+30,"Client satisfait","Demander retour, temoignage ou recommandation",Email,Office manager,J+30,A faire,
-Reactivation,"Mission terminee depuis 6 mois","Proposer point rapide sur les evolutions et nouveaux besoins",Email,Dirigeant,Mensuel,A planifier,
