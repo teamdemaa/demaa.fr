@@ -58,6 +58,21 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: '/systemes/:slug',
+        destination: '/kit-operationnel/:slug',
+        permanent: true,
+      },
+      {
+        source: '/kit-systeme/:slug',
+        destination: '/kit-operationnel/:slug',
+        permanent: true,
+      },
+      {
+        source: '/modeles-de-documents/tableau-de-pilotage-:slug',
+        destination: '/kit-operationnel/:slug',
+        permanent: true,
+      },
+      {
         source: '/annuaire-fournisseurs/assurance-pro',
         destination: '/annuaire-fournisseurs/orus',
         permanent: true,

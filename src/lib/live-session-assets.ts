@@ -40,9 +40,9 @@ function getAssets(trainingSlug: string, sourceSystemSlug: string | null) {
           ? [
               {
                 id: "tableau-pilotage-metier",
-                label: `Tableau de pilotage ${system.name}`,
-                description: "Un tableau de pilotage déjà adapté aux indicateurs de votre activité.",
-                href: `/modeles-de-documents/tableau-de-pilotage-${system.slug}`,
+                label: `Kit opérationnel ${system.name}`,
+                description: "Les process, tâches, responsables et récurrences adaptés à votre activité.",
+                href: `/kit-operationnel/${system.slug}`,
               },
             ]
           : []),
@@ -80,9 +80,9 @@ function getAssets(trainingSlug: string, sourceSystemSlug: string | null) {
         ? [
             {
               id: "kit-process-systeme",
-              label: `Kit Process & Système ${system.name}`,
-              description: "Les process, responsabilités et documents opérationnels adaptés à votre métier.",
-              href: `/kit-systeme/${system.slug}`,
+              label: `Kit opérationnel ${system.name}`,
+              description: "Les process, tâches, responsables et récurrences adaptés à votre métier.",
+              href: `/kit-operationnel/${system.slug}`,
             },
           ]
         : [];

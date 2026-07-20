@@ -126,7 +126,7 @@ function inspectPage({ response, html, enterprise, tab }) {
 }
 
 async function inspectState(enterprise, tab) {
-  const url = `${baseUrl}/systemes/${encodeURIComponent(enterprise.slug)}?tab=${encodeURIComponent(tab.slug)}`;
+  const url = `${baseUrl}/kit-operationnel/${encodeURIComponent(enterprise.slug)}?tab=${encodeURIComponent(tab.slug)}`;
 
   for (let attempt = 0; attempt <= retryCount; attempt += 1) {
     try {

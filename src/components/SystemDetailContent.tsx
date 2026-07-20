@@ -99,8 +99,8 @@ const INDUSTRY_TOOL_TAGS = new Set([
 const SYSTEM_SECTION_CARDS = [
   {
     tab: "systeme",
-    label: "Systèmes",
-    description: "Les processus et documents clés pour faire fonctionner l’activité.",
+    label: "Process",
+    description: "Les process opérationnels classés par catégorie, avec leurs tâches dans un seul Google Sheet.",
     icon: FolderKanban,
   },
   {

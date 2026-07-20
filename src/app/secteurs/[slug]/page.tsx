@@ -92,7 +92,7 @@ export default async function SectorHubPage({
             className="group inline-flex items-center gap-2 text-sm font-medium text-gray-400 transition-colors hover:text-neutral-700"
           >
             <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-            Retour à l&apos;annuaire des systèmes
+            Retour aux kits opérationnels
           </Link>
 
           <section className="mt-6 rounded-[1.25rem] border border-dema-line bg-dema-paper p-6 shadow-[0_24px_60px_rgba(23,35,29,0.08)] md:p-8">
@@ -140,13 +140,13 @@ export default async function SectorHubPage({
 
               <div className="rounded-[1.15rem] border border-dema-line bg-dema-paper p-5">
                 <h2 className="text-lg font-semibold text-brand-blue">
-                  Systèmes représentatifs
+                  Kits opérationnels représentatifs
                 </h2>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {featuredSystems.map((system) => (
                     <Link
                       key={system.slug}
-                      href={`/systemes/${system.slug}`}
+                      href={`/kit-operationnel/${system.slug}`}
                       className="inline-flex rounded-full border border-dema-line bg-dema-cream/70 px-3 py-1.5 text-xs font-medium text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
                     >
                       {system.name}

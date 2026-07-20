@@ -253,7 +253,7 @@ export default function SystemsCatalogClient({
   const systemSections = useMemo(() => {
     const sections = filteredSystems.reduce<Array<{ index: number; title: string; systems: System[] }>>(
       (currentSections, system) => {
-        const title = detailsBySlug[system.slug]?.sectorLabel ?? "Autres systèmes";
+        const title = detailsBySlug[system.slug]?.sectorLabel ?? "Autres kits opérationnels";
         const section = currentSections.find((current) => current.title === title);
 
         if (section) {
@@ -286,14 +286,14 @@ export default function SystemsCatalogClient({
         {showIntro ? (
           <div className="max-w-3xl">
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
-              Entreprises & systèmes
+              Kits opérationnels
             </p>
             <h1 className="mt-3 demaa-section-title text-4xl tracking-tight text-brand-blue md:text-5xl">
               Les processus essentiels par entreprise
             </h1>
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-dema-muted">
-              Un catalogue d&apos;entreprises pour voir les systèmes à mettre en place,
-              les processus prioritaires et les outils métiers les plus utiles.
+              Un catalogue par métier pour voir les process à mettre en place,
+              les tâches prioritaires et les outils métiers les plus utiles.
             </p>
           </div>
         ) : null}
@@ -349,7 +349,7 @@ export default function SystemsCatalogClient({
 
         {systemSections.length === 0 ? (
           <div className="mt-8 rounded-[1.25rem] border border-dashed border-dema-line bg-dema-paper p-10 text-center">
-            <h2 className="text-xl font-bold text-brand-blue">Aucun système trouvé</h2>
+            <h2 className="text-xl font-bold text-brand-blue">Aucun kit opérationnel trouvé</h2>
             <p className="mt-3 text-sm font-normal text-dema-muted">
               Essayez un autre mot-clé ou un secteur plus large.
             </p>
@@ -374,7 +374,7 @@ export default function SystemsCatalogClient({
                       return (
                         <SystemCard
                           key={system.id}
-                          href={`/systemes/${system.slug}`}
+                          href={`/kit-operationnel/${system.slug}`}
                           icon={
                             <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper">
                               <Icon className="h-4 w-4" />
