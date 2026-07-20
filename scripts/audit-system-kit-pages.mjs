@@ -35,7 +35,9 @@ function countOccurrences(source, value) {
 
 function inspectPage({ response, html, tab }) {
   const errors = [];
-  const renderedHtml = html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "");
+  const renderedHtml = html
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "")
+    .replace(/<!--[\s\S]*?-->/g, "");
   const recommendationBadgeCount = countOccurrences(renderedHtml, ">Recommandé</span>");
   const visibleCardCount = countOccurrences(renderedHtml, "demaa-card group");
 
@@ -90,11 +92,11 @@ function inspectPage({ response, html, tab }) {
   }
 
   if (tab.slug === "process") {
-    if (!renderedHtml.includes("process opérationnels")) {
-      errors.push("missing process summary");
+    if (!/<p[^>]*>\s*\d+ process\s*<\/p>/.test(renderedHtml)) {
+      errors.push("missing process count");
     }
-    if (!renderedHtml.includes("Recevoir le Google Sheet")) {
-      errors.push("missing single Google Sheet CTA");
+    if (!renderedHtml.includes("Recevoir le kit opérationnel")) {
+      errors.push("missing single kit CTA");
     }
     if (renderedHtml.includes("Aperçu du document")) {
       errors.push("legacy document preview is still visible");

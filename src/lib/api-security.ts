@@ -130,10 +130,6 @@ export function normalizeText(
   return normalized.slice(0, maxLength);
 }
 
-export function isValidStripeSessionId(value: string) {
-  return /^cs_(test|live)_[A-Za-z0-9_]+$/.test(value);
-}
-
 export function escapeSlackMrkdwn(value: string) {
   return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }

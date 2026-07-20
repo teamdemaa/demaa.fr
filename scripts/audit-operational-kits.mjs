@@ -32,14 +32,19 @@ async function inspectEnterprise(enterprise) {
   try {
     const response = await fetchPage(`${canonicalPath}?tab=process`);
     const html = await response.text();
+    const renderedHtml = html.replace(/<!--[\s\S]*?-->/g, "");
 
     if (response.status !== 200) errors.push(`canonical HTTP ${response.status}`);
     if (!html.includes(`<link rel="canonical" href="https://demaa.fr${canonicalPath}"/>`)) {
       errors.push("canonical link missing or incorrect");
     }
     if (!html.includes("Kit opérationnel")) errors.push("SEO title missing");
-    if (!html.includes("process opérationnels")) errors.push("process summary missing");
-    if (!html.includes("Recevoir le Google Sheet")) errors.push("single Sheet CTA missing");
+    if (!/<p[^>]*>\s*\d+ process\s*<\/p>/.test(renderedHtml)) {
+      errors.push("process count missing");
+    }
+    if (!html.includes("Recevoir le kit opérationnel")) {
+      errors.push("single kit CTA missing");
+    }
 
     for (const value of forbiddenUi) {
       if (html.includes(value)) errors.push(`legacy UI still visible: ${value}`);
