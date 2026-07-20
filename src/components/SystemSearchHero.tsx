@@ -125,7 +125,7 @@ export default function SystemSearchHero({
     }
 
     setIsOpen(false);
-    router.push(`/systemes/${suggestion.slug}`);
+    router.push(`/kit-operationnel/${suggestion.slug}`);
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
@@ -235,7 +235,7 @@ export default function SystemSearchHero({
                   <Link
                     key={suggestion.slug}
                     id={`system-search-suggestion-${suggestion.slug}`}
-                    href={`/systemes/${suggestion.slug}`}
+                    href={`/kit-operationnel/${suggestion.slug}`}
                     prefetch
                     onMouseEnter={() => setActiveIndex(index)}
                     onFocus={() => setActiveIndex(index)}
@@ -256,7 +256,7 @@ export default function SystemSearchHero({
                       </p>
                     </div>
                     <span className="inline-flex shrink-0 items-center gap-2 text-xs text-dema-muted md:text-sm">
-                      Voir le système
+                      Voir le kit opérationnel
                       {activeIndex === index ? (
                         <CornerDownLeft className="h-3.5 w-3.5" aria-hidden="true" />
                       ) : null}

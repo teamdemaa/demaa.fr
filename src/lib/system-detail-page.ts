@@ -272,7 +272,7 @@ function singularizeSectorLabel(label: string): string {
 }
 
 export function buildSystemPageTitle(data: SystemDetailPageData): string {
-  return `${data.system.name} : checklist, outils et services | Demaa`;
+  return `Kit opérationnel ${data.system.name} : process, outils et services | Demaa`;
 }
 
 export function buildSystemPageIntro(data: SystemDetailPageData): string {
@@ -283,13 +283,18 @@ export function buildSystemPageDescription(data: SystemDetailPageData): string {
   const override = SYSTEM_PAGE_DESCRIPTION_OVERRIDES[data.system.slug];
 
   if (override) {
-    return override;
+    return override.replace(/\bsysteme\b/gi, "kit opérationnel");
   }
 
   const sectorLabel = singularizeSectorLabel(data.detail.sectorLabel).toLowerCase();
+  const processCount =
+    data.detail.systeme?.cards.reduce(
+      (total, card) => total + card.items.length,
+      0,
+    ) ?? data.detail.processes.length;
   const parts = [
     data.enterprise.description,
-    `${data.detail.processes.length} points de checklist, ${data.detail.tools.length} outils ${data.detail.tools.length > 1 ? "recommandes" : "recommande"} pour structurer une activite de ${sectorLabel}.`,
+    `${processCount} process opérationnels et ${data.detail.tools.length} outils ${data.detail.tools.length > 1 ? "recommandés" : "recommandé"} pour structurer une activité de ${sectorLabel}.`,
   ];
 
   return parts.join(" ");
@@ -298,14 +303,15 @@ export function buildSystemPageDescription(data: SystemDetailPageData): string {
 export function buildSystemPageMetadata(data: SystemDetailPageData): Metadata {
   const title = buildSystemPageTitle(data);
   const description = buildSystemPageDescription(data);
-  const url = `/systemes/${data.system.slug}`;
+  const url = `/kit-operationnel/${data.system.slug}`;
 
   return {
     title,
     description,
     keywords: [
       data.system.name,
-      `checklist ${data.system.name.toLowerCase()}`,
+      `kit opérationnel ${data.system.name.toLowerCase()}`,
+      `process ${data.system.name.toLowerCase()}`,
       `outils ${data.system.name.toLowerCase()}`,
       `organisation ${data.system.name.toLowerCase()}`,
       `structurer ${data.system.name.toLowerCase()}`,
@@ -330,9 +336,13 @@ export function buildSystemPageMetadata(data: SystemDetailPageData): Metadata {
 }
 
 export function buildSystemPageJsonLd(data: SystemDetailPageData) {
-  const url = `https://demaa.fr/systemes/${data.system.slug}`;
+  const url = `https://demaa.fr/kit-operationnel/${data.system.slug}`;
   const description = buildSystemPageDescription(data);
-  const listedProcesses = data.detail.processes.slice(0, 8);
+  const listedProcesses = (
+    data.detail.systeme?.cards.flatMap((card) =>
+      card.items.map((item) => ({ title: item.process })),
+    ) ?? data.detail.processes
+  ).slice(0, 8);
   const listedTools = data.detail.tools.slice(0, 8);
 
   return [
@@ -356,7 +366,7 @@ export function buildSystemPageJsonLd(data: SystemDetailPageData) {
     {
       "@context": "https://schema.org",
       "@type": "ItemList",
-      name: `Ressources du système ${data.system.name}`,
+      name: `Ressources du kit opérationnel ${data.system.name}`,
       numberOfItems: listedProcesses.length + listedTools.length,
       itemListElement: [
         ...listedProcesses.map((process, index) => ({
@@ -385,7 +395,7 @@ export function buildSystemPageJsonLd(data: SystemDetailPageData) {
         {
           "@type": "ListItem",
           position: 2,
-          name: "Systèmes",
+          name: "Kits opérationnels",
           item: "https://demaa.fr",
         },
         {

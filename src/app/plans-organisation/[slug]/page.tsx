@@ -24,7 +24,7 @@ export async function generateMetadata({
     title: `Plan d'organisation ${system.name} - Demaa`,
     description: `Plan d'organisation Demaa pour mieux organiser l'activité ${system.name}.`,
     alternates: {
-      canonical: `/systemes/${system.slug}`,
+      canonical: `/kit-operationnel/${system.slug}`,
     },
     robots: {
       index: false,

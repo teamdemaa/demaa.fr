@@ -175,7 +175,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   const systemEntries: MetadataRoute.Sitemap = enterprises.map((enterprise) => ({
-    url: `${base}/systemes/${enterprise.slug}`,
+    url: `${base}/kit-operationnel/${enterprise.slug}`,
     lastModified: now,
     changeFrequency: "monthly" as const,
     priority: 0.75,

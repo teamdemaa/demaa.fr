@@ -46,7 +46,7 @@ export default async function AnnuaireReseauxProPage({
     : null;
   const backLink = returnEnterprise
     ? {
-        href: `/systemes/${encodeURIComponent(returnEnterprise.slug)}?tab=reseaux-pro`,
+        href: `/kit-operationnel/${encodeURIComponent(returnEnterprise.slug)}?tab=reseaux-pro`,
         label: `Retour à ${returnEnterprise.name}`,
       }
     : undefined;

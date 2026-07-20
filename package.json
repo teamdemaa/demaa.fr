@@ -20,6 +20,7 @@
     "audit:system-recommendations": "node scripts/audit-system-recommendations.mjs",
     "audit:system-discovery-recommendations": "node scripts/audit-system-discovery-recommendations.mjs",
     "audit:system-kit-pages": "node scripts/audit-system-kit-pages.mjs",
+    "audit:operational-kits": "node scripts/audit-operational-kits.mjs",
     "audit:external-links": "node scripts/audit-external-links.mjs",
     "audit:supplier-placeholders": "node scripts/audit-supplier-placeholders.mjs",
     "audit:finance-network-recommendations": "node scripts/audit-finance-network-recommendations.mjs",

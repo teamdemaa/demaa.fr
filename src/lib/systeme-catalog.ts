@@ -1,4 +1,5 @@
 import type { EnterpriseDefinition } from "@/lib/enterprise-annuaire";
+import { getOperationalProcessTitle } from "@/lib/operational-process-titles";
 import {
   groupSystemeRowsByPillar,
   normalizeSystemePillar,
@@ -986,7 +987,7 @@ export function buildSystemeDetail(enterprise: EnterpriseDefinition): SystemeDet
       sectorSlug: enterprise.slug,
       sectorName: enterprise.name,
       pillar: normalizeSystemePillar(row.pillar),
-      process: row.process,
+      process: getOperationalProcessTitle(row.process),
       document: row.document,
     })),
   );

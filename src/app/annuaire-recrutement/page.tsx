@@ -46,7 +46,7 @@ export default async function AnnuaireRecrutementPage({
     : null;
   const backLink = returnEnterprise
     ? {
-        href: `/systemes/${encodeURIComponent(returnEnterprise.slug)}?tab=recrutement`,
+        href: `/kit-operationnel/${encodeURIComponent(returnEnterprise.slug)}?tab=recrutement`,
         label: `Retour à ${returnEnterprise.name}`,
       }
     : undefined;
