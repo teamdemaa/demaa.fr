@@ -3,6 +3,8 @@
 import { FilloutPopupEmbed } from "@fillout/react";
 import { useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
+import { getFilloutAttributionParameters } from "@/lib/lead-attribution-client";
+import { recordFilloutLeadSubmission } from "@/lib/fillout-lead-client";
 
 type OrganisationAuditBookingButtonProps = {
   className?: string;
@@ -17,12 +19,28 @@ export default function OrganisationAuditBookingButton({
 }: OrganisationAuditBookingButtonProps) {
   const searchParams = useSearchParams();
   const [isOpen, setIsOpen] = useState(searchParams.get("booking") === "1");
+  const [filloutAttribution, setFilloutAttribution] = useState(
+    () => getFilloutAttributionParameters(),
+  );
   const inheritedSource = searchParams.get("source") || source;
-  const parameters = useMemo(() => ({ source: inheritedSource }), [inheritedSource]);
+  const inheritedSystemSlug = searchParams.get("systemSlug");
+  const parameters = useMemo(
+    () => ({
+      ...filloutAttribution,
+      source: inheritedSource,
+      systemSlug: inheritedSystemSlug ?? undefined,
+    }),
+    [filloutAttribution, inheritedSource, inheritedSystemSlug],
+  );
+
+  function openBooking() {
+    setFilloutAttribution(getFilloutAttributionParameters());
+    setIsOpen(true);
+  }
 
   return (
     <>
-      <button type="button" onClick={() => setIsOpen(true)} className={className}>
+      <button type="button" onClick={openBooking} className={className}>
         {label}
       </button>
       <FilloutPopupEmbed
@@ -31,6 +49,13 @@ export default function OrganisationAuditBookingButton({
         parameters={parameters}
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
+        onSubmit={(submissionUuid) => {
+          recordFilloutLeadSubmission({
+            source: inheritedSource,
+            submissionUuid,
+            systemSlug: inheritedSystemSlug,
+          });
+        }}
         width={720}
         height={720}
       />

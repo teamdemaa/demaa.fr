@@ -7,6 +7,10 @@ import {
   getLeadAttributionPayload,
   trackLeadConversion,
 } from "@/lib/lead-attribution-client";
+import {
+  clearLeadSubmissionKey,
+  getLeadSubmissionKey,
+} from "@/lib/lead-submission-client";
 
 type AccountingRecommendationDialogProps = {
   buttonClassName: string;
@@ -125,6 +129,8 @@ export default function AccountingRecommendationDialog({
 
     try {
       setIsSubmitting(true);
+      const flowKey = `accounting-recommendation:${systemSlug}`;
+      const idempotencyKey = getLeadSubmissionKey(flowKey);
       const response = await fetch("/api/accounting-directory-appointment-request", {
         method: "POST",
         headers: {
@@ -137,6 +143,7 @@ export default function AccountingRecommendationDialog({
           firstName: formData.firstName,
           phone: formData.phone,
           email: formData.email,
+          idempotencyKey,
           sourceUrl: window.location.href,
           systemSlug,
           website: formData.website,
@@ -153,6 +160,7 @@ export default function AccountingRecommendationDialog({
         );
       }
 
+      clearLeadSubmissionKey(flowKey);
       setSuccess("Demande envoyée. Nous revenons vers vous avec un expert-comptable adapté.");
       trackLeadConversion({
         requestType: "accounting_recommendation",

@@ -9,6 +9,8 @@
     "build:stable": "DEMAA_FORCE_LOCAL_DATA=true DEMAA_BUILD_DIST_DIR=.next-build TMPDIR=/private/tmp next build --webpack",
     "start": "DEMAA_BUILD_DIST_DIR=.next-build next start",
     "lint": "eslint",
+    "test": "vitest run",
+    "check": "npm run lint -- --max-warnings=0 && npx tsc --noEmit && npm test && npm run validate:data",
     "validate:data": "node scripts/validate-data.mjs && node scripts/validate-systeme-catalog.mjs && node scripts/validate-sector-taxonomy.mjs && node scripts/validate-seo-routes.mjs && node scripts/validate-sector-editorial-links.mjs && node scripts/validate-build-runtime.mjs && node scripts/audit-supplier-placeholders.mjs && node scripts/audit-system-recommendations.mjs && node scripts/audit-system-discovery-recommendations.mjs && node scripts/audit-finance-network-recommendations.mjs && node scripts/audit-aid-recommendations.mjs",
     "audit:seo-foundations": "npm run validate:data && node scripts/audit-free-tools-coverage.mjs && node scripts/audit-generic-fallbacks.mjs && node scripts/audit-system-tool-quality.mjs && node scripts/audit-internal-linking.mjs && node scripts/audit-system-pages.mjs",
     "audit:seo-foundations:ci": "npm run audit:seo-foundations",
@@ -50,7 +52,8 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.7",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^3.2.7"
   },
   "overrides": {
     "postcss": "^8.5.15",

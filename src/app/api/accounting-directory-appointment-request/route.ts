@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import {
   enforceRateLimit,
+  normalizeIdempotencyKey,
   normalizeText,
   readJsonBody,
 } from "@/lib/api-security";
@@ -9,6 +10,8 @@ import { isValidEmail, normalizeEmail } from "@/lib/email";
 import { resolveLeadAttribution } from "@/lib/lead-attribution-server";
 import { resolveLeadContext } from "@/lib/lead-context";
 import { submitLeadRequest } from "@/lib/lead-notifications";
+import { enforceSameOrigin } from "@/lib/request-guard";
+import { logOperationalError } from "@/lib/operational-log";
 
 type AppointmentRequestBody = {
   attribution?: unknown;
@@ -25,6 +28,7 @@ type AppointmentRequestBody = {
   };
   email?: unknown;
   firstName?: unknown;
+  idempotencyKey?: unknown;
   firmSlug?: unknown;
   firmSlugs?: unknown;
   firmNames?: unknown;
@@ -48,7 +52,10 @@ function isValidPhone(phone: string) {
 
 export async function POST(request: Request) {
   try {
-    const limited = enforceRateLimit(request, {
+    const blockedOrigin = enforceSameOrigin(request);
+    if (blockedOrigin) return blockedOrigin;
+
+    const limited = await enforceRateLimit(request, {
       keyPrefix: "accounting-directory-appointment",
       limit: 6,
       windowMs: 10 * 60 * 1000,
@@ -71,6 +78,7 @@ export async function POST(request: Request) {
           .filter((value): value is string => Boolean(value))
       : [];
     const email = normalizeEmail(normalizeText(body?.email, 160));
+    const idempotencyKey = normalizeIdempotencyKey(body?.idempotencyKey);
     const phone = normalizeText(body?.phone, 60);
     const firstName = normalizeText(body?.firstName, 100);
     const lastName = normalizeText(body?.lastName, 100);
@@ -126,6 +134,7 @@ export async function POST(request: Request) {
         contact: { email, firstName, lastName, phone },
         context,
         emoji: "📗",
+        idempotencyKey,
         requestType: "accounting_recommendation",
         title: "Trouver un comptable",
       });
@@ -192,6 +201,7 @@ export async function POST(request: Request) {
       contact: { company: companyName, email, phone },
       context,
       emoji: "📗",
+      idempotencyKey,
       fields: [
         { label: "Cabinet(s)", value: firmNames },
         { label: "Ville(s)", value: firmCities },
@@ -211,7 +221,9 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ ok: true, leadId: lead.leadId });
   } catch (error) {
-    console.error("Accounting directory appointment request error →", error);
+    logOperationalError("lead.route.failed", error, {
+      requestType: "accounting_request",
+    });
     return NextResponse.json(
       {
         error:

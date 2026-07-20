@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { getPilotingSheetCopyUrl } from "@/lib/document-models";
 import { getCanonicalOrigin } from "@/lib/site-url";
 
@@ -230,6 +231,7 @@ function renderSystemKitText(input: {
 export async function sendSystemKitEmail(input: {
   email: string;
   firstName: string;
+  idempotencyKey: string;
   systemSlug: string;
   systemName: string;
   request?: Request;
@@ -249,6 +251,7 @@ export async function sendSystemKitEmail(input: {
 
   return sendResendEmail({
     apiKey,
+    idempotencyKey: input.idempotencyKey,
     payload: {
       from,
       to: input.email,
@@ -300,6 +303,7 @@ function renderSystemKitFollowupText(input: {
 
 async function sendResendEmail(input: {
   apiKey: string;
+  idempotencyKey?: string;
   payload: ResendEmailPayload;
 }) {
   const response = await fetch("https://api.resend.com/emails", {
@@ -307,6 +311,9 @@ async function sendResendEmail(input: {
     headers: {
       Authorization: `Bearer ${input.apiKey}`,
       "Content-Type": "application/json",
+      ...(input.idempotencyKey
+        ? { "Idempotency-Key": input.idempotencyKey }
+        : {}),
     },
     body: JSON.stringify(input.payload),
     cache: "no-store",
@@ -323,6 +330,10 @@ async function sendResendEmail(input: {
   }
 
   return { sent: true as const, reason: null };
+}
+
+function buildEmailIdempotencyKey(value: string) {
+  return `demaa-${createHash("sha256").update(value).digest("hex")}`;
 }
 
 export async function sendSystemKitFollowupEmail(input: {
@@ -352,6 +363,9 @@ export async function sendSystemKitFollowupEmail(input: {
 
   return sendResendEmail({
     apiKey,
+    idempotencyKey: buildEmailIdempotencyKey(
+      `system-kit-followup:${input.kind}:${input.systemSlug}:${input.email}`,
+    ),
     payload: {
       from,
       to: input.email,

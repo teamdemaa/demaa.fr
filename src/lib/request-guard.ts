@@ -13,3 +13,24 @@ export function enforceAllowedHost(request: Request) {
     { status: 403 }
   );
 }
+
+export function enforceSameOrigin(request: Request) {
+  const origin = request.headers.get("origin");
+
+  try {
+    if (
+      origin &&
+      new URL(origin).origin === new URL(request.url).origin &&
+      isAllowedRequestHost(request)
+    ) {
+      return null;
+    }
+  } catch {
+    // Invalid origins are rejected below.
+  }
+
+  return NextResponse.json(
+    { error: "Origine de la requête non autorisée." },
+    { status: 403 },
+  );
+}

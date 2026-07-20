@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import { normalizeEmail } from "@/lib/email";
 import { getAdminFirestore } from "./firebase-admin";
+import { getLeadRetentionExpiry } from "@/lib/operational-maintenance";
 
 interface AssistantDelegationRequestRow {
   created_at?: string | null;
@@ -212,6 +213,7 @@ export async function getCustomerSessionEmail(sessionHash: string) {
 export async function scheduleSystemKitSequence(input: {
   email: string;
   firstName: string;
+  leadId: string;
   systemName: string;
   systemSlug: string;
 }) {
@@ -222,6 +224,7 @@ export async function scheduleSystemKitSequence(input: {
 
   await database.runTransaction(async (transaction) => {
     const subscriberDoc = await transaction.get(subscriberRef);
+    if (subscriberDoc.data()?.source_lead_id === input.leadId) return;
 
     transaction.set(
       subscriberRef,
@@ -230,6 +233,7 @@ export async function scheduleSystemKitSequence(input: {
         first_name: input.firstName.trim(),
         sector: input.systemName.trim(),
         source: subscriberDoc.data()?.source || `systeme_kit_${input.systemSlug}`,
+        source_lead_id: input.leadId,
         status: "active",
         system_name: input.systemName.trim(),
         system_slug: input.systemSlug.trim(),
@@ -238,6 +242,7 @@ export async function scheduleSystemKitSequence(input: {
         sequence_last_email_sent_at: now,
         next_email_at: addDaysToIsoDate(now, 7),
         sequence_completed_at: null,
+        retention_expires_at: getLeadRetentionExpiry(),
         created_at: subscriberDoc.exists ? subscriberDoc.data()?.created_at || now : now,
         updated_at: now,
       },
@@ -326,6 +331,7 @@ export async function advanceSystemKitSequenceSubscriber(input: {
       next_email_at: input.completed ? null : addDaysToIsoDate(now, 7),
       status: input.completed ? "completed" : collection === "abonnes" ? "subscribed" : "active",
       sequence_completed_at: input.completed ? now : null,
+      retention_expires_at: getLeadRetentionExpiry(),
       updated_at: now,
     },
     { merge: true }

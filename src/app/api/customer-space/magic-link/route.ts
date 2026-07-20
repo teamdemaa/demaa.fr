@@ -37,7 +37,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const limited = enforceRateLimit(
+  const limited = await enforceRateLimit(
     request,
     {
       keyPrefix: "customer-magic-link",

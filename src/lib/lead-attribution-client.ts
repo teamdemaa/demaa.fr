@@ -6,6 +6,11 @@ import type {
   LeadAttributionPayload,
   LeadAttributionTouch,
 } from "@/lib/lead-attribution";
+import {
+  buildFilloutAttributionParameters,
+  resolveLeadAttributionSource,
+  selectLastAttributionTouch,
+} from "@/lib/lead-attribution";
 
 const ATTRIBUTION_STORAGE_KEY = "demaa-lead-attribution";
 const ATTRIBUTION_LIFETIME_MS = 90 * 24 * 60 * 60 * 1000;
@@ -102,27 +107,6 @@ function getInitialTouch() {
   return initialTouch;
 }
 
-function hasAcquisitionSignal(touch: LeadAttributionTouch) {
-  const currentHost = window.location.hostname.toLowerCase();
-  const hasExternalReferrer = Boolean(
-    touch.referrerHost && touch.referrerHost !== currentHost,
-  );
-
-  return Boolean(
-    touch.utmSource ||
-      touch.utmMedium ||
-      touch.utmCampaign ||
-      touch.gclid ||
-      touch.gbraid ||
-      touch.wbraid ||
-      touch.fbclid ||
-      touch.liFatId ||
-      touch.msclkid ||
-      touch.ttclid ||
-      hasExternalReferrer,
-  );
-}
-
 function readStoredAttribution() {
   const rawValue = window.localStorage.getItem(ATTRIBUTION_STORAGE_KEY);
   if (!rawValue) return null;
@@ -167,7 +151,12 @@ function buildCurrentAttribution() {
   const next: StoredAttribution = {
     ...base,
     expiresAt: new Date(Date.now() + ATTRIBUTION_LIFETIME_MS).toISOString(),
-    lastTouch: hasAcquisitionSignal(current) ? current : base.lastTouch,
+    lastTouch: selectLastAttributionTouch({
+      current,
+      currentHost: window.location.hostname,
+      first,
+      previous: base.lastTouch,
+    }),
   };
 
   memoryAttribution = next;
@@ -191,13 +180,10 @@ function buildCurrentAttribution() {
 }
 
 function resolveClientSource(touch: LeadAttributionTouch | null) {
-  if (!touch) return "direct";
-  if (touch.gclid || touch.gbraid || touch.wbraid) return "google_ads";
-  if (touch.fbclid) return "meta_ads";
-  if (touch.msclkid) return "bing_ads";
-  if (touch.liFatId) return "linkedin_ads";
-  if (touch.ttclid) return "tiktok_ads";
-  return touch.utmSource || touch.referrerHost || "direct";
+  const source = resolveLeadAttributionSource(touch);
+  return source.medium.startsWith("paid_")
+    ? `${source.source}_ads`
+    : source.source;
 }
 
 export function initializeLeadAttribution() {
@@ -215,6 +201,13 @@ export function clearPersistedLeadAttribution() {
 export function getLeadAttributionPayload() {
   if (typeof window === "undefined") return null;
   return buildCurrentAttribution();
+}
+
+export function getFilloutAttributionParameters() {
+  if (typeof window === "undefined") return {};
+
+  const attribution = buildCurrentAttribution();
+  return buildFilloutAttributionParameters(attribution);
 }
 
 export function trackLeadConversion(input: {

@@ -42,6 +42,9 @@ async function inspectEnterprise(enterprise) {
     if (!/<p[^>]*>\s*\d+ process\s*<\/p>/.test(renderedHtml)) {
       errors.push("process count missing");
     }
+    if (!html.includes('class="demaa-accordion')) {
+      errors.push("process accordions missing");
+    }
     if (!html.includes("Recevoir le kit opérationnel")) {
       errors.push("single kit CTA missing");
     }

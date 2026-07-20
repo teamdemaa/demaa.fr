@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import {
   enforceRateLimit,
+  normalizeIdempotencyKey,
   normalizeText,
   readJsonBody,
 } from "@/lib/api-security";
@@ -9,12 +10,15 @@ import { isValidEmail, normalizeEmail } from "@/lib/email";
 import { resolveLeadAttribution } from "@/lib/lead-attribution-server";
 import { resolveLeadContext } from "@/lib/lead-context";
 import { submitLeadRequest } from "@/lib/lead-notifications";
+import { enforceSameOrigin } from "@/lib/request-guard";
+import { logOperationalError } from "@/lib/operational-log";
 
 type ServiceIntroductionRequestBody = {
   attribution?: unknown;
   company?: unknown;
   details?: unknown;
   email?: unknown;
+  idempotencyKey?: unknown;
   name?: unknown;
   phone?: unknown;
   serviceName?: unknown;
@@ -22,6 +26,7 @@ type ServiceIntroductionRequestBody = {
   source?: unknown;
   sourceUrl?: unknown;
   systemSlug?: unknown;
+  website?: unknown;
 };
 
 function isValidPhone(phone: string) {
@@ -32,7 +37,10 @@ function isValidPhone(phone: string) {
 
 export async function POST(request: Request) {
   try {
-    const limited = enforceRateLimit(request, {
+    const blockedOrigin = enforceSameOrigin(request);
+    if (blockedOrigin) return blockedOrigin;
+
+    const limited = await enforceRateLimit(request, {
       keyPrefix: "service-introduction",
       limit: 8,
       windowMs: 10 * 60 * 1000,
@@ -43,9 +51,15 @@ export async function POST(request: Request) {
       await readJsonBody<ServiceIntroductionRequestBody>(request);
     if (response) return response;
 
+    const honeypot = normalizeText(body?.website, 200);
+    if (honeypot) {
+      return NextResponse.json({ ok: true });
+    }
+
     const name = normalizeText(body?.name, 120);
     const phone = normalizeText(body?.phone, 60);
     const email = normalizeEmail(normalizeText(body?.email, 160));
+    const idempotencyKey = normalizeIdempotencyKey(body?.idempotencyKey);
     const company = normalizeText(body?.company, 120);
     const details = normalizeText(body?.details, 1500, { multiline: true });
     const source = normalizeText(body?.source, 120);
@@ -87,6 +101,7 @@ export async function POST(request: Request) {
       contact: { company, email, name, phone },
       context,
       emoji: "🤝",
+      idempotencyKey,
       fields: [
         { label: "Service", value: serviceName },
         { label: "Besoin", value: details },
@@ -97,7 +112,9 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ ok: true, leadId: lead.leadId });
   } catch (error) {
-    console.error("Service introduction request error →", error);
+    logOperationalError("lead.route.failed", error, {
+      requestType: "service_introduction",
+    });
     return NextResponse.json(
       {
         error:

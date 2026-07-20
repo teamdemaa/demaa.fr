@@ -16,7 +16,7 @@ export async function GET(request: Request) {
   const blockedHost = enforceAllowedHost(request);
   if (blockedHost) return blockedHost;
 
-  const limited = enforceRateLimit(request, {
+  const limited = await enforceRateLimit(request, {
     keyPrefix: "customer-magic-consume",
     limit: 20,
     windowMs: 10 * 60 * 1000,

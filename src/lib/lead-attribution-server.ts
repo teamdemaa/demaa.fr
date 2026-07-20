@@ -7,6 +7,7 @@ import type {
   LeadAttributionSource,
   LeadAttributionTouch,
 } from "@/lib/lead-attribution";
+import { resolveLeadAttributionSource } from "@/lib/lead-attribution";
 
 const CLICK_ID_KEYS = [
   "gclid",
@@ -32,15 +33,6 @@ const TRACKED_QUERY_KEYS = [
   "li_fat_id",
   "msclkid",
   "ttclid",
-] as const;
-
-const SOCIAL_DOMAINS = [
-  "facebook.com",
-  "instagram.com",
-  "linkedin.com",
-  "tiktok.com",
-  "twitter.com",
-  "x.com",
 ] as const;
 
 function cleanString(value: unknown, maxLength: number) {
@@ -157,56 +149,6 @@ function sanitizePayload(value: unknown): LeadAttributionPayload {
   };
 }
 
-function resolveSource(touch: LeadAttributionTouch | null): LeadAttributionSource {
-  if (!touch) {
-    return { campaign: null, confidence: "unknown", medium: "unknown", source: "direct" };
-  }
-
-  if (touch.gclid || touch.gbraid || touch.wbraid) {
-    return { campaign: touch.utmCampaign, confidence: "deterministic", medium: "paid_search", source: "google" };
-  }
-  if (touch.fbclid) {
-    return { campaign: touch.utmCampaign, confidence: "deterministic", medium: "paid_social", source: "meta" };
-  }
-  if (touch.msclkid) {
-    return { campaign: touch.utmCampaign, confidence: "deterministic", medium: "paid_search", source: "bing" };
-  }
-  if (touch.liFatId) {
-    return { campaign: touch.utmCampaign, confidence: "deterministic", medium: "paid_social", source: "linkedin" };
-  }
-  if (touch.ttclid) {
-    return { campaign: touch.utmCampaign, confidence: "deterministic", medium: "paid_social", source: "tiktok" };
-  }
-  if (touch.utmSource || touch.utmMedium || touch.utmCampaign) {
-    return {
-      campaign: touch.utmCampaign,
-      confidence: "deterministic",
-      medium: touch.utmMedium || "campaign",
-      source: touch.utmSource || "campaign",
-    };
-  }
-
-  const host = touch.referrerHost?.replace(/^www\./, "") ?? "";
-  if (/^(google\.|bing\.|search\.yahoo\.|duckduckgo\.)/.test(host)) {
-    const source = host.startsWith("google.")
-      ? "google"
-      : host.startsWith("bing.")
-        ? "bing"
-        : host.startsWith("duckduckgo.")
-          ? "duckduckgo"
-          : "yahoo";
-    return { campaign: null, confidence: "inferred", medium: "organic", source };
-  }
-  if (SOCIAL_DOMAINS.some((domain) => host === domain || host.endsWith(`.${domain}`))) {
-    return { campaign: null, confidence: "inferred", medium: "social", source: host };
-  }
-  if (host && host !== "demaa.fr") {
-    return { campaign: null, confidence: "inferred", medium: "referral", source: host };
-  }
-
-  return { campaign: null, confidence: "unknown", medium: "unknown", source: "direct" };
-}
-
 function decodeHeader(value: string | null, maxLength: number) {
   if (!value) return null;
   try {
@@ -288,9 +230,9 @@ export function resolveLeadAttribution(
       submitted_at: new Date().toISOString(),
       timezone: cleanString(request.headers.get("x-vercel-ip-timezone"), 120),
     },
-    first_source: resolveSource(payload.firstTouch),
+    first_source: resolveLeadAttributionSource(payload.firstTouch),
     first_touch: payload.firstTouch,
-    last_source: resolveSource(payload.lastTouch),
+    last_source: resolveLeadAttributionSource(payload.lastTouch),
     last_touch: payload.lastTouch,
     storage: payload.storage,
     version: 1,

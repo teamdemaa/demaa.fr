@@ -4,6 +4,12 @@ import {
   getDueSystemKitSequenceSubscribers,
 } from "@/lib/generations-db";
 import { sendSystemKitFollowupEmail } from "@/lib/system-kit-email";
+import { retryFailedLeadDeliveries } from "@/lib/lead-notifications";
+import { cleanupExpiredOperationalData } from "@/lib/operational-maintenance";
+import {
+  logOperationalError,
+  logOperationalEvent,
+} from "@/lib/operational-log";
 
 export const runtime = "nodejs";
 
@@ -18,11 +24,13 @@ function isAuthorizedCronRequest(request: Request) {
   return authorization === `Bearer ${secret}`;
 }
 
-export async function GET(request: Request) {
+async function handleGet(request: Request) {
   if (!isAuthorizedCronRequest(request)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  const notificationRetries = await retryFailedLeadDeliveries(30);
+  const cleanup = await cleanupExpiredOperationalData(50);
   const dueSubscribers = await getDueSystemKitSequenceSubscribers(50);
   const results: Array<{ email: string; kind: string; sent: boolean }> = [];
 
@@ -69,11 +77,38 @@ export async function GET(request: Request) {
     });
   }
 
-  return NextResponse.json({
+  const summary = {
     ok: true,
     processed: dueSubscribers.length,
     sent: results.filter((result) => result.sent).length,
     failed: results.filter((result) => !result.sent).length,
+    notificationRetries: {
+      attempted: notificationRetries.length,
+      sent: notificationRetries.filter((result) => result.status === "sent").length,
+      failed: notificationRetries.filter((result) => result.status === "failed").length,
+    },
+    cleanup,
     results,
+  };
+
+  logOperationalEvent("cron.system_kit.completed", {
+    cleanupDeleted: cleanup.deleted,
+    followupsFailed: summary.failed,
+    followupsSent: summary.sent,
+    retriesAttempted: notificationRetries.length,
   });
+
+  return NextResponse.json(summary);
+}
+
+export async function GET(request: Request) {
+  try {
+    return await handleGet(request);
+  } catch (error) {
+    logOperationalError("cron.system_kit.failed", error);
+    return NextResponse.json(
+      { error: "Cron execution failed." },
+      { status: 500 },
+    );
+  }
 }

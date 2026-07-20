@@ -11,9 +11,11 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import AccountingRecommendationDialog from "@/components/AccountingRecommendationDialog";
 import ServiceIntroductionModal from "@/components/ServiceIntroductionModal";
+import { getFilloutAttributionParameters } from "@/lib/lead-attribution-client";
+import { recordFilloutLeadSubmission } from "@/lib/fillout-lead-client";
 import { getDemaaServiceBySlug, type DemaaService } from "@/lib/service-catalog";
 
 type AccompagnementServicesProps = {
@@ -117,12 +119,25 @@ export default function AccompagnementServices({
   const selectedSlug = searchParams.get("service");
   const selectedConfig = accompagnements.find((item) => item.slug === selectedSlug) ?? null;
   const selectedService = selectedConfig ? getFormService(selectedConfig) : null;
+  const [filloutAttribution, setFilloutAttribution] = useState(
+    () => getFilloutAttributionParameters(),
+  );
   const filloutParameters = useMemo(
-    () => ({ systemName, systemSlug, sector: sectorLabel, source }),
-    [sectorLabel, source, systemName, systemSlug],
+    () => ({
+      ...filloutAttribution,
+      systemName,
+      systemSlug,
+      sector: sectorLabel,
+      source,
+    }),
+    [filloutAttribution, sectorLabel, source, systemName, systemSlug],
   );
 
   function openService(slug: string) {
+    if (slug === "structuration") {
+      setFilloutAttribution(getFilloutAttributionParameters());
+    }
+
     const params = new URLSearchParams(searchParams.toString());
     params.set("service", slug);
     params.set("systemSlug", systemSlug);
@@ -214,6 +229,9 @@ export default function AccompagnementServices({
           parameters={filloutParameters}
           isOpen
           onClose={closeService}
+          onSubmit={(submissionUuid) => {
+            recordFilloutLeadSubmission({ source, submissionUuid, systemSlug });
+          }}
           width={720}
           height={720}
         />

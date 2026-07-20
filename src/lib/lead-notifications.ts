@@ -3,12 +3,21 @@ import "server-only";
 import { escapeSlackMrkdwn } from "@/lib/api-security";
 import type { LeadAttributionRecord } from "@/lib/lead-attribution";
 import { buildAttributionDisplayFields } from "@/lib/lead-attribution-server";
+import { chunkSlackLines } from "@/lib/lead-notification-format";
+import {
+  logOperationalError,
+  logOperationalEvent,
+} from "@/lib/operational-log";
 import type { LeadContext } from "@/lib/lead-context";
 import {
   createLeadRequest,
+  getFailedLeadRequests,
+  markLeadDeliveryAbandoned,
   type LeadContact,
   type LeadDeliveryChannel,
   type LeadField,
+  type LeadNotificationChannel,
+  type StoredLeadRequest,
   updateLeadDeliveryStatus,
 } from "@/lib/lead-storage";
 import { syncResendLeadContact } from "@/lib/resend-audience";
@@ -25,6 +34,7 @@ type LeadSubmission = {
   context: LeadContext;
   emoji: string;
   fields?: LeadField[];
+  idempotencyKey?: string | null;
   requestType: string;
   title: string;
 };
@@ -64,6 +74,33 @@ function buildTitle(input: LeadSubmission) {
   return input.context.sectorLabel
     ? `[${input.context.sectorLabel}] ${input.title}`
     : input.title;
+}
+
+function buildSlackBlocks(input: LeadSubmission, leadId: string, retry = false) {
+  const lines = [
+    `*${escapeSlackMrkdwn(buildTitle(input))}*`,
+    ...buildDisplayFields(input).map(
+      (field) =>
+        `*${escapeSlackMrkdwn(field.label)}* : ${escapeSlackMrkdwn(field.value ?? "")}`,
+    ),
+  ];
+  const sections = chunkSlackLines(lines);
+
+  return [
+    ...sections.slice(0, 48).map((text) => ({
+      type: "section",
+      text: { type: "mrkdwn", text },
+    })),
+    {
+      type: "context",
+      elements: [{
+        type: "mrkdwn",
+        text: retry
+          ? `Référence ${escapeSlackMrkdwn(leadId)} · nouvelle tentative automatique`
+          : `Référence ${escapeSlackMrkdwn(leadId)} · ${new Date().toLocaleString("fr-FR", { timeZone: "Europe/Paris" })}`,
+      }],
+    },
+  ];
 }
 
 async function sendInternalLeadEmail(input: LeadSubmission, leadId: string) {
@@ -106,8 +143,8 @@ async function sendInternalLeadEmail(input: LeadSubmission, leadId: string) {
   }
 }
 
-async function deliverChannel(input: {
-  channel: LeadDeliveryChannel;
+async function deliverChannel<TChannel extends LeadDeliveryChannel>(input: {
+  channel: TChannel;
   leadId: string;
   operation: () => Promise<unknown>;
 }) {
@@ -121,30 +158,55 @@ async function deliverChannel(input: {
     return { channel: input.channel, status: "sent" as const };
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown delivery error";
-    console.error(`[lead-notifications] ${input.channel} failed for ${input.leadId}:`, message);
+    logOperationalError("lead.delivery.failed", error, {
+      channel: input.channel,
+      leadId: input.leadId,
+    });
     await updateLeadDeliveryStatus({
       channel: input.channel,
       error: message,
       leadId: input.leadId,
       status: "failed",
     }).catch((statusError) => {
-      console.error(`[lead-notifications] Unable to persist ${input.channel} failure for ${input.leadId}:`, statusError);
+      logOperationalError("lead.delivery_status.failed", statusError, {
+        channel: input.channel,
+        leadId: input.leadId,
+      });
     });
     return { channel: input.channel, status: "failed" as const };
   }
 }
 
 export async function submitLeadRequest(input: LeadSubmission) {
-  const fields = buildDisplayFields(input);
   const lead = await createLeadRequest({
     attribution: input.attribution,
     channels: input.channels,
     contact: input.contact,
     context: input.context,
     fields: input.fields ?? [],
+    idempotencyKey: input.idempotencyKey,
+    emoji: input.emoji,
     requestType: input.requestType,
     title: input.title,
   });
+
+  if (!lead.created) {
+    logOperationalEvent("lead.duplicate", {
+      leadId: lead.id,
+      requestId: input.attribution.conversion.request_id,
+      requestType: input.requestType,
+      systemSlug: input.context.systemSlug,
+    });
+    return { duplicate: true, leadId: lead.id, deliveries: [] };
+  }
+
+  logOperationalEvent("lead.created", {
+    leadId: lead.id,
+    requestId: input.attribution.conversion.request_id,
+    requestType: input.requestType,
+    systemSlug: input.context.systemSlug,
+  });
+
   const deliveries: Array<Promise<{ channel: LeadDeliveryChannel; status: "failed" | "sent" }>> = [];
 
   if (input.channels.slack) {
@@ -153,22 +215,7 @@ export async function submitLeadRequest(input: LeadSubmission) {
       leadId: lead.id,
       operation: () => sendSlackMessage({
         text: `${input.emoji} ${buildTitle(input)}`,
-        blocks: [
-          {
-            type: "section",
-            text: {
-              type: "mrkdwn",
-              text: `*${escapeSlackMrkdwn(buildTitle(input))}*\n${fields.map((field) => `*${escapeSlackMrkdwn(field.label)}* : ${escapeSlackMrkdwn(field.value ?? "")}`).join("\n")}`,
-            },
-          },
-          {
-            type: "context",
-            elements: [{
-              type: "mrkdwn",
-              text: `Référence ${escapeSlackMrkdwn(lead.id)} · ${new Date().toLocaleString("fr-FR", { timeZone: "Europe/Paris" })}`,
-            }],
-          },
-        ],
+        blocks: buildSlackBlocks(input, lead.id),
       }),
     }));
   }
@@ -186,15 +233,128 @@ export async function submitLeadRequest(input: LeadSubmission) {
       channel: "resend",
       leadId: lead.id,
       operation: () => syncResendLeadContact({
-        context: input.context,
         email: input.contact.email ?? "",
         firstName: input.contact.firstName ?? input.contact.name,
         lastName: input.contact.lastName,
-        requestType: input.requestType,
       }),
     }));
   }
 
   const results = await Promise.all(deliveries);
-  return { leadId: lead.id, deliveries: results };
+  logOperationalEvent("lead.deliveries.completed", {
+    failed: results.filter((result) => result.status === "failed").length,
+    leadId: lead.id,
+    sent: results.filter((result) => result.status === "sent").length,
+  });
+  return { duplicate: false, leadId: lead.id, deliveries: results };
+}
+
+function rebuildLeadSubmission(data: StoredLeadRequest): LeadSubmission {
+  return {
+    attribution: data.attribution,
+    channels: {
+      email: data.notification_status.email.status !== "skipped",
+      resend: data.notification_status.resend.status !== "skipped",
+      slack: data.notification_status.slack.status !== "skipped",
+    },
+    contact: {
+      company: data.contact.company,
+      email: data.contact.email,
+      firstName: data.contact.first_name,
+      lastName: data.contact.last_name,
+      name: data.contact.name,
+      phone: data.contact.phone,
+    },
+    context: {
+      sectorLabel: data.context.sector_label,
+      sectorSlug: data.context.sector_slug,
+      source: data.context.source,
+      sourceUrl: data.context.source_url,
+      systemName: data.context.system_name,
+      systemSlug: data.context.system_slug,
+    },
+    emoji: data.emoji || "📬",
+    fields: data.fields,
+    requestType: data.request_type,
+    title: data.title,
+  };
+}
+
+export async function retryFailedLeadDeliveries(limit = 30) {
+  const failedLeads = await getFailedLeadRequests(limit);
+  const now = Date.now();
+  const results: Array<{
+    channel: LeadNotificationChannel;
+    status: "failed" | "sent";
+  }> = [];
+
+  for (const lead of failedLeads) {
+    const input = rebuildLeadSubmission(lead.data);
+
+    for (const channel of ["email", "resend", "slack"] as const) {
+      const delivery = lead.data.notification_status[channel];
+      const attemptCount = delivery.attempt_count ?? 1;
+      const retryAt = delivery.next_retry_at
+        ? Date.parse(delivery.next_retry_at)
+        : 0;
+
+      if (
+        delivery.status !== "failed" ||
+        (Number.isFinite(retryAt) && retryAt > now)
+      ) {
+        continue;
+      }
+
+      if (attemptCount >= 4) {
+        await markLeadDeliveryAbandoned({ channel, leadId: lead.id });
+        logOperationalEvent("lead.delivery.abandoned", {
+          channel,
+          leadId: lead.id,
+        });
+        continue;
+      }
+
+      let result: { channel: LeadNotificationChannel; status: "failed" | "sent" } | null = null;
+
+      if (channel === "email") {
+        result = await deliverChannel({
+          channel,
+          leadId: lead.id,
+          operation: () => sendInternalLeadEmail(input, lead.id),
+        });
+      } else if (channel === "resend" && input.contact.email) {
+        result = await deliverChannel({
+          channel,
+          leadId: lead.id,
+          operation: () => syncResendLeadContact({
+            email: input.contact.email ?? "",
+            firstName: input.contact.firstName ?? input.contact.name,
+            lastName: input.contact.lastName,
+          }),
+        });
+      } else if (channel === "slack") {
+        result = await deliverChannel({
+          channel,
+          leadId: lead.id,
+          operation: () => sendSlackMessage({
+            text: `${input.emoji} ${buildTitle(input)}`,
+            blocks: buildSlackBlocks(input, lead.id, true),
+          }),
+        });
+      }
+
+      if (result) {
+        results.push(result);
+        if (result.status === "failed" && attemptCount >= 3) {
+          await markLeadDeliveryAbandoned({ channel, leadId: lead.id });
+          logOperationalEvent("lead.delivery.abandoned", {
+            channel,
+            leadId: lead.id,
+          });
+        }
+      }
+    }
+  }
+
+  return results;
 }

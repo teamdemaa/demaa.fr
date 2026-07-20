@@ -6,6 +6,10 @@ import {
   getLeadAttributionPayload,
   trackLeadConversion,
 } from "@/lib/lead-attribution-client";
+import {
+  clearLeadSubmissionKey,
+  getLeadSubmissionKey,
+} from "@/lib/lead-submission-client";
 import type { DemaaService } from "@/lib/service-catalog";
 
 type ServiceIntroductionModalProps = {
@@ -21,6 +25,7 @@ const INITIAL_FORM = {
   email: "",
   company: "",
   details: "",
+  website: "",
 };
 
 export default function ServiceIntroductionModal({
@@ -62,12 +67,15 @@ export default function ServiceIntroductionModal({
 
     try {
       setIsSubmitting(true);
+      const flowKey = `service:${service.slug}:${systemSlug || "none"}`;
+      const idempotencyKey = getLeadSubmissionKey(flowKey);
       const response = await fetch("/api/service-introduction-request", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...formData,
           attribution: getLeadAttributionPayload(),
+          idempotencyKey,
           serviceName: service.name,
           serviceSlug: service.slug,
           source,
@@ -86,6 +94,7 @@ export default function ServiceIntroductionModal({
         );
       }
 
+      clearLeadSubmissionKey(flowKey);
       setSuccessMessage("Demande envoyée. On vous recontacte rapidement.");
       trackLeadConversion({
         requestType: "service_introduction",
@@ -170,6 +179,15 @@ export default function ServiceIntroductionModal({
               placeholder="Votre besoin ou contexte"
               rows={4}
               className="demaa-textarea"
+            />
+            <input
+              type="text"
+              value={formData.website}
+              onChange={(event) => handleChange("website", event)}
+              tabIndex={-1}
+              autoComplete="off"
+              className="hidden"
+              aria-hidden="true"
             />
 
             {error ? <p className="text-sm text-dema-forest">{error}</p> : null}

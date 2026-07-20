@@ -6,6 +6,10 @@ import {
   getLeadAttributionPayload,
   trackLeadConversion,
 } from "@/lib/lead-attribution-client";
+import {
+  clearLeadSubmissionKey,
+  getLeadSubmissionKey,
+} from "@/lib/lead-submission-client";
 import type { SystemeDetail } from "@/lib/systeme-catalog";
 
 type SystemCompleteModalProps = {
@@ -23,6 +27,7 @@ export default function SystemCompleteModal({
 }: SystemCompleteModalProps) {
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
+  const [website, setWebsite] = useState("");
   const [copyUrl, setCopyUrl] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -52,6 +57,8 @@ export default function SystemCompleteModal({
     setError(null);
 
     try {
+      const flowKey = `system-kit:${systemSlug}`;
+      const idempotencyKey = getLeadSubmissionKey(flowKey);
       const response = await fetch("/api/systeme-kit/request", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -59,8 +66,10 @@ export default function SystemCompleteModal({
           attribution: getLeadAttributionPayload(),
           email,
           firstName,
+          idempotencyKey,
           sectorName: systemName,
           sectorSlug: systemSlug,
+          website,
         }),
       });
       const payload = (await response.json().catch(() => null)) as
@@ -71,6 +80,7 @@ export default function SystemCompleteModal({
         throw new Error(payload?.error || "Impossible d’envoyer le kit pour le moment.");
       }
 
+      clearLeadSubmissionKey(flowKey);
       setCopyUrl(payload.copyUrl);
       trackLeadConversion({
         requestType: "system_kit_request",
@@ -167,6 +177,15 @@ export default function SystemCompleteModal({
             onChange={(event) => setEmail(event.target.value)}
             autoComplete="email"
             required
+          />
+          <input
+            type="text"
+            value={website}
+            onChange={(event) => setWebsite(event.target.value)}
+            tabIndex={-1}
+            autoComplete="off"
+            className="hidden"
+            aria-hidden="true"
           />
 
           {error ? <p className="text-sm text-brand-coral">{error}</p> : null}
