@@ -100,7 +100,7 @@
         "Process",
         "Projet"
       ],
-      "bestFor": "Créer un mini système interne sans logiciel métier lourd.",
+      "bestFor": "Créer un mini outil interne sans logiciel métier lourd.",
       "pricingHint": "Freemium",
       "keyFeatures": [
         "Documents et notes",
@@ -1932,7 +1932,7 @@
         "Stock",
         "Facturation"
       ],
-      "bestFor": "Centraliser plusieurs briques métier dans un seul système.",
+      "bestFor": "Centraliser plusieurs briques métier dans un seul outil.",
       "pricingHint": "Freemium",
       "keyFeatures": [
         "CRM",
@@ -5594,7 +5594,7 @@
       "sectors": [
         "Hébergement & tourisme"
       ],
-    "description": "Système de réservation pour activités de loisirs, visites, expériences et tourisme.",
+    "description": "Outil de réservation pour activités de loisirs, visites, expériences et tourisme.",
     "tags": [
       "Tourisme",
       "Booking",
@@ -5602,7 +5602,7 @@
     ],
     "bestFor": "Vendre et organiser des activités touristiques ou loisirs.",
     "keyFeatures": [
-      "Système de réservation tout-en-un pour tours et activités",
+      "Réservation tout-en-un pour tours et activités",
       "Vente en ligne de billets et gestion des réservations",
       "Site web, marketing et pilotage des canaux de vente"
     ],
@@ -7886,7 +7886,7 @@
       "sectors": [
         "Services aux particuliers"
       ],
-      "description": "Système de gestion à distance pour laveries automatiques, machines, séchoirs et centrales.",
+      "description": "Outil de gestion à distance pour laveries automatiques, machines, séchoirs et centrales.",
       "tags": [
         "Laverie",
         "Gestion à distance",

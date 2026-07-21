@@ -80,7 +80,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
       "studio-branding-design",
     ],
     highlights: [
-      { label: "Voir le modele organisation", href: "/modeles-de-documents/systeme-operationnel" },
+      { label: "Voir le modele organisation", href: "/modeles-de-documents/pilotage-marketing-vente" },
       { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Conseil & services aux entreprises") },
     ],
   }),
@@ -109,7 +109,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
       "photographe-videaste",
     ],
     highlights: [
-      { label: "Voir le modele organisation", href: "/modeles-de-documents/systeme-operationnel" },
+      { label: "Voir le modele organisation", href: "/modeles-de-documents/pilotage-marketing-vente" },
       { label: "Voir les services acquisition", href: "/annuaire-services" },
       { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Tech & Digital") },
     ],
@@ -171,7 +171,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
       "marchand-de-biens",
     ],
     highlights: [
-      { label: "Voir le modele organisation", href: "/modeles-de-documents/systeme-operationnel" },
+      { label: "Voir le modele organisation", href: "/modeles-de-documents/pilotage-marketing-vente" },
       { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Immobilier") },
       { label: "Voir les services utiles", href: "/annuaire-services" },
     ],
@@ -347,7 +347,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
       "laverie-automatique",
     ],
     highlights: [
-      { label: "Voir le modele organisation", href: "/modeles-de-documents/systeme-operationnel" },
+      { label: "Voir le modele organisation", href: "/modeles-de-documents/pilotage-marketing-vente" },
       { label: "Voir les services utiles", href: "/annuaire-services" },
       { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Services aux particuliers") },
     ],
@@ -432,7 +432,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
       "association",
     ],
     highlights: [
-      { label: "Voir le modele organisation", href: "/modeles-de-documents/systeme-operationnel" },
+      { label: "Voir le modele organisation", href: "/modeles-de-documents/pilotage-marketing-vente" },
       { label: "Voir les services utiles", href: "/annuaire-services" },
       { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Associations & événements") },
     ],

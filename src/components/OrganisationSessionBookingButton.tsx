@@ -6,17 +6,17 @@ import { useMemo, useState } from "react";
 import { getFilloutAttributionParameters } from "@/lib/lead-attribution-client";
 import { recordFilloutLeadSubmission } from "@/lib/fillout-lead-client";
 
-type OrganisationAuditBookingButtonProps = {
+type OrganisationSessionBookingButtonProps = {
   className?: string;
   label?: string;
   source?: string;
 };
 
-export default function OrganisationAuditBookingButton({
+export default function OrganisationSessionBookingButton({
   className = "demaa-primary-button mt-5 w-fit",
-  label = "Prendre RDV",
-  source = "Page diagnostic organisation",
-}: OrganisationAuditBookingButtonProps) {
+  label = "Réserver ma session",
+  source = "Page session d’organisation",
+}: OrganisationSessionBookingButtonProps) {
   const searchParams = useSearchParams();
   const [isOpen, setIsOpen] = useState(searchParams.get("booking") === "1");
   const [filloutAttribution, setFilloutAttribution] = useState(

@@ -367,9 +367,9 @@ Ce modèle est particulièrement utile si vous voulez :
     featuredRank: 1,
   },
   {
-    slug: "systeme-operationnel",
-    title: "Système Marketing & Vente",
-    seoTitle: "Système Marketing & Vente pour TPE | Modèle Airtable Demaa",
+    slug: "pilotage-marketing-vente",
+    title: "Tableau de pilotage Marketing & Vente",
+    seoTitle: "Tableau de pilotage Marketing & Vente pour TPE | Modèle Airtable Demaa",
     description:
       "Une base Airtable pour structurer votre pipeline commercial, vos relances et le suivi des conversions.",
     seoDescription:
@@ -416,7 +416,7 @@ Ce modèle est particulièrement utile si vous voulez :
     ctaHref: "https://airtable.com/app3fRlYVjiFAnrjW/shraiL72hO4EvQoh2",
     tags: ["modele", "marketing", "vente", "pipeline", "airtable"],
     relatedSystemSlugs:
-      RELATED_SYSTEM_SLUGS_BY_CONTENT_SLUG["systeme-operationnel"] ??
+      RELATED_SYSTEM_SLUGS_BY_CONTENT_SLUG["pilotage-marketing-vente"] ??
       [],
     featuredRank: 2,
   },

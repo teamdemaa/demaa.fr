@@ -530,7 +530,7 @@ const SANTE_BIEN_ETRE_ROWS: SystemeTemplateRow[] = [
   { pillar: "Direction", process: "Garder une visibilité sans reprendre la main", document: "Point de pilotage mensuel" },
   { pillar: "Marketing et Vente", process: "Attirer les clients", document: "Calendrier de publication" },
   { pillar: "Marketing et Vente", process: "Vendre (offre de prestation claire)", document: "Fiche offre & argumentaire (grille tarifaire)" },
-  { pillar: "Marketing et Vente", process: "Gérer les rendez-vous, fidéliser", document: "Système de réservation + Relance no-show" },
+  { pillar: "Marketing et Vente", process: "Gérer les rendez-vous, fidéliser", document: "Réservation + Relance no-show" },
   { pillar: "Marketing et Vente", process: "Traiter une réclamation client", document: "Trame de traitement des réclamations" },
   { pillar: "Opérations", process: "Ouvrir et fermer l'établissement", document: "Checklist ouverture/fermeture" },
   { pillar: "Opérations", process: "Standardiser une prestation", document: "Fiches process par prestation" },

@@ -44,19 +44,19 @@ const organisationSignals = [
 
 const organisationSteps = [
   {
-    title: "On fait le point sur votre organisation",
+    title: "On choisit le process prioritaire",
     description:
-      "On identifie les tâches répétitives, les outils, les documents, les validations et les points de friction.",
+      "On repère le process qui vous fait perdre le plus de temps ou qui dépend encore trop de vous.",
   },
   {
-    title: "On repère les priorités à traiter",
+    title: "On cadre les tâches utiles",
     description:
-      "On voit ce qui bloque vraiment, ce qui dépend trop de vous et ce qui mérite d'être structuré en premier.",
+      "On commence à lister les étapes concrètes à conserver, simplifier, répartir ou compléter dans votre tableau.",
   },
   {
-    title: "On vous oriente vers la suite utile",
+    title: "On fixe le responsable et la récurrence",
     description:
-      "Vous repartez avec une lecture claire des besoins. Si nécessaire, vous pourrez ensuite choisir le bon service à lancer.",
+      "Vous repartez avec une première base exploitable et la prochaine action à poursuivre après la session.",
   },
 ] as const;
 
@@ -70,56 +70,51 @@ const organisationPillars = [
 
 const organisationFaq = [
   {
-    question: "Est-ce que le diagnostic offert m'engage à acheter quelque chose ?",
+    question: "Est-ce que la session offerte m'engage à acheter quelque chose ?",
     answer:
-      "Non. Le diagnostic sert à faire le point sur votre organisation et à clarifier vos besoins. Vous décidez ensuite librement de la suite.",
+      "Non. La session sert à vous aider à démarrer votre kit. Vous décidez ensuite librement de la suite.",
   },
   {
-    question: "Qu'est-ce que vous regardez pendant le diagnostic ?",
+    question: "Que faisons-nous pendant la session ?",
     answer:
-      "On regarde les tâches répétitives, les outils, les documents, les validations, les zones de flou et les sujets qui vous font perdre du temps au quotidien.",
+      "Nous choisissons un process prioritaire, puis nous commençons à cadrer ses tâches, son responsable et sa récurrence dans votre tableau.",
   },
   {
-    question: "Est-ce utile si mon activité est encore très manuelle ?",
+    question: "Est-ce que 30 minutes suffisent ?",
     answer:
-      "Oui. Le but n'est pas de forcer une solution technique, mais d'identifier ce qui doit d'abord être clarifié, structuré ou mieux réparti.",
+      "Oui pour démarrer proprement un process prioritaire. La session n’a pas vocation à compléter l’intégralité du kit en une seule fois.",
   },
   {
     question: "Qu'est-ce que je récupère à la fin ?",
     answer:
-      "Vous repartez avec un regard extérieur, des priorités plus claires et une lecture concrète des actions ou services utiles pour la suite.",
-  },
-  {
-    question: "Quel gain peut-on espérer ?",
-    answer:
-      "En général, ce type de travail permet d'identifier 20 à 30 % de temps récupérable sur les routines qui encombrent le quotidien.",
+      "Vous repartez avec un process choisi, une première liste de tâches, un responsable, une récurrence et une prochaine action claire.",
   },
 ] as const;
 
 const organisationKeyFacts = [
   {
     label: "Offert",
-    title: "Premier diagnostic",
+    title: "Session d’organisation",
     description:
-      "Le diagnostic sert à faire le point sur votre organisation avant de décider quoi lancer ensuite.",
+      "Un premier temps de travail pour commencer à adapter le kit à votre entreprise.",
   },
   {
-    label: "Sans engagement",
-    title: "Vous choisissez la suite",
+    label: "Durée",
+    title: "30 minutes",
     description:
-      "Vous repartez avec une lecture plus claire, sans obligation d'acheter un service derrière.",
+      "Un format volontairement court, centré sur un seul process prioritaire.",
   },
   {
     label: "Résultat attendu",
-    title: "Priorités plus lisibles",
+    title: "Une première base exploitable",
     description:
-      "On repère ce qui bloque le plus, ce qui dépend trop de vous et ce qu'il faut traiter d'abord.",
+      "Les tâches, le responsable, la récurrence et la prochaine action commencent à être cadrés.",
   },
   {
-    label: "Repère de gain",
-    title: "20 à 30 % de temps",
+    label: "Sans engagement",
+    title: "Vous gardez la main",
     description:
-      "C'est souvent le volume de temps récupérable qu'on arrive à identifier sur les routines qui encombrent le quotidien.",
+      "La session vous aide à démarrer sans vous engager sur un accompagnement supplémentaire.",
   },
 ] as const;
 
@@ -333,8 +328,8 @@ function OrganisationExpandedContent({
     ? systeme.cards.map((card) => card.pillar)
     : organisationPillars;
   const contextualTitle = systemName
-    ? `Les grands piliers analysés pour ${withArticle(systemName)}`
-    : "Ce qui va être analysé";
+    ? `Les catégories du kit à parcourir pour ${withArticle(systemName)}`
+    : "Les catégories que nous pouvons parcourir";
 
   return (
     <div className={sectionGap}>
@@ -366,7 +361,7 @@ function OrganisationExpandedContent({
 
       <section className={sectionClass}>
         <h3 className="text-xl font-semibold tracking-tight text-brand-blue md:text-2xl">
-          Comment ça se passe concrètement
+          Comment se déroule la session
         </h3>
         <div className="mt-6 grid gap-4 md:grid-cols-3">
           {organisationSteps.map((step, index) => (
@@ -414,7 +409,7 @@ function OrganisationExpandedContent({
       {variant === "page" ? (
         <section className={sectionClass}>
           <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
-            Infos clés du diagnostic
+            Infos clés de la session
           </p>
           <h3 className="mt-2 text-xl font-semibold tracking-tight text-brand-blue md:text-2xl">
             Ce que vous devez savoir avant de le demander

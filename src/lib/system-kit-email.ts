@@ -20,7 +20,7 @@ type ResendEmailPayload = {
   text: string;
 };
 
-type SystemKitFollowupKind = "usage" | "diagnostic";
+type SystemKitFollowupKind = "usage" | "session";
 
 function renderSystemKitEmailLayout(input: {
   eyebrow: string;
@@ -158,7 +158,7 @@ function renderSystemKitFollowupEmail(input: {
   firstName: string;
   systemName: string;
   kitUrl: string;
-  diagnosticUrl: string;
+  sessionUrl: string;
   kind: SystemKitFollowupKind;
 }) {
   if (input.kind === "usage") {
@@ -188,17 +188,17 @@ function renderSystemKitFollowupEmail(input: {
   }
 
   return renderSystemKitEmailLayout({
-    eyebrow: "Diagnostic offert",
-    title: "On peut vous offrir un premier diagnostic",
+    eyebrow: "Session d’organisation offerte",
+    title: "Besoin d’aide pour démarrer votre kit ?",
     greeting: input.firstName ? `Bonjour ${input.firstName},` : "Bonjour,",
     paragraphs: [
-      "Si vous avez parcouru le kit mais que vous ne savez pas encore par où commencer, on peut vous aider avec un diagnostic organisation offert.",
-      "L’objectif est de repérer ce qui repose trop sur vous, ce qui freine l’activité, et ce qu’il faudrait clarifier ou déléguer en premier.",
-      "Ce n’est pas un engagement. C’est un premier point simple pour vous aider à voir plus clair.",
+      "Si vous avez parcouru le kit mais que vous ne savez pas encore par où commencer, réservez votre session d’organisation offerte.",
+      "En 30 minutes, nous choisissons ensemble un process prioritaire, puis nous clarifions ses tâches, son responsable et sa récurrence.",
+      "Vous repartez avec une première base exploitable, sans engagement.",
     ],
     button: {
-      href: input.diagnosticUrl,
-      label: "Demander le diagnostic offert",
+      href: input.sessionUrl,
+      label: "Réserver ma session",
     },
     linkNotice: "Si le bouton ne fonctionne pas, copiez-collez ce lien dans votre navigateur :",
   });
@@ -275,7 +275,7 @@ function renderSystemKitFollowupText(input: {
   firstName: string;
   systemName: string;
   kitUrl: string;
-  diagnosticUrl: string;
+  sessionUrl: string;
 }) {
   if (input.kind === "usage") {
     return [
@@ -294,10 +294,10 @@ function renderSystemKitFollowupText(input: {
   return [
     `Bonjour ${input.firstName || ""}`.trim() + ",",
     "",
-    "Si vous avez parcouru le kit mais que vous ne savez pas encore par où commencer, on peut vous aider avec un diagnostic organisation offert.",
-    "L’objectif est de repérer ce qui repose trop sur vous, ce qui freine l’activité, et ce qu’il faudrait clarifier ou déléguer en premier.",
+    "Si vous avez parcouru le kit mais que vous ne savez pas encore par où commencer, réservez votre session d’organisation offerte.",
+    "En 30 minutes, nous choisissons ensemble un process prioritaire, puis nous clarifions ses tâches, son responsable et sa récurrence.",
     "",
-    `Demander le diagnostic offert : ${input.diagnosticUrl}`,
+    `Réserver ma session : ${input.sessionUrl}`,
   ].join("\n");
 }
 
@@ -363,13 +363,13 @@ export async function sendSystemKitFollowupEmail(input: {
   const kitUrl =
     getPilotingSheetCopyUrl(input.systemSlug) ??
     `${getCanonicalOrigin()}/kit-operationnel/${encodeURIComponent(input.systemSlug)}`;
-  const diagnosticUrl =
+  const sessionUrl =
     `${getCanonicalOrigin()}/annuaire-services/organisation?booking=1` +
     `&source=kit-followup&systemSlug=${encodeURIComponent(input.systemSlug)}`;
   const subject =
     input.kind === "usage"
       ? "Comment utiliser votre kit opérationnel concrètement"
-      : "On peut vous offrir un premier diagnostic";
+      : "Besoin d’aide pour démarrer votre kit ?";
 
   return sendResendEmail({
     apiKey,
@@ -384,14 +384,14 @@ export async function sendSystemKitFollowupEmail(input: {
         firstName: input.firstName,
         systemName: input.systemName,
         kitUrl,
-        diagnosticUrl,
+        sessionUrl,
         kind: input.kind,
       }),
       text: renderSystemKitFollowupText({
         firstName: input.firstName,
         systemName: input.systemName,
         kitUrl,
-        diagnosticUrl,
+        sessionUrl,
         kind: input.kind,
       }),
     },

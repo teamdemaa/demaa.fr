@@ -45,7 +45,7 @@ async function handleGet(request: Request) {
       continue;
     }
 
-    const kind = subscriber.sequenceStep === 1 ? "usage" : "diagnostic";
+    const kind = subscriber.sequenceStep === 1 ? "usage" : "session";
     const emailResult = await sendSystemKitFollowupEmail({
       email: subscriber.email,
       firstName: subscriber.firstName,

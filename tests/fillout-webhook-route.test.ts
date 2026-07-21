@@ -75,7 +75,14 @@ describe("Fillout webhook route", () => {
     expect(body).toMatchObject({ ok: true, leadId: "lead_123", duplicate: false });
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
       idempotencyKey: "fillout:sub_route_12345",
-      requestType: "organisation_audit_booking",
+      requestType: "organisation_session_booking",
+      title: "Session d’organisation — formulaire envoyé",
+      fields: expect.arrayContaining([
+        expect.objectContaining({
+          label: "Formulaire",
+          value: "Session d’organisation (Fillout)",
+        }),
+      ]),
       contact: expect.objectContaining({ email: "lead@example.com" }),
       context: expect.objectContaining({ systemSlug: "freelance" }),
     }));

@@ -72,7 +72,7 @@ export default function MentionsLegalesPage() {
 
       <LegalSection title="3. Activité du site">
             <p>
-              Demaa.fr propose des contenus, outils gratuits, ressources, formulaires de contact, demandes d&apos;audit, demandes d&apos;automatisation et accompagnements autour de l&apos;organisation, de l&apos;automatisation et des systèmes business.
+              Demaa.fr propose des contenus, outils gratuits, ressources, formulaires de contact, sessions d&apos;organisation et accompagnements autour de l&apos;organisation, des process et de l&apos;automatisation.
             </p>
             <p>
               Les informations publiées sur le site sont fournies à titre informatif. Elles ne constituent pas un conseil juridique, fiscal, comptable ou financier individualisé.

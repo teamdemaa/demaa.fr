@@ -925,6 +925,15 @@ export default function SystemDetailContent({
         <p className="mt-3 max-w-2xl text-sm leading-6 text-dema-muted">
           {intro}
         </p>
+        {activeTab === null ? (
+          <Link
+            href={`/annuaire-services/organisation?source=kit-operationnel&systemSlug=${encodeURIComponent(system.slug)}`}
+            scroll={false}
+            className="demaa-secondary-button mt-5 inline-flex min-h-10 items-center justify-center px-4 py-2 text-sm"
+          >
+            Session d’organisation offerte
+          </Link>
+        ) : null}
       </div>
 
       {activeTab === null ? (

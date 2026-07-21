@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import ServiceExpandedContent from "@/components/ServiceExpandedContent";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import ServiceRequestCta from "@/components/ServiceRequestCta";
-import OrganisationAuditBookingButton from "@/components/OrganisationAuditBookingButton";
+import OrganisationSessionBookingButton from "@/components/OrganisationSessionBookingButton";
 import { hasExpandedServiceContent } from "@/lib/service-expanded-content";
 import { type DemaaService } from "@/lib/service-catalog";
 
@@ -23,7 +23,7 @@ export default function ServiceDetailDialog({
   const router = useRouter();
   const closeDialog = onClose ?? (() => router.back());
   const hasExpandedContent = hasExpandedServiceContent(service.slug);
-  const isOrganisationAutomation = service.slug === "organisation-automatisation";
+  const isOrganisationSession = service.slug === "organisation-automatisation";
   const isBillingAssistant = service.slug === "assistante-facturation";
 
   return (
@@ -71,11 +71,11 @@ export default function ServiceDetailDialog({
             <p className="max-w-3xl text-[1.02rem] leading-relaxed text-dema-muted sm:text-[1.08rem] md:text-[1.15rem]">
               {service.description}
             </p>
-            {isOrganisationAutomation ? (
-              <OrganisationAuditBookingButton source={source} />
+            {isOrganisationSession ? (
+              <OrganisationSessionBookingButton source={source} />
             ) : null}
 
-            {!isOrganisationAutomation ? (
+            {!isOrganisationSession ? (
               <div className="mt-8 space-y-6">
                 <section className="rounded-[1.05rem] border border-dema-line bg-dema-paper p-4 sm:rounded-[1.15rem] sm:p-5">
                   <h3 className="text-[1.35rem] font-semibold text-brand-blue md:text-[1.55rem]">Ce qui est inclus</h3>
@@ -114,7 +114,7 @@ export default function ServiceDetailDialog({
               </div>
             ) : null}
 
-            <div className={isOrganisationAutomation ? "mt-16" : "mt-8"}>
+            <div className={isOrganisationSession ? "mt-16" : "mt-8"}>
               <ServiceExpandedContent serviceSlug={service.slug} variant="modal" />
             </div>
           </div>

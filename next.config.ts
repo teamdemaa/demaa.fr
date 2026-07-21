@@ -179,12 +179,22 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/ressources/systeme-operationnel-airtable',
-        destination: '/modeles-de-documents/systeme-operationnel',
+        destination: '/modeles-de-documents/pilotage-marketing-vente',
         permanent: true,
       },
       {
         source: '/ressources/systeme-operationnel-template',
-        destination: '/modeles-de-documents/systeme-operationnel',
+        destination: '/modeles-de-documents/pilotage-marketing-vente',
+        permanent: true,
+      },
+      {
+        source: '/modeles-de-documents/systeme-operationnel',
+        destination: '/modeles-de-documents/pilotage-marketing-vente',
+        permanent: true,
+      },
+      {
+        source: '/cours/systeme-marketing-vente',
+        destination: '/cours/organisation-marketing-vente',
         permanent: true,
       },
     ];

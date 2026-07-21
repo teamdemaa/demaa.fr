@@ -109,7 +109,7 @@ const demaaRecruitmentItems = [
     description:
       "Espace recruteur HelloWork pour diffuser des offres, recevoir des candidatures et toucher une audience large sur plusieurs univers métiers.",
     bestFor:
-      "Les TPE et PME qui veulent diffuser une offre sans monter un système de recrutement complexe.",
+      "Les TPE et PME qui veulent diffuser une offre sans monter un process de recrutement complexe.",
     tags: ["Job board", "Offres d'emploi", "Candidatures"],
     icon: "Search",
     usefulFor: ["Diffusion d'offre", "Visibilité", "Sourcing"],
