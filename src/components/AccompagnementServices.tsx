@@ -229,8 +229,8 @@ export default function AccompagnementServices({
           parameters={filloutParameters}
           isOpen
           onClose={closeService}
-          onSubmit={(submissionUuid) => {
-            recordFilloutLeadSubmission({ source, submissionUuid, systemSlug });
+          onSubmit={() => {
+            recordFilloutLeadSubmission({ systemSlug });
           }}
           width={720}
           height={720}

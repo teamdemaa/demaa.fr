@@ -171,6 +171,7 @@ export function buildFilloutAttributionParameters(
   const lastSource = resolveLeadAttributionSource(attribution.lastTouch);
 
   return {
+    dem_analytics_allowed: attribution.consent.analytics ? "true" : "false",
     dem_analytics_consent: attribution.consent.status,
     dem_attribution_version: String(attribution.version),
     dem_first_campaign: firstSource.campaign ?? undefined,
@@ -183,5 +184,6 @@ export function buildFilloutAttributionParameters(
     dem_last_medium: lastSource.medium,
     dem_last_referrer: attribution.lastTouch?.referrerHost ?? undefined,
     dem_last_source: lastSource.source,
+    dem_marketing_allowed: attribution.consent.marketing ? "true" : "false",
   };
 }

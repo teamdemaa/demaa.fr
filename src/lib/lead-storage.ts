@@ -1,13 +1,16 @@
 import "server-only";
 
-import { FieldValue } from "firebase-admin/firestore";
 import { getAdminFirestore } from "@/lib/firebase-admin";
 import type { LeadAttributionRecord } from "@/lib/lead-attribution";
 import type { LeadContext } from "@/lib/lead-context";
 import { buildLeadIdempotencyHash } from "@/lib/lead-idempotency";
+import {
+  getLeadRetryDelayMs,
+  MAX_LEAD_DELIVERY_ATTEMPTS,
+} from "@/lib/lead-retry";
 import { getLeadRetentionExpiry } from "@/lib/operational-maintenance";
 
-export type LeadNotificationChannel = "email" | "resend" | "slack";
+type LeadNotificationChannel = "email" | "resend" | "slack";
 export type LeadDeliveryChannel = LeadNotificationChannel | "kit_email";
 export type LeadDeliveryState = "abandoned" | "failed" | "pending" | "sent" | "skipped";
 
@@ -63,6 +66,7 @@ export type StoredLeadRequest = {
     attempt_count?: number;
     error?: string | null;
     next_retry_at?: string | null;
+    retry_claimed_at?: string | null;
     status: LeadDeliveryState;
   }>;
   request_type: string;
@@ -145,29 +149,40 @@ export async function updateLeadDeliveryStatus(input: {
 }) {
   const database = getAdminFirestore();
   const now = new Date().toISOString();
-  const nextRetryAt = input.status === "failed"
-    ? new Date(Date.now() + 15 * 60 * 1000).toISOString()
-    : null;
+  const leadRef = database.collection("lead_requests").doc(input.leadId);
 
-  await database.collection("lead_requests").doc(input.leadId).update({
-    [`notification_status.${input.channel}.status`]: input.status,
-    [`notification_status.${input.channel}.attempted_at`]: now,
-    [`notification_status.${input.channel}.attempt_count`]: FieldValue.increment(1),
-    [`notification_status.${input.channel}.error`]: input.error?.slice(0, 500) || null,
-    [`notification_status.${input.channel}.next_retry_at`]: nextRetryAt,
-    updated_at: now,
+  await database.runTransaction(async (transaction) => {
+    const snapshot = await transaction.get(leadRef);
+    const data = snapshot.data() as StoredLeadRequest | undefined;
+    const previousAttempts = data?.notification_status?.[input.channel]?.attempt_count ?? 0;
+    const attemptCount = previousAttempts + 1;
+    const retryDelayMs = getLeadRetryDelayMs(attemptCount);
+    const nextRetryAt = input.status === "failed"
+      ? new Date(Date.now() + retryDelayMs).toISOString()
+      : null;
+
+    transaction.update(leadRef, {
+      [`notification_status.${input.channel}.status`]: input.status,
+      [`notification_status.${input.channel}.attempted_at`]: now,
+      [`notification_status.${input.channel}.attempt_count`]: attemptCount,
+      [`notification_status.${input.channel}.error`]: input.error?.slice(0, 500) || null,
+      [`notification_status.${input.channel}.next_retry_at`]: nextRetryAt,
+      [`notification_status.${input.channel}.retry_claimed_at`]: null,
+      updated_at: now,
+    });
   });
 }
 
 export async function getFailedLeadRequests(limit = 30) {
   const database = getAdminFirestore();
-  const channels: LeadNotificationChannel[] = ["email", "resend", "slack"];
+  const channels: LeadDeliveryChannel[] = ["email", "kit_email", "resend", "slack"];
+  const scanLimit = Math.max(100, limit * 10);
   const snapshots = await Promise.all(
     channels.map((channel) =>
       database
         .collection("lead_requests")
         .where(`notification_status.${channel}.status`, "==", "failed")
-        .limit(limit)
+        .limit(scanLimit)
         .get(),
     ),
   );
@@ -180,8 +195,53 @@ export async function getFailedLeadRequests(limit = 30) {
   }
 
   return [...leads.entries()]
+    .sort(([, first], [, second]) => {
+      const firstRetry = Math.min(
+        ...Object.values(first.notification_status)
+          .filter((delivery) => delivery.status === "failed")
+          .map((delivery) => Date.parse(delivery.next_retry_at ?? "") || 0),
+      );
+      const secondRetry = Math.min(
+        ...Object.values(second.notification_status)
+          .filter((delivery) => delivery.status === "failed")
+          .map((delivery) => Date.parse(delivery.next_retry_at ?? "") || 0),
+      );
+      return firstRetry - secondRetry;
+    })
     .slice(0, limit)
     .map(([id, data]) => ({ id, data }));
+}
+
+export async function claimLeadDeliveryRetry(input: {
+  channel: LeadDeliveryChannel;
+  leadId: string;
+}) {
+  const database = getAdminFirestore();
+  const leadRef = database.collection("lead_requests").doc(input.leadId);
+  const now = Date.now();
+
+  return database.runTransaction(async (transaction) => {
+    const snapshot = await transaction.get(leadRef);
+    const data = snapshot.data() as StoredLeadRequest | undefined;
+    const delivery = data?.notification_status?.[input.channel];
+    const retryAt = Date.parse(delivery?.next_retry_at ?? "");
+
+    if (
+      !delivery
+      || delivery.status !== "failed"
+      || (Number.isFinite(retryAt) && retryAt > now)
+      || (delivery.attempt_count ?? 0) >= MAX_LEAD_DELIVERY_ATTEMPTS
+    ) {
+      return false;
+    }
+
+    transaction.update(leadRef, {
+      [`notification_status.${input.channel}.next_retry_at`]: new Date(now + 5 * 60 * 1000).toISOString(),
+      [`notification_status.${input.channel}.retry_claimed_at`]: new Date(now).toISOString(),
+      updated_at: new Date(now).toISOString(),
+    });
+    return true;
+  });
 }
 
 export async function getLeadDeliveryState(
@@ -197,13 +257,14 @@ export async function getLeadDeliveryState(
 }
 
 export async function markLeadDeliveryAbandoned(input: {
-  channel: LeadNotificationChannel;
+  channel: LeadDeliveryChannel;
   leadId: string;
 }) {
   const now = new Date().toISOString();
   await getAdminFirestore().collection("lead_requests").doc(input.leadId).update({
     [`notification_status.${input.channel}.status`]: "abandoned",
     [`notification_status.${input.channel}.next_retry_at`]: null,
+    [`notification_status.${input.channel}.retry_claimed_at`]: null,
     updated_at: now,
   });
 }

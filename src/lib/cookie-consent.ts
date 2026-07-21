@@ -1,5 +1,11 @@
 import "client-only";
 
+import {
+  safeReadBrowserStorage,
+  safeRemoveBrowserStorage,
+  safeWriteBrowserStorage,
+} from "@/lib/browser-storage";
+
 export type CookieConsentPreferences = {
   analytics: boolean;
   marketing: boolean;
@@ -12,6 +18,7 @@ const COOKIE_CONSENT_STORAGE_KEY = "demaa-cookie-consent";
 const COOKIE_CONSENT_EVENT = "demaa-cookie-consent-change";
 
 const CONSENT_LIFETIME_MS = 180 * 24 * 60 * 60 * 1000;
+let memoryConsentSnapshot: string | null = null;
 
 function buildPreferences(analytics: boolean, marketing: boolean): CookieConsentPreferences {
   const now = new Date();
@@ -57,7 +64,10 @@ export function parseCookieConsentSnapshot(
 
 export function readCookieConsentSnapshot() {
   if (typeof window === "undefined") return null;
-  return window.localStorage.getItem(COOKIE_CONSENT_STORAGE_KEY);
+  return safeReadBrowserStorage(
+    () => window.localStorage,
+    COOKIE_CONSENT_STORAGE_KEY,
+  ) ?? memoryConsentSnapshot;
 }
 
 export function getCookieConsentPreferences() {
@@ -69,13 +79,19 @@ export function writeCookieConsentPreferences(input: {
   marketing: boolean;
 }) {
   const preferences = buildPreferences(input.analytics, input.marketing);
-  window.localStorage.setItem(COOKIE_CONSENT_STORAGE_KEY, JSON.stringify(preferences));
+  memoryConsentSnapshot = JSON.stringify(preferences);
+  safeWriteBrowserStorage(
+    () => window.localStorage,
+    COOKIE_CONSENT_STORAGE_KEY,
+    memoryConsentSnapshot,
+  );
   window.dispatchEvent(new Event(COOKIE_CONSENT_EVENT));
   return preferences;
 }
 
 export function clearCookieConsentPreferences() {
-  window.localStorage.removeItem(COOKIE_CONSENT_STORAGE_KEY);
+  memoryConsentSnapshot = null;
+  safeRemoveBrowserStorage(() => window.localStorage, COOKIE_CONSENT_STORAGE_KEY);
   window.dispatchEvent(new Event(COOKIE_CONSENT_EVENT));
 }
 

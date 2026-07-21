@@ -1,6 +1,12 @@
 import { describe, expect, it } from "vitest";
 import { buildLeadIdempotencyHash } from "../src/lib/lead-idempotency";
 import { chunkSlackLines } from "../src/lib/lead-notification-format";
+import { getLeadRetryDelayMs } from "../src/lib/lead-retry";
+import {
+  safeReadBrowserStorage,
+  safeRemoveBrowserStorage,
+  safeWriteBrowserStorage,
+} from "../src/lib/browser-storage";
 
 describe("lead reliability", () => {
   it("builds stable, request-scoped Firestore identifiers", () => {
@@ -22,5 +28,21 @@ describe("lead reliability", () => {
 
     expect(sections.length).toBeGreaterThan(1);
     expect(sections.every((section) => section.length <= 2900)).toBe(true);
+  });
+
+  it("falls back cleanly when browser storage is blocked", () => {
+    const blockedStorage = () => {
+      throw new DOMException("Storage blocked", "SecurityError");
+    };
+
+    expect(safeReadBrowserStorage(blockedStorage, "lead")).toBeNull();
+    expect(safeWriteBrowserStorage(blockedStorage, "lead", "value")).toBe(false);
+    expect(safeRemoveBrowserStorage(blockedStorage, "lead")).toBe(false);
+  });
+
+  it("uses an exponential retry delay capped at 24 hours", () => {
+    expect(getLeadRetryDelayMs(1)).toBe(15 * 60 * 1000);
+    expect(getLeadRetryDelayMs(2)).toBe(30 * 60 * 1000);
+    expect(getLeadRetryDelayMs(20)).toBe(24 * 60 * 60 * 1000);
   });
 });
