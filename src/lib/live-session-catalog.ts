@@ -77,7 +77,7 @@ const liveTrainings = [
   },
   {
     slug: "entreprise-autonome",
-    title: "Rendre son entreprise plus autonome (process & système)",
+    title: "Rendre son entreprise plus autonome (process & organisation)",
     description: "Clarifier les responsabilités et réduire la dépendance au dirigeant.",
     audience: "Dirigeants et responsables d’équipe qui veulent déléguer davantage sans perdre en visibilité.",
     learningGoals: [
@@ -86,10 +86,10 @@ const liveTrainings = [
       "Mettre en place un rythme de délégation et de suivi simple.",
     ],
     includedModels: [
-      "Kit Process & Système adapté à votre activité",
+      "Kit opérationnel adapté à votre activité",
       "Modèles de process, responsabilités et routines de suivi",
     ],
-    qAndA: "Un temps de questions-réponses pour adapter le système à votre organisation.",
+    qAndA: "Un temps de questions-réponses pour adapter les process à votre organisation.",
     duration: "2 h 30",
     unitAmount: 149_00,
     slots: [
@@ -125,7 +125,7 @@ const liveTrainings = [
   },
   {
     slug: "systeme-marketing-vente",
-    title: "Construire un système Marketing & Vente",
+    title: "Organiser son Marketing & Vente",
     description: "Structurer un parcours simple pour attirer, convertir et fidéliser ses clients.",
     audience: "Dirigeants et responsables commerciaux qui souhaitent rendre leur acquisition et leur suivi commercial plus réguliers.",
     learningGoals: [
@@ -134,10 +134,10 @@ const liveTrainings = [
       "Mettre en place un rythme de suivi pour améliorer les résultats.",
     ],
     includedModels: [
-      "Système Marketing & Vente sur Airtable",
+      "Tableau de pilotage Marketing & Vente sur Airtable",
       "Pipeline commercial, relances et suivi des conversions",
     ],
-    qAndA: "Un temps de questions-réponses pour adapter le système à votre cycle de vente.",
+    qAndA: "Un temps de questions-réponses pour adapter le tableau à votre cycle de vente.",
     duration: "2 h 30",
     unitAmount: 250_00,
     slots: [

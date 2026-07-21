@@ -49,17 +49,17 @@ export const trainingFamilies = [
 const demaaTrainings = [
   {
     slug: "formation-organisation-systeme-process",
-    name: "Formation organisation, système et process",
+    name: "Formation organisation et process",
     provider: "Demaa",
     family: "Pilotage d'entreprise",
     category: "Organisation",
     shortDescription:
       "Une formation Demaa en 1 jour pour structurer l'organisation, clarifier les rôles et poser des process afin que l'entreprise ne repose pas uniquement sur le dirigeant.",
     description:
-      "Programme Demaa sur 1 jour pour aider les entreprises à poser une organisation plus stable, formaliser leurs process, clarifier leur système de travail et réduire la dépendance au dirigeant dans l'exécution du quotidien.",
+      "Programme Demaa sur 1 jour pour aider les entreprises à poser une organisation plus stable, formaliser leurs process, clarifier les rôles et réduire la dépendance au dirigeant dans l'exécution du quotidien.",
     bestFor:
       "Les dirigeants de TPE et PME qui veulent rendre leur fonctionnement plus autonome, mieux répartir l'exécution et sortir d'une organisation trop dépendante d'eux.",
-    tags: ["Organisation", "Process", "Système", "Autonomie"],
+    tags: ["Organisation", "Process", "Autonomie", "Délégation"],
     icon: "FolderKanban",
     usefulFor: ["Organisation", "Process", "Autonomie", "Délégation"],
     sectors: [

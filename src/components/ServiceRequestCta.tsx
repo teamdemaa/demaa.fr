@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import OrganisationAuditBookingButton from "@/components/OrganisationAuditBookingButton";
+import OrganisationSessionBookingButton from "@/components/OrganisationSessionBookingButton";
 import ServiceIntroductionModal from "@/components/ServiceIntroductionModal";
 import type { DemaaService } from "@/lib/service-catalog";
 
@@ -20,7 +20,7 @@ function ServiceRequestCtaWithOptions({
 
   if (service.slug === "organisation-automatisation") {
     return (
-      <OrganisationAuditBookingButton
+      <OrganisationSessionBookingButton
         source="Page service"
         className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper transition hover:bg-brand-blue"
       />

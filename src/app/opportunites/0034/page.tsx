@@ -173,7 +173,7 @@ function PanelTitle({ children }: { children: React.ReactNode }) {
 export default function Opportunity0034Page() {
   return (
     <>
-      <Navbar hideDiagnosticCta />
+      <Navbar />
       <main className="min-h-screen bg-dema-cream px-3 py-4 text-brand-blue sm:px-5 sm:py-7 lg:px-8 lg:py-10">
       <div className="mx-auto w-full max-w-[1500px] space-y-5">
         <article className="rounded-[1.75rem] border border-dema-line bg-dema-paper p-4 shadow-[0_16px_45px_rgba(23,35,29,0.035)] sm:p-7 lg:p-10">

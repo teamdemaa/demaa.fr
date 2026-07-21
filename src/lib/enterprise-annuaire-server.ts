@@ -93,16 +93,16 @@ function mergeEnterpriseFallback(
     ...enterprise,
     id: enterprise.id || fallback?.id || enterprise.slug,
     name: enterprise.name || fallback?.name || enterprise.slug,
-    category: enterprise.category || fallback?.category || "Système opérationnel",
+    category: enterprise.category || fallback?.category || "Kit opérationnel",
     description:
-      enterprise.description || fallback?.description || `Système opérationnel pour ${enterprise.slug}`,
+      enterprise.description || fallback?.description || `Kit opérationnel pour ${enterprise.slug}`,
     tags: enterprise.tags?.length ? enterprise.tags : fallback?.tags ?? [],
     icon: enterprise.icon || fallback?.icon || "Briefcase",
     price: enterprise.price ?? fallback?.price ?? "",
     sectorLabel: enterprise.sectorLabel || fallback?.sectorLabel || publicSectorLabels[0],
     imageTitle: enterprise.imageTitle || fallback?.imageTitle || enterprise.name || enterprise.slug,
     imageSubtitle:
-      enterprise.imageSubtitle || fallback?.imageSubtitle || `Aperçu du système opérationnel pour ${enterprise.name || fallback?.name || enterprise.slug}`,
+      enterprise.imageSubtitle || fallback?.imageSubtitle || `Aperçu du kit opérationnel pour ${enterprise.name || fallback?.name || enterprise.slug}`,
     processes: enterprise.processes?.length ? enterprise.processes : fallback?.processes ?? [],
     operationProcesses: enterprise.operationProcesses?.length
       ? enterprise.operationProcesses

@@ -251,7 +251,7 @@ export const freeToolSeo = {
     ],
     related: [
       { label: "Signature email pro", href: "/outils/signature-pro" },
-      { label: "Système opérationnel", href: "/modeles-de-documents/systeme-operationnel" },
+      { label: "Tableau de pilotage Marketing & Vente", href: "/modeles-de-documents/pilotage-marketing-vente" },
       { label: "Signer un document électroniquement", href: "/outils/signez-un-document-electroniquement" },
     ],
   },

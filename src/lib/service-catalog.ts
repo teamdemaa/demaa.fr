@@ -1,7 +1,7 @@
 type ServiceCategory =
   | "Juridique"
   | "Finance"
-  | "Systèmes"
+  | "Organisation"
   | "Acquisition"
   | "Contenu"
   | "Support opérationnel";
@@ -171,32 +171,32 @@ export const demaaServices = [
   },
   {
     slug: "organisation-automatisation",
-    name: "Diagnostic",
-    category: "Systèmes",
-    shortDescription: "Un diagnostic pour repérer les blocages et les priorités.",
+    name: "Session d’organisation offerte",
+    category: "Organisation",
+    shortDescription: "Une session de 30 minutes pour commencer à adapter votre kit à votre activité.",
     description:
-      "Un diagnostic pour prendre du recul, identifier les points de blocage, clarifier les priorités et repérer les besoins les plus utiles à traiter.",
+      "Pendant 30 minutes, nous identifions le process prioritaire et commençons à cadrer ses tâches, son responsable et sa récurrence dans votre tableau.",
     bestFor:
-      "Les entreprises qui perdent du temps sur relances, devis, documents, reporting, planning ou suivi client.",
-    duration: "1 mois",
-    price: "Diagnostic offert",
-    tags: ["Organisation", "Diagnostic", "Demaa"],
+      "Les dirigeants qui veulent démarrer leur kit avec un premier process clair, concret et adapté à leur organisation.",
+    duration: "30 minutes",
+    price: "Offerte",
+    tags: ["Organisation", "Process", "Kit opérationnel"],
     icon: "Workflow",
     deliverables: [
-      "Analyse de vos tâches, blocages et zones de dépendance",
-      "Lecture claire des priorités d'organisation",
-      "Recommandations concrètes sur les besoins à traiter ensuite",
+      "Choix du process à structurer en priorité",
+      "Première liste de tâches à adapter dans le tableau",
+      "Responsable, récurrence et prochaine action clarifiés",
     ],
-    usefulFor: ["Relances", "Documents", "Reporting", "Planning"],
+    usefulFor: ["Process", "Tâches", "Responsable", "Récurrence"],
   },
   {
     slug: "marketing-vente",
-    name: "Système Marketing & Vente",
+    name: "Organisation Marketing & Vente",
     category: "Acquisition",
     shortDescription:
       "Clarifier l'offre, poser un plan d'actions marketing et vente, puis mettre en place un suivi plus régulier.",
     description:
-      "Un système marketing et vente avec offre clarifiée, actions séquencées, suivi commercial, tests et ajustements.",
+      "Une organisation marketing et vente avec offre clarifiée, actions séquencées, suivi commercial, tests et ajustements.",
     bestFor:
       "Les activités qui veulent structurer leur acquisition, mieux suivre leurs actions et garder un rythme marketing et commercial plus régulier.",
     duration: "1 mois",
@@ -215,7 +215,7 @@ export const demaaServices = [
   {
     slug: "organisation-equipes",
     name: "Organisation opérationnelle",
-    category: "Systèmes",
+    category: "Organisation",
     shortDescription:
       "Structurer l'organisation interne pour clarifier l'organigramme, les rôles, les responsabilités et la répartition des tâches.",
     description:

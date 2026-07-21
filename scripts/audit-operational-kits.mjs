@@ -14,7 +14,12 @@ const forbiddenUi = [
   "Documents et process",
   "Accéder aux téléchargements",
   "Aperçu du document",
+  "Diagnostic organisation",
+  "Système opérationnel",
 ];
+
+const organisationSessionLinkPattern =
+  /<a[^>]*href="\/annuaire-services\/organisation\?[^\"]*"[^>]*>\s*Session d’organisation offerte\s*<\/a>/;
 
 async function fetchPage(path, redirect = "follow") {
   return fetch(`${baseUrl}${path}`, {
@@ -30,15 +35,28 @@ async function inspectEnterprise(enterprise) {
   const errors = [];
 
   try {
+    const overviewResponse = await fetchPage(canonicalPath);
+    const overviewHtml = await overviewResponse.text();
+    const renderedOverviewHtml = overviewHtml.replace(/<!--[\s\S]*?-->/g, "");
+
+    if (overviewResponse.status !== 200) errors.push(`canonical HTTP ${overviewResponse.status}`);
+    if (!overviewHtml.includes(`<link rel="canonical" href="https://demaa.fr${canonicalPath}"/>`)) {
+      errors.push("canonical link missing or incorrect");
+    }
+    if (!overviewHtml.includes("Kit opérationnel")) errors.push("SEO title missing");
+    if (!organisationSessionLinkPattern.test(renderedOverviewHtml)) {
+      errors.push("organisation session CTA missing from overview");
+    }
+
+    for (const value of forbiddenUi) {
+      if (renderedOverviewHtml.includes(value)) errors.push(`legacy UI still visible: ${value}`);
+    }
+
     const response = await fetchPage(`${canonicalPath}?tab=process`);
     const html = await response.text();
     const renderedHtml = html.replace(/<!--[\s\S]*?-->/g, "");
 
-    if (response.status !== 200) errors.push(`canonical HTTP ${response.status}`);
-    if (!html.includes(`<link rel="canonical" href="https://demaa.fr${canonicalPath}"/>`)) {
-      errors.push("canonical link missing or incorrect");
-    }
-    if (!html.includes("Kit opérationnel")) errors.push("SEO title missing");
+    if (response.status !== 200) errors.push(`process tab HTTP ${response.status}`);
     if (!/<p[^>]*>\s*\d+ process\s*<\/p>/.test(renderedHtml)) {
       errors.push("process count missing");
     }
@@ -48,9 +66,11 @@ async function inspectEnterprise(enterprise) {
     if (!html.includes("Recevoir le kit opérationnel")) {
       errors.push("single kit CTA missing");
     }
-
     for (const value of forbiddenUi) {
-      if (html.includes(value)) errors.push(`legacy UI still visible: ${value}`);
+      if (renderedHtml.includes(value)) errors.push(`legacy UI still visible on process tab: ${value}`);
+    }
+    if (organisationSessionLinkPattern.test(renderedHtml)) {
+      errors.push("organisation session CTA visible outside overview");
     }
 
     const redirects = [

@@ -73,15 +73,15 @@ const courseEntries: CourseEntry[] = [
     content: "",
   },
   {
-    slug: "systeme-marketing-vente",
-    title: "Construire un système marketing & vente",
-    seoTitle: "Construire un système marketing et vente",
+    slug: "organisation-marketing-vente",
+    title: "Organiser son marketing & ses ventes",
+    seoTitle: "Organiser son marketing et ses ventes",
     date: "2026-06-23",
     featuredRank: 3,
     description:
       "Une étude de cas simple pour visualiser comment attirer, convertir et fidéliser avec un plan d'action concret sur trois mois.",
     seoDescription:
-      "Support Demaa sur la construction d'un système marketing et vente avec étude de cas et plan d'action sur trois mois.",
+      "Support Demaa pour organiser son marketing et ses ventes avec une étude de cas et un plan d'action sur trois mois.",
     category: "Marketing & vente",
     image: "/images/courses/systeme-marketing/01.png",
     slides: [
@@ -92,7 +92,7 @@ const courseEntries: CourseEntry[] = [
       "/images/courses/systeme-marketing/05.png",
     ],
     presentationOnly: true,
-    tags: ["cours", "marketing", "vente", "système"],
+    tags: ["cours", "marketing", "vente", "organisation"],
     duration: "5 slides",
     content: "",
   },

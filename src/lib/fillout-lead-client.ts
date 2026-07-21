@@ -10,7 +10,7 @@ export function recordFilloutLeadSubmission(input: {
   if (typeof window === "undefined") return;
 
   trackLeadConversion({
-    requestType: "organisation_audit_booking",
+    requestType: "organisation_session_booking",
     systemSlug: input.systemSlug,
   });
 }

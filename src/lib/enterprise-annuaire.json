@@ -4,18 +4,18 @@
       "id": "e1",
       "slug": "cabinet-comptable",
       "name": "Cabinet comptable",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Reprenez le contrôle des dossiers, échéances et relances clients pour produire sereinement sans tout garder dans votre tête.",
       "tags": [
         "Conseil",
         "B2B",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Briefcase",
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Cabinet comptable",
-      "imageSubtitle": "Aperçu du système opérationnel pour cabinet comptable",
+      "imageSubtitle": "Aperçu du kit opérationnel pour cabinet comptable",
       "processes": [],
       "operationProcesses": [
         {
@@ -158,18 +158,18 @@
       "id": "e2",
       "slug": "cabinet-davocat",
       "name": "Cabinet d’avocat",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Gardez dossiers, audiences, pièces et priorités sous contrôle pour sécuriser le cabinet sans subir chaque urgence.",
       "tags": [
         "Conseil",
         "B2B",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Briefcase",
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Cabinet d’avocat",
-      "imageSubtitle": "Aperçu du système opérationnel pour cabinet d’avocat",
+      "imageSubtitle": "Aperçu du kit opérationnel pour cabinet d’avocat",
       "processes": [],
       "operationProcesses": [
         {
@@ -269,18 +269,18 @@
       "id": "e3",
       "slug": "cabinet-de-conseil",
       "name": "Cabinet de conseil",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Gardez missions, livrables, clients et marge sous contrôle pour avancer sans dépendre de votre mémoire.",
       "tags": [
         "Conseil",
         "B2B",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Briefcase",
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Cabinet de conseil",
-      "imageSubtitle": "Aperçu du système opérationnel pour cabinet de conseil",
+      "imageSubtitle": "Aperçu du kit opérationnel pour cabinet de conseil",
       "processes": [],
       "operationProcesses": [
         {
@@ -412,18 +412,18 @@
       "id": "e4",
       "slug": "agence-marketing",
       "name": "Agence marketing",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Pilotez prospects, campagnes, livrables et marges pour faire grandir l’agence sans courir après chaque client.",
       "tags": [
         "Conseil",
         "B2B",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Briefcase",
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Agence marketing",
-      "imageSubtitle": "Aperçu du système opérationnel pour agence marketing",
+      "imageSubtitle": "Aperçu du kit opérationnel pour agence marketing",
       "processes": [],
       "operationProcesses": [
         {
@@ -486,7 +486,7 @@
         },
         {
           "slug": "notion",
-          "usage": "Créer un mini système interne sans logiciel métier lourd."
+          "usage": "Créer un mini outil interne sans logiciel métier lourd."
         },
         {
           "slug": "figma",
@@ -573,18 +573,18 @@
       "id": "e5",
       "slug": "freelance",
       "name": "Freelance B2B",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Structurez offres, clients, missions, relances et marge sans dépendre de l’improvisation.",
       "tags": [
         "B2B",
         "Services",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Briefcase",
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Freelance B2B",
-      "imageSubtitle": "Aperçu du système opérationnel pour freelance B2B",
+      "imageSubtitle": "Aperçu du kit opérationnel pour freelance B2B",
       "processes": [],
       "operationProcesses": [
         {
@@ -683,18 +683,18 @@
       "id": "e6",
       "slug": "agence-de-recrutement",
       "name": "Agence de recrutement",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Suivez candidats, clients, postes et relances pour placer plus vite sans laisser filer les bonnes opportunités.",
       "tags": [
         "Conseil",
         "B2B",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Briefcase",
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Agence de recrutement",
-      "imageSubtitle": "Aperçu du système opérationnel pour agence de recrutement",
+      "imageSubtitle": "Aperçu du kit opérationnel pour agence de recrutement",
       "processes": [],
       "operationProcesses": [
         {
@@ -792,18 +792,18 @@
       "id": "e7",
       "slug": "agence-web",
       "name": "Agence web",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Gardez prospects, projets, livraisons et marge sous contrôle pour livrer proprement sans courir après chaque client.",
       "tags": [
         "Tech",
         "Digital",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Code2",
       "price": "",
       "sectorLabel": "Tech & Digital",
       "imageTitle": "Agence web",
-      "imageSubtitle": "Aperçu du système opérationnel pour agence web",
+      "imageSubtitle": "Aperçu du kit opérationnel pour agence web",
       "processes": [],
       "operationProcesses": [
         {
@@ -870,7 +870,7 @@
         },
         {
           "slug": "notion",
-          "usage": "Créer un mini système interne sans logiciel métier lourd."
+          "usage": "Créer un mini outil interne sans logiciel métier lourd."
         },
         {
           "slug": "airtable",
@@ -949,18 +949,18 @@
       "id": "e8",
       "slug": "creation-de-contenu",
       "name": "Création de contenu",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Gardez idées, contenus, publications et revenus sous contrôle pour produire régulièrement sans vous disperser.",
       "tags": [
         "Tech",
         "Digital",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Code2",
       "price": "",
       "sectorLabel": "Tech & Digital",
       "imageTitle": "Création de contenu",
-      "imageSubtitle": "Aperçu du système opérationnel pour création de contenu",
+      "imageSubtitle": "Aperçu du kit opérationnel pour création de contenu",
       "processes": [],
       "operationProcesses": [
         {
@@ -1084,18 +1084,18 @@
       "id": "e9",
       "slug": "marketplace",
       "name": "Marketplace",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Pilotez vendeurs, commandes, paiements et litiges sans laisser le support de la marketplace déborder.",
       "tags": [
         "Tech",
         "Digital",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Code2",
       "price": "",
       "sectorLabel": "Tech & Digital",
       "imageTitle": "Marketplace",
-      "imageSubtitle": "Aperçu du système opérationnel pour marketplace",
+      "imageSubtitle": "Aperçu du kit opérationnel pour marketplace",
       "processes": [],
       "operationProcesses": [
         {
@@ -1215,18 +1215,18 @@
       "id": "e10",
       "slug": "media",
       "name": "Média",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Pilotez contenus, audience, partenariats et revenus pour tenir le rythme sans avancer à l’instinct.",
       "tags": [
         "Tech",
         "Digital",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Code2",
       "price": "",
       "sectorLabel": "Tech & Digital",
       "imageTitle": "Média",
-      "imageSubtitle": "Aperçu du système opérationnel pour média",
+      "imageSubtitle": "Aperçu du kit opérationnel pour média",
       "processes": [],
       "operationProcesses": [
         {
@@ -1342,18 +1342,18 @@
       "id": "e11",
       "slug": "saas",
       "name": "SaaS",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Pilotez acquisition, produit, support et revenus pour faire grandir le SaaS sans perdre la trajectoire.",
       "tags": [
         "Tech",
         "Digital",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Code2",
       "price": "",
       "sectorLabel": "Tech & Digital",
       "imageTitle": "SaaS",
-      "imageSubtitle": "Aperçu du système opérationnel pour saas",
+      "imageSubtitle": "Aperçu du kit opérationnel pour saas",
       "processes": [],
       "operationProcesses": [
         {
@@ -1509,18 +1509,18 @@
       "id": "e12",
       "slug": "batiment",
       "name": "Bâtiment",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Gardez devis, chantiers, équipes et marge sous contrôle pour livrer sans courir après l’information terrain.",
       "tags": [
         "BTP",
         "Terrain",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Wrench",
       "price": "",
       "sectorLabel": "BTP & services techniques",
       "imageTitle": "Bâtiment",
-      "imageSubtitle": "Aperçu du système opérationnel pour bâtiment",
+      "imageSubtitle": "Aperçu du kit opérationnel pour bâtiment",
       "processes": [],
       "operationProcesses": [
         {
@@ -1646,18 +1646,18 @@
       "id": "e13",
       "slug": "nettoyage-professionnel",
       "name": "Nettoyage professionnel",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Coordonnez équipes, passages, contrôles et réclamations pour assurer la qualité sans tout garder dans votre tête.",
       "tags": [
         "BTP",
         "Terrain",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Wrench",
       "price": "",
       "sectorLabel": "BTP & services techniques",
       "imageTitle": "Nettoyage professionnel",
-      "imageSubtitle": "Aperçu du système opérationnel pour nettoyage professionnel",
+      "imageSubtitle": "Aperçu du kit opérationnel pour nettoyage professionnel",
       "processes": [],
       "operationProcesses": [
         {
@@ -1745,18 +1745,18 @@
       "id": "e14",
       "slug": "agence-immobiliere",
       "name": "Agence immobilière professionnelle",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Gardez mandats, prospects, visites et signatures sous contrôle pour vendre sans perdre le fil commercial.",
       "tags": [
         "B2B",
         "Immobilier",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Home",
       "price": "",
       "sectorLabel": "Immobilier",
       "imageTitle": "Agence immobilière professionnelle",
-      "imageSubtitle": "Aperçu du système opérationnel pour agence immobilière professionnelle",
+      "imageSubtitle": "Aperçu du kit opérationnel pour agence immobilière professionnelle",
       "processes": [],
       "operationProcesses": [
         {
@@ -1856,18 +1856,18 @@
       "id": "e55",
       "slug": "syndic",
       "name": "Syndic",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Tenez copropriétés, urgences, assemblées et décisions sans subir la pression permanente.",
       "tags": [
         "Immobilier",
         "Copropriété",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Building2",
       "price": "Sur devis",
       "sectorLabel": "Immobilier",
       "imageTitle": "Syndic",
-      "imageSubtitle": "Aperçu du système opérationnel pour syndic",
+      "imageSubtitle": "Aperçu du kit opérationnel pour syndic",
       "processes": [],
       "operationProcesses": [
         {
@@ -1955,18 +1955,18 @@
       "id": "e56",
       "slug": "gestion-locative",
       "name": "Gestion locative pour investisseurs",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Pilotez loyers, incidents, locataires et documents sans multiplier les relances.",
       "tags": [
         "B2B",
         "Immobilier",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "KeyRound",
       "price": "Sur devis",
       "sectorLabel": "Immobilier",
       "imageTitle": "Gestion locative pour investisseurs",
-      "imageSubtitle": "Aperçu du système opérationnel pour gestion locative investisseurs",
+      "imageSubtitle": "Aperçu du kit opérationnel pour gestion locative investisseurs",
       "processes": [],
       "operationProcesses": [
         {
@@ -2062,18 +2062,18 @@
       "id": "e57",
       "slug": "marchand-de-biens",
       "name": "Marchand de biens",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Maîtrisez achats, travaux, financement et revente pour préserver la marge de chaque opération.",
       "tags": [
         "Immobilier",
         "Opérations",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Landmark",
       "price": "Sur devis",
       "sectorLabel": "Immobilier",
       "imageTitle": "Marchand de biens",
-      "imageSubtitle": "Aperçu du système opérationnel pour marchand de biens",
+      "imageSubtitle": "Aperçu du kit opérationnel pour marchand de biens",
       "processes": [],
       "operationProcesses": [
         {
@@ -2165,7 +2165,7 @@
       "id": "e58",
       "slug": "investissement-locatif",
       "name": "Investissement locatif",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Gardez financement, loyers, travaux et rendement sous contrôle pour investir sans avancer dans le flou.",
       "tags": [
         "Immobilier",
@@ -2176,7 +2176,7 @@
       "price": "Sur devis",
       "sectorLabel": "Immobilier",
       "imageTitle": "Investissement locatif",
-      "imageSubtitle": "Aperçu du système opérationnel pour investissement locatif",
+      "imageSubtitle": "Aperçu du kit opérationnel pour investissement locatif",
       "processes": [],
       "operationProcesses": [
         {
@@ -2264,18 +2264,18 @@
       "id": "e15",
       "slug": "conciergerie-airbnb",
       "name": "Conciergerie multi-biens",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Maîtrisez réservations, ménage, voyageurs et imprévus pour louer sereinement sans gérer chaque urgence vous-même.",
       "tags": [
         "B2B",
         "Immobilier",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Home",
       "price": "",
       "sectorLabel": "Hébergement & tourisme",
       "imageTitle": "Conciergerie multi-biens",
-      "imageSubtitle": "Aperçu du système opérationnel pour conciergerie multi-biens",
+      "imageSubtitle": "Aperçu du kit opérationnel pour conciergerie multi-biens",
       "processes": [],
       "operationProcesses": [
         {
@@ -2375,18 +2375,18 @@
       "id": "e16",
       "slug": "investissement-immobilier",
       "name": "Investissement immobilier",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Gardez biens, travaux, loyers et rendements sous contrôle pour arbitrer sans perdre la vision d’ensemble.",
       "tags": [
         "Patrimoine",
         "Investissement",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Landmark",
       "price": "",
       "sectorLabel": "Patrimoine",
       "imageTitle": "Investissement immobilier",
-      "imageSubtitle": "Aperçu du système opérationnel pour investissement immobilier",
+      "imageSubtitle": "Aperçu du kit opérationnel pour investissement immobilier",
       "processes": [],
       "operationProcesses": [
         {
@@ -2474,18 +2474,18 @@
       "id": "e17",
       "slug": "investissement-financier",
       "name": "Investissement financier",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Gardez allocations, risques, frais et décisions sous contrôle pour piloter votre patrimoine sans bruit inutile.",
       "tags": [
         "Patrimoine",
         "Investissement",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Landmark",
       "price": "",
       "sectorLabel": "Patrimoine",
       "imageTitle": "Investissement financier",
-      "imageSubtitle": "Aperçu du système opérationnel pour investissement financier",
+      "imageSubtitle": "Aperçu du kit opérationnel pour investissement financier",
       "processes": [],
       "operationProcesses": [
         {
@@ -2581,18 +2581,18 @@
       "id": "e18",
       "slug": "investissement-entreprise",
       "name": "Investissement entreprise",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Suivez participations, performance, risques et décisions clés sans perdre la vision d’ensemble.",
       "tags": [
         "Patrimoine",
         "Investissement",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Landmark",
       "price": "",
       "sectorLabel": "Patrimoine",
       "imageTitle": "Investissement entreprise",
-      "imageSubtitle": "Aperçu du système opérationnel pour investissement entreprise",
+      "imageSubtitle": "Aperçu du kit opérationnel pour investissement entreprise",
       "processes": [],
       "operationProcesses": [
         {
@@ -2692,18 +2692,18 @@
       "id": "e19",
       "slug": "demenagement",
       "name": "Déménagement professionnel",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Cadrez visites, devis, équipes, planning et marge pour les déménagements d’entreprise.",
       "tags": [
         "B2B",
         "Logistique",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Truck",
       "price": "",
       "sectorLabel": "Mobilité & logistique",
       "imageTitle": "Déménagement professionnel",
-      "imageSubtitle": "Aperçu du système opérationnel pour déménagement professionnel",
+      "imageSubtitle": "Aperçu du kit opérationnel pour déménagement professionnel",
       "processes": [],
       "operationProcesses": [
         {
@@ -2791,18 +2791,18 @@
       "id": "e20",
       "slug": "livraison-dernier-kilometre",
       "name": "Livraison dernier kilomètre",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Pilotez tournées, délais, chauffeurs et incidents pour livrer à l’heure sans surveiller chaque course à la main.",
       "tags": [
         "Logistique",
         "Transport",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Truck",
       "price": "",
       "sectorLabel": "Mobilité & logistique",
       "imageTitle": "Livraison dernier kilomètre",
-      "imageSubtitle": "Aperçu du système opérationnel pour livraison dernier kilomètre",
+      "imageSubtitle": "Aperçu du kit opérationnel pour livraison dernier kilomètre",
       "processes": [],
       "operationProcesses": [
         {
@@ -2894,18 +2894,18 @@
       "id": "e21",
       "slug": "transport-de-marchandise",
       "name": "Transport de marchandises",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Suivez flotte, fret, expéditions et marge pour transporter sans perdre la trace des dossiers.",
       "tags": [
         "Logistique",
         "Transport",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Truck",
       "price": "",
       "sectorLabel": "Mobilité & logistique",
       "imageTitle": "Transport de marchandises",
-      "imageSubtitle": "Aperçu du système opérationnel pour transport de marchandises",
+      "imageSubtitle": "Aperçu du kit opérationnel pour transport de marchandises",
       "processes": [],
       "operationProcesses": [
         {
@@ -3005,18 +3005,18 @@
       "id": "e22",
       "slug": "transport-de-personnes",
       "name": "Transport de personnes B2B",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Pilotez réservations, trajets, chauffeurs, incidents et rentabilité pour clients professionnels.",
       "tags": [
         "B2B",
         "Transport",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Truck",
       "price": "",
       "sectorLabel": "Mobilité & logistique",
       "imageTitle": "Transport de personnes B2B",
-      "imageSubtitle": "Aperçu du système opérationnel pour transport de personnes B2B",
+      "imageSubtitle": "Aperçu du kit opérationnel pour transport de personnes B2B",
       "processes": [],
       "operationProcesses": [
         {
@@ -3098,18 +3098,18 @@
       "id": "e23",
       "slug": "restaurant",
       "name": "Restaurant",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Gardez service, équipe, achats et marge sous contrôle pour tenir vos rushs sans découvrir trop tard ce qui coûte cher.",
       "tags": [
         "Restauration",
         "Service",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Utensils",
       "price": "",
       "sectorLabel": "Restauration",
       "imageTitle": "Restaurant",
-      "imageSubtitle": "Aperçu du système opérationnel pour restaurant",
+      "imageSubtitle": "Aperçu du kit opérationnel pour restaurant",
       "processes": [],
       "operationProcesses": [
         {
@@ -3215,18 +3215,18 @@
       "id": "e24",
       "slug": "fast-food",
       "name": "Fast-food",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Gardez commandes, équipe, stocks et marge sous contrôle pour encaisser les rushs sans perdre la rentabilité.",
       "tags": [
         "Restauration",
         "Service",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Utensils",
       "price": "",
       "sectorLabel": "Restauration",
       "imageTitle": "Fast-food",
-      "imageSubtitle": "Aperçu du système opérationnel pour fast-food",
+      "imageSubtitle": "Aperçu du kit opérationnel pour fast-food",
       "processes": [],
       "operationProcesses": [
         {
@@ -3324,18 +3324,18 @@
       "id": "e25",
       "slug": "traiteur",
       "name": "Traiteur événementiel B2B",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Cadrez demandes, devis, production, livraison, extras et marge par événement professionnel.",
       "tags": [
         "B2B",
         "Événementiel",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Utensils",
       "price": "",
       "sectorLabel": "Restauration",
       "imageTitle": "Traiteur événementiel B2B",
-      "imageSubtitle": "Aperçu du système opérationnel pour traiteur événementiel B2B",
+      "imageSubtitle": "Aperçu du kit opérationnel pour traiteur événementiel B2B",
       "processes": [],
       "operationProcesses": [
         {
@@ -3429,18 +3429,18 @@
       "id": "e26",
       "slug": "dark-kitchen",
       "name": "Dark kitchen",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Pilotez commandes, cuisine, plateformes et marge pour produire vite sans subir le rythme des applis.",
       "tags": [
         "Restauration",
         "Service",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Utensils",
       "price": "",
       "sectorLabel": "Restauration",
       "imageTitle": "Dark kitchen",
-      "imageSubtitle": "Aperçu du système opérationnel pour dark kitchen",
+      "imageSubtitle": "Aperçu du kit opérationnel pour dark kitchen",
       "processes": [],
       "operationProcesses": [
         {
@@ -3534,18 +3534,18 @@
       "id": "e27",
       "slug": "boulangerie",
       "name": "Boulangerie",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Gardez production, vente, équipe et marge sous contrôle pour faire tourner la boulangerie sans tout porter au quotidien.",
       "tags": [
         "Retail",
         "Vente",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Store",
       "price": "",
       "sectorLabel": "Commerce & retail",
       "imageTitle": "Boulangerie",
-      "imageSubtitle": "Aperçu du système opérationnel pour boulangerie",
+      "imageSubtitle": "Aperçu du kit opérationnel pour boulangerie",
       "processes": [],
       "operationProcesses": [
         {
@@ -3635,18 +3635,18 @@
       "id": "e28",
       "slug": "commerce-de-detail",
       "name": "Commerce de détail",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Pilotez stock, ventes, caisse et équipe sans découvrir les problèmes trop tard.",
       "tags": [
         "Retail",
         "Vente",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Store",
       "price": "",
       "sectorLabel": "Commerce & retail",
       "imageTitle": "Commerce de détail",
-      "imageSubtitle": "Aperçu du système opérationnel pour commerce de détail",
+      "imageSubtitle": "Aperçu du kit opérationnel pour commerce de détail",
       "processes": [],
       "operationProcesses": [
         {
@@ -3752,18 +3752,18 @@
       "id": "e29",
       "slug": "e-commerce",
       "name": "E-commerce",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Gardez ventes, commandes, stock et marge lisibles du trafic jusqu’au SAV, sans vous perdre entre pub, retours et outils.",
       "tags": [
         "Retail",
         "Vente",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Store",
       "price": "",
       "sectorLabel": "Commerce & retail",
       "imageTitle": "E-commerce",
-      "imageSubtitle": "Aperçu du système opérationnel pour e-commerce",
+      "imageSubtitle": "Aperçu du kit opérationnel pour e-commerce",
       "processes": [],
       "operationProcesses": [
         {
@@ -3893,18 +3893,18 @@
       "id": "e30",
       "slug": "institut-de-beaute",
       "name": "Institut de beauté",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Gardez agenda, prestations, clientes et marge sous contrôle pour remplir l’institut sans charge mentale permanente.",
       "tags": [
         "Bien-être",
         "RDV",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "HeartHandshake",
       "price": "",
       "sectorLabel": "Santé, bien-être & esthétique",
       "imageTitle": "Institut de beauté",
-      "imageSubtitle": "Aperçu du système opérationnel pour institut de beauté",
+      "imageSubtitle": "Aperçu du kit opérationnel pour institut de beauté",
       "processes": [],
       "operationProcesses": [
         {
@@ -3994,18 +3994,18 @@
       "id": "e31",
       "slug": "salon-de-coiffure",
       "name": "Salon de coiffure",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Gardez agenda, équipe, clientes et ventes sous contrôle pour remplir le salon sans subir les trous ni les rushs.",
       "tags": [
         "Bien-être",
         "RDV",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "HeartHandshake",
       "price": "",
       "sectorLabel": "Santé, bien-être & esthétique",
       "imageTitle": "Salon de coiffure",
-      "imageSubtitle": "Aperçu du système opérationnel pour salon de coiffure",
+      "imageSubtitle": "Aperçu du kit opérationnel pour salon de coiffure",
       "processes": [],
       "operationProcesses": [
         {
@@ -4095,18 +4095,18 @@
       "id": "e32",
       "slug": "esthetique",
       "name": "Esthétique",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Gardez rendez-vous, prestations, relances et ventes sous contrôle pour développer l’activité sans vous disperser.",
       "tags": [
         "Bien-être",
         "RDV",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "HeartHandshake",
       "price": "",
       "sectorLabel": "Santé, bien-être & esthétique",
       "imageTitle": "Esthétique",
-      "imageSubtitle": "Aperçu du système opérationnel pour esthétique",
+      "imageSubtitle": "Aperçu du kit opérationnel pour esthétique",
       "processes": [],
       "operationProcesses": [
         {
@@ -4196,18 +4196,18 @@
       "id": "e33",
       "slug": "services-a-la-personne",
       "name": "Services à la personne",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Coordonnez demandes, intervenants, plannings et familles sans tout porter dans votre tête.",
       "tags": [
         "Particuliers",
         "Service",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "UserCheck",
       "price": "",
       "sectorLabel": "Services aux particuliers",
       "imageTitle": "Services à la personne",
-      "imageSubtitle": "Aperçu du système opérationnel pour services à la personne",
+      "imageSubtitle": "Aperçu du kit opérationnel pour services à la personne",
       "processes": [],
       "operationProcesses": [
         {
@@ -4293,18 +4293,18 @@
       "id": "e34",
       "slug": "organisme-de-formation",
       "name": "Organisme de formation",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Pilotez inscriptions, sessions, formateurs et preuves Qualiopi sans vous noyer dans l’administratif.",
       "tags": [
         "Formation",
         "Apprenants",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "GraduationCap",
       "price": "",
       "sectorLabel": "Éducation & formation",
       "imageTitle": "Organisme de formation",
-      "imageSubtitle": "Aperçu du système opérationnel pour organisme de formation",
+      "imageSubtitle": "Aperçu du kit opérationnel pour organisme de formation",
       "processes": [],
       "operationProcesses": [
         {
@@ -4424,18 +4424,18 @@
       "id": "e97",
       "slug": "cfa",
       "name": "CFA",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Pilotez candidats, contrats d’apprentissage, entreprises, alternance, OPCO et suivi apprentis sans perdre la trace des obligations.",
       "tags": [
         "Formation",
         "Apprentissage",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "GraduationCap",
       "price": "",
       "sectorLabel": "Éducation & formation",
       "imageTitle": "CFA",
-      "imageSubtitle": "Aperçu du système opérationnel pour centre de formation d’apprentis",
+      "imageSubtitle": "Aperçu du kit opérationnel pour centre de formation d’apprentis",
       "processes": [],
       "operationProcesses": [
         {
@@ -4543,18 +4543,18 @@
       "id": "e35",
       "slug": "formation-en-ligne",
       "name": "Formation en ligne",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Gardez ventes, apprenants, contenus et progression sous contrôle pour vendre vos formations sans disperser votre énergie.",
       "tags": [
         "Formation",
         "Apprenants",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "GraduationCap",
       "price": "",
       "sectorLabel": "Éducation & formation",
       "imageTitle": "Formation en ligne",
-      "imageSubtitle": "Aperçu du système opérationnel pour formation en ligne",
+      "imageSubtitle": "Aperçu du kit opérationnel pour formation en ligne",
       "processes": [],
       "operationProcesses": [
         {
@@ -4670,18 +4670,18 @@
       "id": "e36",
       "slug": "production-industrie",
       "name": "Production & Industrie",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Pilotez production, stocks, délais et priorités sans gérer chaque urgence de l’atelier à la main.",
       "tags": [
         "Industrie",
         "Production",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Factory",
       "price": "",
       "sectorLabel": "Industrie & production",
       "imageTitle": "Production & Industrie",
-      "imageSubtitle": "Aperçu du système opérationnel pour production & industrie",
+      "imageSubtitle": "Aperçu du kit opérationnel pour production & industrie",
       "processes": [],
       "operationProcesses": [
         {
@@ -4777,18 +4777,18 @@
       "id": "e37",
       "slug": "plomberie-chauffage",
       "name": "Plomberie & chauffage",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Gardez urgences, devis, chantiers et pièces sous contrôle pour intervenir vite sans courir après chaque dossier.",
       "tags": [
         "BTP",
         "Intervention",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Wrench",
       "price": "",
       "sectorLabel": "BTP & services techniques",
       "imageTitle": "Plomberie & chauffage",
-      "imageSubtitle": "Aperçu du système opérationnel pour plomberie & chauffage",
+      "imageSubtitle": "Aperçu du kit opérationnel pour plomberie & chauffage",
       "processes": [],
       "operationProcesses": [
         {
@@ -4890,18 +4890,18 @@
       "id": "e38",
       "slug": "electricite-generale",
       "name": "Électricité générale",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Maîtrisez urgences, devis, conformité et équipes pour sécuriser les chantiers sans perdre la vision terrain.",
       "tags": [
         "BTP",
         "Intervention",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Wrench",
       "price": "",
       "sectorLabel": "BTP & services techniques",
       "imageTitle": "Électricité générale",
-      "imageSubtitle": "Aperçu du système opérationnel pour électricité générale",
+      "imageSubtitle": "Aperçu du kit opérationnel pour électricité générale",
       "processes": [],
       "operationProcesses": [
         {
@@ -5003,18 +5003,18 @@
       "id": "e39",
       "slug": "renovation-interieur",
       "name": "Rénovation intérieure",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Gardez clients, choix, chantiers et marge sous contrôle pour avancer sans multiplier les allers-retours.",
       "tags": [
         "BTP",
         "Chantier",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Hammer",
       "price": "",
       "sectorLabel": "BTP & services techniques",
       "imageTitle": "Rénovation intérieure",
-      "imageSubtitle": "Aperçu du système opérationnel pour rénovation intérieure",
+      "imageSubtitle": "Aperçu du kit opérationnel pour rénovation intérieure",
       "processes": [],
       "operationProcesses": [
         {
@@ -5124,18 +5124,18 @@
       "id": "e40",
       "slug": "menuiserie-agencement",
       "name": "Menuiserie & agencement",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Gardez devis, atelier, pose et validations client sous contrôle pour livrer sans tout garder en tête.",
       "tags": [
         "BTP",
         "Atelier",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Hammer",
       "price": "",
       "sectorLabel": "BTP & services techniques",
       "imageTitle": "Menuiserie & agencement",
-      "imageSubtitle": "Aperçu du système opérationnel pour menuiserie & agencement",
+      "imageSubtitle": "Aperçu du kit opérationnel pour menuiserie & agencement",
       "processes": [],
       "operationProcesses": [
         {
@@ -5241,18 +5241,18 @@
       "id": "e41",
       "slug": "maconnerie-gros-oeuvre",
       "name": "Maçonnerie & gros œuvre",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Cadrez planning, matériaux, équipes et sous-traitants pour sécuriser chaque chantier.",
       "tags": [
         "BTP",
         "Chantier",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Building2",
       "price": "",
       "sectorLabel": "BTP & services techniques",
       "imageTitle": "Maçonnerie & gros œuvre",
-      "imageSubtitle": "Aperçu du système opérationnel pour maçonnerie & gros œuvre",
+      "imageSubtitle": "Aperçu du kit opérationnel pour maçonnerie & gros œuvre",
       "processes": [],
       "operationProcesses": [
         {
@@ -5354,18 +5354,18 @@
       "id": "e42",
       "slug": "paysagiste",
       "name": "Paysagiste",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Gardez devis, équipes, chantiers et entretiens sous contrôle pour servir les clients sans perdre les demandes.",
       "tags": [
         "Terrain",
         "Service",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Sparkles",
       "price": "",
       "sectorLabel": "BTP & services techniques",
       "imageTitle": "Paysagiste",
-      "imageSubtitle": "Aperçu du système opérationnel pour paysagiste",
+      "imageSubtitle": "Aperçu du kit opérationnel pour paysagiste",
       "processes": [],
       "operationProcesses": [
         {
@@ -5467,18 +5467,18 @@
       "id": "e43",
       "slug": "garage-automobile",
       "name": "Garage automobile",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Gardez atelier, clients, pièces et marge sous contrôle du premier contact jusqu’à la facture.",
       "tags": [
         "Auto",
         "Réparation",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Car",
       "price": "",
       "sectorLabel": "Automobile & réparation",
       "imageTitle": "Garage automobile",
-      "imageSubtitle": "Aperçu du système opérationnel pour garage automobile",
+      "imageSubtitle": "Aperçu du kit opérationnel pour garage automobile",
       "processes": [],
       "operationProcesses": [
         {
@@ -5560,18 +5560,18 @@
       "id": "e44",
       "slug": "carrosserie",
       "name": "Carrosserie",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Suivez sinistres, accords, pièces et travaux pour faire avancer l’atelier sans dossiers bloqués.",
       "tags": [
         "Auto",
         "Réparation",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Car",
       "price": "",
       "sectorLabel": "Automobile & réparation",
       "imageTitle": "Carrosserie",
-      "imageSubtitle": "Aperçu du système opérationnel pour carrosserie",
+      "imageSubtitle": "Aperçu du kit opérationnel pour carrosserie",
       "processes": [],
       "operationProcesses": [
         {
@@ -5653,18 +5653,18 @@
       "id": "e45",
       "slug": "commerce-alimentaire",
       "name": "Commerce alimentaire",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Gardez produits frais, caisse, fournisseurs et marge sous contrôle sans subir les urgences du quotidien.",
       "tags": [
         "Retail",
         "Alimentaire",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Store",
       "price": "",
       "sectorLabel": "Commerce & retail",
       "imageTitle": "Commerce alimentaire",
-      "imageSubtitle": "Aperçu du système opérationnel pour commerce alimentaire",
+      "imageSubtitle": "Aperçu du kit opérationnel pour commerce alimentaire",
       "processes": [],
       "operationProcesses": [
         {
@@ -5762,18 +5762,18 @@
       "id": "e46",
       "slug": "boutique-specialisee",
       "name": "Boutique spécialisée",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Gardez assortiment, conseil client, stock et marge sous contrôle pour diriger la boutique sereinement.",
       "tags": [
         "Retail",
         "Vente",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Store",
       "price": "",
       "sectorLabel": "Commerce & retail",
       "imageTitle": "Boutique spécialisée",
-      "imageSubtitle": "Aperçu du système opérationnel pour boutique spécialisée",
+      "imageSubtitle": "Aperçu du kit opérationnel pour boutique spécialisée",
       "processes": [],
       "operationProcesses": [
         {
@@ -5875,18 +5875,18 @@
       "id": "e47",
       "slug": "tabac-presse-point-relais",
       "name": "Tabac / presse / point relais",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Maîtrisez caisse, stocks, relais et services malgré le flux permanent du point de vente.",
       "tags": [
         "Retail",
         "Proximité",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Newspaper",
       "price": "",
       "sectorLabel": "Commerce & retail",
       "imageTitle": "Tabac / presse / point relais",
-      "imageSubtitle": "Aperçu du système opérationnel pour tabac presse point relais",
+      "imageSubtitle": "Aperçu du kit opérationnel pour tabac presse point relais",
       "processes": [],
       "operationProcesses": [
         {
@@ -5976,18 +5976,18 @@
       "id": "e48",
       "slug": "bar-cafe",
       "name": "Café",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Gardez service, caisse, équipe et marge sous contrôle du matin à la fermeture.",
       "tags": [
         "Restauration",
         "Service",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "ChefHat",
       "price": "",
       "sectorLabel": "Restauration",
       "imageTitle": "Café",
-      "imageSubtitle": "Aperçu du système opérationnel pour café",
+      "imageSubtitle": "Aperçu du kit opérationnel pour café",
       "processes": [],
       "operationProcesses": [
         {
@@ -6077,18 +6077,18 @@
       "id": "e49",
       "slug": "hotel-hebergement-independant",
       "name": "Hôtel & hébergement indépendant",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Gardez réservations, chambres, ménage et avis clients sous contrôle sans subir les pics d’activité.",
       "tags": [
         "Tourisme",
         "Réservation",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Home",
       "price": "",
       "sectorLabel": "Hébergement & tourisme",
       "imageTitle": "Hôtel & hébergement indépendant",
-      "imageSubtitle": "Aperçu du système opérationnel pour hôtel & hébergement indépendant",
+      "imageSubtitle": "Aperçu du kit opérationnel pour hôtel & hébergement indépendant",
       "processes": [],
       "operationProcesses": [
         {
@@ -6182,18 +6182,18 @@
       "id": "e50",
       "slug": "cabinet-medical",
       "name": "Cabinet médical",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Gardez agenda, demandes patients, documents et suivis sous contrôle sans alourdir le cabinet.",
       "tags": [
         "Santé",
         "RDV",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "HeartHandshake",
       "price": "",
       "sectorLabel": "Santé, bien-être & esthétique",
       "imageTitle": "Cabinet médical",
-      "imageSubtitle": "Aperçu du système opérationnel pour cabinet médical",
+      "imageSubtitle": "Aperçu du kit opérationnel pour cabinet médical",
       "processes": [],
       "operationProcesses": [
         {
@@ -6275,18 +6275,18 @@
       "id": "e51",
       "slug": "cabinet-paramedical",
       "name": "Cabinet paramédical",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Gardez séances, suivis, facturation et documents sous contrôle sans surcharge administrative inutile.",
       "tags": [
         "Santé",
         "RDV",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "HeartHandshake",
       "price": "",
       "sectorLabel": "Santé, bien-être & esthétique",
       "imageTitle": "Cabinet paramédical",
-      "imageSubtitle": "Aperçu du système opérationnel pour cabinet paramédical",
+      "imageSubtitle": "Aperçu du kit opérationnel pour cabinet paramédical",
       "processes": [],
       "operationProcesses": [
         {
@@ -6372,18 +6372,18 @@
       "id": "e52",
       "slug": "infirmier-liberal",
       "name": "Infirmier libéral",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Gardez tournées, soins, patients et documents sous contrôle sans épuiser votre organisation.",
       "tags": [
         "Santé",
         "Terrain",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "HeartHandshake",
       "price": "",
       "sectorLabel": "Santé, bien-être & esthétique",
       "imageTitle": "Infirmier libéral",
-      "imageSubtitle": "Aperçu du système opérationnel pour infirmier libéral",
+      "imageSubtitle": "Aperçu du kit opérationnel pour infirmier libéral",
       "processes": [],
       "operationProcesses": [
         {
@@ -6473,18 +6473,18 @@
       "id": "e53",
       "slug": "aide-a-domicile-menage",
       "name": "Aide à domicile & ménage",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Gardez bénéficiaires, plannings, intervenants et remplacements sous contrôle sans gérer chaque imprévu à chaud.",
       "tags": [
         "Particuliers",
         "Service",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Home",
       "price": "",
       "sectorLabel": "Services aux particuliers",
       "imageTitle": "Aide à domicile & ménage",
-      "imageSubtitle": "Aperçu du système opérationnel pour aide à domicile & ménage",
+      "imageSubtitle": "Aperçu du kit opérationnel pour aide à domicile & ménage",
       "processes": [],
       "operationProcesses": [
         {
@@ -6570,18 +6570,18 @@
       "id": "e54",
       "slug": "reparation-informatique-mobile",
       "name": "Maintenance informatique B2B",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Centralisez tickets, interventions, parc client, délais, contrats et facturation.",
       "tags": [
         "B2B",
         "IT",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Smartphone",
       "price": "",
       "sectorLabel": "Tech & Digital",
       "imageTitle": "Maintenance informatique B2B",
-      "imageSubtitle": "Aperçu du système opérationnel pour maintenance informatique B2B",
+      "imageSubtitle": "Aperçu du kit opérationnel pour maintenance informatique B2B",
       "processes": [],
       "operationProcesses": [
         {
@@ -6663,18 +6663,18 @@
       "id": "e59",
       "slug": "architecte-maitre-oeuvre",
       "name": "Architecte / maître d’œuvre",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Gardez clients, plans, artisans et marges sous contrôle sans porter chaque chantier dans votre tête.",
       "tags": [
         "BTP",
         "Projet",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Home",
       "price": "",
       "sectorLabel": "BTP & services techniques",
       "imageTitle": "Architecte / maître d’œuvre",
-      "imageSubtitle": "Aperçu du système opérationnel pour architecte / maître d’œuvre",
+      "imageSubtitle": "Aperçu du kit opérationnel pour architecte / maître d’œuvre",
       "processes": [],
       "operationProcesses": [
         {
@@ -6764,18 +6764,18 @@
       "id": "e60",
       "slug": "courtier-credit-assurance",
       "name": "Courtier crédit / assurance",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Gardez dossiers, pièces, partenaires et relances sous contrôle pour conclure sans laisser filer les opportunités.",
       "tags": [
         "Finance",
         "Conseil",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Shield",
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Courtier crédit / assurance",
-      "imageSubtitle": "Aperçu du système opérationnel pour courtier crédit / assurance",
+      "imageSubtitle": "Aperçu du kit opérationnel pour courtier crédit / assurance",
       "processes": [],
       "operationProcesses": [
         {
@@ -6861,18 +6861,18 @@
       "id": "e61",
       "slug": "auto-ecole",
       "name": "Centre de formation conduite pro",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Suivez inscriptions, plannings, moniteurs, sessions, examens et facturation professionnelle.",
       "tags": [
         "B2B",
         "Formation",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Car",
       "price": "",
       "sectorLabel": "Éducation & formation",
       "imageTitle": "Centre de formation conduite pro",
-      "imageSubtitle": "Aperçu du système opérationnel pour centre de formation conduite pro",
+      "imageSubtitle": "Aperçu du kit opérationnel pour centre de formation conduite pro",
       "processes": [],
       "operationProcesses": [
         {
@@ -6966,18 +6966,18 @@
       "id": "e62",
       "slug": "photographe-videaste",
       "name": "Photographe / vidéaste corporate",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Cadrez briefs, tournages, validations, livrables et marge pour les missions d’entreprise.",
       "tags": [
         "B2B",
         "Production",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Aperture",
       "price": "",
       "sectorLabel": "Tech & Digital",
       "imageTitle": "Photographe / vidéaste corporate",
-      "imageSubtitle": "Aperçu du système opérationnel pour photographe / vidéaste corporate",
+      "imageSubtitle": "Aperçu du kit opérationnel pour photographe / vidéaste corporate",
       "processes": [],
       "operationProcesses": [
         {
@@ -7079,18 +7079,18 @@
       "id": "e63",
       "slug": "evenementiel",
       "name": "Événementiel professionnel",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Structurez briefs, prestataires, planning, budget et exécution des événements clients.",
       "tags": [
         "B2B",
         "Événementiel",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "PartyPopper",
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Événementiel professionnel",
-      "imageSubtitle": "Aperçu du système opérationnel pour événementiel professionnel",
+      "imageSubtitle": "Aperçu du kit opérationnel pour événementiel professionnel",
       "processes": [],
       "operationProcesses": [
         {
@@ -7192,18 +7192,18 @@
       "id": "e64",
       "slug": "salle-de-sport",
       "name": "Salle de sport",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Gardez abonnements, planning, équipe et fidélisation sous contrôle sans subir les creux d’activité.",
       "tags": [
         "Sport",
         "Abonnement",
-        "Système"
+        "Kit opérationnel"
       ],
       "icon": "Dumbbell",
       "price": "",
       "sectorLabel": "Santé, bien-être & esthétique",
       "imageTitle": "Salle de sport",
-      "imageSubtitle": "Aperçu du système opérationnel pour salle de sport",
+      "imageSubtitle": "Aperçu du kit opérationnel pour salle de sport",
       "processes": [],
       "operationProcesses": [
         {
@@ -7291,10 +7291,10 @@
     },
     {
       "id": "e65",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "price": "",
       "imageTitle": "Dentiste",
-      "imageSubtitle": "Aperçu du système opérationnel pour dentiste",
+      "imageSubtitle": "Aperçu du kit opérationnel pour dentiste",
       "processes": [],
       "processExamples": {
         "strategie.positionnement": "Exemple : définir les patients à accompagner → comprendre le besoin dentaire → choisir les soins principaux → clarifier la différence avec les autres cabinets → choisir le canal de rendez-vous principal.",
@@ -7317,7 +7317,7 @@
       "tags": [
         "Santé",
         "Rendez-vous",
-        "Système"
+        "Kit opérationnel"
       ],
       "description": "Gardez patients, soins, devis et rappels sous contrôle pour soigner sans saturer le cabinet.",
       "operationProcesses": [
@@ -7388,10 +7388,10 @@
     },
     {
       "id": "e66",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "price": "",
       "imageTitle": "Pharmacie",
-      "imageSubtitle": "Aperçu du système opérationnel pour pharmacie",
+      "imageSubtitle": "Aperçu du kit opérationnel pour pharmacie",
       "processes": [],
       "processExamples": {
         "strategie.positionnement": "Exemple : définir les patients, clients et besoins de proximité à accompagner → comprendre le besoin de santé → choisir les services principaux → clarifier la différence avec les concurrents → choisir le canal principal.",
@@ -7414,7 +7414,7 @@
       "tags": [
         "Santé",
         "Stock",
-        "Système"
+        "Kit opérationnel"
       ],
       "description": "Maîtrisez stock, comptoir, équipe et obligations santé pour servir les patients sans perdre le fil.",
       "operationProcesses": [
@@ -7481,10 +7481,10 @@
     },
     {
       "id": "e67",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "price": "",
       "imageTitle": "Notaire",
-      "imageSubtitle": "Aperçu du système opérationnel pour notaire",
+      "imageSubtitle": "Aperçu du kit opérationnel pour notaire",
       "processes": [],
       "processExamples": {
         "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin ou l’obligation → choisir la mission principale → mettre en avant l’expertise → choisir les prescripteurs principaux.",
@@ -7507,7 +7507,7 @@
       "tags": [
         "Juridique",
         "Dossiers",
-        "Système"
+        "Kit opérationnel"
       ],
       "description": "Gardez actes, pièces, échéances et clients sous contrôle sans perdre le fil des dossiers.",
       "operationProcesses": [
@@ -7578,10 +7578,10 @@
     },
     {
       "id": "e68",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "price": "",
       "imageTitle": "Vétérinaire",
-      "imageSubtitle": "Aperçu du système opérationnel pour vétérinaire",
+      "imageSubtitle": "Aperçu du kit opérationnel pour vétérinaire",
       "processes": [],
       "processExamples": {
         "strategie.positionnement": "Exemple : définir les propriétaires et animaux à accompagner → comprendre le besoin de soin animal → choisir les services principaux → clarifier la différence avec les autres cliniques → choisir le canal de rendez-vous principal.",
@@ -7604,7 +7604,7 @@
       "tags": [
         "Santé",
         "Animaux",
-        "Système"
+        "Kit opérationnel"
       ],
       "description": "Pilotez rendez-vous, dossiers animaux, soins et stock pour faire tourner la clinique sans surcharge.",
       "operationProcesses": [
@@ -7671,10 +7671,10 @@
     },
     {
       "id": "e69",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "price": "",
       "imageTitle": "Agence de voyage",
-      "imageSubtitle": "Aperçu du système opérationnel pour agence de voyage",
+      "imageSubtitle": "Aperçu du kit opérationnel pour agence de voyage",
       "processes": [],
       "processExamples": {
         "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin de séjour → choisir les offres principales → clarifier la différence avec les concurrents → choisir le canal de réservation principal.",
@@ -7697,7 +7697,7 @@
       "tags": [
         "Tourisme",
         "Réservation",
-        "Système"
+        "Kit opérationnel"
       ],
       "description": "Pilotez offres, voyageurs, fournisseurs et paiements pour vendre des séjours sans dispersion.",
       "operationProcesses": [
@@ -7772,10 +7772,10 @@
     },
     {
       "id": "e70",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "price": "",
       "imageTitle": "Opticien",
-      "imageSubtitle": "Aperçu du système opérationnel pour opticien",
+      "imageSubtitle": "Aperçu du kit opérationnel pour opticien",
       "processes": [],
       "processExamples": {
         "strategie.positionnement": "Exemple : définir les clients à accompagner → comprendre le besoin optique → choisir les services principaux → clarifier la différence avec les concurrents → choisir le canal principal.",
@@ -7798,7 +7798,7 @@
       "tags": [
         "Santé",
         "Commerce",
-        "Système"
+        "Kit opérationnel"
       ],
       "description": "Suivez clients, verres, montures, mutuelles et commandes pour servir sans bloquer la boutique.",
       "operationProcesses": [
@@ -7869,10 +7869,10 @@
     },
     {
       "id": "e71",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "price": "",
       "imageTitle": "Pisciniste",
-      "imageSubtitle": "Aperçu du système opérationnel pour pisciniste",
+      "imageSubtitle": "Aperçu du kit opérationnel pour pisciniste",
       "processes": [],
       "processExamples": {
         "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le problème technique → choisir les interventions principales → clarifier la différence avec les concurrents → choisir le canal d’appels principal.",
@@ -7895,7 +7895,7 @@
       "tags": [
         "BTP",
         "SAV",
-        "Système"
+        "Kit opérationnel"
       ],
       "description": "Gardez devis, chantiers, entretiens et SAV piscine sous contrôle malgré la saisonnalité.",
       "operationProcesses": [
@@ -7974,10 +7974,10 @@
     },
     {
       "id": "e72",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "price": "",
       "imageTitle": "Diagnostiqueur immobilier",
-      "imageSubtitle": "Aperçu du système opérationnel pour diagnostiqueur immobilier",
+      "imageSubtitle": "Aperçu du kit opérationnel pour diagnostiqueur immobilier",
       "processes": [],
       "processExamples": {
         "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin technique → choisir la mission principale → clarifier la différence avec les concurrents → choisir le canal principal.",
@@ -8000,7 +8000,7 @@
       "tags": [
         "Immobilier",
         "Diagnostic",
-        "Système"
+        "Kit opérationnel"
       ],
       "description": "Gardez rendez-vous, diagnostics, rapports et conformité sous contrôle du terrain jusqu’à l’envoi.",
       "operationProcesses": [
@@ -8071,10 +8071,10 @@
     },
     {
       "id": "e73",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "price": "",
       "imageTitle": "Fleuriste événementiel B2B",
-      "imageSubtitle": "Aperçu du système opérationnel pour fleuriste événementiel B2B",
+      "imageSubtitle": "Aperçu du kit opérationnel pour fleuriste événementiel B2B",
       "processes": [],
       "processExamples": {
         "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin client → choisir les produits frais principaux → clarifier la différence avec les concurrents → choisir le canal principal.",
@@ -8097,7 +8097,7 @@
       "tags": [
         "B2B",
         "Événementiel",
-        "Système"
+        "Kit opérationnel"
       ],
       "description": "Structurez commandes entreprises, événements, compositions, livraison, stock et marge.",
       "operationProcesses": [
@@ -8184,10 +8184,10 @@
     },
     {
       "id": "e74",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "price": "",
       "imageTitle": "Pressing",
-      "imageSubtitle": "Aperçu du système opérationnel pour pressing",
+      "imageSubtitle": "Aperçu du kit opérationnel pour pressing",
       "processes": [],
       "processExamples": {
         "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin d’entretien textile → choisir les services principaux → clarifier la différence avec les concurrents → choisir le canal principal.",
@@ -8210,7 +8210,7 @@
       "tags": [
         "Service local",
         "Caisse",
-        "Système"
+        "Kit opérationnel"
       ],
       "description": "Gardez dépôts, traitements, délais et clients sous contrôle sans perdre une pièce.",
       "operationProcesses": [
@@ -8277,10 +8277,10 @@
     },
     {
       "id": "e75",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "price": "",
       "imageTitle": "Food truck",
-      "imageSubtitle": "Aperçu du système opérationnel pour food truck",
+      "imageSubtitle": "Aperçu du kit opérationnel pour food truck",
       "processes": [],
       "processExamples": {
         "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre l’envie ou le besoin client → choisir les offres principales → clarifier la différence avec les concurrents → choisir le canal principal.",
@@ -8303,7 +8303,7 @@
       "tags": [
         "Restauration",
         "Mobilité",
-        "Système"
+        "Kit opérationnel"
       ],
       "description": "Maîtrisez emplacements, stock, service et autorisations malgré les déplacements.",
       "operationProcesses": [
@@ -8378,10 +8378,10 @@
     },
     {
       "id": "e76",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "price": "",
       "imageTitle": "Consultant indépendant",
-      "imageSubtitle": "Aperçu du système opérationnel pour consultant indépendant",
+      "imageSubtitle": "Aperçu du kit opérationnel pour consultant indépendant",
       "processes": [],
       "processExamples": {
         "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le problème client → choisir la mission principale → clarifier la différence avec les concurrents → choisir le canal principal.",
@@ -8404,7 +8404,7 @@
       "tags": [
         "Conseil",
         "Mission",
-        "Système"
+        "Kit opérationnel"
       ],
       "description": "Gardez missions, livrables, relances et marge sous contrôle sans vous disperser.",
       "operationProcesses": [
@@ -8505,10 +8505,10 @@
     },
     {
       "id": "e77",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "price": "",
       "imageTitle": "Cabinet d’assurance",
-      "imageSubtitle": "Aperçu du système opérationnel pour cabinet d’assurance",
+      "imageSubtitle": "Aperçu du kit opérationnel pour cabinet d’assurance",
       "processes": [],
       "processExamples": {
         "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le projet patrimonial → choisir l’accompagnement principal → clarifier la différence avec les concurrents → choisir le canal principal.",
@@ -8531,7 +8531,7 @@
       "tags": [
         "Assurance",
         "Contrats",
-        "Système"
+        "Kit opérationnel"
       ],
       "description": "Gardez portefeuille, contrats, sinistres et renouvellements sous contrôle sans perdre les échéances.",
       "operationProcesses": [
@@ -8606,10 +8606,10 @@
     },
     {
       "id": "e78",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "price": "",
       "imageTitle": "VTC",
-      "imageSubtitle": "Aperçu du système opérationnel pour vtc",
+      "imageSubtitle": "Aperçu du kit opérationnel pour vtc",
       "processes": [],
       "processExamples": {
         "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin de transport → choisir les services principaux → clarifier la différence avec les concurrents → choisir le canal de réservation principal.",
@@ -8632,7 +8632,7 @@
       "tags": [
         "Transport",
         "Planning",
-        "Système"
+        "Kit opérationnel"
       ],
       "description": "Pilotez courses, clients, chauffeurs et rentabilité sans subir chaque imprévu.",
       "operationProcesses": [
@@ -8699,10 +8699,10 @@
     },
     {
       "id": "e79",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "price": "",
       "imageTitle": "Coach professionnel",
-      "imageSubtitle": "Aperçu du système opérationnel pour coach professionnel",
+      "imageSubtitle": "Aperçu du kit opérationnel pour coach professionnel",
       "processes": [],
       "processExamples": {
         "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le problème client → choisir la mission principale → clarifier la différence avec les concurrents → choisir le canal principal.",
@@ -8725,7 +8725,7 @@
       "tags": [
         "Coaching",
         "Accompagnement",
-        "Système"
+        "Kit opérationnel"
       ],
       "description": "Gardez clients, objectifs, séances et progression sous contrôle sans perdre le cadre.",
       "operationProcesses": [
@@ -8820,10 +8820,10 @@
     },
     {
       "id": "e80",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "price": "",
       "imageTitle": "Coach sportif",
-      "imageSubtitle": "Aperçu du système opérationnel pour coach sportif",
+      "imageSubtitle": "Aperçu du kit opérationnel pour coach sportif",
       "processes": [],
       "processExamples": {
         "strategie.positionnement": "Exemple : définir les clients à accompagner → comprendre l’objectif sportif → choisir l’accompagnement principal → clarifier la différence avec les autres coachs → choisir le canal de rendez-vous principal.",
@@ -8846,7 +8846,7 @@
       "tags": [
         "Sport",
         "Coaching",
-        "Système"
+        "Kit opérationnel"
       ],
       "description": "Gardez clients, séances, programmes et paiements sous contrôle sans perdre le suivi terrain.",
       "operationProcesses": [
@@ -8929,10 +8929,10 @@
     },
     {
       "id": "e81",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "price": "",
       "imageTitle": "Laverie automatique",
-      "imageSubtitle": "Aperçu du système opérationnel pour laverie automatique",
+      "imageSubtitle": "Aperçu du kit opérationnel pour laverie automatique",
       "processes": [],
       "processExamples": {
         "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin de lavage → choisir les services principaux → clarifier la différence avec les concurrents → choisir le canal principal.",
@@ -8955,7 +8955,7 @@
       "tags": [
         "Service local",
         "Maintenance",
-        "Système"
+        "Kit opérationnel"
       ],
       "description": "Surveillez machines, paiements, maintenance et incidents sans présence permanente.",
       "operationProcesses": [
@@ -9026,10 +9026,10 @@
     },
     {
       "id": "e82",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "price": "",
       "imageTitle": "Entreprise de sécurité B2B",
-      "imageSubtitle": "Aperçu du système opérationnel pour entreprise de sécurité B2B",
+      "imageSubtitle": "Aperçu du kit opérationnel pour entreprise de sécurité B2B",
       "processes": [],
       "processExamples": {
         "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin d’intervention → choisir les prestations principales → clarifier la différence avec les concurrents → choisir le canal principal.",
@@ -9052,7 +9052,7 @@
       "tags": [
         "B2B",
         "Sécurité",
-        "Système"
+        "Kit opérationnel"
       ],
       "description": "Suivez sites clients, agents, plannings, agréments, incidents et facturation.",
       "operationProcesses": [
@@ -9127,10 +9127,10 @@
     },
     {
       "id": "e83",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "price": "",
       "imageTitle": "Association",
-      "imageSubtitle": "Aperçu du système opérationnel pour association",
+      "imageSubtitle": "Aperçu du kit opérationnel pour association",
       "processes": [],
       "processExamples": {
         "strategie.positionnement": "Exemple : définir les membres ou bénéficiaires à cibler → comprendre le besoin principal → choisir les actions principales → clarifier la différence avec les autres structures → choisir le canal principal.",
@@ -9153,7 +9153,7 @@
       "tags": [
         "Association",
         "Membres",
-        "Système"
+        "Kit opérationnel"
       ],
       "description": "Structurez membres, adhésions, événements et finances pour avancer sans épuiser les bénévoles.",
       "operationProcesses": [
@@ -9228,10 +9228,10 @@
     },
     {
       "id": "e84",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "price": "",
       "imageTitle": "Couvreur",
-      "imageSubtitle": "Aperçu du système opérationnel pour couvreur",
+      "imageSubtitle": "Aperçu du kit opérationnel pour couvreur",
       "processes": [],
       "processExamples": {
         "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le problème technique → choisir les interventions principales → clarifier la différence avec les concurrents → choisir le canal d’appels principal.",
@@ -9254,7 +9254,7 @@
       "tags": [
         "BTP",
         "Chantier",
-        "Système"
+        "Kit opérationnel"
       ],
       "description": "Gardez urgences, devis, chantiers et sécurité toiture sous contrôle sans perdre les priorités terrain.",
       "operationProcesses": [
@@ -9341,10 +9341,10 @@
     },
     {
       "id": "e85",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "price": "",
       "imageTitle": "Peintre en bâtiment",
-      "imageSubtitle": "Aperçu du système opérationnel pour peintre en bâtiment",
+      "imageSubtitle": "Aperçu du kit opérationnel pour peintre en bâtiment",
       "processes": [],
       "processExamples": {
         "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin de travaux → choisir le type de chantier → clarifier la différence avec les concurrents → choisir le canal principal.",
@@ -9367,7 +9367,7 @@
       "tags": [
         "BTP",
         "Chantier",
-        "Système"
+        "Kit opérationnel"
       ],
       "description": "Gardez devis, chantiers, teintes et finitions sous contrôle sans perdre les demandes client.",
       "operationProcesses": [
@@ -9454,10 +9454,10 @@
     },
     {
       "id": "e86",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "price": "",
       "imageTitle": "Carreleur",
-      "imageSubtitle": "Aperçu du système opérationnel pour carreleur",
+      "imageSubtitle": "Aperçu du kit opérationnel pour carreleur",
       "processes": [],
       "processExamples": {
         "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin de travaux → choisir le type de chantier → clarifier la différence avec les concurrents → choisir le canal principal.",
@@ -9480,7 +9480,7 @@
       "tags": [
         "BTP",
         "Chantier",
-        "Système"
+        "Kit opérationnel"
       ],
       "description": "Gardez métrés, matériaux, poses et réserves sous contrôle du devis jusqu’à la réception.",
       "operationProcesses": [
@@ -9567,10 +9567,10 @@
     },
     {
       "id": "e87",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "price": "",
       "imageTitle": "Climatisation",
-      "imageSubtitle": "Aperçu du système opérationnel pour climatisation",
+      "imageSubtitle": "Aperçu du kit opérationnel pour climatisation",
       "processes": [],
       "processExamples": {
         "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le problème technique → choisir les interventions principales → clarifier la différence avec les concurrents → choisir le canal d’appels principal.",
@@ -9593,7 +9593,7 @@
       "tags": [
         "BTP",
         "Installation",
-        "Système"
+        "Kit opérationnel"
       ],
       "description": "Gardez diagnostics, installations, entretiens et SAV climatisation sous contrôle au quotidien.",
       "operationProcesses": [
@@ -9680,10 +9680,10 @@
     },
     {
       "id": "e88",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "price": "",
       "imageTitle": "Serrurier",
-      "imageSubtitle": "Aperçu du système opérationnel pour serrurier",
+      "imageSubtitle": "Aperçu du kit opérationnel pour serrurier",
       "processes": [],
       "processExamples": {
         "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le problème technique → choisir les interventions principales → clarifier la différence avec les concurrents → choisir le canal d’appels principal.",
@@ -9706,7 +9706,7 @@
       "tags": [
         "Dépannage",
         "BTP",
-        "Système"
+        "Kit opérationnel"
       ],
       "description": "Gardez urgences, devis, interventions et pièces sous contrôle sans perdre les priorités terrain.",
       "operationProcesses": [
@@ -9789,10 +9789,10 @@
     },
     {
       "id": "e90",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "price": "",
       "imageTitle": "Librairie",
-      "imageSubtitle": "Aperçu du système opérationnel pour librairie",
+      "imageSubtitle": "Aperçu du kit opérationnel pour librairie",
       "processes": [],
       "processExamples": {
         "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin client → choisir les produits principaux → clarifier la différence avec les concurrents → choisir le canal principal.",
@@ -9815,7 +9815,7 @@
       "tags": [
         "Commerce",
         "Livre",
-        "Système"
+        "Kit opérationnel"
       ],
       "description": "Gardez catalogue, commandes, stock et animations sous contrôle sans perdre les demandes lecteurs.",
       "operationProcesses": [
@@ -9894,10 +9894,10 @@
     },
     {
       "id": "e91",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "price": "",
       "imageTitle": "Ostéopathe",
-      "imageSubtitle": "Aperçu du système opérationnel pour ostéopathe",
+      "imageSubtitle": "Aperçu du kit opérationnel pour ostéopathe",
       "processes": [],
       "processExamples": {
         "strategie.positionnement": "Exemple : définir les patients à accompagner → comprendre le besoin de soin manuel → choisir l’accompagnement principal → clarifier la différence avec les autres praticiens → choisir le canal de rendez-vous principal.",
@@ -9920,7 +9920,7 @@
       "tags": [
         "Santé",
         "Rendez-vous",
-        "Système"
+        "Kit opérationnel"
       ],
       "description": "Gardez rendez-vous, dossiers patients, suivis et paiements sous contrôle sans alourdir le cabinet.",
       "operationProcesses": [
@@ -9995,10 +9995,10 @@
     },
     {
       "id": "e92",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "price": "",
       "imageTitle": "Psychologue",
-      "imageSubtitle": "Aperçu du système opérationnel pour psychologue",
+      "imageSubtitle": "Aperçu du kit opérationnel pour psychologue",
       "processes": [],
       "processExamples": {
         "strategie.positionnement": "Exemple : définir les patients à accompagner → comprendre le besoin d’accompagnement psychologique → choisir le cadre de suivi principal → clarifier la différence avec les autres praticiens → choisir le canal de rendez-vous principal.",
@@ -10021,7 +10021,7 @@
       "tags": [
         "Santé",
         "Accompagnement",
-        "Système"
+        "Kit opérationnel"
       ],
       "description": "Gardez rendez-vous, suivis, notes et cadre administratif sous contrôle sans perdre le fil.",
       "operationProcesses": [
@@ -10100,10 +10100,10 @@
     },
     {
       "id": "e93",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "price": "",
       "imageTitle": "Crèche",
-      "imageSubtitle": "Aperçu du système opérationnel pour crèche",
+      "imageSubtitle": "Aperçu du kit opérationnel pour crèche",
       "processes": [],
       "processExamples": {
         "strategie.positionnement": "Exemple : définir les familles à cibler → comprendre le besoin d’accueil → choisir l’accueil principal → clarifier la différence avec les autres structures → choisir le canal de préinscription.",
@@ -10126,7 +10126,7 @@
       "tags": [
         "Petite enfance",
         "Familles",
-        "Système"
+        "Kit opérationnel"
       ],
       "description": "Coordonnez enfants, familles, équipe, transmissions et facturation sans surcharger la structure.",
       "operationProcesses": [
@@ -10197,10 +10197,10 @@
     },
     {
       "id": "e94",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "price": "",
       "imageTitle": "Gestionnaire de patrimoine dirigeant",
-      "imageSubtitle": "Aperçu du système opérationnel pour gestionnaire de patrimoine dirigeant",
+      "imageSubtitle": "Aperçu du kit opérationnel pour gestionnaire de patrimoine dirigeant",
       "processes": [],
       "processExamples": {
         "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le projet patrimonial → choisir l’accompagnement principal → clarifier la différence avec les concurrents → choisir le canal principal.",
@@ -10223,7 +10223,7 @@
       "tags": [
         "B2B",
         "Patrimoine",
-        "Système"
+        "Kit opérationnel"
       ],
       "description": "Structurez découverte client, conformité, recommandations, arbitrages et suivi patrimonial.",
       "operationProcesses": [
@@ -10302,10 +10302,10 @@
     },
     {
       "id": "e95",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "price": "",
       "imageTitle": "Chasseur immobilier",
-      "imageSubtitle": "Aperçu du système opérationnel pour chasseur immobilier",
+      "imageSubtitle": "Aperçu du kit opérationnel pour chasseur immobilier",
       "processes": [],
       "processExamples": {
         "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le projet immobilier → choisir les services principaux → clarifier la différence avec les concurrents → choisir le canal principal.",
@@ -10328,7 +10328,7 @@
       "tags": [
         "Immobilier",
         "Recherche",
-        "Système"
+        "Kit opérationnel"
       ],
       "description": "Gardez mandats, recherches, visites et négociations sous contrôle sans perdre les critères client.",
       "operationProcesses": [
@@ -10399,10 +10399,10 @@
     },
     {
       "id": "e96",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "price": "",
       "imageTitle": "Géomètre",
-      "imageSubtitle": "Aperçu du système opérationnel pour géomètre",
+      "imageSubtitle": "Aperçu du kit opérationnel pour géomètre",
       "processes": [],
       "processExamples": {
         "strategie.positionnement": "Exemple : définir les clients à cibler → comprendre le besoin technique → choisir la mission principale → clarifier la différence avec les concurrents → choisir le canal principal.",
@@ -10425,7 +10425,7 @@
       "tags": [
         "Foncier",
         "Terrain",
-        "Système"
+        "Kit opérationnel"
       ],
       "description": "Gardez missions, relevés, plans et dossiers fonciers sous contrôle du terrain à la livraison.",
       "operationProcesses": [
@@ -10498,7 +10498,7 @@
       "id": "e98",
       "slug": "daf-externalise",
       "name": "DAF externalisé",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Structurez budget, trésorerie, reporting, décisions financières et échanges dirigeant.",
       "tags": [
         "B2B",
@@ -10509,7 +10509,7 @@
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "DAF externalisé",
-      "imageSubtitle": "Aperçu du système opérationnel pour daf externalisé",
+      "imageSubtitle": "Aperçu du kit opérationnel pour daf externalisé",
       "processes": [],
       "operationProcesses": [
         {
@@ -10555,7 +10555,7 @@
       "id": "e99",
       "slug": "office-manager-externalise",
       "name": "Office manager externalisé",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Cadrez administration, fournisseurs, contrats, équipe et routines internes.",
       "tags": [
         "B2B",
@@ -10566,7 +10566,7 @@
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Office manager externalisé",
-      "imageSubtitle": "Aperçu du système opérationnel pour office manager externalisé",
+      "imageSubtitle": "Aperçu du kit opérationnel pour office manager externalisé",
       "processes": [],
       "operationProcesses": [
         {
@@ -10610,7 +10610,7 @@
       "id": "e100",
       "slug": "assistant-administratif-externalise",
       "name": "Assistant administratif externalisé",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Organisez documents, relances, factures, rendez-vous et support administratif client.",
       "tags": [
         "B2B",
@@ -10621,7 +10621,7 @@
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Assistant administratif externalisé",
-      "imageSubtitle": "Aperçu du système opérationnel pour assistant administratif externalisé",
+      "imageSubtitle": "Aperçu du kit opérationnel pour assistant administratif externalisé",
       "processes": [],
       "operationProcesses": [
         {
@@ -10665,7 +10665,7 @@
       "id": "e101",
       "slug": "secretariat-externalise",
       "name": "Secrétariat externalisé",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Structurez appels, agenda, accueil, messages et transmission des informations.",
       "tags": [
         "B2B",
@@ -10676,7 +10676,7 @@
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Secrétariat externalisé",
-      "imageSubtitle": "Aperçu du système opérationnel pour secrétariat externalisé",
+      "imageSubtitle": "Aperçu du kit opérationnel pour secrétariat externalisé",
       "processes": [],
       "operationProcesses": [
         {
@@ -10720,7 +10720,7 @@
       "id": "e102",
       "slug": "gestionnaire-paie-independant",
       "name": "Gestionnaire de paie indépendant",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Suivez variables, bulletins, DSN, échéances sociales et demandes salariés.",
       "tags": [
         "B2B",
@@ -10731,7 +10731,7 @@
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Gestionnaire de paie indépendant",
-      "imageSubtitle": "Aperçu du système opérationnel pour gestionnaire de paie indépendant",
+      "imageSubtitle": "Aperçu du kit opérationnel pour gestionnaire de paie indépendant",
       "processes": [],
       "operationProcesses": [
         {
@@ -10775,7 +10775,7 @@
       "id": "e103",
       "slug": "cabinet-rh-externalise",
       "name": "Cabinet RH externalisé",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Structurez recrutements, contrats, entretiens, obligations RH et suivi équipe.",
       "tags": [
         "B2B",
@@ -10786,7 +10786,7 @@
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Cabinet RH externalisé",
-      "imageSubtitle": "Aperçu du système opérationnel pour cabinet rh externalisé",
+      "imageSubtitle": "Aperçu du kit opérationnel pour cabinet rh externalisé",
       "processes": [],
       "operationProcesses": [
         {
@@ -10830,7 +10830,7 @@
       "id": "e104",
       "slug": "centre-appels-support-client",
       "name": "Centre d’appels / support client",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Pilotez tickets, appels, SLA, réponses, escalades et qualité de support.",
       "tags": [
         "B2B",
@@ -10841,7 +10841,7 @@
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Centre d’appels / support client",
-      "imageSubtitle": "Aperçu du système opérationnel pour centre d’appels / support client",
+      "imageSubtitle": "Aperçu du kit opérationnel pour centre d’appels / support client",
       "processes": [],
       "operationProcesses": [
         {
@@ -10889,7 +10889,7 @@
       "id": "e105",
       "slug": "societe-recouvrement",
       "name": "Société de recouvrement",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Cadrez créances, relances, dossiers, preuves, échéanciers et encaissements.",
       "tags": [
         "B2B",
@@ -10900,7 +10900,7 @@
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Société de recouvrement",
-      "imageSubtitle": "Aperçu du système opérationnel pour société de recouvrement",
+      "imageSubtitle": "Aperçu du kit opérationnel pour société de recouvrement",
       "processes": [],
       "operationProcesses": [
         {
@@ -10948,7 +10948,7 @@
       "id": "e107",
       "slug": "centre-affaires-coworking",
       "name": "Centre d’affaires / coworking",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Pilotez espaces, réservations, membres, services, contrats et facturation.",
       "tags": [
         "B2B",
@@ -10959,7 +10959,7 @@
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Centre d’affaires / coworking",
-      "imageSubtitle": "Aperçu du système opérationnel pour centre d’affaires / coworking",
+      "imageSubtitle": "Aperçu du kit opérationnel pour centre d’affaires / coworking",
       "processes": [],
       "operationProcesses": [
         {
@@ -11007,7 +11007,7 @@
       "id": "e108",
       "slug": "cabinet-qhse-conformite",
       "name": "Cabinet QHSE / conformité",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Structurez audits, plans d’action, preuves, risques et obligations clients.",
       "tags": [
         "B2B",
@@ -11018,7 +11018,7 @@
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Cabinet QHSE / conformité",
-      "imageSubtitle": "Aperçu du système opérationnel pour cabinet qhse / conformité",
+      "imageSubtitle": "Aperçu du kit opérationnel pour cabinet qhse / conformité",
       "processes": [],
       "operationProcesses": [
         {
@@ -11066,7 +11066,7 @@
       "id": "e109",
       "slug": "bureau-etudes",
       "name": "Bureau d’études",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Cadrez demandes, études, chiffrages, livrables, validations et marge projet.",
       "tags": [
         "B2B",
@@ -11077,7 +11077,7 @@
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Bureau d’études",
-      "imageSubtitle": "Aperçu du système opérationnel pour bureau d’études",
+      "imageSubtitle": "Aperçu du kit opérationnel pour bureau d’études",
       "processes": [],
       "operationProcesses": [
         {
@@ -11125,7 +11125,7 @@
       "id": "e110",
       "slug": "cabinet-etudes",
       "name": "Cabinet d’études",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Structurez enquêtes, analyses, livrables, validations et recommandations clients.",
       "tags": [
         "B2B",
@@ -11136,7 +11136,7 @@
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Cabinet d’études",
-      "imageSubtitle": "Aperçu du système opérationnel pour cabinet d’études",
+      "imageSubtitle": "Aperçu du kit opérationnel pour cabinet d’études",
       "processes": [],
       "operationProcesses": [
         {
@@ -11188,7 +11188,7 @@
       "id": "e111",
       "slug": "infogerance-informatique",
       "name": "Infogérance informatique",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Pilotez parc client, tickets, contrats, interventions, sécurité et SLA.",
       "tags": [
         "B2B",
@@ -11199,7 +11199,7 @@
       "price": "",
       "sectorLabel": "Tech & Digital",
       "imageTitle": "Infogérance informatique",
-      "imageSubtitle": "Aperçu du système opérationnel pour infogérance informatique",
+      "imageSubtitle": "Aperçu du kit opérationnel pour infogérance informatique",
       "processes": [],
       "operationProcesses": [
         {
@@ -11247,7 +11247,7 @@
       "id": "e112",
       "slug": "cybersecurite-pme",
       "name": "Cybersécurité PME",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Structurez audits, risques, remédiations, preuves et sensibilisation sécurité.",
       "tags": [
         "B2B",
@@ -11258,7 +11258,7 @@
       "price": "",
       "sectorLabel": "Tech & Digital",
       "imageTitle": "Cybersécurité PME",
-      "imageSubtitle": "Aperçu du système opérationnel pour cybersécurité pme",
+      "imageSubtitle": "Aperçu du kit opérationnel pour cybersécurité pme",
       "processes": [],
       "operationProcesses": [
         {
@@ -11310,7 +11310,7 @@
       "id": "e113",
       "slug": "integrateur-crm-erp",
       "name": "Intégrateur CRM / ERP",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Cadrez besoins, paramétrage, migration, recettes, formation et support client.",
       "tags": [
         "B2B",
@@ -11321,7 +11321,7 @@
       "price": "",
       "sectorLabel": "Tech & Digital",
       "imageTitle": "Intégrateur CRM / ERP",
-      "imageSubtitle": "Aperçu du système opérationnel pour intégrateur crm / erp",
+      "imageSubtitle": "Aperçu du kit opérationnel pour intégrateur crm / erp",
       "processes": [],
       "operationProcesses": [
         {
@@ -11365,7 +11365,7 @@
       "id": "e114",
       "slug": "consultant-data-bi",
       "name": "Consultant data / BI",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Structurez sources, tableaux de bord, indicateurs, qualité des données et décisions.",
       "tags": [
         "B2B",
@@ -11376,7 +11376,7 @@
       "price": "",
       "sectorLabel": "Tech & Digital",
       "imageTitle": "Consultant data / BI",
-      "imageSubtitle": "Aperçu du système opérationnel pour consultant data / bi",
+      "imageSubtitle": "Aperçu du kit opérationnel pour consultant data / bi",
       "processes": [],
       "operationProcesses": [
         {
@@ -11424,7 +11424,7 @@
       "id": "e115",
       "slug": "agence-seo",
       "name": "Agence SEO",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Pilotez audit, contenus, technique, backlinks, reporting et performance organique.",
       "tags": [
         "B2B",
@@ -11435,7 +11435,7 @@
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Agence SEO",
-      "imageSubtitle": "Aperçu du système opérationnel pour agence seo",
+      "imageSubtitle": "Aperçu du kit opérationnel pour agence seo",
       "processes": [],
       "operationProcesses": [
         {
@@ -11541,7 +11541,7 @@
       "id": "e116",
       "slug": "agence-acquisition-paid-ads",
       "name": "Agence acquisition paid ads",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Structurez campagnes, budgets, créas, tracking, leads et rentabilité client.",
       "tags": [
         "B2B",
@@ -11552,7 +11552,7 @@
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Agence acquisition paid ads",
-      "imageSubtitle": "Aperçu du système opérationnel pour agence acquisition paid ads",
+      "imageSubtitle": "Aperçu du kit opérationnel pour agence acquisition paid ads",
       "processes": [],
       "operationProcesses": [
         {
@@ -11650,7 +11650,7 @@
       "id": "e117",
       "slug": "studio-branding-design",
       "name": "Studio branding / design",
-      "category": "Système opérationnel",
+      "category": "Kit opérationnel",
       "description": "Cadrez stratégie de marque, créations, retours, livrables et validations client.",
       "tags": [
         "B2B",
@@ -11661,7 +11661,7 @@
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Studio branding / design",
-      "imageSubtitle": "Aperçu du système opérationnel pour studio branding / design",
+      "imageSubtitle": "Aperçu du kit opérationnel pour studio branding / design",
       "processes": [],
       "operationProcesses": [
         {

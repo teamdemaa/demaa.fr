@@ -1,21 +1,16 @@
 "use client";
 
-import { FilloutPopupEmbed } from "@fillout/react";
 import {
   ArrowRight,
   Building2,
   Calculator,
   FilePenLine,
-  Network,
   Power,
   type LucideIcon,
 } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useMemo, useState } from "react";
 import AccountingRecommendationDialog from "@/components/AccountingRecommendationDialog";
 import ServiceIntroductionModal from "@/components/ServiceIntroductionModal";
-import { getFilloutAttributionParameters } from "@/lib/lead-attribution-client";
-import { recordFilloutLeadSubmission } from "@/lib/fillout-lead-client";
 import { getDemaaServiceBySlug, type DemaaService } from "@/lib/service-catalog";
 
 type AccompagnementServicesProps = {
@@ -32,23 +27,13 @@ type AccompagnementConfig = {
   description: string;
   action: string;
   icon: LucideIcon;
-  mode: "accounting-recommendation" | "booking" | "form";
+  mode: "accounting-recommendation" | "form";
 };
 
 const ACCOMPANIMENT_CARD_CLASS =
   "group flex min-h-[17rem] w-full flex-col rounded-[1.35rem] border border-dema-line bg-dema-paper p-6 text-left transition duration-200 hover:-translate-y-0.5 hover:border-dema-forest/20 hover:shadow-[0_18px_45px_rgba(23,35,29,0.07)]";
 
 const accompagnements: readonly AccompagnementConfig[] = [
-  {
-    slug: "structuration",
-    serviceSlug: "organisation-automatisation",
-    title: "Structuration de l’entreprise",
-    description:
-      "Clarifier votre organisation, vos systèmes et vos priorités pour que l’entreprise repose moins sur vous.",
-    action: "Prendre rendez-vous",
-    icon: Network,
-    mode: "booking",
-  },
   {
     slug: "comptabilite",
     serviceSlug: "expert-comptable",
@@ -119,25 +104,7 @@ export default function AccompagnementServices({
   const selectedSlug = searchParams.get("service");
   const selectedConfig = accompagnements.find((item) => item.slug === selectedSlug) ?? null;
   const selectedService = selectedConfig ? getFormService(selectedConfig) : null;
-  const [filloutAttribution, setFilloutAttribution] = useState(
-    () => getFilloutAttributionParameters(),
-  );
-  const filloutParameters = useMemo(
-    () => ({
-      ...filloutAttribution,
-      systemName,
-      systemSlug,
-      sector: sectorLabel,
-      source,
-    }),
-    [filloutAttribution, sectorLabel, source, systemName, systemSlug],
-  );
-
   function openService(slug: string) {
-    if (slug === "structuration") {
-      setFilloutAttribution(getFilloutAttributionParameters());
-    }
-
     const params = new URLSearchParams(searchParams.toString());
     params.set("service", slug);
     params.set("systemSlug", systemSlug);
@@ -221,21 +188,6 @@ export default function AccompagnementServices({
           );
         })}
       </div>
-
-      {selectedConfig?.mode === "booking" ? (
-        <FilloutPopupEmbed
-          filloutId="sWP6PSPRVLus"
-          inheritParameters
-          parameters={filloutParameters}
-          isOpen
-          onClose={closeService}
-          onSubmit={() => {
-            recordFilloutLeadSubmission({ systemSlug });
-          }}
-          width={720}
-          height={720}
-        />
-      ) : null}
 
       {selectedConfig?.mode === "form" && selectedService ? (
         <ServiceIntroductionModal

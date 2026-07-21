@@ -105,9 +105,9 @@ function getAssets(trainingSlug: string, sourceSystemSlug: string | null) {
       return [
         {
           id: "systeme-marketing-vente-airtable",
-          label: "Système Marketing & Vente sur Airtable",
+          label: "Tableau de pilotage Marketing & Vente sur Airtable",
           description: "La base pour structurer le pipeline, les relances et le suivi des conversions.",
-          href: "/modeles-de-documents/systeme-operationnel",
+          href: "/modeles-de-documents/pilotage-marketing-vente",
         },
       ];
     default:

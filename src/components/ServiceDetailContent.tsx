@@ -1,7 +1,7 @@
 "use client";
 
 import { Check } from "lucide-react";
-import OrganisationAuditBookingButton from "@/components/OrganisationAuditBookingButton";
+import OrganisationSessionBookingButton from "@/components/OrganisationSessionBookingButton";
 import type { DemaaService } from "@/lib/service-catalog";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import ServiceRequestCta from "@/components/ServiceRequestCta";
@@ -15,7 +15,7 @@ export default function ServiceDetailContent({
   service,
   compact = false,
 }: ServiceDetailContentProps) {
-  const isOrganisationAudit = service.slug === "organisation-automatisation";
+  const isOrganisationSession = service.slug === "organisation-automatisation";
   const isBillingAssistant = service.slug === "assistante-facturation";
 
   return (
@@ -36,13 +36,13 @@ export default function ServiceDetailContent({
           <p className="mt-4 text-[1.05rem] leading-relaxed text-dema-muted md:text-[1.28rem]">
             {service.description}
           </p>
-          {isOrganisationAudit ? (
-            <OrganisationAuditBookingButton />
+          {isOrganisationSession ? (
+            <OrganisationSessionBookingButton />
           ) : null}
         </div>
       </section>
 
-      {isOrganisationAudit ? null : (
+      {isOrganisationSession ? null : (
         <section className="space-y-5">
           <div className="rounded-[1.25rem] border border-dema-line bg-dema-paper p-6">
             <h2 className="text-2xl font-semibold text-brand-blue md:text-[1.7rem]">Ce qui est inclus</h2>

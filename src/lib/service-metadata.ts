@@ -11,7 +11,7 @@ export function getServicePageMetadata(service: DemaaService): Metadata {
     : isAssistantLanding
     ? "Recrutement assistante facturation - Demaa"
     : isOrganisationLanding
-      ? "Organisation - Annuaire services Demaa"
+      ? "Session d’organisation offerte | Demaa"
       : `${service.name} - Annuaire services Demaa`;
   const canonicalPath = isOrganisationLanding
     ? "/annuaire-services/organisation"
