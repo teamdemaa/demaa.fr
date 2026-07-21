@@ -10,7 +10,7 @@ import {
 } from "@/lib/lead-retry";
 import { getLeadRetentionExpiry } from "@/lib/operational-maintenance";
 
-export type LeadNotificationChannel = "email" | "resend" | "slack";
+type LeadNotificationChannel = "email" | "resend" | "slack";
 export type LeadDeliveryChannel = LeadNotificationChannel | "kit_email";
 export type LeadDeliveryState = "abandoned" | "failed" | "pending" | "sent" | "skipped";
 
