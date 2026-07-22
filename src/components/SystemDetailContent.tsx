@@ -94,10 +94,6 @@ export default function SystemDetailContent({
             <Mail className="h-4 w-4" aria-hidden="true" />
             Recevoir gratuitement mon tableau de pilotage
           </button>
-          <p className="mt-2 text-xs leading-relaxed text-dema-muted">
-            Un seul Google Sheet : synthèse, prévisionnel, actions, équipe, écosystème,
-            calendrier marketing et process.
-          </p>
         </div>
 
         <div className="mt-10 border-b border-dema-line" role="tablist" aria-label="Contenu du kit">
@@ -135,17 +131,8 @@ export default function SystemDetailContent({
 
           {activeTab === "outils" ? (
             <div>
-              <div className="max-w-2xl">
-                <h2 className="text-2xl font-semibold tracking-tight text-brand-blue">
-                  Les outils métier à regarder en priorité
-                </h2>
-                <p className="mt-2 text-sm leading-relaxed text-dema-muted">
-                  Une sélection courte, spécifique à votre activité. Les outils transverses
-                  restent accessibles dans l’annuaire général.
-                </p>
-              </div>
               {métierTools.length ? (
-                <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {métierTools.map((tool) => {
                     const href = tool.slug
                       ? `/annuaire-outils/${tool.slug}`
@@ -181,7 +168,7 @@ export default function SystemDetailContent({
                   })}
                 </div>
               ) : (
-                <div className="demaa-surface mt-6 rounded-[1.25rem] px-5 py-6">
+                <div className="demaa-surface rounded-[1.25rem] px-5 py-6">
                   <p className="text-sm leading-relaxed text-dema-muted">
                     La sélection d’outils métier est en cours de finalisation.
                   </p>
