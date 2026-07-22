@@ -37,7 +37,7 @@ const liveTrainings = [
     ],
     includedModels: [
       "P&L, suivi et prévisionnel financier",
-      "Tableau de pilotage adapté à votre activité",
+      "Tableau de suivi opérationnel adapté à votre activité",
     ],
     qAndA: "Un temps de questions-réponses pour appliquer les modèles à votre entreprise.",
     duration: "2 h 30",

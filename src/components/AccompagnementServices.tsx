@@ -16,7 +16,7 @@ const CARD_CLASS =
 
 const structureItems = [
   "Diagnostic de l’organisation et des priorités",
-  "Tableau de pilotage configuré avec vos données",
+  "Tableau de suivi opérationnel configuré avec vos données",
   "Rôles, process et responsabilités clarifiés",
   "Plan d’action concret pour la suite",
 ] as const;

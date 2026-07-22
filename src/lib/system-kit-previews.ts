@@ -1,15 +1,16 @@
+import previewManifest from "@/lib/generated/system-kit-previews.json";
+
 export type SystemKitPreview = {
   alt: string;
+  height: number;
   src: string;
+  width: number;
 };
 
-const SYSTEM_KIT_PREVIEWS: Partial<Record<string, SystemKitPreview>> = {
-  "agence-marketing": {
-    alt: "Aperçu des feuilles du tableau de pilotage pour agence marketing",
-    src: "/images/kits/agence-marketing/tableau-pilotage-preview.webp",
-  },
-};
+const SYSTEM_KIT_PREVIEWS = new Map<string, SystemKitPreview>(
+  previewManifest.map(({ slug, ...preview }) => [slug, preview]),
+);
 
 export function getSystemKitPreview(systemSlug: string): SystemKitPreview | null {
-  return SYSTEM_KIT_PREVIEWS[systemSlug] ?? null;
+  return SYSTEM_KIT_PREVIEWS.get(systemSlug) ?? null;
 }

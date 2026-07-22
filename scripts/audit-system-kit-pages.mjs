@@ -71,7 +71,7 @@ function inspectPage({ enterprise, response, html, tab }) {
 
   const ctaCount = countOccurrences(
     renderedHtml,
-    "Recevoir mon tableau de pilotage",
+    "Recevoir mon tableau de suivi",
   );
   if (ctaCount !== 1) {
     errors.push(`expected one top download CTA, found ${ctaCount}`);
