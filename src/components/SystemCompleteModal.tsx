@@ -258,10 +258,6 @@ export default function SystemCompleteModal({
               ) : null}
               {isSubmitting ? "Envoi…" : "Recevoir gratuitement mon tableau"}
             </button>
-            <p className="text-xs leading-relaxed text-dema-muted">
-              Le modèle est partagé en lecture seule. Google créera une copie
-              modifiable dans votre Drive.
-            </p>
           </form>
         )}
       </section>
