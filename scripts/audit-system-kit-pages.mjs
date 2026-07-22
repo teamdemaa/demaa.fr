@@ -62,8 +62,16 @@ function inspectPage({ enterprise, response, html, tab }) {
     errors.push(`expected one top download CTA, found ${ctaCount}`);
   }
 
-  if (!renderedHtml.includes("synthèse, prévisionnel, actions, équipe, écosystème")) {
-    errors.push("missing seven-tab delivery summary");
+  for (const removedIntro of [
+    "Un seul Google Sheet : synthèse, prévisionnel, actions, équipe, écosystème",
+    "Les outils métier à regarder en priorité",
+    "Une sélection courte, spécifique à votre activité",
+    "Vous aider à mettre le tableau en place",
+    "Le tableau est gratuit. Ces prestations sont là",
+  ]) {
+    if (renderedHtml.includes(removedIntro)) {
+      errors.push(`removed intro is still visible: ${removedIntro}`);
+    }
   }
 
   if (tab === "process") {
@@ -85,9 +93,6 @@ function inspectPage({ enterprise, response, html, tab }) {
     }
     if (renderedHtml.includes("Voir plus")) {
       errors.push("legacy tool expansion remains visible");
-    }
-    if (!renderedHtml.includes("outils métier à regarder en priorité")) {
-      errors.push("missing métier-tools heading");
     }
   }
 

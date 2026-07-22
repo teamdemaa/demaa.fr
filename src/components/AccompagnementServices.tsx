@@ -53,17 +53,7 @@ export default function AccompagnementServices({
 
   return (
     <div>
-      <div className="max-w-3xl">
-        <h2 className="text-2xl font-semibold tracking-tight text-brand-blue">
-          Vous aider à mettre le tableau en place
-        </h2>
-        <p className="mt-2 text-sm leading-relaxed text-dema-muted">
-          Le tableau est gratuit. Ces prestations sont là si vous souhaitez être aidé pour
-          l’adapter, structurer votre organisation ou déléguer votre comptabilité.
-        </p>
-      </div>
-
-      <div className={`mt-6 grid gap-4 ${showAccounting ? "lg:grid-cols-2" : "max-w-2xl"}`}>
+      <div className={`grid gap-4 ${showAccounting ? "lg:grid-cols-2" : "max-w-2xl"}`}>
         <Link href={structureHref} className={CARD_CLASS}>
           <div className="flex items-start justify-between gap-4">
             <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
