@@ -83,7 +83,7 @@ export default async function FinanceDetailPage({
     : null;
   const backLink = returnEnterprise
     ? {
-        href: `/kit-operationnel/${encodeURIComponent(returnEnterprise.slug)}?tab=financement`,
+        href: `/kit-operationnel/${encodeURIComponent(returnEnterprise.slug)}`,
         label: `Retour à ${returnEnterprise.name}`,
       }
     : {
@@ -112,7 +112,6 @@ export default async function FinanceDetailPage({
             <RelatedSystemsLinks
               systems={relatedSystems}
               description="Quelques kits opérationnels où ce sujet financement revient souvent."
-              systemTab="financement"
             />
           </section>
         </div>

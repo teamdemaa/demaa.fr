@@ -5,7 +5,7 @@ const CURATED_TOOL_RECOMMENDATIONS_BY_SYSTEM: Record<
   "cabinet-comptable": ["pennylane", "tiimora", "silae"],
   "cabinet-davocat": ["secib", "doctrine"],
   "cabinet-de-conseil": ["everwin", "hubspot", "notion"],
-  "agence-marketing": ["furious", "metricool", "canva"],
+  "agence-marketing": ["furious", "boondmanager", "riverside", "kit", "wordpress"],
   freelance: ["malt", "freebe", "calendly"],
   "agence-de-recrutement": ["recruitee", "hubspot", "calendly"],
   "agence-web": ["figma", "webflow", "github"],

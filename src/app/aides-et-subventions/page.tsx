@@ -44,7 +44,7 @@ export default async function AidesEtSubventionsPage({
   const retourSysteme = getParamValue(params.retourSysteme);
   const backLink = retourSysteme
     ? {
-        href: `/kit-operationnel/${encodeURIComponent(retourSysteme)}?tab=financement`,
+        href: `/kit-operationnel/${encodeURIComponent(retourSysteme)}`,
         label: "Retour au kit opérationnel",
       }
     : undefined;

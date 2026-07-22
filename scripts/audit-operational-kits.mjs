@@ -10,6 +10,7 @@ const timeoutMs = Number.parseInt(process.env.DEMAA_AUDIT_TIMEOUT_MS ?? "30000",
 const enterprises = JSON.parse(fs.readFileSync(catalogPath, "utf8")).enterprises;
 
 const forbiddenUi = [
+  "Recevoir gratuitement mon tableau de pilotage",
   "Recevoir les documents",
   "Documents et process",
   "Accéder aux téléchargements",
@@ -18,8 +19,7 @@ const forbiddenUi = [
   "Système opérationnel",
 ];
 
-const organisationSessionLinkPattern =
-  /<a[^>]*href="\/annuaire-services\/organisation\?[^\"]*"[^>]*>\s*Session d’organisation offerte\s*<\/a>/;
+const downloadCta = "Recevoir mon tableau de pilotage";
 
 async function fetchPage(path, redirect = "follow") {
   return fetch(`${baseUrl}${path}`, {
@@ -37,40 +37,28 @@ async function inspectEnterprise(enterprise) {
   try {
     const overviewResponse = await fetchPage(canonicalPath);
     const overviewHtml = await overviewResponse.text();
-    const renderedOverviewHtml = overviewHtml.replace(/<!--[\s\S]*?-->/g, "");
+    const renderedOverviewHtml = overviewHtml
+      .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "")
+      .replace(/<!--[\s\S]*?-->/g, "");
 
     if (overviewResponse.status !== 200) errors.push(`canonical HTTP ${overviewResponse.status}`);
     if (!overviewHtml.includes(`<link rel="canonical" href="https://demaa.fr${canonicalPath}"/>`)) {
       errors.push("canonical link missing or incorrect");
     }
     if (!overviewHtml.includes("Kit opérationnel")) errors.push("SEO title missing");
-    if (!organisationSessionLinkPattern.test(renderedOverviewHtml)) {
-      errors.push("organisation session CTA missing from overview");
+    const overviewDownloadCtaCount = renderedOverviewHtml.split(downloadCta).length - 1;
+    if (overviewDownloadCtaCount !== 1) {
+      errors.push(`expected one top download CTA, found ${overviewDownloadCtaCount}`);
     }
 
     for (const value of forbiddenUi) {
       if (renderedOverviewHtml.includes(value)) errors.push(`legacy UI still visible: ${value}`);
     }
-
-    const response = await fetchPage(`${canonicalPath}?tab=process`);
-    const html = await response.text();
-    const renderedHtml = html.replace(/<!--[\s\S]*?-->/g, "");
-
-    if (response.status !== 200) errors.push(`process tab HTTP ${response.status}`);
-    if (!/<p[^>]*>\s*\d+ process\s*<\/p>/.test(renderedHtml)) {
+    if (!/<p[^>]*>\s*\d+ process\s*<\/p>/.test(renderedOverviewHtml)) {
       errors.push("process count missing");
     }
-    if (!html.includes('class="demaa-accordion')) {
+    if (!overviewHtml.includes('class="demaa-accordion')) {
       errors.push("process accordions missing");
-    }
-    if (!html.includes("Recevoir le kit opérationnel")) {
-      errors.push("single kit CTA missing");
-    }
-    for (const value of forbiddenUi) {
-      if (renderedHtml.includes(value)) errors.push(`legacy UI still visible on process tab: ${value}`);
-    }
-    if (organisationSessionLinkPattern.test(renderedHtml)) {
-      errors.push("organisation session CTA visible outside overview");
     }
 
     const redirects = [

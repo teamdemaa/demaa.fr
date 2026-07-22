@@ -5,14 +5,12 @@ type RelatedSystemsLinksProps = {
   systems: System[];
   title?: string;
   description?: string;
-  systemTab?: string;
 };
 
 export default function RelatedSystemsLinks({
   systems,
   title = "Kits opérationnels liés",
   description = "Explorer les kits opérationnels les plus proches de ce sujet.",
-  systemTab,
 }: RelatedSystemsLinksProps) {
   if (!systems.length) {
     return null;
@@ -26,7 +24,7 @@ export default function RelatedSystemsLinks({
         {systems.map((system) => (
           <Link
             key={system.slug}
-            href={`/kit-operationnel/${system.slug}${systemTab ? `?tab=${encodeURIComponent(systemTab)}` : ""}`}
+            href={`/kit-operationnel/${system.slug}`}
             className="inline-flex rounded-full border border-dema-line bg-dema-paper px-3 py-1.5 text-xs font-medium text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
           >
             {system.name}

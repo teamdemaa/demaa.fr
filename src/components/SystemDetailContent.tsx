@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, ArrowRight, Mail, Wrench } from "lucide-react";
-import { useMemo, useState } from "react";
+import { type KeyboardEvent, useMemo, useState } from "react";
 import AccompagnementServices from "@/components/AccompagnementServices";
 import SystemCompleteModal from "@/components/SystemCompleteModal";
 import SystemeTabContent from "@/components/SystemeTabContent";
@@ -25,7 +25,7 @@ type SystemDetailContentProps = {
 
 const tabs: ReadonlyArray<{ slug: SystemDetailTab; label: string }> = [
   { slug: "process", label: "Process" },
-  { slug: "outils", label: "Outils métier" },
+  { slug: "outils", label: "Outils" },
   { slug: "accompagnement", label: "Accompagnement" },
 ];
 
@@ -59,6 +59,33 @@ export default function SystemDetailContent({
     router.replace(`${url.pathname}?${url.searchParams.toString()}`, { scroll: false });
   }
 
+  function handleTabKeyDown(
+    event: KeyboardEvent<HTMLButtonElement>,
+    currentTab: SystemDetailTab,
+  ) {
+    const currentIndex = tabs.findIndex((tab) => tab.slug === currentTab);
+    let nextIndex: number | undefined;
+
+    if (event.key === "ArrowRight") {
+      nextIndex = (currentIndex + 1) % tabs.length;
+    } else if (event.key === "ArrowLeft") {
+      nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+    } else if (event.key === "Home") {
+      nextIndex = 0;
+    } else if (event.key === "End") {
+      nextIndex = tabs.length - 1;
+    }
+
+    if (nextIndex === undefined) return;
+
+    event.preventDefault();
+    const nextTab = tabs[nextIndex];
+    selectTab(nextTab.slug);
+    requestAnimationFrame(() => {
+      document.getElementById(`tab-${nextTab.slug}`)?.focus();
+    });
+  }
+
   return (
     <>
       <article>
@@ -89,15 +116,20 @@ export default function SystemDetailContent({
             onClick={() => setIsDownloadOpen(true)}
             aria-haspopup="dialog"
             aria-expanded={isDownloadOpen}
-            className="demaa-primary-button mt-6 inline-flex items-center gap-2"
+            className="mt-6 inline-flex items-center gap-2 rounded-full border border-dema-forest/75 bg-dema-sage/80 px-4 py-2.5 text-sm font-semibold text-dema-forest transition hover:border-dema-forest hover:bg-[#e9eee9] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
           >
             <Mail className="h-4 w-4" aria-hidden="true" />
-            Recevoir gratuitement mon tableau de pilotage
+            Recevoir mon tableau de pilotage
           </button>
         </div>
 
-        <div className="mt-10 border-b border-dema-line" role="tablist" aria-label="Contenu du kit">
-          <div className="flex gap-1 overflow-x-auto">
+        <div className="mt-10 flex justify-start">
+          <div
+            className="grid w-full max-w-[46rem] grid-cols-3 gap-1 rounded-full border border-dema-line bg-dema-paper p-1 shadow-[0_8px_24px_rgba(23,35,29,0.035)]"
+            role="tablist"
+            aria-label="Contenu du kit"
+            aria-orientation="horizontal"
+          >
             {tabs.map((tab) => (
               <button
                 key={tab.slug}
@@ -105,12 +137,14 @@ export default function SystemDetailContent({
                 type="button"
                 role="tab"
                 aria-selected={activeTab === tab.slug}
-                aria-controls={`panel-${tab.slug}`}
+                aria-controls="kit-content-panel"
+                tabIndex={activeTab === tab.slug ? 0 : -1}
                 onClick={() => selectTab(tab.slug)}
-                className={`shrink-0 border-b-2 px-4 py-3 text-sm font-semibold transition ${
+                onKeyDown={(event) => handleTabKeyDown(event, tab.slug)}
+                className={`min-h-12 min-w-0 whitespace-nowrap rounded-full px-1 py-2.5 text-[13px] font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:px-4 sm:text-sm ${
                   activeTab === tab.slug
-                    ? "border-dema-forest text-dema-forest"
-                    : "border-transparent text-dema-muted hover:text-brand-blue"
+                    ? "bg-dema-sage text-dema-forest"
+                    : "text-dema-muted hover:bg-dema-sage/55 hover:text-brand-blue"
                 }`}
               >
                 {tab.label}
@@ -120,7 +154,7 @@ export default function SystemDetailContent({
         </div>
 
         <section
-          id={`panel-${activeTab}`}
+          id="kit-content-panel"
           role="tabpanel"
           aria-labelledby={`tab-${activeTab}`}
           className="mt-7"
@@ -132,7 +166,7 @@ export default function SystemDetailContent({
           {activeTab === "outils" ? (
             <div>
               {métierTools.length ? (
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
                   {métierTools.map((tool) => {
                     const href = tool.slug
                       ? `/annuaire-outils/${tool.slug}`

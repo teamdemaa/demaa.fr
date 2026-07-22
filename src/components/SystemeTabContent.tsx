@@ -1,18 +1,16 @@
 "use client";
 
-import { ChevronDown, Mail } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import type { SystemeDetail } from "@/lib/systeme-catalog";
 
 type SystemeTabContentProps = {
   systemName: string;
   systeme: SystemeDetail | null | undefined;
-  onRequestSystemComplete?: () => void;
 };
 
 export default function SystemeTabContent({
   systemName,
   systeme,
-  onRequestSystemComplete,
 }: SystemeTabContentProps) {
   if (!systeme?.cards.length) {
     return (
@@ -66,20 +64,6 @@ export default function SystemeTabContent({
           </details>
         ))}
       </div>
-
-      {onRequestSystemComplete ? (
-        <div className="flex justify-start">
-          <button
-            type="button"
-            onClick={onRequestSystemComplete}
-            className="demaa-primary-button inline-flex items-center gap-2"
-            aria-label={`Recevoir le kit opérationnel ${systemName}`}
-          >
-            <Mail className="h-4 w-4" aria-hidden="true" />
-            Recevoir le kit opérationnel
-          </button>
-        </div>
-      ) : null}
     </div>
   );
 }

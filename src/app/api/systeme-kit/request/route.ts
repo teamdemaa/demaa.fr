@@ -130,7 +130,7 @@ async function handlePost(request: Request) {
     emoji: "📦",
     idempotencyKey,
     requestType: "system_kit_request",
-    title: `Réception du tableau de pilotage — ${resolvedSystemName}`,
+    title: `Réception du tableau de pilotage - ${resolvedSystemName}`,
   });
 
   const existingKitEmailState = await getLeadDeliveryState(lead.leadId, "kit_email");

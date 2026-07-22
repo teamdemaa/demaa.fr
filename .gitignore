@@ -25,6 +25,7 @@
 /data
 /outputs
 /tmp/
+/exports/
 
 # local working files
 Outils_metier_*.xlsx
