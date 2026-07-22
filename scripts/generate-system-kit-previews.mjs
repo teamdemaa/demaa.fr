@@ -53,7 +53,7 @@ if (unknownSlugs.length) {
 }
 
 const cacheDir = path.join(os.tmpdir(), "demaa-system-kit-preview-cache");
-const manifestPath = path.join(rootDir, "src/lib/generated/system-kit-previews.json");
+const manifestPath = path.join(rootDir, "src/lib/system-kit-previews.generated.json");
 const existingManifest = await fs
   .readFile(manifestPath, "utf8")
   .then((source) => JSON.parse(source))

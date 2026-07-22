@@ -6,7 +6,7 @@ import { readSystemKitPreviewData } from "./lib/system-kit-preview-data.mjs";
 
 const rootDir = path.resolve(import.meta.dirname, "..");
 const runtimeNodeModules = process.env.CODEX_WORKSPACE_NODE_MODULES;
-const manifestPath = path.join(rootDir, "src/lib/generated/system-kit-previews.json");
+const manifestPath = path.join(rootDir, "src/lib/system-kit-previews.generated.json");
 const mappings = await readSystemKitPreviewData(rootDir);
 const manifest = JSON.parse(await fs.readFile(manifestPath, "utf8"));
 const manifestBySlug = new Map(manifest.map((entry) => [entry.slug, entry]));

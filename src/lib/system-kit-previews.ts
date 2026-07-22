@@ -1,4 +1,4 @@
-import previewManifest from "@/lib/generated/system-kit-previews.json";
+import previewManifest from "@/lib/system-kit-previews.generated.json";
 
 export type SystemKitPreview = {
   alt: string;
