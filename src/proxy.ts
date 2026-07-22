@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { isVercelPreviewHost } from "@/lib/site-url";
 
 const CANONICAL_HOST = "demaa.fr";
 const CANONICAL_ORIGIN = `https://${CANONICAL_HOST}`;
@@ -44,7 +45,7 @@ export function proxy(request: NextRequest) {
 
   const shouldRedirect =
     host === "www.demaa.fr" ||
-    host.endsWith(".vercel.app");
+    (host.endsWith(".vercel.app") && !isVercelPreviewHost(host));
 
   if (!shouldRedirect) {
     return NextResponse.next();

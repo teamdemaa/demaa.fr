@@ -31,6 +31,19 @@ function getCanonicalHost() {
   return new URL(getCanonicalSiteUrl()).host.toLowerCase();
 }
 
+export function isVercelPreviewHost(host: string) {
+  if (process.env.VERCEL_ENV !== "preview") {
+    return false;
+  }
+
+  const normalizedHost = host.trim().toLowerCase();
+  const previewHosts = [process.env.VERCEL_URL, process.env.VERCEL_BRANCH_URL]
+    .map((value) => value?.trim().toLowerCase())
+    .filter(Boolean);
+
+  return previewHosts.includes(normalizedHost);
+}
+
 export function getCanonicalBaseUrl(request?: Request) {
   if (process.env.NODE_ENV === "production" || !request) {
     return getCanonicalOrigin();
@@ -58,6 +71,10 @@ export function isAllowedRequestHost(request: Request) {
   const canonicalHost = getCanonicalHost();
 
   if (host === canonicalHost) {
+    return true;
+  }
+
+  if (isVercelPreviewHost(host)) {
     return true;
   }
 

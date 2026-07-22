@@ -129,7 +129,7 @@ export default function AccountingRecommendationDialog({
 
     try {
       setIsSubmitting(true);
-      const flowKey = `accounting-recommendation:${systemSlug}`;
+      const flowKey = `accounting-appointment:${systemSlug}`;
       const idempotencyKey = getLeadSubmissionKey(flowKey);
       const response = await fetch("/api/accounting-directory-appointment-request", {
         method: "POST",
@@ -161,7 +161,7 @@ export default function AccountingRecommendationDialog({
       }
 
       clearLeadSubmissionKey(flowKey);
-      setSuccess("Demande envoyée. Nous revenons vers vous avec un expert-comptable adapté.");
+      setSuccess("Demande envoyée. Nous revenons vers vous pour organiser le rendez-vous.");
       trackLeadConversion({
         requestType: "accounting_recommendation",
         systemSlug,
@@ -225,13 +225,13 @@ export default function AccountingRecommendationDialog({
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-                  Mise en relation
+                  Rendez-vous d’information
                 </p>
                 <h2
                   id={`${fieldId}-title`}
                   className="mt-2 text-2xl font-semibold tracking-tight text-brand-blue"
                 >
-                  On vous recommande l’expert-comptable adapté à votre activité
+                  Échangez avec un expert-comptable adapté à votre activité
                 </h2>
                 <p
                   id={`${fieldId}-description`}
@@ -316,7 +316,7 @@ export default function AccountingRecommendationDialog({
                   {isSubmitting ? (
                     <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
                   ) : null}
-                  {isSubmitting ? "Envoi en cours..." : "Recevoir ma recommandation"}
+                  {isSubmitting ? "Envoi en cours..." : "Demander un rendez-vous"}
                 </button>
               </form>
             )}
