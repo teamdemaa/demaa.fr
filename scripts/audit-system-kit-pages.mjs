@@ -102,6 +102,12 @@ function inspectPage({ enterprise, response, html, tab }) {
       }
     }
 
+    if (!renderedHtml.includes(
+      'href="/annuaire-services/organisation?booking=1&amp;source=',
+    )) {
+      errors.push("structuration CTA does not open the booking form");
+    }
+
     const accountingExpected = enterprise.slug !== "cabinet-comptable";
     const hasAccounting = renderedHtml.includes("Expertise comptable");
     if (hasAccounting !== accountingExpected) {

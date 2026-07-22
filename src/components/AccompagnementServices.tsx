@@ -49,7 +49,7 @@ export default function AccompagnementServices({
 }: AccompagnementServicesProps) {
   const showAccounting = systemSlug !== "cabinet-comptable";
   const structureHref =
-    `/annuaire-services/organisation?source=${encodeURIComponent(source)}&systemSlug=${encodeURIComponent(systemSlug)}`;
+    `/annuaire-services/organisation?booking=1&source=${encodeURIComponent(source)}&systemSlug=${encodeURIComponent(systemSlug)}`;
 
   return (
     <div>

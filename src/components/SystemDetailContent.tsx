@@ -87,6 +87,8 @@ export default function SystemDetailContent({
           <button
             type="button"
             onClick={() => setIsDownloadOpen(true)}
+            aria-haspopup="dialog"
+            aria-expanded={isDownloadOpen}
             className="demaa-primary-button mt-6 inline-flex items-center gap-2"
           >
             <Mail className="h-4 w-4" aria-hidden="true" />

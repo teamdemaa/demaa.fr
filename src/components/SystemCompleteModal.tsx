@@ -1,7 +1,7 @@
 "use client";
 
 import { ExternalLink, LoaderCircle, Mail, X } from "lucide-react";
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import {
   getLeadAttributionPayload,
   trackLeadConversion,
@@ -25,6 +25,9 @@ export default function SystemCompleteModal({
   systeme,
   onClose,
 }: SystemCompleteModalProps) {
+  const dialogRef = useRef<HTMLElement>(null);
+  const firstNameInputRef = useRef<HTMLInputElement>(null);
+  const copyLinkRef = useRef<HTMLAnchorElement>(null);
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [website, setWebsite] = useState("");
@@ -35,19 +38,61 @@ export default function SystemCompleteModal({
     systeme?.cards.reduce((total, card) => total + card.items.length, 0) ?? 0;
 
   useEffect(() => {
+    const previouslyFocused = document.activeElement instanceof HTMLElement
+      ? document.activeElement
+      : null;
+    const dialog = dialogRef.current;
+
+    const getFocusableElements = () =>
+      Array.from(
+        dialog?.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), [href], [tabindex]:not([tabindex="-1"])',
+        ) ?? [],
+      ).filter((element) => element.getAttribute("aria-hidden") !== "true");
+
     function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") onClose();
+      if (event.key === "Escape") {
+        event.preventDefault();
+        onClose();
+        return;
+      }
+
+      if (event.key !== "Tab") return;
+
+      const focusableElements = getFocusableElements();
+      const firstFocusable = focusableElements[0];
+      const lastFocusable = focusableElements.at(-1);
+
+      if (!firstFocusable || !lastFocusable) {
+        event.preventDefault();
+        dialog?.focus();
+        return;
+      }
+
+      if (event.shiftKey && document.activeElement === firstFocusable) {
+        event.preventDefault();
+        lastFocusable.focus();
+      } else if (!event.shiftKey && document.activeElement === lastFocusable) {
+        event.preventDefault();
+        firstFocusable.focus();
+      }
     }
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
+    firstNameInputRef.current?.focus();
 
     return () => {
       document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("keydown", handleKeyDown);
+      previouslyFocused?.focus();
     };
   }, [onClose]);
+
+  useEffect(() => {
+    if (copyUrl) copyLinkRef.current?.focus();
+  }, [copyUrl]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -100,13 +145,16 @@ export default function SystemCompleteModal({
     <div
       className="fixed inset-0 z-[80] flex items-center justify-center bg-brand-blue/35 px-4 py-6 backdrop-blur-sm"
       onClick={onClose}
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="system-complete-modal-title"
     >
       <section
+        ref={dialogRef}
         className="relative w-full max-w-lg rounded-[1.5rem] border border-dema-line bg-dema-paper p-6 shadow-[0_24px_70px_rgba(23,35,29,0.14)] sm:p-8"
         onClick={(event) => event.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="system-complete-modal-title"
+        aria-describedby="system-complete-modal-description"
+        tabIndex={-1}
       >
         <button
           type="button"
@@ -129,14 +177,17 @@ export default function SystemCompleteModal({
         >
           Recevoir gratuitement mon tableau de pilotage — {systemName}
         </h2>
-        <p className="mt-3 text-sm leading-relaxed text-dema-muted">
+        <p
+          id="system-complete-modal-description"
+          className="mt-3 text-sm leading-relaxed text-dema-muted"
+        >
           Un seul Google Sheet prêt à copier, avec la synthèse, le prévisionnel financier,
           les actions, l’équipe, l’écosystème, le calendrier marketing et{" "}
           {processCount || "les"} process adaptés à votre métier.
         </p>
 
         {copyUrl ? (
-          <div className="mt-6 rounded-[1rem] bg-dema-cream/55 p-5">
+          <div className="mt-6 rounded-[1rem] bg-dema-cream/55 p-5" role="status">
             <h3 className="text-lg font-semibold text-brand-blue">
               Votre tableau de pilotage est prêt
             </h3>
@@ -145,6 +196,7 @@ export default function SystemCompleteModal({
               puis créez votre copie personnelle et modifiable dans votre Drive.
             </p>
             <a
+              ref={copyLinkRef}
               href={copyUrl}
               target="_blank"
               rel="noopener noreferrer"
@@ -155,55 +207,62 @@ export default function SystemCompleteModal({
             </a>
           </div>
         ) : (
-        <form className="mt-6 space-y-3" onSubmit={handleSubmit}>
-          <label className="block text-sm font-medium text-brand-blue" htmlFor="kit-first-name">
-            Prénom
-          </label>
-          <input
-            id="kit-first-name"
-            className="demaa-input"
-            value={firstName}
-            onChange={(event) => setFirstName(event.target.value)}
-            autoComplete="given-name"
-            required
-          />
-          <label className="block pt-1 text-sm font-medium text-brand-blue" htmlFor="kit-email">
-            E-mail
-          </label>
-          <input
-            id="kit-email"
-            className="demaa-input"
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            autoComplete="email"
-            required
-          />
-          <input
-            type="text"
-            value={website}
-            onChange={(event) => setWebsite(event.target.value)}
-            tabIndex={-1}
-            autoComplete="off"
-            className="hidden"
-            aria-hidden="true"
-          />
+          <form className="mt-6 space-y-3" onSubmit={handleSubmit} aria-busy={isSubmitting}>
+            <label className="block text-sm font-medium text-brand-blue" htmlFor="kit-first-name">
+              Prénom
+            </label>
+            <input
+              ref={firstNameInputRef}
+              id="kit-first-name"
+              className="demaa-input"
+              value={firstName}
+              onChange={(event) => setFirstName(event.target.value)}
+              autoComplete="given-name"
+              required
+            />
+            <label className="block pt-1 text-sm font-medium text-brand-blue" htmlFor="kit-email">
+              E-mail
+            </label>
+            <input
+              id="kit-email"
+              className="demaa-input"
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              autoComplete="email"
+              required
+            />
+            <input
+              type="text"
+              value={website}
+              onChange={(event) => setWebsite(event.target.value)}
+              tabIndex={-1}
+              autoComplete="off"
+              className="hidden"
+              aria-hidden="true"
+            />
 
-          {error ? <p className="text-sm text-brand-coral">{error}</p> : null}
+            {error ? (
+              <p className="text-sm text-brand-coral" role="alert">
+                {error}
+              </p>
+            ) : null}
 
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="demaa-primary-button mt-3 inline-flex w-full items-center justify-center gap-2 disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {isSubmitting ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
-            {isSubmitting ? "Envoi…" : "Recevoir gratuitement mon tableau"}
-          </button>
-          <p className="text-xs leading-relaxed text-dema-muted">
-            Le modèle est partagé en lecture seule. Google créera une copie
-            modifiable dans votre Drive.
-          </p>
-        </form>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="demaa-primary-button mt-3 inline-flex w-full items-center justify-center gap-2 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {isSubmitting ? (
+                <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
+              ) : null}
+              {isSubmitting ? "Envoi…" : "Recevoir gratuitement mon tableau"}
+            </button>
+            <p className="text-xs leading-relaxed text-dema-muted">
+              Le modèle est partagé en lecture seule. Google créera une copie
+              modifiable dans votre Drive.
+            </p>
+          </form>
         )}
       </section>
     </div>
