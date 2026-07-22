@@ -46,7 +46,7 @@ export default async function AnnuaireFormationsPage({
     : null;
   const backLink = returnEnterprise
     ? {
-        href: `/kit-operationnel/${encodeURIComponent(returnEnterprise.slug)}?tab=formation`,
+        href: `/kit-operationnel/${encodeURIComponent(returnEnterprise.slug)}`,
         label: `Retour à ${returnEnterprise.name}`,
       }
     : undefined;

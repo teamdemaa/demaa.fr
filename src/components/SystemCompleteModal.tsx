@@ -1,6 +1,7 @@
 "use client";
 
 import { ExternalLink, LoaderCircle, Mail, X } from "lucide-react";
+import Image from "next/image";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import {
   getLeadAttributionPayload,
@@ -10,6 +11,7 @@ import {
   clearLeadSubmissionKey,
   getLeadSubmissionKey,
 } from "@/lib/lead-submission-client";
+import { getSystemKitPreview } from "@/lib/system-kit-previews";
 import type { SystemeDetail } from "@/lib/systeme-catalog";
 
 type SystemCompleteModalProps = {
@@ -36,6 +38,7 @@ export default function SystemCompleteModal({
   const [error, setError] = useState<string | null>(null);
   const processCount =
     systeme?.cards.reduce((total, card) => total + card.items.length, 0) ?? 0;
+  const preview = getSystemKitPreview(systemSlug);
 
   useEffect(() => {
     const previouslyFocused = document.activeElement instanceof HTMLElement
@@ -143,12 +146,16 @@ export default function SystemCompleteModal({
 
   return (
     <div
-      className="fixed inset-0 z-[80] flex items-center justify-center bg-brand-blue/35 px-4 py-6 backdrop-blur-sm"
+      className="fixed inset-0 z-[80] flex items-center justify-center overflow-y-auto bg-brand-blue/35 px-4 py-4 backdrop-blur-sm sm:py-6"
       onClick={onClose}
     >
       <section
         ref={dialogRef}
-        className="relative w-full max-w-lg rounded-[1.5rem] border border-dema-line bg-dema-paper p-6 shadow-[0_24px_70px_rgba(23,35,29,0.14)] sm:p-8"
+        className={`relative max-h-[calc(100dvh-2rem)] w-full overflow-y-auto rounded-[1.5rem] border border-dema-line bg-dema-paper shadow-[0_24px_70px_rgba(23,35,29,0.14)] sm:max-h-[calc(100dvh-3rem)] ${
+          preview
+            ? "max-w-6xl lg:grid lg:grid-cols-[minmax(0,1.08fr)_minmax(26rem,0.92fr)] lg:overflow-hidden"
+            : "max-w-lg"
+        }`}
         onClick={(event) => event.stopPropagation()}
         role="dialog"
         aria-modal="true"
@@ -165,101 +172,155 @@ export default function SystemCompleteModal({
           <X className="h-4 w-4" aria-hidden="true" />
         </button>
 
-        <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
-          <Mail className="h-5 w-5" aria-hidden="true" />
-        </span>
-        <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-          Tableau de pilotage
-        </p>
-        <h2
-          id="system-complete-modal-title"
-          className="mt-2 pr-10 text-2xl font-semibold tracking-tight text-brand-blue"
-        >
-          Recevoir gratuitement mon tableau de pilotage — {systemName}
-        </h2>
-        <p
-          id="system-complete-modal-description"
-          className="mt-3 text-sm leading-relaxed text-dema-muted"
-        >
-          Un seul Google Sheet prêt à copier, avec la synthèse, le prévisionnel financier,
-          les actions, l’équipe, l’écosystème, le calendrier marketing et{" "}
-          {processCount || "les"} process adaptés à votre métier.
-        </p>
-
-        {copyUrl ? (
-          <div className="mt-6 rounded-[1rem] bg-dema-cream/55 p-5" role="status">
-            <h3 className="text-lg font-semibold text-brand-blue">
-              Votre tableau de pilotage est prêt
-            </h3>
-            <p className="mt-2 text-sm leading-relaxed text-dema-muted">
-              Le lien vient aussi d’être envoyé à {email}. Connectez-vous à Google,
-              puis créez votre copie personnelle et modifiable dans votre Drive.
+        {preview ? (
+          <aside className="hidden min-h-[38rem] flex-col bg-dema-sage/55 p-8 lg:flex xl:p-10">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
+              Aperçu du tableau
             </p>
-            <a
-              ref={copyLinkRef}
-              href={copyUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="demaa-primary-button mt-5 inline-flex w-full items-center justify-center gap-2"
-            >
-              Créer ma copie du tableau
-              <ExternalLink className="h-4 w-4" aria-hidden="true" />
-            </a>
-          </div>
-        ) : (
-          <form className="mt-6 space-y-3" onSubmit={handleSubmit} aria-busy={isSubmitting}>
-            <label className="block text-sm font-medium text-brand-blue" htmlFor="kit-first-name">
-              Prénom
-            </label>
-            <input
-              ref={firstNameInputRef}
-              id="kit-first-name"
-              className="demaa-input"
-              value={firstName}
-              onChange={(event) => setFirstName(event.target.value)}
-              autoComplete="given-name"
-              required
-            />
-            <label className="block pt-1 text-sm font-medium text-brand-blue" htmlFor="kit-email">
-              E-mail
-            </label>
-            <input
-              id="kit-email"
-              className="demaa-input"
-              type="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              autoComplete="email"
-              required
-            />
-            <input
-              type="text"
-              value={website}
-              onChange={(event) => setWebsite(event.target.value)}
-              tabIndex={-1}
-              autoComplete="off"
-              className="hidden"
-              aria-hidden="true"
-            />
+            <div className="flex flex-1 items-center justify-center">
+              <Image
+                src={preview.src}
+                alt={preview.alt}
+                width={1400}
+                height={933}
+                sizes="(max-width: 1023px) 1px, (max-width: 1280px) 52vw, 620px"
+                className="h-auto w-full"
+              />
+            </div>
+          </aside>
+        ) : null}
 
-            {error ? (
-              <p className="text-sm text-brand-coral" role="alert">
-                {error}
+        <div
+          className={`p-6 sm:p-8 ${
+            preview ? "lg:max-h-[calc(100dvh-3rem)] lg:overflow-y-auto lg:p-10" : ""
+          }`}
+        >
+          <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
+            <Mail className="h-5 w-5" aria-hidden="true" />
+          </span>
+          <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
+            Tableau de pilotage
+          </p>
+          <h2
+            id="system-complete-modal-title"
+            className="mt-2 pr-10 text-2xl font-semibold tracking-tight text-brand-blue"
+          >
+            Recevoir mon tableau de pilotage - {systemName}
+          </h2>
+
+          {preview ? (
+            <div className="mt-5 overflow-hidden rounded-[1.125rem] border border-dema-line/80 bg-dema-sage/55 p-2.5 lg:hidden">
+              <Image
+                src={preview.src}
+                alt={preview.alt}
+                width={1400}
+                height={933}
+                sizes="(max-width: 640px) calc(100vw - 68px), 560px"
+                className="h-auto w-full"
+              />
+            </div>
+          ) : null}
+
+          <p
+            id="system-complete-modal-description"
+            className="mt-4 text-sm leading-relaxed text-dema-muted lg:mt-3"
+          >
+            {preview ? (
+              <>
+                <span className="lg:hidden">
+                  Un seul Google Sheet prêt à copier, avec {processCount || "les"} process
+                  adaptés à votre métier.
+                </span>
+                <span className="hidden lg:inline">
+                  Un seul Google Sheet prêt à copier, avec la synthèse, le prévisionnel
+                  financier, les actions, l’équipe, l’écosystème, le calendrier marketing
+                  et {processCount || "les"} process adaptés à votre métier.
+                </span>
+              </>
+            ) : (
+              <>
+                Un seul Google Sheet prêt à copier, avec la synthèse, le prévisionnel
+                financier, les actions, l’équipe, l’écosystème, le calendrier marketing et{" "}
+                {processCount || "les"} process adaptés à votre métier.
+              </>
+            )}
+          </p>
+
+          {copyUrl ? (
+            <div className="mt-6 rounded-[1rem] bg-dema-cream/55 p-5" role="status">
+              <h3 className="text-lg font-semibold text-brand-blue">
+                Votre tableau de pilotage est prêt
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-dema-muted">
+                Le lien vient aussi d’être envoyé à {email}. Connectez-vous à Google,
+                puis créez votre copie personnelle et modifiable dans votre Drive.
               </p>
-            ) : null}
+              <a
+                ref={copyLinkRef}
+                href={copyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="demaa-primary-button mt-5 inline-flex w-full items-center justify-center gap-2"
+              >
+                Créer ma copie du tableau
+                <ExternalLink className="h-4 w-4" aria-hidden="true" />
+              </a>
+            </div>
+          ) : (
+            <form className="mt-6 space-y-3" onSubmit={handleSubmit} aria-busy={isSubmitting}>
+              <label className="block text-sm font-medium text-brand-blue" htmlFor="kit-first-name">
+                Prénom
+              </label>
+              <input
+                ref={firstNameInputRef}
+                id="kit-first-name"
+                className="demaa-input"
+                value={firstName}
+                onChange={(event) => setFirstName(event.target.value)}
+                autoComplete="given-name"
+                required
+              />
+              <label className="block pt-1 text-sm font-medium text-brand-blue" htmlFor="kit-email">
+                E-mail
+              </label>
+              <input
+                id="kit-email"
+                className="demaa-input"
+                type="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                autoComplete="email"
+                required
+              />
+              <input
+                type="text"
+                value={website}
+                onChange={(event) => setWebsite(event.target.value)}
+                tabIndex={-1}
+                autoComplete="off"
+                className="hidden"
+                aria-hidden="true"
+              />
 
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="demaa-primary-button mt-3 inline-flex w-full items-center justify-center gap-2 disabled:cursor-not-allowed disabled:opacity-60"
-            >
-              {isSubmitting ? (
-                <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
+              {error ? (
+                <p className="text-sm text-brand-coral" role="alert">
+                  {error}
+                </p>
               ) : null}
-              {isSubmitting ? "Envoi…" : "Recevoir gratuitement mon tableau"}
-            </button>
-          </form>
-        )}
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="demaa-primary-button mt-3 inline-flex w-full items-center justify-center gap-2 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {isSubmitting ? (
+                  <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
+                ) : null}
+                {isSubmitting ? "Envoi…" : "Recevoir mon tableau de pilotage"}
+              </button>
+            </form>
+          )}
+        </div>
       </section>
     </div>
   );

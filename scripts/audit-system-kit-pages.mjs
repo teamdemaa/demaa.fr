@@ -4,12 +4,16 @@ import { dirname, resolve } from "node:path";
 
 const currentDir = dirname(fileURLToPath(import.meta.url));
 const enterpriseCatalogPath = resolve(currentDir, "../src/lib/enterprise-annuaire.json");
+const toolDirectoryPath = resolve(currentDir, "../src/lib/tool-directory.json");
 const baseUrl = (process.env.DEMAA_AUDIT_BASE_URL ?? "http://127.0.0.1:3001").replace(/\/$/, "");
 const concurrency = Number.parseInt(process.env.DEMAA_AUDIT_CONCURRENCY ?? "8", 10);
 const requestTimeoutMs = Number.parseInt(process.env.DEMAA_AUDIT_TIMEOUT_MS ?? "60000", 10);
 const retryCount = Number.parseInt(process.env.DEMAA_AUDIT_RETRIES ?? "2", 10);
 
 const tabs = ["process", "outils", "accompagnement"];
+const toolsBySlug = new Map(
+  JSON.parse(fs.readFileSync(toolDirectoryPath, "utf8")).tools.map((tool) => [tool.slug, tool]),
+);
 
 function loadEnterprises() {
   const payload = JSON.parse(fs.readFileSync(enterpriseCatalogPath, "utf8"));
@@ -48,21 +52,33 @@ function inspectPage({ enterprise, response, html, tab }) {
     }
   }
 
-  for (const expectedTab of ["Process", "Outils métier", "Accompagnement"]) {
+  for (const expectedTab of ["Process", "Outils", "Accompagnement"]) {
     if (!renderedHtml.includes(`>${expectedTab}</button>`)) {
       errors.push(`missing direct tab: ${expectedTab}`);
     }
   }
 
+  const controlledPanelCount = countOccurrences(
+    renderedHtml,
+    'aria-controls="kit-content-panel"',
+  );
+  if (controlledPanelCount !== 3) {
+    errors.push(`expected three tab controls for the shared panel, found ${controlledPanelCount}`);
+  }
+  if (!renderedHtml.includes('id="kit-content-panel"')) {
+    errors.push("shared tab panel is missing");
+  }
+
   const ctaCount = countOccurrences(
     renderedHtml,
-    "Recevoir gratuitement mon tableau de pilotage",
+    "Recevoir mon tableau de pilotage",
   );
   if (ctaCount !== 1) {
     errors.push(`expected one top download CTA, found ${ctaCount}`);
   }
 
   for (const removedIntro of [
+    "Recevoir gratuitement mon tableau de pilotage",
     "Un seul Google Sheet : synthèse, prévisionnel, actions, équipe, écosystème",
     "Les outils métier à regarder en priorité",
     "Une sélection courte, spécifique à votre activité",
@@ -90,6 +106,21 @@ function inspectPage({ enterprise, response, html, tab }) {
     const toolCardCount = countOccurrences(renderedHtml, "demaa-card group");
     if (toolCardCount > 5) {
       errors.push(`${toolCardCount} tool cards visible; maximum is 5`);
+    }
+    const visibleToolSlugs = Array.from(
+      renderedHtml.matchAll(/href="\/annuaire-outils\/([^"?]+)"/g),
+      (match) => decodeURIComponent(match[1]),
+    );
+    const toolRefsBySlug = new Map(
+      (enterprise.toolRefs ?? []).map((toolRef) => [toolRef.slug, toolRef]),
+    );
+    for (const toolSlug of new Set(visibleToolSlugs)) {
+      const effectiveScope =
+        toolRefsBySlug.get(toolSlug)?.scope ?? toolsBySlug.get(toolSlug)?.scope;
+
+      if (effectiveScope === "transverse") {
+        errors.push(`transverse tool visible in kit selection: ${toolSlug}`);
+      }
     }
     if (renderedHtml.includes("Voir plus")) {
       errors.push("legacy tool expansion remains visible");

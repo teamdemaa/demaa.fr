@@ -64,7 +64,7 @@ export default async function CourseDetailPage(
     : searchParams.retourSysteme;
   const slides = entry.slides?.length ? entry.slides : entry.image ? [entry.image] : [];
   const backHref = returnSystemSlug
-    ? `/kit-operationnel/${returnSystemSlug}?tab=formation`
+    ? `/kit-operationnel/${returnSystemSlug}`
     : "/cours";
   const backLabel = returnSystemSlug ? "Retour au kit opérationnel" : "Retour aux cours";
   const articleJsonLd = {

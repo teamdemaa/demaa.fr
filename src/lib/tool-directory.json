@@ -348,6 +348,10 @@
       ],
       "bestFor": "Accélérer les chantiers techniques et les prototypes.",
       "pricingHint": "Payant",
+      "sources": [
+        "https://openai.com/codex/"
+      ],
+      "lastReviewedAt": "2026-07-22",
       "status": "active",
       "scope": "business"
     },
@@ -4577,6 +4581,10 @@
       ],
       "bestFor": "Piloter missions, consultants, recrutement, temps et marge d’une société de conseil.",
       "pricingHint": "Payant",
+      "sources": [
+        "https://www.boondmanager.com/"
+      ],
+      "lastReviewedAt": "2026-07-22",
       "status": "active",
       "scope": "business"
     },

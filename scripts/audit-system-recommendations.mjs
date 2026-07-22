@@ -22,6 +22,7 @@ const CURATED_TOOL_RECOMMENDATIONS_BY_SYSTEM = Function(
 
 const errors = [];
 const warnings = [];
+const MAX_RECOMMENDATIONS = 5;
 const MAX_REVIEW_AGE_DAYS = 365;
 const DAY_IN_MS = 24 * 60 * 60 * 1000;
 const toolsBySlug = new Map(toolPayload.tools.map((tool) => [tool.slug, tool]));
@@ -39,8 +40,10 @@ for (const enterprise of enterprisePayload.enterprises) {
     continue;
   }
 
-  if (recommendations.length > 3) {
-    errors.push(`${enterprise.slug}: ${recommendations.length} recommandations (maximum 3).`);
+  if (recommendations.length > MAX_RECOMMENDATIONS) {
+    errors.push(
+      `${enterprise.slug}: ${recommendations.length} recommandations (maximum ${MAX_RECOMMENDATIONS}).`,
+    );
   }
 
   if (new Set(recommendations).size !== recommendations.length) {

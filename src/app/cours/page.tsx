@@ -43,7 +43,7 @@ export default async function CoursesIndexPage({
   const returnSystemSlug = getParamValue(resolvedSearchParams.retourSysteme);
   const backLink = returnSystemSlug
     ? {
-        href: `/kit-operationnel/${returnSystemSlug}?tab=formation`,
+        href: `/kit-operationnel/${returnSystemSlug}`,
         label: "Retour au kit opérationnel",
       }
     : undefined;

@@ -182,7 +182,6 @@ export default async function AidDetailPage({
               <RelatedSystemsLinks
                 systems={relatedSystems}
                 description="Quelques kits opérationnels où cette famille d'aides peut être utile."
-                systemTab="financement"
               />
             </section>
           </div>
@@ -214,7 +213,6 @@ export default async function AidDetailPage({
             <RelatedSystemsLinks
               systems={relatedSystems}
               description="Quelques kits opérationnels où ce sujet d'aide ou de subvention peut être pertinent."
-              systemTab="financement"
             />
           </section>
         </div>

@@ -298,6 +298,10 @@ const PILOTING_SHEET_URLS: Partial<Record<string, string>> = {
     "https://docs.google.com/spreadsheets/d/1ljzXVzPjqPIW3c7uebc2ExwK9ySrAv3SnPWTbf-mgTw/edit",
 };
 
+export function getPilotingSheetSlugs(): string[] {
+  return Object.keys(PILOTING_SHEET_URLS);
+}
+
 export function getPilotingSheetCopyUrl(systemSlug: string): string | null {
   const sheetUrl = PILOTING_SHEET_URLS[systemSlug];
 

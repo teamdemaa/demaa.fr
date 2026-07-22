@@ -50,11 +50,7 @@ export default async function OperationalKitPage({
 
   const initialTab = getParamValue(resolvedSearchParams.tab);
   const normalizedInitialTab =
-    initialTab === "cours"
-      ? "formation"
-      : initialTab === "systeme"
-        ? "process"
-        : initialTab;
+    initialTab === "cours" || initialTab === "systeme" ? "process" : initialTab;
   const jsonLd = buildSystemPageJsonLd(data);
 
   return (
