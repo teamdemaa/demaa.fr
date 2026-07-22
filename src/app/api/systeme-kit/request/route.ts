@@ -114,23 +114,23 @@ async function handlePost(request: Request) {
 
   const context = await resolveLeadContext({
     systemSlug: sectorSlug,
-    source: "Réception du kit opérationnel",
+    source: "Réception du tableau de pilotage",
     sourceUrl: request.headers.get("referer"),
   });
 
   if (!context) {
-    return NextResponse.json({ error: "Le contexte du kit est introuvable." }, { status: 400 });
+    return NextResponse.json({ error: "Le contexte du tableau est introuvable." }, { status: 400 });
   }
 
   const lead = await submitLeadRequest({
     attribution: resolveLeadAttribution(request, body?.attribution),
-    channels: { email: false, resend: true, slack: true },
+    channels: { email: false, resend: false, slack: true },
     contact: { email, firstName },
     context,
     emoji: "📦",
     idempotencyKey,
     requestType: "system_kit_request",
-    title: `Réception du kit opérationnel — ${resolvedSystemName}`,
+    title: `Réception du tableau de pilotage — ${resolvedSystemName}`,
   });
 
   const existingKitEmailState = await getLeadDeliveryState(lead.leadId, "kit_email");
@@ -185,7 +185,7 @@ export async function POST(request: Request) {
       requestType: "system_kit_request",
     });
     return NextResponse.json(
-      { error: "Impossible d’envoyer le kit pour le moment." },
+      { error: "Impossible d’envoyer le tableau pour le moment." },
       { status: 500 },
     );
   }

@@ -138,17 +138,17 @@ function renderSystemKitInitialEmail(input: {
   copyUrl: string;
 }) {
   return renderSystemKitEmailLayout({
-    eyebrow: "Kit opérationnel",
-    title: "Votre Google Sheet est prêt",
+    eyebrow: "Tableau de pilotage",
+    title: "Votre tableau de pilotage est prêt",
     greeting: `Bonjour ${input.firstName},`,
     paragraphs: [
-      `Voici votre kit opérationnel pour <strong style="color:#17231d;">${input.systemName}</strong>.`,
-      "Il regroupe dans un seul Google Sheet les catégories, les process, les tâches, les responsables et les récurrences.",
+      `Voici votre tableau de pilotage pour <strong style="color:#17231d;">${input.systemName}</strong>.`,
+      "Il regroupe dans un seul Google Sheet la synthèse, le prévisionnel financier, les actions, l’équipe, l’écosystème, le calendrier marketing et les process.",
       "Connectez-vous à Google puis créez votre copie personnelle : elle sera directement modifiable dans votre Drive.",
     ],
     button: {
       href: input.copyUrl,
-      label: "Créer ma copie du Google Sheet",
+      label: "Créer ma copie du tableau",
     },
     linkNotice: "Si le bouton ne fonctionne pas, copiez-collez ce lien dans votre navigateur :",
   });
@@ -163,42 +163,42 @@ function renderSystemKitFollowupEmail(input: {
 }) {
   if (input.kind === "usage") {
     return renderSystemKitEmailLayout({
-      eyebrow: "Kit opérationnel",
-      title: "Comment utiliser votre kit concrètement",
+      eyebrow: "Tableau de pilotage",
+      title: "Comment démarrer simplement",
       greeting: input.firstName ? `Bonjour ${input.firstName},` : "Bonjour,",
       paragraphs: [
-        `Une semaine après l’envoi, voici la meilleure façon d’utiliser votre kit ${input.systemName.toLowerCase()} simplement.`,
-        "Le bon réflexe n’est pas de compléter tous les process d’un coup.",
-        "Commencez par le process qui vous fait perdre le plus de temps, ajustez ses tâches, désignez un responsable et fixez sa récurrence.",
+        `Voici la façon la plus simple de démarrer votre tableau de pilotage ${input.systemName.toLowerCase()}.`,
+        "Commencez par la Synthèse : choisissez le premier mois, votre unité d’activité et vos objectifs.",
+        "Renseignez ensuite vos chiffres dans le Prévisionnel financier, puis choisissez une seule action et un seul process prioritaires.",
       ],
       secondaryBlock: {
         title: "Pour bien démarrer",
         lines: [
-          "1. Repérez ce qui repose encore trop sur vous.",
-          "2. Choisissez un process à structurer en priorité.",
-          "3. Complétez ses tâches, son responsable et sa récurrence.",
+          "1. Configurez la Synthèse.",
+          "2. Complétez le Prévisionnel financier mois par mois.",
+          "3. Ajoutez une action prioritaire, puis adaptez un premier process.",
         ],
       },
       button: {
         href: input.kitUrl,
-        label: "Revoir mon kit",
+        label: "Ouvrir mon tableau",
       },
       linkNotice: "Si le bouton ne fonctionne pas, copiez-collez ce lien dans votre navigateur :",
     });
   }
 
   return renderSystemKitEmailLayout({
-    eyebrow: "Session d’organisation offerte",
-    title: "Besoin d’aide pour démarrer votre kit ?",
+    eyebrow: "Structuration & pilotage",
+    title: "Vous voulez adapter le tableau à votre entreprise ?",
     greeting: input.firstName ? `Bonjour ${input.firstName},` : "Bonjour,",
     paragraphs: [
-      "Si vous avez parcouru le kit mais que vous ne savez pas encore par où commencer, réservez votre session d’organisation offerte.",
-      "En 30 minutes, nous choisissons ensemble un process prioritaire, puis nous clarifions ses tâches, son responsable et sa récurrence.",
-      "Vous repartez avec une première base exploitable, sans engagement.",
+      "La mission Structuration & pilotage vous aide à configurer le tableau avec vos données, clarifier les rôles et remettre de l’ordre dans vos priorités et vos process.",
+      "L’intervention dure un mois et coûte 980 € HT.",
+      "La première session de cadrage est offerte et sans engagement.",
     ],
     button: {
       href: input.sessionUrl,
-      label: "Réserver ma session",
+      label: "Réserver ma session de cadrage offerte",
     },
     linkNotice: "Si le bouton ne fonctionne pas, copiez-collez ce lien dans votre navigateur :",
   });
@@ -220,10 +220,10 @@ function renderSystemKitText(input: {
   return [
     `Bonjour ${input.firstName},`,
     "",
-    `Voici votre kit opérationnel pour ${input.systemName} :`,
+    `Voici votre tableau de pilotage pour ${input.systemName} :`,
     input.copyUrl,
     "",
-    "Ce Google Sheet regroupe les catégories, les process, les tâches, les responsables et les récurrences.",
+    "Ce Google Sheet regroupe la synthèse, le prévisionnel financier, les actions, l’équipe, l’écosystème, le calendrier marketing et les process.",
     "Connectez-vous à Google puis créez votre copie personnelle et modifiable dans votre Drive.",
   ].join("\n");
 }
@@ -255,7 +255,7 @@ export async function sendSystemKitEmail(input: {
     payload: {
       from,
       to: input.email,
-      subject: `Votre kit opérationnel Demaa - ${input.systemName}`,
+      subject: `Votre tableau de pilotage Demaa — ${input.systemName}`,
       html: renderSystemKitEmail({
         firstName: input.firstName,
         systemName: input.systemName,
@@ -281,23 +281,23 @@ function renderSystemKitFollowupText(input: {
     return [
       `Bonjour ${input.firstName || ""}`.trim() + ",",
       "",
-      `Une semaine après l’envoi, voici la meilleure façon d’utiliser votre kit ${input.systemName} simplement.`,
+      `Voici la façon la plus simple de démarrer votre tableau de pilotage ${input.systemName}.`,
       "",
-      "1. Repérez ce qui vous fait perdre le plus de temps.",
-      "2. Choisissez un seul process à structurer.",
-      "3. Complétez ses tâches, son responsable et sa récurrence.",
+      "1. Configurez la Synthèse : premier mois, unité d’activité et objectifs.",
+      "2. Complétez le Prévisionnel financier mois par mois.",
+      "3. Ajoutez une action prioritaire, puis adaptez un premier process.",
       "",
-      `Revoir mon kit : ${input.kitUrl}`,
+      `Ouvrir mon tableau : ${input.kitUrl}`,
     ].join("\n");
   }
 
   return [
     `Bonjour ${input.firstName || ""}`.trim() + ",",
     "",
-    "Si vous avez parcouru le kit mais que vous ne savez pas encore par où commencer, réservez votre session d’organisation offerte.",
-    "En 30 minutes, nous choisissons ensemble un process prioritaire, puis nous clarifions ses tâches, son responsable et sa récurrence.",
+    "La mission Structuration & pilotage vous aide à configurer le tableau avec vos données, clarifier les rôles et remettre de l’ordre dans vos priorités et vos process.",
+    "L’intervention dure un mois et coûte 980 € HT. La première session de cadrage est offerte et sans engagement.",
     "",
-    `Réserver ma session : ${input.sessionUrl}`,
+    `Réserver ma session de cadrage offerte : ${input.sessionUrl}`,
   ].join("\n");
 }
 
@@ -368,8 +368,8 @@ export async function sendSystemKitFollowupEmail(input: {
     `&source=kit-followup&systemSlug=${encodeURIComponent(input.systemSlug)}`;
   const subject =
     input.kind === "usage"
-      ? "Comment utiliser votre kit opérationnel concrètement"
-      : "Besoin d’aide pour démarrer votre kit ?";
+      ? "Comment démarrer votre tableau de pilotage"
+      : "Besoin d’aide pour adapter votre tableau ?";
 
   return sendResendEmail({
     apiKey,
@@ -406,12 +406,12 @@ export function getSystemKitEmailErrorMessage(
   }
 
   if (reason === "resend_error") {
-    return "Impossible d'envoyer le kit pour le moment. Merci de réessayer dans quelques instants.";
+    return "Impossible d'envoyer le tableau pour le moment. Merci de réessayer dans quelques instants.";
   }
 
   if (reason === "missing_sheet") {
     return "Le Google Sheet de ce métier est introuvable.";
   }
 
-  return "Impossible d'envoyer le kit.";
+  return "Impossible d'envoyer le tableau.";
 }

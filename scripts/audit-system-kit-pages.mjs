@@ -9,15 +9,7 @@ const concurrency = Number.parseInt(process.env.DEMAA_AUDIT_CONCURRENCY ?? "8", 
 const requestTimeoutMs = Number.parseInt(process.env.DEMAA_AUDIT_TIMEOUT_MS ?? "60000", 10);
 const retryCount = Number.parseInt(process.env.DEMAA_AUDIT_RETRIES ?? "2", 10);
 
-const tabs = [
-  { slug: "process" },
-  { slug: "outils" },
-  { slug: "fournisseurs" },
-  { slug: "financement" },
-  { slug: "recrutement" },
-  { slug: "formation" },
-  { slug: "reseaux-pro" },
-];
+const tabs = ["process", "outils", "accompagnement"];
 
 function loadEnterprises() {
   const payload = JSON.parse(fs.readFileSync(enterpriseCatalogPath, "utf8"));
@@ -33,30 +25,21 @@ function countOccurrences(source, value) {
   return source.split(value).length - 1;
 }
 
-function inspectPage({ response, html, tab }) {
+function inspectPage({ enterprise, response, html, tab }) {
   const errors = [];
   const renderedHtml = html
     .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "")
     .replace(/<!--[\s\S]*?-->/g, "");
-  const recommendationBadgeCount = countOccurrences(renderedHtml, ">Recommandé</span>");
-  const visibleCardCount = countOccurrences(renderedHtml, "demaa-card group");
 
-  if (!response.ok) {
-    errors.push(`HTTP ${response.status}`);
-  }
-
+  if (!response.ok) errors.push(`HTTP ${response.status}`);
   if (!response.headers.get("content-type")?.includes("text/html")) {
     errors.push("response is not HTML");
   }
-
-  if (!renderedHtml.includes("<h1")) {
-    errors.push("missing main heading");
-  }
+  if (!renderedHtml.includes("<h1")) errors.push("missing main heading");
 
   for (const forbiddenText of [
     "Cette page n'existe pas",
     "Page introuvable",
-    "Structure en cours de préparation",
     "Internal Server Error",
     "Application error",
   ]) {
@@ -65,88 +48,127 @@ function inspectPage({ response, html, tab }) {
     }
   }
 
-  if (recommendationBadgeCount > 0) {
-    errors.push(`${recommendationBadgeCount} recommendation badges still visible`);
-  }
-
-  if (tab.slug !== "process" && visibleCardCount > 3) {
-    errors.push(`${visibleCardCount} recommendation cards visible before Voir plus`);
-  }
-
-  if (renderedHtml.includes("Ouvrir l’annuaire")) {
-    errors.push("generic directory link still visible");
-  }
-
-  if (tab.slug === "recrutement") {
-    if (!renderedHtml.includes("Solutions de recrutement")) {
-      errors.push("missing unified recruitment section");
-    }
-
-    if (!renderedHtml.includes("Bravus Akademy")) {
-      errors.push("Bravus Akademy is not visible");
-    }
-
-    if (/class="[^"]*text-\[11px\][^"]*"[^>]*>\s*Alternance\s*</i.test(renderedHtml)) {
-      errors.push("standalone Alternance section still visible");
+  for (const expectedTab of ["Process", "Outils métier", "Accompagnement"]) {
+    if (!renderedHtml.includes(`>${expectedTab}</button>`)) {
+      errors.push(`missing direct tab: ${expectedTab}`);
     }
   }
 
-  if (tab.slug === "process") {
+  const ctaCount = countOccurrences(
+    renderedHtml,
+    "Recevoir gratuitement mon tableau de pilotage",
+  );
+  if (ctaCount !== 1) {
+    errors.push(`expected one top download CTA, found ${ctaCount}`);
+  }
+
+  if (!renderedHtml.includes("synthèse, prévisionnel, actions, équipe, écosystème")) {
+    errors.push("missing seven-tab delivery summary");
+  }
+
+  if (tab === "process") {
     if (!/<p[^>]*>\s*\d+ process\s*<\/p>/.test(renderedHtml)) {
       errors.push("missing process count");
-    }
-    if (!renderedHtml.includes("Recevoir le kit opérationnel")) {
-      errors.push("missing single kit CTA");
     }
     if (renderedHtml.includes("Aperçu du document")) {
       errors.push("legacy document preview is still visible");
     }
+    if (renderedHtml.includes("Recevoir le kit opérationnel")) {
+      errors.push("legacy process download CTA is still visible");
+    }
   }
 
-  return {
-    errors,
-    recommendationBadgeCount,
-    visibleCardCount,
-  };
+  if (tab === "outils") {
+    const toolCardCount = countOccurrences(renderedHtml, "demaa-card group");
+    if (toolCardCount > 5) {
+      errors.push(`${toolCardCount} tool cards visible; maximum is 5`);
+    }
+    if (renderedHtml.includes("Voir plus")) {
+      errors.push("legacy tool expansion remains visible");
+    }
+    if (!renderedHtml.includes("outils métier à regarder en priorité")) {
+      errors.push("missing métier-tools heading");
+    }
+  }
+
+  if (tab === "accompagnement") {
+    for (const expectedText of [
+      "Structuration &amp; pilotage",
+      "980 € HT",
+      "Réserver ma session de cadrage offerte",
+    ]) {
+      if (!renderedHtml.includes(expectedText)) {
+        errors.push(`missing offer text: ${expectedText}`);
+      }
+    }
+
+    const accountingExpected = enterprise.slug !== "cabinet-comptable";
+    const hasAccounting = renderedHtml.includes("Expertise comptable");
+    if (hasAccounting !== accountingExpected) {
+      errors.push(
+        accountingExpected
+          ? "accounting offer is missing"
+          : "accounting offer should be hidden for cabinet-comptable",
+      );
+    }
+
+    if (accountingExpected) {
+      for (const expectedText of [
+        "À partir de 250 € HT",
+        "Demander un rendez-vous",
+        "cabinet inscrit à l’Ordre des",
+      ]) {
+        if (!renderedHtml.includes(expectedText)) {
+          errors.push(`missing accounting text: ${expectedText}`);
+        }
+      }
+    }
+
+    for (const removedOffer of [
+      "Création de société",
+      "Modification de société",
+      "Fermeture de société",
+      "Trouver un comptable",
+    ]) {
+      if (renderedHtml.includes(removedOffer)) {
+        errors.push(`removed offer still visible: ${removedOffer}`);
+      }
+    }
+  }
+
+  return { errors };
 }
 
 async function inspectState(enterprise, tab) {
-  const url = `${baseUrl}/kit-operationnel/${encodeURIComponent(enterprise.slug)}?tab=${encodeURIComponent(tab.slug)}`;
+  const url = `${baseUrl}/kit-operationnel/${encodeURIComponent(enterprise.slug)}?tab=${tab}`;
 
   for (let attempt = 0; attempt <= retryCount; attempt += 1) {
     try {
       const response = await fetch(url, {
         redirect: "follow",
         signal: AbortSignal.timeout(requestTimeoutMs),
-        headers: {
-          "user-agent": "Demaa system kit audit",
-        },
+        headers: { "user-agent": "Demaa system kit audit" },
       });
       const html = await response.text();
-      const inspection = inspectPage({ response, html, tab });
-
       return {
         slug: enterprise.slug,
-        tab: tab.slug,
+        tab,
         url,
         status: response.status,
         attempts: attempt + 1,
-        ...inspection,
+        ...inspectPage({ enterprise, response, html, tab }),
       };
     } catch (error) {
       if (attempt === retryCount) {
         return {
           slug: enterprise.slug,
-          tab: tab.slug,
+          tab,
           url,
           status: null,
           attempts: attempt + 1,
-          recommendationBadgeCount: 0,
           errors: [error instanceof Error ? error.message : String(error)],
         };
       }
-
-      await new Promise((resolveRetry) => setTimeout(resolveRetry, 250 * (attempt + 1)));
     }
   }
 }
@@ -180,19 +202,12 @@ const tasks = enterprises.flatMap((enterprise) =>
 );
 const results = await runPool(tasks);
 const failures = results.filter((result) => result.errors.length);
-const recommendationBadgeCounts = results.reduce((counts, result) => {
-  counts[result.tab] ??= {};
-  counts[result.tab][result.recommendationBadgeCount] =
-    (counts[result.tab][result.recommendationBadgeCount] ?? 0) + 1;
-  return counts;
-}, {});
 
 console.log(JSON.stringify({
   baseUrl,
   kits: enterprises.length,
   tabsPerKit: tabs.length,
   statesChecked: results.length,
-  recommendationBadgeCounts,
   failureCount: failures.length,
   failures: failures.slice(0, 100),
   failuresTruncated: failures.length > 100,

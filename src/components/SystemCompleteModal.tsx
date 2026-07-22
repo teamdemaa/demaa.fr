@@ -77,7 +77,7 @@ export default function SystemCompleteModal({
         | null;
 
       if (!response.ok || !payload?.ok || !payload.copyUrl) {
-        throw new Error(payload?.error || "Impossible d’envoyer le kit pour le moment.");
+        throw new Error(payload?.error || "Impossible d’envoyer le tableau pour le moment.");
       }
 
       clearLeadSubmissionKey(flowKey);
@@ -90,7 +90,7 @@ export default function SystemCompleteModal({
       setError(
         submissionError instanceof Error
           ? submissionError.message
-          : "Impossible d’envoyer le kit pour le moment.",
+          : "Impossible d’envoyer le tableau pour le moment.",
       );
       setIsSubmitting(false);
     }
@@ -121,23 +121,24 @@ export default function SystemCompleteModal({
           <Mail className="h-5 w-5" aria-hidden="true" />
         </span>
         <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-          Kit opérationnel
+          Tableau de pilotage
         </p>
         <h2
           id="system-complete-modal-title"
           className="mt-2 pr-10 text-2xl font-semibold tracking-tight text-brand-blue"
         >
-          Recevoir le kit opérationnel {systemName}
+          Recevoir gratuitement mon tableau de pilotage — {systemName}
         </h2>
         <p className="mt-3 text-sm leading-relaxed text-dema-muted">
-          Le fichier regroupe {processCount || "les"} process avec les tâches détaillées,
-          le responsable et la récurrence à adapter à votre entreprise.
+          Un seul Google Sheet prêt à copier, avec la synthèse, le prévisionnel financier,
+          les actions, l’équipe, l’écosystème, le calendrier marketing et{" "}
+          {processCount || "les"} process adaptés à votre métier.
         </p>
 
         {copyUrl ? (
           <div className="mt-6 rounded-[1rem] bg-dema-cream/55 p-5">
             <h3 className="text-lg font-semibold text-brand-blue">
-              Votre kit opérationnel est prêt
+              Votre tableau de pilotage est prêt
             </h3>
             <p className="mt-2 text-sm leading-relaxed text-dema-muted">
               Le lien vient aussi d’être envoyé à {email}. Connectez-vous à Google,
@@ -149,7 +150,7 @@ export default function SystemCompleteModal({
               rel="noopener noreferrer"
               className="demaa-primary-button mt-5 inline-flex w-full items-center justify-center gap-2"
             >
-              Créer ma copie
+              Créer ma copie du tableau
               <ExternalLink className="h-4 w-4" aria-hidden="true" />
             </a>
           </div>
@@ -196,7 +197,7 @@ export default function SystemCompleteModal({
             className="demaa-primary-button mt-3 inline-flex w-full items-center justify-center gap-2 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {isSubmitting ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
-            {isSubmitting ? "Envoi…" : "Recevoir le kit opérationnel"}
+            {isSubmitting ? "Envoi…" : "Recevoir gratuitement mon tableau"}
           </button>
           <p className="text-xs leading-relaxed text-dema-muted">
             Le modèle est partagé en lecture seule. Google créera une copie

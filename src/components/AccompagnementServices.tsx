@@ -1,17 +1,8 @@
 "use client";
 
-import {
-  ArrowRight,
-  Building2,
-  Calculator,
-  FilePenLine,
-  Power,
-  type LucideIcon,
-} from "lucide-react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { ArrowRight, Calculator, Check, Route } from "lucide-react";
 import AccountingRecommendationDialog from "@/components/AccountingRecommendationDialog";
-import ServiceIntroductionModal from "@/components/ServiceIntroductionModal";
-import { getDemaaServiceBySlug, type DemaaService } from "@/lib/service-catalog";
 
 type AccompagnementServicesProps = {
   source?: string;
@@ -20,76 +11,34 @@ type AccompagnementServicesProps = {
   systemSlug: string;
 };
 
-type AccompagnementConfig = {
-  slug: string;
-  serviceSlug: string;
-  title: string;
-  description: string;
-  action: string;
-  icon: LucideIcon;
-  mode: "accounting-recommendation" | "form";
-};
+const CARD_CLASS =
+  "group flex h-full min-h-[28rem] w-full flex-col rounded-[1.35rem] border border-dema-line bg-dema-paper p-6 text-left transition duration-200 hover:-translate-y-0.5 hover:border-dema-forest/20 hover:shadow-[0_18px_45px_rgba(23,35,29,0.07)]";
 
-const ACCOMPANIMENT_CARD_CLASS =
-  "group flex min-h-[17rem] w-full flex-col rounded-[1.35rem] border border-dema-line bg-dema-paper p-6 text-left transition duration-200 hover:-translate-y-0.5 hover:border-dema-forest/20 hover:shadow-[0_18px_45px_rgba(23,35,29,0.07)]";
-
-const accompagnements: readonly AccompagnementConfig[] = [
-  {
-    slug: "comptabilite",
-    serviceSlug: "expert-comptable",
-    title: "Trouver un comptable",
-    description:
-      "Recevoir la recommandation d’un professionnel adapté à votre activité.",
-    action: "Recevoir ma recommandation",
-    icon: Calculator,
-    mode: "accounting-recommendation",
-  },
-  {
-    slug: "creation-societe",
-    serviceSlug: "creation-societe",
-    title: "Création de société",
-    description:
-      "Choisir le bon statut et prendre en charge les formalités jusqu’à l’immatriculation.",
-    action: "Démarrer ma demande",
-    icon: Building2,
-    mode: "form",
-  },
-  {
-    slug: "modification-societe",
-    serviceSlug: "modification-societe",
-    title: "Modification de société",
-    description:
-      "Gérer un changement de siège, de dirigeant, d’activité, de capital ou de statuts.",
-    action: "Décrire la modification",
-    icon: FilePenLine,
-    mode: "form",
-  },
-  {
-    slug: "fermeture-societe",
-    serviceSlug: "fermeture-societe",
-    title: "Fermeture de société",
-    description:
-      "Organiser la dissolution, la liquidation et la radiation sans oublier d’étape.",
-    action: "Démarrer ma demande",
-    icon: Power,
-    mode: "form",
-  },
+const structureItems = [
+  "Diagnostic de l’organisation et des priorités",
+  "Tableau de pilotage configuré avec vos données",
+  "Rôles, process et responsabilités clarifiés",
+  "Plan d’action concret pour la suite",
 ] as const;
 
-function getFormService(config: AccompagnementConfig): DemaaService | null {
-  const service = getDemaaServiceBySlug(config.serviceSlug);
+const accountingItems = [
+  "Comptabilité et obligations déclaratives",
+  "Suivi adapté à votre activité",
+  "Échanges avec un interlocuteur dédié",
+  "Structuration et pilotage disponibles séparément",
+] as const;
 
-  if (!service) {
-    return null;
-  }
-
-  return {
-    ...service,
-    slug: config.slug,
-    name: config.title,
-    shortDescription: config.description,
-    description: config.description,
-  };
+function OfferList({ items }: { items: readonly string[] }) {
+  return (
+    <ul className="mt-5 space-y-2.5">
+      {items.map((item) => (
+        <li key={item} className="flex items-start gap-2.5 text-sm leading-relaxed text-dema-muted">
+          <Check className="mt-0.5 h-4 w-4 shrink-0 text-dema-forest" aria-hidden="true" />
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  );
 }
 
 export default function AccompagnementServices({
@@ -98,105 +47,102 @@ export default function AccompagnementServices({
   systemName,
   systemSlug,
 }: AccompagnementServicesProps) {
-  const pathname = usePathname();
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const selectedSlug = searchParams.get("service");
-  const selectedConfig = accompagnements.find((item) => item.slug === selectedSlug) ?? null;
-  const selectedService = selectedConfig ? getFormService(selectedConfig) : null;
-  function openService(slug: string) {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("service", slug);
-    params.set("systemSlug", systemSlug);
-    params.set("sector", sectorLabel);
-    params.set("source", source);
-    router.push(`${pathname}?${params.toString()}`, { scroll: false });
-  }
-
-  function closeService() {
-    const params = new URLSearchParams(searchParams.toString());
-    params.delete("service");
-    params.delete("systemSlug");
-    params.delete("sector");
-    params.delete("source");
-    const query = params.toString();
-    router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
-  }
+  const showAccounting = systemSlug !== "cabinet-comptable";
+  const structureHref =
+    `/annuaire-services/organisation?source=${encodeURIComponent(source)}&systemSlug=${encodeURIComponent(systemSlug)}`;
 
   return (
-    <>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {accompagnements.map((item) => {
-          const Icon = item.icon;
-
-          if (item.mode === "accounting-recommendation") {
-            return (
-              <AccountingRecommendationDialog
-                key={item.slug}
-                buttonClassName={ACCOMPANIMENT_CARD_CLASS}
-                sectorLabel={sectorLabel}
-                systemName={systemName}
-                systemSlug={systemSlug}
-                triggerContent={(
-                  <>
-                    <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest shadow-[0_6px_18px_rgba(23,35,29,0.04)]">
-                      <Icon className="h-5 w-5" aria-hidden="true" />
-                    </span>
-                    <h3 className="mt-6 text-[1.35rem] font-medium leading-[1.15] tracking-[-0.02em] text-brand-blue">
-                      {item.title}
-                    </h3>
-                    <p className="mt-3 text-[0.9375rem] leading-6 text-dema-muted">
-                      {item.description}
-                    </p>
-                    <span className="mt-auto inline-flex items-center gap-2 pt-5 text-[0.9375rem] font-semibold text-dema-forest">
-                      {item.action}
-                      <ArrowRight
-                        className="h-4 w-4 transition group-hover:translate-x-0.5"
-                        aria-hidden="true"
-                      />
-                    </span>
-                  </>
-                )}
-              />
-            );
-          }
-
-          return (
-            <button
-              key={item.slug}
-              type="button"
-              onClick={() => openService(item.slug)}
-              className={ACCOMPANIMENT_CARD_CLASS}
-            >
-              <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest shadow-[0_6px_18px_rgba(23,35,29,0.04)]">
-                <Icon className="h-5 w-5" aria-hidden="true" />
-              </span>
-              <h3 className="mt-6 text-[1.35rem] font-medium leading-[1.15] tracking-[-0.02em] text-brand-blue">
-                {item.title}
-              </h3>
-              <p className="mt-3 text-[0.9375rem] leading-6 text-dema-muted">
-                {item.description}
-              </p>
-              <span className="mt-auto inline-flex items-center gap-2 pt-5 text-[0.9375rem] font-semibold text-dema-forest">
-                {item.action}
-                <ArrowRight
-                  className="h-4 w-4 transition group-hover:translate-x-0.5"
-                  aria-hidden="true"
-                />
-              </span>
-            </button>
-          );
-        })}
+    <div>
+      <div className="max-w-3xl">
+        <h2 className="text-2xl font-semibold tracking-tight text-brand-blue">
+          Vous aider à mettre le tableau en place
+        </h2>
+        <p className="mt-2 text-sm leading-relaxed text-dema-muted">
+          Le tableau est gratuit. Ces prestations sont là si vous souhaitez être aidé pour
+          l’adapter, structurer votre organisation ou déléguer votre comptabilité.
+        </p>
       </div>
 
-      {selectedConfig?.mode === "form" && selectedService ? (
-        <ServiceIntroductionModal
-          service={selectedService}
-          source={source}
-          systemSlug={systemSlug}
-          onClose={closeService}
-        />
-      ) : null}
-    </>
+      <div className={`mt-6 grid gap-4 ${showAccounting ? "lg:grid-cols-2" : "max-w-2xl"}`}>
+        <Link href={structureHref} className={CARD_CLASS}>
+          <div className="flex items-start justify-between gap-4">
+            <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
+              <Route className="h-5 w-5" aria-hidden="true" />
+            </span>
+            <span className="rounded-full bg-dema-cream px-3 py-1 text-xs font-semibold text-dema-forest">
+              Mission d’un mois
+            </span>
+          </div>
+          <p className="mt-6 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
+            Organisation de l’entreprise
+          </p>
+          <h3 className="mt-2 text-[1.45rem] font-semibold leading-tight tracking-[-0.02em] text-brand-blue">
+            Structuration & pilotage
+          </h3>
+          <p className="mt-3 text-sm leading-relaxed text-dema-muted">
+            Remettre de l’ordre dans votre entreprise pour qu’elle dépende moins de vous et
+            puisse avancer avec des priorités, des rôles et des process clairs.
+          </p>
+          <OfferList items={structureItems} />
+          <p className="mt-6 text-2xl font-semibold tracking-tight text-brand-blue">
+            980 € HT
+          </p>
+          <span className="mt-auto inline-flex items-center gap-2 pt-5 text-sm font-semibold text-dema-forest">
+            Réserver ma session de cadrage offerte
+            <ArrowRight
+              className="h-4 w-4 transition group-hover:translate-x-0.5"
+              aria-hidden="true"
+            />
+          </span>
+        </Link>
+
+        {showAccounting ? (
+          <AccountingRecommendationDialog
+            buttonClassName={CARD_CLASS}
+            sectorLabel={sectorLabel}
+            systemName={systemName}
+            systemSlug={systemSlug}
+            triggerContent={(
+              <>
+                <div className="flex items-start justify-between gap-4">
+                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
+                    <Calculator className="h-5 w-5" aria-hidden="true" />
+                  </span>
+                  <span className="rounded-full bg-dema-cream px-3 py-1 text-xs font-semibold text-dema-forest">
+                    Suivi mensuel
+                  </span>
+                </div>
+                <p className="mt-6 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
+                  Gestion comptable
+                </p>
+                <h3 className="mt-2 text-[1.45rem] font-semibold leading-tight tracking-[-0.02em] text-brand-blue">
+                  Expertise comptable
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-dema-muted">
+                  Confier votre comptabilité à un cabinet qui comprend votre activité et vous
+                  donne une base financière fiable pour piloter.
+                </p>
+                <p className="mt-4 rounded-[0.9rem] bg-dema-sage/60 px-3.5 py-3 text-sm font-medium leading-relaxed text-brand-blue">
+                  Expertise comptable assurée par un cabinet inscrit à l’Ordre des
+                  experts-comptables.
+                </p>
+                <OfferList items={accountingItems} />
+                <p className="mt-6 text-2xl font-semibold tracking-tight text-brand-blue">
+                  À partir de 250 € HT
+                  <span className="ml-1 text-sm font-medium text-dema-muted">/ mois</span>
+                </p>
+                <span className="mt-auto inline-flex items-center gap-2 pt-5 text-sm font-semibold text-dema-forest">
+                  Demander un rendez-vous
+                  <ArrowRight
+                    className="h-4 w-4 transition group-hover:translate-x-0.5"
+                    aria-hidden="true"
+                  />
+                </span>
+              </>
+            )}
+          />
+        ) : null}
+      </div>
+    </div>
   );
 }

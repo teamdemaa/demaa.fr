@@ -1,12 +1,7 @@
 const SYSTEM_DETAIL_TABS = [
   "process",
   "outils",
-  "fournisseurs",
-  "financement",
-  "reseaux-pro",
   "accompagnement",
-  "recrutement",
-  "formation",
 ] as const;
 
 export type SystemDetailTab = (typeof SYSTEM_DETAIL_TABS)[number];
@@ -14,12 +9,7 @@ export type SystemDetailTab = (typeof SYSTEM_DETAIL_TABS)[number];
 const SYSTEM_DETAIL_TAB_VISIBILITY = {
   process: true,
   outils: true,
-  fournisseurs: true,
-  financement: true,
-  "reseaux-pro": true,
   accompagnement: true,
-  recrutement: true,
-  formation: true,
 } satisfies Record<SystemDetailTab, boolean>;
 
 function isSystemDetailTab(tab?: string): tab is SystemDetailTab {
