@@ -22,6 +22,15 @@ type ResendEmailPayload = {
 
 type SystemKitFollowupKind = "usage" | "session";
 
+function escapeHtml(value: string) {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
 function renderSystemKitEmailLayout(input: {
   eyebrow: string;
   title: string;
@@ -32,6 +41,7 @@ function renderSystemKitEmailLayout(input: {
   secondaryBlock?: SystemKitEmailBlock | null;
   footerNote?: string | null;
 }) {
+  const safeButtonHref = escapeHtml(input.button.href);
   const paragraphsHtml = input.paragraphs
     .map(
       (paragraph) => `
@@ -103,7 +113,7 @@ function renderSystemKitEmailLayout(input: {
                     <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;margin:0 0 24px;">
                       <tr>
                         <td align="center" bgcolor="#315f46" style="border-radius:999px;">
-                          <a href="${input.button.href}" style="display:inline-block;padding:14px 22px;font-family:Arial,sans-serif;font-size:15px;line-height:1.2;font-weight:700;color:#ffffff;text-decoration:none;">
+                          <a href="${safeButtonHref}" style="display:inline-block;padding:14px 22px;font-family:Arial,sans-serif;font-size:15px;line-height:1.2;font-weight:700;color:#ffffff;text-decoration:none;">
                             ${input.button.label}
                           </a>
                         </td>
@@ -115,8 +125,8 @@ function renderSystemKitEmailLayout(input: {
                         ${input.linkNotice}
                       </p>
                       <p style="margin:10px 0 0;font-size:13px;line-height:1.7;word-break:break-all;">
-                        <a href="${input.button.href}" style="color:#315f46;text-decoration:underline;">
-                          ${input.button.href}
+                        <a href="${safeButtonHref}" style="color:#315f46;text-decoration:underline;">
+                          ${safeButtonHref}
                         </a>
                       </p>
                     </div>
@@ -137,12 +147,15 @@ function renderSystemKitInitialEmail(input: {
   systemName: string;
   copyUrl: string;
 }) {
+  const safeFirstName = escapeHtml(input.firstName);
+  const safeSystemName = escapeHtml(input.systemName);
+
   return renderSystemKitEmailLayout({
     eyebrow: "Tableau de pilotage",
     title: "Votre tableau de pilotage est prêt",
-    greeting: `Bonjour ${input.firstName},`,
+    greeting: `Bonjour ${safeFirstName},`,
     paragraphs: [
-      `Voici votre tableau de pilotage pour <strong style="color:#17231d;">${input.systemName}</strong>.`,
+      `Voici votre tableau de pilotage pour <strong style="color:#17231d;">${safeSystemName}</strong>.`,
       "Il regroupe dans un seul Google Sheet la synthèse, le prévisionnel financier, les actions, l’équipe, l’écosystème, le calendrier marketing et les process.",
       "Connectez-vous à Google puis créez votre copie personnelle : elle sera directement modifiable dans votre Drive.",
     ],
@@ -161,13 +174,16 @@ function renderSystemKitFollowupEmail(input: {
   sessionUrl: string;
   kind: SystemKitFollowupKind;
 }) {
+  const safeFirstName = escapeHtml(input.firstName);
+  const safeSystemName = escapeHtml(input.systemName);
+
   if (input.kind === "usage") {
     return renderSystemKitEmailLayout({
       eyebrow: "Tableau de pilotage",
       title: "Comment démarrer simplement",
-      greeting: input.firstName ? `Bonjour ${input.firstName},` : "Bonjour,",
+      greeting: input.firstName ? `Bonjour ${safeFirstName},` : "Bonjour,",
       paragraphs: [
-        `Voici la façon la plus simple de démarrer votre tableau de pilotage ${input.systemName.toLowerCase()}.`,
+        `Voici la façon la plus simple de démarrer votre tableau de pilotage ${safeSystemName.toLowerCase()}.`,
         "Commencez par la Synthèse : choisissez le premier mois, votre unité d’activité et vos objectifs.",
         "Renseignez ensuite vos chiffres dans le Prévisionnel financier, puis choisissez une seule action et un seul process prioritaires.",
       ],
@@ -190,7 +206,7 @@ function renderSystemKitFollowupEmail(input: {
   return renderSystemKitEmailLayout({
     eyebrow: "Structuration & pilotage",
     title: "Vous voulez adapter le tableau à votre entreprise ?",
-    greeting: input.firstName ? `Bonjour ${input.firstName},` : "Bonjour,",
+    greeting: input.firstName ? `Bonjour ${safeFirstName},` : "Bonjour,",
     paragraphs: [
       "La mission Structuration & pilotage vous aide à configurer le tableau avec vos données, clarifier les rôles et remettre de l’ordre dans vos priorités et vos process.",
       "L’intervention dure un mois et coûte 980 € HT.",
