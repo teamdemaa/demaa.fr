@@ -114,7 +114,7 @@ async function handlePost(request: Request) {
 
   const context = await resolveLeadContext({
     systemSlug: sectorSlug,
-    source: "Réception du tableau de pilotage",
+    source: "Réception du tableau de suivi opérationnel",
     sourceUrl: request.headers.get("referer"),
   });
 
@@ -130,7 +130,7 @@ async function handlePost(request: Request) {
     emoji: "📦",
     idempotencyKey,
     requestType: "system_kit_request",
-    title: `Réception du tableau de pilotage - ${resolvedSystemName}`,
+    title: `Réception du tableau de suivi opérationnel - ${resolvedSystemName}`,
   });
 
   const existingKitEmailState = await getLeadDeliveryState(lead.leadId, "kit_email");

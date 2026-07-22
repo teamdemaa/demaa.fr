@@ -19,7 +19,7 @@ const forbiddenUi = [
   "Système opérationnel",
 ];
 
-const downloadCta = "Recevoir mon tableau de pilotage";
+const downloadCta = "Recevoir mon tableau de suivi";
 
 async function fetchPage(path, redirect = "follow") {
   return fetch(`${baseUrl}${path}`, {

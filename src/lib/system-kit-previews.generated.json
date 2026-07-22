@@ -1,0 +1,807 @@
+[
+  {
+    "slug": "batiment",
+    "src": "/images/kits/batiment/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Bâtiment",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "plomberie-chauffage",
+    "src": "/images/kits/plomberie-chauffage/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Plomberie & chauffage",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "electricite-generale",
+    "src": "/images/kits/electricite-generale/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Électricité générale",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "renovation-interieur",
+    "src": "/images/kits/renovation-interieur/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Rénovation intérieure",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "menuiserie-agencement",
+    "src": "/images/kits/menuiserie-agencement/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Menuiserie & agencement",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "maconnerie-gros-oeuvre",
+    "src": "/images/kits/maconnerie-gros-oeuvre/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Maçonnerie & gros œuvre",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "architecte-maitre-oeuvre",
+    "src": "/images/kits/architecte-maitre-oeuvre/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Architecte / maître d’œuvre",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "peintre-en-batiment",
+    "src": "/images/kits/peintre-en-batiment/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Peintre en bâtiment",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "couvreur",
+    "src": "/images/kits/couvreur/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Couvreur",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "carreleur",
+    "src": "/images/kits/carreleur/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Carreleur",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "climatisation",
+    "src": "/images/kits/climatisation/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Climatisation",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "paysagiste",
+    "src": "/images/kits/paysagiste/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Paysagiste",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "pisciniste",
+    "src": "/images/kits/pisciniste/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Pisciniste",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "serrurier",
+    "src": "/images/kits/serrurier/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Serrurier",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "garage-automobile",
+    "src": "/images/kits/garage-automobile/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Garage automobile",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "carrosserie",
+    "src": "/images/kits/carrosserie/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Carrosserie",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "demenagement",
+    "src": "/images/kits/demenagement/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Déménagement professionnel",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "livraison-dernier-kilometre",
+    "src": "/images/kits/livraison-dernier-kilometre/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Livraison dernier kilomètre",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "transport-de-marchandise",
+    "src": "/images/kits/transport-de-marchandise/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Transport de marchandises",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "transport-de-personnes",
+    "src": "/images/kits/transport-de-personnes/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Transport de personnes B2B",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "nettoyage-professionnel",
+    "src": "/images/kits/nettoyage-professionnel/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Nettoyage professionnel",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "entreprise-de-securite",
+    "src": "/images/kits/entreprise-de-securite/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Entreprise de sécurité B2B",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "services-a-la-personne",
+    "src": "/images/kits/services-a-la-personne/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Services à la personne",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "aide-a-domicile-menage",
+    "src": "/images/kits/aide-a-domicile-menage/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Aide à domicile & ménage",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "pressing",
+    "src": "/images/kits/pressing/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Pressing",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "librairie",
+    "src": "/images/kits/librairie/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Librairie",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "laverie-automatique",
+    "src": "/images/kits/laverie-automatique/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Laverie automatique",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "agence-de-voyage",
+    "src": "/images/kits/agence-de-voyage/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Agence de voyage",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "agence-marketing",
+    "src": "/images/kits/agence-marketing/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Agence marketing",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "agence-de-recrutement",
+    "src": "/images/kits/agence-de-recrutement/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Agence de recrutement",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "agence-acquisition-paid-ads",
+    "src": "/images/kits/agence-acquisition-paid-ads/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Agence acquisition paid ads",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "agence-seo",
+    "src": "/images/kits/agence-seo/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Agence SEO",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "agence-web",
+    "src": "/images/kits/agence-web/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Agence web",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "agence-immobiliere",
+    "src": "/images/kits/agence-immobiliere/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Agence immobilière professionnelle",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "cabinet-assurance",
+    "src": "/images/kits/cabinet-assurance/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Cabinet d’assurance",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "cabinet-comptable",
+    "src": "/images/kits/cabinet-comptable/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Cabinet comptable",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "cabinet-davocat",
+    "src": "/images/kits/cabinet-davocat/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Cabinet d’avocat",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "cabinet-de-conseil",
+    "src": "/images/kits/cabinet-de-conseil/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Cabinet de conseil",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "cabinet-etudes",
+    "src": "/images/kits/cabinet-etudes/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Cabinet d’études",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "cabinet-rh-externalise",
+    "src": "/images/kits/cabinet-rh-externalise/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Cabinet RH externalisé",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "cabinet-qhse-conformite",
+    "src": "/images/kits/cabinet-qhse-conformite/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Cabinet QHSE / conformité",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "bureau-etudes",
+    "src": "/images/kits/bureau-etudes/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Bureau d’études",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "centre-appels-support-client",
+    "src": "/images/kits/centre-appels-support-client/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Centre d’appels / support client",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "centre-affaires-coworking",
+    "src": "/images/kits/centre-affaires-coworking/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Centre d’affaires / coworking",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "conciergerie-airbnb",
+    "src": "/images/kits/conciergerie-airbnb/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Conciergerie multi-biens",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "consultant-data-bi",
+    "src": "/images/kits/consultant-data-bi/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Consultant data / BI",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "creation-de-contenu",
+    "src": "/images/kits/creation-de-contenu/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Création de contenu",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "courtier-credit-assurance",
+    "src": "/images/kits/courtier-credit-assurance/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Courtier crédit / assurance",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "chasseur-immobilier",
+    "src": "/images/kits/chasseur-immobilier/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Chasseur immobilier",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "daf-externalise",
+    "src": "/images/kits/daf-externalise/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour DAF externalisé",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "freelance",
+    "src": "/images/kits/freelance/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Freelance B2B",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "gestion-locative",
+    "src": "/images/kits/gestion-locative/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Gestion locative pour investisseurs",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "infogerance-informatique",
+    "src": "/images/kits/infogerance-informatique/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Infogérance informatique",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "integrateur-crm-erp",
+    "src": "/images/kits/integrateur-crm-erp/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Intégrateur CRM / ERP",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "production-industrie",
+    "src": "/images/kits/production-industrie/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Production & Industrie",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "opticien",
+    "src": "/images/kits/opticien/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Opticien",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "reparation-informatique-mobile",
+    "src": "/images/kits/reparation-informatique-mobile/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Maintenance informatique B2B",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "food-truck",
+    "src": "/images/kits/food-truck/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Food truck",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "fast-food",
+    "src": "/images/kits/fast-food/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Fast-food",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "association",
+    "src": "/images/kits/association/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Association",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "assistant-administratif-externalise",
+    "src": "/images/kits/assistant-administratif-externalise/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Assistant administratif externalisé",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "auto-ecole",
+    "src": "/images/kits/auto-ecole/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Centre de formation conduite pro",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "boulangerie",
+    "src": "/images/kits/boulangerie/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Boulangerie",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "consultant-independant",
+    "src": "/images/kits/consultant-independant/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Consultant indépendant",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "coach-sportif",
+    "src": "/images/kits/coach-sportif/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Coach sportif",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "esthetique",
+    "src": "/images/kits/esthetique/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Esthétique",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "fleuriste",
+    "src": "/images/kits/fleuriste/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Fleuriste événementiel B2B",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "geometre",
+    "src": "/images/kits/geometre/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Géomètre",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "gestionnaire-de-patrimoine",
+    "src": "/images/kits/gestionnaire-de-patrimoine/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Gestionnaire de patrimoine dirigeant",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "institut-de-beaute",
+    "src": "/images/kits/institut-de-beaute/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Institut de beauté",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "investissement-immobilier",
+    "src": "/images/kits/investissement-immobilier/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Investissement immobilier",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "investissement-financier",
+    "src": "/images/kits/investissement-financier/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Investissement financier",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "investissement-entreprise",
+    "src": "/images/kits/investissement-entreprise/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Investissement entreprise",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "investissement-locatif",
+    "src": "/images/kits/investissement-locatif/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Investissement locatif",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "salon-de-coiffure",
+    "src": "/images/kits/salon-de-coiffure/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Salon de coiffure",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "osteopathe",
+    "src": "/images/kits/osteopathe/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Ostéopathe",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "psychologue",
+    "src": "/images/kits/psychologue/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Psychologue",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "photographe-videaste",
+    "src": "/images/kits/photographe-videaste/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Photographe / vidéaste corporate",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "restaurant",
+    "src": "/images/kits/restaurant/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Restaurant",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "evenementiel",
+    "src": "/images/kits/evenementiel/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Événementiel professionnel",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "marchand-de-biens",
+    "src": "/images/kits/marchand-de-biens/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Marchand de biens",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "salle-de-sport",
+    "src": "/images/kits/salle-de-sport/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Salle de sport",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "syndic",
+    "src": "/images/kits/syndic/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Syndic",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "traiteur",
+    "src": "/images/kits/traiteur/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Traiteur événementiel B2B",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "creche",
+    "src": "/images/kits/creche/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Crèche",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "hotel-hebergement-independant",
+    "src": "/images/kits/hotel-hebergement-independant/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Hôtel & hébergement indépendant",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "marketplace",
+    "src": "/images/kits/marketplace/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Marketplace",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "media",
+    "src": "/images/kits/media/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Média",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "saas",
+    "src": "/images/kits/saas/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour SaaS",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "e-commerce",
+    "src": "/images/kits/e-commerce/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour E-commerce",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "commerce-de-detail",
+    "src": "/images/kits/commerce-de-detail/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Commerce de détail",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "commerce-alimentaire",
+    "src": "/images/kits/commerce-alimentaire/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Commerce alimentaire",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "boutique-specialisee",
+    "src": "/images/kits/boutique-specialisee/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Boutique spécialisée",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "tabac-presse-point-relais",
+    "src": "/images/kits/tabac-presse-point-relais/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Tabac / presse / point relais",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "bar-cafe",
+    "src": "/images/kits/bar-cafe/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Café",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "organisme-de-formation",
+    "src": "/images/kits/organisme-de-formation/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Organisme de formation",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "cfa",
+    "src": "/images/kits/cfa/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour CFA",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "formation-en-ligne",
+    "src": "/images/kits/formation-en-ligne/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Formation en ligne",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "cabinet-medical",
+    "src": "/images/kits/cabinet-medical/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Cabinet médical",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "cabinet-paramedical",
+    "src": "/images/kits/cabinet-paramedical/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Cabinet paramédical",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "infirmier-liberal",
+    "src": "/images/kits/infirmier-liberal/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Infirmier libéral",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "dentiste",
+    "src": "/images/kits/dentiste/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Dentiste",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "diagnostiqueur-immobilier",
+    "src": "/images/kits/diagnostiqueur-immobilier/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Diagnostiqueur immobilier",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "cybersecurite-pme",
+    "src": "/images/kits/cybersecurite-pme/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Cybersécurité PME",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "coach-professionnel",
+    "src": "/images/kits/coach-professionnel/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Coach professionnel",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "notaire",
+    "src": "/images/kits/notaire/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Notaire",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "office-manager-externalise",
+    "src": "/images/kits/office-manager-externalise/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Office manager externalisé",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "pharmacie",
+    "src": "/images/kits/pharmacie/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Pharmacie",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "secretariat-externalise",
+    "src": "/images/kits/secretariat-externalise/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Secrétariat externalisé",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "gestionnaire-paie-independant",
+    "src": "/images/kits/gestionnaire-paie-independant/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Gestionnaire de paie indépendant",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "societe-recouvrement",
+    "src": "/images/kits/societe-recouvrement/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Société de recouvrement",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "studio-branding-design",
+    "src": "/images/kits/studio-branding-design/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Studio branding / design",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "veterinaire",
+    "src": "/images/kits/veterinaire/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Vétérinaire",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "vtc",
+    "src": "/images/kits/vtc/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour VTC",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "slug": "dark-kitchen",
+    "src": "/images/kits/dark-kitchen/tableau-suivi-preview.webp",
+    "alt": "Aperçu du tableau de suivi opérationnel pour Dark kitchen",
+    "width": 1400,
+    "height": 933
+  }
+]

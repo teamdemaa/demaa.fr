@@ -151,11 +151,11 @@ function renderSystemKitInitialEmail(input: {
   const safeSystemName = escapeHtml(input.systemName);
 
   return renderSystemKitEmailLayout({
-    eyebrow: "Tableau de pilotage",
-    title: "Votre tableau de pilotage est prêt",
+    eyebrow: "Suivi opérationnel",
+    title: "Votre tableau de suivi est prêt",
     greeting: `Bonjour ${safeFirstName},`,
     paragraphs: [
-      `Voici votre tableau de pilotage pour <strong style="color:#17231d;">${safeSystemName}</strong>.`,
+      `Voici votre tableau de suivi opérationnel pour <strong style="color:#17231d;">${safeSystemName}</strong>.`,
       "Il regroupe dans un seul Google Sheet la synthèse, le prévisionnel financier, les actions, l’équipe, l’écosystème, le calendrier marketing et les process.",
       "Connectez-vous à Google puis créez votre copie personnelle : elle sera directement modifiable dans votre Drive.",
     ],
@@ -179,11 +179,11 @@ function renderSystemKitFollowupEmail(input: {
 
   if (input.kind === "usage") {
     return renderSystemKitEmailLayout({
-      eyebrow: "Tableau de pilotage",
+      eyebrow: "Suivi opérationnel",
       title: "Comment démarrer simplement",
       greeting: input.firstName ? `Bonjour ${safeFirstName},` : "Bonjour,",
       paragraphs: [
-        `Voici la façon la plus simple de démarrer votre tableau de pilotage ${safeSystemName.toLowerCase()}.`,
+        `Voici la façon la plus simple de démarrer votre tableau de suivi ${safeSystemName.toLowerCase()}.`,
         "Commencez par la Synthèse : choisissez le premier mois, votre unité d’activité et vos objectifs.",
         "Renseignez ensuite vos chiffres dans le Prévisionnel financier, puis choisissez une seule action et un seul process prioritaires.",
       ],
@@ -236,7 +236,7 @@ function renderSystemKitText(input: {
   return [
     `Bonjour ${input.firstName},`,
     "",
-    `Voici votre tableau de pilotage pour ${input.systemName} :`,
+    `Voici votre tableau de suivi opérationnel pour ${input.systemName} :`,
     input.copyUrl,
     "",
     "Ce Google Sheet regroupe la synthèse, le prévisionnel financier, les actions, l’équipe, l’écosystème, le calendrier marketing et les process.",
@@ -271,7 +271,7 @@ export async function sendSystemKitEmail(input: {
     payload: {
       from,
       to: input.email,
-      subject: `Votre tableau de pilotage Demaa — ${input.systemName}`,
+      subject: `Votre tableau de suivi Demaa - ${input.systemName}`,
       html: renderSystemKitEmail({
         firstName: input.firstName,
         systemName: input.systemName,
@@ -297,7 +297,7 @@ function renderSystemKitFollowupText(input: {
     return [
       `Bonjour ${input.firstName || ""}`.trim() + ",",
       "",
-      `Voici la façon la plus simple de démarrer votre tableau de pilotage ${input.systemName}.`,
+      `Voici la façon la plus simple de démarrer votre tableau de suivi ${input.systemName}.`,
       "",
       "1. Configurez la Synthèse : premier mois, unité d’activité et objectifs.",
       "2. Complétez le Prévisionnel financier mois par mois.",
@@ -384,7 +384,7 @@ export async function sendSystemKitFollowupEmail(input: {
     `&source=kit-followup&systemSlug=${encodeURIComponent(input.systemSlug)}`;
   const subject =
     input.kind === "usage"
-      ? "Comment démarrer votre tableau de pilotage"
+      ? "Comment démarrer votre tableau de suivi"
       : "Besoin d’aide pour adapter votre tableau ?";
 
   return sendResendEmail({

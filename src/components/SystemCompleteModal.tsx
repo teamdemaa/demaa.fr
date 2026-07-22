@@ -181,8 +181,9 @@ export default function SystemCompleteModal({
               <Image
                 src={preview.src}
                 alt={preview.alt}
-                width={1400}
-                height={933}
+                width={preview.width}
+                height={preview.height}
+                loading="eager"
                 sizes="(max-width: 1023px) 1px, (max-width: 1280px) 52vw, 620px"
                 className="h-auto w-full"
               />
@@ -199,13 +200,13 @@ export default function SystemCompleteModal({
             <Mail className="h-5 w-5" aria-hidden="true" />
           </span>
           <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-            Tableau de pilotage
+            Suivi opérationnel
           </p>
           <h2
             id="system-complete-modal-title"
             className="mt-2 pr-10 text-2xl font-semibold tracking-tight text-brand-blue"
           >
-            Recevoir mon tableau de pilotage - {systemName}
+            Recevoir mon tableau de suivi - {systemName}
           </h2>
 
           {preview ? (
@@ -213,8 +214,9 @@ export default function SystemCompleteModal({
               <Image
                 src={preview.src}
                 alt={preview.alt}
-                width={1400}
-                height={933}
+                width={preview.width}
+                height={preview.height}
+                loading="eager"
                 sizes="(max-width: 640px) calc(100vw - 68px), 560px"
                 className="h-auto w-full"
               />
@@ -249,7 +251,7 @@ export default function SystemCompleteModal({
           {copyUrl ? (
             <div className="mt-6 rounded-[1rem] bg-dema-cream/55 p-5" role="status">
               <h3 className="text-lg font-semibold text-brand-blue">
-                Votre tableau de pilotage est prêt
+                Votre tableau de suivi est prêt
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-dema-muted">
                 Le lien vient aussi d’être envoyé à {email}. Connectez-vous à Google,
@@ -316,7 +318,7 @@ export default function SystemCompleteModal({
                 {isSubmitting ? (
                   <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
                 ) : null}
-                {isSubmitting ? "Envoi…" : "Recevoir mon tableau de pilotage"}
+                {isSubmitting ? "Envoi…" : "Recevoir mon tableau de suivi"}
               </button>
             </form>
           )}
