@@ -76,11 +76,11 @@ describe("Fillout webhook route", () => {
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
       idempotencyKey: "fillout:sub_route_12345",
       requestType: "organisation_session_booking",
-      title: "Session d’organisation — formulaire envoyé",
+      title: "Session stratégique — formulaire envoyé",
       fields: expect.arrayContaining([
         expect.objectContaining({
           label: "Formulaire",
-          value: "Session d’organisation (Fillout)",
+          value: "Session stratégique (Fillout)",
         }),
       ]),
       contact: expect.objectContaining({ email: "lead@example.com" }),

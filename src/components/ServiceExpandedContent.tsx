@@ -24,39 +24,39 @@ type ServiceExpandedContentProps = {
 const organisationSignals = [
   {
     icon: FileCheck,
-    title: "Tout passe encore par vous",
+    title: "Vous avez plusieurs priorités en même temps",
     description:
-      "Quand chaque validation, relance ou décision revient vers vous, l’entreprise ralentit et vous épuise.",
+      "Les sujets s’accumulent et vous avez besoin de distinguer ce qui mérite vraiment votre attention maintenant.",
   },
   {
     icon: Users,
-    title: "Votre quotidien est trop chargé",
+    title: "Vous manquez de recul pour décider",
     description:
-      "Vous passez trop de temps à gérer, rappeler, vérifier et rattraper au lieu d’avancer sur l’essentiel.",
+      "Quand on est pris dans le quotidien, il devient difficile de voir clairement le problème à traiter en premier.",
   },
   {
     icon: Blocks,
-    title: "L’activité avance, mais pas de façon autonome",
+    title: "Vous voulez un regard extérieur",
     description:
-      "Sans cadre clair, l’équipe dépend encore de vous pour faire tourner les sujets correctement.",
+      "Un échange structuré peut vous aider à clarifier la situation sans vous engager dans une prestation.",
   },
 ] as const;
 
 const organisationSteps = [
   {
-    title: "On choisit le process prioritaire",
+    title: "On fait le point sur votre situation",
     description:
-      "On repère le process qui vous fait perdre le plus de temps ou qui dépend encore trop de vous.",
+      "Vous partagez le contexte, les sujets du moment et ce qui vous semble aujourd’hui le plus difficile à trancher.",
   },
   {
-    title: "On cadre les tâches utiles",
+    title: "On clarifie ce qui compte maintenant",
     description:
-      "On commence à lister les étapes concrètes à conserver, simplifier, répartir ou compléter dans votre tableau.",
+      "Nous distinguons ensemble le besoin prioritaire des sujets qui peuvent attendre ou être traités autrement.",
   },
   {
-    title: "On fixe le responsable et la récurrence",
+    title: "On définit une prochaine étape",
     description:
-      "Vous repartez avec une première base exploitable et la prochaine action à poursuivre après la session.",
+      "Vous repartez avec une direction concrète, que cette suite passe par Demaa, un autre interlocuteur ou une action en autonomie.",
   },
 ] as const;
 
@@ -72,49 +72,49 @@ const organisationFaq = [
   {
     question: "Est-ce que la session offerte m'engage à acheter quelque chose ?",
     answer:
-      "Non. La session sert à vous aider à démarrer votre kit. Vous décidez ensuite librement de la suite.",
+      "Non. La session est gratuite et sans engagement. Elle reste utile même si vous ne choisissez ensuite aucun service Demaa.",
   },
   {
     question: "Que faisons-nous pendant la session ?",
     answer:
-      "Nous choisissons un process prioritaire, puis nous commençons à cadrer ses tâches, son responsable et sa récurrence dans votre tableau.",
+      "Nous faisons le point sur votre situation, clarifions le besoin ou la priorité du moment et définissons une prochaine étape réaliste.",
   },
   {
     question: "Est-ce que 30 minutes suffisent ?",
     answer:
-      "Oui pour démarrer proprement un process prioritaire. La session n’a pas vocation à compléter l’intégralité du kit en une seule fois.",
+      "Oui pour prendre du recul, clarifier un sujet prioritaire et repartir avec une direction. La session n’a pas vocation à résoudre tous les sujets de l’entreprise en une fois.",
   },
   {
     question: "Qu'est-ce que je récupère à la fin ?",
     answer:
-      "Vous repartez avec un process choisi, une première liste de tâches, un responsable, une récurrence et une prochaine action claire.",
+      "Vous repartez avec une lecture plus claire de votre situation, un besoin prioritaire mieux défini et une prochaine étape concrète.",
   },
 ] as const;
 
 const organisationKeyFacts = [
   {
     label: "Offert",
-    title: "Session d’organisation",
+    title: "Session stratégique avec un spécialiste",
     description:
-      "Un premier temps de travail pour commencer à adapter le kit à votre entreprise.",
+      "Un échange de 30 minutes pour vous aider à y voir plus clair, sans condition d’achat.",
   },
   {
     label: "Durée",
     title: "30 minutes",
     description:
-      "Un format volontairement court, centré sur un seul process prioritaire.",
+      "Un format volontairement court et concentré sur le sujet qui compte le plus aujourd’hui.",
   },
   {
     label: "Résultat attendu",
-    title: "Une première base exploitable",
+    title: "Une prochaine étape claire",
     description:
-      "Les tâches, le responsable, la récurrence et la prochaine action commencent à être cadrés.",
+      "Vous repartez avec une priorité mieux comprise et une direction concrète pour avancer.",
   },
   {
     label: "Sans engagement",
     title: "Vous gardez la main",
     description:
-      "La session vous aide à démarrer sans vous engager sur un accompagnement supplémentaire.",
+      "La suite peut se faire avec Demaa, un autre interlocuteur ou en autonomie.",
   },
 ] as const;
 
@@ -328,15 +328,15 @@ function OrganisationExpandedContent({
     ? systeme.cards.map((card) => card.pillar)
     : organisationPillars;
   const contextualTitle = systemName
-    ? `Les catégories du kit à parcourir pour ${withArticle(systemName)}`
-    : "Les catégories que nous pouvons parcourir";
+    ? `Les sujets que nous pouvons explorer pour ${withArticle(systemName)}`
+    : "Les sujets que nous pouvons explorer";
 
   return (
     <div className={sectionGap}>
       <section className={sectionClass}>
         <div className="max-w-3xl">
           <h3 className="text-xl font-semibold tracking-tight text-brand-blue md:text-2xl">
-            Comment savoir si vous en avez besoin ?
+            Quand cette session peut vous aider
           </h3>
         </div>
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -412,7 +412,7 @@ function OrganisationExpandedContent({
             Infos clés de la session
           </p>
           <h3 className="mt-2 text-xl font-semibold tracking-tight text-brand-blue md:text-2xl">
-            Ce que vous devez savoir avant de le demander
+            Ce que vous devez savoir avant de réserver
           </h3>
           <div className="mt-6 grid gap-4 md:grid-cols-2">
             {organisationKeyFacts.map((item) => (

@@ -26,7 +26,7 @@ type SystemDetailContentProps = {
 const tabs: ReadonlyArray<{ slug: SystemDetailTab; label: string }> = [
   { slug: "process", label: "Process" },
   { slug: "outils", label: "Outils" },
-  { slug: "accompagnement", label: "Accompagnement" },
+  { slug: "accompagnement", label: "Services" },
 ];
 
 export default function SystemDetailContent({
@@ -214,7 +214,7 @@ export default function SystemDetailContent({
           {activeTab === "accompagnement" ? (
             <AccompagnementServices
               sectorLabel={detail.sectorLabel}
-              source="Kit opérationnel — Accompagnement"
+              source="Kit opérationnel — Services"
               systemName={system.name}
               systemSlug={system.slug}
             />

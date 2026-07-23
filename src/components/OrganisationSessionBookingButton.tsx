@@ -14,8 +14,8 @@ type OrganisationSessionBookingButtonProps = {
 
 export default function OrganisationSessionBookingButton({
   className = "demaa-primary-button mt-5 w-fit",
-  label = "Réserver ma session",
-  source = "Page session d’organisation",
+  label = "Réserver ma session offerte",
+  source = "Page session stratégique",
 }: OrganisationSessionBookingButtonProps) {
   const searchParams = useSearchParams();
   const [isOpen, setIsOpen] = useState(searchParams.get("booking") === "1");
