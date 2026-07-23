@@ -268,7 +268,7 @@ export function parseFilloutWebhookSubmission(value: unknown): ParsedFilloutSubm
     toEntries(raw.scheduling),
   );
   const source = readParameter(parameters, "source", 120)
-    ?? "Session d’organisation Fillout";
+    ?? "Session stratégique Fillout";
   const sourceUrl = cleanPath(
     readParameter(parameters, "dem_conversion_page", 700)
       ?? readParameter(parameters, "dem_last_landing", 700)

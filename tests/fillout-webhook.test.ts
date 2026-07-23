@@ -26,7 +26,7 @@ describe("Fillout webhook", () => {
       ],
       urlParameters: [
         { id: "p1", name: "systemSlug", value: "freelance" },
-        { id: "p2", name: "source", value: "Kit opérationnel — Accompagnement" },
+        { id: "p2", name: "source", value: "Kit opérationnel — Services" },
         { id: "p3", name: "dem_first_source", value: "linkedin" },
         { id: "p4", name: "dem_first_medium", value: "paid_social" },
         { id: "p5", name: "dem_first_campaign", value: "audit-2026" },

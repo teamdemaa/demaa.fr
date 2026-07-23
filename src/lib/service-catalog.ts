@@ -134,8 +134,8 @@ export const demaaServices = [
       "Mise en relation avec un expert-comptable selon votre activité, votre stade, vos enjeux et le type d'accompagnement recherché.",
     bestFor:
       "Les dirigeants qui veulent trouver un cabinet adapté pour la création, le suivi courant, la paie, la fiscalité ou un changement d'interlocuteur.",
-    duration: "1 mois",
-    price: "Sur devis",
+    duration: "Suivi mensuel",
+    price: "À partir de 250 € HT / mois",
     tags: ["Comptabilité", "Mise en relation", "Cabinet"],
     icon: "Calculator",
     deliverables: [
@@ -171,23 +171,24 @@ export const demaaServices = [
   },
   {
     slug: "organisation-automatisation",
-    name: "Session d’organisation offerte",
+    name: "Session stratégique offerte avec un spécialiste",
     category: "Organisation",
-    shortDescription: "Une session de 30 minutes pour commencer à adapter votre kit à votre activité.",
+    shortDescription:
+      "30 minutes pour faire le point, y voir plus clair et définir une prochaine étape.",
     description:
-      "Pendant 30 minutes, nous identifions le process prioritaire et commençons à cadrer ses tâches, son responsable et sa récurrence dans votre tableau.",
+      "Un échange gratuit de 30 minutes avec un spécialiste pour clarifier votre situation, faire ressortir ce qui compte maintenant et définir une prochaine étape, sans engagement.",
     bestFor:
-      "Les dirigeants qui veulent démarrer leur kit avec un premier process clair, concret et adapté à leur organisation.",
+      "Les dirigeants qui ont plusieurs sujets en tête, manquent de recul ou veulent simplement y voir plus clair avant de décider de la suite.",
     duration: "30 minutes",
     price: "Offerte",
-    tags: ["Organisation", "Process", "Kit opérationnel"],
-    icon: "Workflow",
+    tags: ["Stratégie", "Clarté", "Sans engagement"],
+    icon: "Lightbulb",
     deliverables: [
-      "Choix du process à structurer en priorité",
-      "Première liste de tâches à adapter dans le tableau",
-      "Responsable, récurrence et prochaine action clarifiés",
+      "Point clair sur votre situation actuelle",
+      "Besoin ou priorité du moment clarifié",
+      "Prochaine étape concrète identifiée",
     ],
-    usefulFor: ["Process", "Tâches", "Responsable", "Récurrence"],
+    usefulFor: ["Prise de recul", "Priorités", "Décision", "Prochaine étape"],
   },
   {
     slug: "marketing-vente",
@@ -214,25 +215,25 @@ export const demaaServices = [
   },
   {
     slug: "organisation-equipes",
-    name: "Organisation opérationnelle",
+    name: "Structuration & pilotage",
     category: "Organisation",
     shortDescription:
-      "Structurer l'organisation interne pour clarifier l'organigramme, les rôles, les responsabilités et la répartition des tâches.",
+      "Remettre de l’ordre dans l’entreprise avec des priorités, des rôles et des process clairs.",
     description:
-      "Mise en place d'une organisation opérationnelle claire avec organigramme, rôles et responsabilités de chacun, politique de rémunération et répartition complète des tâches.",
+      "Une mission d’un mois pour diagnostiquer l’organisation, configurer le tableau de suivi opérationnel et clarifier les rôles, les process, les responsabilités et les priorités.",
     bestFor:
-      "Les dirigeants qui veulent sortir du flou, mieux cadrer leur équipe et poser un fonctionnement plus lisible, stable et autonome au quotidien.",
+      "Les dirigeants qui veulent sortir du flou, moins centraliser le quotidien et installer un fonctionnement plus lisible, stable et autonome.",
     duration: "1 mois",
-    price: "850 € HT",
-    tags: ["Organisation", "Rôles", "Management"],
-    icon: "Users",
+    price: "1 500 € HT",
+    tags: ["Organisation", "Pilotage", "Process"],
+    icon: "Workflow",
     deliverables: [
-      "Organigramme clair et lisible",
-      "Rôles et responsabilités de chacun formalisés",
-      "Politique de rémunération cadrée",
-      "Répartition complète des tâches",
+      "Diagnostic de l’organisation et des priorités",
+      "Tableau de suivi opérationnel configuré avec vos données",
+      "Rôles, process et responsabilités clarifiés",
+      "Plan d’action concret pour la suite",
     ],
-    usefulFor: ["Structuration interne", "Management", "Croissance d'équipe"],
+    usefulFor: ["Structuration interne", "Pilotage", "Autonomie", "Croissance"],
   },
   {
     slug: "publicite-google",

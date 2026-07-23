@@ -120,7 +120,7 @@ export async function POST(request: Request) {
 
       const context = await resolveLeadContext({
         systemSlug,
-        source: "Kit opérationnel — Accompagnement",
+        source: "Kit opérationnel — Services",
         sourceUrl: request.headers.get("referer") || sourceUrl,
       });
 

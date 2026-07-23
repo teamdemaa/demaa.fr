@@ -58,12 +58,12 @@ async function handlePost(request: Request) {
     context,
     emoji: "📅",
     fields: [
-      { label: "Formulaire", value: "Session d’organisation (Fillout)" },
+      { label: "Formulaire", value: "Session stratégique (Fillout)" },
       { label: "Référence Fillout", value: submission.submissionId },
     ],
     idempotencyKey: `fillout:${submission.submissionId}`,
     requestType: "organisation_session_booking",
-    title: "Session d’organisation — formulaire envoyé",
+    title: "Session stratégique — formulaire envoyé",
   });
 
   logOperationalEvent("fillout.webhook.processed", {
