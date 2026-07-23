@@ -69,12 +69,15 @@ function inspectPage({ enterprise, response, html, tab }) {
     errors.push("shared tab panel is missing");
   }
 
-  const ctaCount = countOccurrences(
+  const topDownloadCtaCount = countOccurrences(
     renderedHtml,
-    "Recevoir mon tableau de suivi",
+    'aria-haspopup="dialog"',
   );
-  if (ctaCount !== 1) {
-    errors.push(`expected one top download CTA, found ${ctaCount}`);
+  if (
+    topDownloadCtaCount !== 1 ||
+    !renderedHtml.includes("Tableau de suivi opérationnel")
+  ) {
+    errors.push(`expected one top download CTA, found ${topDownloadCtaCount}`);
   }
 
   for (const removedIntro of [
@@ -130,7 +133,7 @@ function inspectPage({ enterprise, response, html, tab }) {
   if (tab === "accompagnement") {
     for (const expectedText of [
       "Structuration &amp; pilotage",
-      "980 € HT",
+      "1 500 € HT",
       "Réserver ma session de cadrage offerte",
     ]) {
       if (!renderedHtml.includes(expectedText)) {
@@ -144,25 +147,14 @@ function inspectPage({ enterprise, response, html, tab }) {
       errors.push("structuration CTA does not open the booking form");
     }
 
-    const accountingExpected = enterprise.slug !== "cabinet-comptable";
-    const hasAccounting = renderedHtml.includes("Expertise comptable");
-    if (hasAccounting !== accountingExpected) {
-      errors.push(
-        accountingExpected
-          ? "accounting offer is missing"
-          : "accounting offer should be hidden for cabinet-comptable",
-      );
-    }
-
-    if (accountingExpected) {
-      for (const expectedText of [
-        "À partir de 250 € HT",
-        "Demander un rendez-vous",
-        "cabinet inscrit à l’Ordre des",
-      ]) {
-        if (!renderedHtml.includes(expectedText)) {
-          errors.push(`missing accounting text: ${expectedText}`);
-        }
+    for (const hiddenAccountingOfferText of [
+      "Expertise comptable",
+      "À partir de 250 € HT",
+      "Demander un rendez-vous",
+      "cabinet inscrit à l’Ordre des",
+    ]) {
+      if (renderedHtml.includes(hiddenAccountingOfferText)) {
+        errors.push(`accounting offer should be hidden: ${hiddenAccountingOfferText}`);
       }
     }
 

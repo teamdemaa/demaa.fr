@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Calculator, Check, Route } from "lucide-react";
-import AccountingRecommendationDialog from "@/components/AccountingRecommendationDialog";
+import { ArrowRight, Check, Route } from "lucide-react";
 
 type AccompagnementServicesProps = {
   source?: string;
@@ -21,13 +20,6 @@ const structureItems = [
   "Plan d’action concret pour la suite",
 ] as const;
 
-const accountingItems = [
-  "Comptabilité et obligations déclaratives",
-  "Suivi adapté à votre activité",
-  "Échanges avec un interlocuteur dédié",
-  "Structuration et pilotage disponibles séparément",
-] as const;
-
 function OfferList({ items }: { items: readonly string[] }) {
   return (
     <ul className="mt-5 space-y-2.5">
@@ -42,18 +34,15 @@ function OfferList({ items }: { items: readonly string[] }) {
 }
 
 export default function AccompagnementServices({
-  sectorLabel,
   source = "Accompagnement",
-  systemName,
   systemSlug,
 }: AccompagnementServicesProps) {
-  const showAccounting = systemSlug !== "cabinet-comptable";
   const structureHref =
     `/annuaire-services/organisation?booking=1&source=${encodeURIComponent(source)}&systemSlug=${encodeURIComponent(systemSlug)}`;
 
   return (
     <div>
-      <div className={`grid gap-4 ${showAccounting ? "lg:grid-cols-2" : "max-w-2xl"}`}>
+      <div className="grid max-w-2xl gap-4">
         <Link href={structureHref} className={CARD_CLASS}>
           <div className="flex items-start justify-between gap-4">
             <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
@@ -75,7 +64,7 @@ export default function AccompagnementServices({
           </p>
           <OfferList items={structureItems} />
           <p className="mt-6 text-2xl font-semibold tracking-tight text-brand-blue">
-            980 € HT
+            1 500 € HT
           </p>
           <span className="mt-auto inline-flex items-center gap-2 pt-5 text-sm font-semibold text-dema-forest">
             Réserver ma session de cadrage offerte
@@ -85,53 +74,6 @@ export default function AccompagnementServices({
             />
           </span>
         </Link>
-
-        {showAccounting ? (
-          <AccountingRecommendationDialog
-            buttonClassName={CARD_CLASS}
-            sectorLabel={sectorLabel}
-            systemName={systemName}
-            systemSlug={systemSlug}
-            triggerContent={(
-              <>
-                <div className="flex items-start justify-between gap-4">
-                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
-                    <Calculator className="h-5 w-5" aria-hidden="true" />
-                  </span>
-                  <span className="rounded-full bg-dema-cream px-3 py-1 text-xs font-semibold text-dema-forest">
-                    Suivi mensuel
-                  </span>
-                </div>
-                <p className="mt-6 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
-                  Gestion comptable
-                </p>
-                <h3 className="mt-2 text-[1.45rem] font-semibold leading-tight tracking-[-0.02em] text-brand-blue">
-                  Expertise comptable
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-dema-muted">
-                  Confier votre comptabilité à un cabinet qui comprend votre activité et vous
-                  donne une base financière fiable pour piloter.
-                </p>
-                <p className="mt-4 rounded-[0.9rem] bg-dema-sage/60 px-3.5 py-3 text-sm font-medium leading-relaxed text-brand-blue">
-                  Expertise comptable assurée par un cabinet inscrit à l’Ordre des
-                  experts-comptables.
-                </p>
-                <OfferList items={accountingItems} />
-                <p className="mt-6 text-2xl font-semibold tracking-tight text-brand-blue">
-                  À partir de 250 € HT
-                  <span className="ml-1 text-sm font-medium text-dema-muted">/ mois</span>
-                </p>
-                <span className="mt-auto inline-flex items-center gap-2 pt-5 text-sm font-semibold text-dema-forest">
-                  Demander un rendez-vous
-                  <ArrowRight
-                    className="h-4 w-4 transition group-hover:translate-x-0.5"
-                    aria-hidden="true"
-                  />
-                </span>
-              </>
-            )}
-          />
-        ) : null}
       </div>
     </div>
   );

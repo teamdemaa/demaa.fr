@@ -9474,6 +9474,80 @@
       "lastReviewedAt": "2026-07-14",
       "status": "active",
       "scope": "business"
+    },
+    {
+      "slug": "oryka",
+      "name": "Oryka",
+      "url": "https://oryka.app/",
+      "category": "Gestion & équipe",
+      "sectors": [
+        "Artisanat & BTP",
+        "Mobilité & logistique",
+        "Services aux particuliers",
+        "Associations & événements"
+      ],
+      "description": "Planning, affectation des équipes et pointage mobile pour suivre les opérations terrain.",
+      "tags": [
+        "Planning",
+        "Pointage",
+        "Équipes terrain",
+        "Chantiers"
+      ],
+      "bestFor": "Coordonner les équipes mobiles, les présences et l’avancement des chantiers ou interventions.",
+      "pricingHint": "Tarif non communiqué",
+      "keyFeatures": [
+        "Planning des équipes et des affectations",
+        "Pointage depuis le terrain",
+        "Suivi des présences et absences",
+        "Pilotage des chantiers et interventions"
+      ],
+      "idealFor": [
+        "Entreprises avec plusieurs équipes terrain",
+        "Artisans et sociétés qui gèrent plusieurs chantiers",
+        "Structures qui veulent centraliser planning et pointage"
+      ],
+      "sources": [
+        "https://oryka.app/"
+      ],
+      "lastReviewedAt": "2026-07-23",
+      "status": "active",
+      "scope": "business"
+    },
+    {
+      "slug": "revya",
+      "name": "Revya",
+      "url": "https://app.revya.app/",
+      "category": "Marketing & visibilité",
+      "sectors": [
+        "Restauration",
+        "Commerce local"
+      ],
+      "description": "Carte de fidélité digitale par QR code pour suivre les visites, récompenses et profils clients des restaurants.",
+      "tags": [
+        "Fidélité",
+        "QR code",
+        "Restaurant",
+        "Relation client"
+      ],
+      "bestFor": "Fidéliser les clients d’un restaurant sans leur imposer de télécharger une application.",
+      "pricingHint": "Tarif non communiqué",
+      "keyFeatures": [
+        "Carte de fidélité accessible par QR code",
+        "Suivi des visites et des récompenses",
+        "Profils clients centralisés",
+        "Campagnes de fidélisation ciblées"
+      ],
+      "idealFor": [
+        "Restaurants indépendants",
+        "Fast-foods et établissements à forte récurrence",
+        "Commerces alimentaires avec des visites fréquentes"
+      ],
+      "sources": [
+        "https://app.revya.app/"
+      ],
+      "lastReviewedAt": "2026-07-23",
+      "status": "active",
+      "scope": "business"
     }
   ]
 }
