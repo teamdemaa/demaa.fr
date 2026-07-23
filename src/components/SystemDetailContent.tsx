@@ -88,7 +88,7 @@ export default function SystemDetailContent({
 
   return (
     <>
-      <article>
+      <article className="w-full max-w-[55.2rem]">
         <button
           type="button"
           onClick={() => router.back()}
@@ -125,7 +125,7 @@ export default function SystemDetailContent({
 
         <div className="mt-10 flex justify-start">
           <div
-            className="grid w-full max-w-[46rem] grid-cols-3 gap-1 rounded-full border border-dema-line bg-dema-paper p-1 shadow-[0_8px_24px_rgba(23,35,29,0.035)]"
+            className="grid w-full grid-cols-3 gap-1 rounded-full border border-dema-line bg-dema-paper p-1 shadow-[0_8px_24px_rgba(23,35,29,0.035)]"
             role="tablist"
             aria-label="Contenu du kit"
             aria-orientation="horizontal"
