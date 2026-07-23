@@ -152,7 +152,7 @@ function renderSystemKitInitialEmail(input: {
 
   return renderSystemKitEmailLayout({
     eyebrow: "Suivi opérationnel",
-    title: "Votre tableau de suivi est prêt",
+    title: "Votre tableau de suivi opérationnel est prêt",
     greeting: `Bonjour ${safeFirstName},`,
     paragraphs: [
       `Voici votre tableau de suivi opérationnel pour <strong style="color:#17231d;">${safeSystemName}</strong>.`,
@@ -183,7 +183,7 @@ function renderSystemKitFollowupEmail(input: {
       title: "Comment démarrer simplement",
       greeting: input.firstName ? `Bonjour ${safeFirstName},` : "Bonjour,",
       paragraphs: [
-        `Voici la façon la plus simple de démarrer votre tableau de suivi ${safeSystemName.toLowerCase()}.`,
+        `Voici la façon la plus simple de démarrer votre tableau de suivi opérationnel pour ${safeSystemName.toLowerCase()}.`,
         "Commencez par la Synthèse : choisissez le premier mois, votre unité d’activité et vos objectifs.",
         "Renseignez ensuite vos chiffres dans le Prévisionnel financier, puis choisissez une seule action et un seul process prioritaires.",
       ],
@@ -209,7 +209,7 @@ function renderSystemKitFollowupEmail(input: {
     greeting: input.firstName ? `Bonjour ${safeFirstName},` : "Bonjour,",
     paragraphs: [
       "La mission Structuration & pilotage vous aide à configurer le tableau avec vos données, clarifier les rôles et remettre de l’ordre dans vos priorités et vos process.",
-      "L’intervention dure un mois et coûte 980 € HT.",
+      "L’intervention dure un mois et coûte 1 500 € HT.",
       "La première session de cadrage est offerte et sans engagement.",
     ],
     button: {
@@ -271,7 +271,7 @@ export async function sendSystemKitEmail(input: {
     payload: {
       from,
       to: input.email,
-      subject: `Votre tableau de suivi Demaa - ${input.systemName}`,
+      subject: `Votre tableau de suivi opérationnel Demaa - ${input.systemName}`,
       html: renderSystemKitEmail({
         firstName: input.firstName,
         systemName: input.systemName,
@@ -297,7 +297,7 @@ function renderSystemKitFollowupText(input: {
     return [
       `Bonjour ${input.firstName || ""}`.trim() + ",",
       "",
-      `Voici la façon la plus simple de démarrer votre tableau de suivi ${input.systemName}.`,
+      `Voici la façon la plus simple de démarrer votre tableau de suivi opérationnel pour ${input.systemName}.`,
       "",
       "1. Configurez la Synthèse : premier mois, unité d’activité et objectifs.",
       "2. Complétez le Prévisionnel financier mois par mois.",
@@ -311,7 +311,7 @@ function renderSystemKitFollowupText(input: {
     `Bonjour ${input.firstName || ""}`.trim() + ",",
     "",
     "La mission Structuration & pilotage vous aide à configurer le tableau avec vos données, clarifier les rôles et remettre de l’ordre dans vos priorités et vos process.",
-    "L’intervention dure un mois et coûte 980 € HT. La première session de cadrage est offerte et sans engagement.",
+    "L’intervention dure un mois et coûte 1 500 € HT. La première session de cadrage est offerte et sans engagement.",
     "",
     `Réserver ma session de cadrage offerte : ${input.sessionUrl}`,
   ].join("\n");
@@ -384,7 +384,7 @@ export async function sendSystemKitFollowupEmail(input: {
     `&source=kit-followup&systemSlug=${encodeURIComponent(input.systemSlug)}`;
   const subject =
     input.kind === "usage"
-      ? "Comment démarrer votre tableau de suivi"
+      ? "Comment démarrer votre tableau de suivi opérationnel"
       : "Besoin d’aide pour adapter votre tableau ?";
 
   return sendResendEmail({

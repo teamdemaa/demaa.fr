@@ -1636,6 +1636,10 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
+        },
+        {
+          "slug": "oryka",
+          "usage": "Planifier les équipes, suivre les présences et garder les chantiers sous contrôle."
         }
       ],
       "audience": "mixed",
@@ -1735,6 +1739,10 @@
         {
           "slug": "kizeo-forms",
           "usage": "Dématérialiser contrôles qualité, passages et rapports terrain."
+        },
+        {
+          "slug": "oryka",
+          "usage": "Affecter les équipes, suivre les présences et coordonner les prestations terrain."
         }
       ],
       "audience": "b2b",
@@ -2365,6 +2373,10 @@
         {
           "slug": "booking-com",
           "usage": "Diversifier les canaux de réservation des hébergements gérés."
+        },
+        {
+          "slug": "oryka",
+          "usage": "Planifier les équipes terrain et suivre les interventions dans les logements."
         }
       ],
       "audience": "b2b",
@@ -2781,6 +2793,10 @@
         {
           "slug": "antsroute",
           "usage": "Planifier les tournées, passages et communications client."
+        },
+        {
+          "slug": "oryka",
+          "usage": "Coordonner les équipes, les affectations et le pointage pendant les déménagements."
         }
       ],
       "audience": "b2b",
@@ -2884,6 +2900,10 @@
         {
           "slug": "mapotempo",
           "usage": "Construire des tournées optimisées de livraison ou collecte."
+        },
+        {
+          "slug": "oryka",
+          "usage": "Planifier les équipes terrain et suivre les présences pendant les tournées."
         }
       ],
       "audience": "b2b",
@@ -2995,6 +3015,10 @@
         {
           "slug": "mapotempo",
           "usage": "Optimiser itinéraires, zones et tournées de livraison ou collecte."
+        },
+        {
+          "slug": "oryka",
+          "usage": "Coordonner les équipes terrain, les affectations et le pointage."
         }
       ],
       "audience": "b2b",
@@ -3088,6 +3112,10 @@
         {
           "slug": "antsroute",
           "usage": "Planifier les passages, tournées et notifications voyageurs."
+        },
+        {
+          "slug": "oryka",
+          "usage": "Planifier les équipes et suivre les présences des conducteurs salariés."
         }
       ],
       "audience": "b2b",
@@ -3205,6 +3233,10 @@
         {
           "slug": "uber-eats",
           "usage": "Recevoir des commandes en ligne et toucher une clientèle locale."
+        },
+        {
+          "slug": "revya",
+          "usage": "Fidéliser les clients avec une carte accessible par QR code, sans application à télécharger."
         }
       ],
       "audience": "mixed",
@@ -3314,6 +3346,10 @@
         {
           "slug": "uber-eats",
           "usage": "Développer commande en ligne et livraison locale."
+        },
+        {
+          "slug": "revya",
+          "usage": "Encourager les visites récurrentes avec une carte de fidélité accessible par QR code."
         }
       ],
       "audience": "mixed",
@@ -3625,6 +3661,10 @@
         {
           "slug": "tactill",
           "usage": "Équiper une caisse simple pour ventes comptoir et boutique."
+        },
+        {
+          "slug": "revya",
+          "usage": "Fidéliser la clientèle de proximité et suivre visites et récompenses."
         }
       ],
       "audience": "mixed",
@@ -4283,6 +4323,10 @@
         {
           "slug": "arche-mc2",
           "usage": "Structurer interventions, coordination et pilotage service à domicile."
+        },
+        {
+          "slug": "oryka",
+          "usage": "Coordonner les intervenants, leurs affectations et leur présence sur le terrain."
         }
       ],
       "audience": "mixed",
@@ -4880,6 +4924,10 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
+        },
+        {
+          "slug": "oryka",
+          "usage": "Planifier les techniciens et suivre leur présence sur les chantiers."
         }
       ],
       "audience": "mixed",
@@ -4993,6 +5041,10 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
+        },
+        {
+          "slug": "oryka",
+          "usage": "Affecter les équipes et suivre les présences sur les chantiers électriques."
         }
       ],
       "audience": "mixed",
@@ -5114,6 +5166,10 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
+        },
+        {
+          "slug": "oryka",
+          "usage": "Planifier les équipes et suivre l’avancement des chantiers de rénovation."
         }
       ],
       "audience": "mixed",
@@ -5231,6 +5287,10 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
+        },
+        {
+          "slug": "oryka",
+          "usage": "Coordonner les poseurs, leurs affectations et leur présence sur chantier."
         }
       ],
       "audience": "mixed",
@@ -5344,6 +5404,10 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
+        },
+        {
+          "slug": "oryka",
+          "usage": "Planifier les équipes et suivre les présences sur les chantiers de gros œuvre."
         }
       ],
       "audience": "mixed",
@@ -5457,6 +5521,10 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer réponses client, comptes-rendus et checklists terrain."
+        },
+        {
+          "slug": "oryka",
+          "usage": "Affecter les équipes aux interventions et suivre les présences sur le terrain."
         }
       ],
       "audience": "mixed",
@@ -5752,6 +5820,10 @@
         {
           "slug": "uber-eats",
           "usage": "Recevoir des commandes locales en livraison ou retrait."
+        },
+        {
+          "slug": "revya",
+          "usage": "Développer la fidélité des clients réguliers avec une carte accessible par QR code."
         }
       ],
       "audience": "mixed",
@@ -6067,6 +6139,10 @@
         {
           "slug": "clyo",
           "usage": "Gérer caisse, réservations, commande en ligne et fidélité."
+        },
+        {
+          "slug": "revya",
+          "usage": "Récompenser les visites récurrentes et centraliser les profils clients."
         }
       ],
       "audience": "mixed",
@@ -6560,6 +6636,10 @@
         {
           "slug": "arche-mc2",
           "usage": "Coordonner interventions d’aide et soin à domicile."
+        },
+        {
+          "slug": "oryka",
+          "usage": "Planifier les intervenants et suivre leurs affectations et présences."
         }
       ],
       "audience": "mixed",
@@ -7182,6 +7262,10 @@
         {
           "slug": "livestorm",
           "usage": "Gérer événements digitaux, hybrides, inscriptions et relances."
+        },
+        {
+          "slug": "oryka",
+          "usage": "Planifier les équipes mobilisées et suivre leur présence pendant les événements."
         }
       ],
       "audience": "b2b",
@@ -7966,6 +8050,10 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer réponses client, comptes-rendus et checklists SAV."
+        },
+        {
+          "slug": "oryka",
+          "usage": "Coordonner les techniciens et suivre les présences sur les installations."
         }
       ],
       "audience": "mixed",
@@ -8063,6 +8151,10 @@
         {
           "slug": "gestiondiag",
           "usage": "Piloter devis, facturation, dossiers et conformité diagnostic."
+        },
+        {
+          "slug": "oryka",
+          "usage": "Planifier les interventions et suivre les diagnostiqueurs sur le terrain."
         }
       ],
       "audience": "b2b",
@@ -8370,6 +8462,10 @@
         {
           "slug": "uber-eats",
           "usage": "Tester la commande en ligne selon zone et organisation."
+        },
+        {
+          "slug": "revya",
+          "usage": "Fidéliser les clients réguliers grâce à une carte accessible par QR code."
         }
       ],
       "audience": "mixed",
@@ -9119,6 +9215,10 @@
         {
           "slug": "kizeo-forms",
           "usage": "Créer rapports d’intervention et contrôles terrain sécurité."
+        },
+        {
+          "slug": "oryka",
+          "usage": "Affecter les agents aux sites et suivre leurs présences sur le terrain."
         }
       ],
       "audience": "b2b",
@@ -9333,6 +9433,10 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
+        },
+        {
+          "slug": "oryka",
+          "usage": "Planifier les équipes et suivre les présences sur les chantiers de couverture."
         }
       ],
       "audience": "mixed",
@@ -9446,6 +9550,10 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
+        },
+        {
+          "slug": "oryka",
+          "usage": "Affecter les équipes et suivre les présences sur les chantiers de peinture."
         }
       ],
       "audience": "mixed",
@@ -9559,6 +9667,10 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer comptes-rendus, réponses client et procédures chantier."
+        },
+        {
+          "slug": "oryka",
+          "usage": "Planifier les poseurs et suivre leur présence sur les chantiers."
         }
       ],
       "audience": "mixed",
@@ -9672,6 +9784,10 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer réponses client, procédures et comptes-rendus."
+        },
+        {
+          "slug": "oryka",
+          "usage": "Coordonner les techniciens et suivre leurs présences sur les interventions."
         }
       ],
       "audience": "mixed",
@@ -9781,6 +9897,10 @@
         {
           "slug": "chatgpt",
           "usage": "Préparer réponses client, procédures et comptes-rendus."
+        },
+        {
+          "slug": "oryka",
+          "usage": "Planifier les techniciens et suivre leurs affectations sur le terrain."
         }
       ],
       "audience": "mixed",
@@ -10488,6 +10608,10 @@
         {
           "slug": "kizeo-forms",
           "usage": "Collecter relevés, photos et formulaires terrain structurés."
+        },
+        {
+          "slug": "oryka",
+          "usage": "Planifier les équipes et suivre les présences pendant les missions terrain."
         }
       ],
       "audience": "b2b",

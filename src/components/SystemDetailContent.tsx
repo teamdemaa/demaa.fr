@@ -119,7 +119,7 @@ export default function SystemDetailContent({
             className="mt-6 inline-flex items-center gap-2 rounded-full border border-dema-forest/75 bg-dema-sage/80 px-4 py-2.5 text-sm font-semibold text-dema-forest transition hover:border-dema-forest hover:bg-[#e9eee9] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
           >
             <Mail className="h-4 w-4" aria-hidden="true" />
-            Recevoir mon tableau de suivi
+            Tableau de suivi opérationnel
           </button>
         </div>
 

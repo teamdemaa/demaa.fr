@@ -206,7 +206,7 @@ export default function SystemCompleteModal({
             id="system-complete-modal-title"
             className="mt-2 pr-10 text-2xl font-semibold tracking-tight text-brand-blue"
           >
-            Recevoir mon tableau de suivi - {systemName}
+            Recevoir mon tableau de suivi opérationnel - {systemName}
           </h2>
 
           {preview ? (
@@ -251,7 +251,7 @@ export default function SystemCompleteModal({
           {copyUrl ? (
             <div className="mt-6 rounded-[1rem] bg-dema-cream/55 p-5" role="status">
               <h3 className="text-lg font-semibold text-brand-blue">
-                Votre tableau de suivi est prêt
+                Votre tableau de suivi opérationnel est prêt
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-dema-muted">
                 Le lien vient aussi d’être envoyé à {email}. Connectez-vous à Google,
@@ -318,7 +318,7 @@ export default function SystemCompleteModal({
                 {isSubmitting ? (
                   <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
                 ) : null}
-                {isSubmitting ? "Envoi…" : "Recevoir mon tableau de suivi"}
+                {isSubmitting ? "Envoi…" : "Recevoir mon tableau de suivi opérationnel"}
               </button>
             </form>
           )}
