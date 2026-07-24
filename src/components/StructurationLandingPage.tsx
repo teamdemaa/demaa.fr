@@ -211,14 +211,14 @@ function CockpitPhone() {
           <div>
             <DemaaWordmark className="text-xl" />
             <p className="mt-3 text-sm font-semibold text-brand-blue">
-              Atelier Martin
+              Nova Construction
             </p>
             <p className="text-[0.68rem] text-dema-muted">
               Entreprise du bâtiment
             </p>
           </div>
           <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-dema-positive text-[0.65rem] font-semibold text-dema-forest">
-            MM
+            NC
           </span>
         </div>
 
@@ -265,9 +265,9 @@ function CockpitPhone() {
           </p>
           <div className="mt-2 divide-y divide-dema-line rounded-2xl border border-dema-line bg-dema-paper px-3">
             {[
-              ["Valider le planning des trois prochains chantiers", "Lucas"],
-              ["Formaliser la réception de chantier", "Marie"],
-              ["Relancer les factures à plus de 30 jours", "Sarah"],
+              ["Valider le planning des trois prochains chantiers", "Issa"],
+              ["Formaliser la réception de chantier", "Sam"],
+              ["Relancer les factures à plus de 30 jours", "Maya"],
             ].map(([task, owner]) => (
               <div
                 key={task}
@@ -328,6 +328,19 @@ export default function StructurationLandingPage() {
               className="hidden text-sm font-medium text-brand-blue/62 transition hover:text-dema-forest sm:inline-flex"
             >
               Se connecter
+            </Link>
+            <Link
+              href="/kits-operationnels"
+              aria-label="Découvrir les kits opérationnels"
+              className="demaa-secondary-button h-10 min-h-10 w-10 shrink-0 gap-2 px-0 text-xs md:w-auto md:px-4 md:text-sm"
+            >
+              <BriefcaseBusiness
+                className="h-4 w-4 shrink-0"
+                aria-hidden="true"
+              />
+              <span className="hidden md:inline">
+                Découvrir les kits opérationnels
+              </span>
             </Link>
             <BookingButton
               className="demaa-primary-button min-h-10 px-4 text-xs sm:text-sm"

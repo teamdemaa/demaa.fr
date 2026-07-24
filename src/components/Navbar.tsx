@@ -12,6 +12,9 @@ export default function Navbar({
 }) {
   const router = useRouter();
   const pathname = usePathname();
+  const showStructurationCta =
+    pathname === "/kits-operationnels" ||
+    pathname.startsWith("/kit-operationnel/");
   const showSystemsCta =
     !minimal &&
     (pathname === "/annuaire-services" ||
@@ -31,7 +34,14 @@ export default function Navbar({
               <DemaaWordmark className="text-[1.4rem] sm:text-[1.7rem]" />
             </Link>
             <div className="flex items-center gap-2 sm:gap-3">
-              {showSystemsCta ? (
+              {showStructurationCta ? (
+                <Link
+                  href="/"
+                  className="demaa-primary-button min-h-10 px-4 text-xs sm:px-5 sm:text-sm"
+                >
+                  Commencer à structurer
+                </Link>
+              ) : showSystemsCta ? (
                 <Link
                   href="/kits-operationnels"
                   className="demaa-secondary-button hidden min-h-10 items-center justify-center gap-2 px-4 py-2 md:inline-flex"
