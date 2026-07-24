@@ -52,6 +52,7 @@ export default function PolitiqueCookiesPage() {
               <li><strong>Google Analytics</strong> pour l&apos;analyse de fréquentation et des parcours ;</li>
               <li><strong>Meta Pixel</strong> pour la mesure marketing et publicitaire ;</li>
               <li><strong>un stockage local d&apos;attribution Demaa</strong> pour mémoriser pendant 90 jours la première et la dernière source d&apos;acquisition lorsque la mesure d&apos;audience est autorisée ;</li>
+              <li><strong>un compteur serveur agrégé des ouvertures de kits</strong>, sans cookie, adresse email, adresse IP enregistrée ni identifiant visiteur ;</li>
               <li><strong>du stockage local navigateur</strong> pour mémoriser certaines informations utiles à l&apos;assistant et à l&apos;expérience utilisateur ;</li>
               <li><strong>des éléments techniques de session ou de sécurité</strong> nécessaires au bon fonctionnement du site.</li>
             </ul>
@@ -60,6 +61,7 @@ export default function PolitiqueCookiesPage() {
       <CookieSection title="4. Finalités">
             <ul className="list-disc space-y-2 pl-5">
               <li>mesurer l&apos;usage du site et améliorer les contenus et outils proposés ;</li>
+              <li>comparer le nombre d&apos;ouvertures des différents kits opérationnels ;</li>
               <li>évaluer l&apos;efficacité des campagnes et des sources d&apos;acquisition ;</li>
               <li>rattacher une première et une dernière source à une demande envoyée volontairement ;</li>
               <li>mémoriser certaines préférences ou informations temporaires côté navigateur ;</li>
@@ -74,6 +76,9 @@ export default function PolitiqueCookiesPage() {
             <p>
               Les outils de mesure d&apos;audience et les traceurs publicitaires non nécessaires, notamment Google Analytics, Meta Pixel et Vercel Analytics lorsqu&apos;ils sont activés,
               ne sont chargés qu&apos;après votre acceptation via le bandeau de consentement.
+            </p>
+            <p>
+              Le compteur agrégé d&apos;ouverture des kits ne dépose aucun cookie et ne crée aucun profil visiteur. Il enregistre uniquement le kit, la date et, lorsqu&apos;ils sont présents dans l&apos;URL, des paramètres de campagne agrégés.
             </p>
             <p>
               Vous pouvez autoriser séparément la mesure d&apos;audience et la publicité. Un refus n&apos;empêche pas l&apos;envoi d&apos;un formulaire ; dans ce cas, seules les informations minimales disponibles au moment de la demande sont enregistrées et la source peut rester inconnue.

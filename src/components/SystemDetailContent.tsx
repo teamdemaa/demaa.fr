@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, ArrowRight, FileSpreadsheet, Wrench } from "lucide-react";
 import { type KeyboardEvent, useMemo, useState } from "react";
 import SystemeTabContent from "@/components/SystemeTabContent";
+import { trackKitOpen } from "@/lib/kit-analytics-client";
 import type { OperationalSystemDetail } from "@/lib/system-operations";
 import {
   isVisibleSystemDetailTab,
@@ -19,7 +20,7 @@ type SystemDetailContentProps = {
   detail: OperationalSystemDetail;
   intro: string;
   initialActiveTab?: string;
-  kitCopyUrl: string;
+  kitTrackingUrl: string;
   headingAs?: "h1" | "h2";
   headingId?: string;
 };
@@ -35,7 +36,7 @@ export default function SystemDetailContent({
   detail,
   intro,
   initialActiveTab,
-  kitCopyUrl,
+  kitTrackingUrl,
   headingAs: Heading = "h2",
   headingId,
 }: SystemDetailContentProps) {
@@ -153,9 +154,13 @@ export default function SystemDetailContent({
         >
           {activeTab === "kit" ? (
             <a
-              href={kitCopyUrl}
+              href={kitTrackingUrl}
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noopener"
+              onClick={() => trackKitOpen({
+                kitName: system.name,
+                kitSlug: system.slug,
+              })}
               className="group grid w-full overflow-hidden rounded-[1.35rem] border border-dema-line bg-dema-paper text-left shadow-[0_10px_30px_rgba(23,35,29,0.035)] transition duration-200 hover:-translate-y-0.5 hover:border-dema-forest/25 hover:shadow-[0_18px_45px_rgba(23,35,29,0.065)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 md:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)]"
             >
               <span className="flex min-h-[15rem] items-center justify-center bg-dema-sage/45 p-5 sm:min-h-[18rem] sm:p-7 md:min-h-[21rem]">
