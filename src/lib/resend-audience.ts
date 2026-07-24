@@ -31,12 +31,14 @@ async function upsertResendContact(input: {
   email: string;
   firstName?: string | null;
   lastName?: string | null;
+  unsubscribed?: boolean;
 }) {
   const email = input.email.trim().toLowerCase();
 
   const contactPayload = {
     first_name: input.firstName?.trim() || undefined,
     last_name: input.lastName?.trim() || undefined,
+    unsubscribed: input.unsubscribed,
   };
   const contactPath = `/contacts/${encodeURIComponent(email)}`;
 
@@ -68,6 +70,17 @@ export async function syncResendLeadContact(input: {
     email,
     firstName: input.firstName,
     lastName: input.lastName,
+  });
+
+  return { email };
+}
+
+export async function syncResendNewsletterContact(input: { email: string }) {
+  const email = input.email.trim().toLowerCase();
+
+  await upsertResendContact({
+    email,
+    unsubscribed: false,
   });
 
   return { email };

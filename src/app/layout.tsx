@@ -52,23 +52,23 @@ const gambetta = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Demaa | Kits opérationnels pour petites entreprises",
+  title: "Demaa | Structurez votre entreprise",
   description:
-    "Des kits opérationnels par activité pour structurer les process, répartir les responsabilités et rendre l’entreprise plus autonome.",
+    "Demaa structure les process, les outils et le pilotage de votre entreprise pour qu’elle avance avec plus d’autonomie.",
   metadataBase: new URL('https://demaa.fr'),
   openGraph: {
-    title: "Demaa | Kits opérationnels pour petites entreprises",
+    title: "Demaa | Structurez votre entreprise",
     description:
-      "Des kits opérationnels par activité pour structurer les process, répartir les responsabilités et rendre l’entreprise plus autonome.",
+      "Demaa structure les process, les outils et le pilotage de votre entreprise pour qu’elle avance avec plus d’autonomie.",
     siteName: "Demaa",
     locale: "fr_FR",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Demaa | Kits opérationnels pour petites entreprises",
+    title: "Demaa | Structurez votre entreprise",
     description:
-      "Des kits opérationnels par activité pour structurer les process, répartir les responsabilités et rendre l’entreprise plus autonome.",
+      "Demaa structure les process, les outils et le pilotage de votre entreprise pour qu’elle avance avec plus d’autonomie.",
   },
   applicationName: "Demaa",
   formatDetection: {

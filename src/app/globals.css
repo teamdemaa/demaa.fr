@@ -11,6 +11,8 @@
   --color-dema-sage: #f1f3f0;
   --color-dema-line: #eceeed;
   --color-dema-muted: #6f756e;
+  --color-dema-canvas: #f7f8f6;
+  --color-dema-positive: #eaf3ed;
   --font-sans: var(--font-satoshi), "Avenir Next", "Avenir", "Segoe UI", Arial, sans-serif;
   --font-serif: var(--font-gambetta), Georgia, serif;
 }

@@ -1,6 +1,6 @@
 import { buildSocialImage, brandImageContentType, socialImageSize } from "@/app/brand-image-utils";
 
-export const alt = "Carte Demaa pour analyser son organisation";
+export const alt = "Demaa structure votre entreprise pour qu’elle fonctionne sans vous";
 export const size = socialImageSize;
 export const contentType = brandImageContentType;
 

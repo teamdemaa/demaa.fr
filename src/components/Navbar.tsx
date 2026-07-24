@@ -33,7 +33,7 @@ export default function Navbar({
             <div className="flex items-center gap-2 sm:gap-3">
               {showSystemsCta ? (
                 <Link
-                  href="/"
+                  href="/kits-operationnels"
                   className="demaa-secondary-button hidden min-h-10 items-center justify-center gap-2 px-4 py-2 md:inline-flex"
                   aria-label="Voir les Kits opérationnels"
                 >

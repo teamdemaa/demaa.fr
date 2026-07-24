@@ -3,7 +3,7 @@ import { UserRound } from "lucide-react";
 import DemaaWordmark from "@/components/DemaaWordmark";
 
 const mainLinks = [
-  { label: "Kits opérationnels", href: "/" },
+  { label: "Kits opérationnels", href: "/kits-operationnels" },
   { label: "Annuaire outils", href: "/annuaire-outils" },
   { label: "Annuaire financement", href: "/annuaire-financement" },
   { label: "Annuaire fournisseurs", href: "/annuaire-fournisseurs" },
