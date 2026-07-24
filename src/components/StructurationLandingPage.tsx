@@ -64,11 +64,6 @@ const systemItems: ReadonlyArray<{
   description: string;
 }> = [
   {
-    icon: Workflow,
-    title: "Vos process",
-    description: "Les bonnes étapes, au bon moment.",
-  },
-  {
     icon: BarChart3,
     title: "Votre pilotage",
     description: "Les priorités et les chiffres essentiels.",
@@ -77,6 +72,11 @@ const systemItems: ReadonlyArray<{
     icon: BriefcaseBusiness,
     title: "Vos outils",
     description: "Seulement ce qui sert vraiment.",
+  },
+  {
+    icon: Workflow,
+    title: "Vos process",
+    description: "Les bonnes étapes, au bon moment.",
   },
 ];
 
@@ -342,11 +342,6 @@ export default function StructurationLandingPage() {
                 Découvrir les kits opérationnels
               </span>
             </Link>
-            <BookingButton
-              className="demaa-primary-button min-h-10 px-4 text-xs sm:text-sm"
-              label="Session offerte"
-              source="Accueil structuration — Header"
-            />
           </div>
         </div>
       </header>
@@ -354,9 +349,11 @@ export default function StructurationLandingPage() {
       <section className="px-5 pb-28 pt-[4.8rem] sm:px-8 sm:pb-36 sm:pt-[6.4rem] lg:pb-44 lg:pt-32">
         <div className="mx-auto max-w-6xl text-center">
           <h1 className="mx-auto max-w-5xl text-balance text-[clamp(2.65rem,6.8vw,5.95rem)] font-light leading-[0.92] tracking-[-0.06em] text-brand-blue">
-            Structurez votre entreprise pour qu’elle fonctionne{" "}
+            <span className="font-sans font-light">
+              Structurez votre entreprise pour qu’elle fonctionne
+            </span>{" "}
             <span className="demaa-hero-title text-dema-forest">
-              sans dépendre de vous.
+              même quand vous n’êtes pas là.
             </span>
           </h1>
           <p className="mx-auto mt-9 max-w-2xl text-balance text-base leading-7 text-dema-muted sm:text-lg sm:leading-8">
@@ -594,7 +591,7 @@ export default function StructurationLandingPage() {
 
       <section className="px-5 py-28 sm:px-8 sm:py-36 lg:py-44">
         <figure className="mx-auto max-w-6xl rounded-[2rem] bg-dema-forest px-7 py-14 text-center text-dema-paper sm:px-12 sm:py-18 lg:px-20 lg:py-24">
-          <blockquote className="mx-auto max-w-5xl text-balance font-serif text-[clamp(2rem,5vw,4.5rem)] font-light italic leading-[1.02] tracking-[-0.035em]">
+          <blockquote className="mx-auto max-w-5xl text-balance font-serif text-[clamp(1.8rem,3.8vw,3.5rem)] font-light italic leading-[1.08] tracking-[-0.035em]">
             « Avant, tout passait par moi. Depuis qu’on a mis en place une vraie
             organisation, chacun sait ce qu’il peut décider. Je respire enfin. »
           </blockquote>
