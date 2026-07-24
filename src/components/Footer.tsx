@@ -38,7 +38,7 @@ export default function Footer() {
               />
             </Link>
             <p className="demaa-section-title max-w-xs text-lg leading-snug text-neutral-500">
-              Structurez votre entreprise pour qu’elle avance avec plus d’autonomie, même lorsque vous n’êtes pas là.
+              Structurez votre entreprise pour qu’elle dépende moins de vous.
             </p>
           </div>
 

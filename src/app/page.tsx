@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import StructurationLandingPage from "@/components/StructurationLandingPage";
 
 const title =
-  "Structurez votre entreprise pour qu’elle fonctionne même quand vous n’êtes pas là | Demaa";
+  "Structurez votre entreprise pour qu’elle dépende moins de vous | Demaa";
 const description =
-  "Demaa installe en deux mois les process, les outils et le pilotage adaptés à votre activité pour qu’elle fonctionne même quand vous n’êtes pas là.";
+  "En deux mois, Demaa clarifie les responsabilités, formalise les processus et configure un espace de pilotage adapté à votre activité.";
 
 export const metadata: Metadata = {
   title,
