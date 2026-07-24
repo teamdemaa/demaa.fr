@@ -149,8 +149,10 @@ export default async function KitAnalyticsPage({
                 Suivi des kits
               </h1>
               <p className="mt-3 max-w-2xl text-sm leading-relaxed text-dema-muted">
-                Les chiffres correspondent aux ouvertures de la page Google de copie.
-                Aucun email ni identifiant visiteur n’est collecté.
+                Les ouvertures suivies correspondent aux accès à la page Google
+                de copie. L’historique antérieur est affiché séparément, après
+                déduplication. Aucun email ni identifiant visiteur n’est conservé
+                dans ces statistiques.
               </p>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -192,7 +194,7 @@ export default async function KitAnalyticsPage({
 
           <section className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4" aria-label="Indicateurs clés">
             {[
-              { label: "Ouvertures totales", value: overview.totalOpens },
+              { label: "Ouvertures suivies", value: overview.totalOpens },
               { label: `${period} derniers jours`, value: overview.periodOpens },
               { label: "Aujourd’hui", value: todayOpens },
               { label: "Kits actifs sur la période", value: activeKitCount },
@@ -207,6 +209,34 @@ export default async function KitAnalyticsPage({
                 </p>
               </article>
             ))}
+          </section>
+
+          <section
+            className="mt-4 grid gap-3 sm:grid-cols-2"
+            aria-label="Historique avant le suivi"
+          >
+            <article className="rounded-[1.25rem] border border-dema-forest/15 bg-dema-sage/55 p-5 sm:p-6">
+              <p className="text-xs font-semibold uppercase tracking-[0.1em] text-dema-forest">
+                Historique avant le suivi
+              </p>
+              <p className="mt-3 text-3xl font-semibold tracking-[-0.04em] text-brand-blue">
+                {formatCount(overview.historicalDownloads)}
+              </p>
+              <p className="mt-1 text-sm text-dema-muted">
+                kits déjà distribués
+              </p>
+            </article>
+            <article className="rounded-[1.25rem] border border-dema-forest/15 bg-dema-sage/55 p-5 sm:p-6">
+              <p className="text-xs font-semibold uppercase tracking-[0.1em] text-dema-forest">
+                Audience historique
+              </p>
+              <p className="mt-3 text-3xl font-semibold tracking-[-0.04em] text-brand-blue">
+                {formatCount(overview.historicalPeople)}
+              </p>
+              <p className="mt-1 text-sm text-dema-muted">
+                personnes ayant déjà reçu un kit
+              </p>
+            </article>
           </section>
 
           <section className="mt-6 grid gap-4 lg:grid-cols-[minmax(0,1.65fr)_minmax(17rem,0.75fr)]">
@@ -262,17 +292,18 @@ export default async function KitAnalyticsPage({
             <div className="border-b border-dema-line px-5 py-5 sm:px-6">
               <h2 className="text-lg font-semibold text-brand-blue">Détail par kit</h2>
               <p className="mt-1 text-xs text-dema-muted">
-                Classement selon les ouvertures de la période sélectionnée
+                Ouvertures suivies et distributions historiques restent séparées
               </p>
             </div>
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[760px] border-collapse text-left">
+              <table className="w-full min-w-[900px] border-collapse text-left">
                 <thead>
                   <tr className="border-b border-dema-line text-[11px] uppercase tracking-[0.1em] text-dema-muted">
                     <th className="px-5 py-4 font-semibold sm:px-6">Kit</th>
                     <th className="px-4 py-4 text-right font-semibold">Période</th>
                     <th className="px-4 py-4 text-right font-semibold">7 jours</th>
-                    <th className="px-4 py-4 text-right font-semibold">Total</th>
+                    <th className="px-4 py-4 text-right font-semibold">Suivi</th>
+                    <th className="px-4 py-4 text-right font-semibold">Historique</th>
                     <th className="px-5 py-4 text-right font-semibold sm:px-6">Dernière ouverture</th>
                   </tr>
                 </thead>
@@ -299,13 +330,16 @@ export default async function KitAnalyticsPage({
                       <td className="px-4 py-4 text-right text-brand-blue">
                         {formatCount(row.totalOpens)}
                       </td>
+                      <td className="px-4 py-4 text-right text-brand-blue">
+                        {formatCount(row.historicalDownloads)}
+                      </td>
                       <td className="px-5 py-4 text-right text-xs text-dema-muted sm:px-6">
                         {formatLastOpenedAt(row.lastOpenedAt)}
                       </td>
                     </tr>
                   )) : (
                     <tr>
-                      <td colSpan={5} className="px-6 py-14 text-center text-sm text-dema-muted">
+                      <td colSpan={6} className="px-6 py-14 text-center text-sm text-dema-muted">
                         Les premières ouvertures apparaîtront ici automatiquement.
                       </td>
                     </tr>

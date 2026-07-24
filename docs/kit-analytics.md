@@ -28,6 +28,34 @@ Collections Firestore :
 - `kit_open_daily` : total quotidien par kit ;
 - `kit_open_sources` : total quotidien par kit et attribution agrégée.
 
+## Historique avant le suivi
+
+Le tableau sépare les ouvertures suivies depuis la mise en place du compteur des
+distributions historiques. Le backfill historique utilise trois preuves :
+
+- un ancien abonnement dont la source est explicitement un kit ;
+- une séquence kit actuelle ;
+- un email du kit marqué comme envoyé.
+
+Une même personne et un même kit ne sont comptés qu'une fois, même lorsque la
+preuve existe dans plusieurs collections. Les demandes sans preuve d'envoi et
+les abonnés newsletter sans kit sont exclus. Les emails servent uniquement à la
+déduplication en mémoire : ni l'email ni son hash ne sont écrits dans les
+collections analytiques.
+
+Collections Firestore :
+
+- `kit_historical_download_totals` : distributions historiques par kit ;
+- `kit_historical_download_summaries/v1` : nombre total de distributions et de
+  personnes historiques.
+
+Le script est sans effet par défaut et n'écrit qu'avec l'option `--apply` :
+
+```text
+npm run backfill:kit-history
+npm run backfill:kit-history -- --apply
+```
+
 ## Tableau privé
 
 Le tableau est disponible sur `/suivi-kits`. Définir en production :

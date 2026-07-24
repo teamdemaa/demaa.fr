@@ -14,6 +14,10 @@ import {
 const KIT_OPEN_TOTALS_COLLECTION = "kit_open_totals";
 const KIT_OPEN_DAILY_COLLECTION = "kit_open_daily";
 const KIT_OPEN_SOURCES_COLLECTION = "kit_open_sources";
+const KIT_HISTORICAL_DOWNLOAD_TOTALS_COLLECTION =
+  "kit_historical_download_totals";
+const KIT_HISTORICAL_DOWNLOAD_SUMMARIES_COLLECTION =
+  "kit_historical_download_summaries";
 
 type StoredKitOpenTotal = {
   kit_name?: string;
@@ -37,7 +41,19 @@ type StoredKitOpenSource = {
   total_open_count?: number;
 };
 
+type StoredKitHistoricalDownloadTotal = {
+  download_count?: number;
+  kit_name?: string;
+  kit_slug?: string;
+};
+
+type StoredKitHistoricalDownloadSummary = {
+  unique_kit_downloads?: number;
+  unique_people?: number;
+};
+
 export type KitAnalyticsRow = {
+  historicalDownloads: number;
   kitName: string;
   kitSlug: string;
   last7Days: number;
@@ -50,6 +66,8 @@ export type KitAnalyticsRow = {
 export type KitAnalyticsOverview = {
   dailySeries: Array<{ date: string; opens: number }>;
   generatedAt: string;
+  historicalDownloads: number;
+  historicalPeople: number;
   period: KitAnalyticsPeriod;
   periodOpens: number;
   rows: KitAnalyticsRow[];
@@ -142,7 +160,13 @@ export async function getKitAnalyticsOverview(
   const startDateKey = getPeriodStartDateKey(period, now);
   const last7StartDateKey = getPeriodStartDateKey(7, now);
   const todayDateKey = getParisDateKey(now);
-  const [totalsSnapshot, dailySnapshot, sourcesSnapshot] = await Promise.all([
+  const [
+    totalsSnapshot,
+    dailySnapshot,
+    sourcesSnapshot,
+    historicalTotalsSnapshot,
+    historicalSummarySnapshot,
+  ] = await Promise.all([
     database.collection(KIT_OPEN_TOTALS_COLLECTION).get(),
     database
       .collection(KIT_OPEN_DAILY_COLLECTION)
@@ -151,6 +175,11 @@ export async function getKitAnalyticsOverview(
     database
       .collection(KIT_OPEN_SOURCES_COLLECTION)
       .where("date_key", ">=", startDateKey)
+      .get(),
+    database.collection(KIT_HISTORICAL_DOWNLOAD_TOTALS_COLLECTION).get(),
+    database
+      .collection(KIT_HISTORICAL_DOWNLOAD_SUMMARIES_COLLECTION)
+      .doc("v1")
       .get(),
   ]);
   const rowsBySlug = new Map<string, KitAnalyticsRow>();
@@ -162,6 +191,7 @@ export async function getKitAnalyticsOverview(
     const kitSlug = data.kit_slug || document.id;
 
     rowsBySlug.set(kitSlug, {
+      historicalDownloads: 0,
       kitName: data.kit_name || kitSlug,
       kitSlug,
       last7Days: 0,
@@ -181,6 +211,7 @@ export async function getKitAnalyticsOverview(
 
     const opens = readCount(data.total_open_count);
     const row = rowsBySlug.get(kitSlug) ?? {
+      historicalDownloads: 0,
       kitName: data.kit_name || kitSlug,
       kitSlug,
       last7Days: 0,
@@ -197,6 +228,23 @@ export async function getKitAnalyticsOverview(
     dailyTotals.set(dateKey, (dailyTotals.get(dateKey) ?? 0) + opens);
   }
 
+  for (const document of historicalTotalsSnapshot.docs) {
+    const data = document.data() as StoredKitHistoricalDownloadTotal;
+    const kitSlug = data.kit_slug || document.id;
+    const existingRow = rowsBySlug.get(kitSlug);
+
+    rowsBySlug.set(kitSlug, {
+      historicalDownloads: readCount(data.download_count),
+      kitName: data.kit_name || existingRow?.kitName || kitSlug,
+      kitSlug,
+      last7Days: existingRow?.last7Days ?? 0,
+      lastOpenedAt: existingRow?.lastOpenedAt ?? null,
+      periodOpens: existingRow?.periodOpens ?? 0,
+      todayOpens: existingRow?.todayOpens ?? 0,
+      totalOpens: existingRow?.totalOpens ?? 0,
+    });
+  }
+
   for (const document of sourcesSnapshot.docs) {
     const data = document.data() as StoredKitOpenSource;
     const source = data.source || "Accès direct / non attribué";
@@ -210,7 +258,14 @@ export async function getKitAnalyticsOverview(
     (left, right) =>
       right.periodOpens - left.periodOpens
       || right.totalOpens - left.totalOpens
+      || right.historicalDownloads - left.historicalDownloads
       || left.kitName.localeCompare(right.kitName, "fr"),
+  );
+  const historicalSummary =
+    historicalSummarySnapshot.data() as StoredKitHistoricalDownloadSummary | undefined;
+  const historicalDownloadsFromRows = rows.reduce(
+    (sum, row) => sum + row.historicalDownloads,
+    0,
   );
 
   return {
@@ -219,6 +274,10 @@ export async function getKitAnalyticsOverview(
       opens: dailyTotals.get(date) ?? 0,
     })),
     generatedAt: now.toISOString(),
+    historicalDownloads:
+      readCount(historicalSummary?.unique_kit_downloads)
+      || historicalDownloadsFromRows,
+    historicalPeople: readCount(historicalSummary?.unique_people),
     period,
     periodOpens: rows.reduce((sum, row) => sum + row.periodOpens, 0),
     rows,
