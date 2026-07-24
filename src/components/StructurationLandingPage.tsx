@@ -58,6 +58,33 @@ const methodSteps = [
   },
 ] as const;
 
+const teamExpertiseItems: ReadonlyArray<{
+  icon: IconType;
+  title: string;
+  description: string;
+}> = [
+  {
+    icon: BarChart3,
+    title: "Expert financier",
+    description: "Chiffres, rentabilité et points de vigilance.",
+  },
+  {
+    icon: Users,
+    title: "Structuration & pilotage",
+    description: "Priorités, rôles et rythme de fonctionnement.",
+  },
+  {
+    icon: Workflow,
+    title: "Process & opérations",
+    description: "Étapes claires, responsabilités et autonomie.",
+  },
+  {
+    icon: Settings2,
+    title: "Outils & automatisation",
+    description: "Seulement les solutions réellement utiles.",
+  },
+];
+
 const systemItems: ReadonlyArray<{
   icon: IconType;
   title: string;
@@ -431,6 +458,48 @@ export default function StructurationLandingPage() {
                 </h3>
                 <p className="mt-4 text-sm leading-6 text-dema-muted">
                   {step.description}
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y border-dema-line/70 bg-dema-paper px-5 py-28 sm:px-8 sm:py-36 lg:py-44">
+        <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:items-center lg:gap-20">
+          <div>
+            <p className="text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-dema-forest">
+              L’équipe derrière Demaa
+            </p>
+            <h2 className="mt-5 max-w-2xl text-balance text-[clamp(2.35rem,5vw,4.75rem)] font-light leading-[0.98] tracking-[-0.05em] text-brand-blue">
+              Plusieurs expertises.{" "}
+              <span className="demaa-section-title text-dema-forest">
+                Un seul système pour votre entreprise.
+              </span>
+            </h2>
+            <p className="mt-7 max-w-xl text-base leading-7 text-dema-muted md:text-lg md:leading-8">
+              Chaque mission croise quatre regards : finance, structuration,
+              opérations et outils.
+            </p>
+            <p className="mt-7 max-w-xl text-base font-medium leading-7 text-brand-blue">
+              Une équipe mobilisée du diagnostic jusqu’à la mise en place.
+            </p>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            {teamExpertiseItems.map((item) => (
+              <article
+                key={item.title}
+                className="rounded-[1.5rem] border border-dema-line bg-dema-cream p-6 shadow-[0_14px_40px_rgba(23,35,29,0.035)] sm:min-h-[13rem] sm:p-7"
+              >
+                <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-dema-positive text-dema-forest">
+                  <item.icon className="h-5 w-5" aria-hidden />
+                </span>
+                <h3 className="mt-6 text-xl font-medium leading-tight tracking-[-0.02em] text-brand-blue">
+                  {item.title}
+                </h3>
+                <p className="mt-3 text-sm leading-6 text-dema-muted">
+                  {item.description}
                 </p>
               </article>
             ))}
