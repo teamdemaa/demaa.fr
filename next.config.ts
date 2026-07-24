@@ -47,6 +47,7 @@ const nextConfig: NextConfig = {
   allowedDevOrigins: ['127.0.0.1'],
   devIndicators: false,
   distDir: process.env.DEMAA_BUILD_DIST_DIR || '.next',
+  htmlLimitedBots: /.*/,
   experimental: {
     optimizePackageImports: ['lucide-react']
   },
