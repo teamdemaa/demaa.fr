@@ -25,7 +25,7 @@ type SystemDetailContentProps = {
 };
 
 const tabs: ReadonlyArray<{ slug: SystemDetailTab; label: string }> = [
-  { slug: "kit", label: "Kit opérationnel" },
+  { slug: "kit", label: "Pilotage" },
   { slug: "outils", label: "Outils" },
   { slug: "process", label: "Process" },
 ];
@@ -168,7 +168,7 @@ export default function SystemDetailContent({
                     height={preview.height}
                     loading="eager"
                     sizes="(max-width: 767px) calc(100vw - 72px), 330px"
-                    className="h-auto w-full rounded-[0.8rem] shadow-[0_14px_35px_rgba(23,35,29,0.1)] sm:w-4/5"
+                    className="h-auto w-full rounded-[0.8rem] shadow-[0_14px_35px_rgba(23,35,29,0.1)] sm:w-[96%]"
                   />
                 ) : (
                   <span className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-dema-paper text-dema-forest shadow-sm">
