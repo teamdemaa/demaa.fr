@@ -1,7 +1,6 @@
 "use client";
 
 import { ExternalLink, LoaderCircle, Mail, X } from "lucide-react";
-import Image from "next/image";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import {
   getLeadAttributionPayload,
@@ -11,20 +10,15 @@ import {
   clearLeadSubmissionKey,
   getLeadSubmissionKey,
 } from "@/lib/lead-submission-client";
-import { getSystemKitPreview } from "@/lib/system-kit-previews";
-import type { SystemeDetail } from "@/lib/systeme-catalog";
-
 type SystemCompleteModalProps = {
   systemSlug: string;
   systemName: string;
-  systeme: SystemeDetail | null | undefined;
   onClose: () => void;
 };
 
 export default function SystemCompleteModal({
   systemSlug,
   systemName,
-  systeme,
   onClose,
 }: SystemCompleteModalProps) {
   const dialogRef = useRef<HTMLElement>(null);
@@ -36,9 +30,6 @@ export default function SystemCompleteModal({
   const [copyUrl, setCopyUrl] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const processCount =
-    systeme?.cards.reduce((total, card) => total + card.items.length, 0) ?? 0;
-  const preview = getSystemKitPreview(systemSlug);
 
   useEffect(() => {
     const previouslyFocused = document.activeElement instanceof HTMLElement
@@ -151,11 +142,7 @@ export default function SystemCompleteModal({
     >
       <section
         ref={dialogRef}
-        className={`relative max-h-[calc(100dvh-2rem)] w-full overflow-y-auto rounded-[1.5rem] border border-dema-line bg-dema-paper shadow-[0_24px_70px_rgba(23,35,29,0.14)] sm:max-h-[calc(100dvh-3rem)] ${
-          preview
-            ? "max-w-6xl lg:grid lg:grid-cols-[minmax(0,1.08fr)_minmax(26rem,0.92fr)] lg:overflow-hidden"
-            : "max-w-lg"
-        }`}
+        className="relative max-h-[calc(100dvh-2rem)] w-full max-w-[30rem] overflow-y-auto rounded-[1.5rem] border border-dema-line bg-dema-paper shadow-[0_24px_70px_rgba(23,35,29,0.14)] sm:max-h-[calc(100dvh-3rem)]"
         onClick={(event) => event.stopPropagation()}
         role="dialog"
         aria-modal="true"
@@ -172,86 +159,28 @@ export default function SystemCompleteModal({
           <X className="h-4 w-4" aria-hidden="true" />
         </button>
 
-        {preview ? (
-          <aside className="hidden min-h-[38rem] flex-col bg-dema-sage/55 p-8 lg:flex xl:p-10">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
-              Aperçu du tableau
-            </p>
-            <div className="flex flex-1 items-center justify-center">
-              <Image
-                src={preview.src}
-                alt={preview.alt}
-                width={preview.width}
-                height={preview.height}
-                loading="eager"
-                sizes="(max-width: 1023px) 1px, (max-width: 1280px) 52vw, 620px"
-                className="h-auto w-full"
-              />
-            </div>
-          </aside>
-        ) : null}
-
-        <div
-          className={`p-6 sm:p-8 ${
-            preview ? "lg:max-h-[calc(100dvh-3rem)] lg:overflow-y-auto lg:p-10" : ""
-          }`}
-        >
+        <div className="p-6 sm:p-8">
           <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
             <Mail className="h-5 w-5" aria-hidden="true" />
           </span>
-          <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-            Suivi opérationnel
-          </p>
           <h2
             id="system-complete-modal-title"
-            className="mt-2 pr-10 text-2xl font-semibold tracking-tight text-brand-blue"
+            className="mt-5 pr-10 text-2xl font-semibold tracking-tight text-brand-blue"
           >
-            Recevoir mon tableau de suivi opérationnel - {systemName}
+            Recevoir le tableau de pilotage
           </h2>
-
-          {preview ? (
-            <div className="mt-5 overflow-hidden rounded-[1.125rem] border border-dema-line/80 bg-dema-sage/55 p-2.5 lg:hidden">
-              <Image
-                src={preview.src}
-                alt={preview.alt}
-                width={preview.width}
-                height={preview.height}
-                loading="eager"
-                sizes="(max-width: 640px) calc(100vw - 68px), 560px"
-                className="h-auto w-full"
-              />
-            </div>
-          ) : null}
 
           <p
             id="system-complete-modal-description"
-            className="mt-4 text-sm leading-relaxed text-dema-muted lg:mt-3"
+            className="mt-3 text-sm leading-relaxed text-dema-muted"
           >
-            {preview ? (
-              <>
-                <span className="lg:hidden">
-                  Un seul Google Sheet prêt à copier, avec {processCount || "les"} process
-                  adaptés à votre métier.
-                </span>
-                <span className="hidden lg:inline">
-                  Un seul Google Sheet prêt à copier, avec la synthèse, le prévisionnel
-                  financier, les actions, l’équipe, l’écosystème, le calendrier marketing
-                  et {processCount || "les"} process adaptés à votre métier.
-                </span>
-              </>
-            ) : (
-              <>
-                Un seul Google Sheet prêt à copier, avec la synthèse, le prévisionnel
-                financier, les actions, l’équipe, l’écosystème, le calendrier marketing et{" "}
-                {processCount || "les"} process adaptés à votre métier.
-              </>
-            )}
+            Une copie prête à personnaliser pour {systemName}.
           </p>
 
           {copyUrl ? (
             <div className="mt-6 rounded-[1rem] bg-dema-cream/55 p-5" role="status">
               <h3 className="text-lg font-semibold text-brand-blue">
-                Votre tableau de suivi opérationnel est prêt
+                Votre tableau de pilotage est prêt
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-dema-muted">
                 Le lien vient aussi d’être envoyé à {email}. Connectez-vous à Google,
@@ -283,7 +212,7 @@ export default function SystemCompleteModal({
                 required
               />
               <label className="block pt-1 text-sm font-medium text-brand-blue" htmlFor="kit-email">
-                E-mail
+                Adresse e-mail
               </label>
               <input
                 id="kit-email"
@@ -318,8 +247,11 @@ export default function SystemCompleteModal({
                 {isSubmitting ? (
                   <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
                 ) : null}
-                {isSubmitting ? "Envoi…" : "Recevoir mon tableau de suivi opérationnel"}
+                {isSubmitting ? "Envoi…" : "Recevoir mon tableau"}
               </button>
+              <p className="text-center text-xs text-dema-muted">
+                Gratuit · Lien envoyé immédiatement
+              </p>
             </form>
           )}
         </div>
