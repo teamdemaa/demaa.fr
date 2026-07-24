@@ -1,17 +1,19 @@
 import type { Metadata } from "next";
-import SystemsHubPage from "@/components/SystemsHubPage";
+import StructurationLandingPage from "@/components/StructurationLandingPage";
+
+const title = "Structurez votre entreprise pour qu’elle fonctionne sans vous | Demaa";
+const description =
+  "Demaa installe en deux mois les process, les outils et le pilotage adaptés à votre activité pour rendre l’entreprise moins dépendante de vous.";
 
 export const metadata: Metadata = {
-  title: "Kits opérationnels pour dirigeants | Demaa",
-  description:
-    "Découvrez des kits opérationnels avec des process concrets pour structurer votre entreprise, mieux déléguer et gagner en autonomie.",
+  title,
+  description,
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Kits opérationnels pour dirigeants | Demaa",
-    description:
-      "Découvrez des kits opérationnels avec des process concrets pour structurer votre entreprise, mieux déléguer et gagner en autonomie.",
+    title,
+    description,
     url: "/",
     siteName: "Demaa",
     locale: "fr_FR",
@@ -19,12 +21,11 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Kits opérationnels pour dirigeants | Demaa",
-    description:
-      "Découvrez des kits opérationnels avec des process concrets pour structurer votre entreprise, mieux déléguer et gagner en autonomie.",
+    title,
+    description,
   },
 };
 
-export default async function HomePage() {
-  return <SystemsHubPage />;
+export default function HomePage() {
+  return <StructurationLandingPage />;
 }

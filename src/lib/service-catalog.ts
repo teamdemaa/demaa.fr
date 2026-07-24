@@ -171,16 +171,16 @@ export const demaaServices = [
   },
   {
     slug: "organisation-automatisation",
-    name: "Session stratégique offerte avec un spécialiste",
+    name: "Appel découverte gratuit",
     category: "Organisation",
     shortDescription:
-      "30 minutes pour faire le point, y voir plus clair et définir une prochaine étape.",
+      "30 minutes pour faire le point, clarifier votre besoin et définir la prochaine étape.",
     description:
       "Un échange gratuit de 30 minutes avec un spécialiste pour clarifier votre situation, faire ressortir ce qui compte maintenant et définir une prochaine étape, sans engagement.",
     bestFor:
       "Les dirigeants qui ont plusieurs sujets en tête, manquent de recul ou veulent simplement y voir plus clair avant de décider de la suite.",
     duration: "30 minutes",
-    price: "Offerte",
+    price: "Gratuit",
     tags: ["Stratégie", "Clarté", "Sans engagement"],
     icon: "Lightbulb",
     deliverables: [
@@ -215,22 +215,23 @@ export const demaaServices = [
   },
   {
     slug: "organisation-equipes",
-    name: "Structuration & pilotage",
+    name: "Accompagnement structuration & pilotage",
     category: "Organisation",
     shortDescription:
-      "Remettre de l’ordre dans l’entreprise avec des priorités, des rôles et des process clairs.",
+      "Pendant 3 mois, avancez avec un point tous les 15 jours et un plan d’action clair.",
     description:
-      "Une mission d’un mois pour diagnostiquer l’organisation, configurer le tableau de suivi opérationnel et clarifier les rôles, les process, les responsabilités et les priorités.",
+      "Un accompagnement de 3 mois pour structurer l’entreprise, configurer le tableau de suivi opérationnel et avancer avec un point de pilotage tous les 15 jours.",
     bestFor:
       "Les dirigeants qui veulent sortir du flou, moins centraliser le quotidien et installer un fonctionnement plus lisible, stable et autonome.",
-    duration: "1 mois",
-    price: "1 500 € HT",
+    duration: "3 mois · point tous les 15 jours",
+    price: "500 € HT / mois",
     tags: ["Organisation", "Pilotage", "Process"],
     icon: "Workflow",
     deliverables: [
       "Diagnostic de l’organisation et des priorités",
       "Tableau de suivi opérationnel configuré avec vos données",
       "Rôles, process et responsabilités clarifiés",
+      "Point de pilotage tous les 15 jours pendant 3 mois",
       "Plan d’action concret pour la suite",
     ],
     usefulFor: ["Structuration interne", "Pilotage", "Autonomie", "Croissance"],

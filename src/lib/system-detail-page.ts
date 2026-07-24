@@ -396,7 +396,7 @@ export function buildSystemPageJsonLd(data: SystemDetailPageData) {
           "@type": "ListItem",
           position: 2,
           name: "Kits opérationnels",
-          item: "https://demaa.fr",
+          item: "https://demaa.fr/kits-operationnels",
         },
         {
           "@type": "ListItem",

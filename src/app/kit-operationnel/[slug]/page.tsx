@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import SystemDetailContent from "@/components/SystemDetailContent";
+import { getPilotingSheetCopyUrl } from "@/lib/document-models";
 import { normalizeSystemDetailTab } from "@/lib/system-detail-tabs";
 import {
   buildSystemPageIntro,
@@ -50,6 +51,11 @@ export default async function OperationalKitPage({
 
   const initialTab = getParamValue(resolvedSearchParams.tab);
   const jsonLd = buildSystemPageJsonLd(data);
+  const kitCopyUrl = getPilotingSheetCopyUrl(data.system.slug);
+
+  if (!kitCopyUrl) {
+    notFound();
+  }
 
   return (
     <>
@@ -65,6 +71,7 @@ export default async function OperationalKitPage({
             detail={data.detail}
             intro={buildSystemPageIntro(data)}
             initialActiveTab={normalizeSystemDetailTab(initialTab)}
+            kitCopyUrl={kitCopyUrl}
             headingAs="h1"
           />
         </div>
