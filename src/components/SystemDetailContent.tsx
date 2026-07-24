@@ -3,8 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, ArrowRight, FileSpreadsheet, Wrench } from "lucide-react";
-import { type KeyboardEvent, useMemo, useState } from "react";
+import { ArrowLeft, ArrowRight, FileSpreadsheet, ShieldCheck, Wrench } from "lucide-react";
+import { type KeyboardEvent, Suspense, useMemo, useState } from "react";
+import OrganisationSessionBookingButton from "@/components/OrganisationSessionBookingButton";
 import SystemeTabContent from "@/components/SystemeTabContent";
 import { trackKitOpen } from "@/lib/kit-analytics-client";
 import type { OperationalSystemDetail } from "@/lib/system-operations";
@@ -45,6 +46,7 @@ export default function SystemDetailContent({
     isVisibleSystemDetailTab(initialActiveTab) ? initialActiveTab : "kit",
   );
   const preview = getSystemKitPreview(system.slug);
+  const isBuildingKit = system.slug === "batiment";
   const métierTools = useMemo(
     () =>
       detail.tools
@@ -189,21 +191,53 @@ export default function SystemDetailContent({
                   Tableau de pilotage — {system.name}
                 </span>
                 <span className="mt-4 text-sm leading-relaxed text-dema-muted">
-                  Suivez vos chiffres, vos priorités, votre équipe et vos process dans un
-                  seul Google Sheet.
+                  {isBuildingKit
+                    ? "Suivez vos chiffres, vos marges, vos chantiers, votre équipe et vos process dans un seul Google Sheet."
+                    : "Suivez vos chiffres, vos priorités, votre équipe et vos process dans un seul Google Sheet."}
                 </span>
-                <span className="mt-6 text-xs font-medium text-dema-muted">
-                  Google Sheets · Prêt à copier
-                </span>
-                <span className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-dema-forest">
-                  Ouvrir le tableau
+                <span className="mt-7 inline-flex w-fit items-center justify-center gap-2 rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper transition group-hover:bg-brand-blue">
+                  Ouvrir gratuitement le tableau
                   <ArrowRight
                     className="h-4 w-4 transition group-hover:translate-x-0.5"
                     aria-hidden="true"
                   />
                 </span>
+                <span className="mt-3 inline-flex items-center gap-2 text-xs font-medium text-dema-muted">
+                  <ShieldCheck className="h-4 w-4 text-dema-forest" aria-hidden="true" />
+                  Accès immédiat · Aucun email demandé
+                </span>
               </span>
             </a>
+          ) : null}
+
+          {activeTab === "kit" ? (
+            <div className="mt-5 flex flex-col gap-5 rounded-[1.35rem] border border-dema-line bg-dema-sage/35 px-6 py-6 shadow-[0_10px_30px_rgba(23,35,29,0.025)] sm:px-8 md:flex-row md:items-center md:justify-between">
+              <div className="max-w-2xl">
+                <h2 className="text-lg font-semibold leading-snug tracking-[-0.02em] text-brand-blue">
+                  Vous avez le tableau. Besoin de l’adapter à votre entreprise ?
+                </h2>
+                <p className="mt-2 text-sm leading-relaxed text-dema-muted">
+                  En 30 minutes, identifiez ce qui dépend encore de vous et les premières
+                  priorités à structurer.
+                </p>
+              </div>
+              <Suspense
+                fallback={(
+                  <span
+                    className="inline-flex min-h-11 w-full shrink-0 items-center justify-center rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper md:w-auto"
+                    aria-hidden="true"
+                  >
+                    Réserver ma session offerte
+                  </span>
+                )}
+              >
+                <OrganisationSessionBookingButton
+                  source={`Kit opérationnel — ${system.name}`}
+                  systemSlug={system.slug}
+                  className="inline-flex min-h-11 w-full shrink-0 items-center justify-center rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper transition hover:bg-brand-blue md:w-auto"
+                />
+              </Suspense>
+            </div>
           ) : null}
 
           {activeTab === "process" ? (
