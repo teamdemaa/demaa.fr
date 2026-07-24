@@ -332,12 +332,13 @@ export default function StructurationLandingPage() {
             <Link
               href="/kits-operationnels"
               aria-label="Découvrir les kits opérationnels"
-              className="demaa-secondary-button h-10 min-h-10 w-10 shrink-0 gap-2 px-0 text-xs md:w-auto md:px-4 md:text-sm"
+              className="demaa-secondary-button h-10 min-h-10 w-auto shrink-0 gap-2 px-3 text-xs md:px-4 md:text-sm"
             >
               <BriefcaseBusiness
                 className="h-4 w-4 shrink-0"
                 aria-hidden="true"
               />
+              <span className="md:hidden">Kit opérationnel</span>
               <span className="hidden md:inline">
                 Découvrir les kits opérationnels
               </span>
