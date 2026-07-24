@@ -195,27 +195,22 @@ export default function SystemDetailContent({
                     ? "Suivez vos chiffres, vos marges, vos chantiers, votre équipe et vos process dans un seul Google Sheet."
                     : "Suivez vos chiffres, vos priorités, votre équipe et vos process dans un seul Google Sheet."}
                 </span>
-                <span className="mt-6 text-xs font-medium text-dema-muted">
-                  Google Sheets · Prêt à copier
-                </span>
                 <span className="mt-7 inline-flex w-fit items-center justify-center gap-2 rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper transition group-hover:bg-brand-blue">
-                  {isBuildingKit ? "Ouvrir gratuitement le tableau" : "Ouvrir le tableau"}
+                  Ouvrir gratuitement le tableau
                   <ArrowRight
                     className="h-4 w-4 transition group-hover:translate-x-0.5"
                     aria-hidden="true"
                   />
                 </span>
-                {isBuildingKit ? (
-                  <span className="mt-3 inline-flex items-center gap-2 text-xs font-medium text-dema-muted">
-                    <ShieldCheck className="h-4 w-4 text-dema-forest" aria-hidden="true" />
-                    Accès immédiat · Aucun email demandé
-                  </span>
-                ) : null}
+                <span className="mt-3 inline-flex items-center gap-2 text-xs font-medium text-dema-muted">
+                  <ShieldCheck className="h-4 w-4 text-dema-forest" aria-hidden="true" />
+                  Accès immédiat · Aucun email demandé
+                </span>
               </span>
             </a>
           ) : null}
 
-          {activeTab === "kit" && isBuildingKit ? (
+          {activeTab === "kit" ? (
             <div className="mt-5 flex flex-col gap-5 rounded-[1.35rem] border border-dema-line bg-dema-sage/35 px-6 py-6 shadow-[0_10px_30px_rgba(23,35,29,0.025)] sm:px-8 md:flex-row md:items-center md:justify-between">
               <div className="max-w-2xl">
                 <h2 className="text-lg font-semibold leading-snug tracking-[-0.02em] text-brand-blue">
@@ -237,7 +232,7 @@ export default function SystemDetailContent({
                 )}
               >
                 <OrganisationSessionBookingButton
-                  source="Kit opérationnel — Bâtiment"
+                  source={`Kit opérationnel — ${system.name}`}
                   systemSlug={system.slug}
                   className="inline-flex min-h-11 w-full shrink-0 items-center justify-center rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper transition hover:bg-brand-blue md:w-auto"
                 />
