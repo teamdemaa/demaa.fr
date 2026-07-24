@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import SystemDetailContent from "@/components/SystemDetailContent";
-import { isVisibleSystemDetailTab } from "@/lib/system-detail-tabs";
+import { normalizeSystemDetailTab } from "@/lib/system-detail-tabs";
 import {
   buildSystemPageIntro,
   buildSystemPageJsonLd,
@@ -49,8 +49,6 @@ export default async function OperationalKitPage({
   }
 
   const initialTab = getParamValue(resolvedSearchParams.tab);
-  const normalizedInitialTab =
-    initialTab === "cours" || initialTab === "systeme" ? "process" : initialTab;
   const jsonLd = buildSystemPageJsonLd(data);
 
   return (
@@ -66,11 +64,7 @@ export default async function OperationalKitPage({
             system={data.system}
             detail={data.detail}
             intro={buildSystemPageIntro(data)}
-            initialActiveTab={
-              isVisibleSystemDetailTab(normalizedInitialTab)
-                ? normalizedInitialTab
-                : undefined
-            }
+            initialActiveTab={normalizeSystemDetailTab(initialTab)}
             headingAs="h1"
           />
         </div>

@@ -272,7 +272,7 @@ function singularizeSectorLabel(label: string): string {
 }
 
 function buildSystemPageTitle(data: SystemDetailPageData): string {
-  return `Kit opérationnel ${data.system.name} : process, outils et services | Demaa`;
+  return `Kit opérationnel ${data.system.name} : tableau de pilotage, outils et process | Demaa`;
 }
 
 export function buildSystemPageIntro(data: SystemDetailPageData): string {
