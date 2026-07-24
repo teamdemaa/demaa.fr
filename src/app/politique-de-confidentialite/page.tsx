@@ -57,6 +57,7 @@ export default function PolitiqueConfidentialitePage() {
               <li>contenu de votre demande, besoin métier, préférences outils et informations transmises dans les formulaires ;</li>
               <li>contenu saisi dans l&apos;assistant IA et plans générés ;</li>
               <li>données techniques liées à la navigation et à la mesure d&apos;audience ;</li>
+              <li>données agrégées d&apos;ouverture des kits : kit concerné, date, page d&apos;origine et paramètres UTM éventuels, sans adresse email, adresse IP enregistrée ni identifiant visiteur ;</li>
               <li>données d&apos;attribution liées aux demandes : première et dernière source, paramètres UTM, campagne, page d&apos;entrée, référent, page de conversion et statut du consentement ;</li>
               <li>localisation approximative au niveau pays, région ou ville, ainsi que type d&apos;appareil, navigateur et système d&apos;exploitation, lorsque ces informations sont disponibles ;</li>
               <li>données conservées localement dans votre navigateur pour l&apos;expérience assistant.</li>
@@ -80,7 +81,7 @@ export default function PolitiqueConfidentialitePage() {
               <li><strong>Vercel</strong> pour l&apos;hébergement et la mesure d&apos;audience ;</li>
               <li><strong>Google Analytics</strong> pour la mesure des parcours lorsque vous l&apos;autorisez ;</li>
               <li><strong>Meta Pixel</strong> pour la mesure publicitaire lorsque vous l&apos;autorisez ;</li>
-              <li><strong>Google Firebase / Firestore</strong> pour le stockage sécurisé des demandes et de leur contexte d&apos;attribution ;</li>
+              <li><strong>Google Firebase / Firestore</strong> pour le stockage sécurisé des demandes, de leur contexte d&apos;attribution et des compteurs agrégés d&apos;ouverture des kits ;</li>
               <li><strong>Resend</strong> pour l&apos;envoi des emails demandés et la gestion des contacts concernés ;</li>
               <li><strong>Anthropic</strong> pour la génération des réponses de l&apos;assistant IA ;</li>
               <li><strong>Slack</strong> pour la réception interne de notifications liées à certaines demandes ;</li>
@@ -100,6 +101,7 @@ export default function PolitiqueConfidentialitePage() {
               <li><strong>Générations de l&apos;assistant IA et historique associé :</strong> pendant la durée nécessaire au service et au suivi commercial, puis suppression ou anonymisation.</li>
               <li><strong>Données conservées localement dans votre navigateur :</strong> jusqu&apos;à suppression manuelle ou effacement par votre navigateur.</li>
               <li><strong>Données techniques de sécurité et journaux :</strong> pendant la durée nécessaire à l&apos;exploitation et à la sécurité du site.</li>
+              <li><strong>Compteurs agrégés d&apos;ouverture des kits :</strong> pendant la durée d&apos;exploitation du service, ces compteurs ne contenant ni adresse email, ni adresse IP enregistrée, ni identifiant visiteur.</li>
             </ul>
       </PrivacySection>
 
