@@ -37,11 +37,11 @@ export default function SystemeTabContent({
             className="demaa-accordion h-24 rounded-[1.25rem] px-5 py-3 open:h-auto"
           >
             <summary className="flex min-h-[4.5rem] cursor-pointer list-none items-start justify-between gap-4">
-              <div className="flex min-h-[4.5rem] min-w-0 flex-1 flex-col justify-between">
+              <div className="min-w-0 flex-1">
                 <h3 className="line-clamp-2 text-base font-semibold leading-5 tracking-tight text-brand-blue">
                   {card.pillar}
                 </h3>
-                <p className="text-xs leading-4 text-dema-muted">
+                <p className="mt-1 text-xs leading-4 text-dema-muted">
                   {card.items.length} processus
                 </p>
               </div>
