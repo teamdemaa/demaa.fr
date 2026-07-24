@@ -42,19 +42,19 @@ const methodSteps = [
     number: "02",
     title: "Structurer l’organisation",
     description:
-      "Un atelier de travail pour entrer dans le détail, repérer les blocages et définir qui fait quoi.",
+      "Un atelier de travail pour repérer les blocages, clarifier les rôles et définir qui fait quoi.",
   },
   {
     number: "03",
-    title: "Construire votre système",
+    title: "Formaliser les processus",
     description:
-      "Demaa configure votre espace de pilotage et formalise les processus adaptés à votre activité.",
+      "Demaa documente les étapes, les responsabilités et les règles de décision adaptées à votre activité.",
   },
   {
     number: "04",
-    title: "Le mettre en place",
+    title: "Installer le pilotage",
     description:
-      "Nous accompagnons sa prise en main et l’ajustons jusqu’à ce qu’il soit réellement utilisé.",
+      "Nous configurons votre espace de pilotage, accompagnons sa prise en main et l’ajustons avec votre équipe.",
   },
 ] as const;
 
@@ -75,7 +75,7 @@ const teamExpertiseItems: ReadonlyArray<{
   },
   {
     icon: Workflow,
-    title: "Process & opérations",
+    title: "Processus & opérations",
     description: "Étapes claires, responsabilités et autonomie.",
   },
   {
@@ -102,8 +102,8 @@ const systemItems: ReadonlyArray<{
   },
   {
     icon: Workflow,
-    title: "Vos process",
-    description: "Les bonnes étapes, au bon moment.",
+    title: "Vos processus",
+    description: "Les étapes, les responsables et les règles de décision.",
   },
 ];
 
@@ -113,21 +113,21 @@ const cockpitHighlights: ReadonlyArray<{
 }> = [
   { icon: ListChecks, label: "Vos priorités" },
   { icon: BarChart3, label: "Vos chiffres" },
-  { icon: Workflow, label: "Vos process" },
+  { icon: Workflow, label: "Vos processus" },
 ];
 
 const caseResults = [
   { value: "36 jours/an", label: "gagnés côté comptabilité" },
   { value: "30 jours/an", label: "gagnés côté paie" },
-  { value: "Jusqu’à 30 000 €", label: "de capacité récupérée par an" },
+  { value: "Jusqu’à 30 000 €", label: "de capacité facturable récupérée par an" },
 ] as const;
 
 const retainedItems: ReadonlyArray<{
   icon: IconType;
   label: string;
 }> = [
-  { icon: Settings2, label: "Votre système personnalisé" },
-  { icon: ClipboardCheck, label: "Vos process et responsabilités" },
+  { icon: Settings2, label: "Votre organisation documentée" },
+  { icon: ClipboardCheck, label: "Vos processus et responsabilités" },
   { icon: MonitorSmartphone, label: "Votre espace de pilotage configuré" },
   { icon: FileText, label: "Votre plan d’action" },
 ];
@@ -144,7 +144,7 @@ const partnerItems: ReadonlyArray<{
 
 const priceItems = [
   "Diagnostic et atelier de structuration",
-  "Construction du système personnalisé",
+  "Formalisation des rôles et des processus",
   "Configuration de l’espace de pilotage",
   "Mise en place et suivi pendant deux mois",
   "Accès à l’outil de pilotage gratuit à vie",
@@ -169,7 +169,7 @@ const faqItems = [
   {
     question: "Qu’est-ce que je conserve après la mission ?",
     answer:
-      "Votre système personnalisé, vos process, votre plan d’action et votre espace de pilotage, accessible gratuitement à vie.",
+      "Vos processus, vos responsabilités, votre plan d’action et votre espace de pilotage, accessible gratuitement à vie.",
   },
 ] as const;
 
@@ -256,7 +256,7 @@ function CockpitPhone() {
                 Kit Bâtiment actif
               </p>
               <p className="mt-1 text-xs font-semibold text-brand-blue">
-                7 process · 15 outils
+                7 processus · 15 outils
               </p>
             </div>
             <span className="rounded-full bg-dema-positive px-2 py-1 text-[0.55rem] font-semibold text-dema-forest">
@@ -280,7 +280,7 @@ function CockpitPhone() {
           />
           <CockpitMetric
             icon={Users}
-            label="Process autonomes"
+            label="Processus autonomes"
             value="68 %"
             note="4 dépendent encore de vous"
           />
@@ -374,19 +374,20 @@ export default function StructurationLandingPage() {
         </div>
       </header>
 
-      <section className="px-5 pb-28 pt-[4.8rem] sm:px-8 sm:pb-36 sm:pt-[6.4rem] lg:pb-44 lg:pt-32">
+      <section className="px-5 pb-28 pt-[3.36rem] sm:px-8 sm:pb-36 sm:pt-[4.48rem] lg:pb-44 lg:pt-[5.6rem]">
         <div className="mx-auto max-w-6xl text-center">
           <h1 className="mx-auto max-w-5xl text-balance text-[clamp(2.65rem,6.8vw,5.95rem)] font-light leading-[0.92] tracking-[-0.06em] text-brand-blue">
-            <span className="font-sans font-light">
-              Structurez votre entreprise pour qu’elle fonctionne
+            <span className="font-sans font-light text-[#6F756E]">
+              Structurez votre entreprise pour qu’elle
             </span>{" "}
             <span className="demaa-hero-title text-dema-forest">
-              même quand vous n’êtes pas là.
+              dépende moins de vous.
             </span>
           </h1>
           <p className="mx-auto mt-9 max-w-2xl text-balance text-base leading-7 text-dema-muted sm:text-lg sm:leading-8">
-            Demaa met en place les process, les outils et le pilotage adaptés à
-            votre activité.
+            En deux mois, Demaa clarifie les responsabilités, formalise les
+            processus et configure un espace de pilotage adapté à votre
+            activité.
           </p>
           <div className="mt-9">
             <BookingButton
@@ -425,7 +426,7 @@ export default function StructurationLandingPage() {
       <section className="bg-dema-sage/45 px-5 py-28 sm:px-8 sm:py-36 lg:py-44">
         <SectionHeading
           title="Si vous vous absentez un mois, qu’est-ce qui s’arrête ?"
-          description="Demaa identifie ce qui dépend encore de vous et construit une organisation claire pour votre équipe."
+          description="Demaa repère les décisions, les tâches et les informations qui reposent encore sur vous, puis organise leur transmission à votre équipe."
         />
       </section>
 
@@ -435,13 +436,13 @@ export default function StructurationLandingPage() {
             eyebrow="La méthode"
             title={(
               <>
-                En deux mois, Demaa installe{" "}
+                En deux mois, Demaa structure{" "}
                 <span className="demaa-section-title text-dema-forest">
-                  votre système.
+                  votre organisation.
                 </span>
               </>
             )}
-            description="Une mission courte et structurée, avec un résultat concret à la fin."
+            description="À la fin, les rôles, les processus et les outils de pilotage sont en place."
           />
 
           <div className="mt-18 grid gap-5 md:mt-24 md:grid-cols-2 xl:grid-cols-4">
@@ -474,7 +475,7 @@ export default function StructurationLandingPage() {
             <h2 className="mt-5 max-w-2xl text-balance text-[clamp(2.35rem,5vw,4.75rem)] font-light leading-[0.98] tracking-[-0.05em] text-brand-blue">
               Plusieurs expertises.{" "}
               <span className="demaa-section-title text-dema-forest">
-                Un seul système pour votre entreprise.
+                Une organisation cohérente pour votre entreprise.
               </span>
             </h2>
             <p className="mt-7 max-w-xl text-base leading-7 text-dema-muted md:text-lg md:leading-8">
@@ -538,14 +539,7 @@ export default function StructurationLandingPage() {
       <section className="border-y border-dema-line/70 bg-dema-paper px-5 py-28 sm:px-8 sm:py-36 lg:py-44">
         <div className="mx-auto max-w-6xl">
           <SectionHeading
-            title={(
-              <>
-                Un système adapté à{" "}
-                <span className="demaa-section-title text-dema-forest">
-                  votre activité.
-                </span>
-              </>
-            )}
+            title="Votre pilotage, vos outils et vos processus."
           />
           <div className="mt-18 grid gap-5 md:mt-24 md:grid-cols-3">
             {systemItems.map((item) => (
@@ -582,30 +576,16 @@ export default function StructurationLandingPage() {
           <SectionHeading
             title={(
               <>
-                Votre entreprise,{" "}
-                <span className="demaa-section-title text-dema-forest">
-                  au même endroit.
-                </span>
-              </>
-            )}
-            description="Priorités, chiffres et organisation accessibles à tout moment."
-          />
-
-          <div className="mt-20 grid items-center gap-16 lg:mt-28 lg:grid-cols-[minmax(0,0.9fr)_minmax(22rem,0.78fr)_minmax(0,0.9fr)]">
-            <div className="text-center lg:text-left">
-              <p className="text-3xl font-light leading-tight tracking-[-0.035em] text-brand-blue lg:text-4xl">
-                Gardez la visibilité.
-                <br />
+                Gardez la visibilité.{" "}
                 <span className="demaa-section-title text-dema-forest">
                   Sans tout porter.
                 </span>
-              </p>
-              <p className="mx-auto mt-5 max-w-sm text-sm leading-7 text-dema-muted lg:mx-0">
-                L’information utile reste accessible, claire et partagée avec
-                les personnes concernées.
-              </p>
-            </div>
+              </>
+            )}
+            description="Vos priorités, vos chiffres et vos processus sont réunis dans un espace partagé avec les personnes concernées."
+          />
 
+          <div className="mt-20 grid items-center gap-16 lg:mx-auto lg:mt-28 lg:max-w-4xl lg:grid-cols-[minmax(22rem,0.78fr)_minmax(0,0.9fr)]">
             <CockpitPhone />
 
             <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
@@ -638,8 +618,8 @@ export default function StructurationLandingPage() {
               </span>
             </h2>
             <p className="mt-7 max-w-xl text-base leading-7 text-dema-muted">
-              Chez EM2A, cabinet d’expertise comptable, le système a remis de
-              l’ordre dans les échanges et libéré du temps utile.
+              Chez EM2A, cabinet d’expertise comptable, la nouvelle organisation
+              a remis de l’ordre dans les échanges et libéré du temps utile.
             </p>
           </div>
 
@@ -673,7 +653,7 @@ export default function StructurationLandingPage() {
 
       <section className="border-y border-dema-line/70 bg-dema-paper px-5 py-28 sm:px-8 sm:py-36 lg:py-44">
         <div className="mx-auto max-w-7xl">
-          <SectionHeading title="Après les deux mois, tout reste chez vous." />
+          <SectionHeading title="À la fin de la mission, vous gardez tout ce qui a été mis en place." />
 
           <div className="mt-18 grid gap-4 sm:grid-cols-2 lg:mt-24 lg:grid-cols-4">
             {retainedItems.map((item) => (
@@ -837,7 +817,7 @@ export default function StructurationLandingPage() {
               Structure.
             </h2>
             <p className="mt-7 max-w-md text-base leading-7 text-dema-paper/75 sm:text-lg sm:leading-8">
-              5 minutes de lecture pour que votre entreprise ne dépende plus de
+              5 minutes de lecture pour que votre entreprise dépende moins de
               vous.
             </p>
           </div>

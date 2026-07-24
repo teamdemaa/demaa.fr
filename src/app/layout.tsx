@@ -54,12 +54,12 @@ const gambetta = localFont({
 export const metadata: Metadata = {
   title: "Demaa | Structurez votre entreprise",
   description:
-    "Demaa structure les process, les outils et le pilotage de votre entreprise pour qu’elle avance avec plus d’autonomie.",
+    "Demaa clarifie les responsabilités, formalise les processus et configure un espace de pilotage pour que votre entreprise dépende moins de vous.",
   metadataBase: new URL('https://demaa.fr'),
   openGraph: {
     title: "Demaa | Structurez votre entreprise",
     description:
-      "Demaa structure les process, les outils et le pilotage de votre entreprise pour qu’elle avance avec plus d’autonomie.",
+      "Demaa clarifie les responsabilités, formalise les processus et configure un espace de pilotage pour que votre entreprise dépende moins de vous.",
     siteName: "Demaa",
     locale: "fr_FR",
     type: "website",
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Demaa | Structurez votre entreprise",
     description:
-      "Demaa structure les process, les outils et le pilotage de votre entreprise pour qu’elle avance avec plus d’autonomie.",
+      "Demaa clarifie les responsabilités, formalise les processus et configure un espace de pilotage pour que votre entreprise dépende moins de vous.",
   },
   applicationName: "Demaa",
   formatDetection: {
