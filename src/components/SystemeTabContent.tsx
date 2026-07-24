@@ -34,19 +34,19 @@ export default function SystemeTabContent({
         {systeme.cards.map((card) => (
           <details
             key={card.pillar}
-            className="demaa-accordion h-fit rounded-[1.25rem] px-5 py-4"
+            className="demaa-accordion h-24 rounded-[1.25rem] px-5 py-3 open:h-auto"
           >
-            <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
-              <div className="min-w-0">
-                <h3 className="text-base font-semibold tracking-tight text-brand-blue">
+            <summary className="flex min-h-[4.5rem] cursor-pointer list-none items-start justify-between gap-4">
+              <div className="flex min-h-[4.5rem] min-w-0 flex-1 flex-col justify-between">
+                <h3 className="line-clamp-2 text-base font-semibold leading-5 tracking-tight text-brand-blue">
                   {card.pillar}
                 </h3>
-                <p className="mt-1 text-xs text-dema-muted">
-                  {card.items.length} process
+                <p className="text-xs leading-4 text-dema-muted">
+                  {card.items.length} processus
                 </p>
               </div>
               <ChevronDown
-                className="demaa-accordion-chevron h-4 w-4 shrink-0 text-dema-muted transition-transform"
+                className="demaa-accordion-chevron mt-0.5 h-4 w-4 shrink-0 text-dema-muted transition-transform"
                 aria-hidden="true"
               />
             </summary>
