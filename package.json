@@ -29,6 +29,7 @@
     "audit:finance-network-recommendations": "node scripts/audit-finance-network-recommendations.mjs",
     "audit:aid-recommendations": "node scripts/audit-aid-recommendations.mjs",
     "audit:tool-modal-readiness": "node scripts/audit-tool-modal-readiness.mjs",
+    "backfill:kit-history": "node scripts/backfill-kit-download-history.mjs",
     "seed:enterprise-annuaire": "node scripts/seed-enterprise-annuaire.mjs",
     "sync:enterprise-annuaire": "node scripts/sync-enterprise-annuaire.mjs",
     "sync:tool-directory": "node scripts/sync-tool-directory.mjs"

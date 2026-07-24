@@ -29,11 +29,21 @@ export async function GET(request: Request) {
   );
   const overview = await getKitAnalyticsOverview(period);
   const rows = [
-    ["Kit", "Slug", "Total", `Période ${period} jours`, "7 derniers jours", "Aujourd’hui", "Dernière ouverture"],
+    [
+      "Kit",
+      "Slug",
+      "Ouvertures suivies",
+      "Distributions historiques",
+      `Période ${period} jours`,
+      "7 derniers jours",
+      "Aujourd’hui",
+      "Dernière ouverture",
+    ],
     ...overview.rows.map((row) => [
       row.kitName,
       row.kitSlug,
       row.totalOpens,
+      row.historicalDownloads,
       row.periodOpens,
       row.last7Days,
       row.todayOpens,
