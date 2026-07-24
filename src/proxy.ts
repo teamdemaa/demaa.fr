@@ -4,7 +4,6 @@ import { isVercelPreviewHost } from "@/lib/site-url";
 const CANONICAL_HOST = "demaa.fr";
 const CANONICAL_ORIGIN = `https://${CANONICAL_HOST}`;
 const RETIRED_EXACT_PATHS = new Set([
-  "/annuaire-experts-comptables",
   "/annuaire-services",
   "/cockpit-preview",
   "/logo-preview",
@@ -18,7 +17,6 @@ const RETIRED_EXACT_PATHS = new Set([
   "/sw.js",
 ]);
 const RETIRED_PATH_PREFIXES = [
-  "/annuaire-experts-comptables/",
   "/services/",
 ];
 

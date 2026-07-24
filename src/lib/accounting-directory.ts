@@ -34,6 +34,34 @@ export type AccountingFirm = {
   featuredRank?: number;
 };
 
+export type AccountingDirectoryFilters = {
+  query?: string;
+  city?: string;
+  region?: string;
+  service?: string;
+  industry?: string;
+  clientType?: string;
+  tool?: string;
+  creationOfferOnly?: boolean;
+  newClientsOnly?: boolean;
+  verifiedOnly?: boolean;
+};
+
+export type AccountingDirectoryFacet = {
+  label: string;
+  value: string;
+  count: number;
+};
+
+export type AccountingDirectoryFacets = {
+  cities: AccountingDirectoryFacet[];
+  regions: AccountingDirectoryFacet[];
+  services: AccountingDirectoryFacet[];
+  industries: AccountingDirectoryFacet[];
+  clientTypes: AccountingDirectoryFacet[];
+  tools: AccountingDirectoryFacet[];
+};
+
 type AccountingDirectoryApiFirm = Partial<AccountingFirm> & {
   publicationStatus?: string;
 };
@@ -81,6 +109,139 @@ export const getAccountingFirms = cache(async () => {
 export async function getAccountingFirmBySlug(slug: string) {
   const firms = await getAccountingFirms();
   return firms.find((firm) => firm.slug === slug) ?? null;
+}
+
+export async function getAccountingDirectoryFacets() {
+  return getDirectoryFacets(await getAccountingFirms());
+}
+
+export async function getSimilarAccountingFirms(
+  firm: AccountingFirm,
+  limit = 3
+) {
+  const firms = await getAccountingFirms();
+  return sortAccountingFirms(
+    firms.filter((candidate) => candidate.id !== firm.id),
+    {
+      city: firm.city,
+      region: firm.regions[0],
+      service: firm.services[0],
+      industry: firm.industries[0],
+      clientType: firm.clientTypes[0],
+      tool: firm.tools[0],
+    }
+  ).slice(0, limit);
+}
+
+export function getAccountingFirmScore(
+  firm: AccountingFirm,
+  filters: AccountingDirectoryFilters = {}
+) {
+  let score = 0;
+
+  if (firm.isOecVerified) score += 20;
+  if (firm.acceptsNewClients === "likely") score += 14;
+  if (firm.dataQuality === "Donnees solides") score += 10;
+  if (firm.hasCreationOffer === "yes") score += 6;
+
+  if (filters.city && firm.city === filters.city) score += 20;
+  if (filters.region && firm.regions.includes(filters.region)) score += 18;
+  if (filters.service && firm.services.includes(filters.service)) score += 16;
+  if (filters.industry && firm.industries.includes(filters.industry)) score += 14;
+  if (filters.clientType && firm.clientTypes.includes(filters.clientType)) score += 12;
+  if (filters.tool && firm.tools.includes(filters.tool)) score += 8;
+
+  score += Math.min(firm.officeCount, 10);
+
+  return score;
+}
+
+export function filterAccountingFirms(
+  firms: AccountingFirm[],
+  filters: AccountingDirectoryFilters
+) {
+  const query = filters.query?.trim().toLowerCase();
+
+  return firms.filter((firm) => {
+    if (query) {
+      const haystack = [
+        firm.name,
+        firm.description,
+        firm.city,
+        ...firm.regions,
+        ...firm.services,
+        ...firm.industries,
+        ...firm.clientTypes,
+        ...firm.tools,
+      ]
+        .join(" ")
+        .toLowerCase();
+
+      if (!haystack.includes(query)) return false;
+    }
+
+    if (filters.city && firm.city !== filters.city) return false;
+    if (filters.region && !firm.regions.includes(filters.region)) return false;
+    if (filters.service && !firm.services.includes(filters.service)) return false;
+    if (filters.industry && !firm.industries.includes(filters.industry)) return false;
+    if (filters.clientType && !firm.clientTypes.includes(filters.clientType)) return false;
+    if (filters.tool && !firm.tools.includes(filters.tool)) return false;
+    if (filters.creationOfferOnly && firm.hasCreationOffer === "unknown") return false;
+    if (filters.newClientsOnly && firm.acceptsNewClients !== "likely") return false;
+    if (filters.verifiedOnly && !firm.isOecVerified) return false;
+
+    return true;
+  });
+}
+
+export function sortAccountingFirms(
+  firms: AccountingFirm[],
+  filters: AccountingDirectoryFilters = {}
+) {
+  return [...firms].sort((a, b) => {
+    const featuredDifference =
+      (a.featuredRank ?? Number.MAX_SAFE_INTEGER) -
+      (b.featuredRank ?? Number.MAX_SAFE_INTEGER);
+    if (featuredDifference !== 0) return featuredDifference;
+
+    const scoreDifference =
+      getAccountingFirmScore(b, filters) - getAccountingFirmScore(a, filters);
+    if (scoreDifference !== 0) return scoreDifference;
+
+    return a.name.localeCompare(b.name, "fr");
+  });
+}
+
+export function getFilteredAccountingFirms(
+  firms: AccountingFirm[],
+  filters: AccountingDirectoryFilters = {}
+) {
+  return sortAccountingFirms(filterAccountingFirms(firms, filters), filters);
+}
+
+export function getDirectoryFacets(
+  firms: AccountingFirm[]
+): AccountingDirectoryFacets {
+  return {
+    cities: buildFacet(firms.map((firm) => firm.city)),
+    regions: buildFacet(firms.flatMap((firm) => firm.regions)),
+    services: buildFacet(firms.flatMap((firm) => firm.services)),
+    industries: buildFacet(firms.flatMap((firm) => firm.industries)),
+    clientTypes: buildFacet(firms.flatMap((firm) => firm.clientTypes)),
+    tools: buildFacet(firms.flatMap((firm) => firm.tools)),
+  };
+}
+
+function buildFacet(values: string[]): AccountingDirectoryFacet[] {
+  const counts = new Map<string, number>();
+
+  values.filter(Boolean).forEach((value) => {
+    counts.set(value, (counts.get(value) ?? 0) + 1);
+  });
+
+  return [...counts.entries()]
+    .map(([label, count]) => ({ label, value: label, count }))
+    .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label, "fr"));
 }
 
 function mapAccountingDirectoryApiFirm(

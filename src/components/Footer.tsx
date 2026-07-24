@@ -2,17 +2,21 @@ import Link from "next/link";
 import { UserRound } from "lucide-react";
 import DemaaWordmark from "@/components/DemaaWordmark";
 
-const mainLinks = [
-  { label: "Kits opérationnels", href: "/kits-operationnels" },
+const directoryLinks = [
   { label: "Annuaire outils", href: "/annuaire-outils" },
   { label: "Annuaire financement", href: "/annuaire-financement" },
   { label: "Annuaire fournisseurs", href: "/annuaire-fournisseurs" },
+  { label: "Annuaire réseaux professionnels", href: "/annuaire-reseaux-pro" },
+  { label: "Annuaire formations", href: "/annuaire-formations" },
+  { label: "Annuaire recrutement", href: "/annuaire-recrutement" },
+  { label: "Annuaire newsletters", href: "/annuaire-newsletters" },
+  { label: "Annuaire experts-comptables", href: "/annuaire-experts-comptables" },
 ];
 
-const contentLinks = [
+const resourceLinks = [
+  { label: "Kits opérationnels", href: "/kits-operationnels" },
   { label: "Modèles de documents", href: "/modeles-de-documents" },
   { label: "Cours", href: "/cours" },
-  { label: "Annuaire newsletters", href: "/annuaire-newsletters" },
   { label: "Aides & subventions", href: "/aides-et-subventions" },
 ];
 
@@ -40,10 +44,23 @@ export default function Footer() {
 
           <div>
             <h3 className="text-lg font-semibold mb-6">
-              Demaa
+              Annuaires
             </h3>
             <ul className="space-y-3">
-              {mainLinks.map((link) => (
+              {directoryLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className={linkClass}>{link.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-semibold mb-6">
+              Ressources
+            </h3>
+            <ul className="space-y-3">
+              {resourceLinks.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className={linkClass}>{link.label}</Link>
                 </li>
@@ -51,19 +68,6 @@ export default function Footer() {
               <li>
                 <Link href="mailto:team@demaa.fr" className={linkClass}>Nous contacter</Link>
               </li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-lg font-semibold mb-6">
-              Contenus
-            </h3>
-            <ul className="space-y-3">
-              {contentLinks.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className={linkClass}>{link.label}</Link>
-                </li>
-              ))}
             </ul>
           </div>
 
