@@ -4,6 +4,7 @@ import { getAllCourseEntries } from "@/lib/course-content";
 import { getAllDocumentModels } from "@/lib/document-models";
 import { getAllNewsletters } from "@/lib/newsletter-content";
 import { aidFamilies, demaaAidItems } from "@/lib/aid-catalog";
+import { getAccountingFirms } from "@/lib/accounting-directory";
 import { getEnterpriseCatalog } from "@/lib/enterprise-annuaire-server";
 import { demaaFinanceItems } from "@/lib/finance-catalog";
 import { demaaProNetworks } from "@/lib/pro-network-catalog";
@@ -26,9 +27,10 @@ export const dynamic = "force-dynamic";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = getCanonicalBaseUrl();
   const now = new Date();
-  const [tools, enterprises] = await Promise.all([
+  const [tools, enterprises, accountingFirms] = await Promise.all([
     getUnifiedToolDirectory(),
     getEnterpriseCatalog(),
+    getAccountingFirms(),
   ]);
 
   const staticRoutes: MetadataRoute.Sitemap = [
@@ -42,6 +44,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/annuaire-formations`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-recrutement`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-newsletters`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
+    { url: `${base}/annuaire-experts-comptables`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/modeles-de-documents`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/cours`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/mentions-legales`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
@@ -161,6 +164,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
+  const accountingFirmEntries: MetadataRoute.Sitemap = accountingFirms.map((firm) => ({
+    url: `${base}/annuaire-experts-comptables/cabinets/${firm.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.75,
+  }));
+
   const sectorEntries: MetadataRoute.Sitemap = sectorPageDefinitions.map((sector) => ({
     url: `${base}/secteurs/${sector.slug}`,
     lastModified: now,
@@ -197,6 +207,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...proNetworkEntries,
     ...trainingEntries,
     ...recruitmentEntries,
+    ...accountingFirmEntries,
     ...sectorEntries,
     ...toolSectorEntries,
     ...systemEntries,
