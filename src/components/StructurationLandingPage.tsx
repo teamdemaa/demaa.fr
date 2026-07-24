@@ -324,12 +324,6 @@ export default function StructurationLandingPage() {
           </Link>
           <div className="flex items-center gap-3">
             <Link
-              href="/connexion"
-              className="hidden text-sm font-medium text-brand-blue/62 transition hover:text-dema-forest sm:inline-flex"
-            >
-              Se connecter
-            </Link>
-            <Link
               href="/kits-operationnels"
               aria-label="Découvrir les kits opérationnels"
               className="demaa-secondary-button h-10 min-h-10 w-auto shrink-0 gap-2 px-3 text-xs md:px-4 md:text-sm"
@@ -342,6 +336,12 @@ export default function StructurationLandingPage() {
               <span className="hidden md:inline">
                 Découvrir les kits opérationnels
               </span>
+            </Link>
+            <Link
+              href="/connexion"
+              className="hidden text-sm font-medium text-brand-blue/62 transition hover:text-dema-forest sm:inline-flex"
+            >
+              Se connecter
             </Link>
           </div>
         </div>
