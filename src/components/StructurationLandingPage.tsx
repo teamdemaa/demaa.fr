@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Suspense, type ComponentType } from "react";
 import {
@@ -29,6 +30,61 @@ const proofPoints = [
   { value: "+ de 200", label: "dirigeants accompagnés" },
   { value: "115", label: "activités couvertes" },
   { value: "+ de 500", label: "processus métier structurés" },
+] as const;
+
+const sectorItems = [
+  {
+    title: "Bâtiment & travaux",
+    image: "/images/structuration-sectors/batiment-travaux.jpg",
+    imageClassName:
+      "object-[64%_50%] saturate-[.42] contrast-[.93] brightness-[.98] sepia-[.1]",
+  },
+  {
+    title: "Cabinets comptables",
+    image: "/images/structuration-sectors/cabinets-comptables.jpg",
+    imageClassName:
+      "object-[center_44%] saturate-[.56] contrast-[.94] brightness-[1.02] sepia-[.08]",
+  },
+  {
+    title: "Services de terrain",
+    image: "/images/structuration-sectors/services-terrain.jpg",
+    imageClassName:
+      "object-[center_45%] saturate-[.4] contrast-[.92] brightness-[.99] sepia-[.1]",
+  },
+  {
+    title: "Commerce & restauration",
+    image: "/images/structuration-sectors/commerce-restauration.jpg",
+    imageClassName:
+      "object-[center_46%] saturate-[.55] contrast-[.94] brightness-[1.01] sepia-[.07]",
+  },
+] as const;
+
+const structurationPillars = [
+  {
+    number: "01",
+    title: "Pilotage & direction",
+    description: "Priorités, indicateurs et rythme de décision",
+  },
+  {
+    number: "02",
+    title: "Marketing & ventes",
+    description: "Acquisition, opportunités et relances",
+  },
+  {
+    number: "03",
+    title: "Finance & administratif",
+    description: "Trésorerie, marge, facturation et échéances",
+  },
+  {
+    number: "04",
+    title: "Opérations",
+    description: "Étapes, qualité, contrôles et passages de relais",
+  },
+  {
+    number: "05",
+    title: "Équipe & responsabilités",
+    description: "Rôles, autonomie et transmission",
+  },
 ] as const;
 
 const methodSteps = [
@@ -82,28 +138,6 @@ const teamExpertiseItems: ReadonlyArray<{
     icon: Settings2,
     title: "Outils & automatisation",
     description: "Seulement les solutions réellement utiles.",
-  },
-];
-
-const systemItems: ReadonlyArray<{
-  icon: IconType;
-  title: string;
-  description: string;
-}> = [
-  {
-    icon: BarChart3,
-    title: "Votre pilotage",
-    description: "Les priorités et les chiffres essentiels.",
-  },
-  {
-    icon: BriefcaseBusiness,
-    title: "Vos outils",
-    description: "Seulement ce qui sert vraiment.",
-  },
-  {
-    icon: Workflow,
-    title: "Vos processus",
-    description: "Les étapes, les responsables et les règles de décision.",
   },
 ];
 
@@ -430,6 +464,115 @@ export default function StructurationLandingPage() {
         />
       </section>
 
+      <section
+        aria-labelledby="secteurs-heading"
+        className="px-5 py-24 sm:px-8 sm:py-28 lg:px-12 lg:py-32"
+      >
+        <div className="mx-auto max-w-7xl">
+          <h2
+            id="secteurs-heading"
+            className="mx-auto max-w-6xl text-center text-balance text-[clamp(2.15rem,4.4vw,4.2rem)] font-light leading-[1.02] tracking-[-0.05em] text-brand-blue"
+          >
+            Des activités différentes. Un même besoin :{" "}
+            <span className="demaa-section-title text-dema-forest">
+              ne plus tout porter.
+            </span>
+          </h2>
+
+          <div className="mt-14 grid grid-cols-2 gap-x-4 gap-y-9 sm:gap-x-5 lg:mt-18 lg:grid-cols-4">
+            {sectorItems.map((sector) => (
+              <figure key={sector.title}>
+                <div className="relative aspect-[1.45/1] overflow-hidden rounded-[1.15rem] bg-dema-sage sm:aspect-[1.35/1] lg:aspect-[1.42/1]">
+                  <Image
+                    src={sector.image}
+                    alt=""
+                    fill
+                    sizes="(max-width: 1023px) 50vw, 25vw"
+                    className={`object-cover ${sector.imageClassName}`}
+                  />
+                </div>
+                <figcaption className="pt-4 text-center text-sm font-medium tracking-[-0.015em] text-brand-blue sm:text-base">
+                  {sector.title}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section
+        aria-labelledby="structuration-heading"
+        className="border-b border-dema-line/70 bg-dema-paper px-5 py-24 sm:px-8 sm:py-28 lg:px-12 lg:py-32"
+      >
+        <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start lg:gap-20">
+          <div>
+            <p className="text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-dema-forest">
+              Ce que nous structurons avec vous
+            </p>
+            <h2
+              id="structuration-heading"
+              className="mt-5 max-w-2xl text-balance text-[clamp(2.35rem,5vw,4.7rem)] font-light leading-[0.98] tracking-[-0.05em] text-brand-blue"
+            >
+              On installe les systèmes qui font tourner{" "}
+              <span className="demaa-section-title text-dema-forest">
+                votre entreprise.
+              </span>
+            </h2>
+
+            <div className="mt-9 flex max-w-xl items-center gap-5 rounded-[1.25rem] border border-dema-forest/25 bg-dema-cream/70 px-5 py-5 sm:px-6 sm:py-6">
+              <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-dema-forest/20 bg-dema-positive text-dema-forest">
+                <BriefcaseBusiness className="h-6 w-6" aria-hidden />
+              </span>
+              <div>
+                <p className="font-medium text-dema-forest">
+                  Votre kit opérationnel sert de base
+                </p>
+                <p className="mt-1 text-sm leading-6 text-dema-muted">
+                  Nous l’adaptons à vos chiffres, vos rôles, vos outils et votre
+                  activité.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div className="border-t border-dema-forest/20">
+              {structurationPillars.map((pillar) => (
+                <div
+                  key={pillar.number}
+                  className="grid gap-2 border-b border-dema-forest/15 py-5 sm:grid-cols-[3.5rem_minmax(10rem,0.8fr)_minmax(0,1.2fr)] sm:items-center sm:gap-4"
+                >
+                  <span className="demaa-section-title text-xl text-dema-forest">
+                    {pillar.number}
+                  </span>
+                  <h3 className="text-base font-medium tracking-[-0.02em] text-brand-blue sm:text-lg">
+                    {pillar.title}
+                  </h3>
+                  <p className="col-start-1 text-sm leading-6 text-dema-muted sm:col-start-auto">
+                    {pillar.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-5 flex items-start gap-4 rounded-[1.15rem] border border-dema-forest/10 bg-dema-sage/75 px-5 py-5 sm:px-6">
+              <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-dema-forest text-2xl font-light leading-none text-dema-forest">
+                +
+              </span>
+              <div>
+                <p className="text-sm font-semibold text-dema-forest">
+                  Et les piliers propres à votre activité
+                </p>
+                <p className="mt-1 text-xs leading-5 text-dema-muted sm:text-sm">
+                  Chantier, conformité, stocks, qualité, planning, suivi client…
+                  Nous ajoutons uniquement ce qui est utile à votre métier.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="px-5 py-28 sm:px-8 sm:py-36 lg:py-44">
         <div className="mx-auto max-w-7xl">
           <SectionHeading
@@ -532,41 +675,6 @@ export default function StructurationLandingPage() {
             <p className="mt-4 text-xs text-dema-muted">
               Gratuit · Sans engagement
             </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="border-y border-dema-line/70 bg-dema-paper px-5 py-28 sm:px-8 sm:py-36 lg:py-44">
-        <div className="mx-auto max-w-6xl">
-          <SectionHeading
-            title="Votre pilotage, vos outils et vos processus."
-          />
-          <div className="mt-18 grid gap-5 md:mt-24 md:grid-cols-3">
-            {systemItems.map((item) => (
-              <article
-                key={item.title}
-                className="rounded-[1.5rem] border border-dema-line bg-dema-cream px-6 py-9 text-center md:min-h-[17rem] md:px-8 md:py-11"
-              >
-                <span className="mx-auto inline-flex h-14 w-14 items-center justify-center rounded-full bg-dema-positive text-dema-forest">
-                  <item.icon className="h-6 w-6" aria-hidden />
-                </span>
-                <h3 className="mt-7 text-xl font-medium text-brand-blue">
-                  {item.title}
-                </h3>
-                <p className="mx-auto mt-3 max-w-xs text-sm leading-6 text-dema-muted">
-                  {item.description}
-                </p>
-              </article>
-            ))}
-          </div>
-          <div className="mt-10 flex justify-center md:mt-14">
-            <Link
-              href="/kits-operationnels"
-              className="demaa-secondary-button inline-flex min-h-12 items-center justify-center gap-2 px-6"
-            >
-              Découvrir les kits opérationnels
-              <ArrowRight className="h-4 w-4" aria-hidden />
-            </Link>
           </div>
         </div>
       </section>
