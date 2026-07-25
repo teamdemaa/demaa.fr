@@ -3,8 +3,6 @@ import { isVercelPreviewHost } from "@/lib/site-url";
 
 const CANONICAL_HOST = "demaa.fr";
 const CANONICAL_ORIGIN = `https://${CANONICAL_HOST}`;
-const CONSISTENT_RENDER_USER_AGENT =
-  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/138.0.0.0 Safari/537.36";
 const RETIRED_EXACT_PATHS = new Set([
   "/annuaire-services",
   "/cockpit-preview",
@@ -40,7 +38,7 @@ export function proxy(request: NextRequest) {
   const host = request.headers.get("host")?.toLowerCase();
 
   if (!host) {
-    return nextResponseFor(pathname, request.headers);
+    return NextResponse.next();
   }
 
   const shouldRedirect =
@@ -48,7 +46,7 @@ export function proxy(request: NextRequest) {
     (host.endsWith(".vercel.app") && !isVercelPreviewHost(host));
 
   if (!shouldRedirect) {
-    return nextResponseFor(pathname, request.headers);
+    return NextResponse.next();
   }
 
   const url = request.nextUrl.clone();
@@ -56,21 +54,6 @@ export function proxy(request: NextRequest) {
   url.host = CANONICAL_HOST;
 
   return NextResponse.redirect(`${CANONICAL_ORIGIN}${url.pathname}${url.search}`, 308);
-}
-
-function nextResponseFor(pathname: string, incomingHeaders: Headers) {
-  if (!pathname.startsWith("/kit-operationnel/")) {
-    return NextResponse.next();
-  }
-
-  const requestHeaders = new Headers(incomingHeaders);
-  requestHeaders.set("user-agent", CONSISTENT_RENDER_USER_AGENT);
-
-  return NextResponse.next({
-    request: {
-      headers: requestHeaders,
-    },
-  });
 }
 
 export const config = {
