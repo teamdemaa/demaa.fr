@@ -342,6 +342,14 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
       "alan",
     ],
   },
+  "investissement-immobilier": {
+    order: [
+      "onoff-business",
+      "orus",
+      "insify",
+      "alan",
+    ],
+  },
   "agence-de-recrutement": {
     order: [
       "onoff-business",
@@ -686,9 +694,9 @@ export function getRecommendedSuppliersForSystem(
   const rule = SUPPLIER_RECOMMENDATIONS_BY_SYSTEM[systemSlug];
   const sectorRule = sectorLabel ? SUPPLIER_RECOMMENDATIONS_BY_SECTOR[sectorLabel] : undefined;
   const order = [
-    ...(rule?.order ?? []),
-    ...(sectorRule?.order ?? []),
-    ...DEFAULT_SUPPLIER_ORDER,
+    ...(rule?.order ??
+      sectorRule?.order ??
+      DEFAULT_SUPPLIER_ORDER),
   ].filter(
     (slug, index, list) => list.indexOf(slug) === index,
   ) as string[];

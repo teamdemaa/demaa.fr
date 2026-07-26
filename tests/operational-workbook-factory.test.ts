@@ -133,4 +133,13 @@ describe("operational workbook factory", () => {
     expect(names).toContain("EDF Entreprises");
     expect(names).not.toContain("SumUp");
   });
+
+  it("keeps employee benefits out of the property investment ecosystem", () => {
+    const names = buildOperationalWorkbookPair(
+      "investissement-immobilier",
+    ).editable.ecosystemRows.map((row) => row.name);
+
+    expect(names).toContain("Onoff Business");
+    expect(names).not.toContain("Swile");
+  });
 });
