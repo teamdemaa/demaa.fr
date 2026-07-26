@@ -561,7 +561,6 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
       "orus",
       "onoff-business",
       "alan",
-      "swile",
       "insify",
     ],
   },
@@ -648,7 +647,6 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
       "insify",
       "alan",
       "onoff-business",
-      "swile",
     ],
   },
   "courtier-credit-assurance": {

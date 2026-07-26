@@ -139,6 +139,8 @@ describe("operational workbook factory", () => {
       "investissement-immobilier",
       "investissement-entreprise",
       "investissement-financier",
+      "cabinet-assurance",
+      "gestionnaire-de-patrimoine",
     ]) {
       const names = buildOperationalWorkbookPair(
         slug,
