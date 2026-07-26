@@ -6,6 +6,14 @@ Demaa distribue un **système opérationnel prêt à l'emploi par métier**. Le
 produit n'est ni une bibliothèque abstraite, ni une prestation de
 structuration réalisée manuellement pour chaque prospect.
 
+Le contrat commercial unique est :
+
+- démonstration remplie gratuite, sans formulaire et en lecture seule ;
+- système modifiable vendu **49 € TTC en paiement unique** ;
+- adresse e-mail collectée au paiement pour remettre l'accès ;
+- aucune session, assistance humaine ou réponse personnalisée incluse ;
+- aucun abonnement.
+
 Chaque page métier présente :
 
 1. le système opérationnel au-dessus de la navigation ;
@@ -38,6 +46,10 @@ Chaque métier possède deux Google Sheets distincts :
 - mention `MODÈLE VIERGE` visible ;
 - URL remise sous la forme `/copy` ;
 - accès obtenu après confirmation du paiement unique de 49 €.
+
+Le lien `/copy` du modèle vierge ne doit jamais être envoyé au navigateur avant
+confirmation du paiement. Il reste résolu côté serveur à partir du métier
+acheté, puis il est affiché sur la page de confirmation et envoyé par e-mail.
 
 Une démonstration ne doit jamais pointer vers le modèle vierge et les deux
 documents ne doivent jamais partager le même identifiant Google Drive.
