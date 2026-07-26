@@ -434,10 +434,29 @@ function buildEcosystemRows(
   variant: OperationalWorkbookVariant,
 ) {
   const toolRows = buildToolRows(enterprise);
+  const normalizedToolNames = toolRows.map((row) =>
+    row.name
+      .normalize("NFD")
+      .replace(/\p{Diacritic}/gu, "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]/g, ""),
+  );
   const suppliers = getRecommendedSuppliersForSystem(
     enterprise.slug,
     enterprise.sectorLabel,
-  );
+  ).filter((supplier) => {
+    const normalizedSupplierName = supplier.name
+      .normalize("NFD")
+      .replace(/\p{Diacritic}/gu, "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]/g, "");
+
+    return !normalizedToolNames.some(
+      (toolName) =>
+        toolName.startsWith(normalizedSupplierName) ||
+        normalizedSupplierName.startsWith(toolName),
+    );
+  });
   const operationalSuppliers = suppliers
     .filter(
       (supplier) =>

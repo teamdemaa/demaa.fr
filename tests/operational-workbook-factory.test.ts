@@ -89,4 +89,14 @@ describe("operational workbook factory", () => {
       expect(names).not.toContain("SumUp");
     }
   });
+
+  it("does not repeat a supplier already represented by a branded tool", () => {
+    const names = buildOperationalWorkbookPair(
+      "salle-de-sport",
+    ).editable.ecosystemRows.map((row) => row.name);
+
+    expect(names).toContain("SumUp Caisse");
+    expect(names).not.toContain("SumUp");
+    expect(names).toContain("EDF Entreprises");
+  });
 });
