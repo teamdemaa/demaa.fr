@@ -99,4 +99,19 @@ describe("operational workbook factory", () => {
     expect(names).not.toContain("SumUp");
     expect(names).toContain("EDF Entreprises");
   });
+
+  it("keeps payment terminals out of training ecosystems", () => {
+    for (const slug of [
+      "organisme-de-formation",
+      "cfa",
+      "formation-en-ligne",
+    ]) {
+      const names = buildOperationalWorkbookPair(
+        slug,
+      ).editable.ecosystemRows.map((row) => row.name);
+
+      expect(names).toContain("Bernard");
+      expect(names).not.toContain("SumUp");
+    }
+  });
 });

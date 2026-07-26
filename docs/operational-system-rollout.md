@@ -156,7 +156,7 @@ La généralisation se fait ensuite par famille de métiers. Une erreur découve
 dans un échantillon doit être corrigée dans le générateur avant la vague
 suivante, jamais manuellement dans des dizaines de fichiers.
 
-Trente-cinq métiers sont désormais publiés avec une paire distincte, une démonstration
+Trente-huit métiers sont désormais publiés avec une paire distincte, une démonstration
 en lecture seule et un document modifiable livré après paiement :
 
 - Plomberie & chauffage ;
@@ -193,12 +193,15 @@ en lecture seule et un document modifiable livré après paiement :
 - Cabinet RH externalisé ;
 - Centre d'appels / support client ;
 - Salle de sport ;
-- Coach sportif.
+- Coach sportif ;
+- Organisme de formation ;
+- CFA ;
+- Formation en ligne.
 
 Les contrôles de l'échantillon et des familles BTP, restauration rapide et
 immobilier expertise, services terrain et immobilier transaction complètes
 ainsi que des familles services RH et support et sport & accompagnement
-complètes confirment :
+et du lot Formation complets confirment :
 
 - 74 contenus opérationnels dans chaque fichier ;
 - zéro personne, date commerciale ou solution retenue fictive dans les

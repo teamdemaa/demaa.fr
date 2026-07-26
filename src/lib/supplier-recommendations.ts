@@ -69,7 +69,14 @@ const SUPPLIER_RECOMMENDATIONS_BY_SECTOR: Record<string, SupplierRecommendationR
     order: ["bernard", "orus", "onoff-business", "sumup", "insify"],
   },
   "Éducation & formation": {
-    order: ["onoff-business", "orus", "alan", "swile", "insify"],
+    order: [
+      "onoff-business",
+      "bernard",
+      "swile",
+      "orus",
+      "alan",
+      "insify",
+    ],
   },
   "Industrie & production": {
     order: ["wurth", "kiloutou", "edf-entreprises", "bernard", "orus", "onoff-business"],
