@@ -1151,6 +1151,11 @@
       "slug": "fresha",
       "name": "Fresha",
       "url": "https://www.fresha.com/",
+      "sources": [
+        "https://www.fresha.com/fr/for-business/features",
+        "https://www.fresha.com/fr/pricing"
+      ],
+      "lastReviewedAt": "2026-07-26",
       "category": "Caisse & réservation",
       "sectors": [
         "Santé & bien-être",
@@ -6877,6 +6882,11 @@
       "slug": "kiute-pro",
       "name": "Kiute Pro",
       "url": "https://pro.kiute.com/fr/",
+      "sources": [
+        "https://pro.kiute.com/fr/",
+        "https://pro.kiute.com/fr/blog/5-raisons-de-faire-des-promotions-grace-au-yield-management/"
+      ],
+      "lastReviewedAt": "2026-07-26",
       "category": "Caisse & réservation",
       "sectors": [
         "Santé & bien-être",

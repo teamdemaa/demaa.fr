@@ -156,7 +156,7 @@ La généralisation se fait ensuite par famille de métiers. Une erreur découve
 dans un échantillon doit être corrigée dans le générateur avant la vague
 suivante, jamais manuellement dans des dizaines de fichiers.
 
-Cinquante-sept métiers sont désormais publiés avec une paire distincte, une démonstration
+Soixante métiers sont désormais publiés avec une paire distincte, une démonstration
 en lecture seule et un document modifiable livré après paiement :
 
 - Plomberie & chauffage ;
@@ -215,7 +215,10 @@ en lecture seule et un document modifiable livré après paiement :
 - Hôtel & hébergement indépendant ;
 - Garage automobile ;
 - Carrosserie ;
-- Production & Industrie.
+- Production & Industrie ;
+- Institut de beauté ;
+- Salon de coiffure ;
+- Esthétique.
 
 Les contrôles de l'échantillon et des familles BTP, restauration rapide et
 immobilier expertise, services terrain et immobilier transaction complètes
@@ -223,7 +226,7 @@ ainsi que des familles services RH et support et sport & accompagnement
 et des lots Formation, gestion immobilière, investissement immobilier,
 investissement financier et accueil & services
 ainsi que les lots Entretien textile et Hospitalité & événements complets
-et le lot Ateliers & production complet confirment :
+et les lots Ateliers & production et Beauté complets confirment :
 
 - 74 contenus opérationnels dans chaque fichier ;
 - zéro personne, date commerciale ou solution retenue fictive dans les

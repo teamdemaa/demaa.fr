@@ -160,4 +160,30 @@ describe("operational workbook factory", () => {
     expect(travelNames).not.toContain("SumUp");
     expect(coworkingNames).toContain("SumUp");
   });
+
+  it("differentiates the first beauty tools by operating model", () => {
+    const toolNames = (slug: string) =>
+      buildOperationalWorkbookPair(slug).editable.ecosystemRows
+        .filter((row) => row.category === "Outil métier")
+        .map((row) => row.name);
+
+    expect(toolNames("institut-de-beaute")).toEqual([
+      "Planity",
+      "Fresha",
+      "Kiute Pro",
+      "Square",
+    ]);
+    expect(toolNames("salon-de-coiffure")).toEqual([
+      "Kiute Pro",
+      "Planity",
+      "Fresha",
+      "Square",
+    ]);
+    expect(toolNames("esthetique")).toEqual([
+      "Fresha",
+      "Planity",
+      "Square",
+      "Canva",
+    ]);
+  });
 });
