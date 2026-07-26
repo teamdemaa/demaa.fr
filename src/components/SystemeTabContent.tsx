@@ -18,7 +18,6 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { useState } from "react";
-import { plumbingPilotStepsByProcessId } from "@/lib/plumbing-process-pilot";
 import type {
   SystemeDetail,
   SystemeProcessItem,
@@ -26,11 +25,8 @@ import type {
 
 type SystemeTabContentProps = {
   systemName: string;
-  systemSlug: string;
   systeme: SystemeDetail | null | undefined;
 };
-
-const PLUMBING_PILOT_SLUG = "plomberie-chauffage";
 
 const pillarIcons: Record<string, LucideIcon> = {
   Direction: Flag,
@@ -96,21 +92,20 @@ function ProcessDocument({ item }: { item: SystemeProcessItem }) {
         </div>
       ) : (
         <span className="shrink-0 text-[11px] font-medium text-dema-forest/75">
-          Dans le modèle opérationnel
+          Dans le système opérationnel
         </span>
       )}
     </div>
   );
 }
 
-function PlumbingProcessList({ items }: { items: SystemeProcessItem[] }) {
+function ProcessList({ items }: { items: SystemeProcessItem[] }) {
   return (
     <div className="space-y-0 px-5 pb-6 pt-2 sm:px-7 sm:pb-7">
       {items.map((item, index) => {
         const ProcessIcon = getProcessIcon(item.process);
         const isLast = index === items.length - 1;
-        const pilotSteps = plumbingPilotStepsByProcessId[item.processId]
-          ?? item.steps.map((step) => step.step);
+        const processSteps = item.steps.map((step) => step.step);
 
         return (
           <article
@@ -136,9 +131,9 @@ function PlumbingProcessList({ items }: { items: SystemeProcessItem[] }) {
                 {index + 1}. {item.process}
               </h4>
 
-              {pilotSteps.length ? (
+              {processSteps.length ? (
                 <ul className="mt-3 space-y-2">
-                  {pilotSteps.map((step, stepIndex) => (
+                  {processSteps.map((step, stepIndex) => (
                     <li
                       key={`${item.processId}-${stepIndex}`}
                       className="grid grid-cols-[0.65rem_minmax(0,1fr)] gap-2 text-[13px] leading-relaxed text-dema-muted sm:text-sm"
@@ -166,7 +161,7 @@ function PlumbingProcessList({ items }: { items: SystemeProcessItem[] }) {
   );
 }
 
-function PlumbingSystemePilot({ systeme }: { systeme: SystemeDetail }) {
+function OperationalProcessAccordion({ systeme }: { systeme: SystemeDetail }) {
   const initialPillar = systeme.cards.some(
     (card) => card.pillar === "Marketing et Vente",
   )
@@ -179,7 +174,7 @@ function PlumbingSystemePilot({ systeme }: { systeme: SystemeDetail }) {
       {systeme.cards.map((card, index) => {
         const PillarIcon = pillarIcons[card.pillar] ?? ListChecks;
         const isOpen = openPillar === card.pillar;
-        const panelId = `plumbing-process-panel-${index}`;
+        const panelId = `system-process-panel-${index}`;
 
         return (
           <section
@@ -225,7 +220,7 @@ function PlumbingSystemePilot({ systeme }: { systeme: SystemeDetail }) {
                 id={panelId}
                 className="border-t border-dema-line/80"
               >
-                <PlumbingProcessList items={card.items} />
+                <ProcessList items={card.items} />
               </div>
             ) : null}
           </section>
@@ -237,7 +232,6 @@ function PlumbingSystemePilot({ systeme }: { systeme: SystemeDetail }) {
 
 export default function SystemeTabContent({
   systemName,
-  systemSlug,
   systeme,
 }: SystemeTabContentProps) {
   if (!systeme?.cards.length) {
@@ -256,46 +250,5 @@ export default function SystemeTabContent({
     );
   }
 
-  if (systemSlug === PLUMBING_PILOT_SLUG) {
-    return <PlumbingSystemePilot systeme={systeme} />;
-  }
-
-  return (
-    <div className="space-y-5">
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {systeme.cards.map((card) => (
-          <details
-            key={card.pillar}
-            className="demaa-accordion h-24 rounded-[1.25rem] px-5 py-3 open:h-auto"
-          >
-            <summary className="flex min-h-[4.5rem] cursor-pointer list-none items-start justify-between gap-4">
-              <div className="min-w-0 flex-1">
-                <h3 className="line-clamp-2 text-base font-semibold leading-5 tracking-tight text-brand-blue">
-                  {card.pillar}
-                </h3>
-                <p className="mt-1 text-xs leading-4 text-dema-muted">
-                  {card.items.length} processus
-                </p>
-              </div>
-              <ChevronDown
-                className="demaa-accordion-chevron mt-0.5 h-4 w-4 shrink-0 text-dema-muted transition-transform"
-                aria-hidden="true"
-              />
-            </summary>
-
-            <div className="demaa-accordion-content mt-4 space-y-0">
-              {card.items.map((item) => (
-                <p
-                  key={`${card.pillar}-${item.process}`}
-                  className="border-t border-dema-line/80 py-3 text-sm font-medium leading-relaxed text-brand-blue first:border-t-0 first:pt-0 last:pb-0"
-                >
-                  {item.process}
-                </p>
-              ))}
-            </div>
-          </details>
-        ))}
-      </div>
-    </div>
-  );
+  return <OperationalProcessAccordion systeme={systeme} />;
 }

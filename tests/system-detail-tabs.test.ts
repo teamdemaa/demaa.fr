@@ -4,16 +4,14 @@ import {
   SYSTEM_DETAIL_TABS,
 } from "@/lib/system-detail-tabs";
 
-describe("operational kit tabs", () => {
-  it("reconnaît les sections des parcours actuel et pilote", () => {
-    expect(SYSTEM_DETAIL_TABS).toEqual([
-      "kit",
-      "outils",
-      "process",
-    ]);
+describe("operational system tabs", () => {
+  it("keeps only Process and Outils in the validated order", () => {
+    expect(SYSTEM_DETAIL_TABS).toEqual(["process", "outils"]);
   });
 
   it("keeps legacy tab URLs on a meaningful section", () => {
+    expect(normalizeSystemDetailTab("kit")).toBe("process");
+    expect(normalizeSystemDetailTab("pilotage")).toBe("process");
     expect(normalizeSystemDetailTab("accompagnement")).toBe("process");
     expect(normalizeSystemDetailTab("services")).toBe("process");
     expect(normalizeSystemDetailTab("cours")).toBe("process");

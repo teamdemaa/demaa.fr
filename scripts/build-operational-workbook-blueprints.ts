@@ -41,7 +41,11 @@ if (args.includes("--summary")) {
         CANONICAL_OPERATIONAL_WORKBOOK_SHEET_IDS,
       )
     : blueprint;
-  process.stdout.write(JSON.stringify(output, null, 2));
+  process.stdout.write(
+    shouldCompileSheetBatch
+      ? JSON.stringify(output)
+      : JSON.stringify(output, null, 2),
+  );
 } else if (slug && !variant) {
   process.stdout.write(JSON.stringify(buildOperationalWorkbookPair(slug), null, 2));
 } else {

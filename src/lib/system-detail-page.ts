@@ -7,6 +7,7 @@ import {
   buildOperationalSystemDetail,
   type OperationalSystemDetail,
 } from "@/lib/system-operations";
+import { hasPaidOperationalSystemAsset } from "@/lib/paid-operational-system-assets.server";
 import type { System } from "@/lib/types";
 
 export type SystemDetailPageData = {
@@ -272,11 +273,7 @@ function singularizeSectorLabel(label: string): string {
 }
 
 function buildSystemPageTitle(data: SystemDetailPageData): string {
-  if (data.system.slug === "plomberie-chauffage") {
-    return `Système opérationnel ${data.system.name} : process, outils et modèle modifiable | Demaa`;
-  }
-
-  return `Kit opérationnel ${data.system.name} : tableau de pilotage, outils et process | Demaa`;
+  return `Système opérationnel ${data.system.name} : process, outils et modèle modifiable | Demaa`;
 }
 
 export function buildSystemPageIntro(data: SystemDetailPageData): string {
@@ -285,24 +282,24 @@ export function buildSystemPageIntro(data: SystemDetailPageData): string {
 
 function buildSystemPageDescription(data: SystemDetailPageData): string {
   const override = SYSTEM_PAGE_DESCRIPTION_OVERRIDES[data.system.slug];
-
-  if (data.system.slug === "plomberie-chauffage") {
-    return [
-      data.enterprise.description,
-      "Découvrez gratuitement une démonstration remplie, 18 process, 74 consignes concrètes et les outils recommandés, puis obtenez le système modifiable pour 49 € en paiement unique.",
-    ].join(" ");
-  }
-
-  if (override) {
-    return override.replace(/\bsysteme\b/gi, "kit opérationnel");
-  }
-
-  const sectorLabel = singularizeSectorLabel(data.detail.sectorLabel).toLowerCase();
   const processCount =
     data.detail.systeme?.cards.reduce(
       (total, card) => total + card.items.length,
       0,
     ) ?? 0;
+
+  if (hasPaidOperationalSystemAsset(data.system.slug)) {
+    return [
+      data.enterprise.description,
+      `Découvrez gratuitement une démonstration remplie, ${processCount} process, 74 consignes concrètes et les outils recommandés, puis obtenez le système modifiable pour 49 € en paiement unique.`,
+    ].join(" ");
+  }
+
+  if (override) {
+    return override.replace(/\bsysteme\b/gi, "système opérationnel");
+  }
+
+  const sectorLabel = singularizeSectorLabel(data.detail.sectorLabel).toLowerCase();
   const parts = [
     data.enterprise.description,
     `${processCount} process opérationnels et ${data.detail.tools.length} outils ${data.detail.tools.length > 1 ? "recommandés" : "recommandé"} pour structurer une activité de ${sectorLabel}.`,
@@ -320,22 +317,13 @@ export function buildSystemPageMetadata(data: SystemDetailPageData): Metadata {
     title,
     description,
     keywords:
-      data.system.slug === "plomberie-chauffage"
-        ? [
-            data.system.name,
-            `système opérationnel ${data.system.name.toLowerCase()}`,
-            `process ${data.system.name.toLowerCase()}`,
-            `outils ${data.system.name.toLowerCase()}`,
-            `modèle entreprise ${data.system.name.toLowerCase()}`,
-          ]
-        : [
-            data.system.name,
-            `kit opérationnel ${data.system.name.toLowerCase()}`,
-            `process ${data.system.name.toLowerCase()}`,
-            `outils ${data.system.name.toLowerCase()}`,
-            `organisation ${data.system.name.toLowerCase()}`,
-            `structurer ${data.system.name.toLowerCase()}`,
-          ],
+      [
+        data.system.name,
+        `système opérationnel ${data.system.name.toLowerCase()}`,
+        `process ${data.system.name.toLowerCase()}`,
+        `outils ${data.system.name.toLowerCase()}`,
+        `modèle entreprise ${data.system.name.toLowerCase()}`,
+      ],
     alternates: {
       canonical: url,
     },
@@ -386,10 +374,7 @@ export function buildSystemPageJsonLd(data: SystemDetailPageData) {
     {
       "@context": "https://schema.org",
       "@type": "ItemList",
-      name:
-        data.system.slug === "plomberie-chauffage"
-          ? `Ressources du système opérationnel ${data.system.name}`
-          : `Ressources du kit opérationnel ${data.system.name}`,
+      name: `Ressources du système opérationnel ${data.system.name}`,
       numberOfItems: listedProcesses.length + listedTools.length,
       itemListElement: [
         ...listedProcesses.map((process, index) => ({
@@ -418,7 +403,7 @@ export function buildSystemPageJsonLd(data: SystemDetailPageData) {
         {
           "@type": "ListItem",
           position: 2,
-          name: "Kits opérationnels",
+          name: "Systèmes opérationnels",
           item: "https://demaa.fr/kits-operationnels",
         },
         {

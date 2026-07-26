@@ -156,6 +156,20 @@ La généralisation se fait ensuite par famille de métiers. Une erreur découve
 dans un échantillon doit être corrigée dans le générateur avant la vague
 suivante, jamais manuellement dans des dizaines de fichiers.
 
+Les cinq métiers de référence sont désormais publiés avec une paire distincte,
+une démonstration en lecture seule et un document modifiable livré après
+paiement. Les contrôles de l'échantillon confirment :
+
+- 74 contenus opérationnels dans chaque fichier ;
+- zéro personne, date commerciale ou solution retenue fictive dans les
+  versions modifiables ;
+- six actions datées, des personnes fictives et des solutions choisies dans
+  les démonstrations ;
+- des outils et fournisseurs nommés, avec EM2A Expertise dans chaque
+  Écosystème ;
+- des liens publics en lecture seule pour les démonstrations et des liens
+  `/copy` gardés côté serveur pour les versions vendues.
+
 ## Fabrique de classeurs
 
 La fabrique `operational-workbook-factory` produit pour chacun des 115 métiers :
@@ -171,6 +185,11 @@ La fabrique `operational-workbook-factory` produit pour chacun des 115 métiers 
 Le compilateur `operational-workbook-sheet-compiler` convertit ensuite une
 variante en requêtes Google Sheets. Il accepte les identifiants d'onglets du
 fichier cible afin de ne pas dépendre d'une édition manuelle.
+
+Avant chaque écriture, il supprime les anciennes fusions présentes dans les
+zones de données et répète le format de la première ligne. Cette normalisation
+évite qu'un pied de tableau hérité du modèle masque une ligne lorsqu'un métier
+possède davantage d'actions ou de rôles que le fichier source.
 
 Commandes de contrôle :
 

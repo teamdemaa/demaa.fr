@@ -21,12 +21,19 @@ function extractGoogleSheetId(url: string): string | null {
 
 describe("piloting sheet mappings", () => {
   it("maps every legacy free kit to one unique Google Sheet copy URL", () => {
+    const paidSystemSlugs = new Set([
+      "plomberie-chauffage",
+      "agence-marketing",
+      "restaurant",
+      "pharmacie",
+      "creche",
+    ]);
     const enterpriseSlugs = enterprises
       .map((enterprise) => enterprise.slug)
-      .filter((slug) => slug !== "plomberie-chauffage");
+      .filter((slug) => !paidSystemSlugs.has(slug));
     const mappedSlugs = getPilotingSheetSlugs();
 
-    expect(enterpriseSlugs).toHaveLength(114);
+    expect(enterpriseSlugs).toHaveLength(110);
     expect(new Set(enterpriseSlugs).size).toBe(enterpriseSlugs.length);
     expect(mappedSlugs.toSorted()).toEqual(enterpriseSlugs.toSorted());
 
@@ -50,18 +57,31 @@ describe("piloting sheet mappings", () => {
     expect(getPilotingSheetCopyUrl("kit-inconnu")).toBeNull();
   });
 
-  it("expose seulement la démonstration du pilote Plomberie", () => {
-    const demoUrl = getOperationalSystemDemoUrl(
+  it("exposes one read-only demonstration for every published paid system", () => {
+    const publishedSlugs = [
       "plomberie-chauffage",
-    );
+      "agence-marketing",
+      "restaurant",
+      "pharmacie",
+      "creche",
+    ];
+    const demoUrls = publishedSlugs.map((slug) => {
+      const demoUrl = getOperationalSystemDemoUrl(slug);
 
-    expect(demoUrl).toBe(
-      "https://docs.google.com/spreadsheets/d/1YiSXWlhEr87U9BLzaQvdHVJ496hyJc5l6jYDrJIjhFg/edit?usp=sharing",
-    );
-    expect(getPilotingSheetCopyUrl("plomberie-chauffage")).toBeNull();
+      expect(demoUrl).toMatch(
+        /^https:\/\/docs\.google\.com\/spreadsheets\/d\/[a-zA-Z0-9-_]+\/edit\?usp=sharing$/,
+      );
+
+      return demoUrl;
+    });
+
+    expect(new Set(demoUrls).size).toBe(publishedSlugs.length);
+    for (const slug of publishedSlugs) {
+      expect(getPilotingSheetCopyUrl(slug)).toBeNull();
+    }
   });
 
-  it("ne prétend pas avoir une démonstration pour les autres métiers", () => {
-    expect(getOperationalSystemDemoUrl("agence-marketing")).toBeNull();
+  it("does not claim a demonstration for an unpublished system", () => {
+    expect(getOperationalSystemDemoUrl("electricite-generale")).toBeNull();
   });
 });

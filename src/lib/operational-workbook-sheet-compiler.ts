@@ -82,6 +82,33 @@ function clearValues(range: ReturnType<typeof gridRange>) {
   };
 }
 
+function normalizeDataRange(
+  range: ReturnType<typeof gridRange>,
+  templateRowIndex: number,
+) {
+  return [
+    {
+      unmergeCells: {
+        range,
+      },
+    },
+    {
+      copyPaste: {
+        source: gridRange(
+          range.sheetId,
+          templateRowIndex,
+          templateRowIndex + 1,
+          range.startColumnIndex,
+          range.endColumnIndex,
+        ),
+        destination: range,
+        pasteType: "PASTE_FORMAT",
+        pasteOrientation: "NORMAL",
+      },
+    },
+  ];
+}
+
 function writeValues(
   range: ReturnType<typeof gridRange>,
   rows: CellValue[][],
@@ -204,6 +231,10 @@ export function compileOperationalWorkbookSheetRequests(
       [`ÉCOSYSTÈME - ${blueprint.systemName.toUpperCase()}`],
       [blueprint.notices.Écosystème],
     ]),
+    ...normalizeDataRange(
+      gridRange(sheetIds.actions, 5, 498, 0, 12),
+      5,
+    ),
     clearValues(gridRange(sheetIds.actions, 5, 498, 0, 12)),
     writeValues(
       gridRange(sheetIds.actions, 5, actionEnd, 0, 12),
@@ -221,6 +252,10 @@ export function compileOperationalWorkbookSheetRequests(
         entry.expectedResult,
         entry.notes,
       ]),
+    ),
+    ...normalizeDataRange(
+      gridRange(sheetIds.process, 7, 200, 0, 7),
+      7,
     ),
     clearValues(gridRange(sheetIds.process, 7, 200, 0, 7)),
     writeValues(gridRange(sheetIds.process, 3, 5, 0, 6), [
@@ -260,6 +295,10 @@ export function compileOperationalWorkbookSheetRequests(
         entry.support,
       ]),
     ),
+    ...normalizeDataRange(
+      gridRange(sheetIds.team, 5, 201, 0, 8),
+      5,
+    ),
     clearValues(gridRange(sheetIds.team, 5, 201, 0, 8)),
     writeValues(
       gridRange(sheetIds.team, 5, teamEnd, 0, 8),
@@ -274,7 +313,15 @@ export function compileOperationalWorkbookSheetRequests(
         entry.notes,
       ]),
     ),
+    ...normalizeDataRange(
+      gridRange(sheetIds.calendar, 5, 200, 0, 7),
+      5,
+    ),
     clearValues(gridRange(sheetIds.calendar, 5, 200, 0, 7)),
+    ...normalizeDataRange(
+      gridRange(sheetIds.ecosystem, 5, 120, 0, 9),
+      5,
+    ),
     clearValues(gridRange(sheetIds.ecosystem, 5, 120, 0, 9)),
     writeValues(
       gridRange(sheetIds.ecosystem, 5, ecosystemEnd, 0, 9),

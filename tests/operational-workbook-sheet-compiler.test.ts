@@ -51,4 +51,25 @@ describe("operational workbook Google Sheets compiler", () => {
       "Ne jamais laisser un objectif commercial influencer l’analyse pharmaceutique",
     );
   });
+
+  it("removes template footer merges before writing variable-length tables", () => {
+    const result = compileOperationalWorkbookSheetRequests(
+      buildOperationalWorkbookBlueprint("restaurant", "editable"),
+    );
+    const unmergeRequests = result.requests.filter(
+      (request) =>
+        typeof request === "object" &&
+        request !== null &&
+        "unmergeCells" in request,
+    );
+    const formatCopies = result.requests.filter(
+      (request) =>
+        typeof request === "object" &&
+        request !== null &&
+        "copyPaste" in request,
+    );
+
+    expect(unmergeRequests).toHaveLength(5);
+    expect(formatCopies).toHaveLength(5);
+  });
 });

@@ -6,7 +6,6 @@ import {
   getOperationalSystemDemoUrl,
   getPilotingSheetCopyUrl,
 } from "@/lib/document-models";
-import { buildKitTrackingUrl } from "@/lib/kit-analytics-utils";
 import { hasPaidOperationalSystemAsset } from "@/lib/paid-operational-system-assets.server";
 import { normalizeSystemDetailTab } from "@/lib/system-detail-tabs";
 import {
@@ -32,7 +31,7 @@ export async function generateMetadata({
 
   if (!data) {
     return {
-      title: "Kit opérationnel introuvable - Demaa",
+      title: "Système opérationnel introuvable - Demaa",
       robots: {
         index: false,
         follow: false,
@@ -80,9 +79,7 @@ export default async function OperationalKitPage({
             demoUrl={getOperationalSystemDemoUrl(data.system.slug)}
             intro={buildSystemPageIntro(data)}
             initialActiveTab={normalizeSystemDetailTab(initialTab)}
-            kitTrackingUrl={
-              isPaidSystem ? undefined : buildKitTrackingUrl(data.system.slug)
-            }
+            purchaseAvailable={isPaidSystem}
             headingAs="h1"
           />
         </div>

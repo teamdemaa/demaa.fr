@@ -120,8 +120,6 @@ const PILOTING_SHEET_URLS: Partial<Record<string, string>> = {
     "https://docs.google.com/spreadsheets/d/10OtpjlnwgKjctMNtyZ4dKEw2BXz36Em-BCdd9jyCSmc/edit",
   "agence-de-voyage":
     "https://docs.google.com/spreadsheets/d/1tycv2ymbAUj0uR-2KQwdDkL1n3IvyBwedX5OtZ6lslw/edit",
-  "agence-marketing":
-    "https://docs.google.com/spreadsheets/d/1mOhRDUnuxh5y2xQMIsrhY-I3b_b1hC40d89kZyzwnvk/edit",
   "agence-de-recrutement":
     "https://docs.google.com/spreadsheets/d/1_leHlVSML48rvchBUCa87ljS2bWq5terVVzFgpfOOuI/edit",
   "agence-acquisition-paid-ads":
@@ -220,8 +218,6 @@ const PILOTING_SHEET_URLS: Partial<Record<string, string>> = {
     "https://docs.google.com/spreadsheets/d/1U-_ZhRGgZ4fe3qSaRbaN5dhzfiLRaoPPLX4_Du6tdiM/edit",
   "photographe-videaste":
     "https://docs.google.com/spreadsheets/d/1u29b4wPvt72aUo4JRT_dSCl059DY-7JoW1KLCLrDwXA/edit",
-  restaurant:
-    "https://docs.google.com/spreadsheets/d/1jJaSYip1xXLANSaJYD6mQ_c6YxBLlcVUpw-zvKhwqV4/edit",
   evenementiel:
     "https://docs.google.com/spreadsheets/d/1YH8HpXkEABajxTFjfjd7A5x_3MNAgM6R4eE92ZmhtwA/edit",
   "marchand-de-biens":
@@ -232,8 +228,6 @@ const PILOTING_SHEET_URLS: Partial<Record<string, string>> = {
     "https://docs.google.com/spreadsheets/d/1kiTjrf6L208UIVptV5XZQbtjCJ8vHA4lpTzJNDdMdvQ/edit",
   traiteur:
     "https://docs.google.com/spreadsheets/d/1ikxhfhnLFpSKDa5RsxCLT9GBSHCksoeaj3tsi2eDcFo/edit",
-  creche:
-    "https://docs.google.com/spreadsheets/d/154J4Mb0tkJRZbSmV6qc-mF6lZUFUYqeHZvVnbBwVQbc/edit",
   "hotel-hebergement-independant":
     "https://docs.google.com/spreadsheets/d/1IpG7ky_M2vOcn4ByC38fgBuaZniUeaEyapDK4n2HrCU/edit",
   marketplace:
@@ -278,8 +272,6 @@ const PILOTING_SHEET_URLS: Partial<Record<string, string>> = {
     "https://docs.google.com/spreadsheets/d/1TgpvP7YteAmHuzKQ7JgPZvQmwuHrg3o72IZ3RJEiEQQ/edit",
   "office-manager-externalise":
     "https://docs.google.com/spreadsheets/d/19eBa4TmMOFlKwGfKL4Lc-t3BlGzkiyMaberhE0X1hrg/edit",
-  pharmacie:
-    "https://docs.google.com/spreadsheets/d/1zPxMWgBgkpUJx3P1wslGd9kDFMuHJQK7cfkMe5TWcm0/edit",
   "secretariat-externalise":
     "https://docs.google.com/spreadsheets/d/1ChMwRO9EWmAdZBUNKqvyfWLuj1SmmWVIu0aJfTsILsY/edit",
   "gestionnaire-paie-independant":
@@ -297,6 +289,14 @@ const PILOTING_SHEET_URLS: Partial<Record<string, string>> = {
 };
 
 const OPERATIONAL_SYSTEM_DEMO_URLS: Partial<Record<string, string>> = {
+  "agence-marketing":
+    "https://docs.google.com/spreadsheets/d/1OaV9p60D4cmKcrRJKDBKbSM8-Rqi1GHiWSIc_jXPgvA/edit",
+  restaurant:
+    "https://docs.google.com/spreadsheets/d/1B59qQCBbKBPfYT1XeZSVEnFRYAXWi-Y6RQRszwDDYjI/edit",
+  pharmacie:
+    "https://docs.google.com/spreadsheets/d/1GORr3gdTTkMhNxmhwQtVqC2zA0zJSXBkQHAFN3pP0yM/edit",
+  creche:
+    "https://docs.google.com/spreadsheets/d/1sLY-zuhCfmjs_aMPh___yRlBuV5Rg4izfqokYpVwzvM/edit",
   "plomberie-chauffage":
     "https://docs.google.com/spreadsheets/d/1YiSXWlhEr87U9BLzaQvdHVJ496hyJc5l6jYDrJIjhFg/edit",
 };

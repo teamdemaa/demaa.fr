@@ -7,11 +7,9 @@ import {
   ArrowLeft,
   ArrowRight,
   FileSpreadsheet,
-  ShieldCheck,
   Wrench,
 } from "lucide-react";
-import { type KeyboardEvent, Suspense, useMemo, useState } from "react";
-import OrganisationSessionBookingButton from "@/components/OrganisationSessionBookingButton";
+import { type KeyboardEvent, useMemo, useState } from "react";
 import OperationalSystemPurchaseButton from "@/components/OperationalSystemPurchaseButton";
 import SystemeTabContent from "@/components/SystemeTabContent";
 import { trackKitOpen } from "@/lib/kit-analytics-client";
@@ -30,18 +28,12 @@ type SystemDetailContentProps = {
   demoUrl?: string | null;
   intro: string;
   initialActiveTab?: string;
-  kitTrackingUrl?: string;
+  purchaseAvailable?: boolean;
   headingAs?: "h1" | "h2";
   headingId?: string;
 };
 
-const legacyTabs: ReadonlyArray<{ slug: SystemDetailTab; label: string }> = [
-  { slug: "kit", label: "Pilotage" },
-  { slug: "outils", label: "Outils" },
-  { slug: "process", label: "Process" },
-];
-
-const plumbingPilotTabs: ReadonlyArray<{
+const systemTabs: ReadonlyArray<{
   slug: SystemDetailTab;
   label: string;
 }> = [
@@ -55,23 +47,19 @@ export default function SystemDetailContent({
   demoUrl,
   intro,
   initialActiveTab,
-  kitTrackingUrl,
+  purchaseAvailable = false,
   headingAs: Heading = "h2",
   headingId,
 }: SystemDetailContentProps) {
   const router = useRouter();
-  const isPlumbingPilot = system.slug === "plomberie-chauffage";
-  const tabs = isPlumbingPilot ? plumbingPilotTabs : legacyTabs;
+  const tabs = systemTabs;
   const [activeTab, setActiveTab] = useState<SystemDetailTab>(
     isVisibleSystemDetailTab(initialActiveTab) &&
       tabs.some((tab) => tab.slug === initialActiveTab)
       ? initialActiveTab
-      : isPlumbingPilot
-        ? "process"
-        : "kit",
+      : "process",
   );
   const preview = getSystemKitPreview(system.slug);
-  const isBuildingKit = system.slug === "batiment";
   const métierTools = useMemo(
     () =>
       detail.tools
@@ -130,7 +118,7 @@ export default function SystemDetailContent({
 
         <div className="max-w-4xl">
           <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-            {isPlumbingPilot ? "Système opérationnel" : "Kit opérationnel"}
+            Système opérationnel
           </p>
           <Heading
             id={headingId}
@@ -143,7 +131,7 @@ export default function SystemDetailContent({
           </p>
         </div>
 
-        {isPlumbingPilot ? (
+        {purchaseAvailable ? (
           <section className="mt-8 grid w-full overflow-hidden rounded-[1.35rem] border border-dema-line bg-dema-paper shadow-[0_10px_30px_rgba(23,35,29,0.035)] md:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)]">
             <div className="flex min-h-[15rem] items-center justify-center bg-dema-sage/45 p-5 sm:min-h-[18rem] sm:p-7 md:min-h-[21rem]">
               {preview ? (
@@ -171,8 +159,8 @@ export default function SystemDetailContent({
                 Système opérationnel — {system.name}
               </h2>
               <p className="mt-4 text-sm leading-relaxed text-dema-muted">
-                Consultez le système complet, puis récupérez votre tableau
-                modifiable.
+                Consultez la démonstration complète, puis obtenez votre
+                document Google Sheets modifiable.
               </p>
 
               <div className="mt-7 flex flex-col gap-3 sm:flex-row">
@@ -203,15 +191,9 @@ export default function SystemDetailContent({
 
         <div className="mt-8 flex justify-start sm:mt-9">
           <div
-            className={`grid w-full gap-1 rounded-full border border-dema-line bg-dema-paper p-1 shadow-[0_8px_24px_rgba(23,35,29,0.035)] ${
-              isPlumbingPilot ? "grid-cols-2" : "grid-cols-3"
-            }`}
+            className="grid w-full grid-cols-2 gap-1 rounded-full border border-dema-line bg-dema-paper p-1 shadow-[0_8px_24px_rgba(23,35,29,0.035)]"
             role="tablist"
-            aria-label={
-              isPlumbingPilot
-                ? "Contenu du système opérationnel"
-                : "Contenu du kit"
-            }
+            aria-label="Contenu du système opérationnel"
             aria-orientation="horizontal"
           >
             {tabs.map((tab) => (
@@ -243,96 +225,9 @@ export default function SystemDetailContent({
           aria-labelledby={`tab-${activeTab}`}
           className="mt-7"
         >
-          {activeTab === "kit" && kitTrackingUrl ? (
-            <a
-              href={kitTrackingUrl}
-              target="_blank"
-              rel="noopener"
-              onClick={() => trackKitOpen({
-                kitName: system.name,
-                kitSlug: system.slug,
-              })}
-              className="group grid w-full overflow-hidden rounded-[1.35rem] border border-dema-line bg-dema-paper text-left shadow-[0_10px_30px_rgba(23,35,29,0.035)] transition duration-200 hover:-translate-y-0.5 hover:border-dema-forest/25 hover:shadow-[0_18px_45px_rgba(23,35,29,0.065)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 md:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)]"
-            >
-              <span className="flex min-h-[15rem] items-center justify-center bg-dema-sage/45 p-5 sm:min-h-[18rem] sm:p-7 md:min-h-[21rem]">
-                {preview ? (
-                  <Image
-                    src={preview.src}
-                    alt={preview.alt}
-                    width={preview.width}
-                    height={preview.height}
-                    loading="eager"
-                    sizes="(max-width: 767px) calc(100vw - 72px), 330px"
-                    className="h-auto w-full rounded-[0.8rem] shadow-[0_14px_35px_rgba(23,35,29,0.1)] sm:w-[96%]"
-                  />
-                ) : (
-                  <span className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-dema-paper text-dema-forest shadow-sm">
-                    <FileSpreadsheet className="h-8 w-8" aria-hidden="true" />
-                  </span>
-                )}
-              </span>
-
-              <span className="flex min-w-0 flex-col justify-center px-6 py-8 sm:px-8 sm:py-10">
-                <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-                  Document de pilotage
-                </span>
-                <span className="mt-3 text-[1.55rem] font-semibold leading-tight tracking-[-0.025em] text-brand-blue">
-                  Tableau de pilotage — {system.name}
-                </span>
-                <span className="mt-4 text-sm leading-relaxed text-dema-muted">
-                  {isBuildingKit
-                    ? "Suivez vos chiffres, vos marges, vos chantiers, votre équipe et vos process dans un seul Google Sheet."
-                    : "Suivez vos chiffres, vos priorités, votre équipe et vos process dans un seul Google Sheet."}
-                </span>
-                <span className="mt-7 inline-flex w-fit items-center justify-center gap-2 rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper transition group-hover:bg-brand-blue">
-                  Ouvrir gratuitement le tableau
-                  <ArrowRight
-                    className="h-4 w-4 transition group-hover:translate-x-0.5"
-                    aria-hidden="true"
-                  />
-                </span>
-                <span className="mt-3 inline-flex items-center gap-2 text-xs font-medium text-dema-muted">
-                  <ShieldCheck className="h-4 w-4 text-dema-forest" aria-hidden="true" />
-                  Accès immédiat · Aucun email demandé
-                </span>
-              </span>
-            </a>
-          ) : null}
-
-          {activeTab === "kit" ? (
-            <div className="mt-5 flex flex-col gap-5 rounded-[1.35rem] border border-dema-line bg-dema-sage/35 px-6 py-6 shadow-[0_10px_30px_rgba(23,35,29,0.025)] sm:px-8 md:flex-row md:items-center md:justify-between">
-              <div className="max-w-2xl">
-                <h2 className="text-lg font-semibold leading-snug tracking-[-0.02em] text-brand-blue">
-                  Vous avez le tableau. Besoin de l’adapter à votre entreprise ?
-                </h2>
-                <p className="mt-2 text-sm leading-relaxed text-dema-muted">
-                  En 30 minutes, identifiez ce qui dépend encore de vous et les premières
-                  priorités à structurer.
-                </p>
-              </div>
-              <Suspense
-                fallback={(
-                  <span
-                    className="inline-flex min-h-11 w-full shrink-0 items-center justify-center rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper md:w-auto"
-                    aria-hidden="true"
-                  >
-                    Réserver ma session offerte
-                  </span>
-                )}
-              >
-                <OrganisationSessionBookingButton
-                  source={`Kit opérationnel — ${system.name}`}
-                  systemSlug={system.slug}
-                  className="inline-flex min-h-11 w-full shrink-0 items-center justify-center rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper transition hover:bg-brand-blue md:w-auto"
-                />
-              </Suspense>
-            </div>
-          ) : null}
-
           {activeTab === "process" ? (
             <SystemeTabContent
               systemName={system.name}
-              systemSlug={system.slug}
               systeme={detail.systeme}
             />
           ) : null}
