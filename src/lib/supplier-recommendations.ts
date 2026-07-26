@@ -329,12 +329,23 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
       "alan",
     ],
   },
+  "agence-de-recrutement": {
+    order: [
+      "onoff-business",
+      "swile",
+      "bernard",
+      "orus",
+      "alan",
+      "insify",
+    ],
+  },
   "cabinet-rh-externalise": {
     order: [
       "alan",
       "swile",
       "orus",
       "onoff-business",
+      "bernard",
       "insify",
     ],
   },
@@ -344,6 +355,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
       "orus",
       "alan",
       "swile",
+      "bernard",
       "insify",
     ],
   },

@@ -74,4 +74,19 @@ describe("operational workbook factory", () => {
       pair.editable.ecosystemRows.every((row) => !row.chosenSolution),
     ).toBe(true);
   });
+
+  it("keeps payment terminals out of office-only HR and support ecosystems", () => {
+    for (const slug of [
+      "agence-de-recrutement",
+      "cabinet-rh-externalise",
+      "centre-appels-support-client",
+    ]) {
+      const names = buildOperationalWorkbookPair(
+        slug,
+      ).editable.ecosystemRows.map((row) => row.name);
+
+      expect(names).toContain("Bernard");
+      expect(names).not.toContain("SumUp");
+    }
+  });
 });
