@@ -350,6 +350,22 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
       "alan",
     ],
   },
+  "investissement-entreprise": {
+    order: [
+      "onoff-business",
+      "orus",
+      "insify",
+      "alan",
+    ],
+  },
+  "investissement-financier": {
+    order: [
+      "onoff-business",
+      "orus",
+      "insify",
+      "alan",
+    ],
+  },
   "agence-de-recrutement": {
     order: [
       "onoff-business",

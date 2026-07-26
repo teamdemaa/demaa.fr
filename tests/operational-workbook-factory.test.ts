@@ -134,12 +134,18 @@ describe("operational workbook factory", () => {
     expect(names).not.toContain("SumUp");
   });
 
-  it("keeps employee benefits out of the property investment ecosystem", () => {
-    const names = buildOperationalWorkbookPair(
+  it("keeps employee benefits out of investment ecosystems", () => {
+    for (const slug of [
       "investissement-immobilier",
-    ).editable.ecosystemRows.map((row) => row.name);
+      "investissement-entreprise",
+      "investissement-financier",
+    ]) {
+      const names = buildOperationalWorkbookPair(
+        slug,
+      ).editable.ecosystemRows.map((row) => row.name);
 
-    expect(names).toContain("Onoff Business");
-    expect(names).not.toContain("Swile");
+      expect(names).toContain("Onoff Business");
+      expect(names).not.toContain("Swile");
+    }
   });
 });
