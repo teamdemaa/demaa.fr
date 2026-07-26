@@ -123,4 +123,14 @@ describe("operational workbook factory", () => {
     expect(names).toContain("Bernard");
     expect(names).not.toContain("SumUp");
   });
+
+  it("keeps payment terminals out of the concierge ecosystem", () => {
+    const names = buildOperationalWorkbookPair(
+      "conciergerie-airbnb",
+    ).editable.ecosystemRows.map((row) => row.name);
+
+    expect(names).toContain("Bernard");
+    expect(names).toContain("EDF Entreprises");
+    expect(names).not.toContain("SumUp");
+  });
 });

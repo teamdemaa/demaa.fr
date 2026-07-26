@@ -666,7 +666,13 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
     order: ["metro-france", "bernard", "france-boissons", "edf-entreprises", "sumup", "orus"],
   },
   "conciergerie-airbnb": {
-    order: ["bernard", "onoff-business", "orus", "sumup", "edf-entreprises", "insify"],
+    order: [
+      "bernard",
+      "onoff-business",
+      "edf-entreprises",
+      "orus",
+      "insify",
+    ],
   },
   "agence-de-voyage": {
     order: ["onoff-business", "orus", "sumup", "insify", "alan"],
