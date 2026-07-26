@@ -20,6 +20,10 @@ export function getStripeWebhookSecret() {
   );
 }
 
+export function isStripeCheckoutConfigured() {
+  return Boolean(getStripeSecretKey());
+}
+
 export function getStripeClient() {
   const secretKey = getStripeSecretKey();
 

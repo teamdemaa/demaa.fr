@@ -3,7 +3,7 @@ import SystemsHubPage from "@/components/SystemsHubPage";
 
 const title = "Systèmes opérationnels par métier | Demaa";
 const description =
-  "Trouvez le système opérationnel de votre activité avec des process concrets, des outils recommandés, des modèles et des services utiles.";
+  "Trouvez le système opérationnel de votre activité avec des process concrets, des outils recommandés et un tableau Google Sheets prêt à utiliser.";
 
 export const metadata: Metadata = {
   title,

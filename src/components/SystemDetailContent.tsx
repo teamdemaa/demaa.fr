@@ -29,6 +29,7 @@ type SystemDetailContentProps = {
   intro: string;
   initialActiveTab?: string;
   purchaseAvailable?: boolean;
+  checkoutAvailable?: boolean;
   headingAs?: "h1" | "h2";
   headingId?: string;
 };
@@ -48,6 +49,7 @@ export default function SystemDetailContent({
   intro,
   initialActiveTab,
   purchaseAvailable = false,
+  checkoutAvailable = false,
   headingAs: Heading = "h2",
   headingId,
 }: SystemDetailContentProps) {
@@ -159,8 +161,8 @@ export default function SystemDetailContent({
                 Système opérationnel — {system.name}
               </h2>
               <p className="mt-4 text-sm leading-relaxed text-dema-muted">
-                Consultez la démonstration complète, puis obtenez votre
-                document Google Sheets modifiable.
+                Des process concrets, des outils recommandés et un tableau
+                Google Sheets prêt à utiliser.
               </p>
 
               <div className="mt-7 flex flex-col gap-3 sm:flex-row">
@@ -179,11 +181,15 @@ export default function SystemDetailContent({
                     Voir la démonstration
                   </a>
                 ) : null}
-                <OperationalSystemPurchaseButton systemSlug={system.slug} />
+                {checkoutAvailable ? (
+                  <OperationalSystemPurchaseButton systemSlug={system.slug} />
+                ) : null}
               </div>
 
               <p className="mt-4 text-xs leading-relaxed text-dema-muted">
-                {getOperationalSystemAccessNote()}
+                {checkoutAvailable
+                  ? getOperationalSystemAccessNote()
+                  : "Démonstration en lecture seule · Achat temporairement indisponible"}
               </p>
             </div>
           </section>

@@ -150,7 +150,7 @@ export default async function DocumentModelDetailPage({
           <div className="mt-10">
             <RelatedSystemsLinks
               systems={relatedSystems}
-              description="Quelques kits opérationnels où ce modèle de document peut être particulièrement utile."
+              description="Quelques systèmes opérationnels où ce modèle de document peut être particulièrement utile."
             />
           </div>
         </article>

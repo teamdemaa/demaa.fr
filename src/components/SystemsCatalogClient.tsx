@@ -288,7 +288,7 @@ export default function SystemsCatalogClient({
         {showIntro ? (
           <div className="max-w-3xl">
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
-              Kits opérationnels
+              Systèmes opérationnels
             </p>
             <h1 className="mt-3 demaa-section-title text-4xl tracking-tight text-brand-blue md:text-5xl">
               Les processus essentiels par entreprise

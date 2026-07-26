@@ -45,7 +45,7 @@ export default async function AidesEtSubventionsPage({
   const backLink = retourSysteme
     ? {
         href: `/kit-operationnel/${encodeURIComponent(retourSysteme)}`,
-        label: "Retour au kit opérationnel",
+        label: "Retour au système opérationnel",
       }
     : undefined;
 

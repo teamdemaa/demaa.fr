@@ -61,7 +61,7 @@ export default function PolitiqueCookiesPage() {
       <CookieSection title="4. Finalités">
             <ul className="list-disc space-y-2 pl-5">
               <li>mesurer l&apos;usage du site et améliorer les contenus et outils proposés ;</li>
-              <li>comparer le nombre d&apos;ouvertures des différents kits opérationnels ;</li>
+              <li>comparer le nombre d&apos;ouvertures des différents systèmes opérationnels ;</li>
               <li>évaluer l&apos;efficacité des campagnes et des sources d&apos;acquisition ;</li>
               <li>rattacher une première et une dernière source à une demande envoyée volontairement ;</li>
               <li>mémoriser certaines préférences ou informations temporaires côté navigateur ;</li>

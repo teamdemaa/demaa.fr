@@ -23,7 +23,6 @@ import {
 } from "@/lib/lead-storage";
 import { syncResendLeadContact } from "@/lib/resend-audience";
 import { sendSlackMessage } from "@/lib/slack";
-import { sendSystemKitEmail } from "@/lib/system-kit-email";
 
 type LeadSubmission = {
   attribution: LeadAttributionRecord;
@@ -317,13 +316,18 @@ export async function retryFailedLeadDeliveries(limit = 30) {
         continue;
       }
 
+      if (channel === "kit_email") {
+        await markLeadDeliveryAbandoned({ channel, leadId: lead.id });
+        logOperationalEvent("lead.delivery.abandoned", {
+          channel,
+          leadId: lead.id,
+          reason: "legacy_free_delivery_retired",
+        });
+        continue;
+      }
+
       const missingRetryData =
-        (channel === "kit_email" && (
-          !input.contact.email
-          || !input.context.systemSlug
-          || !input.context.systemName
-        ))
-        || (channel === "resend" && !input.contact.email);
+        channel === "resend" && !input.contact.email;
       if (missingRetryData) {
         await markLeadDeliveryAbandoned({ channel, leadId: lead.id });
         logOperationalEvent("lead.delivery.abandoned", {
@@ -344,28 +348,6 @@ export async function retryFailedLeadDeliveries(limit = 30) {
           channel,
           leadId: lead.id,
           operation: () => sendInternalLeadEmail(input, lead.id),
-        });
-      } else if (
-        channel === "kit_email"
-        && input.contact.email
-        && input.context.systemSlug
-        && input.context.systemName
-      ) {
-        result = await deliverChannel({
-          channel,
-          leadId: lead.id,
-          operation: async () => {
-            const emailResult = await sendSystemKitEmail({
-              email: input.contact.email ?? "",
-              firstName: input.contact.firstName ?? input.contact.name ?? "",
-              idempotencyKey: `lead-${lead.id}-kit`,
-              systemName: input.context.systemName ?? "",
-              systemSlug: input.context.systemSlug ?? "",
-            });
-            if (!emailResult.sent) {
-              throw new Error(`System kit email failed: ${emailResult.reason}`);
-            }
-          },
         });
       } else if (channel === "resend" && input.contact.email) {
         result = await deliverChannel({

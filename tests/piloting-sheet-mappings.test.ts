@@ -72,12 +72,10 @@ describe("piloting sheet mappings", () => {
     }
   });
 
-  it("does not claim a demonstration for an unpublished system", () => {
-    const unpublishedSlug = enterprises.find(
-      (enterprise) => !Object.hasOwn(demoAssets, enterprise.slug),
-    )?.slug;
-
-    expect(unpublishedSlug).toBeDefined();
-    expect(getOperationalSystemDemoUrl(unpublishedSlug as string)).toBeNull();
+  it("publishes a demonstration for every system and rejects an unknown slug", () => {
+    expect(Object.keys(demoAssets).toSorted()).toEqual(
+      enterprises.map((enterprise) => enterprise.slug).toSorted(),
+    );
+    expect(getOperationalSystemDemoUrl("systeme-inconnu")).toBeNull();
   });
 });

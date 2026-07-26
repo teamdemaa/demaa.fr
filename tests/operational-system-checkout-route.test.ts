@@ -6,6 +6,7 @@ const mocks = vi.hoisted(() => ({
   createCheckoutSession: vi.fn(),
   getEnterpriseBySlug: vi.fn(),
   hasPaidOperationalSystemAsset: vi.fn(),
+  isStripeCheckoutConfigured: vi.fn(),
 }));
 
 vi.mock("@/lib/api-security", () => ({
@@ -40,6 +41,7 @@ vi.mock("@/lib/site-url", () => ({
 }));
 
 vi.mock("@/lib/stripe.server", () => ({
+  isStripeCheckoutConfigured: mocks.isStripeCheckoutConfigured,
   getStripeClient: () => ({
     checkout: {
       sessions: {
@@ -55,6 +57,7 @@ describe("operational system checkout route", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mocks.hasPaidOperationalSystemAsset.mockReturnValue(true);
+    mocks.isStripeCheckoutConfigured.mockReturnValue(true);
     mocks.getEnterpriseBySlug.mockResolvedValue({
       name: "Plomberie & chauffage",
       slug: "plomberie-chauffage",
@@ -111,6 +114,24 @@ describe("operational system checkout route", () => {
     );
 
     expect(response.status).toBe(404);
+    expect(mocks.createCheckoutSession).not.toHaveBeenCalled();
+  });
+
+  it("returns a controlled error when Stripe is not configured", async () => {
+    mocks.isStripeCheckoutConfigured.mockReturnValueOnce(false);
+
+    const response = await POST(
+      new Request("https://demaa.fr/api/checkout/operational-system", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ systemSlug: "plomberie-chauffage" }),
+      }),
+    );
+
+    expect(response.status).toBe(503);
+    await expect(response.json()).resolves.toEqual({
+      error: "Le paiement est temporairement indisponible.",
+    });
     expect(mocks.createCheckoutSession).not.toHaveBeenCalled();
   });
 });

@@ -45,8 +45,8 @@ export default async function PurchaseSuccessPage({
                 Votre système est prêt
               </h1>
               <p className="mt-4 text-sm leading-relaxed text-dema-muted">
-                Créez maintenant votre copie personnelle et modifiable dans
-                Google Drive. Le lien a également été envoyé à {result.email}.
+                Créez maintenant votre copie personnelle dans Google Drive.
+                Le lien a également été envoyé à {result.email}.
               </p>
               <a
                 href={result.copyUrl}
@@ -54,7 +54,7 @@ export default async function PurchaseSuccessPage({
                 rel="noopener noreferrer"
                 className="demaa-primary-button mt-7 inline-flex w-full items-center justify-center"
               >
-                Créer ma copie modifiable
+                Créer ma copie
               </a>
               {!result.emailSent ? (
                 <p className="mt-3 text-xs leading-relaxed text-dema-muted">

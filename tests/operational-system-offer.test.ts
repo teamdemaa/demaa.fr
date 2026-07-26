@@ -21,7 +21,7 @@ describe("operational system commercial contract", () => {
   it("keeps the demo free and read-only", () => {
     expect(OPERATIONAL_SYSTEM_OFFER.demoAccess).toBe("free_read_only");
     expect(getOperationalSystemAccessNote()).toBe(
-      "Démonstration en lecture seule · Version modifiable après paiement",
+      "Démonstration en lecture seule · Tableau prêt à utiliser après paiement",
     );
   });
 

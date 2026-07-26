@@ -17,9 +17,6 @@ export type SystemeProcessItem = {
   process: string;
   documentId: string;
   document: string;
-  documentStatus: string;
-  documentUrl: string;
-  documentCopyUrl: string;
   steps: SystemeProcessStep[];
 };
 
@@ -154,9 +151,6 @@ export function buildSystemeDetail(
       process: process.process,
       documentId: process.documentId,
       document: document?.name ?? "",
-      documentStatus: document?.status ?? "À auditer",
-      documentUrl: document?.sourceUrl ?? "",
-      documentCopyUrl: document?.copyUrl ?? "",
       steps:
         stepsByMétierAndProcess.get(
           `${métier.métierId}::${process.processId}`,

@@ -172,7 +172,7 @@ function buildOperationalSystemDetailFromSources(
     slug: system.slug,
     sectorLabel: publicSectorLabels[0],
     imageTitle: system.name,
-    imageSubtitle: `Aperçu du kit opérationnel pour ${system.name.toLowerCase()}`,
+    imageSubtitle: `Aperçu du système opérationnel pour ${system.name.toLowerCase()}`,
     systeme: null,
     businessBlocks: [],
     tools: [],

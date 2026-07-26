@@ -4,7 +4,7 @@ import SystemsHubPage from "@/components/SystemsHubPage";
 const title =
   "Trouvez le système opérationnel de votre entreprise | Demaa";
 const description =
-  "Choisissez votre activité et découvrez les process, outils, modèles et services utiles pour faire fonctionner votre entreprise.";
+  "Choisissez votre activité et découvrez des process concrets, des outils recommandés et un tableau Google Sheets prêt à utiliser.";
 
 export const metadata: Metadata = {
   title,

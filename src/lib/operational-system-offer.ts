@@ -19,5 +19,5 @@ export function getOperationalSystemPurchaseLabel() {
 }
 
 export function getOperationalSystemAccessNote() {
-  return "Démonstration en lecture seule · Version modifiable après paiement";
+  return "Démonstration en lecture seule · Tableau prêt à utiliser après paiement";
 }

@@ -13,7 +13,10 @@ import {
 import { hasPaidOperationalSystemAsset } from "@/lib/paid-operational-system-assets.server";
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
 import { getCanonicalBaseUrl } from "@/lib/site-url";
-import { getStripeClient } from "@/lib/stripe.server";
+import {
+  getStripeClient,
+  isStripeCheckoutConfigured,
+} from "@/lib/stripe.server";
 
 export const runtime = "nodejs";
 
@@ -70,6 +73,14 @@ export async function POST(request: Request) {
   }
 
   const systemName = enterpriseToSystem(enterprise).name || enterprise.name;
+
+  if (!isStripeCheckoutConfigured()) {
+    return NextResponse.json(
+      { error: "Le paiement est temporairement indisponible." },
+      { status: 503 },
+    );
+  }
+
   const baseUrl = getCanonicalBaseUrl(request);
   const stripe = getStripeClient();
   const session = await stripe.checkout.sessions.create({
@@ -85,7 +96,7 @@ export async function POST(request: Request) {
           product_data: {
             name: getOperationalSystemProductName(systemName),
             description:
-              "Google Sheet modifiable livré automatiquement après paiement.",
+              "Tableau Google Sheets prêt à utiliser, livré automatiquement après paiement.",
           },
         },
       },

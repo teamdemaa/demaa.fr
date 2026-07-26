@@ -9,8 +9,8 @@ type RelatedSystemsLinksProps = {
 
 export default function RelatedSystemsLinks({
   systems,
-  title = "Kits opérationnels liés",
-  description = "Explorer les kits opérationnels les plus proches de ce sujet.",
+  title = "Systèmes opérationnels liés",
+  description = "Explorer les systèmes opérationnels les plus proches de ce sujet.",
 }: RelatedSystemsLinksProps) {
   if (!systems.length) {
     return null;

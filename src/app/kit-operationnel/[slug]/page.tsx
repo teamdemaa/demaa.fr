@@ -7,6 +7,7 @@ import {
   getPilotingSheetCopyUrl,
 } from "@/lib/document-models";
 import { hasPaidOperationalSystemAsset } from "@/lib/paid-operational-system-assets.server";
+import { isStripeCheckoutConfigured } from "@/lib/stripe.server";
 import { normalizeSystemDetailTab } from "@/lib/system-detail-tabs";
 import {
   buildSystemPageIntro,
@@ -80,6 +81,9 @@ export default async function OperationalKitPage({
             intro={buildSystemPageIntro(data)}
             initialActiveTab={normalizeSystemDetailTab(initialTab)}
             purchaseAvailable={isPaidSystem}
+            checkoutAvailable={
+              isPaidSystem && isStripeCheckoutConfigured()
+            }
             headingAs="h1"
           />
         </div>

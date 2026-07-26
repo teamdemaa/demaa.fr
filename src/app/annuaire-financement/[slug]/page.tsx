@@ -111,7 +111,7 @@ export default async function FinanceDetailPage({
           <section className="mt-5">
             <RelatedSystemsLinks
               systems={relatedSystems}
-              description="Quelques kits opérationnels où ce sujet financement revient souvent."
+              description="Quelques systèmes opérationnels où ce sujet financement revient souvent."
             />
           </section>
         </div>

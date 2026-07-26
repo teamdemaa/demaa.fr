@@ -273,7 +273,7 @@ function singularizeSectorLabel(label: string): string {
 }
 
 function buildSystemPageTitle(data: SystemDetailPageData): string {
-  return `Système opérationnel ${data.system.name} : process, outils et modèle modifiable | Demaa`;
+  return `Système opérationnel ${data.system.name} : process, outils et tableau prêt à utiliser | Demaa`;
 }
 
 export function buildSystemPageIntro(data: SystemDetailPageData): string {
@@ -291,7 +291,7 @@ function buildSystemPageDescription(data: SystemDetailPageData): string {
   if (hasPaidOperationalSystemAsset(data.system.slug)) {
     return [
       data.enterprise.description,
-      `Découvrez gratuitement une démonstration remplie, ${processCount} process, 74 consignes concrètes et les outils recommandés, puis obtenez le système modifiable pour 49 € en paiement unique.`,
+      `Découvrez gratuitement une démonstration remplie, ${processCount} process, 74 consignes concrètes et les outils recommandés, puis obtenez le tableau prêt à utiliser pour 49 € en paiement unique.`,
     ].join(" ");
   }
 

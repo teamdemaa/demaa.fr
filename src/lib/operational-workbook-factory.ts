@@ -2,6 +2,7 @@ import rawEnterpriseAnnuaire from "@/lib/enterprise-annuaire.json";
 import rawProcessRegistry from "@/lib/process-registry.generated.json";
 import rawProcessSteps from "@/lib/process-steps.generated.json";
 import { ACCOUNTING_RECOMMENDATION } from "@/lib/accounting-recommendation";
+import { plumbingPilotEcosystemRecommendations } from "@/lib/plumbing-ecosystem-pilot";
 import { plumbingPilotTeamRoles } from "@/lib/plumbing-workbook-pilot";
 import { getRecommendedSuppliersForSystem } from "@/lib/supplier-recommendations";
 import { getCuratedToolRecommendationsForSystem } from "@/lib/system-tool-recommendations";
@@ -282,16 +283,16 @@ function buildActionRows(
         priority:
           variant === "demo"
             ? index < 3
-              ? "Haute"
+              ? "P1"
               : index < 8
-                ? "Moyenne"
-                : "Basse"
+                ? "P2"
+                : "P3"
             : "À définir",
         start: variant === "demo" ? start : "",
         due: variant === "demo" ? addDays(start, 14) : "",
         status:
           variant === "demo"
-            ? ["En cours", "À faire", "Planifiée"][index % 3]
+            ? ["En cours", "À faire", "À planifier"][index % 3]
             : "À planifier",
         expectedResult: `Action appliquée, responsable désigné et preuve ajoutée dans « ${document.name} ».`,
         notes:
@@ -433,6 +434,34 @@ function buildEcosystemRows(
   enterprise: Enterprise,
   variant: OperationalWorkbookVariant,
 ) {
+  if (enterprise.slug === "plomberie-chauffage") {
+    const selectedDemoSolutions = new Set([
+      "Obat",
+      "Google Business Profile",
+      "EM2A Expertise",
+    ]);
+
+    return plumbingPilotEcosystemRecommendations.map((recommendation) => {
+      const isSelectedDemoSolution =
+        variant === "demo" &&
+        selectedDemoSolutions.has(recommendation.name);
+
+      return {
+        category: recommendation.category,
+        need: recommendation.need,
+        name: recommendation.name,
+        chosenSolution: isSelectedDemoSolution ? recommendation.name : "",
+        status: isSelectedDemoSolution
+          ? "Déjà utilisé"
+          : recommendation.initialStatus,
+        cost: recommendation.cost,
+        targetDate: "",
+        url: recommendation.url,
+        notes: recommendation.recommendation,
+      };
+    });
+  }
+
   const toolRows = buildToolRows(enterprise);
   const normalizedToolNames = toolRows.map((row) =>
     row.name

@@ -86,7 +86,7 @@ const liveTrainings = [
       "Mettre en place un rythme de délégation et de suivi simple.",
     ],
     includedModels: [
-      "Kit opérationnel adapté à votre activité",
+      "Système opérationnel adapté à votre activité",
       "Modèles de process, responsabilités et routines de suivi",
     ],
     qAndA: "Un temps de questions-réponses pour adapter les process à votre organisation.",

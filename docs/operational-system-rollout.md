@@ -9,7 +9,7 @@ structuration réalisée manuellement pour chaque prospect.
 Le contrat commercial unique est :
 
 - démonstration remplie gratuite, sans formulaire et en lecture seule ;
-- système modifiable vendu **49 € en paiement unique** ;
+- tableau prêt à utiliser vendu **49 € en paiement unique** ;
 - adresse e-mail collectée au paiement pour remettre l'accès ;
 - aucune session, assistance humaine ou réponse personnalisée incluse ;
 - aucun abonnement.
@@ -43,7 +43,7 @@ Chaque métier possède deux Google Sheets distincts :
 - structure strictement identique à la démonstration ;
 - données fictives retirées des zones que l'utilisateur doit compléter ;
 - recommandations, modes d'emploi, listes et formules conservés ;
-- mention `MODÈLE VIERGE` visible ;
+- mention `VERSION MODIFIABLE` visible ;
 - URL remise sous la forme `/copy` ;
 - accès obtenu après confirmation du paiement unique de 49 €.
 
@@ -119,11 +119,9 @@ fermeture de société vendue par Demaa.
 
 ## Supports liés aux processus
 
-Chaque processus possède une référence de support. Lorsqu'un support est
-publié, l'interface propose séparément :
-
-- la consultation de l'exemple ;
-- la copie du modèle vierge.
+Chaque processus possède une référence de support. L'interface affiche son nom
+et la mention discrète `Modèle disponible dans le système`, sans exposer de
+lien de copie séparé sur chaque processus.
 
 Les supports doivent être dédupliqués par usage avant création. Plusieurs
 métiers peuvent réutiliser un socle commun lorsque le contenu reste réellement
@@ -156,7 +154,7 @@ La généralisation se fait ensuite par famille de métiers. Une erreur découve
 dans un échantillon doit être corrigée dans le générateur avant la vague
 suivante, jamais manuellement dans des dizaines de fichiers.
 
-Soixante-dix-neuf métiers sont désormais publiés avec une paire distincte, une démonstration
+Les cent quinze métiers sont désormais publiés avec une paire distincte, une démonstration
 en lecture seule et un document modifiable livré après paiement :
 
 - Plomberie & chauffage ;
@@ -237,7 +235,43 @@ en lecture seule et un document modifiable livré après paiement :
 - Livraison dernier kilomètre ;
 - Transport de marchandises ;
 - Transport de personnes B2B ;
-- VTC.
+- VTC ;
+- Cabinet de conseil ;
+- Freelance B2B ;
+- Agence web ;
+- Création de contenu ;
+- Marketplace ;
+- Média ;
+- SaaS ;
+- Commerce de détail ;
+- E-commerce ;
+- Services à la personne ;
+- Commerce alimentaire ;
+- Boutique spécialisée ;
+- Tabac / presse / point relais ;
+- Infirmier libéral ;
+- Aide à domicile & ménage ;
+- Maintenance informatique B2B ;
+- Photographe / vidéaste corporate ;
+- Opticien ;
+- Fleuriste événementiel B2B ;
+- Consultant indépendant ;
+- Coach professionnel ;
+- Librairie ;
+- DAF externalisé ;
+- Office manager externalisé ;
+- Assistant administratif externalisé ;
+- Secrétariat externalisé ;
+- Cabinet QHSE / conformité ;
+- Bureau d’études ;
+- Cabinet d’études ;
+- Infogérance informatique ;
+- Cybersécurité PME ;
+- Intégrateur CRM / ERP ;
+- Consultant data / BI ;
+- Agence SEO ;
+- Agence acquisition paid ads ;
+- Studio branding / design.
 
 Les contrôles de l'échantillon et des familles BTP, restauration rapide et
 immobilier expertise, services terrain et immobilier transaction complètes

@@ -14,8 +14,6 @@ const enterprises = JSON.parse(fs.readFileSync(catalogPath, "utf8")).enterprises
 if (targetSlug && enterprises.length !== 1) {
   throw new Error(`Unknown enterprise slug: ${targetSlug}`);
 }
-const plumbingPilotSlug = "plomberie-chauffage";
-
 const forbiddenUi = [
   "Recevoir gratuitement mon tableau de pilotage",
   "Recevoir les documents",
@@ -23,9 +21,10 @@ const forbiddenUi = [
   "Accéder aux téléchargements",
   "Aperçu du document",
   "Diagnostic organisation",
+  "Ouvrir gratuitement le tableau",
+  "Réserver ma session offerte",
+  "Démonstration en lecture seule · Version modifiable après paiement",
 ];
-
-const downloadCta = "Tableau de suivi opérationnel";
 
 async function fetchPage(path, redirect = "follow") {
   return fetch(`${baseUrl}${path}`, {
@@ -39,7 +38,6 @@ async function inspectEnterprise(enterprise) {
   const slug = encodeURIComponent(enterprise.slug);
   const canonicalPath = `/kit-operationnel/${slug}`;
   const errors = [];
-  const isPlumbingPilot = enterprise.slug === plumbingPilotSlug;
 
   try {
     const overviewResponse = await fetchPage(canonicalPath);
@@ -52,41 +50,35 @@ async function inspectEnterprise(enterprise) {
     if (!overviewHtml.includes(`<link rel="canonical" href="https://demaa.fr${canonicalPath}"/>`)) {
       errors.push("canonical link missing or incorrect");
     }
-    const expectedSeoTitle = isPlumbingPilot
-      ? "Système opérationnel"
-      : "Kit opérationnel";
-    if (!overviewHtml.includes(expectedSeoTitle)) errors.push("SEO title missing");
+    const expectedPreviewPath =
+      `%2Fimages%2Fkits%2F${enterprise.slug}%2Ftableau-suivi-preview.webp`;
+    if (!renderedOverviewHtml.includes(expectedPreviewPath)) {
+      errors.push("system preview image missing");
+    }
+    if (!overviewHtml.includes("Système opérationnel")) {
+      errors.push("SEO title missing");
+    }
 
-    if (isPlumbingPilot) {
-      for (const expectedText of [
-        "Voir la démonstration",
-        "Obtenir le système — 49 €",
-        "Démonstration en lecture seule · Version modifiable après paiement",
-      ]) {
-        if (!renderedOverviewHtml.includes(expectedText)) {
-          errors.push(`pilot promise missing: ${expectedText}`);
-        }
-      }
-      if (renderedOverviewHtml.includes(downloadCta)) {
-        errors.push(`legacy download CTA still visible: ${downloadCta}`);
-      }
-    } else {
-      const overviewDownloadCtaCount = renderedOverviewHtml.split(downloadCta).length - 1;
-      if (overviewDownloadCtaCount !== 1) {
-        errors.push(`expected one top download CTA, found ${overviewDownloadCtaCount}`);
+    for (const expectedText of [
+      "Voir la démonstration",
+      "Obtenir le système — 49 €",
+      "Des process concrets, des outils recommandés et un tableau",
+      "Google Sheets prêt à utiliser.",
+      "Démonstration en lecture seule · Tableau prêt à utiliser après paiement",
+    ]) {
+      if (!renderedOverviewHtml.includes(expectedText)) {
+        errors.push(`commercial promise missing: ${expectedText}`);
       }
     }
 
     for (const value of forbiddenUi) {
       if (renderedOverviewHtml.includes(value)) errors.push(`legacy UI still visible: ${value}`);
     }
-    if (isPlumbingPilot) {
-      if (!/\d+ processus/.test(renderedOverviewHtml)) {
-        errors.push("process count missing");
-      }
-      if (!overviewHtml.includes("plumbing-process-panel-")) {
-        errors.push("process accordions missing");
-      }
+    if (!/\d+ processus/.test(renderedOverviewHtml)) {
+      errors.push("process count missing");
+    }
+    if (!overviewHtml.includes("system-process-panel-")) {
+      errors.push("process accordions missing");
     }
 
     const redirects = [

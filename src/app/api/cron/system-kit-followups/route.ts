@@ -3,7 +3,6 @@ import {
   advanceSystemKitSequenceSubscriber,
   getDueSystemKitSequenceSubscribers,
 } from "@/lib/generations-db";
-import { sendSystemKitFollowupEmail } from "@/lib/system-kit-email";
 import { retryFailedLeadDeliveries } from "@/lib/lead-notifications";
 import { cleanupExpiredOperationalData } from "@/lib/operational-maintenance";
 import {
@@ -32,67 +31,33 @@ async function handleGet(request: Request) {
   const notificationRetries = await retryFailedLeadDeliveries(30);
   const cleanup = await cleanupExpiredOperationalData(50);
   const dueSubscribers = await getDueSystemKitSequenceSubscribers(50);
-  const results: Array<{ reference: string; kind: string; sent: boolean }> = [];
+  let retiredSequences = 0;
 
   for (const subscriber of dueSubscribers) {
-    if (subscriber.sequenceStep > 1) {
-      await advanceSystemKitSequenceSubscriber({
-        collection: subscriber.collection,
-        subscriberId: subscriber.id,
-        nextStep: subscriber.sequenceStep,
-        completed: true,
-      });
-      continue;
-    }
-
-    const kind = "usage";
-    const emailResult = await sendSystemKitFollowupEmail({
-      email: subscriber.email,
-      firstName: subscriber.firstName,
-      systemName: subscriber.systemName,
-      systemSlug: subscriber.systemSlug,
-    });
-
-    results.push({
-      reference: subscriber.id,
-      kind,
-      sent: emailResult.sent,
-    });
-
-    if (!emailResult.sent) {
-      logOperationalError("system_kit.followup.failed", new Error(emailResult.reason), {
-        reference: subscriber.id,
-        kind,
-      });
-      continue;
-    }
-
     await advanceSystemKitSequenceSubscriber({
       collection: subscriber.collection,
       subscriberId: subscriber.id,
-      nextStep: subscriber.sequenceStep + 1,
+      nextStep: subscriber.sequenceStep,
       completed: true,
     });
+    retiredSequences += 1;
   }
 
   const summary = {
     ok: true,
     processed: dueSubscribers.length,
-    sent: results.filter((result) => result.sent).length,
-    failed: results.filter((result) => !result.sent).length,
+    retiredSequences,
     notificationRetries: {
       attempted: notificationRetries.length,
       sent: notificationRetries.filter((result) => result.status === "sent").length,
       failed: notificationRetries.filter((result) => result.status === "failed").length,
     },
     cleanup,
-    results,
   };
 
   logOperationalEvent("cron.system_kit.completed", {
     cleanupDeleted: cleanup.deleted,
-    followupsFailed: summary.failed,
-    followupsSent: summary.sent,
+    followupsRetired: retiredSequences,
     retriesAttempted: notificationRetries.length,
   });
 

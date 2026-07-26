@@ -11,7 +11,6 @@ const requestTimeoutMs = Number.parseInt(process.env.DEMAA_AUDIT_TIMEOUT_MS ?? "
 const retryCount = Number.parseInt(process.env.DEMAA_AUDIT_RETRIES ?? "2", 10);
 const targetSlug = process.env.DEMAA_AUDIT_SLUG?.trim();
 
-const plumbingPilotSlug = "plomberie-chauffage";
 const toolsBySlug = new Map(
   JSON.parse(fs.readFileSync(toolDirectoryPath, "utf8")).tools.map((tool) => [tool.slug, tool]),
 );
@@ -30,15 +29,12 @@ function countOccurrences(source, value) {
   return source.split(value).length - 1;
 }
 
-function getTabs(enterprise) {
-  return enterprise.slug === plumbingPilotSlug
-    ? ["process", "outils", "services"]
-    : ["kit", "outils", "process"];
+function getTabs() {
+  return ["process", "outils"];
 }
 
 function inspectPage({ enterprise, response, html, tab }) {
   const errors = [];
-  const isPlumbingPilot = enterprise.slug === plumbingPilotSlug;
   const renderedHtml = html
     .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "")
     .replace(/<!--[\s\S]*?-->/g, "");
@@ -48,6 +44,11 @@ function inspectPage({ enterprise, response, html, tab }) {
     errors.push("response is not HTML");
   }
   if (!renderedHtml.includes("<h1")) errors.push("missing main heading");
+  const expectedPreviewPath =
+    `%2Fimages%2Fkits%2F${enterprise.slug}%2Ftableau-suivi-preview.webp`;
+  if (!renderedHtml.includes(expectedPreviewPath)) {
+    errors.push("missing system preview image");
+  }
 
   for (const forbiddenText of [
     "Cette page n'existe pas",
@@ -60,9 +61,7 @@ function inspectPage({ enterprise, response, html, tab }) {
     }
   }
 
-  const expectedTabs = isPlumbingPilot
-    ? ["Process", "Outils"]
-    : ["Pilotage", "Outils", "Process"];
+  const expectedTabs = ["Process", "Outils"];
 
   for (const expectedTab of expectedTabs) {
     if (!renderedHtml.includes(`>${expectedTab}</button>`)) {
@@ -74,7 +73,7 @@ function inspectPage({ enterprise, response, html, tab }) {
     renderedHtml,
     'aria-controls="kit-content-panel"',
   );
-  const expectedTabCount = isPlumbingPilot ? 2 : 3;
+  const expectedTabCount = 2;
   if (controlledPanelCount !== expectedTabCount) {
     errors.push(`expected ${expectedTabCount} tab controls for the shared panel, found ${controlledPanelCount}`);
   }
@@ -82,26 +81,26 @@ function inspectPage({ enterprise, response, html, tab }) {
     errors.push("shared tab panel is missing");
   }
 
-  if (isPlumbingPilot) {
-    for (const expectedText of [
-      "Voir la démonstration",
-      "Obtenir le système — 49 €",
-      "Consultez le système complet, puis récupérez votre tableau",
-      "Démonstration en lecture seule · Version modifiable après paiement",
-    ]) {
-      if (!renderedHtml.includes(expectedText)) {
-        errors.push(`missing demo/model distinction: ${expectedText}`);
-      }
+  for (const expectedText of [
+    "Voir la démonstration",
+    "Obtenir le système — 49 €",
+    "Des process concrets, des outils recommandés et un tableau",
+    "Google Sheets prêt à utiliser.",
+    "Démonstration en lecture seule · Tableau prêt à utiliser après paiement",
+  ]) {
+    if (!renderedHtml.includes(expectedText)) {
+      errors.push(`missing demo/paid distinction: ${expectedText}`);
     }
+  }
 
-    for (const legacyPromise of [
-      "Ouvrir gratuitement le tableau",
-      "Réserver ma session de cadrage offerte",
-      "1 500 € HT",
-    ]) {
-      if (renderedHtml.includes(legacyPromise)) {
-        errors.push(`legacy pilot promise is still visible: ${legacyPromise}`);
-      }
+  for (const legacyPromise of [
+    "Ouvrir gratuitement le tableau",
+    "Réserver ma session de cadrage offerte",
+    "1 500 € HT",
+    "Démonstration en lecture seule · Version modifiable après paiement",
+  ]) {
+    if (renderedHtml.includes(legacyPromise)) {
+      errors.push(`legacy promise is still visible: ${legacyPromise}`);
     }
   }
 
@@ -152,19 +151,6 @@ function inspectPage({ enterprise, response, html, tab }) {
     }
     if (renderedHtml.includes("Voir plus")) {
       errors.push("legacy tool expansion remains visible");
-    }
-  }
-
-  if (tab === "services" && isPlumbingPilot) {
-    for (const expectedText of [
-      "Système opérationnel clé en main",
-      "Votre entreprise fonctionne sans que tout passe par vous.",
-      "Trouver un expert-comptable",
-      "Jusqu’à 3 recommandations",
-    ]) {
-      if (!renderedHtml.includes(expectedText)) {
-        errors.push(`missing offer text: ${expectedText}`);
-      }
     }
   }
 
@@ -243,7 +229,7 @@ const failures = results.filter((result) => result.errors.length);
 console.log(JSON.stringify({
   baseUrl,
   kits: enterprises.length,
-  tabsPerKit: 3,
+  tabsPerKit: 2,
   statesChecked: results.length,
   failureCount: failures.length,
   failures: failures.slice(0, 100),

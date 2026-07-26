@@ -32,12 +32,12 @@ describe("plumbing filled demonstration", () => {
 
   it("illustre le marketing et l’écosystème avec des noms et des liens concrets", () => {
     expect(plumbingDemoMarketingCalendar.length).toBeGreaterThanOrEqual(6);
-    expect(plumbingDemoEcosystem.length).toBeGreaterThanOrEqual(6);
+    expect(plumbingDemoEcosystem).toHaveLength(9);
 
     for (const row of plumbingDemoEcosystem) {
       expect(row[2].length).toBeGreaterThan(2);
       expect(row[2]).not.toMatch(/logiciel|cabinet|fournisseur|courtier/i);
-      expect(row[7]).toMatch(/^https:\/\/demaa\.fr\//);
+      expect(row[7]).toMatch(/^https:\/\//);
       expect([row[0], row[2], row[8]].join(" ")).not.toMatch(
         /\bDemaa\b/i,
       );
@@ -51,7 +51,7 @@ describe("plumbing filled demonstration", () => {
 
     expect(accountingRow).toEqual([
       "Professionnel",
-      "Comptabilité et TVA",
+      "Comptabilité, TVA, paie et conseil",
       "EM2A Expertise",
       "EM2A Expertise",
       "Déjà utilisé",
@@ -60,6 +60,17 @@ describe("plumbing filled demonstration", () => {
       "https://demaa.fr/annuaire-experts-comptables/cabinets/em2a-expertise",
       "Point mensuel prévu le 10.",
     ]);
+  });
+
+  it("montre les neuf solutions mais n’en retient que trois dans la démonstration", () => {
+    expect(
+      plumbingDemoEcosystem.filter((row) => row[3] !== ""),
+    ).toHaveLength(3);
+    expect(
+      plumbingDemoEcosystem
+        .filter((row) => row[3] !== "")
+        .map((row) => row[2]),
+    ).toEqual(["Obat", "Google Business Profile", "EM2A Expertise"]);
   });
 
   it("ne contient aucune prestation humaine Demaa", () => {

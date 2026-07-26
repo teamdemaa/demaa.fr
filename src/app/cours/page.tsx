@@ -44,7 +44,7 @@ export default async function CoursesIndexPage({
   const backLink = returnSystemSlug
     ? {
         href: `/kit-operationnel/${returnSystemSlug}`,
-        label: "Retour au kit opérationnel",
+        label: "Retour au système opérationnel",
       }
     : undefined;
 

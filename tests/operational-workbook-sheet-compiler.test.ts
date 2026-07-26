@@ -39,6 +39,27 @@ describe("operational workbook Google Sheets compiler", () => {
     expect(editableJson).not.toContain("Camille Martin");
   });
 
+  it("uses only values accepted by the Actions dropdowns", () => {
+    for (const slug of getOperationalWorkbookFactorySlugs()) {
+      for (const variant of ["demo", "editable"] as const) {
+        const blueprint = buildOperationalWorkbookBlueprint(slug, variant);
+
+        for (const action of blueprint.actionRows) {
+          expect(["P1", "P2", "P3", "À définir"]).toContain(
+            action.priority,
+          );
+          expect([
+            "À planifier",
+            "À faire",
+            "En cours",
+            "Terminée",
+            "Reportée",
+          ]).toContain(action.status);
+        }
+      }
+    }
+  });
+
   it("keeps the seven canonical sheet ids and process data in the payload", () => {
     const result = compileOperationalWorkbookSheetRequests(
       buildOperationalWorkbookBlueprint("pharmacie", "editable"),
@@ -71,5 +92,56 @@ describe("operational workbook Google Sheets compiler", () => {
 
     expect(unmergeRequests).toHaveLength(5);
     expect(formatCopies).toHaveLength(5);
+  });
+
+  it("writes the Actions table strictly in its twelve canonical columns", () => {
+    const result = compileOperationalWorkbookSheetRequests(
+      buildOperationalWorkbookBlueprint("transport-de-marchandise", "demo"),
+    );
+    const actionWrites = result.requests.filter((request) => {
+      if (
+        typeof request !== "object" ||
+        request === null ||
+        !("updateCells" in request)
+      ) {
+        return false;
+      }
+
+      const updateCells = request.updateCells as {
+        range?: {
+          sheetId?: number;
+          startRowIndex?: number;
+          startColumnIndex?: number;
+          endColumnIndex?: number;
+        };
+        rows?: Array<{ values?: unknown[] }>;
+      };
+
+      return (
+        updateCells.range?.sheetId === 593863816 &&
+        updateCells.range.startRowIndex === 5
+      );
+    });
+
+    expect(actionWrites).toHaveLength(1);
+
+    const updateCells = (
+      actionWrites[0] as {
+        updateCells: {
+          range: {
+            startColumnIndex: number;
+            endColumnIndex: number;
+          };
+          rows: Array<{ values: unknown[] }>;
+        };
+      }
+    ).updateCells;
+
+    expect(updateCells.range.startColumnIndex).toBe(0);
+    expect(updateCells.range.endColumnIndex).toBe(12);
+    expect(updateCells.rows.length).toBeGreaterThan(0);
+    expect(
+      updateCells.rows.every((row) => row.values.length === 12),
+    ).toBe(true);
   });
 });

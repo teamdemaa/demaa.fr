@@ -4,7 +4,6 @@ import {
   ArrowDown,
   ChevronDown,
   Euro,
-  ExternalLink,
   Flag,
   HeartHandshake,
   ListChecks,
@@ -55,46 +54,14 @@ function getProcessIcon(process: string): LucideIcon {
 }
 
 function ProcessDocument({ item }: { item: SystemeProcessItem }) {
-  const hasDemo = Boolean(item.documentUrl);
-  const hasBlankModel = Boolean(item.documentCopyUrl);
-
   return (
-    <div className="mt-4 flex flex-col gap-2 rounded-[0.9rem] border border-dema-forest/10 bg-dema-sage/45 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+    <div className="mt-4 rounded-[0.9rem] border border-dema-forest/10 bg-dema-sage/45 px-4 py-3">
       <p className="min-w-0 text-sm font-semibold leading-snug text-brand-blue">
         {item.document}
       </p>
-
-      {hasDemo || hasBlankModel ? (
-        <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-          {hasDemo ? (
-            <a
-              href={item.documentUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex min-h-9 items-center justify-center gap-2 rounded-full border border-dema-forest/25 bg-dema-paper px-4 py-2 text-xs font-semibold text-dema-forest transition hover:border-dema-forest/45 hover:bg-dema-sage"
-            >
-              Voir l’exemple
-              <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
-            </a>
-          ) : null}
-
-          {hasBlankModel ? (
-            <a
-              href={item.documentCopyUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex min-h-9 items-center justify-center gap-2 rounded-full bg-dema-forest px-4 py-2 text-xs font-semibold text-dema-paper transition hover:bg-brand-blue"
-            >
-              Copier le modèle
-              <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
-            </a>
-          ) : null}
-        </div>
-      ) : (
-        <span className="shrink-0 text-[11px] font-medium text-dema-forest/75">
-          Dans le système opérationnel
-        </span>
-      )}
+      <p className="mt-1 text-[11px] font-medium text-dema-muted/65">
+        Modèle disponible dans le système
+      </p>
     </div>
   );
 }

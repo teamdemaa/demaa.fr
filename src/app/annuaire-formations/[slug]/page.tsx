@@ -108,7 +108,7 @@ export default async function TrainingDetailPage({
           <section className="mt-5">
             <RelatedSystemsLinks
               systems={relatedSystems}
-              description="Quelques kits opérationnels où cette formation revient souvent."
+              description="Quelques systèmes opérationnels où cette formation revient souvent."
             />
           </section>
         </div>

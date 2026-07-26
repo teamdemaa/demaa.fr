@@ -70,8 +70,8 @@ Regle simple: reutiliser les classes ou composants existants avant d'ajouter des
 
 Routes critiques:
 
-- `/api/systeme-kit/request`: envoie le Google Sheet du kit et programme les suivis.
-- `/api/cron/system-kit-followups`: envoie les suivis programmes.
+- `/api/systeme-kit/request`: ancien endpoint gratuit conservé en garde-fou et retourne `410 Gone`.
+- `/api/cron/system-kit-followups`: clôt les anciennes séquences gratuites et exécute la maintenance opérationnelle.
 - `/api/customer-space/*`: acces securise a Mon espace.
 - `/api/service-introduction-request`: demande de mise en relation avec un service.
 - `/api/system-setup-request`: ancien endpoint conserve en garde-fou et retourne `410 Gone`.

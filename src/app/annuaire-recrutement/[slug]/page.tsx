@@ -111,7 +111,7 @@ export default async function RecruitmentDetailPage({
           <section className="mt-5">
             <RelatedSystemsLinks
               systems={relatedSystems}
-              description="Quelques kits opérationnels où cette solution de recrutement revient souvent."
+              description="Quelques systèmes opérationnels où cette solution de recrutement revient souvent."
             />
           </section>
         </div>
