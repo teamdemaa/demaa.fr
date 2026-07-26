@@ -146,9 +146,13 @@ async function renderWorkbook(workbookPath, renderDir) {
     sheets.map((sheet) => [normalizeSheetName(sheet.name), sheet]),
   );
   const preferredSheets = [
-    { normalizedName: "synthese", role: "summary" },
-    { normalizedName: "previsionnel financier", role: "forecast" },
-    { normalizedName: "process", role: "process" },
+    { normalizedName: "synthese", role: "summary", range: "A1:F20" },
+    {
+      normalizedName: "previsionnel financier",
+      role: "forecast",
+      range: "A1:G24",
+    },
+    { normalizedName: "process", role: "process", range: "A1:G25" },
   ];
   const fallbackSheets = [...sheets];
   const selections = preferredSheets.map((preferred) => {
@@ -164,7 +168,7 @@ async function renderWorkbook(workbookPath, renderDir) {
   for (const selection of selections) {
     const preview = await workbook.render({
       sheetName: selection.sheet.name,
-      range: selection.sheet.address,
+      range: selection.range,
       scale: 1,
       format: "png",
     });
