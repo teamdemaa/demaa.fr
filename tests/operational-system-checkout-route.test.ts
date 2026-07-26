@@ -36,10 +36,6 @@ vi.mock("@/lib/request-guard", () => ({
   enforceSameOrigin: vi.fn().mockReturnValue(null),
 }));
 
-vi.mock("@/lib/site-url", () => ({
-  getCanonicalBaseUrl: vi.fn().mockReturnValue("https://demaa.fr"),
-}));
-
 vi.mock("@/lib/stripe.server", () => ({
   isStripeCheckoutConfigured: mocks.isStripeCheckoutConfigured,
   getStripeClient: () => ({
@@ -98,6 +94,32 @@ describe("operational system checkout route", () => {
           systemName: "Plomberie & chauffage",
           systemSlug: "plomberie-chauffage",
         },
+        success_url:
+          "https://demaa.fr/commande/systeme-operationnel/succes?session_id={CHECKOUT_SESSION_ID}",
+        cancel_url:
+          "https://demaa.fr/kit-operationnel/plomberie-chauffage",
+      }),
+    );
+  });
+
+  it("returns to the actual preview origin after checkout", async () => {
+    await POST(
+      new Request(
+        "https://demaa-preview.vercel.app/api/checkout/operational-system",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ systemSlug: "plomberie-chauffage" }),
+        },
+      ),
+    );
+
+    expect(mocks.createCheckoutSession).toHaveBeenCalledWith(
+      expect.objectContaining({
+        success_url:
+          "https://demaa-preview.vercel.app/commande/systeme-operationnel/succes?session_id={CHECKOUT_SESSION_ID}",
+        cancel_url:
+          "https://demaa-preview.vercel.app/kit-operationnel/plomberie-chauffage",
       }),
     );
   });

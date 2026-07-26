@@ -12,7 +12,6 @@ import {
 } from "@/lib/operational-system-offer";
 import { hasPaidOperationalSystemAsset } from "@/lib/paid-operational-system-assets.server";
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
-import { getCanonicalBaseUrl } from "@/lib/site-url";
 import {
   getStripeClient,
   isStripeCheckoutConfigured,
@@ -81,7 +80,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const baseUrl = getCanonicalBaseUrl(request);
+  const baseUrl = new URL(request.url).origin;
   const stripe = getStripeClient();
   const session = await stripe.checkout.sessions.create({
     mode: "payment",
