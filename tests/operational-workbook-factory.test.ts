@@ -148,4 +148,16 @@ describe("operational workbook factory", () => {
       expect(names).not.toContain("Swile");
     }
   });
+
+  it("keeps payment terminals specific to the coworking reception use case", () => {
+    const travelNames = buildOperationalWorkbookPair(
+      "agence-de-voyage",
+    ).editable.ecosystemRows.map((row) => row.name);
+    const coworkingNames = buildOperationalWorkbookPair(
+      "centre-affaires-coworking",
+    ).editable.ecosystemRows.map((row) => row.name);
+
+    expect(travelNames).not.toContain("SumUp");
+    expect(coworkingNames).toContain("SumUp");
+  });
 });

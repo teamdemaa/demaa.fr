@@ -699,7 +699,7 @@ const SUPPLIER_RECOMMENDATIONS_BY_SYSTEM: Record<string, SupplierRecommendationR
     ],
   },
   "agence-de-voyage": {
-    order: ["onoff-business", "orus", "sumup", "insify", "alan"],
+    order: ["onoff-business", "orus", "insify", "alan"],
   },
 };
 
