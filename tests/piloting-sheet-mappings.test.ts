@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import rawEnterpriseAnnuaire from "@/lib/enterprise-annuaire.json";
+import demoAssets from "@/lib/operational-system-demo-assets.generated.json";
 import {
   getOperationalSystemDemoUrl,
   getPilotingSheetCopyUrl,
@@ -21,19 +22,15 @@ function extractGoogleSheetId(url: string): string | null {
 
 describe("piloting sheet mappings", () => {
   it("maps every legacy free kit to one unique Google Sheet copy URL", () => {
-    const paidSystemSlugs = new Set([
-      "plomberie-chauffage",
-      "agence-marketing",
-      "restaurant",
-      "pharmacie",
-      "creche",
-    ]);
+    const paidSystemSlugs = new Set(Object.keys(demoAssets));
     const enterpriseSlugs = enterprises
       .map((enterprise) => enterprise.slug)
       .filter((slug) => !paidSystemSlugs.has(slug));
     const mappedSlugs = getPilotingSheetSlugs();
 
-    expect(enterpriseSlugs).toHaveLength(110);
+    expect(enterpriseSlugs).toHaveLength(
+      enterprises.length - paidSystemSlugs.size,
+    );
     expect(new Set(enterpriseSlugs).size).toBe(enterpriseSlugs.length);
     expect(mappedSlugs.toSorted()).toEqual(enterpriseSlugs.toSorted());
 
@@ -82,6 +79,6 @@ describe("piloting sheet mappings", () => {
   });
 
   it("does not claim a demonstration for an unpublished system", () => {
-    expect(getOperationalSystemDemoUrl("electricite-generale")).toBeNull();
+    expect(getOperationalSystemDemoUrl("couvreur")).toBeNull();
   });
 });

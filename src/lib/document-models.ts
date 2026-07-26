@@ -1,6 +1,7 @@
 import { RELATED_SYSTEM_SLUGS_BY_CONTENT_SLUG } from "@/lib/content-relationships";
 import type { System } from "@/lib/types";
 import rawEnterpriseAnnuaire from "@/lib/enterprise-annuaire.json";
+import rawOperationalSystemDemoAssets from "@/lib/operational-system-demo-assets.generated.json";
 
 type EnterpriseSummary = {
   id: string;
@@ -288,24 +289,20 @@ const PILOTING_SHEET_URLS: Partial<Record<string, string>> = {
     "https://docs.google.com/spreadsheets/d/1ljzXVzPjqPIW3c7uebc2ExwK9ySrAv3SnPWTbf-mgTw/edit",
 };
 
-const OPERATIONAL_SYSTEM_DEMO_URLS: Partial<Record<string, string>> = {
-  "agence-marketing":
-    "https://docs.google.com/spreadsheets/d/1OaV9p60D4cmKcrRJKDBKbSM8-Rqi1GHiWSIc_jXPgvA/edit",
-  restaurant:
-    "https://docs.google.com/spreadsheets/d/1B59qQCBbKBPfYT1XeZSVEnFRYAXWi-Y6RQRszwDDYjI/edit",
-  pharmacie:
-    "https://docs.google.com/spreadsheets/d/1GORr3gdTTkMhNxmhwQtVqC2zA0zJSXBkQHAFN3pP0yM/edit",
-  creche:
-    "https://docs.google.com/spreadsheets/d/1sLY-zuhCfmjs_aMPh___yRlBuV5Rg4izfqokYpVwzvM/edit",
-  "plomberie-chauffage":
-    "https://docs.google.com/spreadsheets/d/1YiSXWlhEr87U9BLzaQvdHVJ496hyJc5l6jYDrJIjhFg/edit",
-};
+const OPERATIONAL_SYSTEM_DEMO_URLS =
+  rawOperationalSystemDemoAssets as Partial<Record<string, string>>;
 
 export function getPilotingSheetSlugs(): string[] {
-  return Object.keys(PILOTING_SHEET_URLS);
+  return Object.keys(PILOTING_SHEET_URLS).filter(
+    (slug) => !OPERATIONAL_SYSTEM_DEMO_URLS[slug],
+  );
 }
 
 export function getPilotingSheetCopyUrl(systemSlug: string): string | null {
+  if (OPERATIONAL_SYSTEM_DEMO_URLS[systemSlug]) {
+    return null;
+  }
+
   const sheetUrl = PILOTING_SHEET_URLS[systemSlug];
 
   if (!sheetUrl) {

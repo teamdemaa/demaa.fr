@@ -156,9 +156,22 @@ La généralisation se fait ensuite par famille de métiers. Une erreur découve
 dans un échantillon doit être corrigée dans le générateur avant la vague
 suivante, jamais manuellement dans des dizaines de fichiers.
 
-Les cinq métiers de référence sont désormais publiés avec une paire distincte,
-une démonstration en lecture seule et un document modifiable livré après
-paiement. Les contrôles de l'échantillon confirment :
+Onze métiers sont désormais publiés avec une paire distincte, une démonstration
+en lecture seule et un document modifiable livré après paiement :
+
+- Plomberie & chauffage ;
+- Agence marketing ;
+- Restaurant ;
+- Pharmacie ;
+- Crèche ;
+- Bâtiment ;
+- Électricité générale ;
+- Rénovation intérieure ;
+- Menuiserie & agencement ;
+- Maçonnerie & gros œuvre ;
+- Paysagiste.
+
+Les contrôles de l'échantillon et de la première vague BTP confirment :
 
 - 74 contenus opérationnels dans chaque fichier ;
 - zéro personne, date commerciale ou solution retenue fictive dans les
@@ -169,6 +182,11 @@ paiement. Les contrôles de l'échantillon confirment :
   Écosystème ;
 - des liens publics en lecture seule pour les démonstrations et des liens
   `/copy` gardés côté serveur pour les versions vendues.
+
+Les nouvelles paires sont créées dans le dossier Drive
+`Demaa — Systèmes opérationnels publiés`. Le dossier porte le droit Lecteur
+par lien : les fichiers créés à l'intérieur héritent du bon accès sans réglage
+manuel fichier par fichier.
 
 ## Fabrique de classeurs
 
@@ -197,4 +215,5 @@ Commandes de contrôle :
 npm run generate:operational-blueprints -- --summary
 npm run generate:operational-blueprints -- --slug pharmacie
 npm run generate:operational-blueprints -- --slug pharmacie --variant editable --sheet-batch-json
+npm run register:operational-assets -- --slug <métier> --demo-id <id> --paid-id <id>
 ```

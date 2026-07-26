@@ -6,16 +6,11 @@ import {
   getPaidOperationalSystemCopyUrl,
   hasPaidOperationalSystemAsset,
 } from "@/lib/paid-operational-system-assets.server";
+import paidAssets from "@/lib/paid-operational-system-assets.generated.server.json";
 
 describe("paid operational system assets", () => {
   it("keeps every published sold workbook in the server-only registry", () => {
-    const publishedSlugs = [
-      "plomberie-chauffage",
-      "agence-marketing",
-      "restaurant",
-      "pharmacie",
-      "creche",
-    ];
+    const publishedSlugs = Object.keys(paidAssets);
     const copyUrls = publishedSlugs.map((slug) => {
       expect(hasPaidOperationalSystemAsset(slug)).toBe(true);
       const copyUrl = getPaidOperationalSystemCopyUrl(slug);
