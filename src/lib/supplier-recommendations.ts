@@ -13,7 +13,6 @@ const DEFAULT_SUPPLIER_ORDER = [
   "orus",
   "alan",
   "onoff-business",
-  "sumup",
   "insify",
 ] satisfies readonly string[];
 
@@ -85,7 +84,14 @@ const SUPPLIER_RECOMMENDATIONS_BY_SECTOR: Record<string, SupplierRecommendationR
     order: ["autodistribution-pro", "wurth", "kiloutou", "edf-entreprises", "orus", "onoff-business"],
   },
   "Associations & événements": {
-    order: ["onoff-business", "orus", "alan", "swile", "insify"],
+    order: [
+      "onoff-business",
+      "bernard",
+      "swile",
+      "orus",
+      "alan",
+      "insify",
+    ],
   },
 };
 

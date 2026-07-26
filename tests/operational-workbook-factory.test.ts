@@ -114,4 +114,13 @@ describe("operational workbook factory", () => {
       expect(names).not.toContain("SumUp");
     }
   });
+
+  it("keeps payment terminals out of the association ecosystem", () => {
+    const names = buildOperationalWorkbookPair(
+      "association",
+    ).editable.ecosystemRows.map((row) => row.name);
+
+    expect(names).toContain("Bernard");
+    expect(names).not.toContain("SumUp");
+  });
 });
