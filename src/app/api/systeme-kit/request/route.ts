@@ -25,6 +25,7 @@ import {
   sendSystemKitEmail,
 } from "@/lib/system-kit-email";
 import { logOperationalError } from "@/lib/operational-log";
+import { hasPaidOperationalSystemAsset } from "@/lib/paid-operational-system-assets.server";
 
 export const runtime = "nodejs";
 
@@ -64,6 +65,16 @@ async function handlePost(request: Request) {
   const email = normalizeEmail(normalizeText(body?.email, 160));
   const idempotencyKey = normalizeIdempotencyKey(body?.idempotencyKey);
   const honeypot = normalizeText(body?.website, 200);
+
+  if (hasPaidOperationalSystemAsset(sectorSlug)) {
+    return NextResponse.json(
+      {
+        error:
+          "Ce système est désormais disponible après paiement depuis sa page métier.",
+      },
+      { status: 410 },
+    );
+  }
 
   if (honeypot) {
     return NextResponse.json({

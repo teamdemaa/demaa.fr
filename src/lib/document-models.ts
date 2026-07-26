@@ -73,8 +73,6 @@ export function getDocumentModelPreviewSrc(model: DocumentModel): string | null 
 
 const PILOTING_SHEET_URLS: Partial<Record<string, string>> = {
   batiment: "https://docs.google.com/spreadsheets/d/15zC4j67O86Tjy7Gro3_rG49NcfpHfv6L4ztlSPC6hxI/edit",
-  "plomberie-chauffage":
-    "https://docs.google.com/spreadsheets/d/1YiIS1FwchjbZIJZhdOKwnkyF183ScTohJtYU3JKhUpQ/edit",
   "electricite-generale":
     "https://docs.google.com/spreadsheets/d/1wIK28icOZUNLr0Fqd1XXeqDETmye7bx03BEl8h7RI8o/edit",
   "renovation-interieur":
@@ -327,12 +325,6 @@ export function getOperationalSystemDemoUrl(
   }
 
   return sheetUrl.replace(/\/edit(?:\?.*)?$/, "/edit?usp=sharing");
-}
-
-export function getOperationalSystemBlankCopyUrl(
-  systemSlug: string,
-): string | null {
-  return getPilotingSheetCopyUrl(systemSlug);
 }
 
 const globalDocumentModels: DocumentModel[] = [

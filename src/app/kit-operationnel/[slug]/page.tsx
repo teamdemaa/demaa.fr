@@ -7,6 +7,7 @@ import {
   getPilotingSheetCopyUrl,
 } from "@/lib/document-models";
 import { buildKitTrackingUrl } from "@/lib/kit-analytics-utils";
+import { hasPaidOperationalSystemAsset } from "@/lib/paid-operational-system-assets.server";
 import { normalizeSystemDetailTab } from "@/lib/system-detail-tabs";
 import {
   buildSystemPageIntro,
@@ -55,9 +56,12 @@ export default async function OperationalKitPage({
 
   const initialTab = getParamValue(resolvedSearchParams.tab);
   const jsonLd = buildSystemPageJsonLd(data);
-  const kitCopyUrl = getPilotingSheetCopyUrl(data.system.slug);
+  const isPaidSystem = hasPaidOperationalSystemAsset(data.system.slug);
+  const kitCopyUrl = isPaidSystem
+    ? null
+    : getPilotingSheetCopyUrl(data.system.slug);
 
-  if (!kitCopyUrl) {
+  if (!isPaidSystem && !kitCopyUrl) {
     notFound();
   }
 
@@ -76,7 +80,9 @@ export default async function OperationalKitPage({
             demoUrl={getOperationalSystemDemoUrl(data.system.slug)}
             intro={buildSystemPageIntro(data)}
             initialActiveTab={normalizeSystemDetailTab(initialTab)}
-            kitTrackingUrl={buildKitTrackingUrl(data.system.slug)}
+            kitTrackingUrl={
+              isPaidSystem ? undefined : buildKitTrackingUrl(data.system.slug)
+            }
             headingAs="h1"
           />
         </div>

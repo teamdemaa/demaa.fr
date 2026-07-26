@@ -273,7 +273,7 @@ function singularizeSectorLabel(label: string): string {
 
 function buildSystemPageTitle(data: SystemDetailPageData): string {
   if (data.system.slug === "plomberie-chauffage") {
-    return `Système opérationnel ${data.system.name} : process, outils et modèle gratuit | Demaa`;
+    return `Système opérationnel ${data.system.name} : process, outils et modèle modifiable | Demaa`;
   }
 
   return `Kit opérationnel ${data.system.name} : tableau de pilotage, outils et process | Demaa`;
@@ -289,7 +289,7 @@ function buildSystemPageDescription(data: SystemDetailPageData): string {
   if (data.system.slug === "plomberie-chauffage") {
     return [
       data.enterprise.description,
-      "Découvrez une démonstration remplie, 18 process, 74 consignes concrètes, les outils recommandés et un tableau gratuit et vierge à copier.",
+      "Découvrez gratuitement une démonstration remplie, 18 process, 74 consignes concrètes et les outils recommandés, puis obtenez le système modifiable pour 49 € en paiement unique.",
     ].join(" ");
   }
 

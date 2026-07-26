@@ -60,8 +60,8 @@ async function inspectEnterprise(enterprise) {
     if (isPlumbingPilot) {
       for (const expectedText of [
         "Voir la démonstration",
-        "Recevoir le tableau gratuit",
-        "Aperçu en lecture seule · Tableau envoyé par e-mail",
+        "Obtenir le système — 49 €",
+        "Démonstration en lecture seule · Version modifiable après paiement",
       ]) {
         if (!renderedOverviewHtml.includes(expectedText)) {
           errors.push(`pilot promise missing: ${expectedText}`);

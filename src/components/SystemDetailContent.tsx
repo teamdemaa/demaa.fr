@@ -12,9 +12,10 @@ import {
 } from "lucide-react";
 import { type KeyboardEvent, Suspense, useMemo, useState } from "react";
 import OrganisationSessionBookingButton from "@/components/OrganisationSessionBookingButton";
-import SystemCompleteModal from "@/components/SystemCompleteModal";
+import OperationalSystemPurchaseButton from "@/components/OperationalSystemPurchaseButton";
 import SystemeTabContent from "@/components/SystemeTabContent";
 import { trackKitOpen } from "@/lib/kit-analytics-client";
+import { getOperationalSystemAccessNote } from "@/lib/operational-system-offer";
 import type { OperationalSystemDetail } from "@/lib/system-operations";
 import {
   isVisibleSystemDetailTab,
@@ -29,7 +30,7 @@ type SystemDetailContentProps = {
   demoUrl?: string | null;
   intro: string;
   initialActiveTab?: string;
-  kitTrackingUrl: string;
+  kitTrackingUrl?: string;
   headingAs?: "h1" | "h2";
   headingId?: string;
 };
@@ -69,7 +70,6 @@ export default function SystemDetailContent({
         ? "process"
         : "kit",
   );
-  const [isBlankModelOpen, setIsBlankModelOpen] = useState(false);
   const preview = getSystemKitPreview(system.slug);
   const isBuildingKit = system.slug === "batiment";
   const métierTools = useMemo(
@@ -191,17 +191,11 @@ export default function SystemDetailContent({
                     Voir la démonstration
                   </a>
                 ) : null}
-                <button
-                  type="button"
-                  onClick={() => setIsBlankModelOpen(true)}
-                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-dema-forest/25 bg-dema-paper px-5 py-3 text-sm font-semibold text-dema-forest transition hover:border-dema-forest hover:bg-dema-sage/35"
-                >
-                  Recevoir le tableau gratuit
-                </button>
+                <OperationalSystemPurchaseButton systemSlug={system.slug} />
               </div>
 
               <p className="mt-4 text-xs leading-relaxed text-dema-muted">
-                Aperçu en lecture seule · Tableau envoyé par e-mail
+                {getOperationalSystemAccessNote()}
               </p>
             </div>
           </section>
@@ -249,7 +243,7 @@ export default function SystemDetailContent({
           aria-labelledby={`tab-${activeTab}`}
           className="mt-7"
         >
-          {activeTab === "kit" ? (
+          {activeTab === "kit" && kitTrackingUrl ? (
             <a
               href={kitTrackingUrl}
               target="_blank"
@@ -393,14 +387,6 @@ export default function SystemDetailContent({
 
         </section>
       </article>
-
-      {isBlankModelOpen ? (
-        <SystemCompleteModal
-          systemName={system.name}
-          systemSlug={system.slug}
-          onClose={() => setIsBlankModelOpen(false)}
-        />
-      ) : null}
     </>
   );
 }

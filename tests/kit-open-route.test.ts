@@ -5,10 +5,12 @@ vi.mock("server-only", () => ({}));
 const {
   getEnterpriseBySlugMock,
   getPilotingSheetCopyUrlMock,
+  hasPaidOperationalSystemAssetMock,
   recordKitOpenMock,
 } = vi.hoisted(() => ({
   getEnterpriseBySlugMock: vi.fn(),
   getPilotingSheetCopyUrlMock: vi.fn(),
+  hasPaidOperationalSystemAssetMock: vi.fn(),
   recordKitOpenMock: vi.fn(),
 }));
 
@@ -33,6 +35,10 @@ vi.mock("@/lib/operational-log", () => ({
   logOperationalEvent: vi.fn(),
 }));
 
+vi.mock("@/lib/paid-operational-system-assets.server", () => ({
+  hasPaidOperationalSystemAsset: hasPaidOperationalSystemAssetMock,
+}));
+
 import { GET } from "@/app/api/kits/[slug]/open/route";
 
 describe("kit open redirect route", () => {
@@ -46,6 +52,7 @@ describe("kit open redirect route", () => {
       "https://docs.google.com/spreadsheets/d/example/copy",
     );
     recordKitOpenMock.mockResolvedValue(undefined);
+    hasPaidOperationalSystemAssetMock.mockReturnValue(false);
   });
 
   it("records the opening and redirects to the Google copy page", async () => {
@@ -93,6 +100,21 @@ describe("kit open redirect route", () => {
     );
 
     expect(response.status).toBe(404);
+    expect(recordKitOpenMock).not.toHaveBeenCalled();
+  });
+
+  it("ne redirige jamais publiquement vers un système payant", async () => {
+    hasPaidOperationalSystemAssetMock.mockReturnValueOnce(true);
+
+    const response = await GET(
+      new Request(
+        "https://demaa.fr/api/kits/plomberie-chauffage/open",
+      ),
+      { params: Promise.resolve({ slug: "plomberie-chauffage" }) },
+    );
+
+    expect(response.status).toBe(410);
+    expect(getPilotingSheetCopyUrlMock).not.toHaveBeenCalled();
     expect(recordKitOpenMock).not.toHaveBeenCalled();
   });
 });

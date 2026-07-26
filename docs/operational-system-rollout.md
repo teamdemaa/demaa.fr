@@ -9,7 +9,7 @@ structuration réalisée manuellement pour chaque prospect.
 Le contrat commercial unique est :
 
 - démonstration remplie gratuite, sans formulaire et en lecture seule ;
-- système modifiable vendu **49 € TTC en paiement unique** ;
+- système modifiable vendu **49 € en paiement unique** ;
 - adresse e-mail collectée au paiement pour remettre l'accès ;
 - aucune session, assistance humaine ou réponse personnalisée incluse ;
 - aucun abonnement.
@@ -50,6 +50,26 @@ Chaque métier possède deux Google Sheets distincts :
 Le lien `/copy` du modèle vierge ne doit jamais être envoyé au navigateur avant
 confirmation du paiement. Il reste résolu côté serveur à partir du métier
 acheté, puis il est affiché sur la page de confirmation et envoyé par e-mail.
+
+## Configuration du paiement
+
+Le paiement utilise Stripe Checkout en mode `payment`, sans abonnement. Les
+variables serveur attendues sont :
+
+- `STRIPE_SECRET_KEY` et `STRIPE_WEBHOOK_SECRET` en production ;
+- `STRIPE_SECRET_KEY_TEST` et `STRIPE_WEBHOOK_SECRET_TEST` en environnement de
+  test local ;
+- `RESEND_API_KEY` et `RESEND_FROM_EMAIL` pour l'e-mail de livraison.
+
+Le webhook Stripe doit cibler `/api/webhooks/stripe` et écouter :
+
+- `checkout.session.completed` ;
+- `checkout.session.async_payment_succeeded`.
+
+La page de confirmation revérifie également la session Stripe. Elle peut donc
+remettre le lien au client même si l'e-mail est momentanément indisponible,
+mais jamais si le paiement, le montant, la devise ou le métier ne correspondent
+pas au contrat.
 
 Une démonstration ne doit jamais pointer vers le modèle vierge et les deux
 documents ne doivent jamais partager le même identifiant Google Drive.

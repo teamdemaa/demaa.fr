@@ -5,6 +5,7 @@ import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 import { recordKitOpen } from "@/lib/kit-analytics.server";
 import { shouldCountKitOpen } from "@/lib/kit-analytics-utils";
 import { logOperationalError, logOperationalEvent } from "@/lib/operational-log";
+import { hasPaidOperationalSystemAsset } from "@/lib/paid-operational-system-assets.server";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -22,6 +23,13 @@ export async function GET(request: Request, context: KitOpenRouteContext) {
 
   if (!isValidKitSlug(slug)) {
     return NextResponse.json({ error: "Kit invalide." }, { status: 400 });
+  }
+
+  if (hasPaidOperationalSystemAsset(slug)) {
+    return NextResponse.json(
+      { error: "Ce système est disponible après paiement." },
+      { status: 410 },
+    );
   }
 
   const copyUrl = getPilotingSheetCopyUrl(slug);

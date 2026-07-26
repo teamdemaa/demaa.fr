@@ -61,7 +61,7 @@ function inspectPage({ enterprise, response, html, tab }) {
   }
 
   const expectedTabs = isPlumbingPilot
-    ? ["Process", "Outils", "Services"]
+    ? ["Process", "Outils"]
     : ["Pilotage", "Outils", "Process"];
 
   for (const expectedTab of expectedTabs) {
@@ -74,8 +74,9 @@ function inspectPage({ enterprise, response, html, tab }) {
     renderedHtml,
     'aria-controls="kit-content-panel"',
   );
-  if (controlledPanelCount !== 3) {
-    errors.push(`expected three tab controls for the shared panel, found ${controlledPanelCount}`);
+  const expectedTabCount = isPlumbingPilot ? 2 : 3;
+  if (controlledPanelCount !== expectedTabCount) {
+    errors.push(`expected ${expectedTabCount} tab controls for the shared panel, found ${controlledPanelCount}`);
   }
   if (!renderedHtml.includes('id="kit-content-panel"')) {
     errors.push("shared tab panel is missing");
@@ -84,9 +85,9 @@ function inspectPage({ enterprise, response, html, tab }) {
   if (isPlumbingPilot) {
     for (const expectedText of [
       "Voir la démonstration",
-      "Recevoir le tableau gratuit",
+      "Obtenir le système — 49 €",
       "Consultez le système complet, puis récupérez votre tableau",
-      "Aperçu en lecture seule · Tableau envoyé par e-mail",
+      "Démonstration en lecture seule · Version modifiable après paiement",
     ]) {
       if (!renderedHtml.includes(expectedText)) {
         errors.push(`missing demo/model distinction: ${expectedText}`);

@@ -11,6 +11,7 @@ const mocks = vi.hoisted(() => ({
   sendSystemKitEmail: vi.fn(),
   submitLeadRequest: vi.fn(),
   updateLeadDeliveryStatus: vi.fn(),
+  hasPaidOperationalSystemAsset: vi.fn(),
 }));
 
 vi.mock("@/lib/api-security", () => ({
@@ -76,6 +77,10 @@ vi.mock("@/lib/operational-log", () => ({
   logOperationalError: vi.fn(),
 }));
 
+vi.mock("@/lib/paid-operational-system-assets.server", () => ({
+  hasPaidOperationalSystemAsset: mocks.hasPaidOperationalSystemAsset,
+}));
+
 import { POST } from "@/app/api/systeme-kit/request/route";
 
 describe("blank operational system request route", () => {
@@ -99,6 +104,7 @@ describe("blank operational system request route", () => {
     });
     mocks.updateLeadDeliveryStatus.mockResolvedValue(undefined);
     mocks.scheduleSystemKitSequence.mockResolvedValue(undefined);
+    mocks.hasPaidOperationalSystemAsset.mockReturnValue(false);
   });
 
   it("collecte prénom et email puis renvoie uniquement la copie du modèle vierge", async () => {
@@ -162,6 +168,26 @@ describe("blank operational system request route", () => {
     );
 
     expect(response.status).toBe(400);
+    expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
+    expect(mocks.sendSystemKitEmail).not.toHaveBeenCalled();
+  });
+
+  it("ne remet jamais gratuitement un système passé au paiement", async () => {
+    mocks.hasPaidOperationalSystemAsset.mockReturnValueOnce(true);
+
+    const response = await POST(
+      new Request("https://demaa.fr/api/systeme-kit/request", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: "maya@example.com",
+          firstName: "Maya",
+          sectorSlug: "plomberie-chauffage",
+        }),
+      }),
+    );
+
+    expect(response.status).toBe(410);
     expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
     expect(mocks.sendSystemKitEmail).not.toHaveBeenCalled();
   });

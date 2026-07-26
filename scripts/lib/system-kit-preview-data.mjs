@@ -16,22 +16,35 @@ export async function readSystemKitPreviewData(rootDir) {
     "const OPERATIONAL_SYSTEM_DEMO_URLS",
     mappingStart,
   );
-  const firstExportStart = source.indexOf(
+  const mappingsExportStart = source.indexOf(
     "export function getPilotingSheetSlugs",
     mappingStart,
   );
-  const mappingEnd =
-    demoMappingStart > mappingStart ? demoMappingStart : firstExportStart;
 
-  if (mappingStart < 0 || mappingEnd < 0 || mappingEnd <= mappingStart) {
-    throw new Error("Impossible de trouver PILOTING_SHEET_URLS dans document-models.ts.");
+  if (
+    mappingStart < 0 ||
+    demoMappingStart <= mappingStart ||
+    mappingsExportStart <= demoMappingStart
+  ) {
+    throw new Error(
+      "Impossible de trouver les mappings des systèmes dans document-models.ts.",
+    );
   }
 
-  const mappingBlock = source.slice(mappingStart, mappingEnd);
-  const mappings = [...mappingBlock.matchAll(SHEET_MAPPING_PATTERN)].map((match) => ({
-    slug: match[1] || match[2],
-    url: match[3],
-  }));
+  const legacyMappingBlock = source.slice(mappingStart, demoMappingStart);
+  const demoMappingBlock = source.slice(demoMappingStart, mappingsExportStart);
+  const parseMappings = (block) =>
+    [...block.matchAll(SHEET_MAPPING_PATTERN)].map((match) => ({
+      slug: match[1] || match[2],
+      url: match[3],
+    }));
+  const mappingsBySlug = new Map(
+    [
+      ...parseMappings(legacyMappingBlock),
+      ...parseMappings(demoMappingBlock),
+    ].map((mapping) => [mapping.slug, mapping]),
+  );
+  const mappings = [...mappingsBySlug.values()];
   const enterprises = JSON.parse(catalogSource).enterprises;
   const namesBySlug = new Map(
     enterprises.map((enterprise) => [enterprise.slug, enterprise.name]),

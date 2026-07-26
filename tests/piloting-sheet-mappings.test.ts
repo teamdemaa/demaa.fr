@@ -2,7 +2,6 @@ import { describe, expect, it } from "vitest";
 
 import rawEnterpriseAnnuaire from "@/lib/enterprise-annuaire.json";
 import {
-  getOperationalSystemBlankCopyUrl,
   getOperationalSystemDemoUrl,
   getPilotingSheetCopyUrl,
   getPilotingSheetSlugs,
@@ -21,11 +20,13 @@ function extractGoogleSheetId(url: string): string | null {
 }
 
 describe("piloting sheet mappings", () => {
-  it("maps every operational kit to one unique Google Sheet copy URL", () => {
-    const enterpriseSlugs = enterprises.map((enterprise) => enterprise.slug);
+  it("maps every legacy free kit to one unique Google Sheet copy URL", () => {
+    const enterpriseSlugs = enterprises
+      .map((enterprise) => enterprise.slug)
+      .filter((slug) => slug !== "plomberie-chauffage");
     const mappedSlugs = getPilotingSheetSlugs();
 
-    expect(enterpriseSlugs).toHaveLength(115);
+    expect(enterpriseSlugs).toHaveLength(114);
     expect(new Set(enterpriseSlugs).size).toBe(enterpriseSlugs.length);
     expect(mappedSlugs.toSorted()).toEqual(enterpriseSlugs.toSorted());
 
@@ -49,23 +50,15 @@ describe("piloting sheet mappings", () => {
     expect(getPilotingSheetCopyUrl("kit-inconnu")).toBeNull();
   });
 
-  it("sépare la démonstration et le modèle vierge du pilote Plomberie", () => {
+  it("expose seulement la démonstration du pilote Plomberie", () => {
     const demoUrl = getOperationalSystemDemoUrl(
-      "plomberie-chauffage",
-    );
-    const blankCopyUrl = getOperationalSystemBlankCopyUrl(
       "plomberie-chauffage",
     );
 
     expect(demoUrl).toBe(
       "https://docs.google.com/spreadsheets/d/1YiSXWlhEr87U9BLzaQvdHVJ496hyJc5l6jYDrJIjhFg/edit?usp=sharing",
     );
-    expect(blankCopyUrl).toBe(
-      "https://docs.google.com/spreadsheets/d/1YiIS1FwchjbZIJZhdOKwnkyF183ScTohJtYU3JKhUpQ/copy",
-    );
-    expect(extractGoogleSheetId(demoUrl as string)).not.toBe(
-      extractGoogleSheetId(blankCopyUrl as string),
-    );
+    expect(getPilotingSheetCopyUrl("plomberie-chauffage")).toBeNull();
   });
 
   it("ne prétend pas avoir une démonstration pour les autres métiers", () => {
