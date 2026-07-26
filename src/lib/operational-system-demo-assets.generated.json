@@ -12,6 +12,8 @@
   "cabinet-assurance": "https://docs.google.com/spreadsheets/d/1JAw-MWKgBgTs8TkiX6R0lRaUyxzw9hRlHfibXEa3iSk/edit",
   "cabinet-comptable": "https://docs.google.com/spreadsheets/d/1GmIJe1qK0D8cBQc83F6BX32U1RDceBCNsKGuUM6C3vs/edit",
   "cabinet-davocat": "https://docs.google.com/spreadsheets/d/1Z1GX-tAntKkV5kyXBQHWUIdJoXI2tD4mbbRY4d6hcww/edit",
+  "cabinet-medical": "https://docs.google.com/spreadsheets/d/1ZwwXcKzE24Ub1bC8Ri158nlApdiRg1BRtXPelALx500/edit",
+  "cabinet-paramedical": "https://docs.google.com/spreadsheets/d/1_TNTQE0Q1vv1J961JOqdGWkX8DZbOg6LcCaHbkXydMo/edit",
   "cabinet-rh-externalise": "https://docs.google.com/spreadsheets/d/14Zi1bvn1UY2tO8crSfS8phLjKXmXgJ-yx36SfJItJzs/edit",
   "carreleur": "https://docs.google.com/spreadsheets/d/1NcdcPwN0jmGCyTkp-lgh0oRQn_o3S696HrU9cOJtNRg/edit",
   "carrosserie": "https://docs.google.com/spreadsheets/d/1woelPPjPjo9blIRrZcH572JI1ShAI05ekpW1pxSrodw/edit",
@@ -26,6 +28,7 @@
   "couvreur": "https://docs.google.com/spreadsheets/d/1e4ulqXf5YXwP4pPJlq-LVoBUYlfAcgjM9B0fZqK-9cA/edit",
   "creche": "https://docs.google.com/spreadsheets/d/1sLY-zuhCfmjs_aMPh___yRlBuV5Rg4izfqokYpVwzvM/edit",
   "dark-kitchen": "https://docs.google.com/spreadsheets/d/1OORhYta_20Znq1OJ9X77omiHprnM8Ko-Tpba-oBvewM/edit",
+  "dentiste": "https://docs.google.com/spreadsheets/d/1Pp3lfpjJ8mgHgb3A3gEVz0GRAOpKtGOotg30MQE0ivM/edit",
   "diagnostiqueur-immobilier": "https://docs.google.com/spreadsheets/d/1_rSNaB2BlRQvU2cmpHOlmUsy9C5XjMTp1lE00CyL-70/edit",
   "electricite-generale": "https://docs.google.com/spreadsheets/d/1Q__Nm82igtN-o9mSG2tsvMpRTXmqeEdPOwGEXcoJkYI/edit",
   "entreprise-de-securite": "https://docs.google.com/spreadsheets/d/1uzIoVmznXLLBH6kZCoTim5kwDBRJEmn7wQeyQDD-OR0/edit",
@@ -52,6 +55,7 @@
   "nettoyage-professionnel": "https://docs.google.com/spreadsheets/d/1f4l_L-Mz67jIThbhwspwOc66JgMrmkt908Sl92KCVgI/edit",
   "notaire": "https://docs.google.com/spreadsheets/d/1NzAD99n8jpC9w1XPz23vQKOb__z9Di2KpjkXprRsa5M/edit",
   "organisme-de-formation": "https://docs.google.com/spreadsheets/d/1oDmugm3RFuuwRKyoHc5ZD40fz2-E9Masf8Yc5zA1b0s/edit",
+  "osteopathe": "https://docs.google.com/spreadsheets/d/1GgnyOOfq8mHmnUX0PgYP1XBO18oIk6jwSYO5mV7Jafg/edit",
   "paysagiste": "https://docs.google.com/spreadsheets/d/1Fg7lBWzU6_nM5-GkdHWOEik1ugYSq7rorTHgNPOybmo/edit",
   "peintre-en-batiment": "https://docs.google.com/spreadsheets/d/10G6ZEs3Beu44v3qVub0k1NM5hUlOE6KD7On1IP51TPw/edit",
   "pharmacie": "https://docs.google.com/spreadsheets/d/1GORr3gdTTkMhNxmhwQtVqC2zA0zJSXBkQHAFN3pP0yM/edit",
@@ -59,6 +63,7 @@
   "plomberie-chauffage": "https://docs.google.com/spreadsheets/d/1YiSXWlhEr87U9BLzaQvdHVJ496hyJc5l6jYDrJIjhFg/edit",
   "pressing": "https://docs.google.com/spreadsheets/d/1FS8NSIh20TWOcvw0enJeumsCuVntBRgY5PxKhx3mXRU/edit",
   "production-industrie": "https://docs.google.com/spreadsheets/d/1m0lkglAFaSVqerMTxQv4j7xKretW86TGXI-6K4mLr60/edit",
+  "psychologue": "https://docs.google.com/spreadsheets/d/1aPE8kxQOR9MX00KUnTSv6I6HOoUoqha5jLVA6nhjAz4/edit",
   "renovation-interieur": "https://docs.google.com/spreadsheets/d/1GDk0zriVd3ZMZWnnEoppTBANWXLQjMoZnB-fBL1TdgM/edit",
   "restaurant": "https://docs.google.com/spreadsheets/d/1B59qQCBbKBPfYT1XeZSVEnFRYAXWi-Y6RQRszwDDYjI/edit",
   "salle-de-sport": "https://docs.google.com/spreadsheets/d/16MewqFl_sX3V9MvGeHK07hVDP8PtukvA00xdnTWiRHw/edit",
@@ -66,5 +71,6 @@
   "serrurier": "https://docs.google.com/spreadsheets/d/1owptkEadJ-Q9lgVfbgreAj8038xA2WRWnRI76_ugldw/edit",
   "societe-recouvrement": "https://docs.google.com/spreadsheets/d/1OOwTiA9wB75YUrMFjP-wwWcxkTCCAVSj63eKW1dHiZM/edit",
   "syndic": "https://docs.google.com/spreadsheets/d/1By3thbD4v9X9EYs8AcuPCqptj9G946hrpak3ZTW3tlA/edit",
-  "traiteur": "https://docs.google.com/spreadsheets/d/1oyMUhYoeq1N9O8aB2dpOBsjCW89aQmh5pi_mAsLpx1w/edit"
+  "traiteur": "https://docs.google.com/spreadsheets/d/1oyMUhYoeq1N9O8aB2dpOBsjCW89aQmh5pi_mAsLpx1w/edit",
+  "veterinaire": "https://docs.google.com/spreadsheets/d/1APboDv0WOnNrguCWG5VlSnA2kFVfwVNZs3PuOsWUbJI/edit"
 }
