@@ -156,7 +156,7 @@ La généralisation se fait ensuite par famille de métiers. Une erreur découve
 dans un échantillon doit être corrigée dans le générateur avant la vague
 suivante, jamais manuellement dans des dizaines de fichiers.
 
-Vingt-six métiers sont désormais publiés avec une paire distincte, une démonstration
+Vingt-sept métiers sont désormais publiés avec une paire distincte, une démonstration
 en lecture seule et un document modifiable livré après paiement :
 
 - Plomberie & chauffage ;
@@ -184,10 +184,11 @@ en lecture seule et un document modifiable livré après paiement :
 - Dark kitchen ;
 - Boulangerie ;
 - Café ;
-- Food truck.
+- Food truck ;
+- Diagnostiqueur immobilier.
 
-Les contrôles de l'échantillon, de la famille BTP et de la famille restauration
-rapide complètes confirment :
+Les contrôles de l'échantillon et des familles BTP, restauration rapide et
+immobilier expertise complètes confirment :
 
 - 74 contenus opérationnels dans chaque fichier ;
 - zéro personne, date commerciale ou solution retenue fictive dans les
