@@ -27,8 +27,8 @@ describe("system kit email", () => {
       email: "client@example.com",
       firstName: '<img src=x onerror="alert(1)">',
       idempotencyKey: "system-kit-email-security-test",
-      systemName: "Bâtiment & travaux",
-      systemSlug: "batiment",
+      systemName: "Cabinet & conseil",
+      systemSlug: "cabinet-de-conseil",
     });
 
     expect(result.sent).toBe(true);
@@ -44,13 +44,13 @@ describe("system kit email", () => {
     expect(payload.html).toContain(
       "&lt;img src=x onerror=&quot;alert(1)&quot;&gt;",
     );
-    expect(payload.html).toContain("Bâtiment &amp; travaux");
+    expect(payload.html).toContain("Cabinet &amp; conseil");
     expect(payload.html).toContain("Votre tableau gratuit est prêt");
     expect(payload.html).toContain(
       "Ce fichier est distinct de la démonstration remplie",
     );
     expect(payload.subject).toBe(
-      "Votre tableau gratuit Demaa - Bâtiment & travaux",
+      "Votre tableau gratuit Demaa - Cabinet & conseil",
     );
   });
 

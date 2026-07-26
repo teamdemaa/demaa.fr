@@ -156,7 +156,7 @@ La généralisation se fait ensuite par famille de métiers. Une erreur découve
 dans un échantillon doit être corrigée dans le générateur avant la vague
 suivante, jamais manuellement dans des dizaines de fichiers.
 
-Onze métiers sont désormais publiés avec une paire distincte, une démonstration
+Vingt métiers sont désormais publiés avec une paire distincte, une démonstration
 en lecture seule et un document modifiable livré après paiement :
 
 - Plomberie & chauffage ;
@@ -169,9 +169,18 @@ en lecture seule et un document modifiable livré après paiement :
 - Rénovation intérieure ;
 - Menuiserie & agencement ;
 - Maçonnerie & gros œuvre ;
-- Paysagiste.
+- Paysagiste ;
+- Nettoyage professionnel ;
+- Architecte ;
+- Pisciniste ;
+- Couvreur ;
+- Peintre en bâtiment ;
+- Carreleur ;
+- Climatisation ;
+- Serrurier ;
+- Géomètre.
 
-Les contrôles de l'échantillon et de la première vague BTP confirment :
+Les contrôles de l'échantillon et de la famille BTP complète confirment :
 
 - 74 contenus opérationnels dans chaque fichier ;
 - zéro personne, date commerciale ou solution retenue fictive dans les

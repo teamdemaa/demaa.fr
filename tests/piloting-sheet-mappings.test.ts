@@ -55,13 +55,7 @@ describe("piloting sheet mappings", () => {
   });
 
   it("exposes one read-only demonstration for every published paid system", () => {
-    const publishedSlugs = [
-      "plomberie-chauffage",
-      "agence-marketing",
-      "restaurant",
-      "pharmacie",
-      "creche",
-    ];
+    const publishedSlugs = Object.keys(demoAssets);
     const demoUrls = publishedSlugs.map((slug) => {
       const demoUrl = getOperationalSystemDemoUrl(slug);
 
@@ -79,6 +73,11 @@ describe("piloting sheet mappings", () => {
   });
 
   it("does not claim a demonstration for an unpublished system", () => {
-    expect(getOperationalSystemDemoUrl("couvreur")).toBeNull();
+    const unpublishedSlug = enterprises.find(
+      (enterprise) => !Object.hasOwn(demoAssets, enterprise.slug),
+    )?.slug;
+
+    expect(unpublishedSlug).toBeDefined();
+    expect(getOperationalSystemDemoUrl(unpublishedSlug as string)).toBeNull();
   });
 });
