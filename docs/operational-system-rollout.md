@@ -155,3 +155,27 @@ Après Plomberie & chauffage, l'usine est validée sur :
 La généralisation se fait ensuite par famille de métiers. Une erreur découverte
 dans un échantillon doit être corrigée dans le générateur avant la vague
 suivante, jamais manuellement dans des dizaines de fichiers.
+
+## Fabrique de classeurs
+
+La fabrique `operational-workbook-factory` produit pour chacun des 115 métiers :
+
+- une démonstration avec société et données fictives ;
+- une version modifiable sans les affectations et chiffres fictifs ;
+- les mêmes 74 contenus précis dans les deux variantes ;
+- les actions de mise en place extraites du référentiel ;
+- les rôles déduits des responsables recommandés ;
+- les outils nommés, EM2A Expertise et les fournisseurs pertinents ;
+- les sept onglets dans l'ordre canonique.
+
+Le compilateur `operational-workbook-sheet-compiler` convertit ensuite une
+variante en requêtes Google Sheets. Il accepte les identifiants d'onglets du
+fichier cible afin de ne pas dépendre d'une édition manuelle.
+
+Commandes de contrôle :
+
+```bash
+npm run generate:operational-blueprints -- --summary
+npm run generate:operational-blueprints -- --slug pharmacie
+npm run generate:operational-blueprints -- --slug pharmacie --variant editable --sheet-batch-json
+```
