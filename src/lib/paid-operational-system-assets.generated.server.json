@@ -28,6 +28,7 @@
   "couvreur": "https://docs.google.com/spreadsheets/d/1blmXIzAYIuxsMuyJRWv84n1HHa4avQF_W4BFHYMOWTw/edit",
   "creche": "https://docs.google.com/spreadsheets/d/1wJBIeclGwDiGMD6CD0RTQMxFLM1D1eoRJdBWUReVw_M/edit",
   "dark-kitchen": "https://docs.google.com/spreadsheets/d/1VKRO2aUHZ097L8nf6o09jpyRAK2MIovXVIlaZKkCyo8/edit",
+  "demenagement": "https://docs.google.com/spreadsheets/d/1xsfN6yuBGGhyv2zLpXtxoppAXtDVvkxcn-GIaxHzpkQ/edit",
   "dentiste": "https://docs.google.com/spreadsheets/d/1fXJKcPhKZmSxaIYWp-3k-wipzh9W87wzf6LU3R5mgXE/edit",
   "diagnostiqueur-immobilier": "https://docs.google.com/spreadsheets/d/1JTzzd_c3TsY79ynwdeDdgfDDqYgFN_7MT_5KFMhLzJg/edit",
   "electricite-generale": "https://docs.google.com/spreadsheets/d/1hKVQCB93NUvlsf9-QkBi6wEjAk3uNzl-ofCDT5DW9DU/edit",
@@ -49,6 +50,7 @@
   "investissement-immobilier": "https://docs.google.com/spreadsheets/d/1hpnLmjWchsF632hAdStqUIF0OtT4UIz6kiyx53fmym8/edit",
   "investissement-locatif": "https://docs.google.com/spreadsheets/d/1TOWG6KTC5swW4WdXgpqV9eqDDpVzYKY3C8SANrh6gVE/edit",
   "laverie-automatique": "https://docs.google.com/spreadsheets/d/1wFS1Sk51WUhd7AqpJi54M3UjnZLnNdsIQEg9a-RRdAo/edit",
+  "livraison-dernier-kilometre": "https://docs.google.com/spreadsheets/d/16HGlJqKdyKAXkpw5oScLpSgC_5k2a1vu_3eQXbZ7Nec/edit",
   "maconnerie-gros-oeuvre": "https://docs.google.com/spreadsheets/d/1uQxIEv6VrFELDPixqTUBQsxTFlsnTJcADJi0iYbsKOs/edit",
   "marchand-de-biens": "https://docs.google.com/spreadsheets/d/1jO9Bh5Y7uWbCauJ1A-cWOEW0gJGb5P7DBz91-R1_M_o/edit",
   "menuiserie-agencement": "https://docs.google.com/spreadsheets/d/1GcfEcMdjXBsZUjutKOrdpua71lyhiaqtO29axzNlcEQ/edit",
@@ -72,5 +74,8 @@
   "societe-recouvrement": "https://docs.google.com/spreadsheets/d/1E8O_pNiIVgtY7hecApqxXbMSaUZCg6RYTe4_PgDwU2g/edit",
   "syndic": "https://docs.google.com/spreadsheets/d/13R95pA3BP5MgeRmL12aNXMCSL54DMipVfEKhYRHd9H0/edit",
   "traiteur": "https://docs.google.com/spreadsheets/d/10w8BfJqT8cdvka0MiXvU4fpRpErZY3VOFIfBgEb-5NM/edit",
-  "veterinaire": "https://docs.google.com/spreadsheets/d/17MgbxkgTrpSojJOoR0BIbDAgWsvACAydNpAI9lN_4JE/edit"
+  "transport-de-marchandise": "https://docs.google.com/spreadsheets/d/1S6bteR6iLflYQDMqicIj3XS_xFDM18j7cWgEsdwhgQ4/edit",
+  "transport-de-personnes": "https://docs.google.com/spreadsheets/d/1ujzfXrm82pSWROXClXhl_NJN6UECx5kVJJS2w3scdLY/edit",
+  "veterinaire": "https://docs.google.com/spreadsheets/d/17MgbxkgTrpSojJOoR0BIbDAgWsvACAydNpAI9lN_4JE/edit",
+  "vtc": "https://docs.google.com/spreadsheets/d/1ebmVrqRDwq4VDo9wV3BhRqIRP4TjdsldH6OjOCjTlxk/edit"
 }

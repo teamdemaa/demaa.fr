@@ -156,7 +156,7 @@ La généralisation se fait ensuite par famille de métiers. Une erreur découve
 dans un échantillon doit être corrigée dans le générateur avant la vague
 suivante, jamais manuellement dans des dizaines de fichiers.
 
-Soixante-quatorze métiers sont désormais publiés avec une paire distincte, une démonstration
+Soixante-dix-neuf métiers sont désormais publiés avec une paire distincte, une démonstration
 en lecture seule et un document modifiable livré après paiement :
 
 - Plomberie & chauffage ;
@@ -232,7 +232,12 @@ en lecture seule et un document modifiable livré après paiement :
 - Dentiste ;
 - Ostéopathe ;
 - Psychologue ;
-- Vétérinaire.
+- Vétérinaire ;
+- Déménagement professionnel ;
+- Livraison dernier kilomètre ;
+- Transport de marchandises ;
+- Transport de personnes B2B ;
+- VTC.
 
 Les contrôles de l'échantillon et des familles BTP, restauration rapide et
 immobilier expertise, services terrain et immobilier transaction complètes
@@ -241,7 +246,7 @@ et des lots Formation, gestion immobilière, investissement immobilier,
 investissement financier et accueil & services
 ainsi que les lots Entretien textile et Hospitalité & événements complets
 et les lots Ateliers & production, Beauté, Services financiers, Cabinets
-réglementés et Cabinets de santé complets confirment :
+réglementés, Cabinets de santé et Logistique & transport complets confirment :
 
 - 74 contenus opérationnels dans chaque fichier ;
 - zéro personne, date commerciale ou solution retenue fictive dans les
