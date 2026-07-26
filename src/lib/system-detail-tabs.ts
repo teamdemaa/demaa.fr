@@ -2,7 +2,6 @@ export const SYSTEM_DETAIL_TABS = [
   "kit",
   "outils",
   "process",
-  "services",
 ] as const;
 
 export type SystemDetailTab = (typeof SYSTEM_DETAIL_TABS)[number];
@@ -11,7 +10,6 @@ const SYSTEM_DETAIL_TAB_VISIBILITY = {
   kit: true,
   outils: true,
   process: true,
-  services: true,
 } satisfies Record<SystemDetailTab, boolean>;
 
 function isSystemDetailTab(tab?: string): tab is SystemDetailTab {
@@ -23,7 +21,8 @@ export function isVisibleSystemDetailTab(tab?: string): tab is SystemDetailTab {
 }
 
 const LEGACY_SYSTEM_DETAIL_TABS: Readonly<Record<string, SystemDetailTab>> = {
-  accompagnement: "services",
+  accompagnement: "process",
+  services: "process",
   cours: "process",
   systeme: "process",
 };

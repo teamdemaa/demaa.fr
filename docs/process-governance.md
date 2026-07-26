@@ -29,17 +29,34 @@ Chaque ligne de processus est rattachée à :
 Les titres existants des processus restent la base. Les étapes les rendent concrètes pour chaque
 métier sans recréer un second catalogue.
 
+## État du référentiel au 26 juillet 2026
+
+- 115 métiers ;
+- 37 familles ;
+- 526 processus ;
+- 8 510 contenus opérationnels, soit 74 par métier ;
+- 526 références de supports ;
+- 18 supports Plomberie & chauffage possédant une démonstration et un modèle
+  vierge liés.
+
+L'industrialisation éditoriale des 115 métiers est terminée. La création des
+classeurs métier et des supports associés constitue un chantier séparé : elle
+ne doit pas modifier les intitulés de processus ni les 8 510 contenus validés.
+
 ## Documents et modèles
 
-Le lot actuel couvre uniquement le nettoyage et la consolidation. Il ne crée aucun modèle.
-
-Le lot suivant créera les modèles séparément, exclusivement dans :
+Les modèles sont créés exclusivement dans :
 
 - Google Sheets pour les registres, suivis, grilles, tableaux et calculateurs ;
 - Google Docs pour les checklists, procédures, attestations et trames narratives.
 
-Les liens de copie seront ajoutés au référentiel maître après validation du modèle. L'application
-pourra ensuite les exposer depuis l'onglet **Process** du tableau de pilotage.
+Chaque support publié doit posséder deux accès distincts :
+
+- une démonstration consultable en lecture seule ;
+- un modèle vierge copiable.
+
+Les liens sont ajoutés au référentiel maître après validation. L'application
+les expose ensuite depuis l'onglet **Process** du système opérationnel.
 
 ## Règles de maintenance
 
@@ -48,7 +65,9 @@ pourra ensuite les exposer depuis l'onglet **Process** du tableau de pilotage.
 - Ne pas réintroduire `operationProcesses`, `processExamples` ou `system_process_templates`.
 - Régénérer les deux fichiers JSON après une modification éditoriale.
 - Lancer `npm run validate:data` avant livraison.
-- Vérifier le pilote plomberie : 18 processus et 74 contenus typés.
+- Vérifier chaque métier : 74 contenus typés.
+- Vérifier le pilote Plomberie : 18 processus, 74 contenus et 18 supports liés.
+- Ne jamais utiliser un modèle vierge comme démonstration remplie.
 
 ## Pilote Plomberie et vagues BTP du 25 juillet 2026
 

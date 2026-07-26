@@ -20,8 +20,6 @@ type ResendEmailPayload = {
   text: string;
 };
 
-type SystemKitFollowupKind = "usage" | "session";
-
 function escapeHtml(value: string) {
   return value
     .replaceAll("&", "&amp;")
@@ -171,49 +169,30 @@ function renderSystemKitFollowupEmail(input: {
   firstName: string;
   systemName: string;
   kitUrl: string;
-  sessionUrl: string;
-  kind: SystemKitFollowupKind;
 }) {
   const safeFirstName = escapeHtml(input.firstName);
   const safeSystemName = escapeHtml(input.systemName);
 
-  if (input.kind === "usage") {
-    return renderSystemKitEmailLayout({
-      eyebrow: "Système opérationnel",
-      title: "Comment démarrer simplement",
-      greeting: input.firstName ? `Bonjour ${safeFirstName},` : "Bonjour,",
-      paragraphs: [
-        `Voici la façon la plus simple de démarrer votre modèle opérationnel pour ${safeSystemName.toLowerCase()}.`,
-        "Commencez par la Synthèse : choisissez le premier mois, votre unité d’activité et vos objectifs.",
-        "Renseignez ensuite vos chiffres dans le Prévisionnel financier, puis choisissez une seule action et un seul process prioritaires.",
-      ],
-      secondaryBlock: {
-        title: "Pour bien démarrer",
-        lines: [
-          "1. Configurez la Synthèse.",
-          "2. Complétez le Prévisionnel financier mois par mois.",
-          "3. Ajoutez une action prioritaire, puis adaptez un premier process.",
-        ],
-      },
-      button: {
-        href: input.kitUrl,
-        label: "Ouvrir mon modèle",
-      },
-      linkNotice: "Si le bouton ne fonctionne pas, copiez-collez ce lien dans votre navigateur :",
-    });
-  }
-
   return renderSystemKitEmailLayout({
-    eyebrow: "Système opérationnel clé en main",
-    title: "Votre entreprise dépend encore trop de vous ?",
+    eyebrow: "Système opérationnel",
+    title: "Comment démarrer simplement",
     greeting: input.firstName ? `Bonjour ${safeFirstName},` : "Bonjour,",
     paragraphs: [
-      "Nous pouvons adapter les process, les rôles, les outils et les documents à votre fonctionnement, puis mettre le système en place avec votre équipe.",
-      "Le premier échange est offert. Vous recevez ensuite un périmètre et un devis adaptés avant tout démarrage.",
+      `Voici la façon la plus simple de démarrer votre modèle opérationnel pour ${safeSystemName.toLowerCase()}.`,
+      "Commencez par la Synthèse : choisissez le premier mois, votre unité d’activité et vos objectifs.",
+      "Renseignez ensuite vos chiffres dans le Prévisionnel financier, puis choisissez une seule action et un seul process prioritaires.",
     ],
+    secondaryBlock: {
+      title: "Pour bien démarrer",
+      lines: [
+        "1. Configurez la Synthèse.",
+        "2. Complétez le Prévisionnel financier mois par mois.",
+        "3. Ajoutez une action prioritaire, puis adaptez un premier process.",
+      ],
+    },
     button: {
-      href: input.sessionUrl,
-      label: "Mettre en place mon système",
+      href: input.kitUrl,
+      label: "Ouvrir mon modèle",
     },
     linkNotice: "Si le bouton ne fonctionne pas, copiez-collez ce lien dans votre navigateur :",
   });
@@ -287,33 +266,20 @@ export async function sendSystemKitEmail(input: {
 }
 
 function renderSystemKitFollowupText(input: {
-  kind: SystemKitFollowupKind;
   firstName: string;
   systemName: string;
   kitUrl: string;
-  sessionUrl: string;
 }) {
-  if (input.kind === "usage") {
-    return [
-      `Bonjour ${input.firstName || ""}`.trim() + ",",
-      "",
-      `Voici la façon la plus simple de démarrer votre modèle opérationnel pour ${input.systemName}.`,
-      "",
-      "1. Configurez la Synthèse : premier mois, unité d’activité et objectifs.",
-      "2. Complétez le Prévisionnel financier mois par mois.",
-      "3. Ajoutez une action prioritaire, puis adaptez un premier process.",
-      "",
-      `Ouvrir mon modèle : ${input.kitUrl}`,
-    ].join("\n");
-  }
-
   return [
     `Bonjour ${input.firstName || ""}`.trim() + ",",
     "",
-    "Demaa peut construire à partir du modèle un outil adapté à un processus précis : suivi, statuts, responsabilités et automatisations utiles.",
-    "Les projets simples démarrent à 750 € HT. Vous décrivez le besoin par écrit, puis vous recevez un périmètre, un délai et un devis fixe avant tout démarrage.",
+    `Voici la façon la plus simple de démarrer votre modèle opérationnel pour ${input.systemName}.`,
     "",
-    `Décrire mon besoin et demander un devis : ${input.sessionUrl}`,
+    "1. Configurez la Synthèse : premier mois, unité d’activité et objectifs.",
+    "2. Complétez le Prévisionnel financier mois par mois.",
+    "3. Ajoutez une action prioritaire, puis adaptez un premier process.",
+    "",
+    `Ouvrir mon modèle : ${input.kitUrl}`,
   ].join("\n");
 }
 
@@ -367,7 +333,6 @@ export async function sendSystemKitFollowupEmail(input: {
   firstName: string;
   systemName: string;
   systemSlug: string;
-  kind: SystemKitFollowupKind;
 }) {
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.RESEND_FROM_EMAIL;
@@ -379,18 +344,12 @@ export async function sendSystemKitFollowupEmail(input: {
   const kitUrl =
     getPilotingSheetCopyUrl(input.systemSlug) ??
     `${getCanonicalOrigin()}/kit-operationnel/${encodeURIComponent(input.systemSlug)}`;
-  const sessionUrl =
-    `${getCanonicalOrigin()}/annuaire-services/organisation-equipes` +
-    `?source=kit-followup&systemSlug=${encodeURIComponent(input.systemSlug)}`;
-  const subject =
-    input.kind === "usage"
-      ? "Comment démarrer votre modèle opérationnel"
-      : "Besoin d’un système adapté à votre entreprise ?";
+  const subject = "Comment démarrer votre modèle opérationnel";
 
   return sendResendEmail({
     apiKey,
     idempotencyKey: buildEmailIdempotencyKey(
-      `system-kit-followup:${input.kind}:${input.systemSlug}:${input.email}`,
+      `system-kit-followup:usage:${input.systemSlug}:${input.email}`,
     ),
     payload: {
       from,
@@ -400,15 +359,11 @@ export async function sendSystemKitFollowupEmail(input: {
         firstName: input.firstName,
         systemName: input.systemName,
         kitUrl,
-        sessionUrl,
-        kind: input.kind,
       }),
       text: renderSystemKitFollowupText({
         firstName: input.firstName,
         systemName: input.systemName,
         kitUrl,
-        sessionUrl,
-        kind: input.kind,
       }),
     },
   });

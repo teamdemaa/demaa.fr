@@ -10,12 +10,12 @@ describe("operational kit tabs", () => {
       "kit",
       "outils",
       "process",
-      "services",
     ]);
   });
 
   it("keeps legacy tab URLs on a meaningful section", () => {
-    expect(normalizeSystemDetailTab("accompagnement")).toBe("services");
+    expect(normalizeSystemDetailTab("accompagnement")).toBe("process");
+    expect(normalizeSystemDetailTab("services")).toBe("process");
     expect(normalizeSystemDetailTab("cours")).toBe("process");
     expect(normalizeSystemDetailTab("systeme")).toBe("process");
   });

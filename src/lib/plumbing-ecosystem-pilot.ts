@@ -7,9 +7,7 @@ export type PlumbingPilotEcosystemRecommendation = {
     | "Outil métier"
     | "Professionnel"
     | "Fournisseur"
-    | "Formalité"
-    | "Banque / assurance / financement"
-    | "Accompagnement";
+    | "Banque / assurance / financement";
   need: string;
   name: string;
   recommendation: string;
@@ -81,50 +79,6 @@ export const plumbingPilotEcosystemRecommendations: PlumbingPilotEcosystemRecomm
       cost: "Sur devis",
       url: EM2A_PROFILE_URL,
       note: "Cabinet inscrit à l’Ordre des experts-comptables.",
-    },
-    {
-      category: "Formalité",
-      need: "Créer une société",
-      name: "Création de société",
-      recommendation:
-        "Préparer le choix du statut, les documents, l’annonce légale et le suivi de l’immatriculation.",
-      initialStatus: "À étudier",
-      cost: "600 € HT",
-      url: "https://demaa.fr/annuaire-services/creation-societe",
-      note: "À utiliser uniquement si une création est réellement prévue.",
-    },
-    {
-      category: "Formalité",
-      need: "Modifier une société",
-      name: "Modification de société",
-      recommendation:
-        "Préparer le changement de siège, de dirigeant, d’activité, de capital, de dénomination ou de statuts.",
-      initialStatus: "À étudier",
-      cost: "Sur devis",
-      url: "https://demaa.fr/annuaire-services/modification-societe",
-      note: "Vérifier aussi l’impact sur l’assurance et les activités déclarées.",
-    },
-    {
-      category: "Formalité",
-      need: "Fermer une société",
-      name: "Fermeture de société",
-      recommendation:
-        "Préparer la dissolution, la liquidation, la publication et le suivi de la radiation.",
-      initialStatus: "À étudier",
-      cost: "Sur devis",
-      url: "https://demaa.fr/annuaire-services/fermeture-societe",
-      note: "Prévoir la coordination avec l’expert-comptable.",
-    },
-    {
-      category: "Accompagnement",
-      need: "Mettre en place le système dans l’entreprise",
-      name: "Système opérationnel clé en main",
-      recommendation:
-        "Faire diagnostiquer le fonctionnement, adapter les process, les rôles et les outils, puis mettre le système en place avec l’équipe.",
-      initialStatus: "À étudier",
-      cost: "Sur devis",
-      url: "https://demaa.fr/annuaire-services/organisation-equipes",
-      note: "Premier échange offert ; le périmètre et le devis sont validés avant toute mise en place.",
     },
     {
       category: "Fournisseur",

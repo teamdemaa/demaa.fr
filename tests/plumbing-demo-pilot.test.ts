@@ -61,4 +61,13 @@ describe("plumbing filled demonstration", () => {
       "Point mensuel prévu le 10.",
     ]);
   });
+
+  it("ne contient aucune prestation humaine Demaa", () => {
+    expect(
+      plumbingDemoEcosystem.some(
+        (row) =>
+          row[7].includes("/annuaire-services/"),
+      ),
+    ).toBe(false);
+  });
 });

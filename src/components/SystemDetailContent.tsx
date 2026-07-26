@@ -11,7 +11,6 @@ import {
   Wrench,
 } from "lucide-react";
 import { type KeyboardEvent, Suspense, useMemo, useState } from "react";
-import AccompagnementServices from "@/components/AccompagnementServices";
 import OrganisationSessionBookingButton from "@/components/OrganisationSessionBookingButton";
 import SystemCompleteModal from "@/components/SystemCompleteModal";
 import SystemeTabContent from "@/components/SystemeTabContent";
@@ -47,7 +46,6 @@ const plumbingPilotTabs: ReadonlyArray<{
 }> = [
   { slug: "process", label: "Process" },
   { slug: "outils", label: "Outils" },
-  { slug: "services", label: "Services" },
 ];
 
 export default function SystemDetailContent({
@@ -211,7 +209,9 @@ export default function SystemDetailContent({
 
         <div className="mt-8 flex justify-start sm:mt-9">
           <div
-            className="grid w-full grid-cols-3 gap-1 rounded-full border border-dema-line bg-dema-paper p-1 shadow-[0_8px_24px_rgba(23,35,29,0.035)]"
+            className={`grid w-full gap-1 rounded-full border border-dema-line bg-dema-paper p-1 shadow-[0_8px_24px_rgba(23,35,29,0.035)] ${
+              isPlumbingPilot ? "grid-cols-2" : "grid-cols-3"
+            }`}
             role="tablist"
             aria-label={
               isPlumbingPilot
@@ -389,15 +389,6 @@ export default function SystemDetailContent({
                 </div>
               )}
             </div>
-          ) : null}
-
-          {activeTab === "services" ? (
-            <AccompagnementServices
-              sectorLabel={system.category}
-              source={`Système opérationnel — ${system.name} — Services`}
-              systemName={system.name}
-              systemSlug={system.slug}
-            />
           ) : null}
 
         </section>

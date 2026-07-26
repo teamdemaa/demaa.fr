@@ -54,7 +54,7 @@ describe("system kit email", () => {
     );
   });
 
-  it("présente la construction d’un système personnalisé sur devis", async () => {
+  it("envoie un unique suivi d’usage sans proposition de service", async () => {
     process.env.RESEND_API_KEY = "test-key";
     process.env.RESEND_FROM_EMAIL = "Demaa <team@demaa.fr>";
     const fetchMock = vi
@@ -65,7 +65,6 @@ describe("system kit email", () => {
     const result = await sendSystemKitFollowupEmail({
       email: "client@example.com",
       firstName: "Maya",
-      kind: "session",
       systemName: "Plomberie & chauffage",
       systemSlug: "plomberie-chauffage",
     });
@@ -77,13 +76,11 @@ describe("system kit email", () => {
       subject: string;
     };
 
-    expect(payload.subject).toBe(
-      "Besoin d’un système adapté à votre entreprise ?",
-    );
-    expect(payload.html).toContain("premier échange est offert");
-    expect(payload.html).toContain("un périmètre et un devis");
-    expect(payload.html).toContain("mettre le système en place");
-    expect(payload.html).not.toContain("750 € HT");
-    expect(payload.html).not.toContain("session d’adaptation");
+    expect(payload.subject).toBe("Comment démarrer votre modèle opérationnel");
+    expect(payload.html).toContain("Comment démarrer simplement");
+    expect(payload.html).toContain("Ouvrir mon modèle");
+    expect(payload.html).not.toContain("premier échange");
+    expect(payload.html).not.toContain("devis");
+    expect(payload.html).not.toContain("accompagnement");
   });
 });

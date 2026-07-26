@@ -42,9 +42,7 @@ const ecosystemCategories = [
   "Outil métier",
   "Professionnel",
   "Fournisseur",
-  "Formalité",
   "Banque / assurance / financement",
-  "Accompagnement",
 ];
 
 const ecosystemStatuses = [
@@ -602,7 +600,7 @@ function buildRequests(data) {
       [
         ["ÉCOSYSTÈME - PLOMBERIE & CHAUFFAGE"],
         [
-          "Centralisez ici les outils, professionnels, formalités, fournisseurs et services utiles.",
+          "Centralisez ici les outils, professionnels, fournisseurs, assurances et financements utiles.",
         ],
         [
           {

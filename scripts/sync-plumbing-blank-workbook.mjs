@@ -222,7 +222,7 @@ function buildRequests(data) {
     writeValues(
       gridRange(SHEET_IDS.ecosystem, 1, 2, 0, 1),
       [[
-        "MODÈLE VIERGE - Comparez puis renseignez les outils, professionnels, formalités, fournisseurs et services utiles.",
+        "MODÈLE VIERGE - Comparez puis renseignez les outils, professionnels, fournisseurs, assurances et financements utiles.",
       ]],
     ),
     clearValues(gridRange(SHEET_IDS.actions, 5, 498, 0, 12)),

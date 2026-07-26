@@ -40,13 +40,13 @@ export default function Navbar({
                 <Link
                   href={
                     isPlumbingPilotPage
-                      ? "/kit-operationnel/plomberie-chauffage?tab=services"
+                      ? "/kit-operationnel/plomberie-chauffage?tab=process"
                       : "/"
                   }
                   className="demaa-primary-button min-h-10 px-4 text-xs sm:px-5 sm:text-sm"
                 >
                   {isPlumbingPilotPage
-                    ? "Mettre en place mon système"
+                    ? "Voir les process"
                     : "Trouver mon système"}
                 </Link>
               ) : showSystemsCta ? (

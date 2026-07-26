@@ -6,14 +6,12 @@ const allowedCategories = new Set([
   "Outil métier",
   "Professionnel",
   "Fournisseur",
-  "Formalité",
   "Banque / assurance / financement",
-  "Accompagnement",
 ]);
 
 describe("plumbing ecosystem pilot", () => {
   it("propose un écosystème court et exploitable", () => {
-    expect(plumbingPilotEcosystemRecommendations).toHaveLength(13);
+    expect(plumbingPilotEcosystemRecommendations).toHaveLength(9);
     expect(
       new Set(
         plumbingPilotEcosystemRecommendations.map(
@@ -49,20 +47,13 @@ describe("plumbing ecosystem pilot", () => {
     }
   });
 
-  it("présente la mise en place clé en main comme une prestation sur devis", () => {
-    const turnkeySystem = plumbingPilotEcosystemRecommendations.filter(
-      (recommendation) =>
-        recommendation.category === "Accompagnement" &&
-        recommendation.need === "Mettre en place le système dans l’entreprise",
-    );
-
-    expect(turnkeySystem).toHaveLength(1);
-    expect(turnkeySystem[0].name).toBe("Système opérationnel clé en main");
-    expect(turnkeySystem[0].cost).toBe("Sur devis");
-    expect(turnkeySystem[0].recommendation).toContain("adapter les process");
-    expect(turnkeySystem[0].recommendation).toContain("mettre le système en place");
-    expect(turnkeySystem[0].note).toContain("Premier échange offert");
-    expect(turnkeySystem[0].note).toContain("devis");
+  it("ne contient aucune prestation humaine Demaa", () => {
+    expect(
+      plumbingPilotEcosystemRecommendations.some(
+        (recommendation) =>
+          recommendation.url.includes("/annuaire-services/"),
+      ),
+    ).toBe(false);
   });
 
   it("reprend les fournisseurs critiques déjà recommandés pour la plomberie", () => {

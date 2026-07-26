@@ -35,7 +35,7 @@ async function handleGet(request: Request) {
   const results: Array<{ reference: string; kind: string; sent: boolean }> = [];
 
   for (const subscriber of dueSubscribers) {
-    if (subscriber.sequenceStep > 2) {
+    if (subscriber.sequenceStep > 1) {
       await advanceSystemKitSequenceSubscriber({
         collection: subscriber.collection,
         subscriberId: subscriber.id,
@@ -45,13 +45,12 @@ async function handleGet(request: Request) {
       continue;
     }
 
-    const kind = subscriber.sequenceStep === 1 ? "usage" : "session";
+    const kind = "usage";
     const emailResult = await sendSystemKitFollowupEmail({
       email: subscriber.email,
       firstName: subscriber.firstName,
       systemName: subscriber.systemName,
       systemSlug: subscriber.systemSlug,
-      kind,
     });
 
     results.push({
@@ -72,7 +71,7 @@ async function handleGet(request: Request) {
       collection: subscriber.collection,
       subscriberId: subscriber.id,
       nextStep: subscriber.sequenceStep + 1,
-      completed: subscriber.sequenceStep >= 2,
+      completed: true,
     });
   }
 

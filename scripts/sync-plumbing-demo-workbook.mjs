@@ -291,7 +291,7 @@ function buildRequests(demo) {
     writeValues(
       gridRange(SHEET_IDS.ecosystem, 1, 2, 0, 1),
       [[
-        `DÉMONSTRATION - Exemple fictif de ${company.name}. Les liens ouvrent les outils et services présentés dans cet exemple.`,
+        `DÉMONSTRATION - Exemple fictif de ${company.name}. Les liens ouvrent les outils, professionnels et fournisseurs présentés dans cet exemple.`,
       ]],
     ),
     writeValues(
