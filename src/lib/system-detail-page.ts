@@ -272,6 +272,10 @@ function singularizeSectorLabel(label: string): string {
 }
 
 function buildSystemPageTitle(data: SystemDetailPageData): string {
+  if (data.system.slug === "plomberie-chauffage") {
+    return `Système opérationnel ${data.system.name} : process, outils et modèle gratuit | Demaa`;
+  }
+
   return `Kit opérationnel ${data.system.name} : tableau de pilotage, outils et process | Demaa`;
 }
 
@@ -282,6 +286,13 @@ export function buildSystemPageIntro(data: SystemDetailPageData): string {
 function buildSystemPageDescription(data: SystemDetailPageData): string {
   const override = SYSTEM_PAGE_DESCRIPTION_OVERRIDES[data.system.slug];
 
+  if (data.system.slug === "plomberie-chauffage") {
+    return [
+      data.enterprise.description,
+      "Découvrez une démonstration remplie, 18 process, 74 consignes concrètes, les outils recommandés et un tableau gratuit et vierge à copier.",
+    ].join(" ");
+  }
+
   if (override) {
     return override.replace(/\bsysteme\b/gi, "kit opérationnel");
   }
@@ -291,7 +302,7 @@ function buildSystemPageDescription(data: SystemDetailPageData): string {
     data.detail.systeme?.cards.reduce(
       (total, card) => total + card.items.length,
       0,
-    ) ?? data.detail.processes.length;
+    ) ?? 0;
   const parts = [
     data.enterprise.description,
     `${processCount} process opérationnels et ${data.detail.tools.length} outils ${data.detail.tools.length > 1 ? "recommandés" : "recommandé"} pour structurer une activité de ${sectorLabel}.`,
@@ -308,14 +319,23 @@ export function buildSystemPageMetadata(data: SystemDetailPageData): Metadata {
   return {
     title,
     description,
-    keywords: [
-      data.system.name,
-      `kit opérationnel ${data.system.name.toLowerCase()}`,
-      `process ${data.system.name.toLowerCase()}`,
-      `outils ${data.system.name.toLowerCase()}`,
-      `organisation ${data.system.name.toLowerCase()}`,
-      `structurer ${data.system.name.toLowerCase()}`,
-    ],
+    keywords:
+      data.system.slug === "plomberie-chauffage"
+        ? [
+            data.system.name,
+            `système opérationnel ${data.system.name.toLowerCase()}`,
+            `process ${data.system.name.toLowerCase()}`,
+            `outils ${data.system.name.toLowerCase()}`,
+            `modèle entreprise ${data.system.name.toLowerCase()}`,
+          ]
+        : [
+            data.system.name,
+            `kit opérationnel ${data.system.name.toLowerCase()}`,
+            `process ${data.system.name.toLowerCase()}`,
+            `outils ${data.system.name.toLowerCase()}`,
+            `organisation ${data.system.name.toLowerCase()}`,
+            `structurer ${data.system.name.toLowerCase()}`,
+          ],
     alternates: {
       canonical: url,
     },
@@ -341,7 +361,7 @@ export function buildSystemPageJsonLd(data: SystemDetailPageData) {
   const listedProcesses = (
     data.detail.systeme?.cards.flatMap((card) =>
       card.items.map((item) => ({ title: item.process })),
-    ) ?? data.detail.processes
+    ) ?? []
   ).slice(0, 8);
   const listedTools = data.detail.tools.slice(0, 8);
 
@@ -366,7 +386,10 @@ export function buildSystemPageJsonLd(data: SystemDetailPageData) {
     {
       "@context": "https://schema.org",
       "@type": "ItemList",
-      name: `Ressources du kit opérationnel ${data.system.name}`,
+      name:
+        data.system.slug === "plomberie-chauffage"
+          ? `Ressources du système opérationnel ${data.system.name}`
+          : `Ressources du kit opérationnel ${data.system.name}`,
       numberOfItems: listedProcesses.length + listedTools.length,
       itemListElement: [
         ...listedProcesses.map((process, index) => ({

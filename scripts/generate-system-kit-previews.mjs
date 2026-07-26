@@ -185,9 +185,9 @@ function createSheetHeader({ width, name, kind }) {
     return Buffer.from(
       `<svg width="${width}" height="105" xmlns="http://www.w3.org/2000/svg">
         <rect x="31" y="22" width="${width - 31}" height="31" fill="#08613f"/>
-        <text x="42" y="44" font-family="Arial, sans-serif" font-size="${titleSize}" font-weight="700" fill="#ffffff">${safeName} — TABLEAU DE PILOTAGE</text>
+        <text x="42" y="44" font-family="Arial, sans-serif" font-size="${titleSize}" font-weight="700" fill="#ffffff">${safeName} - SYSTÈME OPÉRATIONNEL</text>
         <rect x="31" y="53" width="${width - 31}" height="27" fill="#ffffff"/>
-        <text x="42" y="71" font-family="Arial, sans-serif" font-size="10" font-style="italic" fill="#65706a">Un seul tableau pour suivre vos chiffres, vos priorités, votre équipe, votre écosystème, votre calendrier et vos process.</text>
+        <text x="42" y="71" font-family="Arial, sans-serif" font-size="10" font-style="italic" fill="#65706a">Process, actions, équipe, finances, marketing et écosystème réunis dans un seul fichier.</text>
         <rect x="31" y="80" width="${width - 31}" height="25" fill="#08613f"/>
         <text x="42" y="98" font-family="Arial, sans-serif" font-size="11" font-weight="700" fill="#ffffff">SYNTHÈSE FINANCIÈRE</text>
       </svg>`,
@@ -341,7 +341,7 @@ for (const [index, mapping] of selectedMappings.entries()) {
     manifestBySlug.set(mapping.slug, {
       slug: mapping.slug,
       src: relativeSrc,
-      alt: `Aperçu du tableau de suivi opérationnel pour ${mapping.name}`,
+      alt: `Aperçu du système opérationnel pour ${mapping.name}`,
       width: metadata.width,
       height: metadata.height,
     });

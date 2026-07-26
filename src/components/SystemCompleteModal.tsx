@@ -167,20 +167,22 @@ export default function SystemCompleteModal({
             id="system-complete-modal-title"
             className="mt-5 pr-10 text-2xl font-semibold tracking-tight text-brand-blue"
           >
-            Recevoir le tableau de pilotage
+            Recevoir le tableau gratuit
           </h2>
 
           <p
             id="system-complete-modal-description"
             className="mt-3 text-sm leading-relaxed text-dema-muted"
           >
-            Une copie prête à personnaliser pour {systemName}.
+            Le tableau gratuit est un fichier vierge séparé de la démonstration.
+            Il contient la structure, les process et les champs à compléter pour{" "}
+            {systemName}.
           </p>
 
           {copyUrl ? (
             <div className="mt-6 rounded-[1rem] bg-dema-cream/55 p-5" role="status">
               <h3 className="text-lg font-semibold text-brand-blue">
-                Votre tableau de pilotage est prêt
+                Votre tableau gratuit est prêt
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-dema-muted">
                 Le lien vient aussi d’être envoyé à {email}. Connectez-vous à Google,
@@ -193,7 +195,7 @@ export default function SystemCompleteModal({
                 rel="noopener noreferrer"
                 className="demaa-primary-button mt-5 inline-flex w-full items-center justify-center gap-2"
               >
-                Créer ma copie du tableau
+                Créer ma copie modifiable
                 <ExternalLink className="h-4 w-4" aria-hidden="true" />
               </a>
             </div>
@@ -247,10 +249,10 @@ export default function SystemCompleteModal({
                 {isSubmitting ? (
                   <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
                 ) : null}
-                {isSubmitting ? "Envoi…" : "Recevoir mon tableau"}
+                {isSubmitting ? "Envoi…" : "Recevoir le tableau gratuit"}
               </button>
               <p className="text-center text-xs text-dema-muted">
-                Gratuit · Lien envoyé immédiatement
+                Gratuit · Prénom et email · Copie dans votre Drive
               </p>
             </form>
           )}

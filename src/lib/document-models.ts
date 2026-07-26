@@ -298,6 +298,11 @@ const PILOTING_SHEET_URLS: Partial<Record<string, string>> = {
     "https://docs.google.com/spreadsheets/d/1ljzXVzPjqPIW3c7uebc2ExwK9ySrAv3SnPWTbf-mgTw/edit",
 };
 
+const OPERATIONAL_SYSTEM_DEMO_URLS: Partial<Record<string, string>> = {
+  "plomberie-chauffage":
+    "https://docs.google.com/spreadsheets/d/1YiSXWlhEr87U9BLzaQvdHVJ496hyJc5l6jYDrJIjhFg/edit",
+};
+
 export function getPilotingSheetSlugs(): string[] {
   return Object.keys(PILOTING_SHEET_URLS);
 }
@@ -310,6 +315,24 @@ export function getPilotingSheetCopyUrl(systemSlug: string): string | null {
   }
 
   return sheetUrl.replace(/\/edit(?:\?.*)?$/, "/copy");
+}
+
+export function getOperationalSystemDemoUrl(
+  systemSlug: string,
+): string | null {
+  const sheetUrl = OPERATIONAL_SYSTEM_DEMO_URLS[systemSlug];
+
+  if (!sheetUrl) {
+    return null;
+  }
+
+  return sheetUrl.replace(/\/edit(?:\?.*)?$/, "/edit?usp=sharing");
+}
+
+export function getOperationalSystemBlankCopyUrl(
+  systemSlug: string,
+): string | null {
+  return getPilotingSheetCopyUrl(systemSlug);
 }
 
 const globalDocumentModels: DocumentModel[] = [

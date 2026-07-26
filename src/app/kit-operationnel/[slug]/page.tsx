@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import SystemDetailContent from "@/components/SystemDetailContent";
-import { getPilotingSheetCopyUrl } from "@/lib/document-models";
+import {
+  getOperationalSystemDemoUrl,
+  getPilotingSheetCopyUrl,
+} from "@/lib/document-models";
 import { buildKitTrackingUrl } from "@/lib/kit-analytics-utils";
 import { normalizeSystemDetailTab } from "@/lib/system-detail-tabs";
 import {
@@ -70,6 +73,7 @@ export default async function OperationalKitPage({
           <SystemDetailContent
             system={data.system}
             detail={data.detail}
+            demoUrl={getOperationalSystemDemoUrl(data.system.slug)}
             intro={buildSystemPageIntro(data)}
             initialActiveTab={normalizeSystemDetailTab(initialTab)}
             kitTrackingUrl={buildKitTrackingUrl(data.system.slug)}

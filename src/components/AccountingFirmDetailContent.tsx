@@ -64,7 +64,7 @@ export default function AccountingFirmDetailContent({
             </p>
             <p className="mt-3 text-sm leading-relaxed text-dema-muted">
               Présentez votre activité, votre contexte et vos disponibilités pour
-              être rappelé par le bon cabinet.
+              être rappelé par {firm.name}.
             </p>
             <div className="mt-5 flex flex-col gap-2">
               <AccountingAppointmentDialog firm={firm} />

@@ -120,7 +120,7 @@ export async function POST(request: Request) {
 
       const context = await resolveLeadContext({
         systemSlug,
-        source: "Kit opérationnel — Services",
+        source: "Système opérationnel — Services",
         sourceUrl: request.headers.get("referer") || sourceUrl,
       });
 
@@ -134,9 +134,15 @@ export async function POST(request: Request) {
         contact: { email, firstName, lastName, phone },
         context,
         emoji: "📗",
+        fields: [
+          {
+            label: "Demande",
+            value: "Jusqu’à 3 recommandations de cabinets adaptés",
+          },
+        ],
         idempotencyKey,
         requestType: "accounting_recommendation",
-        title: "Trouver un comptable",
+        title: "Demande de recommandations expert-comptable",
       });
 
       return NextResponse.json({ ok: true, leadId: lead.leadId });

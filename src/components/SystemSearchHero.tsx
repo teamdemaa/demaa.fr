@@ -170,10 +170,10 @@ export default function SystemSearchHero({
           <h1
             className="leading-[0.94] tracking-tight text-brand-blue"
             style={{ fontSize: "clamp(2.4rem, 6.8vw, 4.6rem)" }}
-            aria-label="Trouvez le Kit opérationnel pour votre entreprise"
+            aria-label="Trouvez le système opérationnel de votre entreprise"
           >
             <span className="font-sans font-light not-italic text-brand-blue/62">
-              Trouvez le Kit opérationnel
+              Trouvez le système opérationnel
             </span>
             <br />
             <span
@@ -255,7 +255,7 @@ export default function SystemSearchHero({
                       </p>
                     </div>
                     <span className="inline-flex shrink-0 items-center gap-2 text-xs text-dema-muted md:text-sm">
-                      Voir le kit opérationnel
+                      Voir le système opérationnel
                       {activeIndex === index ? (
                         <CornerDownLeft className="h-3.5 w-3.5" aria-hidden="true" />
                       ) : null}

@@ -12,9 +12,11 @@ export default function Navbar({
 }) {
   const router = useRouter();
   const pathname = usePathname();
-  const showStructurationCta =
+  const showSystemSearchCta =
     pathname === "/kits-operationnels" ||
     pathname.startsWith("/kit-operationnel/");
+  const isPlumbingPilotPage =
+    pathname === "/kit-operationnel/plomberie-chauffage";
   const showSystemsCta =
     !minimal &&
     (pathname === "/annuaire-services" ||
@@ -34,21 +36,27 @@ export default function Navbar({
               <DemaaWordmark className="text-[1.4rem] sm:text-[1.7rem]" />
             </Link>
             <div className="flex items-center gap-2 sm:gap-3">
-              {showStructurationCta ? (
+              {showSystemSearchCta ? (
                 <Link
-                  href="/"
+                  href={
+                    isPlumbingPilotPage
+                      ? "/kit-operationnel/plomberie-chauffage?tab=services"
+                      : "/"
+                  }
                   className="demaa-primary-button min-h-10 px-4 text-xs sm:px-5 sm:text-sm"
                 >
-                  Commencer à structurer
+                  {isPlumbingPilotPage
+                    ? "Mettre en place mon système"
+                    : "Trouver mon système"}
                 </Link>
               ) : showSystemsCta ? (
                 <Link
                   href="/kits-operationnels"
                   className="demaa-secondary-button hidden min-h-10 items-center justify-center gap-2 px-4 py-2 md:inline-flex"
-                  aria-label="Voir les Kits opérationnels"
+                  aria-label="Voir les systèmes opérationnels"
                 >
                   <BriefcaseBusiness className="h-4 w-4 shrink-0" aria-hidden="true" />
-                  <span>Voir les Kits opérationnels</span>
+                  <span>Voir les systèmes opérationnels</span>
                 </Link>
               ) : null}
             </div>

@@ -8,7 +8,6 @@ import type {
 } from "@/lib/enterprise-annuaire";
 import { getEnterpriseCatalog, getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 import type { BusinessModelBlock, BusinessModelSignals } from "@/lib/business-models";
-import type { SystemPillar, SystemProcessTemplate } from "@/lib/system-process-types";
 import { getCuratedToolRecommendationsForSystem } from "@/lib/system-tool-recommendations";
 import {
   findToolDirectoryItemBySlug,
@@ -17,20 +16,11 @@ import {
   type ToolDirectoryItem,
 } from "@/lib/tool-directory";
 
-
-type SystemProcessCard = {
-  pillar: SystemPillar;
-  title: string;
-  description: string;
-  examples?: string;
-};
-
 export type OperationalSystemDetail = {
   slug: string;
   sectorLabel: string;
   imageTitle: string;
   imageSubtitle: string;
-  processes: SystemProcessCard[];
   systeme: SystemeDetail | null;
   businessModelId?: string;
   businessVariant?: string;
@@ -41,28 +31,15 @@ export type OperationalSystemDetail = {
 
 type OperationalSystemDetailSources = {
   enterprisesBySlug: Record<string, EnterpriseDefinition>;
-  templates: SystemProcessTemplate[];
   toolDirectory: ToolDirectoryItem[];
 };
 
 async function loadSystemOperationSources() {
-  const [{ getSystemProcessTemplates }, { getUnifiedToolDirectory }] = await Promise.all([
-    import("@/lib/system-process-templates"),
-    import("@/lib/tool-directory-firestore"),
-  ]);
+  const { getUnifiedToolDirectory } = await import("@/lib/tool-directory-firestore");
 
   return {
-    getSystemProcessTemplates,
     getUnifiedToolDirectory,
   };
-}
-
-function normalizePillar(pillar: string): SystemPillar {
-  if (pillar === "Finance & Juridique") {
-    return "Finance & administration";
-  }
-
-  return pillar as SystemPillar;
 }
 
 function resolveEnterpriseTools(
@@ -150,15 +127,11 @@ function resolveEnterpriseTools(
 
 export async function buildOperationalSystemDetail(system: System): Promise<OperationalSystemDetail> {
   const enterprise = await getEnterpriseBySlug(system.slug);
-  const { getSystemProcessTemplates, getUnifiedToolDirectory } = await loadSystemOperationSources();
-  const [templates, toolDirectory] = await Promise.all([
-    getSystemProcessTemplates(),
-    getUnifiedToolDirectory(),
-  ]);
+  const { getUnifiedToolDirectory } = await loadSystemOperationSources();
+  const toolDirectory = await getUnifiedToolDirectory();
 
   return buildOperationalSystemDetailFromSources(system, {
     enterprisesBySlug: enterprise ? { [system.slug]: enterprise } : {},
-    templates,
     toolDirectory,
   }, {
     includeSysteme: true,
@@ -173,37 +146,14 @@ function buildOperationalSystemDetailFromSources(
   },
 ): OperationalSystemDetail {
   const enterprise = sources.enterprisesBySlug[system.slug] ?? null;
-  const templates = sources.templates;
   const toolDirectory = sources.toolDirectory;
 
   if (enterprise) {
-    const operationSource =
-      enterprise.operationProcesses?.length
-        ? enterprise.operationProcesses
-        : enterprise.processes?.filter((process) => normalizePillar(process.pillar) === "Opérations") ?? [];
-
-    const operationProcesses: SystemProcessCard[] = operationSource.map((process) => ({
-      pillar: "Opérations",
-      title: process.title,
-      description: process.description,
-      examples: process.examples,
-    }));
-    const hasBusinessBlocks = Boolean(enterprise.businessBlocks?.length);
-    const sharedProcesses: SystemProcessCard[] = hasBusinessBlocks
-      ? []
-      : templates.map((template) => ({
-          pillar: template.pillar,
-          title: template.title,
-          description: template.description,
-          examples: enterprise.processExamples?.[template.id],
-        }));
-
     return {
       slug: system.slug,
       sectorLabel: enterprise.sectorLabel,
       imageTitle: enterprise.imageTitle,
       imageSubtitle: enterprise.imageSubtitle,
-      processes: [...sharedProcesses, ...operationProcesses],
       systeme: options?.includeSysteme ? buildSystemeDetail(enterprise) : null,
       businessModelId: enterprise.businessModelId,
       businessVariant: enterprise.businessVariant,
@@ -223,7 +173,6 @@ function buildOperationalSystemDetailFromSources(
     sectorLabel: publicSectorLabels[0],
     imageTitle: system.name,
     imageSubtitle: `Aperçu du kit opérationnel pour ${system.name.toLowerCase()}`,
-    processes: templates.map((template) => ({ ...template })),
     systeme: null,
     businessBlocks: [],
     tools: [],
@@ -235,17 +184,15 @@ export async function buildOperationalSystemDetails(
   enterpriseCatalog?: EnterpriseDefinition[],
   loadedToolDirectory?: ToolDirectoryItem[],
 ): Promise<Record<string, OperationalSystemDetail>> {
-  const { getSystemProcessTemplates, getUnifiedToolDirectory } = await loadSystemOperationSources();
-  const [enterprises, templates, toolDirectory] = await Promise.all([
+  const { getUnifiedToolDirectory } = await loadSystemOperationSources();
+  const [enterprises, toolDirectory] = await Promise.all([
     enterpriseCatalog ? Promise.resolve(enterpriseCatalog) : getEnterpriseCatalog(),
-    getSystemProcessTemplates(),
     loadedToolDirectory ? Promise.resolve(loadedToolDirectory) : getUnifiedToolDirectory(),
   ]);
   const sources: OperationalSystemDetailSources = {
     enterprisesBySlug: Object.fromEntries(
       enterprises.map((enterprise) => [enterprise.slug, enterprise])
     ),
-    templates,
     toolDirectory,
   };
 

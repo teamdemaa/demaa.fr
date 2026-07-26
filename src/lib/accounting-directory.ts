@@ -1,4 +1,5 @@
 import { cache } from "react";
+import { ACCOUNTING_RECOMMENDATION } from "@/lib/accounting-recommendation";
 import { generatedAccountingDirectoryFirms } from "@/lib/generated-accounting-directory-firms";
 
 type CreationOfferStatus = "yes" | "likely" | "unknown";
@@ -119,18 +120,20 @@ export async function getSimilarAccountingFirms(
   firm: AccountingFirm,
   limit = 3
 ) {
+  if (
+    limit <= 0 ||
+    firm.slug === ACCOUNTING_RECOMMENDATION.firmSlug
+  ) {
+    return [];
+  }
+
   const firms = await getAccountingFirms();
-  return sortAccountingFirms(
-    firms.filter((candidate) => candidate.id !== firm.id),
-    {
-      city: firm.city,
-      region: firm.regions[0],
-      service: firm.services[0],
-      industry: firm.industries[0],
-      clientType: firm.clientTypes[0],
-      tool: firm.tools[0],
-    }
-  ).slice(0, limit);
+  const recommendedFirm = firms.find(
+    (candidate) =>
+      candidate.slug === ACCOUNTING_RECOMMENDATION.firmSlug,
+  );
+
+  return recommendedFirm ? [recommendedFirm] : [];
 }
 
 export function getAccountingFirmScore(

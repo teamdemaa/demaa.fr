@@ -69,15 +69,33 @@ export async function POST(request: Request) {
     const requestedServiceName = normalizeText(body?.serviceName, 160);
     const service = serviceSlug ? getDemaaServiceBySlug(serviceSlug) : null;
     const serviceName = service?.name ?? requestedServiceName;
+    const isCustomSystemRequest = service?.slug === "organisation-equipes";
 
-    if (!name || !phone || !serviceName) {
+    if (!name || !serviceName) {
       return NextResponse.json(
-        { error: "Merci d'indiquer votre nom, votre téléphone et le service demandé." },
+        { error: "Merci d'indiquer votre nom et le service demandé." },
         { status: 400 }
       );
     }
 
-    if (!isValidPhone(phone)) {
+    if (isCustomSystemRequest && (!email || !details)) {
+      return NextResponse.json(
+        {
+          error:
+            "Merci d'indiquer votre email et de décrire le système à mettre en place.",
+        },
+        { status: 400 },
+      );
+    }
+
+    if (!isCustomSystemRequest && !phone) {
+      return NextResponse.json(
+        { error: "Merci d'indiquer votre téléphone." },
+        { status: 400 },
+      );
+    }
+
+    if (phone && !isValidPhone(phone)) {
       return NextResponse.json({ error: "Merci de saisir un numéro de téléphone valide." }, { status: 400 });
     }
 
@@ -107,7 +125,7 @@ export async function POST(request: Request) {
         { label: "Besoin", value: details },
       ],
       requestType: "service_introduction",
-      title: `Demande d’accompagnement — ${serviceName}`,
+      title: `${isCustomSystemRequest ? "Demande de devis" : "Demande d’accompagnement"} — ${serviceName}`,
     });
 
     return NextResponse.json({ ok: true, leadId: lead.leadId });

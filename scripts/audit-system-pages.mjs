@@ -1,4 +1,5 @@
 import enterpriseAnnuaire from "../src/lib/enterprise-annuaire.json" with { type: "json" };
+import processRegistry from "../src/lib/process-registry.generated.json" with { type: "json" };
 import fs from "node:fs";
 import path from "node:path";
 
@@ -51,6 +52,17 @@ const supplierRuleKeys = extractRuleKeys(supplierRulesSource);
 const contentRelationships = extractContentRelationships(contentRelationshipsSource);
 const courseSlugs = [...courseContentSource.matchAll(/slug:\s*"([^"]+)"/g)].map((match) => match[1]);
 const documentModelSlugs = [...documentModelsSource.matchAll(/slug:\s*"([^"]+)"/g)].map((match) => match[1]);
+const familyBySlug = new Map(
+  processRegistry["métiers"].map((metier) => [metier.slug, metier.familyId]),
+);
+const processCountByFamily = new Map();
+
+for (const process of processRegistry.processes) {
+  processCountByFamily.set(
+    process.familyId,
+    (processCountByFamily.get(process.familyId) ?? 0) + 1,
+  );
+}
 
 function getRelatedContentCount(systemSlug) {
   let count = 0;
@@ -79,8 +91,7 @@ function getCoverageTier(score) {
 const systems = enterpriseAnnuaire.enterprises
   .filter((enterprise) => enterprise.visibility !== "hidden")
   .map((enterprise) => {
-    const processes =
-      enterprise.operationProcesses?.length || enterprise.processes?.length || 0;
+    const processes = processCountByFamily.get(familyBySlug.get(enterprise.slug)) ?? 0;
     const tools = enterprise.toolRefs?.length || enterprise.tools?.length || 0;
     const hasCustomServiceRule = serviceRuleKeys.has(enterprise.slug);
     const hasCustomSupplierRule = supplierRuleKeys.has(enterprise.slug);

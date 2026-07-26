@@ -161,7 +161,9 @@ export default function AccountingRecommendationDialog({
       }
 
       clearLeadSubmissionKey(flowKey);
-      setSuccess("Demande envoyée. Nous revenons vers vous pour organiser le rendez-vous.");
+      setSuccess(
+        "Demande envoyée. Nous revenons vers vous avec jusqu’à 3 cabinets adaptés à votre activité.",
+      );
       trackLeadConversion({
         requestType: "accounting_recommendation",
         systemSlug,
@@ -201,7 +203,7 @@ export default function AccountingRecommendationDialog({
               Trouver un expert-comptable
             </h3>
             <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-dema-muted">
-              Recevoir la recommandation d’un professionnel adapté à votre activité et à votre secteur.
+              Jusqu’à 3 recommandations adaptées à votre activité.
             </p>
           </>
         )}
@@ -225,19 +227,20 @@ export default function AccountingRecommendationDialog({
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-                  Rendez-vous d’information
+                  Mise en relation
                 </p>
                 <h2
                   id={`${fieldId}-title`}
                   className="mt-2 text-2xl font-semibold tracking-tight text-brand-blue"
                 >
-                  Échangez avec un expert-comptable adapté à votre activité
+                  Trouver votre expert-comptable
                 </h2>
                 <p
                   id={`${fieldId}-description`}
                   className="mt-2 text-sm leading-relaxed text-dema-muted"
                 >
-                  Secteur pris en compte automatiquement : {sectorLabel}
+                  Nous qualifions votre besoin pour vous proposer jusqu’à 3
+                  cabinets adaptés à votre activité : {sectorLabel}.
                 </p>
               </div>
               <button
@@ -316,7 +319,9 @@ export default function AccountingRecommendationDialog({
                   {isSubmitting ? (
                     <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
                   ) : null}
-                  {isSubmitting ? "Envoi en cours..." : "Demander un rendez-vous"}
+                  {isSubmitting
+                    ? "Envoi en cours..."
+                    : "Recevoir mes recommandations"}
                 </button>
               </form>
             )}

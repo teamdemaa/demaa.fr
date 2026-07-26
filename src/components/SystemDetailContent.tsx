@@ -3,9 +3,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, ArrowRight, FileSpreadsheet, ShieldCheck, Wrench } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  FileSpreadsheet,
+  ShieldCheck,
+  Wrench,
+} from "lucide-react";
 import { type KeyboardEvent, Suspense, useMemo, useState } from "react";
+import AccompagnementServices from "@/components/AccompagnementServices";
 import OrganisationSessionBookingButton from "@/components/OrganisationSessionBookingButton";
+import SystemCompleteModal from "@/components/SystemCompleteModal";
 import SystemeTabContent from "@/components/SystemeTabContent";
 import { trackKitOpen } from "@/lib/kit-analytics-client";
 import type { OperationalSystemDetail } from "@/lib/system-operations";
@@ -19,6 +27,7 @@ import type { System } from "@/lib/types";
 type SystemDetailContentProps = {
   system: System;
   detail: OperationalSystemDetail;
+  demoUrl?: string | null;
   intro: string;
   initialActiveTab?: string;
   kitTrackingUrl: string;
@@ -26,15 +35,25 @@ type SystemDetailContentProps = {
   headingId?: string;
 };
 
-const tabs: ReadonlyArray<{ slug: SystemDetailTab; label: string }> = [
+const legacyTabs: ReadonlyArray<{ slug: SystemDetailTab; label: string }> = [
   { slug: "kit", label: "Pilotage" },
   { slug: "outils", label: "Outils" },
   { slug: "process", label: "Process" },
 ];
 
+const plumbingPilotTabs: ReadonlyArray<{
+  slug: SystemDetailTab;
+  label: string;
+}> = [
+  { slug: "process", label: "Process" },
+  { slug: "outils", label: "Outils" },
+  { slug: "services", label: "Services" },
+];
+
 export default function SystemDetailContent({
   system,
   detail,
+  demoUrl,
   intro,
   initialActiveTab,
   kitTrackingUrl,
@@ -42,9 +61,17 @@ export default function SystemDetailContent({
   headingId,
 }: SystemDetailContentProps) {
   const router = useRouter();
+  const isPlumbingPilot = system.slug === "plomberie-chauffage";
+  const tabs = isPlumbingPilot ? plumbingPilotTabs : legacyTabs;
   const [activeTab, setActiveTab] = useState<SystemDetailTab>(
-    isVisibleSystemDetailTab(initialActiveTab) ? initialActiveTab : "kit",
+    isVisibleSystemDetailTab(initialActiveTab) &&
+      tabs.some((tab) => tab.slug === initialActiveTab)
+      ? initialActiveTab
+      : isPlumbingPilot
+        ? "process"
+        : "kit",
   );
+  const [isBlankModelOpen, setIsBlankModelOpen] = useState(false);
   const preview = getSystemKitPreview(system.slug);
   const isBuildingKit = system.slug === "batiment";
   const métierTools = useMemo(
@@ -105,7 +132,7 @@ export default function SystemDetailContent({
 
         <div className="max-w-4xl">
           <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-            Kit opérationnel
+            {isPlumbingPilot ? "Système opérationnel" : "Kit opérationnel"}
           </p>
           <Heading
             id={headingId}
@@ -118,11 +145,79 @@ export default function SystemDetailContent({
           </p>
         </div>
 
+        {isPlumbingPilot ? (
+          <section className="mt-8 grid w-full overflow-hidden rounded-[1.35rem] border border-dema-line bg-dema-paper shadow-[0_10px_30px_rgba(23,35,29,0.035)] md:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)]">
+            <div className="flex min-h-[15rem] items-center justify-center bg-dema-sage/45 p-5 sm:min-h-[18rem] sm:p-7 md:min-h-[21rem]">
+              {preview ? (
+                <Image
+                  src={preview.src}
+                  alt={preview.alt}
+                  width={preview.width}
+                  height={preview.height}
+                  loading="eager"
+                  sizes="(max-width: 767px) calc(100vw - 72px), 330px"
+                  className="h-auto w-full rounded-[0.8rem] shadow-[0_14px_35px_rgba(23,35,29,0.1)] sm:w-[96%]"
+                />
+              ) : (
+                <span className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-dema-paper text-dema-forest shadow-sm">
+                  <FileSpreadsheet className="h-8 w-8" aria-hidden="true" />
+                </span>
+              )}
+            </div>
+
+            <div className="flex min-w-0 flex-col justify-center px-6 py-8 sm:px-8 sm:py-10">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
+                Système opérationnel
+              </p>
+              <h2 className="mt-3 text-[1.55rem] font-semibold leading-tight tracking-[-0.025em] text-brand-blue">
+                Système opérationnel — {system.name}
+              </h2>
+              <p className="mt-4 text-sm leading-relaxed text-dema-muted">
+                Consultez le système complet, puis récupérez votre tableau
+                modifiable.
+              </p>
+
+              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+                {demoUrl ? (
+                  <a
+                    href={demoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() =>
+                      trackKitOpen({
+                        kitName: `${system.name} — démonstration`,
+                        kitSlug: system.slug,
+                      })}
+                    className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper transition hover:bg-brand-blue"
+                  >
+                    Voir la démonstration
+                  </a>
+                ) : null}
+                <button
+                  type="button"
+                  onClick={() => setIsBlankModelOpen(true)}
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-dema-forest/25 bg-dema-paper px-5 py-3 text-sm font-semibold text-dema-forest transition hover:border-dema-forest hover:bg-dema-sage/35"
+                >
+                  Recevoir le tableau gratuit
+                </button>
+              </div>
+
+              <p className="mt-4 text-xs leading-relaxed text-dema-muted">
+                Aperçu en lecture seule · Tableau envoyé par e-mail
+              </p>
+            </div>
+          </section>
+        ) : null}
+
         <div className="mt-8 flex justify-start sm:mt-9">
           <div
             className="grid w-full grid-cols-3 gap-1 rounded-full border border-dema-line bg-dema-paper p-1 shadow-[0_8px_24px_rgba(23,35,29,0.035)]"
             role="tablist"
-            aria-label="Contenu du kit"
+            aria-label={
+              isPlumbingPilot
+                ? "Contenu du système opérationnel"
+                : "Contenu du kit"
+            }
             aria-orientation="horizontal"
           >
             {tabs.map((tab) => (
@@ -241,7 +336,11 @@ export default function SystemDetailContent({
           ) : null}
 
           {activeTab === "process" ? (
-            <SystemeTabContent systemName={system.name} systeme={detail.systeme} />
+            <SystemeTabContent
+              systemName={system.name}
+              systemSlug={system.slug}
+              systeme={detail.systeme}
+            />
           ) : null}
 
           {activeTab === "outils" ? (
@@ -292,8 +391,25 @@ export default function SystemDetailContent({
             </div>
           ) : null}
 
+          {activeTab === "services" ? (
+            <AccompagnementServices
+              sectorLabel={system.category}
+              source={`Système opérationnel — ${system.name} — Services`}
+              systemName={system.name}
+              systemSlug={system.slug}
+            />
+          ) : null}
+
         </section>
       </article>
+
+      {isBlankModelOpen ? (
+        <SystemCompleteModal
+          systemName={system.name}
+          systemSlug={system.slug}
+          onClose={() => setIsBlankModelOpen(false)}
+        />
+      ) : null}
     </>
   );
 }

@@ -7,7 +7,14 @@ const catalogPath = resolve(currentDir, "../src/lib/enterprise-annuaire.json");
 const baseUrl = (process.env.DEMAA_AUDIT_BASE_URL ?? "http://127.0.0.1:3001").replace(/\/$/, "");
 const concurrency = Number.parseInt(process.env.DEMAA_AUDIT_CONCURRENCY ?? "8", 10);
 const timeoutMs = Number.parseInt(process.env.DEMAA_AUDIT_TIMEOUT_MS ?? "30000", 10);
-const enterprises = JSON.parse(fs.readFileSync(catalogPath, "utf8")).enterprises;
+const targetSlug = process.env.DEMAA_AUDIT_SLUG?.trim();
+const enterprises = JSON.parse(fs.readFileSync(catalogPath, "utf8")).enterprises.filter(
+  (enterprise) => !targetSlug || enterprise.slug === targetSlug,
+);
+if (targetSlug && enterprises.length !== 1) {
+  throw new Error(`Unknown enterprise slug: ${targetSlug}`);
+}
+const plumbingPilotSlug = "plomberie-chauffage";
 
 const forbiddenUi = [
   "Recevoir gratuitement mon tableau de pilotage",
@@ -16,7 +23,6 @@ const forbiddenUi = [
   "Accéder aux téléchargements",
   "Aperçu du document",
   "Diagnostic organisation",
-  "Système opérationnel",
 ];
 
 const downloadCta = "Tableau de suivi opérationnel";
@@ -33,6 +39,7 @@ async function inspectEnterprise(enterprise) {
   const slug = encodeURIComponent(enterprise.slug);
   const canonicalPath = `/kit-operationnel/${slug}`;
   const errors = [];
+  const isPlumbingPilot = enterprise.slug === plumbingPilotSlug;
 
   try {
     const overviewResponse = await fetchPage(canonicalPath);
@@ -45,20 +52,41 @@ async function inspectEnterprise(enterprise) {
     if (!overviewHtml.includes(`<link rel="canonical" href="https://demaa.fr${canonicalPath}"/>`)) {
       errors.push("canonical link missing or incorrect");
     }
-    if (!overviewHtml.includes("Kit opérationnel")) errors.push("SEO title missing");
-    const overviewDownloadCtaCount = renderedOverviewHtml.split(downloadCta).length - 1;
-    if (overviewDownloadCtaCount !== 1) {
-      errors.push(`expected one top download CTA, found ${overviewDownloadCtaCount}`);
+    const expectedSeoTitle = isPlumbingPilot
+      ? "Système opérationnel"
+      : "Kit opérationnel";
+    if (!overviewHtml.includes(expectedSeoTitle)) errors.push("SEO title missing");
+
+    if (isPlumbingPilot) {
+      for (const expectedText of [
+        "Voir la démonstration",
+        "Recevoir le tableau gratuit",
+        "Aperçu en lecture seule · Tableau envoyé par e-mail",
+      ]) {
+        if (!renderedOverviewHtml.includes(expectedText)) {
+          errors.push(`pilot promise missing: ${expectedText}`);
+        }
+      }
+      if (renderedOverviewHtml.includes(downloadCta)) {
+        errors.push(`legacy download CTA still visible: ${downloadCta}`);
+      }
+    } else {
+      const overviewDownloadCtaCount = renderedOverviewHtml.split(downloadCta).length - 1;
+      if (overviewDownloadCtaCount !== 1) {
+        errors.push(`expected one top download CTA, found ${overviewDownloadCtaCount}`);
+      }
     }
 
     for (const value of forbiddenUi) {
       if (renderedOverviewHtml.includes(value)) errors.push(`legacy UI still visible: ${value}`);
     }
-    if (!/<p[^>]*>\s*\d+ process\s*<\/p>/.test(renderedOverviewHtml)) {
-      errors.push("process count missing");
-    }
-    if (!overviewHtml.includes('class="demaa-accordion')) {
-      errors.push("process accordions missing");
+    if (isPlumbingPilot) {
+      if (!/\d+ processus/.test(renderedOverviewHtml)) {
+        errors.push("process count missing");
+      }
+      if (!overviewHtml.includes("plumbing-process-panel-")) {
+        errors.push("process accordions missing");
+      }
     }
 
     const redirects = [

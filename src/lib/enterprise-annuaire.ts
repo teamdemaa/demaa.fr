@@ -1,5 +1,4 @@
 import type { ToolDirectoryItem, ToolScope } from "./tool-directory";
-import type { SystemPillar } from "./system-process-types";
 import type { System } from "./types";
 import {
   getEnterpriseBusinessModel,
@@ -25,13 +24,6 @@ export type EnterpriseToolReference = {
   scope?: ToolScope;
 };
 
-type EnterpriseProcess = {
-  pillar: SystemPillar | "Finance & Juridique";
-  title: string;
-  description: string;
-  examples?: string;
-};
-
 export type EnterpriseDefinition = {
   id: string;
   slug: string;
@@ -44,9 +36,6 @@ export type EnterpriseDefinition = {
   sectorLabel: string;
   imageTitle: string;
   imageSubtitle: string;
-  processes?: EnterpriseProcess[];
-  operationProcesses?: EnterpriseProcess[];
-  processExamples?: Record<string, string>;
   tools?: EnterpriseTool[];
   toolRefs?: EnterpriseToolReference[];
   recommendedToolSlugs?: string[];

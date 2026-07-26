@@ -9,8 +9,9 @@ const baseUrl = (process.env.DEMAA_AUDIT_BASE_URL ?? "http://127.0.0.1:3001").re
 const concurrency = Number.parseInt(process.env.DEMAA_AUDIT_CONCURRENCY ?? "8", 10);
 const requestTimeoutMs = Number.parseInt(process.env.DEMAA_AUDIT_TIMEOUT_MS ?? "60000", 10);
 const retryCount = Number.parseInt(process.env.DEMAA_AUDIT_RETRIES ?? "2", 10);
+const targetSlug = process.env.DEMAA_AUDIT_SLUG?.trim();
 
-const tabs = ["process", "outils", "accompagnement"];
+const plumbingPilotSlug = "plomberie-chauffage";
 const toolsBySlug = new Map(
   JSON.parse(fs.readFileSync(toolDirectoryPath, "utf8")).tools.map((tool) => [tool.slug, tool]),
 );
@@ -29,8 +30,15 @@ function countOccurrences(source, value) {
   return source.split(value).length - 1;
 }
 
+function getTabs(enterprise) {
+  return enterprise.slug === plumbingPilotSlug
+    ? ["process", "outils", "services"]
+    : ["kit", "outils", "process"];
+}
+
 function inspectPage({ enterprise, response, html, tab }) {
   const errors = [];
+  const isPlumbingPilot = enterprise.slug === plumbingPilotSlug;
   const renderedHtml = html
     .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "")
     .replace(/<!--[\s\S]*?-->/g, "");
@@ -52,7 +60,11 @@ function inspectPage({ enterprise, response, html, tab }) {
     }
   }
 
-  for (const expectedTab of ["Process", "Outils", "Accompagnement"]) {
+  const expectedTabs = isPlumbingPilot
+    ? ["Process", "Outils", "Services"]
+    : ["Pilotage", "Outils", "Process"];
+
+  for (const expectedTab of expectedTabs) {
     if (!renderedHtml.includes(`>${expectedTab}</button>`)) {
       errors.push(`missing direct tab: ${expectedTab}`);
     }
@@ -69,15 +81,27 @@ function inspectPage({ enterprise, response, html, tab }) {
     errors.push("shared tab panel is missing");
   }
 
-  const topDownloadCtaCount = countOccurrences(
-    renderedHtml,
-    'aria-haspopup="dialog"',
-  );
-  if (
-    topDownloadCtaCount !== 1 ||
-    !renderedHtml.includes("Tableau de suivi opérationnel")
-  ) {
-    errors.push(`expected one top download CTA, found ${topDownloadCtaCount}`);
+  if (isPlumbingPilot) {
+    for (const expectedText of [
+      "Voir la démonstration",
+      "Recevoir le tableau gratuit",
+      "Consultez le système complet, puis récupérez votre tableau",
+      "Aperçu en lecture seule · Tableau envoyé par e-mail",
+    ]) {
+      if (!renderedHtml.includes(expectedText)) {
+        errors.push(`missing demo/model distinction: ${expectedText}`);
+      }
+    }
+
+    for (const legacyPromise of [
+      "Ouvrir gratuitement le tableau",
+      "Réserver ma session de cadrage offerte",
+      "1 500 € HT",
+    ]) {
+      if (renderedHtml.includes(legacyPromise)) {
+        errors.push(`legacy pilot promise is still visible: ${legacyPromise}`);
+      }
+    }
   }
 
   for (const removedIntro of [
@@ -94,7 +118,7 @@ function inspectPage({ enterprise, response, html, tab }) {
   }
 
   if (tab === "process") {
-    if (!/<p[^>]*>\s*\d+ process\s*<\/p>/.test(renderedHtml)) {
+    if (!/\d+ processus/.test(renderedHtml)) {
       errors.push("missing process count");
     }
     if (renderedHtml.includes("Aperçu du document")) {
@@ -130,42 +154,15 @@ function inspectPage({ enterprise, response, html, tab }) {
     }
   }
 
-  if (tab === "accompagnement") {
+  if (tab === "services" && isPlumbingPilot) {
     for (const expectedText of [
-      "Structuration &amp; pilotage",
-      "1 500 € HT",
-      "Réserver ma session de cadrage offerte",
+      "Système opérationnel clé en main",
+      "Votre entreprise fonctionne sans que tout passe par vous.",
+      "Trouver un expert-comptable",
+      "Jusqu’à 3 recommandations",
     ]) {
       if (!renderedHtml.includes(expectedText)) {
         errors.push(`missing offer text: ${expectedText}`);
-      }
-    }
-
-    if (!renderedHtml.includes(
-      'href="/annuaire-services/organisation?booking=1&amp;source=',
-    )) {
-      errors.push("structuration CTA does not open the booking form");
-    }
-
-    for (const hiddenAccountingOfferText of [
-      "Expertise comptable",
-      "À partir de 250 € HT",
-      "Demander un rendez-vous",
-      "cabinet inscrit à l’Ordre des",
-    ]) {
-      if (renderedHtml.includes(hiddenAccountingOfferText)) {
-        errors.push(`accounting offer should be hidden: ${hiddenAccountingOfferText}`);
-      }
-    }
-
-    for (const removedOffer of [
-      "Création de société",
-      "Modification de société",
-      "Fermeture de société",
-      "Trouver un comptable",
-    ]) {
-      if (renderedHtml.includes(removedOffer)) {
-        errors.push(`removed offer still visible: ${removedOffer}`);
       }
     }
   }
@@ -230,9 +227,14 @@ async function runPool(tasks) {
   return results;
 }
 
-const enterprises = loadEnterprises();
+const enterprises = loadEnterprises().filter(
+  (enterprise) => !targetSlug || enterprise.slug === targetSlug,
+);
+if (targetSlug && enterprises.length !== 1) {
+  throw new Error(`Unknown enterprise slug: ${targetSlug}`);
+}
 const tasks = enterprises.flatMap((enterprise) =>
-  tabs.map((tab) => ({ enterprise, tab })),
+  getTabs(enterprise).map((tab) => ({ enterprise, tab })),
 );
 const results = await runPool(tasks);
 const failures = results.filter((result) => result.errors.length);
@@ -240,7 +242,7 @@ const failures = results.filter((result) => result.errors.length);
 console.log(JSON.stringify({
   baseUrl,
   kits: enterprises.length,
-  tabsPerKit: tabs.length,
+  tabsPerKit: 3,
   statesChecked: results.length,
   failureCount: failures.length,
   failures: failures.slice(0, 100),

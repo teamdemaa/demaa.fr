@@ -43,7 +43,7 @@ const CURATED_TOOL_RECOMMENDATIONS_BY_SYSTEM: Record<
   cfa: ["ypareo", "fillout", "livestorm"],
   "formation-en-ligne": ["kajabi", "digiforma", "zoom"],
   "production-industrie": ["odoo", "katana"],
-  "plomberie-chauffage": ["esabora", "alobees", "oryka", "kizeo-forms"],
+  "plomberie-chauffage": ["obat", "esabora", "alobees", "kizeo-forms"],
   "electricite-generale": ["esabora", "fieldwire", "oryka", "kizeo-forms"],
   "renovation-interieur": ["vertuoza", "graneet", "fieldwire", "oryka"],
   "menuiserie-agencement": ["progbat", "alobees", "oryka", "fieldwire"],

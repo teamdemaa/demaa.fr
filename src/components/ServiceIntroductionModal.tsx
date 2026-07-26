@@ -34,6 +34,7 @@ export default function ServiceIntroductionModal({
   systemSlug,
   onClose,
 }: ServiceIntroductionModalProps) {
+  const isCustomSystem = service.slug === "organisation-equipes";
   const [formData, setFormData] = useState(INITIAL_FORM);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -51,7 +52,14 @@ export default function ServiceIntroductionModal({
 
   function validateForm() {
     if (!formData.name.trim()) return "Merci d'indiquer votre nom.";
-    if (!formData.phone.trim()) return "Merci d'indiquer votre téléphone ou WhatsApp.";
+    if (isCustomSystem) {
+      if (!formData.email.trim()) return "Merci d'indiquer votre email.";
+      if (!formData.details.trim()) {
+        return "Merci de décrire votre fonctionnement actuel et ce que vous voulez rendre plus autonome.";
+      }
+    } else if (!formData.phone.trim()) {
+      return "Merci d'indiquer votre téléphone ou WhatsApp.";
+    }
     return null;
   }
 
@@ -95,7 +103,11 @@ export default function ServiceIntroductionModal({
       }
 
       clearLeadSubmissionKey(flowKey);
-      setSuccessMessage("Demande envoyée. On vous recontacte rapidement.");
+      setSuccessMessage(
+        isCustomSystem
+          ? "Demande envoyée. Nous revenons vers vous pour cadrer le premier échange offert."
+          : "Demande envoyée. On vous recontacte rapidement.",
+      );
       trackLeadConversion({
         requestType: "service_introduction",
         systemSlug,
@@ -117,7 +129,7 @@ export default function ServiceIntroductionModal({
       className="fixed inset-0 z-[90] flex items-center justify-center bg-brand-blue/45 px-4 py-8"
       role="dialog"
       aria-modal="true"
-      aria-label={`Demande de mise en relation pour ${service.name}`}
+      aria-label={`${isCustomSystem ? "Demande de devis" : "Demande de mise en relation"} pour ${service.name}`}
       onClick={onClose}
     >
       <div
@@ -127,7 +139,7 @@ export default function ServiceIntroductionModal({
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-              Mise en relation
+              {isCustomSystem ? "Demande de devis" : "Mise en relation"}
             </p>
             <h2 className="mt-2 text-2xl font-semibold tracking-tight text-brand-blue">
               {service.name}
@@ -143,6 +155,16 @@ export default function ServiceIntroductionModal({
           </button>
         </div>
 
+        {isCustomSystem && !successMessage ? (
+          <div className="mt-5 rounded-[1rem] border border-dema-line bg-dema-sage/55 px-4 py-3">
+            <p className="text-sm leading-relaxed text-brand-blue">
+              Décrivez brièvement votre entreprise, ce qui dépend encore de vous
+              et les outils déjà utilisés. Le premier échange permet de définir
+              le périmètre et le devis.
+            </p>
+          </div>
+        ) : null}
+
         {successMessage ? (
           <div className="mt-5 rounded-[1rem] border border-dema-line bg-dema-sage/55 px-4 py-3">
             <p className="text-sm font-medium text-brand-blue">{successMessage}</p>
@@ -153,18 +175,26 @@ export default function ServiceIntroductionModal({
               value={formData.name}
               onChange={(event) => handleChange("name", event)}
               placeholder="Nom"
+              required
               className="demaa-input"
             />
             <input
               value={formData.phone}
               onChange={(event) => handleChange("phone", event)}
-              placeholder="Téléphone / WhatsApp"
+              placeholder={
+                isCustomSystem
+                  ? "Téléphone / WhatsApp (facultatif)"
+                  : "Téléphone / WhatsApp"
+              }
+              required={!isCustomSystem}
               className="demaa-input"
             />
             <input
+              type="email"
               value={formData.email}
               onChange={(event) => handleChange("email", event)}
-              placeholder="Email"
+              placeholder={isCustomSystem ? "Email professionnel" : "Email"}
+              required={isCustomSystem}
               className="demaa-input"
             />
             <input
@@ -176,8 +206,13 @@ export default function ServiceIntroductionModal({
             <textarea
               value={formData.details}
               onChange={(event) => handleChange("details", event)}
-              placeholder="Votre besoin ou contexte"
-              rows={4}
+              placeholder={
+                isCustomSystem
+                  ? "Qu’est-ce qui dépend encore de vous aujourd’hui ? Comment votre équipe travaille-t-elle et quels outils utilisez-vous déjà ?"
+                  : "Votre besoin ou contexte"
+              }
+              rows={isCustomSystem ? 6 : 4}
+              required={isCustomSystem}
               className="demaa-textarea"
             />
             <input
@@ -197,7 +232,11 @@ export default function ServiceIntroductionModal({
               disabled={isSubmitting}
               className="inline-flex w-full items-center justify-center rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper transition hover:bg-brand-blue disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {isSubmitting ? "Envoi en cours..." : "Envoyer la demande"}
+              {isSubmitting
+                ? "Envoi en cours..."
+                : isCustomSystem
+                  ? "Demander mon devis"
+                  : "Envoyer la demande"}
             </button>
           </form>
         )}

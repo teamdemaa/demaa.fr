@@ -1,0 +1,507 @@
+import {
+  composeProcessDraft,
+  type IndustrializedContentItem,
+  type IndustrializedProcessDefinition,
+  type ProcessContentPatch,
+  type ProcessDraft,
+} from "@/lib/process-industrialization";
+
+const FAMILY = "agences-digitales-creation";
+
+export const AGENCY_PROCESS = {
+  cap: `process.${FAMILY}.direction.savoir-ou-va-lagence`,
+  decisions: `process.${FAMILY}.direction.decider-sans-bloquer-la-production`,
+  access: `process.${FAMILY}.direction.donner-acces-a-lessentiel`,
+  capacity: `process.${FAMILY}.direction.garder-une-visibilite-sur-la-charge`,
+  prospects: `process.${FAMILY}.marketing-vente.developper-les-prospects-et-briefs`,
+  sales: `process.${FAMILY}.marketing-vente.vendre-une-prestation-creative-ou-digitale`,
+  loyalty: `process.${FAMILY}.marketing-vente.faire-revenir-les-clients`,
+  complaint: `process.${FAMILY}.marketing-vente.traiter-un-retour-ou-une-reclamation-client`,
+  brief: `process.${FAMILY}.operations.cadrer-un-brief-et-un-perimetre`,
+  production: `process.${FAMILY}.operations.produire-les-livrables`,
+  delivery: `process.${FAMILY}.operations.faire-valider-et-livrer`,
+  performance: `process.${FAMILY}.operations.mesurer-les-performances-ou-retours`,
+  team: `process.${FAMILY}.equipe.organiser-lequipe-et-les-remplacements`,
+  handover: `process.${FAMILY}.equipe.transmettre-un-projet-en-cas-dabsence`,
+  onboarding: `process.${FAMILY}.equipe.integrer-un-nouveau-collaborateur`,
+  margin: `process.${FAMILY}.finance-admin.suivre-la-marge-projet`,
+  expenses: `process.${FAMILY}.finance-admin.payer-a-temps`,
+  invoicing: `process.${FAMILY}.finance-admin.se-faire-payer`,
+  compliance: `process.${FAMILY}.conformite-metier.securiser-droits-contrats-et-acces`,
+} as const;
+
+const content = (
+  type: IndustrializedContentItem["type"],
+  label: string,
+): IndustrializedContentItem => ({ type, label });
+
+const definition = (
+  objective: string,
+  trigger: string,
+  expectedResult: string,
+  defaultOwner: string,
+  cadence: string,
+): IndustrializedProcessDefinition => ({
+  objective,
+  trigger,
+  expectedResult,
+  defaultOwner,
+  cadence,
+});
+
+export const agencyFamilyCoreDraft: ProcessDraft = {
+  definitionsById: {
+    [AGENCY_PROCESS.cap]: definition(
+      "Choisir les offres, clients et objectifs qui doivent guider l’agence.",
+      "Création de l’agence, nouveau trimestre ou écart important aux objectifs.",
+      "Une feuille de route chiffrée et comprise par l’équipe.",
+      "Dirigeant",
+      "Trimestrielle",
+    ),
+    [AGENCY_PROCESS.decisions]: definition(
+      "Éviter que chaque arbitrage de production remonte au dirigeant.",
+      "Conflit de priorité, demande hors cadre ou blocage de production.",
+      "Une décision tracée, prise au bon niveau et sans attente inutile.",
+      "Dirigeant ou responsable de production",
+      "Hebdomadaire",
+    ),
+    [AGENCY_PROCESS.access]: definition(
+      "Centraliser les accès nécessaires sans partager les mots de passe en clair.",
+      "Nouveau client, nouvel outil, arrivée ou départ d’un collaborateur.",
+      "Des accès à jour, attribués par rôle et récupérables rapidement.",
+      "Responsable opérations",
+      "Mensuelle",
+    ),
+    [AGENCY_PROCESS.capacity]: definition(
+      "Comparer la charge vendue à la capacité réellement disponible.",
+      "Planification hebdomadaire et entrée d’un nouveau projet.",
+      "Des délais réalistes et des besoins de renfort anticipés.",
+      "Responsable de production",
+      "Hebdomadaire",
+    ),
+    [AGENCY_PROCESS.prospects]: definition(
+      "Créer un flux régulier de prospects correspondant aux offres prioritaires.",
+      "Revue commerciale hebdomadaire.",
+      "Un pipe qualifié avec une prochaine action datée pour chaque opportunité.",
+      "Dirigeant ou responsable commercial",
+      "Hebdomadaire",
+    ),
+    [AGENCY_PROCESS.sales]: definition(
+      "Transformer un besoin compris en proposition rentable et cadrée.",
+      "Rendez-vous de découverte validé.",
+      "Une proposition acceptée avec périmètre, prix, planning et conditions.",
+      "Responsable commercial",
+      "À chaque opportunité",
+    ),
+    [AGENCY_PROCESS.loyalty]: definition(
+      "Faire émerger les renouvellements, extensions de mission et recommandations.",
+      "Résultat obtenu, jalon livré ou fin de mission proche.",
+      "Une prochaine mission identifiée sans attendre une nouvelle demande.",
+      "Responsable de compte",
+      "Mensuelle",
+    ),
+    [AGENCY_PROCESS.complaint]: definition(
+      "Traiter les insatisfactions sans débat dispersé ni promesse non maîtrisée.",
+      "Réclamation, retard contesté ou livrable refusé.",
+      "Une réponse factuelle, une action corrective et une clôture écrite.",
+      "Responsable de compte",
+      "À chaque réclamation",
+    ),
+    [AGENCY_PROCESS.brief]: definition(
+      "Transformer la demande client en brief exploitable et périmètre vérifiable.",
+      "Signature du devis ou lancement d’un nouveau lot.",
+      "Un brief complet, validé et prêt pour la production.",
+      "Chef de projet",
+      "À chaque projet",
+    ),
+    [AGENCY_PROCESS.production]: definition(
+      "Produire les livrables dans le bon ordre avec des contrôles intermédiaires.",
+      "Brief validé et éléments client disponibles.",
+      "Des livrables conformes, tracés et prêts à présenter.",
+      "Responsable de production",
+      "À chaque projet",
+    ),
+    [AGENCY_PROCESS.delivery]: definition(
+      "Obtenir une validation exploitable et livrer sans versions contradictoires.",
+      "Livrable prêt pour revue client.",
+      "Une validation écrite et une livraison finale archivée.",
+      "Chef de projet",
+      "À chaque jalon",
+    ),
+    [AGENCY_PROCESS.performance]: definition(
+      "Mesurer ce qui permet de décider, pas seulement ce qui est facile à reporter.",
+      "Fin de période, campagne ou projet.",
+      "Des résultats expliqués et une prochaine décision documentée.",
+      "Responsable de compte",
+      "Mensuelle",
+    ),
+    [AGENCY_PROCESS.team]: definition(
+      "Répartir les projets selon la capacité et les compétences disponibles.",
+      "Planification, absence ou nouveau projet.",
+      "Chaque projet a un responsable, un remplaçant et une échéance réaliste.",
+      "Responsable de production",
+      "Hebdomadaire",
+    ),
+    [AGENCY_PROCESS.handover]: definition(
+      "Permettre à un collègue de reprendre un projet sans solliciter l’absent.",
+      "Absence planifiée ou indisponibilité imprévue.",
+      "Une passation courte contenant l’état, les risques et la prochaine action.",
+      "Chef de projet",
+      "Avant chaque absence",
+    ),
+    [AGENCY_PROCESS.onboarding]: definition(
+      "Rendre un nouveau collaborateur opérationnel sur un premier projet test.",
+      "Arrivée d’un salarié ou freelance.",
+      "Les standards sont compris et vérifiés sur une production réelle.",
+      "Manager",
+      "À chaque arrivée",
+    ),
+    [AGENCY_PROCESS.margin]: definition(
+      "Détecter les projets qui consomment plus de temps ou d’achats que prévu.",
+      "Saisie des temps, achat externe ou fin de jalon.",
+      "Une marge mise à jour et un plan d’action sur chaque dérive.",
+      "Dirigeant ou responsable financier",
+      "Hebdomadaire",
+    ),
+    [AGENCY_PROCESS.expenses]: definition(
+      "Anticiper les abonnements, prestataires et échéances de l’agence.",
+      "Nouvelle dépense ou revue mensuelle.",
+      "Aucune dépense critique oubliée ou renouvelée sans décision.",
+      "Responsable administratif",
+      "Mensuelle",
+    ),
+    [AGENCY_PROCESS.invoicing]: definition(
+      "Déclencher les factures au bon jalon et suivre les retards.",
+      "Signature, acompte, jalon ou échéance d’abonnement.",
+      "Des factures envoyées à temps et des relances datées.",
+      "Responsable administratif",
+      "Hebdomadaire",
+    ),
+    [AGENCY_PROCESS.compliance]: definition(
+      "Sécuriser contrats, droits d’usage, données et accès confiés par les clients.",
+      "Nouveau projet, nouveau sous-traitant ou livraison finale.",
+      "Des preuves contractuelles et des accès retirés quand ils ne sont plus utiles.",
+      "Dirigeant ou référent conformité",
+      "Trimestrielle",
+    ),
+  },
+  contentByProcessId: {
+    [AGENCY_PROCESS.cap]: [
+      content("implementation_action", "Choisir les offres prioritaires et les clients que l’agence accepte ou refuse"),
+      content("implementation_action", "Fixer pour le trimestre un objectif de chiffre d’affaires, marge, récurrence et capacité"),
+      content("recurring_control", "Comparer chaque mois le réalisé aux objectifs et nommer les deux écarts à corriger"),
+      content("operating_rule", "Refuser un nouveau projet s’il ne correspond ni au positionnement ni à la capacité disponible"),
+    ],
+    [AGENCY_PROCESS.decisions]: [
+      content("implementation_action", "Écrire les décisions que le chef de projet peut prendre sans validation du dirigeant"),
+      content("operational_step", "Arbitrer chaque blocage avec trois éléments : impact client, impact délai et impact marge"),
+      content("operating_rule", "Toute demande hors périmètre devient un avenant, un échange de priorité ou un refus écrit"),
+      content("recurring_control", "Revoir chaque semaine les décisions en attente depuis plus de deux jours ouvrés"),
+    ],
+    [AGENCY_PROCESS.access]: [
+      content("implementation_action", "Créer un registre des accès par client, outil, propriétaire et niveau d’autorisation"),
+      content("operational_step", "Demander des accès nominatifs ou délégués et éviter les mots de passe partagés par e-mail"),
+      content("operational_step", "Retirer les accès des collaborateurs et prestataires dès la fin de leur intervention"),
+      content("recurring_control", "Contrôler chaque mois les accès administrateur, moyens de récupération et doubles authentifications"),
+    ],
+    [AGENCY_PROCESS.capacity]: [
+      content("implementation_action", "Estimer la capacité hebdomadaire disponible par rôle et réserver une marge pour les imprévus"),
+      content("operational_step", "Affecter chaque projet avec une charge estimée, un responsable et une date de prochain jalon"),
+      content("recurring_control", "Comparer chaque semaine charge vendue, charge planifiée et charge réellement consommée"),
+      content("recurring_control", "Repérer les personnes au-dessus de 90 % de capacité pendant deux semaines consécutives"),
+    ],
+    [AGENCY_PROCESS.prospects]: [
+      content("implementation_action", "Choisir trois canaux d’acquisition maximum et définir le type de prospect attendu pour chacun"),
+      content("operational_step", "Qualifier chaque demande avec objectif, contexte, budget, délai, décideur et éléments déjà disponibles"),
+      content("operational_step", "Inscrire dans le pipe une prochaine action datée après chaque échange commercial"),
+      content("recurring_control", "Mesurer chaque semaine demandes reçues, rendez-vous tenus, propositions envoyées et signatures"),
+    ],
+    [AGENCY_PROCESS.sales]: [
+      content("implementation_action", "Créer une trame de proposition avec problème, résultat attendu, périmètre, exclusions, planning et prix"),
+      content("operational_step", "Découper précisément ce qui est inclus, le nombre de versions et les responsabilités du client"),
+      content("operational_step", "Présenter la proposition au décideur au lieu de l’envoyer sans explication"),
+      content("operational_step", "Relancer la proposition à J+2 puis J+7 avec une question de décision claire"),
+      content("recurring_control", "Analyser chaque mois taux de signature, délai de décision et raisons de perte"),
+    ],
+    [AGENCY_PROCESS.loyalty]: [
+      content("implementation_action", "Créer un calendrier de revues client avant la fin des missions et renouvellements"),
+      content("operational_step", "Présenter les résultats obtenus, les irritants résolus et la prochaine priorité possible"),
+      content("operational_step", "Demander un avis ou une recommandation quand une preuve concrète de résultat est disponible"),
+      content("recurring_control", "Lister chaque mois les clients à renouveler, réactiver ou solliciter pour une recommandation"),
+    ],
+    [AGENCY_PROCESS.complaint]: [
+      content("implementation_action", "Créer un registre des réclamations avec faits, cause, action, responsable et date de clôture"),
+      content("operational_step", "Accuser réception, reformuler le problème et annoncer un délai de réponse réaliste"),
+      content("operational_step", "Proposer par écrit la correction, le nouveau délai et ce qui relève ou non du périmètre vendu"),
+      content("operating_rule", "Ne jamais promettre un geste commercial avant d’avoir vérifié les faits, le contrat et l’impact marge"),
+    ],
+    [AGENCY_PROCESS.brief]: [
+      content("implementation_action", "Créer un brief obligatoire avant toute mise en production"),
+      content("operational_step", "Documenter objectif, cible, message, livrables, contraintes, références et critères de réussite"),
+      content("operational_step", "Lister les contenus, accès et validations que le client doit fournir avec une date"),
+      content("operating_rule", "La production ne démarre qu’après validation écrite du brief et disponibilité des éléments critiques"),
+    ],
+    [AGENCY_PROCESS.production]: [
+      content("implementation_action", "Créer un tableau de production unique avec projet, étape, responsable, échéance et statut"),
+      content("operational_step", "Découper la production selon la séquence métier et placer les contrôles avant les validations client"),
+      content("operational_step", "Centraliser fichiers de travail, commentaires et versions dans l’espace prévu pour le projet"),
+      content("operational_step", "Contrôler le livrable avec une checklist métier avant toute présentation au client"),
+      content("recurring_control", "Revoir deux fois par semaine les retards, dépendances client et risques de dépassement"),
+    ],
+    [AGENCY_PROCESS.delivery]: [
+      content("implementation_action", "Définir un circuit de validation avec un décideur client et un canal de retour unique"),
+      content("operational_step", "Présenter le livrable avec les choix réalisés, les points à valider et la date limite de retour"),
+      content("operational_step", "Regrouper les retours contradictoires avant de lancer une nouvelle version"),
+      content("recurring_control", "Vérifier avant clôture la validation écrite, les fichiers finaux, les accès et les consignes de suite"),
+    ],
+    [AGENCY_PROCESS.performance]: [
+      content("implementation_action", "Définir pour chaque offre trois à cinq indicateurs reliés à l’objectif du client"),
+      content("operational_step", "Comparer résultat, objectif, période précédente et actions réellement menées"),
+      content("recurring_control", "Documenter chaque mois ce qui progresse, ce qui recule et l’hypothèse à tester ensuite"),
+      content("recurring_control", "Faire valider au client la prochaine décision plutôt que le seul reporting"),
+    ],
+    [AGENCY_PROCESS.team]: [
+      content("implementation_action", "Cartographier les rôles nécessaires, leurs compétences et un remplaçant possible"),
+      content("operational_step", "Répartir la charge selon les compétences, la disponibilité et le niveau de risque du projet"),
+      content("operating_rule", "Un projet ne peut pas dépendre d’une seule personne pour les accès, fichiers et prochaines actions"),
+      content("recurring_control", "Revoir chaque semaine absences, surcharges, renforts et projets sans remplaçant"),
+    ],
+    [AGENCY_PROCESS.handover]: [
+      content("implementation_action", "Créer une fiche de passation courte utilisable pour tous les projets"),
+      content("operational_step", "Renseigner contexte, état actuel, prochaine action, échéance, accès et risque principal"),
+      content("operating_rule", "La personne qui reprend confirme qu’elle peut ouvrir les fichiers et exécuter la prochaine action"),
+    ],
+    [AGENCY_PROCESS.onboarding]: [
+      content("implementation_action", "Préparer un parcours d’arrivée avec outils, standards, exemples et interlocuteurs"),
+      content("operational_step", "Faire réaliser un exercice représentatif puis corriger avec la checklist qualité de l’agence"),
+      content("recurring_control", "Valider à J+7 et J+30 l’autonomie sur les outils, la qualité et la communication client"),
+    ],
+    [AGENCY_PROCESS.margin]: [
+      content("implementation_action", "Créer un suivi par projet avec revenu vendu, temps prévu, temps passé et achats externes"),
+      content("operational_step", "Identifier la cause de chaque dérive : estimation, retours, attente client, qualité ou hors périmètre"),
+      content("operational_step", "Décider pour chaque dérive d’un recadrage, avenant, changement de méthode ou arrêt"),
+      content("recurring_control", "Revoir chaque semaine les projets sous la marge cible ou au-dessus du temps vendu"),
+    ],
+    [AGENCY_PROCESS.expenses]: [
+      content("implementation_action", "Lister abonnements, prestataires et achats avec montant, échéance, propriétaire et projet associé"),
+      content("operational_step", "Valider toute nouvelle dépense en vérifiant son utilité, sa durée d’engagement et sa refacturation possible"),
+      content("recurring_control", "Contrôler chaque mois les doublons, licences inutilisées et renouvellements à résilier"),
+    ],
+    [AGENCY_PROCESS.invoicing]: [
+      content("implementation_action", "Définir les déclencheurs de facturation : signature, acompte, jalon, livraison ou abonnement"),
+      content("operational_step", "Envoyer la facture avec le bon de commande ou la preuve du jalon lorsqu’ils sont requis"),
+      content("recurring_control", "Suivre chaque semaine les factures à émettre, échues et à relancer"),
+    ],
+    [AGENCY_PROCESS.compliance]: [
+      content("implementation_action", "Créer un dossier par client avec contrat, sous-traitants, droits, données traitées et accès confiés"),
+      content("operational_step", "Vérifier avant production les droits d’utilisation des contenus, images, polices, musiques, données et outils"),
+      content("operating_rule", "Toute cession de droits, utilisation de données ou intervention d’un sous-traitant doit être couverte par écrit"),
+      content("recurring_control", "Contrôler chaque trimestre contrats, durées de conservation, accès actifs et preuves de consentement utiles"),
+    ],
+  },
+};
+
+export type AgencyTradeProfile = {
+  slug: string;
+  name: string;
+  reviewState: "draft" | "internal_review_complete";
+  priorityOffers: string;
+  northStarMetrics: string;
+  qualificationInputs: string;
+  scopeBoundaries: string;
+  briefSpecifics: string;
+  productionSequence: string;
+  qualityChecks: string;
+  validationProtocol: string;
+  performanceMetrics: string;
+  teamRoles: string;
+  handoverInputs: string;
+  onboardingExercise: string;
+  marginWatch: string;
+  complianceChecks: string;
+};
+
+function profilePatches(profile: AgencyTradeProfile): ProcessContentPatch[] {
+  return [
+    { processId: AGENCY_PROCESS.cap, contentIndex: 0, label: `Choisir les offres prioritaires : ${profile.priorityOffers}` },
+    { processId: AGENCY_PROCESS.cap, contentIndex: 2, label: `Suivre chaque mois les indicateurs directeurs : ${profile.northStarMetrics}` },
+    { processId: AGENCY_PROCESS.prospects, contentIndex: 1, label: `Qualifier chaque demande avec : ${profile.qualificationInputs}` },
+    { processId: AGENCY_PROCESS.sales, contentIndex: 1, label: `Délimiter dans la proposition : ${profile.scopeBoundaries}` },
+    { processId: AGENCY_PROCESS.brief, contentIndex: 1, label: `Documenter dans le brief : ${profile.briefSpecifics}` },
+    { processId: AGENCY_PROCESS.production, contentIndex: 1, label: `Organiser la production dans cet ordre : ${profile.productionSequence}` },
+    { processId: AGENCY_PROCESS.production, contentIndex: 3, label: `Contrôler avant présentation : ${profile.qualityChecks}` },
+    { processId: AGENCY_PROCESS.delivery, contentIndex: 1, label: `Faire valider selon ce protocole : ${profile.validationProtocol}` },
+    { processId: AGENCY_PROCESS.performance, contentIndex: 1, label: `Mesurer et expliquer : ${profile.performanceMetrics}` },
+    { processId: AGENCY_PROCESS.team, contentIndex: 0, label: `Cartographier les rôles et remplaçants : ${profile.teamRoles}` },
+    { processId: AGENCY_PROCESS.handover, contentIndex: 1, label: `Inclure dans chaque passation : ${profile.handoverInputs}` },
+    { processId: AGENCY_PROCESS.onboarding, contentIndex: 1, label: `Valider l’autonomie avec cet exercice : ${profile.onboardingExercise}` },
+    { processId: AGENCY_PROCESS.margin, contentIndex: 1, label: `Surveiller particulièrement : ${profile.marginWatch}` },
+    { processId: AGENCY_PROCESS.compliance, contentIndex: 1, label: `Vérifier avant production et livraison : ${profile.complianceChecks}` },
+  ];
+}
+
+export function generateAgencyTradeProcessDraft(
+  profile: AgencyTradeProfile,
+): ProcessDraft {
+  return composeProcessDraft(agencyFamilyCoreDraft, [
+    {
+      id: `metier.${profile.slug}`,
+      contentPatches: profilePatches(profile),
+    },
+  ]);
+}
+
+export const agencyTradeProfiles = {
+  "agence-marketing": {
+    slug: "agence-marketing",
+    name: "Agence marketing",
+    reviewState: "internal_review_complete",
+    priorityOffers: "stratégie marketing, campagnes multicanales, contenu récurrent et pilotage externalisé",
+    northStarMetrics: "MRR, marge par compte, rétention, charge consommée et résultats client",
+    qualificationInputs: "objectif commercial, canaux actuels, budget, équipe interne, données disponibles et délai",
+    scopeBoundaries: "canaux couverts, volume de campagnes, livrables mensuels, reporting, réunions et demandes hors forfait",
+    briefSpecifics: "cible, offre, message, canaux, calendrier, budget, preuves disponibles et validation attendue",
+    productionSequence: "stratégie, calendrier, briefs, production, contrôle, diffusion puis optimisation",
+    qualityChecks: "cohérence offre-message-cible, liens, tracking, orthographe, formats et autorisations",
+    validationProtocol: "un calendrier mensuel, un décideur client et une validation groupée avant diffusion",
+    performanceMetrics: "leads, coût par résultat, conversion, revenu attribué, engagement utile et progression versus objectif",
+    teamRoles: "stratège, chef de projet, acquisition, contenu, design, tracking et remplaçant de compte",
+    handoverInputs: "campagnes actives, budget, calendrier, validations attendues, alertes performance et prochaine décision",
+    onboardingExercise: "préparer un mini-plan de campagne et un reporting commenté à partir d’un compte test",
+    marginWatch: "réunions non prévues, demandes dispersées, reporting manuel, retours tardifs et production hors forfait",
+    complianceChecks: "consentement, bases de contact, mentions publicitaires, droits des créations et accès plateformes",
+  },
+  "agence-web": {
+    slug: "agence-web",
+    name: "Agence web",
+    reviewState: "internal_review_complete",
+    priorityOffers: "site vitrine, refonte, e-commerce, maintenance et optimisation continue",
+    northStarMetrics: "marge par projet, temps consommé, mises en ligne à l’heure, maintenance récurrente et incidents",
+    qualificationInputs: "objectif du site, pages, fonctions, CMS, contenus, intégrations, hébergement, budget et date cible",
+    scopeBoundaries: "pages, fonctionnalités, migrations, contenus, navigateurs, retours, maintenance et achats de licences",
+    briefSpecifics: "arborescence, parcours, fonctions, contenus, données, intégrations, contraintes techniques et recette",
+    productionSequence: "cadrage, arborescence, maquettes, développement, intégration, recette, sauvegarde et mise en ligne",
+    qualityChecks: "responsive, formulaires, liens, performance, SEO de base, analytics, sécurité, sauvegarde et retour arrière",
+    validationProtocol: "validation séparée de l’arborescence, des maquettes, de la recette puis de la mise en ligne",
+    performanceMetrics: "conversion, formulaires reçus, vitesse, disponibilité, erreurs, trafic utile et objectifs de parcours",
+    teamRoles: "chef de projet, UX/UI, développement, intégration, recette, SEO technique et maintenance",
+    handoverInputs: "environnement, branche, accès, sauvegarde, tickets ouverts, recette, date de mise en ligne et rollback",
+    onboardingExercise: "corriger une page test, exécuter la recette et documenter la mise en production",
+    marginWatch: "contenus en retard, fonctions implicites, retours de maquette, bugs de recette et maintenance non cadrée",
+    complianceChecks: "licences, propriété du code, cookies, formulaires, données, mentions légales et accès hébergement",
+  },
+  "creation-de-contenu": {
+    slug: "creation-de-contenu",
+    name: "Création de contenu",
+    reviewState: "internal_review_complete",
+    priorityOffers: "stratégie éditoriale, rédaction, social media, vidéo courte et production récurrente",
+    northStarMetrics: "contenus livrés, régularité, engagement utile, leads assistés, rétention client et marge par format",
+    qualificationInputs: "audience, ligne éditoriale, canaux, formats, fréquence, porte-parole, ressources et validation",
+    scopeBoundaries: "nombre de contenus, formats, tournages, interviews, révisions, publication, modération et reporting",
+    briefSpecifics: "angle, audience, intention, message, sources, format, canal, appel à l’action et contraintes de marque",
+    productionSequence: "planning éditorial, recherche, brief, production, édition, contrôle, validation et programmation",
+    qualityChecks: "exactitude, sources, ton, orthographe, sous-titres, formats, liens, droits et appel à l’action",
+    validationProtocol: "un calendrier éditorial validé puis des lots de contenus avec une date limite de retour",
+    performanceMetrics: "portée qualifiée, rétention, clics, conversations, leads assistés et formats qui se répètent avec succès",
+    teamRoles: "stratégie éditoriale, rédaction, social media, vidéo, montage, design et publication",
+    handoverInputs: "calendrier, sujets en cours, sources, fichiers, validations, programmation et contenus sensibles",
+    onboardingExercise: "produire un contenu complet à partir d’un brief puis appliquer la checklist éditoriale",
+    marginWatch: "recherches longues, interviews, retours subjectifs, déclinaisons, urgences et publication manuelle",
+    complianceChecks: "sources, droit de citation, image, musique, témoignages, partenariats et données personnelles",
+  },
+  media: {
+    slug: "media",
+    name: "Média",
+    reviewState: "internal_review_complete",
+    priorityOffers: "contenus éditoriaux, newsletters, sponsoring, abonnements et opérations partenaires",
+    northStarMetrics: "audience qualifiée, abonnements, revenu par format, rétention, marge partenaire et cadence éditoriale",
+    qualificationInputs: "sujet, public, angle, exclusivité, sources, sponsor éventuel, date et canal de diffusion",
+    scopeBoundaries: "formats, volume, droits de reprise, diffusion, sponsoring, modifications et durée d’exploitation",
+    briefSpecifics: "angle, promesse éditoriale, sources, contradictoire, format, date, distribution et monétisation",
+    productionSequence: "conférence éditoriale, commande, collecte, production, édition, juridique, diffusion et analyse",
+    qualityChecks: "faits, sources, titres, conflits d’intérêts, droits, liens, formats et séparation éditorial-publicité",
+    validationProtocol: "validation éditoriale interne puis validation limitée du partenaire aux éléments contractuels",
+    performanceMetrics: "lecture, écoute ou visionnage complet, abonnements, clics qualifiés, revenu et fidélité par format",
+    teamRoles: "rédaction en chef, journalistes ou créateurs, édition, production, audience, commercial et juridique",
+    handoverInputs: "planning, commandes, sources, sujets sensibles, sponsors, validations et calendrier de diffusion",
+    onboardingExercise: "produire et faire éditer un sujet test avec sources, titre, distribution et règles sponsor",
+    marginWatch: "production non sponsorisée, piges, montage, distribution payante, reprises et retards partenaires",
+    complianceChecks: "sources, droit de réponse, diffamation, droits d’auteur, sponsoring, cookies et données abonnés",
+  },
+  "photographe-videaste": {
+    slug: "photographe-videaste",
+    name: "Photographe / vidéaste corporate",
+    reviewState: "internal_review_complete",
+    priorityOffers: "reportage corporate, portrait, film de marque, événement, interview et contenus récurrents",
+    northStarMetrics: "marge par tournage, jours de production, taux de retouche, livraisons à l’heure et réachat",
+    qualificationInputs: "usage, lieux, personnes, durée, formats, diffusion, droits, contraintes techniques et date",
+    scopeBoundaries: "repérage, équipe, matériel, durée, nombre d’images ou montages, retouches, exports et droits",
+    briefSpecifics: "intention, déroulé, plans, intervenants, lieux, autorisations, son, lumière, formats et diffusion",
+    productionSequence: "repérage, plan de tournage, préparation matériel, captation, sauvegarde, dérush, montage et export",
+    qualityChecks: "double sauvegarde, netteté, son, exposition, continuité, habillage, sous-titres, codecs et droits",
+    validationProtocol: "validation du script ou conducteur, puis d’une version de travail avant les exports finaux",
+    performanceMetrics: "livraison à l’heure, reprises, satisfaction, réutilisation des contenus et performance par format",
+    teamRoles: "production, réalisation, image, son, lumière, montage, motion, coordination client et sauvegarde",
+    handoverInputs: "conducteur, call sheet, contacts, autorisations, matériel, rushs, sauvegardes, montage et exports attendus",
+    onboardingExercise: "préparer un tournage test, sécuriser les rushs et livrer un export conforme au brief",
+    marginWatch: "déplacements, location, heures supplémentaires, retouches, versions, stockage et droits étendus",
+    complianceChecks: "droit à l’image, autorisations de lieu, musique, rushs, sous-traitants, drone et durée de cession",
+  },
+  "agence-seo": {
+    slug: "agence-seo",
+    name: "Agence SEO",
+    reviewState: "internal_review_complete",
+    priorityOffers: "audit, stratégie SEO, contenu, technique, netlinking et accompagnement récurrent",
+    northStarMetrics: "leads organiques, trafic utile, positions stratégiques, rétention, marge par compte et actions livrées",
+    qualificationInputs: "objectifs business, historique, CMS, marchés, données Search Console, ressources et contraintes techniques",
+    scopeBoundaries: "audit, pages, briefs, contenus, correctifs, netlinking, reporting, réunions et responsabilité d’implémentation",
+    briefSpecifics: "intention, page cible, concurrence, structure, entités, liens internes, preuve attendue et validation",
+    productionSequence: "audit, priorisation, correctifs, briefs, contenus, publication, netlinking et mesure",
+    qualityChecks: "intention, indexabilité, balises, contenu, maillage, données structurées, liens et absence de régression",
+    validationProtocol: "validation des priorités puis des briefs et contenus, avec un propriétaire pour chaque correction",
+    performanceMetrics: "clics, impressions, positions, pages actives, conversions organiques et progression des clusters prioritaires",
+    teamRoles: "consultant SEO, technique, contenu, netlinking, data, chef de projet et interlocuteur développeur",
+    handoverInputs: "priorités, tickets, pages suivies, accès, livrables, liens acquis, alertes et prochaine analyse",
+    onboardingExercise: "auditer une page, produire un brief et expliquer les priorités à un client fictif",
+    marginWatch: "audits manuels, contenus hors volume, dépendance développeur, reporting sur mesure et réunions",
+    complianceChecks: "accès, données analytics, droits des contenus, achats de liens, allégations et conservation des exports",
+  },
+  "agence-acquisition-paid-ads": {
+    slug: "agence-acquisition-paid-ads",
+    name: "Agence acquisition paid ads",
+    reviewState: "internal_review_complete",
+    priorityOffers: "audit tracking, media buying, créatives, landing pages et pilotage d’acquisition",
+    northStarMetrics: "revenu attribué, CPA, qualité des leads, budget géré, rétention et marge par compte",
+    qualificationInputs: "offre, marge client, tunnel, budget, volume de vente, tracking, CRM, créatives et capacité de closing",
+    scopeBoundaries: "plateformes, pays, budgets, tracking, créatives, landing pages, reporting et responsabilités commerciales",
+    briefSpecifics: "offre, audience, objections, preuves, budget, événement de conversion, créatives et page d’arrivée",
+    productionSequence: "audit tracking, structure compte, créatives, landing page, lancement, contrôle puis optimisation",
+    qualityChecks: "pixels, événements, UTMs, budgets, ciblages, annonces, pages, formulaires, règles plateforme et remontées CRM",
+    validationProtocol: "validation de l’offre, des créatives et du budget avant lancement, puis seuils d’arbitrage pré-approuvés",
+    performanceMetrics: "dépense, CPA, ROAS ou revenu, taux de conversion, qualité des leads et délai de traitement commercial",
+    teamRoles: "media buyer, tracking, créatif, copywriting, landing page, data et responsable de compte",
+    handoverInputs: "budgets, campagnes actives, règles, tracking, tests, alertes, accès et prochaines optimisations",
+    onboardingExercise: "auditer un compte test, repérer une erreur de tracking et proposer un plan d’optimisation",
+    marginWatch: "multiplication des plateformes, créatives, reporting, urgences budget et support sur le closing",
+    complianceChecks: "consentement, tracking, audiences, politiques publicitaires, allégations, créatives et accès business manager",
+  },
+  "studio-branding-design": {
+    slug: "studio-branding-design",
+    name: "Studio branding / design",
+    reviewState: "internal_review_complete",
+    priorityOffers: "stratégie de marque, identité visuelle, design system, supports et déclinaisons",
+    northStarMetrics: "marge par projet, temps par phase, nombre de retours, livraisons à l’heure et recommandations",
+    qualificationInputs: "enjeu de marque, décisionnaire, usages, existant, concurrence, livrables, budget et calendrier",
+    scopeBoundaries: "phases, pistes, livrables, déclinaisons, tours de retours, fichiers sources, production et droits",
+    briefSpecifics: "positionnement, audience, personnalité, usages, concurrence, contraintes, références et critères de décision",
+    productionSequence: "stratégie, territoire, pistes, présentation, ajustements, système, déclinaisons et livraison",
+    qualityChecks: "cohérence conceptuelle, lisibilité, grilles, couleurs, typographies, exports, nomenclature et usages",
+    validationProtocol: "validation d’une phase avant la suivante avec retours consolidés par un décideur unique",
+    performanceMetrics: "respect des phases, retours par jalon, adoption des assets, cohérence d’usage et satisfaction",
+    teamRoles: "stratégie, direction artistique, design, motion, exécution, chef de projet et contrôle final",
+    handoverInputs: "concept retenu, décisions, fichiers sources, bibliothèques, déclinaisons, retours et prochaine présentation",
+    onboardingExercise: "décliner un asset test à partir du système de marque puis préparer les exports finaux",
+    marginWatch: "pistes supplémentaires, retours contradictoires, déclinaisons non prévues, exécution et achats de licences",
+    complianceChecks: "recherches d’antériorité confiées, licences, polices, images, cession de droits et fichiers sources",
+  },
+} satisfies Record<string, AgencyTradeProfile>;

@@ -253,7 +253,9 @@ export default function SystemsCatalogClient({
   const systemSections = useMemo(() => {
     const sections = filteredSystems.reduce<Array<{ index: number; title: string; systems: System[] }>>(
       (currentSections, system) => {
-        const title = detailsBySlug[system.slug]?.sectorLabel ?? "Autres kits opérationnels";
+        const title =
+          detailsBySlug[system.slug]?.sectorLabel ??
+          "Autres systèmes opérationnels";
         const section = currentSections.find((current) => current.title === title);
 
         if (section) {
@@ -349,7 +351,9 @@ export default function SystemsCatalogClient({
 
         {systemSections.length === 0 ? (
           <div className="mt-8 rounded-[1.25rem] border border-dashed border-dema-line bg-dema-paper p-10 text-center">
-            <h2 className="text-xl font-bold text-brand-blue">Aucun kit opérationnel trouvé</h2>
+            <h2 className="text-xl font-bold text-brand-blue">
+              Aucun système opérationnel trouvé
+            </h2>
             <p className="mt-3 text-sm font-normal text-dema-muted">
               Essayez un autre mot-clé ou un secteur plus large.
             </p>

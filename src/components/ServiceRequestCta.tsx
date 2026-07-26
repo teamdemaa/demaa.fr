@@ -34,7 +34,9 @@ function ServiceRequestCtaWithOptions({
         onClick={() => setIsIntroductionOpen(true)}
         className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper transition hover:bg-brand-blue"
       >
-        Demander ce service
+        {service.slug === "organisation-equipes"
+          ? "Décrire mon besoin et recevoir un devis"
+          : "Demander ce service"}
       </button>
       {isIntroductionOpen ? (
         <ServiceIntroductionModal

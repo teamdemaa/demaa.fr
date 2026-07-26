@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 const currentDir = dirname(fileURLToPath(import.meta.url));
 const rootDir = resolve(currentDir, "..");
 const enterpriseAnnuairePath = resolve(rootDir, "src/lib/enterprise-annuaire.json");
-const systemeCatalogPath = resolve(rootDir, "src/lib/systeme-catalog.ts");
+const processRegistryPath = resolve(rootDir, "src/lib/process-registry.generated.json");
 
 const VISIBLE_PILLARS = new Set([
   "Direction",
@@ -68,7 +68,11 @@ const CRITICAL_EXPECTATIONS = [
   {
     slug: "batiment",
     checks: [
-      { label: "se faire payer", pattern: /se faire payer|impay[ée]s?|acomptes|situations/i },
+      {
+        label: "se faire payer",
+        pattern:
+          /se faire payer|factur|encaiss|impay[ée]s?|acomptes|situations/i,
+      },
       { label: "traiter une réclamation", pattern: /réclamation|reclamation|litige/i },
       { label: "remplacer un absent", pattern: /absent|remplacement/i },
     ],
@@ -183,44 +187,6 @@ function sortRows(rows) {
   });
 }
 
-function extractTemplateRows(source) {
-  const templates = new Map();
-  const rowBlockRegex = /const\s+([A-Z0-9_]+_ROWS):\s*SystemeTemplateRow\[\]\s*=\s*\[(.*?)\n\];/gs;
-
-  for (const match of source.matchAll(rowBlockRegex)) {
-    const [, constName, block] = match;
-    const rows = [];
-    const rowRegex =
-      /\{\s*pillar:\s*"([^"]+)",\s*process:\s*"([^"]+)",\s*document:\s*"([^"]+)"\s*\}/g;
-
-    for (const rowMatch of block.matchAll(rowRegex)) {
-      const [, pillar, process, document] = rowMatch;
-      rows.push({ pillar, process, document });
-    }
-
-    templates.set(constName, rows);
-  }
-
-  return templates;
-}
-
-function extractSlugMappings(source, templatesByName) {
-  const mappings = new Map();
-  const templateRegex = /\{\s*slugs:\s*\[((?:.|\n)*?)\],\s*rows:\s*([A-Z0-9_]+_ROWS),\s*\}/g;
-
-  for (const match of source.matchAll(templateRegex)) {
-    const [, slugsBlock, rowConstName] = match;
-    const rows = templatesByName.get(rowConstName) ?? [];
-    const slugs = [...slugsBlock.matchAll(/"([a-z0-9-]+)"/g)].map((slugMatch) => slugMatch[1]);
-
-    for (const slug of slugs) {
-      mappings.set(slug, rows);
-    }
-  }
-
-  return mappings;
-}
-
 function getProcessOrder(pillar, process, document) {
   const rules = PROCESS_CATEGORY_RULES[pillar];
 
@@ -240,9 +206,30 @@ function getProcessOrder(pillar, process, document) {
 }
 
 const enterprisePayload = readJson(enterpriseAnnuairePath);
-const source = fs.readFileSync(systemeCatalogPath, "utf8");
-const templatesByName = extractTemplateRows(source);
-const rowsBySlug = extractSlugMappings(source, templatesByName);
+const processRegistry = readJson(processRegistryPath);
+const documentsById = new Map(
+  (processRegistry.documents ?? []).map((document) => [document.documentId, document]),
+);
+const processesByFamily = new Map();
+
+for (const process of processRegistry.processes ?? []) {
+  const rows = processesByFamily.get(process.familyId) ?? [];
+  const document = documentsById.get(process.documentId);
+
+  rows.push({
+    pillar: process.pillarSpecialization || process.pillarLabel,
+    process: process.process,
+    document: document?.name ?? "",
+  });
+  processesByFamily.set(process.familyId, rows);
+}
+
+const rowsBySlug = new Map(
+  (processRegistry["métiers"] ?? []).map((metier) => [
+    metier.slug,
+    processesByFamily.get(metier.familyId) ?? [],
+  ]),
+);
 
 const errors = [];
 const warnings = [];

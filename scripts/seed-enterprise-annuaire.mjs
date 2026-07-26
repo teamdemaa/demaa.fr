@@ -6,7 +6,6 @@ import { getFirestore } from "firebase-admin/firestore";
 
 const currentDir = dirname(fileURLToPath(import.meta.url));
 const enterpriseAnnuairePath = resolve(currentDir, "../src/lib/enterprise-annuaire.json");
-const processTemplatesPath = resolve(currentDir, "../src/lib/system-process-templates.json");
 const toolDirectoryPath = resolve(currentDir, "../src/lib/tool-directory.json");
 
 function loadEnvFile(path) {
@@ -78,17 +77,6 @@ function loadEnterpriseAnnuaire() {
   return payload.enterprises;
 }
 
-function loadSystemProcessTemplates() {
-  const raw = fs.readFileSync(processTemplatesPath, "utf8");
-  const payload = JSON.parse(raw);
-
-  if (!Array.isArray(payload?.templates)) {
-    throw new Error("Invalid system process templates payload");
-  }
-
-  return payload.templates;
-}
-
 function loadToolDirectory() {
   const raw = fs.readFileSync(toolDirectoryPath, "utf8");
   const payload = JSON.parse(raw);
@@ -104,26 +92,11 @@ async function main() {
   loadEnvFile(resolve(currentDir, "../.env.local"));
 
   const enterprises = loadEnterpriseAnnuaire();
-  const templates = loadSystemProcessTemplates();
   const tools = loadToolDirectory();
   const firestore = getFirestoreDb();
   const enterpriseCollection = firestore.collection("enterprise_annuaire");
-  const templateCollection = firestore.collection("system_process_templates");
   const toolCollection = firestore.collection("tool_directory");
   const now = new Date().toISOString();
-
-  for (const [index, template] of templates.entries()) {
-    const docRef = templateCollection.doc(template.id);
-
-    await docRef.set(
-      {
-        ...template,
-        sort_order: typeof template.sort_order === "number" ? template.sort_order : index,
-        updated_at: now,
-      },
-      { merge: true }
-    );
-  }
 
   for (const [index, tool] of tools.entries()) {
     const docRef = toolCollection.doc(tool.slug);
@@ -153,10 +126,9 @@ async function main() {
       {
         migrated: {
           enterprises: enterprises.length,
-          templates: templates.length,
           tools: tools.length,
         },
-        collections: ["tool_directory", "system_process_templates", "enterprise_annuaire"],
+        collections: ["tool_directory", "enterprise_annuaire"],
       },
       null,
       2

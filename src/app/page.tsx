@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import StructurationLandingPage from "@/components/StructurationLandingPage";
+import SystemsHubPage from "@/components/SystemsHubPage";
 
 const title =
-  "Structurez votre entreprise pour qu’elle dépende moins de vous | Demaa";
+  "Trouvez le système opérationnel de votre entreprise | Demaa";
 const description =
-  "En deux mois, Demaa clarifie les responsabilités, formalise les processus et configure un espace de pilotage adapté à votre activité.";
+  "Choisissez votre activité et découvrez les process, outils, modèles et services utiles pour faire fonctionner votre entreprise.";
 
 export const metadata: Metadata = {
   title,
@@ -27,6 +27,6 @@ export const metadata: Metadata = {
   },
 };
 
-export default function HomePage() {
-  return <StructurationLandingPage />;
+export default async function HomePage() {
+  return <SystemsHubPage />;
 }

@@ -114,7 +114,7 @@ async function handlePost(request: Request) {
 
   const context = await resolveLeadContext({
     systemSlug: sectorSlug,
-    source: "Réception du tableau de suivi opérationnel",
+    source: "Réception du modèle vierge du système opérationnel",
     sourceUrl: request.headers.get("referer"),
   });
 
@@ -130,7 +130,7 @@ async function handlePost(request: Request) {
     emoji: "📦",
     idempotencyKey,
     requestType: "system_kit_request",
-    title: `Réception du tableau de suivi opérationnel - ${resolvedSystemName}`,
+    title: `Réception du modèle vierge - ${resolvedSystemName}`,
   });
 
   const existingKitEmailState = await getLeadDeliveryState(lead.leadId, "kit_email");
@@ -185,7 +185,7 @@ export async function POST(request: Request) {
       requestType: "system_kit_request",
     });
     return NextResponse.json(
-      { error: "Impossible d’envoyer le tableau pour le moment." },
+      { error: "Impossible d’envoyer le modèle pour le moment." },
       { status: 500 },
     );
   }

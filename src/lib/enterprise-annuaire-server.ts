@@ -15,6 +15,9 @@ type EnterpriseFirestoreDocument = EnterpriseDefinition & {
   sort_order?: number;
   created_at?: string;
   updated_at?: string;
+  processes?: unknown;
+  operationProcesses?: unknown;
+  processExamples?: unknown;
 };
 
 const ENTERPRISE_ANNUAIRE_COLLECTION = "enterprise_annuaire";
@@ -103,13 +106,6 @@ function mergeEnterpriseFallback(
     imageTitle: enterprise.imageTitle || fallback?.imageTitle || enterprise.name || enterprise.slug,
     imageSubtitle:
       enterprise.imageSubtitle || fallback?.imageSubtitle || `Aperçu du kit opérationnel pour ${enterprise.name || fallback?.name || enterprise.slug}`,
-    processes: enterprise.processes?.length ? enterprise.processes : fallback?.processes ?? [],
-    operationProcesses: enterprise.operationProcesses?.length
-      ? enterprise.operationProcesses
-      : fallback?.operationProcesses ?? [],
-    processExamples: Object.keys(enterprise.processExamples ?? {}).length
-      ? enterprise.processExamples
-      : fallback?.processExamples ?? {},
     tools: mergedTools,
     toolRefs: mergedToolRefs,
   };
@@ -119,11 +115,17 @@ function stripFirestoreMetadata({
   sort_order,
   created_at,
   updated_at,
+  processes,
+  operationProcesses,
+  processExamples,
   ...enterprise
 }: EnterpriseFirestoreDocument): EnterpriseDefinition {
   void sort_order;
   void created_at;
   void updated_at;
+  void processes;
+  void operationProcesses;
+  void processExamples;
 
   return enterprise;
 }

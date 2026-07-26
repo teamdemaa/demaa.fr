@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import SystemsHubPage from "@/components/SystemsHubPage";
 
-const title = "Kits opérationnels pour dirigeants | Demaa";
+const title = "Systèmes opérationnels par métier | Demaa";
 const description =
-  "Découvrez des kits opérationnels avec des process concrets pour structurer votre entreprise, mieux déléguer et gagner en autonomie.";
+  "Trouvez le système opérationnel de votre activité avec des process concrets, des outils recommandés, des modèles et des services utiles.";
 
 export const metadata: Metadata = {
   title,

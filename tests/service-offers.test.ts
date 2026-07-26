@@ -13,16 +13,28 @@ describe("services displayed in operational kits", () => {
     expect(service?.description).toContain("sans engagement");
   });
 
-  it("uses the validated structure and accounting offers", () => {
+  it("presents the custom system as a delivered solution rather than consulting", () => {
     expect(getDemaaServiceBySlug("organisation-equipes")).toMatchObject({
-      name: "Accompagnement structuration & pilotage",
-      duration: "3 mois · point tous les 15 jours",
-      price: "500 € HT / mois",
+      name: "Système opérationnel clé en main",
+      duration: "Selon le périmètre",
+      price: "Sur devis",
     });
+    expect(
+      getDemaaServiceBySlug("organisation-equipes")?.description,
+    ).toContain("mettons en place");
+    expect(
+      getDemaaServiceBySlug("organisation-equipes")?.deliverables,
+    ).toContain("Mise en place dans votre environnement");
+  });
+
+  it("keeps the validated accounting offer", () => {
     expect(getDemaaServiceBySlug("expert-comptable")).toMatchObject({
-      name: "Expert-comptable",
-      duration: "Suivi mensuel",
-      price: "À partir de 250 € HT / mois",
+      name: "Trouver un expert-comptable",
+      duration: "Mise en relation",
+      price: "Gratuit",
     });
+    expect(
+      getDemaaServiceBySlug("expert-comptable")?.deliverables,
+    ).toContain("Jusqu’à 3 cabinets adaptés");
   });
 });

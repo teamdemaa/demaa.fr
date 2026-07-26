@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 
 import rawEnterpriseAnnuaire from "@/lib/enterprise-annuaire.json";
 import {
+  getOperationalSystemBlankCopyUrl,
+  getOperationalSystemDemoUrl,
   getPilotingSheetCopyUrl,
   getPilotingSheetSlugs,
 } from "@/lib/document-models";
@@ -45,5 +47,28 @@ describe("piloting sheet mappings", () => {
 
   it("returns null for an unknown kit", () => {
     expect(getPilotingSheetCopyUrl("kit-inconnu")).toBeNull();
+  });
+
+  it("sépare la démonstration et le modèle vierge du pilote Plomberie", () => {
+    const demoUrl = getOperationalSystemDemoUrl(
+      "plomberie-chauffage",
+    );
+    const blankCopyUrl = getOperationalSystemBlankCopyUrl(
+      "plomberie-chauffage",
+    );
+
+    expect(demoUrl).toBe(
+      "https://docs.google.com/spreadsheets/d/1YiSXWlhEr87U9BLzaQvdHVJ496hyJc5l6jYDrJIjhFg/edit?usp=sharing",
+    );
+    expect(blankCopyUrl).toBe(
+      "https://docs.google.com/spreadsheets/d/1YiIS1FwchjbZIJZhdOKwnkyF183ScTohJtYU3JKhUpQ/copy",
+    );
+    expect(extractGoogleSheetId(demoUrl as string)).not.toBe(
+      extractGoogleSheetId(blankCopyUrl as string),
+    );
+  });
+
+  it("ne prétend pas avoir une démonstration pour les autres métiers", () => {
+    expect(getOperationalSystemDemoUrl("agence-marketing")).toBeNull();
   });
 });

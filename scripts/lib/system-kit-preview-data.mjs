@@ -12,7 +12,16 @@ export async function readSystemKitPreviewData(rootDir) {
     fs.readFile(catalogPath, "utf8"),
   ]);
   const mappingStart = source.indexOf("const PILOTING_SHEET_URLS");
-  const mappingEnd = source.indexOf("export function getPilotingSheetSlugs");
+  const demoMappingStart = source.indexOf(
+    "const OPERATIONAL_SYSTEM_DEMO_URLS",
+    mappingStart,
+  );
+  const firstExportStart = source.indexOf(
+    "export function getPilotingSheetSlugs",
+    mappingStart,
+  );
+  const mappingEnd =
+    demoMappingStart > mappingStart ? demoMappingStart : firstExportStart;
 
   if (mappingStart < 0 || mappingEnd < 0 || mappingEnd <= mappingStart) {
     throw new Error("Impossible de trouver PILOTING_SHEET_URLS dans document-models.ts.");
