@@ -11,6 +11,8 @@ const EXPECTED_COUNTS = {
 };
 
 const errors = [];
+const autonomousFilePromisePattern =
+  /\b(disponible(?:s)?|fourni(?:e|es|s)?|inclus(?:e|es|s)?|télécharge(?:able|ables|ment)?|recevez|obtenez|copie modifiable|fichier(?:s)? prêt(?:e|es|s)?|prêt(?:e|es|s)? à (?:l'emploi|utiliser))\b/i;
 
 function requireUnique(rows, key, label) {
   const values = new Set();
@@ -83,11 +85,23 @@ for (const process of processes) {
   if (!documentIds.has(process.documentId)) {
     errors.push(`Processus ${process.processId}: document inconnu "${process.documentId}".`);
   }
+
+  if (autonomousFilePromisePattern.test(process.process ?? "")) {
+    errors.push(
+      `Processus ${process.processId}: promesse de fichier autonome ambiguë dans "${process.process}".`,
+    );
+  }
 }
 
 for (const document of documents) {
   if (!processIds.has(document.processId)) {
     errors.push(`Document ${document.documentId}: processus inconnu "${document.processId}".`);
+  }
+
+  if (autonomousFilePromisePattern.test(document.name ?? "")) {
+    errors.push(
+      `Document ${document.documentId}: promesse de fichier autonome ambiguë dans "${document.name}".`,
+    );
   }
 }
 

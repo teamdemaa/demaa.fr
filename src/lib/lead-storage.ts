@@ -28,6 +28,13 @@ export type LeadField = {
   value?: string | null;
 };
 
+export type LeadMarketingConsent = {
+  capturedAt: string;
+  granted: boolean;
+  text: string;
+  version: string;
+};
+
 export type LeadRequestInput = {
   attribution: LeadAttributionRecord;
   channels: Record<LeadNotificationChannel, boolean>;
@@ -36,6 +43,7 @@ export type LeadRequestInput = {
   fields: LeadField[];
   idempotencyKey?: string | null;
   emoji: string;
+  marketingConsent?: LeadMarketingConsent | null;
   requestType: string;
   title: string;
 };
@@ -61,6 +69,12 @@ export type StoredLeadRequest = {
   created_at: string;
   emoji?: string;
   fields: Array<{ label: string; value: string | null }>;
+  marketing_consent?: {
+    captured_at: string;
+    granted: boolean;
+    text: string;
+    version: string;
+  } | null;
   notification_status: Record<LeadDeliveryChannel, {
     attempted_at?: string;
     attempt_count?: number;
@@ -112,6 +126,14 @@ export async function createLeadRequest(input: LeadRequestInput) {
       label: field.label.trim(),
       value: cleanString(field.value),
     })),
+    marketing_consent: input.marketingConsent
+      ? {
+          captured_at: input.marketingConsent.capturedAt,
+          granted: input.marketingConsent.granted,
+          text: input.marketingConsent.text,
+          version: input.marketingConsent.version,
+        }
+      : null,
     notification_status: {
       email: { attempt_count: 0, status: input.channels.email ? "pending" : "skipped" },
       kit_email: {

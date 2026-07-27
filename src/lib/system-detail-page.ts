@@ -7,7 +7,7 @@ import {
   buildOperationalSystemDetail,
   type OperationalSystemDetail,
 } from "@/lib/system-operations";
-import { hasPaidOperationalSystemAsset } from "@/lib/paid-operational-system-assets.server";
+import { hasEditableOperationalSystemAsset } from "@/lib/editable-operational-system-assets.server";
 import type { System } from "@/lib/types";
 
 export type SystemDetailPageData = {
@@ -288,10 +288,10 @@ function buildSystemPageDescription(data: SystemDetailPageData): string {
       0,
     ) ?? 0;
 
-  if (hasPaidOperationalSystemAsset(data.system.slug)) {
+  if (hasEditableOperationalSystemAsset(data.system.slug)) {
     return [
       data.enterprise.description,
-      `Découvrez gratuitement une démonstration remplie, ${processCount} process, 74 consignes concrètes et les outils recommandés, puis obtenez le tableau prêt à utiliser pour 49 € en paiement unique.`,
+      `Découvrez une démonstration remplie, ${processCount} process concrets et les outils recommandés pour ${data.system.name}. Recevez gratuitement par e-mail le lien permettant de créer votre copie personnelle dans Google Drive.`,
     ].join(" ");
   }
 

@@ -24,6 +24,9 @@ const forbiddenUi = [
   "Ouvrir gratuitement le tableau",
   "Réserver ma session offerte",
   "Démonstration en lecture seule · Version modifiable après paiement",
+  "Obtenir le système — 49 €",
+  "Démonstration en lecture seule · Tableau prêt à utiliser après paiement",
+  "Modèle disponible dans le système",
 ];
 
 async function fetchPage(path, redirect = "follow") {
@@ -61,10 +64,11 @@ async function inspectEnterprise(enterprise) {
 
     for (const expectedText of [
       "Voir la démonstration",
-      "Obtenir le système — 49 €",
+      "Recevoir ma copie modifiable",
       "Des process concrets, des outils recommandés et un tableau",
       "Google Sheets prêt à utiliser.",
-      "Démonstration en lecture seule · Tableau prêt à utiliser après paiement",
+      "Gratuit · Envoyé par e-mail",
+      "Support associé indiqué dans le système",
     ]) {
       if (!renderedOverviewHtml.includes(expectedText)) {
         errors.push(`commercial promise missing: ${expectedText}`);
@@ -73,6 +77,12 @@ async function inspectEnterprise(enterprise) {
 
     for (const value of forbiddenUi) {
       if (renderedOverviewHtml.includes(value)) errors.push(`legacy UI still visible: ${value}`);
+    }
+    for (const serverOnlyCopyMarker of ["/copy", "\\/copy", "%2Fcopy"]) {
+      if (overviewHtml.includes(serverOnlyCopyMarker)) {
+        errors.push("editable Google Drive link leaked into the public HTML");
+        break;
+      }
     }
     if (!/\d+ processus/.test(renderedOverviewHtml)) {
       errors.push("process count missing");

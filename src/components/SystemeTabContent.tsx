@@ -60,7 +60,7 @@ function ProcessDocument({ item }: { item: SystemeProcessItem }) {
         {item.document}
       </p>
       <p className="mt-1 text-[11px] font-medium text-dema-muted/65">
-        Modèle disponible dans le système
+        Support associé indiqué dans le système
       </p>
     </div>
   );

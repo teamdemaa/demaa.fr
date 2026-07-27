@@ -9,8 +9,9 @@ structuration réalisée manuellement pour chaque prospect.
 Le contrat commercial unique est :
 
 - démonstration remplie gratuite, sans formulaire et en lecture seule ;
-- tableau prêt à utiliser vendu **49 € en paiement unique** ;
-- adresse e-mail collectée au paiement pour remettre l'accès ;
+- copie modifiable gratuite, envoyée uniquement par e-mail ;
+- prénom et adresse e-mail collectés pour remettre la copie demandée ;
+- consentement marketing facultatif et séparé de la livraison ;
 - aucune session, assistance humaine ou réponse personnalisée incluse ;
 - aucun abonnement.
 
@@ -18,7 +19,7 @@ Chaque page métier présente :
 
 1. le système opérationnel au-dessus de la navigation ;
 2. une démonstration remplie et consultable sans formulaire ;
-3. une version vierge et modifiable, livrée après paiement ;
+3. une copie modifiable, livrée gratuitement par e-mail après la demande ;
 4. deux onglets, dans cet ordre : **Process**, **Outils**.
 
 Le terme `Système opérationnel` est le libellé public de référence. Les anciens
@@ -38,38 +39,41 @@ Chaque métier possède deux Google Sheets distincts :
   de Google Sheets ;
 - aucune collecte d'e-mail avant consultation.
 
-### Modèle vierge
+### Copie modifiable
 
 - structure strictement identique à la démonstration ;
 - données fictives retirées des zones que l'utilisateur doit compléter ;
 - recommandations, modes d'emploi, listes et formules conservés ;
 - mention `VERSION MODIFIABLE` visible ;
 - URL remise sous la forme `/copy` ;
-- accès obtenu après confirmation du paiement unique de 49 €.
+- accès envoyé uniquement par e-mail après une demande valide.
 
-Le lien `/copy` du modèle vierge ne doit jamais être envoyé au navigateur avant
-confirmation du paiement. Il reste résolu côté serveur à partir du métier
-acheté, puis il est affiché sur la page de confirmation et envoyé par e-mail.
+Le lien `/copy` ne doit jamais être renvoyé par l'API, injecté dans le HTML ou
+affiché après le formulaire. Il reste résolu côté serveur à partir du métier
+demandé et n'est présent que dans l'e-mail transactionnel.
 
-## Configuration du paiement
+## Livraison par e-mail
 
-Le paiement utilise Stripe Checkout en mode `payment`, sans abonnement. Les
-variables serveur attendues sont :
+La livraison utilise l'endpoint `POST /api/systeme-kit/request`. La requête
+canonique contient :
 
-- `STRIPE_SECRET_KEY` et `STRIPE_WEBHOOK_SECRET` en production ;
-- `STRIPE_SECRET_KEY_TEST` et `STRIPE_WEBHOOK_SECRET_TEST` en environnement de
-  test local ;
-- `RESEND_API_KEY` et `RESEND_FROM_EMAIL` pour l'e-mail de livraison.
+- `firstName` ;
+- `email` ;
+- `systemSlug` ;
+- `idempotencyKey` ;
+- l'attribution et le honeypot facultatifs.
 
-Le webhook Stripe doit cibler `/api/webhooks/stripe` et écouter :
+La réponse publique de succès est toujours `{ "ok": true }`. Elle ne contient
+ni lien `/copy`, ni identifiant de lead, ni identifiant Resend.
 
-- `checkout.session.completed` ;
-- `checkout.session.async_payment_succeeded`.
+Le serveur valide la demande, applique les limites par IP et par adresse,
+déduplique l'envoi, résout la copie depuis le registre server-only, puis envoie
+l'e-mail avec Resend. Les variables serveur nécessaires sont
+`RESEND_API_KEY` et `RESEND_FROM_EMAIL`.
 
-La page de confirmation revérifie également la session Stripe. Elle peut donc
-remettre le lien au client même si l'e-mail est momentanément indisponible,
-mais jamais si le paiement, le montant, la devise ou le métier ne correspondent
-pas au contrat.
+Un échec d'envoi est journalisé pour les tentatives automatiques. L'inscription
+à des communications marketing reste désactivée par défaut et ne peut pas être
+déduite de la seule demande de copie.
 
 Une démonstration ne doit jamais pointer vers le modèle vierge et les deux
 documents ne doivent jamais partager le même identifiant Google Drive.
@@ -154,8 +158,9 @@ La généralisation se fait ensuite par famille de métiers. Une erreur découve
 dans un échantillon doit être corrigée dans le générateur avant la vague
 suivante, jamais manuellement dans des dizaines de fichiers.
 
-Les cent quinze métiers sont désormais publiés avec une paire distincte, une démonstration
-en lecture seule et un document modifiable livré après paiement :
+Les cent quinze métiers sont désormais publiés avec une paire distincte, une
+démonstration en lecture seule et une copie modifiable livrée gratuitement par
+e-mail :
 
 - Plomberie & chauffage ;
 - Agence marketing ;
@@ -290,7 +295,7 @@ réglementés, Cabinets de santé et Logistique & transport complets confirment 
 - des outils et fournisseurs nommés, avec EM2A Expertise dans chaque
   Écosystème ;
 - des liens publics en lecture seule pour les démonstrations et des liens
-  `/copy` gardés côté serveur pour les versions vendues.
+  `/copy` gardés côté serveur pour les copies envoyées.
 
 Les nouvelles paires sont créées dans le dossier Drive
 `Demaa — Systèmes opérationnels publiés`. Le dossier porte le droit Lecteur
@@ -324,5 +329,5 @@ Commandes de contrôle :
 npm run generate:operational-blueprints -- --summary
 npm run generate:operational-blueprints -- --slug pharmacie
 npm run generate:operational-blueprints -- --slug pharmacie --variant editable --sheet-batch-json
-npm run register:operational-assets -- --slug <métier> --demo-id <id> --paid-id <id>
+npm run register:operational-assets -- --slug <métier> --demo-id <id> --editable-id <id>
 ```

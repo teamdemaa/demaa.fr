@@ -1,6 +1,7 @@
 import "server-only";
 
 import { createHash } from "node:crypto";
+import { getEditableOperationalSystemCopyUrl } from "@/lib/editable-operational-system-assets.server";
 
 function escapeHtml(value: string) {
   return value
@@ -11,15 +12,16 @@ function escapeHtml(value: string) {
     .replaceAll("'", "&#039;");
 }
 
-function buildIdempotencyKey(sessionId: string) {
-  return `demaa-system-${createHash("sha256").update(sessionId).digest("hex")}`;
+function buildIdempotencyKey(deliveryId: string) {
+  return `demaa-system-${createHash("sha256").update(deliveryId).digest("hex")}`;
 }
 
 export async function sendOperationalSystemDeliveryEmail(input: {
-  copyUrl: string;
+  deliveryId: string;
   email: string;
-  sessionId: string;
+  firstName: string;
   systemName: string;
+  systemSlug: string;
 }) {
   const apiKey = process.env.RESEND_API_KEY?.trim();
   const from = process.env.RESEND_FROM_EMAIL?.trim();
@@ -28,19 +30,25 @@ export async function sendOperationalSystemDeliveryEmail(input: {
     return { sent: false as const, reason: "missing_resend_config" as const };
   }
 
-  const safeCopyUrl = escapeHtml(input.copyUrl);
+  const copyUrl = getEditableOperationalSystemCopyUrl(input.systemSlug);
+  if (!copyUrl) {
+    return { sent: false as const, reason: "missing_asset" as const };
+  }
+
+  const safeCopyUrl = escapeHtml(copyUrl);
+  const safeFirstName = escapeHtml(input.firstName);
   const safeSystemName = escapeHtml(input.systemName);
   const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${apiKey}`,
       "Content-Type": "application/json",
-      "Idempotency-Key": buildIdempotencyKey(input.sessionId),
+      "Idempotency-Key": buildIdempotencyKey(input.deliveryId),
     },
     body: JSON.stringify({
       from,
       to: input.email,
-      subject: `Votre système opérationnel — ${input.systemName}`,
+      subject: `Votre copie modifiable — ${input.systemName}`,
       html: `
         <!DOCTYPE html>
         <html lang="fr">
@@ -48,9 +56,10 @@ export async function sendOperationalSystemDeliveryEmail(input: {
             <div style="max-width:560px;margin:0 auto;border:1px solid #e7ece6;border-radius:24px;background:#ffffff;padding:32px;">
               <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#315f46;">Système opérationnel</p>
               <h1 style="margin:14px 0;font-size:28px;line-height:1.2;">Votre système est prêt</h1>
-              <p style="margin:0 0 16px;font-size:16px;line-height:1.7;color:#52606d;">Votre paiement pour <strong>${safeSystemName}</strong> est confirmé.</p>
-              <p style="margin:0 0 22px;font-size:16px;line-height:1.7;color:#52606d;">Connectez-vous à Google, puis créez votre copie personnelle et modifiable dans votre Drive.</p>
-              <a href="${safeCopyUrl}" style="display:inline-block;border-radius:999px;background:#315f46;padding:14px 22px;font-size:15px;font-weight:700;color:#ffffff;text-decoration:none;">Créer ma copie modifiable</a>
+              <p style="margin:0 0 16px;font-size:16px;line-height:1.7;color:#52606d;">Bonjour ${safeFirstName},</p>
+              <p style="margin:0 0 16px;font-size:16px;line-height:1.7;color:#52606d;">Voici votre système opérationnel <strong>${safeSystemName}</strong>.</p>
+              <p style="margin:0 0 22px;font-size:16px;line-height:1.7;color:#52606d;">Connectez-vous à Google, puis créez gratuitement votre copie personnelle et modifiable dans votre Drive.</p>
+              <a href="${safeCopyUrl}" style="display:inline-block;border-radius:999px;background:#315f46;padding:14px 22px;font-size:15px;font-weight:700;color:#ffffff;text-decoration:none;">Créer ma copie dans Google Drive</a>
               <p style="margin:24px 0 8px;font-size:13px;line-height:1.6;color:#52606d;">Si le bouton ne fonctionne pas, copiez ce lien :</p>
               <a href="${safeCopyUrl}" style="font-size:13px;line-height:1.6;color:#315f46;word-break:break-all;">${safeCopyUrl}</a>
             </div>
@@ -58,10 +67,12 @@ export async function sendOperationalSystemDeliveryEmail(input: {
         </html>
       `,
       text: [
-        `Votre paiement pour ${input.systemName} est confirmé.`,
+        `Bonjour ${input.firstName},`,
         "",
-        "Connectez-vous à Google, puis créez votre copie personnelle et modifiable dans votre Drive :",
-        input.copyUrl,
+        `Votre système opérationnel ${input.systemName} est prêt.`,
+        "",
+        "Connectez-vous à Google, puis créez gratuitement votre copie personnelle et modifiable dans votre Drive :",
+        copyUrl,
       ].join("\n"),
     }),
     cache: "no-store",
