@@ -11,6 +11,7 @@ import {
   type KeyboardEvent,
 } from "react";
 import { CornerDownLeft, Search } from "lucide-react";
+import { trackSystemJourneyEvent } from "@/lib/kit-analytics-client";
 import { matchesSearchQuery, normalizeSearchText } from "@/lib/search";
 import type { System } from "@/lib/types";
 
@@ -116,13 +117,26 @@ export default function SystemSearchHero({
     };
   }, []);
 
-  function openSuggestion(index: number) {
+  function trackSelection(index: number, method: "click" | "keyboard") {
     const suggestion = suggestions[index];
 
     if (!suggestion) {
       return;
     }
 
+    trackSystemJourneyEvent("system_search_selected", {
+      method,
+      position: index + 1,
+      queryLength: query.trim().length,
+      systemSlug: suggestion.slug,
+    });
+  }
+
+  function openSuggestion(index: number) {
+    const suggestion = suggestions[index];
+    if (!suggestion) return;
+
+    trackSelection(index, "keyboard");
     setIsOpen(false);
     router.push(`/kit-operationnel/${suggestion.slug}`);
   }
@@ -236,6 +250,7 @@ export default function SystemSearchHero({
                     id={`system-search-suggestion-${suggestion.slug}`}
                     href={`/kit-operationnel/${suggestion.slug}`}
                     prefetch
+                    onClick={() => trackSelection(index, "click")}
                     onMouseEnter={() => setActiveIndex(index)}
                     onFocus={() => setActiveIndex(index)}
                     role="option"

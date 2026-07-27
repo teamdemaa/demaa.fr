@@ -9,6 +9,7 @@ import {
   logOperationalError,
   logOperationalEvent,
 } from "@/lib/operational-log";
+import { sendOperationalSystemDeliveryEmail } from "@/lib/operational-system-delivery-email.server";
 import type { LeadContext } from "@/lib/lead-context";
 import {
   createLeadRequest,
@@ -18,6 +19,7 @@ import {
   type LeadContact,
   type LeadDeliveryChannel,
   type LeadField,
+  type LeadMarketingConsent,
   type StoredLeadRequest,
   updateLeadDeliveryStatus,
 } from "@/lib/lead-storage";
@@ -36,6 +38,7 @@ type LeadSubmission = {
   emoji: string;
   fields?: LeadField[];
   idempotencyKey?: string | null;
+  marketingConsent?: LeadMarketingConsent | null;
   requestType: string;
   title: string;
 };
@@ -187,6 +190,7 @@ export async function submitLeadRequest(input: LeadSubmission) {
     fields: input.fields ?? [],
     idempotencyKey: input.idempotencyKey,
     emoji: input.emoji,
+    marketingConsent: input.marketingConsent,
     requestType: input.requestType,
     title: input.title,
   });
@@ -276,6 +280,14 @@ function rebuildLeadSubmission(data: StoredLeadRequest): LeadSubmission {
     },
     emoji: data.emoji || "📬",
     fields: data.fields,
+    marketingConsent: data.marketing_consent
+      ? {
+          capturedAt: data.marketing_consent.captured_at,
+          granted: data.marketing_consent.granted,
+          text: data.marketing_consent.text,
+          version: data.marketing_consent.version,
+        }
+      : null,
     requestType: data.request_type,
     title: data.title,
   };
@@ -316,18 +328,17 @@ export async function retryFailedLeadDeliveries(limit = 30) {
         continue;
       }
 
-      if (channel === "kit_email") {
-        await markLeadDeliveryAbandoned({ channel, leadId: lead.id });
-        logOperationalEvent("lead.delivery.abandoned", {
-          channel,
-          leadId: lead.id,
-          reason: "legacy_free_delivery_retired",
-        });
-        continue;
-      }
-
       const missingRetryData =
-        channel === "resend" && !input.contact.email;
+        (channel === "resend" && !input.contact.email)
+        || (
+          channel === "kit_email"
+          && (
+            !input.contact.email
+            || !input.contact.firstName
+            || !input.context.systemName
+            || !input.context.systemSlug
+          )
+        );
       if (missingRetryData) {
         await markLeadDeliveryAbandoned({ channel, leadId: lead.id });
         logOperationalEvent("lead.delivery.abandoned", {
@@ -348,6 +359,29 @@ export async function retryFailedLeadDeliveries(limit = 30) {
           channel,
           leadId: lead.id,
           operation: () => sendInternalLeadEmail(input, lead.id),
+        });
+      } else if (
+        channel === "kit_email"
+        && input.contact.email
+        && input.contact.firstName
+        && input.context.systemName
+        && input.context.systemSlug
+      ) {
+        result = await deliverChannel({
+          channel,
+          leadId: lead.id,
+          operation: async () => {
+            const delivery = await sendOperationalSystemDeliveryEmail({
+              deliveryId: `lead-${lead.id}-system`,
+              email: input.contact.email ?? "",
+              firstName: input.contact.firstName ?? "",
+              systemName: input.context.systemName ?? "",
+              systemSlug: input.context.systemSlug ?? "",
+            });
+            if (!delivery.sent) {
+              throw new Error(delivery.reason);
+            }
+          },
         });
       } else if (channel === "resend" && input.contact.email) {
         result = await deliverChannel({

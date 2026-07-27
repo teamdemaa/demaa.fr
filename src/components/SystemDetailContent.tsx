@@ -9,11 +9,18 @@ import {
   FileSpreadsheet,
   Wrench,
 } from "lucide-react";
-import { type KeyboardEvent, useMemo, useState } from "react";
-import OperationalSystemPurchaseButton from "@/components/OperationalSystemPurchaseButton";
+import {
+  type KeyboardEvent,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
+import OperationalSystemCopyRequestModal from "@/components/OperationalSystemCopyRequestModal";
 import SystemeTabContent from "@/components/SystemeTabContent";
-import { trackKitOpen } from "@/lib/kit-analytics-client";
-import { getOperationalSystemAccessNote } from "@/lib/operational-system-offer";
+import {
+  trackKitOpen,
+  trackSystemJourneyEvent,
+} from "@/lib/kit-analytics-client";
 import type { OperationalSystemDetail } from "@/lib/system-operations";
 import {
   isVisibleSystemDetailTab,
@@ -28,8 +35,7 @@ type SystemDetailContentProps = {
   demoUrl?: string | null;
   intro: string;
   initialActiveTab?: string;
-  purchaseAvailable?: boolean;
-  checkoutAvailable?: boolean;
+  deliveryAvailable?: boolean;
   headingAs?: "h1" | "h2";
   headingId?: string;
 };
@@ -48,8 +54,7 @@ export default function SystemDetailContent({
   demoUrl,
   intro,
   initialActiveTab,
-  purchaseAvailable = false,
-  checkoutAvailable = false,
+  deliveryAvailable = false,
   headingAs: Heading = "h2",
   headingId,
 }: SystemDetailContentProps) {
@@ -61,6 +66,7 @@ export default function SystemDetailContent({
       ? initialActiveTab
       : "process",
   );
+  const [isCopyRequestOpen, setIsCopyRequestOpen] = useState(false);
   const preview = getSystemKitPreview(system.slug);
   const métierTools = useMemo(
     () =>
@@ -70,6 +76,16 @@ export default function SystemDetailContent({
         .slice(0, 5),
     [detail.tools],
   );
+  const closeCopyRequest = useCallback(() => {
+    setIsCopyRequestOpen(false);
+  }, []);
+
+  function openCopyRequest() {
+    setIsCopyRequestOpen(true);
+    trackSystemJourneyEvent("system_copy_form_opened", {
+      systemSlug: system.slug,
+    });
+  }
 
   function selectTab(tab: SystemDetailTab) {
     setActiveTab(tab);
@@ -133,7 +149,7 @@ export default function SystemDetailContent({
           </p>
         </div>
 
-        {purchaseAvailable ? (
+        {deliveryAvailable ? (
           <section className="mt-8 grid w-full overflow-hidden rounded-[1.35rem] border border-dema-line bg-dema-paper shadow-[0_10px_30px_rgba(23,35,29,0.035)] md:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)]">
             <div className="flex min-h-[15rem] items-center justify-center bg-dema-sage/45 p-5 sm:min-h-[18rem] sm:p-7 md:min-h-[21rem]">
               {preview ? (
@@ -181,15 +197,17 @@ export default function SystemDetailContent({
                     Voir la démonstration
                   </a>
                 ) : null}
-                {checkoutAvailable ? (
-                  <OperationalSystemPurchaseButton systemSlug={system.slug} />
-                ) : null}
+                <button
+                  type="button"
+                  onClick={openCopyRequest}
+                  className="inline-flex min-h-11 items-center justify-center rounded-full border border-dema-forest/25 bg-dema-paper px-5 py-3 text-sm font-semibold text-dema-forest transition hover:border-dema-forest hover:bg-dema-sage/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
+                >
+                  Recevoir ma copie modifiable
+                </button>
               </div>
 
               <p className="mt-4 text-xs leading-relaxed text-dema-muted">
-                {checkoutAvailable
-                  ? getOperationalSystemAccessNote()
-                  : "Démonstration en lecture seule · Achat temporairement indisponible"}
+                Gratuit · Envoyé par e-mail
               </p>
             </div>
           </section>
@@ -288,6 +306,13 @@ export default function SystemDetailContent({
 
         </section>
       </article>
+      {isCopyRequestOpen ? (
+        <OperationalSystemCopyRequestModal
+          systemName={system.name}
+          systemSlug={system.slug}
+          onClose={closeCopyRequest}
+        />
+      ) : null}
     </>
   );
 }

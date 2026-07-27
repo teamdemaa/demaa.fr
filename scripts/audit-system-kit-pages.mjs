@@ -83,10 +83,10 @@ function inspectPage({ enterprise, response, html, tab }) {
 
   for (const expectedText of [
     "Voir la démonstration",
-    "Obtenir le système — 49 €",
+    "Recevoir ma copie modifiable",
     "Des process concrets, des outils recommandés et un tableau",
     "Google Sheets prêt à utiliser.",
-    "Démonstration en lecture seule · Tableau prêt à utiliser après paiement",
+    "Gratuit · Envoyé par e-mail",
   ]) {
     if (!renderedHtml.includes(expectedText)) {
       errors.push(`missing demo/paid distinction: ${expectedText}`);
@@ -98,9 +98,23 @@ function inspectPage({ enterprise, response, html, tab }) {
     "Réserver ma session de cadrage offerte",
     "1 500 € HT",
     "Démonstration en lecture seule · Version modifiable après paiement",
+    "Obtenir le système — 49 €",
+    "Démonstration en lecture seule · Tableau prêt à utiliser après paiement",
+    "Modèle disponible dans le système",
   ]) {
     if (renderedHtml.includes(legacyPromise)) {
       errors.push(`legacy promise is still visible: ${legacyPromise}`);
+    }
+  }
+
+  for (const serverOnlyCopyMarker of [
+    "/copy",
+    "\\/copy",
+    "%2Fcopy",
+  ]) {
+    if (html.includes(serverOnlyCopyMarker)) {
+      errors.push("editable Google Drive link leaked into the public HTML");
+      break;
     }
   }
 
@@ -120,6 +134,9 @@ function inspectPage({ enterprise, response, html, tab }) {
   if (tab === "process") {
     if (!/\d+ processus/.test(renderedHtml)) {
       errors.push("missing process count");
+    }
+    if (!renderedHtml.includes("Support associé indiqué dans le système")) {
+      errors.push("missing neutral associated-support wording");
     }
     if (renderedHtml.includes("Aperçu du document")) {
       errors.push("legacy document preview is still visible");

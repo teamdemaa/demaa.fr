@@ -1,4 +1,71 @@
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
+vi.mock("server-only", () => ({}));
+
+const mocks = vi.hoisted(() => ({
+  enforceRateLimit: vi.fn(),
+  getEnterpriseBySlug: vi.fn(),
+  getLeadDeliveryState: vi.fn(),
+  hasEditableOperationalSystemAsset: vi.fn(),
+  resolveLeadContext: vi.fn(),
+  sendDeliveryEmail: vi.fn(),
+  submitLeadRequest: vi.fn(),
+  updateLeadDeliveryStatus: vi.fn(),
+}));
+
+vi.mock("@/lib/api-security", () => ({
+  enforceRateLimit: mocks.enforceRateLimit,
+  normalizeIdempotencyKey: (value: unknown) =>
+    typeof value === "string" && value.length >= 8 ? value : null,
+  normalizeText: (value: unknown, maxLength: number) =>
+    typeof value === "string"
+      ? value.replace(/\s+/g, " ").trim().slice(0, maxLength)
+      : "",
+  readJsonBody: async <T,>(request: Request) => ({
+    data: (await request.json()) as T,
+    response: null,
+  }),
+}));
+
+vi.mock("@/lib/editable-operational-system-assets.server", () => ({
+  hasEditableOperationalSystemAsset:
+    mocks.hasEditableOperationalSystemAsset,
+}));
+
+vi.mock("@/lib/enterprise-annuaire", () => ({
+  enterpriseToSystem: (enterprise: { name: string }) => ({
+    name: enterprise.name,
+  }),
+}));
+
+vi.mock("@/lib/enterprise-annuaire-server", () => ({
+  getEnterpriseBySlug: mocks.getEnterpriseBySlug,
+}));
+
+vi.mock("@/lib/lead-attribution-server", () => ({
+  resolveLeadAttribution: vi.fn().mockReturnValue({ conversion: {} }),
+}));
+
+vi.mock("@/lib/lead-context", () => ({
+  resolveLeadContext: mocks.resolveLeadContext,
+}));
+
+vi.mock("@/lib/lead-notifications", () => ({
+  submitLeadRequest: mocks.submitLeadRequest,
+}));
+
+vi.mock("@/lib/lead-storage", () => ({
+  getLeadDeliveryState: mocks.getLeadDeliveryState,
+  updateLeadDeliveryStatus: mocks.updateLeadDeliveryStatus,
+}));
+
+vi.mock("@/lib/operational-log", () => ({
+  logOperationalError: vi.fn(),
+}));
+
+vi.mock("@/lib/operational-system-delivery-email.server", () => ({
+  sendOperationalSystemDeliveryEmail: mocks.sendDeliveryEmail,
+}));
 
 vi.mock("@/lib/request-guard", () => ({
   enforceAllowedHost: vi.fn().mockReturnValue(null),
@@ -7,23 +74,170 @@ vi.mock("@/lib/request-guard", () => ({
 
 import { POST } from "@/app/api/systeme-kit/request/route";
 
-describe("legacy free operational system request route", () => {
-  it("never distributes an operational system for free", async () => {
-    const response = await POST(
-      new Request("https://demaa.fr/api/systeme-kit/request", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: "maya@example.com",
-          firstName: "Maya",
-          sectorSlug: "plomberie-chauffage",
+function buildRequest(
+  overrides: Record<string, unknown> = {},
+) {
+  return new Request("https://demaa.fr/api/systeme-kit/request", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Origin: "https://demaa.fr",
+    },
+    body: JSON.stringify({
+      attribution: { version: 1 },
+      email: "MAYA@EXAMPLE.COM ",
+      firstName: " Maya ",
+      idempotencyKey: "web:test:12345678",
+      marketingConsent: false,
+      systemSlug: "plomberie-chauffage",
+      website: "",
+      ...overrides,
+    }),
+  });
+}
+
+describe("free operational system delivery route", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    mocks.enforceRateLimit.mockResolvedValue(null);
+    mocks.getEnterpriseBySlug.mockResolvedValue({
+      name: "Plomberie & chauffage",
+      slug: "plomberie-chauffage",
+    });
+    mocks.getLeadDeliveryState.mockResolvedValue(null);
+    mocks.hasEditableOperationalSystemAsset.mockReturnValue(true);
+    mocks.resolveLeadContext.mockResolvedValue({
+      source: "Livraison du système opérationnel gratuit",
+      systemName: "Plomberie & chauffage",
+      systemSlug: "plomberie-chauffage",
+    });
+    mocks.sendDeliveryEmail.mockResolvedValue({
+      sent: true,
+      reason: null,
+    });
+    mocks.submitLeadRequest.mockResolvedValue({
+      duplicate: false,
+      leadId: "lead-123",
+    });
+    mocks.updateLeadDeliveryStatus.mockResolvedValue(undefined);
+  });
+
+  it("returns only a generic success and resolves delivery server-side", async () => {
+    const response = await POST(buildRequest());
+    const rawPayload = await response.text();
+
+    expect(response.status).toBe(200);
+    expect(JSON.parse(rawPayload)).toEqual({ ok: true });
+    expect(rawPayload).not.toContain("/copy");
+    expect(rawPayload).not.toContain("lead-123");
+    expect(mocks.sendDeliveryEmail).toHaveBeenCalledWith({
+      deliveryId: "lead-lead-123-system",
+      email: "maya@example.com",
+      firstName: "Maya",
+      systemName: "Plomberie & chauffage",
+      systemSlug: "plomberie-chauffage",
+    });
+    expect(mocks.updateLeadDeliveryStatus).toHaveBeenCalledWith({
+      channel: "kit_email",
+      leadId: "lead-123",
+      status: "sent",
+    });
+  });
+
+  it("keeps marketing consent optional and separate from delivery", async () => {
+    await POST(buildRequest());
+
+    expect(mocks.submitLeadRequest).toHaveBeenCalledWith(
+      expect.objectContaining({
+        channels: {
+          email: false,
+          resend: false,
+          slack: true,
+        },
+        marketingConsent: expect.objectContaining({
+          granted: false,
+          version: "system-delivery-v1",
         }),
       }),
     );
-    const payload = (await response.json()) as { error?: string };
 
-    expect(response.status).toBe(410);
-    expect(payload.error).toContain("livraison gratuite a été arrêtée");
-    expect(payload.error).toContain("tableau prêt à utiliser");
+    await POST(buildRequest({ marketingConsent: true }));
+
+    expect(mocks.submitLeadRequest).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        channels: expect.objectContaining({ resend: true }),
+        marketingConsent: expect.objectContaining({ granted: true }),
+      }),
+    );
+  });
+
+  it("accepts sectorSlug temporarily for backward compatibility", async () => {
+    await POST(buildRequest({
+      sectorSlug: "plomberie-chauffage",
+      systemSlug: undefined,
+    }));
+
+    expect(mocks.hasEditableOperationalSystemAsset).toHaveBeenCalledWith(
+      "plomberie-chauffage",
+    );
+  });
+
+  it("does not send again when the idempotent delivery is already complete", async () => {
+    mocks.getLeadDeliveryState.mockResolvedValueOnce("sent");
+
+    const response = await POST(buildRequest());
+
+    expect(response.status).toBe(200);
+    await expect(response.json()).resolves.toEqual({ ok: true });
+    expect(mocks.sendDeliveryEmail).not.toHaveBeenCalled();
+  });
+
+  it("silently absorbs honeypot submissions", async () => {
+    const response = await POST(buildRequest({ website: "bot.example" }));
+
+    expect(response.status).toBe(200);
+    await expect(response.json()).resolves.toEqual({ ok: true });
+    expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
+    expect(mocks.sendDeliveryEmail).not.toHaveBeenCalled();
+  });
+
+  it("rejects invalid contact data before storing or sending", async () => {
+    const response = await POST(buildRequest({
+      email: "invalid",
+      firstName: "",
+    }));
+
+    expect(response.status).toBe(400);
+    expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
+    expect(mocks.sendDeliveryEmail).not.toHaveBeenCalled();
+  });
+
+  it("does not disclose or deliver an unknown editable asset", async () => {
+    mocks.hasEditableOperationalSystemAsset.mockReturnValueOnce(false);
+
+    const response = await POST(buildRequest({
+      systemSlug: "systeme-inconnu",
+    }));
+
+    expect(response.status).toBe(404);
+    expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
+    expect(mocks.sendDeliveryEmail).not.toHaveBeenCalled();
+  });
+
+  it("records a failed delivery for the retry cron", async () => {
+    mocks.sendDeliveryEmail.mockResolvedValueOnce({
+      sent: false,
+      reason: "resend_error",
+    });
+
+    const response = await POST(buildRequest());
+
+    expect(response.status).toBe(502);
+    expect(mocks.updateLeadDeliveryStatus).toHaveBeenCalledWith({
+      channel: "kit_email",
+      error: "resend_error",
+      leadId: "lead-123",
+      status: "failed",
+    });
   });
 });

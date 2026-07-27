@@ -11,22 +11,22 @@ function readArg(name) {
 
 const slug = readArg("--slug");
 const demoId = readArg("--demo-id");
-const paidId = readArg("--paid-id");
+const editableId = readArg("--editable-id");
 
-if (!slug || !demoId || !paidId) {
+if (!slug || !demoId || !editableId) {
   throw new Error(
-    "Utilisez --slug <métier> --demo-id <Google ID> --paid-id <Google ID>.",
+    "Utilisez --slug <métier> --demo-id <Google ID> --editable-id <Google ID>.",
   );
 }
 
 const googleSheetIdPattern = /^[a-zA-Z0-9-_]+$/;
 
-if (!googleSheetIdPattern.test(demoId) || !googleSheetIdPattern.test(paidId)) {
+if (!googleSheetIdPattern.test(demoId) || !googleSheetIdPattern.test(editableId)) {
   throw new Error("Un identifiant Google Sheets est invalide.");
 }
 
-if (demoId === paidId) {
-  throw new Error("La démonstration et le document vendu doivent être distincts.");
+if (demoId === editableId) {
+  throw new Error("La démonstration et le document modifiable doivent être distincts.");
 }
 
 const root = process.cwd();
@@ -34,9 +34,9 @@ const demoPath = path.join(
   root,
   "src/lib/operational-system-demo-assets.generated.json",
 );
-const paidPath = path.join(
+const editablePath = path.join(
   root,
-  "src/lib/paid-operational-system-assets.generated.server.json",
+  "src/lib/editable-operational-system-assets.generated.server.json",
 );
 
 function readManifest(filePath) {
@@ -54,21 +54,21 @@ function writeManifest(filePath, manifest) {
 }
 
 const demoManifest = readManifest(demoPath);
-const paidManifest = readManifest(paidPath);
+const editableManifest = readManifest(editablePath);
 
 demoManifest[slug] =
   `https://docs.google.com/spreadsheets/d/${demoId}/edit`;
-paidManifest[slug] =
-  `https://docs.google.com/spreadsheets/d/${paidId}/edit`;
+editableManifest[slug] =
+  `https://docs.google.com/spreadsheets/d/${editableId}/edit`;
 
 writeManifest(demoPath, demoManifest);
-writeManifest(paidPath, paidManifest);
+writeManifest(editablePath, editableManifest);
 
 process.stdout.write(
   JSON.stringify({
     slug,
     demoId,
-    paidId,
+    editableId,
     publishedSystems: Object.keys(demoManifest).length,
   }),
 );

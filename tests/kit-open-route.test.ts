@@ -5,12 +5,12 @@ vi.mock("server-only", () => ({}));
 const {
   getEnterpriseBySlugMock,
   getPilotingSheetCopyUrlMock,
-  hasPaidOperationalSystemAssetMock,
+  hasEditableOperationalSystemAssetMock,
   recordKitOpenMock,
 } = vi.hoisted(() => ({
   getEnterpriseBySlugMock: vi.fn(),
   getPilotingSheetCopyUrlMock: vi.fn(),
-  hasPaidOperationalSystemAssetMock: vi.fn(),
+  hasEditableOperationalSystemAssetMock: vi.fn(),
   recordKitOpenMock: vi.fn(),
 }));
 
@@ -35,8 +35,8 @@ vi.mock("@/lib/operational-log", () => ({
   logOperationalEvent: vi.fn(),
 }));
 
-vi.mock("@/lib/paid-operational-system-assets.server", () => ({
-  hasPaidOperationalSystemAsset: hasPaidOperationalSystemAssetMock,
+vi.mock("@/lib/editable-operational-system-assets.server", () => ({
+  hasEditableOperationalSystemAsset: hasEditableOperationalSystemAssetMock,
 }));
 
 import { GET } from "@/app/api/kits/[slug]/open/route";
@@ -52,7 +52,7 @@ describe("kit open redirect route", () => {
       "https://docs.google.com/spreadsheets/d/example/copy",
     );
     recordKitOpenMock.mockResolvedValue(undefined);
-    hasPaidOperationalSystemAssetMock.mockReturnValue(false);
+    hasEditableOperationalSystemAssetMock.mockReturnValue(false);
   });
 
   it("records the opening and redirects to the Google copy page", async () => {
@@ -103,8 +103,8 @@ describe("kit open redirect route", () => {
     expect(recordKitOpenMock).not.toHaveBeenCalled();
   });
 
-  it("ne redirige jamais publiquement vers un système payant", async () => {
-    hasPaidOperationalSystemAssetMock.mockReturnValueOnce(true);
+  it("ne redirige jamais publiquement vers une copie envoyée par e-mail", async () => {
+    hasEditableOperationalSystemAssetMock.mockReturnValueOnce(true);
 
     const response = await GET(
       new Request(

@@ -2,12 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import SystemDetailContent from "@/components/SystemDetailContent";
-import {
-  getOperationalSystemDemoUrl,
-  getPilotingSheetCopyUrl,
-} from "@/lib/document-models";
-import { hasPaidOperationalSystemAsset } from "@/lib/paid-operational-system-assets.server";
-import { isStripeCheckoutConfigured } from "@/lib/stripe.server";
+import { getOperationalSystemDemoUrl } from "@/lib/document-models";
+import { hasEditableOperationalSystemAsset } from "@/lib/editable-operational-system-assets.server";
 import { normalizeSystemDetailTab } from "@/lib/system-detail-tabs";
 import {
   buildSystemPageIntro,
@@ -56,12 +52,9 @@ export default async function OperationalKitPage({
 
   const initialTab = getParamValue(resolvedSearchParams.tab);
   const jsonLd = buildSystemPageJsonLd(data);
-  const isPaidSystem = hasPaidOperationalSystemAsset(data.system.slug);
-  const kitCopyUrl = isPaidSystem
-    ? null
-    : getPilotingSheetCopyUrl(data.system.slug);
+  const hasEditableSystem = hasEditableOperationalSystemAsset(data.system.slug);
 
-  if (!isPaidSystem && !kitCopyUrl) {
+  if (!hasEditableSystem) {
     notFound();
   }
 
@@ -80,10 +73,7 @@ export default async function OperationalKitPage({
             demoUrl={getOperationalSystemDemoUrl(data.system.slug)}
             intro={buildSystemPageIntro(data)}
             initialActiveTab={normalizeSystemDetailTab(initialTab)}
-            purchaseAvailable={isPaidSystem}
-            checkoutAvailable={
-              isPaidSystem && isStripeCheckoutConfigured()
-            }
+            deliveryAvailable={hasEditableSystem}
             headingAs="h1"
           />
         </div>
