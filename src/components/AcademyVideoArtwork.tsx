@@ -11,6 +11,11 @@ export default function AcademyVideoArtwork({
   className?: string;
 }) {
   const isForest = video.artworkTheme === "forest";
+  const artworkScale = video.artworkScale ?? 1;
+  const artworkTransformStyle = {
+    transform: `scale(${artworkScale})`,
+    transformOrigin: "right center",
+  };
   const artworkMaskStyle = {
     WebkitMaskImage: `url("${video.artworkPath}")`,
     WebkitMaskPosition: "center",
@@ -20,6 +25,7 @@ export default function AcademyVideoArtwork({
     maskPosition: "center",
     maskRepeat: "no-repeat",
     maskSize: "contain",
+    ...artworkTransformStyle,
   };
 
   return (
@@ -59,6 +65,7 @@ export default function AcademyVideoArtwork({
               priority={priority}
               sizes="(max-width: 767px) 42vw, (max-width: 1279px) 32vw, 350px"
               className="object-contain object-center opacity-85"
+              style={artworkTransformStyle}
             />
           ) : (
             <span

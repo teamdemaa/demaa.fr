@@ -65,6 +65,17 @@ describe("academy video catalog", () => {
     }
   });
 
+  it("keeps artwork scaling explicit and limited to the benefit thumbnail", () => {
+    expect(
+      getAcademyVideoBySlug("difference-chiffre-affaires-benefice")
+        ?.artworkScale,
+    ).toBe(1.22);
+    expect(
+      getAcademyVideoBySlug("entreprise-rentable-sans-tresorerie")
+        ?.artworkScale,
+    ).toBeUndefined();
+  });
+
   it("emits real VideoObject data and escapes JSON-LD", () => {
     for (const video of getPublishedAcademyVideos()) {
       const jsonLd = buildAcademyPageJsonLd(video);
