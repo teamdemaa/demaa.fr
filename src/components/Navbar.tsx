@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { BriefcaseBusiness } from "lucide-react";
+import { BookOpen, BriefcaseBusiness } from "lucide-react";
 import DemaaWordmark from "@/components/DemaaWordmark";
 
 export default function Navbar({
@@ -12,11 +12,11 @@ export default function Navbar({
 }) {
   const router = useRouter();
   const pathname = usePathname();
+  const isAcademyPage =
+    pathname === "/academie" || pathname.startsWith("/academie/");
+  const isSystemDetailPage = pathname.startsWith("/kit-operationnel/");
   const showSystemSearchCta =
-    pathname === "/kits-operationnels" ||
-    pathname.startsWith("/kit-operationnel/");
-  const isPlumbingPilotPage =
-    pathname === "/kit-operationnel/plomberie-chauffage";
+    pathname === "/kits-operationnels" || isAcademyPage;
   const showSystemsCta =
     !minimal &&
     (pathname === "/annuaire-services" ||
@@ -36,18 +36,20 @@ export default function Navbar({
               <DemaaWordmark className="text-[1.4rem] sm:text-[1.7rem]" />
             </Link>
             <div className="flex items-center gap-2 sm:gap-3">
-              {showSystemSearchCta ? (
+              {isSystemDetailPage ? (
                 <Link
-                  href={
-                    isPlumbingPilotPage
-                      ? "/kit-operationnel/plomberie-chauffage?tab=process"
-                      : "/"
-                  }
+                  href="/academie"
+                  className="demaa-secondary-button min-h-10 gap-2 px-4 text-xs sm:px-5 sm:text-sm"
+                >
+                  <BookOpen className="h-4 w-4 shrink-0" aria-hidden="true" />
+                  <span>Découvrir l’Académie</span>
+                </Link>
+              ) : showSystemSearchCta ? (
+                <Link
+                  href="/"
                   className="demaa-primary-button min-h-10 px-4 text-xs sm:px-5 sm:text-sm"
                 >
-                  {isPlumbingPilotPage
-                    ? "Voir les process"
-                    : "Trouver mon système"}
+                  Trouver mon système
                 </Link>
               ) : showSystemsCta ? (
                 <Link

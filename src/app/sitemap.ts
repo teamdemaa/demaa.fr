@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getCanonicalBaseUrl } from "@/lib/site-url";
 import { getAllCourseEntries } from "@/lib/course-content";
+import { getAllAcademyVideos } from "@/lib/academy-video-catalog";
 import { getAllDocumentModels } from "@/lib/document-models";
 import { getAllNewsletters } from "@/lib/newsletter-content";
 import { aidFamilies, demaaAidItems } from "@/lib/aid-catalog";
@@ -46,6 +47,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/annuaire-newsletters`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-experts-comptables`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/modeles-de-documents`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${base}/academie`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/cours`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/mentions-legales`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
     { url: `${base}/conditions-d-utilisation`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
@@ -69,6 +71,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
+
+  const academyEntries: MetadataRoute.Sitemap = getAllAcademyVideos().map(
+    (video) => ({
+      url: `${base}/academie/${video.slug}`,
+      lastModified: new Date(`${video.updatedAt}T12:00:00+02:00`),
+      changeFrequency: "monthly" as const,
+      priority: 0.78,
+    }),
+  );
 
   const newsletterEntries = getAllNewsletters();
   const newsletterSitemapEntries: MetadataRoute.Sitemap = newsletterEntries.map((entry) => ({
@@ -195,6 +206,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [
     ...staticRoutes,
     ...documentModelSitemapEntries,
+    ...academyEntries,
     ...courseContentEntries,
     ...newsletterSitemapEntries,
     ...toolEntries,

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import {
   ArrowLeft,
   ArrowRight,
+  BookOpen,
   FileSpreadsheet,
   Wrench,
 } from "lucide-react";
@@ -38,6 +39,11 @@ type SystemDetailContentProps = {
   deliveryAvailable?: boolean;
   headingAs?: "h1" | "h2";
   headingId?: string;
+  academyVideos?: ReadonlyArray<{
+    slug: string;
+    title: string;
+    category: string;
+  }>;
 };
 
 const systemTabs: ReadonlyArray<{
@@ -57,6 +63,7 @@ export default function SystemDetailContent({
   deliveryAvailable = false,
   headingAs: Heading = "h2",
   headingId,
+  academyVideos = [],
 }: SystemDetailContentProps) {
   const router = useRouter();
   const tabs = systemTabs;
@@ -305,6 +312,43 @@ export default function SystemDetailContent({
           ) : null}
 
         </section>
+
+        {academyVideos.length ? (
+          <section
+            className="mt-12 border-t border-dema-line pt-10"
+            aria-labelledby="academy-related-heading"
+          >
+            <div className="flex items-center gap-3">
+              <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
+                <BookOpen className="h-4 w-4" aria-hidden="true" />
+              </span>
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
+                  Académie Demaa
+                </p>
+                <h2 id="academy-related-heading" className="mt-1 text-xl font-semibold tracking-[-0.025em] text-brand-blue">
+                  Comprendre les indicateurs de ce système
+                </h2>
+              </div>
+            </div>
+            <div className="mt-5 grid gap-3 sm:grid-cols-2">
+              {academyVideos.map((video) => (
+                <Link
+                  key={video.slug}
+                  href={`/academie/${video.slug}`}
+                  className="group rounded-[1.1rem] border border-dema-line bg-dema-paper px-5 py-5 transition hover:border-dema-forest/18"
+                >
+                  <p className="text-xs font-medium text-dema-forest">{video.category}</p>
+                  <h3 className="mt-2 font-semibold leading-snug text-brand-blue">{video.title}</h3>
+                  <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-dema-forest">
+                    Lire la fiche
+                    <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" aria-hidden="true" />
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </section>
+        ) : null}
       </article>
       {isCopyRequestOpen ? (
         <OperationalSystemCopyRequestModal
