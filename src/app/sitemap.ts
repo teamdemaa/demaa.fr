@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getCanonicalBaseUrl } from "@/lib/site-url";
 import { getAllCourseEntries } from "@/lib/course-content";
-import { getAllAcademyVideos } from "@/lib/academy-video-catalog";
+import { getPublishedAcademyVideos } from "@/lib/academy-video-catalog";
 import { getAllDocumentModels } from "@/lib/document-models";
 import { getAllNewsletters } from "@/lib/newsletter-content";
 import { aidFamilies, demaaAidItems } from "@/lib/aid-catalog";
@@ -72,7 +72,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  const academyEntries: MetadataRoute.Sitemap = getAllAcademyVideos().map(
+  const academyEntries: MetadataRoute.Sitemap = getPublishedAcademyVideos().map(
     (video) => ({
       url: `${base}/academie/${video.slug}`,
       lastModified: new Date(`${video.updatedAt}T12:00:00+02:00`),

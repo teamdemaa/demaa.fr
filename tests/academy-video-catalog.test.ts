@@ -4,9 +4,12 @@ import {
   ACADEMY_THUMBNAIL_CANVAS,
   ACADEMY_THUMBNAIL_TARGET_CROP_RATIO,
   DEFAULT_ACADEMY_THUMBNAIL_COMPOSITION,
+} from "@/lib/academy-thumbnail";
+import {
   getAcademyVideoBySlug,
   getAcademyVideosForSystem,
   getAllAcademyVideos,
+  getPublishedAcademyVideoBySlug,
   getPublishedAcademyVideos,
 } from "@/lib/academy-video-catalog";
 import {
@@ -15,15 +18,16 @@ import {
 } from "@/lib/academy-seo";
 
 describe("academy video catalog", () => {
-  it("exposes two distinct autonomous SEO pages", () => {
+  it("stores five distinct autonomous SEO entries", () => {
     const videos = getAllAcademyVideos();
 
-    expect(videos).toHaveLength(2);
-    expect(new Set(videos.map((video) => video.slug)).size).toBe(2);
-    expect(new Set(videos.map((video) => video.seoTitle)).size).toBe(2);
-    expect(new Set(videos.map((video) => video.h1)).size).toBe(2);
+    expect(videos).toHaveLength(5);
+    expect(new Set(videos.map((video) => video.slug)).size).toBe(5);
+    expect(new Set(videos.map((video) => video.seoTitle)).size).toBe(5);
+    expect(new Set(videos.map((video) => video.h1)).size).toBe(5);
 
     for (const video of videos) {
+      expect(video.contentType).toBe("course");
       expect(video.seoTitle.length).toBeLessThanOrEqual(60);
       expect(video.seoDescription.length).toBeLessThanOrEqual(160);
       expect(video.shortAnswer.length).toBeGreaterThan(180);
@@ -32,9 +36,17 @@ describe("academy video catalog", () => {
       expect(video.faq.length).toBeGreaterThanOrEqual(5);
       expect(getAcademyVideoBySlug(video.relatedVideoSlug)).toBeDefined();
     }
+
+    expect(videos.map((video) => video.courseCategory)).toEqual([
+      "Finances & pilotage",
+      "Finances & pilotage",
+      "Finances & pilotage",
+      "Vente & relation client",
+      "Organisation & management",
+    ]);
   });
 
-  it("uses only the two validated public YouTube publications", () => {
+  it("keeps only the two validated YouTube publications public", () => {
     expect(
       getPublishedAcademyVideos().map((video) => ({
         id: video.publication.youtubeId,
@@ -66,6 +78,20 @@ describe("academy video catalog", () => {
       expect(video.publication.thumbnailWidth).toBe(1280);
       expect(video.publication.thumbnailHeight).toBe(720);
     }
+
+    const draftSlugs = getAllAcademyVideos()
+      .filter((video) => video.publication.status === "draft")
+      .map((video) => video.slug);
+
+    expect(draftSlugs).toEqual([
+      "fixer-ses-prix-sans-vendre-a-perte",
+      "transformer-une-demande-en-client",
+      "deleguer-sans-perdre-le-controle",
+    ]);
+
+    for (const slug of draftSlugs) {
+      expect(getPublishedAcademyVideoBySlug(slug)).toBeUndefined();
+    }
   });
 
   it("keeps measured composition parameters distinct for both thumbnails", () => {
@@ -77,7 +103,7 @@ describe("academy video catalog", () => {
     );
 
     expect(benefit).toMatchObject({
-      artworkTheme: "sage",
+      artworkTheme: "forest",
       thumbnailComposition: {
         artwork: {
           scale: Math.SQRT2,
@@ -124,6 +150,7 @@ describe("academy video catalog", () => {
     ).toBe(ACADEMY_THUMBNAIL_TARGET_CROP_RATIO);
 
     for (const video of getPublishedAcademyVideos()) {
+      expect(video.artworkTheme).toBe("forest");
       expect(video.thumbnailComposition.safeZone.minimumSafeAspectRatio).toBeLessThanOrEqual(
         ACADEMY_THUMBNAIL_TARGET_CROP_RATIO,
       );
@@ -162,6 +189,7 @@ describe("academy video catalog", () => {
       "difference-chiffre-affaires-benefice",
     ]);
     expect(getAcademyVideosForSystem("plomberie-chauffage")).toHaveLength(0);
+    expect(getAcademyVideosForSystem("agence-web")).toHaveLength(0);
   });
 
   it("publishes both real videos in the video sitemap", async () => {
@@ -175,5 +203,8 @@ describe("academy video catalog", () => {
     expect(xml).toContain("Wch_wDVu4Wc");
     expect(xml).toContain("www.youtube-nocookie.com");
     expect(xml).not.toContain("autoplay");
+    expect(xml).not.toContain("fixer-ses-prix-sans-vendre-a-perte");
+    expect(xml).not.toContain("transformer-une-demande-en-client");
+    expect(xml).not.toContain("deleguer-sans-perdre-le-controle");
   });
 });

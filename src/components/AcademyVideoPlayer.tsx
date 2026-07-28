@@ -4,12 +4,12 @@ import { Play } from "lucide-react";
 import { useState } from "react";
 import AcademyVideoArtwork from "@/components/AcademyVideoArtwork";
 import { trackAcademyEvent } from "@/lib/academy-analytics-client";
-import type { AcademyVideoEntry } from "@/lib/academy-video-catalog";
+import type { PublishedAcademyVideoEntry } from "@/lib/academy-video-catalog";
 
 export default function AcademyVideoPlayer({
   video,
 }: {
-  video: AcademyVideoEntry;
+  video: PublishedAcademyVideoEntry;
 }) {
   const [hasStarted, setHasStarted] = useState(false);
 
@@ -36,7 +36,7 @@ export default function AcademyVideoPlayer({
         onClick={() => {
           setHasStarted(true);
           trackAcademyEvent("academy_player_started", {
-            category: video.category,
+            category: video.courseCategory,
             videoSlug: video.slug,
           });
         }}

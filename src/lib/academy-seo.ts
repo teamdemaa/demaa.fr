@@ -1,7 +1,7 @@
-import type { AcademyVideoEntry } from "@/lib/academy-video-catalog";
+import type { PublishedAcademyVideoEntry } from "@/lib/academy-video-catalog";
 import { getCanonicalOrigin } from "@/lib/site-url";
 
-export function buildAcademyPageJsonLd(video: AcademyVideoEntry) {
+export function buildAcademyPageJsonLd(video: PublishedAcademyVideoEntry) {
   const origin = getCanonicalOrigin();
   const pageUrl = `${origin}/academie/${video.slug}`;
 

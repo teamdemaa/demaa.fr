@@ -1,15 +1,15 @@
 import Image from "next/image";
+import type { PublishedAcademyVideoEntry } from "@/lib/academy-video-catalog";
 import {
   DEFAULT_ACADEMY_THUMBNAIL_COMPOSITION,
-  type AcademyVideoEntry,
-} from "@/lib/academy-video-catalog";
+} from "@/lib/academy-thumbnail";
 
 export default function AcademyVideoArtwork({
   video,
   priority = false,
   className = "",
 }: {
-  video: AcademyVideoEntry;
+  video: PublishedAcademyVideoEntry;
   priority?: boolean;
   className?: string;
 }) {

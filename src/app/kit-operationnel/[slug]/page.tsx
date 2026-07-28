@@ -63,7 +63,7 @@ export default async function OperationalKitPage({
     (video) => ({
       slug: video.slug,
       title: video.cardTitle,
-      category: video.category,
+      category: video.courseCategory,
     }),
   );
 

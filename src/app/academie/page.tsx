@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import AcademyCatalogClient from "@/components/AcademyCatalogClient";
 import Navbar from "@/components/Navbar";
-import { getAllAcademyVideos } from "@/lib/academy-video-catalog";
+import { getPublishedAcademyVideos } from "@/lib/academy-video-catalog";
 
 const title = "Académie Demaa : apprendre à entreprendre";
 const description =
@@ -37,7 +37,7 @@ export default function AcademyPage() {
               organiser et sécuriser votre entreprise.
             </p>
           </div>
-          <AcademyCatalogClient videos={getAllAcademyVideos()} />
+          <AcademyCatalogClient videos={getPublishedAcademyVideos()} />
         </section>
       </main>
     </>

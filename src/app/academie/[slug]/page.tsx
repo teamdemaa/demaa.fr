@@ -12,8 +12,8 @@ import AcademyVideoArtwork from "@/components/AcademyVideoArtwork";
 import AcademyVideoPlayer from "@/components/AcademyVideoPlayer";
 import Navbar from "@/components/Navbar";
 import {
-  getAcademyVideoBySlug,
-  getAllAcademyVideos,
+  getPublishedAcademyVideoBySlug,
+  getPublishedAcademyVideos,
 } from "@/lib/academy-video-catalog";
 import {
   buildAcademyPageJsonLd,
@@ -32,12 +32,12 @@ const dateFormatter = new Intl.DateTimeFormat("fr-FR", {
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return getAllAcademyVideos().map((video) => ({ slug: video.slug }));
+  return getPublishedAcademyVideos().map((video) => ({ slug: video.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const video = getAcademyVideoBySlug(slug);
+  const video = getPublishedAcademyVideoBySlug(slug);
 
   if (!video) {
     return {
@@ -80,10 +80,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function AcademyVideoPage({ params }: PageProps) {
   const { slug } = await params;
-  const video = getAcademyVideoBySlug(slug);
+  const video = getPublishedAcademyVideoBySlug(slug);
   if (!video) notFound();
 
-  const relatedVideo = getAcademyVideoBySlug(video.relatedVideoSlug);
+  const relatedVideo = getPublishedAcademyVideoBySlug(video.relatedVideoSlug);
   const publishedDate = dateFormatter.format(
     new Date(`${video.editorialPublishedAt}T12:00:00+02:00`),
   );
@@ -117,7 +117,7 @@ export default async function AcademyVideoPage({ params }: PageProps) {
 
           <header className="mx-auto mt-10 max-w-5xl text-center sm:mt-14">
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
-              {video.category}
+              {video.courseCategory}
             </p>
             <h1 className="mt-4 text-[clamp(2.35rem,6vw,5.35rem)] font-light leading-[0.96] tracking-[-0.052em] text-brand-blue">
               {video.h1}
@@ -271,7 +271,7 @@ export default async function AcademyVideoPage({ params }: PageProps) {
               <Link href={`/academie/${relatedVideo.slug}`} className="group mt-6 grid overflow-hidden rounded-[1.4rem] border border-dema-line bg-dema-paper sm:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
                 <AcademyVideoArtwork video={relatedVideo} className="rounded-none" />
                 <div className="flex flex-col justify-center px-6 py-7 sm:px-8">
-                  <p className="text-xs font-semibold text-dema-forest">{relatedVideo.category}</p>
+                  <p className="text-xs font-semibold text-dema-forest">{relatedVideo.courseCategory}</p>
                   <h3 className="mt-2 text-xl font-semibold leading-snug tracking-[-0.025em] text-brand-blue">
                     {video.relatedVideoAnchor}
                   </h3>

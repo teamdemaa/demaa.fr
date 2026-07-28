@@ -6,8 +6,8 @@ import { useDeferredValue, useMemo, useRef, useState } from "react";
 import AcademyVideoArtwork from "@/components/AcademyVideoArtwork";
 import { trackAcademyEvent } from "@/lib/academy-analytics-client";
 import type {
-  AcademyVideoCategory,
-  AcademyVideoEntry,
+  AcademyCourseCategory,
+  PublishedAcademyVideoEntry,
 } from "@/lib/academy-video-catalog";
 import { matchesSearchQuery } from "@/lib/search";
 
@@ -17,11 +17,11 @@ const FILTERS_ID = "academy-category-filters";
 export default function AcademyCatalogClient({
   videos,
 }: {
-  videos: readonly AcademyVideoEntry[];
+  videos: readonly PublishedAcademyVideoEntry[];
 }) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<
-    typeof ALL_CATEGORIES | AcademyVideoCategory
+    typeof ALL_CATEGORIES | AcademyCourseCategory
   >(ALL_CATEGORIES);
   const [areFiltersOpen, setAreFiltersOpen] = useState(false);
   const filterButtonRef = useRef<HTMLButtonElement>(null);
@@ -29,7 +29,7 @@ export default function AcademyCatalogClient({
   const categories = useMemo(
     () => [
       ALL_CATEGORIES,
-      ...Array.from(new Set(videos.map((video) => video.category))),
+      ...Array.from(new Set(videos.map((video) => video.courseCategory))),
     ],
     [videos],
   );
@@ -37,13 +37,15 @@ export default function AcademyCatalogClient({
     () =>
       videos.filter(
         (video) =>
-          (category === ALL_CATEGORIES || video.category === category) &&
+          (category === ALL_CATEGORIES ||
+            video.courseCategory === category) &&
           matchesSearchQuery(deferredQuery, [
             video.cardTitle,
             video.h1,
             video.primaryKeyword,
             ...video.secondaryKeywords,
             ...video.topics,
+            video.courseCategory,
           ]),
       ),
     [category, deferredQuery, videos],
@@ -107,7 +109,7 @@ export default function AcademyCatalogClient({
                   aria-pressed={active}
                   onClick={() => {
                     setCategory(
-                      item as typeof ALL_CATEGORIES | AcademyVideoCategory,
+                      item as typeof ALL_CATEGORIES | AcademyCourseCategory,
                     );
                     trackAcademyEvent("academy_filter_selected", {
                       category: item,
@@ -149,7 +151,7 @@ export default function AcademyCatalogClient({
                   href={`/academie/${video.slug}`}
                   onClick={() =>
                     trackAcademyEvent("academy_video_card_opened", {
-                      category: video.category,
+                      category: video.courseCategory,
                       queryLength: query.trim().length,
                       videoSlug: video.slug,
                     })
@@ -161,7 +163,7 @@ export default function AcademyCatalogClient({
                 </Link>
                 <div className="mt-4 flex items-start justify-between gap-4 px-1">
                   <div className="min-w-0">
-                    <p className="text-xs font-medium text-dema-forest">{video.category}</p>
+                    <p className="text-xs font-medium text-dema-forest">{video.courseCategory}</p>
                     <h3 className="mt-1 text-lg font-semibold leading-snug tracking-[-0.02em] text-brand-blue">
                       <Link href={`/academie/${video.slug}`} className="rounded-sm hover:text-dema-forest">
                         {video.cardTitle}
