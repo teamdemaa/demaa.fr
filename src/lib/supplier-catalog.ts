@@ -15,7 +15,11 @@ export type SupplierFamily =
   | "Finance & protection"
   | "Équipement & exploitation";
 
-type SupplierCta = "Voir le fournisseur" | "Demander une mise en relation" | "Comparer les options";
+type SupplierCta =
+  | "Voir le fournisseur"
+  | "Demander une mise en relation"
+  | "Comparer les options"
+  | "Découvrir la solution";
 
 export type DemaaSupplier = {
   slug: string;

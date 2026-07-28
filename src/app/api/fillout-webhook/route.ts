@@ -63,7 +63,7 @@ async function handlePost(request: Request) {
     ],
     idempotencyKey: `fillout:${submission.submissionId}`,
     requestType: "organisation_session_booking",
-    title: "Session stratégique — formulaire envoyé",
+    title: "Session stratégique - formulaire envoyé",
   });
 
   logOperationalEvent("fillout.webhook.processed", {

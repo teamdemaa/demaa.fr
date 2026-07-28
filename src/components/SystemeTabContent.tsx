@@ -129,12 +129,7 @@ function ProcessList({ items }: { items: SystemeProcessItem[] }) {
 }
 
 function OperationalProcessAccordion({ systeme }: { systeme: SystemeDetail }) {
-  const initialPillar = systeme.cards.some(
-    (card) => card.pillar === "Marketing et Vente",
-  )
-    ? "Marketing et Vente"
-    : systeme.cards[0]?.pillar ?? null;
-  const [openPillar, setOpenPillar] = useState<string | null>(initialPillar);
+  const [openPillar, setOpenPillar] = useState<string | null>(null);
 
   return (
     <div className="space-y-3">

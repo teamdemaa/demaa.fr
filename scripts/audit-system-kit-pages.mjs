@@ -93,6 +93,16 @@ function inspectPage({ enterprise, response, html, tab }) {
     }
   }
 
+  const copyCtaGroup = renderedHtml.match(
+    /<div[^>]*data-kit-copy-cta-group[^>]*>[\s\S]*?<\/div>/,
+  )?.[0];
+  if (
+    !copyCtaGroup?.includes("Recevoir ma copie modifiable") ||
+    !copyCtaGroup.includes("Gratuit · Envoyé par e-mail")
+  ) {
+    errors.push("free email note is not attached to the copy CTA");
+  }
+
   for (const legacyPromise of [
     "Ouvrir gratuitement le tableau",
     "Réserver ma session de cadrage offerte",
@@ -132,11 +142,14 @@ function inspectPage({ enterprise, response, html, tab }) {
   }
 
   if (tab === "process") {
+    if (renderedHtml.includes('aria-expanded="true"')) {
+      errors.push("a process family is expanded by default");
+    }
     if (!/\d+ processus/.test(renderedHtml)) {
       errors.push("missing process count");
     }
-    if (!renderedHtml.includes("Support associé indiqué dans le système")) {
-      errors.push("missing neutral associated-support wording");
+    if (renderedHtml.includes("Support associé indiqué dans le système")) {
+      errors.push("collapsed process content is exposed by default");
     }
     if (renderedHtml.includes("Aperçu du document")) {
       errors.push("legacy document preview is still visible");

@@ -57,6 +57,24 @@ export type SystemEcosystemGroup = {
   resources: SystemEcosystemResource[];
 };
 
+const GENERIC_SOLUTION_CTA_RESOURCE_KEYS = new Set([
+  "finance:qonto",
+  "supplier:alan",
+  "supplier:orus",
+]);
+
+export function getSystemEcosystemResourceCtaLabel(
+  resource: SystemEcosystemResource,
+) {
+  const key = `${resource.type}:${resource.item.slug}`;
+
+  if (GENERIC_SOLUTION_CTA_RESOURCE_KEYS.has(key)) {
+    return "Découvrir la solution";
+  }
+
+  return "cta" in resource.item ? resource.item.cta : null;
+}
+
 export function getSystemEcosystemResourceIdentity(
   resource: SystemEcosystemResource,
 ) {

@@ -52,7 +52,7 @@ describe("operational system delivery email", () => {
 
     expect(headers["Idempotency-Key"]).toMatch(/^demaa-system-[a-f0-9]{64}$/);
     expect(payload.subject).toBe(
-      "Votre copie modifiable — Plomberie & chauffage",
+      "Votre copie modifiable - Plomberie & chauffage",
     );
     expect(payload.html).toContain("Créer ma copie dans Google Drive");
     expect(payload.html).toContain("https://example.invalid/private-copy");

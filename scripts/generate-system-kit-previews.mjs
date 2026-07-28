@@ -203,7 +203,7 @@ function createSheetHeader({ width, name, kind }) {
     return Buffer.from(
       `<svg width="${width}" height="58" xmlns="http://www.w3.org/2000/svg">
         <rect x="26" y="20" width="${width - 26}" height="30" fill="#08613f"/>
-        <text x="36" y="41" font-family="Arial, sans-serif" font-size="${titleSize}" font-weight="700" fill="#ffffff">${safeName} — PRÉVISIONNEL FINANCIER</text>
+        <text x="36" y="41" font-family="Arial, sans-serif" font-size="${titleSize}" font-weight="700" fill="#ffffff">${safeName} - PRÉVISIONNEL FINANCIER</text>
       </svg>`,
     );
   }

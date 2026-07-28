@@ -259,7 +259,7 @@ export const demaaProNetworks = [
   },
   {
     slug: "salons-habitat-btp",
-    name: "Foire de Paris — Maison & Habitat",
+    name: "Foire de Paris - Maison & Habitat",
     category: "Événement",
     shortDescription: "L’univers Maison & Habitat de la Foire de Paris.",
     description:
@@ -637,7 +637,7 @@ export const demaaProNetworks = [
   },
   {
     slug: "union-commercants-locaux",
-    name: "CCI France — Commerce",
+    name: "CCI France - Commerce",
     category: "Réseau",
     shortDescription: "Le réseau national des CCI pour accompagner les commerces de proximité.",
     description:

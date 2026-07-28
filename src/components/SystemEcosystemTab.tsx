@@ -26,6 +26,7 @@ import SupplierDetailDialog from "@/components/SupplierDetailDialog";
 import TrainingDetailDialog from "@/components/TrainingDetailDialog";
 import { trackSystemEcosystemEvent } from "@/lib/kit-analytics-client";
 import {
+  getSystemEcosystemResourceCtaLabel,
   getSystemEcosystemResourceIdentity,
   type SystemEcosystemGroup,
   type SystemEcosystemResource,
@@ -87,7 +88,16 @@ function ResourceDialog({
   }
 
   if (resource.type === "finance") {
-    return <FinanceDetailDialog item={resource.item} onClose={onClose} />;
+    return (
+      <FinanceDetailDialog
+        item={{
+          ...resource.item,
+          cta:
+            getSystemEcosystemResourceCtaLabel(resource) ?? resource.item.cta,
+        }}
+        onClose={onClose}
+      />
+    );
   }
 
   if (resource.type === "network") {
@@ -104,14 +114,26 @@ function ResourceDialog({
     return (
       <ServiceDetailDialog
         service={resource.item}
-        source={`Système opérationnel — ${systemSlug}`}
+        source={`Système opérationnel - ${systemSlug}`}
         onClose={onClose}
       />
     );
   }
 
   if (resource.type === "supplier") {
-    return <SupplierDetailDialog supplier={resource.item} onClose={onClose} />;
+    return (
+      <SupplierDetailDialog
+        supplier={{
+          ...resource.item,
+          cta:
+            getSystemEcosystemResourceCtaLabel(resource) ===
+            "Découvrir la solution"
+              ? "Découvrir la solution"
+              : resource.item.cta,
+        }}
+        onClose={onClose}
+      />
+    );
   }
 
   return <TrainingDetailDialog training={resource.item} onClose={onClose} />;
@@ -282,7 +304,7 @@ export default function SystemEcosystemTab({
                   <div className="flex shrink-0 items-center gap-2">
                     <button
                       type="button"
-                      aria-label={`Voir les ressources précédentes — ${group.title}`}
+                      aria-label={`Voir les ressources précédentes - ${group.title}`}
                       onClick={() => navigateRail(group, -1)}
                       disabled={!railState?.canPrevious}
                       className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest disabled:cursor-not-allowed disabled:opacity-30"
@@ -291,7 +313,7 @@ export default function SystemEcosystemTab({
                     </button>
                     <button
                       type="button"
-                      aria-label={`Voir les ressources suivantes — ${group.title}`}
+                      aria-label={`Voir les ressources suivantes - ${group.title}`}
                       onClick={() => navigateRail(group, 1)}
                       disabled={!railState?.canNext}
                       className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest disabled:cursor-not-allowed disabled:opacity-30"

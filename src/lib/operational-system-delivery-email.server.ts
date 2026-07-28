@@ -48,7 +48,7 @@ export async function sendOperationalSystemDeliveryEmail(input: {
     body: JSON.stringify({
       from,
       to: input.email,
-      subject: `Votre copie modifiable — ${input.systemName}`,
+      subject: `Votre copie modifiable - ${input.systemName}`,
       html: `
         <!DOCTYPE html>
         <html lang="fr">
