@@ -10,7 +10,7 @@ import {
   useState,
   type KeyboardEvent,
 } from "react";
-import { ArrowRight, BookOpen, CornerDownLeft, Search } from "lucide-react";
+import { CornerDownLeft, Search } from "lucide-react";
 import { trackSystemJourneyEvent } from "@/lib/kit-analytics-client";
 import { matchesSearchQuery, normalizeSearchText } from "@/lib/search";
 import type { System } from "@/lib/types";
@@ -287,16 +287,6 @@ export default function SystemSearchHero({
             </div>
           ) : null}
 
-          <div className="mt-7 flex justify-center">
-            <Link
-              href="/academie"
-              className="group inline-flex min-h-11 items-center gap-3 rounded-full border border-dema-line bg-dema-paper px-5 py-2.5 text-sm font-semibold text-brand-blue shadow-[0_6px_18px_rgba(23,35,29,0.025)] transition hover:border-dema-forest/20 hover:text-dema-forest"
-            >
-              <BookOpen className="h-4 w-4 text-dema-forest" aria-hidden="true" />
-              Découvrir l’Académie
-              <ArrowRight className="h-4 w-4 text-dema-forest transition group-hover:translate-x-0.5" aria-hidden="true" />
-            </Link>
-          </div>
         </div>
       </div>
     </section>
