@@ -72,16 +72,18 @@ export default function AcademyVideoArtwork({
           <p
             className={`mt-[7%] font-medium leading-[0.98] tracking-[-0.045em] ${thumbnailTitleSizeClass}`}
           >
-            {video.thumbnailLines.map((line, index) => (
-              <span
-                key={line}
-                className={`block ${
-                  isForest && index > 0 ? "text-[#9eb7a7]" : ""
-                }`}
-              >
-                {line}
-              </span>
-            ))}
+            <span data-academy-title-copy className="inline-block">
+              {video.thumbnailLines.map((line, index) => (
+                <span
+                  key={line}
+                  className={`block ${
+                    isForest && index > 0 ? "text-[#9eb7a7]" : ""
+                  }`}
+                >
+                  {line}
+                </span>
+              ))}
+            </span>
           </p>
         </div>
         <div
@@ -101,6 +103,7 @@ export default function AcademyVideoArtwork({
               alt=""
               fill
               priority={priority}
+              data-academy-artwork-visual
               sizes="(max-width: 767px) 42vw, (max-width: 1279px) 32vw, 350px"
               className="object-contain object-center opacity-85"
               style={artworkTransformStyle}
@@ -109,6 +112,7 @@ export default function AcademyVideoArtwork({
             <span
               aria-hidden="true"
               data-academy-artwork-tone="forest"
+              data-academy-artwork-visual
               className="absolute inset-0 bg-[#315f46]"
               style={artworkMaskStyle}
             />

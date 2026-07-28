@@ -97,6 +97,7 @@ describe("academy video catalog", () => {
     });
     expect(treasury).toMatchObject({
       artworkTheme: "forest",
+      thumbnailLines: ["Rentable.", "Mais sans", "trésorerie."],
       thumbnailComposition: {
         artwork: {
           scale: 1.25,

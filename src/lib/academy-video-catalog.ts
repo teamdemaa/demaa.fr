@@ -115,7 +115,7 @@ export const academyVideoCatalog: readonly AcademyVideoEntry[] = [
     h1: "Pourquoi une entreprise rentable peut-elle manquer de trésorerie ?",
     cardTitle: "Rentable, mais sans trésorerie",
     thumbnailEyebrow: "Le paradoxe",
-    thumbnailLines: ["Rentable.", "Mais sans trésorerie."],
+    thumbnailLines: ["Rentable.", "Mais sans", "trésorerie."],
     thumbnailAlt:
       "Dirigeant face à des factures rentables mais à une trésorerie insuffisante.",
     artworkPath: "/images/academy/illustration-cash.png",
