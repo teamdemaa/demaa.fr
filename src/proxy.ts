@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { buildContentSecurityPolicy } from "@/lib/content-security-policy";
 import { isVercelPreviewHost } from "@/lib/site-url";
 
 const CANONICAL_HOST = "demaa.fr";
@@ -19,6 +20,14 @@ const RETIRED_EXACT_PATHS = new Set([
 const RETIRED_PATH_PREFIXES = [
   "/services/",
 ];
+const CONTENT_SECURITY_POLICY = buildContentSecurityPolicy({
+  allowUnsafeEval: process.env.NODE_ENV === "development",
+});
+
+function withContentSecurityPolicy(response: NextResponse) {
+  response.headers.set("Content-Security-Policy", CONTENT_SECURITY_POLICY);
+  return response;
+}
 
 export function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
@@ -27,18 +36,20 @@ export function proxy(request: NextRequest) {
     RETIRED_EXACT_PATHS.has(pathname) ||
     RETIRED_PATH_PREFIXES.some((prefix) => pathname.startsWith(prefix))
   ) {
-    return NextResponse.rewrite(new URL("/_not-found", request.url), {
-      status: 404,
-      headers: {
-        "X-Robots-Tag": "noindex, nofollow",
-      },
-    });
+    return withContentSecurityPolicy(
+      NextResponse.rewrite(new URL("/_not-found", request.url), {
+        status: 404,
+        headers: {
+          "X-Robots-Tag": "noindex, nofollow",
+        },
+      }),
+    );
   }
 
   const host = request.headers.get("host")?.toLowerCase();
 
   if (!host) {
-    return NextResponse.next();
+    return withContentSecurityPolicy(NextResponse.next());
   }
 
   const shouldRedirect =
@@ -46,14 +57,19 @@ export function proxy(request: NextRequest) {
     (host.endsWith(".vercel.app") && !isVercelPreviewHost(host));
 
   if (!shouldRedirect) {
-    return NextResponse.next();
+    return withContentSecurityPolicy(NextResponse.next());
   }
 
   const url = request.nextUrl.clone();
   url.protocol = "https:";
   url.host = CANONICAL_HOST;
 
-  return NextResponse.redirect(`${CANONICAL_ORIGIN}${url.pathname}${url.search}`, 308);
+  return withContentSecurityPolicy(
+    NextResponse.redirect(
+      `${CANONICAL_ORIGIN}${url.pathname}${url.search}`,
+      308,
+    ),
+  );
 }
 
 export const config = {

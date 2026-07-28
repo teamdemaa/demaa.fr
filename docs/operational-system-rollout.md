@@ -67,15 +67,17 @@ La réponse publique de succès est toujours `{ "ok": true }`. Elle ne contient
 ni lien `/copy`, ni identifiant de lead, ni identifiant Resend.
 
 Le serveur valide la demande, applique les limites par IP et par adresse,
-déduplique l'envoi, résout la copie depuis le registre server-only, puis envoie
-l'e-mail avec Resend. Les variables serveur nécessaires sont
-`RESEND_API_KEY` et `RESEND_FROM_EMAIL`.
+déduplique l'envoi, puis résout la copie depuis un registre privé fourni par la
+variable serveur `OPERATIONAL_SYSTEM_COPY_SHEET_IDS_JSON`. Ce registre n'est
+jamais suivi par Git, inclus dans le bundle, renvoyé par l'API ou écrit dans les
+logs. Les autres variables serveur nécessaires sont `RESEND_API_KEY` et
+`RESEND_FROM_EMAIL`.
 
 Un échec d'envoi est journalisé pour les tentatives automatiques. L'inscription
 à des communications marketing reste désactivée par défaut et ne peut pas être
 déduite de la seule demande de copie.
 
-Une démonstration ne doit jamais pointer vers le modèle vierge et les deux
+Une démonstration ne doit jamais pointer vers la copie modifiable et les deux
 documents ne doivent jamais partager le même identifiant Google Drive.
 
 ## Structure canonique du classeur
@@ -136,11 +138,11 @@ pertinent.
 Un métier n'est publiable que si :
 
 - ses 74 contenus sont présents ;
-- sa démonstration et son modèle vierge sont deux fichiers distincts ;
+- sa démonstration et sa copie modifiable sont deux fichiers distincts ;
 - les sept onglets existent dans le bon ordre ;
 - l'Écosystème contient des noms concrets ;
 - les liens de démonstration et de copie sont valides ;
-- l'e-mail remet le bon modèle vierge ;
+- l'e-mail remet la bonne copie modifiable ;
 - la page affiche uniquement Process et Outils ;
 - les contrôles desktop, mobile et Google Sheets sont validés ;
 - les tests automatisés passent.
@@ -294,8 +296,8 @@ réglementés, Cabinets de santé et Logistique & transport complets confirment 
   les démonstrations ;
 - des outils et fournisseurs nommés, avec EM2A Expertise dans chaque
   Écosystème ;
-- des liens publics en lecture seule pour les démonstrations et des liens
-  `/copy` gardés côté serveur pour les copies envoyées.
+- des liens publics en lecture seule pour les démonstrations et des
+  identifiants de copie conservés uniquement dans le secret serveur privé.
 
 Les nouvelles paires sont créées dans le dossier Drive
 `Demaa — Systèmes opérationnels publiés`. Le dossier porte le droit Lecteur

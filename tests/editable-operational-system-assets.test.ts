@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("server-only", () => ({}));
 
@@ -6,27 +6,49 @@ import {
   getEditableOperationalSystemCopyUrl,
   hasEditableOperationalSystemAsset,
 } from "@/lib/editable-operational-system-assets.server";
-import editableAssets from "@/lib/editable-operational-system-assets.generated.server.json";
+import demoAssets from "@/lib/operational-system-demo-assets.generated.json";
+
+const PRIVATE_REGISTRY_ENV_NAME =
+  "OPERATIONAL_SYSTEM_COPY_SHEET_IDS_JSON";
+const knownSystemSlug = "plomberie-chauffage";
+
+function buildPrivateRegistry() {
+  return Object.fromEntries(
+    Object.keys(demoAssets).map((slug, index) => [
+      slug,
+      `private${index.toString(36).padStart(24, "0")}`,
+    ]),
+  );
+}
 
 describe("editable operational system assets", () => {
-  it("keeps every published editable workbook in the server-only registry", () => {
-    const publishedSlugs = Object.keys(editableAssets);
-    const copyUrls = publishedSlugs.map((slug) => {
-      expect(hasEditableOperationalSystemAsset(slug)).toBe(true);
-      const copyUrl = getEditableOperationalSystemCopyUrl(slug);
-
-      expect(copyUrl).toMatch(
-        /^https:\/\/docs\.google\.com\/spreadsheets\/d\/[a-zA-Z0-9-_]+\/copy$/,
-      );
-
-      return copyUrl;
-    });
-
-    expect(new Set(copyUrls).size).toBe(publishedSlugs.length);
+  afterEach(() => {
+    delete process.env[PRIVATE_REGISTRY_ENV_NAME];
   });
 
-  it("does not resolve an unknown system", () => {
+  it("recognizes published systems without exposing or requiring the private registry", () => {
+    expect(hasEditableOperationalSystemAsset(knownSystemSlug)).toBe(true);
+    expect(getEditableOperationalSystemCopyUrl(knownSystemSlug)).toBeNull();
     expect(hasEditableOperationalSystemAsset("inconnu")).toBe(false);
     expect(getEditableOperationalSystemCopyUrl("inconnu")).toBeNull();
+  });
+
+  it("resolves a copy URL from a validated server-only sheet identifier", () => {
+    const privateRegistry = buildPrivateRegistry();
+    process.env[PRIVATE_REGISTRY_ENV_NAME] = JSON.stringify(privateRegistry);
+
+    expect(getEditableOperationalSystemCopyUrl(knownSystemSlug)).toBe(
+      `https://docs.google.com/spreadsheets/d/${privateRegistry[knownSystemSlug]}/copy`,
+    );
+  });
+
+  it("rejects malformed or unpublished entries without echoing their value", () => {
+    process.env[PRIVATE_REGISTRY_ENV_NAME] = JSON.stringify({
+      inconnu: "b".repeat(24),
+    });
+
+    expect(() => getEditableOperationalSystemCopyUrl(knownSystemSlug)).toThrow(
+      "Le registre privé des copies est invalide.",
+    );
   });
 });
