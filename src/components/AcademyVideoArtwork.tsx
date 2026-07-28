@@ -1,5 +1,8 @@
 import Image from "next/image";
-import type { AcademyVideoEntry } from "@/lib/academy-video-catalog";
+import {
+  DEFAULT_ACADEMY_THUMBNAIL_COMPOSITION,
+  type AcademyVideoEntry,
+} from "@/lib/academy-video-catalog";
 
 export default function AcademyVideoArtwork({
   video,
@@ -11,11 +14,14 @@ export default function AcademyVideoArtwork({
   className?: string;
 }) {
   const isForest = video.artworkTheme === "forest";
-  const artworkScale = video.artworkScale ?? 1;
-  const artworkOffsetXPercent = video.artworkOffsetXPercent ?? 0;
-  const thumbnailTextScale = video.thumbnailTextScale ?? 1;
-  const thumbnailTitleOffsetXPercent =
-    video.thumbnailTitleOffsetXPercent ?? 0;
+  const composition =
+    video.thumbnailComposition ?? DEFAULT_ACADEMY_THUMBNAIL_COMPOSITION;
+  const artworkScale = composition.artwork.scale;
+  const artworkOffsetXPercent = composition.artwork.offsetXPercent;
+  const artworkOffsetYPercent = composition.artwork.offsetYPercent;
+  const thumbnailTextScale = composition.title.scale;
+  const thumbnailTitleOffsetXPercent = composition.title.offsetXPercent;
+  const thumbnailTitleOffsetYPercent = composition.title.offsetYPercent;
   const thumbnailTitleSizeClass =
     thumbnailTextScale < 1
       ? "text-[clamp(1.25rem,4.1vw,2.3rem)]"
@@ -46,8 +52,12 @@ export default function AcademyVideoArtwork({
         <div
           className="relative z-10 min-w-0"
           data-academy-title-block
+          data-thumbnail-title-scale={thumbnailTextScale}
+          data-thumbnail-title-offset-x={thumbnailTitleOffsetXPercent}
+          data-thumbnail-title-offset-y={thumbnailTitleOffsetYPercent}
           style={{
             left: `${thumbnailTitleOffsetXPercent}%`,
+            top: `${thumbnailTitleOffsetYPercent}%`,
             transform: `scale(${thumbnailTextScale})`,
             transformOrigin: "left center",
           }}
@@ -76,7 +86,14 @@ export default function AcademyVideoArtwork({
         </div>
         <div
           className="relative h-full min-w-0"
-          style={{ left: `${artworkOffsetXPercent}%` }}
+          data-academy-artwork-block
+          data-thumbnail-artwork-scale={artworkScale}
+          data-thumbnail-artwork-offset-x={artworkOffsetXPercent}
+          data-thumbnail-artwork-offset-y={artworkOffsetYPercent}
+          style={{
+            left: `${artworkOffsetXPercent}%`,
+            top: `${artworkOffsetYPercent}%`,
+          }}
         >
           {isForest ? (
             <Image

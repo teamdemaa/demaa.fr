@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
 import { GET as getVideoSitemap } from "@/app/academie/video-sitemap.xml/route";
 import {
+  ACADEMY_THUMBNAIL_CANVAS,
+  ACADEMY_THUMBNAIL_TARGET_CROP_RATIO,
+  DEFAULT_ACADEMY_THUMBNAIL_COMPOSITION,
   getAcademyVideoBySlug,
   getAcademyVideosForSystem,
   getAllAcademyVideos,
@@ -65,7 +68,7 @@ describe("academy video catalog", () => {
     }
   });
 
-  it("keeps artwork scaling explicit and limited to the benefit thumbnail", () => {
+  it("keeps measured composition parameters distinct for both thumbnails", () => {
     const benefit = getAcademyVideoBySlug(
       "difference-chiffre-affaires-benefice",
     );
@@ -74,15 +77,62 @@ describe("academy video catalog", () => {
     );
 
     expect(benefit).toMatchObject({
-      artworkScale: Math.SQRT2,
-      artworkOffsetXPercent: -6.3,
-      thumbnailTextScale: 0.69,
-      thumbnailTitleOffsetXPercent: 15.9,
+      artworkTheme: "sage",
+      thumbnailComposition: {
+        artwork: {
+          scale: Math.SQRT2,
+          offsetXPercent: -6.3,
+          offsetYPercent: 0,
+        },
+        title: {
+          scale: 0.69,
+          offsetXPercent: 15.9,
+          offsetYPercent: 0,
+        },
+        safeZone: {
+          targetAspectRatio: ACADEMY_THUMBNAIL_TARGET_CROP_RATIO,
+          minimumSafeAspectRatio: 1.3056,
+        },
+      },
     });
-    expect(treasury?.artworkScale).toBeUndefined();
-    expect(treasury?.artworkOffsetXPercent).toBeUndefined();
-    expect(treasury?.thumbnailTextScale).toBeUndefined();
-    expect(treasury?.thumbnailTitleOffsetXPercent).toBeUndefined();
+    expect(treasury).toMatchObject({
+      artworkTheme: "forest",
+      thumbnailComposition: {
+        artwork: {
+          scale: 1.25,
+          offsetXPercent: -10,
+          offsetYPercent: 0,
+        },
+        title: {
+          scale: 1,
+          offsetXPercent: 17,
+          offsetYPercent: 0,
+        },
+        safeZone: {
+          targetAspectRatio: ACADEMY_THUMBNAIL_TARGET_CROP_RATIO,
+          minimumSafeAspectRatio: 1.2722,
+        },
+      },
+    });
+
+    expect(treasury?.thumbnailComposition).not.toEqual(
+      benefit?.thumbnailComposition,
+    );
+    expect(
+      DEFAULT_ACADEMY_THUMBNAIL_COMPOSITION.safeZone.minimumSafeAspectRatio,
+    ).toBe(ACADEMY_THUMBNAIL_TARGET_CROP_RATIO);
+
+    for (const video of getPublishedAcademyVideos()) {
+      expect(video.thumbnailComposition.safeZone.minimumSafeAspectRatio).toBeLessThanOrEqual(
+        ACADEMY_THUMBNAIL_TARGET_CROP_RATIO,
+      );
+      expect(video.publication.thumbnailWidth).toBe(
+        ACADEMY_THUMBNAIL_CANVAS.width,
+      );
+      expect(video.publication.thumbnailHeight).toBe(
+        ACADEMY_THUMBNAIL_CANVAS.height,
+      );
+    }
   });
 
   it("emits real VideoObject data and escapes JSON-LD", () => {
