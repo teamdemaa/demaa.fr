@@ -11,6 +11,16 @@ export default function AcademyVideoArtwork({
   className?: string;
 }) {
   const isForest = video.artworkTheme === "forest";
+  const artworkMaskStyle = {
+    WebkitMaskImage: `url("${video.artworkPath}")`,
+    WebkitMaskPosition: "center",
+    WebkitMaskRepeat: "no-repeat",
+    WebkitMaskSize: "contain",
+    maskImage: `url("${video.artworkPath}")`,
+    maskPosition: "center",
+    maskRepeat: "no-repeat",
+    maskSize: "contain",
+  };
 
   return (
     <div
@@ -41,16 +51,23 @@ export default function AcademyVideoArtwork({
           </p>
         </div>
         <div className="relative h-full min-w-0">
-          <Image
-            src={video.artworkPath}
-            alt=""
-            fill
-            priority={priority}
-            sizes="(max-width: 767px) 42vw, (max-width: 1279px) 32vw, 350px"
-            className={`object-contain object-center ${
-              isForest ? "opacity-85" : "opacity-70"
-            }`}
-          />
+          {isForest ? (
+            <Image
+              src={video.artworkPath}
+              alt=""
+              fill
+              priority={priority}
+              sizes="(max-width: 767px) 42vw, (max-width: 1279px) 32vw, 350px"
+              className="object-contain object-center opacity-85"
+            />
+          ) : (
+            <span
+              aria-hidden="true"
+              data-academy-artwork-tone="forest"
+              className="absolute inset-0 bg-[#315f46]"
+              style={artworkMaskStyle}
+            />
+          )}
         </div>
       </div>
     </div>
