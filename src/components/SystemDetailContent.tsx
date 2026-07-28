@@ -13,13 +13,16 @@ import {
 import {
   type KeyboardEvent,
   useCallback,
+  useEffect,
   useMemo,
   useState,
 } from "react";
 import OperationalSystemCopyRequestModal from "@/components/OperationalSystemCopyRequestModal";
+import SystemEcosystemTab from "@/components/SystemEcosystemTab";
 import SystemeTabContent from "@/components/SystemeTabContent";
 import {
   trackKitOpen,
+  trackSystemEcosystemEvent,
   trackSystemJourneyEvent,
 } from "@/lib/kit-analytics-client";
 import type { OperationalSystemDetail } from "@/lib/system-operations";
@@ -28,6 +31,7 @@ import {
   type SystemDetailTab,
 } from "@/lib/system-detail-tabs";
 import { getSystemKitPreview } from "@/lib/system-kit-previews";
+import type { SystemEcosystemGroup } from "@/lib/system-ecosystem-types";
 import type { System } from "@/lib/types";
 
 type SystemDetailContentProps = {
@@ -39,6 +43,7 @@ type SystemDetailContentProps = {
   deliveryAvailable?: boolean;
   headingAs?: "h1" | "h2";
   headingId?: string;
+  ecosystemGroups?: SystemEcosystemGroup[];
   academyVideos?: ReadonlyArray<{
     slug: string;
     title: string;
@@ -52,6 +57,7 @@ const systemTabs: ReadonlyArray<{
 }> = [
   { slug: "process", label: "Process" },
   { slug: "outils", label: "Outils" },
+  { slug: "ecosysteme", label: "Écosystème" },
 ];
 
 export default function SystemDetailContent({
@@ -63,6 +69,7 @@ export default function SystemDetailContent({
   deliveryAvailable = false,
   headingAs: Heading = "h2",
   headingId,
+  ecosystemGroups = [],
   academyVideos = [],
 }: SystemDetailContentProps) {
   const router = useRouter();
@@ -86,6 +93,14 @@ export default function SystemDetailContent({
   const closeCopyRequest = useCallback(() => {
     setIsCopyRequestOpen(false);
   }, []);
+
+  useEffect(() => {
+    if (activeTab !== "ecosysteme") return;
+
+    trackSystemEcosystemEvent("system_ecosystem_tab_opened", {
+      systemSlug: system.slug,
+    });
+  }, [activeTab, system.slug]);
 
   function openCopyRequest() {
     setIsCopyRequestOpen(true);
@@ -222,7 +237,7 @@ export default function SystemDetailContent({
 
         <div className="mt-8 flex justify-start sm:mt-9">
           <div
-            className="grid w-full grid-cols-2 gap-1 rounded-full border border-dema-line bg-dema-paper p-1 shadow-[0_8px_24px_rgba(23,35,29,0.035)]"
+            className="grid w-full grid-cols-3 gap-1 rounded-full border border-dema-line bg-dema-paper p-1 shadow-[0_8px_24px_rgba(23,35,29,0.035)]"
             role="tablist"
             aria-label="Contenu du système opérationnel"
             aria-orientation="horizontal"
@@ -309,6 +324,14 @@ export default function SystemDetailContent({
                 </div>
               )}
             </div>
+          ) : null}
+
+          {activeTab === "ecosysteme" ? (
+            <SystemEcosystemTab
+              key={system.slug}
+              groups={ecosystemGroups}
+              systemSlug={system.slug}
+            />
           ) : null}
 
         </section>

@@ -11,8 +11,8 @@ import {
 } from "lucide-react";
 import AccountingAppointmentDialog from "@/components/AccountingAppointmentDialog";
 import AccountingDirectoryMap from "@/components/AccountingDirectoryMap";
+import AccountingDirectoryProfileModal from "@/components/AccountingDirectoryProfileModal";
 import AccountingFirmCard from "@/components/AccountingFirmCard";
-import AccountingFirmDetailContent from "@/components/AccountingFirmDetailContent";
 import type {
   AccountingDirectoryFacet,
   AccountingDirectoryFacets,
@@ -664,42 +664,6 @@ function AccountingDirectoryMapDrawer({
           onFirmPreview={onFirmPreview}
           onOpenProfile={onOpenProfile}
           onAfterCitySelect={onClose}
-        />
-      </div>
-    </div>
-  );
-}
-
-function AccountingDirectoryProfileModal({
-  firm,
-  similarFirms,
-  onClose,
-}: {
-  firm: AccountingFirm;
-  similarFirms: AccountingFirm[];
-  onClose: () => void;
-}) {
-  return (
-    <div
-      className="fixed inset-0 z-[95] overflow-y-auto bg-brand-blue/40 px-4 py-6"
-      onClick={onClose}
-    >
-      <div
-        className="relative mx-auto max-w-6xl rounded-[1.25rem] border border-dema-line bg-dema-cream p-4 shadow-[0_24px_70px_rgba(23,35,29,0.2)] md:p-6"
-        onClick={(event) => event.stopPropagation()}
-      >
-        <button
-          type="button"
-          className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
-          onClick={onClose}
-          aria-label="Fermer"
-        >
-          <X className="h-4 w-4" aria-hidden="true" />
-        </button>
-        <AccountingFirmDetailContent
-          firm={firm}
-          similarFirms={similarFirms}
-          showBackLink={false}
         />
       </div>
     </div>

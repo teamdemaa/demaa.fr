@@ -1,6 +1,7 @@
 export const SYSTEM_DETAIL_TABS = [
   "process",
   "outils",
+  "ecosysteme",
 ] as const;
 
 export type SystemDetailTab = (typeof SYSTEM_DETAIL_TABS)[number];
@@ -8,6 +9,7 @@ export type SystemDetailTab = (typeof SYSTEM_DETAIL_TABS)[number];
 const SYSTEM_DETAIL_TAB_VISIBILITY = {
   process: true,
   outils: true,
+  ecosysteme: true,
 } satisfies Record<SystemDetailTab, boolean>;
 
 function isSystemDetailTab(tab?: string): tab is SystemDetailTab {

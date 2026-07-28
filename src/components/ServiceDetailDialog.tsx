@@ -2,10 +2,12 @@
 
 import { Check, X } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useCallback } from "react";
 import ServiceExpandedContent from "@/components/ServiceExpandedContent";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import ServiceRequestCta from "@/components/ServiceRequestCta";
 import OrganisationSessionBookingButton from "@/components/OrganisationSessionBookingButton";
+import { useAccessibleDialog } from "@/components/useAccessibleDialog";
 import { hasExpandedServiceContent } from "@/lib/service-expanded-content";
 import { type DemaaService } from "@/lib/service-catalog";
 
@@ -21,7 +23,15 @@ export default function ServiceDetailDialog({
   onClose,
 }: ServiceDetailDialogProps) {
   const router = useRouter();
-  const closeDialog = onClose ?? (() => router.back());
+  const closeDialog = useCallback(() => {
+    if (onClose) {
+      onClose();
+      return;
+    }
+
+    router.back();
+  }, [onClose, router]);
+  const dialogRef = useAccessibleDialog({ onClose: closeDialog });
   const hasExpandedContent = hasExpandedServiceContent(service.slug);
   const isOrganisationSession = service.slug === "organisation-automatisation";
   const isBillingAssistant = service.slug === "assistante-facturation";
@@ -29,17 +39,19 @@ export default function ServiceDetailDialog({
   return (
     <>
       <div
-        className="fixed inset-0 z-[80] flex items-center justify-center bg-brand-blue/45 p-3 sm:p-4"
-        role="dialog"
-        aria-modal="true"
-        aria-label={service.name}
+        className="fixed inset-0 z-[80] flex items-end justify-center bg-brand-blue/45 sm:items-center sm:p-4"
         onClick={closeDialog}
       >
         <div
-          className={`relative flex max-h-[94vh] w-full flex-col overflow-hidden rounded-[1.2rem] border border-dema-line bg-dema-paper shadow-[0_24px_70px_rgba(23,35,29,0.2)] sm:max-h-[92vh] sm:rounded-[1.25rem] ${
+          ref={dialogRef}
+          className={`relative flex max-h-[88dvh] w-full flex-col overflow-hidden rounded-t-[1.35rem] border border-dema-line bg-dema-paper shadow-[0_24px_70px_rgba(23,35,29,0.2)] outline-none sm:max-h-[92vh] sm:rounded-[1.25rem] ${
             hasExpandedContent ? "max-w-5xl" : "max-w-4xl"
           }`}
           onClick={(event) => event.stopPropagation()}
+          role="dialog"
+          aria-modal="true"
+          aria-label={service.name}
+          tabIndex={-1}
         >
           <div className="flex items-start justify-between gap-3 border-b border-dema-line px-5 py-5 sm:gap-4 sm:px-6 sm:py-5">
             <div className="flex min-w-0 items-center gap-3">
@@ -59,6 +71,7 @@ export default function ServiceDetailDialog({
               <button
                 type="button"
                 onClick={closeDialog}
+                data-dialog-initial-focus
                 className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
                 aria-label="Fermer"
               >

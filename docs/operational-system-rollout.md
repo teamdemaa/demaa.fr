@@ -20,7 +20,7 @@ Chaque page métier présente :
 1. le système opérationnel au-dessus de la navigation ;
 2. une démonstration remplie et consultable sans formulaire ;
 3. une copie modifiable, livrée gratuitement par e-mail après la demande ;
-4. deux onglets, dans cet ordre : **Process**, **Outils**.
+4. trois onglets, dans cet ordre : **Process**, **Outils**, **Écosystème**.
 
 Le terme `Système opérationnel` est le libellé public de référence. Les anciens
 chemins contenant `kit-operationnel` peuvent rester temporairement actifs pour
@@ -143,7 +143,7 @@ Un métier n'est publiable que si :
 - l'Écosystème contient des noms concrets ;
 - les liens de démonstration et de copie sont valides ;
 - l'e-mail remet la bonne copie modifiable ;
-- la page affiche uniquement Process et Outils ;
+- la page affiche Process, Outils et Écosystème dans cet ordre ;
 - les contrôles desktop, mobile et Google Sheets sont validés ;
 - les tests automatisés passent.
 
