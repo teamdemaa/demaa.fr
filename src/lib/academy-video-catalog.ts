@@ -1,5 +1,48 @@
 export type AcademyVideoCategory = "Finances & pilotage";
 
+export const ACADEMY_THUMBNAIL_CANVAS = {
+  width: 1280,
+  height: 720,
+  aspectRatio: 16 / 9,
+} as const;
+
+export const ACADEMY_THUMBNAIL_TARGET_CROP_RATIO = 4 / 3;
+
+export type AcademyThumbnailComposition = {
+  artwork: {
+    scale: number;
+    offsetXPercent: number;
+    offsetYPercent: number;
+  };
+  title: {
+    scale: number;
+    offsetXPercent: number;
+    offsetYPercent: number;
+  };
+  safeZone: {
+    targetAspectRatio: typeof ACADEMY_THUMBNAIL_TARGET_CROP_RATIO;
+    minimumSafeAspectRatio: number;
+  };
+};
+
+export const DEFAULT_ACADEMY_THUMBNAIL_COMPOSITION: AcademyThumbnailComposition =
+  {
+    artwork: {
+      scale: 1,
+      offsetXPercent: 0,
+      offsetYPercent: 0,
+    },
+    title: {
+      scale: 1,
+      offsetXPercent: 0,
+      offsetYPercent: 0,
+    },
+    safeZone: {
+      targetAspectRatio: ACADEMY_THUMBNAIL_TARGET_CROP_RATIO,
+      minimumSafeAspectRatio: ACADEMY_THUMBNAIL_TARGET_CROP_RATIO,
+    },
+  };
+
 export type PublishedAcademyVideo = {
   status: "published";
   youtubeId: string;
@@ -29,10 +72,7 @@ export type AcademyVideoEntry = {
   thumbnailAlt: string;
   artworkPath: string;
   artworkTheme: "forest" | "sage";
-  artworkScale?: number;
-  artworkOffsetXPercent?: number;
-  thumbnailTextScale?: number;
-  thumbnailTitleOffsetXPercent?: number;
+  thumbnailComposition: AcademyThumbnailComposition;
   topics: readonly string[];
   durationLabel: string;
   durationSeconds: number;
@@ -80,6 +120,22 @@ export const academyVideoCatalog: readonly AcademyVideoEntry[] = [
       "Dirigeant face à des factures rentables mais à une trésorerie insuffisante.",
     artworkPath: "/images/academy/illustration-cash.png",
     artworkTheme: "forest",
+    thumbnailComposition: {
+      artwork: {
+        scale: 1.25,
+        offsetXPercent: -10,
+        offsetYPercent: 0,
+      },
+      title: {
+        scale: 1,
+        offsetXPercent: 17,
+        offsetYPercent: 0,
+      },
+      safeZone: {
+        targetAspectRatio: ACADEMY_THUMBNAIL_TARGET_CROP_RATIO,
+        minimumSafeAspectRatio: 1.2722,
+      },
+    },
     topics: ["Trésorerie", "BFR", "Délais clients", "Prévision sur 12 semaines"],
     durationLabel: "3 min 19 s",
     durationSeconds: 199,
@@ -209,10 +265,22 @@ export const academyVideoCatalog: readonly AcademyVideoEntry[] = [
       "Comparaison entre chiffre d’affaires, marge et bénéfice d’une petite entreprise.",
     artworkPath: "/images/academy/illustration-benefice.png",
     artworkTheme: "sage",
-    artworkScale: Math.SQRT2,
-    artworkOffsetXPercent: -6.3,
-    thumbnailTextScale: 0.69,
-    thumbnailTitleOffsetXPercent: 15.9,
+    thumbnailComposition: {
+      artwork: {
+        scale: Math.SQRT2,
+        offsetXPercent: -6.3,
+        offsetYPercent: 0,
+      },
+      title: {
+        scale: 0.69,
+        offsetXPercent: 15.9,
+        offsetYPercent: 0,
+      },
+      safeZone: {
+        targetAspectRatio: ACADEMY_THUMBNAIL_TARGET_CROP_RATIO,
+        minimumSafeAspectRatio: 1.3056,
+      },
+    },
     topics: ["Chiffre d’affaires", "Marge", "Bénéfice", "Point mort"],
     durationLabel: "3 min 32 s",
     durationSeconds: 212,

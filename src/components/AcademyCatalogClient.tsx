@@ -172,9 +172,6 @@ export default function AcademyCatalogClient({
                         <Clock3 className="h-3.5 w-3.5" aria-hidden="true" />
                         {video.durationLabel}
                       </span>
-                      <span className="rounded-full bg-dema-sage px-2.5 py-1 font-medium text-dema-forest">
-                        Vidéo disponible
-                      </span>
                     </div>
                   </div>
                   <ArrowUpRight
