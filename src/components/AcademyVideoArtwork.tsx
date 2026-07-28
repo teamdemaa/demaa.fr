@@ -12,6 +12,14 @@ export default function AcademyVideoArtwork({
 }) {
   const isForest = video.artworkTheme === "forest";
   const artworkScale = video.artworkScale ?? 1;
+  const artworkOffsetXPercent = video.artworkOffsetXPercent ?? 0;
+  const thumbnailTextScale = video.thumbnailTextScale ?? 1;
+  const thumbnailTitleOffsetXPercent =
+    video.thumbnailTitleOffsetXPercent ?? 0;
+  const thumbnailTitleSizeClass =
+    thumbnailTextScale < 1
+      ? "text-[clamp(1.25rem,4.1vw,2.3rem)]"
+      : "text-[clamp(1rem,3.2vw,2rem)]";
   const artworkTransformStyle = {
     transform: `scale(${artworkScale})`,
     transformOrigin: "right center",
@@ -35,7 +43,15 @@ export default function AcademyVideoArtwork({
       } ${className}`}
     >
       <div className="absolute inset-0 grid grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] items-center gap-1 px-[6.5%] py-[7%] sm:gap-3">
-        <div className="relative z-10 min-w-0">
+        <div
+          className="relative z-10 min-w-0"
+          data-academy-title-block
+          style={{
+            left: `${thumbnailTitleOffsetXPercent}%`,
+            transform: `scale(${thumbnailTextScale})`,
+            transformOrigin: "left center",
+          }}
+        >
           <p
             className={`text-[clamp(0.46rem,1.1vw,0.68rem)] font-semibold uppercase tracking-[0.16em] ${
               isForest ? "text-white/72" : "text-dema-forest/58"
@@ -43,7 +59,9 @@ export default function AcademyVideoArtwork({
           >
             {video.thumbnailEyebrow}
           </p>
-          <p className="mt-[7%] text-[clamp(1rem,3.2vw,2rem)] font-medium leading-[0.98] tracking-[-0.045em]">
+          <p
+            className={`mt-[7%] font-medium leading-[0.98] tracking-[-0.045em] ${thumbnailTitleSizeClass}`}
+          >
             {video.thumbnailLines.map((line, index) => (
               <span
                 key={line}
@@ -56,7 +74,10 @@ export default function AcademyVideoArtwork({
             ))}
           </p>
         </div>
-        <div className="relative h-full min-w-0">
+        <div
+          className="relative h-full min-w-0"
+          style={{ left: `${artworkOffsetXPercent}%` }}
+        >
           {isForest ? (
             <Image
               src={video.artworkPath}
