@@ -29,6 +29,7 @@ export type AcademyVideoEntry = {
   thumbnailAlt: string;
   artworkPath: string;
   artworkTheme: "forest" | "sage";
+  artworkScale?: number;
   topics: readonly string[];
   durationLabel: string;
   durationSeconds: number;
@@ -205,6 +206,7 @@ export const academyVideoCatalog: readonly AcademyVideoEntry[] = [
       "Comparaison entre chiffre d’affaires, marge et bénéfice d’une petite entreprise.",
     artworkPath: "/images/academy/illustration-benefice.png",
     artworkTheme: "sage",
+    artworkScale: 1.22,
     topics: ["Chiffre d’affaires", "Marge", "Bénéfice", "Point mort"],
     durationLabel: "3 min 32 s",
     durationSeconds: 212,
