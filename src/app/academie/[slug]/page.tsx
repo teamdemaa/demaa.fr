@@ -132,19 +132,14 @@ export default async function AcademyVideoPage({ params }: PageProps) {
             aria-label={`Vidéo : ${video.publication.youtubeTitle}`}
           >
             <AcademyVideoPlayer video={video} />
-            <div className="mt-4 flex flex-col gap-3 rounded-[1.15rem] border border-dema-line bg-dema-paper px-4 py-4 text-sm text-dema-muted sm:flex-row sm:items-center sm:justify-between sm:px-5">
-              <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-                <span className="inline-flex items-center gap-2">
-                  <Clock3 className="h-4 w-4 text-dema-forest" aria-hidden="true" />
-                  Durée : {video.durationLabel}
-                </span>
-                <span className="inline-flex items-center gap-2">
-                  <CalendarDays className="h-4 w-4 text-dema-forest" aria-hidden="true" />
-                  Publiée le {publishedDate}
-                </span>
-              </div>
-              <span className="w-fit rounded-full bg-dema-sage px-3 py-1.5 text-xs font-semibold text-dema-forest">
-                Vidéo disponible
+            <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-dema-muted">
+              <span className="inline-flex items-center gap-2">
+                <Clock3 className="h-4 w-4 text-dema-forest" aria-hidden="true" />
+                Durée : {video.durationLabel}
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <CalendarDays className="h-4 w-4 text-dema-forest" aria-hidden="true" />
+                Publiée le {publishedDate}
               </span>
             </div>
           </section>

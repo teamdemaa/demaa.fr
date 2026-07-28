@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ArrowUpRight, Clock3, Search, SlidersHorizontal } from "lucide-react";
-import { useDeferredValue, useMemo, useState } from "react";
+import { useDeferredValue, useMemo, useRef, useState } from "react";
 import AcademyVideoArtwork from "@/components/AcademyVideoArtwork";
 import { trackAcademyEvent } from "@/lib/academy-analytics-client";
 import type {
@@ -12,6 +12,7 @@ import type {
 import { matchesSearchQuery } from "@/lib/search";
 
 const ALL_CATEGORIES = "Tous les sujets";
+const FILTERS_ID = "academy-category-filters";
 
 export default function AcademyCatalogClient({
   videos,
@@ -22,6 +23,8 @@ export default function AcademyCatalogClient({
   const [category, setCategory] = useState<
     typeof ALL_CATEGORIES | AcademyVideoCategory
   >(ALL_CATEGORIES);
+  const [areFiltersOpen, setAreFiltersOpen] = useState(false);
+  const filterButtonRef = useRef<HTMLButtonElement>(null);
   const deferredQuery = useDeferredValue(query);
   const categories = useMemo(
     () => [
@@ -48,7 +51,15 @@ export default function AcademyCatalogClient({
 
   return (
     <>
-      <div className="mx-auto mt-10 max-w-4xl md:mt-12">
+      <div
+        className="mx-auto mt-10 max-w-4xl md:mt-12"
+        onKeyDown={(event) => {
+          if (event.key !== "Escape" || !areFiltersOpen) return;
+          event.preventDefault();
+          setAreFiltersOpen(false);
+          filterButtonRef.current?.focus();
+        }}
+      >
         <div className="demaa-search-shell p-2">
           <div className="relative">
             <Search
@@ -63,41 +74,56 @@ export default function AcademyCatalogClient({
               aria-label="Rechercher dans l’Académie"
               className="w-full rounded-full bg-dema-paper py-4 pl-14 pr-16 text-base text-brand-blue outline-none placeholder:text-brand-blue/30 sm:py-5"
             />
-            <span className="pointer-events-none absolute right-2 top-1/2 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
+            <button
+              ref={filterButtonRef}
+              type="button"
+              onClick={() => setAreFiltersOpen((current) => !current)}
+              aria-expanded={areFiltersOpen}
+              aria-controls={FILTERS_ID}
+              aria-label={
+                areFiltersOpen
+                  ? "Masquer les filtres par sujet"
+                  : "Afficher les filtres par sujet"
+              }
+              className="absolute right-2 top-1/2 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition hover:bg-[#e9ede8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
+            >
               <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
-            </span>
+            </button>
           </div>
         </div>
 
-        <div
-          className="no-scrollbar mt-4 flex gap-2 overflow-x-auto pb-2 sm:flex-wrap sm:justify-center"
-          aria-label="Filtrer les vidéos par catégorie"
-        >
-          {categories.map((item) => {
-            const active = item === category;
-            return (
-              <button
-                key={item}
-                type="button"
-                aria-pressed={active}
-                onClick={() => {
-                  setCategory(
-                    item as typeof ALL_CATEGORIES | AcademyVideoCategory,
-                  );
-                  trackAcademyEvent("academy_filter_selected", {
-                    category: item,
-                    queryLength: query.trim().length,
-                  });
-                }}
-                className={`demaa-chip shrink-0 ${
-                  active ? "demaa-chip-active" : ""
-                }`}
-              >
-                {item}
-              </button>
-            );
-          })}
-        </div>
+        {areFiltersOpen ? (
+          <div
+            id={FILTERS_ID}
+            className="no-scrollbar mt-4 flex gap-2 overflow-x-auto pb-2 sm:flex-wrap sm:justify-center"
+            aria-label="Filtrer les vidéos par catégorie"
+          >
+            {categories.map((item) => {
+              const active = item === category;
+              return (
+                <button
+                  key={item}
+                  type="button"
+                  aria-pressed={active}
+                  onClick={() => {
+                    setCategory(
+                      item as typeof ALL_CATEGORIES | AcademyVideoCategory,
+                    );
+                    trackAcademyEvent("academy_filter_selected", {
+                      category: item,
+                      queryLength: query.trim().length,
+                    });
+                  }}
+                  className={`demaa-chip shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 ${
+                    active ? "demaa-chip-active" : ""
+                  }`}
+                >
+                  {item}
+                </button>
+              );
+            })}
+          </div>
+        ) : null}
       </div>
 
       <section className="mx-auto mt-14 w-full max-w-7xl md:mt-16">

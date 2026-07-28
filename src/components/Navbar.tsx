@@ -5,6 +5,9 @@ import { usePathname, useRouter } from "next/navigation";
 import { BookOpen, BriefcaseBusiness } from "lucide-react";
 import DemaaWordmark from "@/components/DemaaWordmark";
 
+const navbarPillClassName =
+  "demaa-secondary-button min-h-10 gap-2 whitespace-nowrap px-4 text-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:px-5 sm:text-sm";
+
 export default function Navbar({
   minimal = false,
 }: {
@@ -39,7 +42,7 @@ export default function Navbar({
               {isSystemDetailPage ? (
                 <Link
                   href="/academie"
-                  className="demaa-secondary-button min-h-10 gap-2 px-4 text-xs sm:px-5 sm:text-sm"
+                  className={navbarPillClassName}
                 >
                   <BookOpen className="h-4 w-4 shrink-0" aria-hidden="true" />
                   <span>Découvrir l’Académie</span>
@@ -47,9 +50,13 @@ export default function Navbar({
               ) : showSystemSearchCta ? (
                 <Link
                   href="/"
-                  className="demaa-primary-button min-h-10 px-4 text-xs sm:px-5 sm:text-sm"
+                  className={navbarPillClassName}
                 >
-                  Trouver mon système
+                  <BriefcaseBusiness
+                    className="h-4 w-4 shrink-0"
+                    aria-hidden="true"
+                  />
+                  <span>Trouver mon système</span>
                 </Link>
               ) : showSystemsCta ? (
                 <Link

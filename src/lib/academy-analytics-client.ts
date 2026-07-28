@@ -6,8 +6,7 @@ import { getCookieConsentPreferences } from "@/lib/cookie-consent";
 type AcademyEventName =
   | "academy_filter_selected"
   | "academy_player_started"
-  | "academy_video_card_opened"
-  | "academy_youtube_opened";
+  | "academy_video_card_opened";
 
 export function trackAcademyEvent(
   eventName: AcademyEventName,
