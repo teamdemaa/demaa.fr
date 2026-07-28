@@ -68,11 +68,20 @@ async function inspectEnterprise(enterprise) {
       "Des process concrets, des outils recommandés et un tableau",
       "Google Sheets prêt à utiliser.",
       "Gratuit · Envoyé par e-mail",
-      "Support associé indiqué dans le système",
     ]) {
       if (!renderedOverviewHtml.includes(expectedText)) {
         errors.push(`commercial promise missing: ${expectedText}`);
       }
+    }
+
+    const copyCtaGroup = renderedOverviewHtml.match(
+      /<div[^>]*data-kit-copy-cta-group[^>]*>[\s\S]*?<\/div>/,
+    )?.[0];
+    if (
+      !copyCtaGroup?.includes("Recevoir ma copie modifiable") ||
+      !copyCtaGroup.includes("Gratuit · Envoyé par e-mail")
+    ) {
+      errors.push("free email note is not attached to the copy CTA");
     }
 
     for (const value of forbiddenUi) {
@@ -89,6 +98,16 @@ async function inspectEnterprise(enterprise) {
     }
     if (!overviewHtml.includes("system-process-panel-")) {
       errors.push("process accordions missing");
+    }
+    if (renderedOverviewHtml.includes('aria-expanded="true"')) {
+      errors.push("a process family is expanded by default");
+    }
+    if (
+      renderedOverviewHtml.includes(
+        "Support associé indiqué dans le système",
+      )
+    ) {
+      errors.push("collapsed process content is exposed by default");
     }
 
     const redirects = [

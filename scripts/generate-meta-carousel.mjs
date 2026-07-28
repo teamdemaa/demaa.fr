@@ -133,7 +133,7 @@ function baseSvg({ index, body, background = palette.background, inverse = false
     ${cardNumber(index, inverse)}
     ${body}
     ${progress(index, inverse)}
-  </svg>`;
+  </svg>`.replace(/[ \t]+$/gm, "");
 }
 
 function checkIcon(x, y) {
@@ -241,7 +241,7 @@ function slideTwo(images) {
 
 function slideThree(images) {
   const body = `
-    ${pill({ x: 72, y: 176, width: 242, label: "01 — VOS CHIFFRES" })}
+    ${pill({ x: 72, y: 176, width: 242, label: "01 - VOS CHIFFRES" })}
     ${textBlock({
       x: 72,
       y: 287,
@@ -279,7 +279,7 @@ function slideFour(images) {
     "Suivi client",
   ];
   const body = `
-    ${pill({ x: 72, y: 176, width: 264, label: "02 — VOS PROCESS" })}
+    ${pill({ x: 72, y: 176, width: 264, label: "02 - VOS PROCESS" })}
     ${textBlock({
       x: 72,
       y: 288,
@@ -332,7 +332,7 @@ function slideFive(images) {
     ["Process", "Fonctionnement métier"],
   ];
   const body = `
-    ${pill({ x: 72, y: 176, width: 298, label: "03 — TOUT AU MÊME ENDROIT" })}
+    ${pill({ x: 72, y: 176, width: 298, label: "03 - TOUT AU MÊME ENDROIT" })}
     ${textBlock({
       x: 72,
       y: 288,

@@ -1,4 +1,4 @@
-# Carrousel Meta — Lead magnet Bâtiment
+# Carrousel Meta - Lead magnet Bâtiment
 
 ## Objectif
 

@@ -43,10 +43,10 @@ function formatCount(value: number) {
 }
 
 function formatLastOpenedAt(value: string | null) {
-  if (!value) return "—";
+  if (!value) return "-";
 
   const timestamp = Date.parse(value);
-  return Number.isFinite(timestamp) ? dateFormatter.format(timestamp) : "—";
+  return Number.isFinite(timestamp) ? dateFormatter.format(timestamp) : "-";
 }
 
 function LoginScreen({ error, configured }: { error: string | null; configured: boolean }) {

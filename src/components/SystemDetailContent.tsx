@@ -189,14 +189,14 @@ export default function SystemDetailContent({
                 Système opérationnel
               </p>
               <h2 className="mt-3 text-[1.55rem] font-semibold leading-tight tracking-[-0.025em] text-brand-blue">
-                Système opérationnel — {system.name}
+                Système opérationnel - {system.name}
               </h2>
               <p className="mt-4 text-sm leading-relaxed text-dema-muted">
                 Des process concrets, des outils recommandés et un tableau
                 Google Sheets prêt à utiliser.
               </p>
 
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-start">
                 {demoUrl ? (
                   <a
                     href={demoUrl}
@@ -204,7 +204,7 @@ export default function SystemDetailContent({
                     rel="noopener noreferrer"
                     onClick={() =>
                       trackKitOpen({
-                        kitName: `${system.name} — démonstration`,
+                        kitName: `${system.name} - démonstration`,
                         kitSlug: system.slug,
                       })}
                     className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper transition hover:bg-brand-blue"
@@ -212,18 +212,22 @@ export default function SystemDetailContent({
                     Voir la démonstration
                   </a>
                 ) : null}
-                <button
-                  type="button"
-                  onClick={openCopyRequest}
-                  className="inline-flex min-h-11 items-center justify-center rounded-full border border-dema-forest/25 bg-dema-paper px-5 py-3 text-sm font-semibold text-dema-forest transition hover:border-dema-forest hover:bg-dema-sage/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
+                <div
+                  data-kit-copy-cta-group
+                  className="flex w-full flex-col items-center gap-2 sm:w-auto"
                 >
-                  Recevoir ma copie modifiable
-                </button>
+                  <button
+                    type="button"
+                    onClick={openCopyRequest}
+                    className="inline-flex min-h-11 w-full items-center justify-center rounded-full border border-dema-forest/25 bg-dema-paper px-5 py-3 text-sm font-semibold text-dema-forest transition hover:border-dema-forest hover:bg-dema-sage/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:w-auto"
+                  >
+                    Recevoir ma copie modifiable
+                  </button>
+                  <p className="text-center text-xs leading-relaxed text-dema-muted">
+                    Gratuit · Envoyé par e-mail
+                  </p>
+                </div>
               </div>
-
-              <p className="mt-4 text-xs leading-relaxed text-dema-muted">
-                Gratuit · Envoyé par e-mail
-              </p>
             </div>
           </section>
         ) : null}

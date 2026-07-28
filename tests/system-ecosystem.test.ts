@@ -2,8 +2,19 @@ import { describe, expect, it, vi } from "vitest";
 
 vi.mock("server-only", () => ({}));
 
+import rawEnterpriseAnnuaire from "@/lib/enterprise-annuaire.json";
 import { buildSystemEcosystemGroups } from "@/lib/system-ecosystem.server";
-import { getSystemEcosystemResourceIdentity } from "@/lib/system-ecosystem-types";
+import {
+  getSystemEcosystemResourceCtaLabel,
+  getSystemEcosystemResourceIdentity,
+} from "@/lib/system-ecosystem-types";
+
+type EnterpriseAnnuairePayload = {
+  enterprises: Array<{
+    sectorLabel: string;
+    slug: string;
+  }>;
+};
 
 const CASES = [
   {
@@ -97,5 +108,55 @@ describe("system ecosystem", () => {
         false,
       );
     }
+  });
+
+  it("uses contextual CTA labels without changing the canonical directories", () => {
+    const enterprises = (rawEnterpriseAnnuaire as EnterpriseAnnuairePayload)
+      .enterprises;
+    const resources = enterprises.flatMap(({ sectorLabel, slug }) =>
+      buildSystemEcosystemGroups({
+        sectorLabel,
+        systemSlug: slug,
+      }).flatMap((group) => group.resources),
+    );
+    const contextualOverrides = new Set(
+      resources.flatMap((resource) => {
+        if (!("cta" in resource.item)) return [];
+
+        const contextualCta = getSystemEcosystemResourceCtaLabel(resource);
+        return contextualCta === resource.item.cta
+          ? []
+          : [`${resource.type}:${resource.item.slug}:${contextualCta}`];
+      }),
+    );
+
+    expect(enterprises).toHaveLength(115);
+    expect(contextualOverrides).toEqual(
+      new Set([
+        "finance:qonto:Découvrir la solution",
+        "supplier:alan:Découvrir la solution",
+        "supplier:orus:Découvrir la solution",
+      ]),
+    );
+    expect(
+      resources
+        .filter((resource) => "cta" in resource.item)
+        .every((resource) =>
+          Boolean(getSystemEcosystemResourceCtaLabel(resource)?.trim()),
+        ),
+    ).toBe(true);
+
+    const qonto = resources.find(
+      (resource) =>
+        resource.type === "finance" && resource.item.slug === "qonto",
+    );
+    if (!qonto || qonto.type !== "finance") {
+      throw new Error("La ressource Qonto est absente de l’Écosystème.");
+    }
+
+    expect(qonto.item.cta).toBe("Voir le financement");
+    expect(
+      getSystemEcosystemResourceCtaLabel(qonto),
+    ).toBe("Découvrir la solution");
   });
 });

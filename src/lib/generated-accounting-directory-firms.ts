@@ -114,7 +114,7 @@ export const generatedAccountingDirectoryFirms: AccountingFirm[] = [
     id: "Groupe Archipel_3",
     slug: "groupe-archipel",
     name: "Groupe Archipel",
-    description: "Chez Archipel, nous sommes convaincus que l’expert-comptable doit rester le “médecin de l’entreprise” — un professionnel central, stratégique, sollicité à chaque moment-clé de la vie de son client. C’est pourquoi Archipel accompagne ses cabinets dans une transformation progressive vers un modèle de plateforme multi-services, tout en respectant l’identité locale de chacun.",
+    description: "Chez Archipel, nous sommes convaincus que l’expert-comptable doit rester le “médecin de l’entreprise” - un professionnel central, stratégique, sollicité à chaque moment-clé de la vie de son client. C’est pourquoi Archipel accompagne ses cabinets dans une transformation progressive vers un modèle de plateforme multi-services, tout en respectant l’identité locale de chacun.",
     city: "Rennes",
     regions: [
       "Bretagne"

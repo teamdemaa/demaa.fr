@@ -193,7 +193,7 @@ async function handlePost(request: Request) {
       version: MARKETING_CONSENT_VERSION,
     },
     requestType: "system_kit_request",
-    title: `Livraison du système opérationnel gratuit — ${systemName}`,
+    title: `Livraison du système opérationnel gratuit - ${systemName}`,
   });
 
   const deliveryState = await getLeadDeliveryState(lead.leadId, "kit_email");
