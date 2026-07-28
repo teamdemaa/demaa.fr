@@ -14,7 +14,15 @@ const systeme: SystemeDetail = {
           documentId: "doc-direction",
           process: "Piloter l’activité",
           processId: "process-direction",
-          steps: [],
+          steps: [
+            {
+              defaultOwner: "Direction",
+              order: 1,
+              recurrence: "Hebdomadaire",
+              step: "Mettre à jour les indicateurs",
+              stepId: "step-direction",
+            },
+          ],
         },
       ],
     },
@@ -43,10 +51,15 @@ describe("system process accordion", () => {
     );
 
     expect(html.match(/aria-expanded="false"/g)).toHaveLength(
-      systeme.cards.length,
+      systeme.cards.length +
+        systeme.cards.reduce((total, card) => total + card.items.length, 0),
     );
     expect(html).not.toContain('aria-expanded="true"');
     expect(html).not.toContain("Tableau de pilotage");
     expect(html).not.toContain("Plan commercial");
+    expect(html).not.toContain("Mettre à jour les indicateurs");
+    expect(html).not.toContain("Dans le système");
+    expect(html).toContain(">01<");
+    expect(html).toContain(">01.01<");
   });
 });

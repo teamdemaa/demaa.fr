@@ -1,7 +1,14 @@
 "use client";
 
-import { Check, LoaderCircle, Mail, X } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
+import {
+  Check,
+  FileSpreadsheet,
+  LoaderCircle,
+  Mail,
+  X,
+} from "lucide-react";
 import {
   type FormEvent,
   useEffect,
@@ -17,14 +24,20 @@ import {
   getLeadSubmissionKey,
 } from "@/lib/lead-submission-client";
 import { isValidEmail } from "@/lib/email";
-import { trackSystemJourneyEvent } from "@/lib/kit-analytics-client";
+import {
+  trackKitOpen,
+  trackSystemJourneyEvent,
+} from "@/lib/kit-analytics-client";
 import type {
   OperationalSystemDeliveryRequest,
   OperationalSystemDeliverySuccess,
 } from "@/lib/operational-system-delivery-contract";
+import type { SystemKitPreview } from "@/lib/system-kit-previews";
 
 type OperationalSystemCopyRequestModalProps = {
+  demoUrl?: string | null;
   onClose: () => void;
+  preview: SystemKitPreview | null;
   systemName: string;
   systemSlug: string;
 };
@@ -62,7 +75,9 @@ function getErrorMessage(response: Response, payload: DeliveryPayload) {
 }
 
 export default function OperationalSystemCopyRequestModal({
+  demoUrl,
   onClose,
+  preview,
   systemName,
   systemSlug,
 }: OperationalSystemCopyRequestModalProps) {
@@ -73,7 +88,9 @@ export default function OperationalSystemCopyRequestModal({
   const [error, setError] = useState<string | null>(null);
   const [firstName, setFirstName] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccessful, setIsSuccessful] = useState(false);
+  const [view, setView] = useState<"overview" | "form" | "success">(
+    "overview",
+  );
   const [website, setWebsite] = useState("");
 
   useEffect(() => {
@@ -122,7 +139,7 @@ export default function OperationalSystemCopyRequestModal({
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     document.addEventListener("keydown", handleKeyDown);
-    firstNameInputRef.current?.focus();
+    dialog?.focus();
 
     return () => {
       document.body.style.overflow = previousOverflow;
@@ -132,8 +149,15 @@ export default function OperationalSystemCopyRequestModal({
   }, [onClose]);
 
   useEffect(() => {
-    if (isSuccessful) successRef.current?.focus();
-  }, [isSuccessful]);
+    if (view === "form") firstNameInputRef.current?.focus();
+    if (view === "success") successRef.current?.focus();
+  }, [view]);
+
+  function openForm() {
+    setError(null);
+    setView("form");
+    trackSystemJourneyEvent("system_copy_form_opened", { systemSlug });
+  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -182,7 +206,7 @@ export default function OperationalSystemCopyRequestModal({
       }
 
       clearLeadSubmissionKey(flowKey);
-      setIsSuccessful(true);
+      setView("success");
       trackLeadConversion({
         requestType: "system_kit_request",
         systemSlug,
@@ -204,7 +228,9 @@ export default function OperationalSystemCopyRequestModal({
     >
       <section
         ref={dialogRef}
-        className="relative max-h-[calc(100dvh-2rem)] w-full max-w-[30rem] overflow-y-auto rounded-[1.5rem] border border-dema-line bg-dema-paper shadow-[0_24px_70px_rgba(23,35,29,0.14)] sm:max-h-[calc(100dvh-3rem)]"
+        className={`relative max-h-[calc(100dvh-2rem)] w-full overflow-y-auto rounded-[1.5rem] border border-dema-line bg-dema-paper shadow-[0_24px_70px_rgba(23,35,29,0.14)] transition-[max-width] sm:max-h-[calc(100dvh-3rem)] ${
+          view === "overview" ? "max-w-[48rem]" : "max-w-[30rem]"
+        }`}
         onClick={(event) => event.stopPropagation()}
         role="dialog"
         aria-modal="true"
@@ -221,32 +247,106 @@ export default function OperationalSystemCopyRequestModal({
           <X className="h-4 w-4" aria-hidden="true" />
         </button>
 
-        <div className="p-6 sm:p-8">
-          <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
-            {isSuccessful ? (
-              <Check className="h-5 w-5" aria-hidden="true" />
-            ) : (
-              <Mail className="h-5 w-5" aria-hidden="true" />
-            )}
-          </span>
+        {view === "overview" ? (
+          <div className="grid md:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]">
+            <div className="flex min-h-[14rem] items-center justify-center bg-dema-sage/45 p-5 sm:min-h-[18rem] sm:p-7 md:min-h-[25rem]">
+              {preview ? (
+                <Image
+                  src={preview.src}
+                  alt={preview.alt}
+                  width={preview.width}
+                  height={preview.height}
+                  sizes="(max-width: 767px) calc(100vw - 72px), 340px"
+                  className="h-auto w-full rounded-[0.8rem] shadow-[0_14px_35px_rgba(23,35,29,0.1)]"
+                />
+              ) : (
+                <span className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-dema-paper text-dema-forest shadow-sm">
+                  <FileSpreadsheet className="h-8 w-8" aria-hidden="true" />
+                </span>
+              )}
+            </div>
 
-          <h2
-            id="system-copy-modal-title"
-            className="mt-5 pr-10 text-2xl font-semibold tracking-tight text-brand-blue"
-          >
-            {isSuccessful ? "C’est envoyé" : "Recevoir ma copie modifiable"}
-          </h2>
+            <div className="flex min-w-0 flex-col justify-center p-6 sm:p-8">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
+                Système opérationnel
+              </p>
+              <h2
+                id="system-copy-modal-title"
+                className="mt-3 pr-10 text-2xl font-semibold leading-tight tracking-[-0.025em] text-brand-blue"
+              >
+                Système opérationnel - {systemName}
+              </h2>
+              <p
+                id="system-copy-modal-description"
+                className="mt-4 text-sm leading-relaxed text-dema-muted"
+              >
+                Des process concrets, des outils recommandés et un tableau
+                Google Sheets prêt à utiliser.
+              </p>
 
-          <p
-            id="system-copy-modal-description"
-            className="mt-3 text-sm leading-relaxed text-dema-muted"
-          >
-            {isSuccessful
-              ? "Le lien permettant de créer votre copie personnelle dans Google Drive vient d’être envoyé par e-mail. Pensez à vérifier vos courriers indésirables."
-              : "Nous vous envoyons le lien permettant de créer votre copie personnelle dans Google Drive."}
-          </p>
+              <div className="mt-7 flex flex-col gap-3">
+                {demoUrl ? (
+                  <a
+                    href={demoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() =>
+                      trackKitOpen({
+                        kitName: `${systemName} - démonstration`,
+                        kitSlug: systemSlug,
+                      })}
+                    className="inline-flex min-h-11 items-center justify-center rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper transition hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
+                  >
+                    Voir la démonstration
+                  </a>
+                ) : null}
+                <div
+                  data-kit-copy-cta-group
+                  className="flex w-full flex-col items-center gap-2"
+                >
+                  <button
+                    type="button"
+                    onClick={openForm}
+                    className="inline-flex min-h-11 w-full items-center justify-center rounded-full border border-dema-forest/25 bg-dema-paper px-5 py-3 text-sm font-semibold text-dema-forest transition hover:border-dema-forest hover:bg-dema-sage/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
+                  >
+                    Recevoir ma copie modifiable
+                  </button>
+                  <p className="text-center text-xs leading-relaxed text-dema-muted">
+                    Gratuit · Envoyé par e-mail
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="p-6 sm:p-8">
+            <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
+              {view === "success" ? (
+                <Check className="h-5 w-5" aria-hidden="true" />
+              ) : (
+                <Mail className="h-5 w-5" aria-hidden="true" />
+              )}
+            </span>
 
-          {isSuccessful ? (
+            <h2
+              id="system-copy-modal-title"
+              className="mt-5 pr-10 text-2xl font-semibold tracking-tight text-brand-blue"
+            >
+              {view === "success"
+                ? "C’est envoyé"
+                : "Recevoir ma copie modifiable"}
+            </h2>
+
+            <p
+              id="system-copy-modal-description"
+              className="mt-3 text-sm leading-relaxed text-dema-muted"
+            >
+              {view === "success"
+                ? "Le lien permettant de créer votre copie personnelle dans Google Drive vient d’être envoyé par e-mail. Pensez à vérifier vos courriers indésirables."
+                : "Nous vous envoyons le lien permettant de créer votre copie personnelle dans Google Drive."}
+            </p>
+
+            {view === "success" ? (
             <div
               ref={successRef}
               className="mt-6 rounded-[1rem] bg-dema-cream/55 p-5 outline-none"
@@ -353,8 +453,9 @@ export default function OperationalSystemCopyRequestModal({
                 </Link>
               </p>
             </form>
-          )}
-        </div>
+            )}
+          </div>
+        )}
       </section>
     </div>
   );
