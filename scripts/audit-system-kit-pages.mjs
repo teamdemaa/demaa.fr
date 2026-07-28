@@ -30,7 +30,7 @@ function countOccurrences(source, value) {
 }
 
 function getTabs() {
-  return ["process", "outils"];
+  return ["process", "outils", "ecosysteme"];
 }
 
 function inspectPage({ enterprise, response, html, tab }) {
@@ -61,7 +61,7 @@ function inspectPage({ enterprise, response, html, tab }) {
     }
   }
 
-  const expectedTabs = ["Process", "Outils"];
+  const expectedTabs = ["Process", "Outils", "Écosystème"];
 
   for (const expectedTab of expectedTabs) {
     if (!renderedHtml.includes(`>${expectedTab}</button>`)) {
@@ -73,7 +73,7 @@ function inspectPage({ enterprise, response, html, tab }) {
     renderedHtml,
     'aria-controls="kit-content-panel"',
   );
-  const expectedTabCount = 2;
+  const expectedTabCount = 3;
   if (controlledPanelCount !== expectedTabCount) {
     errors.push(`expected ${expectedTabCount} tab controls for the shared panel, found ${controlledPanelCount}`);
   }
@@ -171,6 +171,32 @@ function inspectPage({ enterprise, response, html, tab }) {
     }
   }
 
+  if (tab === "ecosysteme") {
+    for (const expectedGroup of [
+      "Gérer mes finances",
+      "Sécuriser mon activité",
+      "Recruter et protéger mon équipe",
+    ]) {
+      if (!renderedHtml.includes(expectedGroup)) {
+        errors.push(`missing ecosystem group: ${expectedGroup}`);
+      }
+    }
+
+    const resourceCardCount = countOccurrences(
+      renderedHtml,
+      "data-ecosystem-resource-card",
+    );
+    if (resourceCardCount < 3) {
+      errors.push(`only ${resourceCardCount} ecosystem resource cards rendered`);
+    }
+
+    for (const forbiddenCardCta of ["Sélectionner", "Voir la fiche"]) {
+      if (renderedHtml.includes(forbiddenCardCta)) {
+        errors.push(`forbidden ecosystem card CTA: ${forbiddenCardCta}`);
+      }
+    }
+  }
+
   return { errors };
 }
 
@@ -246,7 +272,7 @@ const failures = results.filter((result) => result.errors.length);
 console.log(JSON.stringify({
   baseUrl,
   kits: enterprises.length,
-  tabsPerKit: 2,
+  tabsPerKit: 3,
   statesChecked: results.length,
   failureCount: failures.length,
   failures: failures.slice(0, 100),

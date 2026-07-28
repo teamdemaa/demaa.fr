@@ -5,8 +5,12 @@ import {
 } from "@/lib/system-detail-tabs";
 
 describe("operational system tabs", () => {
-  it("keeps only Process and Outils in the validated order", () => {
-    expect(SYSTEM_DETAIL_TABS).toEqual(["process", "outils"]);
+  it("keeps Process, Outils and Écosystème in the validated order", () => {
+    expect(SYSTEM_DETAIL_TABS).toEqual([
+      "process",
+      "outils",
+      "ecosysteme",
+    ]);
   });
 
   it("keeps legacy tab URLs on a meaningful section", () => {

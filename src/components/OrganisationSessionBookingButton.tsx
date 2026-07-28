@@ -42,7 +42,12 @@ export default function OrganisationSessionBookingButton({
 
   return (
     <>
-      <button type="button" onClick={openBooking} className={className}>
+      <button
+        type="button"
+        onClick={openBooking}
+        className={className}
+        data-resource-cta
+      >
         {label}
       </button>
       <FilloutPopupEmbed

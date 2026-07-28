@@ -273,7 +273,7 @@ function singularizeSectorLabel(label: string): string {
 }
 
 function buildSystemPageTitle(data: SystemDetailPageData): string {
-  return `Système opérationnel ${data.system.name} : process, outils et tableau prêt à utiliser | Demaa`;
+  return `Système opérationnel ${data.system.name} : process, outils et écosystème | Demaa`;
 }
 
 export function buildSystemPageIntro(data: SystemDetailPageData): string {
@@ -322,6 +322,7 @@ export function buildSystemPageMetadata(data: SystemDetailPageData): Metadata {
         `système opérationnel ${data.system.name.toLowerCase()}`,
         `process ${data.system.name.toLowerCase()}`,
         `outils ${data.system.name.toLowerCase()}`,
+        `écosystème ${data.system.name.toLowerCase()}`,
         `modèle entreprise ${data.system.name.toLowerCase()}`,
       ],
     alternates: {

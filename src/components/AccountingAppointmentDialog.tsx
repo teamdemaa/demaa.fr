@@ -1,8 +1,9 @@
 "use client";
 
 import type React from "react";
-import { useEffect, useId, useState } from "react";
+import { useCallback, useEffect, useId, useState } from "react";
 import { ArrowUpRight, LoaderCircle, Search, X } from "lucide-react";
+import { useAccessibleDialog } from "@/components/useAccessibleDialog";
 import type { AccountingFirm } from "@/lib/accounting-directory";
 
 type AccountingAppointmentDialogProps = {
@@ -56,7 +57,8 @@ export default function AccountingAppointmentDialog({
     if (error) setError(null);
   }
 
-  function resetState() {
+  const closeDialog = useCallback(() => {
+    setIsOpen(false);
     setFormData(INITIAL_FORM);
     setIsSubmitting(false);
     setError(null);
@@ -64,7 +66,11 @@ export default function AccountingAppointmentDialog({
     setSelectedCompany(null);
     setCompanySuggestions([]);
     setCompanySearchError(null);
-  }
+  }, []);
+  const dialogRef = useAccessibleDialog({
+    isOpen,
+    onClose: closeDialog,
+  });
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -192,6 +198,7 @@ export default function AccountingAppointmentDialog({
         className={buttonClassName}
         onClick={() => setIsOpen(true)}
         disabled={selectedFirms.length === 0}
+        data-resource-cta
       >
         {buttonLabel}
         <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
@@ -199,18 +206,17 @@ export default function AccountingAppointmentDialog({
 
       {isOpen ? (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-brand-blue/45 px-4 py-8"
-          role="dialog"
-          aria-modal="true"
-          aria-label={`Demande de mise en relation avec ${firmNames.join(", ")}`}
-          onClick={() => {
-            setIsOpen(false);
-            resetState();
-          }}
+          className="fixed inset-0 z-[100] flex items-end justify-center bg-brand-blue/45 sm:items-center sm:px-4 sm:py-8"
+          onClick={closeDialog}
         >
           <div
-            className="w-full max-w-2xl rounded-[1.25rem] border border-dema-line bg-dema-paper p-6 shadow-[0_24px_70px_rgba(23,35,29,0.2)]"
+            ref={dialogRef}
+            className="max-h-[88dvh] w-full max-w-2xl overflow-y-auto rounded-t-[1.25rem] border border-dema-line bg-dema-paper p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] shadow-[0_24px_70px_rgba(23,35,29,0.2)] outline-none sm:max-h-[92vh] sm:rounded-[1.25rem]"
             onClick={(event) => event.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-label={`Demande de mise en relation avec ${firmNames.join(", ")}`}
+            tabIndex={-1}
           >
             <div className="flex items-start justify-between gap-4">
               <div>
@@ -234,10 +240,8 @@ export default function AccountingAppointmentDialog({
               </div>
               <button
                 type="button"
-                onClick={() => {
-                  setIsOpen(false);
-                  resetState();
-                }}
+                onClick={closeDialog}
+                data-dialog-initial-focus
                 className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
                 aria-label="Fermer"
               >

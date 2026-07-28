@@ -31,6 +31,13 @@ type SystemJourneyEvent =
   | "system_copy_form_submitted"
   | "system_search_selected";
 
+type SystemEcosystemEvent =
+  | "system_ecosystem_rail_navigated"
+  | "system_ecosystem_resource_closed"
+  | "system_ecosystem_resource_cta_clicked"
+  | "system_ecosystem_resource_opened"
+  | "system_ecosystem_tab_opened";
+
 export function trackSystemJourneyEvent(
   eventName: SystemJourneyEvent,
   input: {
@@ -59,5 +66,36 @@ export function trackSystemJourneyEvent(
     window.gtag?.("event", eventName, properties);
   } catch {
     // The delivery record remains authoritative for successful requests.
+  }
+}
+
+export function trackSystemEcosystemEvent(
+  eventName: SystemEcosystemEvent,
+  input: {
+    groupSlug?: string;
+    position?: number;
+    resourceSlug?: string;
+    resourceType?: string;
+    systemSlug: string;
+  },
+) {
+  if (typeof window === "undefined") return;
+
+  const preferences = getCookieConsentPreferences();
+  if (!preferences?.analytics) return;
+
+  const properties = {
+    group_slug: input.groupSlug?.slice(0, 80) || "none",
+    position: input.position ?? -1,
+    resource_slug: input.resourceSlug?.slice(0, 120) || "none",
+    resource_type: input.resourceType?.slice(0, 40) || "none",
+    system_slug: input.systemSlug.slice(0, 120),
+  };
+
+  try {
+    track(eventName, properties);
+    window.gtag?.("event", eventName, properties);
+  } catch {
+    // Les parcours restent utilisables même si la mesure est indisponible.
   }
 }
