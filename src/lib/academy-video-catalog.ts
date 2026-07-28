@@ -30,6 +30,9 @@ export type AcademyVideoEntry = {
   artworkPath: string;
   artworkTheme: "forest" | "sage";
   artworkScale?: number;
+  artworkOffsetXPercent?: number;
+  thumbnailTextScale?: number;
+  thumbnailTitleOffsetXPercent?: number;
   topics: readonly string[];
   durationLabel: string;
   durationSeconds: number;
@@ -206,7 +209,10 @@ export const academyVideoCatalog: readonly AcademyVideoEntry[] = [
       "Comparaison entre chiffre d’affaires, marge et bénéfice d’une petite entreprise.",
     artworkPath: "/images/academy/illustration-benefice.png",
     artworkTheme: "sage",
-    artworkScale: 1.22,
+    artworkScale: Math.SQRT2,
+    artworkOffsetXPercent: -6.3,
+    thumbnailTextScale: 0.69,
+    thumbnailTitleOffsetXPercent: 15.9,
     topics: ["Chiffre d’affaires", "Marge", "Bénéfice", "Point mort"],
     durationLabel: "3 min 32 s",
     durationSeconds: 212,

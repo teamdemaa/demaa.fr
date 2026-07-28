@@ -66,14 +66,23 @@ describe("academy video catalog", () => {
   });
 
   it("keeps artwork scaling explicit and limited to the benefit thumbnail", () => {
-    expect(
-      getAcademyVideoBySlug("difference-chiffre-affaires-benefice")
-        ?.artworkScale,
-    ).toBe(1.22);
-    expect(
-      getAcademyVideoBySlug("entreprise-rentable-sans-tresorerie")
-        ?.artworkScale,
-    ).toBeUndefined();
+    const benefit = getAcademyVideoBySlug(
+      "difference-chiffre-affaires-benefice",
+    );
+    const treasury = getAcademyVideoBySlug(
+      "entreprise-rentable-sans-tresorerie",
+    );
+
+    expect(benefit).toMatchObject({
+      artworkScale: Math.SQRT2,
+      artworkOffsetXPercent: -6.3,
+      thumbnailTextScale: 0.69,
+      thumbnailTitleOffsetXPercent: 15.9,
+    });
+    expect(treasury?.artworkScale).toBeUndefined();
+    expect(treasury?.artworkOffsetXPercent).toBeUndefined();
+    expect(treasury?.thumbnailTextScale).toBeUndefined();
+    expect(treasury?.thumbnailTitleOffsetXPercent).toBeUndefined();
   });
 
   it("emits real VideoObject data and escapes JSON-LD", () => {
