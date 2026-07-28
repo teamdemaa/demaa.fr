@@ -26,6 +26,8 @@
 /outputs
 /tmp/
 /exports/
+/private/
+/src/lib/editable-operational-system-assets.generated.server.json
 
 # local working files
 Outils_metier_*.xlsx

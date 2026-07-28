@@ -422,6 +422,7 @@ function writeLocalMirror(data) {
           stepCount: NEW_STEP_COUNT,
           matchedStepCount: NEW_STEP_COUNT,
           unmatchedCount: 0,
+          sourceUrl: "",
         }
       : audit,
   );

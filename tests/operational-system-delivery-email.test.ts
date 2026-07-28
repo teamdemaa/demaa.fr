@@ -17,7 +17,7 @@ describe("operational system delivery email", () => {
     vi.stubEnv("RESEND_API_KEY", "re_test");
     vi.stubEnv("RESEND_FROM_EMAIL", "Demaa <systemes@demaa.fr>");
     mocks.getCopyUrl.mockReturnValue(
-      "https://docs.google.com/spreadsheets/d/editable-file/copy",
+      "https://example.invalid/private-copy",
     );
   });
 
@@ -55,8 +55,8 @@ describe("operational system delivery email", () => {
       "Votre copie modifiable — Plomberie & chauffage",
     );
     expect(payload.html).toContain("Créer ma copie dans Google Drive");
-    expect(payload.html).toContain("/copy");
-    expect(payload.text).toContain("/copy");
+    expect(payload.html).toContain("https://example.invalid/private-copy");
+    expect(payload.text).toContain("https://example.invalid/private-copy");
   });
 
   it("does not call Resend when the editable asset is missing", async () => {
