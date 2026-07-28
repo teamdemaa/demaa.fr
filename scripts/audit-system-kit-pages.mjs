@@ -44,11 +44,6 @@ function inspectPage({ enterprise, response, html, tab }) {
     errors.push("response is not HTML");
   }
   if (!renderedHtml.includes("<h1")) errors.push("missing main heading");
-  const expectedPreviewPath =
-    `%2Fimages%2Fkits%2F${enterprise.slug}%2Ftableau-suivi-preview.webp`;
-  if (!renderedHtml.includes(expectedPreviewPath)) {
-    errors.push("missing system preview image");
-  }
 
   for (const forbiddenText of [
     "Cette page n'existe pas",
@@ -82,25 +77,13 @@ function inspectPage({ enterprise, response, html, tab }) {
   }
 
   for (const expectedText of [
-    "Voir la démonstration",
-    "Recevoir ma copie modifiable",
-    "Des process concrets, des outils recommandés et un tableau",
-    "Google Sheets prêt à utiliser.",
-    "Gratuit · Envoyé par e-mail",
+    "Voir le système",
+    "Diagnostic offert",
+    "Demander mon diagnostic",
   ]) {
     if (!renderedHtml.includes(expectedText)) {
-      errors.push(`missing demo/paid distinction: ${expectedText}`);
+      errors.push(`missing system journey control: ${expectedText}`);
     }
-  }
-
-  const copyCtaGroup = renderedHtml.match(
-    /<div[^>]*data-kit-copy-cta-group[^>]*>[\s\S]*?<\/div>/,
-  )?.[0];
-  if (
-    !copyCtaGroup?.includes("Recevoir ma copie modifiable") ||
-    !copyCtaGroup.includes("Gratuit · Envoyé par e-mail")
-  ) {
-    errors.push("free email note is not attached to the copy CTA");
   }
 
   for (const legacyPromise of [
@@ -148,7 +131,7 @@ function inspectPage({ enterprise, response, html, tab }) {
     if (!/\d+ processus/.test(renderedHtml)) {
       errors.push("missing process count");
     }
-    if (renderedHtml.includes("Support associé indiqué dans le système")) {
+    if (renderedHtml.includes("Dans le système")) {
       errors.push("collapsed process content is exposed by default");
     }
     if (renderedHtml.includes("Aperçu du document")) {

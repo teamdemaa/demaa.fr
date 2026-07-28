@@ -53,35 +53,18 @@ async function inspectEnterprise(enterprise) {
     if (!overviewHtml.includes(`<link rel="canonical" href="https://demaa.fr${canonicalPath}"/>`)) {
       errors.push("canonical link missing or incorrect");
     }
-    const expectedPreviewPath =
-      `%2Fimages%2Fkits%2F${enterprise.slug}%2Ftableau-suivi-preview.webp`;
-    if (!renderedOverviewHtml.includes(expectedPreviewPath)) {
-      errors.push("system preview image missing");
-    }
     if (!overviewHtml.includes("Système opérationnel")) {
       errors.push("SEO title missing");
     }
 
     for (const expectedText of [
-      "Voir la démonstration",
-      "Recevoir ma copie modifiable",
-      "Des process concrets, des outils recommandés et un tableau",
-      "Google Sheets prêt à utiliser.",
-      "Gratuit · Envoyé par e-mail",
+      "Voir le système",
+      "Diagnostic offert",
+      "Demander mon diagnostic",
     ]) {
       if (!renderedOverviewHtml.includes(expectedText)) {
-        errors.push(`commercial promise missing: ${expectedText}`);
+        errors.push(`system journey control missing: ${expectedText}`);
       }
-    }
-
-    const copyCtaGroup = renderedOverviewHtml.match(
-      /<div[^>]*data-kit-copy-cta-group[^>]*>[\s\S]*?<\/div>/,
-    )?.[0];
-    if (
-      !copyCtaGroup?.includes("Recevoir ma copie modifiable") ||
-      !copyCtaGroup.includes("Gratuit · Envoyé par e-mail")
-    ) {
-      errors.push("free email note is not attached to the copy CTA");
     }
 
     for (const value of forbiddenUi) {
@@ -104,7 +87,7 @@ async function inspectEnterprise(enterprise) {
     }
     if (
       renderedOverviewHtml.includes(
-        "Support associé indiqué dans le système",
+        "Dans le système",
       )
     ) {
       errors.push("collapsed process content is exposed by default");

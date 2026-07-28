@@ -1,21 +1,6 @@
 "use client";
 
-import {
-  ArrowDown,
-  ChevronDown,
-  Euro,
-  Flag,
-  HeartHandshake,
-  ListChecks,
-  Megaphone,
-  MessageCircleWarning,
-  PackageSearch,
-  Settings2,
-  ShieldCheck,
-  Target,
-  UsersRound,
-  type LucideIcon,
-} from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 import type {
   SystemeDetail,
@@ -27,32 +12,6 @@ type SystemeTabContentProps = {
   systeme: SystemeDetail | null | undefined;
 };
 
-const pillarIcons: Record<string, LucideIcon> = {
-  Direction: Flag,
-  "Marketing et Vente": Megaphone,
-  Opérations: Settings2,
-  Équipe: UsersRound,
-  "Finance et Admin": Euro,
-  "Sécurité & Conformité Chantier": ShieldCheck,
-  "Matériel & Approvisionnement": PackageSearch,
-};
-
-function getProcessIcon(process: string): LucideIcon {
-  if (/acquérir|qualifier|conclure/i.test(process)) {
-    return Target;
-  }
-
-  if (/fidéliser|relances/i.test(process)) {
-    return HeartHandshake;
-  }
-
-  if (/réclamation|litige/i.test(process)) {
-    return MessageCircleWarning;
-  }
-
-  return ListChecks;
-}
-
 function ProcessDocument({ item }: { item: SystemeProcessItem }) {
   return (
     <div className="mt-4 rounded-[0.9rem] border border-dema-forest/10 bg-dema-sage/45 px-4 py-3">
@@ -60,70 +19,110 @@ function ProcessDocument({ item }: { item: SystemeProcessItem }) {
         {item.document}
       </p>
       <p className="mt-1 text-[11px] font-medium text-dema-muted/65">
-        Support associé indiqué dans le système
+        Dans le système
       </p>
     </div>
   );
 }
 
-function ProcessList({ items }: { items: SystemeProcessItem[] }) {
+function ProcessItem({
+  familyIndex,
+  item,
+  processIndex,
+}: {
+  familyIndex: number;
+  item: SystemeProcessItem;
+  processIndex: number;
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+  const panelId = `system-process-detail-${familyIndex}-${processIndex}`;
+  const processNumber = `${String(familyIndex + 1).padStart(2, "0")}.${String(
+    processIndex + 1,
+  ).padStart(2, "0")}`;
+  const processSteps = item.steps.map((step) => step.step);
+
   return (
-    <div className="space-y-0 px-5 pb-6 pt-2 sm:px-7 sm:pb-7">
-      {items.map((item, index) => {
-        const ProcessIcon = getProcessIcon(item.process);
-        const isLast = index === items.length - 1;
-        const processSteps = item.steps.map((step) => step.step);
+    <article className="border-b border-dema-line/80 last:border-b-0">
+      <button
+        type="button"
+        aria-expanded={isOpen}
+        aria-controls={panelId}
+        onClick={() => setIsOpen((current) => !current)}
+        className="flex min-h-[4.7rem] w-full items-center gap-4 px-5 py-4 text-left transition hover:bg-dema-sage/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-dema-forest/35 sm:px-7"
+      >
+        <span className="w-12 shrink-0 font-mono text-xs font-semibold tabular-nums text-dema-forest">
+          {processNumber}
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="block text-[15px] font-semibold leading-snug tracking-[-0.015em] text-brand-blue sm:text-base">
+            {item.process}
+          </span>
+          <span className="mt-1 block text-xs text-dema-muted">
+            {processSteps.length
+              ? `${processSteps.length} étapes`
+              : "Étapes en préparation"}
+          </span>
+        </span>
+        <ChevronDown
+          className={`h-4 w-4 shrink-0 text-dema-muted transition-transform ${
+            isOpen ? "rotate-180" : ""
+          }`}
+          aria-hidden="true"
+        />
+      </button>
 
-        return (
-          <article
-            key={item.processId}
-            className="relative grid grid-cols-[3rem_minmax(0,1fr)] gap-4 pb-8 last:pb-0"
-          >
-            {!isLast ? (
-              <span
-                className="absolute bottom-0 left-6 top-12 flex -translate-x-1/2 flex-col items-center"
-                aria-hidden="true"
-              >
-                <span className="h-full w-px bg-dema-forest/55" />
-                <ArrowDown className="-mt-1 h-4 w-4 shrink-0 text-dema-forest" />
-              </span>
-            ) : null}
+      {isOpen ? (
+        <div
+          id={panelId}
+          className="px-5 pb-5 pl-[5.75rem] sm:px-7 sm:pb-6 sm:pl-[6.75rem]"
+        >
+          {processSteps.length ? (
+            <ol className="space-y-2">
+              {processSteps.map((step, stepIndex) => (
+                <li
+                  key={`${item.processId}-${stepIndex}`}
+                  className="grid grid-cols-[1.5rem_minmax(0,1fr)] gap-2 text-[13px] leading-relaxed text-dema-muted sm:text-sm"
+                >
+                  <span
+                    className="font-mono text-[11px] font-semibold tabular-nums text-dema-forest/70"
+                    aria-hidden="true"
+                  >
+                    {String(stepIndex + 1).padStart(2, "0")}
+                  </span>
+                  <span>{step}</span>
+                </li>
+              ))}
+            </ol>
+          ) : (
+            <p className="text-sm leading-relaxed text-dema-muted">
+              Les étapes de ce process sont en cours de préparation.
+            </p>
+          )}
 
-            <span className="relative z-10 inline-flex h-12 w-12 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
-              <ProcessIcon className="h-5 w-5" aria-hidden="true" />
-            </span>
+          <ProcessDocument item={item} />
+        </div>
+      ) : null}
+    </article>
+  );
+}
 
-            <div className="min-w-0 pt-1">
-              <h4 className="text-[15px] font-semibold leading-snug tracking-[-0.015em] text-brand-blue sm:text-base">
-                {index + 1}. {item.process}
-              </h4>
-
-              {processSteps.length ? (
-                <ul className="mt-3 space-y-2">
-                  {processSteps.map((step, stepIndex) => (
-                    <li
-                      key={`${item.processId}-${stepIndex}`}
-                      className="grid grid-cols-[0.65rem_minmax(0,1fr)] gap-2 text-[13px] leading-relaxed text-dema-muted sm:text-sm"
-                    >
-                      <span
-                        className="mt-[0.55rem] h-1.5 w-1.5 rounded-full bg-dema-forest"
-                        aria-hidden="true"
-                      />
-                      <span>{step}</span>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="mt-3 text-sm leading-relaxed text-dema-muted">
-                  Les étapes de ce process sont en cours de préparation.
-                </p>
-              )}
-
-              <ProcessDocument item={item} />
-            </div>
-          </article>
-        );
-      })}
+function ProcessList({
+  familyIndex,
+  items,
+}: {
+  familyIndex: number;
+  items: SystemeProcessItem[];
+}) {
+  return (
+    <div>
+      {items.map((item, processIndex) => (
+        <ProcessItem
+          key={item.processId}
+          familyIndex={familyIndex}
+          item={item}
+          processIndex={processIndex}
+        />
+      ))}
     </div>
   );
 }
@@ -134,9 +133,9 @@ function OperationalProcessAccordion({ systeme }: { systeme: SystemeDetail }) {
   return (
     <div className="space-y-3">
       {systeme.cards.map((card, index) => {
-        const PillarIcon = pillarIcons[card.pillar] ?? ListChecks;
         const isOpen = openPillar === card.pillar;
         const panelId = `system-process-panel-${index}`;
+        const familyNumber = String(index + 1).padStart(2, "0");
 
         return (
           <section
@@ -154,10 +153,10 @@ function OperationalProcessAccordion({ systeme }: { systeme: SystemeDetail }) {
                   current === card.pillar ? null : card.pillar,
                 )
               }
-              className="flex min-h-[5.35rem] w-full items-center gap-4 px-5 py-4 text-left transition hover:bg-dema-sage/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-dema-forest/35 sm:px-6"
+              className="flex min-h-[4.9rem] w-full items-center gap-4 px-5 py-4 text-left transition hover:bg-dema-sage/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-dema-forest/35 sm:px-6"
             >
-              <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
-                <PillarIcon className="h-5 w-5" aria-hidden="true" />
+              <span className="w-9 shrink-0 font-mono text-sm font-semibold tabular-nums text-dema-forest">
+                {familyNumber}
               </span>
 
               <span className="min-w-0 flex-1">
@@ -177,14 +176,13 @@ function OperationalProcessAccordion({ systeme }: { systeme: SystemeDetail }) {
               />
             </button>
 
-            {isOpen ? (
-              <div
-                id={panelId}
-                className="border-t border-dema-line/80"
-              >
-                <ProcessList items={card.items} />
-              </div>
-            ) : null}
+            <div
+              id={panelId}
+              className="border-t border-dema-line/80"
+              hidden={!isOpen}
+            >
+              <ProcessList familyIndex={index} items={card.items} />
+            </div>
           </section>
         );
       })}

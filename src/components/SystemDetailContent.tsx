@@ -1,13 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   ArrowLeft,
   ArrowRight,
   BookOpen,
-  FileSpreadsheet,
   Wrench,
 } from "lucide-react";
 import {
@@ -18,12 +16,11 @@ import {
   useState,
 } from "react";
 import OperationalSystemCopyRequestModal from "@/components/OperationalSystemCopyRequestModal";
+import SystemDiagnosticCta from "@/components/SystemDiagnosticCta";
 import SystemEcosystemTab from "@/components/SystemEcosystemTab";
 import SystemeTabContent from "@/components/SystemeTabContent";
 import {
-  trackKitOpen,
   trackSystemEcosystemEvent,
-  trackSystemJourneyEvent,
 } from "@/lib/kit-analytics-client";
 import type { OperationalSystemDetail } from "@/lib/system-operations";
 import {
@@ -80,7 +77,7 @@ export default function SystemDetailContent({
       ? initialActiveTab
       : "process",
   );
-  const [isCopyRequestOpen, setIsCopyRequestOpen] = useState(false);
+  const [isSystemModalOpen, setIsSystemModalOpen] = useState(false);
   const preview = getSystemKitPreview(system.slug);
   const métierTools = useMemo(
     () =>
@@ -90,8 +87,8 @@ export default function SystemDetailContent({
         .slice(0, 5),
     [detail.tools],
   );
-  const closeCopyRequest = useCallback(() => {
-    setIsCopyRequestOpen(false);
+  const closeSystemModal = useCallback(() => {
+    setIsSystemModalOpen(false);
   }, []);
 
   useEffect(() => {
@@ -101,13 +98,6 @@ export default function SystemDetailContent({
       systemSlug: system.slug,
     });
   }, [activeTab, system.slug]);
-
-  function openCopyRequest() {
-    setIsCopyRequestOpen(true);
-    trackSystemJourneyEvent("system_copy_form_opened", {
-      systemSlug: system.slug,
-    });
-  }
 
   function selectTab(tab: SystemDetailTab) {
     setActiveTab(tab);
@@ -169,75 +159,16 @@ export default function SystemDetailContent({
           <p className="mt-4 max-w-3xl text-base leading-relaxed text-dema-muted">
             {intro}
           </p>
+          {deliveryAvailable ? (
+            <button
+              type="button"
+              onClick={() => setIsSystemModalOpen(true)}
+              className="mt-7 inline-flex min-h-11 items-center justify-center rounded-full border border-dema-forest/25 bg-dema-paper px-5 py-3 text-sm font-semibold text-dema-forest transition hover:border-dema-forest hover:bg-dema-sage/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
+            >
+              Voir le système
+            </button>
+          ) : null}
         </div>
-
-        {deliveryAvailable ? (
-          <section className="mt-8 grid w-full overflow-hidden rounded-[1.35rem] border border-dema-line bg-dema-paper shadow-[0_10px_30px_rgba(23,35,29,0.035)] md:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)]">
-            <div className="flex min-h-[15rem] items-center justify-center bg-dema-sage/45 p-5 sm:min-h-[18rem] sm:p-7 md:min-h-[21rem]">
-              {preview ? (
-                <Image
-                  src={preview.src}
-                  alt={preview.alt}
-                  width={preview.width}
-                  height={preview.height}
-                  loading="eager"
-                  sizes="(max-width: 767px) calc(100vw - 72px), 330px"
-                  className="h-auto w-full rounded-[0.8rem] shadow-[0_14px_35px_rgba(23,35,29,0.1)] sm:w-[96%]"
-                />
-              ) : (
-                <span className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-dema-paper text-dema-forest shadow-sm">
-                  <FileSpreadsheet className="h-8 w-8" aria-hidden="true" />
-                </span>
-              )}
-            </div>
-
-            <div className="flex min-w-0 flex-col justify-center px-6 py-8 sm:px-8 sm:py-10">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-                Système opérationnel
-              </p>
-              <h2 className="mt-3 text-[1.55rem] font-semibold leading-tight tracking-[-0.025em] text-brand-blue">
-                Système opérationnel - {system.name}
-              </h2>
-              <p className="mt-4 text-sm leading-relaxed text-dema-muted">
-                Des process concrets, des outils recommandés et un tableau
-                Google Sheets prêt à utiliser.
-              </p>
-
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-start">
-                {demoUrl ? (
-                  <a
-                    href={demoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() =>
-                      trackKitOpen({
-                        kitName: `${system.name} - démonstration`,
-                        kitSlug: system.slug,
-                      })}
-                    className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper transition hover:bg-brand-blue"
-                  >
-                    Voir la démonstration
-                  </a>
-                ) : null}
-                <div
-                  data-kit-copy-cta-group
-                  className="flex w-full flex-col items-center gap-2 sm:w-auto"
-                >
-                  <button
-                    type="button"
-                    onClick={openCopyRequest}
-                    className="inline-flex min-h-11 w-full items-center justify-center rounded-full border border-dema-forest/25 bg-dema-paper px-5 py-3 text-sm font-semibold text-dema-forest transition hover:border-dema-forest hover:bg-dema-sage/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:w-auto"
-                  >
-                    Recevoir ma copie modifiable
-                  </button>
-                  <p className="text-center text-xs leading-relaxed text-dema-muted">
-                    Gratuit · Envoyé par e-mail
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-        ) : null}
 
         <div className="mt-8 flex justify-start sm:mt-9">
           <div
@@ -340,6 +271,8 @@ export default function SystemDetailContent({
 
         </section>
 
+        <SystemDiagnosticCta systemSlug={system.slug} />
+
         {academyVideos.length ? (
           <section
             className="mt-12 border-t border-dema-line pt-10"
@@ -377,11 +310,13 @@ export default function SystemDetailContent({
           </section>
         ) : null}
       </article>
-      {isCopyRequestOpen ? (
+      {isSystemModalOpen ? (
         <OperationalSystemCopyRequestModal
+          demoUrl={demoUrl}
+          preview={preview}
           systemName={system.name}
           systemSlug={system.slug}
-          onClose={closeCopyRequest}
+          onClose={closeSystemModal}
         />
       ) : null}
     </>
