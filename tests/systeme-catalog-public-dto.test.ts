@@ -18,4 +18,22 @@ describe("public operational system DTO", () => {
     expect(serialized).not.toContain("documentCopyUrl");
     expect(serialized).not.toContain("docs.google.com");
   });
+
+  it("projects the pilot routines without exposing support links", () => {
+    const building = enterprisePayload.enterprises.find(
+      (enterprise) => enterprise.slug === "batiment",
+    );
+    const detail = buildSystemeDetail(building as EnterpriseDefinition);
+
+    expect(detail?.routines).toHaveLength(8);
+    expect(
+      detail?.routines?.every(
+        (routine) =>
+          routine.bullets.length >= 2 &&
+          routine.bullets.length <= 4 &&
+          routine.support === null,
+      ),
+    ).toBe(true);
+    expect(JSON.stringify(detail?.routines)).not.toContain("docs.google.com");
+  });
 });

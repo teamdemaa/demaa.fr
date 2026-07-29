@@ -105,6 +105,7 @@
     "sync:enterprise-annuaire": "node scripts/sync-enterprise-annuaire.mjs",
     "sync:tool-directory": "node scripts/sync-tool-directory.mjs",
     "generate:operational-blueprints": "vite-node --config vitest.config.ts scripts/build-operational-workbook-blueprints.ts",
+    "generate:operational-v2-pilots": "vite-node --config vitest.config.ts scripts/build-operational-workbook-v2-pilots.ts",
     "register:operational-assets": "node scripts/register-operational-system-assets.mjs"
   },
   "dependencies": {
