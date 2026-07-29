@@ -17,6 +17,7 @@ function buildIdempotencyKey(deliveryId: string) {
 }
 
 export async function sendOperationalSystemDeliveryEmail(input: {
+  assetRevision: string;
   deliveryId: string;
   email: string;
   firstName: string;
@@ -30,7 +31,10 @@ export async function sendOperationalSystemDeliveryEmail(input: {
     return { sent: false as const, reason: "missing_resend_config" as const };
   }
 
-  const copyUrl = getEditableOperationalSystemCopyUrl(input.systemSlug);
+  const copyUrl = getEditableOperationalSystemCopyUrl(
+    input.systemSlug,
+    input.assetRevision,
+  );
   if (!copyUrl) {
     return { sent: false as const, reason: "missing_asset" as const };
   }

@@ -4,6 +4,7 @@ vi.mock("server-only", () => ({}));
 
 const mocks = vi.hoisted(() => ({
   enforceRateLimit: vi.fn(),
+  getActiveDeliverySnapshot: vi.fn(),
   getEnterpriseBySlug: vi.fn(),
   getLeadDeliveryState: vi.fn(),
   hasEditableOperationalSystemAsset: vi.fn(),
@@ -28,6 +29,8 @@ vi.mock("@/lib/api-security", () => ({
 }));
 
 vi.mock("@/lib/editable-operational-system-assets.server", () => ({
+  getActiveOperationalSystemDeliverySnapshot:
+    mocks.getActiveDeliverySnapshot,
   hasEditableOperationalSystemAsset:
     mocks.hasEditableOperationalSystemAsset,
 }));
@@ -105,6 +108,10 @@ describe("free operational system delivery route", () => {
       slug: "plomberie-chauffage",
     });
     mocks.getLeadDeliveryState.mockResolvedValue(null);
+    mocks.getActiveDeliverySnapshot.mockReturnValue({
+      assetRevision: "d032-v1-2026-07-28",
+      workbookVersion: "1.0.0",
+    });
     mocks.hasEditableOperationalSystemAsset.mockReturnValue(true);
     mocks.resolveLeadContext.mockResolvedValue({
       source: "Livraison du système opérationnel gratuit",
@@ -116,6 +123,10 @@ describe("free operational system delivery route", () => {
       reason: null,
     });
     mocks.submitLeadRequest.mockResolvedValue({
+      assetSnapshot: {
+        assetRevision: "d032-v1-2026-07-28",
+        workbookVersion: "1.0.0",
+      },
       duplicate: false,
       leadId: "lead-123",
     });
@@ -131,6 +142,7 @@ describe("free operational system delivery route", () => {
     expect(rawPayload).not.toContain("/copy");
     expect(rawPayload).not.toContain("lead-123");
     expect(mocks.sendDeliveryEmail).toHaveBeenCalledWith({
+      assetRevision: "d032-v1-2026-07-28",
       deliveryId: "lead-lead-123-system",
       email: "maya@example.com",
       firstName: "Maya",
@@ -142,6 +154,24 @@ describe("free operational system delivery route", () => {
       leadId: "lead-123",
       status: "sent",
     });
+  });
+
+  it("persists and delivers the same immutable asset revision", async () => {
+    await POST(buildRequest());
+
+    expect(mocks.submitLeadRequest).toHaveBeenCalledWith(
+      expect.objectContaining({
+        assetSnapshot: {
+          assetRevision: "d032-v1-2026-07-28",
+          workbookVersion: "1.0.0",
+        },
+      }),
+    );
+    expect(mocks.sendDeliveryEmail).toHaveBeenCalledWith(
+      expect.objectContaining({
+        assetRevision: "d032-v1-2026-07-28",
+      }),
+    );
   });
 
   it("keeps marketing consent optional and separate from delivery", async () => {
@@ -190,6 +220,81 @@ describe("free operational system delivery route", () => {
     expect(response.status).toBe(200);
     await expect(response.json()).resolves.toEqual({ ok: true });
     expect(mocks.sendDeliveryEmail).not.toHaveBeenCalled();
+  });
+
+  it("keeps the historical revision for an idempotent duplicate after the active revision changes", async () => {
+    mocks.getActiveDeliverySnapshot.mockReturnValueOnce({
+      assetRevision: "d061-v2-pilot-2026-07-29-01",
+      workbookVersion: "2.0.0-pilot",
+    });
+    mocks.submitLeadRequest.mockResolvedValueOnce({
+      assetSnapshot: {
+        assetRevision: "d032-v1-2026-07-28",
+        workbookVersion: "1.0.0",
+      },
+      duplicate: true,
+      leadId: "lead-historique",
+    });
+
+    const response = await POST(buildRequest());
+
+    expect(response.status).toBe(200);
+    expect(mocks.submitLeadRequest).toHaveBeenCalledWith(
+      expect.objectContaining({
+        assetSnapshot: {
+          assetRevision: "d061-v2-pilot-2026-07-29-01",
+          workbookVersion: "2.0.0-pilot",
+        },
+      }),
+    );
+    expect(mocks.sendDeliveryEmail).toHaveBeenCalledWith(
+      expect.objectContaining({
+        assetRevision: "d032-v1-2026-07-28",
+        deliveryId: "lead-lead-historique-system",
+      }),
+    );
+  });
+
+  it("does not resend a completed historical duplicate after the active revision changes", async () => {
+    mocks.getActiveDeliverySnapshot.mockReturnValueOnce({
+      assetRevision: "d061-v2-pilot-2026-07-29-01",
+      workbookVersion: "2.0.0-pilot",
+    });
+    mocks.submitLeadRequest.mockResolvedValueOnce({
+      assetSnapshot: {
+        assetRevision: "d032-v1-2026-07-28",
+        workbookVersion: "1.0.0",
+      },
+      duplicate: true,
+      leadId: "lead-historique",
+    });
+    mocks.getLeadDeliveryState.mockResolvedValueOnce("sent");
+
+    const response = await POST(buildRequest());
+
+    expect(response.status).toBe(200);
+    expect(mocks.sendDeliveryEmail).not.toHaveBeenCalled();
+  });
+
+  it("delivers the explicit v1 revision for a pre-D061 duplicate", async () => {
+    mocks.submitLeadRequest.mockResolvedValueOnce({
+      assetSnapshot: {
+        assetRevision: "d032-v1-2026-07-28",
+        workbookVersion: "1.0.0",
+      },
+      duplicate: true,
+      leadId: "lead-sans-revision",
+    });
+
+    const response = await POST(buildRequest());
+
+    expect(response.status).toBe(200);
+    expect(mocks.sendDeliveryEmail).toHaveBeenCalledWith(
+      expect.objectContaining({
+        assetRevision: "d032-v1-2026-07-28",
+        deliveryId: "lead-lead-sans-revision-system",
+      }),
+    );
   });
 
   it("silently absorbs honeypot submissions", async () => {

@@ -16,7 +16,9 @@ import {
   claimLeadDeliveryRetry,
   getFailedLeadRequests,
   markLeadDeliveryAbandoned,
+  resolveStoredLeadAssetSnapshot,
   type LeadContact,
+  type LeadAssetSnapshot,
   type LeadDeliveryChannel,
   type LeadField,
   type LeadMarketingConsent,
@@ -27,6 +29,7 @@ import { syncResendLeadContact } from "@/lib/resend-audience";
 import { sendSlackMessage } from "@/lib/slack";
 
 type LeadSubmission = {
+  assetSnapshot?: LeadAssetSnapshot | null;
   attribution: LeadAttributionRecord;
   channels: {
     email: boolean;
@@ -183,6 +186,7 @@ async function deliverChannel<TChannel extends LeadDeliveryChannel>(input: {
 
 export async function submitLeadRequest(input: LeadSubmission) {
   const lead = await createLeadRequest({
+    assetSnapshot: input.assetSnapshot,
     attribution: input.attribution,
     channels: input.channels,
     contact: input.contact,
@@ -202,7 +206,12 @@ export async function submitLeadRequest(input: LeadSubmission) {
       requestType: input.requestType,
       systemSlug: input.context.systemSlug,
     });
-    return { duplicate: true, leadId: lead.id, deliveries: [] };
+    return {
+      assetSnapshot: lead.assetSnapshot,
+      duplicate: true,
+      leadId: lead.id,
+      deliveries: [],
+    };
   }
 
   logOperationalEvent("lead.created", {
@@ -251,11 +260,17 @@ export async function submitLeadRequest(input: LeadSubmission) {
     leadId: lead.id,
     sent: results.filter((result) => result.status === "sent").length,
   });
-  return { duplicate: false, leadId: lead.id, deliveries: results };
+  return {
+    assetSnapshot: lead.assetSnapshot,
+    duplicate: false,
+    leadId: lead.id,
+    deliveries: results,
+  };
 }
 
 function rebuildLeadSubmission(data: StoredLeadRequest): LeadSubmission {
   return {
+    assetSnapshot: resolveStoredLeadAssetSnapshot(data),
     attribution: data.attribution,
     channels: {
       email: data.notification_status.email?.status !== "skipped",
@@ -337,6 +352,8 @@ export async function retryFailedLeadDeliveries(limit = 30) {
             || !input.contact.firstName
             || !input.context.systemName
             || !input.context.systemSlug
+            || !input.assetSnapshot?.assetRevision
+            || !input.assetSnapshot.workbookVersion
           )
         );
       if (missingRetryData) {
@@ -366,7 +383,9 @@ export async function retryFailedLeadDeliveries(limit = 30) {
         && input.contact.firstName
         && input.context.systemName
         && input.context.systemSlug
+        && input.assetSnapshot?.assetRevision
       ) {
+        const assetRevision = input.assetSnapshot.assetRevision;
         result = await deliverChannel({
           channel,
           leadId: lead.id,
@@ -377,6 +396,7 @@ export async function retryFailedLeadDeliveries(limit = 30) {
               firstName: input.contact.firstName ?? "",
               systemName: input.context.systemName ?? "",
               systemSlug: input.context.systemSlug ?? "",
+              assetRevision,
             });
             if (!delivery.sent) {
               throw new Error(delivery.reason);

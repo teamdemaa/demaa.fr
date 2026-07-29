@@ -1,6 +1,8 @@
 import type { EnterpriseDefinition } from "@/lib/enterprise-annuaire";
 import rawProcessRegistry from "@/lib/process-registry.generated.json";
 import rawProcessSteps from "@/lib/process-steps.generated.json";
+import { getOperationalWorkbookV2PilotProfile } from "@/lib/operational-workbook-v2-profiles";
+import { isOperationalWorkbookV2PilotSlug } from "@/lib/operational-workbook-v2";
 import type { SystemePillar } from "@/lib/system-canon";
 
 export type SystemeProcessStep = {
@@ -25,8 +27,20 @@ export type SystemePillarCard = {
   items: SystemeProcessItem[];
 };
 
+export type SystemeRoutine = {
+  bullets: string[];
+  frequency: string;
+  routineId: string;
+  support: null | {
+    assetRevision: string;
+    name: string;
+  };
+  title: string;
+};
+
 export type SystemeDetail = {
   cards: SystemePillarCard[];
+  routines?: SystemeRoutine[];
 };
 
 type ProcessRegistryMétier = {
@@ -169,7 +183,32 @@ export function buildSystemeDetail(
     return null;
   }
 
+  const pilotProfile = isOperationalWorkbookV2PilotSlug(enterprise.slug)
+    ? getOperationalWorkbookV2PilotProfile(enterprise.slug)
+    : null;
+  const routines = pilotProfile?.routines.map((routine) => ({
+    bullets: routine.sourceStepIds.map((stepId) => {
+      const step = processSteps.steps.find(
+        (candidate) =>
+          candidate.stepId === stepId &&
+          candidate.métierId === métier.métierId &&
+          candidate.status === "Actif",
+      );
+      if (!step) {
+        throw new Error(
+          `[systeme] Contenu source v2 introuvable pour ${enterprise.slug}: ${stepId}`,
+        );
+      }
+      return step.step;
+    }),
+    frequency: routine.frequency,
+    routineId: routine.routineId,
+    support: null,
+    title: routine.title,
+  }));
+
   return {
     cards: [...cards.entries()].map(([pillar, items]) => ({ pillar, items })),
+    routines,
   };
 }
