@@ -23,6 +23,24 @@ vi.mock("@/lib/lead-storage", () => ({
   createLeadRequest: vi.fn(),
   getFailedLeadRequests: mocks.getFailedLeadRequests,
   markLeadDeliveryAbandoned: mocks.markLeadDeliveryAbandoned,
+  resolveStoredLeadAssetSnapshot: (lead: {
+    asset_snapshot?: {
+      asset_revision: string;
+      workbook_version: string;
+    } | null;
+    request_type: string;
+  }) =>
+    lead.asset_snapshot
+      ? {
+          assetRevision: lead.asset_snapshot.asset_revision,
+          workbookVersion: lead.asset_snapshot.workbook_version,
+        }
+      : lead.request_type === "system_kit_request"
+        ? {
+            assetRevision: "d032-v1-2026-07-28",
+            workbookVersion: "1.0.0",
+          }
+        : null,
   updateLeadDeliveryStatus: mocks.updateLeadDeliveryStatus,
 }));
 
@@ -49,6 +67,10 @@ function buildFailedLead() {
   return {
     id: "lead-123",
     data: {
+      asset_snapshot: {
+        asset_revision: "d032-v1-2026-07-28",
+        workbook_version: "1.0.0",
+      },
       attribution: {
         consent: { analytics: false, marketing: false, status: "pending" },
         conversion: { request_id: "request-123" },
@@ -98,11 +120,12 @@ describe("operational system delivery retry", () => {
     mocks.updateLeadDeliveryStatus.mockResolvedValue(undefined);
   });
 
-  it("retries a failed transactional delivery with the same delivery id", async () => {
+  it("retries the historical v1 revision even after a later revision could be active", async () => {
     const result = await retryFailedLeadDeliveries(10);
 
     expect(result).toEqual([{ channel: "kit_email", status: "sent" }]);
     expect(mocks.sendDeliveryEmail).toHaveBeenCalledWith({
+      assetRevision: "d032-v1-2026-07-28",
       deliveryId: "lead-lead-123-system",
       email: "maya@example.com",
       firstName: "Maya",
@@ -114,6 +137,25 @@ describe("operational system delivery retry", () => {
       leadId: "lead-123",
       status: "sent",
     });
+  });
+
+  it("retries a pre-D061 lead without a snapshot against the explicit v1 revision", async () => {
+    const failedLead = buildFailedLead();
+    failedLead.data.asset_snapshot = null as never;
+    mocks.getFailedLeadRequests.mockResolvedValueOnce([failedLead]);
+
+    const result = await retryFailedLeadDeliveries(10);
+
+    expect(result).toEqual([{ channel: "kit_email", status: "sent" }]);
+    expect(mocks.sendDeliveryEmail).toHaveBeenCalledWith({
+      assetRevision: "d032-v1-2026-07-28",
+      deliveryId: "lead-lead-123-system",
+      email: "maya@example.com",
+      firstName: "Maya",
+      systemName: "Plomberie & chauffage",
+      systemSlug: "plomberie-chauffage",
+    });
+    expect(mocks.markLeadDeliveryAbandoned).not.toHaveBeenCalled();
   });
 
   it("keeps a failed retry scheduled through the shared retry state", async () => {

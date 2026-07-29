@@ -6,7 +6,10 @@ import {
   normalizeText,
   readJsonBody,
 } from "@/lib/api-security";
-import { hasEditableOperationalSystemAsset } from "@/lib/editable-operational-system-assets.server";
+import {
+  getActiveOperationalSystemDeliverySnapshot,
+  hasEditableOperationalSystemAsset,
+} from "@/lib/editable-operational-system-assets.server";
 import { isValidEmail, normalizeEmail } from "@/lib/email";
 import { enterpriseToSystem } from "@/lib/enterprise-annuaire";
 import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
@@ -140,6 +143,15 @@ async function handlePost(request: Request) {
     );
   }
 
+  const requestedAssetSnapshot =
+    getActiveOperationalSystemDeliverySnapshot(systemSlug);
+  if (!requestedAssetSnapshot) {
+    return NextResponse.json(
+      { error: "Le système opérationnel demandé est indisponible." },
+      { status: 503 },
+    );
+  }
+
   const enterprise = await getEnterpriseBySlug(systemSlug);
   if (!enterprise) {
     return NextResponse.json(
@@ -176,6 +188,10 @@ async function handlePost(request: Request) {
     : buildFallbackIdempotencyKey(email, systemSlug);
   const consentCapturedAt = new Date().toISOString();
   const lead = await submitLeadRequest({
+    assetSnapshot: {
+      assetRevision: requestedAssetSnapshot.assetRevision,
+      workbookVersion: requestedAssetSnapshot.workbookVersion,
+    },
     attribution: resolveLeadAttribution(request, body?.attribution),
     channels: {
       email: false,
@@ -201,7 +217,15 @@ async function handlePost(request: Request) {
     return successResponse();
   }
 
+  if (!lead.assetSnapshot?.assetRevision) {
+    return NextResponse.json(
+      { error: "La version du système demandé est indisponible." },
+      { status: 503 },
+    );
+  }
+
   const delivery = await sendOperationalSystemDeliveryEmail({
+    assetRevision: lead.assetSnapshot.assetRevision,
     deliveryId: `lead-${lead.leadId}-system`,
     email,
     firstName,

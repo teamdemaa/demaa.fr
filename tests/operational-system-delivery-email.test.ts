@@ -32,6 +32,7 @@ describe("operational system delivery email", () => {
     );
 
     const result = await sendOperationalSystemDeliveryEmail({
+      assetRevision: "d032-v1-2026-07-28",
       deliveryId: "lead-123-system",
       email: "maya@example.com",
       firstName: "Maya",
@@ -40,6 +41,10 @@ describe("operational system delivery email", () => {
     });
 
     expect(result).toEqual({ sent: true, reason: null });
+    expect(mocks.getCopyUrl).toHaveBeenCalledWith(
+      "plomberie-chauffage",
+      "d032-v1-2026-07-28",
+    );
     expect(fetchMock).toHaveBeenCalledTimes(1);
 
     const [, init] = fetchMock.mock.calls[0];
@@ -64,6 +69,7 @@ describe("operational system delivery email", () => {
     const fetchMock = vi.spyOn(globalThis, "fetch");
 
     const result = await sendOperationalSystemDeliveryEmail({
+      assetRevision: "d032-v1-2026-07-28",
       deliveryId: "lead-123-system",
       email: "maya@example.com",
       firstName: "Maya",

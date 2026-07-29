@@ -62,4 +62,51 @@ describe("system process accordion", () => {
     expect(html).toContain(">01<");
     expect(html).toContain(">01.01<");
   });
+
+  it("renders pilot routines as simple numbered accordions without unsupported assets", () => {
+    const pilotSysteme: SystemeDetail = {
+      cards: systeme.cards,
+      routines: [
+        {
+          bullets: [
+            "Qualifier la demande",
+            "Préparer le devis détaillé",
+            "Confirmer le calendrier",
+          ],
+          frequency: "À chaque demande",
+          routineId: "routine.batiment.devis",
+          support: null,
+          title: "Qualifier une demande et préparer le devis",
+        },
+        {
+          bullets: [
+            "Planifier les équipes",
+            "Confirmer le matériel",
+          ],
+          frequency: "Chaque semaine",
+          routineId: "routine.batiment.planning",
+          support: {
+            assetRevision: "support-test",
+            name: "Planning chantier validé",
+          },
+          title: "Planifier les équipes et les interventions",
+        },
+      ],
+    };
+    const html = renderToStaticMarkup(
+      createElement(SystemeTabContent, {
+        systemName: "Bâtiment",
+        systeme: pilotSysteme,
+      }),
+    );
+
+    expect(html.match(/aria-expanded="false"/g)).toHaveLength(2);
+    expect(html).not.toContain('aria-expanded="true"');
+    expect(html).toContain(">01<");
+    expect(html).toContain(">02<");
+    expect(html).not.toContain("01.01");
+    expect(html).not.toContain("Qualifier la demande</li>");
+    expect(html).not.toContain("Dans le système");
+    expect(html).not.toContain("Planning chantier validé");
+  });
 });

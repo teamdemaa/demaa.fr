@@ -1,0 +1,1995 @@
+{
+  "schemaVersion": "operational-system-public-assets-v2",
+  "systems": {
+    "agence-acquisition-paid-ads": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/11GbE9NAjO9FBynfmkHav9T2Qu34uxeV2tQgMf9iVVf4/edit",
+          "preview": {
+            "src": "/images/kits/agence-acquisition-paid-ads/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Agence acquisition paid ads",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "agence-de-recrutement": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1nnfswnwZ3ZRdd-3zihwRVHwM_BgC2lsxI76EvOj99MM/edit",
+          "preview": {
+            "src": "/images/kits/agence-de-recrutement/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Agence de recrutement",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "agence-de-voyage": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1XyJfiOFtDUCnwcy02L-zAMtbVgsjGzh5vHq1l73otSI/edit",
+          "preview": {
+            "src": "/images/kits/agence-de-voyage/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Agence de voyage",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "agence-immobiliere": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1o67PO8UYf2GmdyASDMoelAYYZ7R4yYx9jmYjKGCHdjg/edit",
+          "preview": {
+            "src": "/images/kits/agence-immobiliere/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Agence immobilière professionnelle",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "agence-marketing": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1OaV9p60D4cmKcrRJKDBKbSM8-Rqi1GHiWSIc_jXPgvA/edit",
+          "preview": {
+            "src": "/images/kits/agence-marketing/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Agence marketing",
+            "width": 1400,
+            "height": 933
+          }
+        },
+        "d061-v2-pilot-2026-07-29-01": {
+          "assetRevision": "d061-v2-pilot-2026-07-29-01",
+          "state": "draft",
+          "workbookVersion": "2.0.0-pilot",
+          "demoUrl": null,
+          "preview": null
+        }
+      }
+    },
+    "agence-seo": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1cKQwu3AQbAuGAe-sJR3pJ13L9ctoamaQoCX1fvO6pBw/edit",
+          "preview": {
+            "src": "/images/kits/agence-seo/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Agence SEO",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "agence-web": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1bV3Wj_hNulCVjbUPi0Fbar1K95o4zjUEAB88t9iTdFc/edit",
+          "preview": {
+            "src": "/images/kits/agence-web/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Agence web",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "aide-a-domicile-menage": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1c3YuTeHcdbi-ejjfsIhfXFwoNjvwaSHMkwFAbdpVzMI/edit",
+          "preview": {
+            "src": "/images/kits/aide-a-domicile-menage/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Aide à domicile & ménage",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "architecte-maitre-oeuvre": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1BXo1HfkvdW-Grj-pv_Yi4rasD9Gz4KmR2fJwt1t5NJM/edit",
+          "preview": {
+            "src": "/images/kits/architecte-maitre-oeuvre/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Architecte / maître d’œuvre",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "assistant-administratif-externalise": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1g3fHnX2XVyzvfJiAeDpxokpPNG5aV0xmNHUBE2Y4AQ4/edit",
+          "preview": {
+            "src": "/images/kits/assistant-administratif-externalise/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Assistant administratif externalisé",
+            "width": 1400,
+            "height": 933
+          }
+        },
+        "d061-v2-pilot-2026-07-29-01": {
+          "assetRevision": "d061-v2-pilot-2026-07-29-01",
+          "state": "draft",
+          "workbookVersion": "2.0.0-pilot",
+          "demoUrl": null,
+          "preview": null
+        }
+      }
+    },
+    "association": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1ItAG5bc4_-uKHOGeVO3sa-J3f2tX3S3KmtJkMUGhINI/edit",
+          "preview": {
+            "src": "/images/kits/association/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Association",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "auto-ecole": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1GbfEXUWm17nONx9JSL08vfndPkXRsSowd_iGJ0NXKEU/edit",
+          "preview": {
+            "src": "/images/kits/auto-ecole/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Centre de formation conduite pro",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "bar-cafe": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/11V47ckBafPV5KrZe7tEhUThaOlPyrDoYn2VH9NnrjEE/edit",
+          "preview": {
+            "src": "/images/kits/bar-cafe/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Café",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "batiment": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1wkPZ_y1DTL4daDxKaBfU_W3tul7jTv3Pl7uD4VK0xr0/edit",
+          "preview": {
+            "src": "/images/kits/batiment/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Bâtiment",
+            "width": 1400,
+            "height": 933
+          }
+        },
+        "d061-v2-pilot-2026-07-29-01": {
+          "assetRevision": "d061-v2-pilot-2026-07-29-01",
+          "state": "draft",
+          "workbookVersion": "2.0.0-pilot",
+          "demoUrl": null,
+          "preview": null
+        }
+      }
+    },
+    "boulangerie": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1kYgQVH3pTQywxlVucEos0CwUKusRXHAoKGhRv6QDbmU/edit",
+          "preview": {
+            "src": "/images/kits/boulangerie/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Boulangerie",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "boutique-specialisee": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1PY-J1MeB0sS6kg-VfQFSNFyGou9KoW01exS7bukVVB4/edit",
+          "preview": {
+            "src": "/images/kits/boutique-specialisee/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Boutique spécialisée",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "bureau-etudes": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1bPAz7isP3E-eKsYcbmqpnhBiHgwpj7zDApDw8_yQT6g/edit",
+          "preview": {
+            "src": "/images/kits/bureau-etudes/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Bureau d’études",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "cabinet-assurance": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1JAw-MWKgBgTs8TkiX6R0lRaUyxzw9hRlHfibXEa3iSk/edit",
+          "preview": {
+            "src": "/images/kits/cabinet-assurance/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Cabinet d’assurance",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "cabinet-comptable": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1GmIJe1qK0D8cBQc83F6BX32U1RDceBCNsKGuUM6C3vs/edit",
+          "preview": {
+            "src": "/images/kits/cabinet-comptable/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Cabinet comptable",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "cabinet-davocat": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1Z1GX-tAntKkV5kyXBQHWUIdJoXI2tD4mbbRY4d6hcww/edit",
+          "preview": {
+            "src": "/images/kits/cabinet-davocat/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Cabinet d’avocat",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "cabinet-de-conseil": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/15jAAven8j7ZuaCZ-cx6Yum2kkuADJWxX0ZzsZgYlivA/edit",
+          "preview": {
+            "src": "/images/kits/cabinet-de-conseil/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Cabinet de conseil",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "cabinet-etudes": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/11Qej2fmRoVOS_3scFcBHFZgIDYCjzJhz0XNrPoeWfME/edit",
+          "preview": {
+            "src": "/images/kits/cabinet-etudes/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Cabinet d’études",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "cabinet-medical": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1ZwwXcKzE24Ub1bC8Ri158nlApdiRg1BRtXPelALx500/edit",
+          "preview": {
+            "src": "/images/kits/cabinet-medical/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Cabinet médical",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "cabinet-paramedical": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1_TNTQE0Q1vv1J961JOqdGWkX8DZbOg6LcCaHbkXydMo/edit",
+          "preview": {
+            "src": "/images/kits/cabinet-paramedical/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Cabinet paramédical",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "cabinet-qhse-conformite": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1qs_ksgyV4aRU1mrh1qLKv33nNG3pWDhJTzSsNI2Ygks/edit",
+          "preview": {
+            "src": "/images/kits/cabinet-qhse-conformite/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Cabinet QHSE / conformité",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "cabinet-rh-externalise": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/14Zi1bvn1UY2tO8crSfS8phLjKXmXgJ-yx36SfJItJzs/edit",
+          "preview": {
+            "src": "/images/kits/cabinet-rh-externalise/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Cabinet RH externalisé",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "carreleur": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1NcdcPwN0jmGCyTkp-lgh0oRQn_o3S696HrU9cOJtNRg/edit",
+          "preview": {
+            "src": "/images/kits/carreleur/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Carreleur",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "carrosserie": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1woelPPjPjo9blIRrZcH572JI1ShAI05ekpW1pxSrodw/edit",
+          "preview": {
+            "src": "/images/kits/carrosserie/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Carrosserie",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "centre-affaires-coworking": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/14xE2g8zFg3IWJ6ZZ9PmRN-FufMV-EwCemfmueCFQFWk/edit",
+          "preview": {
+            "src": "/images/kits/centre-affaires-coworking/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Centre d’affaires / coworking",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "centre-appels-support-client": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/17XcOwKHWvHRbL3tpWDMVe76UI5lSTaF2ma7dgXnoF8o/edit",
+          "preview": {
+            "src": "/images/kits/centre-appels-support-client/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Centre d’appels / support client",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "cfa": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1b7oOkBHvEbKt-Bd-7K3O2zBEqnTfwYu1znKvdIGRWr0/edit",
+          "preview": {
+            "src": "/images/kits/cfa/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour CFA",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "chasseur-immobilier": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1IIT6VYiHibrTdzJ8edJCe4PUDhIiT2bzLsSlQrHW0ug/edit",
+          "preview": {
+            "src": "/images/kits/chasseur-immobilier/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Chasseur immobilier",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "climatisation": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1S7W1ygHKdvZTqDN8XKy_FmD_R-HgQ47JIr8P-b1J-4Q/edit",
+          "preview": {
+            "src": "/images/kits/climatisation/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Climatisation",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "coach-professionnel": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1y6Bjvc3Vt0ERSRIextlm_yKYjr_t9VNhSEDU7V56PWc/edit",
+          "preview": {
+            "src": "/images/kits/coach-professionnel/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Coach professionnel",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "coach-sportif": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1N9LAbjqW0fuw-UltyonJenniT0srHppydbFSU8Yv07Q/edit",
+          "preview": {
+            "src": "/images/kits/coach-sportif/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Coach sportif",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "commerce-alimentaire": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1LPFoC0dfSTuNTl_PyC0XZn-4dmTx_KZlhi1D9QBSKFk/edit",
+          "preview": {
+            "src": "/images/kits/commerce-alimentaire/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Commerce alimentaire",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "commerce-de-detail": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1ujEAe56oI5pvHBSaTXZH5F-XCsGf5Tmnu5xt7pdvFsI/edit",
+          "preview": {
+            "src": "/images/kits/commerce-de-detail/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Commerce de détail",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "conciergerie-airbnb": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/15GHAL1hRw2GYc8ZQ4d53xLa7hUYvzZLCdkFTsDHSXjg/edit",
+          "preview": {
+            "src": "/images/kits/conciergerie-airbnb/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Conciergerie multi-biens",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "consultant-data-bi": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1sjRSllpT6rTtxLrT_N5LGeVNWBGj6LGKxRbyva1zSGY/edit",
+          "preview": {
+            "src": "/images/kits/consultant-data-bi/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Consultant data / BI",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "consultant-independant": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/14hIlfcOWbh4NxjK2LX6PEDCyuvbyZcbHGM79l_n0W2g/edit",
+          "preview": {
+            "src": "/images/kits/consultant-independant/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Consultant indépendant",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "courtier-credit-assurance": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1SSLHA7L4ZyqVFvjzJli4C3zvEBSwFneaUBxvTwv52TU/edit",
+          "preview": {
+            "src": "/images/kits/courtier-credit-assurance/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Courtier crédit / assurance",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "couvreur": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1e4ulqXf5YXwP4pPJlq-LVoBUYlfAcgjM9B0fZqK-9cA/edit",
+          "preview": {
+            "src": "/images/kits/couvreur/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Couvreur",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "creation-de-contenu": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1BK_wJlLgvFSgWlr_erUQ3R_Z0zS7G_RzxUPoRdjSlYw/edit",
+          "preview": {
+            "src": "/images/kits/creation-de-contenu/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Création de contenu",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "creche": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1sLY-zuhCfmjs_aMPh___yRlBuV5Rg4izfqokYpVwzvM/edit",
+          "preview": {
+            "src": "/images/kits/creche/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Crèche",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "cybersecurite-pme": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1_eQa81Hcbp2Lx49LvZve5GVKytDYMkH9PATlX6gMXIA/edit",
+          "preview": {
+            "src": "/images/kits/cybersecurite-pme/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Cybersécurité PME",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "daf-externalise": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1ewbIfMOL5F_dkEiZjAqvaMuzv58P8FMogxKqix2Vlos/edit",
+          "preview": {
+            "src": "/images/kits/daf-externalise/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour DAF externalisé",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "dark-kitchen": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1OORhYta_20Znq1OJ9X77omiHprnM8Ko-Tpba-oBvewM/edit",
+          "preview": {
+            "src": "/images/kits/dark-kitchen/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Dark kitchen",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "demenagement": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1etq-Q-eYr0LHT9ygvKXR0GDfpG7cE1oTW1VdxHd-qVw/edit",
+          "preview": {
+            "src": "/images/kits/demenagement/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Déménagement professionnel",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "dentiste": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1Pp3lfpjJ8mgHgb3A3gEVz0GRAOpKtGOotg30MQE0ivM/edit",
+          "preview": {
+            "src": "/images/kits/dentiste/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Dentiste",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "diagnostiqueur-immobilier": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1_rSNaB2BlRQvU2cmpHOlmUsy9C5XjMTp1lE00CyL-70/edit",
+          "preview": {
+            "src": "/images/kits/diagnostiqueur-immobilier/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Diagnostiqueur immobilier",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "e-commerce": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1cYKeWhP3GuPelXysGMLoqVnIg5IcmFROKLlPCAAUo38/edit",
+          "preview": {
+            "src": "/images/kits/e-commerce/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour E-commerce",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "electricite-generale": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1Q__Nm82igtN-o9mSG2tsvMpRTXmqeEdPOwGEXcoJkYI/edit",
+          "preview": {
+            "src": "/images/kits/electricite-generale/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Électricité générale",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "entreprise-de-securite": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1uzIoVmznXLLBH6kZCoTim5kwDBRJEmn7wQeyQDD-OR0/edit",
+          "preview": {
+            "src": "/images/kits/entreprise-de-securite/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Entreprise de sécurité B2B",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "esthetique": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1MlZRAahypXnPGWg2D1Az5E2okCSqTzPkf-xyQ8-48ME/edit",
+          "preview": {
+            "src": "/images/kits/esthetique/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Esthétique",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "evenementiel": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1XF02EETrKEo9aB5DTLlXSmdQ8_hprpeL9F4ewrDkY0Y/edit",
+          "preview": {
+            "src": "/images/kits/evenementiel/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Événementiel professionnel",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "fast-food": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1Fv-Y0OQYHRto_Osav9yvgAkZlNnVT554OREobAIz_0w/edit",
+          "preview": {
+            "src": "/images/kits/fast-food/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Fast-food",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "fleuriste": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1fXzifLFD2KbgzSiE6NEHVWe3Eu4woWkhpS4OLhbKwEc/edit",
+          "preview": {
+            "src": "/images/kits/fleuriste/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Fleuriste événementiel B2B",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "food-truck": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1UJAHQ29koudUUUvS2R_1A3zbwZLM6YAjoJOpoyk4BS4/edit",
+          "preview": {
+            "src": "/images/kits/food-truck/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Food truck",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "formation-en-ligne": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1XJFVAIjoFuBltkFWcCx-sv1Hp0TnXYrUFJ-K7KW1C2Y/edit",
+          "preview": {
+            "src": "/images/kits/formation-en-ligne/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Formation en ligne",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "freelance": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1EhWpCIPdRHiv-QojA78kfz5qwOM9jPwpvUPfC6uWwe0/edit",
+          "preview": {
+            "src": "/images/kits/freelance/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Freelance B2B",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "garage-automobile": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1VQDgzZG8ikN65zo52quRcGfJ6imO8rc9h3cwx0wfr4I/edit",
+          "preview": {
+            "src": "/images/kits/garage-automobile/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Garage automobile",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "geometre": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1ZNyXd1nhDe330cXvL_zizxw8qUsn59x3eRIZu3vZA5Q/edit",
+          "preview": {
+            "src": "/images/kits/geometre/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Géomètre",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "gestion-locative": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1qYGQkp9KzYl456hCmBXzYun4a3Fdxou7pHXdkPO47tA/edit",
+          "preview": {
+            "src": "/images/kits/gestion-locative/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Gestion locative pour investisseurs",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "gestionnaire-de-patrimoine": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/19r71BqP8cP77jN2ioJSUP-djnW7kF2KoWd46XInPUNY/edit",
+          "preview": {
+            "src": "/images/kits/gestionnaire-de-patrimoine/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Gestionnaire de patrimoine dirigeant",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "gestionnaire-paie-independant": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1mxhvXlIdOeo-8ammfM2Iav0Wejse1mM0g2KPHfDlc1U/edit",
+          "preview": {
+            "src": "/images/kits/gestionnaire-paie-independant/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Gestionnaire de paie indépendant",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "hotel-hebergement-independant": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1oAyd8jkw2mVNbuIfAnUVLWRPh8y7KxBXtEr2NuBfoKc/edit",
+          "preview": {
+            "src": "/images/kits/hotel-hebergement-independant/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Hôtel & hébergement indépendant",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "infirmier-liberal": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1Xf3J2vkQ2xC8-IQjFaVXnF8Z2IrmsmsxFOOpIiEBAJA/edit",
+          "preview": {
+            "src": "/images/kits/infirmier-liberal/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Infirmier libéral",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "infogerance-informatique": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1fC-NivunmzyMt9iP8XYlCnrF3FTmMpWnOJ4j839bNgg/edit",
+          "preview": {
+            "src": "/images/kits/infogerance-informatique/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Infogérance informatique",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "institut-de-beaute": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/12p9Mbl4aAar-0-mIQKbP_LvYAgRM0KO6V6QdAkihSBA/edit",
+          "preview": {
+            "src": "/images/kits/institut-de-beaute/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Institut de beauté",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "integrateur-crm-erp": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/186KMe_M3_hKqd_F4okQdWbrmjNIW_8GG6-O6m0TUaCg/edit",
+          "preview": {
+            "src": "/images/kits/integrateur-crm-erp/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Intégrateur CRM / ERP",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "investissement-entreprise": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1puMz9O_0VaJkwptY7BLZvo0mhUoz39Hn4MmVzA9mQnY/edit",
+          "preview": {
+            "src": "/images/kits/investissement-entreprise/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Investissement entreprise",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "investissement-financier": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/18C3qSARSyQ9wek2RALAb9dXcOY6cY1_kgjWPnriwyqE/edit",
+          "preview": {
+            "src": "/images/kits/investissement-financier/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Investissement financier",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "investissement-immobilier": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1JUqUTk1uXjxSIT02Eq4FwXGMgo4CZqOPT-iwJHCPZi4/edit",
+          "preview": {
+            "src": "/images/kits/investissement-immobilier/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Investissement immobilier",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "investissement-locatif": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1tuAhhA6P82rAvye-ejNGyiFMR6xNmGZUFh2Xnl68_Qg/edit",
+          "preview": {
+            "src": "/images/kits/investissement-locatif/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Investissement locatif",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "laverie-automatique": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1sKaBmD5PBy8vdpMYMS4nwBP8ErDSgT13RafC3p5mYSk/edit",
+          "preview": {
+            "src": "/images/kits/laverie-automatique/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Laverie automatique",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "librairie": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1-g_1Wp3YznyZ3BcTGKGaygYsPF0OZm8-0RdRtNMbr5g/edit",
+          "preview": {
+            "src": "/images/kits/librairie/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Librairie",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "livraison-dernier-kilometre": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1I5yEnNXeR11HbXWldg3WTGfFHabwCUBisZDQKcmvRg0/edit",
+          "preview": {
+            "src": "/images/kits/livraison-dernier-kilometre/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Livraison dernier kilomètre",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "maconnerie-gros-oeuvre": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1uPmvhVorHZhxJlYKezheffzTJdT1lz70Ukwvteg8nY8/edit",
+          "preview": {
+            "src": "/images/kits/maconnerie-gros-oeuvre/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Maçonnerie & gros œuvre",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "marchand-de-biens": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1QkGI_txzYn2037bJDOvsEs8DoWJCqBO6iFiYdvvcF5A/edit",
+          "preview": {
+            "src": "/images/kits/marchand-de-biens/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Marchand de biens",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "marketplace": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1KLtKXZ18iIRs1aTcSTJRyXxXNqbrZZxnS3DzjvRGT_M/edit",
+          "preview": {
+            "src": "/images/kits/marketplace/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Marketplace",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "media": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1XIYWLlgBehLQHp2uaNHRN3FZoh5EjlyheJ-Dj0jBPKM/edit",
+          "preview": {
+            "src": "/images/kits/media/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Média",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "menuiserie-agencement": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1Kihc6LxM8kSqkfzcIjRt9fZG0560bt2OOTxlpEEkGio/edit",
+          "preview": {
+            "src": "/images/kits/menuiserie-agencement/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Menuiserie & agencement",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "nettoyage-professionnel": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1f4l_L-Mz67jIThbhwspwOc66JgMrmkt908Sl92KCVgI/edit",
+          "preview": {
+            "src": "/images/kits/nettoyage-professionnel/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Nettoyage professionnel",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "notaire": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1NzAD99n8jpC9w1XPz23vQKOb__z9Di2KpjkXprRsa5M/edit",
+          "preview": {
+            "src": "/images/kits/notaire/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Notaire",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "office-manager-externalise": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1JDDe7Jm6g3cMjjFOzSNJSGHv_i-TbPDDPMZbRzO5VqU/edit",
+          "preview": {
+            "src": "/images/kits/office-manager-externalise/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Office manager externalisé",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "opticien": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1cx9asgif9bvNLP7YIiiZRDx0EQ8FMVixdUp0Kch8sSo/edit",
+          "preview": {
+            "src": "/images/kits/opticien/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Opticien",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "organisme-de-formation": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1oDmugm3RFuuwRKyoHc5ZD40fz2-E9Masf8Yc5zA1b0s/edit",
+          "preview": {
+            "src": "/images/kits/organisme-de-formation/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Organisme de formation",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "osteopathe": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1GgnyOOfq8mHmnUX0PgYP1XBO18oIk6jwSYO5mV7Jafg/edit",
+          "preview": {
+            "src": "/images/kits/osteopathe/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Ostéopathe",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "paysagiste": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1Fg7lBWzU6_nM5-GkdHWOEik1ugYSq7rorTHgNPOybmo/edit",
+          "preview": {
+            "src": "/images/kits/paysagiste/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Paysagiste",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "peintre-en-batiment": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/10G6ZEs3Beu44v3qVub0k1NM5hUlOE6KD7On1IP51TPw/edit",
+          "preview": {
+            "src": "/images/kits/peintre-en-batiment/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Peintre en bâtiment",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "pharmacie": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1GORr3gdTTkMhNxmhwQtVqC2zA0zJSXBkQHAFN3pP0yM/edit",
+          "preview": {
+            "src": "/images/kits/pharmacie/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Pharmacie",
+            "width": 1400,
+            "height": 933
+          }
+        },
+        "d061-v2-pilot-2026-07-29-01": {
+          "assetRevision": "d061-v2-pilot-2026-07-29-01",
+          "state": "draft",
+          "workbookVersion": "2.0.0-pilot",
+          "demoUrl": null,
+          "preview": null
+        }
+      }
+    },
+    "photographe-videaste": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1eb5bgNINLeLpZz-uNTVtiLGHWCVdPV4lhOdjQp1F6Ls/edit",
+          "preview": {
+            "src": "/images/kits/photographe-videaste/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Photographe / vidéaste corporate",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "pisciniste": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1iFvUkA9eP0o0CAndiNVda54Jp0eSuReSFFeHK1fB9XA/edit",
+          "preview": {
+            "src": "/images/kits/pisciniste/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Pisciniste",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "plomberie-chauffage": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1YiSXWlhEr87U9BLzaQvdHVJ496hyJc5l6jYDrJIjhFg/edit",
+          "preview": {
+            "src": "/images/kits/plomberie-chauffage/tableau-suivi-preview.webp",
+            "alt": "Aperçu du système opérationnel pour Plomberie & chauffage",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "pressing": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1FS8NSIh20TWOcvw0enJeumsCuVntBRgY5PxKhx3mXRU/edit",
+          "preview": {
+            "src": "/images/kits/pressing/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Pressing",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "production-industrie": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1m0lkglAFaSVqerMTxQv4j7xKretW86TGXI-6K4mLr60/edit",
+          "preview": {
+            "src": "/images/kits/production-industrie/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Production & Industrie",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "psychologue": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1aPE8kxQOR9MX00KUnTSv6I6HOoUoqha5jLVA6nhjAz4/edit",
+          "preview": {
+            "src": "/images/kits/psychologue/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Psychologue",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "renovation-interieur": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1GDk0zriVd3ZMZWnnEoppTBANWXLQjMoZnB-fBL1TdgM/edit",
+          "preview": {
+            "src": "/images/kits/renovation-interieur/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Rénovation intérieure",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "reparation-informatique-mobile": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1GW-eVewR_62c489ty9VX0duLT8rxRDlBMkpzbF0QAao/edit",
+          "preview": {
+            "src": "/images/kits/reparation-informatique-mobile/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Maintenance informatique B2B",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "restaurant": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1B59qQCBbKBPfYT1XeZSVEnFRYAXWi-Y6RQRszwDDYjI/edit",
+          "preview": {
+            "src": "/images/kits/restaurant/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Restaurant",
+            "width": 1400,
+            "height": 933
+          }
+        },
+        "d061-v2-pilot-2026-07-29-01": {
+          "assetRevision": "d061-v2-pilot-2026-07-29-01",
+          "state": "draft",
+          "workbookVersion": "2.0.0-pilot",
+          "demoUrl": null,
+          "preview": null
+        }
+      }
+    },
+    "saas": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1FsX9xWHQk4GS3N8Piv5SJDG2ulZV-tWJoLCUTzAjVnc/edit",
+          "preview": {
+            "src": "/images/kits/saas/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour SaaS",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "salle-de-sport": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/16MewqFl_sX3V9MvGeHK07hVDP8PtukvA00xdnTWiRHw/edit",
+          "preview": {
+            "src": "/images/kits/salle-de-sport/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Salle de sport",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "salon-de-coiffure": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1ZDqVukFU_c75uqBMkXz0OfQIabxtcrLxERU0MbucMOk/edit",
+          "preview": {
+            "src": "/images/kits/salon-de-coiffure/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Salon de coiffure",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "secretariat-externalise": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/13DSzn0CK87__V77ofpGmyg1_OetWY0bGeGt-ItJ1BEA/edit",
+          "preview": {
+            "src": "/images/kits/secretariat-externalise/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Secrétariat externalisé",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "serrurier": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1owptkEadJ-Q9lgVfbgreAj8038xA2WRWnRI76_ugldw/edit",
+          "preview": {
+            "src": "/images/kits/serrurier/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Serrurier",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "services-a-la-personne": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1TAO2wljhX9N7HsMmyE3Y9qgGAizd4X4RlC8xD7fx7KU/edit",
+          "preview": {
+            "src": "/images/kits/services-a-la-personne/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Services à la personne",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "societe-recouvrement": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1OOwTiA9wB75YUrMFjP-wwWcxkTCCAVSj63eKW1dHiZM/edit",
+          "preview": {
+            "src": "/images/kits/societe-recouvrement/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Société de recouvrement",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "studio-branding-design": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1m0vjxTr17wY14tt10ch8LcGudnnZG8GR5KL2ix4DpnY/edit",
+          "preview": {
+            "src": "/images/kits/studio-branding-design/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Studio branding / design",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "syndic": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1By3thbD4v9X9EYs8AcuPCqptj9G946hrpak3ZTW3tlA/edit",
+          "preview": {
+            "src": "/images/kits/syndic/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Syndic",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "tabac-presse-point-relais": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1nc9yWYpbbxPObGtQ4M2lh3PsJJo-B8OBXj2apv4px64/edit",
+          "preview": {
+            "src": "/images/kits/tabac-presse-point-relais/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Tabac / presse / point relais",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "traiteur": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1oyMUhYoeq1N9O8aB2dpOBsjCW89aQmh5pi_mAsLpx1w/edit",
+          "preview": {
+            "src": "/images/kits/traiteur/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Traiteur événementiel B2B",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "transport-de-marchandise": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1TwfJQ4uyqWy8v68gfCe3asp-Bx-X9aAPaSm7Ru2FBWw/edit",
+          "preview": {
+            "src": "/images/kits/transport-de-marchandise/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Transport de marchandises",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "transport-de-personnes": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1Ge1ApmHAwbP903P44G_HzVG2lsJ62LYsYYBt-R1CjzI/edit",
+          "preview": {
+            "src": "/images/kits/transport-de-personnes/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Transport de personnes B2B",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "veterinaire": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1APboDv0WOnNrguCWG5VlSnA2kFVfwVNZs3PuOsWUbJI/edit",
+          "preview": {
+            "src": "/images/kits/veterinaire/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour Vétérinaire",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    },
+    "vtc": {
+      "activeRevision": "d032-v1-2026-07-28",
+      "revisions": {
+        "d032-v1-2026-07-28": {
+          "assetRevision": "d032-v1-2026-07-28",
+          "state": "active",
+          "workbookVersion": "1.0.0",
+          "demoUrl": "https://docs.google.com/spreadsheets/d/1MDz98ivKXWnnYqZt0H9MlshYzYogK7RTLO3NaFWN5f8/edit",
+          "preview": {
+            "src": "/images/kits/vtc/tableau-suivi-preview.webp",
+            "alt": "Aperçu du tableau de suivi opérationnel pour VTC",
+            "width": 1400,
+            "height": 933
+          }
+        }
+      }
+    }
+  }
+}
