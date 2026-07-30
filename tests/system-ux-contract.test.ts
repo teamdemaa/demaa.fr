@@ -24,23 +24,42 @@ describe("system UX contract", () => {
     expect(modalSource).not.toMatch(/Stripe|checkout|\/copy/);
   });
 
-  it("reuses the canonical Fillout booking behavior for the shared diagnostic", async () => {
+  it("keeps the free 30-minute call inside Process and reuses canonical Fillout", async () => {
     const detailSource = await readSource(
       "src/components/SystemDetailContent.tsx",
     );
-    const diagnosticSource = await readSource(
-      "src/components/SystemDiagnosticCta.tsx",
+    const processCallSource = await readSource(
+      "src/components/SystemProcessCallCta.tsx",
     );
+    const toolsSource = await readSource(
+      "src/components/SystemEcosystemTab.tsx",
+    );
+    const processStart = detailSource.indexOf(
+      'activeTab === "process"',
+    );
+    const processCall = detailSource.indexOf("<SystemProcessCallCta");
+    const toolsStart = detailSource.indexOf('activeTab === "outils"');
 
-    expect(detailSource.match(/<SystemDiagnosticCta\b/g)).toHaveLength(1);
-    expect(diagnosticSource).toContain(
+    expect(processStart).toBeGreaterThan(-1);
+    expect(processCall).toBeGreaterThan(processStart);
+    expect(processCall).toBeLessThan(toolsStart);
+    expect(detailSource.match(/<SystemProcessCallCta\b/g)).toHaveLength(1);
+    expect(processCallSource).toContain(
       'import OrganisationSessionBookingButton from "@/components/OrganisationSessionBookingButton"',
     );
-    expect(diagnosticSource).toContain("Diagnostic offert");
-    expect(diagnosticSource).toContain(
-      "Faites le point sur vos priorités avec un spécialiste Demaa.",
+    expect(processCallSource).toContain("Un appel gratuit de 30 minutes");
+    expect(processCallSource).toContain(
+      "dépende pas uniquement de vous au quotidien.",
     );
-    expect(diagnosticSource).toContain('label="Demander mon diagnostic"');
-    expect(diagnosticSource).not.toMatch(/filloutId|fillout\.com|https?:\/\//);
+    expect(processCallSource).toContain('label="Réserver mon appel gratuit"');
+    expect(processCallSource).toContain(
+      'source="Système opérationnel - Process"',
+    );
+    expect(processCallSource).not.toMatch(
+      /Diagnostic offert|Demander mon diagnostic|filloutId|fillout\.com|https?:\/\//,
+    );
+    expect(toolsSource).not.toMatch(
+      /SystemProcessCallCta|Diagnostic offert|appel gratuit/,
+    );
   });
 });
