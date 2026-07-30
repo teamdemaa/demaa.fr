@@ -19,6 +19,7 @@ import {
   getOperationalWorkbookV2PilotSlugs,
 } from "@/lib/operational-workbook-v2-factory";
 import {
+  OPERATIONAL_WORKBOOK_V2_PREVIOUS_ASSET_REVISION,
   OPERATIONAL_WORKBOOK_V2_PILOT_SLUGS,
   OPERATIONAL_WORKBOOK_V2_SHEET_ORDER,
   type OperationalWorkbookV2Blueprint,
@@ -497,6 +498,172 @@ describe("operational workbook v2 pilots", () => {
     expect(JSON.stringify(process)).not.toContain("HYPERLINK");
   });
 
+  it("wraps and auto-resizes every populated operational row with targeted widths", () => {
+    const expectedWidths = new Map<number, number[]>([
+      [
+        OPERATIONAL_WORKBOOK_V2_SHEET_IDS.actions,
+        [300, 360, 230, 160, 100, 115, 115, 125, 300, 260],
+      ],
+      [
+        OPERATIONAL_WORKBOOK_V2_SHEET_IDS.team,
+        [180, 210, 125, 210, 160, 330, 330, 260],
+      ],
+      [
+        OPERATIONAL_WORKBOOK_V2_SHEET_IDS.ecosystem,
+        [220, 230, 380, 180, 150],
+      ],
+      [
+        OPERATIONAL_WORKBOOK_V2_SHEET_IDS.calendar,
+        [170, 170, 340, 190, 220, 125, 300],
+      ],
+      [
+        OPERATIONAL_WORKBOOK_V2_SHEET_IDS.process,
+        [320, 180, 150, 600],
+      ],
+    ]);
+
+    for (const slug of OPERATIONAL_WORKBOOK_V2_PILOT_SLUGS) {
+      for (const variant of ["demo", "editable"] as const) {
+        const blueprint = buildOperationalWorkbookV2Blueprint(
+          slug,
+          variant,
+        );
+        const requests = asRequests(
+          compileFromCanonicalV1(blueprint).plan.requests,
+        );
+        const populatedRows = new Map<number, number>([
+          [
+            OPERATIONAL_WORKBOOK_V2_SHEET_IDS.actions,
+            blueprint.actionRows.length,
+          ],
+          [
+            OPERATIONAL_WORKBOOK_V2_SHEET_IDS.team,
+            blueprint.teamRows.length,
+          ],
+          [
+            OPERATIONAL_WORKBOOK_V2_SHEET_IDS.ecosystem,
+            blueprint.ecosystemRows.length,
+          ],
+          [
+            OPERATIONAL_WORKBOOK_V2_SHEET_IDS.calendar,
+            blueprint.calendarRows.length,
+          ],
+          [
+            OPERATIONAL_WORKBOOK_V2_SHEET_IDS.process,
+            blueprint.routineRows.length,
+          ],
+        ]);
+
+        for (const [sheetId, widths] of expectedWidths) {
+          const widthRequests = requests
+            .filter((request) => {
+              const update = request.updateDimensionProperties as
+                | {
+                    range?: {
+                      dimension?: string;
+                      sheetId?: number;
+                    };
+                  }
+                | undefined;
+              return (
+                update?.range?.sheetId === sheetId &&
+                update.range.dimension === "COLUMNS"
+              );
+            })
+            .map((request) => {
+              const update = request.updateDimensionProperties as {
+                range: {
+                  endIndex: number;
+                  startIndex: number;
+                };
+                properties: { pixelSize: number };
+              };
+              return Array.from(
+                {
+                  length:
+                    update.range.endIndex -
+                    update.range.startIndex,
+                },
+                () => update.properties.pixelSize,
+              );
+            })
+            .flat();
+          expect(widthRequests).toEqual(widths);
+
+          const rowCount = populatedRows.get(sheetId) ?? 0;
+          const wrapRequests = requests.filter((request) => {
+            const repeatCell = request.repeatCell as
+              | {
+                  range?: {
+                    endRowIndex?: number;
+                    sheetId?: number;
+                    startRowIndex?: number;
+                  };
+                  cell?: {
+                    userEnteredFormat?: {
+                      verticalAlignment?: string;
+                      wrapStrategy?: string;
+                    };
+                  };
+                }
+              | undefined;
+            return (
+              repeatCell?.range?.sheetId === sheetId &&
+              repeatCell.range.startRowIndex === 4 &&
+              repeatCell.cell?.userEnteredFormat?.wrapStrategy ===
+                "WRAP"
+            );
+          });
+          const autoResizeRequests = requests.filter((request) => {
+            const resize = request.autoResizeDimensions as
+              | {
+                  dimensions?: {
+                    dimension?: string;
+                    endIndex?: number;
+                    sheetId?: number;
+                    startIndex?: number;
+                  };
+                }
+              | undefined;
+            return (
+              resize?.dimensions?.sheetId === sheetId &&
+              resize.dimensions.dimension === "ROWS"
+            );
+          });
+
+          if (rowCount === 0) {
+            expect(wrapRequests).toHaveLength(0);
+            expect(autoResizeRequests).toHaveLength(0);
+            continue;
+          }
+
+          expect(wrapRequests).toHaveLength(1);
+          expect(wrapRequests[0]?.repeatCell).toMatchObject({
+            range: {
+              endRowIndex: rowCount + 4,
+              startRowIndex: 4,
+            },
+            cell: {
+              userEnteredFormat: {
+                verticalAlignment: "TOP",
+                wrapStrategy: "WRAP",
+              },
+            },
+          });
+          expect(autoResizeRequests).toHaveLength(1);
+          expect(autoResizeRequests[0]?.autoResizeDimensions).toEqual({
+            dimensions: {
+              dimension: "ROWS",
+              endIndex: rowCount + 4,
+              sheetId,
+              startIndex: 4,
+            },
+          });
+        }
+      }
+    }
+  });
+
   it("makes cost assumptions visible and guards every editable calculation", () => {
     const blueprint = buildOperationalWorkbookV2Blueprint(
       "batiment",
@@ -733,6 +900,94 @@ describe("operational workbook v2 pilots", () => {
         partialState,
       ),
     ).toThrow("État du classeur inconnu");
+  });
+
+  it("seals a non-destructive readability repair for the known previous v2 revision", () => {
+    for (const variant of ["demo", "editable"] as const) {
+      const blueprint = buildOperationalWorkbookV2Blueprint(
+        "batiment",
+        variant,
+      );
+      const expectedApplied =
+        buildOperationalWorkbookV2ExpectedAppliedPreflight(blueprint);
+      const previousRevision = sealOperationalWorkbookV2Preflight({
+        capturedAt: expectedApplied.capturedAt,
+        developerMetadata: expectedApplied.developerMetadata.map(
+          (entry) =>
+            entry.key === "demaa.assetRevision"
+              ? {
+                  ...entry,
+                  value:
+                    OPERATIONAL_WORKBOOK_V2_PREVIOUS_ASSET_REVISION,
+                }
+              : entry,
+        ),
+        revisionToken: "fixture-previous-v2-revision",
+        sheets: expectedApplied.sheets,
+        spreadsheetId: expectedApplied.spreadsheetId,
+        spreadsheetTitle: expectedApplied.spreadsheetTitle,
+      });
+      const identity = {
+        assetRevision: blueprint.assetRevision,
+        systemSlug: blueprint.systemSlug,
+        variant: blueprint.variant,
+        workbookVersion: blueprint.workbookVersion,
+      };
+
+      expect(
+        classifyOperationalWorkbookV2SheetState(
+          previousRevision,
+          identity,
+          previousRevision.spreadsheetTitle,
+        ),
+      ).toBe("repairable-v2");
+
+      const plan = compileOperationalWorkbookV2ApplicationPlan(
+        blueprint,
+        previousRevision,
+      );
+      const serialized = JSON.stringify(plan.requests);
+
+      expect(plan.summary).toMatchObject({
+        action: "repaired-from-v2",
+        assetRevision: blueprint.assetRevision,
+        rebuiltSheets: [
+          "Actions",
+          "Équipe",
+          "Écosystème",
+          "Calendrier marketing",
+          "Process",
+        ],
+      });
+      expect(
+        assertOperationalWorkbookV2ApplicationPlan(
+          plan,
+          previousRevision,
+        ),
+      ).toBe(true);
+      expect(serialized).toContain("updateDeveloperMetadata");
+      expect(serialized).toContain(blueprint.assetRevision);
+      expect(serialized).toContain("autoResizeDimensions");
+      expect(serialized).not.toContain("addSheet");
+      expect(serialized).not.toContain("deleteSheet");
+      expect(serialized).not.toContain("__D061_REBUILD__");
+
+      const repairedPreflight = sealOperationalWorkbookV2Preflight({
+        capturedAt: "2026-07-30T13:45:00.000Z",
+        developerMetadata: expectedApplied.developerMetadata,
+        revisionToken: "fixture-repaired-v2-revision",
+        sheets: expectedApplied.sheets,
+        spreadsheetId: expectedApplied.spreadsheetId,
+        spreadsheetTitle: expectedApplied.spreadsheetTitle,
+      });
+      const second = compileOperationalWorkbookV2ApplicationPlan(
+        blueprint,
+        repairedPreflight,
+      );
+
+      expect(second.summary.action).toBe("already-applied");
+      expect(second.requests).toEqual([]);
+    }
   });
 
   it("binds every v1 and v2 source to the canonical system and variant title", () => {
