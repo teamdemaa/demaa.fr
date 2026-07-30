@@ -40,7 +40,7 @@ export type SystemeRoutine = {
 
 export type SystemeDetail = {
   cards: SystemePillarCard[];
-  routines?: SystemeRoutine[];
+  routines: SystemeRoutine[];
 };
 
 type ProcessRegistryMétier = {
@@ -139,6 +139,59 @@ function assertValidProcess(
   }
 }
 
+const MAX_DERIVED_ROUTINES = 12;
+const MAX_ROUTINE_BULLETS = 4;
+
+function selectRoutineItems(cards: Map<SystemePillar, SystemeProcessItem[]>) {
+  const pillarQueues = [...cards.values()].map((items) => [...items]);
+  const selected: SystemeProcessItem[] = [];
+
+  while (
+    selected.length < MAX_DERIVED_ROUTINES &&
+    pillarQueues.some((items) => items.length > 0)
+  ) {
+    for (const items of pillarQueues) {
+      const item = items.shift();
+
+      if (item) {
+        selected.push(item);
+      }
+      if (selected.length === MAX_DERIVED_ROUTINES) {
+        break;
+      }
+    }
+  }
+
+  return selected;
+}
+
+function buildDerivedRoutines(
+  enterprise: EnterpriseDefinition,
+  cards: Map<SystemePillar, SystemeProcessItem[]>,
+): SystemeRoutine[] {
+  return selectRoutineItems(cards).map((item) => {
+    const bullets = item.steps
+      .slice(0, MAX_ROUTINE_BULLETS)
+      .map((step) => step.step);
+    const frequency = item.steps.find((step) => step.recurrence.trim())
+      ?.recurrence;
+
+    if (bullets.length < 2 || !frequency) {
+      throw new Error(
+        `[systeme] Routine publique incomplète pour ${enterprise.slug}: ${item.processId}`,
+      );
+    }
+
+    return {
+      bullets,
+      frequency,
+      routineId: `routine.${enterprise.slug}.${item.processId}`,
+      support: null,
+      title: item.process,
+    };
+  });
+}
+
 export function buildSystemeDetail(
   enterprise: EnterpriseDefinition,
 ): SystemeDetail | null {
@@ -186,26 +239,28 @@ export function buildSystemeDetail(
   const pilotProfile = isOperationalWorkbookV2PilotSlug(enterprise.slug)
     ? getOperationalWorkbookV2PilotProfile(enterprise.slug)
     : null;
-  const routines = pilotProfile?.routines.map((routine) => ({
-    bullets: routine.sourceStepIds.map((stepId) => {
-      const step = processSteps.steps.find(
-        (candidate) =>
-          candidate.stepId === stepId &&
-          candidate.métierId === métier.métierId &&
-          candidate.status === "Actif",
-      );
-      if (!step) {
-        throw new Error(
-          `[systeme] Contenu source v2 introuvable pour ${enterprise.slug}: ${stepId}`,
-        );
-      }
-      return step.step;
-    }),
-    frequency: routine.frequency,
-    routineId: routine.routineId,
-    support: null,
-    title: routine.title,
-  }));
+  const routines = pilotProfile
+    ? pilotProfile.routines.map((routine) => ({
+        bullets: routine.sourceStepIds.map((stepId) => {
+          const step = processSteps.steps.find(
+            (candidate) =>
+              candidate.stepId === stepId &&
+              candidate.métierId === métier.métierId &&
+              candidate.status === "Actif",
+          );
+          if (!step) {
+            throw new Error(
+              `[systeme] Contenu source v2 introuvable pour ${enterprise.slug}: ${stepId}`,
+            );
+          }
+          return step.step;
+        }),
+        frequency: routine.frequency,
+        routineId: routine.routineId,
+        support: null,
+        title: routine.title,
+      }))
+    : buildDerivedRoutines(enterprise, cards);
 
   return {
     cards: [...cards.entries()].map(([pillar, items]) => ({ pillar, items })),
