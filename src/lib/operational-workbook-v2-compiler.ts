@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import { CANONICAL_OPERATIONAL_WORKBOOK_SHEET_IDS } from "@/lib/operational-workbook-sheet-compiler";
 import {
   getOperationalWorkbookV2CanonicalSystemName,
+  OPERATIONAL_WORKBOOK_V2_PREVIOUS_ASSET_REVISION,
   type OperationalWorkbookV2Blueprint,
 } from "@/lib/operational-workbook-v2";
 
@@ -91,7 +92,10 @@ export type OperationalWorkbookV2ApplicationPlan = {
   planFingerprint: string;
   requests: ReadonlyArray<unknown>;
   summary: {
-    action: "already-applied" | "rebuilt-from-v1";
+    action:
+      | "already-applied"
+      | "rebuilt-from-v1"
+      | "repaired-from-v2";
     assetRevision: string;
     rebuiltSheets: string[];
     routines: number;
@@ -105,6 +109,7 @@ export type OperationalWorkbookV2ApplicationPlan = {
 
 export type OperationalWorkbookV2SheetState =
   | "already-v2"
+  | "repairable-v2"
   | "unknown"
   | "v1";
 
@@ -262,6 +267,41 @@ function setColumnWidth(
       fields: "pixelSize",
     },
   };
+}
+
+function autoResizeRows(
+  sheetId: number,
+  startIndex: number,
+  endIndex: number,
+) {
+  return {
+    autoResizeDimensions: {
+      dimensions: {
+        sheetId,
+        dimension: "ROWS",
+        startIndex,
+        endIndex,
+      },
+    },
+  };
+}
+
+function readableDataRows(
+  sheetId: number,
+  endRowIndex: number,
+  columnCount: number,
+) {
+  if (endRowIndex <= 4) {
+    return [];
+  }
+
+  return [
+    formatCells(sheetId, 4, endRowIndex, 0, columnCount, {
+      verticalAlignment: "TOP",
+      wrapStrategy: "WRAP",
+    }),
+    autoResizeRows(sheetId, 4, endRowIndex),
+  ];
 }
 
 function setValidation(
@@ -594,39 +634,85 @@ function assertOperationalWorkbookV2ApplicationPreflightFreshness(
   return true;
 }
 
-function requestIdentityMetadata(requests: ReadonlyArray<unknown>) {
-  return requests.flatMap((request) => {
-    const metadata = (
-      request as {
-        createDeveloperMetadata?: {
-          developerMetadata?: {
+function requestIdentityMetadata(
+  requests: ReadonlyArray<unknown>,
+  sourceEntries: OperationalWorkbookV2SheetPreflight["developerMetadata"],
+) {
+  const entries = sourceEntries.map((entry) => ({
+    ...entry,
+    location: { ...entry.location },
+  }));
+
+  for (const request of requests) {
+    const typedRequest = request as {
+      createDeveloperMetadata?: {
+        developerMetadata?: {
+          metadataKey?: string;
+          metadataValue?: string;
+          location?: {
+            dimensionRange?: unknown;
+            sheetId?: number;
+            spreadsheet?: boolean;
+          };
+          visibility?: string;
+        };
+      };
+      updateDeveloperMetadata?: {
+        dataFilters?: Array<{
+          developerMetadataLookup?: {
+            locationType?: string;
             metadataKey?: string;
-            metadataValue?: string;
-            location?: {
-              dimensionRange?: unknown;
-              sheetId?: number;
-              spreadsheet?: boolean;
-            };
             visibility?: string;
           };
+        }>;
+        developerMetadata?: {
+          metadataValue?: string;
         };
-      }
-    ).createDeveloperMetadata?.developerMetadata;
+        fields?: string;
+      };
+    };
+    const created =
+      typedRequest.createDeveloperMetadata?.developerMetadata;
 
-    return (
-      metadata?.metadataKey &&
-      metadata.metadataValue &&
-      metadata.location &&
-      metadata.visibility
-    )
-      ? [{
-          key: metadata.metadataKey,
-          location: metadata.location,
-          value: metadata.metadataValue,
-          visibility: metadata.visibility,
-        }]
-      : [];
-  });
+    if (
+      created?.metadataKey &&
+      created.metadataValue &&
+      created.location &&
+      created.visibility
+    ) {
+      entries.push({
+        key: created.metadataKey,
+        location: created.location,
+        value: created.metadataValue,
+        visibility: created.visibility,
+      });
+    }
+
+    const updated = typedRequest.updateDeveloperMetadata;
+    const lookup =
+      updated?.dataFilters?.length === 1
+        ? updated.dataFilters[0]?.developerMetadataLookup
+        : undefined;
+    if (
+      lookup?.metadataKey &&
+      lookup.locationType === "SPREADSHEET" &&
+      lookup.visibility === "DOCUMENT" &&
+      updated?.developerMetadata?.metadataValue &&
+      updated.fields === "metadataValue"
+    ) {
+      for (const entry of entries) {
+        if (
+          entry.key === lookup.metadataKey &&
+          entry.location.spreadsheet === true &&
+          entry.visibility === lookup.visibility
+        ) {
+          entry.value = updated.developerMetadata.metadataValue;
+        }
+      }
+    }
+  }
+
+  return entries;
 }
 
 function sealOperationalWorkbookV2ApplicationPlan(
@@ -684,12 +770,16 @@ export function assertOperationalWorkbookV2ApplicationPlan(
   const actionMatchesRequests =
     (plan.summary.action === "already-applied" &&
       plan.requests.length === 0) ||
-    (plan.summary.action === "rebuilt-from-v1" &&
+    ((plan.summary.action === "rebuilt-from-v1" ||
+      plan.summary.action === "repaired-from-v2") &&
       plan.requests.length > 0);
   const identityEntries =
     plan.requests.length === 0
       ? freshPreflight.developerMetadata
-      : requestIdentityMetadata(plan.requests);
+      : requestIdentityMetadata(
+          plan.requests,
+          freshPreflight.developerMetadata,
+        );
 
   if (
     plan.kind !== "demaa.operational-workbook-v2.sealed-plan" ||
@@ -1199,12 +1289,28 @@ export function classifyOperationalWorkbookV2SheetState(
       );
     },
   );
-  return isV2 &&
+  if (!isV2) {
+    return "unknown";
+  }
+
+  if (
     hasExpectedIdentityMetadata(
       preflight.developerMetadata,
       expectedIdentity,
     )
-    ? "already-v2"
+  ) {
+    return "already-v2";
+  }
+
+  return hasExpectedIdentityMetadata(
+    preflight.developerMetadata,
+    {
+      ...expectedIdentity,
+      assetRevision:
+        OPERATIONAL_WORKBOOK_V2_PREVIOUS_ASSET_REVISION,
+    },
+  )
+    ? "repairable-v2"
     : "unknown";
 }
 
@@ -1410,6 +1516,70 @@ function buildSimpleSheetValues(blueprint: OperationalWorkbookV2Blueprint) {
   } satisfies Record<Exclude<SheetKey, "summary" | "forecast">, CellValue[][]>;
 }
 
+function buildOperationalWorkbookV2ReadabilityRequests(
+  simpleValues: ReturnType<typeof buildSimpleSheetValues>,
+) {
+  return [
+    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.actions, 0, 1, 300),
+    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.actions, 1, 2, 360),
+    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.actions, 2, 3, 230),
+    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.actions, 3, 4, 160),
+    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.actions, 4, 5, 100),
+    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.actions, 5, 7, 115),
+    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.actions, 7, 8, 125),
+    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.actions, 8, 9, 300),
+    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.actions, 9, 10, 260),
+    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.team, 0, 1, 180),
+    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.team, 1, 2, 210),
+    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.team, 2, 3, 125),
+    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.team, 3, 4, 210),
+    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.team, 4, 5, 160),
+    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.team, 5, 7, 330),
+    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.team, 7, 8, 260),
+    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.ecosystem, 0, 1, 220),
+    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.ecosystem, 1, 2, 230),
+    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.ecosystem, 2, 3, 380),
+    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.ecosystem, 3, 4, 180),
+    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.ecosystem, 4, 5, 150),
+    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.calendar, 0, 1, 170),
+    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.calendar, 1, 2, 170),
+    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.calendar, 2, 3, 340),
+    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.calendar, 3, 4, 190),
+    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.calendar, 4, 5, 220),
+    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.calendar, 5, 6, 125),
+    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.calendar, 6, 7, 300),
+    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.process, 0, 1, 320),
+    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.process, 1, 2, 180),
+    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.process, 2, 3, 150),
+    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.process, 3, 4, 600),
+    ...readableDataRows(
+      OPERATIONAL_WORKBOOK_V2_SHEET_IDS.actions,
+      simpleValues.actions.length,
+      10,
+    ),
+    ...readableDataRows(
+      OPERATIONAL_WORKBOOK_V2_SHEET_IDS.team,
+      simpleValues.team.length,
+      8,
+    ),
+    ...readableDataRows(
+      OPERATIONAL_WORKBOOK_V2_SHEET_IDS.ecosystem,
+      simpleValues.ecosystem.length,
+      5,
+    ),
+    ...readableDataRows(
+      OPERATIONAL_WORKBOOK_V2_SHEET_IDS.calendar,
+      simpleValues.calendar.length,
+      7,
+    ),
+    ...readableDataRows(
+      OPERATIONAL_WORKBOOK_V2_SHEET_IDS.process,
+      simpleValues.process.length,
+      4,
+    ),
+  ];
+}
+
 export function compileOperationalWorkbookV2ApplicationPlan(
   blueprint: OperationalWorkbookV2Blueprint,
   preflight: OperationalWorkbookV2SheetPreflight,
@@ -1462,6 +1632,61 @@ export function compileOperationalWorkbookV2ApplicationPlan(
     );
   }
 
+  const simpleValues = buildSimpleSheetValues(blueprint);
+  if (sourceState === "repairable-v2") {
+    const repairedSheets = [
+      "Actions",
+      "Équipe",
+      "Écosystème",
+      "Calendrier marketing",
+      "Process",
+    ];
+    const requests: unknown[] = [
+      {
+        updateDeveloperMetadata: {
+          dataFilters: [
+            {
+              developerMetadataLookup: {
+                locationType: "SPREADSHEET",
+                metadataKey: IDENTITY_METADATA_KEYS.assetRevision,
+                visibility: "DOCUMENT",
+              },
+            },
+          ],
+          developerMetadata: {
+            metadataValue: blueprint.assetRevision,
+          },
+          fields: "metadataValue",
+        },
+      },
+      writeValues(
+        OPERATIONAL_WORKBOOK_V2_SHEET_IDS.summary,
+        5,
+        6,
+        1,
+        2,
+        [[blueprint.assetRevision]],
+      ),
+      ...buildOperationalWorkbookV2ReadabilityRequests(simpleValues),
+    ];
+
+    return sealOperationalWorkbookV2ApplicationPlan(
+      guardInput,
+      requests,
+      {
+        action: "repaired-from-v2" as const,
+        assetRevision: blueprint.assetRevision,
+        rebuiltSheets: repairedSheets,
+        routines: blueprint.routineRows.length,
+        schemaVersion: blueprint.schemaVersion,
+        sourceContents: blueprint.sourceContentCount,
+        systemSlug: blueprint.systemSlug,
+        variant: blueprint.variant,
+        workbookVersion: blueprint.workbookVersion,
+      },
+    );
+  }
+
   const workbookTitle = expectedSpreadsheetTitle;
   const assumptions = buildAssumptionRows(blueprint);
   const forecast = buildForecastRows(blueprint, assumptions.layout);
@@ -1474,7 +1699,6 @@ export function compileOperationalWorkbookV2ApplicationPlan(
     }
     return padded;
   });
-  const simpleValues = buildSimpleSheetValues(blueprint);
   const definitions = OPERATIONAL_WORKBOOK_V2_SHEET_DEFINITIONS;
   const requests: unknown[] = [
     {
@@ -1558,15 +1782,7 @@ export function compileOperationalWorkbookV2ApplicationPlan(
     setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.forecast, 15, 16, 125),
     setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.forecast, 16, 17, 110),
     setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.forecast, 17, 31, 28),
-    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.actions, 0, 2, 220),
-    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.actions, 2, 10, 150),
-    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.team, 0, 8, 180),
-    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.ecosystem, 0, 5, 210),
-    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.calendar, 0, 7, 180),
-    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.process, 0, 1, 260),
-    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.process, 1, 2, 125),
-    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.process, 2, 3, 150),
-    setColumnWidth(OPERATIONAL_WORKBOOK_V2_SHEET_IDS.process, 3, 4, 420),
+    ...buildOperationalWorkbookV2ReadabilityRequests(simpleValues),
   ];
 
   const variableRateRows =
