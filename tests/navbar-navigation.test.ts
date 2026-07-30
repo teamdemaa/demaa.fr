@@ -35,4 +35,17 @@ describe("contextual navbar navigation", () => {
     expect(source).not.toContain("BookOpen");
     expect(source).not.toContain("ArrowRight");
   });
+  it("uses the shared secondary pill and the book icon without an arrow", async () => {
+    const source = await readFile(
+      new URL("../src/components/Navbar.tsx", import.meta.url),
+      "utf8",
+    );
+
+    expect(source).toContain("demaa-secondary-button");
+    expect(source).toContain("BookOpen");
+    expect(source).not.toContain("ArrowRight");
+    expect(source).not.toContain(
+      "demaa-primary-button min-h-10 px-4 text-xs",
+    );
+  });
 });
