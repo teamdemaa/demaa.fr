@@ -15,8 +15,8 @@ import {
   useState,
 } from "react";
 import OperationalSystemCopyRequestModal from "@/components/OperationalSystemCopyRequestModal";
-import SystemDiagnosticCta from "@/components/SystemDiagnosticCta";
 import SystemEcosystemTab from "@/components/SystemEcosystemTab";
+import SystemProcessCallCta from "@/components/SystemProcessCallCta";
 import SystemeTabContent from "@/components/SystemeTabContent";
 import {
   trackSystemEcosystemEvent,
@@ -200,10 +200,13 @@ export default function SystemDetailContent({
           className="mt-7"
         >
           {activeTab === "process" ? (
-            <SystemeTabContent
-              systemName={system.name}
-              systeme={detail.systeme}
-            />
+            <>
+              <SystemeTabContent
+                systemName={system.name}
+                systeme={detail.systeme}
+              />
+              <SystemProcessCallCta systemSlug={system.slug} />
+            </>
           ) : null}
 
           {activeTab === "outils" ? (
@@ -263,8 +266,6 @@ export default function SystemDetailContent({
           ) : null}
 
         </section>
-
-        <SystemDiagnosticCta systemSlug={system.slug} />
       </article>
       {isSystemModalOpen ? (
         <OperationalSystemCopyRequestModal
