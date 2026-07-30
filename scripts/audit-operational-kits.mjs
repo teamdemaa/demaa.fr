@@ -59,11 +59,19 @@ async function inspectEnterprise(enterprise) {
 
     for (const expectedText of [
       "Voir le système",
-      "Diagnostic offert",
-      "Demander mon diagnostic",
+      "Un appel gratuit de 30 minutes",
+      "Réserver mon appel gratuit",
     ]) {
       if (!renderedOverviewHtml.includes(expectedText)) {
         errors.push(`system journey control missing: ${expectedText}`);
+      }
+    }
+    for (const removedDiagnosticText of [
+      "Diagnostic offert",
+      "Demander mon diagnostic",
+    ]) {
+      if (renderedOverviewHtml.includes(removedDiagnosticText)) {
+        errors.push(`removed diagnostic control still visible: ${removedDiagnosticText}`);
       }
     }
 

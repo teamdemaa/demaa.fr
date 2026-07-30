@@ -76,13 +76,30 @@ function inspectPage({ enterprise, response, html, tab }) {
     errors.push("shared tab panel is missing");
   }
 
-  for (const expectedText of [
-    "Voir le système",
+  for (const expectedText of ["Voir le système"]) {
+    if (!renderedHtml.includes(expectedText)) {
+      errors.push(`missing system journey control: ${expectedText}`);
+    }
+  }
+  const processCallTexts = [
+    "Un appel gratuit de 30 minutes",
+    "Réserver mon appel gratuit",
+  ];
+  for (const processCallText of processCallTexts) {
+    const isVisible = renderedHtml.includes(processCallText);
+    if (tab === "process" && !isVisible) {
+      errors.push(`missing Process call control: ${processCallText}`);
+    }
+    if (tab !== "process" && isVisible) {
+      errors.push(`Process call control visible under ${tab}: ${processCallText}`);
+    }
+  }
+  for (const removedDiagnosticText of [
     "Diagnostic offert",
     "Demander mon diagnostic",
   ]) {
-    if (!renderedHtml.includes(expectedText)) {
-      errors.push(`missing system journey control: ${expectedText}`);
+    if (renderedHtml.includes(removedDiagnosticText)) {
+      errors.push(`removed diagnostic control still visible: ${removedDiagnosticText}`);
     }
   }
 
