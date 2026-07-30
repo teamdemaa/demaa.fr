@@ -1,10 +1,12 @@
 export const OPERATIONAL_WORKBOOK_V2_SCHEMA_VERSION =
   "operational-workbook-v2" as const;
 export const OPERATIONAL_WORKBOOK_V2_VERSION = "2.0.0-pilot" as const;
-export const OPERATIONAL_WORKBOOK_V2_PREVIOUS_ASSET_REVISION =
-  "d061-v2-pilot-2026-07-29-01" as const;
+export const OPERATIONAL_WORKBOOK_V2_REPAIRABLE_ASSET_REVISIONS = [
+  "d061-v2-pilot-2026-07-29-01",
+  "d061-v2-pilot-2026-07-30-02",
+] as const;
 export const OPERATIONAL_WORKBOOK_V2_ASSET_REVISION =
-  "d061-v2-pilot-2026-07-30-02" as const;
+  "d061-v2-pilot-2026-07-30-03" as const;
 
 export const OPERATIONAL_WORKBOOK_V2_PILOT_SLUGS = [
   "batiment",

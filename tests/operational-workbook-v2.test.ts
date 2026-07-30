@@ -19,8 +19,8 @@ import {
   getOperationalWorkbookV2PilotSlugs,
 } from "@/lib/operational-workbook-v2-factory";
 import {
-  OPERATIONAL_WORKBOOK_V2_PREVIOUS_ASSET_REVISION,
   OPERATIONAL_WORKBOOK_V2_PILOT_SLUGS,
+  OPERATIONAL_WORKBOOK_V2_REPAIRABLE_ASSET_REVISIONS,
   OPERATIONAL_WORKBOOK_V2_SHEET_ORDER,
   type OperationalWorkbookV2Blueprint,
 } from "@/lib/operational-workbook-v2";
@@ -614,26 +614,27 @@ describe("operational workbook v2 pilots", () => {
                 "WRAP"
             );
           });
-          const autoResizeRequests = requests.filter((request) => {
-            const resize = request.autoResizeDimensions as
+          const rowHeightRequests = requests.filter((request) => {
+            const resize = request.updateDimensionProperties as
               | {
-                  dimensions?: {
+                  range?: {
                     dimension?: string;
                     endIndex?: number;
                     sheetId?: number;
                     startIndex?: number;
                   };
+                  properties?: { pixelSize?: number };
                 }
               | undefined;
             return (
-              resize?.dimensions?.sheetId === sheetId &&
-              resize.dimensions.dimension === "ROWS"
+              resize?.range?.sheetId === sheetId &&
+              resize.range.dimension === "ROWS"
             );
           });
 
           if (rowCount === 0) {
             expect(wrapRequests).toHaveLength(0);
-            expect(autoResizeRequests).toHaveLength(0);
+            expect(rowHeightRequests).toHaveLength(0);
             continue;
           }
 
@@ -650,14 +651,23 @@ describe("operational workbook v2 pilots", () => {
               },
             },
           });
-          expect(autoResizeRequests).toHaveLength(1);
-          expect(autoResizeRequests[0]?.autoResizeDimensions).toEqual({
-            dimensions: {
+          const expectedRowHeight =
+            sheetId === OPERATIONAL_WORKBOOK_V2_SHEET_IDS.actions
+              ? 72
+              : sheetId ===
+                  OPERATIONAL_WORKBOOK_V2_SHEET_IDS.process
+                ? 104
+                : 44;
+          expect(rowHeightRequests).toHaveLength(1);
+          expect(rowHeightRequests[0]?.updateDimensionProperties).toEqual({
+            range: {
               dimension: "ROWS",
               endIndex: rowCount + 4,
               sheetId,
               startIndex: 4,
             },
+            properties: { pixelSize: expectedRowHeight },
+            fields: "pixelSize",
           });
         }
       }
@@ -910,15 +920,16 @@ describe("operational workbook v2 pilots", () => {
       );
       const expectedApplied =
         buildOperationalWorkbookV2ExpectedAppliedPreflight(blueprint);
-      const previousRevision = sealOperationalWorkbookV2Preflight({
+      for (const repairableAssetRevision of
+        OPERATIONAL_WORKBOOK_V2_REPAIRABLE_ASSET_REVISIONS) {
+        const previousRevision = sealOperationalWorkbookV2Preflight({
         capturedAt: expectedApplied.capturedAt,
         developerMetadata: expectedApplied.developerMetadata.map(
           (entry) =>
             entry.key === "demaa.assetRevision"
               ? {
                   ...entry,
-                  value:
-                    OPERATIONAL_WORKBOOK_V2_PREVIOUS_ASSET_REVISION,
+                  value: repairableAssetRevision,
                 }
               : entry,
         ),
@@ -926,7 +937,7 @@ describe("operational workbook v2 pilots", () => {
         sheets: expectedApplied.sheets,
         spreadsheetId: expectedApplied.spreadsheetId,
         spreadsheetTitle: expectedApplied.spreadsheetTitle,
-      });
+        });
       const identity = {
         assetRevision: blueprint.assetRevision,
         systemSlug: blueprint.systemSlug,
@@ -934,21 +945,21 @@ describe("operational workbook v2 pilots", () => {
         workbookVersion: blueprint.workbookVersion,
       };
 
-      expect(
-        classifyOperationalWorkbookV2SheetState(
+        expect(
+          classifyOperationalWorkbookV2SheetState(
+            previousRevision,
+            identity,
+            previousRevision.spreadsheetTitle,
+          ),
+        ).toBe("repairable-v2");
+
+        const plan = compileOperationalWorkbookV2ApplicationPlan(
+          blueprint,
           previousRevision,
-          identity,
-          previousRevision.spreadsheetTitle,
-        ),
-      ).toBe("repairable-v2");
+        );
+        const serialized = JSON.stringify(plan.requests);
 
-      const plan = compileOperationalWorkbookV2ApplicationPlan(
-        blueprint,
-        previousRevision,
-      );
-      const serialized = JSON.stringify(plan.requests);
-
-      expect(plan.summary).toMatchObject({
+        expect(plan.summary).toMatchObject({
         action: "repaired-from-v2",
         assetRevision: blueprint.assetRevision,
         rebuiltSheets: [
@@ -958,35 +969,39 @@ describe("operational workbook v2 pilots", () => {
           "Calendrier marketing",
           "Process",
         ],
-      });
-      expect(
-        assertOperationalWorkbookV2ApplicationPlan(
-          plan,
-          previousRevision,
-        ),
-      ).toBe(true);
-      expect(serialized).toContain("updateDeveloperMetadata");
-      expect(serialized).toContain(blueprint.assetRevision);
-      expect(serialized).toContain("autoResizeDimensions");
-      expect(serialized).not.toContain("addSheet");
-      expect(serialized).not.toContain("deleteSheet");
-      expect(serialized).not.toContain("__D061_REBUILD__");
+        });
+        expect(
+          assertOperationalWorkbookV2ApplicationPlan(
+            plan,
+            previousRevision,
+          ),
+        ).toBe(true);
+        expect(serialized).toContain("updateDeveloperMetadata");
+        expect(serialized).toContain(blueprint.assetRevision);
+        expect(serialized).toContain(
+          '"dimension":"ROWS"',
+        );
+        expect(serialized).not.toContain("autoResizeDimensions");
+        expect(serialized).not.toContain("addSheet");
+        expect(serialized).not.toContain("deleteSheet");
+        expect(serialized).not.toContain("__D061_REBUILD__");
 
-      const repairedPreflight = sealOperationalWorkbookV2Preflight({
+        const repairedPreflight = sealOperationalWorkbookV2Preflight({
         capturedAt: "2026-07-30T13:45:00.000Z",
         developerMetadata: expectedApplied.developerMetadata,
         revisionToken: "fixture-repaired-v2-revision",
         sheets: expectedApplied.sheets,
         spreadsheetId: expectedApplied.spreadsheetId,
         spreadsheetTitle: expectedApplied.spreadsheetTitle,
-      });
-      const second = compileOperationalWorkbookV2ApplicationPlan(
-        blueprint,
-        repairedPreflight,
-      );
+        });
+        const second = compileOperationalWorkbookV2ApplicationPlan(
+          blueprint,
+          repairedPreflight,
+        );
 
-      expect(second.summary.action).toBe("already-applied");
-      expect(second.requests).toEqual([]);
+        expect(second.summary.action).toBe("already-applied");
+        expect(second.requests).toEqual([]);
+      }
     }
   });
 
