@@ -84,14 +84,19 @@ async function inspectEnterprise(enterprise) {
         break;
       }
     }
-    if (!/\d+ processus/.test(renderedOverviewHtml)) {
-      errors.push("process count missing");
+    if (!renderedOverviewHtml.includes("Routines essentielles")) {
+      errors.push("shared Process routine heading is missing");
     }
-    if (!overviewHtml.includes("system-process-panel-")) {
-      errors.push("process accordions missing");
+    const routineControlCount =
+      renderedOverviewHtml.split('aria-controls="system-routine-detail-').length - 1;
+    if (routineControlCount < 8 || routineControlCount > 12) {
+      errors.push(`expected 8 to 12 Process routines, found ${routineControlCount}`);
+    }
+    if (renderedOverviewHtml.includes("system-process-panel-")) {
+      errors.push("legacy Process family accordion is still rendered");
     }
     if (renderedOverviewHtml.includes('aria-expanded="true"')) {
-      errors.push("a process family is expanded by default");
+      errors.push("a Process routine is expanded by default");
     }
     if (
       renderedOverviewHtml.includes(

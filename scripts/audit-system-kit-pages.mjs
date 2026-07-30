@@ -143,13 +143,25 @@ function inspectPage({ enterprise, response, html, tab }) {
 
   if (tab === "process") {
     if (renderedHtml.includes('aria-expanded="true"')) {
-      errors.push("a process family is expanded by default");
+      errors.push("a Process routine is expanded by default");
     }
-    if (!/\d+ processus/.test(renderedHtml)) {
-      errors.push("missing process count");
+    if (!renderedHtml.includes("Routines essentielles")) {
+      errors.push("shared Process routine heading is missing");
+    }
+    const routineControlCount = countOccurrences(
+      renderedHtml,
+      'aria-controls="system-routine-detail-',
+    );
+    if (routineControlCount < 8 || routineControlCount > 12) {
+      errors.push(
+        `expected 8 to 12 Process routines, found ${routineControlCount}`,
+      );
+    }
+    if (renderedHtml.includes("system-process-panel-")) {
+      errors.push("legacy Process family accordion is still rendered");
     }
     if (renderedHtml.includes("Dans le système")) {
-      errors.push("collapsed process content is exposed by default");
+      errors.push("unsupported Process asset is exposed");
     }
     if (renderedHtml.includes("Aperçu du document")) {
       errors.push("legacy document preview is still visible");

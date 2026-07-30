@@ -39,10 +39,32 @@ const systeme: SystemeDetail = {
       ],
     },
   ],
+  routines: [
+    {
+      bullets: [
+        "Mettre à jour les indicateurs",
+        "Analyser les écarts",
+      ],
+      frequency: "Hebdomadaire",
+      routineId: "routine.cabinet-conseil.process-direction",
+      support: null,
+      title: "Piloter l’activité",
+    },
+    {
+      bullets: [
+        "Qualifier le besoin",
+        "Confirmer la prochaine étape",
+      ],
+      frequency: "À chaque demande",
+      routineId: "routine.cabinet-conseil.process-marketing",
+      support: null,
+      title: "Qualifier les prospects",
+    },
+  ],
 };
 
 describe("system process accordion", () => {
-  it("renders every process family collapsed by default", () => {
+  it("renders derived routines with the shared layout, collapsed by default", () => {
     const html = renderToStaticMarkup(
       createElement(SystemeTabContent, {
         systemName: "Bâtiment",
@@ -51,16 +73,15 @@ describe("system process accordion", () => {
     );
 
     expect(html.match(/aria-expanded="false"/g)).toHaveLength(
-      systeme.cards.length +
-        systeme.cards.reduce((total, card) => total + card.items.length, 0),
+      systeme.routines.length,
     );
     expect(html).not.toContain('aria-expanded="true"');
-    expect(html).not.toContain("Tableau de pilotage");
-    expect(html).not.toContain("Plan commercial");
     expect(html).not.toContain("Mettre à jour les indicateurs");
+    expect(html).not.toContain("Qualifier le besoin");
     expect(html).not.toContain("Dans le système");
     expect(html).toContain(">01<");
-    expect(html).toContain(">01.01<");
+    expect(html).toContain(">02<");
+    expect(html).not.toContain("01.01");
   });
 
   it("renders pilot routines as simple numbered accordions without unsupported assets", () => {
