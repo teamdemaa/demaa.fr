@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { CANONICAL_OPERATIONAL_WORKBOOK_SHEET_IDS } from "@/lib/operational-workbook-sheet-compiler";
 import {
   getOperationalWorkbookV2CanonicalSystemName,
-  OPERATIONAL_WORKBOOK_V2_PREVIOUS_ASSET_REVISION,
+  OPERATIONAL_WORKBOOK_V2_REPAIRABLE_ASSET_REVISIONS,
   type OperationalWorkbookV2Blueprint,
 } from "@/lib/operational-workbook-v2";
 
@@ -269,19 +269,22 @@ function setColumnWidth(
   };
 }
 
-function autoResizeRows(
+function setRowHeight(
   sheetId: number,
   startIndex: number,
   endIndex: number,
+  pixelSize: number,
 ) {
   return {
-    autoResizeDimensions: {
-      dimensions: {
+    updateDimensionProperties: {
+      range: {
         sheetId,
         dimension: "ROWS",
         startIndex,
         endIndex,
       },
+      properties: { pixelSize },
+      fields: "pixelSize",
     },
   };
 }
@@ -290,6 +293,7 @@ function readableDataRows(
   sheetId: number,
   endRowIndex: number,
   columnCount: number,
+  rowHeight: number,
 ) {
   if (endRowIndex <= 4) {
     return [];
@@ -300,7 +304,7 @@ function readableDataRows(
       verticalAlignment: "TOP",
       wrapStrategy: "WRAP",
     }),
-    autoResizeRows(sheetId, 4, endRowIndex),
+    setRowHeight(sheetId, 4, endRowIndex, rowHeight),
   ];
 }
 
@@ -1302,13 +1306,15 @@ export function classifyOperationalWorkbookV2SheetState(
     return "already-v2";
   }
 
-  return hasExpectedIdentityMetadata(
-    preflight.developerMetadata,
-    {
-      ...expectedIdentity,
-      assetRevision:
-        OPERATIONAL_WORKBOOK_V2_PREVIOUS_ASSET_REVISION,
-    },
+  return OPERATIONAL_WORKBOOK_V2_REPAIRABLE_ASSET_REVISIONS.some(
+    (assetRevision) =>
+      hasExpectedIdentityMetadata(
+        preflight.developerMetadata,
+        {
+          ...expectedIdentity,
+          assetRevision,
+        },
+      ),
   )
     ? "repairable-v2"
     : "unknown";
@@ -1556,26 +1562,31 @@ function buildOperationalWorkbookV2ReadabilityRequests(
       OPERATIONAL_WORKBOOK_V2_SHEET_IDS.actions,
       simpleValues.actions.length,
       10,
+      72,
     ),
     ...readableDataRows(
       OPERATIONAL_WORKBOOK_V2_SHEET_IDS.team,
       simpleValues.team.length,
       8,
+      44,
     ),
     ...readableDataRows(
       OPERATIONAL_WORKBOOK_V2_SHEET_IDS.ecosystem,
       simpleValues.ecosystem.length,
       5,
+      44,
     ),
     ...readableDataRows(
       OPERATIONAL_WORKBOOK_V2_SHEET_IDS.calendar,
       simpleValues.calendar.length,
       7,
+      44,
     ),
     ...readableDataRows(
       OPERATIONAL_WORKBOOK_V2_SHEET_IDS.process,
       simpleValues.process.length,
       4,
+      104,
     ),
   ];
 }
