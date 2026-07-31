@@ -1,19 +1,37 @@
 # Gouvernance du référentiel Process
 
-## Source de vérité
+> **Note de gouvernance au 31 juillet 2026**
+>
+> Ce document décrit le flux éditorial historique du référentiel Process. La
+> hiérarchie active des sources de vérité est désormais définie dans
+> [`docs/governance/README.md`](./governance/README.md). Le Google Sheet est un
+> outil de proposition et de synchronisation ; il ne peut pas remplacer seul
+> un contrat Git validé.
 
-Le référentiel éditorial unique est le Google Sheet maître
-[DEMAA — Référentiel Process — Nettoyage](https://docs.google.com/spreadsheets/d/1Y_FqDpG9AshpS-gS46MpDZaPG-2lktfOsVYp3miB75c/edit).
-Il contient les métiers, les piliers, les familles, les processus, les étapes et les références
-des documents associés.
+## Miroir éditorial historique
 
-Les fichiers `process-registry.generated.json` et `process-steps.generated.json` sont des miroirs
-techniques générés depuis ce référentiel. Ils alimentent l'application et ne doivent pas être
-modifiés manuellement.
+Le référentiel éditorial historique est inventorié, avec son lien unique, dans
+[`docs/governance/source-inventory.md`](./governance/source-inventory.md). Il
+contient les métiers, les piliers, les familles, les processus, les étapes et
+les références des documents associés.
+
+Les fichiers `process-registry.generated.json` et `process-steps.generated.json`
+sont les snapshots Git approuvés qui alimentent l'application. Ils sont générés
+depuis une proposition validée et ne doivent pas être modifiés manuellement.
 
 Les 115 Google Sheets métier sont des sources historiques auditées et des sorties métier. Ils ne
-doivent plus définir seuls un processus commun : toute correction durable passe par le référentiel
-maître, puis par une régénération.
+doivent plus définir seuls un processus commun.
+
+## Workflow de modification
+
+1. proposer la correction dans le miroir Google Sheet ;
+2. vérifier les identifiants, la provenance, le métier et les impacts ;
+3. obtenir une validation éditoriale explicite ;
+4. générer les snapshots Git sans modification manuelle ;
+5. exécuter les validateurs et contrôler le diff ;
+6. lier le commit et les empreintes au manifeste de release.
+
+Une proposition Sheet non validée n'est jamais consommée par le produit.
 
 ## Structure cible
 
@@ -55,15 +73,17 @@ Chaque support publié doit posséder deux accès distincts :
 - une démonstration consultable en lecture seule ;
 - un modèle vierge copiable.
 
-Les liens sont ajoutés au référentiel maître après validation. L'application
-les expose ensuite depuis l'onglet **Process** du système opérationnel.
+Après validation, les liens sont synchronisés dans le contrat Git. L'application
+expose un support depuis **Process** uniquement si l'asset réel existe, si son
+format est validé et si la démonstration et la copie sont correctement liées.
+Sinon, aucune mention ni espace réservé ne doit être rendu.
 
 ## Règles de maintenance
 
-- Modifier d'abord le Google Sheet maître.
+- Proposer d'abord dans le Google Sheet, puis valider avant génération Git.
 - Conserver un identifiant stable pour chaque métier, famille, processus, étape et document.
 - Ne pas réintroduire `operationProcesses`, `processExamples` ou `system_process_templates`.
-- Régénérer les deux fichiers JSON après une modification éditoriale.
+- Régénérer les deux fichiers JSON seulement après validation éditoriale.
 - Lancer `npm run validate:data` avant livraison.
 - Vérifier chaque métier : 74 contenus typés.
 - Vérifier le pilote Plomberie : 18 processus, 74 contenus et 18 supports liés.

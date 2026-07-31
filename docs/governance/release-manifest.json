@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 2,
+  "releaseId": "systems-cleanbase-w1",
+  "phase": "documentation-only",
+  "parentCodeCheckpoint": "811735139211253818839719617fb97fc373a9b2",
+  "executionBase": "future-approved-w1-commit",
+  "targetArchitecture": {
+    "implemented": false,
+    "systemTabs": [
+      "Process",
+      "Solutions"
+    ],
+    "servicesRoute": "/services",
+    "servicesPresenceHomeAndSystemsStatus": "validated",
+    "servicesNavigationPresentationStatus": "working",
+    "organizationAssistancePlacementStatus": "validated",
+    "organizationAssistanceCopyStatus": "working",
+    "activeServices": 7,
+    "activeServiceCategories": 2
+  },
+  "documents": [
+    {
+      "path": "docs/governance/README.md",
+      "sha256": "20f2a78f4ee4ef91809ed3c327e0868c53ae5226b7fa6789e9152a763d477b1d"
+    },
+    {
+      "path": "docs/governance/source-inventory.md",
+      "sha256": "e0ef8925566ce61f493544e78da2ad2ad394720fa3bf57ededa030af911862ef"
+    },
+    {
+      "path": "docs/decisions/0001-systems-services-architecture.md",
+      "sha256": "ec09f334053452bfb174390043c9c8434539732cfdda55e600af2b96e55aecc0"
+    },
+    {
+      "path": "docs/decisions/0002-decision-register.md",
+      "sha256": "7264a7a4bdb94b8f2fda991ccf62983052b45a39b1f39e82653d4a8641b0107e"
+    },
+    {
+      "path": "docs/services-v1-catalog.md",
+      "sha256": "bbb3cfc667583f401fa455cf683cdbb3c0f520e24eeaf55870dac5b1e41498b6"
+    },
+    {
+      "path": "docs/governance/supersession-register.md",
+      "sha256": "c13fb3d97a34b44cd5004ab6e6cf19c8f87dc86bd7c039f0a5ae5cdba3770ca5"
+    },
+    {
+      "path": "docs/governance/execution-plan.md",
+      "sha256": "cf68f0934f638085e396125c536cca3244ce01b93c6af4a91cf2fcddb8d88a3c"
+    },
+    {
+      "path": "docs/process-governance.md",
+      "sha256": "38403fdc0d78c67a3770b5307aa7bc6f7eabb6de348bf4d1c88b89f978976d42"
+    },
+    {
+      "path": "docs/operational-system-rollout.md",
+      "sha256": "77e8eff73ead269014b9e747f16c630a086555088748d6e32559423b154716ee"
+    }
+  ],
+  "trackedInputs": [
+    {
+      "path": "src/lib/process-registry.generated.json",
+      "role": "approved-process-snapshot",
+      "sha256": "aa5dbad66629cf6b03b074e8f056e1502d6d0b84ff33d579e6624a7549bd47be"
+    },
+    {
+      "path": "src/lib/process-steps.generated.json",
+      "role": "approved-process-steps-snapshot",
+      "sha256": "c963ae80ae8b2e5905a6847acc1a5503dd170122ffe12d3036be44bc494c3f11"
+    },
+    {
+      "path": "src/lib/enterprise-annuaire.json",
+      "role": "tracked-enterprise-fallback",
+      "sha256": "bf6a65eb661a68a4a62f07dd6e4db8ea5ff2e1d32ece98385246a3bffe96c87d"
+    },
+    {
+      "path": "src/lib/tool-directory.json",
+      "role": "tracked-tool-fallback",
+      "sha256": "0b30fcce95772990358036f1ed2340f27c1730237965e1dbcad5aaae56c2e2cf"
+    },
+    {
+      "path": "src/lib/operational-system-asset-revisions.generated.json",
+      "role": "public-asset-revision-contract",
+      "sha256": "66ca57976b7efa667ccb3e676a020ef945afeaebe2b46e30b8eb375cdb29fc7e"
+    }
+  ],
+  "runtimeOverlays": [
+    {
+      "domain": "enterprise-directory",
+      "mechanism": "firestore-overlay",
+      "trackedFallback": "src/lib/enterprise-annuaire.json",
+      "capturedInManifest": false
+    },
+    {
+      "domain": "tool-directory",
+      "mechanism": "firestore-overlay",
+      "trackedFallback": "src/lib/tool-directory.json",
+      "capturedInManifest": false
+    },
+    {
+      "domain": "editable-workbook-delivery",
+      "mechanism": "private-server-registry",
+      "publicContract": "src/lib/operational-system-asset-revisions.generated.json",
+      "capturedInManifest": false
+    }
+  ],
+  "containsSecrets": false,
+  "containsPersonalData": false,
+  "authorizesDeployment": false,
+  "authorizesExternalMutation": false
+}
