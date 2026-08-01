@@ -44,6 +44,7 @@ export async function cleanupExpiredOperationalData(limitPerCollection = 50) {
     { collection: "system_kit_sequences", field: "retention_expires_at", limit: limitPerCollection, value: now },
     { collection: "system_kit_sequences", field: "updated_at", limit: limitPerCollection, value: leadCutoff },
     { collection: "api_rate_limits", field: "expires_at", limit: limitPerCollection, value: now },
+    { collection: "service_request_rate_limits", field: "expires_at", limit: limitPerCollection, value: now },
     { collection: "customer_magic_links", field: "expires_at", limit: limitPerCollection, value: now },
     { collection: "customer_sessions", field: "expires_at", limit: limitPerCollection, value: now },
   ];

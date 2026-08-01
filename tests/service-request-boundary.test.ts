@@ -5,6 +5,9 @@ const backendFiles = [
   "src/app/api/service-request/route.ts",
   "src/app/api/solution-referral/route.ts",
   "src/lib/service-request-notifications.server.ts",
+  "src/lib/service-request-delivery-worker.server.ts",
+  "src/lib/service-request-security.server.ts",
+  "src/lib/service-request-snapshots.server.ts",
   "src/lib/service-request-storage.server.ts",
   "src/lib/service-solution-request-contract.ts",
   "src/lib/solution-referral-disclosures.server.ts",
@@ -18,6 +21,9 @@ describe("service request backend boundaries", () => {
   it("keeps storage, delivery and legal disclosure modules server-only", () => {
     for (const path of [
       "src/lib/service-request-notifications.server.ts",
+      "src/lib/service-request-delivery-worker.server.ts",
+      "src/lib/service-request-security.server.ts",
+      "src/lib/service-request-snapshots.server.ts",
       "src/lib/service-request-storage.server.ts",
       "src/lib/solution-referral-disclosures.server.ts",
     ]) {
@@ -55,5 +61,12 @@ describe("service request backend boundaries", () => {
       /logOperational(?:Event|Error)\([^;]*payload\.(?:email|need|company|firstName)/,
     );
     expect(routes).not.toMatch(/leadId/);
+  });
+
+  it("registers independent three-year cleanup without touching lead storage", () => {
+    const maintenance = source("src/lib/operational-maintenance.ts");
+    expect(maintenance).toContain('{ collection: "service_requests", field: "retention_expires_at"');
+    expect(maintenance).toContain('{ collection: "solution_referrals", field: "retention_expires_at"');
+    expect(maintenance).toContain('{ collection: "service_request_rate_limits", field: "expires_at"');
   });
 });

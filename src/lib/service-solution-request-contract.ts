@@ -20,21 +20,6 @@ const REQUEST_COMMON_KEYS = [
 const SERVICE_REQUEST_KEYS = [...REQUEST_COMMON_KEYS, "serviceSlug"] as const;
 const SOLUTION_REFERRAL_KEYS = [...REQUEST_COMMON_KEYS, "resourceSlug"] as const;
 const IDEMPOTENCY_KEY_PATTERN = /^[A-Za-z0-9:_-]{8,160}$/;
-const PERSONAL_EMAIL_DOMAINS = new Set([
-  "aol.com",
-  "gmail.com",
-  "hotmail.com",
-  "hotmail.fr",
-  "icloud.com",
-  "live.com",
-  "live.fr",
-  "outlook.com",
-  "outlook.fr",
-  "proton.me",
-  "protonmail.com",
-  "yahoo.com",
-  "yahoo.fr",
-]);
 const attributionEncoder = new TextEncoder();
 
 export type ServiceRequestPayload = Readonly<{
@@ -78,13 +63,9 @@ function normalizeRequiredText(
   return normalized;
 }
 
-function parseProfessionalEmail(value: unknown) {
+function parseContactEmail(value: unknown) {
   const email = normalizeEmail(normalizeRequiredText(value, "request.email", 160));
   if (!isValidEmail(email)) throw new TypeError("request.email must be valid");
-  const domain = email.split("@")[1] ?? "";
-  if (PERSONAL_EMAIL_DOMAINS.has(domain)) {
-    throw new TypeError("request.email must be a professional email address");
-  }
   return email;
 }
 
@@ -148,7 +129,7 @@ function parseCommon(record: Record<string, unknown>) {
   return {
     attribution: parseAttribution(record.attribution),
     company: normalizeRequiredText(record.company, "request.company", 160),
-    email: parseProfessionalEmail(record.email),
+    email: parseContactEmail(record.email),
     firstName: normalizeRequiredText(record.firstName, "request.firstName", 80),
     idempotencyKey: parseIdempotencyKey(record.idempotencyKey),
     marketingConsent: parseMarketingConsent(record.marketingConsent),

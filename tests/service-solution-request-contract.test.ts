@@ -47,12 +47,12 @@ describe("service and solution request contracts", () => {
     })).toThrow("unknown fields: phone");
   });
 
-  it("rejects personal email domains for the professional-email contract", () => {
-    expect(() => parseServiceRequestPayload({
+  it("accepts any valid contact email without an arbitrary provider denylist", () => {
+    expect(parseServiceRequestPayload({
       ...base,
       email: "maya@gmail.com",
       serviceSlug: "site-vitrine-prise-contact",
-    })).toThrow("professional email");
+    }).email).toBe("maya@gmail.com");
   });
 
   it("rejects malformed slugs, idempotency keys and consent", () => {

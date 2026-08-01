@@ -5,9 +5,7 @@ vi.mock("server-only", () => ({}));
 const mocks = vi.hoisted(() => ({
   createServiceRequest: vi.fn(),
   createSolutionReferral: vi.fn(),
-  deliverService: vi.fn(),
-  deliverSolution: vi.fn(),
-  enforceRateLimit: vi.fn(),
+  enforceSecurity: vi.fn(),
   getEnterpriseBySlug: vi.fn(),
   getService: vi.fn(),
   getSolution: vi.fn(),
@@ -15,13 +13,10 @@ const mocks = vi.hoisted(() => ({
   getSolutionPlacements: vi.fn(),
   logOperationalError: vi.fn(),
   logOperationalEvent: vi.fn(),
+  RequestIdempotencyConflictError: class extends Error {},
   resolveLeadAttribution: vi.fn(),
 }));
 
-vi.mock("@/lib/api-security", async (importOriginal) => {
-  const original = await importOriginal<typeof import("@/lib/api-security")>();
-  return { ...original, enforceRateLimit: mocks.enforceRateLimit };
-});
 vi.mock("@/lib/enterprise-annuaire-server", () => ({
   getEnterpriseBySlug: mocks.getEnterpriseBySlug,
 }));
@@ -35,13 +30,13 @@ vi.mock("@/lib/operational-log", () => ({
 vi.mock("@/lib/service-catalog-v2", () => ({
   getPublishedServiceOfferV2BySlug: mocks.getService,
 }));
-vi.mock("@/lib/service-request-notifications.server", () => ({
-  deliverServiceRequestNotifications: mocks.deliverService,
-  deliverSolutionReferralNotifications: mocks.deliverSolution,
+vi.mock("@/lib/service-request-security.server", () => ({
+  enforceServiceRequestRateLimit: mocks.enforceSecurity,
 }));
 vi.mock("@/lib/service-request-storage.server", () => ({
   createServiceRequest: mocks.createServiceRequest,
   createSolutionReferral: mocks.createSolutionReferral,
+  RequestIdempotencyConflictError: mocks.RequestIdempotencyConflictError,
 }));
 vi.mock("@/lib/solution-registry.server", () => ({
   getPublishedSolutionPlacementsForSystem: mocks.getSolutionPlacements,
@@ -133,15 +128,13 @@ describe("service and solution request routes", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     process.env.SITE_URL = "https://demaa.fr";
-    mocks.enforceRateLimit.mockResolvedValue(null);
+    mocks.enforceSecurity.mockResolvedValue(null);
     mocks.getEnterpriseBySlug.mockResolvedValue({ slug: "batiment" });
     mocks.getService.mockReturnValue(null);
     mocks.getSolution.mockReturnValue(null);
     mocks.getSolutionDisclosure.mockReturnValue(null);
     mocks.getSolutionPlacements.mockReturnValue([]);
     mocks.resolveLeadAttribution.mockReturnValue({ conversion: {} });
-    mocks.deliverService.mockResolvedValue([]);
-    mocks.deliverSolution.mockResolvedValue([]);
     mocks.createServiceRequest.mockImplementation(async (input) => ({
       created: true,
       id: "service-request-id",
@@ -167,12 +160,12 @@ describe("service and solution request routes", () => {
       "https://evil.example",
     ));
     expect(response.status).toBe(403);
-    expect(mocks.enforceRateLimit).not.toHaveBeenCalled();
+    expect(mocks.enforceSecurity).not.toHaveBeenCalled();
     expect(mocks.createServiceRequest).not.toHaveBeenCalled();
   });
 
   it("enforces rate limiting before mutation", async () => {
-    mocks.enforceRateLimit.mockResolvedValueOnce(
+    mocks.enforceSecurity.mockResolvedValueOnce(
       Response.json({ error: "rate" }, { status: 429 }),
     );
     const response = await submitService(request("/api/service-request", serviceBody()));
@@ -193,6 +186,7 @@ describe("service and solution request routes", () => {
     const response = await submitService(request("/api/service-request", serviceBody()));
     expect(response.status).toBe(404);
     expect(mocks.createServiceRequest).not.toHaveBeenCalled();
+    expect(mocks.enforceSecurity).toHaveBeenCalledTimes(1);
   });
 
   it("stores only the server-resolved Service snapshot and explicit consent", async () => {
@@ -209,8 +203,10 @@ describe("service and solution request routes", () => {
         granted: true,
         version: "service-requests-v1",
       }),
-      service: {
+      service: expect.objectContaining({
         billing_party: "Demaa",
+        category_id: publishedService.categoryId,
+        content_hash: expect.stringMatching(/^[a-f0-9]{64}$/),
         contracting_party: "Demaa",
         offer_version: "1.0.0",
         operator_type: "demaa",
@@ -218,10 +214,10 @@ describe("service and solution request routes", () => {
         service_name: publishedService.title,
         service_slug: publishedService.slug,
         transparency: "La prestation est contractée et facturée par Demaa.",
-      },
+      }),
     }));
     expect(mocks.logOperationalEvent).toHaveBeenCalledWith(
-      "service_request.accepted",
+      "service_request.scheduled",
       expect.not.objectContaining({ email: expect.anything(), need: expect.anything() }),
     );
   });
@@ -230,6 +226,7 @@ describe("service and solution request routes", () => {
     const response = await submitSolution(request("/api/solution-referral", solutionBody()));
     expect(response.status).toBe(404);
     expect(mocks.createSolutionReferral).not.toHaveBeenCalled();
+    expect(mocks.enforceSecurity).toHaveBeenCalledTimes(1);
   });
 
   it("stores external contracting, billing and transparency server-side", async () => {
@@ -237,9 +234,16 @@ describe("service and solution request routes", () => {
     mocks.getSolutionPlacements.mockReturnValue([publishedPlacement]);
     mocks.getSolutionDisclosure.mockReturnValue({
       billingParty: "Juridique Services SAS",
+      commercialRelationship: "paid_referral",
       contractingParty: "Juridique Services SAS",
+      disclosureVersion: "1.0.0",
+      effectiveAt: "2026-07-01T00:00:00.000Z",
+      expiresAt: "2027-07-01T00:00:00.000Z",
+      placementId: publishedPlacement.placementId,
+      resourceSlug: publishedResource.resourceSlug,
+      reviewedAt: "2026-06-25T00:00:00.000Z",
+      reviewer: "legal@demaa.fr",
       transparency: "Juridique Services SAS contracte et facture. Demaa peut recevoir une rémunération.",
-      version: "1.0.0",
     });
     const response = await submitSolution(request("/api/solution-referral", solutionBody()));
 
@@ -256,8 +260,6 @@ describe("service and solution request routes", () => {
         transparency: expect.stringContaining("rémunération"),
       }),
     }));
-    expect(mocks.deliverSolution).toHaveBeenCalledOnce();
-    expect(mocks.deliverService).not.toHaveBeenCalled();
   });
 
   it("never routes an owned solution through the external referral workflow", async () => {
@@ -271,13 +273,28 @@ describe("service and solution request routes", () => {
     }]);
     mocks.getSolutionDisclosure.mockReturnValue({
       billingParty: "Demaa",
+      commercialRelationship: "paid_referral",
       contractingParty: "Demaa",
+      disclosureVersion: "1.0.0",
+      effectiveAt: "2026-07-01T00:00:00.000Z",
+      expiresAt: "2027-07-01T00:00:00.000Z",
+      placementId: publishedPlacement.placementId,
+      resourceSlug: publishedResource.resourceSlug,
+      reviewedAt: "2026-06-25T00:00:00.000Z",
+      reviewer: "legal@demaa.fr",
       transparency: "Demaa contracte et facture.",
-      version: "1.0.0",
     });
 
     const response = await submitSolution(request("/api/solution-referral", solutionBody()));
     expect(response.status).toBe(404);
     expect(mocks.createSolutionReferral).not.toHaveBeenCalled();
+  });
+
+  it("returns 409 when an idempotency key is reused with another fingerprint", async () => {
+    mocks.getService.mockReturnValue(publishedService);
+    mocks.createServiceRequest.mockRejectedValue(new mocks.RequestIdempotencyConflictError());
+    const response = await submitService(request("/api/service-request", serviceBody()));
+    expect(response.status).toBe(409);
+    expect(mocks.logOperationalError).not.toHaveBeenCalled();
   });
 });

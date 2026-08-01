@@ -1,13 +1,16 @@
-import { createHash } from "node:crypto";
 import { NextResponse } from "next/server";
-import { enforceRateLimit, readJsonBody } from "@/lib/api-security";
+import { readJsonBody } from "@/lib/api-security";
 import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 import { resolveLeadAttribution } from "@/lib/lead-attribution-server";
 import { logOperationalError, logOperationalEvent } from "@/lib/operational-log";
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
 import { getPublishedServiceOfferV2BySlug } from "@/lib/service-catalog-v2";
-import { deliverServiceRequestNotifications } from "@/lib/service-request-notifications.server";
-import { createServiceRequest } from "@/lib/service-request-storage.server";
+import { enforceServiceRequestRateLimit } from "@/lib/service-request-security.server";
+import { buildServiceRequestSnapshot } from "@/lib/service-request-snapshots.server";
+import {
+  createServiceRequest,
+  RequestIdempotencyConflictError,
+} from "@/lib/service-request-storage.server";
 import { parseServiceRequestPayload } from "@/lib/service-solution-request-contract";
 
 export const runtime = "nodejs";
@@ -16,12 +19,8 @@ const MARKETING_CONSENT_TEXT =
   "J’accepte de recevoir les conseils et actualités Demaa par e-mail.";
 const MARKETING_CONSENT_VERSION = "service-requests-v1";
 
-function emailRateLimitKey(email: string) {
-  return createHash("sha256").update(email).digest("hex");
-}
-
-function response(status = 202) {
-  const result = NextResponse.json({ ok: true }, { status });
+function response() {
+  const result = NextResponse.json({ ok: true }, { status: 202 });
   result.headers.set("Cache-Control", "private, no-store, max-age=0");
   return result;
 }
@@ -33,9 +32,9 @@ export async function POST(request: Request) {
     const blockedOrigin = enforceSameOrigin(request);
     if (blockedOrigin) return blockedOrigin;
 
-    const limitedByIp = await enforceRateLimit(request, {
-      keyPrefix: "service-request-ip",
+    const limitedByIp = await enforceServiceRequestRateLimit(request, {
       limit: 8,
+      scope: "ip",
       windowMs: 10 * 60 * 1000,
     });
     if (limitedByIp) return limitedByIp;
@@ -56,17 +55,6 @@ export async function POST(request: Request) {
       );
     }
 
-    const limitedByEmail = await enforceRateLimit(
-      request,
-      {
-        keyPrefix: "service-request-email",
-        limit: 4,
-        windowMs: 60 * 60 * 1000,
-      },
-      emailRateLimitKey(payload.email),
-    );
-    if (limitedByEmail) return limitedByEmail;
-
     const service = getPublishedServiceOfferV2BySlug(payload.serviceSlug);
     if (!service) {
       return NextResponse.json(
@@ -82,12 +70,20 @@ export async function POST(request: Request) {
       );
     }
 
-    const operator = service.operatorType === "demaa" ? "Demaa" : "ODEMA";
+    const limitedByEmail = await enforceServiceRequestRateLimit(request, {
+      identity: payload.email,
+      limit: 4,
+      scope: "email",
+      windowMs: 60 * 60 * 1000,
+    });
+    if (limitedByEmail) return limitedByEmail;
+
     const stored = await createServiceRequest({
       attribution: resolveLeadAttribution(request, payload.attribution),
       company: payload.company,
       email: payload.email,
       firstName: payload.firstName,
+      fingerprintAttribution: payload.attribution,
       idempotencyKey: payload.idempotencyKey,
       marketingConsent: payload.marketingConsent
         ? {
@@ -98,24 +94,11 @@ export async function POST(request: Request) {
           }
         : null,
       need: payload.need,
-      service: {
-        billing_party: operator,
-        contracting_party: operator,
-        offer_version: service.offerVersion,
-        operator_type: service.operatorType,
-        pricing: service.pricing,
-        service_name: service.title,
-        service_slug: service.slug,
-        transparency: `La prestation est contractée et facturée par ${operator}.`,
-      },
+      service: buildServiceRequestSnapshot(service),
       systemSlug: payload.systemSlug,
     });
 
-    await deliverServiceRequestNotifications({
-      record: stored.record,
-      requestId: stored.id,
-    });
-    logOperationalEvent("service_request.accepted", {
+    logOperationalEvent("service_request.scheduled", {
       duplicate: !stored.created,
       requestId: stored.id,
       serviceSlug: stored.record.service.service_slug,
@@ -123,7 +106,13 @@ export async function POST(request: Request) {
     });
     return response();
   } catch (error) {
-    logOperationalError("service_request.route.failed", error);
+    if (error instanceof RequestIdempotencyConflictError) {
+      return NextResponse.json(
+        { error: "Cette clé de requête a déjà été utilisée avec d’autres informations." },
+        { status: 409 },
+      );
+    }
+    logOperationalError("service_request.route.failed", new Error("service_request_route_failed"));
     return NextResponse.json(
       { error: "La demande n’a pas pu être enregistrée. Merci de réessayer." },
       { status: 500 },
