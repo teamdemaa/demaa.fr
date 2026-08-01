@@ -59,6 +59,27 @@ Toutes les enveloppes et collections runtime sont parsées depuis `unknown` et
 échouent fermées. Le DTO public est type-only. Le hashing runtime et tout
 canonicaliseur incomplet sont différés.
 
+### W4m — données candidates de migration Solutions/Outils
+
+- `migrations/solutions-v1/README.md` ;
+- `migrations/solutions-v1/source-manifest.json` ;
+- `migrations/solutions-v1/build-snapshot.mjs` ;
+- `migrations/solutions-v1/sources/w2-ecosystem-effective-matrix.json` ;
+- `migrations/solutions-v1/sources/w2-ecosystem-summary.json` ;
+- `migrations/solutions-v1/sources/w2-tools-snapshot.json` ;
+- `migrations/solutions-v1/solutions-migration-candidates.json` ;
+- `migrations/solutions-v1/output-manifest.json` ;
+- `tests/solutions-migration-snapshot.test.ts`.
+
+Gate : génération strictement offline et reproductible depuis les empreintes
+W2 figées ; 115 systèmes couverts ; candidats exclusivement `pending` avec
+relation commerciale `unknown` ; aucun statut approuvé ou publié, aucun
+fallback, aucun import depuis `src/`. Les quatre systèmes sans outil visible,
+les 35 systèmes sous cinq cartes, les 12 écarts UI/SEO, les ressources
+universelles, les anciens Services, l'exclusion EM2A et les deux besoins sans
+prestataire sont conservés explicitement. Ce lot ne remplit ni ne consomme les
+registres runtime W3c et n'accorde aucune publication.
+
 W1 documente la cible. Le commit `811735139211253818839719617fb97fc373a9b2`
 est le **parent code checkpoint** de W1, pas la base directe des lots suivants.
 W2 à W8 doivent tous partir du futur commit W1 approuvé. Un fichier attribué à

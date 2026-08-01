@@ -1,0 +1,126 @@
+{
+  "auditVersion": "W2c-effective-ecosystem-2026-07-31",
+  "sourceCommit": "4b8a5d77333f7f30d0d649a200a0414b1796a65f",
+  "generatedAt": "2026-07-31T16:29:30.589Z",
+  "systemCount": 115,
+  "visibleCardOccurrenceCount": 1069,
+  "distinctVisibleResourceCount": 74,
+  "classifications": {
+    "directory_only": 272,
+    "exclude": 1,
+    "needs_evidence": 534,
+    "provider_candidate": 227,
+    "service_demaa_legacy": 15,
+    "software_candidate": 20
+  },
+  "resourceTypes": {
+    "accounting": 115,
+    "finance": 228,
+    "network": 115,
+    "recruitment": 230,
+    "service": 15,
+    "supplier": 280,
+    "training": 86
+  },
+  "provenances": {
+    "global_default": 261,
+    "hardcoded_universal": 345,
+    "sector_rule": 130,
+    "system_override": 333
+  },
+  "repeatedCardsTop20": [
+    {
+      "resource": "accounting:em2a-expertise",
+      "occurrences": 115
+    },
+    {
+      "resource": "finance:qonto",
+      "occurrences": 115
+    },
+    {
+      "resource": "supplier:orus",
+      "occurrences": 115
+    },
+    {
+      "resource": "supplier:alan",
+      "occurrences": 115
+    },
+    {
+      "resource": "recruitment:bravus-akademy",
+      "occurrences": 115
+    },
+    {
+      "resource": "finance:defacto",
+      "occurrences": 102
+    },
+    {
+      "resource": "recruitment:france-travail-pro",
+      "occurrences": 71
+    },
+    {
+      "resource": "recruitment:side-recrutement-flexible",
+      "occurrences": 44
+    },
+    {
+      "resource": "network:cci-locale",
+      "occurrences": 28
+    },
+    {
+      "resource": "training:documents-obligations-rgpd",
+      "occurrences": 16
+    },
+    {
+      "resource": "service:audit-conformite-fiscale",
+      "occurrences": 15
+    },
+    {
+      "resource": "training:feebat-renove-rge",
+      "occurrences": 14
+    },
+    {
+      "resource": "supplier:kiloutou",
+      "occurrences": 14
+    },
+    {
+      "resource": "network:capeb",
+      "occurrences": 12
+    },
+    {
+      "resource": "supplier:plateforme-du-batiment",
+      "occurrences": 11
+    },
+    {
+      "resource": "supplier:point-p",
+      "occurrences": 10
+    },
+    {
+      "resource": "training:cybersecurite-bpifrance-universite",
+      "occurrences": 9
+    },
+    {
+      "resource": "supplier:wurth",
+      "occurrences": 9
+    },
+    {
+      "resource": "network:french-tech",
+      "occurrences": 7
+    },
+    {
+      "resource": "training:loi-alur-immobilier",
+      "occurrences": 7
+    }
+  ],
+  "systemCardCounts": {
+    "min": 7,
+    "max": 13,
+    "distribution": {
+      "7": 2,
+      "8": 26,
+      "9": 59,
+      "10": 15,
+      "11": 1,
+      "12": 1,
+      "13": 11
+    }
+  }
+}

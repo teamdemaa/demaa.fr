@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "migrationId": "w4-solutions-data-migration-v1",
+  "snapshotFile": "solutions-migration-candidates.json",
+  "snapshotSha256": "d6cd11fbda321945eb4dd156a1fd995384ad650280f42e1ba4db007fc1a10963",
+  "sourceCommit": "4b8a5d77333f7f30d0d649a200a0414b1796a65f",
+  "systemCount": 115,
+  "candidateCount": 1903,
+  "softwareCandidates": 854,
+  "providerCandidates": 410,
+  "directoryCandidates": 639,
+  "systemsWithEmptyToolUi": 4,
+  "systemsWithFewerThanFiveToolCards": 35,
+  "systemsWithUiSeoMismatch": 12,
+  "universalLegacyPlacements": 345,
+  "legacyServicesToExit": 15,
+  "excludedConflictCandidates": 1,
+  "unmetNeedCount": 2
+}
