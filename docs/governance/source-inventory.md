@@ -8,11 +8,15 @@ d'audit ; ils ne doivent pas être copiés en bloc dans Git.
 
 | Source | Empreinte ou révision | Autorité | Destination | Propriétaire |
 | --- | --- | --- | --- | --- |
+| Checkpoint consolidé W6.0 | commit `be33c4d5451b0a61ab23da1945ee72b27cf36c5a` | état local de référence W3/W4/W5, non activé publiquement | W6 routes/SEO puis candidat W7/W8 | Intégration |
+| UI Systèmes W3 | commits `616e9df83b411d8995c83f0fdf772bf92105356e` et `be33c4d5451b0a61ab23da1945ee72b27cf36c5a` | implémentation locale `published-only` | activation W6 après levée du gate metadata/JSON-LD et D-064 | Systèmes UI |
+| Marketplace Services W4 | commits `60205ace7a1731328d4407a4b35b653c1bb31309` et `ddb9adfddc94aaacbc23df19f34a05d315b540e5` | implémentation locale fail-closed | activation W6 après promotion explicite des offres | Services produit/UX |
+| Transport Services/Solutions W5 | commits `84e73e0eb65efc16a0ea203c426149df369e608e`, `c4e742ffa57f2c5d283945364e260c858acd196a` et `5e34d2e8881f0c427c2f3905eec8f81ff95bc498` | implémentation locale sécurisée | configuration worker, secrets et supervision avant activation | Leads/Conformité |
 | Checkpoint combiné Systèmes + Académie | commit `104fffecec7fdedd5eefc0c1c208445c684f3836` | provenance de la lignée propre | parent de l'intégration des corrections D-061 | Intégration |
 | Correctif lisibilité original | commit `9629b0a35a93c65a2841d19dab7c4ffe06530e0b` | preuve de patch | réappliqué dans la lignée propre sous `155b2ababb1b9c748b7f465a6cd6a1a38daecc1d` | Workbooks |
 | Correctif lisibilité intégré | commit `155b2ababb1b9c748b7f465a6cd6a1a38daecc1d` | code checkpoint intermédiaire | parent direct de `811735139211253818839719617fb97fc373a9b2` | Workbooks |
 | Correctif hauteur original | commit `5e9f2db3cd5054f092d3ce00d8c925e89de8ee20` | preuve de patch | réappliqué dans la lignée propre sous `811735139211253818839719617fb97fc373a9b2` | Workbooks |
-| Parent code checkpoint de W1 | commit `811735139211253818839719617fb97fc373a9b2` | base d'exécution W1 uniquement | futur commit W1 ; W2-W8 partiront de ce futur commit | Intégration |
+| Parent code checkpoint de W1 | commit `811735139211253818839719617fb97fc373a9b2` | provenance historique de W1 | lignée consolidée W6.0 ci-dessus | Intégration |
 | Branche D-061 pilotes protégés | commit `dfa036ade6e1c95b0157665a7ed2dc6d0e9df851` | preuve historique intégrée à contrôler, pas à cherry-pick deux fois | W7 | Workbooks |
 | Branche Process unifié | commit `39bfa1f2ab2d4bb8bfb682a4454ddd504729de7e` | preuve de staging, pas source isolée de release | W3/W8 | Systèmes UI |
 | Branche Académie cinq cours | commit `82b95bdada34c85c0b19a7af611e53edd655f5c1` | preuve Académie à préserver | W6/W8 | Académie |
@@ -67,15 +71,23 @@ volumineux. Il ne doit jamais être ajouté en bloc au dépôt produit.
 | D-049 à D-060 | historique dans le backlog non suivi, statut `deferred` dans ADR 0002 | backlog Tiimora séparé | Tiimora |
 | D-071 | hypothèse 1 350 EUR et cadeaux, statut `deferred` dans ADR 0002 | revue commerciale ultérieure | Services produit |
 
-## Inventaire des routes Services au 31 juillet 2026
+## Manifeste de release
+
+`docs/governance/release-manifest.json` décrit encore le lot documentaire W1.
+Il n'est pas une photographie de W6.0 et ne doit pas être régénéré depuis ce
+checkpoint. Sa prochaine génération est réservée au candidat exact W7/W8, afin
+que ses commits et empreintes correspondent à l'état réellement présenté à la
+recette.
+
+## Inventaire des routes Services au 1er août 2026
 
 | Route | État observé | Autorité future | Action W6 |
 | --- | --- | --- | --- |
-| `/services` | réécrite en 404/noindex par le proxy | ADR 0001, implémentation non réalisée | activer seulement après W4 et validation de la matrice navbar |
-| `/services/[slug]` | préfixe réécrit en 404/noindex | catalogue W2b et pages W4 | créer ou ne pas exposer selon décision de fiches |
-| `/annuaire-services` | réécrite en 404/noindex | aucune comme nouvelle marketplace | décider redirect ou maintien 404 |
-| `/annuaire-services/[slug]` | pages historiques encore générées | ancien catalogue mixte | inventorier chaque slug, migrer ou retirer |
-| modal interceptée `/annuaire-services/[slug]` | route historique active | ancien catalogue mixte | migrer ou retirer avec la page correspondante |
+| `/services` | page W4 présente mais réécrite en 404/noindex par le proxy ; sélecteur à 0 offre publiée | ADR 0001 et implémentation W4 locale | activer seulement après promotion des offres, gates W5 et matrice navbar W6 |
+| `/services/[slug]` | pages W4 présentes mais préfixe réécrit en 404/noindex ; aucun paramètre draft généré | catalogue W3b et pages W4 | ne rendre publiques que les fiches explicitement publiées |
+| `/annuaire-services` | réécrite en 404/noindex ; cible produit `superseded` | aucune comme nouvelle marketplace | décider redirect ou maintien 404 |
+| `/annuaire-services/[slug]` | pages historiques encore générées au runtime | ancien catalogue mixte `superseded` | inventorier chaque slug, migrer ou retirer |
+| modal interceptée `/annuaire-services/[slug]` | route historique encore active au runtime | ancien catalogue mixte `superseded` | migrer ou retirer avec la page correspondante |
 | sitemap des fiches historiques | entrées toujours générées | SEO global W6 | retirer ou rediriger seulement après inventaire |
 
 Le soft-404 Académie déjà documenté est un risque faible accepté et reste hors

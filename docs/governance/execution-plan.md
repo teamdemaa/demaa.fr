@@ -1,5 +1,26 @@
 # Plan d'exécution W2-W8
 
+## Checkpoint W6.0 — consolidation documentaire
+
+Le checkpoint local de référence est le commit
+`be33c4d5451b0a61ab23da1945ee72b27cf36c5a`. Les lots de contrats W3a/W3b/W3c,
+la migration offline W4m et les implémentations W3/W4/W5 sont présents dans
+cette lignée, mais **aucun n'est activé publiquement** par W6.0.
+
+État fermé à préserver :
+
+- 7 offres Services, toutes `draft`, donc 0 publiée ;
+- 0 Solution publiée ;
+- 115 systèmes toujours servis par la révision D-061 v1 active ;
+- `/services` et `/services/[slug]` toujours 404/noindex via le proxy ;
+- ancien annuaire Services `superseded` comme cible, mais encore présent au
+  runtime jusqu'à la migration W6 ;
+- mesure client Services/Solutions différée : seules l'attribution
+  consent-aware et les traces opérationnelles serveur sont implémentées.
+
+`docs/governance/release-manifest.json` n'est pas régénéré à ce checkpoint. Il
+ne doit être produit qu'à partir du candidat exact W7/W8.
+
 ## Amendement M2a — allowlists G0/W3a/W3b/W3c
 
 Pour le checkpoint contractuel M2a, les quatre allowlists ci-dessous remplacent
@@ -81,14 +102,14 @@ prestataire sont conservés explicitement. Ce lot ne remplit ni ne consomme les
 registres runtime W3c et n'accorde aucune publication.
 
 W1 documente la cible. Le commit `811735139211253818839719617fb97fc373a9b2`
-est le **parent code checkpoint** de W1, pas la base directe des lots suivants.
-W2 à W8 doivent tous partir du futur commit W1 approuvé. Un fichier attribué à
-un lot ne peut pas être modifié en parallèle par un autre lot.
+reste le **parent code checkpoint** historique de W1. La lignée consolidée W6.0
+est désormais celle identifiée ci-dessus. Un fichier attribué à un lot ne peut
+pas être modifié en parallèle par un autre lot.
 
 ## Séquence
 
 ```text
-Futur commit W1
+Lignée W1 approuvée
  |--> W2a Socle et inventaire
  |     |--> W2b Catalogue Services --> W4 UI Services --> W5 transport/API --|
  |     `--> W2c Catalogue Solutions --> W3 UI Systèmes ----------------|--> W6 Routes/SEO --> W8 QA
@@ -123,32 +144,42 @@ combiné.
 ## W3 - Interface des Systèmes
 
 - Propriétaire : chantier Systèmes UI
-- Objectif : remplacer Outils/Écosystème par Solutions, migrer D-012 sans perte
-  et afficher un seul encart commun d'aide à l'organisation.
+- Statut : implémenté localement, non activé ; 0 Solution publiée.
+- Objectif : préparer le remplacement Outils/Écosystème par une interface
+  Solutions `published-only`, sans consommer les candidats de migration comme
+  fallback, et conserver un seul encart commun d'aide à l'organisation.
 - Allowlist d'écriture :
+  - `docs/system-solutions-ui-w6-integration-gate.md` ;
+  - `src/app/kit-operationnel/[slug]/page.tsx` ;
   - `src/components/SystemDetailContent.tsx` ;
-  - `src/components/SystemEcosystemTab.tsx` ;
   - `src/components/SystemSolutionsTab.tsx` ;
   - `src/lib/system-detail-tabs.ts` ;
+  - `src/lib/system-solutions-ui-dto.ts` ;
+  - `src/lib/system-solutions-ui.server.ts` ;
+  - `tests/fixtures/published-solution-sections.ts` ;
   - `tests/system-detail-tabs.test.ts` ;
-  - `tests/system-ecosystem.test.ts` ;
+  - `tests/system-solutions-ui.test.ts` ;
   - `tests/system-ux-contract.test.ts`.
 - Gate : 115 systèmes, Process/Solutions, mobile/desktop, aucun Service Demaa
-  dans Solutions, aucun lien privé ou support fantôme.
+  dans Solutions, aucun lien privé ou support fantôme ; metadata et JSON-LD
+  alignés sur le même sélecteur publié ; attribution D-064 corrigée avant
+  activation de Solutions, sans inventer la copie finale.
 
 ## W4 - Interface de la marketplace Services
 
 - Propriétaire : chantier Services produit/UX
+- Statut : implémenté localement, non activé ; 7 offres `draft`, 0 publiée.
 - Objectif : créer les pages, cartes, fiches et le formulaire visible qui
-  consomment le registre W2b.
+  consomment exclusivement les sélecteurs publiés du registre W3b.
 - Allowlist d'écriture :
+  - `docs/services-marketplace-w6-integration-gate.md` ;
   - `src/app/services/page.tsx` ;
   - `src/app/services/[slug]/page.tsx` ;
-  - `src/components/ServicesCatalogClient.tsx` ;
-  - `src/components/ServiceDetailModal.tsx` ;
+  - `src/components/ServiceOfferDetails.tsx` ;
   - `src/components/ServiceRequestForm.tsx` ;
-  - `tests/services-catalog-ui.test.ts` ;
-  - `tests/service-request-form-ui.test.ts`.
+  - `src/components/ServicesMarketplace.tsx` ;
+  - `tests/fixtures/published-service-offers.ts` ;
+  - `tests/services-marketplace-ui.test.ts`.
 - Frontière : W4 possède les quatre champs visibles, les validations client,
   les metadata et le canonical des pages `/services` et
   `/services/[slug]`. Il ne possède ni le transport, ni le stockage, ni
@@ -159,22 +190,42 @@ combiné.
 ## W5 - Transport, leads, consentement et mesure
 
 - Propriétaire : chantier Leads et conformité
+- Statut : transport sécurisé implémenté localement, non activé ; mesure client
+  spécifique différée.
 - Objectif : réceptionner le formulaire W4, conserver l'attribution, notifier
-  sans fuite et mesurer les étapes utiles.
+  sans fuite et préparer les reprises persistées. La mesure client des étapes
+  et conversions n'est pas implémentée dans ce lot.
 - Allowlist d'écriture :
+  - `src/app/api/cron/service-request-deliveries/route.ts` ;
   - `src/app/api/service-request/route.ts` ;
-  - `src/lib/service-lead-contract.ts` ;
-  - `src/lib/service-lead-storage.ts` ;
-  - `src/lib/service-lead-notifications.server.ts` ;
-  - `src/lib/service-analytics-client.ts` ;
-  - `tests/service-request-route.test.ts` ;
-  - `tests/service-lead-storage.test.ts` ;
-  - `tests/service-analytics.test.ts`.
+  - `src/app/api/solution-referral/route.ts` ;
+  - `src/lib/operational-maintenance.ts` ;
+  - `src/lib/service-request-delivery-worker.server.ts` ;
+  - `src/lib/service-request-notifications.server.ts` ;
+  - `src/lib/service-request-security.server.ts` ;
+  - `src/lib/service-request-snapshots.server.ts` ;
+  - `src/lib/service-request-storage.server.ts` ;
+  - `src/lib/service-solution-request-contract.ts` ;
+  - `src/lib/solution-referral-disclosures.server.ts` ;
+  - `tests/service-request-boundary.test.ts` ;
+  - `tests/service-request-notifications.test.ts` ;
+  - `tests/service-request-route-integration.test.ts` ;
+  - `tests/service-request-security.test.ts` ;
+  - `tests/service-request-snapshots.test.ts` ;
+  - `tests/service-request-storage.test.ts` ;
+  - `tests/service-solution-request-contract.test.ts` ;
+  - `tests/service-solution-request-routes.test.ts` ;
+  - `tests/solution-referral-disclosures.test.ts`.
 - Frontière : W5 possède le transport/API, l'idempotence, le stockage, le
-  consentement, les notifications et les événements. Il ne modifie pas le DOM
-  du formulaire ni les metadata des pages.
-- Gate : consentement séparé, retrait possible, aucune PII dans analytics ou
-  URL, politique de conservation définie, anti-spam et idempotence testés.
+  consentement et les notifications. Il ne modifie pas le DOM du formulaire ni
+  les metadata des pages. L'attribution consent-aware et les logs opérationnels
+  ne valent pas activation d'une mesure client.
+- Gate : planifier explicitement `/api/cron/service-request-deliveries` dans
+  `vercel.json`, configurer `CRON_SECRET` et un
+  `SERVICE_REQUEST_RATE_LIMIT_HMAC_SECRET` d'au moins 32 caractères, puis
+  valider la supervision des échecs/reprises/files persistées ; consentement
+  séparé, retrait possible, aucune PII dans une future mesure ou URL, politique
+  de conservation, anti-spam et idempotence testés.
 
 ## W6 - Navigation, routes et SEO global
 
@@ -213,7 +264,9 @@ combiné.
   - `tests/editable-operational-system-assets.test.ts`.
 - Gate : révision exacte `d061-v2-pilot-2026-07-30-03`, preflight relu juste
   avant application, concordance public/privé, rollback testé, cinq pilotes
-  toujours inactifs sans GO distinct.
+  toujours inactifs sans GO distinct. Le fichier
+  `docs/governance/release-manifest.json` ne sera régénéré qu'à partir du
+  candidat exact W7/W8.
 
 ## W8 - Intégration et recette indépendante
 

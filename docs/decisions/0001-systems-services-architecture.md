@@ -2,8 +2,9 @@
 
 - Statut : `validated`
 - Date : 31 juillet 2026
-- Portée : cible produit, sans implémentation dans ce lot
-- Implémentée : non
+- Mise à jour d'état : 1er août 2026, checkpoint documentaire W6.0
+- Portée : cible produit et état de l'implémentation locale consolidée
+- Implémentation locale : W3, W4 et W5 présents, activation publique bloquée
 
 ## Décision
 
@@ -44,8 +45,11 @@ Navigation globale
 
 La présence d'un encart d'aide à l'organisation sous le panneau actif de
 **Process et de Solutions** est `validated`. Son texte exact reste `working`.
-D-064 n'est donc plus limité au seul onglet Process, mais son formulaire
-Fillout et son contrat ne doivent pas être dupliqués.
+L'implémentation locale place bien un seul composant après le contenu du panneau
+actif, mais son attribution Fillout est encore libellée
+`Système opérationnel - Process`. Cette attribution doit être corrigée avant
+l'activation de Solutions. W6.0 ne fige aucune nouvelle copie et le formulaire
+Fillout ne doit pas être dupliqué.
 
 ## Frontières
 
@@ -65,20 +69,35 @@ Fillout et son contrat ne doivent pas être dupliqués.
 - ne contient pas les Services opérés par Demaa ;
 - remplace les usages web des anciens onglets `Outils` et `Écosystème`.
 
+Au checkpoint W6.0, l'interface et son adaptateur serveur `published-only` sont
+implémentés localement. Le registre produit contient **0 Solution publiée** :
+l'onglet reste donc absent en runtime et les anciens alias retombent sur
+Process. Les candidats de migration ne constituent pas une autorisation de
+publication.
+
 ### Services
 
 - route autonome `/services` ;
-- sept offres actives dans deux catégories ;
+- sept offres enregistrées dans deux catégories, toutes `draft` et aucune
+  publiée au checkpoint W6.0 ;
 - cards, fiche ou modale, puis formulaire minimal ;
 - aucun checkout ni Stripe en V1 ;
 - qualification, devis et acceptation précèdent tout futur paiement ;
 - transparence sur l'opérateur Demaa ou ODEMA à valider avant publication.
+
+Les pages, cartes, détails et le formulaire W4 ainsi que le transport W5 sont
+implémentés localement. Le proxy continue néanmoins de répondre 404/noindex sur
+`/services` et `/services/[slug]`. Le contrat `published-only` doit rester
+fermé jusqu'à promotion explicite des offres et levée des gates W5/W6.
 
 ### Classeurs D-061
 
 La feuille de classeur nommée `Écosystème` n'est pas renommée par cette ADR.
 L'architecture des classeurs et l'architecture de navigation web sont deux
 contrats distincts.
+
+Les **115 systèmes** restent servis par leur révision active **v1**. Les
+révisions D-061 v2 pilotes ne sont ni généralisées, ni activées par W6.0.
 
 ## Décisions non figées
 
@@ -118,7 +137,10 @@ modification de `Navbar.tsx`.
   conserver telle quelle.
 - D-062 devient une offre de `/services`, pas une carte Écosystème.
 - D-063 reste différé.
-- Les anciens annuaires ou routes de services ne sont pas automatiquement la
-  nouvelle marketplace.
+- L'ancien annuaire Services est `superseded` comme cible produit, mais ses
+  fiches et sa modale restent présentes au runtime jusqu'à la migration W6.
 - La migration exige un inventaire de chaque recommandation existante avant
   retrait d'un composant ou d'un registre.
+- La mesure client propre aux parcours Services et Solutions reste différée :
+  seuls l'attribution consent-aware jointe aux demandes et les logs
+  opérationnels serveur existent dans la branche consolidée.

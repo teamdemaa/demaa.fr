@@ -20,6 +20,10 @@ En cas de contradiction, appliquer cet ordre :
 Le code d'interface, le SEO et les pages publiques consomment les contrats. Ils
 ne constituent pas une source de vérité indépendante.
 
+Au checkpoint W6.0, le manifeste W1 reste une preuve historique et non une
+photographie de la branche consolidée. Sa prochaine génération appartient au
+candidat exact W7/W8.
+
 ## Documents actifs
 
 - [Architecture cible](../decisions/0001-systems-services-architecture.md)
@@ -28,7 +32,8 @@ ne constituent pas une source de vérité indépendante.
 - [Inventaire des sources](./source-inventory.md)
 - [Registre de remplacement](./supersession-register.md)
 - [Plan d'exécution W2-W8](./execution-plan.md)
-- [Manifeste public de release](./release-manifest.json)
+- [Manifeste historique W1](./release-manifest.json) — ne pas régénérer avant
+  le candidat exact W7/W8
 
 ## Propriétaires
 

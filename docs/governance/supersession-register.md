@@ -10,18 +10,20 @@ remplacé et la nouvelle référence à consulter.
 | Outils comme onglet autonome | `superseded` | sous-section de Solutions, libellé exact non figé |
 | Prestations Demaa dans Écosystème | `superseded` | marketplace autonome `/services` |
 | D-062 dans Écosystème | `superseded` | `Système & automatisation commerciale` dans Services V1 |
-| D-064 uniquement sous Process | `superseded` | encart commun Process/Solutions, copie non figée |
+| D-064 uniquement sous Process | `superseded` | encart unique après le panneau actif Process/future Solutions ; attribution source encore `Process` à corriger avant activation, copie finale non figée |
 | Newsletter D-063 sous Outils ou Écosystème | `deferred` | backlog sans impact sur la base active |
-| `/annuaire-services` comme marketplace cible | `working` | audit de routes et redirections dans W6 |
-| `/services` actuellement retiré par le proxy | `working` | création dans W4, activation et matrice de routes dans W6 |
+| `/annuaire-services` comme marketplace cible | `superseded` | index déjà 404/noindex ; fiches et modale historiques encore runtime jusqu'à la migration W6 |
+| `/services` actuellement retiré par le proxy | `working` | pages W4 implémentées localement, mais 7 offres encore `draft` et activation/matrice de routes réservées à W6 |
 | Fiches `/annuaire-services/[slug]` encore générées et sitemappées | `working` | inventaire contenu, destination ou retrait, redirects et sitemap dans W6 |
-| Catalogue historique de services mixtes | `superseded` | Catalogue Services V1 suivi par Git |
+| Catalogue historique de services mixtes | `superseded` | Catalogue Services V1 suivi par Git ; ancien runtime conservé transitoirement jusqu'à la migration W6 |
 | Boutique en ligne | `superseded` | aucune carte V1 |
 | Site vitrine 1 350 EUR avec cadeaux | `deferred` | Site vitrine actif à 950 EUR HT, portée non figée |
 | Google Sheet maître au-dessus de Git | `superseded` | ADR validée, contrat Git approuvé, plan Git, puis miroir Google |
 | Ordre historique des feuilles du classeur | `superseded` | ordre défini par le contrat D-061 |
-| Recommandations outils dispersées sans placement audité | `working` | registre de placements et audit métier W2a-W2c |
-| Manifests démo et preview historiques multiples | `working` | manifest révisionné D-061, consolidation W7 |
+| Recommandations outils dispersées sans placement audité | `working` | candidats offline `pending`; registre produit à 0 Solution publiée jusqu'à audit et promotion explicites |
+| Mesure client Services/Solutions | `deferred` | attribution consent-aware et logs opérationnels seulement ; contrat d'événements sans PII à définir ultérieurement |
+| Manifests démo et preview historiques multiples | `working` | 115 révisions v1 restent actives ; manifest révisionné D-061 et consolidation W7 avant tout pilote v2 |
+| `docs/governance/release-manifest.json` W1 utilisé comme état courant | `superseded` | conserver comme preuve historique ; régénérer uniquement depuis le candidat exact W7/W8 |
 
 ## Éléments à préserver
 
