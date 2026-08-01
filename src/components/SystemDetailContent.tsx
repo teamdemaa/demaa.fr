@@ -10,6 +10,7 @@ import SystemSolutionsTab from "@/components/SystemSolutionsTab";
 import SystemeTabContent from "@/components/SystemeTabContent";
 import type { SystemeDetail } from "@/lib/systeme-catalog";
 import {
+  getSystemDetailBookingSource,
   getVisibleSystemDetailTabs,
   getNextSystemDetailTab,
   isVisibleSystemDetailTab,
@@ -187,7 +188,10 @@ export default function SystemDetailContent({
             <SystemSolutionsTab sections={solutionSections} />
           ) : null}
         </section>
-        <SystemProcessCallCta systemSlug={system.slug} />
+        <SystemProcessCallCta
+          source={getSystemDetailBookingSource(activeTab)}
+          systemSlug={system.slug}
+        />
         {academyVideos.length ? (
           <section
             className="mt-12 border-t border-dema-line pt-10"

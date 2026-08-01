@@ -50,6 +50,12 @@ describe("Fillout webhook", () => {
     });
     expect(submission?.systemSlug).toBe("freelance");
     expect(submission?.sourceUrl).toBe("https://demaa.fr/annuaire-services/organisation");
+    expect(submission?.attribution.first_touch?.landingPath).toBe(
+      "/kit-operationnel/freelance",
+    );
+    expect(submission?.attribution.last_touch?.landingPath).toBe(
+      "/annuaire-services/organisation",
+    );
     expect(submission?.attribution.first_source).toMatchObject({
       campaign: "audit-2026",
       medium: "paid_social",
@@ -64,6 +70,27 @@ describe("Fillout webhook", () => {
       marketing: false,
       status: "accepted",
     });
+  });
+
+  it("does not manufacture the retired organisation path for new submissions", () => {
+    const submission = parseFilloutWebhookSubmission({
+      formId: "sWP6PSPRVLus",
+      submissionId: "sub_no_path_123",
+      submissionTime: "2026-07-20T20:00:00.000Z",
+      urlParameters: [
+        { id: "source", name: "source", value: "Système opérationnel - Process" },
+        { id: "slug", name: "systemSlug", value: "freelance" },
+      ],
+    });
+
+    expect(submission).not.toBeNull();
+    expect(submission?.sourceUrl).toBeNull();
+    expect(submission?.attribution.conversion.page).toBeNull();
+    expect(submission?.attribution.first_touch).toBeNull();
+    expect(submission?.attribution.last_touch).toBeNull();
+    expect(JSON.stringify(submission)).not.toContain(
+      "/annuaire-services/organisation",
+    );
   });
 
   it("rejects malformed submission identifiers", () => {

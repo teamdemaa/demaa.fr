@@ -50,9 +50,11 @@ describe("system UX contract", () => {
       "dépende pas uniquement de vous au quotidien.",
     );
     expect(processCallSource).toContain('label="Réserver mon appel gratuit"');
-    expect(processCallSource).toContain(
-      'source="Système opérationnel - Process"',
+    expect(detailSource).toContain(
+      "source={getSystemDetailBookingSource(activeTab)}",
     );
+    expect(processCallSource).toContain("source={source}");
+    expect(processCallSource).toContain("systemSlug={systemSlug}");
     expect(processCallSource).not.toMatch(
       /Diagnostic offert|Demander mon diagnostic|filloutId|fillout\.com|https?:\/\//,
     );

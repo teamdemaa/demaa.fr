@@ -5,7 +5,6 @@ export async function POST() {
     {
       error:
         "Ce formulaire a été remplacé par la prise de rendez-vous Fillout pour la session stratégique.",
-      redirectTo: "/annuaire-services/organisation?booking=1",
     },
     { status: 410 },
   );

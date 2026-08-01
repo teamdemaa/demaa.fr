@@ -2,10 +2,13 @@
 
 import { Suspense } from "react";
 import OrganisationSessionBookingButton from "@/components/OrganisationSessionBookingButton";
+import type { SystemDetailBookingSource } from "@/lib/system-detail-tabs";
 
 export default function SystemProcessCallCta({
+  source,
   systemSlug,
 }: {
+  source: SystemDetailBookingSource;
   systemSlug: string;
 }) {
   return (
@@ -40,7 +43,7 @@ export default function SystemProcessCallCta({
         <OrganisationSessionBookingButton
           className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper transition hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
           label="Réserver mon appel gratuit"
-          source="Système opérationnel - Process"
+          source={source}
           systemSlug={systemSlug}
         />
       </Suspense>
