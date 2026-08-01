@@ -1,6 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import { type FormEvent, useRef, useState } from "react";
+import { getLeadAttributionPayload } from "@/lib/lead-attribution-client";
+import type { LeadAttributionPayload } from "@/lib/lead-attribution";
+import {
+  clearLeadSubmissionKey,
+  getLeadSubmissionKey,
+} from "@/lib/lead-submission-client";
 import type { ServiceOfferSlug } from "@/lib/service-catalog-v2-dto";
 
 export type ServiceRequestFields = Readonly<{
@@ -11,6 +18,7 @@ export type ServiceRequestFields = Readonly<{
 }>;
 
 export type ServiceRequestPayload = Readonly<{
+  attribution?: LeadAttributionPayload;
   company: string;
   email: string;
   firstName: string;
@@ -67,8 +75,10 @@ export function buildServiceRequestPayload(
   fields: ServiceRequestFields,
   serviceSlug: ServiceOfferSlug,
   idempotencyKey: string,
+  attribution?: LeadAttributionPayload | null,
 ): ServiceRequestPayload {
   return {
+    ...(attribution ? { attribution } : {}),
     company: fields.company.trim(),
     email: fields.email.trim().toLowerCase(),
     firstName: fields.firstName.trim(),
@@ -80,6 +90,55 @@ export function buildServiceRequestPayload(
   };
 }
 
+const SERVICE_REQUEST_SUCCESS_STATUS = 202;
+
+type FetchServiceRequest = (
+  input: RequestInfo | URL,
+  init?: RequestInit,
+) => Promise<Response>;
+
+function isStrictSuccessPayload(value: unknown): value is { ok: true } {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return false;
+  const keys = Object.keys(value);
+  return keys.length === 1 && keys[0] === "ok" && Reflect.get(value, "ok") === true;
+}
+
+export async function submitServiceRequest(
+  endpoint: string,
+  payload: ServiceRequestPayload,
+  fetchRequest: FetchServiceRequest = fetch,
+) {
+  const response = await fetchRequest(endpoint, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  const mediaType = response.headers
+    .get("content-type")
+    ?.split(";", 1)[0]
+    ?.trim()
+    .toLowerCase();
+
+  if (response.status !== SERVICE_REQUEST_SUCCESS_STATUS || mediaType !== "application/json") {
+    throw new Error("service request failed");
+  }
+
+  let result: unknown;
+  try {
+    result = await response.json();
+  } catch {
+    throw new Error("service request failed");
+  }
+
+  if (!isStrictSuccessPayload(result)) throw new Error("service request failed");
+}
+
+export function acquireServiceRequestSubmission(lock: { current: boolean }) {
+  if (lock.current) return false;
+  lock.current = true;
+  return true;
+}
+
 export default function ServiceRequestForm({
   endpoint = "/api/service-request",
   serviceSlug,
@@ -88,6 +147,7 @@ export default function ServiceRequestForm({
   serviceSlug: ServiceOfferSlug;
 }) {
   const formRef = useRef<HTMLFormElement>(null);
+  const submissionInFlightRef = useRef(false);
   const [fields, setFields] = useState<ServiceRequestFields>(EMPTY_FIELDS);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
@@ -113,27 +173,30 @@ export default function ServiceRequestForm({
       return;
     }
 
+    if (!acquireServiceRequestSubmission(submissionInFlightRef)) return;
+
     setErrors({});
     setStatus("submitting");
 
+    const flowKey = `service-request:${serviceSlug}`;
     try {
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(
-          buildServiceRequestPayload(
-            fields,
-            serviceSlug,
-            `web:service:${crypto.randomUUID()}`,
-          ),
+      const idempotencyKey = getLeadSubmissionKey(flowKey);
+      await submitServiceRequest(
+        endpoint,
+        buildServiceRequestPayload(
+          fields,
+          serviceSlug,
+          idempotencyKey,
+          getLeadAttributionPayload(),
         ),
-      });
-
-      if (!response.ok) throw new Error("service request failed");
+      );
+      clearLeadSubmissionKey(flowKey);
       setFields(EMPTY_FIELDS);
       setStatus("success");
     } catch {
       setStatus("error");
+    } finally {
+      submissionInFlightRef.current = false;
     }
   }
 
@@ -229,6 +292,15 @@ export default function ServiceRequestForm({
       >
         {status === "submitting" ? "Envoi…" : "Parler de mon projet"}
       </button>
+
+      <p className="text-xs leading-relaxed text-dema-muted">
+        <Link
+          href="/politique-de-confidentialite"
+          className="font-medium text-dema-forest underline underline-offset-2"
+        >
+          Politique de confidentialité
+        </Link>
+      </p>
 
       {status === "success" ? (
         <p role="status" className="text-sm font-medium text-dema-forest">

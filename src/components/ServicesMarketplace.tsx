@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import {
-  ArrowRight,
   ChevronLeft,
   ChevronRight,
   Megaphone,
@@ -119,7 +118,7 @@ export default function ServicesMarketplace({
 
   return (
     <>
-      <div className="min-w-0 max-w-full space-y-12">
+      <div className="min-w-0 max-w-[883px] space-y-12">
         {groups.map((group) => {
           const railState = railStates[group.categoryId];
           const CategoryIcon = CATEGORY_ICONS[group.categoryId];
@@ -172,7 +171,8 @@ export default function ServicesMarketplace({
                   railRefs.current[group.categoryId] = node;
                 }}
                 onScroll={() => updateRailState(group)}
-                className="mt-5 grid max-w-full snap-x snap-mandatory grid-flow-col auto-cols-[82%] gap-4 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] md:auto-cols-[calc((100%_-_2rem)_/_3)] [&::-webkit-scrollbar]:hidden"
+                data-service-rail
+                className="mt-5 grid max-w-full snap-x snap-mandatory grid-flow-col auto-cols-[min(82%,293.55px)] gap-[15.92px] overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] lg:auto-cols-[283.72px] [&::-webkit-scrollbar]:hidden"
               >
                 {group.offers.map((offer) => (
                   <button
@@ -181,11 +181,11 @@ export default function ServicesMarketplace({
                     data-service-offer-card
                     onClick={() => setSelected(offer)}
                     aria-label={`Ouvrir ${offer.title}`}
-                    className="group aspect-square min-w-0 snap-start overflow-hidden rounded-[1.2rem] border border-dema-line bg-dema-paper p-5 text-left shadow-[0_10px_28px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/20 hover:shadow-[0_14px_32px_rgba(23,35,29,0.07)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:p-6"
+                    className="aspect-square min-w-0 snap-start overflow-hidden rounded-[1.2rem] border border-dema-line bg-dema-paper p-5 text-left shadow-[0_10px_28px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/20 hover:shadow-[0_14px_32px_rgba(23,35,29,0.07)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:p-6"
                   >
                     <span className="flex h-full min-h-0 flex-col">
-                      <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-dema-forest">
-                        {getServicePriceLabel(offer.pricing)}
+                      <span className="line-clamp-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-dema-forest">
+                        {offer.categoryTitle}
                       </span>
                       <span className="mt-4 block text-xl font-semibold leading-snug tracking-[-0.02em] text-brand-blue sm:text-2xl">
                         {offer.title}
@@ -193,9 +193,8 @@ export default function ServicesMarketplace({
                       <span className="mt-3 line-clamp-4 text-sm leading-relaxed text-dema-muted">
                         {offer.description}
                       </span>
-                      <span className="mt-auto inline-flex items-center gap-2 pt-4 text-sm font-semibold text-dema-forest">
-                        Voir le service
-                        <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" aria-hidden="true" />
+                      <span className="mt-auto block pt-4 text-sm font-semibold text-dema-forest">
+                        {getServicePriceLabel(offer.pricing)}
                       </span>
                     </span>
                   </button>
@@ -218,7 +217,6 @@ export default function ServicesMarketplace({
               className="inline-flex items-center gap-2 text-sm font-semibold text-dema-forest underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
             >
               Ouvrir la page du service
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
           <ServiceOfferDetails offer={selected} />

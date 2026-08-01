@@ -4,10 +4,13 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("server-only", () => ({}));
+vi.mock("client-only", () => ({}));
 
 import ServiceOfferDetails, { getServicePriceLabel } from "@/components/ServiceOfferDetails";
 import {
+  acquireServiceRequestSubmission,
   buildServiceRequestPayload,
+  submitServiceRequest,
   validateServiceRequestFields,
 } from "@/components/ServiceRequestForm";
 import ServicesMarketplace from "@/components/ServicesMarketplace";
@@ -46,6 +49,7 @@ describe("Services marketplace UI", () => {
     expect(markup.match(/Sur devis/g)).toHaveLength(5);
     expect(markup).toContain("950");
     expect(markup).toContain("490");
+    expect(markup).not.toContain("Voir le service");
     expect(markup).not.toMatch(/interne|externe|placeholder|en cours|bientôt/i);
   });
 
@@ -92,6 +96,90 @@ describe("Services marketplace UI", () => {
     });
   });
 
+  it("requires the documented 202 JSON success contract", async () => {
+    const payload = buildServiceRequestPayload(
+      {
+        firstName: "Maya",
+        email: "maya@atelier-martin.fr",
+        company: "Atelier Martin",
+        need: "Créer un site clair.",
+      },
+      "site-vitrine-prise-contact",
+      "web:service:12345678",
+    );
+
+    await expect(submitServiceRequest(
+      "/api/service-request",
+      payload,
+      async () => new Response("<html>ok</html>", {
+        status: 200,
+        headers: { "Content-Type": "text/html" },
+      }),
+    )).rejects.toThrow("service request failed");
+
+    await expect(submitServiceRequest(
+      "/api/service-request",
+      payload,
+      async () => new Response("not-json", {
+        status: 202,
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+      }),
+    )).rejects.toThrow("service request failed");
+
+    await expect(submitServiceRequest(
+      "/api/service-request",
+      payload,
+      async () => new Response(JSON.stringify({ ok: true, extra: true }), {
+        status: 202,
+        headers: { "Content-Type": "application/json" },
+      }),
+    )).rejects.toThrow("service request failed");
+
+    await expect(submitServiceRequest(
+      "/api/service-request",
+      payload,
+      async () => new Response(JSON.stringify({ ok: true }), {
+        status: 202,
+        headers: { "Content-Type": "application/json" },
+      }),
+    )).resolves.toBeUndefined();
+  });
+
+  it("retries a timeout with the same idempotency key and locks double clicks", async () => {
+    const lock = { current: false };
+    expect(acquireServiceRequestSubmission(lock)).toBe(true);
+    expect(acquireServiceRequestSubmission(lock)).toBe(false);
+
+    const payload = buildServiceRequestPayload(
+      {
+        firstName: "Maya",
+        email: "maya@atelier-martin.fr",
+        company: "Atelier Martin",
+        need: "Créer un site clair.",
+      },
+      "site-vitrine-prise-contact",
+      "web:service:stable-retry-key",
+    );
+    const bodies: string[] = [];
+    const fetchRequest = vi.fn(async (_input: RequestInfo | URL, init?: RequestInit) => {
+      bodies.push(String(init?.body));
+      if (bodies.length === 1) throw new Error("timeout");
+      return new Response(JSON.stringify({ ok: true }), {
+        status: 202,
+        headers: { "Content-Type": "application/json" },
+      });
+    });
+
+    await expect(submitServiceRequest("/api/service-request", payload, fetchRequest))
+      .rejects.toThrow("timeout");
+    await expect(submitServiceRequest("/api/service-request", payload, fetchRequest))
+      .resolves.toBeUndefined();
+    expect(bodies.map((body) => JSON.parse(body).idempotencyKey)).toEqual([
+      "web:service:stable-retry-key",
+      "web:service:stable-retry-key",
+    ]);
+  });
+
   it("keeps RSC payloads serializable and server selectors out of clients", async () => {
     expect(JSON.parse(JSON.stringify(publishedServiceOffersFixture))).toEqual(
       publishedServiceOffersFixture,
@@ -122,6 +210,14 @@ describe("Services marketplace UI", () => {
     expect(hookSource).toContain('event.key !== "Tab"');
     expect(hookSource).toContain("previouslyFocused?.focus()");
     expect(formSource).toContain("requestAnimationFrame");
+    expect(formSource).toContain("submissionInFlightRef");
+    expect(formSource).toContain("getLeadSubmissionKey(flowKey)");
+    expect(formSource).toContain("getLeadAttributionPayload()");
+    expect(formSource.indexOf("await submitServiceRequest(")).toBeLessThan(
+      formSource.indexOf("clearLeadSubmissionKey(flowKey)"),
+    );
+    expect(formSource).not.toMatch(/track\(|gtag|fbq|randomUUID/);
+    expect(formSource).toContain('href="/politique-de-confidentialite"');
     expect(formSource).toContain('role="alert"');
     expect(formSource).toContain('role="status"');
   });
@@ -133,17 +229,24 @@ describe("Services marketplace UI", () => {
     expect(marketplaceSource).toContain("aspect-square min-w-0");
     expect(marketplaceSource).toContain("overflow-x-auto");
     expect(marketplaceSource).toContain("overscroll-x-contain");
-    expect(marketplaceSource).toContain("auto-cols-[82%]");
-    expect(marketplaceSource).toContain("md:auto-cols-[calc((100%_-_2rem)_/_3)]");
+    expect(marketplaceSource).toContain("auto-cols-[min(82%,293.55px)]");
+    expect(marketplaceSource).toContain("gap-[15.92px]");
+    expect(marketplaceSource).toContain("lg:auto-cols-[283.72px]");
+    expect((883 - (2 * 15.92)) / 3).toBeCloseTo(283.72, 2);
+    expect(marketplaceSource).toContain("{offer.categoryTitle}");
+    expect(marketplaceSource).not.toContain("Voir le service");
+    expect(marketplaceSource).not.toContain("ArrowRight");
     expect(marketplaceSource).not.toMatch(/\bposition\b/);
-    expect(indexSource).toContain("min-w-0 max-w-full");
+    expect(indexSource).toContain("max-w-[883px]");
   });
 
-  it("keeps canonical metadata scoped to the direct detail page", async () => {
+  it("owns canonical metadata for the index and direct detail page", async () => {
     const indexSource = await readSource("src/app/services/page.tsx");
     const detailSource = await readSource("src/app/services/[slug]/page.tsx");
 
-    expect(indexSource).not.toMatch(/metadata|canonical|openGraph/);
+    expect(indexSource).toContain("export const metadata: Metadata");
+    expect(indexSource).toContain('alternates: { canonical: "/services" }');
+    expect(indexSource).toContain('url: "/services"');
     expect(detailSource).toContain("alternates: { canonical }");
     expect(detailSource).toContain("url: canonical");
     expect(detailSource).toContain('robots: { index: false, follow: false }');

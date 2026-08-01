@@ -1,6 +1,23 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ServicesMarketplace from "@/components/ServicesMarketplace";
 import { getPublishedServiceOffersV2 } from "@/lib/service-catalog-v2";
+
+const title = "Services - Demaa";
+const description =
+  "Des prestations concrètes pour structurer et développer votre activité.";
+
+export const metadata: Metadata = {
+  title,
+  description,
+  alternates: { canonical: "/services" },
+  openGraph: {
+    title,
+    description,
+    type: "website",
+    url: "/services",
+  },
+};
 
 export default function ServicesPage() {
   const offers = getPublishedServiceOffersV2();
@@ -9,7 +26,7 @@ export default function ServicesPage() {
 
   return (
     <main className="min-h-screen min-w-0 max-w-full bg-dema-cream px-4 pb-20 pt-12 sm:px-6 sm:pt-16 lg:px-8">
-      <div className="mx-auto min-w-0 max-w-7xl">
+      <div className="mx-auto min-w-0 max-w-[883px]">
         <header className="max-w-3xl">
           <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
             Services
