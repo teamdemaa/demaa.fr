@@ -26,7 +26,10 @@ export async function generateMetadata({
   params,
 }: OperationalKitPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const data = await getSystemDetailPageData(slug);
+  const [data, solutionSections] = await Promise.all([
+    getSystemDetailPageData(slug),
+    getRenderableSolutionSectionsForSystem(slug),
+  ]);
 
   if (!data) {
     return {
@@ -38,7 +41,7 @@ export async function generateMetadata({
     };
   }
 
-  return buildSystemPageMetadata(data);
+  return buildSystemPageMetadata(data, solutionSections);
 }
 
 export default async function OperationalKitPage({
@@ -56,7 +59,7 @@ export default async function OperationalKitPage({
   }
 
   const initialTab = getParamValue(resolvedSearchParams.tab);
-  const jsonLd = buildSystemPageJsonLd(data);
+  const jsonLd = buildSystemPageJsonLd(data, solutionSections);
   const hasEditableSystem = hasEditableOperationalSystemAsset(data.system.slug);
   const academyVideos = getAcademyVideosForSystem(data.system.slug).map(
     (video) => ({
@@ -76,7 +79,9 @@ export default async function OperationalKitPage({
       <main className="min-h-screen bg-background pb-20">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+          }}
         />
         <div className="mx-auto w-full max-w-7xl px-4 pb-16 pt-3 sm:px-6 lg:px-8">
           <SystemDetailContent

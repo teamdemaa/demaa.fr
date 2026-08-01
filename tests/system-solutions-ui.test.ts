@@ -155,7 +155,6 @@ describe("system Solutions UI", () => {
     expect(gate).toContain("bloqué avant W6");
     expect(gate).toContain("JSON-LD");
     expect(gate).toContain("published-only");
-    expect(pageSource).toContain("buildSystemPageJsonLd(data)");
-    expect(pageSource).not.toMatch(/buildSystemPageJsonLd\([^)]*solutionSections/);
+    expect(pageSource).toContain("buildSystemPageJsonLd(data, solutionSections)");
   });
 });

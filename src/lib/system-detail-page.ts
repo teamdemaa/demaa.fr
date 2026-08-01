@@ -8,6 +8,7 @@ import {
   type OperationalSystemDetail,
 } from "@/lib/system-operations";
 import { hasEditableOperationalSystemAsset } from "@/lib/editable-operational-system-assets.server";
+import type { RenderableSolutionSectionDto } from "@/lib/system-solutions-ui-dto";
 import type { System } from "@/lib/types";
 
 export type SystemDetailPageData = {
@@ -272,15 +273,36 @@ function singularizeSectorLabel(label: string): string {
   return label.replace(/^les\s+/i, "").replace(/^la\s+/i, "").replace(/^le\s+/i, "").trim();
 }
 
-function buildSystemPageTitle(data: SystemDetailPageData): string {
-  return `Système opérationnel ${data.system.name} : process, outils et écosystème | Demaa`;
+type SystemPageSolutionSections = readonly RenderableSolutionSectionDto[];
+
+function getPublishedSolutionResources(sections: SystemPageSolutionSections) {
+  const resources = new Map<string, RenderableSolutionSectionDto["placements"][number]["resource"]>();
+
+  for (const section of sections) {
+    for (const placement of section.placements) {
+      resources.set(placement.resource.resourceSlug, placement.resource);
+    }
+  }
+
+  return [...resources.values()];
+}
+
+function buildSystemPageTitle(
+  data: SystemDetailPageData,
+  solutionSections: SystemPageSolutionSections,
+): string {
+  const contentLabel = solutionSections.length > 0 ? "Process et Solutions" : "Process";
+  return `Système opérationnel ${data.system.name} : ${contentLabel} | Demaa`;
 }
 
 export function buildSystemPageIntro(data: SystemDetailPageData): string {
   return data.enterprise.description;
 }
 
-function buildSystemPageDescription(data: SystemDetailPageData): string {
+function buildSystemPageDescription(
+  data: SystemDetailPageData,
+  solutionSections: SystemPageSolutionSections,
+): string {
   const override = SYSTEM_PAGE_DESCRIPTION_OVERRIDES[data.system.slug];
   const processCount =
     data.detail.systeme?.cards.reduce(
@@ -288,30 +310,43 @@ function buildSystemPageDescription(data: SystemDetailPageData): string {
       0,
     ) ?? 0;
 
-  if (hasEditableOperationalSystemAsset(data.system.slug)) {
-    return [
-      data.enterprise.description,
-      `Découvrez une démonstration remplie, ${processCount} process concrets et les outils recommandés pour ${data.system.name}. Recevez gratuitement par e-mail le lien permettant de créer votre copie personnelle dans Google Drive.`,
-    ].join(" ");
-  }
+  const sectorLabel = singularizeSectorLabel(data.detail.sectorLabel).toLowerCase();
+  const processSummary = override
+    ? override
+      .replace(/\bsysteme\b/gi, "système opérationnel")
+      .replace(/,\s*outils utiles[^.]*\./i, ".")
+    : `${processCount} process opérationnels pour structurer une activité de ${sectorLabel}.`;
+  const parts = [processSummary];
 
   if (override) {
-    return override.replace(/\bsysteme\b/gi, "système opérationnel");
+    parts.push(`${processCount} process opérationnels structurent ce système.`);
   }
 
-  const sectorLabel = singularizeSectorLabel(data.detail.sectorLabel).toLowerCase();
-  const parts = [
-    data.enterprise.description,
-    `${processCount} process opérationnels et ${data.detail.tools.length} outils ${data.detail.tools.length > 1 ? "recommandés" : "recommandé"} pour structurer une activité de ${sectorLabel}.`,
-  ];
+  if (hasEditableOperationalSystemAsset(data.system.slug)) {
+    parts.push(
+      `Découvrez une démonstration remplie et recevez gratuitement par e-mail le lien permettant de créer votre copie personnelle dans Google Drive.`,
+    );
+  }
+
+  const publishedResources = getPublishedSolutionResources(solutionSections);
+  if (publishedResources.length > 0) {
+    const names = publishedResources.slice(0, 3).map((resource) => resource.name);
+    parts.push(
+      `${publishedResources.length} ${publishedResources.length > 1 ? "Solutions publiées" : "Solution publiée"} pour ce système : ${names.join(", ")}.`,
+    );
+  }
 
   return parts.join(" ");
 }
 
-export function buildSystemPageMetadata(data: SystemDetailPageData): Metadata {
-  const title = buildSystemPageTitle(data);
-  const description = buildSystemPageDescription(data);
+export function buildSystemPageMetadata(
+  data: SystemDetailPageData,
+  solutionSections: SystemPageSolutionSections,
+): Metadata {
+  const title = buildSystemPageTitle(data, solutionSections);
+  const description = buildSystemPageDescription(data, solutionSections);
   const url = `/kit-operationnel/${data.system.slug}`;
+  const publishedResources = getPublishedSolutionResources(solutionSections);
 
   return {
     title,
@@ -321,9 +356,13 @@ export function buildSystemPageMetadata(data: SystemDetailPageData): Metadata {
         data.system.name,
         `système opérationnel ${data.system.name.toLowerCase()}`,
         `process ${data.system.name.toLowerCase()}`,
-        `outils ${data.system.name.toLowerCase()}`,
-        `écosystème ${data.system.name.toLowerCase()}`,
         `modèle entreprise ${data.system.name.toLowerCase()}`,
+        ...(publishedResources.length > 0
+          ? [
+              `solutions ${data.system.name.toLowerCase()}`,
+              ...publishedResources.map((resource) => resource.name),
+            ]
+          : []),
       ],
     alternates: {
       canonical: url,
@@ -344,27 +383,31 @@ export function buildSystemPageMetadata(data: SystemDetailPageData): Metadata {
   };
 }
 
-export function buildSystemPageJsonLd(data: SystemDetailPageData) {
+export function buildSystemPageJsonLd(
+  data: SystemDetailPageData,
+  solutionSections: SystemPageSolutionSections,
+) {
   const url = `https://demaa.fr/kit-operationnel/${data.system.slug}`;
-  const description = buildSystemPageDescription(data);
+  const description = buildSystemPageDescription(data, solutionSections);
+  const pageName = buildSystemPageTitle(data, solutionSections).replace(/ \| Demaa$/, "");
   const listedProcesses = (
     data.detail.systeme?.cards.flatMap((card) =>
       card.items.map((item) => ({ title: item.process })),
     ) ?? []
   ).slice(0, 8);
-  const listedTools = data.detail.tools.slice(0, 8);
+  const listedSolutions = getPublishedSolutionResources(solutionSections).slice(0, 8);
 
   return [
     {
       "@context": "https://schema.org",
       "@type": "CollectionPage",
-      name: data.system.name,
+      name: pageName,
       description,
       url,
       about: {
         "@type": "Thing",
         name: data.system.name,
-        description: data.system.description,
+        description,
       },
       isPartOf: {
         "@type": "WebSite",
@@ -375,19 +418,23 @@ export function buildSystemPageJsonLd(data: SystemDetailPageData) {
     {
       "@context": "https://schema.org",
       "@type": "ItemList",
-      name: `Ressources du système opérationnel ${data.system.name}`,
-      numberOfItems: listedProcesses.length + listedTools.length,
+      name: listedSolutions.length > 0
+        ? `Process et Solutions du système opérationnel ${data.system.name}`
+        : `Process du système opérationnel ${data.system.name}`,
+      numberOfItems: listedProcesses.length + listedSolutions.length,
       itemListElement: [
         ...listedProcesses.map((process, index) => ({
           "@type": "ListItem",
           position: index + 1,
           name: process.title,
         })),
-        ...listedTools.map((tool, index) => ({
+        ...listedSolutions.map((resource, index) => ({
           "@type": "ListItem",
           position: listedProcesses.length + index + 1,
-          name: tool.name,
-          url: tool.slug ? `https://demaa.fr/annuaire-outils/${tool.slug}` : undefined,
+          name: resource.name,
+          url: resource.interaction.href.startsWith("/")
+            ? `https://demaa.fr${resource.interaction.href}`
+            : resource.interaction.href,
         })),
       ],
     },
