@@ -1,5 +1,64 @@
 # Plan d'exécution W2-W8
 
+## Amendement M2a — allowlists G0/W3a/W3b/W3c
+
+Pour le checkpoint contractuel M2a, les quatre allowlists ci-dessous remplacent
+les anciennes allowlists d'implémentation W2a/W2b/W2c. Les sections historiques
+plus bas restent utiles pour la séquence produit, mais n'accordent aucune écriture
+supplémentaire à M2a. G0 est committé en premier ; W3a est ensuite le parent
+commun de W3b et W3c. Chaque lot doit être relu comme une unité indépendante.
+
+### G0 — gouvernance des lots
+
+- `docs/governance/execution-plan.md`.
+
+Gate : les allowlists exactes, l'ordre des commits et les frontières de
+responsabilité sont approuvés avant tout commit de code.
+
+### W3a — socle partagé minimal
+
+- `src/lib/registry-contract-utils.ts` ;
+- `src/lib/recommendation-source-contract.ts` ;
+- `tests/recommendation-source-contract.test.ts`.
+
+Gate : toutes les frontières acceptent `unknown`, rejettent les structures et
+enums invalides sans erreur inattendue, figent récursivement les valeurs parsées,
+et contrôlent dates, chronologie et expiration avec `new Date()` par défaut ou
+une date injectée en test.
+
+### W3b — catalogue Services serveur
+
+- `src/lib/service-catalog-v2-contract.ts` ;
+- `src/lib/service-catalog-v2-dto.ts` ;
+- `src/lib/service-catalog-v2.generated.json` ;
+- `src/lib/service-catalog-v2.ts` ;
+- `tests/service-catalog-v2-boundary.test.ts` ;
+- `tests/service-catalog-v2.test.ts`.
+
+Gate : exactement sept offres toutes `draft`, deux prix serveur de 95 000 et
+49 000 centimes EUR HT, cinq offres sur devis, aucun export brut ou `getAll`,
+aucune donnée draft importable depuis un module client et aucun validateur MJS
+concurrent. Le DTO public est type-only et peut être importé par W4 avec
+`import type` sans ouvrir l'accès au registre serveur.
+
+### W3c — registres Solutions serveur
+
+- `src/lib/solution-registry-contract.ts` ;
+- `src/lib/solution-registry-dto.ts` ;
+- `src/lib/solution-registry.server.ts` ;
+- `tests/fixtures/solution-migration-candidates.ts` ;
+- `tests/solution-registry-boundary.test.ts` ;
+- `tests/solution-registry-contract.test.ts` ;
+- `tests/solution-registry-server.test.ts`.
+
+Gate : registres produit vides, ressources discriminées `software`, `provider`
+ou `directory`, interactions `external_link`, `detail` ou `referral_form`,
+placements exclusivement explicites sans fallback. Qonto, La Plateforme du
+Bâtiment et CAPEB restent exclusivement des fixtures de migration sous `tests/`.
+Toutes les enveloppes et collections runtime sont parsées depuis `unknown` et
+échouent fermées. Le DTO public est type-only. Le hashing runtime et tout
+canonicaliseur incomplet sont différés.
+
 W1 documente la cible. Le commit `811735139211253818839719617fb97fc373a9b2`
 est le **parent code checkpoint** de W1, pas la base directe des lots suivants.
 W2 à W8 doivent tous partir du futur commit W1 approuvé. Un fichier attribué à
@@ -24,55 +83,21 @@ combiné.
 
 ## W2a - Socle, inventaire et provenance
 
-- Propriétaire : chantier Gouvernance des données
-- Objectif : inventorier toutes les sources, détecter les doublons et définir
-  les champs communs de provenance, statut et vérification.
-- Allowlist d'écriture :
-  - `src/lib/recommendation-source-contract.ts` ;
-  - `scripts/audit-recommendation-sources.mjs` ;
-  - `tests/recommendation-source-contract.test.ts` ;
-  - `docs/governance/source-inventory.md`.
-- Entrées en lecture seule : annuaire entreprises, annuaire outils, toolRefs,
-  recommandations curées, D-012, ancien catalogue Services et overlays runtime.
-- Gate : rapport complet des collisions et aucune mutation d'une source métier.
+- Statut : allowlist remplacée par W3a dans l'amendement M2a ci-dessus.
+- Les audits d'inventaire W2 restent des entrées en lecture seule et ne sont pas
+  rouverts par ce checkpoint.
 
 ## W2b - Contrat du catalogue Services
 
-- Propriétaire : chantier Données Services
-- Objectif : transformer les sept offres validées en registre typé sans
-  réutiliser le catalogue historique mixte comme vérité implicite.
-- Allowlist d'écriture :
-  - `src/lib/service-catalog-v2.ts` ;
-  - `src/lib/service-catalog-v2.generated.json` ;
-  - `scripts/validate-service-catalog-v2.mjs` ;
-  - `tests/service-catalog-v2.test.ts`.
-- Gate : sept offres seulement, deux prix exacts, cinq offres sur devis,
-  statuts et périmètres non figés explicitement représentés.
+- Statut : allowlist remplacée par W3b dans l'amendement M2a ci-dessus.
+- Le validateur MJS historique est explicitement retiré afin de conserver un
+  seul parseur TypeScript canonique.
 
 ## W2c - Contrat des ressources et placements Solutions
 
-- Propriétaire : chantier Données Solutions
-- Objectif : unifier logiciels, prestataires et fournisseurs sans perdre les
-  placements D-012 et sans importer de prestation Demaa.
-- Allowlist d'écriture :
-  - `src/lib/solution-resource-registry.ts` ;
-  - `src/lib/solution-placement-registry.ts` ;
-  - `src/lib/system-ecosystem-types.ts` ;
-  - `src/lib/system-ecosystem.server.ts` ;
-  - `src/lib/system-tool-recommendations.ts` ;
-  - `src/lib/service-recommendations.ts` ;
-  - `src/lib/supplier-recommendations.ts` ;
-  - `src/lib/finance-recommendations.ts` ;
-  - `src/lib/pro-network-recommendations.ts` ;
-  - `src/lib/recruitment-recommendations.ts` ;
-  - `src/lib/training-recommendations.ts` ;
-  - `src/lib/accounting-recommendation.ts` ;
-  - `src/lib/aid-recommendations.ts` ;
-  - `src/lib/plumbing-ecosystem-pilot.ts` ;
-  - `tests/solution-resource-registry.test.ts` ;
-  - `tests/solution-placement-registry.test.ts`.
-- Gate : chaque placement possède une source, une date de vérification et une
-  justification métier ; aucun fallback public non audité.
+- Statut : allowlist remplacée par W3c dans l'amendement M2a ci-dessus.
+- Les migrations D-012 restent différées ; aucun ancien catalogue n'est muté
+  ni consommé comme fallback par le registre produit vide.
 
 ## W3 - Interface des Systèmes
 
