@@ -1,15 +1,13 @@
 export const SYSTEM_DETAIL_TABS = [
   "process",
-  "outils",
-  "ecosysteme",
+  "solutions",
 ] as const;
 
 export type SystemDetailTab = (typeof SYSTEM_DETAIL_TABS)[number];
 
 const SYSTEM_DETAIL_TAB_VISIBILITY = {
   process: true,
-  outils: true,
-  ecosysteme: true,
+  solutions: true,
 } satisfies Record<SystemDetailTab, boolean>;
 
 function isSystemDetailTab(tab?: string): tab is SystemDetailTab {
@@ -21,6 +19,8 @@ export function isVisibleSystemDetailTab(tab?: string): tab is SystemDetailTab {
 }
 
 const LEGACY_SYSTEM_DETAIL_TABS: Readonly<Record<string, SystemDetailTab>> = {
+  outils: "solutions",
+  ecosysteme: "solutions",
   kit: "process",
   pilotage: "process",
   accompagnement: "process",
@@ -35,4 +35,24 @@ export function normalizeSystemDetailTab(tab?: string): SystemDetailTab | undefi
   const normalizedTab = LEGACY_SYSTEM_DETAIL_TABS[tab] ?? tab;
 
   return isVisibleSystemDetailTab(normalizedTab) ? normalizedTab : undefined;
+}
+
+export function getNextSystemDetailTab(
+  currentTab: SystemDetailTab,
+  key: string,
+): SystemDetailTab | undefined {
+  const currentIndex = SYSTEM_DETAIL_TABS.indexOf(currentTab);
+
+  if (key === "Home") return SYSTEM_DETAIL_TABS[0];
+  if (key === "End") return SYSTEM_DETAIL_TABS.at(-1);
+  if (key === "ArrowRight") {
+    return SYSTEM_DETAIL_TABS[(currentIndex + 1) % SYSTEM_DETAIL_TABS.length];
+  }
+  if (key === "ArrowLeft") {
+    return SYSTEM_DETAIL_TABS[
+      (currentIndex - 1 + SYSTEM_DETAIL_TABS.length) % SYSTEM_DETAIL_TABS.length
+    ];
+  }
+
+  return undefined;
 }

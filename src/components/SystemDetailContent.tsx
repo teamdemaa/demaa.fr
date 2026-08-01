@@ -2,33 +2,21 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import {
-  ArrowLeft,
-  ArrowRight,
-  BookOpen,
-  Wrench,
-} from "lucide-react";
-import {
-  type KeyboardEvent,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { ArrowLeft, ArrowRight, BookOpen } from "lucide-react";
+import { type KeyboardEvent, useCallback, useState } from "react";
 import OperationalSystemCopyRequestModal from "@/components/OperationalSystemCopyRequestModal";
-import SystemEcosystemTab from "@/components/SystemEcosystemTab";
 import SystemProcessCallCta from "@/components/SystemProcessCallCta";
+import SystemSolutionsTab, {
+  type PublishedSolutionSection,
+} from "@/components/SystemSolutionsTab";
 import SystemeTabContent from "@/components/SystemeTabContent";
-import {
-  trackSystemEcosystemEvent,
-} from "@/lib/kit-analytics-client";
 import type { OperationalSystemDetail } from "@/lib/system-operations";
 import {
+  getNextSystemDetailTab,
   isVisibleSystemDetailTab,
   type SystemDetailTab,
 } from "@/lib/system-detail-tabs";
 import { getSystemKitPreview } from "@/lib/system-kit-previews";
-import type { SystemEcosystemGroup } from "@/lib/system-ecosystem-types";
 import type { System } from "@/lib/types";
 
 type SystemDetailContentProps = {
@@ -40,7 +28,7 @@ type SystemDetailContentProps = {
   deliveryAvailable?: boolean;
   headingAs?: "h1" | "h2";
   headingId?: string;
-  ecosystemGroups?: SystemEcosystemGroup[];
+  solutionSections?: readonly PublishedSolutionSection[];
   academyVideos?: ReadonlyArray<{
     slug: string;
     title: string;
@@ -53,9 +41,10 @@ const systemTabs: ReadonlyArray<{
   label: string;
 }> = [
   { slug: "process", label: "Process" },
-  { slug: "outils", label: "Outils" },
-  { slug: "ecosysteme", label: "Écosystème" },
+  { slug: "solutions", label: "Solutions" },
 ];
+
+const EMPTY_SOLUTION_SECTIONS: readonly PublishedSolutionSection[] = [];
 
 export default function SystemDetailContent({
   system,
@@ -66,7 +55,7 @@ export default function SystemDetailContent({
   deliveryAvailable = false,
   headingAs: Heading = "h2",
   headingId,
-  ecosystemGroups = [],
+  solutionSections = EMPTY_SOLUTION_SECTIONS,
   academyVideos = [],
 }: SystemDetailContentProps) {
   const router = useRouter();
@@ -79,25 +68,9 @@ export default function SystemDetailContent({
   );
   const [isSystemModalOpen, setIsSystemModalOpen] = useState(false);
   const preview = getSystemKitPreview(system.slug);
-  const métierTools = useMemo(
-    () =>
-      detail.tools
-        .filter((tool) => (tool.scope ?? tool.detail?.scope) !== "transverse")
-        .toSorted((left, right) => Number(Boolean(right.recommended)) - Number(Boolean(left.recommended)))
-        .slice(0, 5),
-    [detail.tools],
-  );
   const closeSystemModal = useCallback(() => {
     setIsSystemModalOpen(false);
   }, []);
-
-  useEffect(() => {
-    if (activeTab !== "ecosysteme") return;
-
-    trackSystemEcosystemEvent("system_ecosystem_tab_opened", {
-      systemSlug: system.slug,
-    });
-  }, [activeTab, system.slug]);
 
   function selectTab(tab: SystemDetailTab) {
     setActiveTab(tab);
@@ -111,26 +84,13 @@ export default function SystemDetailContent({
     event: KeyboardEvent<HTMLButtonElement>,
     currentTab: SystemDetailTab,
   ) {
-    const currentIndex = tabs.findIndex((tab) => tab.slug === currentTab);
-    let nextIndex: number | undefined;
-
-    if (event.key === "ArrowRight") {
-      nextIndex = (currentIndex + 1) % tabs.length;
-    } else if (event.key === "ArrowLeft") {
-      nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
-    } else if (event.key === "Home") {
-      nextIndex = 0;
-    } else if (event.key === "End") {
-      nextIndex = tabs.length - 1;
-    }
-
-    if (nextIndex === undefined) return;
+    const nextTab = getNextSystemDetailTab(currentTab, event.key);
+    if (!nextTab) return;
 
     event.preventDefault();
-    const nextTab = tabs[nextIndex];
-    selectTab(nextTab.slug);
+    selectTab(nextTab);
     requestAnimationFrame(() => {
-      document.getElementById(`tab-${nextTab.slug}`)?.focus();
+      document.getElementById(`tab-${nextTab}`)?.focus();
     });
   }
 
@@ -172,7 +132,7 @@ export default function SystemDetailContent({
 
         <div className="mt-8 flex justify-start sm:mt-9">
           <div
-            className="grid w-full grid-cols-3 gap-1 rounded-full border border-dema-line bg-dema-paper p-1 shadow-[0_8px_24px_rgba(23,35,29,0.035)]"
+            className="grid w-full grid-cols-2 gap-1 rounded-full border border-dema-line bg-dema-paper p-1 shadow-[0_8px_24px_rgba(23,35,29,0.035)]"
             role="tablist"
             aria-label="Contenu du système opérationnel"
             aria-orientation="horizontal"
@@ -207,72 +167,17 @@ export default function SystemDetailContent({
           className="mt-7"
         >
           {activeTab === "process" ? (
-            <>
-              <SystemeTabContent
-                systemName={system.name}
-                systeme={detail.systeme}
-              />
-              <SystemProcessCallCta systemSlug={system.slug} />
-            </>
-          ) : null}
-
-          {activeTab === "outils" ? (
-            <div>
-              {métierTools.length ? (
-                <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
-                  {métierTools.map((tool) => {
-                    const href = tool.slug
-                      ? `/annuaire-outils/${tool.slug}`
-                      : tool.url ?? "/annuaire-outils";
-
-                    return (
-                      <Link
-                        key={tool.slug ?? tool.name}
-                        href={href}
-                        className="demaa-card group flex min-h-[13rem] flex-col rounded-[1.15rem] p-5"
-                      >
-                        <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
-                          <Wrench className="h-4 w-4" aria-hidden="true" />
-                        </span>
-                        <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-dema-muted">
-                          {tool.type}
-                        </p>
-                        <h3 className="mt-2 text-lg font-semibold leading-snug text-brand-blue">
-                          {tool.name}
-                        </h3>
-                        <p className="mt-2 text-sm leading-relaxed text-dema-muted">
-                          {tool.usage}
-                        </p>
-                        <span className="mt-auto inline-flex items-center gap-2 pt-4 text-sm font-semibold text-dema-forest">
-                          Voir l’outil
-                          <ArrowRight
-                            className="h-4 w-4 transition group-hover:translate-x-0.5"
-                            aria-hidden="true"
-                          />
-                        </span>
-                      </Link>
-                    );
-                  })}
-                </div>
-              ) : (
-                <div className="demaa-surface rounded-[1.25rem] px-5 py-6">
-                  <p className="text-sm leading-relaxed text-dema-muted">
-                    La sélection d’outils métier est en cours de finalisation.
-                  </p>
-                </div>
-              )}
-            </div>
-          ) : null}
-
-          {activeTab === "ecosysteme" ? (
-            <SystemEcosystemTab
-              key={system.slug}
-              groups={ecosystemGroups}
-              systemSlug={system.slug}
+            <SystemeTabContent
+              systemName={system.name}
+              systeme={detail.systeme}
             />
           ) : null}
 
+          {activeTab === "solutions" ? (
+            <SystemSolutionsTab sections={solutionSections} />
+          ) : null}
         </section>
+        <SystemProcessCallCta systemSlug={system.slug} />
         {academyVideos.length ? (
           <section
             className="mt-12 border-t border-dema-line pt-10"

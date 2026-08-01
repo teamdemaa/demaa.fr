@@ -24,25 +24,23 @@ describe("system UX contract", () => {
     expect(modalSource).not.toMatch(/Stripe|checkout|\/copy/);
   });
 
-  it("keeps the free 30-minute call inside Process and reuses canonical Fillout", async () => {
+  it("renders the free 30-minute call once after the active panel", async () => {
     const detailSource = await readSource(
       "src/components/SystemDetailContent.tsx",
     );
     const processCallSource = await readSource(
       "src/components/SystemProcessCallCta.tsx",
     );
-    const toolsSource = await readSource(
-      "src/components/SystemEcosystemTab.tsx",
+    const solutionsSource = await readSource(
+      "src/components/SystemSolutionsTab.tsx",
     );
-    const processStart = detailSource.indexOf(
-      'activeTab === "process"',
-    );
+    const panelEnd = detailSource.indexOf("</section>");
     const processCall = detailSource.indexOf("<SystemProcessCallCta");
-    const toolsStart = detailSource.indexOf('activeTab === "outils"');
+    const academyStart = detailSource.indexOf("academyVideos.length");
 
-    expect(processStart).toBeGreaterThan(-1);
-    expect(processCall).toBeGreaterThan(processStart);
-    expect(processCall).toBeLessThan(toolsStart);
+    expect(panelEnd).toBeGreaterThan(-1);
+    expect(processCall).toBeGreaterThan(panelEnd);
+    expect(processCall).toBeLessThan(academyStart);
     expect(detailSource.match(/<SystemProcessCallCta\b/g)).toHaveLength(1);
     expect(processCallSource).toContain(
       'import OrganisationSessionBookingButton from "@/components/OrganisationSessionBookingButton"',
@@ -58,7 +56,7 @@ describe("system UX contract", () => {
     expect(processCallSource).not.toMatch(
       /Diagnostic offert|Demander mon diagnostic|filloutId|fillout\.com|https?:\/\//,
     );
-    expect(toolsSource).not.toMatch(
+    expect(solutionsSource).not.toMatch(
       /SystemProcessCallCta|Diagnostic offert|appel gratuit/,
     );
   });

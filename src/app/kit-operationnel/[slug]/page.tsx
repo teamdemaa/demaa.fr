@@ -5,8 +5,8 @@ import SystemDetailContent from "@/components/SystemDetailContent";
 import { getOperationalSystemDemoUrl } from "@/lib/document-models";
 import { hasEditableOperationalSystemAsset } from "@/lib/editable-operational-system-assets.server";
 import { getAcademyVideosForSystem } from "@/lib/academy-video-catalog";
+import { getPublishedSolutionSectionsForSystem } from "@/lib/solution-registry.server";
 import { normalizeSystemDetailTab } from "@/lib/system-detail-tabs";
-import { buildSystemEcosystemGroups } from "@/lib/system-ecosystem.server";
 import {
   buildSystemPageIntro,
   buildSystemPageJsonLd,
@@ -46,7 +46,10 @@ export default async function OperationalKitPage({
   searchParams,
 }: OperationalKitPageProps) {
   const [{ slug }, resolvedSearchParams] = await Promise.all([params, searchParams]);
-  const data = await getSystemDetailPageData(slug);
+  const [data, solutionSections] = await Promise.all([
+    getSystemDetailPageData(slug),
+    getPublishedSolutionSectionsForSystem(slug),
+  ]);
 
   if (!data) {
     notFound();
@@ -55,10 +58,6 @@ export default async function OperationalKitPage({
   const initialTab = getParamValue(resolvedSearchParams.tab);
   const jsonLd = buildSystemPageJsonLd(data);
   const hasEditableSystem = hasEditableOperationalSystemAsset(data.system.slug);
-  const ecosystemGroups = await buildSystemEcosystemGroups({
-    sectorLabel: data.detail.sectorLabel,
-    systemSlug: data.system.slug,
-  });
   const academyVideos = getAcademyVideosForSystem(data.system.slug).map(
     (video) => ({
       slug: video.slug,
@@ -88,7 +87,7 @@ export default async function OperationalKitPage({
             initialActiveTab={normalizeSystemDetailTab(initialTab)}
             deliveryAvailable={hasEditableSystem}
             headingAs="h1"
-            ecosystemGroups={ecosystemGroups}
+            solutionSections={solutionSections}
             academyVideos={academyVideos}
           />
         </div>
