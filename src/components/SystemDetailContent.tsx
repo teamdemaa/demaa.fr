@@ -6,29 +6,29 @@ import { ArrowLeft, ArrowRight, BookOpen } from "lucide-react";
 import { type KeyboardEvent, useCallback, useState } from "react";
 import OperationalSystemCopyRequestModal from "@/components/OperationalSystemCopyRequestModal";
 import SystemProcessCallCta from "@/components/SystemProcessCallCta";
-import SystemSolutionsTab, {
-  type PublishedSolutionSection,
-} from "@/components/SystemSolutionsTab";
+import SystemSolutionsTab from "@/components/SystemSolutionsTab";
 import SystemeTabContent from "@/components/SystemeTabContent";
-import type { OperationalSystemDetail } from "@/lib/system-operations";
+import type { SystemeDetail } from "@/lib/systeme-catalog";
 import {
+  getVisibleSystemDetailTabs,
   getNextSystemDetailTab,
   isVisibleSystemDetailTab,
   type SystemDetailTab,
 } from "@/lib/system-detail-tabs";
 import { getSystemKitPreview } from "@/lib/system-kit-previews";
+import type { RenderableSolutionSectionDto } from "@/lib/system-solutions-ui-dto";
 import type { System } from "@/lib/types";
 
 type SystemDetailContentProps = {
   system: System;
-  detail: OperationalSystemDetail;
+  systeme: SystemeDetail | null;
   demoUrl?: string | null;
   intro: string;
   initialActiveTab?: string;
   deliveryAvailable?: boolean;
   headingAs?: "h1" | "h2";
   headingId?: string;
-  solutionSections?: readonly PublishedSolutionSection[];
+  solutionSections?: readonly RenderableSolutionSectionDto[];
   academyVideos?: ReadonlyArray<{
     slug: string;
     title: string;
@@ -36,7 +36,7 @@ type SystemDetailContentProps = {
   }>;
 };
 
-const systemTabs: ReadonlyArray<{
+const systemTabDefinitions: ReadonlyArray<{
   slug: SystemDetailTab;
   label: string;
 }> = [
@@ -44,11 +44,11 @@ const systemTabs: ReadonlyArray<{
   { slug: "solutions", label: "Solutions" },
 ];
 
-const EMPTY_SOLUTION_SECTIONS: readonly PublishedSolutionSection[] = [];
+const EMPTY_SOLUTION_SECTIONS: readonly RenderableSolutionSectionDto[] = [];
 
 export default function SystemDetailContent({
   system,
-  detail,
+  systeme,
   demoUrl,
   intro,
   initialActiveTab,
@@ -59,9 +59,13 @@ export default function SystemDetailContent({
   academyVideos = [],
 }: SystemDetailContentProps) {
   const router = useRouter();
-  const tabs = systemTabs;
+  const solutionsAvailable = solutionSections.length > 0;
+  const visibleTabSlugs = getVisibleSystemDetailTabs(solutionsAvailable);
+  const tabs = systemTabDefinitions.filter((tab) =>
+    visibleTabSlugs.includes(tab.slug),
+  );
   const [activeTab, setActiveTab] = useState<SystemDetailTab>(
-    isVisibleSystemDetailTab(initialActiveTab) &&
+    isVisibleSystemDetailTab(initialActiveTab, solutionsAvailable) &&
       tabs.some((tab) => tab.slug === initialActiveTab)
       ? initialActiveTab
       : "process",
@@ -84,7 +88,11 @@ export default function SystemDetailContent({
     event: KeyboardEvent<HTMLButtonElement>,
     currentTab: SystemDetailTab,
   ) {
-    const nextTab = getNextSystemDetailTab(currentTab, event.key);
+    const nextTab = getNextSystemDetailTab(
+      currentTab,
+      event.key,
+      solutionsAvailable,
+    );
     if (!nextTab) return;
 
     event.preventDefault();
@@ -132,7 +140,9 @@ export default function SystemDetailContent({
 
         <div className="mt-8 flex justify-start sm:mt-9">
           <div
-            className="grid w-full grid-cols-2 gap-1 rounded-full border border-dema-line bg-dema-paper p-1 shadow-[0_8px_24px_rgba(23,35,29,0.035)]"
+            className={`grid w-full gap-1 rounded-full border border-dema-line bg-dema-paper p-1 shadow-[0_8px_24px_rgba(23,35,29,0.035)] ${
+              solutionsAvailable ? "grid-cols-2" : "grid-cols-1"
+            }`}
             role="tablist"
             aria-label="Contenu du système opérationnel"
             aria-orientation="horizontal"
@@ -169,11 +179,11 @@ export default function SystemDetailContent({
           {activeTab === "process" ? (
             <SystemeTabContent
               systemName={system.name}
-              systeme={detail.systeme}
+              systeme={systeme}
             />
           ) : null}
 
-          {activeTab === "solutions" ? (
+          {solutionsAvailable && activeTab === "solutions" ? (
             <SystemSolutionsTab sections={solutionSections} />
           ) : null}
         </section>

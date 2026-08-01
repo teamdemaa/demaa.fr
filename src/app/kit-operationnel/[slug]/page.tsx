@@ -5,7 +5,7 @@ import SystemDetailContent from "@/components/SystemDetailContent";
 import { getOperationalSystemDemoUrl } from "@/lib/document-models";
 import { hasEditableOperationalSystemAsset } from "@/lib/editable-operational-system-assets.server";
 import { getAcademyVideosForSystem } from "@/lib/academy-video-catalog";
-import { getPublishedSolutionSectionsForSystem } from "@/lib/solution-registry.server";
+import { getRenderableSolutionSectionsForSystem } from "@/lib/system-solutions-ui.server";
 import { normalizeSystemDetailTab } from "@/lib/system-detail-tabs";
 import {
   buildSystemPageIntro,
@@ -48,7 +48,7 @@ export default async function OperationalKitPage({
   const [{ slug }, resolvedSearchParams] = await Promise.all([params, searchParams]);
   const [data, solutionSections] = await Promise.all([
     getSystemDetailPageData(slug),
-    getPublishedSolutionSectionsForSystem(slug),
+    getRenderableSolutionSectionsForSystem(slug),
   ]);
 
   if (!data) {
@@ -81,10 +81,13 @@ export default async function OperationalKitPage({
         <div className="mx-auto w-full max-w-7xl px-4 pb-16 pt-3 sm:px-6 lg:px-8">
           <SystemDetailContent
             system={data.system}
-            detail={data.detail}
+            systeme={data.detail.systeme}
             demoUrl={getOperationalSystemDemoUrl(data.system.slug)}
             intro={buildSystemPageIntro(data)}
-            initialActiveTab={normalizeSystemDetailTab(initialTab)}
+            initialActiveTab={normalizeSystemDetailTab(
+              initialTab,
+              solutionSections.length > 0,
+            )}
             deliveryAvailable={hasEditableSystem}
             headingAs="h1"
             solutionSections={solutionSections}

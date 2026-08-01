@@ -11,26 +11,44 @@ import {
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import DirectoryDetailDialogShell from "@/components/DirectoryDetailDialogShell";
+import type { SolutionSection } from "@/lib/solution-registry-dto";
 import type {
-  PublishedSolutionPlacementDto,
-  SolutionInteractionDto,
-  SolutionSection,
-} from "@/lib/solution-registry-dto";
-
-export type PublishedSolutionSection = Readonly<{
-  section: SolutionSection;
-  placements: readonly PublishedSolutionPlacementDto[];
-}>;
+  RenderableSolutionPlacementDto,
+  RenderableSolutionSectionDto,
+  SupportedSolutionInteractionDto,
+} from "@/lib/system-solutions-ui-dto";
 
 type RailState = Readonly<{
   canNext: boolean;
   canPrevious: boolean;
-  position: number;
 }>;
 
-const SECTION_LABELS: Readonly<Record<SolutionSection, string>> = {
+// Working UI copy only. These labels are intentionally centralized so W6 can
+// align final editorial and SEO wording before integration.
+export const SOLUTION_UI_WORKING_LABELS: Readonly<Record<SolutionSection, string>> = {
   software: "Logiciels",
-  providers: "Prestataires et partenaires",
+  providers: "Prestataires et fournisseurs",
+};
+
+const SOLUTION_RESOURCE_TYPE_WORKING_LABELS: Readonly<
+  Record<RenderableSolutionPlacementDto["resource"]["resourceType"], string>
+> = {
+  software: "Logiciel",
+  provider: "Prestataire",
+  directory: "Annuaire",
+};
+
+const COMMERCIAL_RELATIONSHIP_DISCLOSURES: Readonly<
+  Record<
+    RenderableSolutionPlacementDto["resource"]["commercialRelationship"],
+    string | null
+  >
+> = {
+  none: null,
+  owned: "Solution proposée directement par Demaa.",
+  affiliate: "Demaa peut percevoir une commission si vous choisissez cette solution.",
+  commercial_partner: "Demaa peut être rémunérée dans le cadre de ce partenariat.",
+  paid_referral: "Demaa peut être rémunérée pour cette mise en relation.",
 };
 
 const RESOURCE_ICONS = {
@@ -39,22 +57,19 @@ const RESOURCE_ICONS = {
   directory: Building2,
 } as const;
 
-function buildInitialRailState(sections: readonly PublishedSolutionSection[]) {
+function buildInitialRailState(sections: readonly RenderableSolutionSectionDto[]) {
   return Object.fromEntries(
     sections.map(({ section, placements }) => [
       section,
       {
         canNext: placements.length > 1,
         canPrevious: false,
-        position: 0,
       },
     ]),
   ) as Partial<Record<SolutionSection, RailState>>;
 }
 
-function SolutionAction({ interaction }: { interaction: SolutionInteractionDto }) {
-  if (interaction.interactionMode === "referral_form") return null;
-
+function SolutionAction({ interaction }: { interaction: SupportedSolutionInteractionDto }) {
   const label =
     interaction.interactionMode === "detail"
       ? "Voir la fiche"
@@ -87,10 +102,12 @@ function SolutionDialog({
   placement,
   onClose,
 }: {
-  placement: PublishedSolutionPlacementDto;
+  placement: RenderableSolutionPlacementDto;
   onClose: () => void;
 }) {
   const { resource } = placement;
+  const disclosure =
+    COMMERCIAL_RELATIONSHIP_DISCLOSURES[resource.commercialRelationship];
 
   return (
     <DirectoryDetailDialogShell
@@ -99,7 +116,7 @@ function SolutionDialog({
       onClose={onClose}
     >
       <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-        {resource.resourceType === "software" ? "Logiciel" : "Solution partenaire"}
+        {SOLUTION_RESOURCE_TYPE_WORKING_LABELS[resource.resourceType]}
       </p>
       <h3 className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-brand-blue sm:text-3xl">
         {resource.name}
@@ -107,6 +124,11 @@ function SolutionDialog({
       <p className="mt-4 text-base leading-relaxed text-dema-muted">
         {resource.description}
       </p>
+      {disclosure ? (
+        <p className="mt-4 rounded-[0.85rem] bg-dema-cream/70 px-4 py-3 text-xs leading-relaxed text-dema-muted">
+          {disclosure}
+        </p>
+      ) : null}
 
       <div className="mt-7 space-y-5 border-t border-dema-line pt-6">
         <div>
@@ -144,7 +166,7 @@ function SolutionDialog({
 export default function SystemSolutionsTab({
   sections,
 }: {
-  sections: readonly PublishedSolutionSection[];
+  sections: readonly RenderableSolutionSectionDto[];
 }) {
   const visibleSections = useMemo(
     () => sections.filter(({ placements }) => placements.length > 0),
@@ -154,32 +176,22 @@ export default function SystemSolutionsTab({
   const [railStates, setRailStates] = useState(() =>
     buildInitialRailState(visibleSections),
   );
-  const [selected, setSelected] = useState<PublishedSolutionPlacementDto | null>(null);
+  const [selected, setSelected] = useState<RenderableSolutionPlacementDto | null>(null);
 
-  const updateRailState = useCallback((group: PublishedSolutionSection) => {
+  const updateRailState = useCallback((group: RenderableSolutionSectionDto) => {
     const rail = railRefs.current[group.section];
     if (!rail) return;
 
-    const firstCard = rail.querySelector<HTMLElement>("[data-solution-resource-card]");
-    const cardWidth = firstCard?.getBoundingClientRect().width ?? rail.clientWidth;
-    const gap = Number.parseFloat(window.getComputedStyle(rail).columnGap) || 0;
-    const step = Math.max(cardWidth + gap, 1);
-    const position = Math.min(
-      group.placements.length - 1,
-      Math.max(0, Math.round(rail.scrollLeft / step)),
-    );
     const nextState = {
       canNext: rail.scrollLeft + rail.clientWidth < rail.scrollWidth - 2,
       canPrevious: rail.scrollLeft > 2,
-      position,
     };
 
     setRailStates((current) => {
       const previous = current[group.section];
       if (
         previous?.canNext === nextState.canNext &&
-        previous?.canPrevious === nextState.canPrevious &&
-        previous?.position === nextState.position
+        previous?.canPrevious === nextState.canPrevious
       ) {
         return current;
       }
@@ -198,7 +210,7 @@ export default function SystemSolutionsTab({
     setSelected(null);
   }, []);
 
-  function navigateRail(group: PublishedSolutionSection, direction: -1 | 1) {
+  function navigateRail(group: RenderableSolutionSectionDto, direction: -1 | 1) {
     const rail = railRefs.current[group.section];
     const firstCard = rail?.querySelector<HTMLElement>("[data-solution-resource-card]");
     if (!rail || !firstCard) return;
@@ -214,7 +226,7 @@ export default function SystemSolutionsTab({
     <>
       <div className="max-w-full space-y-10 overflow-hidden">
         {visibleSections.map((group) => {
-          const label = SECTION_LABELS[group.section];
+          const label = SOLUTION_UI_WORKING_LABELS[group.section];
           const railState = railStates[group.section];
 
           return (
@@ -264,6 +276,10 @@ export default function SystemSolutionsTab({
                 {group.placements.map((placement) => {
                   const { resource } = placement;
                   const ResourceIcon = RESOURCE_ICONS[resource.resourceType];
+                  const disclosure =
+                    COMMERCIAL_RELATIONSHIP_DISCLOSURES[
+                      resource.commercialRelationship
+                    ];
 
                   return (
                     <button
@@ -279,7 +295,7 @@ export default function SystemSolutionsTab({
                           <ResourceIcon className="h-5 w-5" aria-hidden="true" />
                         </span>
                         <span className="mt-5 block text-[10px] font-semibold uppercase tracking-[0.15em] text-dema-muted">
-                          {resource.resourceType === "software" ? "Logiciel" : "Solution partenaire"}
+                          {SOLUTION_RESOURCE_TYPE_WORKING_LABELS[resource.resourceType]}
                         </span>
                         <span className="mt-2 block text-lg font-semibold leading-snug text-brand-blue sm:text-xl">
                           {resource.name}
@@ -287,6 +303,11 @@ export default function SystemSolutionsTab({
                         <span className="mt-3 line-clamp-3 text-sm leading-relaxed text-dema-muted">
                           {resource.description}
                         </span>
+                        {disclosure ? (
+                          <span className="mt-auto line-clamp-2 pt-3 text-[11px] leading-relaxed text-dema-muted">
+                            {disclosure}
+                          </span>
+                        ) : null}
                       </span>
                     </button>
                   );
