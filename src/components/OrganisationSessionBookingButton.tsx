@@ -10,6 +10,7 @@ type OrganisationSessionBookingButtonProps = {
   className?: string;
   label?: string;
   source?: string;
+  sourceIsAuthoritative?: boolean;
   systemSlug?: string;
 };
 
@@ -17,6 +18,7 @@ export default function OrganisationSessionBookingButton({
   className = "demaa-primary-button mt-5 w-fit",
   label = "Réserver ma session offerte",
   source = "Page session stratégique",
+  sourceIsAuthoritative = false,
   systemSlug,
 }: OrganisationSessionBookingButtonProps) {
   const searchParams = useSearchParams();
@@ -24,7 +26,9 @@ export default function OrganisationSessionBookingButton({
   const [filloutAttribution, setFilloutAttribution] = useState(
     () => getFilloutAttributionParameters(),
   );
-  const inheritedSource = searchParams.get("source") || source;
+  const inheritedSource = sourceIsAuthoritative
+    ? source
+    : searchParams.get("source") || source;
   const inheritedSystemSlug = systemSlug ?? searchParams.get("systemSlug");
   const parameters = useMemo(
     () => ({

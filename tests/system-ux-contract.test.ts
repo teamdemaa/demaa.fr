@@ -54,6 +54,7 @@ describe("system UX contract", () => {
       "source={getSystemDetailBookingSource(activeTab)}",
     );
     expect(processCallSource).toContain("source={source}");
+    expect(processCallSource).toContain("sourceIsAuthoritative");
     expect(processCallSource).toContain("systemSlug={systemSlug}");
     expect(processCallSource).not.toMatch(
       /Diagnostic offert|Demander mon diagnostic|filloutId|fillout\.com|https?:\/\//,
