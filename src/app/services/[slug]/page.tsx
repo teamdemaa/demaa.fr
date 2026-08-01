@@ -7,6 +7,10 @@ import {
   getPublishedServiceOfferV2BySlug,
   getPublishedServiceOffersV2,
 } from "@/lib/service-catalog-v2";
+import {
+  buildServicePageJsonLd,
+  serializeServicesJsonLd,
+} from "@/lib/services-seo";
 
 type ServicePageProps = {
   params: Promise<{ slug: string }>;
@@ -22,12 +26,7 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
   const { slug } = await params;
   const offer = getPublishedServiceOfferV2BySlug(slug);
 
-  if (!offer) {
-    return {
-      title: "Service indisponible | Demaa",
-      robots: { index: false, follow: false },
-    };
-  }
+  if (!offer) notFound();
 
   const title = `${offer.title} | Services Demaa`;
   const canonical = `/services/${offer.slug}`;
@@ -54,17 +53,25 @@ export default async function ServicePage({ params }: ServicePageProps) {
   if (!offer) notFound();
 
   return (
-    <main className="min-h-screen min-w-0 max-w-full bg-dema-cream px-4 pb-20 pt-8 sm:px-6 lg:px-8">
-      <div className="mx-auto min-w-0 max-w-5xl">
-        <Link
-          href="/services"
-          className="mb-8 inline-flex items-center gap-2 text-sm font-semibold text-dema-muted transition hover:text-dema-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
-        >
-          <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-          Tous les services
-        </Link>
-        <ServiceOfferDetails offer={offer} headingAs="h1" />
-      </div>
-    </main>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: serializeServicesJsonLd(buildServicePageJsonLd(offer)),
+        }}
+      />
+      <main className="min-h-screen min-w-0 max-w-full bg-dema-cream px-4 pb-20 pt-8 sm:px-6 lg:px-8">
+        <div className="mx-auto min-w-0 max-w-5xl">
+          <Link
+            href="/services"
+            className="mb-8 inline-flex items-center gap-2 text-sm font-semibold text-dema-muted transition hover:text-dema-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
+          >
+            <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+            Tous les services
+          </Link>
+          <ServiceOfferDetails offer={offer} headingAs="h1" />
+        </div>
+      </main>
+    </>
   );
 }

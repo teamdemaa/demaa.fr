@@ -244,11 +244,12 @@ describe("Services marketplace UI", () => {
     const indexSource = await readSource("src/app/services/page.tsx");
     const detailSource = await readSource("src/app/services/[slug]/page.tsx");
 
-    expect(indexSource).toContain("export const metadata: Metadata");
+    expect(indexSource).toContain("export function generateMetadata(): Metadata");
     expect(indexSource).toContain('alternates: { canonical: "/services" }');
     expect(indexSource).toContain('url: "/services"');
     expect(detailSource).toContain("alternates: { canonical }");
     expect(detailSource).toContain("url: canonical");
-    expect(detailSource).toContain('robots: { index: false, follow: false }');
+    expect(detailSource).toContain("if (!offer) notFound()");
+    expect(detailSource).not.toContain("robots:");
   });
 });
