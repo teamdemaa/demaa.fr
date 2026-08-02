@@ -25,10 +25,12 @@ async function readSource(path: string) {
 }
 
 describe("system Solutions UI", () => {
-  it("hides empty sections and never renders a fallback or placeholder", () => {
+  it("shows the validated empty state and hides empty section rails", () => {
     expect(
       renderToStaticMarkup(createElement(SystemSolutionsTab, { sections: [] })),
-    ).toBe("");
+    ).toContain(
+      "Nous vérifions encore les solutions les plus pertinentes pour ce métier.",
+    );
 
     const markup = renderToStaticMarkup(
       createElement(SystemSolutionsTab, {
@@ -41,7 +43,7 @@ describe("system Solutions UI", () => {
     expect(markup).not.toMatch(/en cours|bientôt|à venir|placeholder/i);
   });
 
-  it("keeps every one of the 115 systems on Process until renderable DTOs exist", () => {
+  it("keeps Solutions reachable on all 115 systems before publication", () => {
     expect(enterpriseCatalog).toHaveLength(115);
 
     for (const system of enterpriseCatalog) {
@@ -49,11 +51,16 @@ describe("system Solutions UI", () => {
       expect(JSON.parse(JSON.stringify(sections))).toEqual(sections);
       expect(
         renderToStaticMarkup(createElement(SystemSolutionsTab, { sections })),
-      ).toBe("");
-      expect(normalizeSystemDetailTab("solutions", sections.length > 0)).toBe("process");
-      expect(normalizeSystemDetailTab("outils", sections.length > 0)).toBe("process");
-      expect(normalizeSystemDetailTab("ecosysteme", sections.length > 0)).toBe("process");
-      expect(getVisibleSystemDetailTabs(sections.length > 0)).toEqual(["process"]);
+      ).toContain(
+        "Nous vérifions encore les solutions les plus pertinentes pour ce métier.",
+      );
+      expect(normalizeSystemDetailTab("solutions")).toBe("solutions");
+      expect(normalizeSystemDetailTab("outils")).toBe("solutions");
+      expect(normalizeSystemDetailTab("ecosysteme")).toBe("solutions");
+      expect(getVisibleSystemDetailTabs()).toEqual([
+        "process",
+        "solutions",
+      ]);
     }
   });
 
@@ -112,11 +119,14 @@ describe("system Solutions UI", () => {
 
     expect(detailSource).toContain('url.searchParams.set("tab", tab)');
     expect(detailSource).toContain('url.searchParams.delete("service")');
-    expect(detailSource).toContain("solutionsAvailable");
-    expect(detailSource).toContain("getVisibleSystemDetailTabs(solutionsAvailable)");
+    expect(detailSource).not.toContain("solutionsAvailable");
+    expect(detailSource).toContain("getVisibleSystemDetailTabs()");
     expect(detailSource).toContain("requestAnimationFrame");
     expect(detailSource).toContain("?.focus()");
     expect(detailSource).toContain('activeTab === "solutions"');
+    expect(detailSource).not.toContain(
+      'solutionsAvailable && activeTab === "solutions"',
+    );
     expect(detailSource).not.toMatch(/activeTab === "(?:outils|ecosysteme)"/);
     expect(detailSource).not.toContain("detail: OperationalSystemDetail");
     expect(detailSource).toContain("systeme: SystemeDetail | null");

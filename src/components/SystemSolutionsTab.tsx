@@ -220,7 +220,16 @@ export default function SystemSolutionsTab({
     rail.scrollBy({ behavior: "smooth", left: direction * step });
   }
 
-  if (visibleSections.length === 0) return null;
+  if (visibleSections.length === 0) {
+    return (
+      <p
+        className="rounded-[1.15rem] border border-dema-line bg-dema-paper px-5 py-6 text-sm leading-relaxed text-dema-muted sm:px-6"
+        role="status"
+      >
+        Nous vérifions encore les solutions les plus pertinentes pour ce métier.
+      </p>
+    );
+  }
 
   return (
     <>

@@ -20,11 +20,20 @@ describe("system UX contract", () => {
     expect(modalSource).toContain("Voir la démonstration");
     expect(modalSource).toContain("Recevoir ma copie modifiable");
     expect(modalSource).toContain("Gratuit · Envoyé par e-mail");
+    expect(modalSource).toContain(
+      "Un tableau de pilotage opérationnel simple pour suivre votre",
+    );
+    expect(modalSource).toContain(
+      "activité, vos finances, vos actions et les responsabilités.",
+    );
+    expect(modalSource).not.toContain(
+      "Des process concrets, des outils recommandés",
+    );
     expect(modalSource).toContain('fetch("/api/systeme-kit/request"');
     expect(modalSource).not.toMatch(/Stripe|checkout|\/copy/);
   });
 
-  it("renders the free 30-minute call once after the active panel", async () => {
+  it("renders the organisation exchange once after the active panel", async () => {
     const detailSource = await readSource(
       "src/components/SystemDetailContent.tsx",
     );
@@ -45,11 +54,13 @@ describe("system UX contract", () => {
     expect(processCallSource).toContain(
       'import OrganisationSessionBookingButton from "@/components/OrganisationSessionBookingButton"',
     );
-    expect(processCallSource).toContain("Un appel gratuit de 30 minutes");
     expect(processCallSource).toContain(
-      "dépende pas uniquement de vous au quotidien.",
+      "Besoin d’y voir plus clair dans votre organisation ?",
     );
-    expect(processCallSource).toContain('label="Réserver mon appel gratuit"');
+    expect(processCallSource).toContain(
+      "identifier ce qui dépend encore de vous et la priorité à structurer.",
+    );
+    expect(processCallSource).toContain('label="Réserver mon échange"');
     expect(detailSource).toContain(
       "source={getSystemDetailBookingSource(activeTab)}",
     );

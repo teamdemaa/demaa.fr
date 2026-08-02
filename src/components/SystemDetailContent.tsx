@@ -60,13 +60,12 @@ export default function SystemDetailContent({
   academyVideos = [],
 }: SystemDetailContentProps) {
   const router = useRouter();
-  const solutionsAvailable = solutionSections.length > 0;
-  const visibleTabSlugs = getVisibleSystemDetailTabs(solutionsAvailable);
+  const visibleTabSlugs = getVisibleSystemDetailTabs();
   const tabs = systemTabDefinitions.filter((tab) =>
     visibleTabSlugs.includes(tab.slug),
   );
   const [activeTab, setActiveTab] = useState<SystemDetailTab>(
-    isVisibleSystemDetailTab(initialActiveTab, solutionsAvailable) &&
+    isVisibleSystemDetailTab(initialActiveTab) &&
       tabs.some((tab) => tab.slug === initialActiveTab)
       ? initialActiveTab
       : "process",
@@ -92,7 +91,6 @@ export default function SystemDetailContent({
     const nextTab = getNextSystemDetailTab(
       currentTab,
       event.key,
-      solutionsAvailable,
     );
     if (!nextTab) return;
 
@@ -141,9 +139,7 @@ export default function SystemDetailContent({
 
         <div className="mt-8 flex justify-start sm:mt-9">
           <div
-            className={`grid w-full gap-1 rounded-full border border-dema-line bg-dema-paper p-1 shadow-[0_8px_24px_rgba(23,35,29,0.035)] ${
-              solutionsAvailable ? "grid-cols-2" : "grid-cols-1"
-            }`}
+            className="grid w-full grid-cols-2 gap-1 rounded-full border border-dema-line bg-dema-paper p-1 shadow-[0_8px_24px_rgba(23,35,29,0.035)]"
             role="tablist"
             aria-label="Contenu du système opérationnel"
             aria-orientation="horizontal"
@@ -184,7 +180,7 @@ export default function SystemDetailContent({
             />
           ) : null}
 
-          {solutionsAvailable && activeTab === "solutions" ? (
+          {activeTab === "solutions" ? (
             <SystemSolutionsTab sections={solutionSections} />
           ) : null}
         </section>

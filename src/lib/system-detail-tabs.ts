@@ -21,20 +21,14 @@ function isSystemDetailTab(tab?: string): tab is SystemDetailTab {
   return SYSTEM_DETAIL_TABS.includes(tab as SystemDetailTab);
 }
 
-export function getVisibleSystemDetailTabs(
-  solutionsAvailable: boolean,
-): readonly SystemDetailTab[] {
-  return solutionsAvailable ? SYSTEM_DETAIL_TABS : ["process"];
+export function getVisibleSystemDetailTabs(): readonly SystemDetailTab[] {
+  return SYSTEM_DETAIL_TABS;
 }
 
 export function isVisibleSystemDetailTab(
   tab: string | undefined,
-  solutionsAvailable: boolean,
 ): tab is SystemDetailTab {
-  return (
-    isSystemDetailTab(tab) &&
-    getVisibleSystemDetailTabs(solutionsAvailable).includes(tab)
-  );
+  return isSystemDetailTab(tab) && getVisibleSystemDetailTabs().includes(tab);
 }
 
 const LEGACY_SYSTEM_DETAIL_TABS: Readonly<Record<string, SystemDetailTab>> = {
@@ -50,15 +44,12 @@ const LEGACY_SYSTEM_DETAIL_TABS: Readonly<Record<string, SystemDetailTab>> = {
 
 export function normalizeSystemDetailTab(
   tab: string | undefined,
-  solutionsAvailable: boolean,
 ): SystemDetailTab | undefined {
   if (!tab) return undefined;
 
   const normalizedTab = LEGACY_SYSTEM_DETAIL_TABS[tab] ?? tab;
 
-  if (normalizedTab === "solutions" && !solutionsAvailable) return "process";
-
-  return isVisibleSystemDetailTab(normalizedTab, solutionsAvailable)
+  return isVisibleSystemDetailTab(normalizedTab)
     ? normalizedTab
     : undefined;
 }
@@ -66,9 +57,8 @@ export function normalizeSystemDetailTab(
 export function getNextSystemDetailTab(
   currentTab: SystemDetailTab,
   key: string,
-  solutionsAvailable: boolean,
 ): SystemDetailTab | undefined {
-  const visibleTabs = getVisibleSystemDetailTabs(solutionsAvailable);
+  const visibleTabs = getVisibleSystemDetailTabs();
   const currentIndex = visibleTabs.indexOf(currentTab);
 
   if (key === "Home") return visibleTabs[0];

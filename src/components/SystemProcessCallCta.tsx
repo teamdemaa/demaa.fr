@@ -21,11 +21,11 @@ export default function SystemProcessCallCta({
           id="system-process-call-heading"
           className="text-base font-semibold tracking-[-0.015em] text-brand-blue"
         >
-          Un appel gratuit de 30 minutes
+          Besoin d’y voir plus clair dans votre organisation ?
         </h2>
         <p className="mt-1 text-sm leading-relaxed text-dema-muted">
-          Faites le point avec un spécialiste pour que votre entreprise ne
-          dépende pas uniquement de vous au quotidien.
+          Faites le point pendant 30 minutes avec un spécialiste Demaa pour
+          identifier ce qui dépend encore de vous et la priorité à structurer.
         </p>
       </div>
 
@@ -36,13 +36,13 @@ export default function SystemProcessCallCta({
             disabled
             className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper opacity-60"
           >
-            Réserver mon appel gratuit
+            Réserver mon échange
           </button>
         }
       >
         <OrganisationSessionBookingButton
           className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper transition hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
-          label="Réserver mon appel gratuit"
+          label="Réserver mon échange"
           source={source}
           sourceIsAuthoritative
           systemSlug={systemSlug}

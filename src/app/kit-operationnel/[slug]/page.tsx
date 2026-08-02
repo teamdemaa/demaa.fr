@@ -89,10 +89,7 @@ export default async function OperationalKitPage({
             systeme={data.detail.systeme}
             demoUrl={getOperationalSystemDemoUrl(data.system.slug)}
             intro={buildSystemPageIntro(data)}
-            initialActiveTab={normalizeSystemDetailTab(
-              initialTab,
-              solutionSections.length > 0,
-            )}
+            initialActiveTab={normalizeSystemDetailTab(initialTab)}
             deliveryAvailable={hasEditableSystem}
             headingAs="h1"
             solutionSections={solutionSections}

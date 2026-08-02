@@ -280,8 +280,8 @@ export default function OperationalSystemCopyRequestModal({
                 id="system-copy-modal-description"
                 className="mt-4 text-sm leading-relaxed text-dema-muted"
               >
-                Des process concrets, des outils recommandés et un tableau
-                Google Sheets prêt à utiliser.
+                Un tableau de pilotage opérationnel simple pour suivre votre
+                activité, vos finances, vos actions et les responsabilités.
               </p>
 
               <div className="mt-7 flex flex-col gap-3">
