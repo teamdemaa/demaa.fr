@@ -1,9 +1,8 @@
 import type { EnterpriseDefinition } from "@/lib/enterprise-annuaire";
 import rawProcessRegistry from "@/lib/process-registry.generated.json";
 import rawProcessSteps from "@/lib/process-steps.generated.json";
-import { getOperationalWorkbookV2PilotProfile } from "@/lib/operational-workbook-v2-profiles";
-import { isOperationalWorkbookV2PilotSlug } from "@/lib/operational-workbook-v2";
 import type { SystemePillar } from "@/lib/system-canon";
+import { findCuratedSystemProcessRoutines } from "@/lib/system-process-routines";
 
 export type SystemeProcessStep = {
   stepId: string;
@@ -236,11 +235,9 @@ export function buildSystemeDetail(
     return null;
   }
 
-  const pilotProfile = isOperationalWorkbookV2PilotSlug(enterprise.slug)
-    ? getOperationalWorkbookV2PilotProfile(enterprise.slug)
-    : null;
-  const routines = pilotProfile
-    ? pilotProfile.routines.map((routine) => ({
+  const curatedRoutines = findCuratedSystemProcessRoutines(enterprise.slug);
+  const routines = curatedRoutines
+    ? curatedRoutines.map((routine) => ({
         bullets: routine.sourceStepIds.map((stepId) => {
           const step = processSteps.steps.find(
             (candidate) =>

@@ -6,6 +6,19 @@ const currentDir = dirname(fileURLToPath(import.meta.url));
 const rootDir = resolve(currentDir, "..");
 const enterpriseAnnuairePath = resolve(rootDir, "src/lib/enterprise-annuaire.json");
 const processRegistryPath = resolve(rootDir, "src/lib/process-registry.generated.json");
+const processStepsPath = resolve(rootDir, "src/lib/process-steps.generated.json");
+const curatedRoutinesPath = resolve(
+  rootDir,
+  "src/lib/system-process-routines.json",
+);
+
+const CURATED_ROUTINE_COUNTS = {
+  "agence-marketing": 8,
+  "assistant-administratif-externalise": 9,
+  batiment: 8,
+  pharmacie: 8,
+  restaurant: 8,
+};
 
 const VISIBLE_PILLARS = new Set([
   "Direction",
@@ -207,6 +220,8 @@ function getProcessOrder(pillar, process, document) {
 
 const enterprisePayload = readJson(enterpriseAnnuairePath);
 const processRegistry = readJson(processRegistryPath);
+const processSteps = readJson(processStepsPath);
+const curatedRoutines = readJson(curatedRoutinesPath);
 const documentsById = new Map(
   (processRegistry.documents ?? []).map((document) => [document.documentId, document]),
 );
@@ -366,6 +381,96 @@ for (const expectation of CRITICAL_EXPECTATIONS) {
         errors,
         `Systeme ${expectation.slug} is missing critical check "${check.label}".`,
       );
+    }
+  }
+}
+
+const curatedRoutineSlugs = Object.keys(curatedRoutines).sort();
+const expectedCuratedRoutineSlugs = Object.keys(CURATED_ROUTINE_COUNTS).sort();
+
+if (JSON.stringify(curatedRoutineSlugs) !== JSON.stringify(expectedCuratedRoutineSlugs)) {
+  addUnique(
+    errors,
+    `Curated Process routine profiles mismatch: ${curatedRoutineSlugs.join(", ")}.`,
+  );
+}
+
+const métierByCuratedSlug = new Map(
+  (processRegistry["métiers"] ?? []).map((métier) => [métier.slug, métier]),
+);
+const processById = new Map(
+  (processRegistry.processes ?? []).map((process) => [process.processId, process]),
+);
+const activeStepById = new Map(
+  (processSteps.steps ?? [])
+    .filter((step) => step.status === "Actif")
+    .map((step) => [step.stepId, step]),
+);
+const curatedRoutineIds = new Set();
+
+for (const systemSlug of expectedCuratedRoutineSlugs) {
+  const métier = métierByCuratedSlug.get(systemSlug);
+  const routines = curatedRoutines[systemSlug];
+
+  if (!métier || !Array.isArray(routines)) {
+    addUnique(errors, `Curated Process routine profile missing for ${systemSlug}.`);
+    continue;
+  }
+  if (routines.length !== CURATED_ROUTINE_COUNTS[systemSlug]) {
+    addUnique(
+      errors,
+      `Curated Process routine count mismatch for ${systemSlug}: ${routines.length}.`,
+    );
+  }
+
+  for (const routine of routines) {
+    if (
+      !routine.routineId ||
+      !routine.title?.trim() ||
+      !routine.frequency?.trim() ||
+      !Array.isArray(routine.sourceProcessIds) ||
+      routine.sourceProcessIds.length === 0 ||
+      !Array.isArray(routine.sourceStepIds) ||
+      routine.sourceStepIds.length < 2 ||
+      routine.sourceStepIds.length > 4
+    ) {
+      addUnique(
+        errors,
+        `Curated Process routine incomplete for ${systemSlug}: ${routine.routineId ?? "unknown"}.`,
+      );
+      continue;
+    }
+    if (curatedRoutineIds.has(routine.routineId)) {
+      addUnique(errors, `Curated Process routine ID duplicated: ${routine.routineId}.`);
+    }
+    curatedRoutineIds.add(routine.routineId);
+
+    for (const processId of routine.sourceProcessIds) {
+      const process = processById.get(processId);
+      if (
+        !process ||
+        process.status !== "Actif" ||
+        process.familyId !== métier.familyId
+      ) {
+        addUnique(
+          errors,
+          `Curated Process source process invalid for ${routine.routineId}: ${processId}.`,
+        );
+      }
+    }
+
+    for (const stepId of routine.sourceStepIds) {
+      const step = activeStepById.get(stepId);
+      if (
+        !step ||
+        step.métierId !== métier.métierId ||
+        !routine.sourceProcessIds.includes(step.processId)
+      ) {
+        addUnique(
+          errors,
+          `Curated Process source step invalid for ${routine.routineId}: ${stepId}.`,
+        );
+      }
     }
   }
 }
