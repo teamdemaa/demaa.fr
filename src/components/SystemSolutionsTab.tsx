@@ -282,20 +282,20 @@ export default function SystemSolutionsTab({
                         }
                         setSelected(placement);
                       }}
-                      className="group aspect-square min-w-0 snap-start overflow-hidden rounded-[1.2rem] border border-dema-line bg-dema-paper p-5 text-left shadow-[0_10px_28px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/20 hover:shadow-[0_14px_32px_rgba(23,35,29,0.07)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:p-6"
+                      className="group min-h-[248px] min-w-0 snap-start overflow-hidden rounded-[1.2rem] border border-dema-line bg-dema-paper p-5 text-left shadow-[0_10px_28px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/20 hover:shadow-[0_14px_32px_rgba(23,35,29,0.07)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:p-6 md:aspect-square md:min-h-0"
                       aria-label={`Ouvrir ${resource.name}`}
                     >
                       <span className="flex h-full min-h-0 flex-col">
                         <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
                           <ResourceIcon className="h-5 w-5" aria-hidden="true" />
                         </span>
-                        <span className="mt-5 block text-[10px] font-semibold uppercase tracking-[0.15em] text-dema-muted">
+                        <span className="mt-4 block text-[10px] font-semibold uppercase tracking-[0.15em] text-dema-muted md:mt-5">
                           {SOLUTION_RESOURCE_TYPE_WORKING_LABELS[resource.resourceType]}
                         </span>
-                        <span className="mt-2 block text-lg font-semibold leading-snug text-brand-blue sm:text-xl">
+                        <span className="mt-1.5 block text-lg font-semibold leading-snug text-brand-blue sm:text-xl md:mt-2">
                           {resource.name}
                         </span>
-                        <span className="mt-3 line-clamp-3 text-sm leading-relaxed text-dema-muted">
+                        <span className="mt-2 text-[13px] leading-5 text-dema-muted md:mt-3 md:text-sm md:leading-relaxed">
                           {resource.description}
                         </span>
                       </span>
