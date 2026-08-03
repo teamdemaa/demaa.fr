@@ -38,6 +38,10 @@ type SystemEcosystemEvent =
   | "system_ecosystem_resource_opened"
   | "system_ecosystem_tab_opened";
 
+type SystemSolutionEvent =
+  | "system_solution_resource_cta_clicked"
+  | "system_solution_resource_opened";
+
 export function trackSystemJourneyEvent(
   eventName: SystemJourneyEvent,
   input: {
@@ -89,6 +93,37 @@ export function trackSystemEcosystemEvent(
     position: input.position ?? -1,
     resource_slug: input.resourceSlug?.slice(0, 120) || "none",
     resource_type: input.resourceType?.slice(0, 40) || "none",
+    system_slug: input.systemSlug.slice(0, 120),
+  };
+
+  try {
+    track(eventName, properties);
+    window.gtag?.("event", eventName, properties);
+  } catch {
+    // Les parcours restent utilisables même si la mesure est indisponible.
+  }
+}
+
+export function trackSystemSolutionEvent(
+  eventName: SystemSolutionEvent,
+  input: {
+    rank: number;
+    resourceSlug: string;
+    resourceType: string;
+    section: string;
+    systemSlug: string;
+  },
+) {
+  if (typeof window === "undefined") return;
+
+  const preferences = getCookieConsentPreferences();
+  if (!preferences?.analytics) return;
+
+  const properties = {
+    rank: input.rank,
+    resource_slug: input.resourceSlug.slice(0, 120),
+    resource_type: input.resourceType.slice(0, 40),
+    section: input.section.slice(0, 40),
     system_slug: input.systemSlug.slice(0, 120),
   };
 

@@ -14,6 +14,9 @@ export type RenderableSolutionResourceDto = Readonly<{
   resourceType: SolutionResourceType;
   name: string;
   description: string;
+  displayCategory?: string;
+  ctaLabel?: string;
+  indicativePricing?: string;
   interaction: SupportedSolutionInteractionDto;
 }>;
 

@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import DirectoryDetailDialogShell from "@/components/DirectoryDetailDialogShell";
+import { trackSystemSolutionEvent } from "@/lib/kit-analytics-client";
 import type { SolutionSection } from "@/lib/solution-registry-dto";
 import type {
   RenderableSolutionPlacementDto,
@@ -31,21 +32,21 @@ export const SOLUTION_UI_WORKING_LABELS: Readonly<Record<SolutionSection, string
   providers: "Prestataires et fournisseurs",
 };
 
-const SOLUTION_RESOURCE_TYPE_WORKING_LABELS: Readonly<
-  Record<RenderableSolutionPlacementDto["resource"]["resourceType"], string>
-> = {
-  tool: "Outil",
-  software: "Logiciel",
-  provider: "Prestataire",
-  directory: "Annuaire",
-};
-
 const RESOURCE_ICONS = {
   tool: Gauge,
   software: Wrench,
   provider: BriefcaseBusiness,
   directory: Building2,
 } as const;
+
+const DEFAULT_RESOURCE_LABELS: Readonly<
+  Record<RenderableSolutionPlacementDto["resource"]["resourceType"], string>
+> = {
+  tool: "Outil",
+  software: "Logiciel",
+  provider: "Fournisseur",
+  directory: "Organisation professionnelle",
+};
 
 function buildInitialRailState(sections: readonly RenderableSolutionSectionDto[]) {
   return Object.fromEntries(
@@ -59,19 +60,23 @@ function buildInitialRailState(sections: readonly RenderableSolutionSectionDto[]
   ) as Partial<Record<SolutionSection, RailState>>;
 }
 
-function SolutionAction({ interaction }: { interaction: SupportedSolutionInteractionDto }) {
+function SolutionAction({
+  interaction,
+  label,
+  onClick,
+}: {
+  interaction: SupportedSolutionInteractionDto;
+  label: string;
+  onClick: () => void;
+}) {
   if (interaction.interactionMode === "system_delivery") return null;
 
-  const label =
-    interaction.interactionMode === "detail"
-      ? "Voir la fiche"
-      : "Découvrir la solution";
   const className =
     "mt-7 inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2";
 
   if (interaction.href.startsWith("/")) {
     return (
-      <Link href={interaction.href} className={className}>
+      <Link href={interaction.href} className={className} onClick={onClick}>
         {label}
       </Link>
     );
@@ -81,8 +86,9 @@ function SolutionAction({ interaction }: { interaction: SupportedSolutionInterac
     <a
       href={interaction.href}
       target="_blank"
-      rel="noreferrer"
+      rel="noopener noreferrer"
       className={className}
+      onClick={onClick}
     >
       {label}
       <ExternalLink className="h-4 w-4" aria-hidden="true" />
@@ -105,7 +111,7 @@ function SolutionDialog({
       onClose={onClose}
     >
       <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-        {SOLUTION_RESOURCE_TYPE_WORKING_LABELS[resource.resourceType]}
+        {resource.displayCategory ?? DEFAULT_RESOURCE_LABELS[resource.resourceType]}
       </p>
       <h3 className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-brand-blue sm:text-3xl">
         {resource.name}
@@ -115,7 +121,7 @@ function SolutionDialog({
       </p>
       <div className="mt-7 space-y-5 border-t border-dema-line pt-6">
         <div>
-          <h4 className="text-sm font-semibold text-brand-blue">Usage dans ce système</h4>
+          <h4 className="text-sm font-semibold text-brand-blue">Ce que vous y gagnez</h4>
           <p className="mt-2 text-sm leading-relaxed text-dema-muted">
             {placement.usage}
           </p>
@@ -126,9 +132,17 @@ function SolutionDialog({
             {placement.fitRationale}
           </p>
         </div>
+        {resource.indicativePricing ? (
+          <div>
+            <h4 className="text-sm font-semibold text-brand-blue">Tarif indicatif</h4>
+            <p className="mt-2 text-sm leading-relaxed text-dema-muted">
+              {resource.indicativePricing}
+            </p>
+          </div>
+        ) : null}
         {placement.fitConstraints.length > 0 ? (
           <div>
-            <h4 className="text-sm font-semibold text-brand-blue">Points d’attention</h4>
+            <h4 className="text-sm font-semibold text-brand-blue">À vérifier avant de choisir</h4>
             <ul className="mt-2 space-y-2 text-sm leading-relaxed text-dema-muted">
               {placement.fitConstraints.map((constraint) => (
                 <li key={constraint} className="flex gap-2">
@@ -141,7 +155,17 @@ function SolutionDialog({
         ) : null}
       </div>
 
-      <SolutionAction interaction={resource.interaction} />
+      <SolutionAction
+        interaction={resource.interaction}
+        label={resource.ctaLabel ?? "Découvrir la solution"}
+        onClick={() => trackSystemSolutionEvent("system_solution_resource_cta_clicked", {
+          rank: placement.rank,
+          resourceSlug: resource.resourceSlug,
+          resourceType: resource.resourceType,
+          section: placement.section,
+          systemSlug: placement.systemSlug,
+        })}
+      />
     </DirectoryDetailDialogShell>
   );
 }
@@ -280,6 +304,13 @@ export default function SystemSolutionsTab({
                           onOpenSystemDelivery?.();
                           return;
                         }
+                        trackSystemSolutionEvent("system_solution_resource_opened", {
+                          rank: placement.rank,
+                          resourceSlug: resource.resourceSlug,
+                          resourceType: resource.resourceType,
+                          section: placement.section,
+                          systemSlug: placement.systemSlug,
+                        });
                         setSelected(placement);
                       }}
                       className="group min-h-[248px] min-w-0 snap-start overflow-hidden rounded-[1.2rem] border border-dema-line bg-dema-paper p-5 text-left shadow-[0_10px_28px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/20 hover:shadow-[0_14px_32px_rgba(23,35,29,0.07)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:p-6 md:aspect-square md:min-h-0"
@@ -290,7 +321,7 @@ export default function SystemSolutionsTab({
                           <ResourceIcon className="h-5 w-5" aria-hidden="true" />
                         </span>
                         <span className="mt-4 block text-[10px] font-semibold uppercase tracking-[0.15em] text-dema-muted md:mt-5">
-                          {SOLUTION_RESOURCE_TYPE_WORKING_LABELS[resource.resourceType]}
+                          {resource.displayCategory ?? DEFAULT_RESOURCE_LABELS[resource.resourceType]}
                         </span>
                         <span className="mt-1.5 block text-lg font-semibold leading-snug text-brand-blue sm:text-xl md:mt-2">
                           {resource.name}

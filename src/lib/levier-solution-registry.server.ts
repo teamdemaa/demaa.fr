@@ -153,22 +153,25 @@ export const LEVIER_PLACEMENT_SYSTEM_SLUGS = [
 ] as const;
 
 export const LEVIER_SOLUTION_PLACEMENTS: readonly SolutionPlacement[] =
-  LEVIER_PLACEMENT_SYSTEM_SLUGS.map((systemSlug) => ({
-    ...LEVIER_REVIEW,
-    placementId: `${systemSlug}:levier:software:1`,
-    systemSlug,
-    resourceSlug: "levier",
-    rank: 1,
-    section: "software",
-    usage:
-      "Suivre l’activité, les finances, les actions et les responsabilités dans un tableau unique.",
-    fitRationale:
-      "Levier fournit le socle de pilotage commun nécessaire pour exécuter ce système opérationnel.",
-    fitConstraints: [
-      "Adapter les objectifs, responsables et rythmes de suivi à l’organisation.",
-    ],
-    commercialRelationship: "owned",
-    status: "published",
-    placementVersion: "levier.v1",
-    publicationBlockers: [],
-  }));
+  LEVIER_PLACEMENT_SYSTEM_SLUGS.map((systemSlug) => {
+    const rank = systemSlug === "batiment" ? 3 : 1;
+    return {
+      ...LEVIER_REVIEW,
+      placementId: `${systemSlug}:levier:software:${rank}`,
+      systemSlug,
+      resourceSlug: "levier",
+      rank,
+      section: "software",
+      usage:
+        "Suivre l’activité, les finances, les actions et les responsabilités dans un tableau unique.",
+      fitRationale:
+        "Levier fournit le socle de pilotage commun nécessaire pour exécuter ce système opérationnel.",
+      fitConstraints: [
+        "Adapter les objectifs, responsables et rythmes de suivi à l’organisation.",
+      ],
+      commercialRelationship: "owned",
+      status: "published",
+      placementVersion: "levier.v1",
+      publicationBlockers: [],
+    };
+  });

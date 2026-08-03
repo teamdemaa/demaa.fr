@@ -18,6 +18,7 @@ vi.mock("@/lib/cookie-consent", () => ({
 import {
   trackSystemEcosystemEvent,
   trackSystemJourneyEvent,
+  trackSystemSolutionEvent,
 } from "@/lib/kit-analytics-client";
 
 describe("system journey analytics", () => {
@@ -93,5 +94,38 @@ describe("system journey analytics", () => {
         system_slug: "batiment",
       },
     );
+  });
+
+  it("emits only the five non-PII Solution properties after consent", () => {
+    mocks.getCookieConsentPreferences.mockReturnValue({
+      analytics: true,
+      marketing: false,
+    });
+
+    trackSystemSolutionEvent("system_solution_resource_opened", {
+      rank: 2,
+      resourceSlug: "costructor",
+      resourceType: "software",
+      section: "software",
+      systemSlug: "batiment",
+    });
+
+    expect(mocks.track).toHaveBeenCalledWith(
+      "system_solution_resource_opened",
+      {
+        rank: 2,
+        resource_slug: "costructor",
+        resource_type: "software",
+        section: "software",
+        system_slug: "batiment",
+      },
+    );
+    expect(Object.keys(mocks.track.mock.calls[0]?.[1] ?? {}).sort()).toEqual([
+      "rank",
+      "resource_slug",
+      "resource_type",
+      "section",
+      "system_slug",
+    ]);
   });
 });

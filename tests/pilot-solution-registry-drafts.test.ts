@@ -31,10 +31,15 @@ import {
 const now = new Date("2026-08-03T21:00:00.000Z");
 const expectedResourceSlugs = [
   "obat",
+  "costructor",
+  "progbat",
+  "vertuoza",
   "fieldwire",
   "graneet",
   "point-p",
+  "plateforme-du-batiment",
   "kiloutou",
+  "wurth",
   "capeb",
   "tiimora",
   "pennylane",
@@ -57,10 +62,10 @@ describe("three-pilot draft Solutions registry", () => {
   it("stores the reviewed resources, placements and unmet needs without inventing slugs", () => {
     expect(PILOT_SOLUTION_DRAFT_RESOURCES.map(({ resourceSlug }) => resourceSlug))
       .toEqual(expectedResourceSlugs);
-    expect(PILOT_SOLUTION_DRAFT_PLACEMENTS).toHaveLength(14);
+    expect(PILOT_SOLUTION_DRAFT_PLACEMENTS).toHaveLength(17);
     expect(PILOT_SOLUTION_DRAFT_PLACEMENTS.map(({ systemSlug }) => systemSlug))
       .toEqual([
-        "batiment", "batiment", "batiment", "batiment", "batiment", "batiment",
+        "batiment", "batiment", "batiment", "batiment", "batiment", "batiment", "batiment", "batiment", "batiment",
         "cabinet-comptable", "cabinet-comptable", "cabinet-comptable",
         "agence-marketing", "agence-marketing", "agence-marketing", "agence-marketing", "agence-marketing",
       ]);
@@ -128,25 +133,18 @@ describe("three-pilot draft Solutions registry", () => {
     }, now)).toEqual([]);
   });
 
-  it("uses only existing internal detail pages", () => {
+  it("resolves every draft resource to its catalog-backed official HTTPS destination", () => {
     for (const resource of PILOT_SOLUTION_DRAFT_RESOURCES) {
-      expect(resource.interactionMode).toBe("detail");
-      if (resource.interactionMode !== "detail") continue;
+      expect(resource.interactionMode).toBe("external_link");
+      if (resource.interactionMode !== "external_link") continue;
+      expect(resource.href).toMatch(/^https:\/\//);
 
       if (resource.resourceType === "software") {
-        expect(resource.href).toBe(`/annuaire-outils/${resource.resourceSlug}`);
-        expect(getToolDirectoryItemBySlug(resource.resourceSlug)).not.toBeNull();
+        expect(resource.href).toBe(getToolDirectoryItemBySlug(resource.resourceSlug)?.url);
       } else if (resource.resourceType === "provider") {
-        expect(resource.href).toBe(
-          `/annuaire-fournisseurs/${resource.resourceSlug}`,
-        );
-        expect(getDemaaSupplierBySlug(resource.resourceSlug)).not.toBeNull();
+        expect(resource.href).toBe(getDemaaSupplierBySlug(resource.resourceSlug)?.href);
       } else {
-        expect(resource).toMatchObject({
-          resourceSlug: "capeb",
-          href: "/annuaire-reseaux-pro/capeb",
-        });
-        expect(getDemaaProNetworkBySlug(resource.resourceSlug)).not.toBeNull();
+        expect(resource.href).toBe(getDemaaProNetworkBySlug(resource.resourceSlug)?.href);
       }
     }
   });
@@ -160,7 +158,7 @@ describe("three-pilot draft Solutions registry", () => {
       expect(placements).toHaveLength(1);
       expect(placements[0]).toMatchObject({
         systemSlug: system.slug,
-        rank: 1,
+        rank: system.slug === "batiment" ? 3 : 1,
         resource: { resourceSlug: "levier" },
       });
     }
@@ -177,8 +175,8 @@ describe("three-pilot draft Solutions registry", () => {
     expect(getRenderableSolutionSectionsForSystem("batiment").map(({ placements }) =>
       placements.map(({ resource }) => resource.resourceSlug)
     )).toEqual([
-      ["levier", "obat", "fieldwire", "graneet"],
-      ["point-p", "kiloutou", "capeb"],
+      ["obat", "costructor", "levier", "progbat", "vertuoza"],
+      ["point-p", "plateforme-du-batiment", "kiloutou", "wurth", "capeb"],
     ]);
     expect(getRenderableSolutionSectionsForSystem("cabinet-comptable").map(({ placements }) =>
       placements.map(({ resource }) => resource.resourceSlug)

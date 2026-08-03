@@ -18,7 +18,7 @@ import {
 import { enterpriseCatalog } from "@/lib/enterprise-annuaire";
 
 describe("server-only product Solutions registries", () => {
-  it("publishes Levier first on every system after the reviewed asset handoff", () => {
+  it("publishes Levier on every system with the Bâtiment ranking exception", () => {
     expect(getPublishedSolutionResources()).toEqual([
       expect.objectContaining({
         resourceSlug: "levier",
@@ -32,7 +32,7 @@ describe("server-only product Solutions registries", () => {
     expect(getPublishedSolutionResourceBySlug(42)).toBeNull();
     expect(getPublishedSolutionPlacementsForSystem("batiment")).toEqual([
       expect.objectContaining({
-        rank: 1,
+        rank: 3,
         resource: expect.objectContaining({
           resourceSlug: "levier",
           interaction: { interactionMode: "system_delivery" },
@@ -45,7 +45,7 @@ describe("server-only product Solutions registries", () => {
       expect.objectContaining({
         section: "software",
         placements: [expect.objectContaining({
-          rank: 1,
+          rank: 3,
           resource: expect.objectContaining({ resourceSlug: "levier" }),
         })],
       }),
@@ -64,7 +64,7 @@ describe("server-only product Solutions registries", () => {
       enterpriseCatalog.map(({ slug }) => slug),
     );
     expect(LEVIER_SOLUTION_PLACEMENTS.every((placement) =>
-      placement.rank === 1 &&
+      placement.rank === (placement.systemSlug === "batiment" ? 3 : 1) &&
       placement.status === "published" &&
       placement.publicationBlockers.length === 0
     )).toBe(true);

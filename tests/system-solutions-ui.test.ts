@@ -16,6 +16,8 @@ import {
   getPublishedRenderableSolutionSectionsForSystem,
   getRenderableSolutionSectionsForSystem,
 } from "@/lib/system-solutions-ui.server";
+import { getSolutionResourcePresentation } from "@/lib/solution-resource-presentation.server";
+import { PILOT_SOLUTION_DRAFT_RESOURCES } from "@/lib/pilot-solution-registry-drafts.server";
 import {
   publishedLevierSolutionSectionsFixture,
   publishedSolutionSectionsFixture,
@@ -62,16 +64,16 @@ describe("system Solutions UI", () => {
     );
   });
 
-  it("publishes Levier first in Solutions on all 115 systems", () => {
+  it("keeps Levier universal, third for Bâtiment and first on every other system", () => {
     expect(enterpriseCatalog).toHaveLength(115);
 
     for (const system of enterpriseCatalog) {
       const sections = getRenderableSolutionSectionsForSystem(system.slug);
       expect(JSON.parse(JSON.stringify(sections))).toEqual(sections);
       expect(
-        sections[0]?.placements[0],
+        sections[0]?.placements.find(({ resource }) => resource.resourceSlug === "levier"),
       ).toMatchObject({
-        rank: 1,
+        rank: system.slug === "batiment" ? 3 : 1,
         resource: {
           resourceSlug: "levier",
           interaction: { interactionMode: "system_delivery" },
@@ -124,8 +126,8 @@ describe("system Solutions UI", () => {
   it("shows the selected pilot resources by relevance without exposing review fields", () => {
     const expected = {
       batiment: [
-        ["levier", "obat", "fieldwire", "graneet"],
-        ["point-p", "kiloutou", "capeb"],
+        ["obat", "costructor", "levier", "progbat", "vertuoza"],
+        ["point-p", "plateforme-du-batiment", "kiloutou", "wurth", "capeb"],
       ],
       "cabinet-comptable": [
         ["levier", "tiimora", "pennylane", "silae"],
@@ -170,6 +172,69 @@ describe("system Solutions UI", () => {
 
     expect(getPublishedRenderableSolutionSectionsForSystem("batiment")[0]?.placements)
       .toHaveLength(1);
+  });
+
+  it("uses compact direct modals with resource-specific categories and no internal detail CTA", async () => {
+    const sections = getRenderableSolutionSectionsForSystem("batiment");
+    const resources = sections.flatMap(({ placements }) => placements.map(({ resource }) => resource));
+    const bySlug = new Map(resources.map((resource) => [resource.resourceSlug, resource]));
+
+    expect(bySlug.get("obat")).toMatchObject({
+      displayCategory: "Logiciel",
+      ctaLabel: "Voir l’outil",
+      indicativePricing: "À partir de 39 € HT/mois (paiement annuel)",
+      interaction: { interactionMode: "external_link", href: "https://www.obat.fr/" },
+    });
+    expect(bySlug.get("costructor")).toMatchObject({
+      ctaLabel: "Voir l’outil",
+      indicativePricing: "Gratuit, puis à partir de 12,50 € HT/mois (paiement annuel)",
+      interaction: { interactionMode: "external_link", href: "https://costructor.co/" },
+    });
+    expect(bySlug.get("point-p")).toMatchObject({
+      displayCategory: "Fournisseur de matériaux",
+      ctaLabel: "Voir le fournisseur",
+    });
+    expect(bySlug.get("plateforme-du-batiment")).toMatchObject({
+      displayCategory: "Fournisseur réservé aux professionnels",
+      ctaLabel: "Voir le fournisseur",
+    });
+    expect(bySlug.get("kiloutou")).toMatchObject({
+      displayCategory: "Location de matériel",
+      ctaLabel: "Voir le service de location",
+    });
+    expect(bySlug.get("wurth")).toMatchObject({
+      displayCategory: "Fournisseur d’outillage et de consommables",
+      ctaLabel: "Voir le fournisseur",
+    });
+    expect(bySlug.get("capeb")).toMatchObject({
+      displayCategory: "Organisation professionnelle",
+      ctaLabel: "Découvrir l’organisation",
+    });
+
+    for (const resource of resources.filter(({ resourceSlug }) => resourceSlug !== "levier")) {
+      expect(resource.interaction.interactionMode).toBe("external_link");
+      if (resource.interaction.interactionMode === "external_link") {
+        expect(resource.interaction.href).toMatch(/^https:\/\//);
+      }
+    }
+
+    const source = await readSource("src/components/SystemSolutionsTab.tsx");
+    expect(source).toContain("Ce que vous y gagnez");
+    expect(source).toContain("Pourquoi cette solution");
+    expect(source).toContain("Tarif indicatif");
+    expect(source).toContain("À vérifier avant de choisir");
+    expect(source).toContain('rel="noopener noreferrer"');
+    expect(source).not.toContain("Voir la fiche");
+    expect(source).not.toContain("Usage dans ce système");
+
+    const obat = PILOT_SOLUTION_DRAFT_RESOURCES.find(({ resourceSlug }) => resourceSlug === "obat");
+    expect(obat).toBeDefined();
+    const presentation = getSolutionResourcePresentation(obat!);
+    expect(presentation).toMatchObject({
+      pricingReviewedAt: "2026-08-04",
+      pricingSource: "https://www.obat.fr/",
+    });
+    expect(JSON.stringify(sections)).not.toMatch(/pricingReviewedAt|pricingSource/);
   });
 
   it("keeps the registry server-side and crosses RSC with public DTOs only", async () => {

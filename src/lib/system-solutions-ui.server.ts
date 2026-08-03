@@ -11,6 +11,10 @@ import {
   type SolutionPlacement,
   type SolutionResource,
 } from "@/lib/solution-registry-contract";
+import {
+  getSolutionResourcePresentation,
+  resolveSolutionOfficialDestination,
+} from "@/lib/solution-resource-presentation.server";
 import type {
   PublishedSolutionPlacementDto,
   SolutionSection,
@@ -51,6 +55,13 @@ function toRenderablePlacement(
       resourceType: resource.resourceType,
       name: resource.name,
       description: resource.description,
+      displayCategory: resource.resourceType === "directory"
+        ? "Organisation professionnelle"
+        : resource.resourceType === "provider"
+        ? "Fournisseur"
+        : resource.resourceType === "tool"
+        ? "Outil"
+        : "Logiciel",
       interaction,
     },
   };
@@ -96,9 +107,10 @@ function toRenderableDraftPlacement(
   resource: SolutionResource,
 ): RenderableSolutionPlacementDto | null {
   if (!hasSupportedDraftInteraction(resource)) return null;
-  const interaction = resource.interactionMode === "system_delivery"
-    ? { interactionMode: resource.interactionMode } as const
-    : { interactionMode: resource.interactionMode, href: resource.href } as const;
+  const officialDestination = resolveSolutionOfficialDestination(resource);
+  if (!officialDestination) return null;
+  const presentation = getSolutionResourcePresentation(resource);
+  const interaction = { interactionMode: "external_link", href: officialDestination } as const;
   return {
     placementId: placement.placementId,
     systemSlug: placement.systemSlug,
@@ -106,12 +118,15 @@ function toRenderableDraftPlacement(
     section: placement.section,
     usage: placement.usage,
     fitRationale: placement.fitRationale,
-    fitConstraints: [...placement.fitConstraints],
+    fitConstraints: [...placement.fitConstraints].slice(0, 2),
     resource: {
       resourceSlug: resource.resourceSlug,
       resourceType: resource.resourceType,
       name: resource.name,
       description: resource.description,
+      displayCategory: presentation.displayCategory,
+      ctaLabel: presentation.ctaLabel,
+      indicativePricing: presentation.indicativePricing,
       interaction,
     },
   };
