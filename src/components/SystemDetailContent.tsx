@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, ArrowRight, BookOpen } from "lucide-react";
 import { type KeyboardEvent, useCallback, useState } from "react";
+import HistoricalOperationalSystemCopyRequestModal from "@/components/HistoricalOperationalSystemCopyRequestModal";
 import OperationalSystemCopyRequestModal from "@/components/OperationalSystemCopyRequestModal";
 import SystemProcessCallCta from "@/components/SystemProcessCallCta";
 import SystemSolutionsTab from "@/components/SystemSolutionsTab";
@@ -26,6 +27,7 @@ import type { System } from "@/lib/types";
 type SystemDetailContentProps = {
   system: System;
   systeme: SystemeDetail | null;
+  demoUrl?: string | null;
   intro: string;
   initialActiveTab?: string;
   deliveryAvailable?: boolean;
@@ -52,6 +54,7 @@ const EMPTY_SOLUTION_SECTIONS: readonly RenderableSolutionSectionDto[] = [];
 export default function SystemDetailContent({
   system,
   systeme,
+  demoUrl,
   intro,
   initialActiveTab,
   deliveryAvailable = false,
@@ -238,8 +241,17 @@ export default function SystemDetailContent({
           </section>
         ) : null}
       </article>
-      {isSystemModalOpen ? (
+      {isSystemModalOpen && hasLevierSolution ? (
         <OperationalSystemCopyRequestModal
+          preview={preview}
+          systemName={system.name}
+          systemSlug={system.slug}
+          onClose={closeSystemModal}
+        />
+      ) : null}
+      {isSystemModalOpen && !hasLevierSolution ? (
+        <HistoricalOperationalSystemCopyRequestModal
+          demoUrl={demoUrl}
           preview={preview}
           systemName={system.name}
           systemSlug={system.slug}

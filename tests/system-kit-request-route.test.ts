@@ -410,6 +410,17 @@ describe("free operational system delivery route", () => {
     expect(mocks.sendDeliveryEmail).not.toHaveBeenCalled();
   });
 
+  it("keeps first name mandatory for the historical system delivery", async () => {
+    const response = await POST(buildRequest({ firstName: undefined }));
+
+    expect(response.status).toBe(400);
+    expect(mocks.getPublishedSolutionPlacements).toHaveBeenCalledWith(
+      "plomberie-chauffage",
+    );
+    expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
+    expect(mocks.sendDeliveryEmail).not.toHaveBeenCalled();
+  });
+
   it("rejects an invalid e-mail even when Levier does not require a name", async () => {
     const response = await POST(buildRequest({
       email: "invalid",

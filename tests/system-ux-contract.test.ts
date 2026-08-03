@@ -13,11 +13,20 @@ describe("system UX contract", () => {
     const modalSource = await readSource(
       "src/components/OperationalSystemCopyRequestModal.tsx",
     );
+    const historicalModalSource = await readSource(
+      "src/components/HistoricalOperationalSystemCopyRequestModal.tsx",
+    );
+    const pageSource = await readSource(
+      "src/app/kit-operationnel/[slug]/page.tsx",
+    );
 
     expect(detailSource.match(/Voir le système/g)).toHaveLength(1);
     expect(detailSource).not.toContain("Recevoir ma copie modifiable");
     expect(detailSource).toContain("deliveryAvailable && !hasLevierSolution");
     expect(detailSource).toContain("onOpenSystemDelivery");
+    expect(detailSource).toContain("isSystemModalOpen && hasLevierSolution");
+    expect(detailSource).toContain("isSystemModalOpen && !hasLevierSolution");
+    expect(detailSource).toContain("HistoricalOperationalSystemCopyRequestModal");
     expect(modalSource).not.toMatch(/"overview"\s*\|\s*"form"/);
     expect(modalSource).toContain("Recevoir Levier");
     expect(modalSource).toContain("Levier vous a été envoyé par e-mail");
@@ -32,6 +41,13 @@ describe("system UX contract", () => {
     );
     expect(modalSource).toContain('fetch("/api/systeme-kit/request"');
     expect(modalSource).not.toMatch(/Stripe|checkout|\/copy|\.xlsx/);
+    expect(historicalModalSource).toContain('name="firstName"');
+    expect(historicalModalSource).toContain("Prénom");
+    expect(historicalModalSource).toContain("Voir la démonstration");
+    expect(historicalModalSource).toContain("Recevoir ma copie modifiable");
+    expect(historicalModalSource).toContain('firstName: normalizedFirstName');
+    expect(historicalModalSource).toContain('const flowKey = `system-copy:${systemSlug}`');
+    expect(pageSource).toContain("getOperationalSystemDemoUrl(data.system.slug)");
   });
 
   it("renders the organisation exchange once after the active panel", async () => {
