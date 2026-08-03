@@ -5,7 +5,10 @@ import SystemDetailContent from "@/components/SystemDetailContent";
 import { getOperationalSystemDemoUrl } from "@/lib/document-models";
 import { hasEditableOperationalSystemAsset } from "@/lib/editable-operational-system-assets.server";
 import { getAcademyContentForSystem } from "@/lib/academy-course-content";
-import { getRenderableSolutionSectionsForSystem } from "@/lib/system-solutions-ui.server";
+import {
+  getPublishedRenderableSolutionSectionsForSystem,
+  getRenderableSolutionSectionsForSystem,
+} from "@/lib/system-solutions-ui.server";
 import { normalizeSystemDetailTab } from "@/lib/system-detail-tabs";
 import {
   buildSystemPageIntro,
@@ -28,7 +31,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const [data, solutionSections] = await Promise.all([
     getSystemDetailPageData(slug),
-    getRenderableSolutionSectionsForSystem(slug),
+    getPublishedRenderableSolutionSectionsForSystem(slug),
   ]);
 
   if (!data) {
@@ -49,9 +52,10 @@ export default async function OperationalKitPage({
   searchParams,
 }: OperationalKitPageProps) {
   const [{ slug }, resolvedSearchParams] = await Promise.all([params, searchParams]);
-  const [data, solutionSections] = await Promise.all([
+  const [data, solutionSections, publishedSolutionSections] = await Promise.all([
     getSystemDetailPageData(slug),
     getRenderableSolutionSectionsForSystem(slug),
+    getPublishedRenderableSolutionSectionsForSystem(slug),
   ]);
 
   if (!data) {
@@ -59,7 +63,7 @@ export default async function OperationalKitPage({
   }
 
   const initialTab = getParamValue(resolvedSearchParams.tab);
-  const jsonLd = buildSystemPageJsonLd(data, solutionSections);
+  const jsonLd = buildSystemPageJsonLd(data, publishedSolutionSections);
   const hasEditableSystem = hasEditableOperationalSystemAsset(data.system.slug);
   const academyVideos = getAcademyContentForSystem(data.system.slug).map(
     (content) => ({

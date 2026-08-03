@@ -6,6 +6,10 @@ import {
   LEVIER_SOLUTION_PLACEMENTS,
   LEVIER_SOLUTION_RESOURCE,
 } from "@/lib/levier-solution-registry.server";
+import {
+  PILOT_SOLUTION_DRAFT_PLACEMENTS,
+  PILOT_SOLUTION_DRAFT_RESOURCES,
+} from "@/lib/pilot-solution-registry-drafts.server";
 import { deepFreeze, parseSlug } from "@/lib/registry-contract-utils";
 import {
   selectPublishedSolutionPlacements,
@@ -19,9 +23,11 @@ import type {
 
 const productSolutionResources: readonly unknown[] = deepFreeze([
   LEVIER_SOLUTION_RESOURCE,
+  ...PILOT_SOLUTION_DRAFT_RESOURCES,
 ]);
 const productSolutionPlacements: readonly unknown[] = deepFreeze([
   ...LEVIER_SOLUTION_PLACEMENTS,
+  ...PILOT_SOLUTION_DRAFT_PLACEMENTS,
 ]);
 const knownSystemSlugs = deepFreeze(enterpriseCatalog.map((system) => system.slug));
 

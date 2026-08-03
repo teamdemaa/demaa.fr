@@ -13,6 +13,7 @@ import {
 } from "@/lib/system-detail-tabs";
 import {
   filterRenderableSolutionSections,
+  getPublishedRenderableSolutionSectionsForSystem,
   getRenderableSolutionSectionsForSystem,
 } from "@/lib/system-solutions-ui.server";
 import {
@@ -108,20 +109,67 @@ describe("system Solutions UI", () => {
     expect(JSON.stringify(sections)).not.toContain("referral_form");
   });
 
-  it("shows disclosures only for owned or remunerated relationships", async () => {
+  it("never exposes commercial relationship claims in the client UI", async () => {
     const markup = renderToStaticMarkup(
       createElement(SystemSolutionsTab, {
         sections: publishedSolutionSectionsFixture,
       }),
     );
 
-    expect(markup).toContain("Solution proposée directement par Demaa.");
-    expect(markup).toContain(
-      "Demaa peut être rémunérée dans le cadre de ce partenariat.",
-    );
-    expect(markup).not.toContain("Demaa est rémunérée pour Qonto");
+    expect(markup).not.toMatch(/proposée directement|commission|rémunér|partenariat/i);
     const source = await readSource("src/components/SystemSolutionsTab.tsx");
-    expect(source).toContain("none: null");
+    expect(source).not.toMatch(/commercialRelationship|ODEMA|rémunér|affiliate/i);
+  });
+
+  it("shows the selected pilot resources by relevance without exposing review fields", () => {
+    const expected = {
+      batiment: [
+        ["levier", "obat", "fieldwire", "graneet"],
+        ["point-p", "kiloutou", "capeb"],
+      ],
+      "cabinet-comptable": [
+        ["levier", "tiimora", "pennylane", "silae"],
+      ],
+      "agence-marketing": [
+        ["levier", "airtable", "canva", "brevo", "metricool", "chatgpt"],
+      ],
+    } as const;
+
+    for (const [systemSlug, sectionSlugs] of Object.entries(expected)) {
+      const sections = getRenderableSolutionSectionsForSystem(systemSlug);
+      expect(sections.map(({ placements }) =>
+        placements.map(({ resource }) => resource.resourceSlug)
+      )).toEqual(sectionSlugs);
+      const markup = renderToStaticMarkup(
+        createElement(SystemSolutionsTab, { sections }),
+      );
+      expect(markup).toContain("Outils");
+      expect(markup).toContain('aria-label="Ouvrir Levier"');
+      const orderedNames = sections.flatMap(({ placements }) =>
+        placements.map(({ resource }) => resource.name)
+      );
+      for (const [index, name] of orderedNames.entries()) {
+        expect(markup).toContain(`aria-label="Ouvrir ${name}"`);
+        if (index > 0) {
+          expect(markup.indexOf(`aria-label="Ouvrir ${orderedNames[index - 1]}"`))
+            .toBeLessThan(markup.indexOf(`aria-label="Ouvrir ${name}"`));
+        }
+      }
+      const serialized = JSON.stringify(sections);
+      expect(serialized).not.toMatch(
+        /commercialRelationship|publicationBlockers|status|reviewer|reviewedAt|expiresAt|evidence|ODEMA|owned|affiliate|commercial_partner|paid_referral/i,
+      );
+    }
+
+    expect(renderToStaticMarkup(createElement(SystemSolutionsTab, {
+      sections: getRenderableSolutionSectionsForSystem("batiment"),
+    }))).toContain("Prestataires et fournisseurs");
+    expect(renderToStaticMarkup(createElement(SystemSolutionsTab, {
+      sections: getRenderableSolutionSectionsForSystem("cabinet-comptable"),
+    }))).not.toContain("Prestataires et fournisseurs");
+
+    expect(getPublishedRenderableSolutionSectionsForSystem("batiment")[0]?.placements)
+      .toHaveLength(1);
   });
 
   it("keeps the registry server-side and crosses RSC with public DTOs only", async () => {
@@ -129,8 +177,9 @@ describe("system Solutions UI", () => {
     const detailSource = await readSource("src/components/SystemDetailContent.tsx");
     const solutionsSource = await readSource("src/components/SystemSolutionsTab.tsx");
 
+    expect(pageSource).toContain("getRenderableSolutionSectionsForSystem,");
     expect(pageSource).toContain(
-      'import { getRenderableSolutionSectionsForSystem } from "@/lib/system-solutions-ui.server"',
+      'from "@/lib/system-solutions-ui.server"',
     );
     expect(pageSource).toContain("solutionSections={solutionSections}");
     expect(detailSource).not.toMatch(/solution-registry\.(?:server|contract)/);
@@ -192,6 +241,8 @@ describe("system Solutions UI", () => {
     expect(gate).toContain("bloqué avant W6");
     expect(gate).toContain("JSON-LD");
     expect(gate).toContain("published-only");
-    expect(pageSource).toContain("buildSystemPageJsonLd(data, solutionSections)");
+    expect(pageSource).toContain(
+      "buildSystemPageJsonLd(data, publishedSolutionSections)",
+    );
   });
 });

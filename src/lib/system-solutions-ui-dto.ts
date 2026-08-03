@@ -1,7 +1,6 @@
 import type {
-  PublishedSolutionPlacementDto,
-  PublishedSolutionResourceDto,
   SolutionInteractionDto,
+  SolutionResourceType,
   SolutionSection,
 } from "@/lib/solution-registry-dto";
 
@@ -10,17 +9,22 @@ export type SupportedSolutionInteractionDto = Exclude<
   Readonly<{ interactionMode: "referral_form"; referralKey: string }>
 >;
 
-export type RenderableSolutionResourceDto = Omit<
-  PublishedSolutionResourceDto,
-  "interaction"
-> & Readonly<{
+export type RenderableSolutionResourceDto = Readonly<{
+  resourceSlug: string;
+  resourceType: SolutionResourceType;
+  name: string;
+  description: string;
   interaction: SupportedSolutionInteractionDto;
 }>;
 
-export type RenderableSolutionPlacementDto = Omit<
-  PublishedSolutionPlacementDto,
-  "resource"
-> & Readonly<{
+export type RenderableSolutionPlacementDto = Readonly<{
+  placementId: string;
+  systemSlug: string;
+  rank: number;
+  section: SolutionSection;
+  usage: string;
+  fitRationale: string;
+  fitConstraints: readonly string[];
   resource: RenderableSolutionResourceDto;
 }>;
 

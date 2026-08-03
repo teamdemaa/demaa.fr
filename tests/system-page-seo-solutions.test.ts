@@ -142,9 +142,13 @@ describe("system page SEO published Solutions boundary", () => {
       "utf8",
     );
 
-    expect(pageSource.match(/getRenderableSolutionSectionsForSystem\(slug\)/g)).toHaveLength(2);
+    expect(pageSource.match(/getRenderableSolutionSectionsForSystem\(slug\)/g)).toHaveLength(1);
+    expect(pageSource.match(/getPublishedRenderableSolutionSectionsForSystem\(slug\)/g))
+      .toHaveLength(2);
     expect(pageSource).toContain("buildSystemPageMetadata(data, solutionSections)");
-    expect(pageSource).toContain("buildSystemPageJsonLd(data, solutionSections)");
+    expect(pageSource).toContain(
+      "buildSystemPageJsonLd(data, publishedSolutionSections)",
+    );
     expect(pageSource).toContain('JSON.stringify(jsonLd).replace(/</g, "\\\\u003c")');
     expect(detailSource).not.toContain("data.detail.tools");
   });

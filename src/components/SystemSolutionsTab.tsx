@@ -40,19 +40,6 @@ const SOLUTION_RESOURCE_TYPE_WORKING_LABELS: Readonly<
   directory: "Annuaire",
 };
 
-const COMMERCIAL_RELATIONSHIP_DISCLOSURES: Readonly<
-  Record<
-    RenderableSolutionPlacementDto["resource"]["commercialRelationship"],
-    string | null
-  >
-> = {
-  none: null,
-  owned: "Solution proposée directement par Demaa.",
-  affiliate: "Demaa peut percevoir une commission si vous choisissez cette solution.",
-  commercial_partner: "Demaa peut être rémunérée dans le cadre de ce partenariat.",
-  paid_referral: "Demaa peut être rémunérée pour cette mise en relation.",
-};
-
 const RESOURCE_ICONS = {
   tool: Gauge,
   software: Wrench,
@@ -111,9 +98,6 @@ function SolutionDialog({
   onClose: () => void;
 }) {
   const { resource } = placement;
-  const disclosure =
-    COMMERCIAL_RELATIONSHIP_DISCLOSURES[resource.commercialRelationship];
-
   return (
     <DirectoryDetailDialogShell
       ariaLabel={`Détails de ${resource.name}`}
@@ -129,12 +113,6 @@ function SolutionDialog({
       <p className="mt-4 text-base leading-relaxed text-dema-muted">
         {resource.description}
       </p>
-      {disclosure ? (
-        <p className="mt-4 rounded-[0.85rem] bg-dema-cream/70 px-4 py-3 text-xs leading-relaxed text-dema-muted">
-          {disclosure}
-        </p>
-      ) : null}
-
       <div className="mt-7 space-y-5 border-t border-dema-line pt-6">
         <div>
           <h4 className="text-sm font-semibold text-brand-blue">Usage dans ce système</h4>
@@ -292,11 +270,6 @@ export default function SystemSolutionsTab({
                 {group.placements.map((placement) => {
                   const { resource } = placement;
                   const ResourceIcon = RESOURCE_ICONS[resource.resourceType];
-                  const disclosure =
-                    COMMERCIAL_RELATIONSHIP_DISCLOSURES[
-                      resource.commercialRelationship
-                    ];
-
                   return (
                     <button
                       key={placement.placementId}
@@ -325,11 +298,6 @@ export default function SystemSolutionsTab({
                         <span className="mt-3 line-clamp-3 text-sm leading-relaxed text-dema-muted">
                           {resource.description}
                         </span>
-                        {disclosure ? (
-                          <span className="mt-auto line-clamp-2 pt-3 text-[11px] leading-relaxed text-dema-muted">
-                            {disclosure}
-                          </span>
-                        ) : null}
                       </span>
                     </button>
                   );
