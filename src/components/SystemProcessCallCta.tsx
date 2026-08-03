@@ -25,7 +25,8 @@ export default function SystemProcessCallCta({
         </h2>
         <p className="mt-1 text-sm leading-relaxed text-dema-muted">
           Faites le point pendant 30 minutes avec un spécialiste Demaa pour
-          identifier ce qui dépend encore de vous et la priorité à structurer.
+          identifier la priorité à structurer et rendre votre entreprise moins
+          dépendante de vous au quotidien.
         </p>
       </div>
 

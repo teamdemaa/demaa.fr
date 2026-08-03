@@ -75,8 +75,9 @@ describe("system UX contract", () => {
       "Besoin d’y voir plus clair dans votre organisation ?",
     );
     expect(processCallSource).toContain(
-      "identifier ce qui dépend encore de vous et la priorité à structurer.",
+      "identifier la priorité à structurer et rendre votre entreprise moins",
     );
+    expect(processCallSource).toContain("dépendante de vous au quotidien.");
     expect(processCallSource).toContain('label="Réserver mon échange"');
     expect(detailSource).toContain(
       "source={getSystemDetailBookingSource(activeTab)}",
