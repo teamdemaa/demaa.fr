@@ -9,7 +9,6 @@ import {
   logOperationalError,
   logOperationalEvent,
 } from "@/lib/operational-log";
-import { sendOperationalSystemDeliveryEmail } from "@/lib/operational-system-delivery-email.server";
 import type { LeadContext } from "@/lib/lead-context";
 import {
   createLeadRequest,
@@ -45,6 +44,18 @@ type LeadSubmission = {
   requestType: string;
   title: string;
 };
+
+type OperationalSystemDeliveryEmailSender = (input: {
+  assetRevision: string;
+  deliveryId: string;
+  email: string;
+  firstName: string;
+  systemName: string;
+  systemSlug: string;
+}) => Promise<
+  | Readonly<{ sent: true; reason: null }>
+  | Readonly<{ sent: false; reason: string }>
+>;
 
 function escapeHtml(value: string) {
   return value
@@ -308,7 +319,10 @@ function rebuildLeadSubmission(data: StoredLeadRequest): LeadSubmission {
   };
 }
 
-export async function retryFailedLeadDeliveries(limit = 30) {
+export async function retryFailedLeadDeliveries(
+  limit: number,
+  sendOperationalSystemDeliveryEmail: OperationalSystemDeliveryEmailSender,
+) {
   const failedLeads = await getFailedLeadRequests(limit);
   const now = Date.now();
   const results: Array<{

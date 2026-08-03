@@ -21,8 +21,6 @@ const LEVIER_REVIEW = {
   expiresAt: "2027-08-03T00:00:00.000Z",
 } as const;
 
-const ASSET_BLOCKER = "Levier.xlsx final non remis" as const;
-
 export const LEVIER_SOLUTION_RESOURCE = {
   ...LEVIER_REVIEW,
   resourceSlug: "levier",
@@ -31,9 +29,9 @@ export const LEVIER_SOLUTION_RESOURCE = {
   description: "Tableau de pilotage opérationnel",
   interactionMode: "system_delivery",
   commercialRelationship: "owned",
-  status: "draft",
+  status: "published",
   resourceVersion: "levier.v1",
-  publicationBlockers: [ASSET_BLOCKER],
+  publicationBlockers: [],
 } as const satisfies SolutionResource;
 
 export const LEVIER_PLACEMENT_SYSTEM_SLUGS = [
@@ -170,7 +168,7 @@ export const LEVIER_SOLUTION_PLACEMENTS: readonly SolutionPlacement[] =
       "Adapter les objectifs, responsables et rythmes de suivi à l’organisation.",
     ],
     commercialRelationship: "owned",
-    status: "draft",
+    status: "published",
     placementVersion: "levier.v1",
-    publicationBlockers: [ASSET_BLOCKER],
+    publicationBlockers: [],
   }));

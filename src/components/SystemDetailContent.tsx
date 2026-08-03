@@ -16,14 +16,16 @@ import {
   isVisibleSystemDetailTab,
   type SystemDetailTab,
 } from "@/lib/system-detail-tabs";
-import { getSystemKitPreview } from "@/lib/system-kit-previews";
+import {
+  getSystemKitPreview,
+  LEVIER_PREVIEW,
+} from "@/lib/system-kit-previews";
 import type { RenderableSolutionSectionDto } from "@/lib/system-solutions-ui-dto";
 import type { System } from "@/lib/types";
 
 type SystemDetailContentProps = {
   system: System;
   systeme: SystemeDetail | null;
-  demoUrl?: string | null;
   intro: string;
   initialActiveTab?: string;
   deliveryAvailable?: boolean;
@@ -77,7 +79,9 @@ export default function SystemDetailContent({
         resource.interaction.interactionMode === "system_delivery",
     ),
   );
-  const preview = getSystemKitPreview(system.slug);
+  const preview = hasLevierSolution
+    ? LEVIER_PREVIEW
+    : getSystemKitPreview(system.slug);
   const closeSystemModal = useCallback(() => {
     setIsSystemModalOpen(false);
   }, [setIsSystemModalOpen]);

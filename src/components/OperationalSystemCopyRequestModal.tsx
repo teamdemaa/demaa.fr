@@ -173,7 +173,7 @@ export default function OperationalSystemCopyRequestModal({
     setIsSubmitting(true);
     trackSystemJourneyEvent("system_copy_form_submitted", { systemSlug });
 
-    const flowKey = `system-copy:${systemSlug}`;
+    const flowKey = `levier:${systemSlug}`;
     const requestPayload: OperationalSystemDeliveryRequest = {
       attribution: getLeadAttributionPayload(),
       email: normalizedEmail,
@@ -276,6 +276,13 @@ export default function OperationalSystemCopyRequestModal({
                 className="mt-4 text-sm leading-relaxed text-dema-muted"
               >
                 Tableau de pilotage opérationnel
+              </p>
+              <p
+                data-levier-preview-disclosure
+                className="mt-3 text-xs leading-relaxed text-dema-muted"
+              >
+                Aperçu avec des données d’exemple. Le fichier reçu sera vierge
+                et prêt à compléter.
               </p>
 
               <div className="mt-7 flex flex-col gap-3">
@@ -422,8 +429,7 @@ export default function OperationalSystemCopyRequestModal({
               </button>
 
               <p className="text-center text-xs leading-relaxed text-dema-muted">
-                Ces informations sont utilisées pour vous envoyer Levier
-                demandée.{" "}
+                Ces informations sont utilisées pour vous envoyer Levier.{" "}
                 <Link
                   href="/politique-de-confidentialite"
                   className="font-medium text-dema-forest underline underline-offset-2"

@@ -18,23 +18,46 @@ import {
 import { enterpriseCatalog } from "@/lib/enterprise-annuaire";
 
 describe("server-only product Solutions registries", () => {
-  it("keeps the staged Levier seed fail-closed before the final asset handoff", () => {
-    expect(getPublishedSolutionResources()).toEqual([]);
+  it("publishes Levier first on every system after the reviewed asset handoff", () => {
+    expect(getPublishedSolutionResources()).toEqual([
+      expect.objectContaining({
+        resourceSlug: "levier",
+        resourceType: "tool",
+        name: "Levier",
+        interaction: { interactionMode: "system_delivery" },
+      }),
+    ]);
     expect(getPublishedSolutionResourceBySlug("qonto")).toBeNull();
     expect(getPublishedSolutionResourceBySlug("unknown-resource")).toBeNull();
     expect(getPublishedSolutionResourceBySlug(42)).toBeNull();
-    expect(getPublishedSolutionPlacementsForSystem("batiment")).toEqual([]);
+    expect(getPublishedSolutionPlacementsForSystem("batiment")).toEqual([
+      expect.objectContaining({
+        rank: 1,
+        resource: expect.objectContaining({
+          resourceSlug: "levier",
+          interaction: { interactionMode: "system_delivery" },
+        }),
+      }),
+    ]);
     expect(getPublishedSolutionPlacementsForSystem("unknown-system")).toEqual([]);
     expect(getPublishedSolutionPlacementsForSystem(null)).toEqual([]);
-    expect(getPublishedSolutionSectionsForSystem("batiment")).toEqual([]);
+    expect(getPublishedSolutionSectionsForSystem("batiment")).toEqual([
+      expect.objectContaining({
+        section: "software",
+        placements: [expect.objectContaining({
+          rank: 1,
+          resource: expect.objectContaining({ resourceSlug: "levier" }),
+        })],
+      }),
+    ]);
     expect(getPublishedSolutionSectionsForSystem({})).toEqual([]);
 
     expect(LEVIER_SOLUTION_RESOURCE).toMatchObject({
       resourceSlug: "levier",
       resourceType: "tool",
       interactionMode: "system_delivery",
-      status: "draft",
-      publicationBlockers: ["Levier.xlsx final non remis"],
+      status: "published",
+      publicationBlockers: [],
     });
     expect(LEVIER_SOLUTION_PLACEMENTS).toHaveLength(115);
     expect(LEVIER_PLACEMENT_SYSTEM_SLUGS).toEqual(
@@ -42,8 +65,8 @@ describe("server-only product Solutions registries", () => {
     );
     expect(LEVIER_SOLUTION_PLACEMENTS.every((placement) =>
       placement.rank === 1 &&
-      placement.status === "draft" &&
-      placement.publicationBlockers.length === 1
+      placement.status === "published" &&
+      placement.publicationBlockers.length === 0
     )).toBe(true);
   });
 

@@ -15,7 +15,10 @@ import {
   buildSystemPageMetadata,
   type SystemDetailPageData,
 } from "@/lib/system-detail-page";
-import { publishedSolutionSectionsFixture } from "./fixtures/published-solution-sections";
+import {
+  publishedLevierSolutionSectionsFixture,
+  publishedSolutionSectionsFixture,
+} from "./fixtures/published-solution-sections";
 
 function buildPageData(enterprise: EnterpriseDefinition): SystemDetailPageData {
   const system = enterpriseToSystem(enterprise);
@@ -144,5 +147,33 @@ describe("system page SEO published Solutions boundary", () => {
     expect(pageSource).toContain("buildSystemPageJsonLd(data, solutionSections)");
     expect(pageSource).toContain('JSON.stringify(jsonLd).replace(/</g, "\\\\u003c")');
     expect(detailSource).not.toContain("data.detail.tools");
+  });
+
+  it("describes Levier without publishing an asset or Drive URL", () => {
+    const metadata = buildSystemPageMetadata(
+      publishedSolutionsData,
+      publishedLevierSolutionSectionsFixture,
+    );
+    const jsonLd = buildSystemPageJsonLd(
+      publishedSolutionsData,
+      publishedLevierSolutionSectionsFixture,
+    );
+    const exposed = JSON.stringify({ metadata, jsonLd });
+
+    expect(metadata.description).toContain(
+      "Recevez gratuitement Levier.xlsx, le tableau de pilotage opérationnel, par e-mail.",
+    );
+    expect(exposed).not.toMatch(/Google Drive|docs\.google|private-assets/);
+    const list = itemList(jsonLd);
+    expect(list?.itemListElement).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ name: "Levier" }),
+      ]),
+    );
+    if (!list?.itemListElement) throw new Error("ItemList JSON-LD manquant");
+    const levierItem = list.itemListElement.find(
+      (item) => item.name === "Levier",
+    );
+    expect(levierItem).not.toHaveProperty("url");
   });
 });

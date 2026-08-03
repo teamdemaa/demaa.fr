@@ -61,17 +61,26 @@ describe("system Solutions UI", () => {
     );
   });
 
-  it("keeps Solutions reachable on all 115 systems before publication", () => {
+  it("publishes Levier first in Solutions on all 115 systems", () => {
     expect(enterpriseCatalog).toHaveLength(115);
 
     for (const system of enterpriseCatalog) {
       const sections = getRenderableSolutionSectionsForSystem(system.slug);
       expect(JSON.parse(JSON.stringify(sections))).toEqual(sections);
       expect(
-        renderToStaticMarkup(createElement(SystemSolutionsTab, { sections })),
-      ).toContain(
-        "Nous vérifions encore les solutions les plus pertinentes pour ce métier.",
+        sections[0]?.placements[0],
+      ).toMatchObject({
+        rank: 1,
+        resource: {
+          resourceSlug: "levier",
+          interaction: { interactionMode: "system_delivery" },
+        },
+      });
+      const markup = renderToStaticMarkup(
+        createElement(SystemSolutionsTab, { sections }),
       );
+      expect(markup).toContain("Levier");
+      expect(markup).toContain("Tableau de pilotage opérationnel");
       expect(normalizeSystemDetailTab("solutions")).toBe("solutions");
       expect(normalizeSystemDetailTab("outils")).toBe("solutions");
       expect(normalizeSystemDetailTab("ecosysteme")).toBe("solutions");

@@ -7,6 +7,7 @@ const mocks = vi.hoisted(() => ({
   getActiveDeliverySnapshot: vi.fn(),
   getEnterpriseBySlug: vi.fn(),
   getLeadDeliveryState: vi.fn(),
+  getPublishedSolutionPlacements: vi.fn(),
   hasEditableOperationalSystemAsset: vi.fn(),
   resolveLeadContext: vi.fn(),
   sendDeliveryEmail: vi.fn(),
@@ -70,6 +71,18 @@ vi.mock("@/lib/operational-system-delivery-email.server", () => ({
   sendOperationalSystemDeliveryEmail: mocks.sendDeliveryEmail,
 }));
 
+vi.mock("@/lib/levier-asset.server", () => ({
+  LEVIER_ASSET_SNAPSHOT: {
+    assetRevision: "levier-v1-test",
+    workbookVersion: "1.0.0",
+  },
+}));
+
+vi.mock("@/lib/solution-registry.server", () => ({
+  getPublishedSolutionPlacementsForSystem:
+    mocks.getPublishedSolutionPlacements,
+}));
+
 vi.mock("@/lib/request-guard", () => ({
   enforceAllowedHost: vi.fn().mockReturnValue(null),
   enforceSameOrigin: vi.fn().mockReturnValue(null),
@@ -108,6 +121,7 @@ describe("free operational system delivery route", () => {
       slug: "plomberie-chauffage",
     });
     mocks.getLeadDeliveryState.mockResolvedValue(null);
+    mocks.getPublishedSolutionPlacements.mockReturnValue([]);
     mocks.getActiveDeliverySnapshot.mockReturnValue({
       assetRevision: "d032-v1-2026-07-28",
       workbookVersion: "1.0.0",
@@ -170,6 +184,44 @@ describe("free operational system delivery route", () => {
     expect(mocks.sendDeliveryEmail).toHaveBeenCalledWith(
       expect.objectContaining({
         assetRevision: "d032-v1-2026-07-28",
+      }),
+    );
+  });
+
+  it("uses the universal Levier snapshot only for an explicit published placement", async () => {
+    mocks.getPublishedSolutionPlacements.mockReturnValueOnce([{
+      resource: {
+        resourceSlug: "levier",
+        interaction: { interactionMode: "system_delivery" },
+      },
+    }]);
+    mocks.submitLeadRequest.mockResolvedValueOnce({
+      assetSnapshot: {
+        assetRevision: "levier-v1-test",
+        workbookVersion: "1.0.0",
+      },
+      duplicate: false,
+      leadId: "lead-levier",
+    });
+
+    const response = await POST(buildRequest());
+
+    expect(response.status).toBe(200);
+    expect(mocks.hasEditableOperationalSystemAsset).not.toHaveBeenCalled();
+    expect(mocks.getActiveDeliverySnapshot).not.toHaveBeenCalled();
+    expect(mocks.submitLeadRequest).toHaveBeenCalledWith(
+      expect.objectContaining({
+        assetSnapshot: {
+          assetRevision: "levier-v1-test",
+          workbookVersion: "1.0.0",
+        },
+        title: "Livraison de Levier - Plomberie & chauffage",
+      }),
+    );
+    expect(mocks.sendDeliveryEmail).toHaveBeenCalledWith(
+      expect.objectContaining({
+        assetRevision: "levier-v1-test",
+        deliveryId: "lead-lead-levier-system",
       }),
     );
   });

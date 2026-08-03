@@ -49,10 +49,6 @@ vi.mock("@/lib/operational-log", () => ({
   logOperationalEvent: vi.fn(),
 }));
 
-vi.mock("@/lib/operational-system-delivery-email.server", () => ({
-  sendOperationalSystemDeliveryEmail: mocks.sendDeliveryEmail,
-}));
-
 vi.mock("@/lib/resend-audience", () => ({
   syncResendLeadContact: vi.fn(),
 }));
@@ -121,7 +117,7 @@ describe("operational system delivery retry", () => {
   });
 
   it("retries the historical v1 revision even after a later revision could be active", async () => {
-    const result = await retryFailedLeadDeliveries(10);
+    const result = await retryFailedLeadDeliveries(10, mocks.sendDeliveryEmail);
 
     expect(result).toEqual([{ channel: "kit_email", status: "sent" }]);
     expect(mocks.sendDeliveryEmail).toHaveBeenCalledWith({
@@ -144,7 +140,7 @@ describe("operational system delivery retry", () => {
     failedLead.data.asset_snapshot = null as never;
     mocks.getFailedLeadRequests.mockResolvedValueOnce([failedLead]);
 
-    const result = await retryFailedLeadDeliveries(10);
+    const result = await retryFailedLeadDeliveries(10, mocks.sendDeliveryEmail);
 
     expect(result).toEqual([{ channel: "kit_email", status: "sent" }]);
     expect(mocks.sendDeliveryEmail).toHaveBeenCalledWith({
@@ -164,7 +160,7 @@ describe("operational system delivery retry", () => {
       reason: "resend_error",
     });
 
-    const result = await retryFailedLeadDeliveries(10);
+    const result = await retryFailedLeadDeliveries(10, mocks.sendDeliveryEmail);
 
     expect(result).toEqual([{ channel: "kit_email", status: "failed" }]);
     expect(mocks.updateLeadDeliveryStatus).toHaveBeenCalledWith(

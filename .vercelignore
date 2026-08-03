@@ -10,6 +10,7 @@ generated
 outputs
 tmp
 *.xlsx
+!private-assets/levier/Levier.xlsx
 *.tsbuildinfo
 .DS_Store
 .env*

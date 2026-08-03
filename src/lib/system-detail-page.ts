@@ -317,6 +317,11 @@ function buildSystemPageDescription(
       .replace(/,\s*outils utiles[^.]*\./i, ".")
     : `${processCount} process opérationnels pour structurer une activité de ${sectorLabel}.`;
   const parts = [processSummary];
+  const publishedResources = getPublishedSolutionResources(solutionSections);
+  const hasPublishedLevier = publishedResources.some(
+    ({ interaction, resourceSlug }) =>
+      resourceSlug === "levier" && interaction.interactionMode === "system_delivery",
+  );
 
   if (override) {
     parts.push(`${processCount} process opérationnels structurent ce système.`);
@@ -324,11 +329,12 @@ function buildSystemPageDescription(
 
   if (hasEditableOperationalSystemAsset(data.system.slug)) {
     parts.push(
-      `Découvrez une démonstration remplie et recevez gratuitement par e-mail le lien permettant de créer votre copie personnelle dans Google Drive.`,
+      hasPublishedLevier
+        ? "Recevez gratuitement Levier.xlsx, le tableau de pilotage opérationnel, par e-mail."
+        : "Découvrez une démonstration remplie et recevez gratuitement par e-mail le lien permettant de créer votre copie personnelle dans Google Drive.",
     );
   }
 
-  const publishedResources = getPublishedSolutionResources(solutionSections);
   if (publishedResources.length > 0) {
     const names = publishedResources.slice(0, 3).map((resource) => resource.name);
     parts.push(
