@@ -20,7 +20,7 @@ export default function DirectoryDetailDialogShell({
 
   return (
     <div
-      className="fixed inset-0 z-[80] flex items-end justify-center bg-brand-blue/45 sm:items-center sm:p-4"
+      className="fixed inset-0 z-[100] flex items-end justify-center bg-brand-blue/45 sm:items-center sm:p-4"
       onClick={onClose}
     >
       <div
