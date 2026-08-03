@@ -72,7 +72,6 @@ function getErrorMessage(response: Response, payload: DeliveryPayload) {
 export default function OperationalSystemCopyRequestModal({
   onClose,
   preview,
-  systemName,
   systemSlug,
 }: OperationalSystemCopyRequestModalProps) {
   const dialogRef = useRef<HTMLElement>(null);
@@ -268,18 +267,14 @@ export default function OperationalSystemCopyRequestModal({
                   id="system-copy-modal-title"
                   className="mt-5 pr-10 text-2xl font-semibold leading-tight tracking-[-0.025em] text-brand-blue"
                 >
-                  Levier vous a été envoyé par e-mail
+                  Levier est dans votre boîte mail.
                 </h2>
                 <p
                   id="system-copy-modal-description"
                   className="mt-3 text-sm leading-relaxed text-dema-muted"
                 >
-                  Le lien permettant de créer votre copie personnelle vient
-                  d’être envoyé. Pensez à vérifier vos courriers indésirables.
-                </p>
-                <p className="mt-4 text-sm leading-relaxed text-dema-muted">
-                  Votre demande de Levier pour {systemName} a bien été prise en
-                  compte.
+                  Vous y trouverez le lien pour créer votre copie personnelle.
+                  Pensez à vérifier vos courriers indésirables.
                 </p>
                 <button
                   type="button"

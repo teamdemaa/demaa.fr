@@ -29,7 +29,14 @@ describe("system UX contract", () => {
     expect(detailSource).toContain("HistoricalOperationalSystemCopyRequestModal");
     expect(modalSource).not.toMatch(/"overview"\s*\|\s*"form"/);
     expect(modalSource).toContain("Recevoir Levier");
-    expect(modalSource).toContain("Levier vous a été envoyé par e-mail");
+    expect(modalSource).toContain("Levier est dans votre boîte mail.");
+    expect(modalSource).toContain(
+      "Vous y trouverez le lien pour créer votre copie personnelle.",
+    );
+    expect(modalSource).toContain(
+      "Pensez à vérifier vos courriers indésirables.",
+    );
+    expect(modalSource).not.toContain("Votre demande de Levier pour");
     expect(modalSource).toContain("Tableau de pilotage opérationnel");
     expect(modalSource).toContain('name="email"');
     expect(modalSource).not.toContain('name="firstName"');
