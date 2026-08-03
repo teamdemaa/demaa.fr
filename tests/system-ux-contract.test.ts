@@ -16,16 +16,14 @@ describe("system UX contract", () => {
 
     expect(detailSource.match(/Voir le système/g)).toHaveLength(1);
     expect(detailSource).not.toContain("Recevoir ma copie modifiable");
+    expect(detailSource).toContain("deliveryAvailable && !hasLevierSolution");
+    expect(detailSource).toContain("onOpenSystemDelivery");
     expect(modalSource).toContain('"overview" | "form" | "success"');
-    expect(modalSource).toContain("Voir la démonstration");
-    expect(modalSource).toContain("Recevoir ma copie modifiable");
+    expect(modalSource).toContain("Recevoir Levier");
+    expect(modalSource).toContain("Levier vous a été envoyé par e-mail");
     expect(modalSource).toContain("Gratuit · Envoyé par e-mail");
-    expect(modalSource).toContain(
-      "Un tableau de pilotage opérationnel simple pour suivre votre",
-    );
-    expect(modalSource).toContain(
-      "activité, vos finances, vos actions et les responsabilités.",
-    );
+    expect(modalSource).toContain("Tableau de pilotage opérationnel");
+    expect(modalSource).not.toMatch(/Voir la démonstration|Google Drive/);
     expect(modalSource).not.toContain(
       "Des process concrets, des outils recommandés",
     );

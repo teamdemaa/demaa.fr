@@ -50,7 +50,6 @@ const EMPTY_SOLUTION_SECTIONS: readonly RenderableSolutionSectionDto[] = [];
 export default function SystemDetailContent({
   system,
   systeme,
-  demoUrl,
   intro,
   initialActiveTab,
   deliveryAvailable = false,
@@ -71,10 +70,17 @@ export default function SystemDetailContent({
       : "process",
   );
   const [isSystemModalOpen, setIsSystemModalOpen] = useState(false);
+  const hasLevierSolution = solutionSections.some((section) =>
+    section.placements.some(
+      ({ resource }) =>
+        resource.resourceSlug === "levier" &&
+        resource.interaction.interactionMode === "system_delivery",
+    ),
+  );
   const preview = getSystemKitPreview(system.slug);
   const closeSystemModal = useCallback(() => {
     setIsSystemModalOpen(false);
-  }, []);
+  }, [setIsSystemModalOpen]);
 
   function selectTab(tab: SystemDetailTab) {
     setActiveTab(tab);
@@ -126,7 +132,7 @@ export default function SystemDetailContent({
           <p className="mt-4 max-w-3xl text-base leading-relaxed text-dema-muted">
             {intro}
           </p>
-          {deliveryAvailable ? (
+          {deliveryAvailable && !hasLevierSolution ? (
             <button
               type="button"
               onClick={() => setIsSystemModalOpen(true)}
@@ -181,7 +187,10 @@ export default function SystemDetailContent({
           ) : null}
 
           {activeTab === "solutions" ? (
-            <SystemSolutionsTab sections={solutionSections} />
+            <SystemSolutionsTab
+              onOpenSystemDelivery={() => setIsSystemModalOpen(true)}
+              sections={solutionSections}
+            />
           ) : null}
         </section>
         <SystemProcessCallCta
@@ -227,7 +236,6 @@ export default function SystemDetailContent({
       </article>
       {isSystemModalOpen ? (
         <OperationalSystemCopyRequestModal
-          demoUrl={demoUrl}
           preview={preview}
           systemName={system.name}
           systemSlug={system.slug}

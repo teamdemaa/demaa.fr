@@ -428,14 +428,22 @@ export function buildSystemPageJsonLd(
           position: index + 1,
           name: process.title,
         })),
-        ...listedSolutions.map((resource, index) => ({
-          "@type": "ListItem",
-          position: listedProcesses.length + index + 1,
-          name: resource.name,
-          url: resource.interaction.href.startsWith("/")
-            ? `https://demaa.fr${resource.interaction.href}`
-            : resource.interaction.href,
-        })),
+        ...listedSolutions.map((resource, index) => {
+          const item = {
+            "@type": "ListItem",
+            position: listedProcesses.length + index + 1,
+            name: resource.name,
+          };
+          if (resource.interaction.interactionMode === "system_delivery") {
+            return item;
+          }
+          return {
+            ...item,
+            url: resource.interaction.href.startsWith("/")
+              ? `https://demaa.fr${resource.interaction.href}`
+              : resource.interaction.href,
+          };
+        }),
       ],
     },
     {

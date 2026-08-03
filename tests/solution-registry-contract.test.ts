@@ -147,6 +147,40 @@ describe("Solutions registry contract", () => {
     }, now)).toEqual([]);
   });
 
+  it("publishes the canonical Levier tool interaction without a public URL", () => {
+    const resource = {
+      ...publishedResource(),
+      resourceSlug: "levier",
+      resourceType: "tool" as const,
+      name: "Levier",
+      description: "Tableau de pilotage opérationnel",
+      interactionMode: "system_delivery" as const,
+      resourceVersion: "levier.v1",
+    };
+    delete (resource as { href?: string }).href;
+    const placement = {
+      ...publishedPlacement(),
+      placementId: "cabinet-comptable:levier:software:1",
+      resourceSlug: "levier",
+      placementVersion: "levier.v1",
+    };
+
+    expect(validateSolutionResource(resource, now)).toEqual([]);
+    const selected = selectPublishedSolutionPlacements({
+      systemSlug: "cabinet-comptable",
+      knownSystemSlugs: ["cabinet-comptable"],
+      resources: [resource],
+      placements: [placement],
+    }, now);
+    expect(selected).toHaveLength(1);
+    expect(selected[0].resource).toMatchObject({
+      resourceSlug: "levier",
+      resourceType: "tool",
+      interaction: { interactionMode: "system_delivery" },
+    });
+    expect(selected[0].resource.interaction).not.toHaveProperty("href");
+  });
+
   it("rejects invalid chronology, real injected expiry and non-semantic placements", () => {
     const resource = publishedResource();
     expect(selectPublishedSolutionPlacements({

@@ -15,7 +15,8 @@ function hasSupportedInteraction(
 ): placement is RenderableSolutionPlacementDto {
   return (
     placement.resource.interaction.interactionMode === "external_link" ||
-    placement.resource.interaction.interactionMode === "detail"
+    placement.resource.interaction.interactionMode === "detail" ||
+    placement.resource.interaction.interactionMode === "system_delivery"
   );
 }
 

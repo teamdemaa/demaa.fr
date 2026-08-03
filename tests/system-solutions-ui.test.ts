@@ -16,6 +16,7 @@ import {
   getRenderableSolutionSectionsForSystem,
 } from "@/lib/system-solutions-ui.server";
 import {
+  publishedLevierSolutionSectionsFixture,
   publishedSolutionSectionsFixture,
   publishedSolutionSectionsWithReferralFixture,
 } from "./fixtures/published-solution-sections";
@@ -37,10 +38,27 @@ describe("system Solutions UI", () => {
         sections: publishedSolutionSectionsFixture,
       }),
     );
-    expect(markup).toContain("Logiciels");
+    expect(markup).toContain("Outils");
     expect(markup).toContain("Qonto");
     expect(markup).toContain("Prestataires et fournisseurs");
     expect(markup).not.toMatch(/en cours|bientôt|à venir|placeholder/i);
+  });
+
+  it("renders Levier as the first universal tool card without a public asset URL", () => {
+    const markup = renderToStaticMarkup(
+      createElement(SystemSolutionsTab, {
+        sections: publishedLevierSolutionSectionsFixture,
+      }),
+    );
+
+    expect(markup).toContain("Outils");
+    expect(markup).toContain("Levier");
+    expect(markup).toContain("Tableau de pilotage opérationnel");
+    expect(markup).toContain("Ouvrir Levier");
+    expect(markup).not.toMatch(/Outil Demaa|Modèle|Service/);
+    expect(JSON.stringify(publishedLevierSolutionSectionsFixture)).not.toMatch(
+      /https?:\/\/|drive|\.xlsx/i,
+    );
   });
 
   it("keeps Solutions reachable on all 115 systems before publication", () => {

@@ -24,6 +24,23 @@ const externalPlacement = {
   },
 } as const satisfies PublishedSolutionPlacementDto;
 
+const levierPlacement = {
+  ...externalPlacement,
+  placementId: "cabinet-comptable:levier:software:1",
+  resource: {
+    ...externalPlacement.resource,
+    resourceSlug: "levier",
+    resourceType: "tool",
+    name: "Levier",
+    description: "Tableau de pilotage opérationnel",
+    interaction: {
+      interactionMode: "system_delivery",
+    },
+    commercialRelationship: "owned",
+    resourceVersion: "levier.v1",
+  },
+} as const satisfies PublishedSolutionPlacementDto;
+
 const ownedPlacement = {
   ...externalPlacement,
   placementId: "cabinet-comptable:demaa-pilotage:software:2",
@@ -78,6 +95,13 @@ export const publishedSolutionSectionsFixture = [
   {
     section: "providers",
     placements: [detailPlacement],
+  },
+] satisfies readonly RenderableSolutionSectionDto[];
+
+export const publishedLevierSolutionSectionsFixture = [
+  {
+    section: "software",
+    placements: [levierPlacement],
   },
 ] satisfies readonly RenderableSolutionSectionDto[];
 

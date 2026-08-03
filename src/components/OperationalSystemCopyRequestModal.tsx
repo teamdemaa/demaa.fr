@@ -24,10 +24,7 @@ import {
   getLeadSubmissionKey,
 } from "@/lib/lead-submission-client";
 import { isValidEmail } from "@/lib/email";
-import {
-  trackKitOpen,
-  trackSystemJourneyEvent,
-} from "@/lib/kit-analytics-client";
+import { trackSystemJourneyEvent } from "@/lib/kit-analytics-client";
 import type {
   OperationalSystemDeliveryRequest,
   OperationalSystemDeliverySuccess,
@@ -35,7 +32,6 @@ import type {
 import type { SystemKitPreview } from "@/lib/system-kit-previews";
 
 type OperationalSystemCopyRequestModalProps = {
-  demoUrl?: string | null;
   onClose: () => void;
   preview: SystemKitPreview | null;
   systemName: string;
@@ -65,17 +61,16 @@ function getErrorMessage(response: Response, payload: DeliveryPayload) {
     return serverError;
   }
   if (response.status === 404) {
-    return "Cette copie n’est pas disponible pour le moment.";
+    return "Levier n’est pas disponible pour le moment.";
   }
   if (response.status === 429) {
     return "Vous avez effectué trop de demandes. Réessayez un peu plus tard.";
   }
 
-  return "Impossible d’envoyer le lien pour le moment. Réessayez dans quelques instants.";
+  return "Impossible d’envoyer Levier pour le moment. Réessayez dans quelques instants.";
 }
 
 export default function OperationalSystemCopyRequestModal({
-  demoUrl,
   onClose,
   preview,
   systemName,
@@ -213,7 +208,7 @@ export default function OperationalSystemCopyRequestModal({
       });
     } catch {
       setError(
-        "Impossible d’envoyer le lien pour le moment. Réessayez dans quelques instants.",
+        "Impossible d’envoyer Levier pour le moment. Réessayez dans quelques instants.",
       );
       trackSystemJourneyEvent("system_copy_form_failed", { systemSlug });
     } finally {
@@ -268,38 +263,22 @@ export default function OperationalSystemCopyRequestModal({
 
             <div className="flex min-w-0 flex-col justify-center p-6 sm:p-8">
               <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-                Système opérationnel
+                Outil de pilotage
               </p>
               <h2
                 id="system-copy-modal-title"
                 className="mt-3 pr-10 text-2xl font-semibold leading-tight tracking-[-0.025em] text-brand-blue"
               >
-                Système opérationnel - {systemName}
+                Levier
               </h2>
               <p
                 id="system-copy-modal-description"
                 className="mt-4 text-sm leading-relaxed text-dema-muted"
               >
-                Un tableau de pilotage opérationnel simple pour suivre votre
-                activité, vos finances, vos actions et les responsabilités.
+                Tableau de pilotage opérationnel
               </p>
 
               <div className="mt-7 flex flex-col gap-3">
-                {demoUrl ? (
-                  <a
-                    href={demoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() =>
-                      trackKitOpen({
-                        kitName: `${systemName} - démonstration`,
-                        kitSlug: systemSlug,
-                      })}
-                    className="inline-flex min-h-11 items-center justify-center rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper transition hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
-                  >
-                    Voir la démonstration
-                  </a>
-                ) : null}
                 <div
                   data-kit-copy-cta-group
                   className="flex w-full flex-col items-center gap-2"
@@ -309,7 +288,7 @@ export default function OperationalSystemCopyRequestModal({
                     onClick={openForm}
                     className="inline-flex min-h-11 w-full items-center justify-center rounded-full border border-dema-forest/25 bg-dema-paper px-5 py-3 text-sm font-semibold text-dema-forest transition hover:border-dema-forest hover:bg-dema-sage/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
                   >
-                    Recevoir ma copie modifiable
+                    Recevoir Levier
                   </button>
                   <p className="text-center text-xs leading-relaxed text-dema-muted">
                     Gratuit · Envoyé par e-mail
@@ -333,8 +312,8 @@ export default function OperationalSystemCopyRequestModal({
               className="mt-5 pr-10 text-2xl font-semibold tracking-tight text-brand-blue"
             >
               {view === "success"
-                ? "C’est envoyé"
-                : "Recevoir ma copie modifiable"}
+                ? "Levier vous a été envoyé par e-mail"
+                : "Recevoir Levier"}
             </h2>
 
             <p
@@ -342,8 +321,8 @@ export default function OperationalSystemCopyRequestModal({
               className="mt-3 text-sm leading-relaxed text-dema-muted"
             >
               {view === "success"
-                ? "Le lien permettant de créer votre copie personnelle dans Google Drive vient d’être envoyé par e-mail. Pensez à vérifier vos courriers indésirables."
-                : "Nous vous envoyons le lien permettant de créer votre copie personnelle dans Google Drive."}
+                ? "Le fichier Levier.xlsx vient d’être envoyé. Pensez à vérifier vos courriers indésirables."
+                : "Renseignez vos coordonnées pour recevoir Levier.xlsx par e-mail."}
             </p>
 
             {view === "success" ? (
@@ -354,8 +333,8 @@ export default function OperationalSystemCopyRequestModal({
               tabIndex={-1}
             >
               <p className="text-sm leading-relaxed text-dema-muted">
-                Votre demande pour le système opérationnel {systemName} a bien
-                été prise en compte.
+                Votre demande de Levier pour {systemName} a bien été prise en
+                compte.
               </p>
               <button
                 type="button"
@@ -439,11 +418,11 @@ export default function OperationalSystemCopyRequestModal({
                     aria-hidden="true"
                   />
                 ) : null}
-                {isSubmitting ? "Envoi…" : "Recevoir ma copie"}
+                {isSubmitting ? "Envoi…" : "Recevoir Levier"}
               </button>
 
               <p className="text-center text-xs leading-relaxed text-dema-muted">
-                Ces informations sont utilisées pour vous envoyer la copie
+                Ces informations sont utilisées pour vous envoyer Levier
                 demandée.{" "}
                 <Link
                   href="/politique-de-confidentialite"

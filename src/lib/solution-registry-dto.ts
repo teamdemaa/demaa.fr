@@ -1,8 +1,9 @@
-export type SolutionResourceType = "software" | "provider" | "directory";
+export type SolutionResourceType = "tool" | "software" | "provider" | "directory";
 export type SolutionSection = "software" | "providers";
 export type SolutionInteractionDto =
   | Readonly<{ interactionMode: "external_link"; href: string }>
   | Readonly<{ interactionMode: "detail"; href: string }>
+  | Readonly<{ interactionMode: "system_delivery" }>
   | Readonly<{ interactionMode: "referral_form"; referralKey: string }>;
 
 export type PublishedSolutionResourceDto = Readonly<{

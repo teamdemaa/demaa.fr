@@ -1,6 +1,11 @@
 import "server-only";
 
 import { enterpriseCatalog } from "@/lib/enterprise-annuaire";
+import {
+  LEVIER_PLACEMENT_SYSTEM_SLUGS,
+  LEVIER_SOLUTION_PLACEMENTS,
+  LEVIER_SOLUTION_RESOURCE,
+} from "@/lib/levier-solution-registry.server";
 import { deepFreeze, parseSlug } from "@/lib/registry-contract-utils";
 import {
   selectPublishedSolutionPlacements,
@@ -12,9 +17,22 @@ import type {
   PublishedSolutionResourceDto,
 } from "@/lib/solution-registry-dto";
 
-const productSolutionResources: readonly unknown[] = deepFreeze([]);
-const productSolutionPlacements: readonly unknown[] = deepFreeze([]);
+const productSolutionResources: readonly unknown[] = deepFreeze([
+  LEVIER_SOLUTION_RESOURCE,
+]);
+const productSolutionPlacements: readonly unknown[] = deepFreeze([
+  ...LEVIER_SOLUTION_PLACEMENTS,
+]);
 const knownSystemSlugs = deepFreeze(enterpriseCatalog.map((system) => system.slug));
+
+if (
+  LEVIER_PLACEMENT_SYSTEM_SLUGS.length !== knownSystemSlugs.length ||
+  LEVIER_PLACEMENT_SYSTEM_SLUGS.some(
+    (systemSlug, index) => systemSlug !== knownSystemSlugs[index],
+  )
+) {
+  throw new Error("Levier placements must explicitly match all published systems.");
+}
 
 const registryErrors = validateSolutionRegistries({
   knownSystemSlugs,

@@ -7,6 +7,7 @@ import {
   ChevronLeft,
   ChevronRight,
   ExternalLink,
+  Gauge,
   Wrench,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -26,13 +27,14 @@ type RailState = Readonly<{
 // Working UI copy only. These labels are intentionally centralized so W6 can
 // align final editorial and SEO wording before integration.
 export const SOLUTION_UI_WORKING_LABELS: Readonly<Record<SolutionSection, string>> = {
-  software: "Logiciels",
+  software: "Outils",
   providers: "Prestataires et fournisseurs",
 };
 
 const SOLUTION_RESOURCE_TYPE_WORKING_LABELS: Readonly<
   Record<RenderableSolutionPlacementDto["resource"]["resourceType"], string>
 > = {
+  tool: "Outil",
   software: "Logiciel",
   provider: "Prestataire",
   directory: "Annuaire",
@@ -52,6 +54,7 @@ const COMMERCIAL_RELATIONSHIP_DISCLOSURES: Readonly<
 };
 
 const RESOURCE_ICONS = {
+  tool: Gauge,
   software: Wrench,
   provider: BriefcaseBusiness,
   directory: Building2,
@@ -70,6 +73,8 @@ function buildInitialRailState(sections: readonly RenderableSolutionSectionDto[]
 }
 
 function SolutionAction({ interaction }: { interaction: SupportedSolutionInteractionDto }) {
+  if (interaction.interactionMode === "system_delivery") return null;
+
   const label =
     interaction.interactionMode === "detail"
       ? "Voir la fiche"
@@ -164,8 +169,10 @@ function SolutionDialog({
 }
 
 export default function SystemSolutionsTab({
+  onOpenSystemDelivery,
   sections,
 }: {
+  onOpenSystemDelivery?: () => void;
   sections: readonly RenderableSolutionSectionDto[];
 }) {
   const visibleSections = useMemo(
@@ -295,7 +302,13 @@ export default function SystemSolutionsTab({
                       key={placement.placementId}
                       type="button"
                       data-solution-resource-card
-                      onClick={() => setSelected(placement)}
+                      onClick={() => {
+                        if (resource.interaction.interactionMode === "system_delivery") {
+                          onOpenSystemDelivery?.();
+                          return;
+                        }
+                        setSelected(placement);
+                      }}
                       className="group aspect-square min-w-0 snap-start overflow-hidden rounded-[1.2rem] border border-dema-line bg-dema-paper p-5 text-left shadow-[0_10px_28px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/20 hover:shadow-[0_14px_32px_rgba(23,35,29,0.07)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:p-6"
                       aria-label={`Ouvrir ${resource.name}`}
                     >

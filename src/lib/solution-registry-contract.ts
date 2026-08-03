@@ -28,8 +28,13 @@ import type {
   SolutionInteractionDto,
 } from "@/lib/solution-registry-dto";
 
-export const SOLUTION_RESOURCE_TYPES = ["software", "provider", "directory"] as const;
-export const SOLUTION_INTERACTION_MODES = ["external_link", "detail", "referral_form"] as const;
+export const SOLUTION_RESOURCE_TYPES = ["tool", "software", "provider", "directory"] as const;
+export const SOLUTION_INTERACTION_MODES = [
+  "external_link",
+  "detail",
+  "system_delivery",
+  "referral_form",
+] as const;
 export const SOLUTION_SECTIONS = ["software", "providers"] as const;
 
 export type SolutionResourceType = (typeof SOLUTION_RESOURCE_TYPES)[number];
@@ -37,6 +42,7 @@ export type SolutionSection = (typeof SOLUTION_SECTIONS)[number];
 export type SolutionInteraction =
   | Readonly<{ interactionMode: "external_link"; href: string }>
   | Readonly<{ interactionMode: "detail"; href: string }>
+  | Readonly<{ interactionMode: "system_delivery" }>
   | Readonly<{ interactionMode: "referral_form"; referralKey: string }>;
 
 type BaseSolutionResource = ReviewMetadata & SolutionInteraction & Readonly<{
@@ -50,6 +56,7 @@ type BaseSolutionResource = ReviewMetadata & SolutionInteraction & Readonly<{
 }>;
 
 export type SolutionResource =
+  | (BaseSolutionResource & Readonly<{ resourceType: "tool" }>)
   | (BaseSolutionResource & Readonly<{ resourceType: "software" }>)
   | (BaseSolutionResource & Readonly<{ resourceType: "provider" }>)
   | (BaseSolutionResource & Readonly<{ resourceType: "directory" }>);
@@ -105,7 +112,12 @@ export function isSafeInteractionHref(href: unknown, mode: unknown): boolean {
 export function parseSolutionResource(input: unknown, path = "solutionResource"): SolutionResource {
   const initial = parseRecord(input, path, [...RESOURCE_BASE_KEYS, "href", "referralKey"]);
   const interactionMode = parseEnum(initial.interactionMode, SOLUTION_INTERACTION_MODES, `${path}.interactionMode`);
-  const interaction: SolutionInteraction = interactionMode === "referral_form"
+  const interaction: SolutionInteraction = interactionMode === "system_delivery"
+    ? (() => {
+        parseRecord(input, path, RESOURCE_BASE_KEYS);
+        return deepFreeze({ interactionMode });
+      })()
+    : interactionMode === "referral_form"
     ? (() => {
         parseRecord(input, path, [...RESOURCE_BASE_KEYS, "referralKey"]);
         return deepFreeze({
@@ -173,7 +185,11 @@ export function validateSolutionResource(input: unknown, now = new Date()): stri
     requireComplete: resource.status === "published",
     now,
   });
-  if (resource.interactionMode !== "referral_form" && !isSafeInteractionHref(resource.href, resource.interactionMode)) {
+  if (
+    resource.interactionMode !== "referral_form" &&
+    resource.interactionMode !== "system_delivery" &&
+    !isSafeInteractionHref(resource.href, resource.interactionMode)
+  ) {
     errors.push(`${resource.interactionMode} requires a safe path or HTTPS URL`);
   }
   if (resource.status === "published") {
@@ -209,7 +225,9 @@ export function validateSolutionPlacement(input: unknown, now = new Date()): str
 
 function toPublishedResourceDto(resource: SolutionResource): PublishedSolutionResourceDto | null {
   if (resource.status !== "published" || resource.commercialRelationship === "unknown") return null;
-  const interaction: SolutionInteractionDto = resource.interactionMode === "referral_form"
+  const interaction: SolutionInteractionDto = resource.interactionMode === "system_delivery"
+    ? { interactionMode: resource.interactionMode }
+    : resource.interactionMode === "referral_form"
     ? { interactionMode: resource.interactionMode, referralKey: resource.referralKey }
     : { interactionMode: resource.interactionMode, href: resource.href };
   return deepFreeze({
@@ -308,8 +326,15 @@ export function selectPublishedSolutionPlacements(
     if (placement.systemSlug !== envelope.systemSlug || placement.status !== "published") return [];
     const resource = resourcesBySlug.get(placement.resourceSlug);
     if (!resource || resource.commercialRelationship !== placement.commercialRelationship) return [];
-    if (placement.section === "software" && resource.resourceType !== "software") return [];
-    if (placement.section === "providers" && resource.resourceType === "software") return [];
+    if (
+      placement.section === "software" &&
+      resource.resourceType !== "software" &&
+      resource.resourceType !== "tool"
+    ) return [];
+    if (
+      placement.section === "providers" &&
+      (resource.resourceType === "software" || resource.resourceType === "tool")
+    ) return [];
     return [deepFreeze({
       placementId: placement.placementId,
       systemSlug: placement.systemSlug,
@@ -365,11 +390,20 @@ export function validateSolutionRegistries(input: unknown, now = new Date()): st
     if (resource && resource.commercialRelationship !== placement.commercialRelationship) {
       errors.push(`${placement.placementId}: commercial relationship differs from resource`);
     }
-    if (resource && placement.section === "software" && resource.resourceType !== "software") {
-      errors.push(`${placement.placementId}: software section requires software resource`);
+    if (
+      resource &&
+      placement.section === "software" &&
+      resource.resourceType !== "software" &&
+      resource.resourceType !== "tool"
+    ) {
+      errors.push(`${placement.placementId}: software section requires software or tool resource`);
     }
-    if (resource && placement.section === "providers" && resource.resourceType === "software") {
-      errors.push(`${placement.placementId}: providers section excludes software resources`);
+    if (
+      resource &&
+      placement.section === "providers" &&
+      (resource.resourceType === "software" || resource.resourceType === "tool")
+    ) {
+      errors.push(`${placement.placementId}: providers section excludes software and tool resources`);
     }
     if (
       placement.status === "published" &&
