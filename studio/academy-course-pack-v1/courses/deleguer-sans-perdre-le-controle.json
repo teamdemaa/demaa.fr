@@ -1,0 +1,109 @@
+{
+  "version": "1.0",
+  "kind": "course",
+  "status": "ready",
+  "identity": {
+    "slug": "deleguer-sans-perdre-le-controle",
+    "title": "Déléguer sans perdre le contrôle",
+    "shortTitle": "Déléguer sans perdre le contrôle",
+    "category": "Organisation & équipe",
+    "promise": "Confier un résultat avec assez de contexte, d’autonomie et de repères pour éviter le micro-management comme les mauvaises surprises.",
+    "audience": "Dirigeants de TPE et responsables d’équipe",
+    "durationMinutes": 10,
+    "card": {
+      "section": "Organiser son entreprise",
+      "title": "Déléguer sans perdre le contrôle",
+      "meta": "6 notions · environ 10 min",
+      "image": "/images/academy/thumbnails/deleguer-sans-perdre-le-controle-v1.png",
+      "imageAlt": "Transmission d’une responsabilité avec un résultat attendu, une zone d’autonomie et des seuils d’alerte."
+    }
+  },
+  "outline": [
+    {
+      "title": "Cadrer",
+      "description": "Choisir la tâche et définir le résultat attendu."
+    },
+    {
+      "title": "Donner de l’autonomie",
+      "description": "Transmettre le contexte, les moyens et les limites."
+    },
+    {
+      "title": "Suivre",
+      "description": "Contrôler le résultat et améliorer le cadre."
+    }
+  ],
+  "lessons": [
+    {
+      "id": "trouver-le-bon-equilibre",
+      "type": "concept",
+      "eyebrow": "Notion 1 sur 6",
+      "title": "Déléguer ne consiste ni à disparaître ni à tout contrôler",
+      "body": "Dire « occupe-toi de ça » puis disparaître fait revenir le travail sous forme de questions et de corrections. Valider chaque détail empêche aussi la personne de décider. Déléguer consiste à confier un résultat avec un cadre suffisamment clair.",
+      "visual": { "type": "comparison", "data": { "leftLabel": "Pas assez de cadre", "leftText": "Questions, retards et corrections", "operator": "équilibre", "rightLabel": "Trop de contrôle", "rightText": "Aucune décision sans validation" } },
+      "takeaway": "La délégation crée de l’autonomie seulement lorsque le résultat et les limites sont explicites."
+    },
+    {
+      "id": "choisir-la-bonne-tache",
+      "type": "decision",
+      "eyebrow": "Notion 2 sur 6",
+      "title": "Commencer par une tâche fréquente, explicable et corrigeable",
+      "body": "Un planning, un rapport récurrent ou l’organisation d’un dossier client se prêtent bien à une première délégation. Gardez les décisions très sensibles, irréversibles ou hors de la compétence disponible tant que le cadre n’est pas maîtrisé.",
+      "visual": { "type": "comparison", "data": { "leftLabel": "Bon point de départ", "leftText": "Fréquent, explicable, erreur détectable", "operator": "≠", "rightLabel": "À conserver au départ", "rightText": "Sensible, irréversible, compétence absente" } },
+      "takeaway": "La première délégation doit libérer du temps sans transférer un risque incontrôlable."
+    },
+    {
+      "id": "decrire-un-resultat-observable",
+      "type": "method",
+      "eyebrow": "Notion 3 sur 6",
+      "title": "Décrire ce qui permettra de dire que le travail est terminé",
+      "body": "Précisez le livrable, la date, le destinataire, les critères de qualité et les contraintes non négociables. « Faire un planning propre » reste flou. Un planning envoyé jeudi à 16 heures avec des techniciens qualifiés devient vérifiable.",
+      "visual": { "type": "metrics", "data": { "fields": ["Livrable", "Échéance", "Destinataire", "Qualité", "Contraintes"] } },
+      "takeaway": "Un résultat observable permet de contrôler la sortie sans dicter chaque geste."
+    },
+    {
+      "id": "transmettre-le-contexte-et-les-moyens",
+      "type": "method",
+      "eyebrow": "Notion 4 sur 6",
+      "title": "Donner ce qui aide réellement la personne à décider",
+      "body": "Expliquez pourquoi la tâche compte, qui sera affecté, quelles décisions existent déjà et quels exemples sont bons ou mauvais. Donnez aussi les accès, les contacts, les informations et les outils nécessaires pour agir sans revenir chercher le dirigeant.",
+      "visual": { "type": "steps", "data": { "steps": [{ "number": "01", "title": "Pourquoi", "detail": "L’utilité du résultat" }, { "number": "02", "title": "Repères", "detail": "Décisions et exemples" }, { "number": "03", "title": "Moyens", "detail": "Accès, contacts et outils" }] } },
+      "takeaway": "Le bon contexte réduit les questions sans noyer la personne dans toute l’histoire de l’entreprise."
+    },
+    {
+      "id": "definir-autonomie-et-alertes",
+      "type": "method",
+      "eyebrow": "Notion 5 sur 6",
+      "title": "Définir trois zones de décision et des seuils d’alerte",
+      "body": "Précisez ce que la personne décide seule, ce qu’elle fait valider avant d’agir et ce qu’elle peut décider puis signaler. Ajoutez des alertes concrètes : retard supérieur à un jour, budget dépassé de 5 %, plainte client ou risque de sécurité.",
+      "visual": { "type": "steps", "data": { "steps": [{ "number": "01", "title": "Décider seule", "detail": "Dans le cadre prévu" }, { "number": "02", "title": "Faire valider", "detail": "Avant d’engager l’entreprise" }, { "number": "03", "title": "Décider puis signaler", "detail": "Information après l’action" }], "alerts": ["Retard > 1 jour", "Budget > 5 %", "Plainte client", "Risque sécurité"] } },
+      "takeaway": "L’autonomie est la liberté de décider à l’intérieur de limites connues."
+    },
+    {
+      "id": "suivre-et-corriger-le-systeme",
+      "type": "example",
+      "eyebrow": "Notion 6 sur 6",
+      "title": "Suivre le résultat avec peu d’indicateurs puis corriger le cadre",
+      "body": "Une assistante prépare dix-huit interventions par semaine. Elle déplace seule les créneaux et alerte pour un délai supérieur à vingt-quatre heures, une compétence manquante ou des heures supplémentaires probables. Trois chiffres suffisent ensuite pour améliorer le système.",
+      "visual": { "type": "metrics", "data": { "expected": "Planning envoyé jeudi à 16 h", "indicators": [{ "label": "Réalisées", "value": 16 }, { "label": "Reprogrammées", "value": 2 }, { "label": "Heures supplémentaires", "value": 3 }], "correctionCauses": ["Résultat mal défini", "Contexte manquant", "Compétence à renforcer", "Alerte absente"] } },
+      "takeaway": "Quand le résultat déçoit, corrigez d’abord le cadre avant de reprendre automatiquement toute la tâche."
+    }
+  ],
+  "recap": {
+    "title": "Le cours en quatre phrases",
+    "points": [
+      "Une bonne délégation commence par une tâche adaptée et un résultat observable.",
+      "Le contexte, les accès et les exemples permettent à l’autre personne de décider.",
+      "L’autonomie fonctionne quand les validations et les seuils d’alerte sont explicites.",
+      "Le suivi porte sur quelques résultats et sert à améliorer le cadre de travail."
+    ]
+  },
+  "quiz": {
+    "title": "Avez-vous bien retenu ?",
+    "questions": [
+      { "id": "bonne-premiere-tache", "question": "Quelle tâche convient le mieux à une première délégation ?", "choices": [{ "id": "frequente", "label": "Une tâche fréquente, explicable et corrigeable" }, { "id": "irreversible", "label": "Une décision sensible et irréversible" }], "correctChoiceId": "frequente", "explanation": "Une première délégation doit libérer du temps tout en gardant un risque détectable et corrigeable." },
+      { "id": "resultat-observable", "question": "Quel énoncé décrit le mieux un résultat observable ?", "choices": [{ "id": "propre", "label": "Faire un planning propre" }, { "id": "date-criteres", "label": "Envoyer jeudi à 16 h un planning respectant les critères définis" }], "correctChoiceId": "date-criteres", "explanation": "Le livrable, l’échéance et les critères permettent de vérifier le résultat sans dicter chaque action." },
+      { "id": "mauvais-resultat", "question": "Que faire en premier lorsque le résultat n’est pas satisfaisant ?", "choices": [{ "id": "reprendre", "label": "Reprendre définitivement toute la tâche" }, { "id": "cause", "label": "Identifier la cause et améliorer le cadre" }], "correctChoiceId": "cause", "explanation": "Le problème peut venir du résultat, du contexte, des moyens, des compétences ou d’un seuil d’alerte absent." }
+    ]
+  },
+  "action": null
+}

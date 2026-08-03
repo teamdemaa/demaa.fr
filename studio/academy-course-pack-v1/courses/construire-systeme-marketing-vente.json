@@ -1,0 +1,116 @@
+{
+  "version": "1.0",
+  "kind": "course",
+  "status": "ready",
+  "identity": {
+    "slug": "construire-systeme-marketing-vente",
+    "title": "Construire son système marketing et vente",
+    "shortTitle": "Construire son système marketing et vente",
+    "category": "Marketing & vente",
+    "promise": "Transformer des actions commerciales dispersées en un parcours simple, suivi et améliorable de la première attention jusqu’à la vente.",
+    "audience": "Dirigeants de TPE",
+    "durationMinutes": 10,
+    "card": {
+      "section": "Développer son activité",
+      "title": "Construire son système marketing et vente",
+      "meta": "6 notions · environ 10 min",
+      "image": "/images/academy/thumbnails/construire-systeme-marketing-vente-v1.png",
+      "imageAlt": "Parcours marketing et commercial allant du premier contact à la vente avec des étapes et des indicateurs simples."
+    }
+  },
+  "outline": [
+    {
+      "title": "Cadrer",
+      "description": "Définir qui attirer et vers quel résultat."
+    },
+    {
+      "title": "Organiser",
+      "description": "Choisir les entrées et centraliser les opportunités."
+    },
+    {
+      "title": "Piloter",
+      "description": "Faire avancer les demandes et corriger les pertes."
+    }
+  ],
+  "lessons": [
+    {
+      "id": "un-chemin-pas-des-actions",
+      "type": "concept",
+      "eyebrow": "Notion 1 sur 6",
+      "title": "Le marketing et la vente forment un chemin, pas une suite d’actions isolées",
+      "body": "Une publication, une recommandation, une campagne puis un devis urgent ne forment pas encore un système. Le système décrit le chemin entre une personne qui découvre l’entreprise et une personne qui devient cliente, avec des étapes et quelques règles.",
+      "visual": { "type": "pipeline", "data": { "steps": ["Découvrir", "S’intéresser", "Échanger", "Recevoir une proposition", "Devenir client"] } },
+      "takeaway": "Le rôle du système est de rendre visible et fiable le chemin complet vers la vente."
+    },
+    {
+      "id": "definir-qui-attirer",
+      "type": "method",
+      "eyebrow": "Notion 2 sur 6",
+      "title": "Définir qui attirer avant de choisir les outils",
+      "body": "Choisissez le type de client recherché, le problème prioritaire qu’il veut résoudre et le résultat que l’entreprise peut réellement produire. Sans cette clarté, le message devient vague et chaque échange commercial recommence de zéro.",
+      "visual": { "type": "steps", "data": { "steps": [{ "number": "01", "title": "Pour qui ?", "detail": "Le client prioritaire" }, { "number": "02", "title": "Quel problème ?", "detail": "Le besoin important" }, { "number": "03", "title": "Quel résultat ?", "detail": "La transformation promise" }] } },
+      "takeaway": "Le positionnement donne au système une cible, un problème et un résultat précis."
+    },
+    {
+      "id": "choisir-peu-de-canaux",
+      "type": "decision",
+      "eyebrow": "Notion 3 sur 6",
+      "title": "Choisir peu de canaux et une prochaine étape claire",
+      "body": "Un canal principal et éventuellement un canal complémentaire suffisent pour commencer. Google, recommandation, prospection ou contenu doivent tous conduire vers une action simple : appeler, remplir un formulaire, demander un diagnostic ou prendre rendez-vous.",
+      "visual": { "type": "pipeline", "data": { "channels": ["Google", "Recommandation", "Prospection", "Contenu"], "nextActions": ["Appeler", "Formulaire", "Diagnostic", "Rendez-vous"] } },
+      "takeaway": "L’objectif n’est pas d’être partout, mais de rendre l’entrée dans le système mesurable."
+    },
+    {
+      "id": "centraliser-les-opportunites",
+      "type": "method",
+      "eyebrow": "Notion 4 sur 6",
+      "title": "Centraliser toutes les opportunités au même endroit",
+      "body": "Un tableur bien tenu peut suffire avant un logiciel complexe. Pour chaque opportunité, enregistrez la source, le besoin, le responsable, l’étape actuelle et la prochaine action datée. Les demandes ne doivent pas dépendre de la mémoire.",
+      "visual": { "type": "metrics", "data": { "fields": ["Source", "Besoin", "Responsable", "Étape", "Prochaine action", "Date"] } },
+      "takeaway": "Une opportunité sans prochaine action et sans date finit presque toujours par disparaître."
+    },
+    {
+      "id": "qualifier-et-faire-avancer",
+      "type": "method",
+      "eyebrow": "Notion 5 sur 6",
+      "title": "Qualifier avant de proposer, puis faire avancer chaque opportunité",
+      "body": "Vérifiez le besoin, l’urgence, le périmètre, la personne qui décide et les contraintes. Placez ensuite la demande dans un parcours simple : nouvelle, à qualifier, qualifiée, proposition envoyée, gagnée ou perdue. Chaque étape doit conduire à une décision.",
+      "visual": { "type": "pipeline", "data": { "qualification": ["Besoin", "Urgence", "Périmètre", "Décideur", "Contraintes"], "stages": ["Nouvelle", "À qualifier", "Qualifiée", "Proposition", "Gagnée ou perdue"] } },
+      "takeaway": "Le marketing crée des opportunités ; la vente les fait avancer jusqu’à une issue claire."
+    },
+    {
+      "id": "piloter-chaque-semaine",
+      "type": "example",
+      "eyebrow": "Notion 6 sur 6",
+      "title": "Lire le parcours avec quelques chiffres chaque semaine",
+      "body": "Sur trente demandes, dix-huit correspondent à la cible, dix donnent lieu à un échange, six reçoivent une proposition et trois deviennent clientes. Ces chiffres servent à localiser les pertes, puis à décider chaque semaine d’une seule amélioration.",
+      "visual": { "type": "pipeline", "data": { "steps": [{ "label": "Demandes", "value": 30 }, { "label": "Ciblées", "value": 18 }, { "label": "Échanges", "value": 10 }, { "label": "Propositions", "value": 6 }, { "label": "Clientes", "value": 3 }], "weeklyReviewMinutes": 30 } },
+      "takeaway": "Les indicateurs servent à trouver où agir, pas à fabriquer un taux de conversion idéal."
+    }
+  ],
+  "recap": {
+    "title": "Le cours en quatre phrases",
+    "points": [
+      "Un système relie la première attention à une issue commerciale claire.",
+      "Le ciblage et le problème à résoudre viennent avant les outils et les canaux.",
+      "Chaque opportunité doit être centralisée avec une prochaine action datée.",
+      "Une courte revue hebdomadaire transforme les chiffres en une amélioration concrète."
+    ]
+  },
+  "quiz": {
+    "title": "Avez-vous bien retenu ?",
+    "questions": [
+      { "id": "premiere-etape-systeme", "question": "Que faut-il définir avant de choisir les outils marketing ?", "choices": [{ "id": "positionnement", "label": "Le client, son problème et le résultat visé" }, { "id": "logiciel", "label": "Le logiciel le plus complet" }], "correctChoiceId": "positionnement", "explanation": "Le système commence par la cible, le problème prioritaire et le résultat que l’entreprise peut produire." },
+      { "id": "opportunite-ouverte", "question": "Que doit posséder chaque opportunité encore ouverte ?", "choices": [{ "id": "action-date", "label": "Une prochaine action et une date" }, { "id": "devis", "label": "Un devis immédiat" }], "correctChoiceId": "action-date", "explanation": "Sans prochaine action datée, une opportunité reste en cours sans réellement avancer." },
+      { "id": "role-indicateurs", "question": "À quoi servent principalement les chiffres du parcours ?", "choices": [{ "id": "localiser", "label": "Localiser les pertes et choisir une amélioration" }, { "id": "promettre", "label": "Promettre un taux de conversion" }], "correctChoiceId": "localiser", "explanation": "Les indicateurs permettent d’identifier l’étape qui bloque et de décider où agir." }
+    ]
+  },
+  "action": {
+    "resourceType": "template",
+    "resourceId": "pilotage-marketing-vente",
+    "title": "Tableau de pilotage Marketing & Vente",
+    "description": "Une base Airtable pour centraliser les opportunités, les prochaines actions, les relances et les conversions.",
+    "ctaLabel": "Ouvrir le tableau",
+    "deliveryMode": "external"
+  }
+}

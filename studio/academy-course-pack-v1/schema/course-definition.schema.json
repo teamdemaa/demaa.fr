@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://demaa.fr/schemas/course-definition-v1.json",
+  "title": "Demaa CourseDefinition v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "kind", "status", "identity", "lessons", "recap", "quiz", "action"],
+  "properties": {
+    "version": { "const": "1.0" },
+    "kind": { "enum": ["course", "case-study"] },
+    "status": { "enum": ["draft", "review", "ready"] },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["slug", "title", "shortTitle", "category", "promise", "audience", "durationMinutes", "card"],
+      "properties": {
+        "slug": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+        "title": { "type": "string", "minLength": 8, "maxLength": 120 },
+        "shortTitle": { "type": "string", "minLength": 5, "maxLength": 70 },
+        "category": { "type": "string", "minLength": 3, "maxLength": 50 },
+        "promise": { "type": "string", "minLength": 20, "maxLength": 180 },
+        "audience": { "type": "string", "minLength": 5, "maxLength": 100 },
+        "durationMinutes": { "type": "integer", "minimum": 4, "maximum": 15 },
+        "card": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["section", "title", "meta", "image", "imageAlt"],
+          "properties": {
+            "section": { "type": "string", "minLength": 3, "maxLength": 60 },
+            "title": { "type": "string", "minLength": 5, "maxLength": 70 },
+            "meta": { "type": "string", "minLength": 5, "maxLength": 80 },
+            "image": { "type": ["string", "null"] },
+            "imageAlt": { "type": "string", "minLength": 10, "maxLength": 180 }
+          }
+        }
+      }
+    },
+    "lessons": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 7,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "type", "eyebrow", "title", "body", "visual", "takeaway"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+          "type": { "enum": ["concept", "example", "method", "decision", "case"] },
+          "eyebrow": { "type": "string", "minLength": 3, "maxLength": 60 },
+          "title": { "type": "string", "minLength": 8, "maxLength": 110 },
+          "body": { "type": "string", "minLength": 50, "maxLength": 520 },
+          "visual": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["type", "data"],
+            "properties": {
+              "type": { "enum": ["comparison", "timeline", "calculation", "metrics", "steps", "pipeline", "brand-case", "story"] },
+              "data": { "type": "object" }
+            }
+          },
+          "takeaway": { "type": "string", "minLength": 15, "maxLength": 180 }
+        }
+      }
+    },
+    "recap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "points"],
+      "properties": {
+        "title": { "type": "string", "minLength": 5, "maxLength": 80 },
+        "points": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": { "type": "string", "minLength": 15, "maxLength": 180 }
+        }
+      }
+    },
+    "quiz": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "questions"],
+      "properties": {
+        "title": { "type": "string", "minLength": 5, "maxLength": 80 },
+        "questions": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "question", "choices", "correctChoiceId", "explanation"],
+            "properties": {
+              "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+              "question": { "type": "string", "minLength": 10, "maxLength": 180 },
+              "choices": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 4,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["id", "label"],
+                  "properties": {
+                    "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+                    "label": { "type": "string", "minLength": 1, "maxLength": 120 }
+                  }
+                }
+              },
+              "correctChoiceId": { "type": "string" },
+              "explanation": { "type": "string", "minLength": 15, "maxLength": 260 }
+            }
+          }
+        }
+      }
+    },
+    "action": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["resourceType", "resourceId", "title", "description", "ctaLabel", "deliveryMode"],
+          "properties": {
+            "resourceType": { "enum": ["tool", "template", "directory-filter"] },
+            "resourceId": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+            "title": { "type": "string", "minLength": 3, "maxLength": 80 },
+            "description": { "type": "string", "minLength": 20, "maxLength": 220 },
+            "ctaLabel": { "type": "string", "minLength": 3, "maxLength": 50 },
+            "deliveryMode": { "enum": ["email", "internal", "external"] }
+          }
+        }
+      ]
+    }
+  }
+}

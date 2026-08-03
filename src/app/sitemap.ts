@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getCanonicalBaseUrl } from "@/lib/site-url";
 import { getAllCourseEntries } from "@/lib/course-content";
-import { getPublishedAcademyVideos } from "@/lib/academy-video-catalog";
+import { getAllAcademyContent } from "@/lib/academy-course-content";
 import { getAllDocumentModels } from "@/lib/document-models";
 import { getAllNewsletters } from "@/lib/newsletter-content";
 import { aidFamilies, demaaAidItems } from "@/lib/aid-catalog";
@@ -48,7 +48,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/annuaire-experts-comptables`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/modeles-de-documents`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/academie`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${base}/cours`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/mentions-legales`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
     { url: `${base}/conditions-d-utilisation`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
     { url: `${base}/politique-de-confidentialite`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
@@ -72,12 +71,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  const academyEntries: MetadataRoute.Sitemap = getPublishedAcademyVideos().map(
-    (video) => ({
-      url: `${base}/academie/${video.slug}`,
-      lastModified: new Date(`${video.updatedAt}T12:00:00+02:00`),
+  const academyEntries: MetadataRoute.Sitemap = getAllAcademyContent().map(
+    (content) => ({
+      url: `${base}/academie/${content.identity.slug}`,
+      lastModified: now,
       changeFrequency: "monthly" as const,
-      priority: 0.78,
+      priority: content.kind === "case-study" ? 0.72 : 0.78,
     }),
   );
 

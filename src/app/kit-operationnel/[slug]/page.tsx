@@ -4,7 +4,7 @@ import Navbar from "@/components/Navbar";
 import SystemDetailContent from "@/components/SystemDetailContent";
 import { getOperationalSystemDemoUrl } from "@/lib/document-models";
 import { hasEditableOperationalSystemAsset } from "@/lib/editable-operational-system-assets.server";
-import { getAcademyVideosForSystem } from "@/lib/academy-video-catalog";
+import { getAcademyContentForSystem } from "@/lib/academy-course-content";
 import { getRenderableSolutionSectionsForSystem } from "@/lib/system-solutions-ui.server";
 import { normalizeSystemDetailTab } from "@/lib/system-detail-tabs";
 import {
@@ -61,11 +61,11 @@ export default async function OperationalKitPage({
   const initialTab = getParamValue(resolvedSearchParams.tab);
   const jsonLd = buildSystemPageJsonLd(data, solutionSections);
   const hasEditableSystem = hasEditableOperationalSystemAsset(data.system.slug);
-  const academyVideos = getAcademyVideosForSystem(data.system.slug).map(
-    (video) => ({
-      slug: video.slug,
-      title: video.cardTitle,
-      category: video.courseCategory,
+  const academyVideos = getAcademyContentForSystem(data.system.slug).map(
+    (content) => ({
+      slug: content.identity.slug,
+      title: content.identity.card.title,
+      category: content.identity.category,
     }),
   );
 

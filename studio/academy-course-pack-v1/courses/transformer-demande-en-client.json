@@ -1,0 +1,116 @@
+{
+  "version": "1.0",
+  "kind": "course",
+  "status": "ready",
+  "identity": {
+    "slug": "transformer-demande-en-client",
+    "title": "Transformer une demande en client",
+    "shortTitle": "Transformer une demande en client",
+    "category": "Marketing & vente",
+    "promise": "Répondre, qualifier, comprendre, proposer et relancer sans perdre du temps sur les demandes qui ne peuvent pas devenir de bons projets.",
+    "audience": "Dirigeants de TPE et indépendants",
+    "durationMinutes": 9,
+    "card": {
+      "section": "Développer son activité",
+      "title": "Transformer une demande en client",
+      "meta": "6 notions · environ 9 min",
+      "image": "/images/academy/thumbnails/transformer-demande-en-client-v1.png",
+      "imageAlt": "Parcours d’une demande entrante depuis la première réponse jusqu’à la décision de signer ou de clôturer."
+    }
+  },
+  "outline": [
+    {
+      "title": "Filtrer",
+      "description": "Répondre vite et décider quelles demandes approfondir."
+    },
+    {
+      "title": "Comprendre",
+      "description": "Qualifier la situation avant de proposer."
+    },
+    {
+      "title": "Décider",
+      "description": "Présenter, relancer et clôturer clairement."
+    }
+  ],
+  "lessons": [
+    {
+      "id": "demande-pas-encore-vente",
+      "type": "concept",
+      "eyebrow": "Notion 1 sur 6",
+      "title": "Une demande entrante n’est pas encore une vente",
+      "body": "Une demande est une possibilité à vérifier. Envoyer un devis avant de comprendre le besoin revient à travailler gratuitement sur une hypothèse. Transformer chaque échange en interrogatoire fait aussi fuir les bons prospects. Il faut décider rapidement si une conversation utile mérite d’avoir lieu.",
+      "visual": { "type": "comparison", "data": { "leftLabel": "Demande reçue", "leftText": "Une possibilité", "operator": "→", "rightLabel": "Demande qualifiée", "rightText": "Une conversation qui mérite d’avancer" } },
+      "takeaway": "Le premier objectif n’est pas de vendre immédiatement, mais de vérifier si la demande mérite du temps."
+    },
+    {
+      "id": "repondre-vite-sans-devis",
+      "type": "method",
+      "eyebrow": "Notion 2 sur 6",
+      "title": "Répondre vite sans fabriquer immédiatement le devis",
+      "body": "Accusez réception le jour même lorsque c’est possible. Dites ce que vous avez compris, posez les premières questions manquantes et annoncez la prochaine étape. Un message court suffit pour éviter le silence et le flou sans résoudre tout le projet.",
+      "visual": { "type": "steps", "data": { "steps": [{ "number": "01", "title": "Accuser réception", "detail": "Le jour même si possible" }, { "number": "02", "title": "Reformuler", "detail": "Ce qui a été compris" }, { "number": "03", "title": "Annoncer la suite", "detail": "Questions ou rendez-vous" }] } },
+      "takeaway": "Une réponse rapide rassure sans obliger l’entreprise à proposer une solution trop tôt."
+    },
+    {
+      "id": "qualifier-cinq-informations",
+      "type": "method",
+      "eyebrow": "Notion 3 sur 6",
+      "title": "Chercher cinq informations avant de proposer un rendez-vous",
+      "body": "Vérifiez le résultat recherché, la raison de l’urgence, le périmètre réel, la personne qui décidera et les contraintes de délai ou de budget. Il ne faut pas exiger un cahier des charges parfait, mais confirmer que le besoin peut avancer sérieusement.",
+      "visual": { "type": "metrics", "data": { "fields": ["Résultat recherché", "Pourquoi maintenant", "Périmètre", "Décideur", "Délai et budget"] } },
+      "takeaway": "Qualifier permet de choisir où investir le temps commercial avant de produire une proposition."
+    },
+    {
+      "id": "comprendre-avant-proposer",
+      "type": "method",
+      "eyebrow": "Notion 4 sur 6",
+      "title": "Comprendre la situation avant de présenter l’entreprise",
+      "body": "Faites préciser la situation actuelle, le problème concret, ce qui changerait si le projet réussissait, ce qui a déjà été essayé et ce qui bloque la décision. Reformulez ensuite la priorité, la date et les contraintes pour éviter une proposition à côté du sujet.",
+      "visual": { "type": "steps", "data": { "steps": [{ "number": "01", "title": "Situation", "detail": "Ce qui se passe aujourd’hui" }, { "number": "02", "title": "Problème", "detail": "Ce qui doit changer" }, { "number": "03", "title": "Décision", "detail": "Ce qui bloque encore" }] } },
+      "takeaway": "Une bonne reformulation évite beaucoup de propositions inutiles ou mal ciblées."
+    },
+    {
+      "id": "proposer-et-relancer",
+      "type": "decision",
+      "eyebrow": "Notion 5 sur 6",
+      "title": "Faire une proposition facile à décider puis relancer proprement",
+      "body": "Reliez la solution au résultat recherché et précisez le périmètre, les étapes, le calendrier, le prix et les exclusions. Terminez par une prochaine décision datée. À la relance, demandez ce qui bloque, puis clôturez le dossier après une seconde tentative sans réponse.",
+      "visual": { "type": "timeline", "data": { "steps": [{ "timing": "Proposition", "label": "Résultat, périmètre, calendrier et prix" }, { "timing": "Date convenue", "label": "Première relance utile" }, { "timing": "Dernière relance", "label": "Réponse ou clôture" }] } },
+      "takeaway": "Sans prochaine étape datée, même une bonne proposition rejoint la pile des décisions reportées."
+    },
+    {
+      "id": "mesurer-et-savoir-dire-non",
+      "type": "example",
+      "eyebrow": "Notion 6 sur 6",
+      "title": "Mesurer le chemin et accepter l’absence de vente",
+      "body": "Un studio reçoit douze demandes. Cinq sont refusées ou redirigées rapidement, sept donnent lieu à un échange, quatre deviennent des propositions et deux clients signent à 2 500 €. Ce parcours montre où le temps est dépensé et où les demandes se perdent.",
+      "visual": { "type": "pipeline", "data": { "steps": [{ "label": "Demandes", "value": 12 }, { "label": "Échanges", "value": 7 }, { "label": "Propositions", "value": 4 }, { "label": "Clients", "value": 2 }], "dealValue": "2 500 €" } },
+      "takeaway": "Une vente saine accepte aussi de refuser ou de clôturer un mauvais projet."
+    }
+  ],
+  "recap": {
+    "title": "Le cours en quatre phrases",
+    "points": [
+      "Une demande entrante doit d’abord être comprise et qualifiée avant de devenir une proposition.",
+      "Une première réponse courte évite le silence sans fabriquer immédiatement un devis.",
+      "Une proposition utile rend le résultat, le périmètre, le prix et la décision très clairs.",
+      "Relancer puis clôturer proprement protège le temps commercial et la relation."
+    ]
+  },
+  "quiz": {
+    "title": "Avez-vous bien retenu ?",
+    "questions": [
+      { "id": "mission-premiere-reponse", "question": "Quelle est la mission principale de la première réponse ?", "choices": [{ "id": "devis", "label": "Envoyer immédiatement un devis" }, { "id": "clarifier", "label": "Éviter le silence et clarifier la prochaine étape" }], "correctChoiceId": "clarifier", "explanation": "La première réponse rassure, reformule et prépare la suite sans résoudre tout le projet." },
+      { "id": "nombre-informations", "question": "Combien d’informations principales servent à qualifier une demande ?", "choices": [{ "id": "trois", "label": "Trois" }, { "id": "cinq", "label": "Cinq" }], "correctChoiceId": "cinq", "explanation": "Le résultat, l’urgence, le périmètre, le décideur et les contraintes permettent de qualifier la demande." },
+      { "id": "apres-deux-relances", "question": "Que faire après une seconde relance courte restée sans réponse ?", "choices": [{ "id": "relancer", "label": "Relancer chaque semaine" }, { "id": "cloturer", "label": "Clôturer proprement le dossier" }], "correctChoiceId": "cloturer", "explanation": "La méthode protège le temps commercial en acceptant aussi une absence de décision ou de vente." }
+    ]
+  },
+  "action": {
+    "resourceType": "template",
+    "resourceId": "pilotage-marketing-vente",
+    "title": "Tableau de pilotage Marketing & Vente",
+    "description": "Une base simple pour suivre les demandes, la qualification, les propositions, les relances et les décisions.",
+    "ctaLabel": "Ouvrir le tableau",
+    "deliveryMode": "external"
+  }
+}

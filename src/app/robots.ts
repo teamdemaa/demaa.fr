@@ -8,10 +8,7 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
       },
     ],
-    sitemap: [
-      "https://demaa.fr/sitemap.xml",
-      "https://demaa.fr/academie/video-sitemap.xml",
-    ],
+    sitemap: "https://demaa.fr/sitemap.xml",
     host: "https://demaa.fr",
   };
 }

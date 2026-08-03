@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,6 +6,10 @@ import ReactMarkdown from "react-markdown";
 import { ArrowLeft, Calendar, GraduationCap } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import RelatedSystemsLinks from "@/components/RelatedSystemsLinks";
+import {
+  getAcademyContentBySlug,
+  getCanonicalAcademySlugForLegacySlug,
+} from "@/lib/academy-course-content";
 import { getCourseEntryBySlug } from "@/lib/course-content";
 import { getRelatedSystemsForContentSlug } from "@/lib/related-systems";
 
@@ -13,6 +17,21 @@ export async function generateMetadata(
   props: { params: Promise<{ slug: string }> }
 ): Promise<Metadata> {
   const params = await props.params;
+  const academySlug =
+    getCanonicalAcademySlugForLegacySlug(params.slug) ??
+    getAcademyContentBySlug(params.slug)?.identity.slug;
+
+  if (academySlug) {
+    const academyContent = getAcademyContentBySlug(academySlug);
+    if (!academyContent) return { title: "Cours introuvable - Demaa" };
+
+    return {
+      title: `${academyContent.identity.title} | Académie Demaa`,
+      description: academyContent.identity.promise,
+      alternates: { canonical: `/academie/${academySlug}` },
+    };
+  }
+
   const entry = getCourseEntryBySlug(params.slug);
 
   if (!entry) return { title: "Cours introuvable - Demaa" };
@@ -50,6 +69,14 @@ export default async function CourseDetailPage(
 ) {
   const params = await props.params;
   const searchParams = await props.searchParams;
+  const academySlug =
+    getCanonicalAcademySlugForLegacySlug(params.slug) ??
+    getAcademyContentBySlug(params.slug)?.identity.slug;
+
+  if (academySlug) {
+    permanentRedirect(`/academie/${academySlug}`);
+  }
+
   const entry = getCourseEntryBySlug(params.slug);
   const relatedSystems = getRelatedSystemsForContentSlug(params.slug);
 

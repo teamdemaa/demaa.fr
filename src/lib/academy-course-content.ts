@@ -1,0 +1,180 @@
+import treasury from "../../studio/academy-course-pack-v1/courses/piloter-sa-tresorerie.json";
+import revenueAndProfit from "../../studio/academy-course-pack-v1/courses/comprendre-chiffre-affaires-benefice.json";
+import pricing from "../../studio/academy-course-pack-v1/courses/fixer-ses-prix-sans-vendre-a-perte.json";
+import marketingSystem from "../../studio/academy-course-pack-v1/courses/construire-systeme-marketing-vente.json";
+import inboundToClient from "../../studio/academy-course-pack-v1/courses/transformer-demande-en-client.json";
+import delegation from "../../studio/academy-course-pack-v1/courses/deleguer-sans-perdre-le-controle.json";
+import consultingCase from "../../studio/academy-course-pack-v1/cases/cabinet-conseil-acquisition.json";
+import trainingCase from "../../studio/academy-course-pack-v1/cases/formation-b2b-acquisition.json";
+import itMaintenanceCase from "../../studio/academy-course-pack-v1/cases/maintenance-informatique-acquisition.json";
+import engineeringCase from "../../studio/academy-course-pack-v1/cases/bureau-etudes-acquisition.json";
+import cleaningCase from "../../studio/academy-course-pack-v1/cases/nettoyage-professionnel-acquisition.json";
+
+export type AcademyContentKind = "course" | "case-study";
+
+export type AcademyVisualType =
+  | "comparison"
+  | "timeline"
+  | "calculation"
+  | "metrics"
+  | "steps"
+  | "pipeline"
+  | "brand-case"
+  | "story";
+
+export interface AcademyLesson {
+  id: string;
+  type: "concept" | "example" | "method" | "decision" | "case";
+  eyebrow: string;
+  title: string;
+  body: string;
+  visual: {
+    type: AcademyVisualType;
+    data: Record<string, unknown>;
+  };
+  takeaway: string;
+}
+
+export interface AcademyQuizChoice {
+  id: string;
+  label: string;
+}
+
+export interface AcademyQuizQuestion {
+  id: string;
+  question: string;
+  choices: AcademyQuizChoice[];
+  correctChoiceId: string;
+  explanation: string;
+}
+
+export interface AcademyAction {
+  resourceType: "tool" | "template" | "directory-filter";
+  resourceId: string;
+  title: string;
+  description: string;
+  ctaLabel: string;
+  deliveryMode: "email" | "internal" | "external";
+}
+
+export interface AcademyContentDefinition {
+  version: "1.0";
+  kind: AcademyContentKind;
+  status: "draft" | "review" | "ready";
+  identity: {
+    slug: string;
+    title: string;
+    shortTitle: string;
+    category: string;
+    promise: string;
+    audience: string;
+    durationMinutes: number;
+    card: {
+      section: string;
+      title: string;
+      meta: string;
+      image: string | null;
+      imageAlt: string;
+    };
+  };
+  outline?: Array<{
+    title: string;
+    description: string;
+  }>;
+  lessons: AcademyLesson[];
+  recap: {
+    title: string;
+    points: string[];
+  };
+  quiz: {
+    title: string;
+    questions: AcademyQuizQuestion[];
+  };
+  action: AcademyAction | null;
+}
+
+const fundamentals = [
+  treasury,
+  revenueAndProfit,
+  pricing,
+  marketingSystem,
+  inboundToClient,
+  delegation,
+] as unknown as AcademyContentDefinition[];
+
+const caseStudies = [
+  consultingCase,
+  trainingCase,
+  itMaintenanceCase,
+  engineeringCase,
+  cleaningCase,
+] as unknown as AcademyContentDefinition[];
+
+const allAcademyContent = [...fundamentals, ...caseStudies].filter(
+  (content) => content.status === "ready",
+);
+
+const legacyAcademySlugAliases = new Map<string, string>([
+  ["entreprise-rentable-sans-tresorerie", "piloter-sa-tresorerie"],
+  ["difference-chiffre-affaires-benefice", "comprendre-chiffre-affaires-benefice"],
+  ["transformer-une-demande-en-client", "transformer-demande-en-client"],
+]);
+
+const academyContentSlugsBySystem = new Map<string, readonly string[]>([
+  ["daf-externalise", ["piloter-sa-tresorerie", "comprendre-chiffre-affaires-benefice"]],
+  ["cabinet-comptable", ["piloter-sa-tresorerie", "comprendre-chiffre-affaires-benefice"]],
+  ["consultant-independant", ["piloter-sa-tresorerie", "comprendre-chiffre-affaires-benefice"]],
+  ["commerce-de-detail", ["piloter-sa-tresorerie"]],
+  ["organisme-de-formation", ["piloter-sa-tresorerie"]],
+  ["e-commerce", ["comprendre-chiffre-affaires-benefice"]],
+  ["restaurant", ["piloter-sa-tresorerie", "comprendre-chiffre-affaires-benefice"]],
+  ["batiment", ["comprendre-chiffre-affaires-benefice"]],
+]);
+
+export function getAcademyFundamentals() {
+  return fundamentals.filter((content) => content.status === "ready");
+}
+
+export function getAcademyCaseStudies() {
+  return caseStudies.filter((content) => content.status === "ready");
+}
+
+export function getAllAcademyContent() {
+  return allAcademyContent;
+}
+
+export function getAcademyContentBySlug(slug: string) {
+  return allAcademyContent.find((content) => content.identity.slug === slug) ?? null;
+}
+
+export function getCanonicalAcademySlugForLegacySlug(slug: string) {
+  return legacyAcademySlugAliases.get(slug) ?? null;
+}
+
+export function getAcademyContentForSystem(systemSlug: string) {
+  const slugs = academyContentSlugsBySystem.get(systemSlug) ?? [];
+  return slugs.flatMap((slug) => {
+    const content = getAcademyContentBySlug(slug);
+    return content ? [content] : [];
+  });
+}
+
+export function getAcademyActionHref(action: AcademyAction) {
+  if (action.resourceId === "pilotage-marketing-vente") {
+    return "/modeles-de-documents/pilotage-marketing-vente";
+  }
+
+  if (action.resourceId === "levier") {
+    return "/kits-operationnels";
+  }
+
+  return "/";
+}
+
+export function getAcademyActionLabel(action: AcademyAction) {
+  if (action.resourceId === "levier") {
+    return "Trouver mon système pour recevoir Levier";
+  }
+
+  return action.ctaLabel;
+}

@@ -1,0 +1,139 @@
+{
+  "version": "1.0",
+  "kind": "case-study",
+  "status": "ready",
+  "identity": {
+    "slug": "bureau-etudes-acquisition",
+    "title": "Bureau d’études — transformer des recherches imprécises en projets qualifiés",
+    "shortTitle": "Bureau d’études",
+    "category": "Acquisition",
+    "promise": "Voir comment un bureau d’études peut rendre son expertise compréhensible et obtenir des projets mieux qualifiés.",
+    "audience": "Entreprises qui vendent leurs prestations après un échange ou un devis",
+    "durationMinutes": 8,
+    "card": {
+      "section": "Cas concrets",
+      "title": "Bureau d’études — obtenir de meilleurs projets",
+      "meta": "Cas concret · environ 8 min",
+      "image": "/images/courses/cases-acquisition/bureau-etudes-storyboard-v1.png",
+      "imageAlt": "Sofia structure l’acquisition et les projets de son bureau d’études."
+    }
+  },
+  "lessons": [
+    {
+      "id": "bureau-etudes-situation",
+      "type": "case",
+      "eyebrow": "La situation",
+      "title": "Sofia montre ses références, mais les demandes restent vagues",
+      "body": "Dans ce cas fictif, le bureau d’études de Sofia possède de beaux projets, mais son site présente surtout l’entreprise et ses compétences. Les prospects appellent sans préciser le type de projet, l’échéance ou les documents disponibles. L’équipe consacre alors beaucoup de temps à comprendre si elle peut réellement intervenir.",
+      "visual": {
+        "type": "story",
+        "data": {
+          "image": "/images/courses/cases-acquisition/bureau-etudes-storyboard-v1.png",
+          "panel": 1,
+          "alt": "Sofia reçoit des demandes vagues malgré la qualité de ses références."
+        }
+      },
+      "takeaway": "De belles références rassurent, mais elles ne remplacent pas une porte d’entrée précise."
+    },
+    {
+      "id": "bureau-etudes-attirer",
+      "type": "method",
+      "eyebrow": "1 · Attirer",
+      "title": "Créer une entrée par problème prioritaire",
+      "body": "Sofia choisit le problème qu’elle sait le mieux résoudre et construit une page dédiée. Elle explique les situations concernées, les éléments nécessaires et le résultat livré. Google, les partenaires prescripteurs et les références de projets renvoient vers cette même page et vers une demande d’étude préalable.",
+      "visual": {
+        "type": "story",
+        "data": {
+          "image": "/images/courses/cases-acquisition/bureau-etudes-storyboard-v1.png",
+          "panel": 2,
+          "alt": "Sofia présente à un client une réponse à un problème technique précis."
+        }
+      },
+      "takeaway": "Un problème clairement nommé aide le bon client à reconnaître son projet."
+    },
+    {
+      "id": "bureau-etudes-transformer",
+      "type": "example",
+      "eyebrow": "2 · Transformer",
+      "title": "Demander les éléments nécessaires avant le devis",
+      "body": "Le formulaire recueille le type de projet, le lieu, l’échéance, la décision attendue et les documents existants. Sofia propose ensuite un cadrage court au lieu d’offrir une étude complète avant signature. Dans l’exemple, 16 demandes donnent 9 projets qualifiés, 5 devis et 2 signatures.",
+      "visual": {
+        "type": "story",
+        "data": {
+          "image": "/images/courses/cases-acquisition/bureau-etudes-storyboard-v1.png",
+          "panel": 3,
+          "alt": "Sofia qualifie un projet avec les plans, le délai et les documents nécessaires."
+        }
+      },
+      "takeaway": "Le cadrage doit confirmer le projet sans réaliser gratuitement la mission."
+    },
+    {
+      "id": "bureau-etudes-fideliser",
+      "type": "method",
+      "eyebrow": "3 · Fidéliser",
+      "title": "Clore le projet en préparant la prochaine phase",
+      "body": "À la livraison, Sofia remet une synthèse compréhensible, les points de vigilance et les prochaines échéances. Elle planifie un rappel avant la phase suivante et tient les prescripteurs informés du résultat. Le projet terminé devient ainsi une référence utile et une source de nouvelles demandes.",
+      "visual": {
+        "type": "story",
+        "data": {
+          "image": "/images/courses/cases-acquisition/bureau-etudes-storyboard-v1.png",
+          "panel": 4,
+          "alt": "Sofia remet la synthèse du projet et planifie la prochaine phase avec son client."
+        }
+      },
+      "takeaway": "Une clôture claire prépare la prochaine phase et rend la recommandation plus facile."
+    }
+  ],
+  "recap": {
+    "title": "Le cas en quatre phrases",
+    "points": [
+      "Sofia transforme son expertise générale en une entrée centrée sur un problème précis.",
+      "La page indique les situations concernées, les prérequis et le résultat livré.",
+      "Le formulaire rassemble les éléments nécessaires avant le cadrage et le devis.",
+      "La livraison prépare la prochaine phase, la référence et la recommandation."
+    ]
+  },
+  "quiz": {
+    "title": "Avez-vous bien retenu ?",
+    "questions": [
+      {
+        "id": "bureau-etudes-page",
+        "question": "Quel est le rôle principal de la page dédiée ?",
+        "choices": [
+          { "id": "histoire", "label": "Raconter toute l’histoire du bureau" },
+          { "id": "reconnaitre", "label": "Aider le client à reconnaître son problème" }
+        ],
+        "correctChoiceId": "reconnaitre",
+        "explanation": "Le prospect doit d’abord comprendre que le bureau traite précisément sa situation."
+      },
+      {
+        "id": "bureau-etudes-documents",
+        "question": "Quand demander les documents disponibles ?",
+        "choices": [
+          { "id": "avant", "label": "Avant de cadrer et chiffrer le projet" },
+          { "id": "fin", "label": "Uniquement à la fin de la mission" }
+        ],
+        "correctChoiceId": "avant",
+        "explanation": "Les documents permettent d’évaluer la faisabilité, le périmètre et le travail nécessaire."
+      },
+      {
+        "id": "bureau-etudes-cloture",
+        "question": "Que doit préparer la clôture du projet ?",
+        "choices": [
+          { "id": "silence", "label": "Une interruption complète de la relation" },
+          { "id": "suite", "label": "La prochaine phase et une référence exploitable" }
+        ],
+        "correctChoiceId": "suite",
+        "explanation": "La synthèse et les prochaines échéances donnent une suite naturelle au projet."
+      }
+    ]
+  },
+  "action": {
+    "resourceType": "template",
+    "resourceId": "pilotage-marketing-vente",
+    "title": "Tableau de pilotage Marketing & Vente",
+    "description": "Un modèle simple pour suivre les demandes, les cadrages, les devis, les relances et les projets signés.",
+    "ctaLabel": "Ouvrir le tableau",
+    "deliveryMode": "external"
+  }
+}
