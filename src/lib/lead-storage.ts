@@ -41,6 +41,7 @@ export type LeadMarketingConsent = {
 
 export type LeadAssetSnapshot = {
   assetRevision: string;
+  resourceId?: string | null;
   workbookVersion: string;
 };
 
@@ -61,6 +62,7 @@ export type LeadRequestInput = {
 export type StoredLeadRequest = {
   asset_snapshot?: {
     asset_revision: string;
+    resource_id?: string | null;
     workbook_version: string;
   } | null;
   attribution: LeadAttributionRecord;
@@ -105,8 +107,10 @@ export function resolveStoredLeadAssetSnapshot(
   lead: Pick<StoredLeadRequest, "asset_snapshot" | "request_type">,
 ): LeadAssetSnapshot | null {
   if (lead.asset_snapshot) {
+    const resourceId = cleanString(lead.asset_snapshot.resource_id);
     return {
       assetRevision: lead.asset_snapshot.asset_revision,
+      ...(resourceId ? { resourceId } : {}),
       workbookVersion: lead.asset_snapshot.workbook_version,
     };
   }
@@ -138,6 +142,7 @@ export async function createLeadRequest(input: LeadRequestInput) {
     asset_snapshot: input.assetSnapshot
       ? {
           asset_revision: input.assetSnapshot.assetRevision,
+          resource_id: cleanString(input.assetSnapshot.resourceId),
           workbook_version: input.assetSnapshot.workbookVersion,
         }
       : null,

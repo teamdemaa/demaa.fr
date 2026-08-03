@@ -4,9 +4,10 @@ import { createHash } from "node:crypto";
 import { getEditableOperationalSystemCopyUrl } from "@/lib/editable-operational-system-assets.server";
 import {
   LEVIER_ASSET_REVISION,
-  LEVIER_ATTACHMENT_FILENAME,
-  readLevierAttachment,
+  LEVIER_LEGACY_ATTACHMENT_REVISION,
+  getLevierCopyUrl,
 } from "@/lib/levier-asset.server";
+import type { LeadAssetSnapshot } from "@/lib/lead-storage";
 
 function escapeHtml(value: string) {
   return value
@@ -22,10 +23,10 @@ function buildIdempotencyKey(deliveryId: string) {
 }
 
 export async function sendOperationalSystemDeliveryEmail(input: {
-  assetRevision: string;
+  assetSnapshot: LeadAssetSnapshot;
   deliveryId: string;
   email: string;
-  firstName: string;
+  firstName?: string | null;
   systemName: string;
   systemSlug: string;
 }) {
@@ -36,20 +37,26 @@ export async function sendOperationalSystemDeliveryEmail(input: {
     return { sent: false as const, reason: "missing_resend_config" as const };
   }
 
-  if (input.assetRevision === LEVIER_ASSET_REVISION) {
+  if (input.assetSnapshot.assetRevision === LEVIER_ASSET_REVISION) {
     return sendLevierDeliveryEmail({ ...input, apiKey, from });
+  }
+  if (
+    input.assetSnapshot.assetRevision === LEVIER_LEGACY_ATTACHMENT_REVISION
+  ) {
+    return { sent: false as const, reason: "missing_asset" as const };
   }
 
   const copyUrl = getEditableOperationalSystemCopyUrl(
     input.systemSlug,
-    input.assetRevision,
+    input.assetSnapshot.assetRevision,
   );
   if (!copyUrl) {
     return { sent: false as const, reason: "missing_asset" as const };
   }
 
   const safeCopyUrl = escapeHtml(copyUrl);
-  const safeFirstName = escapeHtml(input.firstName);
+  const firstName = input.firstName?.trim() ?? "";
+  const greeting = firstName ? `Bonjour ${escapeHtml(firstName)},` : "Bonjour,";
   const safeSystemName = escapeHtml(input.systemName);
   const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
@@ -69,7 +76,7 @@ export async function sendOperationalSystemDeliveryEmail(input: {
             <div style="max-width:560px;margin:0 auto;border:1px solid #e7ece6;border-radius:24px;background:#ffffff;padding:32px;">
               <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#315f46;">Système opérationnel</p>
               <h1 style="margin:14px 0;font-size:28px;line-height:1.2;">Votre système est prêt</h1>
-              <p style="margin:0 0 16px;font-size:16px;line-height:1.7;color:#52606d;">Bonjour ${safeFirstName},</p>
+              <p style="margin:0 0 16px;font-size:16px;line-height:1.7;color:#52606d;">${greeting}</p>
               <p style="margin:0 0 16px;font-size:16px;line-height:1.7;color:#52606d;">Voici votre système opérationnel <strong>${safeSystemName}</strong>.</p>
               <p style="margin:0 0 22px;font-size:16px;line-height:1.7;color:#52606d;">Connectez-vous à Google, puis créez gratuitement votre copie personnelle et modifiable dans votre Drive.</p>
               <a href="${safeCopyUrl}" style="display:inline-block;border-radius:999px;background:#315f46;padding:14px 22px;font-size:15px;font-weight:700;color:#ffffff;text-decoration:none;">Créer ma copie dans Google Drive</a>
@@ -80,7 +87,7 @@ export async function sendOperationalSystemDeliveryEmail(input: {
         </html>
       `,
       text: [
-        `Bonjour ${input.firstName},`,
+        firstName ? `Bonjour ${firstName},` : "Bonjour,",
         "",
         `Votre système opérationnel ${input.systemName} est prêt.`,
         "",
@@ -100,21 +107,17 @@ export async function sendOperationalSystemDeliveryEmail(input: {
 
 async function sendLevierDeliveryEmail(input: {
   apiKey: string;
-  assetRevision: string;
+  assetSnapshot: LeadAssetSnapshot;
   deliveryId: string;
   email: string;
-  firstName: string;
   from: string;
-  systemName: string;
-  systemSlug: string;
 }) {
-  const attachment = await readLevierAttachment();
-  if (!attachment) {
+  const copyUrl = getLevierCopyUrl(input.assetSnapshot);
+  if (!copyUrl) {
     return { sent: false as const, reason: "missing_asset" as const };
   }
 
-  const safeFirstName = escapeHtml(input.firstName);
-  const safeSystemName = escapeHtml(input.systemName);
+  const safeCopyUrl = escapeHtml(copyUrl);
   const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
@@ -123,12 +126,6 @@ async function sendLevierDeliveryEmail(input: {
       "Idempotency-Key": buildIdempotencyKey(input.deliveryId),
     },
     body: JSON.stringify({
-      attachments: [
-        {
-          content: attachment.toString("base64"),
-          filename: LEVIER_ATTACHMENT_FILENAME,
-        },
-      ],
       from: input.from,
       to: input.email,
       subject: "Votre tableau de pilotage Levier",
@@ -139,19 +136,23 @@ async function sendLevierDeliveryEmail(input: {
             <div style="max-width:560px;margin:0 auto;border:1px solid #e7ece6;border-radius:24px;background:#ffffff;padding:32px;">
               <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#315f46;">Tableau de pilotage opérationnel</p>
               <h1 style="margin:14px 0;font-size:28px;line-height:1.2;">Levier est prêt</h1>
-              <p style="margin:0 0 16px;font-size:16px;line-height:1.7;color:#52606d;">Bonjour ${safeFirstName},</p>
-              <p style="margin:0 0 16px;font-size:16px;line-height:1.7;color:#52606d;">Vous trouverez <strong>Levier.xlsx</strong> en pièce jointe, votre tableau de pilotage opérationnel pour ${safeSystemName}.</p>
-              <p style="margin:0;font-size:16px;line-height:1.7;color:#52606d;">Téléchargez le fichier puis adaptez les objectifs, responsables et rythmes de suivi à votre organisation.</p>
+              <p style="margin:0 0 16px;font-size:16px;line-height:1.7;color:#52606d;">Bonjour,</p>
+              <p style="margin:0 0 16px;font-size:16px;line-height:1.7;color:#52606d;">Voici <strong>Levier</strong>, votre tableau de pilotage opérationnel.</p>
+              <p style="margin:0 0 22px;font-size:16px;line-height:1.7;color:#52606d;">Connectez-vous à Google, puis créez votre copie personnelle et modifiable.</p>
+              <a href="${safeCopyUrl}" style="display:inline-block;border-radius:999px;background:#315f46;padding:14px 22px;font-size:15px;font-weight:700;color:#ffffff;text-decoration:none;">Créer ma copie de Levier</a>
+              <p style="margin:24px 0 8px;font-size:13px;line-height:1.6;color:#52606d;">Si le bouton ne fonctionne pas, copiez ce lien :</p>
+              <a href="${safeCopyUrl}" style="font-size:13px;line-height:1.6;color:#315f46;word-break:break-all;">${safeCopyUrl}</a>
             </div>
           </body>
         </html>
       `,
       text: [
-        `Bonjour ${input.firstName},`,
+        "Bonjour,",
         "",
-        `Vous trouverez ${LEVIER_ATTACHMENT_FILENAME} en pièce jointe, votre tableau de pilotage opérationnel pour ${input.systemName}.`,
+        "Voici Levier, votre tableau de pilotage opérationnel.",
         "",
-        "Téléchargez le fichier puis adaptez les objectifs, responsables et rythmes de suivi à votre organisation.",
+        "Connectez-vous à Google, puis créez votre copie personnelle et modifiable :",
+        copyUrl,
       ].join("\n"),
     }),
     cache: "no-store",

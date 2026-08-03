@@ -4,7 +4,7 @@ vi.mock("server-only", () => ({}));
 
 const mocks = vi.hoisted(() => ({
   getCopyUrl: vi.fn(),
-  readLevierAttachment: vi.fn(),
+  getLevierCopyUrl: vi.fn(),
 }));
 
 vi.mock("@/lib/editable-operational-system-assets.server", () => ({
@@ -12,12 +12,14 @@ vi.mock("@/lib/editable-operational-system-assets.server", () => ({
 }));
 
 vi.mock("@/lib/levier-asset.server", () => ({
-  LEVIER_ASSET_REVISION: "levier-v1-test",
-  LEVIER_ATTACHMENT_FILENAME: "Levier.xlsx",
-  readLevierAttachment: mocks.readLevierAttachment,
+  LEVIER_ASSET_REVISION: "levier-google-sheet-v1-test",
+  LEVIER_LEGACY_ATTACHMENT_REVISION: "levier-v1-test",
+  getLevierCopyUrl: mocks.getLevierCopyUrl,
 }));
 
 import { sendOperationalSystemDeliveryEmail } from "@/lib/operational-system-delivery-email.server";
+
+const LEVIER_COPY_URL = "https://example.invalid/levier-copy-test";
 
 describe("operational system delivery email", () => {
   beforeEach(() => {
@@ -26,9 +28,7 @@ describe("operational system delivery email", () => {
     mocks.getCopyUrl.mockReturnValue(
       "https://example.invalid/private-copy",
     );
-    mocks.readLevierAttachment.mockResolvedValue(
-      Buffer.from([0x50, 0x4b, 0x03, 0x04]),
-    );
+    mocks.getLevierCopyUrl.mockReturnValue(LEVIER_COPY_URL);
   });
 
   afterEach(() => {
@@ -36,13 +36,16 @@ describe("operational system delivery email", () => {
     vi.restoreAllMocks();
   });
 
-  it("sends the private copy link only inside the transactional email", async () => {
+  it("sends the historical system link without changing its named flow", async () => {
     const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValue(
       new Response(JSON.stringify({ id: "email_123" }), { status: 200 }),
     );
 
     const result = await sendOperationalSystemDeliveryEmail({
-      assetRevision: "d032-v1-2026-07-28",
+      assetSnapshot: {
+        assetRevision: "d032-v1-2026-07-28",
+        workbookVersion: "1.0.0",
+      },
       deliveryId: "lead-123-system",
       email: "maya@example.com",
       firstName: "Maya",
@@ -55,7 +58,6 @@ describe("operational system delivery email", () => {
       "plomberie-chauffage",
       "d032-v1-2026-07-28",
     );
-    expect(fetchMock).toHaveBeenCalledTimes(1);
 
     const [, init] = fetchMock.mock.calls[0];
     const headers = init?.headers as Record<string, string>;
@@ -69,17 +71,20 @@ describe("operational system delivery email", () => {
     expect(payload.subject).toBe(
       "Votre copie modifiable - Plomberie & chauffage",
     );
+    expect(payload.html).toContain("Bonjour Maya");
     expect(payload.html).toContain("Créer ma copie dans Google Drive");
-    expect(payload.html).toContain("https://example.invalid/private-copy");
     expect(payload.text).toContain("https://example.invalid/private-copy");
   });
 
-  it("does not call Resend when the editable asset is missing", async () => {
+  it("does not call Resend when the historical editable asset is missing", async () => {
     mocks.getCopyUrl.mockReturnValueOnce(null);
     const fetchMock = vi.spyOn(globalThis, "fetch");
 
     const result = await sendOperationalSystemDeliveryEmail({
-      assetRevision: "d032-v1-2026-07-28",
+      assetSnapshot: {
+        assetRevision: "d032-v1-2026-07-28",
+        workbookVersion: "1.0.0",
+      },
       deliveryId: "lead-123-system",
       email: "maya@example.com",
       firstName: "Maya",
@@ -91,53 +96,80 @@ describe("operational system delivery email", () => {
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
-  it("attaches Levier.xlsx without exposing a URL or using the legacy registry", async () => {
+  it("sends the immutable Levier /copy link without a name or attachment", async () => {
     const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValue(
       new Response(JSON.stringify({ id: "email_levier" }), { status: 200 }),
     );
+    const assetSnapshot = {
+      assetRevision: "levier-google-sheet-v1-test",
+      resourceId: "1AbCdEfGhIjKlMnOpQrStUvWxYz_1234567890",
+      workbookVersion: "1.0.0",
+    };
 
     const result = await sendOperationalSystemDeliveryEmail({
-      assetRevision: "levier-v1-test",
+      assetSnapshot,
       deliveryId: "lead-levier-system",
       email: "maya@example.com",
-      firstName: "Maya",
       systemName: "Plomberie & chauffage",
       systemSlug: "plomberie-chauffage",
     });
 
     expect(result).toEqual({ sent: true, reason: null });
     expect(mocks.getCopyUrl).not.toHaveBeenCalled();
-    expect(mocks.readLevierAttachment).toHaveBeenCalledTimes(1);
+    expect(mocks.getLevierCopyUrl).toHaveBeenCalledWith(assetSnapshot);
 
     const [, init] = fetchMock.mock.calls[0];
-    const payload = JSON.parse(String(init?.body)) as {
-      attachments: Array<{ content: string; filename: string }>;
+    const payload = JSON.parse(String(init?.body)) as Record<string, unknown> & {
       html: string;
       subject: string;
       text: string;
     };
-    expect(payload.attachments).toEqual([{
-      content: "UEsDBA==",
-      filename: "Levier.xlsx",
-    }]);
+    expect(payload).not.toHaveProperty("attachments");
     expect(payload.subject).toBe("Votre tableau de pilotage Levier");
-    expect(`${payload.html}${payload.text}`).not.toMatch(/https?:\/\/|Google Drive/);
+    expect(payload.html).toContain("Créer ma copie de Levier");
+    expect(payload.html).toContain(LEVIER_COPY_URL);
+    expect(payload.text).toContain(LEVIER_COPY_URL);
+    expect(`${payload.html}${payload.text}`).not.toContain("Maya");
+    expect(`${payload.html}${payload.text}`).not.toContain("Plomberie");
+    expect(`${payload.html}${payload.text}`).not.toContain(".xlsx");
   });
 
-  it("fails closed before calling Resend when Levier.xlsx is missing", async () => {
-    mocks.readLevierAttachment.mockResolvedValueOnce(null);
+  it("fails closed before calling Resend when the Levier snapshot is invalid", async () => {
+    mocks.getLevierCopyUrl.mockReturnValueOnce(null);
     const fetchMock = vi.spyOn(globalThis, "fetch");
 
     const result = await sendOperationalSystemDeliveryEmail({
-      assetRevision: "levier-v1-test",
+      assetSnapshot: {
+        assetRevision: "levier-google-sheet-v1-test",
+        resourceId: "invalid",
+        workbookVersion: "1.0.0",
+      },
       deliveryId: "lead-levier-system",
       email: "maya@example.com",
-      firstName: "Maya",
       systemName: "Plomberie & chauffage",
       systemSlug: "plomberie-chauffage",
     });
 
     expect(result).toEqual({ sent: false, reason: "missing_asset" });
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it("never falls through a retired attachment revision to a system workbook", async () => {
+    const fetchMock = vi.spyOn(globalThis, "fetch");
+
+    const result = await sendOperationalSystemDeliveryEmail({
+      assetSnapshot: {
+        assetRevision: "levier-v1-test",
+        workbookVersion: "1.0.0",
+      },
+      deliveryId: "lead-levier-legacy-system",
+      email: "maya@example.com",
+      systemName: "Plomberie & chauffage",
+      systemSlug: "plomberie-chauffage",
+    });
+
+    expect(result).toEqual({ sent: false, reason: "missing_asset" });
+    expect(mocks.getCopyUrl).not.toHaveBeenCalled();
     expect(fetchMock).not.toHaveBeenCalled();
   });
 });

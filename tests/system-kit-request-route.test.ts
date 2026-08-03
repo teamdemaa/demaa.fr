@@ -7,6 +7,7 @@ const mocks = vi.hoisted(() => ({
   getActiveDeliverySnapshot: vi.fn(),
   getEnterpriseBySlug: vi.fn(),
   getLeadDeliveryState: vi.fn(),
+  getLevierAssetSnapshot: vi.fn(),
   getPublishedSolutionPlacements: vi.fn(),
   hasEditableOperationalSystemAsset: vi.fn(),
   resolveLeadContext: vi.fn(),
@@ -72,10 +73,7 @@ vi.mock("@/lib/operational-system-delivery-email.server", () => ({
 }));
 
 vi.mock("@/lib/levier-asset.server", () => ({
-  LEVIER_ASSET_SNAPSHOT: {
-    assetRevision: "levier-v1-test",
-    workbookVersion: "1.0.0",
-  },
+  getLevierAssetSnapshot: mocks.getLevierAssetSnapshot,
 }));
 
 vi.mock("@/lib/solution-registry.server", () => ({
@@ -121,6 +119,11 @@ describe("free operational system delivery route", () => {
       slug: "plomberie-chauffage",
     });
     mocks.getLeadDeliveryState.mockResolvedValue(null);
+    mocks.getLevierAssetSnapshot.mockReturnValue({
+      assetRevision: "levier-google-sheet-v1-test",
+      resourceId: "1AbCdEfGhIjKlMnOpQrStUvWxYz_1234567890",
+      workbookVersion: "1.0.0",
+    });
     mocks.getPublishedSolutionPlacements.mockReturnValue([]);
     mocks.getActiveDeliverySnapshot.mockReturnValue({
       assetRevision: "d032-v1-2026-07-28",
@@ -156,7 +159,10 @@ describe("free operational system delivery route", () => {
     expect(rawPayload).not.toContain("/copy");
     expect(rawPayload).not.toContain("lead-123");
     expect(mocks.sendDeliveryEmail).toHaveBeenCalledWith({
-      assetRevision: "d032-v1-2026-07-28",
+      assetSnapshot: {
+        assetRevision: "d032-v1-2026-07-28",
+        workbookVersion: "1.0.0",
+      },
       deliveryId: "lead-lead-123-system",
       email: "maya@example.com",
       firstName: "Maya",
@@ -183,7 +189,10 @@ describe("free operational system delivery route", () => {
     );
     expect(mocks.sendDeliveryEmail).toHaveBeenCalledWith(
       expect.objectContaining({
-        assetRevision: "d032-v1-2026-07-28",
+        assetSnapshot: {
+          assetRevision: "d032-v1-2026-07-28",
+          workbookVersion: "1.0.0",
+        },
       }),
     );
   });
@@ -197,33 +206,60 @@ describe("free operational system delivery route", () => {
     }]);
     mocks.submitLeadRequest.mockResolvedValueOnce({
       assetSnapshot: {
-        assetRevision: "levier-v1-test",
+        assetRevision: "levier-google-sheet-v1-test",
+        resourceId: "1AbCdEfGhIjKlMnOpQrStUvWxYz_1234567890",
         workbookVersion: "1.0.0",
       },
       duplicate: false,
       leadId: "lead-levier",
     });
 
-    const response = await POST(buildRequest());
+    const response = await POST(buildRequest({ firstName: undefined }));
+    const rawPayload = await response.text();
 
     expect(response.status).toBe(200);
+    expect(JSON.parse(rawPayload)).toEqual({ ok: true });
+    expect(rawPayload).not.toMatch(/\/copy|docs\.google|resourceId|1AbCd/);
     expect(mocks.hasEditableOperationalSystemAsset).not.toHaveBeenCalled();
     expect(mocks.getActiveDeliverySnapshot).not.toHaveBeenCalled();
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(
       expect.objectContaining({
         assetSnapshot: {
-          assetRevision: "levier-v1-test",
+          assetRevision: "levier-google-sheet-v1-test",
+          resourceId: "1AbCdEfGhIjKlMnOpQrStUvWxYz_1234567890",
           workbookVersion: "1.0.0",
         },
+        contact: { email: "maya@example.com", firstName: null },
         title: "Livraison de Levier - Plomberie & chauffage",
       }),
     );
     expect(mocks.sendDeliveryEmail).toHaveBeenCalledWith(
       expect.objectContaining({
-        assetRevision: "levier-v1-test",
+        assetSnapshot: {
+          assetRevision: "levier-google-sheet-v1-test",
+          resourceId: "1AbCdEfGhIjKlMnOpQrStUvWxYz_1234567890",
+          workbookVersion: "1.0.0",
+        },
         deliveryId: "lead-lead-levier-system",
+        firstName: null,
       }),
     );
+  });
+
+  it("fails closed when the private Levier Google Sheets config is missing", async () => {
+    mocks.getPublishedSolutionPlacements.mockReturnValueOnce([{
+      resource: {
+        resourceSlug: "levier",
+        interaction: { interactionMode: "system_delivery" },
+      },
+    }]);
+    mocks.getLevierAssetSnapshot.mockReturnValueOnce(null);
+
+    const response = await POST(buildRequest({ firstName: undefined }));
+
+    expect(response.status).toBe(503);
+    expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
+    expect(mocks.sendDeliveryEmail).not.toHaveBeenCalled();
   });
 
   it("keeps marketing consent optional and separate from delivery", async () => {
@@ -301,7 +337,10 @@ describe("free operational system delivery route", () => {
     );
     expect(mocks.sendDeliveryEmail).toHaveBeenCalledWith(
       expect.objectContaining({
-        assetRevision: "d032-v1-2026-07-28",
+        assetSnapshot: {
+          assetRevision: "d032-v1-2026-07-28",
+          workbookVersion: "1.0.0",
+        },
         deliveryId: "lead-lead-historique-system",
       }),
     );
@@ -343,7 +382,10 @@ describe("free operational system delivery route", () => {
     expect(response.status).toBe(200);
     expect(mocks.sendDeliveryEmail).toHaveBeenCalledWith(
       expect.objectContaining({
-        assetRevision: "d032-v1-2026-07-28",
+        assetSnapshot: {
+          assetRevision: "d032-v1-2026-07-28",
+          workbookVersion: "1.0.0",
+        },
         deliveryId: "lead-lead-sans-revision-system",
       }),
     );
@@ -360,8 +402,18 @@ describe("free operational system delivery route", () => {
 
   it("rejects invalid contact data before storing or sending", async () => {
     const response = await POST(buildRequest({
-      email: "invalid",
       firstName: "",
+    }));
+
+    expect(response.status).toBe(400);
+    expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
+    expect(mocks.sendDeliveryEmail).not.toHaveBeenCalled();
+  });
+
+  it("rejects an invalid e-mail even when Levier does not require a name", async () => {
+    const response = await POST(buildRequest({
+      email: "invalid",
+      firstName: undefined,
     }));
 
     expect(response.status).toBe(400);

@@ -15,7 +15,7 @@ import { enterpriseToSystem } from "@/lib/enterprise-annuaire";
 import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 import { resolveLeadAttribution } from "@/lib/lead-attribution-server";
 import { resolveLeadContext } from "@/lib/lead-context";
-import { LEVIER_ASSET_SNAPSHOT } from "@/lib/levier-asset.server";
+import { getLevierAssetSnapshot } from "@/lib/levier-asset.server";
 import { submitLeadRequest } from "@/lib/lead-notifications";
 import {
   getLeadDeliveryState,
@@ -111,9 +111,9 @@ async function handlePost(request: Request) {
   const email = normalizeEmail(normalizeText(body?.email, 160));
   const marketingConsent = body?.marketingConsent === true;
 
-  if (!firstName || !systemSlug || !email) {
+  if (!systemSlug || !email) {
     return NextResponse.json(
-      { error: "Merci de renseigner votre prénom et votre e-mail." },
+      { error: "Merci de renseigner votre adresse e-mail." },
       { status: 400 },
     );
   }
@@ -148,6 +148,12 @@ async function handlePost(request: Request) {
       resource.resourceSlug === "levier" &&
       resource.interaction.interactionMode === "system_delivery"
     );
+  if (!hasPublishedLevier && !firstName) {
+    return NextResponse.json(
+      { error: "Merci de renseigner votre prénom et votre e-mail." },
+      { status: 400 },
+    );
+  }
   if (!hasPublishedLevier && !hasEditableOperationalSystemAsset(systemSlug)) {
     return NextResponse.json(
       { error: "Le système opérationnel demandé est introuvable." },
@@ -155,7 +161,7 @@ async function handlePost(request: Request) {
     );
   }
   const requestedAssetSnapshot = hasPublishedLevier
-    ? LEVIER_ASSET_SNAPSHOT
+    ? getLevierAssetSnapshot()
     : getActiveOperationalSystemDeliverySnapshot(systemSlug);
   if (!requestedAssetSnapshot) {
     return NextResponse.json(
@@ -211,17 +217,14 @@ async function handlePost(request: Request) {
       );
   const consentCapturedAt = new Date().toISOString();
   const lead = await submitLeadRequest({
-    assetSnapshot: {
-      assetRevision: requestedAssetSnapshot.assetRevision,
-      workbookVersion: requestedAssetSnapshot.workbookVersion,
-    },
+    assetSnapshot: requestedAssetSnapshot,
     attribution: resolveLeadAttribution(request, body?.attribution),
     channels: {
       email: false,
       resend: marketingConsent,
       slack: true,
     },
-    contact: { email, firstName },
+    contact: { email, firstName: firstName || null },
     context,
     emoji: "📦",
     idempotencyKey,
@@ -250,10 +253,10 @@ async function handlePost(request: Request) {
   }
 
   const delivery = await sendOperationalSystemDeliveryEmail({
-    assetRevision: lead.assetSnapshot.assetRevision,
+    assetSnapshot: lead.assetSnapshot,
     deliveryId: `lead-${lead.leadId}-system`,
     email,
-    firstName,
+    firstName: firstName || null,
     systemName,
     systemSlug,
   });

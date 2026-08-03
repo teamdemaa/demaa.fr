@@ -37,10 +37,6 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ['lucide-react']
   },
-  outputFileTracingIncludes: {
-    '/api/cron/system-kit-followups': ['./private-assets/levier/Levier.xlsx'],
-    '/api/systeme-kit/request': ['./private-assets/levier/Levier.xlsx'],
-  },
   async redirects() {
     return [
       {

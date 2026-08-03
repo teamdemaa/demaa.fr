@@ -26,6 +26,7 @@ vi.mock("@/lib/lead-storage", () => ({
   resolveStoredLeadAssetSnapshot: (lead: {
     asset_snapshot?: {
       asset_revision: string;
+      resource_id?: string | null;
       workbook_version: string;
     } | null;
     request_type: string;
@@ -33,6 +34,9 @@ vi.mock("@/lib/lead-storage", () => ({
     lead.asset_snapshot
       ? {
           assetRevision: lead.asset_snapshot.asset_revision,
+          ...(lead.asset_snapshot.resource_id
+            ? { resourceId: lead.asset_snapshot.resource_id }
+            : {}),
           workbookVersion: lead.asset_snapshot.workbook_version,
         }
       : lead.request_type === "system_kit_request"
@@ -121,7 +125,10 @@ describe("operational system delivery retry", () => {
 
     expect(result).toEqual([{ channel: "kit_email", status: "sent" }]);
     expect(mocks.sendDeliveryEmail).toHaveBeenCalledWith({
-      assetRevision: "d032-v1-2026-07-28",
+      assetSnapshot: {
+        assetRevision: "d032-v1-2026-07-28",
+        workbookVersion: "1.0.0",
+      },
       deliveryId: "lead-lead-123-system",
       email: "maya@example.com",
       firstName: "Maya",
@@ -144,10 +151,43 @@ describe("operational system delivery retry", () => {
 
     expect(result).toEqual([{ channel: "kit_email", status: "sent" }]);
     expect(mocks.sendDeliveryEmail).toHaveBeenCalledWith({
-      assetRevision: "d032-v1-2026-07-28",
+      assetSnapshot: {
+        assetRevision: "d032-v1-2026-07-28",
+        workbookVersion: "1.0.0",
+      },
       deliveryId: "lead-lead-123-system",
       email: "maya@example.com",
       firstName: "Maya",
+      systemName: "Plomberie & chauffage",
+      systemSlug: "plomberie-chauffage",
+    });
+    expect(mocks.markLeadDeliveryAbandoned).not.toHaveBeenCalled();
+  });
+
+  it("retries Levier from its stored resource snapshot without a first name", async () => {
+    const failedLead = buildFailedLead();
+    failedLead.data.asset_snapshot = {
+      asset_revision: "levier-google-sheet-v1-2026-08-03",
+      resource_id: "1AbCdEfGhIjKlMnOpQrStUvWxYz_1234567890",
+      workbook_version: "1.0.0",
+    } as never;
+    failedLead.data.contact.first_name = null as never;
+    failedLead.data.context.source = "Livraison de Levier";
+    failedLead.data.title = "Livraison de Levier";
+    mocks.getFailedLeadRequests.mockResolvedValueOnce([failedLead]);
+
+    const result = await retryFailedLeadDeliveries(10, mocks.sendDeliveryEmail);
+
+    expect(result).toEqual([{ channel: "kit_email", status: "sent" }]);
+    expect(mocks.sendDeliveryEmail).toHaveBeenCalledWith({
+      assetSnapshot: {
+        assetRevision: "levier-google-sheet-v1-2026-08-03",
+        resourceId: "1AbCdEfGhIjKlMnOpQrStUvWxYz_1234567890",
+        workbookVersion: "1.0.0",
+      },
+      deliveryId: "lead-lead-123-system",
+      email: "maya@example.com",
+      firstName: null,
       systemName: "Plomberie & chauffage",
       systemSlug: "plomberie-chauffage",
     });

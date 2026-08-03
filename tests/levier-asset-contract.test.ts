@@ -1,64 +1,95 @@
-import { readFile, readdir } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("server-only", () => ({}));
 
 import {
   LEVIER_ASSET_REVISION,
-  LEVIER_ASSET_SHA256,
-  LEVIER_ATTACHMENT_FILENAME,
-  readLevierAttachment,
+  buildLevierGoogleSheetsCopyUrl,
+  getLevierAssetSnapshot,
+  getLevierCopyUrl,
+  parseLevierGoogleSheetsCopyUrl,
 } from "@/lib/levier-asset.server";
 
 async function readSource(path: string) {
   return readFile(new URL(`../${path}`, import.meta.url), "utf8");
 }
 
-describe("Levier private attachment contract", () => {
-  it("reads only the independently reviewed canonical workbook", async () => {
-    expect(LEVIER_ASSET_REVISION).toBe("levier-v1-2026-08-03");
-    expect(LEVIER_ASSET_SHA256).toBe(
-      "424ea3b1b342898650fa14f776cc10d9590157abe15597fd18d271f2d306f22e",
-    );
-    expect(LEVIER_ATTACHMENT_FILENAME).toBe("Levier.xlsx");
-    const attachment = await readLevierAttachment();
-    expect(attachment?.subarray(0, 2)).toEqual(Buffer.from([0x50, 0x4b]));
-    await expect(readdir(new URL("../private-assets/levier/", import.meta.url)))
-      .resolves.toEqual(["Levier.xlsx"]);
+const SHEET_ID = "1AbCdEfGhIjKlMnOpQrStUvWxYz_1234567890";
+const COPY_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/copy`;
+
+describe("Levier private Google Sheets contract", () => {
+  afterEach(() => {
+    vi.unstubAllEnvs();
   });
 
-  it("keeps the asset server-only and bundles it only into delivery routes", async () => {
+  it("accepts only an exact Google Sheets /copy URL", () => {
+    expect(parseLevierGoogleSheetsCopyUrl(COPY_URL)).toBe(SHEET_ID);
+    expect(buildLevierGoogleSheetsCopyUrl(SHEET_ID)).toBe(COPY_URL);
+
+    for (const invalid of [
+      "http://docs.google.com/spreadsheets/d/1AbCdEfGhIjKlMnOpQrStUvWxYz_1234567890/copy",
+      "https://drive.google.com/spreadsheets/d/1AbCdEfGhIjKlMnOpQrStUvWxYz_1234567890/copy",
+      "https://docs.google.com/spreadsheets/d/short/copy",
+      "https://docs.google.com/spreadsheets/d/1AbCdEfGhIjKlMnOpQrStUvWxYz_1234567890/edit",
+      `${COPY_URL}?usp=sharing`,
+      `${COPY_URL}#fragment`,
+      "javascript:alert(1)",
+    ]) {
+      expect(parseLevierGoogleSheetsCopyUrl(invalid)).toBeNull();
+    }
+  });
+
+  it("creates an immutable server snapshot from the private environment", () => {
+    vi.stubEnv("LEVIER_GOOGLE_SHEETS_COPY_URL", COPY_URL);
+
+    const snapshot = getLevierAssetSnapshot();
+
+    expect(snapshot).toEqual({
+      assetRevision: "levier-google-sheet-v1-2026-08-03",
+      resourceId: SHEET_ID,
+      workbookVersion: "1.0.0",
+    });
+    expect(Object.isFrozen(snapshot)).toBe(true);
+    expect(getLevierCopyUrl(snapshot ?? { assetRevision: "", resourceId: "" }))
+      .toBe(COPY_URL);
+    expect(LEVIER_ASSET_REVISION).toBe(
+      "levier-google-sheet-v1-2026-08-03",
+    );
+  });
+
+  it("fails closed when the private configuration is missing or invalid", () => {
+    expect(getLevierAssetSnapshot()).toBeNull();
+    vi.stubEnv("LEVIER_GOOGLE_SHEETS_COPY_URL", "https://example.com/copy");
+    expect(getLevierAssetSnapshot()).toBeNull();
+    expect(getLevierCopyUrl({
+      assetRevision: LEVIER_ASSET_REVISION,
+      resourceId: "invalid",
+    })).toBeNull();
+    expect(getLevierCopyUrl({
+      assetRevision: "another-revision",
+      resourceId: SHEET_ID,
+    })).toBeNull();
+  });
+
+  it("keeps the resource server-only and removes the XLSX runtime contract", async () => {
     const assetSource = await readSource("src/lib/levier-asset.server.ts");
     const configSource = await readSource("next.config.ts");
-    const cronSource = await readSource(
-      "src/app/api/cron/system-kit-followups/route.ts",
-    );
-    const leadNotificationsSource = await readSource(
-      "src/lib/lead-notifications.ts",
+    const modalSource = await readSource(
+      "src/components/OperationalSystemCopyRequestModal.tsx",
     );
     const vercelIgnoreSource = await readSource(".vercelignore");
 
     expect(assetSource.startsWith('import "server-only";')).toBe(true);
-    expect(assetSource).toContain('"private-assets"');
-    expect(assetSource).not.toMatch(/public|https?:\/\//);
-    expect(assetSource).toContain("createHash");
-    expect(configSource).toContain("'/api/systeme-kit/request'");
-    expect(configSource).toContain("'/api/cron/system-kit-followups'");
-    expect(configSource.match(/\.\/private-assets\/levier\/Levier\.xlsx/g)).toHaveLength(2);
-    expect(leadNotificationsSource).not.toContain(
-      'from "@/lib/operational-system-delivery-email.server"',
-    );
-    expect(cronSource).toContain(
-      'from "@/lib/operational-system-delivery-email.server"',
-    );
-    expect(cronSource).toContain(
-      "retryFailedLeadDeliveries(\n    30,\n    sendOperationalSystemDeliveryEmail,",
-    );
-    expect(vercelIgnoreSource).toContain("!private-assets/levier/Levier.xlsx");
+    expect(assetSource).toContain("LEVIER_GOOGLE_SHEETS_COPY_URL");
+    expect(assetSource).not.toMatch(/NEXT_PUBLIC|private-assets|readFile|\.xlsx/);
+    expect(configSource).not.toMatch(/private-assets\/levier|Levier\.xlsx/);
+    expect(vercelIgnoreSource).not.toContain("!private-assets/levier/Levier.xlsx");
+    expect(modalSource).not.toMatch(/\/copy|docs\.google|Google Sheets|resourceId/);
   });
 
-  it("separates the public demonstration preview from the blank attachment", async () => {
+  it("keeps the public demonstration separate from the private copy link", async () => {
     const previewSource = await readSource("src/lib/system-kit-previews.ts");
     const modalSource = await readSource(
       "src/components/OperationalSystemCopyRequestModal.tsx",
@@ -67,13 +98,10 @@ describe("Levier private attachment contract", () => {
     expect(previewSource).toContain(
       'src: "/images/levier/levier-tableau-de-bord-preview.webp"',
     );
-    expect(previewSource).toContain("width: 1400");
-    expect(previewSource).toContain("height: 933");
-    expect(previewSource).not.toContain(".xlsx");
+    expect(previewSource).not.toContain("/copy");
     expect(modalSource).toContain(
-      "Aperçu avec des données d’exemple. Le fichier reçu sera vierge",
+      "Aperçu avec des données d’exemple. Votre copie sera vierge",
     );
-    expect(modalSource).toContain("et prêt à compléter.");
     const preview = await readFile(
       new URL(
         "../public/images/levier/levier-tableau-de-bord-preview.webp",

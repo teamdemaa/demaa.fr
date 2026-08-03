@@ -46,10 +46,10 @@ type LeadSubmission = {
 };
 
 type OperationalSystemDeliveryEmailSender = (input: {
-  assetRevision: string;
+  assetSnapshot: LeadAssetSnapshot;
   deliveryId: string;
   email: string;
-  firstName: string;
+  firstName?: string | null;
   systemName: string;
   systemSlug: string;
 }) => Promise<
@@ -363,11 +363,14 @@ export async function retryFailedLeadDeliveries(
           channel === "kit_email"
           && (
             !input.contact.email
-            || !input.contact.firstName
             || !input.context.systemName
             || !input.context.systemSlug
             || !input.assetSnapshot?.assetRevision
             || !input.assetSnapshot.workbookVersion
+            || (
+              !input.assetSnapshot.resourceId
+              && !input.contact.firstName
+            )
           )
         );
       if (missingRetryData) {
@@ -394,23 +397,22 @@ export async function retryFailedLeadDeliveries(
       } else if (
         channel === "kit_email"
         && input.contact.email
-        && input.contact.firstName
         && input.context.systemName
         && input.context.systemSlug
         && input.assetSnapshot?.assetRevision
       ) {
-        const assetRevision = input.assetSnapshot.assetRevision;
+        const assetSnapshot = input.assetSnapshot;
         result = await deliverChannel({
           channel,
           leadId: lead.id,
           operation: async () => {
             const delivery = await sendOperationalSystemDeliveryEmail({
+              assetSnapshot,
               deliveryId: `lead-${lead.id}-system`,
               email: input.contact.email ?? "",
-              firstName: input.contact.firstName ?? "",
+              firstName: input.contact.firstName,
               systemName: input.context.systemName ?? "",
               systemSlug: input.context.systemSlug ?? "",
-              assetRevision,
             });
             if (!delivery.sent) {
               throw new Error(delivery.reason);

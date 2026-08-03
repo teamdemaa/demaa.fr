@@ -52,9 +52,17 @@ import {
   resolveStoredLeadAssetSnapshot,
 } from "@/lib/lead-storage";
 
-function buildInput(assetRevision: string, workbookVersion: string) {
+function buildInput(
+  assetRevision: string,
+  workbookVersion: string,
+  resourceId?: string,
+) {
   return {
-    assetSnapshot: { assetRevision, workbookVersion },
+    assetSnapshot: {
+      assetRevision,
+      ...(resourceId ? { resourceId } : {}),
+      workbookVersion,
+    },
     attribution: {
       consent: {
         analytics: false,
@@ -168,6 +176,37 @@ describe("lead storage asset snapshots", () => {
         created: false,
         id: first.id,
       }),
+    );
+  });
+
+  it("freezes the Levier resource ID for an idempotent duplicate", async () => {
+    const first = await createLeadRequest(
+      buildInput(
+        "levier-google-sheet-v1-2026-08-03",
+        "1.0.0",
+        "1AbCdEfGhIjKlMnOpQrStUvWxYz_1234567890",
+      ),
+    );
+    const duplicate = await createLeadRequest(
+      buildInput(
+        "levier-google-sheet-v2-2026-08-04",
+        "2.0.0",
+        "1AnotherGoogleSheetResourceId_123456789",
+      ),
+    );
+
+    expect(first.assetSnapshot).toEqual({
+      assetRevision: "levier-google-sheet-v1-2026-08-03",
+      resourceId: "1AbCdEfGhIjKlMnOpQrStUvWxYz_1234567890",
+      workbookVersion: "1.0.0",
+    });
+    expect(duplicate).toEqual(expect.objectContaining({
+      assetSnapshot: first.assetSnapshot,
+      created: false,
+      id: first.id,
+    }));
+    expect(JSON.stringify(firestore.documents.get(first.id))).not.toContain(
+      "docs.google.com",
     );
   });
 

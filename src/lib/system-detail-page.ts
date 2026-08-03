@@ -330,7 +330,7 @@ function buildSystemPageDescription(
   if (hasEditableOperationalSystemAsset(data.system.slug)) {
     parts.push(
       hasPublishedLevier
-        ? "Recevez gratuitement Levier.xlsx, le tableau de pilotage opérationnel, par e-mail."
+        ? "Recevez gratuitement par e-mail Levier, le tableau de pilotage opérationnel à copier dans Google Sheets."
         : "Découvrez une démonstration remplie et recevez gratuitement par e-mail le lien permettant de créer votre copie personnelle dans Google Drive.",
     );
   }

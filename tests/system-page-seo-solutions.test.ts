@@ -161,7 +161,7 @@ describe("system page SEO published Solutions boundary", () => {
     const exposed = JSON.stringify({ metadata, jsonLd });
 
     expect(metadata.description).toContain(
-      "Recevez gratuitement Levier.xlsx, le tableau de pilotage opérationnel, par e-mail.",
+      "Recevez gratuitement par e-mail Levier, le tableau de pilotage opérationnel à copier dans Google Sheets.",
     );
     expect(exposed).not.toMatch(/Google Drive|docs\.google|private-assets/);
     const list = itemList(jsonLd);

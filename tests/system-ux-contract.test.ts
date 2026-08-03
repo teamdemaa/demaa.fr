@@ -6,7 +6,7 @@ async function readSource(path: string) {
 }
 
 describe("system UX contract", () => {
-  it("keeps the system overview and copy request in one modal", async () => {
+  it("keeps the Levier preview, e-mail form and confirmation in one modal", async () => {
     const detailSource = await readSource(
       "src/components/SystemDetailContent.tsx",
     );
@@ -18,17 +18,20 @@ describe("system UX contract", () => {
     expect(detailSource).not.toContain("Recevoir ma copie modifiable");
     expect(detailSource).toContain("deliveryAvailable && !hasLevierSolution");
     expect(detailSource).toContain("onOpenSystemDelivery");
-    expect(modalSource).toContain('"overview" | "form" | "success"');
+    expect(modalSource).not.toMatch(/"overview"\s*\|\s*"form"/);
     expect(modalSource).toContain("Recevoir Levier");
     expect(modalSource).toContain("Levier vous a été envoyé par e-mail");
-    expect(modalSource).toContain("Gratuit · Envoyé par e-mail");
     expect(modalSource).toContain("Tableau de pilotage opérationnel");
+    expect(modalSource).toContain('name="email"');
+    expect(modalSource).not.toContain('name="firstName"');
+    expect(modalSource).not.toContain("Prénom");
+    expect(modalSource).not.toContain("openForm");
     expect(modalSource).not.toMatch(/Voir la démonstration|Google Drive/);
     expect(modalSource).not.toContain(
       "Des process concrets, des outils recommandés",
     );
     expect(modalSource).toContain('fetch("/api/systeme-kit/request"');
-    expect(modalSource).not.toMatch(/Stripe|checkout|\/copy/);
+    expect(modalSource).not.toMatch(/Stripe|checkout|\/copy|\.xlsx/);
   });
 
   it("renders the organisation exchange once after the active panel", async () => {
