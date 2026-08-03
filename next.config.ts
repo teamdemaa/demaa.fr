@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import { buildContentSecurityPolicy } from "./src/lib/content-security-policy";
+import { ACADEMY_PERMANENT_REDIRECTS } from "./src/lib/academy-course-routes";
 
 const securityHeaders = [
   {
@@ -39,6 +40,7 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      ...ACADEMY_PERMANENT_REDIRECTS,
       {
         source: '/systemes',
         destination: '/',

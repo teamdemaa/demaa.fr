@@ -9,6 +9,10 @@ import trainingCase from "../../studio/academy-course-pack-v1/cases/formation-b2
 import itMaintenanceCase from "../../studio/academy-course-pack-v1/cases/maintenance-informatique-acquisition.json";
 import engineeringCase from "../../studio/academy-course-pack-v1/cases/bureau-etudes-acquisition.json";
 import cleaningCase from "../../studio/academy-course-pack-v1/cases/nettoyage-professionnel-acquisition.json";
+import {
+  ACADEMY_CONTENT_SLUGS,
+  LEGACY_ACADEMY_SLUG_ALIASES,
+} from "@/lib/academy-course-routes";
 
 export type AcademyContentKind = "course" | "case-study";
 
@@ -114,11 +118,22 @@ const allAcademyContent = [...fundamentals, ...caseStudies].filter(
   (content) => content.status === "ready",
 );
 
-const legacyAcademySlugAliases = new Map<string, string>([
-  ["entreprise-rentable-sans-tresorerie", "piloter-sa-tresorerie"],
-  ["difference-chiffre-affaires-benefice", "comprendre-chiffre-affaires-benefice"],
-  ["transformer-une-demande-en-client", "transformer-demande-en-client"],
-]);
+const legacyAcademySlugAliases = new Map<string, string>(
+  Object.entries(LEGACY_ACADEMY_SLUG_ALIASES),
+);
+
+const configuredAcademyContentSlugs = new Set<string>(ACADEMY_CONTENT_SLUGS);
+
+if (
+  allAcademyContent.length !== configuredAcademyContentSlugs.size ||
+  allAcademyContent.some(
+    (content) => !configuredAcademyContentSlugs.has(content.identity.slug),
+  )
+) {
+  throw new Error(
+    "Les routes Académie et les contenus publiés ne partagent pas la même liste de slugs.",
+  );
+}
 
 const academyContentSlugsBySystem = new Map<string, readonly string[]>([
   ["daf-externalise", ["piloter-sa-tresorerie", "comprendre-chiffre-affaires-benefice"]],

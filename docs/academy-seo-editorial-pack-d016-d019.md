@@ -1,5 +1,11 @@
 # Académie Demaa — paquet éditorial SEO D-016 / D-019
 
+> **Archive — ancienne Académie vidéo.** Ce document décrit le dispositif
+> vidéo D-016 à D-019 retiré du produit. Il ne constitue plus une spécification
+> active : l’Académie publiée repose désormais sur des cours interactifs sans
+> vidéo, sans `VideoObject` et sans sitemap vidéo. Les références YouTube ci-dessous
+> sont conservées uniquement comme historique éditorial.
+
 Date de préparation : 27 juillet 2026
 Mise à jour d’intégration : 28 juillet 2026
 Statut : intégré dans D-017 et D-031 avec les deux publications YouTube publiques

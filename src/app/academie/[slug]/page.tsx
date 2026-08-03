@@ -7,6 +7,11 @@ import {
   getAllAcademyContent,
   getCanonicalAcademySlugForLegacySlug,
 } from "@/lib/academy-course-content";
+import {
+  buildAcademyContentJsonLd,
+  buildAcademyContentMetadata,
+  serializeAcademyContentJsonLd,
+} from "@/lib/academy-content-seo";
 
 export function generateStaticParams() {
   return getAllAcademyContent().map((content) => ({ slug: content.identity.slug }));
@@ -22,32 +27,7 @@ export async function generateMetadata(
 
   if (!content) return { title: "Cours introuvable | Académie Demaa" };
 
-  const title = `${content.identity.title} | Académie Demaa`;
-  const description = content.identity.promise;
-
-  return {
-    title,
-    description,
-    alternates: {
-      canonical: `/academie/${content.identity.slug}`,
-    },
-    openGraph: {
-      title,
-      description,
-      url: `/academie/${content.identity.slug}`,
-      siteName: "Demaa",
-      locale: "fr_FR",
-      type: "article",
-      images: content.identity.card.image
-        ? [{ url: content.identity.card.image, alt: content.identity.card.imageAlt }]
-        : undefined,
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-    },
-  };
+  return buildAcademyContentMetadata(content);
 }
 
 export default async function AcademyCoursePage(
@@ -60,9 +40,17 @@ export default async function AcademyCoursePage(
 
   if (!content) notFound();
 
+  const jsonLd = buildAcademyContentJsonLd(content);
+
   return (
     <>
       <Navbar />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: serializeAcademyContentJsonLd(jsonLd),
+        }}
+      />
       <AcademyCoursePlayer content={content} />
     </>
   );
