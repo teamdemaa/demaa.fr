@@ -82,9 +82,17 @@ describe("system UX contract", () => {
       "Besoin d’y voir plus clair dans votre organisation ?",
     );
     expect(processCallSource).toContain(
-      "identifier la priorité à structurer et rendre votre entreprise moins",
+      "Faites le point en 30 minutes avec un spécialiste Demaa pour identifier",
     );
-    expect(processCallSource).toContain("dépendante de vous au quotidien.");
+    expect(processCallSource).toContain("les priorités qui rendront");
+    expect(processCallSource).toContain(
+      '<strong className="font-semibold text-brand-blue">',
+    );
+    expect(
+      processCallSource.match(
+        /votre entreprise moins dépendante de vous au quotidien/g,
+      ),
+    ).toHaveLength(1);
     expect(processCallSource).toContain('label="Réserver mon échange"');
     expect(detailSource).toContain(
       "source={getSystemDetailBookingSource(activeTab)}",
