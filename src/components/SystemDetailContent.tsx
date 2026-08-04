@@ -152,7 +152,7 @@ export default function SystemDetailContent({
 
         <div className="mt-8 flex justify-start sm:mt-9">
           <div
-            className="grid w-full grid-cols-2 gap-1 rounded-full border border-dema-line bg-dema-paper p-1 shadow-[0_8px_24px_rgba(23,35,29,0.035)]"
+            className="grid w-full grid-cols-2 border-b border-dema-line"
             role="tablist"
             aria-label="Contenu du système opérationnel"
             aria-orientation="horizontal"
@@ -168,10 +168,10 @@ export default function SystemDetailContent({
                 tabIndex={activeTab === tab.slug ? 0 : -1}
                 onClick={() => selectTab(tab.slug)}
                 onKeyDown={(event) => handleTabKeyDown(event, tab.slug)}
-                className={`min-h-12 min-w-0 whitespace-nowrap rounded-full px-1 py-2.5 text-[13px] font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:px-4 sm:text-sm ${
+                className={`-mb-px min-h-11 min-w-0 whitespace-nowrap border-b-2 px-2 py-2.5 text-[13px] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:px-4 sm:text-sm ${
                   activeTab === tab.slug
-                    ? "bg-dema-sage text-dema-forest"
-                    : "text-dema-muted hover:bg-dema-sage/55 hover:text-brand-blue"
+                    ? "border-dema-forest font-semibold text-dema-forest"
+                    : "border-transparent font-medium text-dema-muted hover:border-dema-forest/25 hover:text-brand-blue"
                 }`}
               >
                 {tab.label}

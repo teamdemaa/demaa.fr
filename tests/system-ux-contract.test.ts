@@ -109,4 +109,24 @@ describe("system UX contract", () => {
       /SystemProcessCallCta|Diagnostic offert|appel gratuit/,
     );
   });
+
+  it("keeps Process and Solutions as lightweight balanced tabs", async () => {
+    const detailSource = await readSource(
+      "src/components/SystemDetailContent.tsx",
+    );
+
+    expect(detailSource).toContain(
+      "grid w-full grid-cols-2 border-b border-dema-line",
+    );
+    expect(detailSource).toContain("min-h-11");
+    expect(detailSource).toContain(
+      "border-dema-forest font-semibold text-dema-forest",
+    );
+    expect(detailSource).toContain(
+      "border-transparent font-medium text-dema-muted",
+    );
+    expect(detailSource).not.toContain(
+      "grid w-full grid-cols-2 gap-1 rounded-full",
+    );
+  });
 });
