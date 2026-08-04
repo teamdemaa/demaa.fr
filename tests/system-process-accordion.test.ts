@@ -79,6 +79,11 @@ describe("system process accordion", () => {
     expect(html).not.toContain("Mettre à jour les indicateurs");
     expect(html).not.toContain("Qualifier le besoin");
     expect(html).not.toContain("Dans le système");
+    expect(html).not.toContain("Routines essentielles");
+    expect(html).not.toContain(
+      "Les rendez-vous opérationnels à installer pour piloter l’activité",
+    );
+    expect(html).toContain('aria-label="Routines du système"');
     expect(html).toContain(">01<");
     expect(html).toContain(">02<");
     expect(html).not.toContain("01.01");

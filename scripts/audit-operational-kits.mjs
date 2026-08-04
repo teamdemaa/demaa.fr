@@ -84,8 +84,13 @@ async function inspectEnterprise(enterprise) {
         break;
       }
     }
-    if (!renderedOverviewHtml.includes("Routines essentielles")) {
-      errors.push("shared Process routine heading is missing");
+    if (
+      renderedOverviewHtml.includes("Routines essentielles") ||
+      renderedOverviewHtml.includes(
+        "Les rendez-vous opérationnels à installer pour piloter l’activité",
+      )
+    ) {
+      errors.push("removed Process introduction is still visible");
     }
     const routineControlCount =
       renderedOverviewHtml.split('aria-controls="system-routine-detail-').length - 1;

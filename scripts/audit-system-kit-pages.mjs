@@ -218,8 +218,13 @@ export function inspectPage({ response, html, tab, expectedSolutionOrder }) {
     if (renderedHtml.includes('aria-expanded="true"')) {
       errors.push("a Process routine is expanded by default");
     }
-    if (!renderedHtml.includes("Routines essentielles")) {
-      errors.push("shared Process routine heading is missing");
+    if (
+      renderedHtml.includes("Routines essentielles") ||
+      renderedHtml.includes(
+        "Les rendez-vous opérationnels à installer pour piloter l’activité",
+      )
+    ) {
+      errors.push("removed Process introduction is still visible");
     }
     const routineControlCount = countOccurrences(
       renderedHtml,

@@ -81,23 +81,7 @@ function OperationalRoutineAccordion({
   routines: SystemeRoutine[];
 }) {
   return (
-    <section aria-labelledby="system-routines-title">
-      <div className="border-b border-dema-line pb-4">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-          Process
-        </p>
-        <h2
-          id="system-routines-title"
-          className="mt-2 text-xl font-semibold tracking-tight text-brand-blue"
-        >
-          Routines essentielles
-        </h2>
-        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-dema-muted">
-          Les rendez-vous opérationnels à installer pour piloter l’activité
-          sans parcourir tout le référentiel.
-        </p>
-      </div>
-
+    <section aria-label="Routines du système">
       <div>
         {routines.map((routine, index) => (
           <RoutineItem
