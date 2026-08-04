@@ -51,6 +51,8 @@ const systemTabDefinitions: ReadonlyArray<{
 
 const EMPTY_SOLUTION_SECTIONS: readonly RenderableSolutionSectionDto[] = [];
 
+type DeliveryModal = "system" | "levier" | null;
+
 export default function SystemDetailContent({
   system,
   systeme,
@@ -74,20 +76,11 @@ export default function SystemDetailContent({
       ? initialActiveTab
       : "process",
   );
-  const [isSystemModalOpen, setIsSystemModalOpen] = useState(false);
-  const hasLevierSolution = solutionSections.some((section) =>
-    section.placements.some(
-      ({ resource }) =>
-        resource.resourceSlug === "levier" &&
-        resource.interaction.interactionMode === "system_delivery",
-    ),
-  );
-  const preview = hasLevierSolution
-    ? LEVIER_PREVIEW
-    : getSystemKitPreview(system.slug);
-  const closeSystemModal = useCallback(() => {
-    setIsSystemModalOpen(false);
-  }, [setIsSystemModalOpen]);
+  const [deliveryModal, setDeliveryModal] = useState<DeliveryModal>(null);
+  const systemPreview = getSystemKitPreview(system.slug);
+  const closeDeliveryModal = useCallback(() => {
+    setDeliveryModal(null);
+  }, [setDeliveryModal]);
 
   function selectTab(tab: SystemDetailTab) {
     setActiveTab(tab);
@@ -139,10 +132,10 @@ export default function SystemDetailContent({
           <p className="mt-4 max-w-3xl text-base leading-relaxed text-dema-muted">
             {intro}
           </p>
-          {deliveryAvailable && !hasLevierSolution ? (
+          {deliveryAvailable ? (
             <button
               type="button"
-              onClick={() => setIsSystemModalOpen(true)}
+              onClick={() => setDeliveryModal("system")}
               className="mt-7 inline-flex min-h-11 items-center justify-center rounded-full border border-dema-forest/25 bg-dema-paper px-5 py-3 text-sm font-semibold text-dema-forest transition hover:border-dema-forest hover:bg-dema-sage/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
             >
               Voir le système
@@ -195,7 +188,7 @@ export default function SystemDetailContent({
 
           {activeTab === "solutions" ? (
             <SystemSolutionsTab
-              onOpenSystemDelivery={() => setIsSystemModalOpen(true)}
+              onOpenSystemDelivery={() => setDeliveryModal("levier")}
               sections={solutionSections}
             />
           ) : null}
@@ -241,21 +234,21 @@ export default function SystemDetailContent({
           </section>
         ) : null}
       </article>
-      {isSystemModalOpen && hasLevierSolution ? (
+      {deliveryModal === "levier" ? (
         <OperationalSystemCopyRequestModal
-          preview={preview}
+          preview={LEVIER_PREVIEW}
           systemName={system.name}
           systemSlug={system.slug}
-          onClose={closeSystemModal}
+          onClose={closeDeliveryModal}
         />
       ) : null}
-      {isSystemModalOpen && !hasLevierSolution ? (
+      {deliveryModal === "system" ? (
         <HistoricalOperationalSystemCopyRequestModal
           demoUrl={demoUrl}
-          preview={preview}
+          preview={systemPreview}
           systemName={system.name}
           systemSlug={system.slug}
-          onClose={closeSystemModal}
+          onClose={closeDeliveryModal}
         />
       ) : null}
     </>

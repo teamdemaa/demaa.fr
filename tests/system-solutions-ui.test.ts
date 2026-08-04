@@ -368,6 +368,29 @@ describe("system Solutions UI", () => {
     expect(detailSource).toContain("systeme: SystemeDetail | null");
   });
 
+  it("keeps the full system and Levier as two distinct delivery entry points", async () => {
+    const detailSource = await readSource("src/components/SystemDetailContent.tsx");
+    const levierModalSource = await readSource(
+      "src/components/OperationalSystemCopyRequestModal.tsx",
+    );
+    const systemModalSource = await readSource(
+      "src/components/HistoricalOperationalSystemCopyRequestModal.tsx",
+    );
+
+    expect(detailSource).toContain('onClick={() => setDeliveryModal("system")}');
+    expect(detailSource).toContain('onOpenSystemDelivery={() => setDeliveryModal("levier")}');
+    expect(detailSource).toContain('deliveryModal === "system"');
+    expect(detailSource).toContain('deliveryModal === "levier"');
+    expect(detailSource).toContain("preview={systemPreview}");
+    expect(detailSource).toContain("preview={LEVIER_PREVIEW}");
+    expect(systemModalSource).toContain("Système opérationnel - {systemName}");
+    expect(systemModalSource).toContain("Recevoir ma copie modifiable");
+    expect(systemModalSource).toContain('const flowKey = `system-copy:${systemSlug}`');
+    expect(levierModalSource).toContain("Tableau de pilotage opérationnel");
+    expect(levierModalSource).toContain("Recevoir Levier");
+    expect(levierModalSource).toContain('const flowKey = `levier:${systemSlug}`');
+  });
+
   it("reuses the accessible modal lifecycle and resets selection on close", async () => {
     const solutionsSource = await readSource("src/components/SystemSolutionsTab.tsx");
     const dialogSource = await readSource("src/components/DirectoryDetailDialogShell.tsx");

@@ -22,10 +22,15 @@ describe("system UX contract", () => {
 
     expect(detailSource.match(/Voir le système/g)).toHaveLength(1);
     expect(detailSource).not.toContain("Recevoir ma copie modifiable");
-    expect(detailSource).toContain("deliveryAvailable && !hasLevierSolution");
+    expect(detailSource).toContain("deliveryAvailable ?");
+    expect(detailSource).not.toContain("hasLevierSolution");
+    expect(detailSource).toContain('setDeliveryModal("system")');
     expect(detailSource).toContain("onOpenSystemDelivery");
-    expect(detailSource).toContain("isSystemModalOpen && hasLevierSolution");
-    expect(detailSource).toContain("isSystemModalOpen && !hasLevierSolution");
+    expect(detailSource).toContain('setDeliveryModal("levier")');
+    expect(detailSource).toContain('deliveryModal === "system"');
+    expect(detailSource).toContain('deliveryModal === "levier"');
+    expect(detailSource).toContain("preview={systemPreview}");
+    expect(detailSource).toContain("preview={LEVIER_PREVIEW}");
     expect(detailSource).toContain("HistoricalOperationalSystemCopyRequestModal");
     expect(modalSource).not.toMatch(/"overview"\s*\|\s*"form"/);
     expect(modalSource).toContain("Recevoir Levier");
@@ -54,6 +59,8 @@ describe("system UX contract", () => {
     expect(historicalModalSource).toContain("Recevoir ma copie modifiable");
     expect(historicalModalSource).toContain('firstName: normalizedFirstName');
     expect(historicalModalSource).toContain('const flowKey = `system-copy:${systemSlug}`');
+    expect(modalSource).toContain('const flowKey = `levier:${systemSlug}`');
+    expect(historicalModalSource).toContain('fetch("/api/systeme-kit/request"');
     expect(pageSource).toContain("getOperationalSystemDemoUrl(data.system.slug)");
   });
 
