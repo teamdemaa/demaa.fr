@@ -18,7 +18,7 @@ import {
 import { enterpriseCatalog } from "@/lib/enterprise-annuaire";
 
 describe("server-only product Solutions registries", () => {
-  it("publishes Levier on every system with the Bâtiment ranking exception", () => {
+  it("publishes Levier once in Models on every system", () => {
     expect(getPublishedSolutionResources()).toEqual([
       expect.objectContaining({
         resourceSlug: "levier",
@@ -32,7 +32,8 @@ describe("server-only product Solutions registries", () => {
     expect(getPublishedSolutionResourceBySlug(42)).toBeNull();
     expect(getPublishedSolutionPlacementsForSystem("batiment")).toEqual([
       expect.objectContaining({
-        rank: 3,
+        rank: 1,
+        section: "models",
         resource: expect.objectContaining({
           resourceSlug: "levier",
           interaction: { interactionMode: "system_delivery" },
@@ -43,9 +44,9 @@ describe("server-only product Solutions registries", () => {
     expect(getPublishedSolutionPlacementsForSystem(null)).toEqual([]);
     expect(getPublishedSolutionSectionsForSystem("batiment")).toEqual([
       expect.objectContaining({
-        section: "software",
+        section: "models",
         placements: [expect.objectContaining({
-          rank: 3,
+          rank: 1,
           resource: expect.objectContaining({ resourceSlug: "levier" }),
         })],
       }),
@@ -64,7 +65,8 @@ describe("server-only product Solutions registries", () => {
       enterpriseCatalog.map(({ slug }) => slug),
     );
     expect(LEVIER_SOLUTION_PLACEMENTS.every((placement) =>
-      placement.rank === (placement.systemSlug === "batiment" ? 3 : 1) &&
+      placement.rank === 1 &&
+      placement.section === "models" &&
       placement.status === "published" &&
       placement.publicationBlockers.length === 0
     )).toBe(true);

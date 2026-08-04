@@ -35,7 +35,7 @@ export const SOLUTION_INTERACTION_MODES = [
   "system_delivery",
   "referral_form",
 ] as const;
-export const SOLUTION_SECTIONS = ["software", "providers"] as const;
+export const SOLUTION_SECTIONS = ["software", "providers", "models", "networks"] as const;
 
 export type SolutionResourceType = (typeof SOLUTION_RESOURCE_TYPES)[number];
 export type SolutionSection = (typeof SOLUTION_SECTIONS)[number];
@@ -333,7 +333,15 @@ export function selectPublishedSolutionPlacements(
     ) return [];
     if (
       placement.section === "providers" &&
-      (resource.resourceType === "software" || resource.resourceType === "tool")
+      resource.resourceType !== "provider"
+    ) return [];
+    if (
+      placement.section === "models" &&
+      resource.resourceType !== "tool"
+    ) return [];
+    if (
+      placement.section === "networks" &&
+      resource.resourceType !== "directory"
     ) return [];
     return [deepFreeze({
       placementId: placement.placementId,
@@ -401,9 +409,23 @@ export function validateSolutionRegistries(input: unknown, now = new Date()): st
     if (
       resource &&
       placement.section === "providers" &&
-      (resource.resourceType === "software" || resource.resourceType === "tool")
+      resource.resourceType !== "provider"
     ) {
-      errors.push(`${placement.placementId}: providers section excludes software and tool resources`);
+      errors.push(`${placement.placementId}: providers section requires provider resources`);
+    }
+    if (
+      resource &&
+      placement.section === "models" &&
+      resource.resourceType !== "tool"
+    ) {
+      errors.push(`${placement.placementId}: models section requires tool resources`);
+    }
+    if (
+      resource &&
+      placement.section === "networks" &&
+      resource.resourceType !== "directory"
+    ) {
+      errors.push(`${placement.placementId}: networks section requires directory resources`);
     }
     if (
       placement.status === "published" &&

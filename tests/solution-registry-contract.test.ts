@@ -160,8 +160,9 @@ describe("Solutions registry contract", () => {
     delete (resource as { href?: string }).href;
     const placement = {
       ...publishedPlacement(),
-      placementId: "cabinet-comptable:levier:software:1",
+      placementId: "cabinet-comptable:levier:models:1",
       resourceSlug: "levier",
+      section: "models" as const,
       placementVersion: "levier.v1",
     };
 

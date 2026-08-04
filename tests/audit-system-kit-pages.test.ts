@@ -17,17 +17,17 @@ describe("system kit page audit contract", () => {
     expect(enterprises).toHaveLength(115);
     expect(orders.size).toBe(115);
     expect([...orders.values()].filter((order) => order.includes("levier")))
-      .toHaveLength(84);
+      .toHaveLength(115);
     expect(orders.get("batiment")).toEqual([
       "obat",
       "costructor",
-      "levier",
       "progbat",
       "vertuoza",
       "point-p",
       "plateforme-du-batiment",
       "kiloutou",
       "wurth",
+      "levier",
       "capeb",
     ]);
   });

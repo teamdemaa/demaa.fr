@@ -50,7 +50,7 @@ type DraftPlacementInput = Readonly<{
   systemSlug: "batiment" | "cabinet-comptable" | "agence-marketing";
   resourceSlug: string;
   rank: number;
-  section: "software" | "providers";
+  section: SolutionPlacement["section"];
   usage: string;
   fitRationale: string;
   fitConstraints: readonly string[];
@@ -332,8 +332,8 @@ export const PILOT_SOLUTION_DRAFT_PLACEMENTS: readonly SolutionPlacement[] = [
   draftPlacement({
     systemSlug: "batiment",
     resourceSlug: "capeb",
-    rank: 5,
-    section: "providers",
+    rank: 1,
+    section: "networks",
     usage: "Accéder à un réseau métier, de la veille et un accompagnement adapté à l’artisanat du bâtiment.",
     fitRationale: "La CAPEB apporte un point d’appui professionnel distinct d’un fournisseur commercial.",
     fitConstraints: ["Services et conditions d’adhésion à vérifier auprès de la CAPEB locale."],

@@ -15,20 +15,20 @@ const PILOT_SOLUTION_ORDERS = new Map([
     [
       "obat",
       "costructor",
-      "levier",
       "progbat",
       "vertuoza",
       "point-p",
       "plateforme-du-batiment",
       "kiloutou",
       "wurth",
+      "levier",
       "capeb",
     ],
   ],
-  ["cabinet-comptable", ["levier", "tiimora", "pennylane", "silae"]],
+  ["cabinet-comptable", ["tiimora", "pennylane", "silae", "levier"]],
   [
     "agence-marketing",
-    ["levier", "airtable", "canva", "brevo", "metricool", "chatgpt"],
+    ["airtable", "canva", "brevo", "metricool", "chatgpt", "levier"],
   ],
 ]);
 
@@ -67,9 +67,18 @@ export function buildExpectedSolutionOrders() {
   const orders = new Map(
     manifest.systems.map((system) => [
       system.systemSlug,
-      ["software", "providers"].flatMap((section) =>
-        system.placements
-          .filter((placement) => placement.section === section)
+      ["software", "providers", "models", "networks"].flatMap((section) =>
+        [
+          ...system.placements.filter((placement) => {
+            if (placement.resourceSlug === "levier") return false;
+            if (section === "networks") return placement.resourceType === "directory";
+            if (section === "providers") {
+              return placement.section === "providers" && placement.resourceType === "provider";
+            }
+            return placement.section === section;
+          }),
+          ...(section === "models" ? [{ resourceSlug: "levier", rank: 1 }] : []),
+        ]
           .sort((left, right) => left.rank - right.rank)
           .map((placement) => placement.resourceSlug),
       ),

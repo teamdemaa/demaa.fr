@@ -12,6 +12,7 @@ import {
 } from "@/lib/pilot-solution-registry-drafts.server";
 import { deepFreeze, parseSlug } from "@/lib/registry-contract-utils";
 import {
+  SOLUTION_SECTIONS,
   selectPublishedSolutionPlacements,
   selectPublishedSolutionResources,
   validateSolutionRegistries,
@@ -75,7 +76,7 @@ export function getPublishedSolutionPlacementsForSystem(
 
 export function getPublishedSolutionSectionsForSystem(systemSlug: unknown, now = new Date()) {
   const placements = getPublishedSolutionPlacementsForSystem(systemSlug, now);
-  return (["software", "providers"] as const).flatMap((section) => {
+  return SOLUTION_SECTIONS.flatMap((section) => {
     const sectionPlacements = placements.filter((placement) => placement.section === section);
     return sectionPlacements.length > 0 ? [deepFreeze({ section, placements: sectionPlacements })] : [];
   });

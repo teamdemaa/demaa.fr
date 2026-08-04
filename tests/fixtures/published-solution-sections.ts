@@ -26,7 +26,8 @@ const externalPlacement = {
 
 const levierPlacement = {
   ...externalPlacement,
-  placementId: "cabinet-comptable:levier:software:1",
+  placementId: "cabinet-comptable:levier:models:1",
+  section: "models",
   resource: {
     ...externalPlacement.resource,
     resourceSlug: "levier",
@@ -100,7 +101,7 @@ export const publishedSolutionSectionsFixture = [
 
 export const publishedLevierSolutionSectionsFixture = [
   {
-    section: "software",
+    section: "models",
     placements: [levierPlacement],
   },
 ] satisfies readonly RenderableSolutionSectionDto[];

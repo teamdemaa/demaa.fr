@@ -10,10 +10,10 @@ import {
   type FamilySolutionSelection,
 } from "@/lib/family-solution-selections.server";
 import {
-  getPublishedSolutionResourceBySlug,
   getPublishedSolutionSectionsForSystem,
 } from "@/lib/solution-registry.server";
 import {
+  SOLUTION_SECTIONS,
   validateSolutionPlacement,
   validateSolutionResource,
   type SolutionPlacement,
@@ -31,6 +31,13 @@ import type {
   RenderableSolutionPlacementDto,
   RenderableSolutionSectionDto,
 } from "@/lib/system-solutions-ui-dto";
+
+function getRenderableSection(
+  section: SolutionSection,
+  resourceType: PublishedSolutionPlacementDto["resource"]["resourceType"],
+): SolutionSection {
+  return resourceType === "directory" ? "networks" : section;
+}
 
 function hasSupportedInteraction(
   placement: PublishedSolutionPlacementDto,
@@ -54,7 +61,7 @@ function toRenderablePlacement(
     placementId: placement.placementId,
     systemSlug: placement.systemSlug,
     rank: placement.rank,
-    section: placement.section,
+    section: getRenderableSection(placement.section, resource.resourceType),
     usage: placement.usage,
     fitRationale: placement.fitRationale,
     fitConstraints: [...placement.fitConstraints],
@@ -67,6 +74,8 @@ function toRenderablePlacement(
         ? "Organisation professionnelle"
         : resource.resourceType === "provider"
         ? "Fournisseur"
+        : placement.section === "models"
+        ? "Modèle"
         : resource.resourceType === "tool"
         ? "Outil"
         : "Logiciel",
@@ -123,7 +132,7 @@ function toRenderableDraftPlacement(
     placementId: placement.placementId,
     systemSlug: placement.systemSlug,
     rank: placement.rank,
-    section: placement.section,
+    section: getRenderableSection(placement.section, resource.resourceType),
     usage: placement.usage,
     fitRationale: placement.fitRationale,
     fitConstraints: [...placement.fitConstraints].slice(0, 2),
@@ -155,35 +164,16 @@ function toRenderableFamilyPlacement(
   systemSlug: string,
   selection: FamilySolutionSelection,
 ): RenderableSolutionPlacementDto | null {
-  if (selection.resourceSlug === "levier") {
-    const levier = getPublishedSolutionResourceBySlug("levier");
-    if (!levier || levier.interaction.interactionMode !== "system_delivery") return null;
-    return {
-      placementId: `family:${systemSlug}:levier:${selection.section}:${selection.rank}`,
-      systemSlug,
-      rank: selection.rank,
-      section: selection.section,
-      usage: selection.ownerBenefit,
-      fitRationale: selection.fitRationale,
-      fitConstraints: [...selection.checksBeforeChoosing].slice(0, 2),
-      resource: {
-        resourceSlug: levier.resourceSlug,
-        resourceType: levier.resourceType,
-        name: levier.name,
-        description: levier.description,
-        displayCategory: selection.displayCategory,
-        interaction: levier.interaction,
-      },
-    };
-  }
+  if (selection.resourceSlug === "levier") return null;
 
   const resolved = resolveFamilySolutionCatalogSelection(selection);
   if (!resolved) return null;
+  const section = getRenderableSection(selection.section, resolved.resourceType);
   return {
-    placementId: `family:${systemSlug}:${selection.resourceSlug}:${selection.section}:${selection.rank}`,
+    placementId: `family:${systemSlug}:${selection.resourceSlug}:${section}:${selection.rank}`,
     systemSlug,
     rank: selection.rank,
-    section: selection.section,
+    section,
     usage: selection.ownerBenefit,
     fitRationale: selection.fitRationale,
     fitConstraints: [...selection.checksBeforeChoosing].slice(0, 2),
@@ -203,13 +193,17 @@ function toRenderableFamilyPlacement(
 function getRenderableFamilySolutionSections(systemSlug: string) {
   const system = getFamilySystemSolutionSelection(systemSlug);
   if (!system) return [];
-  return (["software", "providers"] as const).flatMap((section) => {
-    const placements = system.placements
+  const publishedSections = getPublishedRenderableSolutionSectionsForSystem(systemSlug);
+  const familyPlacements = system.placements
+    .filter((placement) => placement.resourceSlug !== "levier")
+    .flatMap((placement) => {
+      const rendered = toRenderableFamilyPlacement(systemSlug, placement);
+      return rendered ? [rendered] : [];
+    });
+  const canonicalPlacements = publishedSections.flatMap(({ placements }) => placements);
+  return SOLUTION_SECTIONS.flatMap((section) => {
+    const placements = [...familyPlacements, ...canonicalPlacements]
       .filter((placement) => placement.section === section)
-      .flatMap((placement) => {
-        const rendered = toRenderableFamilyPlacement(systemSlug, placement);
-        return rendered ? [rendered] : [];
-      })
       .sort((left, right) => left.rank - right.rank);
     return placements.length > 0 ? [{ section, placements }] : [];
   });
@@ -218,11 +212,12 @@ function getRenderableFamilySolutionSections(systemSlug: string) {
 export function filterRenderableSolutionSections(
   sections: readonly PublishedSolutionSectionInput[],
 ): readonly RenderableSolutionSectionDto[] {
-  return sections.flatMap((section) => {
-    const placements = section.placements
-      .filter(hasSupportedInteraction)
-      .map(toRenderablePlacement);
-    return placements.length > 0 ? [{ section: section.section, placements }] : [];
+  const renderedPlacements = sections.flatMap(({ placements }) =>
+    placements.filter(hasSupportedInteraction).map(toRenderablePlacement),
+  );
+  return SOLUTION_SECTIONS.flatMap((section) => {
+    const placements = renderedPlacements.filter((placement) => placement.section === section);
+    return placements.length > 0 ? [{ section, placements }] : [];
   });
 }
 
@@ -263,7 +258,7 @@ export function getRenderableSolutionSectionsForSystem(
     return rendered ? [rendered] : [];
   });
 
-  return (["software", "providers"] as const).flatMap((section) => {
+  return SOLUTION_SECTIONS.flatMap((section) => {
     const published = publishedSections.find((group) => group.section === section)?.placements ?? [];
     const selectedDrafts = draftPlacements.filter((placement) => placement.section === section);
     const placements = [...published, ...selectedDrafts].sort((left, right) => left.rank - right.rank);

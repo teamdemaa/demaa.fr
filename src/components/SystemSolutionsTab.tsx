@@ -30,6 +30,8 @@ type RailState = Readonly<{
 export const SOLUTION_UI_WORKING_LABELS: Readonly<Record<SolutionSection, string>> = {
   software: "Outils",
   providers: "Prestataires et fournisseurs",
+  models: "Modèles",
+  networks: "Réseaux professionnels",
 };
 
 const RESOURCE_ICONS = {

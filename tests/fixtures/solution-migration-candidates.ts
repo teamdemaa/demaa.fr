@@ -88,11 +88,11 @@ export const solutionMigrationCandidatePlacements = [
   },
   {
     ...draftReview,
-    placementId: "batiment:capeb:providers:2",
+    placementId: "batiment:capeb:networks:2",
     systemSlug: "batiment",
     resourceSlug: "capeb",
     rank: 2,
-    section: "providers",
+    section: "networks",
     usage: "Fixture de migration d'un annuaire historique.",
     fitRationale: "Présence historique seulement, sans décision éditoriale.",
     fitConstraints: ["Ne pas publier sans revue métier."],

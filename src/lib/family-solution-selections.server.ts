@@ -176,7 +176,8 @@ export function resolveFamilySolutionCatalogSelection(
   const supplier = selection.section === "providers"
     ? getDemaaSupplierBySlug(selection.resourceSlug)
     : null;
-  const organization = selection.section === "providers" && !supplier
+  const organization =
+    (selection.section === "providers" || selection.section === "networks") && !supplier
     ? getDemaaProNetworkBySlug(selection.resourceSlug)
     : null;
   const href = tool?.url ?? supplier?.href ?? organization?.href;

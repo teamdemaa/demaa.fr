@@ -159,7 +159,8 @@ describe("three-pilot draft Solutions registry", () => {
       expect(placements).toHaveLength(1);
       expect(placements[0]).toMatchObject({
         systemSlug: system.slug,
-        rank: system.slug === "batiment" ? 3 : 1,
+        rank: 1,
+        section: "models",
         resource: { resourceSlug: "levier" },
       });
     }
@@ -176,15 +177,17 @@ describe("three-pilot draft Solutions registry", () => {
     expect(getRenderableSolutionSectionsForSystem("batiment").map(({ placements }) =>
       placements.map(({ resource }) => resource.resourceSlug)
     )).toEqual([
-      ["obat", "costructor", "levier", "progbat", "vertuoza"],
-      ["point-p", "plateforme-du-batiment", "kiloutou", "wurth", "capeb"],
+      ["obat", "costructor", "progbat", "vertuoza"],
+      ["point-p", "plateforme-du-batiment", "kiloutou", "wurth"],
+      ["levier"],
+      ["capeb"],
     ]);
     expect(getRenderableSolutionSectionsForSystem("cabinet-comptable").map(({ placements }) =>
       placements.map(({ resource }) => resource.resourceSlug)
-    )).toEqual([["levier", "tiimora", "pennylane", "silae"]]);
+    )).toEqual([["tiimora", "pennylane", "silae"], ["levier"]]);
     expect(getRenderableSolutionSectionsForSystem("agence-marketing").map(({ placements }) =>
       placements.map(({ resource }) => resource.resourceSlug)
-    )).toEqual([["levier", "airtable", "canva", "brevo", "metricool", "chatgpt"]]);
+    )).toEqual([["airtable", "canva", "brevo", "metricool", "chatgpt"], ["levier"]]);
 
     const pilotSlugs = new Set(["batiment", "cabinet-comptable", "agence-marketing"]);
     const familySystems = enterpriseCatalog.filter(({ slug }) => !pilotSlugs.has(slug));
@@ -192,9 +195,18 @@ describe("three-pilot draft Solutions registry", () => {
     for (const { slug } of familySystems) {
       const selection = getFamilySystemSolutionSelection(slug);
       expect(selection).not.toBeNull();
-      expect(getRenderableSolutionSectionsForSystem(slug).flatMap(({ placements }) =>
+      const renderedSlugs = getRenderableSolutionSectionsForSystem(slug).flatMap(({ placements }) =>
         placements.map(({ resource }) => resource.resourceSlug)
-      )).toEqual(selection?.placements.map(({ resourceSlug }) => resourceSlug));
+      );
+      expect(renderedSlugs).toContain("levier");
+      expect(new Set(renderedSlugs)).toEqual(
+        new Set([
+          ...(selection?.placements ?? [])
+            .filter(({ resourceSlug }) => resourceSlug !== "levier")
+            .map(({ resourceSlug }) => resourceSlug),
+          "levier",
+        ]),
+      );
     }
 
     for (const systemSlug of ["batiment", "cabinet-comptable", "agence-marketing"]) {

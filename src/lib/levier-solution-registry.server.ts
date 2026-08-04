@@ -154,14 +154,14 @@ export const LEVIER_PLACEMENT_SYSTEM_SLUGS = [
 
 export const LEVIER_SOLUTION_PLACEMENTS: readonly SolutionPlacement[] =
   LEVIER_PLACEMENT_SYSTEM_SLUGS.map((systemSlug) => {
-    const rank = systemSlug === "batiment" ? 3 : 1;
+    const rank = 1;
     return {
       ...LEVIER_REVIEW,
-      placementId: `${systemSlug}:levier:software:${rank}`,
+      placementId: `${systemSlug}:levier:models:${rank}`,
       systemSlug,
       resourceSlug: "levier",
       rank,
-      section: "software",
+      section: "models",
       usage:
         "Suivre l’activité, les finances, les actions et les responsabilités dans un tableau unique.",
       fitRationale:

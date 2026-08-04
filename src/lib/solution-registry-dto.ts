@@ -1,5 +1,5 @@
 export type SolutionResourceType = "tool" | "software" | "provider" | "directory";
-export type SolutionSection = "software" | "providers";
+export type SolutionSection = "software" | "providers" | "models" | "networks";
 export type SolutionInteractionDto =
   | Readonly<{ interactionMode: "external_link"; href: string }>
   | Readonly<{ interactionMode: "detail"; href: string }>

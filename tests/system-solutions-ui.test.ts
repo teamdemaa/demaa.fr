@@ -50,24 +50,24 @@ describe("system Solutions UI", () => {
     expect(markup).not.toMatch(/en cours|bientôt|à venir|placeholder/i);
   });
 
-  it("renders Levier as the first universal tool card without a public asset URL", () => {
+  it("renders Levier as the universal model card without a public asset URL", () => {
     const markup = renderToStaticMarkup(
       createElement(SystemSolutionsTab, {
         sections: publishedLevierSolutionSectionsFixture,
       }),
     );
 
-    expect(markup).toContain("Outils");
+    expect(markup).toContain("Modèles");
     expect(markup).toContain("Levier");
     expect(markup).toContain("Tableau de pilotage opérationnel");
     expect(markup).toContain("Ouvrir Levier");
-    expect(markup).not.toMatch(/Outil Demaa|Modèle|Service/);
+    expect(markup).not.toMatch(/Outil Demaa|Service/);
     expect(JSON.stringify(publishedLevierSolutionSectionsFixture)).not.toMatch(
       /https?:\/\/|drive|\.xlsx/i,
     );
   });
 
-  it("renders all 115 systems while keeping the three pilots on their legacy selection", () => {
+  it("renders Levier exactly once in Models on all 115 systems", () => {
     expect(enterpriseCatalog).toHaveLength(115);
 
     for (const system of enterpriseCatalog) {
@@ -75,19 +75,33 @@ describe("system Solutions UI", () => {
       expect(JSON.parse(JSON.stringify(sections))).toEqual(sections);
       const familySelection = getFamilySystemSolutionSelection(system.slug);
       if (familySelection) {
-        expect(sections.flatMap(({ placements }) => placements.map(({ resource }) => resource.resourceSlug)))
-          .toEqual(familySelection.placements.map(({ resourceSlug }) => resourceSlug));
-      } else {
-        expect(
-          sections[0]?.placements.find(({ resource }) => resource.resourceSlug === "levier"),
-        ).toMatchObject({
-          rank: system.slug === "batiment" ? 3 : 1,
-          resource: {
+        const renderedSlugs = sections.flatMap(({ placements }) =>
+          placements.map(({ resource }) => resource.resourceSlug)
+        );
+        expect(new Set(renderedSlugs)).toEqual(new Set([
+          ...familySelection.placements
+            .filter(({ resourceSlug }) => resourceSlug !== "levier")
+            .map(({ resourceSlug }) => resourceSlug),
+          "levier",
+        ]));
+      }
+      const levierPlacements = sections.flatMap(({ placements }) => placements)
+        .filter(({ resource }) => resource.resourceSlug === "levier");
+      expect(levierPlacements).toEqual([
+        expect.objectContaining({
+          rank: 1,
+          section: "models",
+          resource: expect.objectContaining({
             resourceSlug: "levier",
             interaction: { interactionMode: "system_delivery" },
-          },
-        });
-      }
+          }),
+        }),
+      ]);
+      expect(sections.map(({ section }) => section)).toEqual(
+        ["software", "providers", "models", "networks"].filter((section) =>
+          sections.some((candidate) => candidate.section === section),
+        ),
+      );
       const markup = renderToStaticMarkup(
         createElement(SystemSolutionsTab, { sections }),
       );
@@ -102,26 +116,54 @@ describe("system Solutions UI", () => {
     }
   });
 
+  it("reuses the existing resource classifications across the four rails", () => {
+    const placements = enterpriseCatalog.flatMap(({ slug }) =>
+      getRenderableSolutionSectionsForSystem(slug).flatMap((section) => section.placements),
+    );
+    const bySection = Object.groupBy(placements, ({ section }) => section);
+
+    expect(placements).toHaveLength(568);
+    expect(bySection.software).toHaveLength(309);
+    expect(bySection.providers).toHaveLength(63);
+    expect(bySection.models).toHaveLength(115);
+    expect(bySection.networks).toHaveLength(81);
+    expect(bySection.software?.every(({ resource }) => resource.resourceType === "software"))
+      .toBe(true);
+    expect(bySection.providers?.every(({ resource }) => resource.resourceType === "provider"))
+      .toBe(true);
+    expect(bySection.models?.every(({ resource }) => resource.resourceSlug === "levier"))
+      .toBe(true);
+    expect(bySection.networks?.every(({ resource }) => resource.resourceType === "directory"))
+      .toBe(true);
+  });
+
   it("renders the five family sentinels in their audited order", () => {
     const expected = {
       "plomberie-chauffage": [
-        ["esabora", "obat", "alobees", "levier", "kizeo-forms"],
-        ["cedeo-pro", "wurth", "plateforme-du-batiment", "kiloutou", "capeb"],
+        ["esabora", "obat", "alobees", "kizeo-forms"],
+        ["cedeo-pro", "wurth", "plateforme-du-batiment", "kiloutou"],
+        ["levier"],
+        ["capeb"],
       ],
       restaurant: [
-        ["lightspeed", "zenchef", "deliverect", "levier"],
+        ["lightspeed", "zenchef", "deliverect"],
+        ["levier"],
         ["umih"],
       ],
       "commerce-de-detail": [
-        ["lightspeed", "hiboutik", "brevo", "levier"],
+        ["lightspeed", "hiboutik", "brevo"],
+        ["levier"],
       ],
       "agence-immobiliere": [
         ["hektor", "modelo", "zelok", "ubiflow"],
+        ["levier"],
         ["fnaim", "unis"],
       ],
       "cabinet-medical": [
         ["weda", "medistory", "doctolib"],
-        ["distrimed-medical", "ordre-medecins", "urps"],
+        ["distrimed-medical"],
+        ["levier"],
+        ["ordre-medecins", "urps"],
       ],
     } as const;
 
@@ -169,14 +211,18 @@ describe("system Solutions UI", () => {
   it("shows the selected pilot resources by relevance without exposing review fields", () => {
     const expected = {
       batiment: [
-        ["obat", "costructor", "levier", "progbat", "vertuoza"],
-        ["point-p", "plateforme-du-batiment", "kiloutou", "wurth", "capeb"],
+        ["obat", "costructor", "progbat", "vertuoza"],
+        ["point-p", "plateforme-du-batiment", "kiloutou", "wurth"],
+        ["levier"],
+        ["capeb"],
       ],
       "cabinet-comptable": [
-        ["levier", "tiimora", "pennylane", "silae"],
+        ["tiimora", "pennylane", "silae"],
+        ["levier"],
       ],
       "agence-marketing": [
-        ["levier", "airtable", "canva", "brevo", "metricool", "chatgpt"],
+        ["airtable", "canva", "brevo", "metricool", "chatgpt"],
+        ["levier"],
       ],
     } as const;
 
@@ -210,8 +256,14 @@ describe("system Solutions UI", () => {
       sections: getRenderableSolutionSectionsForSystem("batiment"),
     }))).toContain("Prestataires et fournisseurs");
     expect(renderToStaticMarkup(createElement(SystemSolutionsTab, {
+      sections: getRenderableSolutionSectionsForSystem("batiment"),
+    }))).toContain("Réseaux professionnels");
+    expect(renderToStaticMarkup(createElement(SystemSolutionsTab, {
       sections: getRenderableSolutionSectionsForSystem("cabinet-comptable"),
     }))).not.toContain("Prestataires et fournisseurs");
+    expect(renderToStaticMarkup(createElement(SystemSolutionsTab, {
+      sections: getRenderableSolutionSectionsForSystem("cabinet-comptable"),
+    }))).not.toContain("Réseaux professionnels");
 
     expect(getPublishedRenderableSolutionSectionsForSystem("batiment")[0]?.placements)
       .toHaveLength(1);

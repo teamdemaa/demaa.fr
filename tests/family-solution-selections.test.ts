@@ -89,7 +89,7 @@ describe("family solution selections", () => {
     })).toBeNull();
   });
 
-  it("keeps every public field of all 517 family placements free of relationship claims", () => {
+  it("keeps every public field of the family cards plus universal Levier free of relationship claims", () => {
     const forbiddenPublicClaims = /demaa|odema|partenaire|partenariat|affilié|affiliation|rémunéré/i;
     const placements = enterpriseCatalog.flatMap(({ slug }) =>
       getFamilySystemSolutionSelection(slug)
@@ -97,7 +97,7 @@ describe("family solution selections", () => {
         : []
     );
 
-    expect(placements).toHaveLength(517);
+    expect(placements).toHaveLength(548);
     const violations = placements.flatMap((placement) =>
       forbiddenPublicClaims.test(JSON.stringify(placement))
         ? [`${placement.systemSlug}:${placement.resource.resourceSlug}`]
