@@ -1,22 +1,55 @@
 import fs from "node:fs";
-import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 const currentDir = dirname(fileURLToPath(import.meta.url));
 const enterpriseCatalogPath = resolve(currentDir, "../src/lib/enterprise-annuaire.json");
-const toolDirectoryPath = resolve(currentDir, "../src/lib/tool-directory.json");
-const baseUrl = (process.env.DEMAA_AUDIT_BASE_URL ?? "http://127.0.0.1:3001").replace(/\/$/, "");
-const concurrency = Number.parseInt(process.env.DEMAA_AUDIT_CONCURRENCY ?? "8", 10);
-const requestTimeoutMs = Number.parseInt(process.env.DEMAA_AUDIT_TIMEOUT_MS ?? "60000", 10);
-const retryCount = Number.parseInt(process.env.DEMAA_AUDIT_RETRIES ?? "2", 10);
-const targetSlug = process.env.DEMAA_AUDIT_SLUG?.trim();
-
-const toolsBySlug = new Map(
-  JSON.parse(fs.readFileSync(toolDirectoryPath, "utf8")).tools.map((tool) => [tool.slug, tool]),
+const familySelectionsPath = resolve(
+  currentDir,
+  "../src/lib/family-solution-selections.generated.json",
 );
 
-function loadEnterprises() {
-  const payload = JSON.parse(fs.readFileSync(enterpriseCatalogPath, "utf8"));
+const PILOT_SOLUTION_ORDERS = new Map([
+  [
+    "batiment",
+    [
+      "obat",
+      "costructor",
+      "levier",
+      "progbat",
+      "vertuoza",
+      "point-p",
+      "plateforme-du-batiment",
+      "kiloutou",
+      "wurth",
+      "capeb",
+    ],
+  ],
+  ["cabinet-comptable", ["levier", "tiimora", "pennylane", "silae"]],
+  [
+    "agence-marketing",
+    ["levier", "airtable", "canva", "brevo", "metricool", "chatgpt"],
+  ],
+]);
+
+const PRIVATE_SOLUTION_MARKERS = [
+  "commercialRelationship",
+  "publicationBlockers",
+  "evidenceUrls",
+  "catalogDestination",
+  "paid_referral",
+  "commercial_partner",
+  "affiliate",
+];
+const FORBIDDEN_SOLUTION_RELATIONSHIP =
+  /Demaa|ODEMA|partenair|affili|rémunér/iu;
+
+function readJson(path) {
+  return JSON.parse(fs.readFileSync(path, "utf8"));
+}
+
+export function loadEnterprises() {
+  const payload = readJson(enterpriseCatalogPath);
 
   if (!Array.isArray(payload?.enterprises)) {
     throw new Error("Invalid enterprise catalog");
@@ -25,15 +58,61 @@ function loadEnterprises() {
   return payload.enterprises;
 }
 
+export function buildExpectedSolutionOrders() {
+  const manifest = readJson(familySelectionsPath);
+  if (!Array.isArray(manifest?.systems)) {
+    throw new Error("Invalid family Solution selection manifest");
+  }
+
+  const orders = new Map(
+    manifest.systems.map((system) => [
+      system.systemSlug,
+      ["software", "providers"].flatMap((section) =>
+        system.placements
+          .filter((placement) => placement.section === section)
+          .sort((left, right) => left.rank - right.rank)
+          .map((placement) => placement.resourceSlug),
+      ),
+    ]),
+  );
+
+  for (const [systemSlug, order] of PILOT_SOLUTION_ORDERS) {
+    orders.set(systemSlug, [...order]);
+  }
+
+  return orders;
+}
+
 function countOccurrences(source, value) {
   return source.split(value).length - 1;
 }
 
-function getTabs() {
-  return ["process", "outils", "ecosysteme"];
+export function getTabs() {
+  return ["process", "solutions"];
 }
 
-function inspectPage({ enterprise, response, html, tab }) {
+export function collectSerializedSolutionSlugs(html) {
+  return Array.from(
+    html.matchAll(/resourceSlug\\?"\s*:\s*\\?"([^"\\]+)\\?"/g),
+    (match) => match[1],
+  );
+}
+
+export function getSerializedSolutionPayload(html) {
+  const start = html.indexOf("solutionSections");
+  if (start < 0) return "";
+  const end = html.indexOf("academyVideos", start);
+  return html.slice(start, end < 0 ? undefined : end);
+}
+
+function sameOrder(actual, expected) {
+  return (
+    actual.length === expected.length &&
+    actual.every((value, index) => value === expected[index])
+  );
+}
+
+export function inspectPage({ response, html, tab, expectedSolutionOrder }) {
   const errors = [];
   const renderedHtml = html
     .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "")
@@ -56,11 +135,14 @@ function inspectPage({ enterprise, response, html, tab }) {
     }
   }
 
-  const expectedTabs = ["Process", "Outils", "Écosystème"];
-
-  for (const expectedTab of expectedTabs) {
+  for (const expectedTab of ["Process", "Solutions"]) {
     if (!renderedHtml.includes(`>${expectedTab}</button>`)) {
       errors.push(`missing direct tab: ${expectedTab}`);
+    }
+  }
+  for (const removedTab of ["Outils", "Écosystème"]) {
+    if (renderedHtml.includes(`>${removedTab}</button>`)) {
+      errors.push(`legacy direct tab still visible: ${removedTab}`);
     }
   }
 
@@ -68,38 +150,38 @@ function inspectPage({ enterprise, response, html, tab }) {
     renderedHtml,
     'aria-controls="kit-content-panel"',
   );
-  const expectedTabCount = 3;
-  if (controlledPanelCount !== expectedTabCount) {
-    errors.push(`expected ${expectedTabCount} tab controls for the shared panel, found ${controlledPanelCount}`);
+  if (controlledPanelCount !== 2) {
+    errors.push(
+      `expected 2 tab controls for the shared panel, found ${controlledPanelCount}`,
+    );
   }
   if (!renderedHtml.includes('id="kit-content-panel"')) {
     errors.push("shared tab panel is missing");
   }
+  if (
+    !new RegExp(
+      `id="tab-${tab}"[^>]*aria-selected="true"|aria-selected="true"[^>]*id="tab-${tab}"`,
+    ).test(renderedHtml)
+  ) {
+    errors.push(`${tab} tab is not selected`);
+  }
 
-  for (const expectedText of ["Voir le système"]) {
-    if (!renderedHtml.includes(expectedText)) {
-      errors.push(`missing system journey control: ${expectedText}`);
+  for (const callText of [
+    "Besoin d’y voir plus clair dans votre organisation ?",
+    "Réserver mon échange offert",
+  ]) {
+    if (!renderedHtml.includes(callText)) {
+      errors.push(`missing organization call control: ${callText}`);
     }
   }
-  const processCallTexts = [
+  for (const removedCallText of [
     "Un appel gratuit de 30 minutes",
     "Réserver mon appel gratuit",
-  ];
-  for (const processCallText of processCallTexts) {
-    const isVisible = renderedHtml.includes(processCallText);
-    if (tab === "process" && !isVisible) {
-      errors.push(`missing Process call control: ${processCallText}`);
-    }
-    if (tab !== "process" && isVisible) {
-      errors.push(`Process call control visible under ${tab}: ${processCallText}`);
-    }
-  }
-  for (const removedDiagnosticText of [
     "Diagnostic offert",
     "Demander mon diagnostic",
   ]) {
-    if (renderedHtml.includes(removedDiagnosticText)) {
-      errors.push(`removed diagnostic control still visible: ${removedDiagnosticText}`);
+    if (renderedHtml.includes(removedCallText)) {
+      errors.push(`removed call control still visible: ${removedCallText}`);
     }
   }
 
@@ -117,28 +199,19 @@ function inspectPage({ enterprise, response, html, tab }) {
     }
   }
 
-  for (const serverOnlyCopyMarker of [
-    "/copy",
-    "\\/copy",
-    "%2Fcopy",
-  ]) {
-    if (html.includes(serverOnlyCopyMarker)) {
-      errors.push("editable Google Drive link leaked into the public HTML");
-      break;
+  for (const privateMarker of PRIVATE_SOLUTION_MARKERS) {
+    if (html.includes(privateMarker)) {
+      errors.push(`private Solution metadata leaked: ${privateMarker}`);
+    }
+  }
+  for (const privateAssetMarker of ["/copy", "\\/copy", "%2Fcopy", ".xlsx"] ) {
+    if (html.includes(privateAssetMarker)) {
+      errors.push(`private delivery asset leaked: ${privateAssetMarker}`);
     }
   }
 
-  for (const removedIntro of [
-    "Recevoir gratuitement mon tableau de pilotage",
-    "Un seul Google Sheet : synthèse, prévisionnel, actions, équipe, écosystème",
-    "Les outils métier à regarder en priorité",
-    "Une sélection courte, spécifique à votre activité",
-    "Vous aider à mettre le tableau en place",
-    "Le tableau est gratuit. Ces prestations sont là",
-  ]) {
-    if (renderedHtml.includes(removedIntro)) {
-      errors.push(`removed intro is still visible: ${removedIntro}`);
-    }
+  if (renderedHtml.includes("Écosystème")) {
+    errors.push("legacy Écosystème wording is still visible");
   }
 
   if (tab === "process") {
@@ -163,76 +236,63 @@ function inspectPage({ enterprise, response, html, tab }) {
     if (renderedHtml.includes("Dans le système")) {
       errors.push("unsupported Process asset is exposed");
     }
-    if (renderedHtml.includes("Aperçu du document")) {
-      errors.push("legacy document preview is still visible");
+    if (renderedHtml.includes("data-solution-resource-card")) {
+      errors.push("Solution cards leaked into Process");
     }
-    if (renderedHtml.includes("Recevoir le kit opérationnel")) {
-      errors.push("legacy process download CTA is still visible");
-    }
-  }
-
-  if (tab === "outils") {
-    const toolCardCount = countOccurrences(renderedHtml, "demaa-card group");
-    if (toolCardCount > 5) {
-      errors.push(`${toolCardCount} tool cards visible; maximum is 5`);
-    }
-    const visibleToolSlugs = Array.from(
-      renderedHtml.matchAll(/href="\/annuaire-outils\/([^"?]+)"/g),
-      (match) => decodeURIComponent(match[1]),
-    );
-    const toolRefsBySlug = new Map(
-      (enterprise.toolRefs ?? []).map((toolRef) => [toolRef.slug, toolRef]),
-    );
-    for (const toolSlug of new Set(visibleToolSlugs)) {
-      const effectiveScope =
-        toolRefsBySlug.get(toolSlug)?.scope ?? toolsBySlug.get(toolSlug)?.scope;
-
-      if (effectiveScope === "transverse") {
-        errors.push(`transverse tool visible in kit selection: ${toolSlug}`);
-      }
-    }
-    if (renderedHtml.includes("Voir plus")) {
-      errors.push("legacy tool expansion remains visible");
+    if (collectSerializedSolutionSlugs(renderedHtml).length > 0) {
+      errors.push("serialized Solution payload leaked into visible Process markup");
     }
   }
 
-  if (tab === "ecosysteme") {
-    for (const expectedGroup of [
-      "Gérer mes finances",
-      "Sécuriser mon activité",
-      "Recruter et protéger mon équipe",
-    ]) {
-      if (!renderedHtml.includes(expectedGroup)) {
-        errors.push(`missing ecosystem group: ${expectedGroup}`);
-      }
-    }
-
-    const resourceCardCount = countOccurrences(
+  let solutionCardCount = 0;
+  let solutionSlugs = [];
+  if (tab === "solutions") {
+    solutionCardCount = countOccurrences(
       renderedHtml,
-      "data-ecosystem-resource-card",
+      "data-solution-resource-card",
     );
-    if (resourceCardCount < 3) {
-      errors.push(`only ${resourceCardCount} ecosystem resource cards rendered`);
+    solutionSlugs = collectSerializedSolutionSlugs(html);
+
+    if (solutionCardCount !== expectedSolutionOrder.length) {
+      errors.push(
+        `expected ${expectedSolutionOrder.length} Solution cards, found ${solutionCardCount}`,
+      );
+    }
+    if (!sameOrder(solutionSlugs, expectedSolutionOrder)) {
+      errors.push(
+        `Solution order mismatch: ${solutionSlugs.join(",")} != ${expectedSolutionOrder.join(",")}`,
+      );
     }
 
-    for (const forbiddenCardCta of ["Sélectionner", "Voir la fiche"]) {
-      if (renderedHtml.includes(forbiddenCardCta)) {
-        errors.push(`forbidden ecosystem card CTA: ${forbiddenCardCta}`);
-      }
+    const expectedLevier = expectedSolutionOrder.includes("levier");
+    const levierCount = solutionSlugs.filter((slug) => slug === "levier").length;
+    const hasLevierCard = renderedHtml.includes('aria-label="Ouvrir Levier"');
+    if (levierCount !== (expectedLevier ? 1 : 0)) {
+      errors.push(`expected ${expectedLevier ? 1 : 0} Levier placement, found ${levierCount}`);
+    }
+    if (hasLevierCard !== expectedLevier) {
+      errors.push(`Levier card presence mismatch: ${hasLevierCard}/${expectedLevier}`);
+    }
+
+    const payload = getSerializedSolutionPayload(html);
+    if (!payload) {
+      errors.push("serialized Solution payload is missing");
+    } else if (FORBIDDEN_SOLUTION_RELATIONSHIP.test(payload)) {
+      errors.push("forbidden Demaa/ODEMA/partner claim in Solution payload");
     }
   }
 
-  return { errors };
+  return { errors, solutionCardCount, solutionSlugs };
 }
 
-async function inspectState(enterprise, tab) {
+async function inspectState({ baseUrl, enterprise, expectedSolutionOrder, request, tab }) {
   const url = `${baseUrl}/kit-operationnel/${encodeURIComponent(enterprise.slug)}?tab=${tab}`;
 
-  for (let attempt = 0; attempt <= retryCount; attempt += 1) {
+  for (let attempt = 0; attempt <= request.retryCount; attempt += 1) {
     try {
       const response = await fetch(url, {
         redirect: "follow",
-        signal: AbortSignal.timeout(requestTimeoutMs),
+        signal: AbortSignal.timeout(request.timeoutMs),
         headers: { "user-agent": "Demaa system kit audit" },
       });
       const html = await response.text();
@@ -242,10 +302,10 @@ async function inspectState(enterprise, tab) {
         url,
         status: response.status,
         attempts: attempt + 1,
-        ...inspectPage({ enterprise, response, html, tab }),
+        ...inspectPage({ response, html, tab, expectedSolutionOrder }),
       };
     } catch (error) {
-      if (attempt === retryCount) {
+      if (attempt === request.retryCount) {
         return {
           slug: enterprise.slug,
           tab,
@@ -253,13 +313,15 @@ async function inspectState(enterprise, tab) {
           status: null,
           attempts: attempt + 1,
           errors: [error instanceof Error ? error.message : String(error)],
+          solutionCardCount: 0,
+          solutionSlugs: [],
         };
       }
     }
   }
 }
 
-async function runPool(tasks) {
+async function runPool(tasks, concurrency) {
   const results = new Array(tasks.length);
   let nextIndex = 0;
 
@@ -267,8 +329,7 @@ async function runPool(tasks) {
     while (nextIndex < tasks.length) {
       const currentIndex = nextIndex;
       nextIndex += 1;
-      const { enterprise, tab } = tasks[currentIndex];
-      results[currentIndex] = await inspectState(enterprise, tab);
+      results[currentIndex] = await inspectState(tasks[currentIndex]);
     }
   }
 
@@ -282,28 +343,77 @@ async function runPool(tasks) {
   return results;
 }
 
-const enterprises = loadEnterprises().filter(
-  (enterprise) => !targetSlug || enterprise.slug === targetSlug,
-);
-if (targetSlug && enterprises.length !== 1) {
-  throw new Error(`Unknown enterprise slug: ${targetSlug}`);
+export async function runAudit(options = {}) {
+  const baseUrl = (options.baseUrl ?? process.env.DEMAA_AUDIT_BASE_URL ?? "http://127.0.0.1:3001")
+    .replace(/\/$/, "");
+  const concurrency = options.concurrency ?? Number.parseInt(
+    process.env.DEMAA_AUDIT_CONCURRENCY ?? "8",
+    10,
+  );
+  const timeoutMs = options.timeoutMs ?? Number.parseInt(
+    process.env.DEMAA_AUDIT_TIMEOUT_MS ?? "60000",
+    10,
+  );
+  const retryCount = options.retryCount ?? Number.parseInt(
+    process.env.DEMAA_AUDIT_RETRIES ?? "2",
+    10,
+  );
+  const targetSlug = options.targetSlug ?? process.env.DEMAA_AUDIT_SLUG?.trim();
+  const expectedOrders = buildExpectedSolutionOrders();
+  const enterprises = loadEnterprises().filter(
+    (enterprise) => !targetSlug || enterprise.slug === targetSlug,
+  );
+
+  if (targetSlug && enterprises.length !== 1) {
+    throw new Error(`Unknown enterprise slug: ${targetSlug}`);
+  }
+  for (const enterprise of enterprises) {
+    if (!expectedOrders.has(enterprise.slug)) {
+      throw new Error(`Missing expected Solution order: ${enterprise.slug}`);
+    }
+  }
+
+  const tasks = enterprises.flatMap((enterprise) =>
+    getTabs().map((tab) => ({
+      baseUrl,
+      enterprise,
+      expectedSolutionOrder: expectedOrders.get(enterprise.slug),
+      request: { retryCount, timeoutMs },
+      tab,
+    })),
+  );
+  const results = await runPool(tasks, concurrency);
+  const failures = results.filter((result) => result.errors.length);
+  const solutionResults = results.filter((result) => result.tab === "solutions");
+
+  return {
+    baseUrl,
+    kits: enterprises.length,
+    tabsPerKit: 2,
+    statesChecked: results.length,
+    processStatus200: results.filter(
+      (result) => result.tab === "process" && result.status === 200,
+    ).length,
+    solutionsStatus200: solutionResults.filter((result) => result.status === 200).length,
+    solutionCards: solutionResults.reduce(
+      (total, result) => total + result.solutionCardCount,
+      0,
+    ),
+    levierSystems: solutionResults.filter((result) =>
+      result.solutionSlugs.includes("levier")
+    ).length,
+    failureCount: failures.length,
+    failures: failures.slice(0, 100),
+    failuresTruncated: failures.length > 100,
+  };
 }
-const tasks = enterprises.flatMap((enterprise) =>
-  getTabs(enterprise).map((tab) => ({ enterprise, tab })),
-);
-const results = await runPool(tasks);
-const failures = results.filter((result) => result.errors.length);
 
-console.log(JSON.stringify({
-  baseUrl,
-  kits: enterprises.length,
-  tabsPerKit: 3,
-  statesChecked: results.length,
-  failureCount: failures.length,
-  failures: failures.slice(0, 100),
-  failuresTruncated: failures.length > 100,
-}, null, 2));
+async function main() {
+  const report = await runAudit();
+  console.log(JSON.stringify(report, null, 2));
+  if (report.failureCount) process.exitCode = 1;
+}
 
-if (failures.length) {
-  process.exitCode = 1;
+if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
+  await main();
 }
