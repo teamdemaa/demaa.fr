@@ -13,6 +13,27 @@ import {
 import { getRenderableSolutionSectionsForSystem } from "@/lib/system-solutions-ui.server";
 
 const PILOTS = ["agence-marketing", "batiment", "cabinet-comptable"] as const;
+const OFFICIAL_DESTINATION_RESOURCE_SLUGS = new Set([
+  "recruitee",
+  "hubspot",
+  "helloasso",
+  "weda",
+  "medistory",
+  "kizeo-forms",
+  "azeoo",
+  "smoobu",
+  "planity",
+  "fresha",
+  "teachable",
+  "amenitiz",
+  "albus-air",
+  "resamania",
+]);
+const OFFICIAL_DOCTOLIB_DESTINATIONS = new Set([
+  "cabinet-medical:doctolib",
+  "osteopathe:doctolib",
+  "psychologue:doctolib",
+]);
 
 describe("family solution selections", () => {
   it("owns every non-pilot system exactly once with the sealed source hashes", () => {
@@ -39,10 +60,14 @@ describe("family solution selections", () => {
     expect(placements).toHaveLength(517);
     expect(placements.filter(({ resourceSlug }) => resourceSlug === "levier")).toHaveLength(81);
     for (const system of systems) {
-      for (const section of ["software", "providers"] as const) {
-        const sectionPlacements = system.placements.filter((item) => item.section === section);
+      for (const section of ["software", "providers", "networks"] as const) {
+        const sectionPlacements = system.placements
+          .filter((item) => item.resourceSlug !== "levier" && item.section === section)
+          .sort((a, b) => a.rank - b.rank);
         expect(sectionPlacements.length).toBeLessThanOrEqual(5);
-        expect(new Set(sectionPlacements.map(({ rank }) => rank)).size).toBe(sectionPlacements.length);
+        expect(sectionPlacements.map(({ rank }) => rank)).toEqual(
+          sectionPlacements.map((_, index) => index + 1),
+        );
       }
       expect(system.placements.some(({ resourceSlug }) =>
         system.excludedResourceSlugs.includes(resourceSlug)
@@ -56,6 +81,33 @@ describe("family solution selections", () => {
         interactionMode: "external_link",
       });
       expect(resolveFamilySolutionCatalogSelection(placement)).not.toBeNull();
+    }
+    expect(placements.filter(({ resourceType }) => resourceType === "directory")
+      .every(({ section }) => section === "networks")).toBe(true);
+    expect(JSON.stringify(systems)).not.toMatch(/capturedAt|expiresAt/);
+  });
+
+  it("uses the 17 audited destination policies without inventing proof URLs", () => {
+    const policies = new Set([
+      ...OFFICIAL_DESTINATION_RESOURCE_SLUGS,
+      ...OFFICIAL_DOCTOLIB_DESTINATIONS,
+    ]);
+    expect(policies.size).toBe(17);
+
+    const matchedPlacements = enterpriseCatalog.flatMap(({ slug: systemSlug }) => {
+      const system = getFamilySystemSolutionSelection(systemSlug);
+      return (system?.placements ?? []).filter((placement) => (
+        OFFICIAL_DESTINATION_RESOURCE_SLUGS.has(placement.resourceSlug)
+        || OFFICIAL_DOCTOLIB_DESTINATIONS.has(`${systemSlug}:${placement.resourceSlug}`)
+      ));
+    });
+
+    expect(matchedPlacements).toHaveLength(30);
+    for (const placement of matchedPlacements) {
+      expect(placement.catalogDestination).toBe(placement.evidenceUrls[0]);
+      expect(placement.evidenceUrls).toContain(placement.catalogDestination);
+      expect(resolveFamilySolutionCatalogSelection(placement)?.href)
+        .toBe(placement.catalogDestination);
     }
   });
 
@@ -81,7 +133,7 @@ describe("family solution selections", () => {
     const doctolib = medical?.placements.find(({ resourceSlug }) => resourceSlug === "doctolib");
     expect(doctolib).toBeDefined();
     expect(resolveFamilySolutionCatalogSelection(doctolib!)).toMatchObject({
-      href: "https://info.doctolib.fr/chirurgien-dentiste/",
+      href: "https://info.doctolib.fr/medecin-generaliste/",
     });
     expect(resolveFamilySolutionCatalogSelection({
       ...doctolib!,

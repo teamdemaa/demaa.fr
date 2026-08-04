@@ -134,6 +134,24 @@ describe("three-pilot draft Solutions registry", () => {
     }, now)).toEqual([]);
   });
 
+  it("keeps the three reviewed pilot orders contiguous and explicit", () => {
+    const expectedBySystem = {
+      batiment: ["obat", "costructor", "progbat", "vertuoza"],
+      "cabinet-comptable": ["pennylane", "tiimora", "silae"],
+      "agence-marketing": ["airtable", "canva", "brevo", "metricool", "chatgpt"],
+    } as const;
+
+    for (const [systemSlug, expected] of Object.entries(expectedBySystem)) {
+      const placements = PILOT_SOLUTION_DRAFT_PLACEMENTS
+        .filter((placement) => placement.systemSlug === systemSlug && placement.section === "software")
+        .sort((a, b) => a.rank - b.rank);
+      expect(placements.map(({ resourceSlug }) => resourceSlug)).toEqual(expected);
+      expect(placements.map(({ rank }) => rank)).toEqual(
+        placements.map((_, index) => index + 1),
+      );
+    }
+  });
+
   it("resolves every draft resource to its catalog-backed official HTTPS destination", () => {
     for (const resource of PILOT_SOLUTION_DRAFT_RESOURCES) {
       expect(resource.interactionMode).toBe("external_link");
@@ -184,7 +202,7 @@ describe("three-pilot draft Solutions registry", () => {
     ]);
     expect(getRenderableSolutionSectionsForSystem("cabinet-comptable").map(({ placements }) =>
       placements.map(({ resource }) => resource.resourceSlug)
-    )).toEqual([["tiimora", "pennylane", "silae"], ["levier"]]);
+    )).toEqual([["pennylane", "tiimora", "silae"], ["levier"]]);
     expect(getRenderableSolutionSectionsForSystem("agence-marketing").map(({ placements }) =>
       placements.map(({ resource }) => resource.resourceSlug)
     )).toEqual([["airtable", "canva", "brevo", "metricool", "chatgpt"], ["levier"]]);

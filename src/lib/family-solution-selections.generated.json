@@ -189,7 +189,7 @@
           "evidenceUrls": [
             "https://recruitee.com/fr/"
           ],
-          "catalogDestination": "https://recruitee.com/fr",
+          "catalogDestination": "https://recruitee.com/fr/",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -214,7 +214,7 @@
           "evidenceUrls": [
             "https://www.hubspot.com/"
           ],
-          "catalogDestination": "https://www.hubspot.fr/",
+          "catalogDestination": "https://www.hubspot.com/",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -272,7 +272,7 @@
         {
           "resourceSlug": "medef-local",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Organisation patronale",
           "description": "Un réseau de dirigeants utile pour les activités B2B structurées.",
@@ -387,7 +387,7 @@
         {
           "resourceSlug": "offices-tourisme",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Réseau professionnel du tourisme",
           "description": "La fédération nationale des organismes institutionnels du tourisme.",
@@ -523,7 +523,7 @@
         {
           "resourceSlug": "fnaim",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Organisation professionnelle immobilière",
           "description": "Réseau professionnel de l’immobilier, veille et ressources métier.",
@@ -548,7 +548,7 @@
         {
           "resourceSlug": "unis",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 2,
           "displayCategory": "Organisation professionnelle immobilière",
           "description": "Organisation professionnelle pour agents immobiliers, administrateurs de biens et syndics.",
@@ -780,7 +780,7 @@
         {
           "resourceSlug": "french-tech",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Réseau de l’écosystème technologique",
           "description": "Le réseau le plus visible pour beaucoup d’activités tech et numériques.",
@@ -1165,7 +1165,7 @@
           "evidenceUrls": [
             "https://www.helloasso.com/associations"
           ],
-          "catalogDestination": "https://www.helloasso.com/",
+          "catalogDestination": "https://www.helloasso.com/associations",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -1225,7 +1225,7 @@
         {
           "resourceSlug": "mouvement-associatif",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Réseau associatif",
           "description": "Le réseau de référence du monde associatif.",
@@ -1450,8 +1450,8 @@
         {
           "resourceSlug": "umih",
           "resourceType": "directory",
-          "section": "providers",
-          "rank": 2,
+          "section": "networks",
+          "rank": 1,
           "displayCategory": "Organisation professionnelle",
           "description": "Le réseau de référence du secteur CHR.",
           "ownerBenefit": "Accéder à une représentation et à des informations dédiées aux métiers de l'hôtellerie-restauration.",
@@ -1565,8 +1565,8 @@
         {
           "resourceSlug": "cma",
           "resourceType": "directory",
-          "section": "providers",
-          "rank": 2,
+          "section": "networks",
+          "rank": 1,
           "displayCategory": "Organisation professionnelle",
           "description": "Le repère institutionnel clé pour beaucoup d’activités artisanales.",
           "ownerBenefit": "Accéder aux services d'accompagnement destinés aux artisans.",
@@ -1774,7 +1774,7 @@
         {
           "resourceSlug": "ffb",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Organisation professionnelle du bâtiment",
           "description": "Organisation de référence pour les entreprises du bâtiment.",
@@ -2005,7 +2005,7 @@
         {
           "resourceSlug": "avocats-affaires",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Organisation professionnelle",
           "description": "L’institution représentative de la profession d’avocat en France.",
@@ -2088,7 +2088,7 @@
           "evidenceUrls": [
             "https://www.hubspot.com/"
           ],
-          "catalogDestination": "https://www.hubspot.fr/",
+          "catalogDestination": "https://www.hubspot.com/",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -2239,7 +2239,7 @@
         {
           "resourceSlug": "medef-local",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Organisation patronale",
           "description": "Un réseau de dirigeants utile pour les activités B2B structurées.",
@@ -2289,7 +2289,7 @@
             "https://weda.fr/logiciel-medecin-generaliste",
             "https://weda.fr/logiciel-dossier-patient-informatise"
           ],
-          "catalogDestination": "https://www.weda.fr/",
+          "catalogDestination": "https://weda.fr/logiciel-medecin-generaliste",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -2314,7 +2314,7 @@
           "evidenceUrls": [
             "https://medistory.com/"
           ],
-          "catalogDestination": "https://www.medistory.com/",
+          "catalogDestination": "https://medistory.com/",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -2339,7 +2339,7 @@
           "evidenceUrls": [
             "https://info.doctolib.fr/medecin-generaliste/"
           ],
-          "catalogDestination": "https://info.doctolib.fr/chirurgien-dentiste/",
+          "catalogDestination": "https://info.doctolib.fr/medecin-generaliste/",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -2375,8 +2375,8 @@
         {
           "resourceSlug": "ordre-medecins",
           "resourceType": "directory",
-          "section": "providers",
-          "rank": 2,
+          "section": "networks",
+          "rank": 1,
           "displayCategory": "Organisation professionnelle officielle",
           "description": "Instance nationale de la profession médicale.",
           "ownerBenefit": "Accéder au cadre professionnel et aux ressources officielles.",
@@ -2400,8 +2400,8 @@
         {
           "resourceSlug": "urps",
           "resourceType": "directory",
-          "section": "providers",
-          "rank": 3,
+          "section": "networks",
+          "rank": 2,
           "displayCategory": "Organisation régionale de professionnels de santé",
           "description": "Réseaux régionaux représentant les professionnels de santé libéraux.",
           "ownerBenefit": "Identifier les relais et projets régionaux utiles.",
@@ -2510,8 +2510,8 @@
         {
           "resourceSlug": "urps",
           "resourceType": "directory",
-          "section": "providers",
-          "rank": 2,
+          "section": "networks",
+          "rank": 1,
           "displayCategory": "Organisation régionale de professionnels de santé",
           "description": "Réseaux régionaux représentant les professionnels de santé libéraux.",
           "ownerBenefit": "Identifier les relais et projets régionaux utiles.",
@@ -2660,7 +2660,7 @@
           "evidenceUrls": [
             "https://recruitee.com/fr/"
           ],
-          "catalogDestination": "https://recruitee.com/fr",
+          "catalogDestination": "https://recruitee.com/fr/",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -2785,7 +2785,7 @@
           "resourceSlug": "alobees",
           "resourceType": "software",
           "section": "software",
-          "rank": 4,
+          "rank": 3,
           "displayCategory": "Logiciel métier",
           "description": "Suivi de chantier, planning d’équipe, heures et communication terrain pour le BTP.",
           "ownerBenefit": "Planifier les équipes et suivre l’avancement des chantiers.",
@@ -2909,8 +2909,8 @@
         {
           "resourceSlug": "capeb",
           "resourceType": "directory",
-          "section": "providers",
-          "rank": 5,
+          "section": "networks",
+          "rank": 1,
           "displayCategory": "Organisation professionnelle",
           "description": "Confédération utile aux artisans du bâtiment.",
           "ownerBenefit": "Accéder à des informations, conseils et relais dédiés aux artisans du bâtiment.",
@@ -3025,7 +3025,7 @@
         {
           "resourceSlug": "mobilians",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Organisation professionnelle de l’automobile",
           "description": "Le grand réseau métier de l’automobile et des services de mobilité.",
@@ -3110,7 +3110,7 @@
         {
           "resourceSlug": "cci-locale",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Réseau local",
           "description": "La chambre de commerce et d’industrie reste un point d’entrée clair pour rencontrer des dirigeants, suivre des événements et gagner en visibilité locale.",
@@ -3340,7 +3340,7 @@
         {
           "resourceSlug": "acteurs-competence",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Organisation professionnelle de la formation",
           "description": "Organisation professionnelle des entreprises de développement des compétences.",
@@ -3475,7 +3475,7 @@
         {
           "resourceSlug": "fnaim",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Organisation professionnelle immobilière",
           "description": "Réseau professionnel de l’immobilier, veille et ressources métier.",
@@ -3500,7 +3500,7 @@
         {
           "resourceSlug": "notaires",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 2,
           "displayCategory": "Organisation professionnelle notariale",
           "description": "Point d’entrée officiel vers la profession notariale et son annuaire.",
@@ -3617,7 +3617,7 @@
           "resourceSlug": "kizeo-forms",
           "resourceType": "software",
           "section": "software",
-          "rank": 4,
+          "rank": 3,
           "displayCategory": "Logiciel métier",
           "description": "Formulaires terrain digitaux pour chantiers, interventions, relevés, contrôles et rapports personnalisés.",
           "ownerBenefit": "Remplacer les formulaires papier par des rapports terrain structurés.",
@@ -3630,7 +3630,7 @@
           "evidenceUrls": [
             "https://www.kizeo-forms.com/fr/"
           ],
-          "catalogDestination": "https://www.kizeo.com/fr/kizeo-forms/",
+          "catalogDestination": "https://www.kizeo-forms.com/fr/",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -3741,8 +3741,8 @@
         {
           "resourceSlug": "capeb",
           "resourceType": "directory",
-          "section": "providers",
-          "rank": 5,
+          "section": "networks",
+          "rank": 1,
           "displayCategory": "Organisation professionnelle",
           "description": "Confédération utile aux artisans du bâtiment.",
           "ownerBenefit": "Accéder à des informations, conseils et relais dédiés aux artisans du bâtiment.",
@@ -3902,7 +3902,7 @@
             "https://azeoo.com/logiciel-coach-sportif",
             "https://azeoo.com/blog/logiciel-coach-sportif"
           ],
-          "catalogDestination": "https://azeoo.com/",
+          "catalogDestination": "https://azeoo.com/logiciel-coach-sportif",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -4079,8 +4079,8 @@
         {
           "resourceSlug": "cci-locale",
           "resourceType": "directory",
-          "section": "providers",
-          "rank": 2,
+          "section": "networks",
+          "rank": 1,
           "displayCategory": "Réseau d’accompagnement territorial",
           "description": "Le réseau local le plus simple pour rencontrer d’autres dirigeants.",
           "ownerBenefit": "Identifier les dispositifs et interlocuteurs utiles sur le territoire.",
@@ -4248,7 +4248,7 @@
             "https://www.smoobu.com/fr/prix/",
             "https://www.smoobu.com/fr/guides/conciergerie-location-saisonniere/"
           ],
-          "catalogDestination": "https://www.smoobu.com/fr/",
+          "catalogDestination": "https://www.smoobu.com/fr/prix/",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -4400,7 +4400,7 @@
         {
           "resourceSlug": "numeum",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Organisation professionnelle du numérique",
           "description": "Un réseau de référence pour les entreprises du numérique.",
@@ -4539,7 +4539,7 @@
         {
           "resourceSlug": "bni",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Réseau d’affaires",
           "description": "Un réseau business structuré autour de la recommandation.",
@@ -4772,7 +4772,7 @@
           "resourceSlug": "alobees",
           "resourceType": "software",
           "section": "software",
-          "rank": 4,
+          "rank": 3,
           "displayCategory": "Logiciel métier",
           "description": "Suivi de chantier, planning d’équipe, heures et communication terrain pour le BTP.",
           "ownerBenefit": "Planifier les équipes et suivre l’avancement des chantiers.",
@@ -4896,8 +4896,8 @@
         {
           "resourceSlug": "capeb",
           "resourceType": "directory",
-          "section": "providers",
-          "rank": 5,
+          "section": "networks",
+          "rank": 1,
           "displayCategory": "Organisation professionnelle",
           "description": "Confédération utile aux artisans du bâtiment.",
           "ownerBenefit": "Accéder à des informations, conseils et relais dédiés aux artisans du bâtiment.",
@@ -5267,7 +5267,7 @@
         {
           "resourceSlug": "numeum",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Organisation professionnelle du numérique",
           "description": "Un réseau de référence pour les entreprises du numérique.",
@@ -5476,8 +5476,8 @@
         {
           "resourceSlug": "cci-locale",
           "resourceType": "directory",
-          "section": "providers",
-          "rank": 2,
+          "section": "networks",
+          "rank": 1,
           "displayCategory": "Réseau d’accompagnement territorial",
           "description": "Le réseau local le plus simple pour rencontrer d’autres dirigeants.",
           "ownerBenefit": "Identifier les dispositifs et interlocuteurs utiles sur le territoire.",
@@ -5591,8 +5591,8 @@
         {
           "resourceSlug": "cci-locale",
           "resourceType": "directory",
-          "section": "providers",
-          "rank": 2,
+          "section": "networks",
+          "rank": 1,
           "displayCategory": "Réseau d’accompagnement territorial",
           "description": "Le réseau local le plus simple pour rencontrer d’autres dirigeants.",
           "ownerBenefit": "Identifier les dispositifs et interlocuteurs utiles sur le territoire.",
@@ -5726,8 +5726,8 @@
         {
           "resourceSlug": "ordre-dentistes",
           "resourceType": "directory",
-          "section": "providers",
-          "rank": 2,
+          "section": "networks",
+          "rank": 1,
           "displayCategory": "Organisation professionnelle officielle",
           "description": "Instance nationale de la profession dentaire.",
           "ownerBenefit": "Accéder au cadre professionnel et aux ressources officielles.",
@@ -6069,7 +6069,7 @@
           "resourceSlug": "kizeo-forms",
           "resourceType": "software",
           "section": "software",
-          "rank": 4,
+          "rank": 3,
           "displayCategory": "Logiciel métier",
           "description": "Formulaires terrain digitaux pour chantiers, interventions, relevés, contrôles et rapports personnalisés.",
           "ownerBenefit": "Remplacer les formulaires papier par des rapports terrain structurés.",
@@ -6082,7 +6082,7 @@
           "evidenceUrls": [
             "https://www.kizeo-forms.com/fr/"
           ],
-          "catalogDestination": "https://www.kizeo.com/fr/kizeo-forms/",
+          "catalogDestination": "https://www.kizeo-forms.com/fr/",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -6193,8 +6193,8 @@
         {
           "resourceSlug": "capeb",
           "resourceType": "directory",
-          "section": "providers",
-          "rank": 5,
+          "section": "networks",
+          "rank": 1,
           "displayCategory": "Organisation professionnelle",
           "description": "Confédération utile aux artisans du bâtiment.",
           "ownerBenefit": "Accéder à des informations, conseils et relais dédiés aux artisans du bâtiment.",
@@ -6301,7 +6301,7 @@
           "evidenceUrls": [
             "https://www.kizeo-forms.com/fr/"
           ],
-          "catalogDestination": "https://www.kizeo.com/fr/kizeo-forms/",
+          "catalogDestination": "https://www.kizeo-forms.com/fr/",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -6358,7 +6358,7 @@
           "evidenceUrls": [
             "https://info.planity.com/solution/logiciel-rendez-vous"
           ],
-          "catalogDestination": "https://info.planity.com/",
+          "catalogDestination": "https://info.planity.com/solution/logiciel-rendez-vous",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -6384,7 +6384,7 @@
             "https://www.fresha.com/fr/for-business/features",
             "https://www.fresha.com/fr/pricing"
           ],
-          "catalogDestination": "https://www.fresha.com/",
+          "catalogDestination": "https://www.fresha.com/fr/for-business/features",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -6586,7 +6586,7 @@
         {
           "resourceSlug": "cci-locale",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Réseau d’accompagnement territorial",
           "description": "Le réseau local le plus simple pour rencontrer d’autres dirigeants.",
@@ -6701,8 +6701,8 @@
         {
           "resourceSlug": "umih",
           "resourceType": "directory",
-          "section": "providers",
-          "rank": 2,
+          "section": "networks",
+          "rank": 1,
           "displayCategory": "Organisation professionnelle",
           "description": "Le réseau de référence du secteur CHR.",
           "ownerBenefit": "Accéder à une représentation et à des informations dédiées aux métiers de l'hôtellerie-restauration.",
@@ -6844,7 +6844,7 @@
         {
           "resourceSlug": "cma",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Organisation professionnelle",
           "description": "Le repère institutionnel clé pour beaucoup d’activités artisanales.",
@@ -6959,8 +6959,8 @@
         {
           "resourceSlug": "cci-locale",
           "resourceType": "directory",
-          "section": "providers",
-          "rank": 2,
+          "section": "networks",
+          "rank": 1,
           "displayCategory": "Réseau d’accompagnement territorial",
           "description": "Le réseau local le plus simple pour rencontrer d’autres dirigeants.",
           "ownerBenefit": "Identifier les dispositifs et interlocuteurs utiles sur le territoire.",
@@ -7010,7 +7010,7 @@
             "https://www.teachable.com/online-courses",
             "https://support.teachable.com/en/articles/11682410-new-teachable-plans-in-june-2025"
           ],
-          "catalogDestination": "https://teachable.com/",
+          "catalogDestination": "https://www.teachable.com/online-courses",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -7096,7 +7096,7 @@
         {
           "resourceSlug": "edtech-france",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Réseau de la formation numérique",
           "description": "Réseau des entreprises françaises de l’éducation et de la formation numériques.",
@@ -7235,7 +7235,7 @@
         {
           "resourceSlug": "bni",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Réseau d’affaires",
           "description": "Un réseau business structuré autour de la recommandation.",
@@ -7352,7 +7352,7 @@
         {
           "resourceSlug": "mobilians",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Organisation professionnelle de l’automobile",
           "description": "Le grand réseau métier de l’automobile et des services de mobilité.",
@@ -7460,7 +7460,7 @@
           "evidenceUrls": [
             "https://www.kizeo-forms.com/fr/"
           ],
-          "catalogDestination": "https://www.kizeo.com/fr/kizeo-forms/",
+          "catalogDestination": "https://www.kizeo-forms.com/fr/",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -7603,7 +7603,7 @@
         {
           "resourceSlug": "unis",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Organisation professionnelle immobilière",
           "description": "Organisation professionnelle pour agents immobiliers, administrateurs de biens et syndics.",
@@ -7628,7 +7628,7 @@
         {
           "resourceSlug": "fnaim",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 2,
           "displayCategory": "Organisation professionnelle immobilière",
           "description": "Réseau professionnel de l’immobilier, veille et ressources métier.",
@@ -7743,7 +7743,7 @@
         {
           "resourceSlug": "cncgp",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Organisation professionnelle du patrimoine",
           "description": "Un réseau de référence pour les conseillers en gestion de patrimoine.",
@@ -7861,7 +7861,7 @@
             "https://amenitiz.com/fr",
             "https://amenitiz.com/fr/nos-tarifs"
           ],
-          "catalogDestination": "https://www.amenitiz.com/fr/",
+          "catalogDestination": "https://amenitiz.com/fr",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -7947,8 +7947,8 @@
         {
           "resourceSlug": "umih",
           "resourceType": "directory",
-          "section": "providers",
-          "rank": 2,
+          "section": "networks",
+          "rank": 1,
           "displayCategory": "Organisation professionnelle hôtellerie-restauration",
           "description": "Organisation professionnelle du secteur hôtelier et CHR.",
           "ownerBenefit": "Accéder à de la veille, des ressources et un réseau métier.",
@@ -7972,8 +7972,8 @@
         {
           "resourceSlug": "atout-france",
           "resourceType": "directory",
-          "section": "providers",
-          "rank": 3,
+          "section": "networks",
+          "rank": 2,
           "displayCategory": "Organisme national du tourisme",
           "description": "Agence de développement touristique de la France.",
           "ownerBenefit": "Suivre l’environnement sectoriel et les dispositifs utiles.",
@@ -7997,8 +7997,8 @@
         {
           "resourceSlug": "offices-tourisme",
           "resourceType": "directory",
-          "section": "providers",
-          "rank": 4,
+          "section": "networks",
+          "rank": 3,
           "displayCategory": "Fédération des organismes touristiques",
           "description": "Fédération des offices de tourisme et organismes territoriaux.",
           "ownerBenefit": "Comprendre l’écosystème territorial et identifier les relais locaux.",
@@ -8071,7 +8071,7 @@
           "evidenceUrls": [
             "https://www.albus.fr/"
           ],
-          "catalogDestination": "https://www.albus.fr/solutions/albus-air-logiciel-infirmier/",
+          "catalogDestination": "https://www.albus.fr/",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -8132,8 +8132,8 @@
         {
           "resourceSlug": "ordre-infirmiers",
           "resourceType": "directory",
-          "section": "providers",
-          "rank": 2,
+          "section": "networks",
+          "rank": 1,
           "displayCategory": "Organisation professionnelle officielle",
           "description": "Instance nationale de la profession infirmière.",
           "ownerBenefit": "Accéder au cadre professionnel et aux ressources officielles.",
@@ -8157,8 +8157,8 @@
         {
           "resourceSlug": "urps",
           "resourceType": "directory",
-          "section": "providers",
-          "rank": 3,
+          "section": "networks",
+          "rank": 2,
           "displayCategory": "Organisation régionale de professionnels de santé",
           "description": "Réseaux régionaux représentant les professionnels de santé libéraux.",
           "ownerBenefit": "Identifier les relais et projets régionaux utiles.",
@@ -8272,7 +8272,7 @@
         {
           "resourceSlug": "numeum",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Organisation professionnelle du numérique",
           "description": "Un réseau de référence pour les entreprises du numérique.",
@@ -8321,7 +8321,7 @@
           "evidenceUrls": [
             "https://info.planity.com/solution/logiciel-rendez-vous"
           ],
-          "catalogDestination": "https://info.planity.com/",
+          "catalogDestination": "https://info.planity.com/solution/logiciel-rendez-vous",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -8347,7 +8347,7 @@
             "https://www.fresha.com/fr/for-business/features",
             "https://www.fresha.com/fr/pricing"
           ],
-          "catalogDestination": "https://www.fresha.com/",
+          "catalogDestination": "https://www.fresha.com/fr/for-business/features",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -8499,7 +8499,7 @@
         {
           "resourceSlug": "numeum",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Organisation professionnelle du numérique",
           "description": "Un réseau de référence pour les entreprises du numérique.",
@@ -8589,7 +8589,7 @@
         {
           "resourceSlug": "anacofi",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Organisation professionnelle finance et conseil",
           "description": "Un autre réseau structurant pour les métiers du conseil patrimonial.",
@@ -8704,7 +8704,7 @@
         {
           "resourceSlug": "cncgp",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Organisation professionnelle du patrimoine",
           "description": "Un réseau de référence pour les conseillers en gestion de patrimoine.",
@@ -8789,7 +8789,7 @@
         {
           "resourceSlug": "notaires",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Prescripteur immobilier et patrimonial",
           "description": "Les notaires peuvent devenir des relais stratégiques sur les transactions, dossiers patrimoniaux ou moments de structuration.",
@@ -8899,7 +8899,7 @@
         {
           "resourceSlug": "notaires",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Organisation professionnelle notariale",
           "description": "Point d’entrée officiel vers la profession notariale et son annuaire.",
@@ -9199,8 +9199,8 @@
         {
           "resourceSlug": "otre",
           "resourceType": "directory",
-          "section": "providers",
-          "rank": 2,
+          "section": "networks",
+          "rank": 1,
           "displayCategory": "Organisation professionnelle du transport",
           "description": "Un réseau structurant pour transporteurs et logistique.",
           "ownerBenefit": "Accéder à des informations et relais adaptés aux PME du transport.",
@@ -9440,8 +9440,8 @@
         {
           "resourceSlug": "capeb",
           "resourceType": "directory",
-          "section": "providers",
-          "rank": 5,
+          "section": "networks",
+          "rank": 1,
           "displayCategory": "Organisation professionnelle",
           "description": "Confédération utile aux artisans du bâtiment.",
           "ownerBenefit": "Accéder à des informations, conseils et relais dédiés aux artisans du bâtiment.",
@@ -9575,7 +9575,7 @@
         {
           "resourceSlug": "notaires",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Organisation professionnelle notariale",
           "description": "Point d’entrée officiel vers la profession notariale et son annuaire.",
@@ -9600,7 +9600,7 @@
         {
           "resourceSlug": "fnaim",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 2,
           "displayCategory": "Organisation professionnelle immobilière",
           "description": "Réseau professionnel de l’immobilier, veille et ressources métier.",
@@ -9742,7 +9742,7 @@
         {
           "resourceSlug": "france-digitale",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Organisation de l’écosystème numérique",
           "description": "Un réseau très utile pour les startups et sociétés tech en croissance.",
@@ -10102,8 +10102,8 @@
         {
           "resourceSlug": "capeb",
           "resourceType": "directory",
-          "section": "providers",
-          "rank": 5,
+          "section": "networks",
+          "rank": 1,
           "displayCategory": "Organisation professionnelle",
           "description": "Confédération utile aux artisans du bâtiment.",
           "ownerBenefit": "Accéder à des informations, conseils et relais dédiés aux artisans du bâtiment.",
@@ -10210,7 +10210,7 @@
           "evidenceUrls": [
             "https://www.kizeo-forms.com/fr/"
           ],
-          "catalogDestination": "https://www.kizeo.com/fr/kizeo-forms/",
+          "catalogDestination": "https://www.kizeo-forms.com/fr/",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -10359,7 +10359,7 @@
         {
           "resourceSlug": "notaires",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Organisation professionnelle notariale",
           "description": "Un repère institutionnel pour de nombreuses opérations immobilières et patrimoniales.",
@@ -10698,7 +10698,7 @@
         {
           "resourceSlug": "acteurs-competence",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Organisation professionnelle de la formation",
           "description": "Organisation professionnelle des entreprises de développement des compétences.",
@@ -10747,7 +10747,7 @@
           "evidenceUrls": [
             "https://info.doctolib.fr/osteopathe/"
           ],
-          "catalogDestination": "https://info.doctolib.fr/chirurgien-dentiste/",
+          "catalogDestination": "https://info.doctolib.fr/osteopathe/",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -10808,8 +10808,8 @@
         {
           "resourceSlug": "urps",
           "resourceType": "directory",
-          "section": "providers",
-          "rank": 2,
+          "section": "networks",
+          "rank": 1,
           "displayCategory": "Organisation régionale de professionnels de santé",
           "description": "Réseaux régionaux représentant les professionnels de santé libéraux.",
           "ownerBenefit": "Identifier les relais et projets régionaux utiles.",
@@ -11000,8 +11000,8 @@
         {
           "resourceSlug": "cma",
           "resourceType": "directory",
-          "section": "providers",
-          "rank": 4,
+          "section": "networks",
+          "rank": 1,
           "displayCategory": "Organisation professionnelle",
           "description": "Le repère institutionnel clé pour beaucoup d’activités artisanales.",
           "ownerBenefit": "Accéder aux services d'accompagnement destinés aux artisans.",
@@ -11117,7 +11117,7 @@
           "resourceSlug": "alobees",
           "resourceType": "software",
           "section": "software",
-          "rank": 4,
+          "rank": 3,
           "displayCategory": "Logiciel métier",
           "description": "Suivi de chantier, planning d’équipe, heures et communication terrain pour le BTP.",
           "ownerBenefit": "Planifier les équipes et suivre l’avancement des chantiers.",
@@ -11241,8 +11241,8 @@
         {
           "resourceSlug": "capeb",
           "resourceType": "directory",
-          "section": "providers",
-          "rank": 5,
+          "section": "networks",
+          "rank": 1,
           "displayCategory": "Organisation professionnelle",
           "description": "Confédération utile aux artisans du bâtiment.",
           "ownerBenefit": "Accéder à des informations, conseils et relais dédiés aux artisans du bâtiment.",
@@ -11376,8 +11376,8 @@
         {
           "resourceSlug": "ordre-pharmaciens",
           "resourceType": "directory",
-          "section": "providers",
-          "rank": 2,
+          "section": "networks",
+          "rank": 1,
           "displayCategory": "Organisation professionnelle officielle",
           "description": "Instance nationale de la profession pharmaceutique.",
           "ownerBenefit": "Accéder au cadre professionnel et aux ressources officielles.",
@@ -11516,7 +11516,7 @@
         {
           "resourceSlug": "cci-locale",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Réseau d’accompagnement territorial",
           "description": "Le réseau local le plus simple pour rencontrer d’autres dirigeants.",
@@ -11599,7 +11599,7 @@
           "evidenceUrls": [
             "https://www.kizeo-forms.com/fr/"
           ],
-          "catalogDestination": "https://www.kizeo.com/fr/kizeo-forms/",
+          "catalogDestination": "https://www.kizeo-forms.com/fr/",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -11682,8 +11682,8 @@
         {
           "resourceSlug": "capeb",
           "resourceType": "directory",
-          "section": "providers",
-          "rank": 3,
+          "section": "networks",
+          "rank": 1,
           "displayCategory": "Organisation professionnelle",
           "description": "Confédération utile aux artisans du bâtiment.",
           "ownerBenefit": "Accéder à des informations, conseils et relais dédiés aux artisans du bâtiment.",
@@ -11824,7 +11824,7 @@
           "resourceSlug": "kizeo-forms",
           "resourceType": "software",
           "section": "software",
-          "rank": 5,
+          "rank": 4,
           "displayCategory": "Logiciel métier",
           "description": "Formulaires terrain digitaux pour chantiers, interventions, relevés, contrôles et rapports personnalisés.",
           "ownerBenefit": "Remplacer les formulaires papier par des rapports terrain structurés.",
@@ -11837,7 +11837,7 @@
           "evidenceUrls": [
             "https://www.kizeo-forms.com/fr/"
           ],
-          "catalogDestination": "https://www.kizeo.com/fr/kizeo-forms/",
+          "catalogDestination": "https://www.kizeo-forms.com/fr/",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -11948,8 +11948,8 @@
         {
           "resourceSlug": "capeb",
           "resourceType": "directory",
-          "section": "providers",
-          "rank": 5,
+          "section": "networks",
+          "rank": 1,
           "displayCategory": "Organisation professionnelle",
           "description": "Confédération utile aux artisans du bâtiment.",
           "ownerBenefit": "Accéder à des informations, conseils et relais dédiés aux artisans du bâtiment.",
@@ -12064,7 +12064,7 @@
         {
           "resourceSlug": "cma",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Organisation professionnelle",
           "description": "Le repère institutionnel clé pour beaucoup d’activités artisanales.",
@@ -12180,7 +12180,7 @@
         {
           "resourceSlug": "french-fab",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Réseau de l’industrie française",
           "description": "Un repère réseau utile pour l’industrie et la production.",
@@ -12254,7 +12254,7 @@
           "evidenceUrls": [
             "https://info.doctolib.fr/psychologue/"
           ],
-          "catalogDestination": "https://info.doctolib.fr/chirurgien-dentiste/",
+          "catalogDestination": "https://info.doctolib.fr/psychologue/",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -12481,8 +12481,8 @@
         {
           "resourceSlug": "capeb",
           "resourceType": "directory",
-          "section": "providers",
-          "rank": 5,
+          "section": "networks",
+          "rank": 1,
           "displayCategory": "Organisation professionnelle",
           "description": "Confédération utile aux artisans du bâtiment.",
           "ownerBenefit": "Accéder à des informations, conseils et relais dédiés aux artisans du bâtiment.",
@@ -12713,8 +12713,8 @@
         {
           "resourceSlug": "umih",
           "resourceType": "directory",
-          "section": "providers",
-          "rank": 2,
+          "section": "networks",
+          "rank": 1,
           "displayCategory": "Organisation professionnelle",
           "description": "Le réseau de référence du secteur CHR.",
           "ownerBenefit": "Accéder à une représentation et à des informations dédiées aux métiers de l'hôtellerie-restauration.",
@@ -12854,7 +12854,7 @@
         {
           "resourceSlug": "france-digitale",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Organisation de l’écosystème numérique",
           "description": "Un réseau très utile pour les startups et sociétés tech en croissance.",
@@ -12879,7 +12879,7 @@
         {
           "resourceSlug": "french-tech",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 2,
           "displayCategory": "Réseau de l’écosystème technologique",
           "description": "Le réseau le plus visible pour beaucoup d’activités tech et numériques.",
@@ -12928,7 +12928,7 @@
           "evidenceUrls": [
             "https://www.resamania.fr/logiciel-gestion-abonnement-salle-de-sport/"
           ],
-          "catalogDestination": "https://www.resamania.fr/",
+          "catalogDestination": "https://www.resamania.fr/logiciel-gestion-abonnement-salle-de-sport/",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -13038,7 +13038,7 @@
           "evidenceUrls": [
             "https://info.planity.com/solution/logiciel-rendez-vous"
           ],
-          "catalogDestination": "https://info.planity.com/",
+          "catalogDestination": "https://info.planity.com/solution/logiciel-rendez-vous",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -13064,7 +13064,7 @@
             "https://www.fresha.com/fr/for-business/features",
             "https://www.fresha.com/fr/pricing"
           ],
-          "catalogDestination": "https://www.fresha.com/",
+          "catalogDestination": "https://www.fresha.com/fr/for-business/features",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -13350,7 +13350,7 @@
           "evidenceUrls": [
             "https://www.kizeo-forms.com/fr/"
           ],
-          "catalogDestination": "https://www.kizeo.com/fr/kizeo-forms/",
+          "catalogDestination": "https://www.kizeo-forms.com/fr/",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -13483,8 +13483,8 @@
         {
           "resourceSlug": "capeb",
           "resourceType": "directory",
-          "section": "providers",
-          "rank": 5,
+          "section": "networks",
+          "rank": 1,
           "displayCategory": "Organisation professionnelle",
           "description": "Confédération utile aux artisans du bâtiment.",
           "ownerBenefit": "Accéder à des informations, conseils et relais dédiés aux artisans du bâtiment.",
@@ -13844,7 +13844,7 @@
         {
           "resourceSlug": "unis",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Organisation professionnelle immobilière",
           "description": "Organisation professionnelle pour agents immobiliers, administrateurs de biens et syndics.",
@@ -13869,7 +13869,7 @@
         {
           "resourceSlug": "fnaim",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 2,
           "displayCategory": "Organisation professionnelle immobilière",
           "description": "Réseau professionnel de l’immobilier, veille et ressources métier.",
@@ -14100,8 +14100,8 @@
         {
           "resourceSlug": "umih",
           "resourceType": "directory",
-          "section": "providers",
-          "rank": 2,
+          "section": "networks",
+          "rank": 1,
           "displayCategory": "Organisation professionnelle",
           "description": "Le réseau de référence du secteur CHR.",
           "ownerBenefit": "Accéder à une représentation et à des informations dédiées aux métiers de l'hôtellerie-restauration.",
@@ -14215,7 +14215,7 @@
         {
           "resourceSlug": "fntr",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Organisation professionnelle du transport",
           "description": "Le réseau métier de référence du transport routier.",
@@ -14330,7 +14330,7 @@
         {
           "resourceSlug": "otre",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Organisation professionnelle du transport",
           "description": "Un réseau structurant pour transporteurs et logistique.",
@@ -14465,8 +14465,8 @@
         {
           "resourceSlug": "ordre-veterinaires",
           "resourceType": "directory",
-          "section": "providers",
-          "rank": 2,
+          "section": "networks",
+          "rank": 1,
           "displayCategory": "Organisation professionnelle officielle",
           "description": "Instance nationale de la profession vétérinaire.",
           "ownerBenefit": "Accéder au cadre professionnel et aux ressources officielles.",
@@ -14581,7 +14581,7 @@
         {
           "resourceSlug": "otre",
           "resourceType": "directory",
-          "section": "providers",
+          "section": "networks",
           "rank": 1,
           "displayCategory": "Organisation professionnelle du transport",
           "description": "Un réseau structurant pour transporteurs et logistique.",

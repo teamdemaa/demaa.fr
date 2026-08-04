@@ -109,14 +109,16 @@ function assertFamilySolutionManifest() {
       throw new Error(`Invalid family solution system ownership: ${system.systemSlug}.`);
     }
     slugs.add(system.systemSlug);
-    for (const section of ["software", "providers"] as const) {
-      const placements = system.placements.filter((placement) => placement.section === section);
+    for (const section of ["software", "providers", "networks"] as const) {
+      const placements = system.placements.filter(
+        (placement) => placement.resourceSlug !== "levier" && placement.section === section,
+      );
       if (placements.length > 5) {
         throw new Error(`Too many family solutions: ${system.systemSlug}:${section}.`);
       }
-      const ranks = new Set(placements.map(({ rank }) => rank));
-      if (ranks.size !== placements.length) {
-        throw new Error(`Duplicate family solution rank: ${system.systemSlug}:${section}.`);
+      const ranks = placements.map(({ rank }) => rank);
+      if (ranks.some((rank, index) => rank !== index + 1)) {
+        throw new Error(`Non-contiguous family solution ranks: ${system.systemSlug}:${section}.`);
       }
     }
     for (const placement of system.placements) {
@@ -181,9 +183,12 @@ export function resolveFamilySolutionCatalogSelection(
     ? getDemaaProNetworkBySlug(selection.resourceSlug)
     : null;
   const href = tool?.url ?? supplier?.href ?? organization?.href;
+  const destination = selection.catalogDestination;
+  const isCatalogDestination = href === destination;
+  const isProvenDestination = selection.evidenceUrls.includes(destination);
   if (
-    href !== selection.catalogDestination ||
-    !isSafeInteractionHref(href, "external_link")
+    (!isCatalogDestination && !isProvenDestination) ||
+    !isSafeInteractionHref(destination, "external_link")
   ) return null;
 
   return {
@@ -191,6 +196,6 @@ export function resolveFamilySolutionCatalogSelection(
     resourceType: tool ? "software" : supplier ? "provider" : "directory",
     name: tool?.name ?? supplier?.name ?? organization?.name ?? selection.resourceSlug,
     description: selection.description,
-    href,
+    href: destination,
   };
 }

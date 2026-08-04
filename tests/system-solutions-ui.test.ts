@@ -217,7 +217,7 @@ describe("system Solutions UI", () => {
         ["capeb"],
       ],
       "cabinet-comptable": [
-        ["tiimora", "pennylane", "silae"],
+        ["pennylane", "tiimora", "silae"],
         ["levier"],
       ],
       "agence-marketing": [

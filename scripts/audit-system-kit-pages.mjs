@@ -25,7 +25,7 @@ const PILOT_SOLUTION_ORDERS = new Map([
       "capeb",
     ],
   ],
-  ["cabinet-comptable", ["tiimora", "pennylane", "silae", "levier"]],
+  ["cabinet-comptable", ["pennylane", "tiimora", "silae", "levier"]],
   [
     "agence-marketing",
     ["airtable", "canva", "brevo", "metricool", "chatgpt", "levier"],

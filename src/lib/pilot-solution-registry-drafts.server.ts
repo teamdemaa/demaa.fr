@@ -278,7 +278,7 @@ export const PILOT_SOLUTION_DRAFT_PLACEMENTS: readonly SolutionPlacement[] = [
   draftPlacement({
     systemSlug: "batiment",
     resourceSlug: "progbat",
-    rank: 4,
+    rank: 3,
     section: "software",
     usage: "Centraliser devis, factures, planning et suivi de rentabilité des chantiers.",
     fitRationale: "ProGBat réunit dans un même environnement la gestion commerciale et le suivi opérationnel BTP.",
@@ -287,7 +287,7 @@ export const PILOT_SOLUTION_DRAFT_PLACEMENTS: readonly SolutionPlacement[] = [
   draftPlacement({
     systemSlug: "batiment",
     resourceSlug: "vertuoza",
-    rank: 5,
+    rank: 4,
     section: "software",
     usage: "Structurer le cycle commercial, le planning, les chantiers et leur rentabilité.",
     fitRationale: "Vertuoza correspond aux entreprises qui veulent un pilotage BTP intégré et accompagné.",
@@ -340,6 +340,15 @@ export const PILOT_SOLUTION_DRAFT_PLACEMENTS: readonly SolutionPlacement[] = [
   }),
   draftPlacement({
     systemSlug: "cabinet-comptable",
+    resourceSlug: "pennylane",
+    rank: 1,
+    section: "software",
+    usage: "Gérer la production comptable et partager les données financières avec les clients.",
+    fitRationale: "Pennylane couvre le socle comptable et financier attendu dans de nombreux cabinets.",
+    fitConstraints: ["Valider les modules, migrations, intégrations et conditions adaptés au cabinet.", "Ne couvre pas à lui seul tous les besoins sociaux."],
+  }),
+  draftPlacement({
+    systemSlug: "cabinet-comptable",
     resourceSlug: "tiimora",
     rank: 2,
     section: "software",
@@ -349,17 +358,8 @@ export const PILOT_SOLUTION_DRAFT_PLACEMENTS: readonly SolutionPlacement[] = [
   }),
   draftPlacement({
     systemSlug: "cabinet-comptable",
-    resourceSlug: "pennylane",
-    rank: 3,
-    section: "software",
-    usage: "Gérer la production comptable et partager les données financières avec les clients.",
-    fitRationale: "Pennylane couvre le socle comptable et financier attendu dans de nombreux cabinets.",
-    fitConstraints: ["Valider les modules, migrations, intégrations et conditions adaptés au cabinet.", "Ne couvre pas à lui seul tous les besoins sociaux."],
-  }),
-  draftPlacement({
-    systemSlug: "cabinet-comptable",
     resourceSlug: "silae",
-    rank: 4,
+    rank: 3,
     section: "software",
     usage: "Produire la paie et structurer les opérations sociales du cabinet.",
     fitRationale: "Silae répond au besoin spécialisé de paie et de gestion sociale.",
@@ -368,7 +368,7 @@ export const PILOT_SOLUTION_DRAFT_PLACEMENTS: readonly SolutionPlacement[] = [
   draftPlacement({
     systemSlug: "agence-marketing",
     resourceSlug: "airtable",
-    rank: 2,
+    rank: 1,
     section: "software",
     usage: "Structurer les projets, calendriers éditoriaux, campagnes, livrables et validations.",
     fitRationale: "Airtable offre un socle flexible pour coordonner les opérations d’une agence sans imposer ClickUp.",
@@ -377,7 +377,7 @@ export const PILOT_SOLUTION_DRAFT_PLACEMENTS: readonly SolutionPlacement[] = [
   draftPlacement({
     systemSlug: "agence-marketing",
     resourceSlug: "canva",
-    rank: 3,
+    rank: 2,
     section: "software",
     usage: "Produire et décliner rapidement les supports visuels des clients.",
     fitRationale: "Canva facilite une production visuelle collaborative et répétable.",
@@ -386,7 +386,7 @@ export const PILOT_SOLUTION_DRAFT_PLACEMENTS: readonly SolutionPlacement[] = [
   draftPlacement({
     systemSlug: "agence-marketing",
     resourceSlug: "brevo",
-    rank: 4,
+    rank: 3,
     section: "software",
     usage: "Gérer les campagnes e-mail, SMS, automatisations simples et relances CRM.",
     fitRationale: "Brevo couvre un besoin fréquent d’activation et de suivi marketing pour les clients d’une agence.",
@@ -395,7 +395,7 @@ export const PILOT_SOLUTION_DRAFT_PLACEMENTS: readonly SolutionPlacement[] = [
   draftPlacement({
     systemSlug: "agence-marketing",
     resourceSlug: "metricool",
-    rank: 5,
+    rank: 4,
     section: "software",
     usage: "Planifier les publications et consolider l’analyse et le reporting social media.",
     fitRationale: "Metricool répond au besoin de planification et de mesure multi-réseaux d’une agence.",
@@ -404,7 +404,7 @@ export const PILOT_SOLUTION_DRAFT_PLACEMENTS: readonly SolutionPlacement[] = [
   draftPlacement({
     systemSlug: "agence-marketing",
     resourceSlug: "chatgpt",
-    rank: 6,
+    rank: 5,
     section: "software",
     usage: "Préparer des angles, synthèses, brouillons et analyses avec validation humaine.",
     fitRationale: "ChatGPT peut accélérer les tâches de recherche, structuration et rédaction d’une agence.",
