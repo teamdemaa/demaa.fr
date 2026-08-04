@@ -5,6 +5,7 @@ import { describe, expect, it, vi } from "vitest";
 vi.mock("server-only", () => ({}));
 
 import { enterpriseCatalog } from "@/lib/enterprise-annuaire";
+import { getFamilySystemSolutionSelection } from "@/lib/family-solution-selections.server";
 import {
   LEVIER_SOLUTION_PLACEMENTS,
   LEVIER_SOLUTION_RESOURCE,
@@ -186,18 +187,14 @@ describe("three-pilot draft Solutions registry", () => {
     )).toEqual([["levier", "airtable", "canva", "brevo", "metricool", "chatgpt"]]);
 
     const pilotSlugs = new Set(["batiment", "cabinet-comptable", "agence-marketing"]);
-    const unchangedSystems = enterpriseCatalog.filter(({ slug }) => !pilotSlugs.has(slug));
-    expect(unchangedSystems).toHaveLength(112);
-    for (const { slug } of unchangedSystems) {
-      expect(getRenderableSolutionSectionsForSystem(slug)).toEqual([
-        expect.objectContaining({
-          section: "software",
-          placements: [expect.objectContaining({
-            rank: 1,
-            resource: expect.objectContaining({ resourceSlug: "levier" }),
-          })],
-        }),
-      ]);
+    const familySystems = enterpriseCatalog.filter(({ slug }) => !pilotSlugs.has(slug));
+    expect(familySystems).toHaveLength(112);
+    for (const { slug } of familySystems) {
+      const selection = getFamilySystemSolutionSelection(slug);
+      expect(selection).not.toBeNull();
+      expect(getRenderableSolutionSectionsForSystem(slug).flatMap(({ placements }) =>
+        placements.map(({ resource }) => resource.resourceSlug)
+      )).toEqual(selection?.placements.map(({ resourceSlug }) => resourceSlug));
     }
 
     for (const systemSlug of ["batiment", "cabinet-comptable", "agence-marketing"]) {

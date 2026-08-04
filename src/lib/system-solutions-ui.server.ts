@@ -4,7 +4,15 @@ import {
   PILOT_SOLUTION_DRAFT_PLACEMENTS,
   PILOT_SOLUTION_DRAFT_RESOURCES,
 } from "@/lib/pilot-solution-registry-drafts.server";
-import { getPublishedSolutionSectionsForSystem } from "@/lib/solution-registry.server";
+import {
+  getFamilySystemSolutionSelection,
+  resolveFamilySolutionCatalogSelection,
+  type FamilySolutionSelection,
+} from "@/lib/family-solution-selections.server";
+import {
+  getPublishedSolutionResourceBySlug,
+  getPublishedSolutionSectionsForSystem,
+} from "@/lib/solution-registry.server";
 import {
   validateSolutionPlacement,
   validateSolutionResource,
@@ -137,6 +145,76 @@ type PublishedSolutionSectionInput = Readonly<{
   placements: readonly PublishedSolutionPlacementDto[];
 }>;
 
+function getFamilyCtaLabel(resourceType: FamilySolutionSelection["resourceType"]) {
+  if (resourceType === "provider") return "Voir le fournisseur";
+  if (resourceType === "directory") return "Découvrir l’organisation";
+  return "Voir l’outil";
+}
+
+function toRenderableFamilyPlacement(
+  systemSlug: string,
+  selection: FamilySolutionSelection,
+): RenderableSolutionPlacementDto | null {
+  if (selection.resourceSlug === "levier") {
+    const levier = getPublishedSolutionResourceBySlug("levier");
+    if (!levier || levier.interaction.interactionMode !== "system_delivery") return null;
+    return {
+      placementId: `family:${systemSlug}:levier:${selection.section}:${selection.rank}`,
+      systemSlug,
+      rank: selection.rank,
+      section: selection.section,
+      usage: selection.ownerBenefit,
+      fitRationale: selection.fitRationale,
+      fitConstraints: [...selection.checksBeforeChoosing].slice(0, 2),
+      resource: {
+        resourceSlug: levier.resourceSlug,
+        resourceType: levier.resourceType,
+        name: levier.name,
+        description: levier.description,
+        displayCategory: selection.displayCategory,
+        interaction: levier.interaction,
+      },
+    };
+  }
+
+  const resolved = resolveFamilySolutionCatalogSelection(selection);
+  if (!resolved) return null;
+  return {
+    placementId: `family:${systemSlug}:${selection.resourceSlug}:${selection.section}:${selection.rank}`,
+    systemSlug,
+    rank: selection.rank,
+    section: selection.section,
+    usage: selection.ownerBenefit,
+    fitRationale: selection.fitRationale,
+    fitConstraints: [...selection.checksBeforeChoosing].slice(0, 2),
+    resource: {
+      resourceSlug: resolved.resourceSlug,
+      resourceType: resolved.resourceType,
+      name: resolved.name,
+      description: resolved.description,
+      displayCategory: selection.displayCategory,
+      ctaLabel: getFamilyCtaLabel(resolved.resourceType),
+      indicativePricing: selection.pricingSummary,
+      interaction: { interactionMode: "external_link", href: resolved.href },
+    },
+  };
+}
+
+function getRenderableFamilySolutionSections(systemSlug: string) {
+  const system = getFamilySystemSolutionSelection(systemSlug);
+  if (!system) return [];
+  return (["software", "providers"] as const).flatMap((section) => {
+    const placements = system.placements
+      .filter((placement) => placement.section === section)
+      .flatMap((placement) => {
+        const rendered = toRenderableFamilyPlacement(systemSlug, placement);
+        return rendered ? [rendered] : [];
+      })
+      .sort((left, right) => left.rank - right.rank);
+    return placements.length > 0 ? [{ section, placements }] : [];
+  });
+}
+
 export function filterRenderableSolutionSections(
   sections: readonly PublishedSolutionSectionInput[],
 ): readonly RenderableSolutionSectionDto[] {
@@ -158,6 +236,12 @@ export function getRenderableSolutionSectionsForSystem(
   systemSlug: unknown,
   now = new Date(),
 ) {
+  if (
+    typeof systemSlug === "string" &&
+    getFamilySystemSolutionSelection(systemSlug)
+  ) {
+    return getRenderableFamilySolutionSections(systemSlug);
+  }
   const publishedSections = getPublishedRenderableSolutionSectionsForSystem(systemSlug);
   if (typeof systemSlug !== "string") return publishedSections;
 

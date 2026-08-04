@@ -19,6 +19,9 @@ import {
 import { getSolutionResourcePresentation } from "@/lib/solution-resource-presentation.server";
 import { PILOT_SOLUTION_DRAFT_RESOURCES } from "@/lib/pilot-solution-registry-drafts.server";
 import {
+  getFamilySystemSolutionSelection,
+} from "@/lib/family-solution-selections.server";
+import {
   publishedLevierSolutionSectionsFixture,
   publishedSolutionSectionsFixture,
   publishedSolutionSectionsWithReferralFixture,
@@ -64,26 +67,31 @@ describe("system Solutions UI", () => {
     );
   });
 
-  it("keeps Levier universal, third for Bâtiment and first on every other system", () => {
+  it("renders all 115 systems while keeping the three pilots on their legacy selection", () => {
     expect(enterpriseCatalog).toHaveLength(115);
 
     for (const system of enterpriseCatalog) {
       const sections = getRenderableSolutionSectionsForSystem(system.slug);
       expect(JSON.parse(JSON.stringify(sections))).toEqual(sections);
-      expect(
-        sections[0]?.placements.find(({ resource }) => resource.resourceSlug === "levier"),
-      ).toMatchObject({
-        rank: system.slug === "batiment" ? 3 : 1,
-        resource: {
-          resourceSlug: "levier",
-          interaction: { interactionMode: "system_delivery" },
-        },
-      });
+      const familySelection = getFamilySystemSolutionSelection(system.slug);
+      if (familySelection) {
+        expect(sections.flatMap(({ placements }) => placements.map(({ resource }) => resource.resourceSlug)))
+          .toEqual(familySelection.placements.map(({ resourceSlug }) => resourceSlug));
+      } else {
+        expect(
+          sections[0]?.placements.find(({ resource }) => resource.resourceSlug === "levier"),
+        ).toMatchObject({
+          rank: system.slug === "batiment" ? 3 : 1,
+          resource: {
+            resourceSlug: "levier",
+            interaction: { interactionMode: "system_delivery" },
+          },
+        });
+      }
       const markup = renderToStaticMarkup(
         createElement(SystemSolutionsTab, { sections }),
       );
-      expect(markup).toContain("Levier");
-      expect(markup).toContain("Tableau de pilotage opérationnel");
+      expect(markup).toContain("Outils");
       expect(normalizeSystemDetailTab("solutions")).toBe("solutions");
       expect(normalizeSystemDetailTab("outils")).toBe("solutions");
       expect(normalizeSystemDetailTab("ecosysteme")).toBe("solutions");
@@ -91,6 +99,41 @@ describe("system Solutions UI", () => {
         "process",
         "solutions",
       ]);
+    }
+  });
+
+  it("renders the five family sentinels in their audited order", () => {
+    const expected = {
+      "plomberie-chauffage": [
+        ["esabora", "obat", "alobees", "levier", "kizeo-forms"],
+        ["cedeo-pro", "wurth", "plateforme-du-batiment", "kiloutou", "capeb"],
+      ],
+      restaurant: [
+        ["lightspeed", "zenchef", "deliverect", "levier"],
+        ["umih"],
+      ],
+      "commerce-de-detail": [
+        ["lightspeed", "hiboutik", "brevo", "levier"],
+      ],
+      "agence-immobiliere": [
+        ["hektor", "modelo", "zelok", "ubiflow"],
+        ["fnaim", "unis"],
+      ],
+      "cabinet-medical": [
+        ["weda", "medistory", "doctolib"],
+        ["distrimed-medical", "ordre-medecins", "urps"],
+      ],
+    } as const;
+
+    for (const [systemSlug, expectedSections] of Object.entries(expected)) {
+      const sections = getRenderableSolutionSectionsForSystem(systemSlug);
+      expect(sections.map(({ placements }) =>
+        placements.map(({ resource }) => resource.resourceSlug)
+      )).toEqual(expectedSections);
+      expect(sections.every(({ placements }) => placements.length <= 5)).toBe(true);
+      expect(JSON.stringify(sections)).not.toMatch(
+        /commercialRelationship|publicationBlockers|status|evidenceUrls|reviewedAt|catalogDestination/i,
+      );
     }
   });
 
