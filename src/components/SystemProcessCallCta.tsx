@@ -40,13 +40,13 @@ export default function SystemProcessCallCta({
             disabled
             className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper opacity-60"
           >
-            Réserver mon échange
+            Réserver mon échange offert
           </button>
         }
       >
         <OrganisationSessionBookingButton
           className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-dema-paper transition hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
-          label="Réserver mon échange"
+          label="Réserver mon échange offert"
           source={source}
           sourceIsAuthoritative
           systemSlug={systemSlug}

@@ -93,7 +93,9 @@ describe("system UX contract", () => {
         /votre entreprise moins dépendante de vous au quotidien/g,
       ),
     ).toHaveLength(1);
-    expect(processCallSource).toContain('label="Réserver mon échange"');
+    expect(processCallSource).toContain(
+      'label="Réserver mon échange offert"',
+    );
     expect(detailSource).toContain(
       "source={getSystemDetailBookingSource(activeTab)}",
     );
