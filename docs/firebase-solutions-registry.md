@@ -71,10 +71,27 @@ entièrement publiée et validée.
 ```bash
 npm run generate:firebase-solutions-snapshot
 npm run plan:firebase-solutions-import
+npm run verify:firebase-solutions-emulator
 ```
 
 La deuxième commande est strictement en lecture seule. Elle produit un plan de
 849 écritures réparties en lots de 400 maximum et refuse `--apply`.
+
+La troisième commande démarre un projet Firestore Emulator jetable, applique
+réellement les 849 écritures, relit les 248 ressources et les 600 placements,
+revalide les deux empreintes et vérifie que le pointeur actif n’existe pas. Le
+script refuse de démarrer sans `FIRESTORE_EMULATOR_HOST` et utilise uniquement
+le projet de démonstration `demo-demaa-solutions`, qui ne peut pas atteindre un
+service Firebase distant.
+
+## Séparation Preview / Production
+
+Le contrôle Vercel du 5 août 2026 montre que les trois identifiants Firebase
+actuels sont communs aux environnements Development, Preview et Production.
+Une Preview Vercel n’est donc pas, à elle seule, un environnement Firestore
+isolé. Tant qu’un projet Firebase Preview distinct n’est pas configuré, tout
+import distant est interdit, même pour une révision `draft` et même sans mise à
+jour du pointeur actif.
 
 ## Activation et rollback
 
