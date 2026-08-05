@@ -39,6 +39,8 @@ describe("system navigation performance contract", () => {
     const detailSource = await readSource("src/components/SystemDetailContent.tsx");
 
     expect(searchSource).not.toContain("prefetch={false}");
+    expect(searchSource).not.toContain("useLinkStatus");
+    expect(searchSource).not.toContain("SystemDirectoryCardPendingOverlay");
     expect(detailSource).toContain('<Link\n          href="/systemes"');
     expect(detailSource).toContain("Retour aux systèmes");
     expect(detailSource).not.toContain("router.back()");
