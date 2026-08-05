@@ -74,6 +74,11 @@ export const metadata: Metadata = {
   formatDetection: {
     telephone: false,
   },
+  verification: {
+    other: {
+      "facebook-domain-verification": "q8v7yql2wdk1p643wdls8vnr4e8b4h",
+    },
+  },
 };
 
 export const viewport: Viewport = {

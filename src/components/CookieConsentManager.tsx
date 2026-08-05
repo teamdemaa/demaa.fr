@@ -14,7 +14,7 @@ import {
 } from "@/lib/lead-attribution-client";
 
 const GOOGLE_ANALYTICS_ID = "G-V1V4EX55K6";
-const META_PIXEL_ID = "3030409753790915";
+const META_PIXEL_ID = "2790127321387849";
 
 function ensureGtagQueue() {
   window.dataLayer = window.dataLayer || [];
