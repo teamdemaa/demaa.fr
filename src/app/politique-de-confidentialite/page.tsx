@@ -32,7 +32,7 @@ export default function PolitiqueConfidentialitePage() {
     >
       <PrivacySection title="1. Responsable du traitement">
             <p>
-              Le responsable du traitement des données collectées sur {LEGAL.domain} est <strong>{LEGAL.legalEntityName}</strong>, représentée par <strong>{LEGAL.legalRepresentative}</strong>, dans le cadre de l&apos;exploitation de la marque <strong>{LEGAL.brandName}</strong>.
+              Le responsable du traitement des données collectées sur {LEGAL.domain} est <strong>{LEGAL.legalEntityName}</strong>, entrepreneur individuel, dans le cadre de l&apos;exploitation de la marque <strong>{LEGAL.brandName}</strong>.
             </p>
             <p>{LEGAL_COPY.brandOperatorSentence}</p>
             <ul className="list-disc space-y-2 pl-5">
