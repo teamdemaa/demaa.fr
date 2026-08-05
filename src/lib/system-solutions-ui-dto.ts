@@ -4,10 +4,7 @@ import type {
   SolutionSection,
 } from "@/lib/solution-registry-dto";
 
-export type SupportedSolutionInteractionDto = Exclude<
-  SolutionInteractionDto,
-  Readonly<{ interactionMode: "referral_form"; referralKey: string }>
->;
+export type SupportedSolutionInteractionDto = SolutionInteractionDto;
 
 export type RenderableSolutionResourceDto = Readonly<{
   resourceSlug: string;

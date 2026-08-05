@@ -33,7 +33,7 @@ function RoutineItem({
           {routineNumber}
         </span>
         <span className="min-w-0 flex-1">
-          <span className="block text-[15px] font-light leading-snug tracking-[-0.015em] text-brand-blue sm:text-base">
+          <span className="block text-[15px] font-medium leading-snug tracking-[-0.015em] text-brand-blue sm:text-base">
             {routine.title}
           </span>
           <span className="mt-1 block text-xs text-dema-muted">

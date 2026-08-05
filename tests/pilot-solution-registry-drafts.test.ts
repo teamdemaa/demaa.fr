@@ -78,11 +78,6 @@ describe("three-pilot draft Solutions registry", () => {
         resourceSlug: null,
         status: "unmet",
       }),
-      expect.objectContaining({
-        needId: "need:cabinet-comptable:delegation-juridique",
-        resourceSlug: null,
-        status: "unmet",
-      }),
     ]);
     expect(PILOT_SOLUTION_UNMET_NEEDS.every((need) => (
       need.commercialRelationship === "unknown"
@@ -174,16 +169,33 @@ describe("three-pilot draft Solutions registry", () => {
   it("keeps drafts out of SEO/public selectors while exposing only sanitized pilot selections", () => {
     expect(getPublishedSolutionResources()).toEqual([
       expect.objectContaining({ resourceSlug: "levier" }),
+      expect.objectContaining({
+        resourceSlug: "juridi-consulting",
+        interaction: {
+          interactionMode: "referral_form",
+          referralKey: "juridi-consulting",
+        },
+      }),
     ]);
     for (const system of enterpriseCatalog) {
       const placements = getPublishedSolutionPlacementsForSystem(system.slug);
-      expect(placements).toHaveLength(1);
-      expect(placements[0]).toMatchObject({
+      const hasJuridi = ["cabinet-comptable", "cabinet-davocat", "notaire"]
+        .includes(system.slug);
+      expect(placements).toHaveLength(hasJuridi ? 2 : 1);
+      expect(placements).toContainEqual(expect.objectContaining({
         systemSlug: system.slug,
         rank: 1,
         section: "models",
-        resource: { resourceSlug: "levier" },
-      });
+        resource: expect.objectContaining({ resourceSlug: "levier" }),
+      }));
+      if (hasJuridi) {
+        expect(placements).toContainEqual(expect.objectContaining({
+          systemSlug: system.slug,
+          rank: 1,
+          section: "providers",
+          resource: expect.objectContaining({ resourceSlug: "juridi-consulting" }),
+        }));
+      }
     }
     for (const systemSlug of ["batiment", "cabinet-comptable", "agence-marketing"]) {
       const serialized = JSON.stringify(
@@ -207,6 +219,7 @@ describe("three-pilot draft Solutions registry", () => {
       placements.map(({ resource }) => resource.resourceSlug)
     )).toEqual([
       ["pennylane", "tiimora", "silae"],
+      ["juridi-consulting"],
       ["levier"],
       ["ordre-experts-comptables", "croec-regional"],
     ]);
@@ -224,6 +237,9 @@ describe("three-pilot draft Solutions registry", () => {
         placements.map(({ resource }) => resource.resourceSlug)
       );
       expect(renderedSlugs).toContain("levier");
+      const referralSlugs = ["cabinet-davocat", "notaire"].includes(slug)
+        ? ["juridi-consulting"]
+        : [];
       expect(new Set(renderedSlugs)).toEqual(
         new Set([
           ...(selection?.placements ?? [])
@@ -231,6 +247,7 @@ describe("three-pilot draft Solutions registry", () => {
               resourceSlug !== "levier" && editorialStatus === "selected"
             ))
             .map(({ resourceSlug }) => resourceSlug),
+          ...referralSlugs,
           "levier",
         ]),
       );

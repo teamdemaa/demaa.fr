@@ -54,10 +54,10 @@ describe("Firebase Solutions revision contract", () => {
 
     expect(revision.revisionStatus).toBe("published");
     expect(revision.knownSystemSlugs).toEqual(expectedSystemSlugs);
-    expect(revision.placements).toHaveLength(600);
+    expect(revision.placements).toHaveLength(603);
     expect(sectionCounts).toEqual({
       software: 313,
-      providers: 82,
+      providers: 85,
       models: 115,
       networks: 90,
     });
@@ -66,7 +66,7 @@ describe("Firebase Solutions revision contract", () => {
     ).toHaveLength(115);
     expect(
       revision.resources
-        .filter(({ resource }) => resource.resourceSlug !== "levier")
+        .filter(({ resource }) => !["levier", "juridi-consulting"].includes(resource.resourceSlug))
         .every(({ resource }) =>
           resource.status === "draft" &&
           resource.commercialRelationship === "unknown" &&
@@ -75,7 +75,7 @@ describe("Firebase Solutions revision contract", () => {
     ).toBe(true);
     expect(
       revision.placements
-        .filter(({ placement }) => placement.resourceSlug !== "levier")
+        .filter(({ placement }) => !["levier", "juridi-consulting"].includes(placement.resourceSlug))
         .every(({ placement }) =>
           placement.status === "draft" &&
           placement.commercialRelationship === "unknown" &&
@@ -103,7 +103,9 @@ describe("Firebase Solutions revision contract", () => {
       modules.validate(tampered, { expectedSystemSlugs, now }),
     ).toContain("revision sourceFingerprint does not match its content");
     expect(
-      revision.resources.filter(({ resource }) => resource.resourceSlug !== "levier")
+      revision.resources.filter(({ resource }) =>
+        !["levier", "juridi-consulting"].includes(resource.resourceSlug)
+      )
         .every(({ resource }) => resource.status === "draft"),
     ).toBe(true);
   });
@@ -138,8 +140,8 @@ describe("Firebase Solutions revision contract", () => {
     const revision = migrationRevision;
     const plan = modules.buildImportPlan(revision);
 
-    expect(plan.writes).toHaveLength(849);
-    expect(plan.writeBatches.map((batch) => batch.length)).toEqual([400, 400, 49]);
+    expect(plan.writes).toHaveLength(853);
+    expect(plan.writeBatches.map((batch) => batch.length)).toEqual([400, 400, 53]);
     expect(plan.activation).toEqual({
       path: "solution_registry_config/active",
       data: {

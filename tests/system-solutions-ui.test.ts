@@ -81,12 +81,16 @@ describe("system Solutions UI", () => {
         const renderedSlugs = sections.flatMap(({ placements }) =>
           placements.map(({ resource }) => resource.resourceSlug)
         );
+        const referralSlugs = ["cabinet-davocat", "notaire"].includes(system.slug)
+          ? ["juridi-consulting"]
+          : [];
         expect(new Set(renderedSlugs)).toEqual(new Set([
           ...familySelection.placements
             .filter(({ resourceSlug, editorialStatus }) => (
               resourceSlug !== "levier" && editorialStatus === "selected"
             ))
             .map(({ resourceSlug }) => resourceSlug),
+          ...referralSlugs,
           "levier",
         ]));
       }
@@ -139,9 +143,9 @@ describe("system Solutions UI", () => {
     );
     const bySection = Object.groupBy(placements, ({ section }) => section);
 
-    expect(placements).toHaveLength(600);
+    expect(placements).toHaveLength(603);
     expect(bySection.software).toHaveLength(313);
-    expect(bySection.providers).toHaveLength(82);
+    expect(bySection.providers).toHaveLength(85);
     expect(bySection.models).toHaveLength(115);
     expect(bySection.networks).toHaveLength(90);
     expect(bySection.software?.every(({ resource }) => resource.resourceType === "software"))
@@ -197,21 +201,22 @@ describe("system Solutions UI", () => {
     }
   });
 
-  it("filters referral_form on the server before the RSC boundary", () => {
+  it("passes referral_form through the public DTO without commercial metadata", () => {
     const sections = filterRenderableSolutionSections(
       publishedSolutionSectionsWithReferralFixture,
     );
     const placements = sections.flatMap((section) => section.placements);
 
-    expect(placements.map((placement) => placement.resource.name)).not.toContain(
+    expect(placements.map((placement) => placement.resource.name)).toContain(
       "Partenaire Referral",
     );
     expect(placements.map((placement) => placement.resource.interaction.interactionMode)).toEqual([
       "external_link",
       "external_link",
       "detail",
+      "referral_form",
     ]);
-    expect(JSON.stringify(sections)).not.toContain("referral_form");
+    expect(JSON.stringify(sections)).not.toMatch(/paid_referral|commercialRelationship/);
   });
 
   it("never exposes commercial relationship claims in the client UI", async () => {
@@ -236,6 +241,7 @@ describe("system Solutions UI", () => {
       ],
       "cabinet-comptable": [
         ["pennylane", "tiimora", "silae"],
+        ["juridi-consulting"],
         ["levier"],
         ["ordre-experts-comptables", "croec-regional"],
       ],
@@ -281,10 +287,10 @@ describe("system Solutions UI", () => {
     }))).toContain("Réseaux professionnels");
     expect(renderToStaticMarkup(createElement(SystemSolutionsTab, {
       sections: getRenderableSolutionSectionsForSystem("cabinet-comptable"),
-    }))).not.toContain("Prestataires et fournisseurs");
+    }))).toContain("Prestataires et fournisseurs");
     expect(renderToStaticMarkup(createElement(SystemSolutionsTab, {
       sections: getRenderableSolutionSectionsForSystem("cabinet-comptable"),
-    }))).toContain("Réseaux professionnels");
+    }))).toContain("JuridiConsulting");
 
     expect(getPublishedRenderableSolutionSectionsForSystem("batiment")[0]?.placements)
       .toHaveLength(1);
@@ -380,7 +386,8 @@ describe("system Solutions UI", () => {
     expect(solutionsSource).toContain('from "@/lib/solution-registry-dto"');
     expect(solutionsSource).not.toMatch(/solution-registry\.(?:server|contract)/);
     expect(solutionsSource).not.toMatch(/SystemEcosystem|system-ecosystem/);
-    expect(solutionsSource).not.toContain('interactionMode === "referral_form"');
+    expect(solutionsSource).toContain('interactionMode === "referral_form"');
+    expect(solutionsSource).toContain("SolutionReferralForm");
   });
 
   it("preserves query reset and keyboard focus contracts", async () => {
