@@ -91,12 +91,11 @@ service Firebase distant.
 
 ## Séparation Preview / Production
 
-Le contrôle Vercel du 5 août 2026 montre que les trois identifiants Firebase
-actuels sont communs aux environnements Development, Preview et Production.
-Une Preview Vercel n’est donc pas, à elle seule, un environnement Firestore
-isolé. Tant qu’un projet Firebase Preview distinct n’est pas configuré, tout
-import distant est interdit, même pour une révision `draft` et même sans mise à
-jour du pointeur actif.
+Depuis la bascule du 5 août 2026, Vercel Preview et Vercel Production utilisent
+deux identités OIDC sans clé et deux projets Firestore distincts. Toutes les
+Previews utilisent `demaa-preview-2026` ; la Production utilise exclusivement
+`demaa-dde32`. Les anciens identifiants statiques ne sont plus présents dans
+l’environnement Production.
 
 Le projet Firebase isolé retenu pour cette recette est `demaa-preview-2026`,
 avec une base Firestore Standard en région `eur3`, des règles clientes fermées
@@ -150,9 +149,12 @@ Les fonctions Vercel Production utilisent le provider OIDC
 `demaa-fr-production`, limité au projet Vercel `demaa-fr` et à
 `environment=production`. Il peut uniquement emprunter le compte sans clé
 `demaa-solutions-prod-reader`, lui-même limité à
-`roles/datastore.viewer`. Les identifiants privés historiques peuvent être
-retirés de Production après validation du premier déploiement utilisant cette
-identité.
+`roles/datastore.viewer`. Le déploiement final
+`demaa-n24a1htef-hiteamdemaa-2292s-projects.vercel.app` a été reconstruit après
+le retrait des identifiants statiques. La lecture de la révision Firebase par
+OIDC ne produit ni fallback, ni avertissement, ni erreur. L’audit final contrôle
+115 pages Process, 115 pages Solutions, 600 cartes et 115 placements Levier,
+sans échec.
 
 ## Activation et rollback
 
