@@ -108,7 +108,9 @@ describe("system Solutions UI", () => {
       const markup = renderToStaticMarkup(
         createElement(SystemSolutionsTab, { sections }),
       );
-      expect(markup).toContain("Outils");
+      if (sections.some(({ section }) => section === "software")) {
+        expect(markup).toContain("Outils");
+      }
       const visibleRailLabels = SOLUTION_RAIL_DISPLAY_ORDER
         .filter((section) => sections.some((candidate) => candidate.section === section))
         .map((section) => SOLUTION_UI_WORKING_LABELS[section]);
@@ -135,11 +137,11 @@ describe("system Solutions UI", () => {
     );
     const bySection = Object.groupBy(placements, ({ section }) => section);
 
-    expect(placements).toHaveLength(568);
-    expect(bySection.software).toHaveLength(309);
+    expect(placements).toHaveLength(565);
+    expect(bySection.software).toHaveLength(308);
     expect(bySection.providers).toHaveLength(63);
     expect(bySection.models).toHaveLength(115);
-    expect(bySection.networks).toHaveLength(81);
+    expect(bySection.networks).toHaveLength(79);
     expect(bySection.software?.every(({ resource }) => resource.resourceType === "software"))
       .toBe(true);
     expect(bySection.providers?.every(({ resource }) => resource.resourceType === "provider"))

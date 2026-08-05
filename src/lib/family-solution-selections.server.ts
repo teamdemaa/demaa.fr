@@ -35,6 +35,8 @@ export type FamilySolutionSelection = Readonly<{
   displayCategory?: string;
   description: string;
   pricingSummary?: string;
+  pricingCapturedAt?: string;
+  pricingExpiresAt?: string;
   ownerBenefit: string;
   fitRationale: string;
   checksBeforeChoosing: readonly string[];
@@ -146,6 +148,27 @@ function assertFamilySolutionManifest() {
 }
 
 assertFamilySolutionManifest();
+
+export function getFreshFamilyPricingSummary(
+  selection: Pick<FamilySolutionSelection, "pricingSummary" | "pricingCapturedAt" | "pricingExpiresAt">,
+  now = new Date(),
+): string | undefined {
+  if (!selection.pricingSummary || !selection.pricingCapturedAt || !selection.pricingExpiresAt) {
+    return undefined;
+  }
+  const nowTimestamp = now.getTime();
+  const capturedAt = Date.parse(selection.pricingCapturedAt);
+  const expiresAt = Date.parse(selection.pricingExpiresAt);
+  if (
+    !Number.isFinite(nowTimestamp) ||
+    !Number.isFinite(capturedAt) ||
+    !Number.isFinite(expiresAt) ||
+    capturedAt > nowTimestamp ||
+    capturedAt >= expiresAt ||
+    expiresAt <= nowTimestamp
+  ) return undefined;
+  return selection.pricingSummary;
+}
 
 const selectionsBySystemSlug = new Map(
   manifest.systems.map((system) => [system.systemSlug, system]),

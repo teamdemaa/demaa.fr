@@ -7,6 +7,7 @@ import {
   FAMILY_SOLUTION_SENTINEL_SLUGS,
   FAMILY_SOLUTION_SOURCE_HASHES,
   getFamilySolutionGaps,
+  getFreshFamilyPricingSummary,
   getFamilySystemSolutionSelection,
   resolveFamilySolutionCatalogSelection,
 } from "@/lib/family-solution-selections.server";
@@ -31,6 +32,8 @@ const OFFICIAL_DESTINATION_RESOURCE_SLUGS = new Set([
 ]);
 const OFFICIAL_DOCTOLIB_DESTINATIONS = new Set([
   "cabinet-medical:doctolib",
+  "cabinet-paramedical:doctolib",
+  "dentiste:doctolib",
   "osteopathe:doctolib",
   "psychologue:doctolib",
 ]);
@@ -57,7 +60,7 @@ describe("family solution selections", () => {
     });
     const placements = systems.flatMap(({ placements }) => placements);
 
-    expect(placements).toHaveLength(517);
+    expect(placements).toHaveLength(514);
     expect(placements.filter(({ resourceSlug }) => resourceSlug === "levier")).toHaveLength(81);
     for (const system of systems) {
       for (const section of ["software", "providers", "networks"] as const) {
@@ -87,12 +90,12 @@ describe("family solution selections", () => {
     expect(JSON.stringify(systems)).not.toMatch(/capturedAt|expiresAt/);
   });
 
-  it("uses the 17 audited destination policies without inventing proof URLs", () => {
+  it("uses the 19 audited destination policies without inventing proof URLs", () => {
     const policies = new Set([
       ...OFFICIAL_DESTINATION_RESOURCE_SLUGS,
       ...OFFICIAL_DOCTOLIB_DESTINATIONS,
     ]);
-    expect(policies.size).toBe(17);
+    expect(policies.size).toBe(19);
 
     const matchedPlacements = enterpriseCatalog.flatMap(({ slug: systemSlug }) => {
       const system = getFamilySystemSolutionSelection(systemSlug);
@@ -102,7 +105,7 @@ describe("family solution selections", () => {
       ));
     });
 
-    expect(matchedPlacements).toHaveLength(30);
+    expect(matchedPlacements).toHaveLength(32);
     for (const placement of matchedPlacements) {
       expect(placement.catalogDestination).toBe(placement.evidenceUrls[0]);
       expect(placement.evidenceUrls).toContain(placement.catalogDestination);
@@ -149,7 +152,7 @@ describe("family solution selections", () => {
         : []
     );
 
-    expect(placements).toHaveLength(548);
+    expect(placements).toHaveLength(545);
     const violations = placements.flatMap((placement) =>
       forbiddenPublicClaims.test(JSON.stringify(placement))
         ? [`${placement.systemSlug}:${placement.resource.resourceSlug}`]
@@ -167,5 +170,35 @@ describe("family solution selections", () => {
       ?.checksBeforeChoosing).toContain(
         "Vérifier les compétences et les modalités d’accompagnement de l’étude notariale choisie.",
       );
+  });
+
+  it("removes unsupported P0 placements and keeps corrected categories", () => {
+    const investment = getFamilySystemSolutionSelection("investissement-entreprise");
+    expect(investment?.placements.map(({ resourceSlug }) => resourceSlug)).toEqual(["levier"]);
+    expect(getFamilySystemSolutionSelection("osteopathe")?.placements
+      .some(({ resourceSlug }) => resourceSlug === "urps")).toBe(false);
+    expect(getFamilySystemSolutionSelection("freelance")?.placements
+      .find(({ resourceSlug }) => resourceSlug === "malt")?.displayCategory)
+      .toBe("Marketplace de freelances");
+    expect(getFamilySystemSolutionSelection("food-truck")?.placements
+      .find(({ resourceSlug }) => resourceSlug === "uber-eats")?.displayCategory)
+      .toBe("Plateforme de commande et livraison");
+  });
+
+  it("only exposes pricing while its official capture is fresh", () => {
+    const association = getFamilySystemSolutionSelection("association");
+    const mailchimp = association?.placements.find(({ resourceSlug }) => resourceSlug === "mailchimp");
+    expect(mailchimp).toBeDefined();
+    expect(getFreshFamilyPricingSummary(
+      mailchimp!,
+      new Date("2026-08-05T12:00:00.000Z"),
+    )).toContain("250 contacts");
+    expect(getFreshFamilyPricingSummary(
+      mailchimp!,
+      new Date("2026-09-05T00:00:00.000Z"),
+    )).toBeUndefined();
+    expect(getFreshFamilyPricingSummary({
+      pricingSummary: "prix sans preuve temporelle",
+    })).toBeUndefined();
   });
 });

@@ -1154,7 +1154,6 @@
           "rank": 2,
           "displayCategory": "Logiciel métier",
           "description": "Paiement, adhésions, dons, crowdfunding, boutique et billetterie pour associations.",
-          "pricingSummary": "HelloAsso présente ses solutions comme 100% gratuites pour les associations.",
           "ownerBenefit": "Collecter dons, adhésions et inscriptions sans outil technique complexe.",
           "fitRationale": "Pour association, HelloAsso couvre directement adhésions, dons et billetterie en ligne et crowdfunding, boutique et paiements.",
           "checksBeforeChoosing": [
@@ -1180,7 +1179,9 @@
           "rank": 3,
           "displayCategory": "Marketing & visibilité",
           "description": "Plateforme d’email marketing pour newsletters, audiences, campagnes, automatisations et formulaires.",
-          "pricingSummary": "La page officielle Mailchimp Pricing indique qu'en dessous de 250 contacts, le plan Free est disponible, et que le plan Standard demarre a 20 USD par mois pour 12 mois.",
+          "pricingSummary": "Plan Free jusqu’à 250 contacts ; plan Standard à 20 USD/mois pendant 12 mois pour 500 contacts, selon la page officielle.",
+          "pricingCapturedAt": "2026-08-05T00:00:00.000Z",
+          "pricingExpiresAt": "2026-09-05T00:00:00.000Z",
           "ownerBenefit": "Lancer newsletters, campagnes email et séquences marketing simples.",
           "fitRationale": "Pour association, Mailchimp couvre directement email marketing et sms marketing.",
           "checksBeforeChoosing": [
@@ -1663,7 +1664,6 @@
           "rank": 3,
           "displayCategory": "Marketing & visibilité",
           "description": "Emailing, SMS, automatisation marketing et CRM pour relancer clients et prospects.",
-          "pricingSummary": "La page officielle Brevo Tarifs mentionne une offre gratuite permanente et un plan Starter avec des envois a partir de 5 000 emails par mois.",
           "ownerBenefit": "Relancer les clients et automatiser les campagnes marketing simples.",
           "fitRationale": "Pour boutique spécialisée, Brevo couvre directement email marketing et sms marketing.",
           "checksBeforeChoosing": [
@@ -2169,7 +2169,6 @@
           "rank": 1,
           "displayCategory": "Formulaires & collecte",
           "description": "Formulaires interactifs pour qualification, questionnaires, feedback et collecte de leads.",
-          "pricingSummary": "La page officielle Typeform Pricing affiche un plan Basic a 29 USD par mois, ou 25 USD par mois avec engagement annuel.",
           "ownerBenefit": "Créer des formulaires soignés pour qualifier demandes et collecter des informations.",
           "fitRationale": "Pour cabinet d’études, Typeform couvre directement formulaires conversationnels adaptes a chaque repondant et creation de formulaires avec ia.",
           "checksBeforeChoosing": [
@@ -2449,7 +2448,7 @@
           "evidenceUrls": [
             "https://info.doctolib.fr/"
           ],
-          "catalogDestination": "https://info.doctolib.fr/chirurgien-dentiste/",
+          "catalogDestination": "https://info.doctolib.fr/",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -3291,7 +3290,9 @@
           "rank": 3,
           "displayCategory": "Gestion d’organisme de formation",
           "description": "Gestion administrative, commerciale et pédagogique des organismes de formation.",
-          "pricingSummary": "À partir de 19 € HT/mois pour une petite structure ; les offres équipe sont plus élevées.",
+          "pricingSummary": "Offre Indep à 49 € HT/mois avec engagement annuel, ou 59 € HT/mois sans engagement, pour 200 apprenants par an.",
+          "pricingCapturedAt": "2026-08-05T00:00:00.000Z",
+          "pricingExpiresAt": "2026-09-05T00:00:00.000Z",
           "ownerBenefit": "Gérer sessions, documents, évaluations et preuves Qualiopi.",
           "fitRationale": "Structurer les formations et obligations associées.",
           "checksBeforeChoosing": [
@@ -3318,7 +3319,6 @@
           "rank": 4,
           "displayCategory": "Administration formation",
           "description": "Solution tout-en-un pour organismes de formation : administratif, Qualiopi, émargement et BPF.",
-          "pricingSummary": "À partir de 39 € HT/mois, sans engagement, selon la page officielle consultée le 4 août 2026.",
           "ownerBenefit": "Dématérialiser administratif, émargement, BPF et suivi Qualiopi.",
           "fitRationale": "Dématérialiser l’administratif formation et sécuriser Qualiopi.",
           "checksBeforeChoosing": [
@@ -3890,7 +3890,6 @@
           "rank": 1,
           "displayCategory": "Coaching sportif",
           "description": "Logiciel et application de coaching fitness pour programmes, clients, paiements et revenus en ligne.",
-          "pricingSummary": "À partir de 9 € HT/mois pour l’offre Essential, selon la page officielle consultée le 4 août 2026.",
           "ownerBenefit": "Créer programmes, suivre clients et vendre coaching fitness en ligne.",
           "fitRationale": "Digitaliser une activité de coaching sportif ou bien-être.",
           "checksBeforeChoosing": [
@@ -4177,7 +4176,6 @@
           "rank": 3,
           "displayCategory": "Marketing & visibilité",
           "description": "Emailing, SMS, automatisation marketing et CRM pour relancer clients et prospects.",
-          "pricingSummary": "La page officielle Brevo Tarifs mentionne une offre gratuite permanente et un plan Starter avec des envois a partir de 5 000 emails par mois.",
           "ownerBenefit": "Relancer les clients et automatiser les campagnes marketing simples.",
           "fitRationale": "Pour commerce de détail, Brevo couvre directement email marketing et sms marketing.",
           "checksBeforeChoosing": [
@@ -4236,7 +4234,6 @@
           "rank": 1,
           "displayCategory": "Channel manager et PMS",
           "description": "Logiciel de location courte durée pour channel manager, réservations et messages voyageurs.",
-          "pricingSummary": "À partir de 29 €/mois pour un logement ; le coût dépend du plan, de la durée et d’une éventuelle commission.",
           "ownerBenefit": "Synchroniser calendriers, canaux et messages de location courte durée.",
           "fitRationale": "Synchroniser calendriers, annonces et messages pour locations courte durée.",
           "checksBeforeChoosing": [
@@ -4995,7 +4992,6 @@
           "rank": 3,
           "displayCategory": "Marketing & visibilité",
           "description": "Planification, analyse et suivi des réseaux sociaux.",
-          "pricingSummary": "La page officielle Metricool Tarifs affiche un plan Free a 0 EUR par mois et un plan Starter a partir de 16 EUR par mois.",
           "ownerBenefit": "Programmer les contenus et mesurer la visibilité.",
           "fitRationale": "Pour création de contenu, Metricool couvre directement planification des publications et analyses de performance.",
           "checksBeforeChoosing": [
@@ -5431,7 +5427,6 @@
           "rank": 3,
           "displayCategory": "Marketing & visibilité",
           "description": "Emailing, SMS, automatisation marketing et CRM pour relancer clients et prospects.",
-          "pricingSummary": "La page officielle Brevo Tarifs mentionne une offre gratuite permanente et un plan Starter avec des envois a partir de 5 000 emails par mois.",
           "ownerBenefit": "Relancer les clients et automatiser les campagnes marketing simples.",
           "fitRationale": "Pour dark kitchen, Brevo couvre directement email marketing et sms marketing.",
           "checksBeforeChoosing": [
@@ -5688,7 +5683,7 @@
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
-            "https://info.doctolib.fr/"
+            "https://info.doctolib.fr/chirurgien-dentiste/"
           ],
           "catalogDestination": "https://info.doctolib.fr/chirurgien-dentiste/",
           "commercialRelationship": "unknown",
@@ -6799,7 +6794,6 @@
           "rank": 3,
           "displayCategory": "Marketing & visibilité",
           "description": "Emailing, SMS, automatisation marketing et CRM pour relancer clients et prospects.",
-          "pricingSummary": "La page officielle Brevo Tarifs mentionne une offre gratuite permanente et un plan Starter avec des envois a partir de 5 000 emails par mois.",
           "ownerBenefit": "Relancer les clients et automatiser les campagnes marketing simples.",
           "fitRationale": "Pour fleuriste événementiel b2b, Brevo couvre directement email marketing et sms marketing.",
           "checksBeforeChoosing": [
@@ -6914,7 +6908,7 @@
           "resourceType": "software",
           "section": "software",
           "rank": 2,
-          "displayCategory": "Caisse & réservation",
+          "displayCategory": "Plateforme de commande et livraison",
           "description": "Plateforme de commande et livraison pour restaurants, snacks, commerces alimentaires et dark kitchens.",
           "ownerBenefit": "Recevoir des commandes en ligne et développer la livraison locale.",
           "fitRationale": "Uber Eats répond à un besoin concret de food truck sans imposer une solution générique à toute l'activité.",
@@ -6998,7 +6992,6 @@
           "rank": 1,
           "displayCategory": "Vente de formations en ligne",
           "description": "Plateforme pour créer, vendre et gérer des cours en ligne.",
-          "pricingSummary": "À partir de 29 $/mois avec facturation annuelle, hors frais éventuels selon l’offre.",
           "ownerBenefit": "Créer et vendre des cours en ligne avec espace apprenant.",
           "fitRationale": "Vendre des formations en ligne avec un espace apprenant simple.",
           "checksBeforeChoosing": [
@@ -7165,7 +7158,7 @@
           "resourceType": "software",
           "section": "software",
           "rank": 2,
-          "displayCategory": "CRM & ventes",
+          "displayCategory": "Marketplace de freelances",
           "description": "Plateforme pour freelances et entreprises qui cherchent des missions ou compétences.",
           "ownerBenefit": "Trouver des missions ou renforcer une équipe ponctuellement.",
           "fitRationale": "Pour freelance b2b, Malt couvre directement mise en relation entreprises et freelances et recherche de missions.",
@@ -7849,7 +7842,6 @@
           "rank": 1,
           "displayCategory": "PMS hôtelier",
           "description": "Solution hôtelière pour réservations directes, site, channel manager et gestion d’établissement.",
-          "pricingSummary": "Sur devis personnalisé.",
           "ownerBenefit": "Gérer réservations directes, site, channel manager et établissement.",
           "fitRationale": "Gérer un hébergement indépendant et développer les réservations directes.",
           "checksBeforeChoosing": [
@@ -8540,35 +8532,10 @@
       ],
       "placements": [
         {
-          "resourceSlug": "everwin",
-          "resourceType": "software",
-          "section": "software",
-          "rank": 1,
-          "displayCategory": "Logiciel métier",
-          "description": "ERP de gestion d’affaires pour sociétés de conseil, bureaux d’études, agences et ESN.",
-          "ownerBenefit": "Suivre missions, temps, budgets, marge et facturation.",
-          "fitRationale": "Everwin répond à un besoin opérationnel précis de investissement entreprise.",
-          "checksBeforeChoosing": [
-            "Solution structurante",
-            "Prévoir paramétrage et adoption"
-          ],
-          "reviewedAt": "2026-08-04",
-          "evidenceUrls": [
-            "https://www.everwin.fr/"
-          ],
-          "catalogDestination": "https://www.everwin.fr/",
-          "commercialRelationship": "unknown",
-          "status": "draft",
-          "publicationBlockers": [
-            "commercial-relationship-unconfirmed"
-          ],
-          "interactionMode": "external_link"
-        },
-        {
           "resourceSlug": "levier",
           "resourceType": "tool",
           "section": "software",
-          "rank": 2,
+          "rank": 1,
           "displayCategory": "Modèle de pilotage",
           "description": "Tableau de pilotage opérationnel pour suivre chiffres, priorités et actions.",
           "ownerBenefit": "Garder une vue dirigeant simple sans remplacer le logiciel métier.",
@@ -8585,31 +8552,6 @@
           "status": "published",
           "publicationBlockers": [],
           "interactionMode": "system_delivery"
-        },
-        {
-          "resourceSlug": "anacofi",
-          "resourceType": "directory",
-          "section": "networks",
-          "rank": 1,
-          "displayCategory": "Organisation professionnelle finance et conseil",
-          "description": "Un autre réseau structurant pour les métiers du conseil patrimonial.",
-          "ownerBenefit": "Accéder à une représentation et à des ressources métier.",
-          "fitRationale": "Réseau cohérent pour le conseil financier et l'investissement d'entreprise.",
-          "checksBeforeChoosing": [
-            "Adhésion et critères à vérifier",
-            "Vérifier la branche professionnelle"
-          ],
-          "reviewedAt": "2026-08-04",
-          "evidenceUrls": [
-            "https://www.anacofi.asso.fr/"
-          ],
-          "catalogDestination": "https://www.anacofi.asso.fr/",
-          "commercialRelationship": "unknown",
-          "status": "draft",
-          "publicationBlockers": [
-            "commercial-relationship-unconfirmed"
-          ],
-          "interactionMode": "external_link"
         }
       ]
     },
@@ -9039,7 +8981,6 @@
           "rank": 2,
           "displayCategory": "Marketing & visibilité",
           "description": "Emailing, SMS, automatisation marketing et CRM pour relancer clients et prospects.",
-          "pricingSummary": "La page officielle Brevo Tarifs mentionne une offre gratuite permanente et un plan Starter avec des envois a partir de 5 000 emails par mois.",
           "ownerBenefit": "Relancer les clients et automatiser les campagnes marketing simples.",
           "fitRationale": "Pour librairie, Brevo couvre directement email marketing et sms marketing.",
           "checksBeforeChoosing": [
@@ -9841,7 +9782,6 @@
           "rank": 3,
           "displayCategory": "Marketing & visibilité",
           "description": "Planification, analyse et suivi des réseaux sociaux.",
-          "pricingSummary": "La page officielle Metricool Tarifs affiche un plan Free a 0 EUR par mois et un plan Starter a partir de 16 EUR par mois.",
           "ownerBenefit": "Programmer les contenus et mesurer la visibilité.",
           "fitRationale": "Pour média, Metricool couvre directement planification des publications et analyses de performance.",
           "checksBeforeChoosing": [
@@ -10624,7 +10564,9 @@
           "rank": 1,
           "displayCategory": "Gestion d’organisme de formation",
           "description": "Gestion administrative, commerciale et pédagogique des organismes de formation.",
-          "pricingSummary": "À partir de 19 € HT/mois pour une petite structure ; les offres équipe sont plus élevées.",
+          "pricingSummary": "Offre Indep à 49 € HT/mois avec engagement annuel, ou 59 € HT/mois sans engagement, pour 200 apprenants par an.",
+          "pricingCapturedAt": "2026-08-05T00:00:00.000Z",
+          "pricingExpiresAt": "2026-09-05T00:00:00.000Z",
           "ownerBenefit": "Gérer administratif, Qualiopi, sessions, apprenants et documents.",
           "fitRationale": "Structurer les formations et obligations associées.",
           "checksBeforeChoosing": [
@@ -10676,7 +10618,6 @@
           "rank": 3,
           "displayCategory": "Qualité et documents formation",
           "description": "Logiciel SaaS mobile-first pour organismes de formation certifiés Qualiopi.",
-          "pricingSummary": "Formule gratuite limitée à 2 sessions ; Starter à 49 € HT/mois, avec tarif annuel promotionnel affiché à 29 € HT/mois jusqu’au 31 août 2026.",
           "ownerBenefit": "Générer documents, évaluations et preuves Qualiopi depuis mobile.",
           "fitRationale": "Générer documents, évaluations et preuves Qualiopi simplement.",
           "checksBeforeChoosing": [
@@ -10798,31 +10739,6 @@
             "https://www.distrimed.com/"
           ],
           "catalogDestination": "https://www.distrimed.com/",
-          "commercialRelationship": "unknown",
-          "status": "draft",
-          "publicationBlockers": [
-            "commercial-relationship-unconfirmed"
-          ],
-          "interactionMode": "external_link"
-        },
-        {
-          "resourceSlug": "urps",
-          "resourceType": "directory",
-          "section": "networks",
-          "rank": 1,
-          "displayCategory": "Organisation régionale de professionnels de santé",
-          "description": "Réseaux régionaux représentant les professionnels de santé libéraux.",
-          "ownerBenefit": "Identifier les relais et projets régionaux utiles.",
-          "fitRationale": "La structure compétente varie selon profession et région.",
-          "checksBeforeChoosing": [
-            "Vérifier l’éligibilité, la couverture géographique et les conditions applicables.",
-            "Comparer l’offre ou l’utilité réelle avec les alternatives locales."
-          ],
-          "reviewedAt": "2026-08-04",
-          "evidenceUrls": [
-            "https://www.urps.org/"
-          ],
-          "catalogDestination": "https://www.urps.org/",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [

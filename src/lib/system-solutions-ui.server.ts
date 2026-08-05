@@ -6,6 +6,7 @@ import {
 } from "@/lib/pilot-solution-registry-drafts.server";
 import {
   getFamilySystemSolutionSelection,
+  getFreshFamilyPricingSummary,
   resolveFamilySolutionCatalogSelection,
   type FamilySolutionSelection,
 } from "@/lib/family-solution-selections.server";
@@ -163,6 +164,7 @@ function getFamilyCtaLabel(resourceType: FamilySolutionSelection["resourceType"]
 function toRenderableFamilyPlacement(
   systemSlug: string,
   selection: FamilySolutionSelection,
+  now: Date,
 ): RenderableSolutionPlacementDto | null {
   if (selection.resourceSlug === "levier") return null;
 
@@ -184,20 +186,20 @@ function toRenderableFamilyPlacement(
       description: resolved.description,
       displayCategory: selection.displayCategory,
       ctaLabel: getFamilyCtaLabel(resolved.resourceType),
-      indicativePricing: selection.pricingSummary,
+      indicativePricing: getFreshFamilyPricingSummary(selection, now),
       interaction: { interactionMode: "external_link", href: resolved.href },
     },
   };
 }
 
-function getRenderableFamilySolutionSections(systemSlug: string) {
+function getRenderableFamilySolutionSections(systemSlug: string, now: Date) {
   const system = getFamilySystemSolutionSelection(systemSlug);
   if (!system) return [];
   const publishedSections = getPublishedRenderableSolutionSectionsForSystem(systemSlug);
   const familyPlacements = system.placements
     .filter((placement) => placement.resourceSlug !== "levier")
     .flatMap((placement) => {
-      const rendered = toRenderableFamilyPlacement(systemSlug, placement);
+      const rendered = toRenderableFamilyPlacement(systemSlug, placement, now);
       return rendered ? [rendered] : [];
     });
   const canonicalPlacements = publishedSections.flatMap(({ placements }) => placements);
@@ -235,7 +237,7 @@ export function getRenderableSolutionSectionsForSystem(
     typeof systemSlug === "string" &&
     getFamilySystemSolutionSelection(systemSlug)
   ) {
-    return getRenderableFamilySolutionSections(systemSlug);
+    return getRenderableFamilySolutionSections(systemSlug, now);
   }
   const publishedSections = getPublishedRenderableSolutionSectionsForSystem(systemSlug);
   if (typeof systemSlug !== "string") return publishedSections;

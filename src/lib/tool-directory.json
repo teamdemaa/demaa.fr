@@ -321,7 +321,6 @@
         "Structures qui doivent analyser des fichiers avant de decider",
         "Usages transverses de synthese, redaction et travail documentaire"
       ],
-      "pricingNoteVerified": "La page officielle Claude Pricing affiche une offre Pro a 17 USD par mois avec engagement annuel, ou 20 USD en mensuel.",
       "sources": [
         "https://claude.com/product/overview",
         "https://claude.com/pricing"
@@ -412,7 +411,6 @@
         "Structures qui relient plusieurs outils entre eux",
         "Usages transverses comme marketing, ventes, operations ou finance"
       ],
-      "pricingNoteVerified": "La page officielle Make Pricing affiche une offre Free a 0 USD par mois avec jusqu'a 1 000 credits par mois.",
       "sources": [
         "https://www.make.com/en",
         "https://www.make.com/en/pricing"
@@ -452,7 +450,6 @@
         "Structures qui ont beaucoup d'applications SaaS compatibles",
         "Usages transverses de collecte, routage et automatisation simple"
       ],
-      "pricingNoteVerified": "La page officielle Zapier Pricing affiche une offre Professional a partir de 19,99 USD par mois.",
       "sources": [
         "https://zapier.com/",
         "https://zapier.com/pricing"
@@ -494,7 +491,6 @@
         "Structures qui relient formulaires, paiements ou rendez-vous",
         "Usages transverses de collecte, qualification et traitement"
       ],
-      "pricingNoteVerified": "La page officielle Fillout Pricing affiche une offre Free a 0 USD par mois avec formulaires et utilisateurs illimites, plus 1 000 reponses par mois.",
       "sources": [
         "https://www.fillout.com/",
         "https://www.fillout.com/pricing"
@@ -535,7 +531,6 @@
         "Structures qui veulent un outil simple mais deja puissant",
         "Usages transverses de brief, inscription, demande et collecte"
       ],
-      "pricingNoteVerified": "La page officielle Tally Pricing indique que les formulaires et soumissions sont illimites en gratuit, dans le cadre de ses fair use guidelines.",
       "sources": [
         "https://tally.so/",
         "https://tally.so/pricing"
@@ -879,7 +874,6 @@
         "TPE et micro-entreprises",
         "Entrepreneurs qui veulent facturation, compta et compte pro dans un même outil"
       ],
-      "pricingNoteVerified": "Offre Free gratuite, puis offres payantes affichées à partir de 17,99 EUR HT par mois.",
       "sources": [
         "https://www.tiime.fr/"
       ],
@@ -1402,7 +1396,6 @@
         "Marques B2C qui travaillent deja leur base clients",
         "Equipes marketing qui veulent relier campagnes et donnees"
       ],
-      "pricingNoteVerified": "La page officielle Klaviyo Pricing indique qu'un plan gratuit existe avec jusqu'a 500 emails par mois et 150 credits SMS/MMS mensuels.",
       "sources": [
         "https://www.klaviyo.com/",
         "https://www.klaviyo.com/pricing"
@@ -1443,7 +1436,6 @@
         "Structures qui veulent gagner du temps sur la planification",
         "Usages transverses de publication, analyse et reporting"
       ],
-      "pricingNoteVerified": "La page officielle Metricool Tarifs affiche un plan Free a 0 EUR par mois et un plan Starter a partir de 16 EUR par mois.",
       "sources": [
         "https://metricool.com/fr/",
         "https://metricool.com/fr/nos-tarifs/"
@@ -1482,7 +1474,6 @@
         "Structures qui publient regulierement sur les reseaux",
         "Usages transverses de planification et suivi social media"
       ],
-      "pricingNoteVerified": "La page officielle Buffer Pricing affiche un plan Free gratuit et un plan Essentials a 5 USD par mois pour 1 canal avec facturation annuelle.",
       "sources": [
         "https://buffer.com/",
         "https://buffer.com/pricing"
@@ -1604,7 +1595,7 @@
       "slug": "malt",
       "name": "Malt",
       "url": "https://www.malt.fr/",
-      "category": "CRM & ventes",
+      "category": "Marketplace de freelances",
       "sectors": [
         "Services & conseil"
       ],
@@ -1631,7 +1622,7 @@
       "sources": [
         "https://www.malt.fr/"
       ],
-      "lastReviewedAt": "2026-07-02",
+      "lastReviewedAt": "2026-08-05",
       "status": "active",
       "scope": "business"
     },
@@ -1885,7 +1876,7 @@
       "sources": [
         "https://www.digiforma.com/"
       ],
-      "lastReviewedAt": "2026-07-14",
+      "lastReviewedAt": "2026-08-05",
       "category": "Formation",
       "sectors": [
         "Éducation & formation"
@@ -2221,7 +2212,7 @@
       "sources": [
         "https://info.doctolib.fr/chirurgien-dentiste/"
       ],
-      "lastReviewedAt": "2026-07-14",
+      "lastReviewedAt": "2026-08-05",
       "category": "Outils métier",
       "sectors": [
         "Santé & bien-être"
@@ -3186,7 +3177,6 @@
         "Structures qui veulent automatiser des campagnes sans complexite",
         "Usages transverses de relance, newsletter et acquisition"
       ],
-      "pricingNoteVerified": "La page officielle Brevo Tarifs mentionne une offre gratuite permanente et un plan Starter avec des envois a partir de 5 000 emails par mois.",
       "sources": [
         "https://www.brevo.com/fr/",
         "https://www.brevo.com/fr/tarifs/"
@@ -3447,7 +3437,6 @@
         "Professionnels de l'automobile",
         "Structures qui veulent mieux piloter leur visibilite digitale sectorielle"
       ],
-      "pricingNoteVerified": "La page officielle Ubiflow Tarifs immobilier affiche une monodiffusion a partir de 25 EUR HT par mois et un pack initial a 45 EUR HT par mois.",
       "sources": [
         "https://www.ubiflow.net/",
         "https://www.ubiflow.net/tarifs-immobilier"
@@ -3782,7 +3771,6 @@
         "Equipes bénévoles sans stack technique"
       ],
       "pricingHint": "Gratuit",
-      "pricingNoteVerified": "HelloAsso présente ses solutions comme 100% gratuites pour les associations.",
       "sources": [
         "https://www.helloasso.com/associations"
       ],
@@ -3983,7 +3971,6 @@
         "Structures qui cherchent a mieux qualifier des leads",
         "Usages transverses de collecte, feedback et conversion"
       ],
-      "pricingNoteVerified": "La page officielle Typeform Pricing affiche un plan Basic a 29 USD par mois, ou 25 USD par mois avec engagement annuel.",
       "sources": [
         "https://www.typeform.com/",
         "https://www.typeform.com/pricing"
@@ -8157,7 +8144,6 @@
       "Structures qui gèrent un ou plusieurs logements"
     ],
     "pricingHint": "Commission",
-    "pricingNoteVerified": "Création d’annonce gratuite; Airbnb prélève généralement des frais de service après réservation.",
     "sources": [
       "https://www.airbnb.com/host/homes"
     ],
@@ -8192,8 +8178,8 @@
       "sources": [
         "https://merchants.ubereats.com/"
       ],
-      "lastReviewedAt": "2026-07-14",
-      "category": "Caisse & réservation",
+      "lastReviewedAt": "2026-08-05",
+      "category": "Plateforme de commande et livraison",
       "sectors": [
         "Restauration",
         "Commerce local"
@@ -8236,7 +8222,6 @@
       "Equipes qui veulent lancer une billetterie rapidement"
     ],
     "pricingHint": "Freemium",
-    "pricingNoteVerified": "Publication gratuite; frais de billetterie appliqués sur les billets payants.",
     "sources": [
       "https://www.eventbrite.com/organizer/pricing/"
     ],
@@ -8553,7 +8538,6 @@
         "Structures qui veulent plus de controle sur l'hebergement",
         "Automatisations metier avec logique plus complexe"
       ],
-      "pricingNoteVerified": "La page officielle n8n Pricing affiche une offre Starter a 20 EUR par mois avec engagement annuel.",
       "sources": [
         "https://n8n.io/",
         "https://n8n.io/pricing/"
@@ -8593,12 +8577,14 @@
         "Equipes qui veulent combiner email, SMS et automatisation",
         "Usages transverses de newsletter, audience et campagnes"
       ],
-      "pricingNoteVerified": "La page officielle Mailchimp Pricing indique qu'en dessous de 250 contacts, le plan Free est disponible, et que le plan Standard demarre a 20 USD par mois pour 12 mois.",
+      "pricingNoteVerified": "Plan Free jusqu’à 250 contacts ; plan Standard à 20 USD/mois pendant 12 mois pour 500 contacts, selon la page officielle.",
+      "pricingCapturedAt": "2026-08-05T00:00:00.000Z",
+      "pricingExpiresAt": "2026-09-05T00:00:00.000Z",
       "sources": [
         "https://mailchimp.com/",
         "https://mailchimp.com/pricing/marketing/"
       ],
-      "lastReviewedAt": "2026-07-02",
+      "lastReviewedAt": "2026-08-05",
       "status": "active",
       "scope": "transverse"
     },
@@ -8632,7 +8618,6 @@
         "Entrepreneurs individuels",
         "Activités qui veulent accepter des paiements en ligne en France et à l'international"
       ],
-      "pricingNoteVerified": "Sur la page de frais PayPal FR, certains paiements en ligne standards sont affichés à 2,9 % + 0,35 EUR par transaction.",
       "sources": [
         "https://www.paypal.com/fr/business",
         "https://www.paypal.com/fr/business/fees"
@@ -8822,7 +8807,6 @@
         "Entrepreneurs individuels",
         "Structures qui veulent gérer comptabilité, paiements et flux financiers dans une seule plateforme"
       ],
-      "pricingNoteVerified": "La page officielle QuickBooks Pricing affiche un plan Simple Start à 19 USD par mois en offre promotionnelle, au lieu de 38 USD.",
       "sources": [
         "https://quickbooks.intuit.com/",
         "https://quickbooks.intuit.com/pricing/"
