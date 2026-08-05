@@ -7,6 +7,9 @@ import { getAdminFirestore } from "@/lib/firebase-admin";
 import { hasFirebaseVercelWorkloadIdentityConfiguration } from "@/lib/firebase-vercel-oidc-credential.server";
 import snapshot from "@/lib/firebase-solution-registry.snapshot.generated.json";
 import {
+  SOLUTION_SECTIONS,
+} from "@/lib/solution-registry-contract";
+import {
   FIREBASE_SOLUTION_REGISTRY_ACTIVE_POINTER,
   FIREBASE_SOLUTION_REGISTRY_REVISIONS_COLLECTION,
   parseFirebaseSolutionRegistryRevision,
@@ -16,6 +19,9 @@ import {
 
 const EXPECTED_SYSTEM_SLUGS = enterpriseCatalog.map(({ slug }) => slug);
 const PARSED_GENERATED_SNAPSHOT = parseFirebaseSolutionRegistryRevision(snapshot);
+const SOLUTION_SECTION_ORDER = new Map(
+  SOLUTION_SECTIONS.map((section, index) => [section, index]),
+);
 
 type RegistryLoadDependencies = Readonly<{
   forceLocal?: boolean;
@@ -46,6 +52,33 @@ function validatedSnapshot(now: Date) {
     throw new Error(`Invalid generated Solutions fallback:\n${errors.join("\n")}`);
   }
   return PARSED_GENERATED_SNAPSHOT;
+}
+
+function normalizeRevisionEntryOrder(input: unknown) {
+  const revision = parseFirebaseSolutionRegistryRevision(input);
+  const systemOrder = new Map(
+    revision.knownSystemSlugs.map((systemSlug, index) => [systemSlug, index]),
+  );
+  return parseFirebaseSolutionRegistryRevision({
+    ...revision,
+    resources: [...revision.resources].sort((left, right) =>
+      left.resource.resourceSlug.localeCompare(right.resource.resourceSlug)
+    ),
+    placements: [...revision.placements].sort((left, right) => {
+      const systemDifference =
+        (systemOrder.get(left.placement.systemSlug) ?? Number.MAX_SAFE_INTEGER) -
+        (systemOrder.get(right.placement.systemSlug) ?? Number.MAX_SAFE_INTEGER);
+      if (systemDifference !== 0) return systemDifference;
+      const sectionDifference =
+        (SOLUTION_SECTION_ORDER.get(left.placement.section) ?? Number.MAX_SAFE_INTEGER) -
+        (SOLUTION_SECTION_ORDER.get(right.placement.section) ?? Number.MAX_SAFE_INTEGER);
+      if (sectionDifference !== 0) return sectionDifference;
+      const rankDifference = left.placement.rank - right.placement.rank;
+      return rankDifference || left.placement.placementId.localeCompare(
+        right.placement.placementId,
+      );
+    }),
+  });
 }
 
 function parseActivePointer(input: unknown) {
@@ -117,7 +150,7 @@ export async function loadFirebaseSolutionRegistryRevision(
     const remote = await (
       dependencies.fetchRemote ?? fetchActiveFirebaseSolutionRegistryRevisionFromFirestore
     )();
-    const parsed = parseFirebaseSolutionRegistryRevision(remote);
+    const parsed = normalizeRevisionEntryOrder(remote);
     const errors = validateFirebaseSolutionRegistryRevision(parsed, {
       expectedSystemSlugs: EXPECTED_SYSTEM_SLUGS,
       now,
