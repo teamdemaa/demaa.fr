@@ -23,12 +23,26 @@ const valid: SolutionReferralDisclosure = {
 };
 
 describe("solution referral legal disclosure gate", () => {
-  it("remains fail-closed while the reviewed registry is empty", () => {
+  it("remains fail-closed for an unregistered referral", () => {
     expect(getSolutionReferralDisclosure({
       commercialRelationship: "paid_referral",
       placementId: valid.placementId,
       resourceSlug: valid.resourceSlug,
     })).toBeNull();
+  });
+
+  it("exposes the reviewed no-commission disclosure for JuridiConsulting", () => {
+    expect(getSolutionReferralDisclosure({
+      commercialRelationship: "none",
+      placementId: "cabinet-comptable:juridi-consulting:providers:1",
+      resourceSlug: "juridi-consulting",
+      now: new Date("2026-08-05T12:00:00.000Z"),
+    })).toMatchObject({
+      billingParty: "JuridiConsulting",
+      commercialRelationship: "none",
+      contractingParty: "JuridiConsulting",
+      transparency: expect.stringContaining("ne perçoit aucune rémunération"),
+    });
   });
 
   it("requires exact linkage and refuses expired disclosures", () => {

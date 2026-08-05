@@ -182,7 +182,7 @@ describe("family solution selections", () => {
         : []
     );
 
-    expect(placements).toHaveLength(578);
+    expect(placements).toHaveLength(580);
     const violations = placements.flatMap((placement) =>
       forbiddenPublicClaims.test(JSON.stringify(placement))
         ? [`${placement.systemSlug}:${placement.resource.resourceSlug}`]

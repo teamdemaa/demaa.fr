@@ -102,7 +102,6 @@ export default function Footer() {
 
           <div className="mt-8 flex flex-col items-center justify-between text-xs text-gray-500 sm:flex-row">
             <p>© {currentYear} Demaa. Tous droits réservés.</p>
-            <p className="mt-4 sm:mt-0">Structure simplifiée pour une navigation plus claire.</p>
           </div>
         </div>
       </div>

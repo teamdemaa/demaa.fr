@@ -46,7 +46,8 @@ function hasSupportedInteraction(
   return (
     placement.resource.interaction.interactionMode === "external_link" ||
     placement.resource.interaction.interactionMode === "detail" ||
-    placement.resource.interaction.interactionMode === "system_delivery"
+    placement.resource.interaction.interactionMode === "system_delivery" ||
+    placement.resource.interaction.interactionMode === "referral_form"
   );
 }
 
@@ -55,9 +56,6 @@ function toRenderablePlacement(
 ): RenderableSolutionPlacementDto {
   const { resource } = placement;
   const { interaction } = resource;
-  if (interaction.interactionMode === "referral_form") {
-    throw new TypeError("Unsupported published Solution interaction");
-  }
   return {
     placementId: placement.placementId,
     systemSlug: placement.systemSlug,
@@ -71,7 +69,9 @@ function toRenderablePlacement(
       resourceType: resource.resourceType,
       name: resource.name,
       description: resource.description,
-      displayCategory: resource.resourceType === "directory"
+      displayCategory: resource.resourceSlug === "juridi-consulting"
+        ? "Sous-traitance de formalités"
+        : resource.resourceType === "directory"
         ? "Organisation professionnelle"
         : resource.resourceType === "provider"
         ? "Fournisseur"

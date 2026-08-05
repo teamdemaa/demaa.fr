@@ -472,17 +472,4 @@ export const PILOT_SOLUTION_UNMET_NEEDS: readonly PilotSolutionUnmetNeed[] = [
       "commercial-relationship-unconfirmed",
     ],
   },
-  {
-    needId: "need:cabinet-comptable:delegation-juridique",
-    systemSlug: "cabinet-comptable",
-    label: "Délégation juridique pour le cabinet",
-    status: "unmet",
-    resourceSlug: null,
-    commercialRelationship: "unknown",
-    publicationBlockers: [
-      "provider-unidentified",
-      "commercial-relationship-unconfirmed",
-      "regulated-scope-review-required",
-    ],
-  },
 ];

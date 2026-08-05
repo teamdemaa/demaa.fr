@@ -464,7 +464,10 @@ export function buildSystemPageJsonLd(
             position: listedProcesses.length + index + 1,
             name: resource.name,
           };
-          if (resource.interaction.interactionMode === "system_delivery") {
+          if (
+            resource.interaction.interactionMode === "system_delivery" ||
+            resource.interaction.interactionMode === "referral_form"
+          ) {
             return item;
           }
           return {

@@ -26,6 +26,15 @@ describe("server-only product Solutions registries", () => {
         name: "Levier",
         interaction: { interactionMode: "system_delivery" },
       }),
+      expect.objectContaining({
+        resourceSlug: "juridi-consulting",
+        resourceType: "provider",
+        name: "JuridiConsulting",
+        interaction: {
+          interactionMode: "referral_form",
+          referralKey: "juridi-consulting",
+        },
+      }),
     ]);
     expect(getPublishedSolutionResourceBySlug("qonto")).toBeNull();
     expect(getPublishedSolutionResourceBySlug("unknown-resource")).toBeNull();

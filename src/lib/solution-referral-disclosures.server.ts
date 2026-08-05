@@ -20,7 +20,34 @@ export type SolutionReferralDisclosure = Readonly<{
   transparency: string;
 }>;
 
-const disclosures: readonly SolutionReferralDisclosure[] = deepFreeze([]);
+const JURIDI_CONSULTING_DISCLOSURE = {
+  billingParty: "JuridiConsulting",
+  commercialRelationship: "none",
+  contractingParty: "JuridiConsulting",
+  disclosureVersion: "1.0.0",
+  effectiveAt: "2026-08-05T00:00:00.000Z",
+  expiresAt: "2027-02-05T00:00:00.000Z",
+  resourceSlug: "juridi-consulting",
+  reviewedAt: "2026-08-05T00:00:00.000Z",
+  reviewer: "Master Demaa",
+  transparency:
+    "JuridiConsulting contracte et facture ses prestations. Demaa facilite uniquement la mise en relation et ne perçoit aucune rémunération à ce stade.",
+} as const;
+
+const disclosures: readonly SolutionReferralDisclosure[] = deepFreeze([
+  {
+    ...JURIDI_CONSULTING_DISCLOSURE,
+    placementId: "cabinet-comptable:juridi-consulting:providers:1",
+  },
+  {
+    ...JURIDI_CONSULTING_DISCLOSURE,
+    placementId: "cabinet-davocat:juridi-consulting:providers:1",
+  },
+  {
+    ...JURIDI_CONSULTING_DISCLOSURE,
+    placementId: "notaire:juridi-consulting:providers:1",
+  },
+]);
 
 function isIsoDate(value: string) {
   const parsed = Date.parse(value);

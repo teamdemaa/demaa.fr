@@ -311,7 +311,11 @@ export function validateFirebaseSolutionRegistryRevision(
   );
   for (const { placement, presentation } of placementEntries) {
     const resource = resourcesBySlug.get(placement.resourceSlug);
-    if (resource?.interactionMode !== "system_delivery" && !presentation.ctaLabel) {
+    if (
+      resource?.interactionMode !== "system_delivery" &&
+      resource?.interactionMode !== "referral_form" &&
+      !presentation.ctaLabel
+    ) {
       errors.push(`${placement.placementId}: presentation requires a CTA label`);
     }
     if (

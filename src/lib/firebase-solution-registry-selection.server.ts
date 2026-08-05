@@ -49,12 +49,19 @@ export function selectRenderableSolutionSectionsFromRevision(
       resource.commercialRelationship !== placement.commercialRelationship ||
       (options.publishedOnly && resource.status !== "published")
     ) return [];
-    if (
-      resource.interactionMode === "referral_form" ||
-      !["external_link", "detail", "system_delivery"].includes(resource.interactionMode)
-    ) return [];
+    if (![
+      "external_link",
+      "detail",
+      "system_delivery",
+      "referral_form",
+    ].includes(resource.interactionMode)) return [];
     const interaction = resource.interactionMode === "system_delivery"
       ? { interactionMode: "system_delivery" as const }
+      : resource.interactionMode === "referral_form"
+      ? {
+          interactionMode: "referral_form" as const,
+          referralKey: resource.referralKey,
+        }
       : {
           interactionMode: resource.interactionMode,
           href: presentation.hrefOverride ?? resource.href,

@@ -7,6 +7,10 @@ import {
   LEVIER_SOLUTION_RESOURCE,
 } from "@/lib/levier-solution-registry.server";
 import {
+  JURIDI_CONSULTING_SOLUTION_PLACEMENTS,
+  JURIDI_CONSULTING_SOLUTION_RESOURCE,
+} from "@/lib/juridi-consulting-solution.server";
+import {
   PILOT_SOLUTION_DRAFT_PLACEMENTS,
   PILOT_SOLUTION_DRAFT_RESOURCES,
 } from "@/lib/pilot-solution-registry-drafts.server";
@@ -24,10 +28,12 @@ import type {
 
 const productSolutionResources: readonly unknown[] = deepFreeze([
   LEVIER_SOLUTION_RESOURCE,
+  JURIDI_CONSULTING_SOLUTION_RESOURCE,
   ...PILOT_SOLUTION_DRAFT_RESOURCES,
 ]);
 const productSolutionPlacements: readonly unknown[] = deepFreeze([
   ...LEVIER_SOLUTION_PLACEMENTS,
+  ...JURIDI_CONSULTING_SOLUTION_PLACEMENTS,
   ...PILOT_SOLUTION_DRAFT_PLACEMENTS,
 ]);
 const knownSystemSlugs = deepFreeze(enterpriseCatalog.map((system) => system.slug));

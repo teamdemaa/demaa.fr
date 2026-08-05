@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import DirectoryDetailDialogShell from "@/components/DirectoryDetailDialogShell";
+import SolutionReferralForm from "@/components/SolutionReferralForm";
 import { trackSystemSolutionEvent } from "@/lib/kit-analytics-client";
 import type { SolutionSection } from "@/lib/solution-registry-dto";
 import type {
@@ -78,7 +79,10 @@ function SolutionAction({
   label: string;
   onClick: () => void;
 }) {
-  if (interaction.interactionMode === "system_delivery") return null;
+  if (
+    interaction.interactionMode === "system_delivery" ||
+    interaction.interactionMode === "referral_form"
+  ) return null;
 
   const className =
     "mt-7 inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2";
@@ -128,53 +132,71 @@ function SolutionDialog({
       <p className="mt-4 text-base leading-relaxed text-dema-muted">
         {resource.description}
       </p>
-      <div className="mt-7 space-y-5 border-t border-dema-line pt-6">
-        <div>
-          <h4 className="text-sm font-semibold text-brand-blue">Ce que vous y gagnez</h4>
-          <p className="mt-2 text-sm leading-relaxed text-dema-muted">
+      {resource.interaction.interactionMode === "referral_form" ? (
+        <div className="mt-6 border-t border-dema-line pt-5">
+          <p className="text-sm leading-relaxed text-brand-blue">
             {placement.usage}
           </p>
-        </div>
-        <div>
-          <h4 className="text-sm font-semibold text-brand-blue">Pourquoi cette solution</h4>
-          <p className="mt-2 text-sm leading-relaxed text-dema-muted">
-            {placement.fitRationale}
+          <p className="mt-2 text-xs leading-relaxed text-dema-muted">
+            {resource.name} contracte et facture ses prestations. Demaa facilite uniquement la mise en relation.
           </p>
+          <SolutionReferralForm
+            resourceName={resource.name}
+            resourceSlug={resource.resourceSlug}
+            systemSlug={placement.systemSlug}
+          />
         </div>
-        {resource.indicativePricing ? (
+      ) : (
+        <div className="mt-7 space-y-5 border-t border-dema-line pt-6">
           <div>
-            <h4 className="text-sm font-semibold text-brand-blue">Tarif indicatif</h4>
+            <h4 className="text-sm font-semibold text-brand-blue">Ce que vous y gagnez</h4>
             <p className="mt-2 text-sm leading-relaxed text-dema-muted">
-              {resource.indicativePricing}
+              {placement.usage}
             </p>
           </div>
-        ) : null}
-        {placement.fitConstraints.length > 0 ? (
           <div>
-            <h4 className="text-sm font-semibold text-brand-blue">À vérifier avant de choisir</h4>
-            <ul className="mt-2 space-y-2 text-sm leading-relaxed text-dema-muted">
-              {placement.fitConstraints.map((constraint) => (
-                <li key={constraint} className="flex gap-2">
-                  <span aria-hidden="true">•</span>
-                  <span>{constraint}</span>
-                </li>
-              ))}
-            </ul>
+            <h4 className="text-sm font-semibold text-brand-blue">Pourquoi cette solution</h4>
+            <p className="mt-2 text-sm leading-relaxed text-dema-muted">
+              {placement.fitRationale}
+            </p>
           </div>
-        ) : null}
-      </div>
+          {resource.indicativePricing ? (
+            <div>
+              <h4 className="text-sm font-semibold text-brand-blue">Tarif indicatif</h4>
+              <p className="mt-2 text-sm leading-relaxed text-dema-muted">
+                {resource.indicativePricing}
+              </p>
+            </div>
+          ) : null}
+          {placement.fitConstraints.length > 0 ? (
+            <div>
+              <h4 className="text-sm font-semibold text-brand-blue">À vérifier avant de choisir</h4>
+              <ul className="mt-2 space-y-2 text-sm leading-relaxed text-dema-muted">
+                {placement.fitConstraints.map((constraint) => (
+                  <li key={constraint} className="flex gap-2">
+                    <span aria-hidden="true">•</span>
+                    <span>{constraint}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+        </div>
+      )}
 
-      <SolutionAction
-        interaction={resource.interaction}
-        label={resource.ctaLabel ?? "Découvrir la solution"}
-        onClick={() => trackSystemSolutionEvent("system_solution_resource_cta_clicked", {
-          rank: placement.rank,
-          resourceSlug: resource.resourceSlug,
-          resourceType: resource.resourceType,
-          section: placement.section,
-          systemSlug: placement.systemSlug,
-        })}
-      />
+      {resource.interaction.interactionMode !== "referral_form" ? (
+        <SolutionAction
+          interaction={resource.interaction}
+          label={resource.ctaLabel ?? "Découvrir la solution"}
+          onClick={() => trackSystemSolutionEvent("system_solution_resource_cta_clicked", {
+            rank: placement.rank,
+            resourceSlug: resource.resourceSlug,
+            resourceType: resource.resourceType,
+            section: placement.section,
+            systemSlug: placement.systemSlug,
+          })}
+        />
+      ) : null}
     </DirectoryDetailDialogShell>
   );
 }

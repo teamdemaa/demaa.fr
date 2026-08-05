@@ -27,6 +27,8 @@ function migratedReview(
   const interaction = placement.resource.interaction;
   const sourceRef = interaction.interactionMode === "system_delivery"
     ? "decision://systems/levier-2026-08-03"
+    : interaction.interactionMode === "referral_form"
+    ? "https://juridiconsulting.com/partenaires"
     : interaction.href;
   return {
     evidence: [{
@@ -50,11 +52,16 @@ function isLevier(placement: RenderableSolutionPlacementDto) {
   return placement.resource.resourceSlug === "levier";
 }
 
+function isPublishedMigrationResource(placement: RenderableSolutionPlacementDto) {
+  return isLevier(placement) || placement.resource.resourceSlug === "juridi-consulting";
+}
+
 function resourceFromPlacement(
   placement: RenderableSolutionPlacementDto,
 ): FirebaseSolutionResourceEntry {
   const { interaction } = placement.resource;
   const ownedResource = isLevier(placement);
+  const publishedResource = isPublishedMigrationResource(placement);
   return {
     resource: {
       ...migratedReview(placement, "resource"),
@@ -63,10 +70,10 @@ function resourceFromPlacement(
       name: placement.resource.name,
       description: placement.resource.description,
       ...interaction,
-      commercialRelationship: ownedResource ? "owned" : "unknown",
-      status: ownedResource ? "published" : "draft",
+      commercialRelationship: ownedResource ? "owned" : publishedResource ? "none" : "unknown",
+      status: publishedResource ? "published" : "draft",
       resourceVersion: "firebase.v1",
-      publicationBlockers: ownedResource
+      publicationBlockers: publishedResource
         ? []
         : ["commercial-relationship-unconfirmed"],
     },
@@ -102,6 +109,7 @@ function placementEntry(
   now: Date,
 ): FirebaseSolutionPlacementEntry {
   const ownedPlacement = isLevier(placement);
+  const publishedPlacement = isPublishedMigrationResource(placement);
   return {
     placement: {
       ...migratedReview(placement, "placement"),
@@ -114,22 +122,25 @@ function placementEntry(
       fitRationale: placement.fitRationale,
       fitConstraints: placement.fitConstraints,
       editorialStatus: "selected",
-      commercialRelationship: ownedPlacement ? "owned" : "unknown",
-      status: ownedPlacement ? "published" : "draft",
+      commercialRelationship: ownedPlacement ? "owned" : publishedPlacement ? "none" : "unknown",
+      status: publishedPlacement ? "published" : "draft",
       placementVersion: "firebase.v1",
-      publicationBlockers: ownedPlacement
+      publicationBlockers: publishedPlacement
         ? []
         : ["commercial-relationship-unconfirmed"],
     },
     presentation: {
       displayCategory: placement.resource.displayCategory ?? "Solution",
       nameOverride: placement.resource.name,
-      ...(placement.resource.interaction.interactionMode === "system_delivery"
+      ...(placement.resource.interaction.interactionMode === "system_delivery" ||
+      placement.resource.interaction.interactionMode === "referral_form"
         ? {}
         : { hrefOverride: placement.resource.interaction.href }),
       ...(placement.resource.ctaLabel
         ? { ctaLabel: placement.resource.ctaLabel }
         : placement.resource.interaction.interactionMode === "system_delivery"
+        ? {}
+        : placement.resource.interaction.interactionMode === "referral_form"
         ? {}
         : { ctaLabel: "Voir la solution" }),
       descriptionOverride: placement.resource.description,
