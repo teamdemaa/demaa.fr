@@ -102,7 +102,11 @@ Le projet Firebase isolé retenu pour cette recette est `demaa-preview-2026`,
 avec une base Firestore Standard en région `eur3`, des règles clientes fermées
 et la protection contre la suppression activée. L’import distant exige à la
 fois le projet attendu, le projet confirmé en argument, l’empreinte exacte du
-plan et le drapeau `--apply-active-revision`. Le projet de Production est refusé en dur.
+plan et le drapeau `--apply-active-revision`. La Production utilise le même
+importeur, mais exige séparément `--target=production`,
+`--apply-production-active-revision`, le projet canonique `demaa-dde32` et les
+deux empreintes exactes. Un gate Preview ne peut donc jamais écrire en
+Production, et réciproquement.
 L’authentification distante utilise uniquement un jeton utilisateur éphémère
 fourni au processus d’import. Aucune clé de compte de service n’est créée ou
 conservée, et l’ADC partagé avec un autre projet n’est pas utilisé.
