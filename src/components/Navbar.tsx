@@ -59,46 +59,40 @@ export default function Navbar({ minimal = false }: { minimal?: boolean }) {
               <DemaaWordmark className="text-[1.4rem] sm:text-[1.7rem]" />
             </Link>
           </div>
-          <div className="pb-3 pt-1 md:pb-4 md:pt-0">
-            <div
-              aria-label="Navigation principale"
-              data-navbar-section-selector
-              className="mx-auto grid w-full max-w-[55.2rem] grid-cols-2 gap-1 rounded-full border border-dema-line bg-dema-paper p-1 shadow-[0_8px_24px_rgba(23,35,29,0.035)]"
-            >
-              <Link
-                href="/systemes"
-                aria-current={activeSection === "systems" ? "page" : undefined}
-                className={`${navbarTabBaseClassName} ${
-                  activeSection === "systems"
-                    ? navbarTabActiveClassName
-                    : navbarTabInactiveClassName
-                }`}
-              >
-                <Workflow
-                  className="h-4 w-4 shrink-0"
-                  aria-hidden="true"
-                />
-                <span>Système métier</span>
-              </Link>
-              <Link
-                href="/academie"
-                aria-current={activeSection === "academy" ? "page" : undefined}
-                className={`${navbarTabBaseClassName} ${
-                  activeSection === "academy"
-                    ? navbarTabActiveClassName
-                    : navbarTabInactiveClassName
-                }`}
-              >
-                <BookOpen
-                  className="h-4 w-4 shrink-0"
-                  aria-hidden="true"
-                />
-                <span>Académie</span>
-              </Link>
-            </div>
-          </div>
         </div>
       </nav>
+      <div className="bg-dema-cream px-6 pb-3 pt-3 md:px-10 md:pb-4 md:pt-4 lg:px-24">
+        <div
+          aria-label="Navigation principale"
+          data-navbar-section-selector
+          className="mx-auto grid w-full max-w-[55.2rem] grid-cols-2 gap-1 rounded-full border border-dema-line bg-dema-paper p-1 shadow-[0_8px_24px_rgba(23,35,29,0.035)]"
+        >
+          <Link
+            href="/systemes"
+            aria-current={activeSection === "systems" ? "page" : undefined}
+            className={`${navbarTabBaseClassName} ${
+              activeSection === "systems"
+                ? navbarTabActiveClassName
+                : navbarTabInactiveClassName
+            }`}
+          >
+            <Workflow className="h-4 w-4 shrink-0" aria-hidden="true" />
+            <span>Système métier</span>
+          </Link>
+          <Link
+            href="/academie"
+            aria-current={activeSection === "academy" ? "page" : undefined}
+            className={`${navbarTabBaseClassName} ${
+              activeSection === "academy"
+                ? navbarTabActiveClassName
+                : navbarTabInactiveClassName
+            }`}
+          >
+            <BookOpen className="h-4 w-4 shrink-0" aria-hidden="true" />
+            <span>Académie</span>
+          </Link>
+        </div>
+      </div>
     </>
   );
 }

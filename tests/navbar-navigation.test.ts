@@ -50,6 +50,9 @@ describe("conventional systems and Academy navbar", () => {
     expect(source).toContain("data-navbar-section-selector");
     expect(source).toContain("max-w-[55.2rem] grid-cols-2");
     expect(source).toContain("bg-dema-sage text-dema-forest");
+    expect(source.indexOf("</nav>")).toBeLessThan(
+      source.indexOf("data-navbar-section-selector"),
+    );
     expect(source).not.toContain("Voir les services");
     expect(source).not.toContain("Trouver mon système");
     expect(source).not.toContain("Sur mesure</span>");
