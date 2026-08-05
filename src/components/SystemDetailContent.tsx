@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, ArrowRight, BookOpen } from "lucide-react";
 import { type KeyboardEvent, useCallback, useState } from "react";
-import HistoricalOperationalSystemCopyRequestModal from "@/components/HistoricalOperationalSystemCopyRequestModal";
 import OperationalSystemCopyRequestModal from "@/components/OperationalSystemCopyRequestModal";
 import SystemProcessCallCta from "@/components/SystemProcessCallCta";
 import SystemSolutionsTab from "@/components/SystemSolutionsTab";
@@ -17,20 +16,15 @@ import {
   isVisibleSystemDetailTab,
   type SystemDetailTab,
 } from "@/lib/system-detail-tabs";
-import {
-  getSystemKitPreview,
-  LEVIER_PREVIEW,
-} from "@/lib/system-kit-previews";
+import { LEVIER_PREVIEW } from "@/lib/system-kit-previews";
 import type { RenderableSolutionSectionDto } from "@/lib/system-solutions-ui-dto";
 import type { System } from "@/lib/types";
 
 type SystemDetailContentProps = {
   system: System;
   systeme: SystemeDetail | null;
-  demoUrl?: string | null;
   intro: string;
   initialActiveTab?: string;
-  deliveryAvailable?: boolean;
   headingAs?: "h1" | "h2";
   headingId?: string;
   solutionSections?: readonly RenderableSolutionSectionDto[];
@@ -51,15 +45,13 @@ const systemTabDefinitions: ReadonlyArray<{
 
 const EMPTY_SOLUTION_SECTIONS: readonly RenderableSolutionSectionDto[] = [];
 
-type DeliveryModal = "system" | "levier" | null;
+type DeliveryModal = "levier" | null;
 
 export default function SystemDetailContent({
   system,
   systeme,
-  demoUrl,
   intro,
   initialActiveTab,
-  deliveryAvailable = false,
   headingAs: Heading = "h2",
   headingId,
   solutionSections = EMPTY_SOLUTION_SECTIONS,
@@ -77,7 +69,6 @@ export default function SystemDetailContent({
       : "process",
   );
   const [deliveryModal, setDeliveryModal] = useState<DeliveryModal>(null);
-  const systemPreview = getSystemKitPreview(system.slug);
   const closeDeliveryModal = useCallback(() => {
     setDeliveryModal(null);
   }, [setDeliveryModal]);
@@ -132,15 +123,6 @@ export default function SystemDetailContent({
           <p className="mt-4 max-w-3xl text-base leading-relaxed text-dema-muted">
             {intro}
           </p>
-          {deliveryAvailable ? (
-            <button
-              type="button"
-              onClick={() => setDeliveryModal("system")}
-              className="mt-7 inline-flex min-h-11 items-center justify-center rounded-full border border-dema-forest/25 bg-dema-paper px-5 py-3 text-sm font-semibold text-dema-forest transition hover:border-dema-forest hover:bg-dema-sage/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
-            >
-              Voir le système
-            </button>
-          ) : null}
         </div>
 
         <div className="mt-8 flex justify-start sm:mt-9">
@@ -237,15 +219,6 @@ export default function SystemDetailContent({
       {deliveryModal === "levier" ? (
         <OperationalSystemCopyRequestModal
           preview={LEVIER_PREVIEW}
-          systemName={system.name}
-          systemSlug={system.slug}
-          onClose={closeDeliveryModal}
-        />
-      ) : null}
-      {deliveryModal === "system" ? (
-        <HistoricalOperationalSystemCopyRequestModal
-          demoUrl={demoUrl}
-          preview={systemPreview}
           systemName={system.name}
           systemSlug={system.slug}
           onClose={closeDeliveryModal}

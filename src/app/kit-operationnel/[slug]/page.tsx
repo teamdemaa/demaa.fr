@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import SystemDetailContent from "@/components/SystemDetailContent";
-import { getOperationalSystemDemoUrl } from "@/lib/document-models";
 import { hasEditableOperationalSystemAsset } from "@/lib/editable-operational-system-assets.server";
 import { getAcademyContentForSystem } from "@/lib/academy-course-content";
 import {
@@ -91,10 +90,8 @@ export default async function OperationalKitPage({
           <SystemDetailContent
             system={data.system}
             systeme={data.detail.systeme}
-            demoUrl={getOperationalSystemDemoUrl(data.system.slug)}
             intro={buildSystemPageIntro(data)}
             initialActiveTab={normalizeSystemDetailTab(initialTab)}
-            deliveryAvailable={hasEditableSystem}
             headingAs="h1"
             solutionSections={solutionSections}
             academyVideos={academyVideos}

@@ -58,13 +58,15 @@ async function inspectEnterprise(enterprise) {
     }
 
     for (const expectedText of [
-      "Voir le système",
-      "Un appel gratuit de 30 minutes",
-      "Réserver mon appel gratuit",
+      "Besoin d’y voir plus clair dans votre organisation ?",
+      "Réserver mon échange offert",
     ]) {
       if (!renderedOverviewHtml.includes(expectedText)) {
         errors.push(`system journey control missing: ${expectedText}`);
       }
+    }
+    if (renderedOverviewHtml.includes("Voir le système")) {
+      errors.push("hidden historical system delivery entry point is still visible");
     }
     for (const removedDiagnosticText of [
       "Diagnostic offert",

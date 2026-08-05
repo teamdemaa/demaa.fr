@@ -368,7 +368,7 @@ describe("system Solutions UI", () => {
     expect(detailSource).toContain("systeme: SystemeDetail | null");
   });
 
-  it("keeps the full system and Levier as two distinct delivery entry points", async () => {
+  it("keeps only Levier as the public delivery entry point", async () => {
     const detailSource = await readSource("src/components/SystemDetailContent.tsx");
     const levierModalSource = await readSource(
       "src/components/OperationalSystemCopyRequestModal.tsx",
@@ -377,12 +377,12 @@ describe("system Solutions UI", () => {
       "src/components/HistoricalOperationalSystemCopyRequestModal.tsx",
     );
 
-    expect(detailSource).toContain('onClick={() => setDeliveryModal("system")}');
+    expect(detailSource).not.toContain('setDeliveryModal("system")');
     expect(detailSource).toContain('onOpenSystemDelivery={() => setDeliveryModal("levier")}');
-    expect(detailSource).toContain('deliveryModal === "system"');
     expect(detailSource).toContain('deliveryModal === "levier"');
-    expect(detailSource).toContain("preview={systemPreview}");
     expect(detailSource).toContain("preview={LEVIER_PREVIEW}");
+    expect(detailSource).not.toContain("HistoricalOperationalSystemCopyRequestModal");
+    expect(detailSource).not.toContain("Voir le système");
     expect(systemModalSource).toContain("Système opérationnel - {systemName}");
     expect(systemModalSource).toContain("Recevoir ma copie modifiable");
     expect(systemModalSource).toContain('const flowKey = `system-copy:${systemSlug}`');

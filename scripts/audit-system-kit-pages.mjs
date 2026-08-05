@@ -184,6 +184,7 @@ export function inspectPage({ response, html, tab, expectedSolutionOrder }) {
     }
   }
   for (const removedCallText of [
+    "Voir le système",
     "Un appel gratuit de 30 minutes",
     "Réserver mon appel gratuit",
     "Diagnostic offert",

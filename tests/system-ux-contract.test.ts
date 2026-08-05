@@ -20,18 +20,15 @@ describe("system UX contract", () => {
       "src/app/kit-operationnel/[slug]/page.tsx",
     );
 
-    expect(detailSource.match(/Voir le système/g)).toHaveLength(1);
+    expect(detailSource).not.toContain("Voir le système");
     expect(detailSource).not.toContain("Recevoir ma copie modifiable");
-    expect(detailSource).toContain("deliveryAvailable ?");
+    expect(detailSource).not.toContain("deliveryAvailable");
     expect(detailSource).not.toContain("hasLevierSolution");
-    expect(detailSource).toContain('setDeliveryModal("system")');
     expect(detailSource).toContain("onOpenSystemDelivery");
     expect(detailSource).toContain('setDeliveryModal("levier")');
-    expect(detailSource).toContain('deliveryModal === "system"');
     expect(detailSource).toContain('deliveryModal === "levier"');
-    expect(detailSource).toContain("preview={systemPreview}");
     expect(detailSource).toContain("preview={LEVIER_PREVIEW}");
-    expect(detailSource).toContain("HistoricalOperationalSystemCopyRequestModal");
+    expect(detailSource).not.toContain("HistoricalOperationalSystemCopyRequestModal");
     expect(modalSource).not.toMatch(/"overview"\s*\|\s*"form"/);
     expect(modalSource).toContain("Recevoir Levier");
     expect(modalSource).toContain("Levier est dans votre boîte mail.");
@@ -61,7 +58,9 @@ describe("system UX contract", () => {
     expect(historicalModalSource).toContain('const flowKey = `system-copy:${systemSlug}`');
     expect(modalSource).toContain('const flowKey = `levier:${systemSlug}`');
     expect(historicalModalSource).toContain('fetch("/api/systeme-kit/request"');
-    expect(pageSource).toContain("getOperationalSystemDemoUrl(data.system.slug)");
+    expect(pageSource).not.toContain("getOperationalSystemDemoUrl");
+    expect(pageSource).not.toContain("deliveryAvailable=");
+    expect(pageSource).toContain("hasEditableOperationalSystemAsset");
   });
 
   it("renders the organisation exchange once after the active panel", async () => {
