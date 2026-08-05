@@ -454,7 +454,7 @@ export const demaaSuppliers: readonly DemaaSupplier[] = [
     tags: ["Crèche", "Mobilier", "Petite enfance"],
     icon: "Building2",
     usefulFor: ["Aménagement", "Sécurité", "Équipement"],
-    href: "https://www.papouillefrance.com/",
+    href: "https://www.papouillefrance.com/page/qui-sommes-nous-3",
     cta: "Voir le fournisseur",
   },
   {

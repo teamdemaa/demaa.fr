@@ -83,7 +83,9 @@ describe("system Solutions UI", () => {
         );
         expect(new Set(renderedSlugs)).toEqual(new Set([
           ...familySelection.placements
-            .filter(({ resourceSlug }) => resourceSlug !== "levier")
+            .filter(({ resourceSlug, editorialStatus }) => (
+              resourceSlug !== "levier" && editorialStatus === "selected"
+            ))
             .map(({ resourceSlug }) => resourceSlug),
           "levier",
         ]));

@@ -76,7 +76,12 @@ describe("family solution selections", () => {
         system.excludedResourceSlugs.includes(resourceSlug)
       )).toBe(false);
     }
-    for (const placement of placements.filter(({ resourceSlug }) => resourceSlug !== "levier")) {
+    const externalPlacements = placements.filter(({ resourceSlug }) => resourceSlug !== "levier");
+    const nettyPlacements = externalPlacements.filter(({ resourceSlug }) => resourceSlug === "netty");
+    const selectedExternalPlacements = externalPlacements.filter(
+      ({ editorialStatus }) => editorialStatus === "selected",
+    );
+    for (const placement of externalPlacements.filter(({ resourceSlug }) => resourceSlug !== "netty")) {
       expect(placement).toMatchObject({
         editorialStatus: "selected",
         status: "draft",
@@ -90,6 +95,14 @@ describe("family solution selections", () => {
         editorialStatus: "hidden",
       })).toBeNull();
     }
+    expect(nettyPlacements).toHaveLength(2);
+    expect(nettyPlacements.every(({ editorialStatus }) => editorialStatus === "hidden")).toBe(true);
+    expect(nettyPlacements.every((placement) =>
+      resolveFamilySolutionCatalogSelection(placement) === null
+    )).toBe(true);
+    expect(selectedExternalPlacements.every(({ checkedAt, expiresAt }) =>
+      checkedAt === "2026-08-05" && Boolean(expiresAt)
+    )).toBe(true);
     for (const placement of placements.filter(({ resourceSlug }) => resourceSlug === "levier")) {
       expect(placement).toMatchObject({
         editorialStatus: "selected",
@@ -99,7 +112,7 @@ describe("family solution selections", () => {
         commercialRelationship: "owned",
       });
     }
-    expect(placements.filter(({ resourceSlug }) => resourceSlug !== "levier")).toHaveLength(466);
+    expect(externalPlacements).toHaveLength(466);
     expect(placements.filter(({ resourceType }) => resourceType === "directory")
       .every(({ section }) => section === "networks")).toBe(true);
     expect(JSON.stringify(systems)).not.toMatch(/capturedAt/);
@@ -169,7 +182,7 @@ describe("family solution selections", () => {
         : []
     );
 
-    expect(placements).toHaveLength(578);
+    expect(placements).toHaveLength(576);
     const violations = placements.flatMap((placement) =>
       forbiddenPublicClaims.test(JSON.stringify(placement))
         ? [`${placement.systemSlug}:${placement.resource.resourceSlug}`]
@@ -212,6 +225,39 @@ describe("family solution selections", () => {
     expect(getFamilySystemSolutionSelection("evenementiel")?.placements
       .find(({ resourceSlug }) => resourceSlug === "livestorm")?.displayCategory)
       .toBe("Webinaire & événement en ligne");
+  });
+
+  it("keeps audited destination corrections and hides the retired Netty identity", () => {
+    const geotabPlacements = enterpriseCatalog.flatMap(({ slug }) =>
+      getFamilySystemSolutionSelection(slug)?.placements
+        .filter(({ resourceSlug }) => resourceSlug === "geotab") ?? []
+    );
+    expect(geotabPlacements).toHaveLength(4);
+    expect(geotabPlacements.every(({ catalogDestination, evidenceUrls }) =>
+      catalogDestination === "https://www.geotab.com/fr/solutions-gestion-flotte/"
+      && evidenceUrls[0] === catalogDestination
+    )).toBe(true);
+
+    const papouille = getFamilySystemSolutionSelection("creche")?.placements
+      .find(({ resourceSlug }) => resourceSlug === "papouille-creche");
+    expect(papouille).toMatchObject({
+      catalogDestination: "https://www.papouillefrance.com/page/qui-sommes-nous-3",
+      checkedAt: "2026-08-05",
+      expiresAt: "2026-11-05",
+    });
+    expect(papouille?.evidenceUrls[0]).toBe(papouille?.catalogDestination);
+
+    const nettyPlacements = enterpriseCatalog.flatMap(({ slug }) =>
+      getFamilySystemSolutionSelection(slug)?.placements
+        .filter(({ resourceSlug }) => resourceSlug === "netty") ?? []
+    );
+    expect(nettyPlacements).toHaveLength(2);
+    expect(nettyPlacements.every((placement) => (
+      placement.editorialStatus === "hidden"
+      && placement.checkedAt === "2026-08-05"
+      && placement.expiresAt === "2026-11-05"
+      && resolveFamilySolutionCatalogSelection(placement) === null
+    ))).toBe(true);
   });
 
   it("curates regulated networks, food suppliers and non-rendered regulatory gaps", () => {
