@@ -5,6 +5,7 @@ import type {
   Credential,
   GoogleOAuthAccessToken,
 } from "firebase-admin/app";
+import { GoogleAuth, OAuth2Client } from "google-auth-library";
 
 const CLOUD_PLATFORM_SCOPE = "https://www.googleapis.com/auth/cloud-platform";
 const TOKEN_EXCHANGE_GRANT = "urn:ietf:params:oauth:grant-type:token-exchange";
@@ -123,4 +124,21 @@ export function createFirebaseVercelWorkloadIdentityCredential(): Credential {
       return cached.token;
     },
   };
+}
+
+export function createFirebaseVercelWorkloadIdentityGoogleAuth() {
+  const credential = createFirebaseVercelWorkloadIdentityCredential();
+  const authClient = new OAuth2Client({
+    eagerRefreshThresholdMillis: REFRESH_MARGIN_MS,
+  });
+
+  authClient.refreshHandler = async () => {
+    const token = await credential.getAccessToken();
+    return {
+      access_token: token.access_token,
+      expiry_date: Date.now() + token.expires_in * 1_000,
+    };
+  };
+
+  return new GoogleAuth({ authClient });
 }

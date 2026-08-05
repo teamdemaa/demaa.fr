@@ -63,4 +63,25 @@ describe("Firebase Vercel workload identity credential", () => {
       credentialModule.hasFirebaseVercelWorkloadIdentityConfiguration(),
     ).toBe(false);
   });
+
+  it("exposes the short-lived identity through GoogleAuth for Firestore", async () => {
+    const fetchMock = vi.fn()
+      .mockResolvedValueOnce(new Response(JSON.stringify({
+        access_token: "federated-token",
+        expires_in: 3600,
+      }), { status: 200 }))
+      .mockResolvedValueOnce(new Response(JSON.stringify({
+        accessToken: "service-account-token",
+        expireTime: new Date(Date.now() + 60 * 60 * 1_000).toISOString(),
+      }), { status: 200 }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    const googleAuth = credentialModule
+      .createFirebaseVercelWorkloadIdentityGoogleAuth();
+    const authClient = await googleAuth.getClient();
+    const token = await authClient.getAccessToken();
+
+    expect(token.token).toBe("service-account-token");
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+  });
 });

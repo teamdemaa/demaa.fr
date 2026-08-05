@@ -1,12 +1,14 @@
 import "server-only";
 
 import { applicationDefault, cert, getApps, initializeApp } from "firebase-admin/app";
-import { getFirestore } from "firebase-admin/firestore";
+import { Firestore, getFirestore } from "firebase-admin/firestore";
 
 import {
-  createFirebaseVercelWorkloadIdentityCredential,
+  createFirebaseVercelWorkloadIdentityGoogleAuth,
   hasFirebaseVercelWorkloadIdentityConfiguration,
 } from "@/lib/firebase-vercel-oidc-credential.server";
+
+let workloadIdentityFirestore: Firestore | null = null;
 
 function getPrivateKey() {
   return process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n");
@@ -17,10 +19,6 @@ function shouldUseApplicationDefaultCredential() {
 }
 
 function getFirebaseCredential() {
-  if (hasFirebaseVercelWorkloadIdentityConfiguration()) {
-    return createFirebaseVercelWorkloadIdentityCredential();
-  }
-
   const serviceAccountKey = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
 
   if (serviceAccountKey) {
@@ -49,6 +47,23 @@ function getFirebaseCredential() {
 }
 
 export function getAdminFirestore() {
+  if (hasFirebaseVercelWorkloadIdentityConfiguration()) {
+    const projectId = process.env.FIREBASE_PROJECT_ID;
+    if (!projectId) {
+      throw new Error(
+        "FIREBASE_PROJECT_ID is required for Firebase workload identity.",
+      );
+    }
+    if (!workloadIdentityFirestore) {
+      workloadIdentityFirestore = new Firestore({
+        auth: createFirebaseVercelWorkloadIdentityGoogleAuth(),
+        preferRest: true,
+        projectId,
+      });
+    }
+    return workloadIdentityFirestore;
+  }
+
   if (!getApps().length) {
     initializeApp({
       credential: getFirebaseCredential(),
