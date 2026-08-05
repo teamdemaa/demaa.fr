@@ -43,4 +43,19 @@ describe("system navigation performance contract", () => {
     expect(detailSource).toContain("Retour aux systèmes");
     expect(detailSource).not.toContain("router.back()");
   });
+
+  it("uses the validated system métier wording on the homepage", async () => {
+    const [pageSource, searchSource] = await Promise.all([
+      readSource("src/app/page.tsx"),
+      readSource("src/components/SystemSearchHero.tsx"),
+    ]);
+
+    expect(pageSource).toContain(
+      "Trouvez le système métier de votre entreprise | Demaa",
+    );
+    expect(searchSource).toContain(
+      'aria-label="Trouvez le système métier de votre entreprise"',
+    );
+    expect(searchSource).not.toContain("système opérationnel");
+  });
 });

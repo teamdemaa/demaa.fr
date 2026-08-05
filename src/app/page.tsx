@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import SystemsHubPage from "@/components/SystemsHubPage";
 
 const title =
-  "Trouvez le système opérationnel de votre entreprise | Demaa";
+  "Trouvez le système métier de votre entreprise | Demaa";
 const description =
   "Choisissez votre activité et découvrez des process concrets, des outils recommandés et un tableau Google Sheets prêt à utiliser.";
 

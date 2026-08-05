@@ -212,10 +212,10 @@ export default function SystemSearchHero({
           <h1
             className="text-balance font-light leading-[0.94] tracking-tight"
             style={{ fontSize: "clamp(2.4rem, 6.8vw, 4.6rem)" }}
-            aria-label="Trouvez le système opérationnel de votre entreprise"
+            aria-label="Trouvez le système métier de votre entreprise"
           >
             <span className="block font-sans font-light not-italic text-brand-blue/62 md:whitespace-nowrap">
-              Trouvez le système opérationnel
+              Trouvez le système métier
             </span>
             <span className="demaa-hero-title block text-dema-forest" aria-hidden="true">
               pour votre entreprise
@@ -331,7 +331,7 @@ export default function SystemSearchHero({
                       </p>
                     </div>
                     <span className="inline-flex shrink-0 items-center gap-2 text-xs text-dema-muted md:text-sm">
-                      Voir le système opérationnel
+                      Voir le système métier
                       {activeIndex === index ? (
                         <CornerDownLeft className="h-3.5 w-3.5" aria-hidden="true" />
                       ) : null}
@@ -371,7 +371,7 @@ export default function SystemSearchHero({
           </div>
         ) : (
           <div className="mx-auto mt-10 max-w-2xl rounded-[1.25rem] border border-dashed border-dema-line bg-dema-paper p-8 text-center">
-            <p className="text-base text-brand-blue">Aucun système opérationnel trouvé.</p>
+            <p className="text-base text-brand-blue">Aucun système métier trouvé.</p>
             <p className="mt-2 text-sm text-dema-muted">Essayez un autre mot-clé ou un autre secteur.</p>
           </div>
         )}
