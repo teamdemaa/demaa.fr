@@ -90,16 +90,25 @@ describe("Firebase Solutions reader", () => {
     expect(warn).not.toHaveBeenCalled();
   });
 
-  it("falls back when the remote revision is draft or corrupted", async () => {
+  it("falls back when the remote revision is not active or is corrupted", async () => {
     const fallback = await modules.loadRevision({
       forceLocal: true,
       now: new Date("2026-08-05T12:00:00.000Z"),
     });
+    const inactiveBase = {
+      ...fallback,
+      revisionStatus: "draft" as const,
+      sourceFingerprint: "0".repeat(64),
+    };
+    const inactive = {
+      ...inactiveBase,
+      sourceFingerprint: modules.fingerprint(inactiveBase),
+    };
     const warn = vi.fn();
     const revision = await modules.loadRevision({
       forceLocal: false,
       now: new Date("2026-08-05T12:00:00.000Z"),
-      fetchRemote: async () => fallback,
+      fetchRemote: async () => inactive,
       warn,
     });
 

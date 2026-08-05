@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "revisionId": "solutions-2026-08-05-v1",
-  "revisionStatus": "draft",
+  "revisionId": "solutions-2026-08-05-active-v1",
+  "revisionStatus": "published",
   "createdAt": "2026-08-05T12:00:00.000Z",
-  "createdBy": "migration://local-solutions-sources",
-  "sourceFingerprint": "fcb1da043ee2027b807b925766681f2a9c8565ab2795cbc8ffd9333a2193e545",
+  "createdBy": "migration://production-parity-cutover",
+  "sourceFingerprint": "759558daa13d489231fb1040a236173a61e35d316955ded530f97442108c2401",
   "knownSystemSlugs": [
     "cabinet-comptable",
     "cabinet-davocat",

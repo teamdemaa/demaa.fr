@@ -12,8 +12,8 @@ import {
   buildFirestoreSolutionRegistryImportPlan,
   type FirestoreSolutionRegistryWrite,
 } from "@/lib/firebase-solution-registry-firestore-plan";
+import { resolveFirebaseSolutionRegistryImportTarget } from "@/lib/firebase-solution-registry-import-gate";
 
-const FORBIDDEN_PRODUCTION_PROJECT_ID = "demaa-dde32";
 const SOLUTION_SECTIONS = ["software", "providers", "models", "networks"] as const;
 
 type FirestoreValue =
@@ -100,32 +100,19 @@ function decodeFields(fields: Record<string, FirestoreValue> | undefined) {
   );
 }
 
-if (!process.argv.includes("--apply-draft")) {
-  throw new Error("Remote import requires the explicit --apply-draft gate.");
-}
 if (process.env.FIRESTORE_EMULATOR_HOST) {
-  throw new Error("The remote Preview importer refuses Firestore Emulator mode.");
+  throw new Error("The remote importer refuses Firestore Emulator mode.");
 }
 
-const actualProjectId = process.env.FIREBASE_PROJECT_ID;
-const expectedProjectId = process.env.FIREBASE_SOLUTION_REGISTRY_PREVIEW_PROJECT_ID;
-const confirmedProjectId = commandArgument("--confirm-project=");
-if (
-  !actualProjectId ||
-  !expectedProjectId ||
-  actualProjectId !== expectedProjectId ||
-  confirmedProjectId !== expectedProjectId ||
-  !/(?:preview|staging|test|e2e)/i.test(expectedProjectId) ||
-  expectedProjectId === FORBIDDEN_PRODUCTION_PROJECT_ID
-) {
-  throw new Error("The Firebase Preview project identity is not explicitly and safely confirmed.");
-}
-const confirmedPreviewProjectId = expectedProjectId;
-const ephemeralAccessToken = process.env.FIREBASE_SOLUTION_REGISTRY_PREVIEW_ACCESS_TOKEN;
-if (!ephemeralAccessToken) {
-  throw new Error("Remote Preview import requires an explicit ephemeral access token.");
-}
-const confirmedAccessToken = ephemeralAccessToken;
+const {
+  accessToken: confirmedAccessToken,
+  projectId: confirmedTargetProjectId,
+  target,
+  targetLabel,
+} = resolveFirebaseSolutionRegistryImportTarget({
+  arguments_: process.argv.slice(2),
+  environment: process.env,
+});
 
 const revision = parseFirebaseSolutionRegistryRevision(snapshot);
 const plan = buildFirestoreSolutionRegistryImportPlan(revision);
@@ -133,11 +120,16 @@ const confirmedPlanFingerprint = commandArgument("--confirm-plan=");
 if (confirmedPlanFingerprint !== plan.planFingerprint) {
   throw new Error("The confirmed import plan fingerprint does not match the sealed plan.");
 }
-if (plan.revisionStatus !== "draft" || plan.activation !== null) {
-  throw new Error("Remote Preview import accepts only a draft plan without activation.");
+const confirmedActivationFingerprint = commandArgument("--confirm-activation=");
+if (
+  plan.revisionStatus !== "published" ||
+  !plan.activation ||
+  confirmedActivationFingerprint !== plan.sourceFingerprint
+) {
+  throw new Error(`Remote ${targetLabel} activation requires the exact published revision fingerprint.`);
 }
 
-const databaseName = `projects/${confirmedPreviewProjectId}/databases/(default)`;
+const databaseName = `projects/${confirmedTargetProjectId}/databases/(default)`;
 const apiRoot = "https://firestore.googleapis.com/v1";
 const documentsEndpoint = `${apiRoot}/${databaseName}/documents`;
 const documentName = (path: string) => `${databaseName}/documents/${path}`;
@@ -149,18 +141,19 @@ async function firestoreRequest(url: string, init?: RequestInit) {
     headers: {
       Authorization: `Bearer ${confirmedAccessToken}`,
       "Content-Type": "application/json",
-      "x-goog-user-project": confirmedPreviewProjectId,
+      "x-goog-user-project": confirmedTargetProjectId,
       ...init?.headers,
     },
   });
   return response;
 }
 
-async function activePointerExists() {
+async function readActivePointer() {
   const response = await firestoreRequest(documentUrl(FIREBASE_SOLUTION_REGISTRY_ACTIVE_POINTER));
-  if (response.status === 404) return false;
+  if (response.status === 404) return null;
   if (!response.ok) throw new Error(`Unable to read the active pointer (${response.status}).`);
-  return true;
+  const document = await response.json() as FirestoreDocument;
+  return decodeFields(document.fields);
 }
 
 async function batchGet(paths: readonly string[]) {
@@ -170,14 +163,18 @@ async function batchGet(paths: readonly string[]) {
   });
   if (!response.ok) {
     const detail = (await response.text()).slice(0, 1_000);
-    throw new Error(`Unable to read Preview documents (${response.status}): ${detail}`);
+    throw new Error(`Unable to read ${targetLabel} documents (${response.status}): ${detail}`);
   }
   const payload = await response.json() as BatchGetResponse[];
   return payload;
 }
 
-if (await activePointerExists()) {
-  throw new Error("Preview already has an active Solutions pointer; draft import refused.");
+const pointerBeforeImport = await readActivePointer();
+if (
+  pointerBeforeImport &&
+  !isDeepStrictEqual(pointerBeforeImport, plan.activation.data)
+) {
+  throw new Error(`${targetLabel} points to another Solutions revision; activation refused.`);
 }
 
 const missingWrites: FirestoreSolutionRegistryWrite[] = [];
@@ -196,7 +193,7 @@ for (const writeGroup of chunk(plan.writes, 100)) {
   }
 }
 if (mismatchedPaths.length > 0) {
-  throw new Error(`Preview contains conflicting documents:\n${mismatchedPaths.join("\n")}`);
+  throw new Error(`${targetLabel} contains conflicting documents:\n${mismatchedPaths.join("\n")}`);
 }
 
 for (const writeGroup of chunk(missingWrites, 400)) {
@@ -214,7 +211,7 @@ for (const writeGroup of chunk(missingWrites, 400)) {
   });
   if (!response.ok) {
     const detail = (await response.text()).slice(0, 1_000);
-    throw new Error(`Unable to write Preview documents (${response.status}): ${detail}`);
+    throw new Error(`Unable to write ${targetLabel} documents (${response.status}): ${detail}`);
   }
 }
 
@@ -226,10 +223,6 @@ const readBackDocuments = new Map(
 );
 if (readBackDocuments.size !== plan.writes.length) {
   throw new Error("Imported revision is incomplete after read-back.");
-}
-const pointerExistsAfterImport = await activePointerExists();
-if (pointerExistsAfterImport) {
-  throw new Error("The draft import unexpectedly created an active pointer.");
 }
 const revisionPrefix = `solution_registry_revisions/${revision.revisionId}`;
 const metadataDocument = readBackDocuments.get(documentName(revisionPrefix));
@@ -274,16 +267,42 @@ if (importedRevision.sourceFingerprint !== revision.sourceFingerprint) {
   throw new Error("Imported revision fingerprint differs from the sealed snapshot.");
 }
 
+let pointerCreated = false;
+if (!pointerBeforeImport) {
+  const response = await firestoreRequest(`${documentsEndpoint}:commit`, {
+    method: "POST",
+    body: JSON.stringify({
+      writes: [{
+        update: {
+          name: documentName(plan.activation.path),
+          fields: encodeFields(plan.activation.data),
+        },
+        currentDocument: { exists: false },
+      }],
+    }),
+  });
+  if (!response.ok) {
+    const detail = (await response.text()).slice(0, 1_000);
+    throw new Error(`Unable to activate the ${targetLabel} revision (${response.status}): ${detail}`);
+  }
+  pointerCreated = true;
+}
+const activePointer = await readActivePointer();
+if (!isDeepStrictEqual(activePointer, plan.activation.data)) {
+  throw new Error(`${targetLabel} active pointer does not match the sealed revision after activation.`);
+}
+
 console.log(JSON.stringify({
-  mode: "firebase-preview-draft",
-  projectId: confirmedPreviewProjectId,
+  mode: `firebase-${target}-active-revision`,
+  projectId: confirmedTargetProjectId,
   revisionId: revision.revisionId,
   revisionStatus: revision.revisionStatus,
   plannedWrites: plan.writes.length,
   writesCreated: missingWrites.length,
   resourcesReadBack: resources.length,
   placementsReadBack: placements.length,
-  activePointerExists: pointerExistsAfterImport,
+  pointerCreated,
+  activePointer,
   sourceFingerprint: importedRevision.sourceFingerprint,
   planFingerprint: plan.planFingerprint,
 }, null, 2));

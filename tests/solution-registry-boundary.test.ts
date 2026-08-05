@@ -143,4 +143,20 @@ describe("Solutions server and DTO boundaries", () => {
     });
     expect(violations).toEqual([]);
   });
+
+  it("keeps the public System route on Firebase without legacy runtime selectors", () => {
+    const pageSource = readFileSync(
+      `${root}/app/kit-operationnel/[slug]/page.tsx`,
+      "utf8",
+    );
+    const firebaseSelector = readFileSync(
+      `${root}/lib/firebase-solution-registry-selection.server.ts`,
+      "utf8",
+    );
+
+    expect(pageSource).toContain("getActiveRenderableSolutionSectionsForSystem");
+    expect(pageSource).not.toContain("getMigrationSafe");
+    expect(firebaseSelector).not.toContain("system-solutions-ui.server");
+    expect(firebaseSelector).not.toContain("getRenderableSolutionSectionsForSystem");
+  });
 });

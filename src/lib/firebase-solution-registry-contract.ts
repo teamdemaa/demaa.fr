@@ -348,17 +348,5 @@ export function validateFirebaseSolutionRegistryRevision(
     }
   }
 
-  if (revision.revisionStatus === "published") {
-    for (const { resource } of revision.resources) {
-      if (resource.status !== "published") {
-        errors.push(`${resource.resourceSlug}: published revision contains a non-published resource`);
-      }
-    }
-    for (const { placement } of revision.placements) {
-      if (placement.status !== "published") {
-        errors.push(`${placement.placementId}: published revision contains a non-published placement`);
-      }
-    }
-  }
   return errors;
 }

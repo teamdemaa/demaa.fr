@@ -4,6 +4,7 @@ import { unstable_cache } from "next/cache";
 
 import { enterpriseCatalog } from "@/lib/enterprise-annuaire";
 import { getAdminFirestore } from "@/lib/firebase-admin";
+import { hasFirebaseVercelWorkloadIdentityConfiguration } from "@/lib/firebase-vercel-oidc-credential.server";
 import snapshot from "@/lib/firebase-solution-registry.snapshot.generated.json";
 import {
   FIREBASE_SOLUTION_REGISTRY_ACTIVE_POINTER,
@@ -26,6 +27,7 @@ type RegistryLoadDependencies = Readonly<{
 function hasFirebaseConfiguration() {
   return Boolean(
     process.env.FIREBASE_SERVICE_ACCOUNT_KEY ||
+    hasFirebaseVercelWorkloadIdentityConfiguration() ||
     (
       process.env.FIREBASE_PROJECT_ID &&
       process.env.FIREBASE_CLIENT_EMAIL &&
@@ -65,7 +67,7 @@ function parseActivePointer(input: unknown) {
   };
 }
 
-async function fetchRemoteRevisionFromFirestore() {
+export async function fetchActiveFirebaseSolutionRegistryRevisionFromFirestore() {
   const database = getAdminFirestore();
   const [pointerCollection, pointerDocument] =
     FIREBASE_SOLUTION_REGISTRY_ACTIVE_POINTER.split("/");
@@ -112,7 +114,9 @@ export async function loadFirebaseSolutionRegistryRevision(
     return validatedSnapshot(now);
   }
   try {
-    const remote = await (dependencies.fetchRemote ?? fetchRemoteRevisionFromFirestore)();
+    const remote = await (
+      dependencies.fetchRemote ?? fetchActiveFirebaseSolutionRegistryRevisionFromFirestore
+    )();
     const parsed = parseFirebaseSolutionRegistryRevision(remote);
     const errors = validateFirebaseSolutionRegistryRevision(parsed, {
       expectedSystemSlugs: EXPECTED_SYSTEM_SLUGS,

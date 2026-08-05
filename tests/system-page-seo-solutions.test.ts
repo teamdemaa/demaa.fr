@@ -142,8 +142,8 @@ describe("system page SEO published Solutions boundary", () => {
       "utf8",
     );
 
-    expect(pageSource.match(/getMigrationSafeRenderableSolutionSectionsForSystem\(slug\)/g)).toHaveLength(1);
-    expect(pageSource.match(/getMigrationSafePublishedSolutionSectionsForSystem\(slug\)/g))
+    expect(pageSource.match(/getActiveRenderableSolutionSectionsForSystem\(slug\)/g)).toHaveLength(1);
+    expect(pageSource.match(/getActivePublishedRenderableSolutionSectionsForSystem\(slug\)/g))
       .toHaveLength(2);
     expect(pageSource).toContain("buildSystemPageMetadata(data, solutionSections)");
     expect(pageSource).toContain(

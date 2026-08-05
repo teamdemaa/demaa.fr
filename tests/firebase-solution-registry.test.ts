@@ -41,7 +41,7 @@ beforeAll(async () => {
 });
 
 describe("Firebase Solutions revision contract", () => {
-  it("migrates the current 115-system UI without promoting third parties", () => {
+  it("publishes an immutable 115-system revision without promoting third-party entries", () => {
     const now = new Date("2026-08-05T12:00:00.000Z");
     const revision = migrationRevision;
     const expectedSystemSlugs = modules.enterpriseCatalog.map(({ slug }) => slug);
@@ -52,7 +52,7 @@ describe("Firebase Solutions revision contract", () => {
       ]),
     );
 
-    expect(revision.revisionStatus).toBe("draft");
+    expect(revision.revisionStatus).toBe("published");
     expect(revision.knownSystemSlugs).toEqual(expectedSystemSlugs);
     expect(revision.placements).toHaveLength(600);
     expect(sectionCounts).toEqual({
@@ -83,11 +83,15 @@ describe("Firebase Solutions revision contract", () => {
         ),
     ).toBe(true);
     expect(
-      modules.validate(revision, { expectedSystemSlugs, now }),
+      modules.validate(revision, {
+        expectedSystemSlugs,
+        now,
+        requirePublishedRevision: true,
+      }),
     ).toEqual([]);
   });
 
-  it("detects content tampering and refuses a draft active revision", () => {
+  it("detects content tampering without changing the entry-level draft contract", () => {
     const now = new Date("2026-08-05T12:00:00.000Z");
     const revision = migrationRevision;
     const expectedSystemSlugs = modules.enterpriseCatalog.map(({ slug }) => slug);
@@ -99,12 +103,9 @@ describe("Firebase Solutions revision contract", () => {
       modules.validate(tampered, { expectedSystemSlugs, now }),
     ).toContain("revision sourceFingerprint does not match its content");
     expect(
-      modules.validate(revision, {
-        expectedSystemSlugs,
-        now,
-        requirePublishedRevision: true,
-      }),
-    ).toContain("active revision must be published");
+      revision.resources.filter(({ resource }) => resource.resourceSlug !== "levier")
+        .every(({ resource }) => resource.status === "draft"),
+    ).toBe(true);
   });
 
   it("rejects partial pricing metadata", () => {
@@ -133,17 +134,21 @@ describe("Firebase Solutions revision contract", () => {
     ).toContain(`${invalid.placements[0].placement.placementId}: presentation href override is unsafe`);
   });
 
-  it("plans a draft import without an activation pointer", () => {
+  it("plans an active revision and a reversible pointer", () => {
     const revision = migrationRevision;
     const plan = modules.buildImportPlan(revision);
 
     expect(plan.writes).toHaveLength(849);
     expect(plan.writeBatches.map((batch) => batch.length)).toEqual([400, 400, 49]);
-    expect(plan.activation).toBeNull();
+    expect(plan.activation).toEqual({
+      path: "solution_registry_config/active",
+      data: {
+        revisionId: revision.revisionId,
+        sourceFingerprint: revision.sourceFingerprint,
+      },
+    });
     expect(plan.planFingerprint).toMatch(/^[a-f0-9]{64}$/);
-    expect(() => modules.buildRollback(revision)).toThrow(
-      "A rollback target must be a published revision",
-    );
+    expect(modules.buildRollback(revision)).toEqual(plan.activation);
   });
 
   it("preserves the visible card contract for every system", () => {

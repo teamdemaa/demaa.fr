@@ -17,7 +17,7 @@ import type { RenderableSolutionPlacementDto } from "@/lib/system-solutions-ui-d
 
 const MIGRATION_TIMESTAMP = "2026-08-05T12:00:00.000Z";
 const MIGRATION_EXPIRY = "2027-02-05T12:00:00.000Z";
-const MIGRATION_REVISION_ID = "solutions-2026-08-05-v1";
+const MIGRATION_REVISION_ID = "solutions-2026-08-05-active-v1";
 const EMPTY_FINGERPRINT = "0".repeat(64);
 
 function migratedReview(
@@ -165,9 +165,9 @@ export function buildFirebaseSolutionRegistryMigrationRevision(
   const baseRevision: FirebaseSolutionRegistryRevision = {
     schemaVersion: 1,
     revisionId: MIGRATION_REVISION_ID,
-    revisionStatus: "draft",
+    revisionStatus: "published",
     createdAt: MIGRATION_TIMESTAMP,
-    createdBy: "migration://local-solutions-sources",
+    createdBy: "migration://production-parity-cutover",
     sourceFingerprint: EMPTY_FINGERPRINT,
     knownSystemSlugs,
     resources: [...resourcesBySlug.values()].sort((left, right) =>
@@ -182,6 +182,7 @@ export function buildFirebaseSolutionRegistryMigrationRevision(
   const errors = validateFirebaseSolutionRegistryRevision(revision, {
     expectedSystemSlugs: knownSystemSlugs,
     now,
+    requirePublishedRevision: true,
   });
   if (errors.length > 0) {
     throw new Error(`Invalid Firebase Solutions migration revision:\n${errors.join("\n")}`);

@@ -9,10 +9,6 @@ import type {
   RenderableSolutionPlacementDto,
   RenderableSolutionSectionDto,
 } from "@/lib/system-solutions-ui-dto";
-import {
-  getPublishedRenderableSolutionSectionsForSystem,
-  getRenderableSolutionSectionsForSystem,
-} from "@/lib/system-solutions-ui.server";
 
 function isFreshPricing(
   presentation: FirebaseSolutionRegistryRevision["placements"][number]["presentation"],
@@ -109,31 +105,6 @@ export async function getActivePublishedRenderableSolutionSectionsForSystem(
   now = new Date(),
 ) {
   const revision = await getActiveFirebaseSolutionRegistryRevision();
-  return selectRenderableSolutionSectionsFromRevision(revision, systemSlug, {
-    now,
-    publishedOnly: true,
-  });
-}
-
-export async function getMigrationSafeRenderableSolutionSectionsForSystem(
-  systemSlug: unknown,
-  now = new Date(),
-) {
-  const revision = await getActiveFirebaseSolutionRegistryRevision();
-  if (revision.revisionStatus !== "published") {
-    return getRenderableSolutionSectionsForSystem(systemSlug, now);
-  }
-  return selectRenderableSolutionSectionsFromRevision(revision, systemSlug, { now });
-}
-
-export async function getMigrationSafePublishedSolutionSectionsForSystem(
-  systemSlug: unknown,
-  now = new Date(),
-) {
-  const revision = await getActiveFirebaseSolutionRegistryRevision();
-  if (revision.revisionStatus !== "published") {
-    return getPublishedRenderableSolutionSectionsForSystem(systemSlug);
-  }
   return selectRenderableSolutionSectionsFromRevision(revision, systemSlug, {
     now,
     publishedOnly: true,
