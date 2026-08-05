@@ -2014,16 +2014,42 @@
           "displayCategory": "Logiciel métier",
           "description": "ERP de gestion d’affaires pour sociétés de conseil, bureaux d’études, agences et ESN.",
           "ownerBenefit": "Suivre missions, temps, budgets, marge et facturation.",
-          "fitRationale": "Everwin répond à un besoin opérationnel précis de bureau d’études.",
+          "fitRationale": "Everwin pilote affaires, temps, budgets, marge et facturation ; Fieldwire complète ce socle lorsque plans et retours chantier doivent être coordonnés.",
           "checksBeforeChoosing": [
-            "Solution structurante",
-            "Prévoir paramétrage et adoption"
+            "Prévoir le paramétrage des affaires, temps et règles de facturation.",
+            "Ne pas y dupliquer les tâches et réserves suivies sur le terrain."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
             "https://www.everwin.fr/"
           ],
           "catalogDestination": "https://www.everwin.fr/",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "editorialStatus": "selected",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "fieldwire",
+          "resourceType": "software",
+          "section": "software",
+          "rank": 2,
+          "displayCategory": "Suivi de projet terrain",
+          "description": "Logiciel de suivi de chantier terrain : plans, tâches, réserves, photos, rapports et coordination équipes.",
+          "ownerBenefit": "Relier plans, observations et actions entre le bureau et les équipes présentes sur chantier.",
+          "fitRationale": "Fieldwire complète Everwin pour les plans et retours terrain ; Everwin conserve la gestion des affaires, temps, budgets, marge et facturation.",
+          "checksBeforeChoosing": [
+            "Le retenir seulement si une part significative des missions comporte un suivi de chantier.",
+            "Ne pas y dupliquer les budgets, temps et factures déjà pilotés dans l’ERP d’affaires."
+          ],
+          "reviewedAt": "2026-07-02",
+          "evidenceUrls": [
+            "https://www.fieldwire.com/fr/"
+          ],
+          "catalogDestination": "https://www.fieldwire.com/fr/",
           "commercialRelationship": "unknown",
           "status": "draft",
           "editorialStatus": "selected",
@@ -2870,16 +2896,42 @@
           "displayCategory": "Logiciel métier",
           "description": "Logiciel QHSE et RSE pour gérer audits, risques, plans d’action, conformité et preuves dans un référentiel partagé.",
           "ownerBenefit": "Piloter les missions QHSE avec des audits, écarts et plans d’action traçables.",
-          "fitRationale": "Pour cabinet qhse / conformité, BlueKanGo couvre directement audits et inspections et gestion des risques.",
+          "fitRationale": "BlueKanGo centralise référentiels, risques, écarts et plans d’action ; Kizeo Forms se limite à la collecte et aux preuves terrain.",
           "checksBeforeChoosing": [
-            "Solution structurante",
-            "Prévoir référentiels et paramétrage"
+            "Définir les référentiels, responsabilités et workflows avant paramétrage.",
+            "Organiser la synchronisation des constats terrain sans créer un second référentiel."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
             "https://www.bluekango.com/"
           ],
           "catalogDestination": "https://www.bluekango.com/",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "editorialStatus": "selected",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "kizeo-forms",
+          "resourceType": "software",
+          "section": "software",
+          "rank": 2,
+          "displayCategory": "Collecte & rapports terrain",
+          "description": "Formulaires terrain digitaux pour chantiers, interventions, relevés, contrôles et rapports personnalisés.",
+          "ownerBenefit": "Collecter audits, constats et preuves terrain dans des rapports structurés.",
+          "fitRationale": "Kizeo Forms complète BlueKanGo pour la saisie mobile et les preuves terrain ; BlueKanGo reste le référentiel central des risques, écarts et plans d’action.",
+          "checksBeforeChoosing": [
+            "Préparer les formulaires d’audit et les règles de remontée avant déploiement.",
+            "Ne pas le retenir comme remplacement du référentiel QHSE central."
+          ],
+          "reviewedAt": "2026-08-04",
+          "evidenceUrls": [
+            "https://www.kizeo-forms.com/fr/"
+          ],
+          "catalogDestination": "https://www.kizeo-forms.com/fr/",
           "commercialRelationship": "unknown",
           "status": "draft",
           "editorialStatus": "selected",
@@ -4678,16 +4730,42 @@
           "displayCategory": "Logiciel métier",
           "description": "Plateforme de business intelligence pour connecter les données, créer des tableaux de bord et partager des analyses interactives.",
           "ownerBenefit": "Construire et diffuser des tableaux de bord décisionnels à partir de sources multiples.",
-          "fitRationale": "Pour consultant data / bi, Microsoft Power BI couvre directement connexion aux sources de données et modélisation.",
+          "fitRationale": "Power BI couvre la modélisation et les tableaux de bord ; n8n complète la sélection pour automatiser les flux entre sources.",
           "checksBeforeChoosing": [
-            "Préparer des données fiables",
-            "Prévoir les licences de partage"
+            "Fiabiliser les données et les règles de calcul avant diffusion.",
+            "Prévoir les licences et droits de partage adaptés aux clients."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
             "https://powerbi.microsoft.com/fr-fr/"
           ],
           "catalogDestination": "https://powerbi.microsoft.com/fr-fr/",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "editorialStatus": "selected",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "n8n",
+          "resourceType": "software",
+          "section": "software",
+          "rank": 2,
+          "displayCategory": "Automatisation & données",
+          "description": "Plateforme d’automatisation de workflows avec connecteurs, logique conditionnelle et option self-hosted.",
+          "ownerBenefit": "Automatiser des flux de collecte et de transformation entre les sources des clients.",
+          "fitRationale": "n8n prend en charge l’orchestration technique des flux ; Power BI reste la couche de modélisation, d’analyse et de restitution.",
+          "checksBeforeChoosing": [
+            "Prévoir l’hébergement, la supervision et la gestion sécurisée des secrets.",
+            "Ne pas le présenter comme un entrepôt de données ou un outil de BI."
+          ],
+          "reviewedAt": "2026-07-02",
+          "evidenceUrls": [
+            "https://n8n.io/"
+          ],
+          "catalogDestination": "https://n8n.io/",
           "commercialRelationship": "unknown",
           "status": "draft",
           "editorialStatus": "selected",
@@ -5698,16 +5776,68 @@
           "displayCategory": "Finance & paiement",
           "description": "Comptabilité, facturation et pilotage financier pour les entreprises.",
           "ownerBenefit": "Centraliser la gestion financière et comptable.",
-          "fitRationale": "Pour daf externalisé, Pennylane couvre directement facturation simplifiée et gestion des achats.",
+          "fitRationale": "Pennylane constitue le socle comptable et financier partagé ; Regate complète les validations fournisseurs et Power BI la restitution décisionnelle.",
           "checksBeforeChoosing": [
-            "Coordonner avec le cabinet comptable",
-            "Vérifier le périmètre entreprise"
+            "Coordonner les accès et responsabilités avec le cabinet comptable de chaque client.",
+            "Vérifier le périmètre multi-entités et les sources nécessaires au reporting."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
             "https://www.pennylane.com/"
           ],
           "catalogDestination": "https://www.pennylane.com/",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "editorialStatus": "selected",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "regate",
+          "resourceType": "software",
+          "section": "software",
+          "rank": 2,
+          "displayCategory": "Finance & paiement",
+          "description": "Gestion fournisseurs, paiements, factures et workflows financiers.",
+          "ownerBenefit": "Cadrer les dépenses, circuits de validation et paiements fournisseurs des clients.",
+          "fitRationale": "Regate complète Pennylane sur les workflows fournisseurs et les validations ; Pennylane demeure le socle comptable et financier.",
+          "checksBeforeChoosing": [
+            "Vérifier les intégrations avec la comptabilité et les banques de chaque client.",
+            "Définir les droits et circuits d’approbation sans dupliquer la tenue comptable."
+          ],
+          "reviewedAt": "2026-07-02",
+          "evidenceUrls": [
+            "https://www.regate.io/"
+          ],
+          "catalogDestination": "https://www.regate.io/",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "editorialStatus": "selected",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "power-bi",
+          "resourceType": "software",
+          "section": "software",
+          "rank": 3,
+          "displayCategory": "Pilotage & reporting",
+          "description": "Plateforme de business intelligence pour connecter les données, créer des tableaux de bord et partager des analyses interactives.",
+          "ownerBenefit": "Construire et diffuser des tableaux de bord financiers multi-sources pour les dirigeants.",
+          "fitRationale": "Power BI sert à consolider et restituer les indicateurs de direction ; il ne remplace ni la source comptable Pennylane ni les workflows de paiement Regate.",
+          "checksBeforeChoosing": [
+            "Fiabiliser les sources et règles de calcul avant de construire les tableaux de bord.",
+            "Vérifier les licences et droits d’accès nécessaires au partage client."
+          ],
+          "reviewedAt": "2026-08-04",
+          "evidenceUrls": [
+            "https://powerbi.microsoft.com/fr-fr/"
+          ],
+          "catalogDestination": "https://powerbi.microsoft.com/fr-fr/",
           "commercialRelationship": "unknown",
           "status": "draft",
           "editorialStatus": "selected",
@@ -9251,16 +9381,68 @@
           "displayCategory": "Gestion & équipe",
           "description": "Suite modulaire pour CRM, ventes, stock, facturation, production et opérations.",
           "ownerBenefit": "Centraliser plusieurs briques métier dans un seul outil.",
-          "fitRationale": "Pour intégrateur crm / erp, Odoo couvre directement crm et ventes et facturation.",
+          "fitRationale": "Odoo couvre les missions ERP modulaires et peut inclure un CRM ; HubSpot cible les projets CRM spécialisés et Make les intégrations entre applications.",
           "checksBeforeChoosing": [
-            "Limiter les modules au besoin réel",
-            "Prévoir paramétrage et maintenance"
+            "Limiter les modules au périmètre réellement validé avec le client.",
+            "Prévoir gouvernance des données, maintenance et stratégie de mise à niveau."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
             "https://www.odoo.com/fr_FR"
           ],
           "catalogDestination": "https://www.odoo.com/fr_FR",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "editorialStatus": "selected",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "hubspot",
+          "resourceType": "software",
+          "section": "software",
+          "rank": 2,
+          "displayCategory": "CRM",
+          "description": "CRM, marketing, ventes et service client pour centraliser contacts, pipeline et campagnes.",
+          "ownerBenefit": "Déployer un CRM centré sur les ventes, le marketing et le service client.",
+          "fitRationale": "HubSpot apporte une spécialisation CRM face à Odoo, plus modulaire et orienté ERP ; les deux sont des cibles de mission, pas un duo obligatoire.",
+          "checksBeforeChoosing": [
+            "Choisir la plateforme selon le périmètre client plutôt que déployer deux CRM en parallèle.",
+            "Vérifier les modules, niveaux de licence et intégrations réellement nécessaires."
+          ],
+          "reviewedAt": "2026-08-04",
+          "evidenceUrls": [
+            "https://www.hubspot.com/"
+          ],
+          "catalogDestination": "https://www.hubspot.com/",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "editorialStatus": "selected",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "make",
+          "resourceType": "software",
+          "section": "software",
+          "rank": 3,
+          "displayCategory": "Automatisation & intégrations",
+          "description": "Automatisation visuelle entre formulaires, CRM, emails, fichiers et tableaux de suivi.",
+          "ownerBenefit": "Relier les applications du client avec des workflows lisibles et maintenables.",
+          "fitRationale": "Make sert de couche d’intégration entre les applications ; Odoo ou HubSpot restent les systèmes maîtres des données métier.",
+          "checksBeforeChoosing": [
+            "Mesurer les volumes d’opérations et documenter les scénarios avant mise en production.",
+            "Sécuriser les accès et éviter de déplacer la logique métier centrale hors du CRM ou de l’ERP."
+          ],
+          "reviewedAt": "2026-07-02",
+          "evidenceUrls": [
+            "https://www.make.com/"
+          ],
+          "catalogDestination": "https://www.make.com/",
           "commercialRelationship": "unknown",
           "status": "draft",
           "editorialStatus": "selected",
@@ -13396,10 +13578,10 @@
           "displayCategory": "Logiciel métier",
           "description": "Logiciel de caisse et gestion pour ateliers de réparation mobile, informatique et électronique.",
           "ownerBenefit": "Suivre diagnostics, tickets de réparation, pièces, clients et notifications.",
-          "fitRationale": "RepairDesk répond à un besoin concret de maintenance informatique b2b sans imposer une solution générique à toute l'activité.",
+          "fitRationale": "RepairDesk structure les diagnostics, tickets, pièces et notifications d’atelier ; NinjaOne prend le relais pour la maintenance distante B2B.",
           "checksBeforeChoosing": [
-            "Vérifier la fiscalité/caisse en France",
-            "Tester pièces et tickets réparation"
+            "Tester la gestion des tickets, pièces et statuts sur un dossier réel.",
+            "Vérifier les exigences françaises applicables à la caisse si cette fonction est utilisée."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
@@ -13415,23 +13597,23 @@
           "interactionMode": "external_link"
         },
         {
-          "resourceSlug": "sumup-caisse",
+          "resourceSlug": "ninjaone",
           "resourceType": "software",
           "section": "software",
           "rank": 2,
-          "displayCategory": "Caisse & réservation",
-          "description": "Caisse et encaissement pour commerces, cafés et petites activités locales.",
-          "ownerBenefit": "Démarrer une caisse simple avec paiement intégré.",
-          "fitRationale": "SumUp Caisse répond à un besoin concret de maintenance informatique b2b sans imposer une solution générique à toute l'activité.",
+          "displayCategory": "Maintenance informatique",
+          "description": "Plateforme RMM pour les prestataires informatiques : surveillance, gestion des correctifs, automatisation, accès distant et alertes.",
+          "ownerBenefit": "Superviser et maintenir à distance les terminaux de plusieurs clients B2B.",
+          "fitRationale": "NinjaOne couvre la maintenance distante et les correctifs ; RepairDesk reste dédié aux diagnostics, tickets, pièces et réparations traités en atelier.",
           "checksBeforeChoosing": [
-            "Comparer les frais de paiement",
-            "Vérifier le matériel compatible"
+            "Dimensionner le nombre de terminaux gérés et les fonctions RMM nécessaires.",
+            "Ne pas le retenir comme remplacement du suivi des réparations physiques et des pièces."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
-            "https://www.sumup.com/fr-fr/logiciel-de-caisse-sumup/"
+            "https://www.ninjaone.com/fr/msp/"
           ],
-          "catalogDestination": "https://www.sumup.com/fr-fr/logiciel-de-caisse-sumup/",
+          "catalogDestination": "https://www.ninjaone.com/fr/msp/",
           "commercialRelationship": "unknown",
           "status": "draft",
           "editorialStatus": "selected",
@@ -13462,6 +13644,32 @@
           "editorialStatus": "selected",
           "publicationBlockers": [],
           "interactionMode": "system_delivery"
+        },
+        {
+          "resourceSlug": "numeum",
+          "resourceType": "directory",
+          "section": "networks",
+          "rank": 1,
+          "displayCategory": "Organisation professionnelle du numérique",
+          "description": "Un réseau de référence pour les entreprises du numérique.",
+          "ownerBenefit": "Accéder à une veille et à une représentation des entreprises de services numériques.",
+          "fitRationale": "Numeum apporte le réseau et la veille sectorielle ; RepairDesk et NinjaOne restent les outils opérationnels.",
+          "checksBeforeChoosing": [
+            "Vérifier l’adéquation des services avec une activité de maintenance informatique B2B.",
+            "Adhésion éventuellement requise selon les services recherchés."
+          ],
+          "reviewedAt": "2026-08-04",
+          "evidenceUrls": [
+            "https://numeum.fr/"
+          ],
+          "catalogDestination": "https://numeum.fr/",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "editorialStatus": "selected",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
         }
       ]
     },
@@ -14659,10 +14867,10 @@
           "displayCategory": "Création contenu",
           "description": "Design collaboratif pour maquettes, interfaces, visuels et prototypes.",
           "ownerBenefit": "Créer et valider des interfaces ou supports visuels.",
-          "fitRationale": "Pour studio branding / design, Figma couvre directement maquettes et prototypes.",
+          "fitRationale": "Figma reste la source de conception et de validation des identités ; Canva sert aux déclinaisons courantes et Notion à la documentation.",
           "checksBeforeChoosing": [
-            "Organiser les droits et fichiers",
-            "Vérifier le nombre de licences"
+            "Structurer fichiers, bibliothèques et droits d’édition.",
+            "Vérifier les licences nécessaires aux équipes et aux clients."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
@@ -14678,17 +14886,43 @@
           "interactionMode": "external_link"
         },
         {
-          "resourceSlug": "notion",
+          "resourceSlug": "canva",
           "resourceType": "software",
           "section": "software",
           "rank": 2,
+          "displayCategory": "Création contenu",
+          "description": "Création simple de visuels, présentations, documents et supports marketing.",
+          "ownerBenefit": "Décliner des modèles de marque dans des supports courants faciles à transmettre au client.",
+          "fitRationale": "Canva sert à produire et déléguer les déclinaisons courantes ; Figma reste la source de conception et de validation du système visuel.",
+          "checksBeforeChoosing": [
+            "Organiser les droits, modèles partagés et règles d’usage de la marque.",
+            "Ne pas en faire la source unique des fichiers de conception et d’identité."
+          ],
+          "reviewedAt": "2026-08-04",
+          "evidenceUrls": [
+            "https://www.canva.com/"
+          ],
+          "catalogDestination": "https://www.canva.com/",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "editorialStatus": "selected",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "notion",
+          "resourceType": "software",
+          "section": "software",
+          "rank": 3,
           "displayCategory": "Gestion & équipe",
           "description": "Espace simple pour documenter les processus, suivre les projets et créer une base interne.",
           "ownerBenefit": "Créer un mini outil interne sans logiciel métier lourd.",
-          "fitRationale": "Pour studio branding / design, Notion couvre directement documents et notes et wikis internes.",
+          "fitRationale": "Notion documente briefs, décisions, règles de marque et livrables ; il ne remplace ni la conception dans Figma ni les déclinaisons dans Canva.",
           "checksBeforeChoosing": [
-            "Définir une structure simple",
-            "Éviter les bases trop complexes"
+            "Conserver une structure simple pour les briefs et guides de marque.",
+            "Ne pas l’utiliser comme stockage maître des fichiers créatifs."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [

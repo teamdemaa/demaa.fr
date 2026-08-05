@@ -60,7 +60,7 @@ describe("family solution selections", () => {
     });
     const placements = systems.flatMap(({ placements }) => placements);
 
-    expect(placements).toHaveLength(538);
+    expect(placements).toHaveLength(547);
     expect(placements.filter(({ resourceSlug }) => resourceSlug === "levier")).toHaveLength(81);
     for (const system of systems) {
       for (const section of ["software", "providers", "networks"] as const) {
@@ -99,7 +99,7 @@ describe("family solution selections", () => {
         commercialRelationship: "owned",
       });
     }
-    expect(placements.filter(({ resourceSlug }) => resourceSlug !== "levier")).toHaveLength(457);
+    expect(placements.filter(({ resourceSlug }) => resourceSlug !== "levier")).toHaveLength(466);
     expect(placements.filter(({ resourceType }) => resourceType === "directory")
       .every(({ section }) => section === "networks")).toBe(true);
     expect(JSON.stringify(systems)).not.toMatch(/capturedAt/);
@@ -120,7 +120,7 @@ describe("family solution selections", () => {
       ));
     });
 
-    expect(matchedPlacements).toHaveLength(32);
+    expect(matchedPlacements).toHaveLength(34);
     for (const placement of matchedPlacements) {
       expect(placement.catalogDestination).toBe(placement.evidenceUrls[0]);
       expect(placement.evidenceUrls).toContain(placement.catalogDestination);
@@ -169,7 +169,7 @@ describe("family solution selections", () => {
         : []
     );
 
-    expect(placements).toHaveLength(569);
+    expect(placements).toHaveLength(578);
     const violations = placements.flatMap((placement) =>
       forbiddenPublicClaims.test(JSON.stringify(placement))
         ? [`${placement.systemSlug}:${placement.resource.resourceSlug}`]
@@ -296,6 +296,75 @@ describe("family solution selections", () => {
       );
       expect(toolSelections.length, system.systemSlug).toBeLessThanOrEqual(5);
     }
+  });
+
+  it("curates the selected under-covered trades without widening the deferred set", () => {
+    const sectionOrder = ["software", "providers", "models", "networks"] as const;
+    const slugsFor = (systemSlug: string, section?: "software" | "networks") =>
+      getFamilySystemSolutionSelection(systemSlug)?.placements
+        .filter(({ resourceSlug, section: placementSection }) =>
+          resourceSlug !== "levier" && (!section || placementSection === section)
+        )
+        .sort((left, right) =>
+          sectionOrder.indexOf(left.section) - sectionOrder.indexOf(right.section)
+          || left.rank - right.rank
+        )
+        .map(({ resourceSlug }) => resourceSlug) ?? [];
+
+    expect(slugsFor("cabinet-qhse-conformite", "software"))
+      .toEqual(["bluekango", "kizeo-forms"]);
+    expect(slugsFor("daf-externalise", "software"))
+      .toEqual(["pennylane", "regate", "power-bi"]);
+    expect(slugsFor("bureau-etudes", "software"))
+      .toEqual(["everwin", "fieldwire"]);
+    expect(slugsFor("consultant-data-bi", "software"))
+      .toEqual(["power-bi", "n8n"]);
+    expect(slugsFor("integrateur-crm-erp", "software"))
+      .toEqual(["odoo", "hubspot", "make"]);
+    expect(slugsFor("reparation-informatique-mobile", "software"))
+      .toEqual(["repairdesk", "ninjaone"]);
+    expect(slugsFor("reparation-informatique-mobile", "networks"))
+      .toEqual(["numeum"]);
+    expect(slugsFor("studio-branding-design", "software"))
+      .toEqual(["figma", "canva", "notion"]);
+    expect(slugsFor("reparation-informatique-mobile"))
+      .not.toContain("sumup-caisse");
+
+    const reviewedAtByPlacement = new Map([
+      ["cabinet-qhse-conformite:kizeo-forms", "2026-08-04"],
+      ["daf-externalise:regate", "2026-07-02"],
+      ["daf-externalise:power-bi", "2026-08-04"],
+      ["bureau-etudes:fieldwire", "2026-07-02"],
+      ["consultant-data-bi:n8n", "2026-07-02"],
+      ["integrateur-crm-erp:hubspot", "2026-08-04"],
+      ["integrateur-crm-erp:make", "2026-07-02"],
+      ["reparation-informatique-mobile:ninjaone", "2026-08-04"],
+      ["reparation-informatique-mobile:numeum", "2026-08-04"],
+      ["studio-branding-design:canva", "2026-08-04"],
+    ]);
+    for (const [key, reviewedAt] of reviewedAtByPlacement) {
+      const [systemSlug, resourceSlug] = key.split(":");
+      const placement = getFamilySystemSolutionSelection(systemSlug)?.placements
+        .find((item) => item.resourceSlug === resourceSlug);
+      expect(placement, key).toMatchObject({
+        reviewedAt,
+        editorialStatus: "selected",
+        status: "draft",
+        commercialRelationship: "unknown",
+        publicationBlockers: ["commercial-relationship-unconfirmed"],
+        interactionMode: "external_link",
+      });
+      expect(placement?.evidenceUrls[0], key).toBe(placement?.catalogDestination);
+    }
+
+    expect(slugsFor("gestionnaire-paie-independant")).toEqual(["silae"]);
+    expect(slugsFor("societe-recouvrement")).toEqual(["leanpay"]);
+    expect(slugsFor("laverie-automatique")).toEqual(["washonline"]);
+    expect(slugsFor("investissement-entreprise")).toEqual([]);
+    expect(slugsFor("agence-seo")).toEqual(["semrush", "google-search-console"]);
+    expect(slugsFor("cabinet-rh-externalise")).toEqual(["lucca", "recruitee"]);
+    expect(slugsFor("centre-appels-support-client")).toEqual(["aircall", "zendesk"]);
+    expect(slugsFor("cabinet-etudes")).toEqual(["typeform", "power-bi", "medef-local"]);
   });
 
   it("only exposes pricing while its official capture is fresh", () => {
