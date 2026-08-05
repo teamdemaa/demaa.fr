@@ -219,7 +219,7 @@ function ApplicationPreview() {
         </div>
       </div>
       <p className="mt-4 text-center text-[10px] text-dema-muted sm:mt-10">
-        Exemple d’interface — le contenu dépend de votre processus.
+        Exemple d’interface : le contenu dépend de votre processus.
       </p>
     </div>
   );
@@ -246,7 +246,7 @@ export default function SurMesurePage() {
               <div className="mt-8 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-5">
                 <BookingButton
                   className="demaa-primary-button min-h-12 w-full gap-2 px-6 sm:w-auto"
-                  source="Page sur mesure — Hero"
+                  source="Page sur mesure : Hero"
                 />
                 <span className="text-xs text-dema-muted">{content.hero.reassurance}</span>
               </div>
@@ -495,7 +495,7 @@ export default function SurMesurePage() {
             <div className="shrink-0">
               <BookingButton
                 className="demaa-primary-button min-h-12 w-full gap-2 px-6 lg:w-auto"
-                source="Page sur mesure — Final"
+                source="Page sur mesure : Final"
               />
               <p className="mt-3 text-center text-xs text-dema-muted">{content.finalCta.reassurance}</p>
             </div>
