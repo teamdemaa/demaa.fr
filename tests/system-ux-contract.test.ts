@@ -79,16 +79,20 @@ describe("system UX contract", () => {
     expect(panelEnd).toBeGreaterThan(-1);
     expect(customOffer).toBeGreaterThan(panelEnd);
     expect(detailSource.match(/<SystemCustomOfferCta\b/g)).toHaveLength(1);
+    expect(detailSource).toContain("systemSlug={system.slug}");
     expect(detailSource).not.toMatch(
       /academyVideos|Académie Demaa|Comprendre les indicateurs de ce système|Lire la fiche/,
     );
     expect(customOfferSource).toContain(
-      "Besoin d’une application adaptée à votre métier ?",
+      "Besoin de prendre du recul sur votre organisation ?",
     );
-    expect(customOfferSource).toContain('href="/services"');
-    expect(customOfferSource).toContain("Voir les services");
+    expect(customOfferSource).toContain("Échangez 30 minutes avec un spécialiste Demaa");
+    expect(customOfferSource).toContain("30 minutes · Gratuit · Sans engagement");
+    expect(customOfferSource).toContain("OrganisationSessionBookingButton");
+    expect(customOfferSource).toContain('label="Réserver mon échange offert"');
+    expect(customOfferSource).toContain('sourceIsAuthoritative');
     expect(customOfferSource).not.toMatch(
-      /OrganisationSessionBookingButton|Réserver mon échange|filloutId|fillout\.com|https?:\/\//,
+      /href="\/services"|Voir les services|application sur mesure/,
     );
     expect(solutionsSource).not.toMatch(
       /SystemCustomOfferCta|Diagnostic offert|appel gratuit/,
