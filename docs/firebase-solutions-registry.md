@@ -93,6 +93,30 @@ isolé. Tant qu’un projet Firebase Preview distinct n’est pas configuré, to
 import distant est interdit, même pour une révision `draft` et même sans mise à
 jour du pointeur actif.
 
+Le projet Firebase isolé retenu pour cette recette est `demaa-preview-2026`,
+avec une base Firestore Standard en région `eur3`, des règles clientes fermées
+et la protection contre la suppression activée. L’import distant exige à la
+fois le projet attendu, le projet confirmé en argument, l’empreinte exacte du
+plan et le drapeau `--apply-draft`. Le projet de Production est refusé en dur.
+L’authentification distante utilise uniquement un jeton utilisateur éphémère
+fourni au processus d’import. Aucune clé de compte de service n’est créée ou
+conservée, et l’ADC partagé avec un autre projet n’est pas utilisé.
+
+## Recette Firebase Preview du 5 août 2026
+
+La révision brouillon a été importée puis relue dans `demaa-preview-2026` :
+
+- 849 documents créés lors du premier passage ;
+- 248 ressources et 600 placements relus et revalidés ;
+- empreinte source `fcb1da043ee2027b807b925766681f2a9c8565ab2795cbc8ffd9333a2193e545` ;
+- empreinte du plan `6f93e23c4ff9784abbd72e5b46728c3998e3cb1aa40f340fc65738d73466e1fb` ;
+- aucun pointeur actif créé ;
+- seconde exécution idempotente avec zéro écriture créée.
+
+Cette recette ne publie aucune recommandation et ne change pas le rendu des
+pages Systèmes. L’activation reste conditionnée à la validation éditoriale de
+chaque recommandation tierce.
+
 ## Activation et rollback
 
 1. Auditer et promouvoir explicitement les ressources et placements retenus.
