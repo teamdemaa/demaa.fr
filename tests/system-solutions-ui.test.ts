@@ -139,11 +139,11 @@ describe("system Solutions UI", () => {
     );
     const bySection = Object.groupBy(placements, ({ section }) => section);
 
-    expect(placements).toHaveLength(591);
-    expect(bySection.software).toHaveLength(305);
+    expect(placements).toHaveLength(598);
+    expect(bySection.software).toHaveLength(311);
     expect(bySection.providers).toHaveLength(82);
     expect(bySection.models).toHaveLength(115);
-    expect(bySection.networks).toHaveLength(89);
+    expect(bySection.networks).toHaveLength(90);
     expect(bySection.software?.every(({ resource }) => resource.resourceType === "software"))
       .toBe(true);
     expect(bySection.providers?.every(({ resource }) => resource.resourceType === "provider"))

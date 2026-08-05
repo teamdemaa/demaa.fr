@@ -227,7 +227,9 @@ describe("three-pilot draft Solutions registry", () => {
       expect(new Set(renderedSlugs)).toEqual(
         new Set([
           ...(selection?.placements ?? [])
-            .filter(({ resourceSlug }) => resourceSlug !== "levier")
+            .filter(({ resourceSlug, editorialStatus }) => (
+              resourceSlug !== "levier" && editorialStatus === "selected"
+            ))
             .map(({ resourceSlug }) => resourceSlug),
           "levier",
         ]),
