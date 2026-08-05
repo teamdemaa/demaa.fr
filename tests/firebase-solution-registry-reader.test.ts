@@ -90,6 +90,29 @@ describe("Firebase Solutions reader", () => {
     expect(warn).not.toHaveBeenCalled();
   });
 
+  it("normalizes Firestore collection order before validating the fingerprint", async () => {
+    const fallback = await modules.loadRevision({
+      forceLocal: true,
+      now: new Date("2026-08-05T12:00:00.000Z"),
+    });
+    const warn = vi.fn();
+    const revision = await modules.loadRevision({
+      forceLocal: false,
+      now: new Date("2026-08-05T12:00:00.000Z"),
+      fetchRemote: async () => ({
+        ...fallback,
+        resources: [...fallback.resources].reverse(),
+        placements: [...fallback.placements].reverse(),
+      }),
+      warn,
+    });
+
+    expect(revision.sourceFingerprint).toBe(fallback.sourceFingerprint);
+    expect(revision.resources).toEqual(fallback.resources);
+    expect(revision.placements).toEqual(fallback.placements);
+    expect(warn).not.toHaveBeenCalled();
+  });
+
   it("falls back when the remote revision is not active or is corrupted", async () => {
     const fallback = await modules.loadRevision({
       forceLocal: true,
