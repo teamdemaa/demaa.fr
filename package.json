@@ -108,6 +108,10 @@
     "sync:tool-directory": "node scripts/sync-tool-directory.mjs",
     "generate:operational-blueprints": "vite-node --config vitest.config.ts scripts/build-operational-workbook-blueprints.ts",
     "generate:operational-v2-pilots": "vite-node --config vitest.config.ts scripts/build-operational-workbook-v2-pilots.ts",
+    "generate:firebase-solutions-snapshot": "vite-node --config vite.firebase-registry.config.ts scripts/build-firebase-solution-registry-snapshot.ts --write",
+    "plan:firebase-solutions-import": "vite-node --config vite.firebase-registry.config.ts scripts/plan-firebase-solution-registry-import.ts",
+    "import:firebase-solutions-preview": "vite-node --config vite.firebase-registry.config.ts scripts/import-firebase-solution-registry-preview.ts",
+    "verify:firebase-solutions-emulator": "npx --yes firebase-tools emulators:exec --only firestore --project demo-demaa-solutions --config firebase.solutions-emulator.json \"vite-node --config vite.firebase-registry.config.ts scripts/verify-firebase-solution-registry-emulator.ts\"",
     "register:operational-assets": "node scripts/register-operational-system-assets.mjs"
   },
   "dependencies": {

@@ -26,14 +26,15 @@ async function readSource(path: string) {
 }
 
 describe("Services marketplace UI", () => {
-  it("keeps the product routes fail-closed while all seven offers are draft", async () => {
+  it("keeps draft detail routes closed while the public index uses the editorial landing", async () => {
     expect(getPublishedServiceOffersV2()).toEqual([]);
     expect(getPublishedServiceOfferV2BySlug("site-vitrine-prise-contact")).toBeNull();
     expect(generateStaticParams()).toEqual([]);
 
     const indexSource = await readSource("src/app/services/page.tsx");
     const detailSource = await readSource("src/app/services/[slug]/page.tsx");
-    expect(indexSource).toContain("if (offers.length === 0) notFound()");
+    expect(indexSource).toContain('import ServicesLandingPage from "@/components/ServicesLandingPage"');
+    expect(indexSource).toContain("return <ServicesLandingPage />");
     expect(detailSource).toContain("export const dynamicParams = false");
     expect(detailSource).toContain("if (!offer) notFound()");
   });
@@ -189,7 +190,7 @@ describe("Services marketplace UI", () => {
     const marketplaceSource = await readSource("src/components/ServicesMarketplace.tsx");
     const detailsSource = await readSource("src/components/ServiceOfferDetails.tsx");
     const formSource = await readSource("src/components/ServiceRequestForm.tsx");
-    expect(indexSource).toContain('from "@/lib/service-catalog-v2"');
+    expect(indexSource).not.toContain('from "@/lib/service-catalog-v2"');
     for (const source of [marketplaceSource, detailsSource, formSource]) {
       expect(source).not.toMatch(/service-catalog-v2(?:-contract|\.generated)?["']/);
       expect(source).not.toMatch(/service-catalog\.ts|service-catalog"/);
@@ -237,14 +238,16 @@ describe("Services marketplace UI", () => {
     expect(marketplaceSource).not.toContain("Voir le service");
     expect(marketplaceSource).not.toContain("ArrowRight");
     expect(marketplaceSource).not.toMatch(/\bposition\b/);
-    expect(indexSource).toContain("max-w-[883px]");
+    expect(indexSource).toContain("ServicesLandingPage");
+    const landingSource = await readSource("src/components/ServicesLandingPage.tsx");
+    expect(landingSource).toContain("max-w-6xl");
   });
 
   it("owns canonical metadata for the index and direct detail page", async () => {
     const indexSource = await readSource("src/app/services/page.tsx");
     const detailSource = await readSource("src/app/services/[slug]/page.tsx");
 
-    expect(indexSource).toContain("export function generateMetadata(): Metadata");
+    expect(indexSource).toContain("export const metadata: Metadata");
     expect(indexSource).toContain('alternates: { canonical: "/services" }');
     expect(indexSource).toContain('url: "/services"');
     expect(detailSource).toContain("alternates: { canonical }");

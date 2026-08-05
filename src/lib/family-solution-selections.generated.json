@@ -2348,21 +2348,49 @@
       ],
       "placements": [
         {
-          "resourceSlug": "secib",
+          "resourceSlug": "kleos",
           "resourceType": "software",
           "section": "software",
           "rank": 1,
-          "displayCategory": "Logiciel métier",
-          "description": "Logiciel de gestion pour cabinets d’avocats : dossiers, production, facturation et pilotage.",
-          "ownerBenefit": "Structurer la gestion quotidienne d’un cabinet d’avocat.",
-          "fitRationale": "Pour cabinet d’avocat, SECIB couvre directement gestion des dossiers et facturation.",
+          "displayCategory": "Gestion du cabinet",
+          "description": "Logiciel cloud pour centraliser dossiers, échéances, documents, temps, facturation et échanges RPVA.",
+          "ownerBenefit": "Réunir la gestion quotidienne du cabinet dans un outil cloud complet.",
+          "fitRationale": "Kleos convient aux cabinets qui veulent centraliser dossiers, documents, échéances, temps et facturation avec une connexion au RPVA.",
           "checksBeforeChoosing": [
-            "Prévoir reprise et paramétrage",
-            "Vérifier les modules nécessaires"
+            "Comparer le coût total par utilisateur et les frais de déploiement",
+            "Préparer la reprise des dossiers et des documents"
           ],
-          "reviewedAt": "2026-08-04",
+          "reviewedAt": "2026-08-05",
           "checkedAt": "2026-08-05",
-          "expiresAt": "2026-11-05",
+          "expiresAt": "2027-02-05",
+          "evidenceUrls": [
+            "https://www.wolterskluwer.com/fr-fr/solutions/kleos/logiciel-gestion-cabinet-avocat"
+          ],
+          "catalogDestination": "https://www.wolterskluwer.com/fr-fr/solutions/kleos/logiciel-gestion-cabinet-avocat",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "editorialStatus": "selected",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "secib",
+          "resourceType": "software",
+          "section": "software",
+          "rank": 2,
+          "displayCategory": "Gestion du cabinet",
+          "description": "Logiciel de gestion pour cabinets d’avocats : dossiers, production, facturation, RPVA et pilotage.",
+          "ownerBenefit": "Structurer et piloter l’ensemble de l’activité du cabinet.",
+          "fitRationale": "SECIB couvre le cycle de vie du dossier, la production documentaire, le suivi des temps, la facturation et le pilotage.",
+          "checksBeforeChoosing": [
+            "Vérifier la solution SECIB adaptée à la taille du cabinet",
+            "Prévoir le paramétrage et la reprise des données"
+          ],
+          "reviewedAt": "2026-08-05",
+          "checkedAt": "2026-08-05",
+          "expiresAt": "2027-02-05",
           "evidenceUrls": [
             "https://www.secib.fr/"
           ],
@@ -2376,19 +2404,47 @@
           "interactionMode": "external_link"
         },
         {
+          "resourceSlug": "jarvis-legal",
+          "resourceType": "software",
+          "section": "software",
+          "rank": 3,
+          "displayCategory": "Gestion du cabinet",
+          "description": "Logiciel tout-en-un pour gérer dossiers, clients, documents, temps, facturation et suivi de l’activité.",
+          "ownerBenefit": "Gérer la production et le pilotage du cabinet dans une interface moderne.",
+          "fitRationale": "Jarvis Legal convient aux cabinets qui recherchent une gestion cloud tout-en-un avec CRM, suivi des temps et facturation.",
+          "checksBeforeChoosing": [
+            "Vérifier les intégrations nécessaires au cabinet",
+            "Comparer les fonctions incluses dans chaque formule"
+          ],
+          "reviewedAt": "2026-08-05",
+          "checkedAt": "2026-08-05",
+          "expiresAt": "2027-02-05",
+          "evidenceUrls": [
+            "https://www.jarvis-legal.com/"
+          ],
+          "catalogDestination": "https://www.jarvis-legal.com/",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "editorialStatus": "selected",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
           "resourceSlug": "doctrine",
           "resourceType": "software",
           "section": "software",
-          "rank": 2,
-          "displayCategory": "Logiciel métier",
-          "description": "Plateforme d’IA juridique et de recherche documentaire pour avocats et juristes.",
-          "ownerBenefit": "Accélérer recherches, analyses et préparation de dossiers juridiques.",
-          "fitRationale": "Doctrine répond à un besoin opérationnel précis de cabinet d’avocat.",
+          "rank": 4,
+          "displayCategory": "Recherche juridique & IA",
+          "description": "Plateforme d’IA et de recherche juridique pour analyser les sources et préparer les dossiers.",
+          "ownerBenefit": "Accélérer la recherche et l’analyse juridique sans remplacer le logiciel de gestion du cabinet.",
+          "fitRationale": "Doctrine complète un logiciel de gestion lorsque la recherche, l’analyse des sources et la préparation juridique occupent une place importante.",
           "checksBeforeChoosing": [
             "Vérifier le besoin documentaire réel",
-            "Comparer les contenus inclus"
+            "Comparer les fonds et fonctionnalités inclus dans l’abonnement"
           ],
-          "reviewedAt": "2026-08-04",
+          "reviewedAt": "2026-08-05",
           "checkedAt": "2026-08-05",
           "expiresAt": "2027-02-05",
           "evidenceUrls": [

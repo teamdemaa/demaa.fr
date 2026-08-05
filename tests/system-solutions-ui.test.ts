@@ -139,8 +139,8 @@ describe("system Solutions UI", () => {
     );
     const bySection = Object.groupBy(placements, ({ section }) => section);
 
-    expect(placements).toHaveLength(598);
-    expect(bySection.software).toHaveLength(311);
+    expect(placements).toHaveLength(600);
+    expect(bySection.software).toHaveLength(313);
     expect(bySection.providers).toHaveLength(82);
     expect(bySection.models).toHaveLength(115);
     expect(bySection.networks).toHaveLength(90);
@@ -369,9 +369,9 @@ describe("system Solutions UI", () => {
     const detailSource = await readSource("src/components/SystemDetailContent.tsx");
     const solutionsSource = await readSource("src/components/SystemSolutionsTab.tsx");
 
-    expect(pageSource).toContain("getRenderableSolutionSectionsForSystem,");
+    expect(pageSource).toContain("getMigrationSafeRenderableSolutionSectionsForSystem,");
     expect(pageSource).toContain(
-      'from "@/lib/system-solutions-ui.server"',
+      'from "@/lib/firebase-solution-registry-selection.server"',
     );
     expect(pageSource).toContain("solutionSections={solutionSections}");
     expect(detailSource).not.toMatch(/solution-registry\.(?:server|contract)/);

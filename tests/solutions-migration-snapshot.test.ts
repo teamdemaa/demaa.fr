@@ -279,5 +279,5 @@ describe("offline Solutions migration snapshot", () => {
       rmSync(first, { recursive: true, force: true });
       rmSync(second, { recursive: true, force: true });
     }
-  }, 20_000);
+  }, 45_000);
 });

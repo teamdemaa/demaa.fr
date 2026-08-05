@@ -4,9 +4,9 @@ import Navbar from "@/components/Navbar";
 import SystemDetailContent from "@/components/SystemDetailContent";
 import { hasEditableOperationalSystemAsset } from "@/lib/editable-operational-system-assets.server";
 import {
-  getPublishedRenderableSolutionSectionsForSystem,
-  getRenderableSolutionSectionsForSystem,
-} from "@/lib/system-solutions-ui.server";
+  getMigrationSafePublishedSolutionSectionsForSystem,
+  getMigrationSafeRenderableSolutionSectionsForSystem,
+} from "@/lib/firebase-solution-registry-selection.server";
 import { normalizeSystemDetailTab } from "@/lib/system-detail-tabs";
 import {
   buildSystemPageIntro,
@@ -29,7 +29,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const [data, solutionSections] = await Promise.all([
     getSystemDetailPageData(slug),
-    getPublishedRenderableSolutionSectionsForSystem(slug),
+    getMigrationSafePublishedSolutionSectionsForSystem(slug),
   ]);
 
   if (!data) {
@@ -52,8 +52,8 @@ export default async function OperationalKitPage({
   const [{ slug }, resolvedSearchParams] = await Promise.all([params, searchParams]);
   const [data, solutionSections, publishedSolutionSections] = await Promise.all([
     getSystemDetailPageData(slug),
-    getRenderableSolutionSectionsForSystem(slug),
-    getPublishedRenderableSolutionSectionsForSystem(slug),
+    getMigrationSafeRenderableSolutionSectionsForSystem(slug),
+    getMigrationSafePublishedSolutionSectionsForSystem(slug),
   ]);
 
   if (!data) {
