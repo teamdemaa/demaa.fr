@@ -65,7 +65,7 @@ function parseActivePointer(input: unknown) {
   };
 }
 
-async function fetchRemoteRevisionFromFirestore() {
+export async function fetchActiveFirebaseSolutionRegistryRevisionFromFirestore() {
   const database = getAdminFirestore();
   const [pointerCollection, pointerDocument] =
     FIREBASE_SOLUTION_REGISTRY_ACTIVE_POINTER.split("/");
@@ -112,7 +112,9 @@ export async function loadFirebaseSolutionRegistryRevision(
     return validatedSnapshot(now);
   }
   try {
-    const remote = await (dependencies.fetchRemote ?? fetchRemoteRevisionFromFirestore)();
+    const remote = await (
+      dependencies.fetchRemote ?? fetchActiveFirebaseSolutionRegistryRevisionFromFirestore
+    )();
     const parsed = parseFirebaseSolutionRegistryRevision(remote);
     const errors = validateFirebaseSolutionRegistryRevision(parsed, {
       expectedSystemSlugs: EXPECTED_SYSTEM_SLUGS,

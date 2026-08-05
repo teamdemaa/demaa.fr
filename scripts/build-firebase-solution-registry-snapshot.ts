@@ -1,9 +1,26 @@
 import { writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 
-import { buildFirebaseSolutionRegistryMigrationRevision } from "@/lib/firebase-solution-registry-migration.server";
+import { enterpriseCatalog } from "@/lib/enterprise-annuaire";
+import {
+  validateFirebaseSolutionRegistryRevision,
+} from "@/lib/firebase-solution-registry-contract";
+import {
+  fetchActiveFirebaseSolutionRegistryRevisionFromFirestore,
+} from "@/lib/firebase-solution-registry.server";
 
-const revision = buildFirebaseSolutionRegistryMigrationRevision();
+if (!process.argv.includes("--write")) {
+  throw new Error("Export requires --write and reads only the active Firebase revision.");
+}
+
+const revision = await fetchActiveFirebaseSolutionRegistryRevisionFromFirestore();
+const validationErrors = validateFirebaseSolutionRegistryRevision(revision, {
+  expectedSystemSlugs: enterpriseCatalog.map(({ slug }) => slug),
+  requirePublishedRevision: true,
+});
+if (validationErrors.length > 0) {
+  throw new Error(`Active Firebase Solutions revision is invalid:\n${validationErrors.join("\n")}`);
+}
 const outputPath = fileURLToPath(
   new URL(
     "../src/lib/firebase-solution-registry.snapshot.generated.json",
@@ -19,9 +36,5 @@ const summary = {
   sourceFingerprint: revision.sourceFingerprint,
 };
 
-if (process.argv.includes("--write")) {
-  await writeFile(outputPath, `${JSON.stringify(revision, null, 2)}\n`, "utf8");
-  console.log(JSON.stringify({ mode: "write", outputPath, summary }, null, 2));
-} else {
-  console.log(JSON.stringify({ mode: "dry-run", summary }, null, 2));
-}
+await writeFile(outputPath, `${JSON.stringify(revision, null, 2)}\n`, "utf8");
+console.log(JSON.stringify({ mode: "firebase-export", outputPath, summary }, null, 2));

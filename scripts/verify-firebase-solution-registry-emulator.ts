@@ -24,8 +24,8 @@ if (process.env.GCLOUD_PROJECT && process.env.GCLOUD_PROJECT !== EMULATOR_PROJEC
 
 const revision = parseFirebaseSolutionRegistryRevision(snapshot);
 const plan = buildFirestoreSolutionRegistryImportPlan(revision);
-if (plan.revisionStatus !== "draft" || plan.activation !== null) {
-  throw new Error("Emulator verification accepts only a draft plan without activation.");
+if (plan.revisionStatus !== "published" || !plan.activation) {
+  throw new Error("Emulator verification requires a complete active revision plan.");
 }
 
 if (getApps().length === 0) initializeApp({ projectId: EMULATOR_PROJECT_ID });
@@ -38,6 +38,7 @@ for (const writeBatch of plan.writeBatches) {
   }
   await batch.commit();
 }
+await firestore.doc(plan.activation.path).set(plan.activation.data);
 
 const [pointerSnapshot, metadataSnapshot, resourcesSnapshot, placementsSnapshot] =
   await Promise.all([
@@ -59,8 +60,12 @@ const [pointerSnapshot, metadataSnapshot, resourcesSnapshot, placementsSnapshot]
       .get(),
   ]);
 
-if (pointerSnapshot.exists) {
-  throw new Error("The draft import unexpectedly created an active pointer.");
+if (
+  !pointerSnapshot.exists ||
+  pointerSnapshot.get("revisionId") !== revision.revisionId ||
+  pointerSnapshot.get("sourceFingerprint") !== revision.sourceFingerprint
+) {
+  throw new Error("The active pointer does not match the sealed revision.");
 }
 if (!metadataSnapshot.exists) throw new Error("Imported revision metadata is missing.");
 
