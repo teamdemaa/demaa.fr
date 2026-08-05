@@ -84,6 +84,8 @@ describe("system process accordion", () => {
       "Les rendez-vous opérationnels à installer pour piloter l’activité",
     );
     expect(html).toContain('aria-label="Routines du système"');
+    expect(html).toContain("font-light");
+    expect(html).not.toContain("font-semibold leading-snug");
     expect(html).toContain(">01<");
     expect(html).toContain(">02<");
     expect(html).not.toContain("01.01");
