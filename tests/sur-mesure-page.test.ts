@@ -15,15 +15,15 @@ vi.mock("@/components/OrganisationSessionBookingButton", () => ({
   ),
 }));
 
-import SurMesurePage, { metadata } from "@/app/sur-mesure/page";
+import SurMesurePage, { metadata } from "@/app/page";
 import { surMesurePageContent as content } from "@/lib/sur-mesure-page-content";
 
 describe("Sur mesure commercial page", () => {
   it("publishes canonical metadata for the application offer", () => {
     expect(metadata).toMatchObject({
       title: "Application métier sur mesure | Demaa",
-      alternates: { canonical: "/sur-mesure" },
-      openGraph: { url: "/sur-mesure", type: "website" },
+      alternates: { canonical: "/" },
+      openGraph: { url: "/", type: "website" },
     });
   });
 
@@ -85,7 +85,7 @@ describe("Sur mesure commercial page", () => {
     ]);
   });
 
-  it("keeps attribution, the sitemap and the former permanent redirect aligned", async () => {
+  it("keeps attribution, the sitemap and legacy redirects aligned", async () => {
     const [pageSource, buttonSource, sitemapSource, nextConfigSource] = await Promise.all([
       readFile(new URL("../src/app/sur-mesure/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/OrganisationSessionBookingButton.tsx", import.meta.url), "utf8"),
@@ -100,9 +100,13 @@ describe("Sur mesure commercial page", () => {
     expect(buttonSource).toContain('searchParams.get("source") || source');
     expect(buttonSource).toContain("getFilloutAttributionParameters");
     expect(buttonSource).toContain('searchParams.get("systemSlug")');
-    expect(sitemapSource).toContain("`${base}/sur-mesure`");
-    expect(sitemapSource).not.toContain("`${base}/accompagnement`");
-    expect(nextConfigSource).toContain("source: '/accompagnement'");
-    expect(nextConfigSource).toContain("destination: '/sur-mesure'");
+    expect(sitemapSource).not.toContain("`${base}/sur-mesure`");
+    expect(sitemapSource).toContain("`${base}/systemes`");
+    expect(nextConfigSource).toMatch(
+      /source: '\/accompagnement',[\s\S]*?destination: '\/',/,
+    );
+    expect(nextConfigSource).toMatch(
+      /source: '\/sur-mesure',[\s\S]*?destination: '\/',/,
+    );
   });
 });

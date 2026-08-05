@@ -489,8 +489,8 @@ export function buildSystemPageJsonLd(
         {
           "@type": "ListItem",
           position: 2,
-          name: "Systèmes opérationnels",
-          item: "https://demaa.fr/kits-operationnels",
+          name: "Systèmes métier",
+          item: "https://demaa.fr/systemes",
         },
         {
           "@type": "ListItem",

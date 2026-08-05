@@ -60,7 +60,8 @@ export default function FinanceDetailContent({
           <p className="mt-4 text-sm leading-relaxed text-dema-muted md:text-base">
             {item.shortDescription}
           </p>
-          <p className="mt-5 text-sm leading-relaxed text-dema-muted md:text-base">
+          <h3 className="mt-5 text-sm font-semibold text-brand-blue">Idéal pour</h3>
+          <p className="mt-2 text-sm leading-relaxed text-dema-muted md:text-base">
             {item.bestFor}
           </p>
         </div>

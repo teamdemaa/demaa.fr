@@ -39,14 +39,14 @@ describe("system navigation performance contract", () => {
     const detailSource = await readSource("src/components/SystemDetailContent.tsx");
 
     expect(searchSource).not.toContain("prefetch={false}");
-    expect(detailSource).toContain('<Link\n          href="/"');
+    expect(detailSource).toContain('<Link\n          href="/systemes"');
     expect(detailSource).toContain("Retour aux systèmes");
     expect(detailSource).not.toContain("router.back()");
   });
 
   it("uses the validated system métier wording on the homepage", async () => {
     const [pageSource, searchSource] = await Promise.all([
-      readSource("src/app/page.tsx"),
+      readSource("src/app/systemes/page.tsx"),
       readSource("src/components/SystemSearchHero.tsx"),
     ]);
 

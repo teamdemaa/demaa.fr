@@ -95,7 +95,7 @@ export default function SystemDetailContent({
     <>
       <article className="w-full max-w-[55.2rem]">
         <Link
-          href="/"
+          href="/systemes"
           className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-dema-muted transition hover:text-dema-forest"
         >
           <ArrowLeft className="h-4 w-4" aria-hidden="true" />

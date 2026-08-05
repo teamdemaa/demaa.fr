@@ -43,12 +43,27 @@ const nextConfig: NextConfig = {
       ...ACADEMY_PERMANENT_REDIRECTS,
       {
         source: '/accompagnement',
-        destination: '/sur-mesure',
+        destination: '/',
         permanent: true,
       },
       {
-        source: '/systemes',
+        source: '/sur-mesure',
         destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/systemes-operationnels',
+        destination: '/systemes',
+        permanent: true,
+      },
+      {
+        source: '/kits-operationnels',
+        destination: '/systemes',
+        permanent: true,
+      },
+      {
+        source: '/systemes-operationnels/:slug',
+        destination: '/kit-operationnel/:slug',
         permanent: true,
       },
       {

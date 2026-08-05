@@ -26,7 +26,7 @@ export const surMesurePageContent = {
     ],
   },
   benefits: {
-    title: "Un outil qui suit votre façon de travailler.",
+    title: "Pour que votre entreprise dépende moins de vous.",
     items: [
       {
         title: "Un processus plus simple à suivre",

@@ -82,7 +82,7 @@ describe("academy course content", () => {
   it("uses a truthful Levier fallback until a neutral Academy trigger exists", () => {
     const action = getAcademyContentBySlug("piloter-sa-tresorerie")?.action;
     expect(action).not.toBeNull();
-    expect(getAcademyActionHref(action!)).toBe("/kits-operationnels");
+    expect(getAcademyActionHref(action!)).toBe("/systemes");
     expect(getAcademyActionLabel(action!)).toBe(
       "Trouver mon système pour recevoir Levier",
     );

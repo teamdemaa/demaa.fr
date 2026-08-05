@@ -2,9 +2,9 @@ import { readFile } from "node:fs/promises";
 import { describe, expect, it } from "vitest";
 import { getNavbarActiveSection } from "@/components/Navbar";
 
-describe("permanent systems, Academy and Sur mesure navbar", () => {
+describe("conventional systems and Academy navbar", () => {
   it("marks system discovery pages as active", () => {
-    expect(getNavbarActiveSection("/")).toBe("systems");
+    expect(getNavbarActiveSection("/systemes")).toBe("systems");
     expect(getNavbarActiveSection("/kits-operationnels")).toBe("systems");
     expect(getNavbarActiveSection("/kit-operationnel/batiment")).toBe(
       "systems",
@@ -24,17 +24,14 @@ describe("permanent systems, Academy and Sur mesure navbar", () => {
     );
   });
 
-  it("marks the canonical Sur mesure page and its former URL as active", () => {
-    expect(getNavbarActiveSection("/sur-mesure")).toBe("sur-mesure");
-    expect(getNavbarActiveSection("/accompagnement")).toBe("sur-mesure");
-  });
-
   it("does not mark a section active on neutral routes", () => {
+    expect(getNavbarActiveSection("/")).toBeNull();
+    expect(getNavbarActiveSection("/sur-mesure")).toBeNull();
     expect(getNavbarActiveSection("/annuaire-services")).toBeNull();
     expect(getNavbarActiveSection("/annuaire-outils")).toBeNull();
   });
 
-  it("always renders the three tabs without legacy contextual actions", async () => {
+  it("renders two familiar navbar actions and keeps the logo as home", async () => {
     const source = await readFile(
       new URL("../src/components/Navbar.tsx", import.meta.url),
       "utf8",
@@ -42,32 +39,23 @@ describe("permanent systems, Academy and Sur mesure navbar", () => {
 
     expect(source).toContain("Workflow");
     expect(source).toContain("BookOpen");
-    expect(source).toContain("PencilRuler");
-    expect(source).toContain("<span>Systèmes</span>");
-    expect(source).toContain("<span>Academy</span>");
-    expect(source).toContain("<span>Sur mesure</span>");
-    expect(source.indexOf("<span>Systèmes</span>")).toBeLessThan(
-      source.indexOf("<span>Sur mesure</span>"),
-    );
-    expect(source.indexOf("<span>Sur mesure</span>")).toBeLessThan(
-      source.indexOf("<span>Academy</span>"),
-    );
-    expect(source).toContain('href="/sur-mesure"');
+    expect(source).not.toContain("PencilRuler");
+    expect(source).toContain("Voir les systèmes");
+    expect(source).toContain("Découvrir l’Académie");
+    expect(source).toContain('href="/systemes"');
+    expect(source).toContain('href="/academie"');
     expect(source).toContain('aria-current={activeSection === "systems"');
     expect(source).toContain('aria-current={activeSection === "academy"');
-    expect(source).toContain('aria-current={activeSection === "sur-mesure"');
-    expect(source).toContain("data-navbar-section-selector");
-    expect(source).toContain("max-w-[55.2rem]");
-    expect(source).toContain("grid-cols-3");
+    expect(source).not.toContain('aria-current={activeSection === "sur-mesure"');
+    expect(source).not.toContain("data-navbar-section-selector");
+    expect(source).toContain("justify-between");
     expect(source).toContain("bg-dema-sage text-dema-forest");
-    expect(source).toContain("border border-dema-line bg-dema-paper p-1");
-    expect(source).not.toContain("md:absolute md:left-1/2");
     expect(source).not.toContain("Voir les services");
     expect(source).not.toContain("Trouver mon système");
-    expect(source).not.toContain("Découvrir l’Académie");
+    expect(source).not.toContain("Sur mesure</span>");
   });
 
-  it("keeps the permanent selector on system detail and loading states", async () => {
+  it("keeps the navbar on system detail and loading states", async () => {
     const [pageSource, loadingSource] = await Promise.all([
       readFile(new URL("../src/app/kit-operationnel/[slug]/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/app/kit-operationnel/[slug]/loading.tsx", import.meta.url), "utf8"),
@@ -77,5 +65,24 @@ describe("permanent systems, Academy and Sur mesure navbar", () => {
     expect(loadingSource).toContain("<Navbar minimal />");
     expect(pageSource.indexOf("<Navbar minimal />")).toBeLessThan(pageSource.indexOf("<main"));
     expect(loadingSource.indexOf("<Navbar minimal />")).toBeLessThan(loadingSource.indexOf("<main"));
+  });
+
+  it("keeps one canonical URL for each main universe", async () => {
+    const [homeSource, systemsSource, nextConfigSource] = await Promise.all([
+      readFile(new URL("../src/app/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/systemes/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../next.config.ts", import.meta.url), "utf8"),
+    ]);
+
+    expect(homeSource).toContain(
+      'export { default, metadata } from "@/app/sur-mesure/page"',
+    );
+    expect(systemsSource).toContain('canonical: "/systemes"');
+    expect(nextConfigSource).not.toMatch(
+      /source: '\/systemes',[\s\S]*?destination: '\/',/,
+    );
+    expect(nextConfigSource).toMatch(
+      /source: '\/kits-operationnels',[\s\S]*?destination: '\/systemes',/,
+    );
   });
 });

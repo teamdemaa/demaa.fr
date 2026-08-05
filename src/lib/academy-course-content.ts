@@ -186,7 +186,7 @@ export function getAcademyActionHref(action: AcademyAction) {
   }
 
   if (action.resourceId === "levier") {
-    return "/kits-operationnels";
+    return "/systemes";
   }
 
   return "/";

@@ -260,10 +260,6 @@ export default function ToolDirectoryClient({
                   {tool.description}
                 </p>
 
-                <p className="mt-2 text-xs font-normal leading-relaxed text-brand-blue/65">
-                  {tool.bestFor}
-                </p>
-
                 <div className="mt-3 flex flex-wrap gap-2">
                   {showSectorTags
                     ? (tool.sectors.length > 2 ? ["Transverse"] : tool.sectors)

@@ -26,11 +26,11 @@ const description =
 export const metadata: Metadata = {
   title,
   description,
-  alternates: { canonical: "/sur-mesure" },
+  alternates: { canonical: "/" },
   openGraph: {
     title,
     description,
-    url: "/sur-mesure",
+    url: "/",
     siteName: "Demaa",
     locale: "fr_FR",
     type: "website",
@@ -219,7 +219,7 @@ function ApplicationPreview() {
   );
 }
 
-export default function SurMesurePage() {
+export default function SurMesureLandingPage() {
   return (
     <>
       <Navbar />
@@ -237,7 +237,7 @@ export default function SurMesurePage() {
               <p className="mt-6 max-w-xl text-base leading-7 text-dema-muted sm:text-lg sm:leading-8">
                 {content.hero.introduction}
               </p>
-              <div className="mt-8 flex w-full flex-col items-center gap-2.5">
+              <div className="mt-8 flex w-full flex-col items-center gap-2.5 lg:w-fit">
                 <BookingButton
                   className="demaa-primary-button min-h-12 min-w-44 gap-2 px-8"
                   source="Page sur mesure : Hero"
