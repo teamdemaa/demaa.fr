@@ -134,6 +134,26 @@ Cette activation ne promeut aucune recommandation tierce : leurs statuts
 `draft`, relations `unknown` et blocages restent inchangés. Elle déplace
 uniquement la source de lecture vers Firebase avec une parité de rendu 115/115.
 
+## Activation Firebase Production du 5 août 2026
+
+La même révision scellée a été importée puis activée dans le projet canonique
+`demaa-dde32` :
+
+- protection contre la suppression activée sur la base `(default)` en `eur3` ;
+- 849 documents créés, puis 248 ressources et 600 placements relus ;
+- seconde exécution idempotente avec zéro écriture créée ;
+- pointeur actif conforme aux empreintes Preview ci-dessus ;
+- audit HTTP Production : 115 pages Process et 115 pages Solutions en 200,
+  600 cartes Solutions, 115 placements Levier et zéro échec.
+
+Les fonctions Vercel Production utilisent le provider OIDC
+`demaa-fr-production`, limité au projet Vercel `demaa-fr` et à
+`environment=production`. Il peut uniquement emprunter le compte sans clé
+`demaa-solutions-prod-reader`, lui-même limité à
+`roles/datastore.viewer`. Les identifiants privés historiques peuvent être
+retirés de Production après validation du premier déploiement utilisant cette
+identité.
+
 ## Activation et rollback
 
 1. Construire une nouvelle révision immuable et vérifier son empreinte.
