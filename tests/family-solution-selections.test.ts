@@ -60,7 +60,7 @@ describe("family solution selections", () => {
     });
     const placements = systems.flatMap(({ placements }) => placements);
 
-    expect(placements).toHaveLength(542);
+    expect(placements).toHaveLength(538);
     expect(placements.filter(({ resourceSlug }) => resourceSlug === "levier")).toHaveLength(81);
     for (const system of systems) {
       for (const section of ["software", "providers", "networks"] as const) {
@@ -154,7 +154,7 @@ describe("family solution selections", () => {
         : []
     );
 
-    expect(placements).toHaveLength(573);
+    expect(placements).toHaveLength(569);
     const violations = placements.flatMap((placement) =>
       forbiddenPublicClaims.test(JSON.stringify(placement))
         ? [`${placement.systemSlug}:${placement.resource.resourceSlug}`]
@@ -236,6 +236,39 @@ describe("family solution selections", () => {
     expect(regulatedGaps.every(({ auditedOfficialUrl, checkedAt, expiresAt }) =>
       auditedOfficialUrl?.startsWith("https://") && checkedAt && expiresAt
     )).toBe(true);
+  });
+
+  it("maps verified suppliers to their exact trades and caps BTP tool selections", () => {
+    const providerSlugsFor = (systemSlug: string) =>
+      getFamilySystemSolutionSelection(systemSlug)?.placements
+        .filter(({ section }) => section === "providers")
+        .sort((left, right) => left.rank - right.rank)
+        .map(({ resourceSlug }) => resourceSlug) ?? [];
+
+    expect(providerSlugsFor("menuiserie-agencement")).toEqual([
+      "dispano-bois",
+      "legallais-quincaillerie",
+    ]);
+    expect(providerSlugsFor("serrurier")).toEqual(["legallais-quincaillerie"]);
+    expect(providerSlugsFor("climatisation")).toEqual(["clim-plus"]);
+    expect(providerSlugsFor("pisciniste")).toEqual(["scp-france-piscine"]);
+    expect(providerSlugsFor("garage-automobile")).toEqual(["autodistribution-pro"]);
+    expect(providerSlugsFor("carrosserie")).toEqual(["autodistribution-pro"]);
+    expect(providerSlugsFor("fleuriste")).toEqual(["france-fleurs-pro"]);
+    expect(providerSlugsFor("librairie")).toEqual(["dilisco-livres"]);
+    expect(providerSlugsFor("tabac-presse-point-relais")).toEqual(["logista-france"]);
+
+    const btpSystems = enterpriseCatalog.flatMap(({ slug }) => {
+      const system = getFamilySystemSolutionSelection(slug);
+      return system?.family === "btp-travaux-ingenierie" ? [system] : [];
+    });
+    expect(btpSystems).toHaveLength(15);
+    for (const system of btpSystems) {
+      const toolSelections = system.placements.filter(
+        ({ resourceSlug, section }) => resourceSlug !== "levier" && section === "software",
+      );
+      expect(toolSelections.length, system.systemSlug).toBeLessThanOrEqual(5);
+    }
   });
 
   it("only exposes pricing while its official capture is fresh", () => {

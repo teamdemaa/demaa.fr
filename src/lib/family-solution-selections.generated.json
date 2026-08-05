@@ -3173,10 +3173,10 @@
           "displayCategory": "Logiciel métier",
           "description": "Logiciel de gestion et pilotage dédié aux activités de carrosserie.",
           "ownerBenefit": "Piloter dossiers, ateliers et activité carrosserie.",
-          "fitRationale": "Repair Soft répond à un besoin concret de carrosserie sans imposer une solution générique à toute l'activité.",
+          "fitRationale": "Repair Soft cible le pilotage des dossiers et de l’atelier dans une activité de carrosserie.",
           "checksBeforeChoosing": [
-            "Solution spécialisée carrosserie",
-            "Prévoir la reprise des dossiers"
+            "Vérifier la reprise des dossiers et référentiels existants.",
+            "Tester les étapes propres au fonctionnement de l’atelier."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
@@ -3198,10 +3198,10 @@
           "displayCategory": "Logiciel métier",
           "description": "Logiciel de gestion pour garages et carrosseries : dossiers, devis, factures, sinistres et scan IA.",
           "ownerBenefit": "Créer dossiers, devis et factures plus vite pour garage ou carrosserie.",
-          "fitRationale": "Embray répond à un besoin concret de carrosserie sans imposer une solution générique à toute l'activité.",
+          "fitRationale": "Embray privilégie la création rapide des dossiers, devis et factures, avec prise en charge des sinistres.",
           "checksBeforeChoosing": [
-            "Vérifier le périmètre garage/carrosserie",
-            "Tester les fonctions de facturation"
+            "Vérifier le périmètre exact des fonctions garage et carrosserie.",
+            "Tester la facturation et le traitement d’un dossier sinistre complet."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
@@ -3236,6 +3236,31 @@
           "status": "published",
           "publicationBlockers": [],
           "interactionMode": "system_delivery"
+        },
+        {
+          "resourceSlug": "autodistribution-pro",
+          "resourceType": "provider",
+          "section": "providers",
+          "rank": 1,
+          "displayCategory": "Distributeur de pièces et peinture automobile",
+          "description": "Pièces automobiles, peinture, pneumatiques et équipement pour les réparateurs.",
+          "ownerBenefit": "Approvisionner la carrosserie en pièces, peinture et équipements d’atelier.",
+          "fitRationale": "Autodistribution Pro répond à l’approvisionnement physique de la carrosserie ; Repair Soft et Embray couvrent les dossiers et le pilotage.",
+          "checksBeforeChoosing": [
+            "Vérifier l’offre peinture et carrosserie disponible auprès du distributeur local.",
+            "Comparer délais, retours de pièces et conditions professionnelles."
+          ],
+          "reviewedAt": "2026-08-04",
+          "evidenceUrls": [
+            "https://pro.autodistribution.fr/services-aux-professionnels"
+          ],
+          "catalogDestination": "https://pro.autodistribution.fr/services-aux-professionnels",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
         },
         {
           "resourceSlug": "mobilians",
@@ -3765,10 +3790,10 @@
           "displayCategory": "Logiciel métier",
           "description": "Logiciel pour installateurs avec devis, factures, commandes, interventions SAV et suivi d'affaires.",
           "ownerBenefit": "Piloter une activité d'installation, d'intervention et de chantier dans le second oeuvre.",
-          "fitRationale": "Esabora répond à un besoin concret de climatisation sans imposer une solution générique à toute l'activité.",
+          "fitRationale": "Esabora réunit devis, factures, commandes et SAV pour piloter les affaires d’installation CVC.",
           "checksBeforeChoosing": [
-            "Prévoir le paramétrage métier",
-            "Vérifier les modules nécessaires"
+            "Vérifier les modules utiles à l’installation et à la maintenance.",
+            "Tester le suivi d’une affaire et la reprise des données existantes."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
@@ -3790,10 +3815,10 @@
           "displayCategory": "Logiciel métier",
           "description": "Gestion des interventions terrain, plannings, tournées et comptes rendus mobiles.",
           "ownerBenefit": "Planifier les équipes terrain et suivre les interventions en mobilité.",
-          "fitRationale": "Pour climatisation, Praxedo couvre directement planification des équipes terrain et suivi d’activité en temps réel.",
+          "fitRationale": "Praxedo cible la planification et le suivi en temps réel d’une équipe de techniciens itinérants.",
           "checksBeforeChoosing": [
-            "Dimensionner le nombre d'intervenants",
-            "Prévoir le paramétrage des workflows"
+            "Dimensionner les licences selon le nombre de techniciens.",
+            "Vérifier l’intégration avec le socle de devis et de facturation."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
@@ -3837,10 +3862,10 @@
           "displayCategory": "Logiciel métier",
           "description": "Formulaires terrain digitaux pour chantiers, interventions, relevés, contrôles et rapports personnalisés.",
           "ownerBenefit": "Remplacer les formulaires papier par des rapports terrain structurés.",
-          "fitRationale": "Pour climatisation, Kizeo Forms couvre directement formulaires terrain sur mesure et collecte de donnees.",
+          "fitRationale": "Kizeo Forms sert de complément terrain pour les mises en service, relevés et comptes rendus personnalisés.",
           "checksBeforeChoosing": [
-            "Préparer les formulaires terrain",
-            "Ne remplace pas un ERP métier"
+            "Préparer les modèles de rapport avant déploiement.",
+            "Ne pas le confondre avec un ERP ou un outil complet de planification."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
@@ -3855,98 +3880,23 @@
           "interactionMode": "external_link"
         },
         {
-          "resourceSlug": "cedeo-pro",
+          "resourceSlug": "clim-plus",
           "resourceType": "provider",
           "section": "providers",
           "rank": 1,
-          "displayCategory": "Fournisseur plomberie, chauffage et sanitaire",
-          "description": "Sanitaire, chauffage, plomberie et ventilation pour professionnels du bâtiment.",
-          "ownerBenefit": "Regrouper les achats techniques de plomberie, chauffage, sanitaire et ventilation.",
-          "fitRationale": "Catalogue spécialisé pour installateurs et mainteneurs.",
+          "displayCategory": "Distributeur génie climatique",
+          "description": "Climatisation, ventilation et chauffage réservés aux professionnels.",
+          "ownerBenefit": "Centraliser équipements CVC, pièces, accessoires et outillage technique.",
+          "fitRationale": "Clim+ couvre l’approvisionnement spécialisé en génie climatique, distinct de la gestion commerciale et du suivi des interventions.",
           "checksBeforeChoosing": [
-            "Vérifier le stock local",
-            "Comparer les conditions professionnelles"
+            "Vérifier la disponibilité des marques et pièces dans l’agence locale.",
+            "Comparer assistance technique, livraison chantier et conditions professionnelles."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
-            "https://www.cedeo.fr/notre-enseigne"
+            "https://www.climplus.com/clim-nous-connaitre/clim-notre-enseigne"
           ],
-          "catalogDestination": "https://www.cedeo.fr/notre-enseigne",
-          "commercialRelationship": "unknown",
-          "status": "draft",
-          "publicationBlockers": [
-            "commercial-relationship-unconfirmed"
-          ],
-          "interactionMode": "external_link"
-        },
-        {
-          "resourceSlug": "rexel",
-          "resourceType": "provider",
-          "section": "providers",
-          "rank": 2,
-          "displayCategory": "Fournisseur de matériel électrique",
-          "description": "Matériel électrique et solutions énergie.",
-          "ownerBenefit": "Acheter matériel électrique et solutions énergie auprès d'un réseau spécialisé.",
-          "fitRationale": "Pertinent pour électriciens et activités techniques connexes.",
-          "checksBeforeChoosing": [
-            "Vérifier le stock agence",
-            "Comparer les conditions professionnelles"
-          ],
-          "reviewedAt": "2026-08-04",
-          "evidenceUrls": [
-            "https://www.rexel.fr/"
-          ],
-          "catalogDestination": "https://www.rexel.fr/",
-          "commercialRelationship": "unknown",
-          "status": "draft",
-          "publicationBlockers": [
-            "commercial-relationship-unconfirmed"
-          ],
-          "interactionMode": "external_link"
-        },
-        {
-          "resourceSlug": "wurth",
-          "resourceType": "provider",
-          "section": "providers",
-          "rank": 3,
-          "displayCategory": "Fournisseur d’outillage et de consommables",
-          "description": "Consommables, visserie, outillage et EPI.",
-          "ownerBenefit": "Réapprovisionner outillage, fixations, consommables et EPI.",
-          "fitRationale": "Pertinent pour les besoins récurrents de petites équipes terrain.",
-          "checksBeforeChoosing": [
-            "Vérifier les références métier",
-            "Comparer les conditions professionnelles"
-          ],
-          "reviewedAt": "2026-08-04",
-          "evidenceUrls": [
-            "https://eshop.wurth.fr/"
-          ],
-          "catalogDestination": "https://eshop.wurth.fr/",
-          "commercialRelationship": "unknown",
-          "status": "draft",
-          "publicationBlockers": [
-            "commercial-relationship-unconfirmed"
-          ],
-          "interactionMode": "external_link"
-        },
-        {
-          "resourceSlug": "kiloutou",
-          "resourceType": "provider",
-          "section": "providers",
-          "rank": 4,
-          "displayCategory": "Location de matériel",
-          "description": "Location de matériel professionnel.",
-          "ownerBenefit": "Louer le matériel seulement quand le chantier le nécessite.",
-          "fitRationale": "Évite d'immobiliser de la trésorerie dans des équipements ponctuels.",
-          "checksBeforeChoosing": [
-            "Comparer assurance et transport",
-            "Vérifier la disponibilité locale"
-          ],
-          "reviewedAt": "2026-08-04",
-          "evidenceUrls": [
-            "https://www.kiloutou.fr/"
-          ],
-          "catalogDestination": "https://www.kiloutou.fr/",
+          "catalogDestination": "https://www.climplus.com/clim-nous-connaitre/clim-notre-enseigne",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -7124,10 +7074,10 @@
           "displayCategory": "Logiciel métier",
           "description": "Logiciel de caisse et facturation pensé pour les fleuristes.",
           "ownerBenefit": "Encaisser, facturer et suivre l’activité quotidienne d’un fleuriste.",
-          "fitRationale": "Fleuracompta répond à un besoin concret de fleuriste événementiel b2b sans imposer une solution générique à toute l'activité.",
+          "fitRationale": "Fleuracompta couvre la caisse, la facturation et le suivi quotidien des produits métier.",
           "checksBeforeChoosing": [
-            "Vérifier le matériel de caisse",
-            "Tester la gestion des produits métier"
+            "Vérifier la compatibilité avec le matériel de caisse.",
+            "Tester la gestion des produits, compositions et taux de TVA utiles."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
@@ -7149,10 +7099,10 @@
           "displayCategory": "Site & e-commerce",
           "description": "Plateforme e-commerce pour vendre en ligne et gérer les commandes.",
           "ownerBenefit": "Lancer et structurer une boutique en ligne.",
-          "fitRationale": "Pour fleuriste événementiel b2b, Shopify couvre directement boutique en ligne et paiements.",
+          "fitRationale": "Shopify sert à prendre des commandes et paiements en ligne, avec un catalogue à maintenir séparément de la caisse métier.",
           "checksBeforeChoosing": [
-            "Ajouter le coût des applications",
-            "Prévoir la maintenance du catalogue"
+            "Vérifier la synchronisation possible avec la caisse et le stock.",
+            "Chiffrer les applications nécessaires aux créneaux, livraisons ou personnalisations."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
@@ -7174,10 +7124,10 @@
           "displayCategory": "Marketing & visibilité",
           "description": "Emailing, SMS, automatisation marketing et CRM pour relancer clients et prospects.",
           "ownerBenefit": "Relancer les clients et automatiser les campagnes marketing simples.",
-          "fitRationale": "Pour fleuriste événementiel b2b, Brevo couvre directement email marketing et sms marketing.",
+          "fitRationale": "Brevo complète la vente avec les campagnes email et SMS destinées à fidéliser clients et donneurs d’ordre.",
           "checksBeforeChoosing": [
-            "Vérifier le volume de contacts",
-            "Préparer le consentement marketing"
+            "Préparer le consentement marketing et la segmentation des contacts.",
+            "Vérifier les volumes d’envoi nécessaires."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
@@ -7213,6 +7163,31 @@
           "status": "published",
           "publicationBlockers": [],
           "interactionMode": "system_delivery"
+        },
+        {
+          "resourceSlug": "france-fleurs-pro",
+          "resourceType": "provider",
+          "section": "providers",
+          "rank": 1,
+          "displayCategory": "Grossiste floral",
+          "description": "Fleurs fraîches et séchées en gros, avec livraison adaptée aux commandes professionnelles.",
+          "ownerBenefit": "Commander fleurs et végétaux en volume pour les ventes et prestations événementielles.",
+          "fitRationale": "France Fleurs couvre l’approvisionnement floral ; Fleuracompta, Shopify et Brevo restent dédiés à la gestion, à la vente et à la relation client.",
+          "checksBeforeChoosing": [
+            "Vérifier les minima de commande, jours de livraison et conditions de fraîcheur.",
+            "Comparer assortiment, saisonnalité et conditions du compte professionnel."
+          ],
+          "reviewedAt": "2026-08-04",
+          "evidenceUrls": [
+            "https://pros.francefleurs.com/"
+          ],
+          "catalogDestination": "https://pros.francefleurs.com/",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
         },
         {
           "resourceSlug": "cma",
@@ -7738,10 +7713,10 @@
           "displayCategory": "Logiciel métier",
           "description": "Gestion garage tout-en-un : clients, véhicules, devis, factures, rendez-vous, stocks et comptabilité.",
           "ownerBenefit": "Gérer atelier, devis, factures, rendez-vous et stocks d’un garage.",
-          "fitRationale": "AutoProGestion répond à un besoin concret de garage automobile sans imposer une solution générique à toute l'activité.",
+          "fitRationale": "AutoProGestion privilégie un socle tout-en-un pour clients, véhicules, devis, factures, rendez-vous et stock.",
           "checksBeforeChoosing": [
-            "Vérifier la reprise clients-véhicules",
-            "Tester stock et atelier"
+            "Tester la reprise du parc clients-véhicules et du stock.",
+            "Vérifier la couverture des besoins comptables et atelier."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
@@ -7763,10 +7738,10 @@
           "displayCategory": "Logiciel métier",
           "description": "Logiciel SaaS pour garages, carrosseries et concessions : planning, véhicules, garanties et suivi client.",
           "ownerBenefit": "Centraliser accueil, atelier, suivi véhicule et communication client.",
-          "fitRationale": "Keralpha répond à un besoin concret de garage automobile sans imposer une solution générique à toute l'activité.",
+          "fitRationale": "Keralpha convient davantage au pilotage des rendez-vous, véhicules, garanties et échanges avec le client.",
           "checksBeforeChoosing": [
-            "Vérifier les modules retenus",
-            "Prévoir l'adoption atelier"
+            "Vérifier les modules nécessaires à l’atelier avant engagement.",
+            "Comparer sa couverture devis-stock avec celle du socle de gestion envisagé."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
@@ -7801,6 +7776,31 @@
           "status": "published",
           "publicationBlockers": [],
           "interactionMode": "system_delivery"
+        },
+        {
+          "resourceSlug": "autodistribution-pro",
+          "resourceType": "provider",
+          "section": "providers",
+          "rank": 1,
+          "displayCategory": "Distributeur de pièces automobiles",
+          "description": "Pièces automobiles, peinture, pneumatiques et équipement pour les réparateurs.",
+          "ownerBenefit": "Approvisionner l’atelier en pièces multimarques et équipements de réparation.",
+          "fitRationale": "Autodistribution Pro couvre l’approvisionnement de l’atelier, tandis que les logiciels conservés pilotent clients, véhicules et travaux.",
+          "checksBeforeChoosing": [
+            "Vérifier la disponibilité locale des références et les délais de livraison atelier.",
+            "Comparer conditions de compte, retours de pièces et services techniques."
+          ],
+          "reviewedAt": "2026-08-04",
+          "evidenceUrls": [
+            "https://pro.autodistribution.fr/services-aux-professionnels"
+          ],
+          "catalogDestination": "https://pro.autodistribution.fr/services-aux-professionnels",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
         },
         {
           "resourceSlug": "mobilians",
@@ -9444,10 +9444,10 @@
           "displayCategory": "Caisse & réservation",
           "description": "Logiciel de caisse et gestion pour librairies, avec stock, notices et intégrations métier.",
           "ownerBenefit": "Gérer catalogue, ventes, stocks, commandes et références ISBN.",
-          "fitRationale": "Book’n Roll répond à un besoin concret de librairie sans imposer une solution générique à toute l'activité.",
+          "fitRationale": "Book’n Roll constitue le socle métier pour la caisse, les notices, le stock, les commandes et les références ISBN.",
           "checksBeforeChoosing": [
-            "Vérifier les intégrations métier",
-            "Prévoir la reprise du catalogue"
+            "Vérifier les intégrations avec les bases et distributeurs utilisés.",
+            "Préparer la reprise du catalogue et du stock."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
@@ -9469,10 +9469,10 @@
           "displayCategory": "Marketing & visibilité",
           "description": "Emailing, SMS, automatisation marketing et CRM pour relancer clients et prospects.",
           "ownerBenefit": "Relancer les clients et automatiser les campagnes marketing simples.",
-          "fitRationale": "Pour librairie, Brevo couvre directement email marketing et sms marketing.",
+          "fitRationale": "Brevo complète le logiciel libraire pour annoncer nouveautés, rencontres et opérations aux lecteurs inscrits.",
           "checksBeforeChoosing": [
-            "Vérifier le volume de contacts",
-            "Préparer le consentement marketing"
+            "Préparer le consentement marketing et les listes de diffusion.",
+            "Vérifier le volume de contacts et la fréquence d’envoi."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
@@ -9495,10 +9495,10 @@
           "displayCategory": "Site & e-commerce",
           "description": "Solution e-commerce légère pour ajouter une boutique à un site existant ou vendre sur plusieurs canaux.",
           "ownerBenefit": "Ajouter une boutique simple à un site ou une activité locale sans refonte lourde.",
-          "fitRationale": "Pour librairie, Ecwid couvre directement boutique simple et ajout a un site existant.",
+          "fitRationale": "Ecwid sert à ajouter une boutique en ligne légère lorsque la vente à distance est prioritaire.",
           "checksBeforeChoosing": [
-            "Vérifier les limites du forfait",
-            "Tester les intégrations de paiement"
+            "Vérifier la synchronisation du stock avec le logiciel libraire.",
+            "Tester paiements, retraits et expéditions avant publication."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
@@ -9533,6 +9533,31 @@
           "status": "published",
           "publicationBlockers": [],
           "interactionMode": "system_delivery"
+        },
+        {
+          "resourceSlug": "dilisco-livres",
+          "resourceType": "provider",
+          "section": "providers",
+          "rank": 1,
+          "displayCategory": "Diffuseur et distributeur de livres",
+          "description": "Diffusion et distribution de livres auprès des réseaux professionnels.",
+          "ownerBenefit": "Compléter l’assortiment avec des catalogues d’éditeurs distribués aux librairies.",
+          "fitRationale": "Dilisco couvre l’approvisionnement éditorial ; Book’n Roll gère le catalogue et le stock en magasin.",
+          "checksBeforeChoosing": [
+            "Vérifier les éditeurs diffusés et les conditions d’ouverture de compte libraire.",
+            "Comparer délais, retours, franco et modalités de réassort."
+          ],
+          "reviewedAt": "2026-08-04",
+          "evidenceUrls": [
+            "https://www.sne.fr/sne_adherents/dilisco/"
+          ],
+          "catalogDestination": "https://www.sne.fr/sne_adherents/dilisco/",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
         }
       ]
     },
@@ -10337,10 +10362,10 @@
           "displayCategory": "Logiciel métier",
           "description": "Logiciel BTP tout-en-un pour devis, factures, chantiers, planning et suivi de rentabilité.",
           "ownerBenefit": "Structurer les chantiers et la gestion d'entreprise dans un même outil.",
-          "fitRationale": "Pour menuiserie & agencement, ProGBat couvre directement devis et factures.",
+          "fitRationale": "ProGBat convient lorsque devis, factures, planning et rentabilité chantier doivent être réunis dans un même logiciel.",
           "checksBeforeChoosing": [
-            "Comparer les modules inclus",
-            "Prévoir l'adoption par l'équipe"
+            "Vérifier que les modules chantier et rentabilité retenus couvrent le fonctionnement de l’atelier.",
+            "Préparer la reprise des clients, articles et ouvrages existants."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
@@ -10362,10 +10387,10 @@
           "displayCategory": "Logiciel métier",
           "description": "Devis, factures et suivi commercial pour les professionnels du bâtiment.",
           "ownerBenefit": "Gérer les devis et la facturation d’une activité BTP.",
-          "fitRationale": "Pour menuiserie & agencement, Obat couvre directement devis et factures.",
+          "fitRationale": "Obat constitue l’option plus légère pour produire devis et factures sans déployer un pilotage chantier complet.",
           "checksBeforeChoosing": [
-            "Comparer les accès équipe",
-            "Vérifier les fonctions incluses dans le forfait"
+            "Comparer les fonctions incluses avec celles de ProGBat avant de choisir un seul socle de gestion.",
+            "Vérifier les accès équipe et les besoins de suivi d’atelier."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
@@ -10387,10 +10412,10 @@
           "displayCategory": "Logiciel métier",
           "description": "Suivi de chantier, planning d’équipe, heures et communication terrain pour le BTP.",
           "ownerBenefit": "Planifier les équipes et suivre l’avancement des chantiers.",
-          "fitRationale": "Pour menuiserie & agencement, Alobees couvre directement suivi de chantier et planning d'equipe.",
+          "fitRationale": "Alobees complète le logiciel de gestion pour le planning d’équipe, les heures et la communication terrain.",
           "checksBeforeChoosing": [
-            "Tarification liée aux utilisateurs",
-            "Nécessite un autre outil pour la facturation"
+            "Vérifier que le volume de chantiers justifie un outil terrain séparé.",
+            "Conserver le devis et la facturation dans le logiciel métier retenu."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
@@ -10427,23 +10452,23 @@
           "interactionMode": "system_delivery"
         },
         {
-          "resourceSlug": "point-p",
+          "resourceSlug": "dispano-bois",
           "resourceType": "provider",
           "section": "providers",
           "rank": 1,
-          "displayCategory": "Fournisseur de matériaux",
-          "description": "Matériaux de construction et négoce bâtiment.",
-          "ownerBenefit": "Centraliser les achats de matériaux et organiser les livraisons chantier.",
-          "fitRationale": "Négoce généraliste adapté à plusieurs corps d'état.",
+          "displayCategory": "Négoce bois et panneaux",
+          "description": "Bois, panneaux, menuiseries et services de transformation pour professionnels.",
+          "ownerBenefit": "Commander bois et panneaux avec des services de découpe adaptés aux ouvrages.",
+          "fitRationale": "Dispano couvre l’approvisionnement principal en bois et panneaux, en complément des logiciels de devis et de suivi.",
           "checksBeforeChoosing": [
-            "Vérifier stock et livraison locale",
-            "Comparer les tarifs professionnels"
+            "Vérifier les essences et panneaux disponibles dans l’agence locale.",
+            "Comparer les conditions de découpe, de livraison chantier et de compte professionnel."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
-            "https://www.pointp.fr/"
+            "https://www.dispano.fr/qui-sommes-nous"
           ],
-          "catalogDestination": "https://www.pointp.fr/",
+          "catalogDestination": "https://www.dispano.fr/qui-sommes-nous",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -10452,73 +10477,23 @@
           "interactionMode": "external_link"
         },
         {
-          "resourceSlug": "plateforme-du-batiment",
+          "resourceSlug": "legallais-quincaillerie",
           "resourceType": "provider",
           "section": "providers",
           "rank": 2,
-          "displayCategory": "Fournisseur réservé aux professionnels",
-          "description": "Matériaux, outillage et approvisionnement BTP.",
-          "ownerBenefit": "Acheter matériaux et outillage dans un réseau conçu pour les professionnels du bâtiment.",
-          "fitRationale": "Pertinent lorsque la proximité d'un dépôt et la disponibilité immédiate comptent.",
+          "displayCategory": "Quincaillerie technique",
+          "description": "Quincaillerie, serrurerie, contrôle d'accès et équipements pour professionnels du bâtiment.",
+          "ownerBenefit": "Sourcer ferrures, serrures, automatismes et quincaillerie de finition.",
+          "fitRationale": "Legallais complète Dispano sur la quincaillerie technique et les équipements de fermeture, sans doublonner l’achat de bois et panneaux.",
           "checksBeforeChoosing": [
-            "Vérifier la couverture locale",
-            "Comparer les conditions de compte professionnel"
+            "Vérifier la compatibilité des références avec les menuiseries fabriquées ou posées.",
+            "Comparer les délais sur les articles sur commande et les conditions professionnelles."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
-            "https://www.laplateforme.com/"
+            "https://www.legallais.com/offre-sur-commande-a25"
           ],
-          "catalogDestination": "https://www.laplateforme.com/",
-          "commercialRelationship": "unknown",
-          "status": "draft",
-          "publicationBlockers": [
-            "commercial-relationship-unconfirmed"
-          ],
-          "interactionMode": "external_link"
-        },
-        {
-          "resourceSlug": "kiloutou",
-          "resourceType": "provider",
-          "section": "providers",
-          "rank": 3,
-          "displayCategory": "Location de matériel",
-          "description": "Location de matériel professionnel.",
-          "ownerBenefit": "Louer le matériel seulement quand le chantier le nécessite.",
-          "fitRationale": "Évite d'immobiliser de la trésorerie dans des équipements ponctuels.",
-          "checksBeforeChoosing": [
-            "Comparer assurance et transport",
-            "Vérifier la disponibilité locale"
-          ],
-          "reviewedAt": "2026-08-04",
-          "evidenceUrls": [
-            "https://www.kiloutou.fr/"
-          ],
-          "catalogDestination": "https://www.kiloutou.fr/",
-          "commercialRelationship": "unknown",
-          "status": "draft",
-          "publicationBlockers": [
-            "commercial-relationship-unconfirmed"
-          ],
-          "interactionMode": "external_link"
-        },
-        {
-          "resourceSlug": "wurth",
-          "resourceType": "provider",
-          "section": "providers",
-          "rank": 4,
-          "displayCategory": "Fournisseur d’outillage et de consommables",
-          "description": "Consommables, visserie, outillage et EPI.",
-          "ownerBenefit": "Réapprovisionner outillage, fixations, consommables et EPI.",
-          "fitRationale": "Pertinent pour les besoins récurrents de petites équipes terrain.",
-          "checksBeforeChoosing": [
-            "Vérifier les références métier",
-            "Comparer les conditions professionnelles"
-          ],
-          "reviewedAt": "2026-08-04",
-          "evidenceUrls": [
-            "https://eshop.wurth.fr/"
-          ],
-          "catalogDestination": "https://eshop.wurth.fr/",
+          "catalogDestination": "https://www.legallais.com/offre-sur-commande-a25",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -11995,10 +11970,10 @@
           "displayCategory": "Logiciel métier",
           "description": "CRM et logiciel de gestion pour piscinistes : devis, chantiers, SAV et entretien.",
           "ownerBenefit": "Gérer devis, contrats d’entretien, interventions, SAV et saisonnalité.",
-          "fitRationale": "Pour pisciniste, Extrabat couvre directement crm et devis.",
+          "fitRationale": "Extrabat constitue le socle métier pour les devis, chantiers, contrats d’entretien et SAV piscine.",
           "checksBeforeChoosing": [
-            "Solution spécialisée piscine",
-            "Vérifier les modules retenus"
+            "Vérifier les modules retenus pour la construction, l’entretien et le SAV.",
+            "Préparer la reprise des clients, équipements et contrats."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
@@ -12020,10 +11995,10 @@
           "displayCategory": "Logiciel métier",
           "description": "Formulaires terrain digitaux pour chantiers, interventions, relevés, contrôles et rapports personnalisés.",
           "ownerBenefit": "Remplacer les formulaires papier par des rapports terrain structurés.",
-          "fitRationale": "Pour pisciniste, Kizeo Forms couvre directement formulaires terrain sur mesure et collecte de donnees.",
+          "fitRationale": "Kizeo Forms complète Extrabat pour les relevés, contrôles et rapports réalisés au bord du bassin.",
           "checksBeforeChoosing": [
-            "Préparer les formulaires terrain",
-            "Ne remplace pas un ERP métier"
+            "Définir les formulaires terrain avant le déploiement.",
+            "Ne pas l’utiliser comme remplacement du CRM et de la gestion métier."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
@@ -12060,48 +12035,23 @@
           "interactionMode": "system_delivery"
         },
         {
-          "resourceSlug": "point-p",
+          "resourceSlug": "scp-france-piscine",
           "resourceType": "provider",
           "section": "providers",
           "rank": 1,
-          "displayCategory": "Fournisseur de matériaux",
-          "description": "Matériaux de construction et négoce bâtiment.",
-          "ownerBenefit": "Centraliser les achats de matériaux et organiser les livraisons chantier.",
-          "fitRationale": "Négoce généraliste adapté à plusieurs corps d'état.",
+          "displayCategory": "Distributeur piscine et spa",
+          "description": "Distribution d'équipements, pièces et produits pour piscines et spas professionnels.",
+          "ownerBenefit": "Approvisionner construction, rénovation et entretien en équipements et pièces piscine.",
+          "fitRationale": "SCP France couvre l’achat de matériel et de consommables piscine ; Extrabat et Kizeo Forms restent dédiés à la gestion et au terrain.",
           "checksBeforeChoosing": [
-            "Vérifier stock et livraison locale",
-            "Comparer les tarifs professionnels"
+            "Vérifier l’ouverture de compte et la couverture du site de distribution le plus proche.",
+            "Comparer disponibilité des pièces, délais et conditions professionnelles."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
-            "https://www.pointp.fr/"
+            "https://www.swimmingpool.eu/fr/nos-sites.html"
           ],
-          "catalogDestination": "https://www.pointp.fr/",
-          "commercialRelationship": "unknown",
-          "status": "draft",
-          "publicationBlockers": [
-            "commercial-relationship-unconfirmed"
-          ],
-          "interactionMode": "external_link"
-        },
-        {
-          "resourceSlug": "kiloutou",
-          "resourceType": "provider",
-          "section": "providers",
-          "rank": 2,
-          "displayCategory": "Location de matériel",
-          "description": "Location de matériel professionnel.",
-          "ownerBenefit": "Louer le matériel seulement quand le chantier le nécessite.",
-          "fitRationale": "Évite d'immobiliser de la trésorerie dans des équipements ponctuels.",
-          "checksBeforeChoosing": [
-            "Comparer assurance et transport",
-            "Vérifier la disponibilité locale"
-          ],
-          "reviewedAt": "2026-08-04",
-          "evidenceUrls": [
-            "https://www.kiloutou.fr/"
-          ],
-          "catalogDestination": "https://www.kiloutou.fr/",
+          "catalogDestination": "https://www.swimmingpool.eu/fr/nos-sites.html",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -13856,10 +13806,10 @@
           "displayCategory": "Logiciel métier",
           "description": "Logiciel pour installateurs avec devis, factures, commandes, interventions SAV et suivi d'affaires.",
           "ownerBenefit": "Piloter une activité d'installation, d'intervention et de chantier dans le second oeuvre.",
-          "fitRationale": "Esabora répond à un besoin concret de serrurier sans imposer une solution générique à toute l'activité.",
+          "fitRationale": "Esabora centralise devis, factures, commandes et SAV pour une activité d’installation et de maintenance.",
           "checksBeforeChoosing": [
-            "Prévoir le paramétrage métier",
-            "Vérifier les modules nécessaires"
+            "Vérifier les modules de gestion nécessaires avant paramétrage.",
+            "Tester le traitement d’une affaire complète, du devis au SAV."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
@@ -13881,10 +13831,10 @@
           "displayCategory": "Logiciel métier",
           "description": "Gestion des interventions terrain, plannings, tournées et comptes rendus mobiles.",
           "ownerBenefit": "Planifier les équipes terrain et suivre les interventions en mobilité.",
-          "fitRationale": "Pour serrurier, Praxedo couvre directement planification des équipes terrain et suivi d’activité en temps réel.",
+          "fitRationale": "Praxedo est adapté aux équipes qui doivent affecter des dépannages et suivre les interventions en mobilité.",
           "checksBeforeChoosing": [
-            "Dimensionner le nombre d'intervenants",
-            "Prévoir le paramétrage des workflows"
+            "Dimensionner le nombre d’intervenants et les droits mobiles.",
+            "Vérifier l’intégration avec le logiciel de devis et de facturation retenu."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
@@ -13906,10 +13856,10 @@
           "displayCategory": "Logiciel métier",
           "description": "Formulaires terrain digitaux pour chantiers, interventions, relevés, contrôles et rapports personnalisés.",
           "ownerBenefit": "Remplacer les formulaires papier par des rapports terrain structurés.",
-          "fitRationale": "Pour serrurier, Kizeo Forms couvre directement formulaires terrain sur mesure et collecte de donnees.",
+          "fitRationale": "Kizeo Forms complète le socle de gestion pour les constats, relevés et rapports terrain personnalisés.",
           "checksBeforeChoosing": [
-            "Préparer les formulaires terrain",
-            "Ne remplace pas un ERP métier"
+            "Lister les formulaires réellement utiles avant déploiement.",
+            "Ne pas le retenir comme remplacement du logiciel de gestion ou de planification."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
@@ -13946,98 +13896,23 @@
           "interactionMode": "system_delivery"
         },
         {
-          "resourceSlug": "wurth",
+          "resourceSlug": "legallais-quincaillerie",
           "resourceType": "provider",
           "section": "providers",
           "rank": 1,
-          "displayCategory": "Fournisseur d’outillage et de consommables",
-          "description": "Consommables, visserie, outillage et EPI.",
-          "ownerBenefit": "Réapprovisionner outillage, fixations, consommables et EPI.",
-          "fitRationale": "Pertinent pour les besoins récurrents de petites équipes terrain.",
+          "displayCategory": "Quincaillerie et serrurerie",
+          "description": "Quincaillerie, serrurerie, contrôle d'accès et équipements pour professionnels du bâtiment.",
+          "ownerBenefit": "Commander serrures, ferme-portes, automatismes et composants de contrôle d’accès.",
+          "fitRationale": "Legallais répond au besoin d’approvisionnement technique du serrurier ; les logiciels conservés couvrent la gestion et les interventions.",
           "checksBeforeChoosing": [
-            "Vérifier les références métier",
-            "Comparer les conditions professionnelles"
+            "Vérifier les références, normes et compatibilités requises pour chaque chantier.",
+            "Comparer disponibilité, délais sur commande et conditions de compte professionnel."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
-            "https://eshop.wurth.fr/"
+            "https://www.legallais.com/offre-sur-commande-a25"
           ],
-          "catalogDestination": "https://eshop.wurth.fr/",
-          "commercialRelationship": "unknown",
-          "status": "draft",
-          "publicationBlockers": [
-            "commercial-relationship-unconfirmed"
-          ],
-          "interactionMode": "external_link"
-        },
-        {
-          "resourceSlug": "plateforme-du-batiment",
-          "resourceType": "provider",
-          "section": "providers",
-          "rank": 2,
-          "displayCategory": "Fournisseur réservé aux professionnels",
-          "description": "Matériaux, outillage et approvisionnement BTP.",
-          "ownerBenefit": "Acheter matériaux et outillage dans un réseau conçu pour les professionnels du bâtiment.",
-          "fitRationale": "Pertinent lorsque la proximité d'un dépôt et la disponibilité immédiate comptent.",
-          "checksBeforeChoosing": [
-            "Vérifier la couverture locale",
-            "Comparer les conditions de compte professionnel"
-          ],
-          "reviewedAt": "2026-08-04",
-          "evidenceUrls": [
-            "https://www.laplateforme.com/"
-          ],
-          "catalogDestination": "https://www.laplateforme.com/",
-          "commercialRelationship": "unknown",
-          "status": "draft",
-          "publicationBlockers": [
-            "commercial-relationship-unconfirmed"
-          ],
-          "interactionMode": "external_link"
-        },
-        {
-          "resourceSlug": "kiloutou",
-          "resourceType": "provider",
-          "section": "providers",
-          "rank": 3,
-          "displayCategory": "Location de matériel",
-          "description": "Location de matériel professionnel.",
-          "ownerBenefit": "Louer le matériel seulement quand le chantier le nécessite.",
-          "fitRationale": "Évite d'immobiliser de la trésorerie dans des équipements ponctuels.",
-          "checksBeforeChoosing": [
-            "Comparer assurance et transport",
-            "Vérifier la disponibilité locale"
-          ],
-          "reviewedAt": "2026-08-04",
-          "evidenceUrls": [
-            "https://www.kiloutou.fr/"
-          ],
-          "catalogDestination": "https://www.kiloutou.fr/",
-          "commercialRelationship": "unknown",
-          "status": "draft",
-          "publicationBlockers": [
-            "commercial-relationship-unconfirmed"
-          ],
-          "interactionMode": "external_link"
-        },
-        {
-          "resourceSlug": "point-p",
-          "resourceType": "provider",
-          "section": "providers",
-          "rank": 4,
-          "displayCategory": "Fournisseur de matériaux",
-          "description": "Matériaux de construction et négoce bâtiment.",
-          "ownerBenefit": "Centraliser les achats de matériaux et organiser les livraisons chantier.",
-          "fitRationale": "Négoce généraliste adapté à plusieurs corps d'état.",
-          "checksBeforeChoosing": [
-            "Vérifier stock et livraison locale",
-            "Comparer les tarifs professionnels"
-          ],
-          "reviewedAt": "2026-08-04",
-          "evidenceUrls": [
-            "https://www.pointp.fr/"
-          ],
-          "catalogDestination": "https://www.pointp.fr/",
+          "catalogDestination": "https://www.legallais.com/offre-sur-commande-a25",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -14509,10 +14384,10 @@
           "displayCategory": "Caisse & réservation",
           "description": "Caisse, inventaire, commandes et pilotage pour commerces et restaurants.",
           "ownerBenefit": "Structurer les ventes et le suivi opérationnel.",
-          "fitRationale": "Lightspeed répond à un besoin concret de tabac / presse / point relais sans imposer une solution générique à toute l'activité.",
+          "fitRationale": "Lightspeed convient à un point de vente qui recherche une caisse structurée avec inventaire, commandes et pilotage multi-fonctions.",
           "checksBeforeChoosing": [
-            "Comparer les modules caisse et restaurant",
-            "Vérifier matériel et engagement"
+            "Vérifier le matériel compatible et les modules réellement nécessaires.",
+            "Comparer l’engagement et la profondeur de stock avec une solution plus simple."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
@@ -14534,10 +14409,10 @@
           "displayCategory": "Caisse & réservation",
           "description": "Logiciel de caisse en ligne pour ventes, stock, clients et gestion de commerce.",
           "ownerBenefit": "Gérer caisse, ventes et stock d’un commerce de proximité.",
-          "fitRationale": "Hiboutik répond à un besoin concret de tabac / presse / point relais sans imposer une solution générique à toute l'activité.",
+          "fitRationale": "Hiboutik constitue l’option plus légère pour gérer caisse, ventes, clients et stock d’un commerce de proximité.",
           "checksBeforeChoosing": [
-            "Vérifier les options nécessaires",
-            "Tester le matériel de caisse"
+            "Tester le matériel de caisse et les options indispensables.",
+            "Vérifier que le suivi de stock suffit pour les flux tabac, presse et relais."
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
@@ -14572,6 +14447,31 @@
           "status": "published",
           "publicationBlockers": [],
           "interactionMode": "system_delivery"
+        },
+        {
+          "resourceSlug": "logista-france",
+          "resourceType": "provider",
+          "section": "providers",
+          "rank": 1,
+          "displayCategory": "Distributeur pour commerces de proximité",
+          "description": "Distribution de produits et services pour buralistes et commerces de proximité.",
+          "ownerBenefit": "Structurer le réapprovisionnement en produits du tabac et références de proximité.",
+          "fitRationale": "Logista France couvre la distribution et le réassort, tandis que Lightspeed ou Hiboutik couvrent la caisse et le stock du point de vente.",
+          "checksBeforeChoosing": [
+            "Vérifier les conditions d’accès propres à l’activité et aux catégories de produits distribuées.",
+            "Comparer fréquences de livraison, modalités de commande et gestion des retours."
+          ],
+          "reviewedAt": "2026-08-04",
+          "evidenceUrls": [
+            "https://www.logistafrance.fr/fr/home/qui-sommes-nous/presentation.html"
+          ],
+          "catalogDestination": "https://www.logistafrance.fr/fr/home/qui-sommes-nous/presentation.html",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
         }
       ]
     },
