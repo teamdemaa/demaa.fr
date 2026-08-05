@@ -167,7 +167,7 @@ export default function SystemDetailContent({
             />
           ) : null}
         </section>
-        <SystemCustomOfferCta />
+        <SystemCustomOfferCta systemSlug={system.slug} />
       </article>
       {deliveryModal === "levier" ? (
         <OperationalSystemCopyRequestModal
