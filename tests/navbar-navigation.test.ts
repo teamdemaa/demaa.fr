@@ -31,7 +31,7 @@ describe("conventional systems and Academy navbar", () => {
     expect(getNavbarActiveSection("/annuaire-outils")).toBeNull();
   });
 
-  it("renders two centered navigation tabs and keeps the logo as home", async () => {
+  it("renders the historical centered two-column selector", async () => {
     const source = await readFile(
       new URL("../src/components/Navbar.tsx", import.meta.url),
       "utf8",
@@ -48,8 +48,8 @@ describe("conventional systems and Academy navbar", () => {
     expect(source).toContain('aria-current={activeSection === "academy"');
     expect(source).not.toContain('aria-current={activeSection === "sur-mesure"');
     expect(source).toContain("data-navbar-section-selector");
-    expect(source).toContain("sm:left-1/2 sm:-translate-x-1/2");
-    expect(source).toContain('bg-[#DCE9DF] text-dema-forest');
+    expect(source).toContain("max-w-[55.2rem] grid-cols-2");
+    expect(source).toContain("bg-dema-sage text-dema-forest");
     expect(source).not.toContain("Voir les services");
     expect(source).not.toContain("Trouver mon système");
     expect(source).not.toContain("Sur mesure</span>");
