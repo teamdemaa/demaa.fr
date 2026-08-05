@@ -369,9 +369,9 @@ describe("system Solutions UI", () => {
     const detailSource = await readSource("src/components/SystemDetailContent.tsx");
     const solutionsSource = await readSource("src/components/SystemSolutionsTab.tsx");
 
-    expect(pageSource).toContain("getRenderableSolutionSectionsForSystem,");
+    expect(pageSource).toContain("getMigrationSafeRenderableSolutionSectionsForSystem,");
     expect(pageSource).toContain(
-      'from "@/lib/system-solutions-ui.server"',
+      'from "@/lib/firebase-solution-registry-selection.server"',
     );
     expect(pageSource).toContain("solutionSections={solutionSections}");
     expect(detailSource).not.toMatch(/solution-registry\.(?:server|contract)/);
