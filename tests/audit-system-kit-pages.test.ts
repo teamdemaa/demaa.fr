@@ -30,6 +30,23 @@ describe("system kit page audit contract", () => {
       "levier",
       "capeb",
     ]);
+    expect(orders.get("marchand-de-biens")).toEqual([
+      "apimo",
+      "modelo",
+      "pipedrive",
+      "levier",
+      "notaires",
+      "fnaim",
+    ]);
+    expect(orders.get("chasseur-immobilier")).toEqual([
+      "apimo",
+      "modelo",
+      "pipedrive",
+      "levier",
+      "fnaim",
+      "notaires",
+    ]);
+    expect([...orders.values()].some((order) => order.includes("netty"))).toBe(false);
   });
 
   it("reads the ordered public Solution payload without widening its boundary", () => {

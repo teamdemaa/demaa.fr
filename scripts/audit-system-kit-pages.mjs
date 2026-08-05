@@ -82,6 +82,7 @@ export function buildExpectedSolutionOrders() {
       ["software", "providers", "models", "networks"].flatMap((section) =>
         [
           ...system.placements.filter((placement) => {
+            if (placement.editorialStatus !== "selected") return false;
             if (placement.resourceSlug === "levier") return false;
             if (section === "networks") return placement.resourceType === "directory";
             if (section === "providers") {
