@@ -63,7 +63,7 @@ describe("system UX contract", () => {
     expect(pageSource).toContain("hasEditableOperationalSystemAsset");
   });
 
-  it("renders the custom offer once after the active panel", async () => {
+  it("renders one contextual custom offer after the active panel", async () => {
     const detailSource = await readSource(
       "src/components/SystemDetailContent.tsx",
     );
@@ -80,16 +80,29 @@ describe("system UX contract", () => {
     expect(customOffer).toBeGreaterThan(panelEnd);
     expect(detailSource.match(/<SystemCustomOfferCta\b/g)).toHaveLength(1);
     expect(detailSource).toContain("systemSlug={system.slug}");
+    expect(detailSource).toContain("context={activeTab}");
+    expect(detailSource).not.toContain("Votre solution peut aider ce métier ?");
+    expect(detailSource).not.toContain('href="/partenaires"');
     expect(detailSource).not.toMatch(
       /academyVideos|Académie Demaa|Comprendre les indicateurs de ce système|Lire la fiche/,
     );
     expect(customOfferSource).toContain(
       "Besoin de prendre du recul sur votre organisation ?",
     );
+    expect(customOfferSource).toContain(
+      "Besoin d’aide pour identifier la bonne solution ?",
+    );
     expect(customOfferSource).toContain("Échangez 30 minutes avec un spécialiste Demaa");
+    expect(customOfferSource).toContain(
+      "En 30 minutes, clarifiez votre besoin, ce qu’il faut traiter en priorité",
+    );
     expect(customOfferSource).toContain("30 minutes · Gratuit · Sans engagement");
     expect(customOfferSource).toContain("OrganisationSessionBookingButton");
-    expect(customOfferSource).toContain('label="Réserver mon échange offert"');
+    expect(customOfferSource).toContain('buttonLabel: "Réserver mon échange offert"');
+    expect(customOfferSource).toContain('buttonLabel: "Échanger 30 minutes"');
+    expect(customOfferSource).toContain(
+      'source: "Système métier - Aide au choix de solution"',
+    );
     expect(customOfferSource).toContain('sourceIsAuthoritative');
     expect(customOfferSource).not.toMatch(
       /href="\/services"|Voir les services|application sur mesure/,
