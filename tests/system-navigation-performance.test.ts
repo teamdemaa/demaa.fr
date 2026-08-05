@@ -56,6 +56,9 @@ describe("system navigation performance contract", () => {
     expect(searchSource).toContain(
       'aria-label="Trouvez le système métier de votre entreprise"',
     );
+    expect(searchSource).toContain(
+      '<h2 className="text-xl font-light tracking-tight text-brand-blue/85 sm:text-2xl">',
+    );
     expect(searchSource).not.toContain("système opérationnel");
   });
 });

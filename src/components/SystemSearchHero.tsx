@@ -353,7 +353,7 @@ export default function SystemSearchHero({
           <div className="mt-10 space-y-9 text-left sm:mt-12 sm:space-y-11">
             {systemSections.map((section) => (
               <section key={section.title}>
-                <h2 className="text-xl font-medium tracking-tight text-brand-blue/85 sm:text-2xl">
+                <h2 className="text-xl font-light tracking-tight text-brand-blue/85 sm:text-2xl">
                   {section.title}
                 </h2>
                 <HorizontalScrollHint
