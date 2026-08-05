@@ -9,6 +9,10 @@ import {
   MAX_LEAD_DELIVERY_ATTEMPTS,
 } from "@/lib/lead-retry";
 import { getLeadRetentionExpiry } from "@/lib/operational-maintenance";
+import {
+  LEGACY_OPERATIONAL_SYSTEM_ASSET_REVISION,
+  LEGACY_OPERATIONAL_WORKBOOK_VERSION,
+} from "@/lib/operational-system-asset-revisions";
 
 type LeadNotificationChannel = "email" | "resend" | "slack";
 export type LeadDeliveryChannel = LeadNotificationChannel | "kit_email";
@@ -35,7 +39,14 @@ export type LeadMarketingConsent = {
   version: string;
 };
 
+export type LeadAssetSnapshot = {
+  assetRevision: string;
+  resourceId?: string | null;
+  workbookVersion: string;
+};
+
 export type LeadRequestInput = {
+  assetSnapshot?: LeadAssetSnapshot | null;
   attribution: LeadAttributionRecord;
   channels: Record<LeadNotificationChannel, boolean>;
   contact: LeadContact;
@@ -49,6 +60,11 @@ export type LeadRequestInput = {
 };
 
 export type StoredLeadRequest = {
+  asset_snapshot?: {
+    asset_revision: string;
+    resource_id?: string | null;
+    workbook_version: string;
+  } | null;
   attribution: LeadAttributionRecord;
   contact: {
     company: string | null;
@@ -87,6 +103,28 @@ export type StoredLeadRequest = {
   title: string;
 };
 
+export function resolveStoredLeadAssetSnapshot(
+  lead: Pick<StoredLeadRequest, "asset_snapshot" | "request_type">,
+): LeadAssetSnapshot | null {
+  if (lead.asset_snapshot) {
+    const resourceId = cleanString(lead.asset_snapshot.resource_id);
+    return {
+      assetRevision: lead.asset_snapshot.asset_revision,
+      ...(resourceId ? { resourceId } : {}),
+      workbookVersion: lead.asset_snapshot.workbook_version,
+    };
+  }
+
+  if (lead.request_type === "system_kit_request") {
+    return {
+      assetRevision: LEGACY_OPERATIONAL_SYSTEM_ASSET_REVISION,
+      workbookVersion: LEGACY_OPERATIONAL_WORKBOOK_VERSION,
+    };
+  }
+
+  return null;
+}
+
 function cleanString(value?: string | null) {
   return value?.trim() || null;
 }
@@ -101,6 +139,13 @@ export async function createLeadRequest(input: LeadRequestInput) {
     ? database.collection("lead_requests").doc(idempotencyHash)
     : database.collection("lead_requests").doc();
   const leadData = {
+    asset_snapshot: input.assetSnapshot
+      ? {
+          asset_revision: input.assetSnapshot.assetRevision,
+          resource_id: cleanString(input.assetSnapshot.resourceId),
+          workbook_version: input.assetSnapshot.workbookVersion,
+        }
+      : null,
     attribution: input.attribution,
     request_type: input.requestType,
     title: input.title,
@@ -150,17 +195,32 @@ export async function createLeadRequest(input: LeadRequestInput) {
 
   if (!idempotencyHash) {
     await leadRef.set(leadData);
-    return { created: true, id: leadRef.id };
+    return {
+      assetSnapshot: input.assetSnapshot ?? null,
+      created: true,
+      id: leadRef.id,
+    };
   }
 
-  const created = await database.runTransaction(async (transaction) => {
+  const result = await database.runTransaction(async (transaction) => {
     const existing = await transaction.get(leadRef);
-    if (existing.exists) return false;
+    if (existing.exists) {
+      const existingData = existing.data() as StoredLeadRequest | undefined;
+      return {
+        assetSnapshot: existingData
+          ? resolveStoredLeadAssetSnapshot(existingData)
+          : null,
+        created: false,
+      };
+    }
     transaction.create(leadRef, leadData);
-    return true;
+    return {
+      assetSnapshot: input.assetSnapshot ?? null,
+      created: true,
+    };
   });
 
-  return { created, id: leadRef.id };
+  return { ...result, id: leadRef.id };
 }
 
 export async function updateLeadDeliveryStatus(input: {

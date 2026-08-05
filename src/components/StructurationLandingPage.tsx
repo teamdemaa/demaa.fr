@@ -427,7 +427,7 @@ export default function StructurationLandingPage() {
             <BookingButton
               className="demaa-primary-button min-h-13 w-full px-7 text-sm sm:w-auto sm:min-w-[22rem]"
               label="Première session de structuration offerte"
-              source="Accueil structuration — Hero"
+                source="Accueil structuration : Hero"
             />
             <p className="mt-4 text-xs text-dema-muted">
               30 min · Sans engagement
@@ -670,7 +670,7 @@ export default function StructurationLandingPage() {
             <BookingButton
               className="demaa-primary-button min-h-13 w-full px-7 sm:w-auto sm:min-w-[20rem]"
               label="Commencer par la session offerte"
-              source="Accueil structuration — Après la méthode"
+                  source="Accueil structuration : Après la méthode"
             />
             <p className="mt-4 text-xs text-dema-muted">
               Gratuit · Sans engagement
@@ -717,7 +717,7 @@ export default function StructurationLandingPage() {
         <div className="mx-auto grid max-w-7xl gap-12 rounded-[2rem] border border-dema-line bg-dema-cream p-7 sm:p-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:p-16">
           <div>
             <p className="text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-dema-forest">
-              Étude de cas — EM2A
+                    Étude de cas : EM2A
             </p>
             <h2 className="mt-6 max-w-2xl text-balance text-[clamp(2.4rem,5vw,4.8rem)] font-light leading-[0.98] tracking-[-0.05em] text-brand-blue">
               Deux mois rendus à l’équipe{" "}
@@ -851,7 +851,7 @@ export default function StructurationLandingPage() {
               <BookingButton
                 className="demaa-primary-button min-h-13 w-full px-6"
                 label="Commencer par la session offerte"
-                source="Accueil structuration — Tarif"
+                  source="Accueil structuration : Tarif"
               />
             </div>
           </div>
@@ -901,7 +901,7 @@ export default function StructurationLandingPage() {
           <BookingButton
             className="demaa-primary-button min-h-13 w-full px-7 sm:w-auto sm:min-w-[22rem]"
             label="Réserver ma session de structuration offerte"
-            source="Accueil structuration — CTA final"
+                source="Accueil structuration : CTA final"
           />
           <p className="mt-4 text-xs text-dema-muted">
             30 min · Sans engagement · Réponse sous 48 h

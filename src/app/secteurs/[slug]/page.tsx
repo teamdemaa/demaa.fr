@@ -88,7 +88,7 @@ export default async function SectorHubPage({
       <main className="min-h-screen bg-background pb-20">
         <div className="mx-auto max-w-7xl px-4 pb-8 pt-8 sm:px-6 lg:px-8">
           <Link
-            href="/systemes-operationnels"
+            href="/systemes"
             className="group inline-flex items-center gap-2 text-sm font-medium text-gray-400 transition-colors hover:text-neutral-700"
           >
             <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
@@ -146,7 +146,7 @@ export default async function SectorHubPage({
                   {featuredSystems.map((system) => (
                     <Link
                       key={system.slug}
-                      href={`/systemes-operationnels/${system.slug}`}
+                      href={`/kit-operationnel/${system.slug}`}
                       className="inline-flex rounded-full border border-dema-line bg-dema-cream/70 px-3 py-1.5 text-xs font-medium text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
                     >
                       {system.name}

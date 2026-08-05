@@ -68,8 +68,8 @@ for (const absoluteFile of files) {
     slugs.add(slug);
   }
 
-  if (!Array.isArray(course.lessons) || course.lessons.length < 4 || course.lessons.length > 6) {
-    addError(file, "lessons doit contenir entre 4 et 6 leçons.");
+  if (!Array.isArray(course.lessons) || course.lessons.length < 4 || course.lessons.length > 7) {
+    addError(file, "lessons doit contenir entre 4 et 7 leçons.");
   }
 
   const lessonIds = new Set();

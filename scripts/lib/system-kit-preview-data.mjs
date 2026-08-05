@@ -1,57 +1,19 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
-const SHEET_MAPPING_PATTERN =
-  /(?:^|\n)\s*(?:"([^"]+)"|([A-Za-z0-9_-]+)):\s*(?:\n\s*)?"(https:\/\/docs\.google\.com\/spreadsheets[^"]+)"/g;
-
 export async function readSystemKitPreviewData(rootDir) {
-  const sourcePath = path.join(rootDir, "src/lib/document-models.ts");
   const catalogPath = path.join(rootDir, "src/lib/enterprise-annuaire.json");
   const demoAssetsPath = path.join(
     rootDir,
     "src/lib/operational-system-demo-assets.generated.json",
   );
-  const [source, catalogSource, demoAssetsSource] = await Promise.all([
-    fs.readFile(sourcePath, "utf8"),
+  const [catalogSource, demoAssetsSource] = await Promise.all([
     fs.readFile(catalogPath, "utf8"),
     fs.readFile(demoAssetsPath, "utf8"),
   ]);
-  const mappingStart = source.indexOf("const PILOTING_SHEET_URLS");
-  const demoMappingStart = source.indexOf(
-    "const OPERATIONAL_SYSTEM_DEMO_URLS",
-    mappingStart,
-  );
-  const mappingsExportStart = source.indexOf(
-    "export function getPilotingSheetSlugs",
-    mappingStart,
-  );
-
-  if (
-    mappingStart < 0 ||
-    demoMappingStart <= mappingStart ||
-    mappingsExportStart <= demoMappingStart
-  ) {
-    throw new Error(
-      "Impossible de trouver les mappings des systèmes dans document-models.ts.",
-    );
-  }
-
-  const legacyMappingBlock = source.slice(mappingStart, demoMappingStart);
-  const parseMappings = (block) =>
-    [...block.matchAll(SHEET_MAPPING_PATTERN)].map((match) => ({
-      slug: match[1] || match[2],
-      url: match[3],
-    }));
-  const demoMappings = Object.entries(JSON.parse(demoAssetsSource)).map(
+  const mappings = Object.entries(JSON.parse(demoAssetsSource)).map(
     ([slug, url]) => ({ slug, url }),
   );
-  const mappingsBySlug = new Map(
-    [
-      ...parseMappings(legacyMappingBlock),
-      ...demoMappings,
-    ].map((mapping) => [mapping.slug, mapping]),
-  );
-  const mappings = [...mappingsBySlug.values()];
   const enterprises = JSON.parse(catalogSource).enterprises;
   const namesBySlug = new Map(
     enterprises.map((enterprise) => [enterprise.slug, enterprise.name]),

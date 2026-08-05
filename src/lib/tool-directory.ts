@@ -15,11 +15,32 @@ export type ToolDirectoryItem = {
   keyFeatures?: string[];
   idealFor?: string[];
   pricingNoteVerified?: string;
+  pricingCapturedAt?: string;
+  pricingExpiresAt?: string;
   sources?: string[];
   lastReviewedAt?: string;
   scope?: ToolScope;
   status?: "active" | "hidden" | "deprecated";
 };
+
+export function getFreshToolPricingNote(
+  tool: Pick<ToolDirectoryItem, "pricingNoteVerified" | "pricingCapturedAt" | "pricingExpiresAt">,
+  now = new Date(),
+): string | null {
+  if (!tool.pricingNoteVerified || !tool.pricingCapturedAt || !tool.pricingExpiresAt) return null;
+  const nowTimestamp = now.getTime();
+  const capturedAt = Date.parse(tool.pricingCapturedAt);
+  const expiresAt = Date.parse(tool.pricingExpiresAt);
+  if (
+    !Number.isFinite(nowTimestamp) ||
+    !Number.isFinite(capturedAt) ||
+    !Number.isFinite(expiresAt) ||
+    capturedAt > nowTimestamp ||
+    capturedAt >= expiresAt ||
+    expiresAt <= nowTimestamp
+  ) return null;
+  return tool.pricingNoteVerified;
+}
 
 type ToolDirectoryPayload = {
   tools: ToolDirectoryItem[];

@@ -6,6 +6,7 @@ import { useMemo, useState } from "react";
 import AcademyLessonVisual from "@/components/AcademyLessonVisual";
 import {
   getAcademyActionHref,
+  getAcademyActionLabel,
   type AcademyContentDefinition,
   type AcademyQuizQuestion,
 } from "@/lib/academy-course-content";
@@ -288,7 +289,7 @@ export default function AcademyCoursePlayer({ content }: AcademyCoursePlayerProp
                     href={getAcademyActionHref(content.action)}
                     className="demaa-primary-button mt-5 min-h-11 w-full sm:w-auto"
                   >
-                    {content.action.ctaLabel}
+                    {getAcademyActionLabel(content.action)}
                   </Link>
                 </div>
               ) : null}

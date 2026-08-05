@@ -1,4 +1,4 @@
-# Carrousel minimaliste — Kit opérationnel
+# Carrousel minimaliste - Kit opérationnel
 
 ## Parcours
 

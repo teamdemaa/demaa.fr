@@ -27,7 +27,7 @@ const ICONS: Record<ServicePageEntry["icon"], LucideIcon> = {
 
 function ServiceCard({ service }: { service: ServicePageEntry }) {
   const Icon = ICONS[service.icon];
-  const contactHref = `mailto:team@demaa.fr?subject=${encodeURIComponent(`Demande — ${service.name}`)}`;
+  const contactHref = `mailto:team@demaa.fr?subject=${encodeURIComponent(`Demande - ${service.name}`)}`;
 
   return (
     <article className="flex min-h-[21rem] w-[min(82vw,19rem)] shrink-0 snap-start flex-col rounded-[1.4rem] border border-dema-line bg-dema-paper p-6 shadow-[0_8px_24px_rgba(23,35,29,0.025)] sm:w-[19rem] lg:w-[calc((100%-2rem)/3)]">
@@ -84,5 +84,3 @@ export default function ServicesCatalog() {
     </div>
   );
 }
-
-

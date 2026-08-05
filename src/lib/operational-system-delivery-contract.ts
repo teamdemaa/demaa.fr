@@ -1,7 +1,7 @@
 export type OperationalSystemDeliveryRequest = {
   attribution?: unknown;
   email: string;
-  firstName: string;
+  firstName?: string;
   idempotencyKey: string;
   marketingConsent?: boolean;
   systemSlug: string;

@@ -1,7 +1,4 @@
-export const SERVICE_PAGE_CATEGORY_IDS = [
-  "structurer",
-  "visibilite",
-] as const;
+export const SERVICE_PAGE_CATEGORY_IDS = ["structurer", "visibilite"] as const;
 
 export type ServicePageCategoryId = (typeof SERVICE_PAGE_CATEGORY_IDS)[number];
 
@@ -103,5 +100,3 @@ export const servicePageEntries: ServicePageEntry[] = [
     icon: "social-ads",
   },
 ];
-
-

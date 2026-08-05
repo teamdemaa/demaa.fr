@@ -26,6 +26,8 @@
 /outputs
 /tmp/
 /exports/
+/private/
+/src/lib/editable-operational-system-assets.generated.server.json
 
 # local working files
 Outils_metier_*.xlsx
@@ -40,6 +42,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+firestore-debug.log
 
 # env files (can opt-in for committing if needed)
 .env*

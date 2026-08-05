@@ -1,93 +1,98 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { BookOpen, BriefcaseBusiness } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { BookOpen, Workflow } from "lucide-react";
 import DemaaWordmark from "@/components/DemaaWordmark";
 
-export default function Navbar({
-  minimal = false,
-}: {
-  minimal?: boolean;
-}) {
-  const router = useRouter();
+const navbarTabBaseClassName =
+  "inline-flex min-h-12 min-w-0 items-center justify-center gap-2 whitespace-nowrap rounded-full px-2 py-2.5 text-[13px] font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:px-4 sm:text-sm";
+
+const navbarTabActiveClassName =
+  "bg-dema-sage text-dema-forest";
+
+const navbarTabInactiveClassName =
+  "text-dema-muted hover:bg-dema-sage/55 hover:text-brand-blue";
+
+export type NavbarSection = "systems" | "academy" | null;
+
+export function getNavbarActiveSection(pathname: string): NavbarSection {
+  const isAcademyPage =
+    pathname === "/academie" ||
+    pathname.startsWith("/academie/") ||
+    pathname === "/cours" ||
+    pathname.startsWith("/cours/");
+  const isSystemDetailPage = pathname.startsWith("/kit-operationnel/");
+
+  if (
+    pathname === "/systemes" ||
+    pathname === "/kits-operationnels" ||
+    isSystemDetailPage
+  ) {
+    return "systems";
+  }
+
+  if (isAcademyPage) {
+    return "academy";
+  }
+
+  return null;
+}
+
+export default function Navbar({ minimal = false }: { minimal?: boolean }) {
   const pathname = usePathname();
-  const showSystemNavigation =
-    pathname === "/systemes-operationnels" ||
-    pathname.startsWith("/systemes-operationnels/");
-  const showAcademyNavigation =
-    pathname === "/academie" || pathname.startsWith("/academie/");
-  const showServicesNavigation = pathname === "/" || pathname === "/services";
+  const activeSection = getNavbarActiveSection(pathname);
 
-  const secondaryLink = showAcademyNavigation
-    ? {
-        href: "/systemes-operationnels",
-        label: "Voir les systèmes opérationnels",
-        mobileLabel: "Systèmes",
-        icon: BriefcaseBusiness,
-      }
-    : {
-        href: "/academie",
-        label: "Découvrir l’Académie",
-        mobileLabel: "Académie",
-        icon: BookOpen,
-      };
-
-  const primaryLink = showSystemNavigation
-    ? { href: "/", label: "Voir les services", mobileLabel: "Services" }
-    : showServicesNavigation
-      ? {
-          href: "/systemes-operationnels",
-          label: "Voir les systèmes opérationnels",
-          mobileLabel: "Systèmes",
-        }
-      : showAcademyNavigation
-        ? { href: "/", label: "Voir les services", mobileLabel: "Services" }
-        : null;
-
-  const showCrossNavigation =
-    !minimal &&
-    (showSystemNavigation || showAcademyNavigation || showServicesNavigation);
-  const SecondaryIcon = secondaryLink.icon;
   return (
     <>
-      <nav className="sticky top-0 z-40 border-b border-dema-line/70 bg-dema-cream/92 py-1 backdrop-blur-md">
+      <nav
+        data-minimal={minimal ? "true" : undefined}
+        className="sticky top-0 z-40 border-b border-dema-line/70 bg-dema-cream/92 py-1 backdrop-blur-md"
+      >
         <div className="mx-auto w-full px-6 md:px-10 lg:px-24">
-          <div className="relative flex items-center justify-between gap-4 py-3 md:py-4">
+          <div className="flex items-center py-3 md:min-h-16 md:py-4">
             <Link
               href="/"
               aria-label="Retour à l'accueil"
               className="inline-flex items-center shrink-0 z-50 cursor-pointer"
-              onMouseEnter={() => router.prefetch("/")}
-              onFocus={() => router.prefetch("/")}
             >
               <DemaaWordmark className="text-[1.4rem] sm:text-[1.7rem]" />
             </Link>
-            <div className="flex items-center gap-2 sm:gap-3">
-              {showCrossNavigation && primaryLink ? (
-                <>
-                  <Link
-                    href={secondaryLink.href}
-                    className="demaa-secondary-button min-h-10 gap-2 px-3 text-xs sm:px-4 sm:text-sm"
-                    aria-label={secondaryLink.label}
-                  >
-                    <SecondaryIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
-                    <span className="hidden sm:inline">{secondaryLink.label}</span>
-                    <span className="sm:hidden">{secondaryLink.mobileLabel}</span>
-                  </Link>
-                  <Link
-                    href={primaryLink.href}
-                    className="demaa-primary-button min-h-10 px-3 text-xs sm:px-5 sm:text-sm"
-                  >
-                    <span className="hidden sm:inline">{primaryLink.label}</span>
-                    <span className="sm:hidden">{primaryLink.mobileLabel}</span>
-                  </Link>
-                </>
-              ) : null}
-            </div>
           </div>
         </div>
       </nav>
+      <div className="bg-dema-cream px-6 pb-3 pt-3 md:px-10 md:pb-4 md:pt-4 lg:px-24">
+        <div
+          aria-label="Navigation principale"
+          data-navbar-section-selector
+          className="mx-auto grid w-full max-w-[55.2rem] grid-cols-2 gap-1 rounded-full border border-dema-line bg-dema-paper p-1 shadow-[0_8px_24px_rgba(23,35,29,0.035)]"
+        >
+          <Link
+            href="/systemes"
+            aria-current={activeSection === "systems" ? "page" : undefined}
+            className={`${navbarTabBaseClassName} ${
+              activeSection === "systems"
+                ? navbarTabActiveClassName
+                : navbarTabInactiveClassName
+            }`}
+          >
+            <Workflow className="h-4 w-4 shrink-0" aria-hidden="true" />
+            <span>Système métier</span>
+          </Link>
+          <Link
+            href="/academie"
+            aria-current={activeSection === "academy" ? "page" : undefined}
+            className={`${navbarTabBaseClassName} ${
+              activeSection === "academy"
+                ? navbarTabActiveClassName
+                : navbarTabInactiveClassName
+            }`}
+          >
+            <BookOpen className="h-4 w-4 shrink-0" aria-hidden="true" />
+            <span>Académie</span>
+          </Link>
+        </div>
+      </div>
     </>
   );
 }

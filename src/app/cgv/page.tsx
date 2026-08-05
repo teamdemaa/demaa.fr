@@ -32,7 +32,7 @@ export default function CgvPage() {
     >
       <CgvSection title="1. Identité du vendeur">
             <p>
-              Les prestations proposées sur {LEGAL.brandName} sont commercialisées par <strong>{LEGAL.legalEntityName}</strong>, représentée par <strong>{LEGAL.legalRepresentative}</strong>.
+              Les prestations proposées sur {LEGAL.brandName} sont commercialisées par <strong>{LEGAL.legalEntityName}</strong>, entrepreneur individuel, sous le nom commercial <strong>{LEGAL.tradeName}</strong>.
             </p>
             <p>{LEGAL_COPY.brandOperatorSentence}</p>
             <ul className="list-disc space-y-2 pl-5">
@@ -40,7 +40,7 @@ export default function CgvPage() {
               <li><strong>Marque commerciale :</strong> {LEGAL.brandName}</li>
               <li><strong>Forme juridique :</strong> {LEGAL.legalStatus}</li>
               <li><strong>Régime :</strong> Micro-entreprise</li>
-              <li><strong>Représentante légale :</strong> {LEGAL.legalRepresentative}</li>
+              <li><strong>Entrepreneure individuelle :</strong> {LEGAL.legalRepresentative}</li>
               <li><strong>SIREN :</strong> {LEGAL.siren}</li>
               <li><strong>SIRET :</strong> {LEGAL.siret}</li>
               <li><strong>TVA intracommunautaire :</strong> {LEGAL.vatNumber}</li>

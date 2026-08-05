@@ -75,7 +75,7 @@ const systemPillars = [
 const interventionSteps = [
   {
     number: "01",
-    label: "Construction — quatre semaines",
+    label: "Construction : quatre semaines",
     title: "Construire et lancer",
     description:
       "Nous choisissons le chemin utile, produisons les éléments, relions les outils et lançons le système.",
@@ -223,7 +223,7 @@ export default function EthicalMarketingLandingPage() {
           </nav>
           <BookingButton
             className="demaa-primary-button min-h-11 px-5"
-            source="Système marketing — navigation"
+              source="Système marketing : navigation"
           />
         </div>
       </header>
@@ -258,7 +258,7 @@ export default function EthicalMarketingLandingPage() {
           <div className="demaa-fade-up demaa-delay-3 mt-9">
             <BookingButton
               className="demaa-primary-button min-h-13 px-7"
-              source="Système marketing — introduction"
+                source="Système marketing : introduction"
             />
           </div>
         </div>
@@ -615,7 +615,7 @@ export default function EthicalMarketingLandingPage() {
                 <div className="mt-10">
                   <BookingButton
                     className="inline-flex min-h-13 w-full items-center justify-center rounded-full bg-white px-6 text-sm font-bold text-dema-forest transition hover:bg-dema-canvas"
-                    source="Système marketing — tarif"
+                  source="Système marketing : tarif"
                   />
                 </div>
               </aside>
@@ -669,7 +669,7 @@ export default function EthicalMarketingLandingPage() {
           </h2>
           <BookingButton
             className="demaa-primary-button mt-9 min-h-13 px-7"
-            source="Système marketing — conclusion"
+                source="Système marketing : conclusion"
           />
         </div>
       </section>

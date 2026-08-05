@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "migrationId": "w4-solutions-data-migration-v1",
+  "sourceCommit": "4b8a5d77333f7f30d0d649a200a0414b1796a65f",
+  "sources": [
+    {
+      "sourceId": "w2-effective-ecosystem-matrix",
+      "file": "sources/w2-ecosystem-effective-matrix.json",
+      "sha256": "d221b30e165af384fd2d4f0a668077e26b88cf564f20a9894347da1a5ce95f87"
+    },
+    {
+      "sourceId": "w2-effective-ecosystem-summary",
+      "file": "sources/w2-ecosystem-summary.json",
+      "sha256": "46a4e21c676bf84e57042488035cc049a62cc95a60d2d56185cc2f6652baa461"
+    },
+    {
+      "sourceId": "w2-effective-tools-snapshot",
+      "file": "sources/w2-tools-snapshot.json",
+      "sha256": "bb9f7c618b60d092eba743f19628fedb5fec81247cd4bd3a0db07516c069ddf8"
+    }
+  ],
+  "recordedW2Artifacts": [
+    {
+      "artifact": "ecosystem/audit-method.md",
+      "sha256": "02b16ef75cf4d276b9a4f57ad0d2dd072ff94ed66a2c85447f6fb08aa78b27b3"
+    },
+    {
+      "artifact": "ecosystem/anomalies.md",
+      "sha256": "6abf215b505acfd59c4b24af8d141c494a482498b54c01cd99ea9e7cf2c0c8e2"
+    },
+    {
+      "artifact": "ecosystem/effective-ecosystem-matrix.csv",
+      "sha256": "939320944329cb76c320505471e31e60964d1fc8529975d9058f5525fb2178ad"
+    },
+    {
+      "artifact": "ecosystem/migration-plan.md",
+      "sha256": "17e2607b33e82f3bde2c3f5071cb3e0b6bdbffed95ecab58712a149da6cb4d95"
+    },
+    {
+      "artifact": "ecosystem/special-cases.json",
+      "sha256": "81b8c8982f9a25a75755e847256942154b9fd456788e4a9a52648206ce6af6c8"
+    },
+    {
+      "artifact": "ecosystem/system-summary.json",
+      "sha256": "8e5324be84973443a731154b0501153c736fc8ab444b7ae60a39d869b3a191ac"
+    },
+    {
+      "artifact": "tools/report.md",
+      "sha256": "deabf2da5454d2c1b5d30e15246e07c20c3ac193c3f7c202c93d445af8432a12"
+    },
+    {
+      "artifact": "tools/snapshot-115.md",
+      "sha256": "b62cf6e70627d9c120e1630a0388b799eb04b052bffda4fc1d039eca3b666d92"
+    }
+  ]
+}

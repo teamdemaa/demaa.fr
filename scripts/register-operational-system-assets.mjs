@@ -9,24 +9,25 @@ function readArg(name) {
   return index >= 0 ? args[index + 1] : null;
 }
 
-const slug = readArg("--slug");
-const demoId = readArg("--demo-id");
-const editableId = readArg("--editable-id");
-
-if (!slug || !demoId || !editableId) {
+if (args.includes("--editable-id")) {
   throw new Error(
-    "Utilisez --slug <métier> --demo-id <Google ID> --editable-id <Google ID>.",
+    "Les copies modifiables ne sont jamais enregistrées dans le dépôt. Utilisez la procédure privée de rotation.",
   );
 }
 
-const googleSheetIdPattern = /^[a-zA-Z0-9-_]+$/;
+const slug = readArg("--slug");
+const demoId = readArg("--demo-id");
 
-if (!googleSheetIdPattern.test(demoId) || !googleSheetIdPattern.test(editableId)) {
-  throw new Error("Un identifiant Google Sheets est invalide.");
+if (!slug || !demoId) {
+  throw new Error("Utilisez --slug <métier> --demo-id <Google ID>.");
 }
 
-if (demoId === editableId) {
-  throw new Error("La démonstration et le document modifiable doivent être distincts.");
+if (!/^[a-z0-9-]{2,120}$/.test(slug)) {
+  throw new Error("Le slug du système est invalide.");
+}
+
+if (!/^[a-zA-Z0-9-_]{20,160}$/.test(demoId)) {
+  throw new Error("L’identifiant de démonstration Google Sheets est invalide.");
 }
 
 const root = process.cwd();
@@ -34,41 +35,18 @@ const demoPath = path.join(
   root,
   "src/lib/operational-system-demo-assets.generated.json",
 );
-const editablePath = path.join(
-  root,
-  "src/lib/editable-operational-system-assets.generated.server.json",
-);
-
-function readManifest(filePath) {
-  return JSON.parse(fs.readFileSync(filePath, "utf8"));
-}
-
-function writeManifest(filePath, manifest) {
-  const orderedManifest = Object.fromEntries(
-    Object.entries(manifest).toSorted(([left], [right]) =>
-      left.localeCompare(right),
-    ),
-  );
-
-  fs.writeFileSync(filePath, `${JSON.stringify(orderedManifest, null, 2)}\n`);
-}
-
-const demoManifest = readManifest(demoPath);
-const editableManifest = readManifest(editablePath);
+const demoManifest = JSON.parse(fs.readFileSync(demoPath, "utf8"));
 
 demoManifest[slug] =
-  `https://docs.google.com/spreadsheets/d/${demoId}/edit`;
-editableManifest[slug] =
-  `https://docs.google.com/spreadsheets/d/${editableId}/edit`;
+  `https://docs.google.com/spreadsheets/d/${demoId}/edit?usp=sharing`;
 
-writeManifest(demoPath, demoManifest);
-writeManifest(editablePath, editableManifest);
+const orderedManifest = Object.fromEntries(
+  Object.entries(demoManifest).toSorted(([left], [right]) =>
+    left.localeCompare(right),
+  ),
+);
 
+fs.writeFileSync(demoPath, `${JSON.stringify(orderedManifest, null, 2)}\n`);
 process.stdout.write(
-  JSON.stringify({
-    slug,
-    demoId,
-    editableId,
-    publishedSystems: Object.keys(demoManifest).length,
-  }),
+  `${JSON.stringify({ slug, publishedSystems: Object.keys(demoManifest).length })}\n`,
 );

@@ -1,8 +1,20 @@
 # Académie Demaa — paquet éditorial SEO D-016 / D-019
 
-Date de préparation : 27 juillet 2026  
-Statut : prêt pour D-017 et D-031, sous réserve des URL YouTube et des dates de publication  
+> **Archive — ancienne Académie vidéo.** Ce document décrit le dispositif
+> vidéo D-016 à D-019 retiré du produit. Il ne constitue plus une spécification
+> active : l’Académie publiée repose désormais sur des cours interactifs sans
+> vidéo, sans `VideoObject` et sans sitemap vidéo. Les références YouTube ci-dessous
+> sont conservées uniquement comme historique éditorial.
+
+Date de préparation : 27 juillet 2026
+Mise à jour d’intégration : 28 juillet 2026
+Statut : intégré dans D-017 et D-031 avec les deux publications YouTube publiques
 Périmètre : deux masters vidéo finalisés, sans création de route, sans upload et sans modification du backlog maître
+
+Publications validées :
+
+- trésorerie : `SMlvcrgm9Wc` ;
+- chiffre d’affaires / bénéfice : `Wch_wDVu4Wc`.
 
 ## 1. Contrat éditorial commun
 
@@ -77,7 +89,7 @@ apporte une réponse éditoriale originale au-delà de la vidéo.
 
 **Accroche de miniature**
 
-> RENTABLE.  
+> RENTABLE.
 > MAIS SANS TRÉSORERIE.
 
 **Texte alternatif de miniature**
@@ -242,7 +254,7 @@ vidéo uploadée :
 
 **Accroche de miniature**
 
-> VENDRE PLUS  
+> VENDRE PLUS
 > NE VEUT PAS DIRE GAGNER PLUS.
 
 **Texte alternatif de miniature**
@@ -391,21 +403,18 @@ vidéo uploadée :
 Les deux pages peuvent se citer, mais aucune ne doit reprendre la réponse courte,
 l’exemple ou la FAQ de l’autre.
 
-## 5. Champs encore à compléter après upload YouTube
+## 5. Champs intégrés après upload YouTube
 
-Pour chaque vidéo :
-
-- identifiant et URL YouTube ;
-- URL d’intégration en mode confidentialité renforcée ;
-- date et heure de publication ;
-- miniature définitive à URL stable ;
-- dimensions de la miniature ;
-- durée ISO 8601 : `PT3M18.2S` et `PT3M31.667S` à confirmer sur les fichiers
-  publiés ;
-- chapitres et horodatages exacts ;
-- URL canonique absolue ;
-- `uploadDate`, `embedUrl`, `thumbnailUrl` et, si disponible, `contentUrl` du
-  `VideoObject`.
+- Trésorerie : `https://youtu.be/SMlvcrgm9Wc`, durée publique `PT3M19S`.
+- Chiffre d’affaires / bénéfice : `https://youtu.be/Wch_wDVu4Wc`, durée
+  publique `PT3M32S`.
+- Publication publique : 27 juillet 2026.
+- Intégration après interaction sur `youtube-nocookie.com`, sans autoplay.
+- Miniatures publiques 16:9 `maxresdefault` servies par `i.ytimg.com`.
+- `uploadDate`, `embedUrl`, `thumbnailUrl` et durées renseignés dans les
+  `VideoObject` et dans le sitemap vidéo.
+- Les chapitres restent à contrôler sur YouTube avant leur éventuelle
+  publication dans la description ; ils ne sont pas inventés dans le site.
 
 ## 6. Critères de réception D-017 / D-031
 

@@ -192,9 +192,6 @@ function SupplierCard({
       <p className="mt-2 text-sm leading-relaxed text-dema-muted">
         {supplier.shortDescription}
       </p>
-      <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-brand-blue/65">
-        {supplier.bestFor}
-      </p>
       {getSupplierCardBadge(supplier) ? (
         <div className="mt-4 flex flex-wrap items-center gap-2">
           <span className="inline-flex rounded-full bg-dema-sage/75 px-3 py-1 text-[10px] font-medium text-brand-blue/70">

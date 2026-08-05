@@ -9,14 +9,15 @@ import {
   logOperationalError,
   logOperationalEvent,
 } from "@/lib/operational-log";
-import { sendOperationalSystemDeliveryEmail } from "@/lib/operational-system-delivery-email.server";
 import type { LeadContext } from "@/lib/lead-context";
 import {
   createLeadRequest,
   claimLeadDeliveryRetry,
   getFailedLeadRequests,
   markLeadDeliveryAbandoned,
+  resolveStoredLeadAssetSnapshot,
   type LeadContact,
+  type LeadAssetSnapshot,
   type LeadDeliveryChannel,
   type LeadField,
   type LeadMarketingConsent,
@@ -27,6 +28,7 @@ import { syncResendLeadContact } from "@/lib/resend-audience";
 import { sendSlackMessage } from "@/lib/slack";
 
 type LeadSubmission = {
+  assetSnapshot?: LeadAssetSnapshot | null;
   attribution: LeadAttributionRecord;
   channels: {
     email: boolean;
@@ -42,6 +44,18 @@ type LeadSubmission = {
   requestType: string;
   title: string;
 };
+
+type OperationalSystemDeliveryEmailSender = (input: {
+  assetSnapshot: LeadAssetSnapshot;
+  deliveryId: string;
+  email: string;
+  firstName?: string | null;
+  systemName: string;
+  systemSlug: string;
+}) => Promise<
+  | Readonly<{ sent: true; reason: null }>
+  | Readonly<{ sent: false; reason: string }>
+>;
 
 function escapeHtml(value: string) {
   return value
@@ -183,6 +197,7 @@ async function deliverChannel<TChannel extends LeadDeliveryChannel>(input: {
 
 export async function submitLeadRequest(input: LeadSubmission) {
   const lead = await createLeadRequest({
+    assetSnapshot: input.assetSnapshot,
     attribution: input.attribution,
     channels: input.channels,
     contact: input.contact,
@@ -202,7 +217,12 @@ export async function submitLeadRequest(input: LeadSubmission) {
       requestType: input.requestType,
       systemSlug: input.context.systemSlug,
     });
-    return { duplicate: true, leadId: lead.id, deliveries: [] };
+    return {
+      assetSnapshot: lead.assetSnapshot,
+      duplicate: true,
+      leadId: lead.id,
+      deliveries: [],
+    };
   }
 
   logOperationalEvent("lead.created", {
@@ -251,11 +271,17 @@ export async function submitLeadRequest(input: LeadSubmission) {
     leadId: lead.id,
     sent: results.filter((result) => result.status === "sent").length,
   });
-  return { duplicate: false, leadId: lead.id, deliveries: results };
+  return {
+    assetSnapshot: lead.assetSnapshot,
+    duplicate: false,
+    leadId: lead.id,
+    deliveries: results,
+  };
 }
 
 function rebuildLeadSubmission(data: StoredLeadRequest): LeadSubmission {
   return {
+    assetSnapshot: resolveStoredLeadAssetSnapshot(data),
     attribution: data.attribution,
     channels: {
       email: data.notification_status.email?.status !== "skipped",
@@ -293,7 +319,10 @@ function rebuildLeadSubmission(data: StoredLeadRequest): LeadSubmission {
   };
 }
 
-export async function retryFailedLeadDeliveries(limit = 30) {
+export async function retryFailedLeadDeliveries(
+  limit: number,
+  sendOperationalSystemDeliveryEmail: OperationalSystemDeliveryEmailSender,
+) {
   const failedLeads = await getFailedLeadRequests(limit);
   const now = Date.now();
   const results: Array<{
@@ -334,9 +363,14 @@ export async function retryFailedLeadDeliveries(limit = 30) {
           channel === "kit_email"
           && (
             !input.contact.email
-            || !input.contact.firstName
             || !input.context.systemName
             || !input.context.systemSlug
+            || !input.assetSnapshot?.assetRevision
+            || !input.assetSnapshot.workbookVersion
+            || (
+              !input.assetSnapshot.resourceId
+              && !input.contact.firstName
+            )
           )
         );
       if (missingRetryData) {
@@ -363,18 +397,20 @@ export async function retryFailedLeadDeliveries(limit = 30) {
       } else if (
         channel === "kit_email"
         && input.contact.email
-        && input.contact.firstName
         && input.context.systemName
         && input.context.systemSlug
+        && input.assetSnapshot?.assetRevision
       ) {
+        const assetSnapshot = input.assetSnapshot;
         result = await deliverChannel({
           channel,
           leadId: lead.id,
           operation: async () => {
             const delivery = await sendOperationalSystemDeliveryEmail({
+              assetSnapshot,
               deliveryId: `lead-${lead.id}-system`,
               email: input.contact.email ?? "",
-              firstName: input.contact.firstName ?? "",
+              firstName: input.contact.firstName,
               systemName: input.context.systemName ?? "",
               systemSlug: input.context.systemSlug ?? "",
             });

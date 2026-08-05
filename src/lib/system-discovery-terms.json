@@ -1,0 +1,444 @@
+{
+  "entries": {
+    "cabinet-comptable": [
+      { "value": "expert-comptable", "kind": "alias", "status": "published" },
+      { "value": "cabinet d’expertise comptable", "kind": "alias", "status": "published" }
+    ],
+    "cabinet-davocat": [
+      { "value": "avocat", "kind": "alias", "status": "published" },
+      { "value": "cabinet juridique", "kind": "alias", "status": "published" }
+    ],
+    "cabinet-de-conseil": [
+      { "value": "société de conseil", "kind": "alias", "status": "published" },
+      { "value": "conseil aux entreprises", "kind": "specialty", "status": "published" }
+    ],
+    "agence-marketing": [
+      { "value": "agence de communication", "kind": "alias", "status": "published" },
+      { "value": "marketing digital", "kind": "specialty", "status": "published" }
+    ],
+    "freelance": [
+      { "value": "indépendant B2B", "kind": "alias", "status": "published" },
+      { "value": "travailleur indépendant", "kind": "alias", "status": "published" }
+    ],
+    "agence-de-recrutement": [
+      { "value": "cabinet de recrutement", "kind": "alias", "status": "published" },
+      { "value": "chasseur de têtes", "kind": "specialty", "status": "published" }
+    ],
+    "agence-web": [
+      { "value": "agence digitale", "kind": "alias", "status": "published" },
+      { "value": "création de sites web", "kind": "specialty", "status": "published" }
+    ],
+    "creation-de-contenu": [
+      { "value": "créateur de contenu", "kind": "alias", "status": "published" },
+      { "value": "production de contenu", "kind": "specialty", "status": "published" }
+    ],
+    "saas": [
+      { "value": "éditeur de logiciel", "kind": "alias", "status": "published" },
+      { "value": "logiciel en ligne", "kind": "alias", "status": "published" }
+    ],
+    "batiment": [
+      { "value": "entreprise générale du bâtiment", "kind": "alias", "status": "published" },
+      { "value": "entreprise tous corps d’état", "kind": "alias", "status": "published" },
+      { "value": "petits travaux", "kind": "specialty", "status": "published" }
+    ],
+    "nettoyage-professionnel": [
+      { "value": "entreprise de propreté", "kind": "alias", "status": "published" },
+      { "value": "nettoyage de bureaux", "kind": "specialty", "status": "published" },
+      { "value": "nettoyage industriel", "kind": "specialty", "status": "published" },
+      { "value": "nettoyage de copropriétés", "kind": "specialty", "status": "published" },
+      { "value": "nettoyage de vitres", "kind": "specialty", "status": "published" },
+      { "value": "nettoyage après chantier", "kind": "specialty", "status": "published" }
+    ],
+    "agence-immobiliere": [
+      { "value": "agent immobilier", "kind": "alias", "status": "published" },
+      { "value": "transaction immobilière", "kind": "specialty", "status": "published" }
+    ],
+    "syndic": [
+      { "value": "syndic de copropriété", "kind": "alias", "status": "published" },
+      { "value": "gestion de copropriété", "kind": "specialty", "status": "published" }
+    ],
+    "gestion-locative": [
+      { "value": "gestionnaire locatif", "kind": "alias", "status": "published" },
+      { "value": "état des lieux", "kind": "specialty", "status": "published" },
+      { "value": "maintenance locative", "kind": "specialty", "status": "published" }
+    ],
+    "conciergerie-airbnb": [
+      { "value": "conciergerie locative", "kind": "alias", "status": "published" },
+      { "value": "gestion de locations saisonnières", "kind": "specialty", "status": "published" },
+      { "value": "nettoyage entre deux locations", "kind": "specialty", "status": "published" }
+    ],
+    "demenagement": [
+      { "value": "déménageur", "kind": "alias", "status": "published" },
+      { "value": "déménagement d’entreprise", "kind": "specialty", "status": "published" }
+    ],
+    "livraison-dernier-kilometre": [
+      { "value": "coursier", "kind": "alias", "status": "published" },
+      { "value": "messagerie", "kind": "alias", "status": "published" },
+      { "value": "livraison urbaine", "kind": "specialty", "status": "published" }
+    ],
+    "transport-de-marchandise": [
+      { "value": "transporteur routier", "kind": "alias", "status": "published" },
+      { "value": "transport frigorifique", "kind": "specialty", "status": "published" },
+      { "value": "transport d’animaux", "kind": "specialty", "status": "published" }
+    ],
+    "transport-de-personnes": [
+      { "value": "taxi", "kind": "alias", "status": "published" },
+      { "value": "transport scolaire", "kind": "specialty", "status": "published" },
+      { "value": "transport de personnes avec flotte", "kind": "specialty", "status": "published" }
+    ],
+    "vtc": [
+      { "value": "chauffeur privé", "kind": "alias", "status": "published" },
+      { "value": "voiture de transport avec chauffeur", "kind": "alias", "status": "published" }
+    ],
+    "restaurant": [
+      { "value": "restauration traditionnelle", "kind": "alias", "status": "published" },
+      { "value": "restaurant indépendant", "kind": "alias", "status": "published" }
+    ],
+    "fast-food": [
+      { "value": "restauration rapide", "kind": "alias", "status": "published" },
+      { "value": "snack", "kind": "alias", "status": "published" }
+    ],
+    "traiteur": [
+      { "value": "traiteur événementiel", "kind": "alias", "status": "published" },
+      { "value": "service traiteur", "kind": "specialty", "status": "published" }
+    ],
+    "dark-kitchen": [
+      { "value": "cuisine virtuelle", "kind": "alias", "status": "published" },
+      { "value": "restaurant sans salle", "kind": "alias", "status": "published" }
+    ],
+    "boulangerie": [
+      { "value": "boulanger-pâtissier", "kind": "alias", "status": "published" },
+      { "value": "boulangerie-pâtisserie", "kind": "alias", "status": "published" }
+    ],
+    "commerce-de-detail": [
+      { "value": "magasin indépendant", "kind": "alias", "status": "published" },
+      { "value": "inventaire en magasin", "kind": "problem", "status": "published" }
+    ],
+    "e-commerce": [
+      { "value": "boutique en ligne", "kind": "alias", "status": "published" },
+      { "value": "vente en ligne", "kind": "specialty", "status": "published" }
+    ],
+    "institut-de-beaute": [
+      { "value": "institut esthétique", "kind": "alias", "status": "published" },
+      { "value": "centre de beauté", "kind": "alias", "status": "published" }
+    ],
+    "salon-de-coiffure": [
+      { "value": "coiffeur", "kind": "alias", "status": "published" },
+      { "value": "coiffeur à domicile", "kind": "specialty", "status": "published" }
+    ],
+    "esthetique": [
+      { "value": "esthéticienne", "kind": "alias", "status": "published" },
+      { "value": "esthétique à domicile", "kind": "specialty", "status": "published" }
+    ],
+    "services-a-la-personne": [
+      { "value": "garde d’enfants à domicile", "kind": "specialty", "status": "published" },
+      { "value": "assistance à domicile", "kind": "specialty", "status": "published" },
+      { "value": "portage de repas", "kind": "specialty", "status": "published" }
+    ],
+    "organisme-de-formation": [
+      { "value": "centre de formation", "kind": "alias", "status": "published" },
+      { "value": "formation professionnelle", "kind": "specialty", "status": "published" }
+    ],
+    "cfa": [
+      { "value": "centre de formation d’apprentis", "kind": "alias", "status": "published" },
+      { "value": "apprentissage", "kind": "specialty", "status": "published" }
+    ],
+    "formation-en-ligne": [
+      { "value": "e-learning", "kind": "alias", "status": "published" },
+      { "value": "formation à distance", "kind": "alias", "status": "published" }
+    ],
+    "production-industrie": [
+      { "value": "entreprise industrielle", "kind": "alias", "status": "published" },
+      { "value": "atelier de production", "kind": "alias", "status": "published" },
+      { "value": "contrôle qualité en production", "kind": "problem", "status": "published" }
+    ],
+    "plomberie-chauffage": [
+      { "value": "plombier", "kind": "alias", "status": "published" },
+      { "value": "chauffagiste", "kind": "alias", "status": "published" },
+      { "value": "chaudière", "kind": "object", "status": "published" },
+      { "value": "pompe à chaleur", "kind": "specialty", "status": "published" }
+    ],
+    "electricite-generale": [
+      { "value": "électricien", "kind": "alias", "status": "published" },
+      { "value": "installation électrique", "kind": "specialty", "status": "published" }
+    ],
+    "renovation-interieur": [
+      { "value": "entreprise de rénovation", "kind": "alias", "status": "published" },
+      { "value": "isolation intérieure", "kind": "specialty", "status": "published" },
+      { "value": "façade et ravalement", "kind": "specialty", "status": "published" },
+      { "value": "rénovation énergétique", "kind": "problem", "status": "published" }
+    ],
+    "menuiserie-agencement": [
+      { "value": "menuisier", "kind": "alias", "status": "published" },
+      { "value": "agenceur", "kind": "alias", "status": "published" },
+      { "value": "charpente bois", "kind": "specialty", "status": "published" }
+    ],
+    "maconnerie-gros-oeuvre": [
+      { "value": "maçon", "kind": "alias", "status": "published" },
+      { "value": "gros œuvre", "kind": "alias", "status": "published" }
+    ],
+    "paysagiste": [
+      { "value": "jardinier", "kind": "alias", "status": "published" },
+      { "value": "élagueur", "kind": "alias", "status": "published" },
+      { "value": "entretien d’espaces verts", "kind": "specialty", "status": "published" },
+      { "value": "arrosage automatique", "kind": "specialty", "status": "published" },
+      { "value": "entretien de terrains de sport", "kind": "specialty", "status": "published" }
+    ],
+    "garage-automobile": [
+      { "value": "mécanicien automobile", "kind": "alias", "status": "published" },
+      { "value": "garage poids lourds", "kind": "specialty", "status": "published" },
+      { "value": "pneumatiques", "kind": "specialty", "status": "published" },
+      { "value": "mécanique mobile", "kind": "specialty", "status": "published" },
+      { "value": "entretien de flottes", "kind": "specialty", "status": "published" },
+      { "value": "dépannage automobile", "kind": "specialty", "status": "published" }
+    ],
+    "carrosserie": [
+      { "value": "carrossier", "kind": "alias", "status": "published" },
+      { "value": "réparation de carrosserie", "kind": "specialty", "status": "published" }
+    ],
+    "cabinet-medical": [
+      { "value": "médecin libéral", "kind": "alias", "status": "published" },
+      { "value": "cabinet de médecin", "kind": "alias", "status": "published" }
+    ],
+    "cabinet-paramedical": [
+      { "value": "kinésithérapeute", "kind": "specialty", "status": "published" },
+      { "value": "kinésithérapeute à domicile", "kind": "specialty", "status": "published" },
+      { "value": "profession paramédicale", "kind": "alias", "status": "published" }
+    ],
+    "infirmier-liberal": [
+      { "value": "infirmier à domicile", "kind": "alias", "status": "published" },
+      { "value": "soins infirmiers à domicile", "kind": "specialty", "status": "published" }
+    ],
+    "aide-a-domicile-menage": [
+      { "value": "aide à domicile", "kind": "alias", "status": "published" },
+      { "value": "assistance aux personnes âgées", "kind": "specialty", "status": "published" },
+      { "value": "ménage à domicile", "kind": "specialty", "status": "published" }
+    ],
+    "reparation-informatique-mobile": [
+      { "value": "maintenance informatique sur site", "kind": "alias", "status": "published" },
+      { "value": "dépannage informatique B2B", "kind": "specialty", "status": "published" }
+    ],
+    "architecte-maitre-oeuvre": [
+      { "value": "maître d’œuvre", "kind": "alias", "status": "published" },
+      { "value": "inspection de chantier", "kind": "specialty", "status": "published" },
+      { "value": "suivi de chantier", "kind": "problem", "status": "published" }
+    ],
+    "photographe-videaste": [
+      { "value": "photographe immobilier", "kind": "specialty", "status": "published" },
+      { "value": "vidéaste d’entreprise", "kind": "specialty", "status": "published" }
+    ],
+    "evenementiel": [
+      { "value": "agence événementielle", "kind": "alias", "status": "published" },
+      { "value": "installation de stands", "kind": "specialty", "status": "published" },
+      { "value": "location de mobilier événementiel", "kind": "specialty", "status": "published" },
+      { "value": "sonorisation événementielle", "kind": "specialty", "status": "published" },
+      { "value": "éclairage événementiel", "kind": "specialty", "status": "published" },
+      { "value": "montage de scènes", "kind": "specialty", "status": "published" },
+      { "value": "installation de chapiteaux", "kind": "specialty", "status": "published" }
+    ],
+    "salle-de-sport": [
+      { "value": "club de sport", "kind": "alias", "status": "published" },
+      { "value": "centre de fitness", "kind": "alias", "status": "published" }
+    ],
+    "pisciniste": [
+      { "value": "entretien de piscines", "kind": "specialty", "status": "published" },
+      { "value": "installation de piscine", "kind": "specialty", "status": "published" }
+    ],
+    "diagnostiqueur-immobilier": [
+      { "value": "diagnostic immobilier", "kind": "alias", "status": "published" },
+      { "value": "inspection de logements", "kind": "specialty", "status": "published" },
+      { "value": "recherche de fuite", "kind": "specialty", "status": "published" }
+    ],
+    "pressing": [
+      { "value": "blanchisserie", "kind": "alias", "status": "published" },
+      { "value": "nettoyage à sec", "kind": "specialty", "status": "published" }
+    ],
+    "laverie-automatique": [
+      { "value": "laverie libre-service", "kind": "alias", "status": "published" },
+      { "value": "lavomatic", "kind": "alias", "status": "published" }
+    ],
+    "entreprise-de-securite": [
+      { "value": "gardiennage", "kind": "alias", "status": "published" },
+      { "value": "agents de sécurité", "kind": "alias", "status": "published" },
+      { "value": "rondes de surveillance", "kind": "specialty", "status": "published" },
+      { "value": "sécurité événementielle", "kind": "specialty", "status": "published" }
+    ],
+    "couvreur": [
+      { "value": "charpentier", "kind": "alias", "status": "published" },
+      { "value": "charpente", "kind": "specialty", "status": "published" },
+      { "value": "couverture toiture", "kind": "specialty", "status": "published" },
+      { "value": "étanchéité toiture", "kind": "specialty", "status": "published" }
+    ],
+    "peintre-en-batiment": [
+      { "value": "artisan peintre", "kind": "alias", "status": "published" },
+      { "value": "peinture intérieure", "kind": "specialty", "status": "published" },
+      { "value": "peinture extérieure", "kind": "specialty", "status": "published" }
+    ],
+    "carreleur": [
+      { "value": "pose de carrelage", "kind": "specialty", "status": "published" },
+      { "value": "carrelage et faïence", "kind": "specialty", "status": "published" }
+    ],
+    "climatisation": [
+      { "value": "climaticien", "kind": "alias", "status": "published" },
+      { "value": "air conditionné", "kind": "alias", "status": "published" },
+      { "value": "pompe à chaleur", "kind": "specialty", "status": "published" }
+    ],
+    "serrurier": [
+      { "value": "serrurerie", "kind": "alias", "status": "published" },
+      { "value": "dépannage de serrure", "kind": "specialty", "status": "published" }
+    ],
+    "geometre": [
+      { "value": "géomètre-expert", "kind": "alias", "status": "published" },
+      { "value": "topographie", "kind": "specialty", "status": "published" },
+      { "value": "relevés techniques", "kind": "specialty", "status": "published" },
+      { "value": "cartographie de terrain", "kind": "specialty", "status": "published" }
+    ],
+    "cabinet-qhse-conformite": [
+      { "value": "consultant QHSE", "kind": "alias", "status": "published" },
+      { "value": "audit sécurité", "kind": "specialty", "status": "published" },
+      { "value": "contrôle qualité sur site", "kind": "specialty", "status": "published" },
+      { "value": "contrôle de conformité", "kind": "specialty", "status": "published" },
+      { "value": "audit énergétique", "kind": "specialty", "status": "published" }
+    ],
+    "bureau-etudes": [
+      { "value": "bureau d’études techniques", "kind": "alias", "status": "published" },
+      { "value": "expert en bâtiment", "kind": "specialty", "status": "published" },
+      { "value": "études techniques", "kind": "specialty", "status": "published" }
+    ],
+    "infogerance-informatique": [
+      { "value": "prestataire informatique", "kind": "alias", "status": "published" },
+      { "value": "maintenance informatique B2B", "kind": "specialty", "status": "published" },
+      { "value": "support informatique externalisé", "kind": "specialty", "status": "published" }
+    ]
+  },
+  "futureCandidates": [
+    {
+      "candidateKey": "maintenance-technique-multitechnique",
+      "status": "draft",
+      "terms": [
+        "maintenance de bâtiments",
+        "maintenance multitechnique",
+        "maintenance de machines",
+        "maintenance industrielle",
+        "maintenance de matériel médical",
+        "maintenance de distributeurs automatiques",
+        "groupes électrogènes",
+        "ascenseurs",
+        "mobilier urbain"
+      ]
+    },
+    {
+      "candidateKey": "securite-incendie",
+      "status": "draft",
+      "terms": ["extincteurs", "BAES", "désenfumage", "contrôle incendie", "sécurité incendie"]
+    },
+    {
+      "candidateKey": "surete-electronique",
+      "status": "draft",
+      "terms": ["alarmes", "vidéosurveillance", "contrôle d’accès", "interphonie", "domotique"]
+    },
+    {
+      "candidateKey": "froid-commercial-cuisines-professionnelles",
+      "status": "draft",
+      "terms": [
+        "groupes froids",
+        "froid commercial",
+        "chambres froides",
+        "cuisines professionnelles",
+        "nettoyage de hottes",
+        "hottes techniques"
+      ]
+    },
+    {
+      "candidateKey": "lutte-contre-nuisibles",
+      "status": "draft",
+      "terms": [
+        "dératisation",
+        "désinsectisation",
+        "désinfection",
+        "punaises de lit",
+        "termites",
+        "traitement de l’humidité"
+      ]
+    },
+    {
+      "candidateKey": "assainissement-canalisations",
+      "status": "draft",
+      "terms": [
+        "débouchage de canalisations",
+        "curage",
+        "vidange de fosses",
+        "pompage",
+        "assainissement"
+      ]
+    },
+    {
+      "candidateKey": "terrassement-travaux-publics",
+      "status": "draft",
+      "terms": ["terrassement", "travaux publics", "voirie", "démolition", "dépollution"]
+    },
+    {
+      "candidateKey": "maintenance-engins-materiels-professionnels",
+      "status": "draft",
+      "terms": [
+        "réparation de nacelles",
+        "réparation de chariots élévateurs",
+        "réparation d’engins de chantier",
+        "maintenance de matériel agricole",
+        "réparation de matériel agricole"
+      ]
+    },
+    {
+      "candidateKey": "installation-solaire-bornes-recharge",
+      "status": "draft",
+      "terms": [
+        "panneaux solaires",
+        "photovoltaïque",
+        "maintenance photovoltaïque",
+        "bornes de recharge",
+        "maintenance éolienne"
+      ]
+    },
+    {
+      "candidateKey": "portes-portails-fermetures-automatiques",
+      "status": "draft",
+      "terms": [
+        "portes automatiques",
+        "portails et barrières",
+        "stores et volets",
+        "rideaux métalliques"
+      ]
+    },
+    {
+      "candidateKey": "location-materiel-engins",
+      "status": "draft",
+      "terms": [
+        "location de matériel avec livraison",
+        "location de bennes",
+        "location d’engins",
+        "location de nacelles"
+      ]
+    },
+    {
+      "candidateKey": "transport-sanitaire",
+      "status": "draft",
+      "terms": ["ambulances", "transport sanitaire", "transport médical"]
+    },
+    {
+      "candidateKey": "travaux-agricoles",
+      "status": "draft",
+      "terms": [
+        "travaux agricoles",
+        "entreprise de moisson",
+        "irrigation agricole",
+        "entretien de serres",
+        "traitement phytosanitaire"
+      ]
+    },
+    {
+      "candidateKey": "services-funeraires",
+      "status": "draft",
+      "terms": ["services funéraires", "pompes funèbres"]
+    }
+  ]
+}

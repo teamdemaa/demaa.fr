@@ -5,6 +5,7 @@ import Link from "next/link";
 import { getToolPricingInfo } from "@/lib/tool-pricing";
 import {
   getToolDirectorySlug,
+  getFreshToolPricingNote,
   hasStandaloneToolPage,
   type ToolDirectoryItem,
 } from "@/lib/tool-directory";
@@ -19,6 +20,7 @@ export default function SoftwareDetailContent({
   compact = false,
 }: SoftwareDetailContentProps) {
   const pricing = getToolPricingInfo(tool);
+  const verifiedPricingNote = getFreshToolPricingNote(tool);
   const keyFeatures = tool.keyFeatures?.filter(Boolean) ?? [];
   const idealFor = tool.idealFor?.filter(Boolean) ?? [];
   const isInternalTool = tool.url.startsWith("/");
@@ -88,9 +90,9 @@ export default function SoftwareDetailContent({
           <p className="mt-3 text-sm font-normal leading-relaxed text-dema-muted">
             {pricing.summary}
           </p>
-          {tool.pricingNoteVerified ? (
+          {verifiedPricingNote ? (
             <p className="mt-3 text-xs leading-relaxed text-dema-muted">
-              {tool.pricingNoteVerified}
+              {verifiedPricingNote}
             </p>
           ) : null}
           <div className="mt-4 space-y-2">

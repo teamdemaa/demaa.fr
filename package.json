@@ -10,8 +10,10 @@
     "start": "DEMAA_BUILD_DIST_DIR=.next-build next start",
     "lint": "eslint",
     "test": "vitest run",
-    "check": "npm run lint -- --max-warnings=0 && npx tsc --noEmit && npm test && npm run validate:data",
-    "validate:data": "node scripts/validate-data.mjs && node scripts/validate-process-registry.mjs && node scripts/validate-systeme-catalog.mjs && node scripts/validate-sector-taxonomy.mjs && node scripts/validate-seo-routes.mjs && node scripts/validate-sector-editorial-links.mjs && node scripts/validate-build-runtime.mjs && node scripts/audit-supplier-placeholders.mjs && node scripts/audit-system-recommendations.mjs && node scripts/audit-system-discovery-recommendations.mjs && node scripts/audit-finance-network-recommendations.mjs && node scripts/audit-aid-recommendations.mjs && node scripts/audit-system-kit-previews.mjs",
+    "check": "npm run lint -- --max-warnings=0 && npx tsc --noEmit && npm test && npm run validate:academy && npm run validate:data",
+    "validate:academy": "node studio/academy-course-pack-v1/scripts/validate-course-pack.mjs",
+    "audit:academy:http": "node scripts/audit-academy-http.mjs",
+    "validate:data": "node scripts/validate-data.mjs && node scripts/validate-process-registry.mjs && node scripts/validate-systeme-catalog.mjs && node scripts/validate-sector-taxonomy.mjs && node scripts/validate-seo-routes.mjs && node scripts/validate-sector-editorial-links.mjs && node scripts/validate-build-runtime.mjs && node scripts/audit-supplier-placeholders.mjs && node scripts/audit-system-recommendations.mjs && node scripts/audit-system-discovery-recommendations.mjs && node scripts/audit-finance-network-recommendations.mjs && node scripts/audit-aid-recommendations.mjs && node scripts/audit-system-kit-previews.mjs && node scripts/audit-private-operational-system-assets.mjs && node scripts/audit-public-wording.mjs",
     "audit:btp-staging": "vite-node --config vitest.config.ts scripts/audit-btp-publication-staging.ts",
     "audit:agency-staging": "vite-node --config vitest.config.ts scripts/audit-agency-publication-staging.ts",
     "audit:commerce-staging": "vite-node --config vitest.config.ts scripts/audit-commerce-publication-staging.ts",
@@ -91,7 +93,9 @@
     "audit:system-discovery-recommendations": "node scripts/audit-system-discovery-recommendations.mjs",
     "audit:system-kit-pages": "node scripts/audit-system-kit-pages.mjs",
     "audit:system-kit-previews": "node scripts/audit-system-kit-previews.mjs",
+    "audit:private-operational-assets": "node scripts/audit-private-operational-system-assets.mjs",
     "audit:operational-kits": "node scripts/audit-operational-kits.mjs",
+    "audit:public-wording": "node scripts/audit-public-wording.mjs",
     "audit:external-links": "node scripts/audit-external-links.mjs",
     "audit:supplier-placeholders": "node scripts/audit-supplier-placeholders.mjs",
     "audit:finance-network-recommendations": "node scripts/audit-finance-network-recommendations.mjs",
@@ -103,12 +107,20 @@
     "sync:enterprise-annuaire": "node scripts/sync-enterprise-annuaire.mjs",
     "sync:tool-directory": "node scripts/sync-tool-directory.mjs",
     "generate:operational-blueprints": "vite-node --config vitest.config.ts scripts/build-operational-workbook-blueprints.ts",
+    "generate:operational-v2-pilots": "vite-node --config vitest.config.ts scripts/build-operational-workbook-v2-pilots.ts",
+    "export:firebase-solutions-snapshot": "vite-node --config vite.firebase-registry.config.ts scripts/build-firebase-solution-registry-snapshot.ts --write",
+    "plan:firebase-solutions-import": "vite-node --config vite.firebase-registry.config.ts scripts/plan-firebase-solution-registry-import.ts",
+    "import:firebase-solutions-preview": "vite-node --config vite.firebase-registry.config.ts scripts/import-firebase-solution-registry-preview.ts",
+    "import:firebase-solutions-production": "vite-node --config vite.firebase-registry.config.ts scripts/import-firebase-solution-registry-preview.ts --target=production",
+    "verify:firebase-solutions-emulator": "npx --yes firebase-tools emulators:exec --only firestore --project demo-demaa-solutions --config firebase.solutions-emulator.json \"vite-node --config vite.firebase-registry.config.ts scripts/verify-firebase-solution-registry-emulator.ts\"",
     "register:operational-assets": "node scripts/register-operational-system-assets.mjs"
   },
   "dependencies": {
     "@fillout/react": "^3.1.2",
     "@vercel/analytics": "^2.0.1",
+    "@vercel/oidc": "^3.8.2",
     "firebase-admin": "^14.2.0",
+    "google-auth-library": "10.6.2",
     "html-to-image": "^1.11.13",
     "lucide-react": "^1.7.0",
     "next": "^16.2.11",
@@ -131,7 +143,7 @@
   "overrides": {
     "glob": {
       "minimatch": {
-        "brace-expansion": "^5.0.8"
+        "brace-expansion": "5.0.9"
       }
     },
     "postcss": "^8.5.23",

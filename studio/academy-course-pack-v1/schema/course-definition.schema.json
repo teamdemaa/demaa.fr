@@ -38,7 +38,7 @@
     "lessons": {
       "type": "array",
       "minItems": 4,
-      "maxItems": 6,
+      "maxItems": 7,
       "items": {
         "type": "object",
         "additionalProperties": false,

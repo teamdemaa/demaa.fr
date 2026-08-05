@@ -1,0 +1,179 @@
+{
+  "version": "1.0",
+  "scope": "academy-course-pack-v1",
+  "provenancePolicy": {
+    "knownFact": "These assets entered this branch through the local Academy content handoff.",
+    "generationSource": "No original generation file, prompt, author record or external source URL is documented in this repository.",
+    "rightsStatus": "needs-confirmation",
+    "requiredBeforeExternalPublication": "Confirm ownership or an explicit publication licence for every asset."
+  },
+  "assets": [
+    {
+      "slug": "piloter-sa-tresorerie",
+      "kind": "course",
+      "path": "/images/academy/thumbnails/piloter-sa-tresorerie-v1.png",
+      "sourceContentPath": "studio/academy-course-pack-v1/courses/piloter-sa-tresorerie.json",
+      "sha256": "22c7c75f202e9fd08e83fa0ed8215bcd11e16d13279d13ef91e6c6200a82f537",
+      "width": 1536,
+      "height": 864,
+      "bytes": 124413,
+      "provenanceStatus": "needs-confirmation",
+      "rightsStatus": "needs-confirmation"
+    },
+    {
+      "slug": "comprendre-chiffre-affaires-benefice",
+      "kind": "course",
+      "path": "/images/academy/thumbnails/comprendre-chiffre-affaires-benefice-v1.png",
+      "sourceContentPath": "studio/academy-course-pack-v1/courses/comprendre-chiffre-affaires-benefice.json",
+      "sha256": "2b743afe11bb88910907bd2825727203dcecdb6e17acafc61c8a63fc22fb1ba4",
+      "width": 1536,
+      "height": 864,
+      "bytes": 121083,
+      "provenanceStatus": "needs-confirmation",
+      "rightsStatus": "needs-confirmation"
+    },
+    {
+      "slug": "fixer-ses-prix-sans-vendre-a-perte",
+      "kind": "course",
+      "path": "/images/academy/thumbnails/fixer-ses-prix-sans-vendre-a-perte-v1.png",
+      "sourceContentPath": "studio/academy-course-pack-v1/courses/fixer-ses-prix-sans-vendre-a-perte.json",
+      "sha256": "6b06176fafd769e09a6c24a4d437798f4727a02057173358f8cba6e661956d1d",
+      "width": 1536,
+      "height": 864,
+      "bytes": 115045,
+      "provenanceStatus": "needs-confirmation",
+      "rightsStatus": "needs-confirmation"
+    },
+    {
+      "slug": "construire-systeme-marketing-vente",
+      "kind": "course",
+      "path": "/images/academy/thumbnails/construire-systeme-marketing-vente-v1.png",
+      "sourceContentPath": "studio/academy-course-pack-v1/courses/construire-systeme-marketing-vente.json",
+      "sha256": "a9120fb2a46eb8c02892fb44e9724f35ab7fca678b7892bee963e06b52bfc4ae",
+      "width": 1536,
+      "height": 864,
+      "bytes": 119626,
+      "provenanceStatus": "needs-confirmation",
+      "rightsStatus": "needs-confirmation"
+    },
+    {
+      "slug": "transformer-demande-en-client",
+      "kind": "course",
+      "path": "/images/academy/thumbnails/transformer-demande-en-client-v1.png",
+      "sourceContentPath": "studio/academy-course-pack-v1/courses/transformer-demande-en-client.json",
+      "sha256": "ed6e807f7197d2b1f722d8ba5f9e5bfc1ed36afb705ba237f5da4c21843b64c7",
+      "width": 1536,
+      "height": 864,
+      "bytes": 129384,
+      "provenanceStatus": "needs-confirmation",
+      "rightsStatus": "needs-confirmation"
+    },
+    {
+      "slug": "deleguer-sans-perdre-le-controle",
+      "kind": "course",
+      "path": "/images/academy/thumbnails/deleguer-sans-perdre-le-controle-v1.png",
+      "sourceContentPath": "studio/academy-course-pack-v1/courses/deleguer-sans-perdre-le-controle.json",
+      "sha256": "9f6dc2992726adbd227ba62f80a44281879e6b6bc9bfdfef4155b26885fd3f52",
+      "width": 1536,
+      "height": 864,
+      "bytes": 122816,
+      "provenanceStatus": "needs-confirmation",
+      "rightsStatus": "needs-confirmation"
+    },
+    {
+      "slug": "cabinet-conseil-acquisition",
+      "kind": "case-study",
+      "path": "/images/courses/cases-acquisition/cabinet-conseil-storyboard-v1.png",
+      "sourceContentPath": "studio/academy-course-pack-v1/cases/cabinet-conseil-acquisition.json",
+      "sha256": "4424c4db30d51ec851aeb86fb30f37599aa679b16adc5ce93f24bc2670ec6da9",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1213689,
+      "provenanceStatus": "needs-confirmation",
+      "rightsStatus": "needs-confirmation",
+      "optimization": {
+        "tool": "sharp 0.35.3",
+        "mode": "lossless PNG compression",
+        "originalBytes": 1531200,
+        "decodedPixelSha256": "ca6bccf1dac3f8d5d72b0962e9add15b6c85dbc7460c18b6931617da16cefbf4",
+        "decodedPixelsVerifiedIdentical": true
+      }
+    },
+    {
+      "slug": "formation-b2b-acquisition",
+      "kind": "case-study",
+      "path": "/images/courses/cases-acquisition/formation-b2b-storyboard-v1.png",
+      "sourceContentPath": "studio/academy-course-pack-v1/cases/formation-b2b-acquisition.json",
+      "sha256": "c9fb3c8370fe432abb2171161b24141fa29595d611f5ce332f2130d88b3b202b",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1406248,
+      "provenanceStatus": "needs-confirmation",
+      "rightsStatus": "needs-confirmation",
+      "optimization": {
+        "tool": "sharp 0.35.3",
+        "mode": "lossless PNG compression",
+        "originalBytes": 1718016,
+        "decodedPixelSha256": "dab9f7d4fb0bc2aefd587bea47c46e37ed7858f0364fe9f952d974ac0a8e8952",
+        "decodedPixelsVerifiedIdentical": true
+      }
+    },
+    {
+      "slug": "maintenance-informatique-acquisition",
+      "kind": "case-study",
+      "path": "/images/courses/cases-acquisition/maintenance-informatique-storyboard-v1.png",
+      "sourceContentPath": "studio/academy-course-pack-v1/cases/maintenance-informatique-acquisition.json",
+      "sha256": "92210cad41c5649e259ea025d572f09aa93393f1aaf15a363cabb7a0e3d25026",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1313972,
+      "provenanceStatus": "needs-confirmation",
+      "rightsStatus": "needs-confirmation",
+      "optimization": {
+        "tool": "sharp 0.35.3",
+        "mode": "lossless PNG compression",
+        "originalBytes": 1627285,
+        "decodedPixelSha256": "9f084c2416f8dcc6554449fabe2654f912523e418b0be33ba581fc86f430df62",
+        "decodedPixelsVerifiedIdentical": true
+      }
+    },
+    {
+      "slug": "bureau-etudes-acquisition",
+      "kind": "case-study",
+      "path": "/images/courses/cases-acquisition/bureau-etudes-storyboard-v1.png",
+      "sourceContentPath": "studio/academy-course-pack-v1/cases/bureau-etudes-acquisition.json",
+      "sha256": "994ad30e58ef7559768a0e4866563b7b6084ecc46293cd1914943fc87340f4c3",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1418200,
+      "provenanceStatus": "needs-confirmation",
+      "rightsStatus": "needs-confirmation",
+      "optimization": {
+        "tool": "sharp 0.35.3",
+        "mode": "lossless PNG compression",
+        "originalBytes": 1723731,
+        "decodedPixelSha256": "8faf48c7f5f6be6ca2866aec83701f729a0ecda5924d93ed0d885cf2b1a3a6ce",
+        "decodedPixelsVerifiedIdentical": true
+      }
+    },
+    {
+      "slug": "nettoyage-professionnel-acquisition",
+      "kind": "case-study",
+      "path": "/images/courses/cases-acquisition/nettoyage-professionnel-storyboard-v1.png",
+      "sourceContentPath": "studio/academy-course-pack-v1/cases/nettoyage-professionnel-acquisition.json",
+      "sha256": "18974ca1bdcfeef9c94d5c21b1e5766c3a61d388f3e983e350d9d9a0cf748014",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1314788,
+      "provenanceStatus": "needs-confirmation",
+      "rightsStatus": "needs-confirmation",
+      "optimization": {
+        "tool": "sharp 0.35.3",
+        "mode": "lossless PNG compression",
+        "originalBytes": 1620942,
+        "decodedPixelSha256": "993614e718b50ca2b4ed57b0a2c6160b1712d1fe7a90625cd05ddf0c88f67e24",
+        "decodedPixelsVerifiedIdentical": true
+      }
+    }
+  ]
+}

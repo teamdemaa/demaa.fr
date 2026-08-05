@@ -15,7 +15,11 @@ export type SupplierFamily =
   | "Finance & protection"
   | "Équipement & exploitation";
 
-type SupplierCta = "Voir le fournisseur" | "Demander une mise en relation" | "Comparer les options";
+type SupplierCta =
+  | "Voir le fournisseur"
+  | "Demander une mise en relation"
+  | "Comparer les options"
+  | "Découvrir la solution";
 
 export type DemaaSupplier = {
   slug: string;
@@ -450,7 +454,7 @@ export const demaaSuppliers: readonly DemaaSupplier[] = [
     tags: ["Crèche", "Mobilier", "Petite enfance"],
     icon: "Building2",
     usefulFor: ["Aménagement", "Sécurité", "Équipement"],
-    href: "https://www.papouillefrance.com/",
+    href: "https://www.papouillefrance.com/page/qui-sommes-nous-3",
     cta: "Voir le fournisseur",
   },
   {
@@ -554,15 +558,15 @@ export const demaaSuppliers: readonly DemaaSupplier[] = [
     name: "METRO France",
     family: "Équipement & exploitation",
     category: "Grossiste",
-    shortDescription: "Produits, équipements et consommables pour l'hôtellerie et la restauration.",
+    shortDescription: "Grossiste pour la restauration, les cafés, les bars et les métiers de bouche.",
     description:
-      "Offre professionnelle couvrant alimentation, hygiène, linge, mobilier, art de la table et équipements pour les établissements CHR.",
-    bestFor: "Les hôtels et établissements de restauration qui veulent regrouper une partie de leurs achats d'exploitation.",
+      "Offre professionnelle en produits alimentaires, boissons, hygiène, emballages, art de la table et équipements pour les établissements CHR et commerces de bouche.",
+    bestFor: "Les restaurants, fast-foods, bars, traiteurs et boulangeries qui disposent d’un compte professionnel éligible et veulent regrouper une partie de leurs achats.",
     offerHint: "Carte professionnelle",
     tags: ["Hôtellerie", "Restauration", "Équipement"],
     icon: "Building2",
     usefulFor: ["Hôtel", "CHR", "Approvisionnement"],
-    href: "https://www.metro.fr/conseil-service/metro/univers-metiers/Hotel-hebergement",
+    href: "https://www.metro.fr/metro/univers-metiers",
     cta: "Voir le fournisseur",
   },
   {

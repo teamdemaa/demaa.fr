@@ -2114,6 +2114,7 @@ function writeLocalMirror(waves: WaveData[]) {
           stepCount: TARGET_CONTENT_COUNT,
           matchedStepCount: TARGET_CONTENT_COUNT,
           unmatchedCount: 0,
+          sourceUrl: "",
         }
       : audit;
   });

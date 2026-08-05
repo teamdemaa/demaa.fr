@@ -6,12 +6,16 @@ import {
   normalizeText,
   readJsonBody,
 } from "@/lib/api-security";
-import { hasEditableOperationalSystemAsset } from "@/lib/editable-operational-system-assets.server";
+import {
+  getActiveOperationalSystemDeliverySnapshot,
+  hasEditableOperationalSystemAsset,
+} from "@/lib/editable-operational-system-assets.server";
 import { isValidEmail, normalizeEmail } from "@/lib/email";
 import { enterpriseToSystem } from "@/lib/enterprise-annuaire";
 import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 import { resolveLeadAttribution } from "@/lib/lead-attribution-server";
 import { resolveLeadContext } from "@/lib/lead-context";
+import { getLevierAssetSnapshot } from "@/lib/levier-asset.server";
 import { submitLeadRequest } from "@/lib/lead-notifications";
 import {
   getLeadDeliveryState,
@@ -21,6 +25,7 @@ import { logOperationalError } from "@/lib/operational-log";
 import type { OperationalSystemDeliveryRequest } from "@/lib/operational-system-delivery-contract";
 import { sendOperationalSystemDeliveryEmail } from "@/lib/operational-system-delivery-email.server";
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
+import { getPublishedSolutionPlacementsForSystem } from "@/lib/solution-registry.server";
 
 export const runtime = "nodejs";
 
@@ -38,22 +43,27 @@ function isValidSectorSlug(value: string) {
   return /^[a-z0-9-]{2,120}$/.test(value);
 }
 
-function buildFallbackIdempotencyKey(email: string, systemSlug: string) {
+function buildFallbackIdempotencyKey(
+  assetRevision: string,
+  email: string,
+  systemSlug: string,
+) {
   const day = new Date().toISOString().slice(0, 10);
   const digest = createHash("sha256")
-    .update(`${email}:${systemSlug}:${day}`)
+    .update(`${assetRevision}:${email}:${systemSlug}:${day}`)
     .digest("hex");
 
   return `system-delivery:${digest}`;
 }
 
 function buildScopedIdempotencyKey(
+  assetRevision: string,
   clientKey: string,
   email: string,
   systemSlug: string,
 ) {
   const digest = createHash("sha256")
-    .update(`${clientKey}:${email}:${systemSlug}`)
+    .update(`${assetRevision}:${clientKey}:${email}:${systemSlug}`)
     .digest("hex");
 
   return `system-delivery:${digest}`;
@@ -101,9 +111,9 @@ async function handlePost(request: Request) {
   const email = normalizeEmail(normalizeText(body?.email, 160));
   const marketingConsent = body?.marketingConsent === true;
 
-  if (!firstName || !systemSlug || !email) {
+  if (!systemSlug || !email) {
     return NextResponse.json(
-      { error: "Merci de renseigner votre prénom et votre e-mail." },
+      { error: "Merci de renseigner votre adresse e-mail." },
       { status: 400 },
     );
   }
@@ -133,10 +143,30 @@ async function handlePost(request: Request) {
   );
   if (limitedByEmail) return limitedByEmail;
 
-  if (!hasEditableOperationalSystemAsset(systemSlug)) {
+  const hasPublishedLevier = getPublishedSolutionPlacementsForSystem(systemSlug)
+    .some(({ resource }) =>
+      resource.resourceSlug === "levier" &&
+      resource.interaction.interactionMode === "system_delivery"
+    );
+  if (!hasPublishedLevier && !firstName) {
+    return NextResponse.json(
+      { error: "Merci de renseigner votre prénom et votre e-mail." },
+      { status: 400 },
+    );
+  }
+  if (!hasPublishedLevier && !hasEditableOperationalSystemAsset(systemSlug)) {
     return NextResponse.json(
       { error: "Le système opérationnel demandé est introuvable." },
       { status: 404 },
+    );
+  }
+  const requestedAssetSnapshot = hasPublishedLevier
+    ? getLevierAssetSnapshot()
+    : getActiveOperationalSystemDeliverySnapshot(systemSlug);
+  if (!requestedAssetSnapshot) {
+    return NextResponse.json(
+      { error: "Le système opérationnel demandé est indisponible." },
+      { status: 503 },
     );
   }
 
@@ -157,7 +187,9 @@ async function handlePost(request: Request) {
   }
   const context = await resolveLeadContext({
     systemSlug,
-    source: "Livraison du système opérationnel gratuit",
+    source: hasPublishedLevier
+      ? "Livraison de Levier"
+      : "Livraison du système opérationnel gratuit",
     sourceUrl: request.headers.get("referer"),
   });
 
@@ -172,17 +204,27 @@ async function handlePost(request: Request) {
     body?.idempotencyKey,
   );
   const idempotencyKey = clientIdempotencyKey
-    ? buildScopedIdempotencyKey(clientIdempotencyKey, email, systemSlug)
-    : buildFallbackIdempotencyKey(email, systemSlug);
+    ? buildScopedIdempotencyKey(
+        requestedAssetSnapshot.assetRevision,
+        clientIdempotencyKey,
+        email,
+        systemSlug,
+      )
+    : buildFallbackIdempotencyKey(
+        requestedAssetSnapshot.assetRevision,
+        email,
+        systemSlug,
+      );
   const consentCapturedAt = new Date().toISOString();
   const lead = await submitLeadRequest({
+    assetSnapshot: requestedAssetSnapshot,
     attribution: resolveLeadAttribution(request, body?.attribution),
     channels: {
       email: false,
       resend: marketingConsent,
       slack: true,
     },
-    contact: { email, firstName },
+    contact: { email, firstName: firstName || null },
     context,
     emoji: "📦",
     idempotencyKey,
@@ -193,7 +235,9 @@ async function handlePost(request: Request) {
       version: MARKETING_CONSENT_VERSION,
     },
     requestType: "system_kit_request",
-    title: `Livraison du système opérationnel gratuit — ${systemName}`,
+    title: hasPublishedLevier
+      ? `Livraison de Levier - ${systemName}`
+      : `Livraison du système opérationnel gratuit - ${systemName}`,
   });
 
   const deliveryState = await getLeadDeliveryState(lead.leadId, "kit_email");
@@ -201,10 +245,18 @@ async function handlePost(request: Request) {
     return successResponse();
   }
 
+  if (!lead.assetSnapshot?.assetRevision) {
+    return NextResponse.json(
+      { error: "La version du système demandé est indisponible." },
+      { status: 503 },
+    );
+  }
+
   const delivery = await sendOperationalSystemDeliveryEmail({
+    assetSnapshot: lead.assetSnapshot,
     deliveryId: `lead-${lead.leadId}-system`,
     email,
-    firstName,
+    firstName: firstName || null,
     systemName,
     systemSlug,
   });
@@ -220,7 +272,9 @@ async function handlePost(request: Request) {
     return NextResponse.json(
       {
         error:
-          "Impossible d’envoyer le système pour le moment. Merci de réessayer dans quelques instants.",
+          hasPublishedLevier
+            ? "Impossible d’envoyer Levier pour le moment. Merci de réessayer dans quelques instants."
+            : "Impossible d’envoyer le système pour le moment. Merci de réessayer dans quelques instants.",
       },
       { status: 502 },
     );

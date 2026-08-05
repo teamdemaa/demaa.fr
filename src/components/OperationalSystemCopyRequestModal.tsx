@@ -1,7 +1,13 @@
 "use client";
 
-import { Check, LoaderCircle, Mail, X } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
+import {
+  Check,
+  FileSpreadsheet,
+  LoaderCircle,
+  X,
+} from "lucide-react";
 import {
   type FormEvent,
   useEffect,
@@ -22,9 +28,11 @@ import type {
   OperationalSystemDeliveryRequest,
   OperationalSystemDeliverySuccess,
 } from "@/lib/operational-system-delivery-contract";
+import type { SystemKitPreview } from "@/lib/system-kit-previews";
 
 type OperationalSystemCopyRequestModalProps = {
   onClose: () => void;
+  preview: SystemKitPreview | null;
   systemName: string;
   systemSlug: string;
 };
@@ -52,28 +60,28 @@ function getErrorMessage(response: Response, payload: DeliveryPayload) {
     return serverError;
   }
   if (response.status === 404) {
-    return "Cette copie n’est pas disponible pour le moment.";
+    return "Levier n’est pas disponible pour le moment.";
   }
   if (response.status === 429) {
     return "Vous avez effectué trop de demandes. Réessayez un peu plus tard.";
   }
 
-  return "Impossible d’envoyer le lien pour le moment. Réessayez dans quelques instants.";
+  return "Impossible d’envoyer Levier pour le moment. Réessayez dans quelques instants.";
 }
 
 export default function OperationalSystemCopyRequestModal({
   onClose,
-  systemName,
+  preview,
   systemSlug,
 }: OperationalSystemCopyRequestModalProps) {
   const dialogRef = useRef<HTMLElement>(null);
-  const firstNameInputRef = useRef<HTMLInputElement>(null);
+  const emailInputRef = useRef<HTMLInputElement>(null);
   const successRef = useRef<HTMLDivElement>(null);
+  const trackedOpenRef = useRef(false);
   const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [firstName, setFirstName] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccessful, setIsSuccessful] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [website, setWebsite] = useState("");
 
   useEffect(() => {
@@ -122,7 +130,7 @@ export default function OperationalSystemCopyRequestModal({
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     document.addEventListener("keydown", handleKeyDown);
-    firstNameInputRef.current?.focus();
+    emailInputRef.current?.focus();
 
     return () => {
       document.body.style.overflow = previousOverflow;
@@ -132,17 +140,23 @@ export default function OperationalSystemCopyRequestModal({
   }, [onClose]);
 
   useEffect(() => {
-    if (isSuccessful) successRef.current?.focus();
-  }, [isSuccessful]);
+    if (!trackedOpenRef.current) {
+      trackedOpenRef.current = true;
+      trackSystemJourneyEvent("system_copy_form_opened", { systemSlug });
+    }
+  }, [systemSlug]);
+
+  useEffect(() => {
+    if (isSuccess) successRef.current?.focus();
+  }, [isSuccess]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (isSubmitting) return;
 
-    const normalizedFirstName = firstName.trim();
     const normalizedEmail = email.trim();
-    if (!normalizedFirstName || !normalizedEmail) {
-      setError("Merci de renseigner votre prénom et votre adresse e-mail.");
+    if (!normalizedEmail) {
+      setError("Merci de renseigner votre adresse e-mail.");
       return;
     }
     if (!isValidEmail(normalizedEmail)) {
@@ -154,11 +168,10 @@ export default function OperationalSystemCopyRequestModal({
     setIsSubmitting(true);
     trackSystemJourneyEvent("system_copy_form_submitted", { systemSlug });
 
-    const flowKey = `system-copy:${systemSlug}`;
+    const flowKey = `levier:${systemSlug}`;
     const requestPayload: OperationalSystemDeliveryRequest = {
       attribution: getLeadAttributionPayload(),
       email: normalizedEmail,
-      firstName: normalizedFirstName,
       idempotencyKey: getLeadSubmissionKey(flowKey),
       systemSlug,
       website,
@@ -182,14 +195,14 @@ export default function OperationalSystemCopyRequestModal({
       }
 
       clearLeadSubmissionKey(flowKey);
-      setIsSuccessful(true);
+      setIsSuccess(true);
       trackLeadConversion({
         requestType: "system_kit_request",
         systemSlug,
       });
     } catch {
       setError(
-        "Impossible d’envoyer le lien pour le moment. Réessayez dans quelques instants.",
+        "Impossible d’envoyer Levier pour le moment. Réessayez dans quelques instants.",
       );
       trackSystemJourneyEvent("system_copy_form_failed", { systemSlug });
     } finally {
@@ -204,7 +217,7 @@ export default function OperationalSystemCopyRequestModal({
     >
       <section
         ref={dialogRef}
-        className="relative max-h-[calc(100dvh-2rem)] w-full max-w-[30rem] overflow-y-auto rounded-[1.5rem] border border-dema-line bg-dema-paper shadow-[0_24px_70px_rgba(23,35,29,0.14)] sm:max-h-[calc(100dvh-3rem)]"
+        className="relative max-h-[calc(100dvh-2rem)] w-full max-w-[48rem] overflow-y-auto rounded-[1.5rem] border border-dema-line bg-dema-paper shadow-[0_24px_70px_rgba(23,35,29,0.14)] sm:max-h-[calc(100dvh-3rem)]"
         onClick={(event) => event.stopPropagation()}
         role="dialog"
         aria-modal="true"
@@ -216,144 +229,159 @@ export default function OperationalSystemCopyRequestModal({
           type="button"
           onClick={onClose}
           aria-label="Fermer"
-          className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full text-brand-blue transition hover:bg-dema-sage/55 hover:text-dema-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
+          className="absolute right-4 top-4 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-paper/90 text-brand-blue transition hover:bg-dema-sage hover:text-dema-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
         >
           <X className="h-4 w-4" aria-hidden="true" />
         </button>
 
-        <div className="p-6 sm:p-8">
-          <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
-            {isSuccessful ? (
-              <Check className="h-5 w-5" aria-hidden="true" />
+        <div className="grid md:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]">
+          <div className="flex min-h-[14rem] items-center justify-center bg-dema-sage/45 p-5 sm:min-h-[18rem] sm:p-7 md:min-h-[25rem]">
+            {preview ? (
+              <Image
+                src={preview.src}
+                alt={preview.alt}
+                width={preview.width}
+                height={preview.height}
+                sizes="(max-width: 767px) calc(100vw - 72px), 340px"
+                className="h-auto w-full rounded-[0.8rem] shadow-[0_14px_35px_rgba(23,35,29,0.1)]"
+              />
             ) : (
-              <Mail className="h-5 w-5" aria-hidden="true" />
+              <span className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-dema-paper text-dema-forest shadow-sm">
+                <FileSpreadsheet className="h-8 w-8" aria-hidden="true" />
+              </span>
             )}
-          </span>
+          </div>
 
-          <h2
-            id="system-copy-modal-title"
-            className="mt-5 pr-10 text-2xl font-semibold tracking-tight text-brand-blue"
-          >
-            {isSuccessful ? "C’est envoyé" : "Recevoir ma copie modifiable"}
-          </h2>
-
-          <p
-            id="system-copy-modal-description"
-            className="mt-3 text-sm leading-relaxed text-dema-muted"
-          >
-            {isSuccessful
-              ? "Le lien permettant de créer votre copie personnelle dans Google Drive vient d’être envoyé par e-mail. Pensez à vérifier vos courriers indésirables."
-              : "Nous vous envoyons le lien permettant de créer votre copie personnelle dans Google Drive."}
-          </p>
-
-          {isSuccessful ? (
-            <div
-              ref={successRef}
-              className="mt-6 rounded-[1rem] bg-dema-cream/55 p-5 outline-none"
-              role="status"
-              tabIndex={-1}
-            >
-              <p className="text-sm leading-relaxed text-dema-muted">
-                Votre demande pour le système opérationnel {systemName} a bien
-                été prise en compte.
-              </p>
-              <button
-                type="button"
-                onClick={onClose}
-                className="demaa-primary-button mt-5 inline-flex w-full items-center justify-center"
-              >
-                Fermer
-              </button>
-            </div>
-          ) : (
-            <form
-              className="mt-6 space-y-3"
-              onSubmit={handleSubmit}
-              aria-busy={isSubmitting}
-              noValidate
-            >
-              <label
-                className="block text-sm font-medium text-brand-blue"
-                htmlFor="system-copy-first-name"
-              >
-                Prénom
-              </label>
-              <input
-                ref={firstNameInputRef}
-                id="system-copy-first-name"
-                name="firstName"
-                className="demaa-input"
-                value={firstName}
-                onChange={(event) => setFirstName(event.target.value)}
-                autoComplete="given-name"
-                required
-              />
-
-              <label
-                className="block pt-1 text-sm font-medium text-brand-blue"
-                htmlFor="system-copy-email"
-              >
-                Adresse e-mail
-              </label>
-              <input
-                id="system-copy-email"
-                name="email"
-                className="demaa-input"
-                type="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                autoComplete="email"
-                required
-              />
-
+          <div className="flex min-w-0 flex-col justify-center p-6 sm:p-8">
+            {isSuccess ? (
               <div
-                className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden"
-                aria-hidden="true"
+                ref={successRef}
+                className="outline-none"
+                role="status"
+                tabIndex={-1}
               >
-                <label htmlFor="system-copy-website">Site internet</label>
-                <input
-                  id="system-copy-website"
-                  name="website"
-                  type="text"
-                  value={website}
-                  onChange={(event) => setWebsite(event.target.value)}
-                  tabIndex={-1}
-                  autoComplete="off"
-                />
-              </div>
-
-              {error ? (
-                <p className="text-sm text-brand-coral" role="alert">
-                  {error}
-                </p>
-              ) : null}
-
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="demaa-primary-button mt-3 inline-flex w-full items-center justify-center gap-2 disabled:cursor-wait disabled:opacity-60"
-              >
-                {isSubmitting ? (
-                  <LoaderCircle
-                    className="h-4 w-4 animate-spin"
-                    aria-hidden="true"
-                  />
-                ) : null}
-                {isSubmitting ? "Envoi…" : "Recevoir ma copie"}
-              </button>
-
-              <p className="text-center text-xs leading-relaxed text-dema-muted">
-                Ces informations sont utilisées pour vous envoyer la copie
-                demandée.{" "}
-                <Link
-                  href="/politique-de-confidentialite"
-                  className="font-medium text-dema-forest underline underline-offset-2"
+                <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
+                  <Check className="h-5 w-5" aria-hidden="true" />
+                </span>
+                <h2
+                  id="system-copy-modal-title"
+                  className="mt-5 pr-10 text-2xl font-semibold leading-tight tracking-[-0.025em] text-brand-blue"
                 >
-                  Politique de confidentialité
-                </Link>
-              </p>
-            </form>
-          )}
+                  Levier est dans votre boîte mail.
+                </h2>
+                <p
+                  id="system-copy-modal-description"
+                  className="mt-3 text-sm leading-relaxed text-dema-muted"
+                >
+                  Vous y trouverez le lien pour créer votre copie personnelle.
+                  Pensez à vérifier vos courriers indésirables.
+                </p>
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="demaa-primary-button mt-6 inline-flex w-full items-center justify-center"
+                >
+                  Fermer
+                </button>
+              </div>
+            ) : (
+              <>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
+                  Outil de pilotage
+                </p>
+                <h2
+                  id="system-copy-modal-title"
+                  className="mt-3 pr-10 text-2xl font-semibold leading-tight tracking-[-0.025em] text-brand-blue"
+                >
+                  Levier
+                </h2>
+                <p
+                  id="system-copy-modal-description"
+                  className="mt-3 text-sm leading-relaxed text-dema-muted"
+                >
+                  Tableau de pilotage opérationnel
+                </p>
+                <p
+                  data-levier-preview-disclosure
+                  className="mt-3 text-xs leading-relaxed text-dema-muted"
+                >
+                  Aperçu avec des données d’exemple. Votre copie sera vierge
+                  et prête à compléter.
+                </p>
+
+                <form
+                  className="mt-6 space-y-3"
+                  onSubmit={handleSubmit}
+                  aria-busy={isSubmitting}
+                  noValidate
+                >
+                  <label
+                    className="block text-sm font-medium text-brand-blue"
+                    htmlFor="system-copy-email"
+                  >
+                    Adresse e-mail
+                  </label>
+                  <input
+                    ref={emailInputRef}
+                    id="system-copy-email"
+                    name="email"
+                    className="demaa-input"
+                    type="email"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                    autoComplete="email"
+                    required
+                  />
+
+                  <div
+                    className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden"
+                    aria-hidden="true"
+                  >
+                    <label htmlFor="system-copy-website">Site internet</label>
+                    <input
+                      id="system-copy-website"
+                      name="website"
+                      type="text"
+                      value={website}
+                      onChange={(event) => setWebsite(event.target.value)}
+                      tabIndex={-1}
+                      autoComplete="off"
+                    />
+                  </div>
+
+                  {error ? (
+                    <p className="text-sm text-brand-coral" role="alert">
+                      {error}
+                    </p>
+                  ) : null}
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="demaa-primary-button mt-3 inline-flex w-full items-center justify-center gap-2 disabled:cursor-wait disabled:opacity-60"
+                  >
+                    {isSubmitting ? (
+                      <LoaderCircle
+                        className="h-4 w-4 animate-spin"
+                        aria-hidden="true"
+                      />
+                    ) : null}
+                    {isSubmitting ? "Envoi…" : "Recevoir Levier"}
+                  </button>
+
+                  <p className="text-center text-xs leading-relaxed text-dema-muted">
+                    Cette adresse est utilisée pour vous envoyer Levier.{" "}
+                    <Link
+                      href="/politique-de-confidentialite"
+                      className="font-medium text-dema-forest underline underline-offset-2"
+                    >
+                      Politique de confidentialité
+                    </Link>
+                  </p>
+                </form>
+              </>
+            )}
+          </div>
         </div>
       </section>
     </div>

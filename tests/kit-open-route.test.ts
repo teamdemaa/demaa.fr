@@ -2,37 +2,8 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("server-only", () => ({}));
 
-const {
-  getEnterpriseBySlugMock,
-  getPilotingSheetCopyUrlMock,
-  hasEditableOperationalSystemAssetMock,
-  recordKitOpenMock,
-} = vi.hoisted(() => ({
-  getEnterpriseBySlugMock: vi.fn(),
-  getPilotingSheetCopyUrlMock: vi.fn(),
+const { hasEditableOperationalSystemAssetMock } = vi.hoisted(() => ({
   hasEditableOperationalSystemAssetMock: vi.fn(),
-  recordKitOpenMock: vi.fn(),
-}));
-
-vi.mock("@/lib/document-models", () => ({
-  getPilotingSheetCopyUrl: getPilotingSheetCopyUrlMock,
-}));
-
-vi.mock("@/lib/enterprise-annuaire", () => ({
-  enterpriseToSystem: (enterprise: { name: string }) => ({ name: enterprise.name }),
-}));
-
-vi.mock("@/lib/enterprise-annuaire-server", () => ({
-  getEnterpriseBySlug: getEnterpriseBySlugMock,
-}));
-
-vi.mock("@/lib/kit-analytics.server", () => ({
-  recordKitOpen: recordKitOpenMock,
-}));
-
-vi.mock("@/lib/operational-log", () => ({
-  logOperationalError: vi.fn(),
-  logOperationalEvent: vi.fn(),
 }));
 
 vi.mock("@/lib/editable-operational-system-assets.server", () => ({
@@ -41,80 +12,43 @@ vi.mock("@/lib/editable-operational-system-assets.server", () => ({
 
 import { GET } from "@/app/api/kits/[slug]/open/route";
 
-describe("kit open redirect route", () => {
+describe("deprecated kit open route", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    getEnterpriseBySlugMock.mockResolvedValue({
-      name: "Bâtiment",
-      slug: "batiment",
-    });
-    getPilotingSheetCopyUrlMock.mockReturnValue(
-      "https://docs.google.com/spreadsheets/d/example/copy",
-    );
-    recordKitOpenMock.mockResolvedValue(undefined);
     hasEditableOperationalSystemAssetMock.mockReturnValue(false);
   });
 
-  it("records the opening and redirects to the Google copy page", async () => {
-    const request = new Request("https://demaa.fr/api/kits/batiment/open", {
-      headers: {
-        referer:
-          "https://demaa.fr/kit-operationnel/batiment?utm_source=linkedin",
-      },
-    });
-    const response = await GET(request, {
-      params: Promise.resolve({ slug: "batiment" }),
-    });
-
-    expect(response.status).toBe(307);
-    expect(response.headers.get("location")).toBe(
-      "https://docs.google.com/spreadsheets/d/example/copy",
-    );
-    expect(response.headers.get("cache-control")).toContain("no-store");
-    expect(recordKitOpenMock).toHaveBeenCalledWith({
-      kitName: "Bâtiment",
-      kitSlug: "batiment",
-      request,
-    });
-  });
-
-  it("still redirects when the analytics write is unavailable", async () => {
-    recordKitOpenMock.mockRejectedValueOnce(new Error("Firestore unavailable"));
+  it("never redirects a published system to a private copy", async () => {
+    hasEditableOperationalSystemAssetMock.mockReturnValueOnce(true);
 
     const response = await GET(
-      new Request("https://demaa.fr/api/kits/batiment/open"),
-      { params: Promise.resolve({ slug: "batiment" }) },
+      new Request("https://demaa.fr/api/kits/plomberie-chauffage/open"),
+      { params: Promise.resolve({ slug: "plomberie-chauffage" }) },
     );
 
-    expect(response.status).toBe(307);
-    expect(response.headers.get("location")).toContain("docs.google.com");
+    expect(response.status).toBe(410);
+    expect(response.headers.get("location")).toBeNull();
+    expect(await response.json()).toEqual({
+      error: "Ce système est envoyé gratuitement par e-mail.",
+    });
   });
 
-  it("rejects an unknown kit without recording an opening", async () => {
-    getEnterpriseBySlugMock.mockResolvedValueOnce(null);
-    getPilotingSheetCopyUrlMock.mockReturnValueOnce(null);
-
+  it("rejects an unknown kit", async () => {
     const response = await GET(
       new Request("https://demaa.fr/api/kits/inconnu/open"),
       { params: Promise.resolve({ slug: "inconnu" }) },
     );
 
     expect(response.status).toBe(404);
-    expect(recordKitOpenMock).not.toHaveBeenCalled();
+    expect(response.headers.get("location")).toBeNull();
   });
 
-  it("ne redirige jamais publiquement vers une copie envoyée par e-mail", async () => {
-    hasEditableOperationalSystemAssetMock.mockReturnValueOnce(true);
-
+  it("rejects an invalid slug", async () => {
     const response = await GET(
-      new Request(
-        "https://demaa.fr/api/kits/plomberie-chauffage/open",
-      ),
-      { params: Promise.resolve({ slug: "plomberie-chauffage" }) },
+      new Request("https://demaa.fr/api/kits/invalide/open"),
+      { params: Promise.resolve({ slug: "../invalide" }) },
     );
 
-    expect(response.status).toBe(410);
-    expect(getPilotingSheetCopyUrlMock).not.toHaveBeenCalled();
-    expect(recordKitOpenMock).not.toHaveBeenCalled();
+    expect(response.status).toBe(400);
   });
 });

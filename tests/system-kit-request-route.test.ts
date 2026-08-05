@@ -4,8 +4,11 @@ vi.mock("server-only", () => ({}));
 
 const mocks = vi.hoisted(() => ({
   enforceRateLimit: vi.fn(),
+  getActiveDeliverySnapshot: vi.fn(),
   getEnterpriseBySlug: vi.fn(),
   getLeadDeliveryState: vi.fn(),
+  getLevierAssetSnapshot: vi.fn(),
+  getPublishedSolutionPlacements: vi.fn(),
   hasEditableOperationalSystemAsset: vi.fn(),
   resolveLeadContext: vi.fn(),
   sendDeliveryEmail: vi.fn(),
@@ -28,6 +31,8 @@ vi.mock("@/lib/api-security", () => ({
 }));
 
 vi.mock("@/lib/editable-operational-system-assets.server", () => ({
+  getActiveOperationalSystemDeliverySnapshot:
+    mocks.getActiveDeliverySnapshot,
   hasEditableOperationalSystemAsset:
     mocks.hasEditableOperationalSystemAsset,
 }));
@@ -65,6 +70,15 @@ vi.mock("@/lib/operational-log", () => ({
 
 vi.mock("@/lib/operational-system-delivery-email.server", () => ({
   sendOperationalSystemDeliveryEmail: mocks.sendDeliveryEmail,
+}));
+
+vi.mock("@/lib/levier-asset.server", () => ({
+  getLevierAssetSnapshot: mocks.getLevierAssetSnapshot,
+}));
+
+vi.mock("@/lib/solution-registry.server", () => ({
+  getPublishedSolutionPlacementsForSystem:
+    mocks.getPublishedSolutionPlacements,
 }));
 
 vi.mock("@/lib/request-guard", () => ({
@@ -105,6 +119,16 @@ describe("free operational system delivery route", () => {
       slug: "plomberie-chauffage",
     });
     mocks.getLeadDeliveryState.mockResolvedValue(null);
+    mocks.getLevierAssetSnapshot.mockReturnValue({
+      assetRevision: "levier-google-sheet-v1-test",
+      resourceId: "1AbCdEfGhIjKlMnOpQrStUvWxYz_1234567890",
+      workbookVersion: "1.0.0",
+    });
+    mocks.getPublishedSolutionPlacements.mockReturnValue([]);
+    mocks.getActiveDeliverySnapshot.mockReturnValue({
+      assetRevision: "d032-v1-2026-07-28",
+      workbookVersion: "1.0.0",
+    });
     mocks.hasEditableOperationalSystemAsset.mockReturnValue(true);
     mocks.resolveLeadContext.mockResolvedValue({
       source: "Livraison du système opérationnel gratuit",
@@ -116,6 +140,10 @@ describe("free operational system delivery route", () => {
       reason: null,
     });
     mocks.submitLeadRequest.mockResolvedValue({
+      assetSnapshot: {
+        assetRevision: "d032-v1-2026-07-28",
+        workbookVersion: "1.0.0",
+      },
       duplicate: false,
       leadId: "lead-123",
     });
@@ -131,6 +159,10 @@ describe("free operational system delivery route", () => {
     expect(rawPayload).not.toContain("/copy");
     expect(rawPayload).not.toContain("lead-123");
     expect(mocks.sendDeliveryEmail).toHaveBeenCalledWith({
+      assetSnapshot: {
+        assetRevision: "d032-v1-2026-07-28",
+        workbookVersion: "1.0.0",
+      },
       deliveryId: "lead-lead-123-system",
       email: "maya@example.com",
       firstName: "Maya",
@@ -142,6 +174,92 @@ describe("free operational system delivery route", () => {
       leadId: "lead-123",
       status: "sent",
     });
+  });
+
+  it("persists and delivers the same immutable asset revision", async () => {
+    await POST(buildRequest());
+
+    expect(mocks.submitLeadRequest).toHaveBeenCalledWith(
+      expect.objectContaining({
+        assetSnapshot: {
+          assetRevision: "d032-v1-2026-07-28",
+          workbookVersion: "1.0.0",
+        },
+      }),
+    );
+    expect(mocks.sendDeliveryEmail).toHaveBeenCalledWith(
+      expect.objectContaining({
+        assetSnapshot: {
+          assetRevision: "d032-v1-2026-07-28",
+          workbookVersion: "1.0.0",
+        },
+      }),
+    );
+  });
+
+  it("uses the universal Levier snapshot only for an explicit published placement", async () => {
+    mocks.getPublishedSolutionPlacements.mockReturnValueOnce([{
+      resource: {
+        resourceSlug: "levier",
+        interaction: { interactionMode: "system_delivery" },
+      },
+    }]);
+    mocks.submitLeadRequest.mockResolvedValueOnce({
+      assetSnapshot: {
+        assetRevision: "levier-google-sheet-v1-test",
+        resourceId: "1AbCdEfGhIjKlMnOpQrStUvWxYz_1234567890",
+        workbookVersion: "1.0.0",
+      },
+      duplicate: false,
+      leadId: "lead-levier",
+    });
+
+    const response = await POST(buildRequest({ firstName: undefined }));
+    const rawPayload = await response.text();
+
+    expect(response.status).toBe(200);
+    expect(JSON.parse(rawPayload)).toEqual({ ok: true });
+    expect(rawPayload).not.toMatch(/\/copy|docs\.google|resourceId|1AbCd/);
+    expect(mocks.hasEditableOperationalSystemAsset).not.toHaveBeenCalled();
+    expect(mocks.getActiveDeliverySnapshot).not.toHaveBeenCalled();
+    expect(mocks.submitLeadRequest).toHaveBeenCalledWith(
+      expect.objectContaining({
+        assetSnapshot: {
+          assetRevision: "levier-google-sheet-v1-test",
+          resourceId: "1AbCdEfGhIjKlMnOpQrStUvWxYz_1234567890",
+          workbookVersion: "1.0.0",
+        },
+        contact: { email: "maya@example.com", firstName: null },
+        title: "Livraison de Levier - Plomberie & chauffage",
+      }),
+    );
+    expect(mocks.sendDeliveryEmail).toHaveBeenCalledWith(
+      expect.objectContaining({
+        assetSnapshot: {
+          assetRevision: "levier-google-sheet-v1-test",
+          resourceId: "1AbCdEfGhIjKlMnOpQrStUvWxYz_1234567890",
+          workbookVersion: "1.0.0",
+        },
+        deliveryId: "lead-lead-levier-system",
+        firstName: null,
+      }),
+    );
+  });
+
+  it("fails closed when the private Levier Google Sheets config is missing", async () => {
+    mocks.getPublishedSolutionPlacements.mockReturnValueOnce([{
+      resource: {
+        resourceSlug: "levier",
+        interaction: { interactionMode: "system_delivery" },
+      },
+    }]);
+    mocks.getLevierAssetSnapshot.mockReturnValueOnce(null);
+
+    const response = await POST(buildRequest({ firstName: undefined }));
+
+    expect(response.status).toBe(503);
+    expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
+    expect(mocks.sendDeliveryEmail).not.toHaveBeenCalled();
   });
 
   it("keeps marketing consent optional and separate from delivery", async () => {
@@ -192,6 +310,87 @@ describe("free operational system delivery route", () => {
     expect(mocks.sendDeliveryEmail).not.toHaveBeenCalled();
   });
 
+  it("keeps the historical revision for an idempotent duplicate after the active revision changes", async () => {
+    mocks.getActiveDeliverySnapshot.mockReturnValueOnce({
+      assetRevision: "d061-v2-pilot-2026-07-29-01",
+      workbookVersion: "2.0.0-pilot",
+    });
+    mocks.submitLeadRequest.mockResolvedValueOnce({
+      assetSnapshot: {
+        assetRevision: "d032-v1-2026-07-28",
+        workbookVersion: "1.0.0",
+      },
+      duplicate: true,
+      leadId: "lead-historique",
+    });
+
+    const response = await POST(buildRequest());
+
+    expect(response.status).toBe(200);
+    expect(mocks.submitLeadRequest).toHaveBeenCalledWith(
+      expect.objectContaining({
+        assetSnapshot: {
+          assetRevision: "d061-v2-pilot-2026-07-29-01",
+          workbookVersion: "2.0.0-pilot",
+        },
+      }),
+    );
+    expect(mocks.sendDeliveryEmail).toHaveBeenCalledWith(
+      expect.objectContaining({
+        assetSnapshot: {
+          assetRevision: "d032-v1-2026-07-28",
+          workbookVersion: "1.0.0",
+        },
+        deliveryId: "lead-lead-historique-system",
+      }),
+    );
+  });
+
+  it("does not resend a completed historical duplicate after the active revision changes", async () => {
+    mocks.getActiveDeliverySnapshot.mockReturnValueOnce({
+      assetRevision: "d061-v2-pilot-2026-07-29-01",
+      workbookVersion: "2.0.0-pilot",
+    });
+    mocks.submitLeadRequest.mockResolvedValueOnce({
+      assetSnapshot: {
+        assetRevision: "d032-v1-2026-07-28",
+        workbookVersion: "1.0.0",
+      },
+      duplicate: true,
+      leadId: "lead-historique",
+    });
+    mocks.getLeadDeliveryState.mockResolvedValueOnce("sent");
+
+    const response = await POST(buildRequest());
+
+    expect(response.status).toBe(200);
+    expect(mocks.sendDeliveryEmail).not.toHaveBeenCalled();
+  });
+
+  it("delivers the explicit v1 revision for a pre-D061 duplicate", async () => {
+    mocks.submitLeadRequest.mockResolvedValueOnce({
+      assetSnapshot: {
+        assetRevision: "d032-v1-2026-07-28",
+        workbookVersion: "1.0.0",
+      },
+      duplicate: true,
+      leadId: "lead-sans-revision",
+    });
+
+    const response = await POST(buildRequest());
+
+    expect(response.status).toBe(200);
+    expect(mocks.sendDeliveryEmail).toHaveBeenCalledWith(
+      expect.objectContaining({
+        assetSnapshot: {
+          assetRevision: "d032-v1-2026-07-28",
+          workbookVersion: "1.0.0",
+        },
+        deliveryId: "lead-lead-sans-revision-system",
+      }),
+    );
+  });
+
   it("silently absorbs honeypot submissions", async () => {
     const response = await POST(buildRequest({ website: "bot.example" }));
 
@@ -203,8 +402,29 @@ describe("free operational system delivery route", () => {
 
   it("rejects invalid contact data before storing or sending", async () => {
     const response = await POST(buildRequest({
-      email: "invalid",
       firstName: "",
+    }));
+
+    expect(response.status).toBe(400);
+    expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
+    expect(mocks.sendDeliveryEmail).not.toHaveBeenCalled();
+  });
+
+  it("keeps first name mandatory for the historical system delivery", async () => {
+    const response = await POST(buildRequest({ firstName: undefined }));
+
+    expect(response.status).toBe(400);
+    expect(mocks.getPublishedSolutionPlacements).toHaveBeenCalledWith(
+      "plomberie-chauffage",
+    );
+    expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
+    expect(mocks.sendDeliveryEmail).not.toHaveBeenCalled();
+  });
+
+  it("rejects an invalid e-mail even when Levier does not require a name", async () => {
+    const response = await POST(buildRequest({
+      email: "invalid",
+      firstName: undefined,
     }));
 
     expect(response.status).toBe(400);

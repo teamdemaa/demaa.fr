@@ -1,24 +1,27 @@
 export const SYSTEM_DETAIL_TABS = [
   "process",
-  "outils",
+  "solutions",
 ] as const;
 
 export type SystemDetailTab = (typeof SYSTEM_DETAIL_TABS)[number];
-
-const SYSTEM_DETAIL_TAB_VISIBILITY = {
-  process: true,
-  outils: true,
-} satisfies Record<SystemDetailTab, boolean>;
 
 function isSystemDetailTab(tab?: string): tab is SystemDetailTab {
   return SYSTEM_DETAIL_TABS.includes(tab as SystemDetailTab);
 }
 
-export function isVisibleSystemDetailTab(tab?: string): tab is SystemDetailTab {
-  return isSystemDetailTab(tab) && SYSTEM_DETAIL_TAB_VISIBILITY[tab];
+export function getVisibleSystemDetailTabs(): readonly SystemDetailTab[] {
+  return SYSTEM_DETAIL_TABS;
+}
+
+export function isVisibleSystemDetailTab(
+  tab: string | undefined,
+): tab is SystemDetailTab {
+  return isSystemDetailTab(tab) && getVisibleSystemDetailTabs().includes(tab);
 }
 
 const LEGACY_SYSTEM_DETAIL_TABS: Readonly<Record<string, SystemDetailTab>> = {
+  outils: "solutions",
+  ecosysteme: "solutions",
   kit: "process",
   pilotage: "process",
   accompagnement: "process",
@@ -27,10 +30,35 @@ const LEGACY_SYSTEM_DETAIL_TABS: Readonly<Record<string, SystemDetailTab>> = {
   systeme: "process",
 };
 
-export function normalizeSystemDetailTab(tab?: string): SystemDetailTab | undefined {
+export function normalizeSystemDetailTab(
+  tab: string | undefined,
+): SystemDetailTab | undefined {
   if (!tab) return undefined;
 
   const normalizedTab = LEGACY_SYSTEM_DETAIL_TABS[tab] ?? tab;
 
-  return isVisibleSystemDetailTab(normalizedTab) ? normalizedTab : undefined;
+  return isVisibleSystemDetailTab(normalizedTab)
+    ? normalizedTab
+    : undefined;
+}
+
+export function getNextSystemDetailTab(
+  currentTab: SystemDetailTab,
+  key: string,
+): SystemDetailTab | undefined {
+  const visibleTabs = getVisibleSystemDetailTabs();
+  const currentIndex = visibleTabs.indexOf(currentTab);
+
+  if (key === "Home") return visibleTabs[0];
+  if (key === "End") return visibleTabs.at(-1);
+  if (key === "ArrowRight") {
+    return visibleTabs[(currentIndex + 1) % visibleTabs.length];
+  }
+  if (key === "ArrowLeft") {
+    return visibleTabs[
+      (currentIndex - 1 + visibleTabs.length) % visibleTabs.length
+    ];
+  }
+
+  return undefined;
 }

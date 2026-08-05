@@ -8,11 +8,15 @@ import {
   useMemo,
   useRef,
   useState,
+  createElement,
   type KeyboardEvent,
 } from "react";
-import { CornerDownLeft, Search } from "lucide-react";
+import { CornerDownLeft, Search, SlidersHorizontal } from "lucide-react";
+import HorizontalScrollHint from "@/components/HorizontalScrollHint";
 import { trackSystemJourneyEvent } from "@/lib/kit-analytics-client";
-import { matchesSearchQuery, normalizeSearchText } from "@/lib/search";
+import { ALL_SECTORS_LABEL } from "@/lib/public-sectors";
+import { getSystemIcon } from "@/lib/system-icon";
+import { getSystemDiscoveryScore } from "@/lib/system-discovery";
 import type { System } from "@/lib/types";
 
 type SystemSearchHeroProps = {
@@ -24,34 +28,12 @@ type SystemSuggestion = {
   slug: string;
   name: string;
   description: string;
+  shortDescription?: string;
   sectorLabel: string;
   score: number;
 };
 
 const MAX_SUGGESTIONS = 6;
-
-function getSuggestionScore(system: System, sectorLabel: string, query: string): number {
-  const normalizedQuery = normalizeSearchText(query);
-
-  if (!normalizedQuery) {
-    return Number.POSITIVE_INFINITY;
-  }
-
-  const normalizedName = normalizeSearchText(system.name);
-  const normalizedSlug = normalizeSearchText(system.slug);
-  const normalizedSector = normalizeSearchText(sectorLabel);
-  const normalizedDescription = normalizeSearchText(system.description);
-
-  if (normalizedName === normalizedQuery || normalizedSlug === normalizedQuery) return 0;
-  if (normalizedName.startsWith(normalizedQuery)) return 1;
-  if (normalizedSlug.startsWith(normalizedQuery)) return 2;
-  if (normalizedSector.startsWith(normalizedQuery)) return 3;
-  if (normalizedName.includes(normalizedQuery)) return 4;
-  if (normalizedSector.includes(normalizedQuery)) return 5;
-  if (normalizedDescription.includes(normalizedQuery)) return 6;
-
-  return 7;
-}
 
 export default function SystemSearchHero({
   systems,
@@ -62,7 +44,17 @@ export default function SystemSearchHero({
   const [query, setQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [activeSector, setActiveSector] = useState(ALL_SECTORS_LABEL);
+  const [areSectorTagsVisible, setAreSectorTagsVisible] = useState(false);
   const deferredQuery = useDeferredValue(query);
+
+  const sectors = useMemo(() => {
+    const labels = systems
+      .map((system) => sectorLabelsBySlug[system.slug])
+      .filter((label): label is string => Boolean(label));
+
+    return [ALL_SECTORS_LABEL, ...Array.from(new Set(labels))];
+  }, [sectorLabelsBySlug, systems]);
 
   const suggestions = useMemo(() => {
     const visibleSystems = systems.map<SystemSuggestion>((system) => {
@@ -73,8 +65,11 @@ export default function SystemSearchHero({
         slug: system.slug,
         name: system.name,
         description: system.description,
+        shortDescription: system.shortDescription,
         sectorLabel,
-        score: getSuggestionScore(system, sectorLabel, deferredQuery),
+        score:
+          getSystemDiscoveryScore({ ...system, sectorLabel }, deferredQuery) ??
+          Number.POSITIVE_INFINITY,
       };
     });
 
@@ -83,14 +78,7 @@ export default function SystemSearchHero({
     }
 
     return visibleSystems
-      .filter((system) =>
-        matchesSearchQuery(deferredQuery, [
-          system.name,
-          system.description,
-          system.sectorLabel,
-          system.slug,
-        ]),
-      )
+      .filter((system) => Number.isFinite(system.score))
       .sort((left, right) => {
         const byScore = left.score - right.score;
 
@@ -102,6 +90,41 @@ export default function SystemSearchHero({
       })
       .slice(0, MAX_SUGGESTIONS);
   }, [deferredQuery, sectorLabelsBySlug, systems]);
+
+  const filteredSystems = useMemo(() => {
+    return systems.filter((system) => {
+      const sectorLabel =
+        sectorLabelsBySlug[system.slug] ?? "Conseil & services aux entreprises";
+      const matchesSector =
+        activeSector === ALL_SECTORS_LABEL || sectorLabel === activeSector;
+      const matchesQuery =
+        getSystemDiscoveryScore({ ...system, sectorLabel }, deferredQuery) !== null;
+
+      return matchesSector && matchesQuery;
+    });
+  }, [activeSector, deferredQuery, sectorLabelsBySlug, systems]);
+
+  const systemSections = useMemo(() => {
+    const groupedSystems = new Map<string, System[]>();
+
+    filteredSystems.forEach((system) => {
+      const sectorLabel =
+        sectorLabelsBySlug[system.slug] ?? "Conseil & services aux entreprises";
+      const sectionSystems = groupedSystems.get(sectorLabel);
+
+      if (sectionSystems) {
+        sectionSystems.push(system);
+      } else {
+        groupedSystems.set(sectorLabel, [system]);
+      }
+    });
+
+    return sectors.flatMap((sector) => {
+      if (sector === ALL_SECTORS_LABEL) return [];
+      const sectionSystems = groupedSystems.get(sector);
+      return sectionSystems ? [{ title: sector, systems: sectionSystems }] : [];
+    });
+  }, [filteredSystems, sectorLabelsBySlug, sectors]);
 
   useEffect(() => {
     function handlePointerDown(event: PointerEvent) {
@@ -142,6 +165,11 @@ export default function SystemSearchHero({
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
+    if (!query.trim()) {
+      if (event.key === "Escape") setIsOpen(false);
+      return;
+    }
+
     if (!suggestions.length) {
       if (event.key === "Escape") {
         setIsOpen(false);
@@ -174,35 +202,30 @@ export default function SystemSearchHero({
     }
   }
 
-  const showDropdown = isOpen && (!deferredQuery.trim() || suggestions.length > 0);
+  const showDropdown = isOpen && deferredQuery.trim().length > 0 && suggestions.length > 0;
   const showEmptyState = isOpen && deferredQuery.trim().length > 0 && suggestions.length === 0;
 
   return (
-    <section className="relative ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] flex min-h-[calc(100vh-4.5rem)] w-screen items-center overflow-hidden bg-dema-cream px-4 py-12 text-center md:px-8 md:py-16">
-      <div className="relative mx-auto w-full max-w-6xl -translate-y-[35%] md:-translate-y-[15%]">
-        <div className="mx-auto max-w-4xl">
+    <section className="relative ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] w-screen overflow-hidden bg-dema-cream px-4 pb-20 pt-12 text-center md:px-8 md:pb-24 md:pt-16">
+      <div className="relative mx-auto w-full max-w-6xl">
+        <div className="mx-auto max-w-6xl">
           <h1
-            className="leading-[0.94] tracking-tight text-brand-blue"
+            className="text-balance font-light leading-[0.94] tracking-tight"
             style={{ fontSize: "clamp(2.4rem, 6.8vw, 4.6rem)" }}
-            aria-label="Trouvez le système opérationnel de votre entreprise"
+            aria-label="Trouvez le système métier de votre entreprise"
           >
-            <span className="font-sans font-light not-italic text-brand-blue/62">
-              Trouvez le système opérationnel
+            <span className="block font-sans font-light not-italic text-brand-blue/62 md:whitespace-nowrap">
+              Trouvez le système métier
             </span>
-            <br />
-            <span
-              className="demaa-hero-title text-dema-forest"
-              style={{ fontSize: "1.15em" }}
-              aria-hidden="true"
-            >
+            <span className="demaa-hero-title block text-dema-forest" aria-hidden="true">
               pour votre entreprise
             </span>
           </h1>
 
         </div>
 
-        <div ref={containerRef} className="relative mx-auto mt-10 max-w-4xl text-left md:mt-12">
-          <div className="demaa-search-shell p-2">
+        <div ref={containerRef} className="relative mx-auto mt-9 max-w-4xl text-left md:mt-11">
+          <div className="demaa-search-shell p-1.5">
             <div className="relative">
               <Search
                 className="pointer-events-none absolute left-5 top-1/2 h-5 w-5 -translate-y-1/2 text-dema-forest/42"
@@ -213,6 +236,7 @@ export default function SystemSearchHero({
                 value={query}
                 onChange={(event) => {
                   setQuery(event.target.value);
+                  setActiveSector(ALL_SECTORS_LABEL);
                   setActiveIndex(0);
                   setIsOpen(true);
                 }}
@@ -229,16 +253,53 @@ export default function SystemSearchHero({
                     ? `system-search-suggestion-${suggestions[activeIndex].slug}`
                     : undefined
                 }
-                className="w-full rounded-full bg-dema-paper py-5 pl-14 pr-6 text-base text-brand-blue outline-none transition placeholder:text-brand-blue/30 md:py-6 md:pl-16 md:text-lg"
+                className="w-full rounded-full bg-dema-paper py-4 pl-14 pr-16 text-base text-brand-blue outline-none transition placeholder:text-brand-blue/30 md:py-5 md:pl-16 md:pr-20 md:text-lg"
               />
+              <button
+                type="button"
+                onClick={() => setAreSectorTagsVisible((visible) => !visible)}
+                aria-expanded={areSectorTagsVisible}
+                aria-label={areSectorTagsVisible ? "Masquer les catégories" : "Afficher les catégories"}
+                className={`absolute right-2 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full transition md:right-2.5 md:h-10 md:w-10 ${
+                  areSectorTagsVisible || activeSector !== ALL_SECTORS_LABEL
+                    ? "bg-dema-sage text-dema-forest"
+                    : "bg-dema-canvas text-dema-muted"
+                }`}
+              >
+                <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
+              </button>
             </div>
           </div>
+
+          {areSectorTagsVisible ? (
+            <div className="mt-4 overflow-x-auto pb-1 soft-scroll" aria-label="Filtrer par secteur">
+              <div className="flex min-w-max gap-2 px-1">
+                {sectors.map((sector) => (
+                  <button
+                    key={sector}
+                    type="button"
+                    aria-pressed={activeSector === sector}
+                    onClick={() => {
+                      setActiveSector(sector);
+                      setQuery("");
+                      setIsOpen(false);
+                    }}
+                    className={`demaa-chip shrink-0 whitespace-nowrap ${
+                      activeSector === sector ? "demaa-chip-active" : ""
+                    }`}
+                  >
+                    {sector}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : null}
 
           {showDropdown ? (
             <div
               id="system-search-suggestions"
               role="listbox"
-              className="mt-3 overflow-hidden rounded-[1.5rem] border border-dema-line/80 bg-dema-paper shadow-[0_22px_48px_rgba(23,35,29,0.09)]"
+              className="absolute left-0 right-0 top-full z-30 mt-3 overflow-hidden rounded-[1.5rem] border border-dema-line/80 bg-dema-paper shadow-[0_22px_48px_rgba(23,35,29,0.09)]"
             >
               <div className="border-b border-dema-line/70 px-5 py-3 text-xs uppercase tracking-[0.18em] text-dema-muted">
                 {deferredQuery.trim() ? "Suggestions" : "Activités fréquentes"}
@@ -270,7 +331,7 @@ export default function SystemSearchHero({
                       </p>
                     </div>
                     <span className="inline-flex shrink-0 items-center gap-2 text-xs text-dema-muted md:text-sm">
-                      Voir le système opérationnel
+                      Voir le système métier
                       {activeIndex === index ? (
                         <CornerDownLeft className="h-3.5 w-3.5" aria-hidden="true" />
                       ) : null}
@@ -282,12 +343,65 @@ export default function SystemSearchHero({
           ) : null}
 
           {showEmptyState ? (
-            <div className="mt-3 rounded-[1.35rem] border border-dashed border-dema-line bg-dema-paper px-5 py-5 text-center text-sm text-dema-muted">
+            <div className="absolute left-0 right-0 top-full z-30 mt-3 rounded-[1.35rem] border border-dashed border-dema-line bg-dema-paper px-5 py-5 text-center text-sm text-dema-muted shadow-[0_22px_48px_rgba(23,35,29,0.09)]">
               Aucune activité trouvée. Essayez un autre mot-clé plus large.
             </div>
           ) : null}
         </div>
+
+        {systemSections.length > 0 ? (
+          <div className="mt-10 space-y-9 text-left sm:mt-12 sm:space-y-11">
+            {systemSections.map((section) => (
+              <section key={section.title}>
+                <h2 className="text-xl font-light tracking-tight text-brand-blue/85 sm:text-2xl">
+                  {section.title}
+                </h2>
+                <HorizontalScrollHint
+                  className="-mx-4 mt-3 overflow-x-auto px-4 pb-4 pt-1 soft-scroll md:-mx-8 md:px-8"
+                  controlsClassName="absolute right-0 -top-10 z-10 flex items-center gap-1.5"
+                >
+                  <div className="flex gap-4">
+                    {section.systems.map((system) => (
+                      <SystemDirectoryCard key={system.id} system={system} />
+                    ))}
+                  </div>
+                </HorizontalScrollHint>
+              </section>
+            ))}
+          </div>
+        ) : (
+          <div className="mx-auto mt-10 max-w-2xl rounded-[1.25rem] border border-dashed border-dema-line bg-dema-paper p-8 text-center">
+            <p className="text-base text-brand-blue">Aucun système métier trouvé.</p>
+            <p className="mt-2 text-sm text-dema-muted">Essayez un autre mot-clé ou un autre secteur.</p>
+          </div>
+        )}
       </div>
     </section>
+  );
+}
+
+function SystemDirectoryCard({ system }: { system: System }) {
+  const icon = createElement(getSystemIcon(system), {
+    className: "h-4 w-4",
+    "aria-hidden": true,
+  });
+
+  return (
+    <Link
+      href={`/kit-operationnel/${system.slug}`}
+      className="demaa-card group relative flex aspect-square w-[74vw] max-w-[15rem] shrink-0 flex-col overflow-hidden rounded-[1.2rem] p-4 sm:w-[15rem] sm:p-5 [content-visibility:auto] [contain-intrinsic-size:15rem_15rem]"
+    >
+      <span className="relative z-10 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper sm:h-10 sm:w-10">
+        {icon}
+      </span>
+      <div className="relative z-10 mt-4 flex min-w-0 flex-1 flex-col justify-center">
+        <h2 className="line-clamp-2 text-base font-medium leading-tight tracking-tight text-brand-blue sm:text-lg">
+          {system.name}
+        </h2>
+        <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-dema-muted sm:text-sm">
+          {system.shortDescription ?? system.description}
+        </p>
+      </div>
+    </Link>
   );
 }

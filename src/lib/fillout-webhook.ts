@@ -113,13 +113,16 @@ function buildTouch(
   parameters: Map<string, string>,
   prefix: "first" | "last",
   capturedAt: string,
-  fallbackPath: string,
-): LeadAttributionTouch {
+  fallbackPath: string | null,
+): LeadAttributionTouch | null {
+  const landingPath =
+    cleanPath(readParameter(parameters, `dem_${prefix}_landing`, 700))
+    ?? fallbackPath;
+  if (!landingPath) return null;
+
   return {
     capturedAt,
-    landingPath:
-      cleanPath(readParameter(parameters, `dem_${prefix}_landing`, 700))
-      ?? fallbackPath,
+    landingPath,
     referrerHost: cleanHost(readParameter(parameters, `dem_${prefix}_referrer`, 180)),
     referrerUrl: null,
     utmCampaign: readParameter(parameters, `dem_${prefix}_campaign`, 255),
@@ -161,7 +164,7 @@ function buildAttribution(input: {
   const conversionPage = cleanPath(
     readParameter(input.parameters, "dem_conversion_page", 700),
   );
-  const fallbackPath = conversionPage ?? "/annuaire-services/organisation";
+  const fallbackPath = conversionPage;
   const analyticsValue = readParameter(input.parameters, "dem_analytics_allowed", 10);
   const marketingValue = readParameter(input.parameters, "dem_marketing_allowed", 10);
   const consentValue = readParameter(input.parameters, "dem_analytics_consent", 20);

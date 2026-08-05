@@ -6,7 +6,10 @@ import ReactMarkdown from "react-markdown";
 import { ArrowLeft, Calendar, GraduationCap } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import RelatedSystemsLinks from "@/components/RelatedSystemsLinks";
-import { getAcademyContentBySlug } from "@/lib/academy-course-content";
+import {
+  getAcademyContentBySlug,
+  getCanonicalAcademySlugForLegacySlug,
+} from "@/lib/academy-course-content";
 import { getCourseEntryBySlug } from "@/lib/course-content";
 import { getRelatedSystemsForContentSlug } from "@/lib/related-systems";
 
@@ -14,34 +17,18 @@ export async function generateMetadata(
   props: { params: Promise<{ slug: string }> }
 ): Promise<Metadata> {
   const params = await props.params;
-  const academyContent = getAcademyContentBySlug(params.slug);
+  const academySlug =
+    getCanonicalAcademySlugForLegacySlug(params.slug) ??
+    getAcademyContentBySlug(params.slug)?.identity.slug;
 
-  if (academyContent) {
-    const title = `${academyContent.identity.title} | Académie Demaa`;
-    const description = academyContent.identity.promise;
+  if (academySlug) {
+    const academyContent = getAcademyContentBySlug(academySlug);
+    if (!academyContent) return { title: "Cours introuvable - Demaa" };
 
     return {
-      title,
-      description,
-      alternates: {
-        canonical: `/academie/${academyContent.identity.slug}`,
-      },
-      openGraph: {
-        title,
-        description,
-        url: `/academie/${academyContent.identity.slug}`,
-        siteName: "Demaa",
-        locale: "fr_FR",
-        type: "article",
-        images: academyContent.identity.card.image
-          ? [{ url: academyContent.identity.card.image, alt: academyContent.identity.card.imageAlt }]
-          : undefined,
-      },
-      twitter: {
-        card: "summary_large_image",
-        title,
-        description,
-      },
+      title: `${academyContent.identity.title} | Académie Demaa`,
+      description: academyContent.identity.promise,
+      alternates: { canonical: `/academie/${academySlug}` },
     };
   }
 
@@ -82,10 +69,12 @@ export default async function CourseDetailPage(
 ) {
   const params = await props.params;
   const searchParams = await props.searchParams;
-  const academyContent = getAcademyContentBySlug(params.slug);
+  const academySlug =
+    getCanonicalAcademySlugForLegacySlug(params.slug) ??
+    getAcademyContentBySlug(params.slug)?.identity.slug;
 
-  if (academyContent) {
-    permanentRedirect(`/academie/${academyContent.identity.slug}`);
+  if (academySlug) {
+    permanentRedirect(`/academie/${academySlug}`);
   }
 
   const entry = getCourseEntryBySlug(params.slug);
@@ -102,7 +91,7 @@ export default async function CourseDetailPage(
     : searchParams.retourSysteme;
   const slides = entry.slides?.length ? entry.slides : entry.image ? [entry.image] : [];
   const backHref = returnSystemSlug
-    ? `/systemes-operationnels/${returnSystemSlug}`
+    ? `/kit-operationnel/${returnSystemSlug}`
     : "/cours";
   const backLabel = returnSystemSlug ? "Retour au système opérationnel" : "Retour aux cours";
   const articleJsonLd = {

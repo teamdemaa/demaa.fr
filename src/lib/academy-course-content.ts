@@ -12,6 +12,10 @@ import itMaintenanceCase from "../../studio/academy-course-pack-v1/cases/mainten
 import engineeringCase from "../../studio/academy-course-pack-v1/cases/bureau-etudes-acquisition.json";
 import cleaningCase from "../../studio/academy-course-pack-v1/cases/nettoyage-professionnel-acquisition.json";
 import recruitmentCase from "../../studio/academy-course-pack-v1/cases/cabinet-recrutement-acquisition.json";
+import {
+  ACADEMY_CONTENT_SLUGS,
+  LEGACY_ACADEMY_SLUG_ALIASES,
+} from "@/lib/academy-course-routes";
 
 export type AcademyContentKind = "course" | "case-study";
 
@@ -120,6 +124,34 @@ const allAcademyContent = [...fundamentals, ...caseStudies].filter(
   (content) => content.status === "ready",
 );
 
+const legacyAcademySlugAliases = new Map<string, string>(
+  Object.entries(LEGACY_ACADEMY_SLUG_ALIASES),
+);
+
+const configuredAcademyContentSlugs = new Set<string>(ACADEMY_CONTENT_SLUGS);
+
+if (
+  allAcademyContent.length !== configuredAcademyContentSlugs.size ||
+  allAcademyContent.some(
+    (content) => !configuredAcademyContentSlugs.has(content.identity.slug),
+  )
+) {
+  throw new Error(
+    "Les routes Académie et les contenus publiés ne partagent pas la même liste de slugs.",
+  );
+}
+
+const academyContentSlugsBySystem = new Map<string, readonly string[]>([
+  ["daf-externalise", ["piloter-sa-tresorerie", "comprendre-chiffre-affaires-benefice"]],
+  ["cabinet-comptable", ["piloter-sa-tresorerie", "comprendre-chiffre-affaires-benefice"]],
+  ["consultant-independant", ["piloter-sa-tresorerie", "comprendre-chiffre-affaires-benefice"]],
+  ["commerce-de-detail", ["piloter-sa-tresorerie"]],
+  ["organisme-de-formation", ["piloter-sa-tresorerie"]],
+  ["e-commerce", ["comprendre-chiffre-affaires-benefice"]],
+  ["restaurant", ["piloter-sa-tresorerie", "comprendre-chiffre-affaires-benefice"]],
+  ["batiment", ["comprendre-chiffre-affaires-benefice"]],
+]);
+
 export function getAcademyFundamentals() {
   return fundamentals.filter((content) => content.status === "ready");
 }
@@ -136,14 +168,34 @@ export function getAcademyContentBySlug(slug: string) {
   return allAcademyContent.find((content) => content.identity.slug === slug) ?? null;
 }
 
+export function getCanonicalAcademySlugForLegacySlug(slug: string) {
+  return legacyAcademySlugAliases.get(slug) ?? null;
+}
+
+export function getAcademyContentForSystem(systemSlug: string) {
+  const slugs = academyContentSlugsBySystem.get(systemSlug) ?? [];
+  return slugs.flatMap((slug) => {
+    const content = getAcademyContentBySlug(slug);
+    return content ? [content] : [];
+  });
+}
+
 export function getAcademyActionHref(action: AcademyAction) {
   if (action.resourceId === "pilotage-marketing-vente") {
     return "/modeles-de-documents/pilotage-marketing-vente";
   }
 
   if (action.resourceId === "levier") {
-    return "/systemes-operationnels";
+    return "/systemes";
   }
 
   return "/";
+}
+
+export function getAcademyActionLabel(action: AcademyAction) {
+  if (action.resourceId === "levier") {
+    return "Trouver mon système pour recevoir Levier";
+  }
+
+  return action.ctaLabel;
 }

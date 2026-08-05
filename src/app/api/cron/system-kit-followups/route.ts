@@ -4,6 +4,7 @@ import {
   getDueSystemKitSequenceSubscribers,
 } from "@/lib/generations-db";
 import { retryFailedLeadDeliveries } from "@/lib/lead-notifications";
+import { sendOperationalSystemDeliveryEmail } from "@/lib/operational-system-delivery-email.server";
 import { cleanupExpiredOperationalData } from "@/lib/operational-maintenance";
 import {
   logOperationalError,
@@ -28,7 +29,10 @@ async function handleGet(request: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const notificationRetries = await retryFailedLeadDeliveries(30);
+  const notificationRetries = await retryFailedLeadDeliveries(
+    30,
+    sendOperationalSystemDeliveryEmail,
+  );
   const cleanup = await cleanupExpiredOperationalData(50);
   const dueSubscribers = await getDueSystemKitSequenceSubscribers(50);
   let retiredSequences = 0;

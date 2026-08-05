@@ -1,7 +1,6 @@
 import type { NextConfig } from "next";
-
-const scriptSrcUnsafeEval =
-  process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : "";
+import { buildContentSecurityPolicy } from "./src/lib/content-security-policy";
+import { ACADEMY_PERMANENT_REDIRECTS } from "./src/lib/academy-course-routes";
 
 const securityHeaders = [
   {
@@ -26,20 +25,9 @@ const securityHeaders = [
   },
   {
     key: 'Content-Security-Policy',
-    value: [
-      "default-src 'self'",
-      "base-uri 'self'",
-      "object-src 'none'",
-      "frame-ancestors 'none'",
-      `script-src 'self' 'unsafe-inline'${scriptSrcUnsafeEval} https://www.googletagmanager.com https://connect.facebook.net`,
-      "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' data: blob: https://www.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://drive.google.com https://lh3.googleusercontent.com https://*.googleusercontent.com",
-      "font-src 'self' data:",
-      "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://api-adresse.data.gouv.fr",
-      "frame-src https://embed.fillout.com",
-      "form-action 'self'",
-      "upgrade-insecure-requests",
-    ].join('; '),
+    value: buildContentSecurityPolicy({
+      allowUnsafeEval: process.env.NODE_ENV === "development",
+    }),
   },
 ];
 
@@ -52,54 +40,50 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      ...ACADEMY_PERMANENT_REDIRECTS,
       {
-        source: '/cours',
-        destination: '/academie',
+        source: '/accompagnement',
+        destination: '/',
         permanent: true,
       },
       {
-        source: '/marketing-ethique',
-        destination: '/systeme-marketing',
+        source: '/systemes-operationnels',
+        destination: '/systemes',
         permanent: true,
       },
       {
         source: '/kits-operationnels',
-        destination: '/systemes-operationnels',
+        destination: '/systemes',
         permanent: true,
       },
       {
-        source: '/kit-operationnel/:slug',
-        destination: '/systemes-operationnels/:slug',
-        permanent: true,
-      },
-      {
-        source: '/systemes',
-        destination: '/systemes-operationnels',
+        source: '/systemes-operationnels/:slug',
+        destination: '/kit-operationnel/:slug',
         permanent: true,
       },
       {
         source: '/systemes/:slug',
-        destination: '/systemes-operationnels/:slug',
+        destination: '/kit-operationnel/:slug',
         permanent: true,
       },
       {
         source: '/kit-systeme/:slug',
-        destination: '/systemes-operationnels/:slug',
+        destination: '/kit-operationnel/:slug',
         permanent: true,
       },
       {
         source: '/modeles-de-documents/tableau-de-pilotage-:slug',
-        destination: '/systemes-operationnels/:slug',
+        destination: '/kit-operationnel/:slug',
         permanent: true,
       },
       {
         source: '/plans-organisation/:slug',
-        destination: '/systemes-operationnels/:slug',
+        destination: '/kit-operationnel/:slug',
         permanent: true,
       },
       {
         source: '/documents-structuration/:slug',
-        destination: '/systemes-operationnels/:slug',
+        destination: '/kit-operationnel/:slug',
         permanent: true,
       },
       {

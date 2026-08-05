@@ -125,7 +125,7 @@ export async function POST(request: Request) {
         { label: "Besoin", value: details },
       ],
       requestType: "service_introduction",
-      title: `${isCustomSystemRequest ? "Demande de devis" : "Demande d’accompagnement"} — ${serviceName}`,
+      title: `${isCustomSystemRequest ? "Demande de devis" : "Demande d’accompagnement"} - ${serviceName}`,
     });
 
     return NextResponse.json({ ok: true, leadId: lead.leadId });

@@ -39,13 +39,11 @@ export default function MentionsLegalesPage() {
               <li><strong>Marque exploitée :</strong> {LEGAL.brandName}</li>
               <li><strong>Forme juridique :</strong> {LEGAL.legalStatus}</li>
               <li><strong>Régime :</strong> Micro-entreprise</li>
-              <li><strong>Représentante légale :</strong> {LEGAL.legalRepresentative}</li>
+              <li><strong>Entrepreneure individuelle :</strong> {LEGAL.legalRepresentative}</li>
               <li><strong>SIREN :</strong> {LEGAL.siren}</li>
               <li><strong>SIRET (siège) :</strong> {LEGAL.siret}</li>
               <li><strong>TVA intracommunautaire :</strong> {LEGAL.vatNumber}</li>
-              <li><strong>Inscription au RCS :</strong> inscrit au greffe de {LEGAL.rcsCity} le {LEGAL.rcsRegistrationDate}</li>
-              <li><strong>Numéro RCS :</strong> {LEGAL.rcsNumber}</li>
-              <li><strong>Inscription au RNE :</strong> inscrite</li>
+              <li><strong>Inscription au RNE :</strong> inscrite depuis le {LEGAL.rneRegistrationDate}</li>
               <li><strong>Responsable de la publication :</strong> {LEGAL.legalRepresentative}</li>
               <li><strong>Email de contact :</strong> {LEGAL.email}</li>
               <li><strong>Téléphone :</strong> {LEGAL.phone}</li>

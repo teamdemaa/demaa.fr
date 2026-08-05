@@ -53,25 +53,27 @@ async function inspectEnterprise(enterprise) {
     if (!overviewHtml.includes(`<link rel="canonical" href="https://demaa.fr${canonicalPath}"/>`)) {
       errors.push("canonical link missing or incorrect");
     }
-    const expectedPreviewPath =
-      `%2Fimages%2Fkits%2F${enterprise.slug}%2Ftableau-suivi-preview.webp`;
-    if (!renderedOverviewHtml.includes(expectedPreviewPath)) {
-      errors.push("system preview image missing");
-    }
     if (!overviewHtml.includes("Système opérationnel")) {
       errors.push("SEO title missing");
     }
 
     for (const expectedText of [
-      "Voir la démonstration",
-      "Recevoir ma copie modifiable",
-      "Des process concrets, des outils recommandés et un tableau",
-      "Google Sheets prêt à utiliser.",
-      "Gratuit · Envoyé par e-mail",
-      "Support associé indiqué dans le système",
+      "Besoin d’une application adaptée à votre métier ?",
+      "Voir l’offre sur mesure",
     ]) {
       if (!renderedOverviewHtml.includes(expectedText)) {
-        errors.push(`commercial promise missing: ${expectedText}`);
+        errors.push(`system journey control missing: ${expectedText}`);
+      }
+    }
+    if (renderedOverviewHtml.includes("Voir le système")) {
+      errors.push("hidden historical system delivery entry point is still visible");
+    }
+    for (const removedDiagnosticText of [
+      "Diagnostic offert",
+      "Demander mon diagnostic",
+    ]) {
+      if (renderedOverviewHtml.includes(removedDiagnosticText)) {
+        errors.push(`removed diagnostic control still visible: ${removedDiagnosticText}`);
       }
     }
 
@@ -84,11 +86,31 @@ async function inspectEnterprise(enterprise) {
         break;
       }
     }
-    if (!/\d+ processus/.test(renderedOverviewHtml)) {
-      errors.push("process count missing");
+    if (
+      renderedOverviewHtml.includes("Routines essentielles") ||
+      renderedOverviewHtml.includes(
+        "Les rendez-vous opérationnels à installer pour piloter l’activité",
+      )
+    ) {
+      errors.push("removed Process introduction is still visible");
     }
-    if (!overviewHtml.includes("system-process-panel-")) {
-      errors.push("process accordions missing");
+    const routineControlCount =
+      renderedOverviewHtml.split('aria-controls="system-routine-detail-').length - 1;
+    if (routineControlCount < 8 || routineControlCount > 12) {
+      errors.push(`expected 8 to 12 Process routines, found ${routineControlCount}`);
+    }
+    if (renderedOverviewHtml.includes("system-process-panel-")) {
+      errors.push("legacy Process family accordion is still rendered");
+    }
+    if (renderedOverviewHtml.includes('aria-expanded="true"')) {
+      errors.push("a Process routine is expanded by default");
+    }
+    if (
+      renderedOverviewHtml.includes(
+        "Dans le système",
+      )
+    ) {
+      errors.push("collapsed process content is exposed by default");
     }
 
     const redirects = [
