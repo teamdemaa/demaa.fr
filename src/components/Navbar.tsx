@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { BookOpen, Workflow } from "lucide-react";
+import { BookOpen, PencilRuler, Workflow } from "lucide-react";
 import DemaaWordmark from "@/components/DemaaWordmark";
 
 const navbarTabBaseClassName =
@@ -14,7 +14,7 @@ const navbarTabActiveClassName =
 const navbarTabInactiveClassName =
   "text-dema-muted hover:bg-dema-sage/55 hover:text-brand-blue";
 
-export type NavbarSection = "systems" | "academy" | null;
+export type NavbarSection = "systems" | "academy" | "sur-mesure" | null;
 
 export function getNavbarActiveSection(pathname: string): NavbarSection {
   const isAcademyPage =
@@ -34,6 +34,10 @@ export function getNavbarActiveSection(pathname: string): NavbarSection {
 
   if (isAcademyPage) {
     return "academy";
+  }
+
+  if (pathname === "/sur-mesure" || pathname === "/accompagnement") {
+    return "sur-mesure";
   }
 
   return null;
@@ -66,7 +70,7 @@ export default function Navbar({ minimal = false }: { minimal?: boolean }) {
             <div
               aria-label="Navigation principale"
               data-navbar-section-selector
-              className="mx-auto grid w-full max-w-[55.2rem] grid-cols-2 gap-1 rounded-full border border-dema-line bg-dema-paper p-1 shadow-[0_8px_24px_rgba(23,35,29,0.035)]"
+              className="mx-auto grid w-full max-w-[55.2rem] grid-cols-3 gap-1 rounded-full border border-dema-line bg-dema-paper p-1 shadow-[0_8px_24px_rgba(23,35,29,0.035)]"
             >
               <Link
                 href="/"
@@ -97,6 +101,21 @@ export default function Navbar({ minimal = false }: { minimal?: boolean }) {
                   aria-hidden="true"
                 />
                 <span>Academy</span>
+              </Link>
+              <Link
+                href="/sur-mesure"
+                aria-current={activeSection === "sur-mesure" ? "page" : undefined}
+                className={`${navbarTabBaseClassName} ${
+                  activeSection === "sur-mesure"
+                    ? navbarTabActiveClassName
+                    : navbarTabInactiveClassName
+                }`}
+              >
+                <PencilRuler
+                  className="h-4 w-4 shrink-0 max-[359px]:hidden"
+                  aria-hidden="true"
+                />
+                <span>Sur mesure</span>
               </Link>
             </div>
           </div>

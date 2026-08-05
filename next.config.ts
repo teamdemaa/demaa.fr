@@ -42,6 +42,11 @@ const nextConfig: NextConfig = {
     return [
       ...ACADEMY_PERMANENT_REDIRECTS,
       {
+        source: '/accompagnement',
+        destination: '/sur-mesure',
+        permanent: true,
+      },
+      {
         source: '/systemes',
         destination: '/',
         permanent: true,
