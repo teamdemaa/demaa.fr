@@ -1,14 +1,12 @@
 export const surMesurePageContent = {
   hero: {
-    eyebrow: "Application métier sur mesure",
-    title: "Transformez un processus qui vous ralentit en une application simple.",
+    title: "Votre application métier, conçue autour de votre façon de travailler.",
     introduction:
       "Vous suivez encore une activité dans Excel, par e-mail ou avec des tâches manuelles ? Demaa simplifie le fonctionnement et crée une application adaptée à votre métier.",
-    ctaLabel: "Discuter",
+    ctaLabel: "Discutons de votre projet",
     reassurance: "Premier échange offert · Sans engagement",
   },
   startingPoint: {
-    eyebrow: "Le bon point de départ",
     title: "Simplifier avant de développer.",
     description:
       "Nous partons du processus qui vous fait perdre du temps. Nous clarifions les étapes, les informations et les responsabilités avant de définir l’application utile.",
@@ -28,7 +26,6 @@ export const surMesurePageContent = {
     ],
   },
   benefits: {
-    eyebrow: "Ce que l’application change",
     title: "Un outil qui suit votre façon de travailler.",
     items: [
       {
@@ -50,7 +47,6 @@ export const surMesurePageContent = {
     ],
   },
   examples: {
-    eyebrow: "Exemples d’usage",
     title: "Une application peut prendre des formes très différentes.",
     description:
       "Le périmètre dépend du processus retenu. Voici trois exemples de situations qui peuvent être clarifiées puis équipées.",
@@ -70,29 +66,27 @@ export const surMesurePageContent = {
     ],
   },
   method: {
-    eyebrow: "La méthode",
-    title: "Quatre étapes pour passer du problème à une solution cadrée.",
+    title: "De votre besoin à votre application.",
     steps: [
       {
-        title: "Comprendre",
-        description: "Observer le processus actuel, les outils utilisés et les moments où le travail ralentit.",
+        title: "Vous nous montrez comment vous travaillez",
+        description: "Nous regardons vos étapes, vos outils et ce qui vous fait perdre du temps.",
       },
       {
-        title: "Simplifier",
-        description: "Retirer les étapes inutiles et clarifier les informations, les rôles et les décisions.",
+        title: "Nous dessinons une solution plus simple",
+        description: "Nous retirons les étapes inutiles et définissons les informations et les responsabilités utiles.",
       },
       {
-        title: "Prototyper",
-        description: "Rendre le futur fonctionnement concret avant d’engager la réalisation.",
+        title: "Vous validez la maquette",
+        description: "Vous testez les écrans et le parcours avant que le développement commence.",
       },
       {
-        title: "Réaliser",
-        description: "Construire le périmètre validé et ajuster l’application sur les usages retenus.",
+        title: "Nous développons votre application",
+        description: "Nous construisons la version validée, puis nous l’ajustons avec vos retours.",
       },
     ],
   },
   commercialFrame: {
-    eyebrow: "Tarif, support et garanties",
     title: "Une offre claire, sans abonnement obligatoire.",
     pricing: {
       label: "Votre application métier",
@@ -168,7 +162,7 @@ export const surMesurePageContent = {
   finalCta: {
     title: "Parlons du processus qui vous ralentit.",
     description: "Expliquez-nous où le travail se bloque. Nous vérifierons ensemble si une application sur mesure est la bonne réponse.",
-    label: "Discuter",
+    label: "Discutons de votre projet",
     reassurance: "Premier échange offert · Sans engagement",
   },
 } as const;

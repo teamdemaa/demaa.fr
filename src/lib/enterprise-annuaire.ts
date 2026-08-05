@@ -6,6 +6,7 @@ import {
   type BusinessModelSignals,
 } from "./business-models";
 import rawEnterpriseAnnuaire from "./enterprise-annuaire.json";
+import rawSystemCardSummaries from "./system-card-summaries.json";
 
 export type EnterpriseTool = {
   slug?: string;
@@ -30,6 +31,7 @@ export type EnterpriseDefinition = {
   name: string;
   category: string;
   description: string;
+  shortDescription?: string;
   tags: string[];
   icon: string;
   price: string;
@@ -54,6 +56,7 @@ type EnterpriseAnnuairePayload = {
 };
 
 const enterpriseAnnuaire = rawEnterpriseAnnuaire as EnterpriseAnnuairePayload;
+const systemCardSummaries = rawSystemCardSummaries as Record<string, string>;
 
 export const enterpriseCatalog = enterpriseAnnuaire.enterprises;
 
@@ -68,6 +71,7 @@ export function enterpriseToSystem(enterprise: EnterpriseDefinition): System {
     name: enterprise.name,
     category: enterprise.category,
     description: enterprise.description,
+    shortDescription: systemCardSummaries[enterprise.slug],
     tags: enterprise.tags,
     icon: enterprise.icon,
     price: enterprise.price,

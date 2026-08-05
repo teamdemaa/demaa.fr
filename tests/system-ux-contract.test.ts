@@ -63,57 +63,35 @@ describe("system UX contract", () => {
     expect(pageSource).toContain("hasEditableOperationalSystemAsset");
   });
 
-  it("renders the organisation exchange once after the active panel", async () => {
+  it("renders the custom offer once after the active panel", async () => {
     const detailSource = await readSource(
       "src/components/SystemDetailContent.tsx",
     );
-    const processCallSource = await readSource(
-      "src/components/SystemProcessCallCta.tsx",
+    const customOfferSource = await readSource(
+      "src/components/SystemCustomOfferCta.tsx",
     );
     const solutionsSource = await readSource(
       "src/components/SystemSolutionsTab.tsx",
     );
     const panelEnd = detailSource.indexOf("</section>");
-    const processCall = detailSource.indexOf("<SystemProcessCallCta");
+    const customOffer = detailSource.indexOf("<SystemCustomOfferCta");
 
     expect(panelEnd).toBeGreaterThan(-1);
-    expect(processCall).toBeGreaterThan(panelEnd);
-    expect(detailSource.match(/<SystemProcessCallCta\b/g)).toHaveLength(1);
+    expect(customOffer).toBeGreaterThan(panelEnd);
+    expect(detailSource.match(/<SystemCustomOfferCta\b/g)).toHaveLength(1);
     expect(detailSource).not.toMatch(
       /academyVideos|Académie Demaa|Comprendre les indicateurs de ce système|Lire la fiche/,
     );
-    expect(processCallSource).toContain(
-      'import OrganisationSessionBookingButton from "@/components/OrganisationSessionBookingButton"',
+    expect(customOfferSource).toContain(
+      "Besoin d’une application adaptée à votre métier ?",
     );
-    expect(processCallSource).toContain(
-      "Besoin d’y voir plus clair dans votre organisation ?",
-    );
-    expect(processCallSource).toContain(
-      "Faites le point en 30 minutes avec un spécialiste Demaa pour identifier",
-    );
-    expect(processCallSource).toContain("les priorités qui rendront");
-    expect(processCallSource).toContain(
-      '<strong className="font-semibold text-brand-blue">',
-    );
-    expect(
-      processCallSource.match(
-        /votre entreprise moins dépendante de vous au quotidien/g,
-      ),
-    ).toHaveLength(1);
-    expect(processCallSource).toContain(
-      'label="Réserver mon échange offert"',
-    );
-    expect(detailSource).toContain(
-      "source={getSystemDetailBookingSource(activeTab)}",
-    );
-    expect(processCallSource).toContain("source={source}");
-    expect(processCallSource).toContain("sourceIsAuthoritative");
-    expect(processCallSource).toContain("systemSlug={systemSlug}");
-    expect(processCallSource).not.toMatch(
-      /Diagnostic offert|Demander mon diagnostic|filloutId|fillout\.com|https?:\/\//,
+    expect(customOfferSource).toContain('href="/sur-mesure"');
+    expect(customOfferSource).toContain("Voir l’offre sur mesure");
+    expect(customOfferSource).not.toMatch(
+      /OrganisationSessionBookingButton|Réserver mon échange|filloutId|fillout\.com|https?:\/\//,
     );
     expect(solutionsSource).not.toMatch(
-      /SystemProcessCallCta|Diagnostic offert|appel gratuit/,
+      /SystemCustomOfferCta|Diagnostic offert|appel gratuit/,
     );
   });
 

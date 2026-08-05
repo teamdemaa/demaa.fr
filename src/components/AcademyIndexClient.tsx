@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronDown, ChevronUp, Search } from "lucide-react";
+import { ChevronDown, ChevronUp, Search, SlidersHorizontal } from "lucide-react";
 import { useMemo, useState } from "react";
 import type { AcademyContentDefinition } from "@/lib/academy-course-content";
 import { matchesSearchQuery } from "@/lib/search";
@@ -74,6 +74,8 @@ const CASE_STUDY_PRESENTATIONS: Record<string, CaseStudyPresentation> = {
 const COURSE_TITLES: Record<string, string> = {
   "construire-systeme-marketing-vente": "Construire son système marketing",
 };
+
+const ALL_ACADEMY_CATEGORIES = "Tous";
 
 function CourseDiagram({ slug }: { slug: string }) {
   if (slug === "piloter-sa-tresorerie") {
@@ -265,21 +267,36 @@ function AcademyCard({ content, eager = false }: { content: AcademyContentDefini
 export default function AcademyIndexClient({ contents, backLink }: AcademyIndexClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [showAllFundamentals, setShowAllFundamentals] = useState(false);
+  const [activeCategory, setActiveCategory] = useState(ALL_ACADEMY_CATEGORIES);
+  const [areCategoryTagsVisible, setAreCategoryTagsVisible] = useState(false);
+
+  const categories = useMemo(
+    () => [
+      ALL_ACADEMY_CATEGORIES,
+      ...Array.from(new Set(contents.map((content) => content.identity.category))),
+    ],
+    [contents],
+  );
 
   const filteredContents = useMemo(() => {
-    return contents.filter((content) =>
-      matchesSearchQuery(searchQuery, [
-        content.identity.title,
-        content.identity.shortTitle,
-        content.identity.category,
-        content.identity.promise,
-        content.identity.audience,
-        CASE_STUDY_PRESENTATIONS[content.identity.slug]?.title,
-        CASE_STUDY_PRESENTATIONS[content.identity.slug]?.sector,
-        ...content.recap.points,
-      ]),
-    );
-  }, [contents, searchQuery]);
+    return contents.filter((content) => {
+      const matchesCategory =
+        activeCategory === ALL_ACADEMY_CATEGORIES ||
+        content.identity.category === activeCategory;
+      const matchesQuery = matchesSearchQuery(searchQuery, [
+          content.identity.title,
+          content.identity.shortTitle,
+          content.identity.category,
+          content.identity.promise,
+          content.identity.audience,
+          CASE_STUDY_PRESENTATIONS[content.identity.slug]?.title,
+          CASE_STUDY_PRESENTATIONS[content.identity.slug]?.sector,
+          ...content.recap.points,
+        ]);
+
+      return matchesCategory && matchesQuery;
+    });
+  }, [activeCategory, contents, searchQuery]);
 
   const fundamentals = filteredContents.filter((content) => content.kind === "course");
   const caseStudies = filteredContents
@@ -306,26 +323,72 @@ export default function AcademyIndexClient({ contents, backLink }: AcademyIndexC
           ) : null}
 
           <div className="text-center">
-            <h1 className="text-balance text-[3.25rem] font-light leading-[0.9] tracking-[-0.055em] text-brand-blue sm:text-[4rem] md:text-[4.5rem]">
-              <span className="block">Apprendre à</span>
-              <span className="demaa-section-title mt-1 block text-dema-forest">entreprendre</span>
+            <h1
+              className="text-balance font-light leading-[0.94] tracking-tight"
+              style={{ fontSize: "clamp(2.4rem, 6.8vw, 4.6rem)" }}
+            >
+              <span className="block text-brand-blue/62">Apprendre à</span>
+              <span className="demaa-hero-title block text-dema-forest">entreprendre</span>
             </h1>
-            <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-dema-muted sm:text-base">
-              Des cours courts et concrets, à suivre selon ce dont vous avez besoin.
-            </p>
           </div>
 
-          <label className="demaa-search-shell mx-auto mt-7 flex max-w-3xl items-center gap-3 px-5 py-3 md:mt-8 md:px-6">
-            <Search className="h-5 w-5 shrink-0 text-dema-muted" aria-hidden="true" />
-            <span className="sr-only">Rechercher dans l’Académie</span>
-            <input
-              type="search"
-              value={searchQuery}
-              onChange={(event) => setSearchQuery(event.target.value)}
-              placeholder="Rechercher un cours ou une question…"
-              className="min-w-0 flex-1 bg-transparent py-1 text-base text-brand-blue outline-none placeholder:text-dema-muted/70"
-            />
-          </label>
+          <div className="relative mx-auto mt-9 max-w-4xl md:mt-11">
+            <div className="demaa-search-shell p-1.5">
+              <div className="relative">
+                <Search
+                  className="pointer-events-none absolute left-5 top-1/2 h-5 w-5 -translate-y-1/2 text-dema-forest/42"
+                  aria-hidden="true"
+                />
+                <input
+                  type="search"
+                  aria-label="Rechercher dans l’Académie"
+                  value={searchQuery}
+                  onChange={(event) => {
+                    setSearchQuery(event.target.value);
+                    setActiveCategory(ALL_ACADEMY_CATEGORIES);
+                  }}
+                  placeholder="Rechercher un cours ou une question…"
+                  className="w-full rounded-full bg-dema-paper py-4 pl-14 pr-16 text-base text-brand-blue outline-none transition placeholder:text-brand-blue/30 md:py-5 md:pl-16 md:pr-20 md:text-lg"
+                />
+                <button
+                  type="button"
+                  onClick={() => setAreCategoryTagsVisible((visible) => !visible)}
+                  aria-expanded={areCategoryTagsVisible}
+                  aria-label={areCategoryTagsVisible ? "Masquer les catégories" : "Afficher les catégories"}
+                  className={`absolute right-2 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full transition md:right-2.5 md:h-10 md:w-10 ${
+                    areCategoryTagsVisible || activeCategory !== ALL_ACADEMY_CATEGORIES
+                      ? "bg-dema-sage text-dema-forest"
+                      : "bg-dema-canvas text-dema-muted"
+                  }`}
+                >
+                  <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
+                </button>
+              </div>
+            </div>
+
+            {areCategoryTagsVisible ? (
+              <div className="mt-4 overflow-x-auto pb-1 text-left soft-scroll" aria-label="Filtrer les cours par catégorie">
+                <div className="flex min-w-max gap-2 px-1">
+                  {categories.map((category) => (
+                    <button
+                      key={category}
+                      type="button"
+                      aria-pressed={activeCategory === category}
+                      onClick={() => {
+                        setActiveCategory(category);
+                        setSearchQuery("");
+                      }}
+                      className={`demaa-chip shrink-0 whitespace-nowrap ${
+                        activeCategory === category ? "demaa-chip-active" : ""
+                      }`}
+                    >
+                      {category}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+          </div>
         </div>
       </header>
 

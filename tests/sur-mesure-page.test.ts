@@ -31,27 +31,27 @@ describe("Sur mesure commercial page", () => {
     const markup = renderToStaticMarkup(createElement(SurMesurePage));
 
     expect(markup).toContain("<h1");
-    expect(markup).toContain("Transformez un processus qui vous ralentit en une");
-    expect(markup).toContain("application simple.");
+    expect(markup).toContain("Votre application métier, conçue autour de votre");
+    expect(markup).toContain("façon de travailler.");
     expect(markup).toContain(content.hero.introduction);
     expect(markup).toContain(content.startingPoint.title);
     expect(markup).toContain(content.benefits.title);
     expect(markup).toContain(content.examples.title);
     expect(content.method.steps.map(({ title }) => title)).toEqual([
-      "Comprendre",
-      "Simplifier",
-      "Prototyper",
-      "Réaliser",
+      "Vous nous montrez comment vous travaillez",
+      "Nous dessinons une solution plus simple",
+      "Vous validez la maquette",
+      "Nous développons votre application",
     ]);
     expect(markup).toContain(content.commercialFrame.title);
     expect(markup).toContain(content.faq.title);
     expect(markup.match(/<section/g)).toHaveLength(8);
     expect(markup.match(/<details/g)).toHaveLength(4);
-    expect(markup.match(/>Discuter</g)).toHaveLength(2);
+    expect(markup.match(/>Discutons de votre projet</g)).toHaveLength(2);
     expect(markup).toContain('data-source="Page sur mesure : Hero"');
     expect(markup).toContain('data-source="Page sur mesure : Final"');
     expect(markup).toContain('aria-label="Navigation principale"');
-    expect(markup).toContain("Exemple d’interface");
+    expect(markup).not.toContain("Exemple d’interface");
     expect(markup).not.toMatch(/marketplace|partenariat|200 dirigeants|30 000 €|1 500 €/i);
     expect(markup).not.toContain('type="application/ld+json"');
   });

@@ -1,3 +1,28 @@
+import fs from "node:fs";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const currentDir = dirname(fileURLToPath(import.meta.url));
+const academyRoutesSource = fs.readFileSync(
+  resolve(currentDir, "../src/lib/academy-course-routes.ts"),
+  "utf8",
+);
+const academySlugBlock = academyRoutesSource.match(
+  /export const ACADEMY_CONTENT_SLUGS = \[([\s\S]*?)\] as const;/,
+);
+if (!academySlugBlock) {
+  throw new Error("Unable to read the canonical Academy slug registry.");
+}
+
+const slugs = [...academySlugBlock[1].matchAll(/"([^"]+)"/g)].map(
+  (match) => match[1],
+);
+if (slugs.length !== 14 || new Set(slugs).size !== slugs.length) {
+  throw new Error(
+    `Expected 14 unique canonical Academy slugs, found ${slugs.length}.`,
+  );
+}
+
 const args = process.argv.slice(2);
 const baseUrlIndex = args.indexOf("--base-url");
 const baseUrl = new URL(
@@ -5,20 +30,6 @@ const baseUrl = new URL(
     ? args[baseUrlIndex + 1]
     : "http://127.0.0.1:3000",
 );
-
-const slugs = [
-  "piloter-sa-tresorerie",
-  "comprendre-chiffre-affaires-benefice",
-  "fixer-ses-prix-sans-vendre-a-perte",
-  "construire-systeme-marketing-vente",
-  "transformer-demande-en-client",
-  "deleguer-sans-perdre-le-controle",
-  "cabinet-conseil-acquisition",
-  "formation-b2b-acquisition",
-  "maintenance-informatique-acquisition",
-  "bureau-etudes-acquisition",
-  "nettoyage-professionnel-acquisition",
-];
 
 const aliases = {
   "entreprise-rentable-sans-tresorerie": "piloter-sa-tresorerie",

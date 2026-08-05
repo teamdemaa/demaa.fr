@@ -1,6 +1,5 @@
 import { describe, expect, it } from "vitest";
 import {
-  getSystemDetailBookingSource,
   getNextSystemDetailTab,
   getVisibleSystemDetailTabs,
   normalizeSystemDetailTab,
@@ -10,15 +9,6 @@ import {
 describe("operational system tabs", () => {
   it("keeps Process and Solutions in the validated order", () => {
     expect(SYSTEM_DETAIL_TABS).toEqual(["process", "solutions"]);
-  });
-
-  it("attributes the booking CTA to the exact active tab", () => {
-    expect(getSystemDetailBookingSource("process")).toBe(
-      "Système opérationnel - Process",
-    );
-    expect(getSystemDetailBookingSource("solutions")).toBe(
-      "Système opérationnel - Solutions",
-    );
   });
 
   it("keeps legacy Solutions URLs on Solutions, including before publication", () => {

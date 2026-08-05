@@ -76,26 +76,23 @@ function BookingButton({ source, className }: { source: string; className: strin
 }
 
 function SectionHeading({
-  eyebrow,
   title: heading,
   description: headingDescription,
   id,
+  light = false,
 }: {
-  eyebrow?: string;
   title: string;
   description?: string;
   id: string;
+  light?: boolean;
 }) {
   return (
     <div className="max-w-3xl">
-      {eyebrow ? (
-        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
-          {eyebrow}
-        </p>
-      ) : null}
       <h2
         id={id}
-        className="mt-3 text-[2rem] font-semibold leading-[1.08] tracking-[-0.04em] text-brand-blue sm:text-[2.65rem]"
+        className={`text-[2rem] leading-[1.08] tracking-[-0.04em] text-brand-blue sm:text-[2.65rem] ${
+          light ? "font-light" : "font-medium"
+        }`}
       >
         {heading}
       </h2>
@@ -155,7 +152,7 @@ function ApplicationPreview() {
                 <p className="text-[10px] uppercase tracking-[0.12em] text-dema-muted">Aujourd’hui</p>
                 <p className="mt-1 text-base font-semibold text-brand-blue sm:text-lg">Tableau de bord</p>
               </div>
-              <span className="rounded-full bg-dema-forest px-3 py-2 text-[9px] font-semibold text-dema-paper sm:text-[10px]">
+              <span className="rounded-full border border-dema-forest/30 bg-dema-paper px-3 py-2 text-[9px] font-medium text-dema-forest sm:text-[10px]">
                 Nouvelle demande
               </span>
             </div>
@@ -204,23 +201,20 @@ function ApplicationPreview() {
           </div>
         </div>
       </div>
-      <div className="absolute -bottom-7 right-4 hidden w-36 rounded-[1.35rem] border-[5px] border-brand-blue bg-dema-paper p-3 shadow-[0_18px_45px_rgba(23,35,29,0.18)] sm:block lg:right-[-1.2rem]">
-        <div className="mx-auto h-1.5 w-10 rounded-full bg-brand-blue" />
-        <p className="mt-4 text-[9px] font-semibold text-brand-blue">Intervention</p>
-        <div className="mt-3 space-y-2">
+      <div className="absolute bottom-10 -right-1 z-10 flex aspect-[9/19.5] w-24 flex-col rounded-[1.55rem] border-[4px] border-brand-blue bg-dema-paper p-2.5 shadow-[0_18px_45px_rgba(23,35,29,0.18)] sm:-bottom-7 sm:right-4 sm:w-28 sm:rounded-[1.8rem] sm:p-3 lg:right-[-1.2rem] lg:w-32">
+        <div className="mx-auto h-1.5 w-9 rounded-full bg-brand-blue sm:w-10" />
+        <p className="mt-3 text-[8px] font-medium text-brand-blue sm:mt-4 sm:text-[9px]">Intervention</p>
+        <div className="mt-2 space-y-1.5 sm:mt-3 sm:space-y-2">
           {["Client", "Statut", "Photos"].map((item) => (
-            <div key={item} className="rounded-lg bg-dema-canvas px-2 py-2 text-[8px] text-dema-muted">
+            <div key={item} className="rounded-lg bg-dema-canvas px-2 py-1.5 text-[7px] text-dema-muted sm:py-2 sm:text-[8px]">
               {item}
             </div>
           ))}
         </div>
-        <div className="mt-3 rounded-full bg-dema-forest py-2 text-center text-[8px] font-semibold text-dema-paper">
+        <div className="mt-auto rounded-full border border-dema-forest/30 bg-dema-paper py-1.5 text-center text-[7px] font-medium text-dema-forest sm:py-2 sm:text-[8px]">
           Terminer
         </div>
       </div>
-      <p className="mt-4 text-center text-[10px] text-dema-muted sm:mt-10">
-        Exemple d’interface : le contenu dépend de votre processus.
-      </p>
     </div>
   );
 }
@@ -233,22 +227,22 @@ export default function SurMesurePage() {
         <section className="px-4 pb-20 pt-14 sm:px-6 sm:pb-24 sm:pt-20 lg:px-8 lg:pb-28">
           <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.88fr_1.12fr] lg:items-center lg:gap-14">
             <div className="max-w-2xl">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
-                {content.hero.eyebrow}
-              </p>
-              <h1 className="mt-5 text-[2.65rem] font-semibold leading-[1.01] tracking-[-0.055em] sm:text-[4rem] lg:text-[4.5rem]">
-                Transformez un processus qui vous ralentit en une{" "}
-                <span className="demaa-hero-title text-dema-forest">application simple.</span>
+              <h1
+                className="text-left font-light leading-[0.94] tracking-tight"
+                style={{ fontSize: "clamp(2.4rem, 6.8vw, 4.6rem)" }}
+              >
+                <span className="text-brand-blue/62">Votre application métier, conçue autour de votre{" "}</span>
+                <span className="demaa-hero-title text-dema-forest">façon de travailler.</span>
               </h1>
               <p className="mt-6 max-w-xl text-base leading-7 text-dema-muted sm:text-lg sm:leading-8">
                 {content.hero.introduction}
               </p>
-              <div className="mt-8 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-5">
+              <div className="mt-8 flex w-full flex-col items-center gap-2.5">
                 <BookingButton
-                  className="demaa-primary-button min-h-12 w-full gap-2 px-6 sm:w-auto"
+                  className="demaa-primary-button min-h-12 min-w-44 gap-2 px-8"
                   source="Page sur mesure : Hero"
                 />
-                <span className="text-xs text-dema-muted">{content.hero.reassurance}</span>
+                <span className="text-center text-xs text-dema-muted">{content.hero.reassurance}</span>
               </div>
             </div>
             <ApplicationPreview />
@@ -262,16 +256,16 @@ export default function SurMesurePage() {
           <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start lg:gap-16">
             <SectionHeading
               id="starting-point-heading"
-              eyebrow={content.startingPoint.eyebrow}
               title={content.startingPoint.title}
               description={content.startingPoint.description}
+              light
             />
             <div className="divide-y divide-dema-line rounded-[1.25rem] border border-dema-line bg-dema-cream px-5 sm:px-6">
               {content.startingPoint.transformations.map((item) => (
                 <div key={item.before} className="grid gap-2 py-5 sm:grid-cols-[1fr_auto_1fr] sm:items-center sm:gap-5">
                   <p className="text-sm text-dema-muted">{item.before}</p>
                   <ArrowRight className="h-4 w-4 rotate-90 text-dema-forest sm:rotate-0" aria-hidden="true" />
-                  <p className="text-sm font-semibold text-brand-blue">{item.after}</p>
+                  <p className="text-sm font-medium text-brand-blue">{item.after}</p>
                 </div>
               ))}
             </div>
@@ -285,8 +279,8 @@ export default function SurMesurePage() {
           <div className="mx-auto max-w-6xl">
             <SectionHeading
               id="benefits-heading"
-              eyebrow={content.benefits.eyebrow}
               title={content.benefits.title}
+              light
             />
             <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {content.benefits.items.map((item, index) => {
@@ -296,7 +290,7 @@ export default function SurMesurePage() {
                     <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-positive text-dema-forest">
                       <Icon className="h-4.5 w-4.5" aria-hidden={true} />
                     </span>
-                    <h3 className="mt-5 text-lg font-semibold leading-snug tracking-[-0.02em]">{item.title}</h3>
+                    <h3 className="mt-5 text-lg font-medium leading-snug tracking-[-0.02em]">{item.title}</h3>
                     <p className="mt-3 text-sm leading-6 text-dema-muted">{item.description}</p>
                   </article>
                 );
@@ -312,32 +306,23 @@ export default function SurMesurePage() {
           <div className="mx-auto max-w-6xl">
             <SectionHeading
               id="examples-heading"
-              eyebrow={content.examples.eyebrow}
               title={content.examples.title}
               description={content.examples.description}
+              light
             />
             <div className="mt-9 grid gap-4 lg:grid-cols-3">
               {content.examples.items.map((item, index) => {
                 const Icon = exampleIcons[index];
                 return (
-                  <article key={item.title} className="overflow-hidden rounded-[1.2rem] border border-dema-line bg-dema-paper">
-                    <div className="border-b border-dema-line bg-dema-sage/55 p-5">
-                      <div className="rounded-xl border border-dema-line bg-dema-paper p-4 shadow-[0_8px_24px_rgba(23,35,29,0.035)]">
-                        <div className="flex items-center gap-3">
-                          <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-dema-positive text-dema-forest">
-                            <Icon className="h-4 w-4" aria-hidden={true} />
-                          </span>
-                          <div className="h-2.5 w-24 rounded-full bg-dema-sage" />
-                        </div>
-                        <div className="mt-4 space-y-2">
-                          {["w-full", "w-4/5", "w-3/5"].map((width) => (
-                            <div key={width} className={`h-2 rounded-full bg-dema-canvas ${width}`} />
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="p-5 sm:p-6">
-                      <h3 className="text-lg font-semibold tracking-[-0.02em]">{item.title}</h3>
+                  <article
+                    key={item.title}
+                    className="flex items-start gap-4 rounded-[1.1rem] border border-dema-line bg-dema-paper p-5 sm:p-6"
+                  >
+                    <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-dema-positive text-dema-forest">
+                      <Icon className="h-4 w-4" aria-hidden={true} />
+                    </span>
+                    <div>
+                      <h3 className="text-lg font-medium tracking-[-0.02em]">{item.title}</h3>
                       <p className="mt-3 text-sm leading-6 text-dema-muted">{item.description}</p>
                     </div>
                   </article>
@@ -354,8 +339,8 @@ export default function SurMesurePage() {
           <div className="mx-auto max-w-6xl">
             <SectionHeading
               id="method-heading"
-              eyebrow={content.method.eyebrow}
               title={content.method.title}
+              light
             />
             <ol className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
               {content.method.steps.map((step, index) => (
@@ -363,7 +348,7 @@ export default function SurMesurePage() {
                   <span className="absolute -left-3 top-0 inline-flex h-6 w-6 items-center justify-center rounded-full border border-dema-forest/30 bg-dema-cream text-[10px] font-semibold text-dema-forest lg:-top-3 lg:left-0">
                     {index + 1}
                   </span>
-                  <h3 className="text-lg font-semibold tracking-[-0.02em]">{step.title}</h3>
+                  <h3 className="text-lg font-medium tracking-[-0.02em]">{step.title}</h3>
                   <p className="mt-3 text-sm leading-6 text-dema-muted">{step.description}</p>
                 </li>
               ))}
@@ -377,27 +362,24 @@ export default function SurMesurePage() {
         >
           <div className="mx-auto max-w-6xl">
             <div className="max-w-3xl">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-paper/65">
-                {content.commercialFrame.eyebrow}
-              </p>
-              <h2 id="commercial-frame-heading" className="mt-3 text-[2rem] font-semibold leading-[1.08] tracking-[-0.04em] sm:text-[2.65rem]">
+              <h2 id="commercial-frame-heading" className="text-[2rem] font-medium leading-[1.08] tracking-[-0.04em] sm:text-[2.65rem]">
                 {content.commercialFrame.title}
               </h2>
             </div>
             <div className="mt-9 overflow-hidden rounded-[1.3rem] bg-dema-paper text-brand-blue shadow-[0_22px_60px_rgba(0,0,0,0.13)]">
               <div className="grid lg:grid-cols-[0.82fr_1.18fr]">
                 <div className="border-b border-dema-line p-6 sm:p-8 lg:border-b-0 lg:border-r lg:p-10">
-                  <p className="text-2xl font-semibold tracking-[-0.03em]">
+                  <p className="text-2xl font-medium tracking-[-0.03em]">
                     {content.commercialFrame.pricing.label}
                   </p>
                   <p className="mt-8 text-sm text-dema-muted">
                     {content.commercialFrame.pricing.prefix}
                   </p>
                   <p className="mt-1 flex items-end gap-2 text-dema-forest">
-                    <span className="text-[3.3rem] font-semibold leading-none tracking-[-0.055em] sm:text-[4.2rem]">
+                    <span className="text-[3rem] font-normal leading-none tracking-[-0.045em] sm:text-[3.8rem]">
                       {content.commercialFrame.pricing.value}
                     </span>
-                    <span className="pb-1 text-sm font-semibold">
+                    <span className="pb-1 text-sm font-medium">
                       {content.commercialFrame.pricing.tax}
                     </span>
                   </p>
@@ -408,7 +390,7 @@ export default function SurMesurePage() {
                   </div>
                 </div>
                 <div className="p-6 sm:p-8 lg:p-10">
-                  <h3 className="text-lg font-semibold">
+                  <h3 className="text-lg font-medium">
                     {content.commercialFrame.included.title}
                   </h3>
                   <ul className="mt-6 grid gap-3 sm:grid-cols-2">
@@ -423,37 +405,17 @@ export default function SurMesurePage() {
               </div>
             </div>
 
-            <div className="mt-10">
-              <h3 className="text-2xl font-semibold tracking-[-0.03em]">
-                Besoin d’évolutions ou de support ?
-              </h3>
-              <div className="mt-5 grid gap-4 lg:grid-cols-2">
-                {content.commercialFrame.support.map((item) => (
-                  <article key={item.title} className="rounded-[1.1rem] border border-dema-paper/15 bg-dema-paper/7 p-5 sm:p-6">
-                    <div className="grid gap-5 sm:grid-cols-[1fr_auto] sm:items-end">
-                      <div>
-                        <h4 className="text-lg font-semibold">{item.title}</h4>
-                        <p className="mt-3 max-w-md text-sm leading-6 text-dema-paper/70">
-                          {item.description}
-                        </p>
-                      </div>
-                      <p className="whitespace-nowrap text-2xl font-semibold text-dema-paper">
-                        {item.price}
-                      </p>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </div>
-
-            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-10 grid gap-4 sm:grid-cols-2">
               {content.commercialFrame.guarantees.map((item, index) => {
                 const Icon = guaranteeIcons[index];
                 return (
-                  <article key={item.title} className="rounded-[1.1rem] bg-dema-paper p-5 text-brand-blue">
-                    <Icon className="h-5 w-5 text-dema-forest" aria-hidden={true} />
-                    <h4 className="mt-4 text-sm font-semibold">{item.title}</h4>
-                    <p className="mt-2 text-xs leading-5 text-dema-muted">{item.description}</p>
+                  <article
+                    key={item.title}
+                    className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 rounded-[1.1rem] border border-dema-paper/15 bg-dema-paper/7 p-5 text-dema-paper sm:p-6"
+                  >
+                    <Icon className="row-span-2 mt-0.5 h-5 w-5 text-dema-paper/85" aria-hidden={true} />
+                    <h4 className="text-base font-medium">{item.title}</h4>
+                    <p className="text-sm leading-6 text-dema-paper/70">{item.description}</p>
                   </article>
                 );
               })}
@@ -470,7 +432,7 @@ export default function SurMesurePage() {
             <div className="mt-8 divide-y divide-dema-line border-y border-dema-line">
               {content.faq.items.map((item) => (
                 <details key={item.question} className="group py-5">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-5 text-base font-semibold marker:hidden">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-5 text-base font-medium marker:hidden">
                     <span>{item.question}</span>
                     <ChevronDown className="h-4 w-4 shrink-0 text-dema-forest transition group-open:rotate-180" aria-hidden="true" />
                   </summary>
@@ -487,7 +449,7 @@ export default function SurMesurePage() {
         >
           <div className="mx-auto flex max-w-6xl flex-col gap-7 rounded-[1.5rem] border border-dema-line bg-dema-paper p-6 shadow-[0_18px_55px_rgba(23,35,29,0.055)] sm:p-9 lg:flex-row lg:items-center lg:justify-between lg:p-11">
             <div className="max-w-2xl">
-              <h2 id="sur-mesure-cta-heading" className="text-[2rem] font-semibold leading-[1.08] tracking-[-0.04em] sm:text-[2.5rem]">
+              <h2 id="sur-mesure-cta-heading" className="text-[2rem] font-medium leading-[1.08] tracking-[-0.04em] sm:text-[2.5rem]">
                 {content.finalCta.title}
               </h2>
               <p className="mt-4 text-base leading-7 text-dema-muted">{content.finalCta.description}</p>

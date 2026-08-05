@@ -5,18 +5,6 @@ export const SYSTEM_DETAIL_TABS = [
 
 export type SystemDetailTab = (typeof SYSTEM_DETAIL_TABS)[number];
 
-export type SystemDetailBookingSource =
-  | "Système opérationnel - Process"
-  | "Système opérationnel - Solutions";
-
-export function getSystemDetailBookingSource(
-  tab: SystemDetailTab,
-): SystemDetailBookingSource {
-  return tab === "solutions"
-    ? "Système opérationnel - Solutions"
-    : "Système opérationnel - Process";
-}
-
 function isSystemDetailTab(tab?: string): tab is SystemDetailTab {
   return SYSTEM_DETAIL_TABS.includes(tab as SystemDetailTab);
 }

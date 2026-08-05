@@ -58,8 +58,8 @@ async function inspectEnterprise(enterprise) {
     }
 
     for (const expectedText of [
-      "Besoin d’y voir plus clair dans votre organisation ?",
-      "Réserver mon échange offert",
+      "Besoin d’une application adaptée à votre métier ?",
+      "Voir l’offre sur mesure",
     ]) {
       if (!renderedOverviewHtml.includes(expectedText)) {
         errors.push(`system journey control missing: ${expectedText}`);

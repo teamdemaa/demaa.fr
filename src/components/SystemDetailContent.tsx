@@ -1,15 +1,15 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { type KeyboardEvent, useCallback, useState } from "react";
 import OperationalSystemCopyRequestModal from "@/components/OperationalSystemCopyRequestModal";
-import SystemProcessCallCta from "@/components/SystemProcessCallCta";
+import SystemCustomOfferCta from "@/components/SystemCustomOfferCta";
 import SystemSolutionsTab from "@/components/SystemSolutionsTab";
 import SystemeTabContent from "@/components/SystemeTabContent";
 import type { SystemeDetail } from "@/lib/systeme-catalog";
 import {
-  getSystemDetailBookingSource,
   getVisibleSystemDetailTabs,
   getNextSystemDetailTab,
   isVisibleSystemDetailTab,
@@ -94,14 +94,13 @@ export default function SystemDetailContent({
   return (
     <>
       <article className="w-full max-w-[55.2rem]">
-        <button
-          type="button"
-          onClick={() => router.back()}
+        <Link
+          href="/"
           className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-dema-muted transition hover:text-dema-forest"
         >
           <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-          Retour
-        </button>
+          Retour aux systèmes
+        </Link>
 
         <div className="max-w-4xl">
           <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
@@ -168,10 +167,7 @@ export default function SystemDetailContent({
             />
           ) : null}
         </section>
-        <SystemProcessCallCta
-          source={getSystemDetailBookingSource(activeTab)}
-          systemSlug={system.slug}
-        />
+        <SystemCustomOfferCta />
       </article>
       {deliveryModal === "levier" ? (
         <OperationalSystemCopyRequestModal

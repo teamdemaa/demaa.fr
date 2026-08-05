@@ -192,8 +192,8 @@ export function inspectPage({ response, html, tab, expectedSolutionOrder }) {
   }
 
   for (const callText of [
-    "Besoin d’y voir plus clair dans votre organisation ?",
-    "Réserver mon échange offert",
+    "Besoin d’une application adaptée à votre métier ?",
+    "Voir l’offre sur mesure",
   ]) {
     if (!renderedHtml.includes(callText)) {
       errors.push(`missing organization call control: ${callText}`);

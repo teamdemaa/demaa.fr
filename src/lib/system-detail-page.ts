@@ -1,14 +1,14 @@
 import "server-only";
 
 import type { Metadata } from "next";
+import { unstable_cache } from "next/cache";
+import { cache } from "react";
 import { enterpriseToSystem, type EnterpriseDefinition } from "@/lib/enterprise-annuaire";
 import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
-import {
-  buildOperationalSystemDetail,
-  type OperationalSystemDetail,
-} from "@/lib/system-operations";
+import type { OperationalSystemDetail } from "@/lib/system-operations";
 import { hasEditableOperationalSystemAsset } from "@/lib/editable-operational-system-assets.server";
 import type { RenderableSolutionSectionDto } from "@/lib/system-solutions-ui-dto";
+import { buildSystemeDetail } from "@/lib/systeme-catalog";
 import type { System } from "@/lib/types";
 
 export type SystemDetailPageData = {
@@ -250,24 +250,48 @@ const SYSTEM_PAGE_DESCRIPTION_OVERRIDES: Record<string, string> = {
     "Structurez un systeme de studio branding et design avec creations, validations, livrables, outils utiles et ressources concretes.",
 };
 
-export async function getSystemDetailPageData(
+const getCachedSystemPageEnterprise = unstable_cache(
+  async (slug: string) => getEnterpriseBySlug(slug),
+  ["system-detail-enterprise"],
+  { revalidate: 300 },
+);
+
+export function buildOperationalSystemPageDetail(
+  system: System,
+  enterprise: EnterpriseDefinition,
+): OperationalSystemDetail {
+  return {
+    slug: system.slug,
+    sectorLabel: enterprise.sectorLabel,
+    imageTitle: enterprise.imageTitle,
+    imageSubtitle: enterprise.imageSubtitle,
+    systeme: buildSystemeDetail(enterprise),
+    businessModelId: enterprise.businessModelId,
+    businessVariant: enterprise.businessVariant,
+    businessBlocks: enterprise.businessBlocks ?? [],
+    businessSignals: enterprise.businessSignals,
+    tools: [],
+  };
+}
+
+export const getSystemDetailPageData = cache(async function getSystemDetailPageData(
   slug: string,
 ): Promise<SystemDetailPageData | null> {
-  const enterprise = await getEnterpriseBySlug(slug);
+  const enterprise = await getCachedSystemPageEnterprise(slug);
 
   if (!enterprise) {
     return null;
   }
 
   const system = enterpriseToSystem(enterprise);
-  const detail = await buildOperationalSystemDetail(system);
+  const detail = buildOperationalSystemPageDetail(system, enterprise);
 
   return {
     enterprise,
     system,
     detail,
   };
-}
+});
 
 function singularizeSectorLabel(label: string): string {
   return label.replace(/^les\s+/i, "").replace(/^la\s+/i, "").replace(/^le\s+/i, "").trim();
