@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "requestHash": "d480bf7e1203e3f045a654df95c73a8f39dc1888b3857cdddfa5a153afb51100",
+  "request": {
+    "text": "Une entreprise peut être rentable et pourtant ne pas avoir assez d’argent pour payer ses charges à la fin du mois. Ce n’est pas une contradiction comptable. C’est simplement que le bénéfice et la trésorerie ne racontent pas la même chose.\n\nLe résultat mesure ce que l’activité a gagné sur une période. La trésorerie mesure l’argent réellement disponible sur le compte aujourd’hui. Une vente peut donc améliorer le résultat avant d’améliorer la trésorerie. Pour payer un salaire, un fournisseur ou l’Urssaf, c’est pourtant le solde bancaire qui compte.\n\nLe mécanisme est simple. Vous réalisez le travail, vous envoyez la facture, puis le client paie plus tard. Entre-temps, les salaires, les charges, le loyer et certains fournisseurs continuent d’être payés. L’activité a produit de la valeur, mais l’argent n’est pas encore arrivé.\n\nPrenons une petite société de services. Le trente avril, elle facture une mission trente mille euros hors taxes. Une fois tous les coûts de la mission payés, elle gagnera huit mille euros. L’opération est donc rentable. Mais le client règle à quarante-cinq jours. Avant ce règlement, l’entreprise doit décaisser seize mille euros et elle ne possède que neuf mille euros sur son compte. Son point bas n’est pas huit mille euros de bénéfice. Il est de moins sept mille euros de trésorerie. Le papier dit plus huit mille. Le compte bancaire dit moins sept mille. Et pour payer les salaires et les fournisseurs, c’est bien le compte bancaire qui a le dernier mot.\n\nCe décalage entre les dépenses engagées et l’argent encaissé porte un nom : le besoin en fonds de roulement, ou BFR. Dans une activité de services, il vient souvent des factures clients en attente. Dans le commerce, les stocks peuvent ajouter un deuxième décalage.\n\nC’est pour cela que la croissance peut tendre la trésorerie. Si vous doublez les ventes tout en conservant les mêmes délais d’encaissement, vous devez parfois financer deux fois plus de travail avant de recevoir l’argent. Davantage de commandes ne signifie donc pas automatiquement davantage de cash disponible.\n\nLa bonne question n’est donc pas seulement : est-ce que nous serons rentables cette année ? Elle est aussi : quel sera notre point de trésorerie le plus bas pendant les douze prochaines semaines, à quelle date, et pour quelle raison ? Cette question transforme une inquiétude vague en décision de gestion.\n\nTrois actions réduisent immédiatement le risque. Premièrement, facturer dès que le travail le permet, pas quinze jours plus tard. Deuxièmement, encaisser plus tôt : acompte, échéancier clair et relance préparée avant la date de paiement. Troisièmement, mettre à jour chaque semaine un plan de trésorerie sur douze semaines. Pas pour prédire parfaitement l’avenir. Pour voir le point bas assez tôt et décider avant l’urgence.\n\nRetenez cette règle : une facture ne finance rien tant qu’elle n’est pas encaissée. Le bénéfice vous dit si l’activité vaut la peine. La trésorerie vous dit si l’entreprise peut continuer.",
+    "voiceId": "9HTNhnzaWIkUTIhaJhPM",
+    "modelId": "eleven_multilingual_v2",
+    "outputFormat": "mp3_44100_128",
+    "voiceSettings": {
+      "stability": 0.86,
+      "similarityBoost": 0.78,
+      "style": 0,
+      "useSpeakerBoost": true,
+      "speed": 1.15
+    }
+  },
+  "generatedAt": "2026-07-28T22:21:59.683Z"
+}

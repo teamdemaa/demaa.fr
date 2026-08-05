@@ -1,0 +1,9 @@
+node_modules/
+output/
+.env.local
+public/audio/
+content/timing.generated.json
+content/timing-short.generated.json
+content/timing-source.generated.json
+content/timing-short-source.generated.json
+content/generated/

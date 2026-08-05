@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <rect width="1080" height="1920" fill="#F4EDDF"/>
+  <circle cx="887" cy="435" r="18" fill="#F2BC52"/>
+  <text x="80" y="470" fill="#2B1914" font-family="Satoshi,Arial,sans-serif" font-size="144" font-weight="750">DEMAA</text>
+  <text x="80" y="545" fill="#2B1914" opacity=".65" font-family="Satoshi,Arial,sans-serif" font-size="34" font-weight="600" letter-spacing="4">AVEC DEUX A</text>
+  <line x1="80" y1="700" x2="1000" y2="700" stroke="#2B1914" opacity=".18"/>
+  <text x="80" y="925" fill="#2B1914" font-family="Satoshi,Arial,sans-serif" font-size="72" font-weight="700">
+    <tspan x="80">Le plan 3P et sa</tspan>
+    <tspan x="80" dy="94">version vierge sont</tspan>
+    <tspan x="80" dy="94">sous la vidéo.</tspan>
+  </text>
+  <rect x="80" y="1370" width="640" height="122" rx="61" fill="#2B1914"/>
+  <text x="144" y="1447" fill="#F4EDDF" font-family="Satoshi,Arial,sans-serif" font-size="36" font-weight="700" letter-spacing="1.5">ENTREPRENDRE, CONCRÈTEMENT.</text>
+</svg>

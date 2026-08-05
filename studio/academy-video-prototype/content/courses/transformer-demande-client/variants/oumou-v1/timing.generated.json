@@ -1,0 +1,122 @@
+{
+  "source": "elevenlabs-character-alignment+postprocessed-1x",
+  "modelId": "eleven_multilingual_v2",
+  "fps": 30,
+  "audioDurationSeconds": 148.748,
+  "totalDurationSeconds": 149.94799999999998,
+  "scenes": {
+    "demande-pas-client": {
+      "startSeconds": 0,
+      "endSeconds": 16.951,
+      "durationSeconds": 16.951,
+      "speechStartSeconds": 0,
+      "speechEndSeconds": 16.858,
+      "beats": {
+        "objectif": {
+          "cueStartSeconds": 12.887,
+          "leadSeconds": 0.25,
+          "startSeconds": 12.637
+        }
+      }
+    },
+    "reponse-rapide": {
+      "startSeconds": 16.951,
+      "endSeconds": 33.199,
+      "durationSeconds": 16.247999999999998,
+      "speechStartSeconds": 17.044,
+      "speechEndSeconds": 33.124,
+      "beats": {
+        "contenu": {
+          "cueStartSeconds": 23.847,
+          "leadSeconds": 0.25,
+          "startSeconds": 6.646000000000001
+        }
+      }
+    },
+    "qualification": {
+      "startSeconds": 33.199,
+      "endSeconds": 51.329,
+      "durationSeconds": 18.130000000000003,
+      "speechStartSeconds": 33.274,
+      "speechEndSeconds": 51.19,
+      "beats": {
+        "but": {
+          "cueStartSeconds": 43.84,
+          "leadSeconds": 0.25,
+          "startSeconds": 10.391000000000005
+        }
+      }
+    },
+    "decouverte": {
+      "startSeconds": 51.329,
+      "endSeconds": 71.0775,
+      "durationSeconds": 19.7485,
+      "speechStartSeconds": 51.468,
+      "speechEndSeconds": 70.985,
+      "beats": {
+        "reformuler": {
+          "cueStartSeconds": 63.09,
+          "leadSeconds": 0.25,
+          "startSeconds": 11.511000000000003
+        }
+      }
+    },
+    "proposition": {
+      "startSeconds": 71.0775,
+      "endSeconds": 91.01750000000001,
+      "durationSeconds": 19.940000000000012,
+      "speechStartSeconds": 71.17,
+      "speechEndSeconds": 90.849,
+      "beats": {
+        "suite": {
+          "cueStartSeconds": 82.63,
+          "leadSeconds": 0.25,
+          "startSeconds": 11.302499999999995
+        }
+      }
+    },
+    "relance": {
+      "startSeconds": 91.01750000000001,
+      "endSeconds": 106.9345,
+      "durationSeconds": 15.916999999999987,
+      "speechStartSeconds": 91.186,
+      "speechEndSeconds": 106.859,
+      "beats": {
+        "cloture": {
+          "cueStartSeconds": 99.371,
+          "leadSeconds": 0.25,
+          "startSeconds": 8.103499999999983
+        }
+      }
+    },
+    "exemple-trie": {
+      "startSeconds": 106.9345,
+      "endSeconds": 128.3375,
+      "durationSeconds": 21.403000000000006,
+      "speechStartSeconds": 107.01,
+      "speechEndSeconds": 128.198,
+      "beats": {
+        "resultat": {
+          "cueStartSeconds": 118.783,
+          "leadSeconds": 0.25,
+          "startSeconds": 11.598500000000001
+        }
+      }
+    },
+    "regles-refus": {
+      "startSeconds": 128.3375,
+      "endSeconds": 149.94799999999998,
+      "durationSeconds": 21.610499999999973,
+      "speechStartSeconds": 128.477,
+      "speechEndSeconds": 148.748,
+      "beats": {
+        "methode": {
+          "cueStartSeconds": 140.261,
+          "leadSeconds": 0.25,
+          "startSeconds": 11.67349999999999
+        }
+      }
+    }
+  },
+  "postprocessRate": 1
+}

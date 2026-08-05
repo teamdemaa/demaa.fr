@@ -1,0 +1,133 @@
+{
+  "version": 1,
+  "kind": "full-course-narration-delivery",
+  "course": "fixer-ses-prix",
+  "variant": "oumou-warm-v2",
+  "notVoiceApproved": true,
+  "generatedAt": "2026-07-29T11:34:55.450Z",
+  "verifiedAt": "2026-07-29T11:35:13.436Z",
+  "elevenLabsCalls": 1,
+  "characterCount": 3625,
+  "creditsEngagedEstimated": 3625,
+  "script": {
+    "statusBefore": "script-approved",
+    "statusAfter": "script-approved",
+    "byteIdenticalToApprovedSha": true,
+    "sha256": "7ac50ba679f89d4042fb2405a9f9c549762c745ed277e3f0c58903d16d91a641"
+  },
+  "voice": {
+    "voiceId": "9HTNhnzaWIkUTIhaJhPM",
+    "modelId": "eleven_multilingual_v2",
+    "speed": 1.15,
+    "stability": 0.55,
+    "similarityBoost": 0.78,
+    "style": 0,
+    "speakerBoost": true,
+    "postprocessRate": 1
+  },
+  "audio": {
+    "file": "/Users/oumougory/Apps/Demaa.fr/studio/academy-video-prototype/public/courses/fixer-ses-prix/variants/oumou-warm-v2/audio/narration-source.mp3",
+    "codec": "mp3",
+    "sampleRate": 44100,
+    "channels": 1,
+    "fileDurationSeconds": 174.942041,
+    "alignedSpeechEndSeconds": 174.892,
+    "sizeBytes": 2799534,
+    "sha256": "74706b695bdbf851787e554f6e75a5c86d7e058c36766b0e022a2cf6608fa396",
+    "fullDecode": true
+  },
+  "alignment": {
+    "file": "/Users/oumougory/Apps/Demaa.fr/studio/academy-video-prototype/public/courses/fixer-ses-prix/variants/oumou-warm-v2/audio/alignment.json",
+    "sha256": "cbb5853b9314a81d0250c8d05b5f337550d02b38f7cdf2eb6103378e93696543",
+    "characterCount": 3625,
+    "textExact": true,
+    "charactersExact": true,
+    "timesMonotonic": true,
+    "firstStartSeconds": 0,
+    "lastEndSeconds": 174.892
+  },
+  "timing": {
+    "file": "/Users/oumougory/Apps/Demaa.fr/studio/academy-video-prototype/content/courses/fixer-ses-prix/variants/oumou-warm-v2/timing-source.generated.json",
+    "sha256": "cdb45b69ac2e0f9a82e46acc03adcae90440debdfc1c0104ef2726098e0828fb",
+    "audioDurationSeconds": 174.892,
+    "totalDurationSeconds": 176.09199999999998,
+    "scenes": [
+      {
+        "id": "prix-piege",
+        "characterCount": 382,
+        "speechStartSeconds": 0,
+        "speechEndSeconds": 17.96,
+        "speechDurationSeconds": 17.96,
+        "sceneDurationSeconds": 18.053
+      },
+      {
+        "id": "hors-taxes",
+        "characterCount": 435,
+        "speechStartSeconds": 18.146,
+        "speechEndSeconds": 39.96,
+        "speechDurationSeconds": 21.814,
+        "sceneDurationSeconds": 22.099
+      },
+      {
+        "id": "cout-complet",
+        "characterCount": 500,
+        "speechStartSeconds": 40.344,
+        "speechEndSeconds": 66.942,
+        "speechDurationSeconds": 26.598,
+        "sceneDurationSeconds": 26.894
+      },
+      {
+        "id": "charges-fixes",
+        "characterCount": 474,
+        "speechStartSeconds": 67.151,
+        "speechEndSeconds": 88.374,
+        "speechDurationSeconds": 21.223,
+        "sceneDurationSeconds": 21.403
+      },
+      {
+        "id": "calcul-plancher",
+        "characterCount": 499,
+        "speechStartSeconds": 88.525,
+        "speechEndSeconds": 113.835,
+        "speechDurationSeconds": 25.31,
+        "sceneDurationSeconds": 25.525
+      },
+      {
+        "id": "perte-volume",
+        "characterCount": 399,
+        "speechStartSeconds": 114.114,
+        "speechEndSeconds": 133.084,
+        "speechDurationSeconds": 18.97,
+        "sceneDurationSeconds": 19.214
+      },
+      {
+        "id": "prix-cible",
+        "characterCount": 486,
+        "speechStartSeconds": 133.293,
+        "speechEndSeconds": 154.934,
+        "speechDurationSeconds": 21.641,
+        "sceneDurationSeconds": 21.885
+      },
+      {
+        "id": "regle",
+        "characterCount": 436,
+        "speechStartSeconds": 155.213,
+        "speechEndSeconds": 174.892,
+        "speechDurationSeconds": 19.679,
+        "sceneDurationSeconds": 21.018
+      }
+    ]
+  },
+  "requestManifest": {
+    "file": "/Users/oumougory/Apps/Demaa.fr/studio/academy-video-prototype/public/courses/fixer-ses-prix/variants/oumou-warm-v2/audio/narration-source.mp3.manifest.json",
+    "sha256": "acee8a9e89385a5e32ccfda38a77fd82b0494b8f5150feafe73c82a2edb83212",
+    "requestSha256": "f878a0f0b4d3481fcfb18cedfbcd3b35ce24f3973176c1dac5377acad85cf9f9"
+  },
+  "qa": {
+    "sceneCoverageExact": true,
+    "longSilenceThresholdSeconds": 1.2,
+    "longSilenceEvents": 0,
+    "obviousTruncation": false,
+    "obviousDuplication": false
+  }
+}

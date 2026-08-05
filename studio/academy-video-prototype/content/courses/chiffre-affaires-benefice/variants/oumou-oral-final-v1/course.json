@@ -1,0 +1,212 @@
+{
+  "id": "chiffre-affaires-benefice",
+  "editorialVariant": "oumou-oral-final-v1",
+  "title": "Pourquoi le chiffre d’affaires ne dit pas si l’entreprise gagne de l’argent",
+  "shortTitle": "Vendre plus ne veut pas dire gagner plus.",
+  "courseTitle": "CHIFFRE D’AFFAIRES\n≠ BÉNÉFICE",
+  "introVisual": {
+    "primaryLabel": "VENTES H.T.",
+    "secondaryLabel": "MARGE"
+  },
+  "audience": "Dirigeants de TPE en France",
+  "status": "draft",
+  "format": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "targetDurationSeconds": 210
+  },
+  "editorialContract": {
+    "tone": "Chaleureux, lucide, bienveillant et constructif. Dire les choses clairement sans juger le dirigeant.",
+    "rule": "Une idée par écran. Chaque chiffre doit permettre de refaire le calcul.",
+    "screenTextRule": "Le texte à l’écran résume ou chiffre. Il ne retranscrit pas la narration.",
+    "pronouns": "Employer « on » pour les erreurs fréquentes et « vous » pour les actions."
+  },
+  "scenes": [
+    {
+      "id": "confusion",
+      "title": "Le chiffre qui impressionne",
+      "targetSeconds": 28,
+      "narration": "Le chiffre d’affaires, c’est souvent le premier nombre qu’on donne pour parler d’une entreprise. Il montre combien elle a vendu, hors taxes. Mais il ne dit pas combien elle a gagné. Une entreprise peut donc beaucoup vendre et finir l’année avec un petit bénéfice, ou même une perte. Il n’y a rien d’incohérent là-dedans : pour comprendre ce qu’il reste vraiment, il faut regarder les coûts.",
+      "onScreen": ["Un beau chiffre d’affaires.", "Quel bénéfice ?"],
+    "visual": {
+      "type": "illustration",
+      "asset": "illustrations/casting-v2/02-chiffre-affaires-benefice-clean.png",
+      "assetScale": 1.3,
+      "assetOffsetX": 10,
+      "layout": "text-left"
+    }
+    },
+    {
+      "id": "equation",
+      "title": "L’équation de base",
+      "targetSeconds": 35,
+      "narration": "Le calcul tient en une ligne. Au chiffre d’affaires, on retire toutes les charges. Ce qui reste, c’est le résultat. Entre les deux, il faut payer les achats, la production, la sous-traitance, les salaires, les locaux, les logiciels, les assurances, les intérêts et les impôts. Le chiffre d’affaires indique ce qui a été vendu. Le résultat indique ce qu’il reste après toutes ces charges. Si vous regardez seulement le chiffre d’affaires, vous ne savez pas encore ce que l’entreprise gagne.",
+      "onScreen": ["Chiffre d’affaires", "− Charges", "= Résultat"],
+      "visual": {"type": "timeline", "layout": "full"},
+      "beats": [
+        {
+          "id": "equation",
+          "startSeconds": 0,
+          "template": "timeline"
+        },
+        {
+          "id": "charges",
+          "startSeconds": 8,
+          "cue": "Entre les deux",
+          "template": "chips",
+          "eyebrow": "Entre les ventes et le bénéfice",
+          "title": "Toutes les charges passent par là.",
+          "items": ["PRODUCTION", "SALAIRES", "LOCAUX", "IMPÔTS"]
+        }
+      ]
+    },
+    {
+      "id": "exemple",
+      "title": "Un exemple concret",
+      "targetSeconds": 42,
+      "narration": "Prenons une entreprise qui réalise cent mille euros de chiffre d’affaires hors taxes. Les achats, la production et la sous-traitance lui coûtent soixante mille euros. Il reste quarante mille euros de marge pour payer le fonctionnement de l’entreprise. Les salaires administratifs, les locaux, les outils et les autres charges fixes représentent trente-cinq mille euros. Le résultat est donc de cinq mille euros : cent mille, moins soixante mille, moins trente-cinq mille. Voilà ce que raconte le calcul : l’entreprise a vendu cent mille euros, mais elle en a réellement gagné cinq mille.",
+      "onScreen": ["100 000 € vendus", "40 000 € de marge", "5 000 € de bénéfice"],
+      "visual": {"type": "cash-example", "layout": "full"},
+      "beats": [
+        {
+          "id": "calcul",
+          "startSeconds": 0,
+          "template": "metrics",
+          "eyebrow": "Un calcul simple",
+          "cards": [
+            {"label": "Chiffre d’affaires H.T.", "value": "100 000 €"},
+            {"label": "Marge après coûts directs", "value": "40 000 €"},
+            {"label": "Bénéfice final", "value": "5 000 €", "accent": true}
+          ]
+        },
+        {
+          "id": "conclusion",
+          "startSeconds": 28,
+          "cue": "Voilà ce que raconte",
+          "template": "statement",
+          "eyebrow": "Le résultat réel",
+          "lines": ["100 000 € VENDUS", "→", "5 000 € GAGNÉS"],
+          "accentIndex": 2,
+          "zoom": true
+        }
+      ]
+    },
+    {
+      "id": "mauvaise-croissance",
+      "title": "Vendre plus peut faire gagner moins",
+      "targetSeconds": 34,
+      "narration": "Il y a un deuxième piège : vendre plus peut faire baisser le résultat si le prix ne couvre pas le travail demandé. Prenons un contrat supplémentaire de vingt mille euros. Pour le livrer dans l’urgence, l’entreprise dépense vingt-deux mille euros en sous-traitance, heures supplémentaires et corrections. Son chiffre d’affaires augmente bien de vingt mille euros, mais son résultat baisse de deux mille. En clair, cette vente a coûté plus qu’elle n’a rapporté. Le montant du contrat ne corrige pas ce problème.",
+      "onScreen": ["Plus de ventes", "peut produire", "moins de bénéfice"],
+      "visual": {"type": "growth", "layout": "full"},
+      "beats": [
+        {
+          "id": "piege",
+          "startSeconds": 0,
+          "template": "statement",
+          "lines": ["PLUS DE VENTES", "≠", "PLUS DE BÉNÉFICE"],
+          "accentIndex": 2,
+          "zoom": true
+        },
+        {
+          "id": "contrat",
+          "startSeconds": 10,
+          "cue": "Prenons un contrat",
+          "template": "metrics",
+          "eyebrow": "Le mauvais contrat",
+          "cards": [
+            {"label": "Chiffre d’affaires", "value": "+20 000 €"},
+            {"label": "Coûts déclenchés", "value": "−22 000 €"},
+            {"label": "Effet sur le résultat", "value": "−2 000 €", "accent": true}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "point-mort",
+      "title": "Le seuil à connaître",
+      "targetSeconds": 36,
+      "narration": "Vous devez connaître votre seuil de rentabilité. C’est le montant de chiffre d’affaires à atteindre pour couvrir toutes les charges. Le point mort est différent : c’est la date, ou le nombre de jours, nécessaire pour atteindre ce seuil. Supposons que l’entreprise garde quarante pour cent de marge sur ses ventes et qu’elle ait trente-cinq mille euros de charges fixes. Le calcul est le suivant : trente-cinq mille divisés par zéro virgule quarante. Le seuil de rentabilité est donc de quatre-vingt-sept mille cinq cents euros de chiffre d’affaires. En dessous, l’entreprise perd de l’argent. À ce niveau, elle couvre ses charges. Au-dessus, elle commence à gagner de l’argent.",
+      "onScreen": ["Sous le seuil : perte", "Au seuil : équilibre", "Au-dessus : bénéfice"],
+      "visual": {"type": "definition", "layout": "center"},
+      "beats": [
+        {
+          "id": "definition",
+          "startSeconds": 0,
+          "template": "term",
+          "eyebrow": "Le niveau de ventes qui couvre les charges",
+          "term": "SEUIL DE RENTABILITÉ",
+          "definition": "MONTANT DE CHIFFRE D’AFFAIRES À ATTEINDRE"
+        },
+        {
+          "id": "calcul",
+          "startSeconds": 12,
+          "cue": "Supposons que l’entreprise",
+          "template": "metrics",
+          "eyebrow": "Le seuil à atteindre",
+          "cards": [
+            {"label": "Taux de marge", "value": "40 %"},
+            {"label": "Charges fixes", "value": "35 000 €"},
+            {"label": "Seuil de rentabilité", "value": "87 500 €", "accent": true}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pilotage",
+      "title": "Les décisions utiles",
+      "targetSeconds": 42,
+      "narration": "Concrètement, suivez trois choses. Premièrement, la marge en euros et en pourcentage pour chaque offre importante : vous verrez ce que chaque vente laisse après ses coûts directs. Deuxièmement, votre seuil de rentabilité mensuel : vous saurez combien il faut vendre pour couvrir les charges fixes. Troisièmement, regardez le résultat chaque mois, pas seulement en fin d’année. Gardez la trésorerie dans un suivi séparé, car elle répond à une autre question. Un gros client peut générer beaucoup de chiffre d’affaires, peu de bénéfice et, en plus, payer tard.",
+      "onScreen": ["Marge", "Seuil de rentabilité", "Résultat mensuel"],
+      "visual": {"type": "illustration", "layout": "actions"},
+      "beats": [
+        {
+          "id": "introduction",
+          "startSeconds": 0,
+          "template": "statement",
+          "eyebrow": "Piloter correctement",
+          "lines": ["3", "MESURES"],
+          "accentIndex": 0
+        },
+        {
+          "id": "marge",
+          "startSeconds": 4,
+          "cue": "Premièrement",
+          "template": "action",
+          "number": "01",
+          "title": "SUIVRE LA MARGE",
+          "detail": "En euros et en pourcentage, par offre.",
+          "tags": ["PRIX", "COÛTS DIRECTS"]
+        },
+        {
+          "id": "seuil",
+          "startSeconds": 14,
+          "cue": "Deuxièmement",
+          "template": "action",
+          "number": "02",
+          "title": "CONNAÎTRE LE SEUIL DE RENTABILITÉ",
+          "detail": "Le niveau de ventes qui couvre les charges.",
+          "tags": ["CHAQUE MOIS"]
+        },
+        {
+          "id": "resultat",
+          "startSeconds": 24,
+          "cue": "Troisièmement",
+          "template": "action",
+          "number": "03",
+          "title": "MESURER LE RÉSULTAT",
+          "detail": "Ce que l’entreprise gagne réellement.",
+          "tags": ["PAS SEULEMENT UNE FOIS PAR AN"]
+        }
+      ]
+    },
+    {
+      "id": "regle",
+      "title": "La règle",
+      "targetSeconds": 18,
+      "narration": "Retenez quatre chiffres différents. Le chiffre d’affaires indique ce qui a été vendu. La marge indique ce qu’il reste après les coûts directement liés aux ventes. Le résultat indique ce que l’entreprise a gagné après toutes ses charges. La trésorerie indique l’argent disponible. Chaque chiffre répond à une question différente.",
+      "onScreen": ["Le chiffre d’affaires impressionne.", "Le bénéfice tranche."],
+      "visual": {"type": "closing", "layout": "center"}
+    }
+  ]
+}

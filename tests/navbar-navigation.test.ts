@@ -78,7 +78,7 @@ describe("conventional systems and Academy navbar", () => {
     ]);
 
     expect(homeSource).toContain(
-      'export { default, metadata } from "@/app/sur-mesure/page"',
+      'export { default, metadata } from "@/app/systemes/page"',
     );
     expect(systemsSource).toContain('canonical: "/systemes"');
     expect(nextConfigSource).not.toMatch(

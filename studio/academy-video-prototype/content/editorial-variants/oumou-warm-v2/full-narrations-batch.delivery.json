@@ -1,0 +1,106 @@
+{
+  "version": 1,
+  "kind": "full-narrations-batch-delivery",
+  "variant": "oumou-warm-v2",
+  "verifiedAt": "2026-07-29T11:37:03Z",
+  "elevenLabsCalls": 4,
+  "totalCharacterCount": 14212,
+  "totalCreditsEngagedEstimated": 14212,
+  "totalAudioDurationSeconds": 629.890613,
+  "voice": {
+    "voiceId": "9HTNhnzaWIkUTIhaJhPM",
+    "modelId": "eleven_multilingual_v2",
+    "speed": 1.15,
+    "stability": 0.55,
+    "similarityBoost": 0.78,
+    "style": 0,
+    "speakerBoost": true,
+    "postprocessRate": 1
+  },
+  "courses": [
+    {
+      "course": "gestion-tresorerie",
+      "status": "script-approved",
+      "notVoiceApproved": true,
+      "characterCount": 3520,
+      "sceneCount": 9,
+      "durationSeconds": 146.651429,
+      "scriptSha256": "f2490a32dad7100c84e121abe2ede0b9f5c131897ff9fb187a0546e60392d1a8",
+      "audio": "/Users/oumougory/Apps/Demaa.fr/studio/academy-video-prototype/public/courses/gestion-tresorerie/variants/oumou-warm-v2/audio/narration-source.mp3",
+      "audioSha256": "53b557d7e271a54306288c4087924f179d4da22a3e570214f3e3bd8be3516ad6",
+      "alignmentSha256": "6eb16f4ecc40864ebae5a879a7eacca3c7a72055102d5a6c89026cfa750a1d7d",
+      "timingSha256": "9788b60aa94ca31d98e37e26ec877937d4aa9e9502b1d07eb70059086c612705",
+      "deliveryManifest": "/Users/oumougory/Apps/Demaa.fr/studio/academy-video-prototype/public/courses/gestion-tresorerie/variants/oumou-warm-v2/audio/narration-source.delivery.json",
+      "deliveryManifestSha256": "24df6076776f2df1b8f26b345032e4ac43780e1e0c6a8e732643474da8d5f4c6",
+      "qaPassed": true
+    },
+    {
+      "course": "chiffre-affaires-benefice",
+      "status": "script-approved",
+      "notVoiceApproved": true,
+      "characterCount": 3323,
+      "sceneCount": 7,
+      "durationSeconds": 146.834286,
+      "scriptSha256": "adb6c5f930794256b684a8e05b14692a353c275e23b530c22e95731e9622bb51",
+      "audio": "/Users/oumougory/Apps/Demaa.fr/studio/academy-video-prototype/public/courses/chiffre-affaires-benefice/variants/oumou-warm-v2/audio/narration-source.mp3",
+      "audioSha256": "304b1b3a8b5a92bd2f65c4631c4a7bf1994958e9219c043d076aa09f8f8618e8",
+      "alignmentSha256": "d36eeabe25a382df6c549b195eeb4b1f019d706f74b4c1ae0fd8fb8da17f03c5",
+      "timingSha256": "1df00cba0f5189f2f973f68ca572be9e61430d622b7e0e90fdc68897269ef2c3",
+      "deliveryManifest": "/Users/oumougory/Apps/Demaa.fr/studio/academy-video-prototype/public/courses/chiffre-affaires-benefice/variants/oumou-warm-v2/audio/narration-source.delivery.json",
+      "deliveryManifestSha256": "4ffe91721ede528bc43360ef967710f08a13433fe40afcfa44572ab24ccb4bdb",
+      "qaPassed": true
+    },
+    {
+      "course": "fixer-ses-prix",
+      "status": "script-approved",
+      "notVoiceApproved": true,
+      "characterCount": 3625,
+      "sceneCount": 8,
+      "durationSeconds": 174.942041,
+      "scriptSha256": "7ac50ba679f89d4042fb2405a9f9c549762c745ed277e3f0c58903d16d91a641",
+      "audio": "/Users/oumougory/Apps/Demaa.fr/studio/academy-video-prototype/public/courses/fixer-ses-prix/variants/oumou-warm-v2/audio/narration-source.mp3",
+      "audioSha256": "74706b695bdbf851787e554f6e75a5c86d7e058c36766b0e022a2cf6608fa396",
+      "alignmentSha256": "cbb5853b9314a81d0250c8d05b5f337550d02b38f7cdf2eb6103378e93696543",
+      "timingSha256": "cdb45b69ac2e0f9a82e46acc03adcae90440debdfc1c0104ef2726098e0828fb",
+      "deliveryManifest": "/Users/oumougory/Apps/Demaa.fr/studio/academy-video-prototype/public/courses/fixer-ses-prix/variants/oumou-warm-v2/audio/narration-source.delivery.json",
+      "deliveryManifestSha256": "abcc759f9d928f788a535dea1049153965d1866905fbd40cea8a9f4e765177c0",
+      "qaPassed": true
+    },
+    {
+      "course": "deleguer-sans-perdre-controle",
+      "status": "script-approved",
+      "notVoiceApproved": true,
+      "characterCount": 3744,
+      "sceneCount": 8,
+      "durationSeconds": 161.462857,
+      "scriptSha256": "4c5bed3bf2a24e7b8e70d713e8ec825760dd28a69e7278345de29b90f4a3bfd0",
+      "audio": "/Users/oumougory/Apps/Demaa.fr/studio/academy-video-prototype/public/courses/deleguer-sans-perdre-controle/variants/oumou-warm-v2/audio/narration-source.mp3",
+      "audioSha256": "3fe7edfd9c0056ec967dbcc21c937aa365c6493d62d04867e36a4620aca4c01e",
+      "alignmentSha256": "1a035c575f1afac3d93f57df517a6ceaf4258b08bbd8f28d2295c021a694d9c0",
+      "timingSha256": "900dea76ee18ffc9de237b75ddc4cde78bba064852476c440bb01e53845ce71d",
+      "deliveryManifest": "/Users/oumougory/Apps/Demaa.fr/studio/academy-video-prototype/public/courses/deleguer-sans-perdre-controle/variants/oumou-warm-v2/audio/narration-source.delivery.json",
+      "deliveryManifestSha256": "06a4c12617e98f0e177ba04d3fe81f7640378cfc0fe30fdf2ce6b1f03f79bb7a",
+      "qaPassed": true
+    }
+  ],
+  "c4Preserved": {
+    "course": "construire-systeme-marketing-vente",
+    "status": "voice-approved",
+    "scriptSha256": "33ebc74cc408091952f11a736f23798bce579d324ec982f473950f6a6a4102ab",
+    "audioSha256": "bb9909607b374ae8c2d50622f84bc26d6a47f8bcbabf764a14323df0df8d19ca",
+    "alignmentSha256": "59d89bc94d5483bd1c2f483afb2082571215e7812b0a8f1950b3e09ac146ce3e",
+    "timingSha256": "093acbda307adbd9057d462822971522c2ea1327902f41802b1206445dfd8cf7"
+  },
+  "gates": {
+    "voiceApprovedCourses": [
+      "construire-systeme-marketing-vente"
+    ],
+    "awaitingHumanVoiceValidation": [
+      "gestion-tresorerie",
+      "chiffre-affaires-benefice",
+      "fixer-ses-prix",
+      "deleguer-sans-perdre-controle"
+    ],
+    "renderReadyCourses": []
+  }
+}

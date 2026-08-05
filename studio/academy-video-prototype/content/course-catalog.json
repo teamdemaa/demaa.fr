@@ -1,0 +1,86 @@
+{
+  "defaultCourse": "gestion-tresorerie",
+  "courses": {
+    "gestion-tresorerie": {
+      "content": "content/pilot.json",
+      "production": "content/courses/gestion-tresorerie/production.json",
+      "strictPresentationContract": "content/courses/gestion-tresorerie/strict-presentation-contract.json",
+      "sourceTiming": "content/timing-source.generated.json",
+      "timing": "content/timing.generated.json",
+      "alignment": "public/audio/alignment.json",
+      "sourceAudio": "public/audio/narration-source.mp3",
+      "audio": "public/audio/narration.mp3",
+      "finalOutput": "output/cours-gestion-tresorerie-final.mp4"
+    },
+    "chiffre-affaires-benefice": {
+      "content": "content/courses/chiffre-affaires-benefice/course.json",
+      "production": "content/courses/chiffre-affaires-benefice/production.json",
+      "sourceTiming": "content/courses/chiffre-affaires-benefice/timing-source.generated.json",
+      "timing": "content/courses/chiffre-affaires-benefice/timing.generated.json",
+      "alignment": "public/courses/chiffre-affaires-benefice/audio/alignment.json",
+      "sourceAudio": "public/courses/chiffre-affaires-benefice/audio/narration-source.mp3",
+      "audio": "public/courses/chiffre-affaires-benefice/audio/narration.mp3",
+      "finalOutput": "output/cours-chiffre-affaires-benefice-final.mp4"
+    },
+    "fixer-ses-prix": {
+      "content": "content/courses/fixer-ses-prix/course.json",
+      "production": "content/courses/fixer-ses-prix/production.json",
+      "sourceTiming": "content/courses/fixer-ses-prix/timing-source.generated.json",
+      "timing": "content/courses/fixer-ses-prix/timing.generated.json",
+      "alignment": "public/courses/fixer-ses-prix/audio/alignment.json",
+      "sourceAudio": "public/courses/fixer-ses-prix/audio/narration-source.mp3",
+      "audio": "public/courses/fixer-ses-prix/audio/narration.mp3",
+      "finalOutput": "output/cours-fixer-ses-prix-final.mp4"
+    },
+    "juste-systeme-marketing": {
+      "content": "content/courses/juste-systeme-marketing/course.json",
+      "production": "content/courses/juste-systeme-marketing/production.json",
+      "sourceTiming": "content/courses/juste-systeme-marketing/timing-source.generated.json",
+      "timing": "content/courses/juste-systeme-marketing/timing.generated.json",
+      "alignment": "public/courses/juste-systeme-marketing/audio/alignment.json",
+      "sourceAudio": "public/courses/juste-systeme-marketing/audio/narration-source.mp3",
+      "audio": "public/courses/juste-systeme-marketing/audio/narration.mp3",
+      "finalOutput": "output/cours-juste-systeme-marketing-final.mp4"
+    },
+    "transformer-demande-client": {
+      "content": "content/courses/transformer-demande-client/course.json",
+      "production": "content/courses/transformer-demande-client/production.json",
+      "sourceTiming": "content/courses/transformer-demande-client/timing-source.generated.json",
+      "timing": "content/courses/transformer-demande-client/timing.generated.json",
+      "alignment": "public/courses/transformer-demande-client/audio/alignment.json",
+      "sourceAudio": "public/courses/transformer-demande-client/audio/narration-source.mp3",
+      "audio": "public/courses/transformer-demande-client/audio/narration.mp3",
+      "finalOutput": "output/cours-transformer-demande-client-final.mp4"
+    },
+    "deleguer-sans-perdre-controle": {
+      "content": "content/courses/deleguer-sans-perdre-controle/course.json",
+      "production": "content/courses/deleguer-sans-perdre-controle/production.json",
+      "sourceTiming": "content/courses/deleguer-sans-perdre-controle/timing-source.generated.json",
+      "timing": "content/courses/deleguer-sans-perdre-controle/timing.generated.json",
+      "alignment": "public/courses/deleguer-sans-perdre-controle/audio/alignment.json",
+      "sourceAudio": "public/courses/deleguer-sans-perdre-controle/audio/narration-source.mp3",
+      "audio": "public/courses/deleguer-sans-perdre-controle/audio/narration.mp3",
+      "finalOutput": "output/cours-deleguer-sans-perdre-controle-final.mp4"
+    },
+    "construire-systeme-marketing-vente": {
+      "content": "content/courses/construire-systeme-marketing-vente/course.json",
+      "production": "content/courses/construire-systeme-marketing-vente/production.json",
+      "sourceTiming": "content/courses/construire-systeme-marketing-vente/timing-source.generated.json",
+      "timing": "content/courses/construire-systeme-marketing-vente/timing.generated.json",
+      "alignment": "public/courses/construire-systeme-marketing-vente/audio/alignment.json",
+      "sourceAudio": "public/courses/construire-systeme-marketing-vente/audio/narration-source.mp3",
+      "audio": "public/courses/construire-systeme-marketing-vente/audio/narration.mp3",
+      "finalOutput": "output/cours-construire-systeme-marketing-vente-final.mp4"
+    },
+    "pennylane-pour-cabinet": {
+      "content": "content/courses/pennylane-pour-cabinet/course.json",
+      "production": "content/courses/pennylane-pour-cabinet/production.json",
+      "sourceTiming": "content/courses/pennylane-pour-cabinet/timing-source.generated.json",
+      "timing": "content/courses/pennylane-pour-cabinet/timing.generated.json",
+      "alignment": "public/courses/pennylane-pour-cabinet/audio/alignment.json",
+      "sourceAudio": "public/courses/pennylane-pour-cabinet/audio/narration-source.mp3",
+      "audio": "public/courses/pennylane-pour-cabinet/audio/narration.mp3",
+      "finalOutput": "output/cours-pennylane-pour-cabinet-final.mp4"
+    }
+  }
+}

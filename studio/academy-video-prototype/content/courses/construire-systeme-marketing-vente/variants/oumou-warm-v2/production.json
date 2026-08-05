@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "course": "construire-systeme-marketing-vente",
+  "variant": "oumou-warm-v2",
+  "status": "render-ready",
+  "createdAt": "2026-07-29T09:17:22Z",
+  "updatedAt": "2026-07-29T14:34:05.715Z",
+  "editorial": {
+    "baselineSnapshot": "content/editorial-snapshots/2026-07-29-pre-oumou-warm-v2/construire-systeme-marketing-vente/course.json",
+    "baselineSha256": "28ee9f69f3c873a798e72a47ced1ea2e853641da28fab1a797f5bcde313b52d1",
+    "creditsConsumed": 0
+  },
+  "futureVoiceProfile": {
+    "voiceId": "9HTNhnzaWIkUTIhaJhPM",
+    "speed": 1.15,
+    "stability": 0.55,
+    "similarityBoost": 0.78,
+    "style": 0,
+    "speakerBoost": true,
+    "postprocessRate": 1
+  },
+  "script": {
+    "approvedAt": "2026-07-29T10:47:02.366Z",
+    "sha256": "33ebc74cc408091952f11a736f23798bce579d324ec982f473950f6a6a4102ab"
+  },
+  "voice": {
+    "approvedAt": "2026-07-29T11:23:59.792Z",
+    "voiceId": "9HTNhnzaWIkUTIhaJhPM",
+    "modelId": "eleven_multilingual_v2",
+    "sourceAudioSha256": "bb9909607b374ae8c2d50622f84bc26d6a47f8bcbabf764a14323df0df8d19ca",
+    "alignmentSha256": "59d89bc94d5483bd1c2f483afb2082571215e7812b0a8f1950b3e09ac146ce3e",
+    "sourceTimingSha256": "093acbda307adbd9057d462822971522c2ea1327902f41802b1206445dfd8cf7"
+  },
+  "render": {
+    "approvedAt": "2026-07-29T14:34:05.715Z",
+    "pace": 1,
+    "audioSha256": "bb9909607b374ae8c2d50622f84bc26d6a47f8bcbabf764a14323df0df8d19ca",
+    "timingSha256": "4d7aa506c319d7ef0ecfdf3aedf5c4c0b6e648caed491bd30015e3420000950c"
+  }
+}

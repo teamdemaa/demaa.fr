@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <rect width="1080" height="1920" fill="#F4EDDF"/>
+  <text x="84" y="156" fill="#2B1914" font-family="Satoshi,Arial,sans-serif" font-size="34" font-weight="750">JUSTE</text>
+  <circle cx="196" cy="146" r="9" fill="#F2BC52"/>
+  <text x="84" y="738" fill="#2B1914" font-family="Satoshi,Arial,sans-serif" font-size="106" font-weight="700" letter-spacing="-3">L’idée ne suffit pas.</text>
+  <text x="84" y="930" fill="#2B1914" font-family="Satoshi,Arial,sans-serif" font-size="106" font-weight="700" letter-spacing="-3">Il lui faut</text>
+  <text x="84" y="1058" fill="#2B1914" font-family="Satoshi,Arial,sans-serif" font-size="106" font-weight="700" letter-spacing="-3">une direction.</text>
+</svg>

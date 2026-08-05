@@ -17,7 +17,7 @@ import {
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Suivi des kits - Demaa",
+  title: "Suivi des systèmes - Demaa",
   robots: {
     follow: false,
     index: false,
@@ -62,10 +62,10 @@ function LoginScreen({ error, configured }: { error: string | null; configured: 
             Accès privé
           </p>
           <h1 className="mt-3 text-3xl font-semibold tracking-[-0.035em] text-brand-blue">
-            Suivi des kits
+            Suivi des systèmes
           </h1>
           <p className="mt-3 text-sm leading-relaxed text-dema-muted">
-            Consultez les ouvertures des documents de pilotage, kit par kit.
+            Consultez les ouvertures des documents de pilotage, système par système.
           </p>
 
           {!configured ? (
@@ -146,7 +146,7 @@ export default async function KitAnalyticsPage({
                 Pilotage interne
               </p>
               <h1 className="mt-3 text-4xl font-semibold tracking-[-0.04em] text-brand-blue">
-                Suivi des kits
+                Suivi des systèmes
               </h1>
               <p className="mt-3 max-w-2xl text-sm leading-relaxed text-dema-muted">
                 Les ouvertures suivies correspondent aux accès à la page Google
@@ -197,7 +197,7 @@ export default async function KitAnalyticsPage({
               { label: "Ouvertures suivies", value: overview.totalOpens },
               { label: `${period} derniers jours`, value: overview.periodOpens },
               { label: "Aujourd’hui", value: todayOpens },
-              { label: "Kits actifs sur la période", value: activeKitCount },
+              { label: "Systèmes actifs sur la période", value: activeKitCount },
             ].map((metric) => (
               <article
                 key={metric.label}
@@ -223,7 +223,7 @@ export default async function KitAnalyticsPage({
                 {formatCount(overview.historicalDownloads)}
               </p>
               <p className="mt-1 text-sm text-dema-muted">
-                kits déjà distribués
+                systèmes déjà distribués
               </p>
             </article>
             <article className="rounded-[1.25rem] border border-dema-forest/15 bg-dema-sage/55 p-5 sm:p-6">
@@ -234,7 +234,7 @@ export default async function KitAnalyticsPage({
                 {formatCount(overview.historicalPeople)}
               </p>
               <p className="mt-1 text-sm text-dema-muted">
-                personnes ayant déjà reçu un kit
+                personnes ayant déjà reçu un système
               </p>
             </article>
           </section>
@@ -290,7 +290,7 @@ export default async function KitAnalyticsPage({
 
           <section className="mt-6 overflow-hidden rounded-[1.35rem] border border-dema-line bg-dema-paper">
             <div className="border-b border-dema-line px-5 py-5 sm:px-6">
-              <h2 className="text-lg font-semibold text-brand-blue">Détail par kit</h2>
+              <h2 className="text-lg font-semibold text-brand-blue">Détail par système</h2>
               <p className="mt-1 text-xs text-dema-muted">
                 Ouvertures suivies et distributions historiques restent séparées
               </p>
@@ -299,7 +299,7 @@ export default async function KitAnalyticsPage({
               <table className="w-full min-w-[900px] border-collapse text-left">
                 <thead>
                   <tr className="border-b border-dema-line text-[11px] uppercase tracking-[0.1em] text-dema-muted">
-                    <th className="px-5 py-4 font-semibold sm:px-6">Kit</th>
+                    <th className="px-5 py-4 font-semibold sm:px-6">Système</th>
                     <th className="px-4 py-4 text-right font-semibold">Période</th>
                     <th className="px-4 py-4 text-right font-semibold">7 jours</th>
                     <th className="px-4 py-4 text-right font-semibold">Suivi</th>
@@ -312,7 +312,7 @@ export default async function KitAnalyticsPage({
                     <tr key={row.kitSlug} className="border-b border-dema-line/70 last:border-b-0">
                       <td className="px-5 py-4 sm:px-6">
                         <Link
-                          href={`/kit-operationnel/${row.kitSlug}`}
+                          href={`/systemes-operationnels/${row.kitSlug}`}
                           target="_blank"
                           className="inline-flex items-center gap-2 font-semibold text-brand-blue hover:text-dema-forest"
                         >

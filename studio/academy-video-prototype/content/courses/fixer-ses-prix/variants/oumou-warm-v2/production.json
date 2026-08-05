@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "course": "fixer-ses-prix",
+  "variant": "oumou-warm-v2",
+  "status": "render-ready",
+  "createdAt": "2026-07-29T09:17:22Z",
+  "editorial": {
+    "baselineSnapshot": "content/editorial-snapshots/2026-07-29-pre-oumou-warm-v2/fixer-ses-prix/course.json",
+    "baselineSha256": "f34181f992b02b0ba669b1eba08ccc4d065be6a17012c49c7120b55076e4b5fa",
+    "creditsConsumed": 0
+  },
+  "futureVoiceProfile": {
+    "voiceId": "9HTNhnzaWIkUTIhaJhPM",
+    "speed": 1.15,
+    "stability": 0.55,
+    "similarityBoost": 0.78,
+    "style": 0,
+    "speakerBoost": true,
+    "postprocessRate": 1
+  },
+  "updatedAt": "2026-07-29T14:34:05.667Z",
+  "script": {
+    "approvedAt": "2026-07-29T10:52:50.705Z",
+    "sha256": "7ac50ba679f89d4042fb2405a9f9c549762c745ed277e3f0c58903d16d91a641"
+  },
+  "voice": {
+    "approvedAt": "2026-07-29T12:00:22.193Z",
+    "voiceId": "9HTNhnzaWIkUTIhaJhPM",
+    "modelId": "eleven_multilingual_v2",
+    "sourceAudioSha256": "74706b695bdbf851787e554f6e75a5c86d7e058c36766b0e022a2cf6608fa396",
+    "alignmentSha256": "cbb5853b9314a81d0250c8d05b5f337550d02b38f7cdf2eb6103378e93696543",
+    "sourceTimingSha256": "cdb45b69ac2e0f9a82e46acc03adcae90440debdfc1c0104ef2726098e0828fb"
+  },
+  "render": {
+    "approvedAt": "2026-07-29T14:34:05.667Z",
+    "pace": 1,
+    "audioSha256": "74706b695bdbf851787e554f6e75a5c86d7e058c36766b0e022a2cf6608fa396",
+    "timingSha256": "a30d103d71856a38b85c6908cc939f69d63486d57ee7b46b7150bd43fd32031d"
+  }
+}

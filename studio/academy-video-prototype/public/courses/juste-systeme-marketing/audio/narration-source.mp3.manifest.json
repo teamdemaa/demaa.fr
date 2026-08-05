@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "requestHash": "ec12539148f93defa41eac71fd44ba0d054dc74a48255e922b81fd7a9f4957b8",
+  "request": {
+    "text": "Ça, c’est JUSTE. Une marque de cookies-pâtisserie avec juste ce qu’il faut de sucre et de beurre pour rester gourmande sans devenir écœurante. On garde les classiques — chocolat, brownie — et on ajoute des parfums inspirés de la pâtisserie : tarte tatin, forêt-noire ou hibiscus. Ça vous donne envie, non ?\n\nJUSTE n’existe pas. Mais imaginons son histoire. La marque a été lancée il y a dix mois. Le produit est bon, l’univers donne envie… pourtant, elle n’a enregistré que cinq ventes. Sa fondatrice commence à désespérer. Elle reçoit mille et un conseils contradictoires : publier tous les jours, suivre les tendances, se filmer constamment… Et surtout, faire des choses qui ne lui ressemblent pas.\n\nAlors, comment construire un système marketing qui respecte sa personnalité et lui permette réellement de vendre ? Moi, c’est Demaa, avec deux a. J’ai de nouvelles idées tous les quatre matins. Comme je ne peux pas toutes les lancer, je construis les systèmes qui pourraient les faire fonctionner. Pour JUSTE, je construirais un système marketing en trois étapes : attirer, transformer et fidéliser.\n\nPremière étape : attirer. Le contenu doit créer de la confiance, mais surtout donner envie. Le contenu signature de JUSTE, ce serait une roue avec tous les parfums. On la fait tourner, puis on réalise de A à Z la recette sur laquelle elle s’arrête. À la fin de chaque vidéo, on demande aux abonnés de nommer une personne à qui ils aimeraient offrir la box. Une personne est sélectionnée chaque semaine : quatre box offertes par mois, pour un budget d’environ cent euros.\n\nAu départ, je préfère investir ces cent euros dans de vraies dégustations et de vraies recommandations plutôt que de les disperser dans des publicités froides. Autour de ce concept, on ajoute du contenu utile : réussir un cookie à l’hibiscus, obtenir une crème mascarpone parfaite ou montrer les coulisses et le ravitaillement. Et lorsqu’un contenu signature fonctionne naturellement, c’est celui-là qu’on pousse avec un petit budget publicitaire.\n\nDeuxième étape : transformer. Toute cette attention doit conduire vers une offre très simple : une box de cinq cookies avec un sixième parfum mystère offert pour la première commande. Pas six offres. Pas quatre pages. Une offre claire et un parcours d’achat court.\n\nTroisième étape : fidéliser. Après la commande, JUSTE garde le contact grâce à une newsletter envoyée une à deux fois par mois : nouveau parfum, meilleure recette, coulisses et offre réservée aux anciens clients. Le système est simple : un contenu reconnaissable pour attirer, une offre évidente pour transformer et une relation régulière pour fidéliser.\n\nEt surtout, ce système ne demande pas à la fondatrice de devenir quelqu’un d’autre. Il transforme ce qu’elle sait déjà faire — de très bons cookies — en un marketing qu’elle peut réellement tenir dans la durée.",
+    "voiceId": "0lp4RIz96WD1RUtvEu3Q",
+    "modelId": "eleven_multilingual_v2",
+    "outputFormat": "mp3_44100_128",
+    "voiceSettings": {
+      "stability": 0.62,
+      "similarityBoost": 0.78,
+      "style": 0.08,
+      "useSpeakerBoost": true,
+      "speed": 0.96
+    }
+  },
+  "generatedAt": "2026-07-28T15:10:18.535Z"
+}

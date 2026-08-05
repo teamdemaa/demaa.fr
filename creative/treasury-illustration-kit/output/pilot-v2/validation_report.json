@@ -1,0 +1,133 @@
+{
+  "project": "Kit d’illustrations — Trésorerie d’entreprise",
+  "version": "pilot-2",
+  "status": "ready_for_validation",
+  "automated_checks": [
+    {
+      "filename": "01_ouverture_bureau.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "has_alpha": true,
+      "transparent_corners": true,
+      "palette_rgb": [
+        "#FFFFFF",
+        "#D7E3DA"
+      ],
+      "mint_visible_pixel_ratio": 0.0155,
+      "alpha_pixels": {
+        "transparent": 1548291,
+        "partial": 455,
+        "opaque": 24118
+      },
+      "content_margins_px": {
+        "left": 108,
+        "top": 130,
+        "right": 86,
+        "bottom": 130
+      },
+      "horizontal_ratio": 1.5,
+      "manual_review": {
+        "readable_text": false,
+        "dark_strokes": false,
+        "background_baked_in": false,
+        "reference_style_respected": true
+      },
+      "svg_export": {
+        "filename": "01_ouverture_bureau.svg",
+        "native_vector": false,
+        "type": "compatibility_wrapper"
+      }
+    },
+    {
+      "filename": "07_facture_delai_banque.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "has_alpha": true,
+      "transparent_corners": true,
+      "palette_rgb": [
+        "#FFFFFF",
+        "#D7E3DA"
+      ],
+      "mint_visible_pixel_ratio": 0.1873,
+      "alpha_pixels": {
+        "transparent": 1541637,
+        "partial": 329,
+        "opaque": 30898
+      },
+      "content_margins_px": {
+        "left": 97,
+        "top": 268,
+        "right": 78,
+        "bottom": 305
+      },
+      "horizontal_ratio": 1.5,
+      "manual_review": {
+        "readable_text": false,
+        "dark_strokes": false,
+        "background_baked_in": false,
+        "reference_style_respected": true
+      },
+      "svg_export": {
+        "filename": "07_facture_delai_banque.svg",
+        "native_vector": false,
+        "type": "compatibility_wrapper"
+      }
+    },
+    {
+      "filename": "15_plan_action.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "has_alpha": true,
+      "transparent_corners": true,
+      "palette_rgb": [
+        "#FFFFFF",
+        "#D7E3DA"
+      ],
+      "mint_visible_pixel_ratio": 0.3983,
+      "alpha_pixels": {
+        "transparent": 1513331,
+        "partial": 0,
+        "opaque": 59533
+      },
+      "content_margins_px": {
+        "left": 231,
+        "top": 202,
+        "right": 177,
+        "bottom": 182
+      },
+      "horizontal_ratio": 1.5,
+      "manual_review": {
+        "readable_text": false,
+        "dark_strokes": false,
+        "background_baked_in": false,
+        "reference_style_respected": true
+      },
+      "svg_export": {
+        "filename": "15_plan_action.svg",
+        "native_vector": false,
+        "type": "compatibility_wrapper"
+      }
+    }
+  ],
+  "boards": [
+    "pilot_v2_green_background_test.png",
+    "pilot_v2_contrast_sheet.png"
+  ],
+  "quality_gate": {
+    "alpha_channel": true,
+    "transparent_corners": true,
+    "white_strokes_only": true,
+    "mint_accent_only": true,
+    "readable_text_absent_after_visual_review": true,
+    "dark_green_background_test_created": true
+  }
+}

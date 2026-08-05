@@ -1,0 +1,378 @@
+{
+  "id": "transformer-demande-client",
+  "title": "Transformer une demande en client",
+  "shortTitle": "Répondre vite ne veut pas dire envoyer un devis à tout le monde.",
+  "courseTitle": "TRANSFORMER UNE\nDEMANDE EN CLIENT",
+  "introVisual": {
+    "primaryLabel": "DEMANDE",
+    "secondaryLabel": "CLIENT"
+  },
+  "audience": "Dirigeants de TPE en France",
+  "operationalQuestion": "Comment qualifier une demande entrante, conduire l’échange et décider de la suite sans perdre du temps ni forcer la vente ?",
+  "status": "draft",
+  "format": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "targetDurationSeconds": 230
+  },
+  "editorialContract": {
+    "tone": "Professeur expérimenté, calme, direct, humain. Aucun jargon non expliqué.",
+    "rule": "Une idée par écran. Chaque chiffre doit permettre de refaire le calcul.",
+    "screenTextRule": "Le texte à l’écran résume ou chiffre. Il ne retranscrit pas la narration."
+  },
+  "scenes": [
+    {
+      "id": "demande-pas-client",
+      "title": "Une demande n’est pas encore une vente",
+      "targetSeconds": 26,
+      "narration": "Une demande entrante n’est pas encore un client. C’est une possibilité à vérifier. Si vous répondez par un devis avant de comprendre le besoin, vous travaillez gratuitement sur une hypothèse. Si vous transformez chaque échange en interrogatoire commercial, vous faites fuir les bons prospects. L’objectif est plus simple : décider rapidement si une conversation utile mérite d’avoir lieu.",
+      "onScreen": [
+        "Une demande ≠ un client",
+        "Décider de la prochaine étape"
+      ],
+      "visual": {
+        "type": "low-point",
+        "layout": "center"
+      },
+      "beats": [
+        {
+          "id": "distinction",
+          "startSeconds": 0,
+          "template": "statement",
+          "eyebrow": "Le point de départ",
+          "lines": [
+            "UNE DEMANDE",
+            "≠",
+            "UN CLIENT"
+          ],
+          "accentIndex": 2
+        },
+        {
+          "id": "objectif",
+          "startSeconds": 15,
+          "cue": "L’objectif est plus simple",
+          "template": "term",
+          "eyebrow": "Votre première décision",
+          "term": "PROCHAINE ÉTAPE",
+          "definition": "CONTINUER, REDIRIGER OU REFUSER"
+        }
+      ]
+    },
+    {
+      "id": "reponse-rapide",
+      "title": "Répondre vite sans fabriquer le devis",
+      "targetSeconds": 28,
+      "narration": "Une réponse rapide rassure, mais elle n’oblige pas à tout résoudre immédiatement. Pendant vos heures ouvrées, accusez réception le jour même lorsque c’est possible. Dites ce que vous avez compris, posez les premières questions manquantes et annoncez la prochaine étape. Un bon premier message peut tenir en cinq lignes. Sa mission n’est pas de vendre : elle est d’éviter le silence et le flou.",
+      "onScreen": [
+        "Réception confirmée",
+        "Premières questions",
+        "Prochaine étape"
+      ],
+      "visual": {
+        "type": "timeline",
+        "layout": "full"
+      },
+      "beats": [
+        {
+          "id": "delai",
+          "startSeconds": 0,
+          "template": "statement",
+          "eyebrow": "Quand répondre ?",
+          "lines": [
+            "LE JOUR MÊME",
+            "SI C’EST POSSIBLE"
+          ],
+          "accentIndex": 0
+        },
+        {
+          "id": "contenu",
+          "startSeconds": 14,
+          "cue": "Dites ce que",
+          "template": "chips",
+          "eyebrow": "Un premier message utile",
+          "title": "Clair, court, orienté vers la suite.",
+          "items": [
+            "COMPRIS",
+            "QUESTIONS",
+            "ÉTAPE SUIVANTE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "qualification",
+      "title": "Qualifier avec cinq informations",
+      "targetSeconds": 34,
+      "narration": "Avant de proposer un rendez-vous, cherchez cinq informations. Quel résultat la personne veut-elle obtenir ? Pourquoi maintenant ? Quel périmètre est réellement demandé ? Qui décidera ? Et quelles contraintes existent sur le délai et le budget ? Il ne s’agit pas d’exiger un cahier des charges parfait. Il s’agit de vérifier que le besoin correspond à ce que vous savez bien faire et que les conditions permettent d’avancer sérieusement.",
+      "onScreen": [
+        "Résultat",
+        "Urgence",
+        "Périmètre",
+        "Décision · délai · budget"
+      ],
+      "visual": {
+        "type": "timeline",
+        "layout": "full"
+      },
+      "beats": [
+        {
+          "id": "criteres",
+          "startSeconds": 0,
+          "template": "chips",
+          "eyebrow": "La qualification",
+          "title": "Les cinq informations à obtenir.",
+          "items": [
+            "RÉSULTAT",
+            "POURQUOI MAINTENANT",
+            "PÉRIMÈTRE",
+            "DÉCISION",
+            "DÉLAI + BUDGET"
+          ]
+        },
+        {
+          "id": "but",
+          "startSeconds": 21,
+          "cue": "Il ne s’agit pas",
+          "template": "statement",
+          "eyebrow": "Le vrai but",
+          "lines": [
+            "BON BESOIN",
+            "+",
+            "BONNES CONDITIONS"
+          ],
+          "accentIndex": 2
+        }
+      ]
+    },
+    {
+      "id": "decouverte",
+      "title": "Comprendre avant de proposer",
+      "targetSeconds": 34,
+      "narration": "Pendant l’échange, ne commencez pas par présenter votre entreprise pendant dix minutes. Faites préciser la situation actuelle, le problème concret et ce qui changerait si le projet réussissait. Demandez aussi ce qui a déjà été essayé et ce qui bloque la décision. Puis reformulez : « si je comprends bien, votre priorité est celle-ci, avant telle date, avec telle contrainte ». Cette phrase évite beaucoup de propositions à côté du sujet.",
+      "onScreen": [
+        "Situation actuelle",
+        "Résultat attendu",
+        "Obstacles",
+        "Reformulation"
+      ],
+      "visual": {
+        "type": "illustration",
+        "layout": "actions"
+      },
+      "beats": [
+        {
+          "id": "ecouter",
+          "startSeconds": 0,
+          "template": "action",
+          "number": "01",
+          "title": "FAIRE PRÉCISER",
+          "detail": "Situation, problème, résultat attendu.",
+          "tags": [
+            "ÉCOUTER",
+            "COMPRENDRE"
+          ]
+        },
+        {
+          "id": "reformuler",
+          "startSeconds": 20,
+          "cue": "Puis reformulez",
+          "template": "action",
+          "number": "02",
+          "title": "REFORMULER",
+          "detail": "Priorité, date et contrainte.",
+          "tags": [
+            "VALIDER",
+            "CLARIFIER"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "proposition",
+      "title": "Faire une proposition facile à décider",
+      "targetSeconds": 32,
+      "narration": "Une proposition utile relie votre solution au besoin exprimé. Elle précise le résultat visé, le périmètre, les étapes, le calendrier, le prix et ce qui n’est pas inclus. Évitez le catalogue de prestations et les options ajoutées sans raison. Terminez par une décision concrète : accord, question à résoudre ou arrêt. Sans prochaine étape datée, le devis rejoint simplement la pile des choses que le prospect regardera peut-être un jour.",
+      "onScreen": [
+        "Résultat",
+        "Périmètre",
+        "Calendrier",
+        "Prix · prochaine étape"
+      ],
+      "visual": {
+        "type": "timeline",
+        "layout": "full"
+      },
+      "beats": [
+        {
+          "id": "structure",
+          "startSeconds": 0,
+          "template": "chips",
+          "eyebrow": "Une proposition décidable",
+          "title": "Tout ce qui permet de dire oui ou non.",
+          "items": [
+            "RÉSULTAT",
+            "PÉRIMÈTRE",
+            "CALENDRIER",
+            "PRIX"
+          ]
+        },
+        {
+          "id": "suite",
+          "startSeconds": 20,
+          "cue": "Terminez par",
+          "template": "term",
+          "eyebrow": "Ne laissez pas le devis seul",
+          "term": "UNE DATE",
+          "definition": "POUR DÉCIDER DE LA SUITE"
+        }
+      ]
+    },
+    {
+      "id": "relance",
+      "title": "Relancer sans poursuivre le prospect",
+      "targetSeconds": 29,
+      "narration": "La relance n’est pas une répétition de « avez-vous vu mon devis ? ». À la date convenue, rappelez le besoin, demandez ce qui empêche la décision et proposez une réponse simple. Si la personne ne répond pas, faites une seconde relance courte avec une date de clôture. Ensuite, fermez proprement le dossier. Une vente saine accepte aussi l’absence de vente.",
+      "onScreen": [
+        "Relance à la date convenue",
+        "Lever le blocage",
+        "Clôturer proprement"
+      ],
+      "visual": {
+        "type": "timeline",
+        "layout": "full"
+      },
+      "beats": [
+        {
+          "id": "relance-utile",
+          "startSeconds": 0,
+          "template": "action",
+          "number": "01",
+          "title": "RELANCER UTILEMENT",
+          "detail": "Rappeler le besoin et identifier le blocage.",
+          "tags": [
+            "DATE CONVENUE",
+            "QUESTION CLAIRE"
+          ]
+        },
+        {
+          "id": "cloture",
+          "startSeconds": 18,
+          "cue": "Si la personne",
+          "template": "action",
+          "number": "02",
+          "title": "CLÔTURER",
+          "detail": "Une dernière date, puis arrêt du suivi.",
+          "tags": [
+            "RESPECT",
+            "TEMPS PROTÉGÉ"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "exemple-trie",
+      "title": "Exemple : mesurer le chemin, pas rêver au taux",
+      "targetSeconds": 37,
+      "narration": "Prenons un petit studio de création qui reçoit douze demandes dans le mois. Cinq ne correspondent pas à son métier, au budget minimum ou au calendrier disponible : elles sont refusées ou redirigées rapidement. Sept donnent lieu à un échange de découverte. Quatre besoins sont assez clairs pour une proposition, et deux clients signent à deux mille cinq cents euros. Ce résultat n’est pas une promesse. Il sert à voir où le temps est dépensé et où les demandes se perdent.",
+      "onScreen": [
+        "12 demandes",
+        "7 échanges",
+        "4 propositions",
+        "2 clients × 2 500 €"
+      ],
+      "visual": {
+        "type": "cash-example",
+        "layout": "full"
+      },
+      "beats": [
+        {
+          "id": "parcours",
+          "startSeconds": 0,
+          "template": "metrics",
+          "eyebrow": "Un mois observé",
+          "cards": [
+            {
+              "label": "Demandes",
+              "value": "12"
+            },
+            {
+              "label": "Échanges utiles",
+              "value": "7"
+            },
+            {
+              "label": "Propositions",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "id": "resultat",
+          "startSeconds": 22,
+          "cue": "Quatre besoins",
+          "template": "metrics",
+          "eyebrow": "Résultat observé, pas promesse",
+          "cards": [
+            {
+              "label": "Propositions",
+              "value": "4"
+            },
+            {
+              "label": "Clients",
+              "value": "2"
+            },
+            {
+              "label": "Montant unitaire",
+              "value": "2 500 €",
+              "accent": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "regles-refus",
+      "title": "Savoir dire non et garder la méthode",
+      "targetSeconds": 34,
+      "narration": "Refusez lorsque la demande sort clairement de votre compétence, lorsque le délai est impossible, lorsque le budget ne couvre pas une solution sérieuse ou lorsque l’interlocuteur refuse de clarifier le besoin et la décision. Un mauvais projet signé reste un mauvais projet. Retenez la méthode : répondre, qualifier, découvrir, proposer, relancer, puis clôturer. Vous ne forcez pas une vente ; vous rendez une bonne décision plus facile des deux côtés.",
+      "onScreen": [
+        "Hors compétence",
+        "Délai impossible",
+        "Budget incohérent",
+        "Décision impossible à clarifier"
+      ],
+      "visual": {
+        "type": "closing",
+        "layout": "center"
+      },
+      "beats": [
+        {
+          "id": "refuser",
+          "startSeconds": 0,
+          "template": "chips",
+          "eyebrow": "Quand dire non",
+          "title": "Protéger le client et votre entreprise.",
+          "items": [
+            "HORS COMPÉTENCE",
+            "DÉLAI IMPOSSIBLE",
+            "BUDGET INCOHÉRENT",
+            "BESOIN FLOU"
+          ]
+        },
+        {
+          "id": "methode",
+          "startSeconds": 20,
+          "cue": "Retenez la méthode",
+          "template": "statement",
+          "eyebrow": "La séquence",
+          "lines": [
+            "QUALIFIER",
+            "PROPOSER",
+            "DÉCIDER"
+          ],
+          "accentIndex": 2
+        }
+      ]
+    }
+  ]
+}

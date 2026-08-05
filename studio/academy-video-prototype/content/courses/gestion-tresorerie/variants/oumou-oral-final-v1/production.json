@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "course": "gestion-tresorerie",
+  "variant": "oumou-oral-final-v1",
+  "status": "script-approved",
+  "createdAt": "2026-07-30T00:00:00.000Z",
+  "updatedAt": "2026-07-30T06:31:02.395Z",
+  "script": {
+    "approvedAt": "2026-07-30T06:31:02.395Z",
+    "sha256": "bc8867487683a7dd710378780a7e3527051464380bf98eb1f05f0694551fe4a9"
+  }
+}

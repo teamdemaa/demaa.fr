@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "course": "transformer-demande-client",
+  "status": "final",
+  "createdAt": "2026-07-28T23:04:07.016Z",
+  "updatedAt": "2026-07-28T23:14:00.695Z",
+  "script": {
+    "approvedAt": "2026-07-28T23:04:07.019Z",
+    "sha256": "44860d2be14e53172ba29d40d2f18b66f9b6fc2b2f83745f0839c6541e8b682c"
+  },
+  "voice": {
+    "approvedAt": "2026-07-28T23:05:42.898Z",
+    "voiceId": "9HTNhnzaWIkUTIhaJhPM",
+    "modelId": "eleven_multilingual_v2",
+    "sourceAudioSha256": "e93183a3b2aaf3593e82932d7a7ed81dee90aa13979133f8e75bca9b310987ea",
+    "alignmentSha256": "701fa4e9ddfa4dc8d064a4e5419ea75484802387e008c8d92de87e179b53e708",
+    "sourceTimingSha256": "121d9d9dd2037de04cd2b7e7319833c122aa550d895736a398a1cf26e4710378"
+  },
+  "render": {
+    "approvedAt": "2026-07-28T23:06:02.505Z",
+    "pace": 1,
+    "audioSha256": "e93183a3b2aaf3593e82932d7a7ed81dee90aa13979133f8e75bca9b310987ea",
+    "timingSha256": "c315b763ce459155f112161ff67c7f673dce460963446bac7d58251237c9cea9"
+  },
+  "final": {
+    "approvedAt": "2026-07-28T23:14:00.695Z",
+    "output": "../../../../../output/staging/oumou-v1/cours-transformer-demande-client-final.mp4",
+    "sha256": "0874661c4a56036d5f4768f492c66ed75abb538f17f7e96bcd889730cef8dad0",
+    "qa": {
+      "durationSeconds": 149.967,
+      "loudnessLufs": -16.92,
+      "videoCodec": "h264",
+      "audioCodec": "aac",
+      "width": 1920,
+      "height": 1080,
+      "fps": "30/1",
+      "fullDecode": true
+    }
+  }
+}

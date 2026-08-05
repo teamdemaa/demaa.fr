@@ -24,7 +24,7 @@ export default function RelatedSystemsLinks({
         {systems.map((system) => (
           <Link
             key={system.slug}
-            href={`/kit-operationnel/${system.slug}`}
+            href={`/systemes-operationnels/${system.slug}`}
             className="inline-flex rounded-full border border-dema-line bg-dema-paper px-3 py-1.5 text-xs font-medium text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
           >
             {system.name}

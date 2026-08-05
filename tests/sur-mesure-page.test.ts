@@ -15,15 +15,15 @@ vi.mock("@/components/OrganisationSessionBookingButton", () => ({
   ),
 }));
 
-import SurMesurePage, { metadata } from "@/app/page";
+import SurMesurePage, { metadata } from "@/app/sur-mesure/page";
 import { surMesurePageContent as content } from "@/lib/sur-mesure-page-content";
 
 describe("Sur mesure commercial page", () => {
   it("publishes canonical metadata for the application offer", () => {
     expect(metadata).toMatchObject({
       title: "Application métier sur mesure | Demaa",
-      alternates: { canonical: "/" },
-      openGraph: { url: "/", type: "website" },
+      alternates: { canonical: "/sur-mesure" },
+      openGraph: { url: "/sur-mesure", type: "website" },
     });
   });
 
@@ -100,13 +100,11 @@ describe("Sur mesure commercial page", () => {
     expect(buttonSource).toContain('searchParams.get("source") || source');
     expect(buttonSource).toContain("getFilloutAttributionParameters");
     expect(buttonSource).toContain('searchParams.get("systemSlug")');
-    expect(sitemapSource).not.toContain("`${base}/sur-mesure`");
+    expect(sitemapSource).toContain("`${base}/sur-mesure`");
     expect(sitemapSource).toContain("`${base}/systemes`");
     expect(nextConfigSource).toMatch(
       /source: '\/accompagnement',[\s\S]*?destination: '\/',/,
     );
-    expect(nextConfigSource).toMatch(
-      /source: '\/sur-mesure',[\s\S]*?destination: '\/',/,
-    );
+    expect(nextConfigSource).not.toMatch(/source: '\/sur-mesure',/);
   });
 });

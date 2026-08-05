@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <rect width="1080" height="1920" fill="#2B1914"/>
+  <path d="M80 104H232M80 104V256M1000 1816H848M1000 1816V1664" stroke="#F4EDDF" stroke-width="2" opacity=".28"/>
+  <circle cx="925" cy="157" r="18" fill="#F2BC52"/>
+  <text x="80" y="685" fill="#F4EDDF" font-family="Satoshi,Arial,sans-serif" font-size="74" font-weight="550">
+    <tspan x="80">La clé, ce n’est pas</tspan>
+    <tspan x="80" dy="100">d’avoir une idée parfaite.</tspan>
+  </text>
+  <text x="80" y="1040" fill="#F2BC52" font-family="Satoshi,Arial,sans-serif" font-size="114" font-weight="700">
+    <tspan x="80">C’est de lui donner</tspan>
+    <tspan x="80" dy="128">une direction.</tspan>
+  </text>
+</svg>

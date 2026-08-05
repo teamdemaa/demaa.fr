@@ -1,0 +1,84 @@
+{
+  "format": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30
+  },
+  "brand": {
+    "name": "JUSTE.",
+    "tagline": "Le sucre à sa place.",
+    "caseLabel": "DEMAA — CAS 01"
+  },
+  "scenes": [
+    {
+      "id": "hook",
+      "eyebrow": "LE PLAN, PAS LE BLABLA",
+      "title": "Une marque de cookies,\nde zéro au lancement.",
+      "caption": "Si je lançais une marque de cookies…",
+      "narration": "Si je lançais une marque de cookies, voici mon plan.",
+      "assets": [
+        "cookie-v1/01-hook-cookie.png"
+      ]
+    },
+    {
+      "id": "demaa",
+      "eyebrow": "DEMAA — AVEC DEUX A",
+      "title": "Entreprendre,\nconcrètement.",
+      "caption": "Moi, c’est Demaa. Je structure, tu exécutes.",
+      "narration": "Moi, c’est Demaa, avec deux a. Je t’aide à entreprendre, concrètement.",
+      "assets": [
+        "cookie-v1/02-problem-too-sweet.png"
+      ]
+    },
+    {
+      "id": "positioning",
+      "step": "01",
+      "eyebrow": "POSITIONNEMENT",
+      "title": "Gourmand.\nPas écœurant.",
+      "caption": "Pas healthy. Juste le sucre à sa place.",
+      "narration": "Un : positionnement. Des cookies gourmands, pas écœurants, pour ceux qui trouvent les autres trop sucrés. Pas healthy. Le sucre à sa place.",
+      "assets": [
+        "cookie-v1/03-positioning-clean-v2.png",
+        "cookie-v1/04-recipe-less-sugar.png"
+      ]
+    },
+    {
+      "id": "promotion",
+      "step": "02",
+      "eyebrow": "PROMOTION",
+      "title": "Prouver avant\nde produire.",
+      "caption": "Tester. Montrer. Faire goûter.",
+      "narration": "Deux : promotion. Trois recettes testées à l’aveugle. Je filme les essais, même les ratés. Je teste les ventes en coffee shop, puis je lance une box découverte. Les clients choisissent la suite.",
+      "assets": [
+        "cookie-v1/05-blind-tasting.png",
+        "cookie-v1/06-build-in-public-content.png",
+        "cookie-v1/07-coffee-shop-partnership.png",
+        "cookie-v1/08-packaging-clean-v2.png",
+        "cookie-v1/09-customer-vote.png"
+      ]
+    },
+    {
+      "id": "product",
+      "step": "03",
+      "eyebrow": "PRODUIT",
+      "title": "Un parcours\nqui se répète.",
+      "caption": "Découvrir → goûter → choisir → recommander",
+      "narration": "Trois : produit. Tu découvres, tu goûtes, tu choisis, tu recommandes. Boîtes de six ou douze, format bureau, collaborations limitées.",
+      "assets": [
+        "cookie-v1/10-customer-delivery.png",
+        "cookie-v1/08-packaging-clean-v2.png",
+        "cookie-v1/11-office-format.png"
+      ]
+    },
+    {
+      "id": "close",
+      "eyebrow": "LE PLAN EST PRÊT",
+      "title": "Quoi.\nPour qui.\nComment.",
+      "caption": "On ne lance pas au hasard. On construit la direction.",
+      "narration": "Je ne crée pas la marque. Je construis sa direction : quoi, pour qui, comment.",
+      "assets": [
+        "cookie-v1/12-final-clean-v2.png"
+      ]
+    }
+  ]
+}

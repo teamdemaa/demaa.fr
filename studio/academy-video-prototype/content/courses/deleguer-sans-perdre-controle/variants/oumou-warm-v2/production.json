@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "course": "deleguer-sans-perdre-controle",
+  "variant": "oumou-warm-v2",
+  "status": "render-ready",
+  "createdAt": "2026-07-29T09:17:22Z",
+  "editorial": {
+    "baselineSnapshot": "content/editorial-snapshots/2026-07-29-pre-oumou-warm-v2/deleguer-sans-perdre-controle/course.json",
+    "baselineSha256": "25d78018e99e154224e2166d96739862eb3ea5a72be8e85bfea3994b4cefb5fd",
+    "creditsConsumed": 0
+  },
+  "futureVoiceProfile": {
+    "voiceId": "9HTNhnzaWIkUTIhaJhPM",
+    "speed": 1.15,
+    "stability": 0.55,
+    "similarityBoost": 0.78,
+    "style": 0,
+    "speakerBoost": true,
+    "postprocessRate": 1
+  },
+  "updatedAt": "2026-07-29T14:34:05.762Z",
+  "script": {
+    "approvedAt": "2026-07-29T10:52:50.938Z",
+    "sha256": "4c5bed3bf2a24e7b8e70d713e8ec825760dd28a69e7278345de29b90f4a3bfd0"
+  },
+  "voice": {
+    "approvedAt": "2026-07-29T12:00:22.386Z",
+    "voiceId": "9HTNhnzaWIkUTIhaJhPM",
+    "modelId": "eleven_multilingual_v2",
+    "sourceAudioSha256": "3fe7edfd9c0056ec967dbcc21c937aa365c6493d62d04867e36a4620aca4c01e",
+    "alignmentSha256": "1a035c575f1afac3d93f57df517a6ceaf4258b08bbd8f28d2295c021a694d9c0",
+    "sourceTimingSha256": "900dea76ee18ffc9de237b75ddc4cde78bba064852476c440bb01e53845ce71d"
+  },
+  "render": {
+    "approvedAt": "2026-07-29T14:34:05.762Z",
+    "pace": 1,
+    "audioSha256": "3fe7edfd9c0056ec967dbcc21c937aa365c6493d62d04867e36a4620aca4c01e",
+    "timingSha256": "a1cbd5d85c4b4b11ea05602f2ace5f51de9b2b40ed7cf0fcbb16e40135398e92"
+  }
+}

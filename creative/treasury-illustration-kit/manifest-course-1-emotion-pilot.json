@@ -1,0 +1,53 @@
+{
+  "project": "Cours 1 — Gérer sa trésorerie au quotidien",
+  "version": "emotion-pilot-1",
+  "status": "ready_for_validation",
+  "delivery": {
+    "png_directory": "output/course-1-emotion-pilot/png",
+    "svg_directory": "output/course-1-emotion-pilot/svg",
+    "boards_directory": "output/course-1-emotion-pilot/boards",
+    "validation_report": "output/course-1-emotion-pilot/validation_report.json",
+    "zip": "output/course-1-emotion-pilot/zip/course_1_emotion_pilot.zip",
+    "storyboard": "COURSE_1_EMOTIONAL_STORYBOARD.md"
+  },
+  "emotional_arc": [
+    "inquiétude",
+    "déclic",
+    "soulagement et maîtrise"
+  ],
+  "palette": {
+    "line": "#FFFFFF",
+    "accent": "#D7E3DA",
+    "test_background": "#305F46",
+    "background": "transparent"
+  },
+  "illustrations": [
+    {
+      "id": "01",
+      "filename_png": "01_commandes_pleines_cash_vide.png",
+      "filename_svg": "01_commandes_pleines_cash_vide.svg",
+      "title": "Commandes pleines, cash presque vide",
+      "concept": "La réussite commerciale et le manque de liquidité coexistent.",
+      "emotion": "inquiétude contenue",
+      "status": "ready_for_validation"
+    },
+    {
+      "id": "02",
+      "filename_png": "02_benefice_cash_retard.png",
+      "filename_svg": "02_benefice_cash_retard.svg",
+      "title": "Le bénéfice n’est pas la trésorerie",
+      "concept": "Le résultat paraît positif, mais l’argent reste bloqué par le temps.",
+      "emotion": "surprise puis compréhension",
+      "status": "ready_for_validation"
+    },
+    {
+      "id": "03",
+      "filename_png": "03_rituel_lundi_controle.png",
+      "filename_svg": "03_rituel_lundi_controle.svg",
+      "title": "Le rituel du lundi",
+      "concept": "Le plan glissant et la mise à jour régulière rendent la maîtrise visible.",
+      "emotion": "calme, soulagement et confiance",
+      "status": "ready_for_validation"
+    }
+  ]
+}

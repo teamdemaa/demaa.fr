@@ -1,0 +1,121 @@
+{
+  "source": "elevenlabs-character-alignment",
+  "modelId": "eleven_multilingual_v2",
+  "fps": 30,
+  "audioDurationSeconds": 164.211,
+  "totalDurationSeconds": 165.411,
+  "scenes": {
+    "deleguer-resultat": {
+      "startSeconds": 0,
+      "endSeconds": 18.012999999999998,
+      "durationSeconds": 18.012999999999998,
+      "speechStartSeconds": 0,
+      "speechEndSeconds": 17.891,
+      "beats": {
+        "definition": {
+          "startSeconds": 3.187,
+          "cueStartSeconds": 3.437,
+          "leadSeconds": 0.25
+        }
+      }
+    },
+    "quoi-deleguer": {
+      "startSeconds": 18.012999999999998,
+      "endSeconds": 37.0005,
+      "durationSeconds": 18.987500000000004,
+      "speechStartSeconds": 18.135,
+      "speechEndSeconds": 36.896,
+      "beats": {
+        "risque": {
+          "startSeconds": 8.614,
+          "cueStartSeconds": 26.877,
+          "leadSeconds": 0.25
+        }
+      }
+    },
+    "resultat-attendu": {
+      "startSeconds": 37.0005,
+      "endSeconds": 55.014,
+      "durationSeconds": 18.0135,
+      "speechStartSeconds": 37.105,
+      "speechEndSeconds": 54.822,
+      "beats": {
+        "observable": {
+          "startSeconds": 7.819499999999998,
+          "cueStartSeconds": 45.07,
+          "leadSeconds": 0.25
+        }
+      }
+    },
+    "transmettre-contexte": {
+      "startSeconds": 55.014,
+      "endSeconds": 74.3735,
+      "durationSeconds": 19.359500000000004,
+      "speechStartSeconds": 55.206,
+      "speechEndSeconds": 74.234,
+      "beats": {
+        "agir": {
+          "startSeconds": 9.044000000000004,
+          "cueStartSeconds": 64.308,
+          "leadSeconds": 0.25
+        }
+      }
+    },
+    "autonomie-alertes": {
+      "startSeconds": 74.3735,
+      "endSeconds": 94.8765,
+      "durationSeconds": 20.502999999999986,
+      "speechStartSeconds": 74.513,
+      "speechEndSeconds": 94.737,
+      "beats": {
+        "seuils": {
+          "startSeconds": 8.631499999999988,
+          "cueStartSeconds": 83.255,
+          "leadSeconds": 0.25
+        }
+      }
+    },
+    "suivi-leger": {
+      "startSeconds": 94.8765,
+      "endSeconds": 113.58099999999999,
+      "durationSeconds": 18.704499999999996,
+      "speechStartSeconds": 95.016,
+      "speechEndSeconds": 113.442,
+      "beats": {
+        "limite": {
+          "startSeconds": 12.045500000000004,
+          "cueStartSeconds": 107.172,
+          "leadSeconds": 0.25
+        }
+      }
+    },
+    "exemple-planning": {
+      "startSeconds": 113.58099999999999,
+      "endSeconds": 141.54899999999998,
+      "durationSeconds": 27.96799999999999,
+      "speechStartSeconds": 113.72,
+      "speechEndSeconds": 141.41,
+      "beats": {
+        "bilan-chiffre": {
+          "startSeconds": 19.34700000000001,
+          "cueStartSeconds": 133.178,
+          "leadSeconds": 0.25
+        }
+      }
+    },
+    "corriger-sans-reprendre": {
+      "startSeconds": 141.54899999999998,
+      "endSeconds": 165.411,
+      "durationSeconds": 23.862000000000023,
+      "speechStartSeconds": 141.688,
+      "speechEndSeconds": 164.211,
+      "beats": {
+        "methode": {
+          "startSeconds": 17.687000000000012,
+          "cueStartSeconds": 159.486,
+          "leadSeconds": 0.25
+        }
+      }
+    }
+  }
+}

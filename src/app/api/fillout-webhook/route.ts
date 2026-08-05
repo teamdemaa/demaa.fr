@@ -44,7 +44,7 @@ async function handlePost(request: Request) {
     sourceUrl: submission.sourceUrl,
   });
   if (!context) {
-    return NextResponse.json({ error: "Le kit d’origine est introuvable." }, { status: 400 });
+    return NextResponse.json({ error: "Le système d’origine est introuvable." }, { status: 400 });
   }
 
   const lead = await submitLeadRequest({

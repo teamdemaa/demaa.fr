@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "course": "chiffre-affaires-benefice",
+  "status": "final",
+  "createdAt": "2026-07-28T22:21:21.292Z",
+  "updatedAt": "2026-07-29T07:59:01.135Z",
+  "script": {
+    "approvedAt": "2026-07-29T07:56:31.446Z",
+    "sha256": "d0b1b183fe049137f938699c33a631049be7807eef14c0dc0f9ec9dd08d00535"
+  },
+  "voice": {
+    "approvedAt": "2026-07-29T07:56:31.817Z",
+    "voiceId": "9HTNhnzaWIkUTIhaJhPM",
+    "modelId": "eleven_multilingual_v2",
+    "sourceAudioSha256": "b7d983ffcbb16bea9b53da8bb61d47b0c8567c8800d51b5bfa6da4b7dd1eda09",
+    "alignmentSha256": "763ee4ca31f9a1c90b7cb470ef0f6fe202e44466b0f2240afb5998279186bf20",
+    "sourceTimingSha256": "d34ad23a3727770ff659face47ec8e84348b13ee743c81c031a76b0255e79f96"
+  },
+  "render": {
+    "approvedAt": "2026-07-29T07:56:32.114Z",
+    "pace": 1,
+    "audioSha256": "b7d983ffcbb16bea9b53da8bb61d47b0c8567c8800d51b5bfa6da4b7dd1eda09",
+    "timingSha256": "fd8556b8cd15a28b6205a03f0d551b157af968ace97b4019f279365095525ee8"
+  },
+  "final": {
+    "approvedAt": "2026-07-29T07:59:01.135Z",
+    "output": "../../../../../output/staging/oumou-v1/cours-chiffre-affaires-benefice-final.mp4",
+    "sha256": "e9128110446dc702ed3a2b0b502de8716388f4e1859f6d36b02e9b2547d174ba",
+    "qa": {
+      "durationSeconds": 140.133,
+      "loudnessLufs": -14.97,
+      "videoCodec": "h264",
+      "audioCodec": "aac",
+      "width": 1920,
+      "height": 1080,
+      "fps": "30/1",
+      "fullDecode": true
+    }
+  }
+}

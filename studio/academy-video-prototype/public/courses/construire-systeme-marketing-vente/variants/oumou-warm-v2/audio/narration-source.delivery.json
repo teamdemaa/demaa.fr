@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "kind": "full-course-narration-delivery",
+  "course": "construire-systeme-marketing-vente",
+  "variant": "oumou-warm-v2",
+  "notVoiceApproved": true,
+  "generatedAt": "2026-07-29T11:16:38.928Z",
+  "verifiedAt": "2026-07-29T11:18:26Z",
+  "elevenLabsCalls": 1,
+  "characterCount": 3673,
+  "creditsEngagedEstimated": 3673,
+  "script": {
+    "statusBefore": "script-approved",
+    "statusAfter": "script-approved",
+    "byteIdenticalToApprovedSha": true,
+    "sha256": "33ebc74cc408091952f11a736f23798bce579d324ec982f473950f6a6a4102ab"
+  },
+  "voice": {
+    "voiceId": "9HTNhnzaWIkUTIhaJhPM",
+    "modelId": "eleven_multilingual_v2",
+    "speed": 1.15,
+    "stability": 0.55,
+    "similarityBoost": 0.78,
+    "style": 0,
+    "speakerBoost": true,
+    "postprocessRate": 1
+  },
+  "audio": {
+    "file": "/Users/oumougory/Apps/Demaa.fr/studio/academy-video-prototype/public/courses/construire-systeme-marketing-vente/variants/oumou-warm-v2/audio/narration-source.mp3",
+    "codec": "mp3",
+    "sampleRate": 44100,
+    "channels": 1,
+    "fileDurationSeconds": 166.164898,
+    "alignedSpeechEndSeconds": 166.115,
+    "sizeBytes": 2659100,
+    "sha256": "bb9909607b374ae8c2d50622f84bc26d6a47f8bcbabf764a14323df0df8d19ca",
+    "fullDecode": true
+  },
+  "alignment": {
+    "file": "/Users/oumougory/Apps/Demaa.fr/studio/academy-video-prototype/public/courses/construire-systeme-marketing-vente/variants/oumou-warm-v2/audio/alignment.json",
+    "sha256": "59d89bc94d5483bd1c2f483afb2082571215e7812b0a8f1950b3e09ac146ce3e",
+    "characterCount": 3673,
+    "textExact": true,
+    "charactersExact": true,
+    "timesMonotonic": true,
+    "firstStartSeconds": 0,
+    "lastEndSeconds": 166.115
+  },
+  "timing": {
+    "file": "/Users/oumougory/Apps/Demaa.fr/studio/academy-video-prototype/content/courses/construire-systeme-marketing-vente/variants/oumou-warm-v2/timing-source.generated.json",
+    "sha256": "093acbda307adbd9057d462822971522c2ea1327902f41802b1206445dfd8cf7",
+    "audioDurationSeconds": 166.115,
+    "totalDurationSeconds": 167.315,
+    "scenes": [
+      {
+        "id": "systeme",
+        "speechStartSeconds": 0,
+        "speechEndSeconds": 30.94,
+        "speechDurationSeconds": 30.94
+      },
+      {
+        "id": "cible",
+        "speechStartSeconds": 31.149,
+        "speechEndSeconds": 47.02,
+        "speechDurationSeconds": 15.871
+      },
+      {
+        "id": "entrees",
+        "speechStartSeconds": 47.206,
+        "speechEndSeconds": 65.526,
+        "speechDurationSeconds": 18.32
+      },
+      {
+        "id": "centraliser",
+        "speechStartSeconds": 66.235,
+        "speechEndSeconds": 81.989,
+        "speechDurationSeconds": 15.754
+      },
+      {
+        "id": "qualifier",
+        "speechStartSeconds": 82.071,
+        "speechEndSeconds": 98.626,
+        "speechDurationSeconds": 16.555
+      },
+      {
+        "id": "avancer",
+        "speechStartSeconds": 98.905,
+        "speechEndSeconds": 117.957,
+        "speechDurationSeconds": 19.052
+      },
+      {
+        "id": "mesurer",
+        "speechStartSeconds": 118.235,
+        "speechEndSeconds": 144.752,
+        "speechDurationSeconds": 26.517
+      },
+      {
+        "id": "piloter",
+        "speechStartSeconds": 145.136,
+        "speechEndSeconds": 166.115,
+        "speechDurationSeconds": 20.979
+      }
+    ]
+  },
+  "requestManifest": {
+    "file": "/Users/oumougory/Apps/Demaa.fr/studio/academy-video-prototype/public/courses/construire-systeme-marketing-vente/variants/oumou-warm-v2/audio/narration-source.mp3.manifest.json",
+    "sha256": "323425451bae38ec034054f1668a392d7dabdef8643fb26bb3a7ae1ffbc6f8d9",
+    "requestSha256": "62945e6821e4ca060dfcb9084bd8390fad5d2465cc7365489cb969c41ac7e77b"
+  },
+  "qa": {
+    "sceneCoverageExact": true,
+    "longSilenceThresholdSeconds": 1.2,
+    "longSilenceEvents": 0,
+    "obviousTruncation": false,
+    "obviousDuplication": false
+  }
+}

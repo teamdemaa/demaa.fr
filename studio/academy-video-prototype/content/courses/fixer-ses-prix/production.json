@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "course": "fixer-ses-prix",
+  "status": "render-ready",
+  "createdAt": "2026-07-27T20:32:52.789Z",
+  "updatedAt": "2026-07-27T20:45:32.117Z",
+  "script": {
+    "approvedAt": "2026-07-27T20:38:25.306Z",
+    "sha256": "3d4b09bbe2d29db1ded784ea806df0a8576e00227e9d69d1e7a263e430427375"
+  },
+  "voice": {
+    "approvedAt": "2026-07-27T20:45:20.978Z",
+    "voiceId": "0lp4RIz96WD1RUtvEu3Q",
+    "modelId": "eleven_multilingual_v2",
+    "sourceAudioSha256": "d56afd117b6ba8ec9fd3e27c1d3aac813038c0f7c503e4e3e877a26683fc4e85",
+    "alignmentSha256": "c4f7e55b6f6cb4059d8f68cce5dcd078dc7b717c1ae2e886fa5a6ce7350cf21f",
+    "sourceTimingSha256": "4dd1bb4fa242f92007fbf614583e81976514c7a914b10deb12695963da4e6132"
+  },
+  "render": {
+    "approvedAt": "2026-07-27T20:45:32.117Z",
+    "pace": 1.2,
+    "audioSha256": "5aa07ffb070b519f3af0683382a4b6e2a43b05add604c940d741df8715f406a7",
+    "timingSha256": "e0c5c9aa595bfb6906b72429076f2b677b99bfaf5fc3eb6742b4821708610791"
+  }
+}

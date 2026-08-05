@@ -1,0 +1,141 @@
+{
+  "version": 1,
+  "kind": "full-course-narration-delivery",
+  "course": "gestion-tresorerie",
+  "variant": "oumou-warm-v2",
+  "notVoiceApproved": true,
+  "generatedAt": "2026-07-29T11:32:42.089Z",
+  "verifiedAt": "2026-07-29T11:32:57.249Z",
+  "elevenLabsCalls": 1,
+  "characterCount": 3520,
+  "creditsEngagedEstimated": 3520,
+  "script": {
+    "statusBefore": "script-approved",
+    "statusAfter": "script-approved",
+    "byteIdenticalToApprovedSha": true,
+    "sha256": "f2490a32dad7100c84e121abe2ede0b9f5c131897ff9fb187a0546e60392d1a8"
+  },
+  "voice": {
+    "voiceId": "9HTNhnzaWIkUTIhaJhPM",
+    "modelId": "eleven_multilingual_v2",
+    "speed": 1.15,
+    "stability": 0.55,
+    "similarityBoost": 0.78,
+    "style": 0,
+    "speakerBoost": true,
+    "postprocessRate": 1
+  },
+  "audio": {
+    "file": "/Users/oumougory/Apps/Demaa.fr/studio/academy-video-prototype/public/courses/gestion-tresorerie/variants/oumou-warm-v2/audio/narration-source.mp3",
+    "codec": "mp3",
+    "sampleRate": 44100,
+    "channels": 1,
+    "fileDurationSeconds": 146.651429,
+    "alignedSpeechEndSeconds": 146.61,
+    "sizeBytes": 2346884,
+    "sha256": "53b557d7e271a54306288c4087924f179d4da22a3e570214f3e3bd8be3516ad6",
+    "fullDecode": true
+  },
+  "alignment": {
+    "file": "/Users/oumougory/Apps/Demaa.fr/studio/academy-video-prototype/public/courses/gestion-tresorerie/variants/oumou-warm-v2/audio/alignment.json",
+    "sha256": "6eb16f4ecc40864ebae5a879a7eacca3c7a72055102d5a6c89026cfa750a1d7d",
+    "characterCount": 3520,
+    "textExact": true,
+    "charactersExact": true,
+    "timesMonotonic": true,
+    "firstStartSeconds": 0,
+    "lastEndSeconds": 146.61
+  },
+  "timing": {
+    "file": "/Users/oumougory/Apps/Demaa.fr/studio/academy-video-prototype/content/courses/gestion-tresorerie/variants/oumou-warm-v2/timing-source.generated.json",
+    "sha256": "9788b60aa94ca31d98e37e26ec877937d4aa9e9502b1d07eb70059086c612705",
+    "audioDurationSeconds": 146.61,
+    "totalDurationSeconds": 147.81,
+    "scenes": [
+      {
+        "id": "paradoxe",
+        "characterCount": 293,
+        "speechStartSeconds": 0,
+        "speechEndSeconds": 11.889,
+        "speechDurationSeconds": 11.889,
+        "sceneDurationSeconds": 12.028
+      },
+      {
+        "id": "deux-realites",
+        "characterCount": 400,
+        "speechStartSeconds": 12.168,
+        "speechEndSeconds": 28.399,
+        "speechDurationSeconds": 16.231,
+        "sceneDurationSeconds": 16.492
+      },
+      {
+        "id": "facturer-encaisser",
+        "characterCount": 293,
+        "speechStartSeconds": 28.643,
+        "speechEndSeconds": 41.135,
+        "speechDurationSeconds": 12.492,
+        "sceneDurationSeconds": 12.707
+      },
+      {
+        "id": "exemple",
+        "characterCount": 645,
+        "speechStartSeconds": 41.321,
+        "speechEndSeconds": 67.965,
+        "speechDurationSeconds": 26.644,
+        "sceneDurationSeconds": 27.091
+      },
+      {
+        "id": "bfr",
+        "characterCount": 354,
+        "speechStartSeconds": 68.673,
+        "speechEndSeconds": 83.905,
+        "speechDurationSeconds": 15.232,
+        "sceneDurationSeconds": 15.639
+      },
+      {
+        "id": "croissance",
+        "characterCount": 422,
+        "speechStartSeconds": 84.01,
+        "speechEndSeconds": 100.275,
+        "speechDurationSeconds": 16.265,
+        "sceneDurationSeconds": 16.41
+      },
+      {
+        "id": "point-bas",
+        "characterCount": 389,
+        "speechStartSeconds": 100.461,
+        "speechEndSeconds": 117.562,
+        "speechDurationSeconds": 17.101,
+        "sceneDurationSeconds": 17.316
+      },
+      {
+        "id": "decisions",
+        "characterCount": 469,
+        "speechStartSeconds": 117.806,
+        "speechEndSeconds": 137.171,
+        "speechDurationSeconds": 19.365,
+        "sceneDurationSeconds": 19.551
+      },
+      {
+        "id": "regle",
+        "characterCount": 239,
+        "speechStartSeconds": 137.299,
+        "speechEndSeconds": 146.61,
+        "speechDurationSeconds": 9.311,
+        "sceneDurationSeconds": 10.575
+      }
+    ]
+  },
+  "requestManifest": {
+    "file": "/Users/oumougory/Apps/Demaa.fr/studio/academy-video-prototype/public/courses/gestion-tresorerie/variants/oumou-warm-v2/audio/narration-source.mp3.manifest.json",
+    "sha256": "343ebfdfa147d2d01063a8e686368b46bcdb5abe4c8f280b9cbaf3da837392b7",
+    "requestSha256": "61a714c822519461133cc41ad83df3040d6322748ae69df679a05d34d29dc98c"
+  },
+  "qa": {
+    "sceneCoverageExact": true,
+    "longSilenceThresholdSeconds": 1.2,
+    "longSilenceEvents": 0,
+    "obviousTruncation": false,
+    "obviousDuplication": false
+  }
+}

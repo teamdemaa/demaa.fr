@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <rect width="1080" height="1920" fill="#2B1914"/>
+  <text x="80" y="154" fill="#F2BC52" font-family="Satoshi,Arial,sans-serif" font-size="28" font-weight="700" letter-spacing="5">PROMOTION / LE SYSTÈME</text>
+  <g font-family="Satoshi,Arial,sans-serif">
+    <text x="80" y="560" fill="#F2BC52" font-size="176" font-weight="700">1</text>
+    <text x="260" y="530" fill="#F4EDDF" font-size="58" font-weight="650">SESSION</text>
+    <text x="260" y="602" fill="#F4EDDF" opacity=".7" font-size="42">PAR MOIS</text>
+    <line x1="80" y1="700" x2="1000" y2="700" stroke="#F4EDDF" opacity=".18"/>
+    <text x="80" y="990" fill="#F2BC52" font-size="176" font-weight="700">10</text>
+    <text x="380" y="960" fill="#F4EDDF" font-size="58" font-weight="650">VIDÉOS</text>
+    <text x="380" y="1032" fill="#F4EDDF" opacity=".7" font-size="42">PAR SESSION</text>
+    <line x1="80" y1="1130" x2="1000" y2="1130" stroke="#F4EDDF" opacity=".18"/>
+    <text x="80" y="1420" fill="#F2BC52" font-size="176" font-weight="700">2</text>
+    <text x="260" y="1390" fill="#F4EDDF" font-size="58" font-weight="650">PUBLICATIONS</text>
+    <text x="260" y="1462" fill="#F4EDDF" opacity=".7" font-size="42">PAR SEMAINE</text>
+  </g>
+</svg>

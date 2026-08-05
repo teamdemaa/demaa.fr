@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "requestHash": "49d641eafdadc65b1be25a5e8c12a596ce28290bea64cf3ce45e47d60727b64c",
+  "request": {
+    "text": "Le chiffre d’affaires est probablement le nombre le plus cité par les entrepreneurs. C’est aussi l’un des plus mal interprétés. Il mesure ce que l’entreprise a vendu, hors taxes. Il ne mesure pas ce qu’elle a gagné. Une entreprise peut donc annoncer un beau chiffre d’affaires et terminer l’année avec un bénéfice minuscule, ou même une perte.\n\nLe calcul de base tient sur une ligne. Le chiffre d’affaires, moins toutes les charges, donne le résultat. Entre les deux, il faut payer les achats, la production, les sous-traitants, les salaires, les locaux, les logiciels, les assurances, les intérêts et les impôts. Le chiffre d’affaires est le haut de l’histoire. Le bénéfice est ce qu’il reste tout en bas. Si vous oubliez les étages du milieu, vous vous racontez une histoire très agréable, mais fausse.\n\nPrenons une entreprise qui réalise cent mille euros de chiffre d’affaires hors taxes. Les achats, la production et la sous-traitance coûtent soixante mille euros. Il reste quarante mille euros de marge pour payer la structure. Les salaires administratifs, les locaux, les outils et les autres charges fixes représentent trente-cinq mille euros. Le bénéfice n’est donc pas cent mille euros. Il est de cinq mille euros. Voilà ce que raconte vraiment le calcul : cent mille euros vendus, pour cinq mille euros réellement gagnés.\n\nIl y a un deuxième piège. Une hausse du chiffre d’affaires peut dégrader le bénéfice si les nouvelles ventes sont mal tarifées. Prenons un contrat supplémentaire de vingt mille euros. Pour le livrer dans l’urgence, l’entreprise dépense vingt-deux mille euros en sous-traitance, heures supplémentaires et corrections. Le chiffre d’affaires augmente de vingt mille euros. Le résultat, lui, baisse de deux mille. Une vente non rentable ne devient pas une bonne vente simplement parce qu’elle est grosse.\n\nLe dirigeant doit donc connaître son seuil de rentabilité, qu’on appelle aussi le point mort. C’est le niveau de ventes nécessaire pour couvrir toutes les charges. Supposons que l’entreprise conserve quarante centimes de marge sur chaque euro vendu et qu’elle supporte trente-cinq mille euros de charges fixes. Elle doit réaliser environ quatre-vingt-sept mille cinq cents euros de chiffre d’affaires pour atteindre l’équilibre. En dessous, elle perd de l’argent. Au-dessus, elle commence réellement à en gagner.\n\nConcrètement, suivez trois choses. Premièrement, la marge en euros et en pourcentage pour chaque offre importante. Vous verrez quelles ventes créent réellement de la valeur. Deuxièmement, votre point mort mensuel. Vous saurez combien il faut vendre avant de commencer à gagner de l’argent. Troisièmement, le résultat réel, tous les mois, pas seulement une fois par an. Et gardez la trésorerie dans un tableau séparé : elle répond à une autre question. Un gros client peut produire beaucoup de chiffre d’affaires, très peu de bénéfice et, en plus, payer tard.\n\nRetenez simplement ceci. Le chiffre d’affaires mesure le volume des ventes. La marge mesure leur qualité économique. Le bénéfice mesure ce que l’entreprise a réellement gagné. Le premier chiffre impressionne. Le dernier tranche.",
+    "voiceId": "9HTNhnzaWIkUTIhaJhPM",
+    "modelId": "eleven_multilingual_v2",
+    "outputFormat": "mp3_44100_128",
+    "voiceSettings": {
+      "stability": 0.86,
+      "similarityBoost": 0.78,
+      "style": 0,
+      "useSpeakerBoost": true,
+      "speed": 1.15
+    }
+  },
+  "generatedAt": "2026-07-28T22:41:13.228Z"
+}

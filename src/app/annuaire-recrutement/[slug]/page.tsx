@@ -83,7 +83,7 @@ export default async function RecruitmentDetailPage({
     : null;
   const backLink = returnEnterprise
     ? {
-        href: `/kit-operationnel/${encodeURIComponent(returnEnterprise.slug)}`,
+        href: `/systemes-operationnels/${encodeURIComponent(returnEnterprise.slug)}`,
         label: `Retour à ${returnEnterprise.name}`,
       }
     : {

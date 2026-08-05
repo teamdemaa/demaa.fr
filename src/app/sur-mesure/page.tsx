@@ -26,11 +26,11 @@ const description =
 export const metadata: Metadata = {
   title,
   description,
-  alternates: { canonical: "/" },
+  alternates: { canonical: "/sur-mesure" },
   openGraph: {
     title,
     description,
-    url: "/",
+    url: "/sur-mesure",
     siteName: "Demaa",
     locale: "fr_FR",
     type: "website",

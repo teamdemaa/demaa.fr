@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "course": "fixer-ses-prix",
+  "status": "final",
+  "createdAt": "2026-07-28T22:49:03.355Z",
+  "updatedAt": "2026-07-29T07:40:39.791Z",
+  "script": {
+    "approvedAt": "2026-07-29T07:20:57.338Z",
+    "sha256": "f34181f992b02b0ba669b1eba08ccc4d065be6a17012c49c7120b55076e4b5fa"
+  },
+  "voice": {
+    "approvedAt": "2026-07-29T07:22:26.248Z",
+    "voiceId": "9HTNhnzaWIkUTIhaJhPM",
+    "modelId": "eleven_multilingual_v2",
+    "sourceAudioSha256": "d310ba400371d61ff324782bab438c72389508daabc0eddb152c1822de4e8759",
+    "alignmentSha256": "2b3d4519f320fc3689fb7e09216facb03b5d8c405216235adc85cfacbce59884",
+    "sourceTimingSha256": "c61a5dd45dc1d4bf0640798df00d31257addd6ad3c15fbe8f358d124baf86305"
+  },
+  "render": {
+    "approvedAt": "2026-07-29T07:22:26.466Z",
+    "pace": 1,
+    "audioSha256": "d310ba400371d61ff324782bab438c72389508daabc0eddb152c1822de4e8759",
+    "timingSha256": "1a4356fc81666e2f7f47291e486ca413e6e4ebacb5b922044d0df4a4f540c18d"
+  },
+  "final": {
+    "approvedAt": "2026-07-29T07:40:39.791Z",
+    "output": "../../../../../output/staging/oumou-v1/cours-fixer-ses-prix-final.mp4",
+    "sha256": "9b341057f6c5883cba70ddb220e1f8a518c94a49b0e8ee5064106e9d0b68eb63",
+    "qa": {
+      "durationSeconds": 149.633,
+      "loudnessLufs": -15.31,
+      "videoCodec": "h264",
+      "audioCodec": "aac",
+      "width": 1920,
+      "height": 1080,
+      "fps": "30/1",
+      "fullDecode": true
+    }
+  }
+}

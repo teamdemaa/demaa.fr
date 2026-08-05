@@ -47,11 +47,6 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: '/sur-mesure',
-        destination: '/',
-        permanent: true,
-      },
-      {
         source: '/systemes-operationnels',
         destination: '/systemes',
         permanent: true,
