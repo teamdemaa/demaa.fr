@@ -4,6 +4,7 @@ import {
   buildExpectedSolutionOrders,
   collectSerializedSolutionSlugs,
   getSerializedSolutionPayload,
+  getExpectedCallTexts,
   getTabs,
   loadEnterprises,
 } from "../scripts/audit-system-kit-pages.mjs";
@@ -47,6 +48,17 @@ describe("system kit page audit contract", () => {
       "notaires",
     ]);
     expect([...orders.values()].some((order) => order.includes("netty"))).toBe(false);
+  });
+
+  it("expects the CTA copy that belongs to each active tab", () => {
+    expect(getExpectedCallTexts("process")).toEqual([
+      "Besoin de prendre du recul sur votre organisation ?",
+      "Réserver mon échange offert",
+    ]);
+    expect(getExpectedCallTexts("solutions")).toEqual([
+      "Besoin d’aide pour identifier la bonne solution ?",
+      "Échanger 30 minutes",
+    ]);
   });
 
   it("reads the ordered public Solution payload without widening its boundary", () => {
