@@ -19,6 +19,7 @@ const resourceLinks = [
   { label: "Académie", href: "/academie" },
   { label: "Cours", href: "/cours" },
   { label: "Aides & subventions", href: "/aides-et-subventions" },
+  { label: "Proposer votre solution", href: "/partenaires" },
 ];
 
 export default function Footer() {
