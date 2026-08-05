@@ -85,8 +85,8 @@ describe("system UX contract", () => {
     expect(customOfferSource).toContain(
       "Besoin d’une application adaptée à votre métier ?",
     );
-    expect(customOfferSource).toContain('href="/"');
-    expect(customOfferSource).toContain("Voir l’offre sur mesure");
+    expect(customOfferSource).toContain('href="/services"');
+    expect(customOfferSource).toContain("Voir les services");
     expect(customOfferSource).not.toMatch(
       /OrganisationSessionBookingButton|Réserver mon échange|filloutId|fillout\.com|https?:\/\//,
     );

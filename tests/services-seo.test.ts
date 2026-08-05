@@ -7,7 +7,7 @@ import {
   generateMetadata,
   generateStaticParams,
 } from "@/app/services/[slug]/page";
-import { generateMetadata as generateServicesIndexMetadata } from "@/app/services/page";
+import { metadata as servicesIndexMetadata } from "@/app/services/page";
 import {
   buildServicePageJsonLd,
   buildServicesIndexJsonLd,
@@ -22,9 +22,7 @@ async function readSource(path: string) {
 describe("Services SEO and structured data", () => {
   it("keeps drafts and unknown slugs out of static params and metadata", async () => {
     expect(generateStaticParams()).toEqual([]);
-    expect(() => generateServicesIndexMetadata()).toThrowError(
-      expect.objectContaining({ digest: "NEXT_HTTP_ERROR_FALLBACK;404" }),
-    );
+    expect(servicesIndexMetadata.alternates).toEqual({ canonical: "/services" });
     await expect(generateMetadata({
       params: Promise.resolve({ slug: "site-vitrine-prise-contact" }),
     })).rejects.toMatchObject({ digest: "NEXT_HTTP_ERROR_FALLBACK;404" });
@@ -115,14 +113,14 @@ describe("Services SEO and structured data", () => {
     );
   });
 
-  it("keeps structured data behind published-only server selectors", async () => {
+  it("keeps detail structured data behind published-only server selectors", async () => {
     const indexSource = await readSource("src/app/services/page.tsx");
     const detailSource = await readSource("src/app/services/[slug]/page.tsx");
     const seoSource = await readSource("src/lib/services-seo.ts");
 
-    expect(indexSource).toContain("getPublishedServiceOffersV2");
-    expect(indexSource.indexOf("if (offers.length === 0) notFound()"))
-      .toBeLessThan(indexSource.indexOf("buildServicesIndexJsonLd()"));
+    expect(indexSource).toContain("ServicesLandingPage");
+    expect(indexSource).toContain('canonical: "/services"');
+    expect(indexSource).not.toContain("getPublishedServiceOffersV2");
     expect(detailSource).toContain("getPublishedServiceOfferV2BySlug");
     expect(detailSource).toContain("if (!offer) notFound()");
     expect(detailSource).toContain("export const dynamicParams = false");

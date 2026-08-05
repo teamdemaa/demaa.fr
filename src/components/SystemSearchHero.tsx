@@ -1,6 +1,6 @@
 "use client";
 
-import Link, { useLinkStatus } from "next/link";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   useDeferredValue,
@@ -353,7 +353,7 @@ export default function SystemSearchHero({
           <div className="mt-10 space-y-9 text-left sm:mt-12 sm:space-y-11">
             {systemSections.map((section) => (
               <section key={section.title}>
-                <h2 className="text-xl font-medium tracking-tight text-brand-blue/85 sm:text-2xl">
+                <h2 className="text-xl font-light tracking-tight text-brand-blue/85 sm:text-2xl">
                   {section.title}
                 </h2>
                 <HorizontalScrollHint
@@ -391,7 +391,6 @@ function SystemDirectoryCard({ system }: { system: System }) {
       href={`/kit-operationnel/${system.slug}`}
       className="demaa-card group relative flex aspect-square w-[74vw] max-w-[15rem] shrink-0 flex-col overflow-hidden rounded-[1.2rem] p-4 sm:w-[15rem] sm:p-5 [content-visibility:auto] [contain-intrinsic-size:15rem_15rem]"
     >
-      <SystemDirectoryCardPendingOverlay />
       <span className="relative z-10 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper sm:h-10 sm:w-10">
         {icon}
       </span>
@@ -404,18 +403,5 @@ function SystemDirectoryCard({ system }: { system: System }) {
         </p>
       </div>
     </Link>
-  );
-}
-
-function SystemDirectoryCardPendingOverlay() {
-  const { pending } = useLinkStatus();
-
-  return (
-    <span
-      aria-hidden="true"
-      className={`pointer-events-none absolute inset-x-0 bottom-0 h-1.5 bg-dema-forest/70 transition-opacity duration-200 ${
-        pending ? "opacity-100" : "opacity-0"
-      }`}
-    />
   );
 }

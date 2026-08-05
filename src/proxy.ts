@@ -13,7 +13,6 @@ const RETIRED_EXACT_PATHS = new Set([
   "/offline",
   "/organisation",
   "/organisation-automatisation",
-  "/services",
   "/structuration",
   "/sw.js",
 ]);

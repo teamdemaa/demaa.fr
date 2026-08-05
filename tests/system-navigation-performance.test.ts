@@ -39,6 +39,8 @@ describe("system navigation performance contract", () => {
     const detailSource = await readSource("src/components/SystemDetailContent.tsx");
 
     expect(searchSource).not.toContain("prefetch={false}");
+    expect(searchSource).not.toContain("useLinkStatus");
+    expect(searchSource).not.toContain("SystemDirectoryCardPendingOverlay");
     expect(detailSource).toContain('<Link\n          href="/systemes"');
     expect(detailSource).toContain("Retour aux systèmes");
     expect(detailSource).not.toContain("router.back()");
@@ -55,6 +57,9 @@ describe("system navigation performance contract", () => {
     );
     expect(searchSource).toContain(
       'aria-label="Trouvez le système métier de votre entreprise"',
+    );
+    expect(searchSource).toContain(
+      '<h2 className="text-xl font-light tracking-tight text-brand-blue/85 sm:text-2xl">',
     );
     expect(searchSource).not.toContain("système opérationnel");
   });
