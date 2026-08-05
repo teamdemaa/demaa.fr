@@ -34,6 +34,13 @@ export const SOLUTION_UI_WORKING_LABELS: Readonly<Record<SolutionSection, string
   networks: "Réseaux professionnels",
 };
 
+export const SOLUTION_RAIL_DISPLAY_ORDER: readonly SolutionSection[] = [
+  "software",
+  "providers",
+  "networks",
+  "models",
+];
+
 const RESOURCE_ICONS = {
   tool: Gauge,
   software: Wrench,
@@ -180,7 +187,9 @@ export default function SystemSolutionsTab({
   sections: readonly RenderableSolutionSectionDto[];
 }) {
   const visibleSections = useMemo(
-    () => sections.filter(({ placements }) => placements.length > 0),
+    () => SOLUTION_RAIL_DISPLAY_ORDER.flatMap((section) =>
+      sections.filter((group) => group.section === section && group.placements.length > 0),
+    ),
     [sections],
   );
   const railRefs = useRef<Partial<Record<SolutionSection, HTMLDivElement | null>>>({});

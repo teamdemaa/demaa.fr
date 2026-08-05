@@ -5,7 +5,10 @@ import { describe, expect, it, vi } from "vitest";
 
 vi.mock("server-only", () => ({}));
 
-import SystemSolutionsTab from "@/components/SystemSolutionsTab";
+import SystemSolutionsTab, {
+  SOLUTION_RAIL_DISPLAY_ORDER,
+  SOLUTION_UI_WORKING_LABELS,
+} from "@/components/SystemSolutionsTab";
 import { enterpriseCatalog } from "@/lib/enterprise-annuaire";
 import {
   getVisibleSystemDetailTabs,
@@ -106,6 +109,16 @@ describe("system Solutions UI", () => {
         createElement(SystemSolutionsTab, { sections }),
       );
       expect(markup).toContain("Outils");
+      const visibleRailLabels = SOLUTION_RAIL_DISPLAY_ORDER
+        .filter((section) => sections.some((candidate) => candidate.section === section))
+        .map((section) => SOLUTION_UI_WORKING_LABELS[section]);
+      for (const [index, label] of visibleRailLabels.entries()) {
+        if (index > 0) {
+          expect(markup.indexOf(visibleRailLabels[index - 1]))
+            .toBeLessThan(markup.indexOf(label));
+        }
+      }
+      expect(visibleRailLabels.at(-1)).toBe("Modèles");
       expect(normalizeSystemDetailTab("solutions")).toBe("solutions");
       expect(normalizeSystemDetailTab("outils")).toBe("solutions");
       expect(normalizeSystemDetailTab("ecosysteme")).toBe("solutions");
@@ -236,8 +249,10 @@ describe("system Solutions UI", () => {
       );
       expect(markup).toContain("Outils");
       expect(markup).toContain('aria-label="Ouvrir Levier"');
-      const orderedNames = sections.flatMap(({ placements }) =>
-        placements.map(({ resource }) => resource.name)
+      const orderedNames = SOLUTION_RAIL_DISPLAY_ORDER.flatMap((section) =>
+        sections
+          .filter((candidate) => candidate.section === section)
+          .flatMap(({ placements }) => placements.map(({ resource }) => resource.name))
       );
       for (const [index, name] of orderedNames.entries()) {
         expect(markup).toContain(`aria-label="Ouvrir ${name}"`);
