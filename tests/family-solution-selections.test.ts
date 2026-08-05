@@ -60,7 +60,7 @@ describe("family solution selections", () => {
     });
     const placements = systems.flatMap(({ placements }) => placements);
 
-    expect(placements).toHaveLength(547);
+    expect(placements).toHaveLength(549);
     expect(placements.filter(({ resourceSlug }) => resourceSlug === "levier")).toHaveLength(81);
     for (const system of systems) {
       for (const section of ["software", "providers", "networks"] as const) {
@@ -112,7 +112,7 @@ describe("family solution selections", () => {
         commercialRelationship: "owned",
       });
     }
-    expect(externalPlacements).toHaveLength(466);
+    expect(externalPlacements).toHaveLength(468);
     expect(placements.filter(({ resourceType }) => resourceType === "directory")
       .every(({ section }) => section === "networks")).toBe(true);
     expect(JSON.stringify(systems)).not.toMatch(/capturedAt/);
@@ -182,7 +182,7 @@ describe("family solution selections", () => {
         : []
     );
 
-    expect(placements).toHaveLength(576);
+    expect(placements).toHaveLength(578);
     const violations = placements.flatMap((placement) =>
       forbiddenPublicClaims.test(JSON.stringify(placement))
         ? [`${placement.systemSlug}:${placement.resource.resourceSlug}`]
@@ -225,6 +225,24 @@ describe("family solution selections", () => {
     expect(getFamilySystemSolutionSelection("evenementiel")?.placements
       .find(({ resourceSlug }) => resourceSlug === "livestorm")?.displayCategory)
       .toBe("Webinaire & événement en ligne");
+  });
+
+  it("keeps the lawyer software selection ordered by need", () => {
+    const lawyer = getFamilySystemSolutionSelection("cabinet-davocat");
+    const software = lawyer?.placements
+      .filter(({ section }) => section === "software")
+      .sort((left, right) => left.rank - right.rank);
+
+    expect(software?.map(({ resourceSlug }) => resourceSlug)).toEqual([
+      "kleos",
+      "secib",
+      "jarvis-legal",
+      "doctrine",
+    ]);
+    expect(software?.slice(0, 3).every(({ displayCategory }) =>
+      displayCategory === "Gestion du cabinet"
+    )).toBe(true);
+    expect(software?.at(-1)?.displayCategory).toBe("Recherche juridique & IA");
   });
 
   it("keeps audited destination corrections and hides the retired Netty identity", () => {

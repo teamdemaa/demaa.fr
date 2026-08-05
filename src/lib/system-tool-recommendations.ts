@@ -3,7 +3,7 @@ const CURATED_TOOL_RECOMMENDATIONS_BY_SYSTEM: Record<
   readonly string[]
 > = {
   "cabinet-comptable": ["pennylane", "tiimora", "silae"],
-  "cabinet-davocat": ["secib", "doctrine"],
+  "cabinet-davocat": ["kleos", "secib", "jarvis-legal", "doctrine"],
   "cabinet-de-conseil": ["everwin", "hubspot", "notion"],
   "agence-marketing": ["furious", "boondmanager", "riverside", "kit", "wordpress"],
   freelance: ["malt", "freebe", "calendly"],

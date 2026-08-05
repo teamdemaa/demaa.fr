@@ -4355,6 +4355,20 @@
       ],
       "bestFor": "Centraliser dossiers juridiques, tâches et documents du cabinet.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Gestion des dossiers",
+        "Connexion e-Barreau et RPVA",
+        "Suivi des temps et facturation"
+      ],
+      "idealFor": [
+        "Avocats seuls et cabinets qui veulent une solution cloud complète",
+        "Équipes qui veulent centraliser dossiers, documents et échéances",
+        "Cabinets qui souhaitent relier leur gestion au RPVA"
+      ],
+      "sources": [
+        "https://www.wolterskluwer.com/fr-fr/solutions/kleos/logiciel-gestion-cabinet-avocat"
+      ],
+      "lastReviewedAt": "2026-08-05",
       "status": "active",
       "scope": "business"
     },
