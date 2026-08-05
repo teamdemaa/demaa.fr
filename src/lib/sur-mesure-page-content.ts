@@ -1,120 +1,174 @@
 export const surMesurePageContent = {
-  eyebrow: "Sur mesure",
-  title: "Votre entreprise doit pouvoir avancer sans que tout repose sur vous",
-  introduction:
-    "Nous vous aidons à clarifier un processus important, à retirer ce qui le ralentit et à préparer une façon de travailler que votre équipe peut réellement suivre.",
-  criticalProcess: {
-    title: "Commencer par un seul processus critique",
+  hero: {
+    eyebrow: "Application métier sur mesure",
+    title: "Transformez un processus qui vous ralentit en une application simple.",
+    introduction:
+      "Vous suivez encore une activité dans Excel, par e-mail ou avec des tâches manuelles ? Demaa simplifie le fonctionnement et crée une application adaptée à votre métier.",
+    ctaLabel: "Discuter",
+    reassurance: "Premier échange offert · Sans engagement",
+  },
+  startingPoint: {
+    eyebrow: "Le bon point de départ",
+    title: "Simplifier avant de développer.",
     description:
-      "Nous partons d’un point de blocage concret. L’objectif n’est pas de tout refaire, mais de choisir le processus qui crée aujourd’hui le plus d’attente, de reprises ou de dépendance au dirigeant.",
-    examples: [
-      "Une demande client qui se perd entre plusieurs personnes.",
-      "Un devis qui attend toujours la même validation.",
-      "Une commande difficile à transmettre et à suivre.",
-      "Une relance qui dépend encore de la mémoire du dirigeant.",
+      "Nous partons du processus qui vous fait perdre du temps. Nous clarifions les étapes, les informations et les responsabilités avant de définir l’application utile.",
+    transformations: [
+      {
+        before: "Informations dispersées",
+        after: "Un suivi centralisé",
+      },
+      {
+        before: "Étapes implicites",
+        after: "Un parcours clair",
+      },
+      {
+        before: "Relances manuelles",
+        after: "Des actions visibles",
+      },
+    ],
+  },
+  benefits: {
+    eyebrow: "Ce que l’application change",
+    title: "Un outil qui suit votre façon de travailler.",
+    items: [
+      {
+        title: "Un processus plus simple à suivre",
+        description: "Chaque étape utile est visible, dans le bon ordre.",
+      },
+      {
+        title: "Les informations au même endroit",
+        description: "L’équipe retrouve les données nécessaires sans chercher dans plusieurs fichiers.",
+      },
+      {
+        title: "Des responsabilités visibles",
+        description: "Chacun sait ce qu’il doit traiter et quand une décision doit être remontée.",
+      },
+      {
+        title: "Une base claire pour avancer",
+        description: "Les ajustements retenus reposent sur un fonctionnement compris et validé.",
+      },
+    ],
+  },
+  examples: {
+    eyebrow: "Exemples d’usage",
+    title: "Une application peut prendre des formes très différentes.",
+    description:
+      "Le périmètre dépend du processus retenu. Voici trois exemples de situations qui peuvent être clarifiées puis équipées.",
+    items: [
+      {
+        title: "Suivi d’interventions",
+        description: "Planifier, attribuer et suivre une intervention jusqu’à sa clôture.",
+      },
+      {
+        title: "Demandes clients",
+        description: "Centraliser une demande, son statut et les prochaines actions.",
+      },
+      {
+        title: "Pilotage d’activité",
+        description: "Réunir les priorités, les informations utiles et les points à traiter.",
+      },
     ],
   },
   method: {
-    title: "Une méthode courte et concrète",
+    eyebrow: "La méthode",
+    title: "Quatre étapes pour passer du problème à une solution cadrée.",
     steps: [
       {
         title: "Comprendre",
-        description:
-          "Observer le fonctionnement actuel, les informations utilisées et les moments où le travail s’arrête.",
+        description: "Observer le processus actuel, les outils utilisés et les moments où le travail ralentit.",
       },
       {
         title: "Simplifier",
-        description:
-          "Retirer les étapes inutiles, les doubles saisies et les validations qui n’apportent rien.",
+        description: "Retirer les étapes inutiles et clarifier les informations, les rôles et les décisions.",
       },
       {
-        title: "Définir",
-        description:
-          "Clarifier qui fait quoi, avec quelles informations et dans quelles situations une décision doit être remontée.",
+        title: "Prototyper",
+        description: "Rendre le futur fonctionnement concret avant d’engager la réalisation.",
       },
       {
-        title: "Préparer",
-        description:
-          "Formaliser le processus et préparer les éléments nécessaires à sa mise en place, sans engager une réalisation non cadrée.",
+        title: "Réaliser",
+        description: "Construire le périmètre validé et ajuster l’application sur les usages retenus.",
       },
     ],
   },
-  results: {
-    title: "Ce que vous obtenez",
-    items: [
-      "Un processus plus simple à comprendre et à suivre.",
-      "Des responsabilités et des règles de décision explicites.",
-      "Les informations essentielles réunies au bon endroit.",
-      "Une base claire pour réaliser les ajustements retenus, si vous souhaitez aller plus loin.",
-    ],
-  },
-  commercialModel: {
-    title: "Un cadre commercial défini avant de commencer",
-    items: [
+  commercialFrame: {
+    eyebrow: "Tarif, support et garanties",
+    title: "Une offre claire, sans abonnement obligatoire.",
+    pricing: {
+      label: "Votre application métier",
+      value: "2 500 €",
+      tax: "HT",
+      prefix: "À partir de",
+      notes: ["Paiement unique", "Aucun abonnement obligatoire"],
+    },
+    included: {
+      title: "Inclus dans votre application",
+      items: [
+        "Analyse de vos besoins",
+        "Prototype fonctionnel",
+        "Votre identité visuelle",
+        "Vos fonctionnalités métier",
+        "Automatisations essentielles",
+        "Mise en ligne et formation",
+        "30 jours de corrections après livraison",
+      ],
+    },
+    support: [
       {
-        title: "Cadrage au forfait",
-        description:
-          "Le périmètre du cadrage et ce qui vous sera remis sont définis avant son démarrage.",
+        title: "Support à la demande",
+        description: "Interventions ponctuelles facturées à l’heure, sans engagement.",
+        price: "110 €/heure",
       },
       {
-        title: "Réalisation séparée",
-        description:
-          "Si une réalisation complémentaire est utile, elle est estimée au TJM dans une enveloppe que vous validez avant tout engagement.",
+        title: "Forfait mensuel (optionnel)",
+        description: "Maintenance, corrections et petites évolutions incluses.",
+        price: "99 €/mois",
+      },
+    ],
+    guarantees: [
+      {
+        title: "Hébergement sécurisé",
+        description: "Données sauvegardées et protégées.",
       },
       {
-        title: "Maintenance séparée",
-        description:
-          "La maintenance et les évolutions éventuelles font l’objet d’un cadre distinct. Elles ne sont jamais incluses implicitement.",
+        title: "Conformité RGPD",
+        description: "Respect de la réglementation et confidentialité garantie.",
       },
-    ],
-  },
-  exclusions: {
-    title: "Ce que nous ne lançons pas sans cadrage",
-    items: [
-      "Une transformation globale de l’entreprise sans priorité claire.",
-      "Une accumulation de logiciels avant d’avoir simplifié le fonctionnement.",
-      "Une réalisation dont les livrables et les responsabilités ne sont pas définis.",
-      "Une maintenance supposée incluse sans durée ni périmètre convenus.",
-    ],
-  },
-  audience: {
-    title: "Pour qui cet accompagnement est utile",
-    items: [
-      "Vous êtes dirigeant d’une petite entreprise et un processus récurrent dépend encore trop de vous.",
-      "Votre équipe perd du temps à chercher une information, attendre une validation ou refaire une tâche.",
-      "Vous voulez améliorer une priorité réelle avant d’ajouter de nouveaux outils.",
-      "Vous pouvez consacrer du temps aux décisions nécessaires et désigner les personnes concernées.",
+      {
+        title: "Application 100 % à vous",
+        description: "Vous êtes propriétaire de votre application et de vos données.",
+      },
+      {
+        title: "Support réactif",
+        description: "Une équipe disponible et à votre écoute.",
+      },
     ],
   },
   faq: {
     title: "Questions fréquentes",
     items: [
       {
-        question: "Faut-il revoir toute l’entreprise ?",
-        answer:
-          "Non. Nous commençons par un processus prioritaire et un problème observable. Le reste n’entre pas dans le périmètre sans décision explicite.",
+        question: "Faut-il déjà savoir exactement quoi développer ?",
+        answer: "Non. Nous partons du processus qui vous ralentit et du résultat attendu. Le cadrage sert précisément à définir la solution utile.",
       },
       {
-        question: "Qu’est-ce qui est remis à la fin du cadrage ?",
-        answer:
-          "Le livrable exact est défini avant le démarrage. Il comprend au minimum le processus clarifié, les responsabilités, les règles de décision et les actions retenues.",
+        question: "Devons-nous changer tous nos outils ?",
+        answer: "Non. Nous regardons d’abord ce qui peut être simplifié et conservé. Un nouvel outil n’est retenu que s’il répond au besoin cadré.",
       },
       {
-        question: "Demaa peut-il réaliser les ajustements ensuite ?",
-        answer:
-          "Oui, lorsque c’est pertinent et accepté séparément. La réalisation est alors estimée au TJM dans une enveloppe validée avant de commencer.",
+        question: "Comment la réalisation est-elle estimée ?",
+        answer: "L’application métier est proposée à partir de 2 500 € HT, en paiement unique. Le périmètre exact est défini avant de commencer.",
       },
       {
         question: "La maintenance est-elle incluse ?",
-        answer:
-          "Non. Si une maintenance ou des évolutions sont nécessaires, leur durée, leur périmètre et leurs conditions sont définis séparément.",
+        answer: "Trente jours de corrections après livraison sont inclus. Ensuite, vous choisissez entre le support à la demande et le forfait mensuel optionnel.",
       },
     ],
   },
   finalCta: {
-    title: "Parlons du processus qui vous ralentit aujourd’hui",
-    description:
-      "Décrivez votre situation lors d’un premier échange. Nous vérifierons ensemble si ce format d’accompagnement est adapté à votre priorité.",
-    label: "Parler de votre situation",
+    title: "Parlons du processus qui vous ralentit.",
+    description: "Expliquez-nous où le travail se bloque. Nous vérifierons ensemble si une application sur mesure est la bonne réponse.",
+    label: "Discuter",
+    reassurance: "Premier échange offert · Sans engagement",
   },
 } as const;

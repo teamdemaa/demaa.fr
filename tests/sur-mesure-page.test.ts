@@ -19,39 +19,70 @@ import SurMesurePage, { metadata } from "@/app/sur-mesure/page";
 import { surMesurePageContent as content } from "@/lib/sur-mesure-page-content";
 
 describe("Sur mesure commercial page", () => {
-  it("publishes the canonical metadata without an invented price or offer", () => {
+  it("publishes canonical metadata for the application offer", () => {
     expect(metadata).toMatchObject({
-      title: "Sur mesure pour simplifier vos processus | Demaa",
+      title: "Application métier sur mesure | Demaa",
       alternates: { canonical: "/sur-mesure" },
       openGraph: { url: "/sur-mesure", type: "website" },
     });
-    expect(JSON.stringify(metadata)).not.toMatch(/price|offer|€|TJM/);
   });
 
-  it("renders a short complete journey with one accessible final booking action", () => {
+  it("renders the concise eight-section journey and both booking actions", () => {
     const markup = renderToStaticMarkup(createElement(SurMesurePage));
 
     expect(markup).toContain("<h1");
-    expect(markup).toContain(content.title);
-    expect(markup).toContain(content.criticalProcess.title);
+    expect(markup).toContain("Transformez un processus qui vous ralentit en une");
+    expect(markup).toContain("application simple.");
+    expect(markup).toContain(content.hero.introduction);
+    expect(markup).toContain(content.startingPoint.title);
+    expect(markup).toContain(content.benefits.title);
+    expect(markup).toContain(content.examples.title);
     expect(content.method.steps.map(({ title }) => title)).toEqual([
       "Comprendre",
       "Simplifier",
-      "Définir",
-      "Préparer",
+      "Prototyper",
+      "Réaliser",
     ]);
-    expect(markup).toContain(content.results.title);
-    expect(markup).toContain(content.commercialModel.title);
-    expect(markup).toContain(content.exclusions.title);
-    expect(markup).toContain(content.audience.title);
+    expect(markup).toContain(content.commercialFrame.title);
     expect(markup).toContain(content.faq.title);
+    expect(markup.match(/<section/g)).toHaveLength(8);
     expect(markup.match(/<details/g)).toHaveLength(4);
-    expect(markup.match(/Parler de votre situation/g)).toHaveLength(1);
-    expect(markup).toContain('data-source="Page sur mesure"');
+    expect(markup.match(/>Discuter</g)).toHaveLength(2);
+    expect(markup).toContain('data-source="Page sur mesure — Hero"');
+    expect(markup).toContain('data-source="Page sur mesure — Final"');
     expect(markup).toContain('aria-label="Navigation principale"');
-    expect(markup).not.toMatch(/deux ateliers|outil web métier|marketplace|partenariat/i);
-    expect(markup).not.toMatch(/\d[\d\s]*(?:€|euros?)/i);
+    expect(markup).toContain("Exemple d’interface");
+    expect(markup).not.toMatch(/marketplace|partenariat|200 dirigeants|30 000 €|1 500 €/i);
     expect(markup).not.toContain('type="application/ld+json"');
+  });
+
+  it("contains only the explicitly approved price, support and guarantee copy", () => {
+    expect(content.commercialFrame.pricing).toEqual({
+      label: "Votre application métier",
+      value: "2 500 €",
+      tax: "HT",
+      prefix: "À partir de",
+      notes: ["Paiement unique", "Aucun abonnement obligatoire"],
+    });
+    expect(content.commercialFrame.included.items).toEqual([
+      "Analyse de vos besoins",
+      "Prototype fonctionnel",
+      "Votre identité visuelle",
+      "Vos fonctionnalités métier",
+      "Automatisations essentielles",
+      "Mise en ligne et formation",
+      "30 jours de corrections après livraison",
+    ]);
+    expect(content.commercialFrame.support.map(({ price }) => price)).toEqual([
+      "110 €/heure",
+      "99 €/mois",
+    ]);
+    expect(content.commercialFrame.guarantees.map(({ title }) => title)).toEqual([
+      "Hébergement sécurisé",
+      "Conformité RGPD",
+      "Application 100 % à vous",
+      "Support réactif",
+    ]);
   });
 
   it("keeps attribution, the sitemap and the former permanent redirect aligned", async () => {
@@ -63,7 +94,8 @@ describe("Sur mesure commercial page", () => {
     ]);
 
     expect(pageSource).toContain("<OrganisationSessionBookingButton");
-    expect(pageSource).toContain('source="Page sur mesure"');
+    expect(pageSource).toContain('source="Page sur mesure — Hero"');
+    expect(pageSource).toContain('source="Page sur mesure — Final"');
     expect(pageSource).not.toContain("sourceIsAuthoritative");
     expect(buttonSource).toContain('searchParams.get("source") || source');
     expect(buttonSource).toContain("getFilloutAttributionParameters");
