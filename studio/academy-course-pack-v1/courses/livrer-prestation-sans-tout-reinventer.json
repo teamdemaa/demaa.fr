@@ -1,0 +1,187 @@
+{
+  "version": "1.0",
+  "kind": "course",
+  "status": "ready",
+  "identity": {
+    "slug": "livrer-prestation-sans-tout-reinventer",
+    "title": "Livrer une prestation sans tout réinventer",
+    "shortTitle": "Livrer sans tout réinventer",
+    "category": "Organisation & opérations",
+    "promise": "Transformer une prestation vendue en un déroulement clair, répétable et rassurant pour le client comme pour l’équipe.",
+    "audience": "Dirigeants de TPE et prestataires de services B2B",
+    "durationMinutes": 9,
+    "card": {
+      "section": "Organiser son entreprise",
+      "title": "Livrer une prestation sans tout réinventer",
+      "meta": "6 notions · environ 9 min",
+      "image": null,
+      "imageAlt": "Une prestation avance du démarrage à la clôture selon quatre étapes claires."
+    }
+  },
+  "outline": [
+    {
+      "title": "Démarrer",
+      "description": "Aligner le résultat, les rôles et les informations nécessaires."
+    },
+    {
+      "title": "Produire",
+      "description": "Faire avancer la prestation avec des étapes et des validations visibles."
+    },
+    {
+      "title": "Clôturer",
+      "description": "Confirmer le résultat, transmettre et préparer la suite."
+    }
+  ],
+  "lessons": [
+    {
+      "id": "prestation-commence-vente",
+      "type": "concept",
+      "eyebrow": "Notion 1 sur 6",
+      "title": "La livraison commence au moment de la vente",
+      "body": "Le client se fie au résultat, au périmètre et au calendrier annoncés avant la signature. Si ces éléments changent silencieusement pendant la réalisation, la prestation paraît désorganisée même lorsque le travail technique est bon. Le passage de la vente à la production doit conserver les mêmes engagements.",
+      "visual": {
+        "type": "comparison",
+        "data": {
+          "leftLabel": "Vendu",
+          "leftText": "Résultat, périmètre et calendrier",
+          "operator": "=",
+          "rightLabel": "Livré",
+          "rightText": "Les mêmes engagements rendus visibles"
+        }
+      },
+      "takeaway": "Une prestation bien livrée tient de manière visible la promesse faite avant la signature."
+    },
+    {
+      "id": "prestation-demarrage",
+      "type": "method",
+      "eyebrow": "Notion 2 sur 6",
+      "title": "Organiser un démarrage qui enlève les zones floues",
+      "body": "Au démarrage, confirmez le résultat attendu, les interlocuteurs, les informations à fournir, les étapes, les dates et le canal de communication. Le client doit savoir ce que l’équipe attend de lui et quand il sera sollicité. Un démarrage clair évite des jours de recherche et de relance.",
+      "visual": {
+        "type": "metrics",
+        "data": {
+          "fields": ["Résultat attendu", "Interlocuteurs", "Informations nécessaires", "Étapes et dates", "Canal de communication"]
+        }
+      },
+      "takeaway": "Le démarrage transforme les engagements commerciaux en règles de travail partagées."
+    },
+    {
+      "id": "prestation-etapes-repetables",
+      "type": "method",
+      "eyebrow": "Notion 3 sur 6",
+      "title": "Standardiser les étapes, pas chaque geste",
+      "body": "Définissez les grandes étapes qui reviennent dans presque toutes les missions : collecte, diagnostic, production, validation et remise. À l’intérieur, l’expertise reste adaptable. Le but n’est pas de rendre tous les clients identiques, mais d’éviter de reconstruire l’organisation à chaque projet.",
+      "visual": {
+        "type": "steps",
+        "data": {
+          "steps": [
+            { "number": "01", "title": "Collecter", "detail": "Réunir les bonnes informations" },
+            { "number": "02", "title": "Produire", "detail": "Réaliser selon le périmètre" },
+            { "number": "03", "title": "Valider", "detail": "Confirmer avant d’avancer" },
+            { "number": "04", "title": "Remettre", "detail": "Livrer et transmettre" }
+          ]
+        }
+      },
+      "takeaway": "Une structure répétable libère l’expertise au lieu de l’enfermer."
+    },
+    {
+      "id": "prestation-validations",
+      "type": "method",
+      "eyebrow": "Notion 4 sur 6",
+      "title": "Faire valider aux moments où une erreur coûterait cher",
+      "body": "Placez une validation avant les décisions difficiles à corriger : périmètre confirmé, première direction, version intermédiaire ou mise en production. Précisez qui valide, quoi et avant quelle date. Trop de validations ralentissent ; aucune validation reporte tous les désaccords à la fin.",
+      "visual": {
+        "type": "timeline",
+        "data": {
+          "steps": [
+            { "timing": "Départ", "label": "Périmètre confirmé" },
+            { "timing": "Milieu", "label": "Direction ou version intermédiaire" },
+            { "timing": "Avant remise", "label": "Résultat final validé" }
+          ]
+        }
+      },
+      "takeaway": "Une validation utile arrive juste avant qu’un changement devienne long ou coûteux."
+    },
+    {
+      "id": "prestation-changement-perimetre",
+      "type": "decision",
+      "eyebrow": "Notion 5 sur 6",
+      "title": "Traiter les nouvelles demandes sans les absorber silencieusement",
+      "body": "Lorsqu’une demande sort du périmètre, reformulez-la et indiquez son effet sur le délai, le prix ou les autres priorités. Le client peut alors remplacer un élément, ajouter une option ou conserver le plan initial. Accepter sans décider transforme une bonne relation en dépassement invisible.",
+      "visual": {
+        "type": "comparison",
+        "data": {
+          "leftLabel": "Dans le périmètre",
+          "leftText": "Réaliser selon le plan prévu",
+          "operator": "≠",
+          "rightLabel": "Nouvelle demande",
+          "rightText": "Décider de l’effet sur le prix, le délai ou les priorités"
+        }
+      },
+      "takeaway": "Un changement de périmètre doit devenir une décision visible, pas du travail gratuit."
+    },
+    {
+      "id": "prestation-cloture",
+      "type": "example",
+      "eyebrow": "Notion 6 sur 6",
+      "title": "Clôturer en confirmant le résultat et la prochaine étape",
+      "body": "À la fin, récapitulez ce qui a été livré, les décisions prises, les accès ou documents transmis et les points restant à surveiller. Demandez au client ce qui lui sera utile ensuite. Une clôture nette évite les demandes infinies et ouvre naturellement la maintenance, le renouvellement ou une nouvelle mission.",
+      "visual": {
+        "type": "steps",
+        "data": {
+          "steps": [
+            { "number": "01", "title": "Confirmer", "detail": "Résultat et livrables remis" },
+            { "number": "02", "title": "Transmettre", "detail": "Accès, documents et responsabilités" },
+            { "number": "03", "title": "Préparer", "detail": "Suivi, renouvellement ou prochaine mission" }
+          ]
+        }
+      },
+      "takeaway": "La clôture rend la valeur visible et sépare clairement la mission terminée de la suite éventuelle."
+    }
+  ],
+  "recap": {
+    "title": "Le cours en quatre phrases",
+    "points": [
+      "La livraison doit conserver le résultat, le périmètre et le calendrier annoncés avant la signature.",
+      "Un bon démarrage clarifie les rôles, les informations, les étapes et les dates.",
+      "Des validations peu nombreuses protègent les décisions difficiles à corriger et rendent les changements visibles.",
+      "Une clôture claire confirme la valeur livrée et prépare la suite sans prolonger indéfiniment la mission."
+    ]
+  },
+  "quiz": {
+    "title": "Avez-vous bien retenu ?",
+    "questions": [
+      {
+        "id": "prestation-demarrage-objectif",
+        "question": "À quoi sert principalement le démarrage de la prestation ?",
+        "choices": [
+          { "id": "aligner", "label": "Aligner le résultat, les rôles, les informations et les dates" },
+          { "id": "presentation", "label": "Présenter à nouveau toute l’histoire de l’entreprise" }
+        ],
+        "correctChoiceId": "aligner",
+        "explanation": "Le démarrage transforme la promesse commerciale en règles de travail comprises par tous."
+      },
+      {
+        "id": "prestation-standardiser",
+        "question": "Que faut-il standardiser en priorité ?",
+        "choices": [
+          { "id": "gestes", "label": "Tous les gestes de l’expert, sans exception" },
+          { "id": "etapes", "label": "Les grandes étapes, les entrées et les validations" }
+        ],
+        "correctChoiceId": "etapes",
+        "explanation": "Une trame répétable structure le projet tout en laissant l’expertise s’adapter à la situation."
+      },
+      {
+        "id": "prestation-hors-perimetre",
+        "question": "Que faire lorsqu’une nouvelle demande sort du périmètre ?",
+        "choices": [
+          { "id": "absorber", "label": "L’absorber silencieusement pour préserver la relation" },
+          { "id": "decider", "label": "Rendre son effet visible et faire décider le client" }
+        ],
+        "correctChoiceId": "decider",
+        "explanation": "Le client peut arbitrer le prix, le délai, les priorités ou le maintien du plan initial."
+      }
+    ]
+  },
+  "action": null
+}

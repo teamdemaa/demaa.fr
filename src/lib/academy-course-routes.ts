@@ -5,11 +5,14 @@ export const ACADEMY_CONTENT_SLUGS = [
   "construire-systeme-marketing-vente",
   "transformer-demande-en-client",
   "deleguer-sans-perdre-le-controle",
+  "construire-offre-facile-a-acheter",
+  "livrer-prestation-sans-tout-reinventer",
   "cabinet-conseil-acquisition",
-  "formation-b2b-acquisition",
   "maintenance-informatique-acquisition",
-  "bureau-etudes-acquisition",
+  "cabinet-recrutement-acquisition",
   "nettoyage-professionnel-acquisition",
+  "formation-b2b-acquisition",
+  "bureau-etudes-acquisition",
 ] as const;
 
 export const LEGACY_ACADEMY_SLUG_ALIASES = {

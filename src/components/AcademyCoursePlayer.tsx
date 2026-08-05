@@ -217,12 +217,22 @@ export default function AcademyCoursePlayer({ content }: AcademyCoursePlayerProp
                 {content.lessons[activeScreen.lessonIndex].body}
               </p>
 
-              <div className="mt-8 rounded-[1.5rem] bg-[#E7EEE8] px-5 py-6 sm:px-7 sm:py-7">
-                <AcademyLessonVisual lesson={content.lessons[activeScreen.lessonIndex]} />
-              </div>
+              {content.kind === "course" ? (
+                <div className="mt-8 rounded-[1.5rem] bg-[#E7EEE8] px-5 py-6 sm:px-7 sm:py-7">
+                  <AcademyLessonVisual lesson={content.lessons[activeScreen.lessonIndex]} />
+                </div>
+              ) : null}
 
-              <div className="mt-6 border-t border-dema-line/70 pt-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-dema-forest">À retenir</p>
+              <div
+                className={
+                  content.kind === "case-study"
+                    ? "mt-8 rounded-[1.5rem] bg-[#E7EEE8] px-5 py-5 sm:px-7 sm:py-6"
+                    : "mt-6 border-t border-dema-line/70 pt-5"
+                }
+              >
+                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-dema-forest">
+                  {content.kind === "case-study" ? "L’idée à retenir" : "À retenir"}
+                </p>
                 <p className="mt-1.5 font-medium leading-relaxed text-brand-blue">
                   {content.lessons[activeScreen.lessonIndex].takeaway}
                 </p>

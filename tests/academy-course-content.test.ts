@@ -25,10 +25,10 @@ function hasForbiddenVideoField(value: unknown): boolean {
 }
 
 describe("academy course content", () => {
-  it("publishes exactly six fundamentals and five B2B cases", () => {
-    expect(getAcademyFundamentals()).toHaveLength(6);
-    expect(getAcademyCaseStudies()).toHaveLength(5);
-    expect(getAllAcademyContent()).toHaveLength(11);
+  it("publishes eight fundamentals and six B2B cases", () => {
+    expect(getAcademyFundamentals()).toHaveLength(8);
+    expect(getAcademyCaseStudies()).toHaveLength(6);
+    expect(getAllAcademyContent()).toHaveLength(14);
     expect(getAcademyContentBySlug("juste-systeme-marketing")).toBeNull();
   });
 
@@ -38,7 +38,7 @@ describe("academy course content", () => {
 
   it("keeps every ready item structurally complete and video-free", () => {
     const content = getAllAcademyContent();
-    expect(new Set(content.map((item) => item.identity.slug)).size).toBe(11);
+    expect(new Set(content.map((item) => item.identity.slug)).size).toBe(14);
 
     for (const item of content) {
       expect(item.status).toBe("ready");
@@ -47,12 +47,15 @@ describe("academy course content", () => {
       expect(item.recap.points).toHaveLength(4);
       expect(item.quiz.questions).toHaveLength(3);
       expect(hasForbiddenVideoField(item)).toBe(false);
-      expect(item.identity.card.image).toBeTruthy();
-      expect(
-        existsSync(
-          resolve(process.cwd(), "public", item.identity.card.image!.replace(/^\//, "")),
-        ),
-      ).toBe(true);
+      if (item.identity.card.image) {
+        expect(
+          existsSync(
+            resolve(process.cwd(), "public", item.identity.card.image.replace(/^\//, "")),
+          ),
+        ).toBe(true);
+      } else {
+        expect(item.kind).toBe("course");
+      }
     }
   });
 

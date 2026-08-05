@@ -4,11 +4,14 @@ import pricing from "../../studio/academy-course-pack-v1/courses/fixer-ses-prix-
 import marketingSystem from "../../studio/academy-course-pack-v1/courses/construire-systeme-marketing-vente.json";
 import inboundToClient from "../../studio/academy-course-pack-v1/courses/transformer-demande-en-client.json";
 import delegation from "../../studio/academy-course-pack-v1/courses/deleguer-sans-perdre-le-controle.json";
+import offer from "../../studio/academy-course-pack-v1/courses/construire-offre-facile-a-acheter.json";
+import serviceDelivery from "../../studio/academy-course-pack-v1/courses/livrer-prestation-sans-tout-reinventer.json";
 import consultingCase from "../../studio/academy-course-pack-v1/cases/cabinet-conseil-acquisition.json";
 import trainingCase from "../../studio/academy-course-pack-v1/cases/formation-b2b-acquisition.json";
 import itMaintenanceCase from "../../studio/academy-course-pack-v1/cases/maintenance-informatique-acquisition.json";
 import engineeringCase from "../../studio/academy-course-pack-v1/cases/bureau-etudes-acquisition.json";
 import cleaningCase from "../../studio/academy-course-pack-v1/cases/nettoyage-professionnel-acquisition.json";
+import recruitmentCase from "../../studio/academy-course-pack-v1/cases/cabinet-recrutement-acquisition.json";
 import {
   ACADEMY_CONTENT_SLUGS,
   LEGACY_ACADEMY_SLUG_ALIASES,
@@ -104,14 +107,17 @@ const fundamentals = [
   marketingSystem,
   inboundToClient,
   delegation,
+  offer,
+  serviceDelivery,
 ] as unknown as AcademyContentDefinition[];
 
 const caseStudies = [
   consultingCase,
-  trainingCase,
   itMaintenanceCase,
-  engineeringCase,
+  recruitmentCase,
   cleaningCase,
+  trainingCase,
+  engineeringCase,
 ] as unknown as AcademyContentDefinition[];
 
 const allAcademyContent = [...fundamentals, ...caseStudies].filter(
