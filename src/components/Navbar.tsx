@@ -88,21 +88,6 @@ export default function Navbar({ minimal = false }: { minimal?: boolean }) {
                 <span>Systèmes</span>
               </Link>
               <Link
-                href="/academie"
-                aria-current={activeSection === "academy" ? "page" : undefined}
-                className={`${navbarTabBaseClassName} ${
-                  activeSection === "academy"
-                    ? navbarTabActiveClassName
-                    : navbarTabInactiveClassName
-                }`}
-              >
-                <BookOpen
-                  className="h-4 w-4 shrink-0"
-                  aria-hidden="true"
-                />
-                <span>Academy</span>
-              </Link>
-              <Link
                 href="/sur-mesure"
                 aria-current={activeSection === "sur-mesure" ? "page" : undefined}
                 className={`${navbarTabBaseClassName} ${
@@ -116,6 +101,21 @@ export default function Navbar({ minimal = false }: { minimal?: boolean }) {
                   aria-hidden="true"
                 />
                 <span>Sur mesure</span>
+              </Link>
+              <Link
+                href="/academie"
+                aria-current={activeSection === "academy" ? "page" : undefined}
+                className={`${navbarTabBaseClassName} ${
+                  activeSection === "academy"
+                    ? navbarTabActiveClassName
+                    : navbarTabInactiveClassName
+                }`}
+              >
+                <BookOpen
+                  className="h-4 w-4 shrink-0"
+                  aria-hidden="true"
+                />
+                <span>Academy</span>
               </Link>
             </div>
           </div>

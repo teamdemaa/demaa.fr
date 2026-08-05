@@ -46,6 +46,12 @@ describe("permanent systems, Academy and Sur mesure navbar", () => {
     expect(source).toContain("<span>Systèmes</span>");
     expect(source).toContain("<span>Academy</span>");
     expect(source).toContain("<span>Sur mesure</span>");
+    expect(source.indexOf("<span>Systèmes</span>")).toBeLessThan(
+      source.indexOf("<span>Sur mesure</span>"),
+    );
+    expect(source.indexOf("<span>Sur mesure</span>")).toBeLessThan(
+      source.indexOf("<span>Academy</span>"),
+    );
     expect(source).toContain('href="/sur-mesure"');
     expect(source).toContain('aria-current={activeSection === "systems"');
     expect(source).toContain('aria-current={activeSection === "academy"');
