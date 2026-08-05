@@ -14,9 +14,9 @@ const directoryLinks = [
 ];
 
 const resourceLinks = [
-  { label: "Systèmes opérationnels", href: "/kits-operationnels" },
+  { label: "Systèmes opérationnels", href: "/systemes-operationnels" },
   { label: "Modèles de documents", href: "/modeles-de-documents" },
-  { label: "Cours", href: "/cours" },
+  { label: "Académie", href: "/academie" },
   { label: "Aides & subventions", href: "/aides-et-subventions" },
 ];
 

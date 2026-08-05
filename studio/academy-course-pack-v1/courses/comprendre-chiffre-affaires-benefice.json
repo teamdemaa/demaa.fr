@@ -1,0 +1,116 @@
+{
+  "version": "1.0",
+  "kind": "course",
+  "status": "ready",
+  "identity": {
+    "slug": "comprendre-chiffre-affaires-benefice",
+    "title": "Pourquoi le chiffre d’affaires ne dit pas si l’entreprise gagne de l’argent",
+    "shortTitle": "Comprendre chiffre d’affaires et bénéfice",
+    "category": "Pilotage & finances",
+    "promise": "Distinguer chiffre d’affaires, marge et bénéfice pour savoir ce que chaque vente rapporte réellement à l’entreprise.",
+    "audience": "Dirigeants de TPE",
+    "durationMinutes": 9,
+    "card": {
+      "section": "Piloter son entreprise",
+      "title": "Comprendre chiffre d’affaires et bénéfice",
+      "meta": "6 notions · environ 9 min",
+      "image": "/images/academy/thumbnails/comprendre-chiffre-affaires-benefice-v1.png",
+      "imageAlt": "Calcul montrant comment cent mille euros de chiffre d’affaires peuvent aboutir à seulement cinq mille euros de bénéfice."
+    }
+  },
+  "outline": [
+    {
+      "title": "Comprendre",
+      "description": "Distinguer ventes, marge et bénéfice."
+    },
+    {
+      "title": "Calculer",
+      "description": "Retirer les charges et trouver le seuil d’équilibre."
+    },
+    {
+      "title": "Piloter",
+      "description": "Suivre les chiffres qui permettent de décider."
+    }
+  ],
+  "lessons": [
+    {
+      "id": "le-chiffre-qui-impressionne",
+      "type": "concept",
+      "eyebrow": "Notion 1 sur 6",
+      "title": "Le chiffre d’affaires mesure les ventes, pas ce que l’entreprise gagne",
+      "body": "Le chiffre d’affaires correspond à ce que l’entreprise a vendu hors taxes. Il ne déduit aucune charge. Une entreprise peut donc annoncer un volume de ventes important et terminer la période avec un bénéfice très faible, voire une perte.",
+      "visual": { "type": "comparison", "data": { "leftLabel": "Chiffre d’affaires", "leftText": "Ce qui a été vendu", "operator": "≠", "rightLabel": "Bénéfice", "rightText": "Ce qui reste après toutes les charges" } },
+      "takeaway": "Un chiffre d’affaires élevé ne garantit jamais que l’entreprise gagne réellement de l’argent."
+    },
+    {
+      "id": "equation-de-base",
+      "type": "concept",
+      "eyebrow": "Notion 2 sur 6",
+      "title": "Le bénéfice se trouve après toutes les charges",
+      "body": "Le calcul de base est simple : le chiffre d’affaires moins toutes les charges donne le résultat. Il faut donc retirer les achats, la production, la sous-traitance, les salaires, les locaux, les logiciels, les assurances, les intérêts et les impôts.",
+      "visual": { "type": "calculation", "data": { "formula": "Chiffre d’affaires − toutes les charges = résultat", "charges": ["Achats", "Production", "Salaires", "Locaux", "Outils", "Assurances"] } },
+      "takeaway": "Le chiffre d’affaires est le début du calcul ; le résultat se trouve tout en bas."
+    },
+    {
+      "id": "exemple-cent-mille-euros",
+      "type": "example",
+      "eyebrow": "Notion 3 sur 6",
+      "title": "100 000 € vendus peuvent produire seulement 5 000 € de bénéfice",
+      "body": "Une entreprise réalise 100 000 € de chiffre d’affaires. Les achats, la production et la sous-traitance coûtent 60 000 €. Il reste 40 000 € pour payer la structure. Les charges fixes représentent 35 000 €. Le bénéfice final est donc de 5 000 €.",
+      "visual": { "type": "calculation", "data": { "revenue": "100 000 €", "variableCosts": "60 000 €", "margin": "40 000 €", "fixedCosts": "35 000 €", "profit": "5 000 €" } },
+      "takeaway": "Ce qui compte n’est pas seulement ce qui est vendu, mais ce qu’il reste après tous les coûts."
+    },
+    {
+      "id": "vendre-plus-gagner-moins",
+      "type": "example",
+      "eyebrow": "Notion 4 sur 6",
+      "title": "Vendre plus peut faire gagner moins",
+      "body": "Un contrat supplémentaire apporte 20 000 € de chiffre d’affaires. Pour le livrer dans l’urgence, l’entreprise dépense 22 000 € en sous-traitance, heures supplémentaires et corrections. Les ventes augmentent, mais le résultat baisse de 2 000 €.",
+      "visual": { "type": "comparison", "data": { "leftLabel": "Chiffre d’affaires", "leftText": "+20 000 €", "operator": "mais", "rightLabel": "Résultat", "rightText": "−2 000 €" } },
+      "takeaway": "Une grosse vente non rentable reste une mauvaise vente pour l’entreprise."
+    },
+    {
+      "id": "calculer-le-point-mort",
+      "type": "method",
+      "eyebrow": "Notion 5 sur 6",
+      "title": "Le point mort indique combien il faut vendre avant de gagner de l’argent",
+      "body": "Si l’entreprise conserve 40 centimes de marge sur chaque euro vendu et supporte 35 000 € de charges fixes, elle doit réaliser environ 87 500 € de chiffre d’affaires pour atteindre l’équilibre. En dessous, elle perd de l’argent.",
+      "visual": { "type": "calculation", "data": { "fixedCosts": "35 000 €", "marginRate": "40 %", "formula": "35 000 € ÷ 40 %", "breakEvenRevenue": "87 500 €" } },
+      "takeaway": "Le point mort transforme les charges fixes en un objectif minimal de ventes compréhensible."
+    },
+    {
+      "id": "trois-chiffres-a-suivre",
+      "type": "decision",
+      "eyebrow": "Notion 6 sur 6",
+      "title": "Suivre la marge, le point mort et le résultat réel",
+      "body": "Suivez la marge en euros et en pourcentage pour chaque offre importante. Calculez votre point mort mensuel, puis vérifiez le résultat réel tous les mois. Gardez la trésorerie dans un suivi séparé, car elle répond à une autre question.",
+      "visual": { "type": "steps", "data": { "steps": [{ "number": "01", "title": "Marge", "detail": "La qualité économique des ventes" }, { "number": "02", "title": "Point mort", "detail": "Le minimum à vendre" }, { "number": "03", "title": "Résultat", "detail": "Ce que l’entreprise gagne réellement" }] } },
+      "takeaway": "Le chiffre d’affaires montre le volume ; la marge et le résultat permettent de décider."
+    }
+  ],
+  "recap": {
+    "title": "Le cours en quatre phrases",
+    "points": [
+      "Le chiffre d’affaires mesure les ventes et non le gain de l’entreprise.",
+      "La marge montre ce que les ventes laissent pour payer la structure.",
+      "Une vente mal tarifée peut augmenter le chiffre d’affaires tout en réduisant le résultat.",
+      "Le bénéfice est ce qui reste réellement après l’ensemble des charges."
+    ]
+  },
+  "quiz": {
+    "title": "Avez-vous bien retenu ?",
+    "questions": [
+      { "id": "definition-chiffre-affaires", "question": "Que mesure principalement le chiffre d’affaires ?", "choices": [{ "id": "ventes", "label": "Le volume des ventes hors taxes" }, { "id": "gain", "label": "Le gain final de l’entreprise" }], "correctChoiceId": "ventes", "explanation": "Le chiffre d’affaires additionne les ventes ; il ne retire encore aucune charge." },
+      { "id": "benefice-exemple", "question": "Dans l’exemple à 100 000 € de ventes, quel est le bénéfice final ?", "choices": [{ "id": "quarante", "label": "40 000 €" }, { "id": "cinq", "label": "5 000 €" }], "correctChoiceId": "cinq", "explanation": "Après 60 000 € de coûts variables puis 35 000 € de charges fixes, il reste 5 000 €." },
+      { "id": "utilite-point-mort", "question": "À quoi sert le point mort ?", "choices": [{ "id": "minimum", "label": "Connaître le minimum de ventes pour couvrir les charges" }, { "id": "tresorerie", "label": "Connaître le solde bancaire du jour" }], "correctChoiceId": "minimum", "explanation": "Le point mort indique le niveau de ventes nécessaire pour couvrir les charges et atteindre l’équilibre." }
+    ]
+  },
+  "action": {
+    "resourceType": "tool",
+    "resourceId": "levier",
+    "title": "Levier",
+    "description": "Un tableau de pilotage opérationnel pour suivre votre activité, votre marge, vos charges et votre résultat réel.",
+    "ctaLabel": "Recevoir Levier",
+    "deliveryMode": "email"
+  }
+}

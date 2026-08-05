@@ -1,0 +1,345 @@
+{
+  "id": "construire-systeme-marketing-vente",
+  "editorialVariant": "oumou-warm-v2",
+  "title": "Construire son système marketing et vente",
+  "shortTitle": "Des actions dispersées à un parcours commercial fiable.",
+  "courseTitle": "SYSTÈME MARKETING\nET VENTE",
+  "introVisual": {
+    "primaryLabel": "PROSPECTS",
+    "secondaryLabel": "CLIENTS"
+  },
+  "audience": "Dirigeants de TPE en France",
+  "status": "draft",
+  "format": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "targetDurationSeconds": 165
+  },
+  "editorialContract": {
+    "tone": "Chaleureux, lucide, bienveillant et constructif. Dire les choses clairement sans juger le dirigeant.",
+    "rule": "Une idée par écran. Chaque chiffre doit permettre de refaire le calcul.",
+    "screenTextRule": "Le texte à l’écran résume ou chiffre. Il ne retranscrit pas la narration.",
+    "pronouns": "Employer « on » pour les erreurs fréquentes et « vous » pour les actions.",
+    "marketingEthics": "Aider les personnes concernées à comprendre l’offre, vérifier si elle répond à leur problème et ne jamais forcer la décision."
+  },
+  "question": "Comment organiser un parcours simple pour attirer les personnes qui rencontrent le problème traité, vérifier si l’entreprise peut les aider, avancer avec elles et savoir ce qui fonctionne ?",
+  "scenes": [
+    {
+      "id": "systeme",
+      "title": "Un système, pas des actions isolées",
+      "targetSeconds": 23,
+      "narration": "On publie, on demande des recommandations, on lance une campagne, puis on envoie un devis dans l’urgence. Mais quand ces actions restent séparées, on ne sait plus ce qui attire les personnes qui ont besoin de ce qu’on propose, ni où les demandes se perdent. Le marketing ne compense pas un produit ou un service qui ne répond pas à un vrai besoin. Il aide les personnes concernées à comprendre ce que vous proposez et à vérifier si ça répond à leur problème. Un système marketing et vente organise ensuite la suite : comment ces personnes vous découvrent, comprennent votre offre et décident, sans pression, de continuer avec vous ou non.",
+      "onScreen": [
+        "Attirer",
+        "Qualifier",
+        "Vendre",
+        "Suivre"
+      ],
+      "visual": {
+        "type": "illustration",
+        "asset": "illustrations/casting-v2/04-construire-systeme-marketing-vente-clean.png",
+        "assetScale": 1.3,
+        "assetOffsetX": -15,
+        "layout": "text-left"
+      },
+      "beats": [
+        {
+          "id": "actions",
+          "startSeconds": 0,
+          "template": "statement",
+          "eyebrow": "Le problème",
+          "lines": [
+            "DES ACTIONS",
+            "SÉPARÉES"
+          ],
+          "accentIndex": 1
+        },
+        {
+          "id": "parcours",
+          "startSeconds": 12,
+          "cue": "Un système marketing",
+          "template": "timeline"
+        }
+      ]
+    },
+    {
+      "id": "cible",
+      "title": "Définir qui attirer",
+      "targetSeconds": 19,
+      "narration": "Avant de choisir un outil, posez trois choses à plat. Pour quelles personnes votre offre a-t-elle été conçue ? Quel problème concret rencontrent-elles ? Quel résultat pouvez-vous réellement les aider à obtenir ? Quand on parle à tout le monde, le message devient flou. En clair, votre message doit répondre à trois questions : pour qui, pour quel problème et pour quel résultat ?",
+      "onScreen": [
+        "Pour qui ?",
+        "Quel problème ?",
+        "Quel résultat ?"
+      ],
+      "visual": {
+        "type": "definition",
+        "layout": "center"
+      },
+      "beats": [
+        {
+          "id": "questions",
+          "startSeconds": 0,
+          "template": "chips",
+          "eyebrow": "Votre positionnement",
+          "title": "TROIS QUESTIONS",
+          "items": [
+            "POUR QUI ?",
+            "QUEL PROBLÈME ?",
+            "QUEL RÉSULTAT ?"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "entrees",
+      "title": "Choisir ses points d’entrée",
+      "targetSeconds": 19,
+      "narration": "Choisissez ensuite peu de canaux : un principal, puis éventuellement un complémentaire. Selon votre activité, ça peut être Google, la recommandation, la prospection directe, un réseau social ou du contenu utile. Chaque canal doit mener vers une prochaine étape claire : appeler, remplir un formulaire ou prendre rendez-vous. Être partout disperse le temps et le budget. Vous devez surtout savoir d’où viennent les demandes.",
+      "onScreen": [
+        "1 canal principal",
+        "1 action claire"
+      ],
+      "visual": {
+        "type": "definition",
+        "layout": "center"
+      },
+      "beats": [
+        {
+          "id": "canaux",
+          "startSeconds": 0,
+          "template": "chips",
+          "eyebrow": "Rester simple",
+          "title": "CHOISIR PEU DE CANAUX",
+          "items": [
+            "1 CANAL PRINCIPAL",
+            "1 CANAL COMPLÉMENTAIRE"
+          ]
+        },
+        {
+          "id": "action",
+          "startSeconds": 10,
+          "cue": "Chaque canal",
+          "template": "term",
+          "eyebrow": "À la sortie",
+          "term": "UNE ACTION CLAIRE",
+          "definition": "APPELER, REMPLIR, DEMANDER OU PRENDRE RENDEZ-VOUS"
+        }
+      ]
+    },
+    {
+      "id": "centraliser",
+      "title": "Centraliser toutes les opportunités",
+      "targetSeconds": 20,
+      "narration": "Faites ensuite arriver toutes les demandes au même endroit. Au départ, un tableur peut suffire. Pour chacune, notez la source, le besoin, la personne responsable, l’étape et la prochaine action avec sa date. Si les demandes restent éparpillées entre les e-mails, les messages et les carnets, on finit par en oublier. Le problème, c’est simplement l’absence de suivi commun.",
+      "onScreen": [
+        "Source",
+        "Besoin",
+        "Étape",
+        "Prochaine action"
+      ],
+      "visual": {
+        "type": "definition",
+        "layout": "center"
+      },
+      "beats": [
+        {
+          "id": "registre",
+          "startSeconds": 0,
+          "template": "chips",
+          "eyebrow": "Un seul endroit",
+          "title": "CHAQUE OPPORTUNITÉ",
+          "items": [
+            "SOURCE",
+            "BESOIN",
+            "ÉTAPE",
+            "PROCHAINE ACTION"
+          ]
+        },
+        {
+          "id": "memoire",
+          "startSeconds": 13,
+          "cue": "Si les demandes",
+          "template": "statement",
+          "eyebrow": "À éviter",
+          "lines": [
+            "NE PAS DÉPENDRE",
+            "DE LA MÉMOIRE"
+          ],
+          "accentIndex": 1
+        }
+      ]
+    },
+    {
+      "id": "qualifier",
+      "title": "Qualifier avant de proposer",
+      "targetSeconds": 20,
+      "narration": "Toutes les demandes n’ont pas besoin d’un devis tout de suite. Vérifiez cinq points : le besoin, l’urgence, le périmètre, la personne qui décide et les contraintes de délai ou de budget. Le but n’est ni d’interroger ni de pousser à l’achat. Vous vérifiez si votre entreprise peut réellement répondre au besoin. À la fin de la qualification, décidez : continuer, garder le contact, rediriger ou clôturer.",
+      "onScreen": [
+        "Continuer",
+        "Suivre",
+        "Rediriger",
+        "Clôturer"
+      ],
+      "visual": {
+        "type": "definition",
+        "layout": "center"
+      },
+      "beats": [
+        {
+          "id": "criteres",
+          "startSeconds": 0,
+          "template": "chips",
+          "eyebrow": "Avant le devis",
+          "title": "QUALIFIER LA DEMANDE",
+          "items": [
+            "BESOIN",
+            "URGENCE",
+            "DÉCIDEUR",
+            "CONTRAINTES"
+          ]
+        },
+        {
+          "id": "decision",
+          "startSeconds": 12,
+          "cue": "À la fin",
+          "template": "chips",
+          "eyebrow": "Décider",
+          "title": "UNE ISSUE CLAIRE",
+          "items": [
+            "CONTINUER",
+            "SUIVRE",
+            "REDIRIGER",
+            "CLÔTURER"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "avancer",
+      "title": "Faire avancer chaque opportunité",
+      "targetSeconds": 20,
+      "narration": "Gardez un parcours simple : nouvelle demande, à qualifier, qualifiée, proposition envoyée, puis gagnée ou perdue. Chaque opportunité, c’est-à-dire chaque demande encore ouverte, doit avoir une prochaine action et une date. Sinon, on accumule des dossiers « en cours » sans savoir s’il faut relancer ou arrêter. Dans les faits, ce parcours permet de savoir où en est chaque demande et d’éviter qu’elle disparaisse entre deux étapes.",
+      "onScreen": [
+        "Demande",
+        "Qualification",
+        "Proposition",
+        "Décision"
+      ],
+      "visual": {
+        "type": "timeline",
+        "layout": "center"
+      },
+      "beats": [
+        {
+          "id": "etapes",
+          "startSeconds": 0,
+          "template": "timeline"
+        },
+        {
+          "id": "prochaine",
+          "startSeconds": 10,
+          "cue": "Chaque opportunité",
+          "template": "term",
+          "eyebrow": "La règle",
+          "term": "PROCHAINE ACTION",
+          "definition": "TOUJOURS ASSOCIÉE À UNE DATE"
+        }
+      ]
+    },
+    {
+      "id": "mesurer",
+      "title": "Lire le parcours avec des chiffres",
+      "targetSeconds": 25,
+      "narration": "Prenons une entreprise qui reçoit trente demandes en un mois. Dix-huit viennent de personnes qui rencontrent le problème traité. Dix donnent lieu à un échange, six à une proposition et trois deviennent clientes : trente, dix-huit, dix, six, trois. Ce résultat n’est ni une norme ni une promesse. Il montre où les demandes s’arrêtent. Si peu correspondent au problème, revoyez le ciblage. Si elles bloquent plus tard, regardez le délai de réponse, la compréhension du besoin, la proposition ou la relance.",
+      "onScreen": [
+        "30 demandes",
+        "18 qualifiées",
+        "6 propositions",
+        "3 clients"
+      ],
+      "visual": {
+        "type": "growth",
+        "layout": "center"
+      },
+      "beats": [
+        {
+          "id": "entonnoir",
+          "startSeconds": 0,
+          "template": "metrics",
+          "eyebrow": "Exemple sur un mois",
+          "cards": [
+            {
+              "label": "Demandes",
+              "value": "30"
+            },
+            {
+              "label": "Qualifiées",
+              "value": "18"
+            },
+            {
+              "label": "Clients",
+              "value": "3",
+              "accent": true
+            }
+          ]
+        },
+        {
+          "id": "diagnostic",
+          "startSeconds": 14,
+          "cue": "Ce résultat",
+          "template": "statement",
+          "eyebrow": "Le but",
+          "lines": [
+            "LOCALISER",
+            "LES PERTES"
+          ],
+          "accentIndex": 1
+        }
+      ]
+    },
+    {
+      "id": "piloter",
+      "title": "Piloter le système chaque semaine",
+      "targetSeconds": 24,
+      "narration": "Une fois par semaine, consacrez trente minutes au parcours. Regardez les nouvelles demandes, celles sans prochaine action, les réponses en attente et les ventes perdues. Suivez quatre chiffres : les demandes par source, celles qui correspondent au problème traité, les propositions devenues ventes et la durée du parcours. Puis prenez une seule décision d’amélioration. Le but n’est pas de mettre plus de pression. C’est d’aider les personnes concernées à comprendre votre offre et de voir ce qui fonctionne.",
+      "onScreen": [
+        "Un parcours clair",
+        "Une prochaine action",
+        "Une amélioration par semaine"
+      ],
+      "visual": {
+        "type": "closing",
+        "layout": "actions"
+      },
+      "beats": [
+        {
+          "id": "revue",
+          "startSeconds": 0,
+          "template": "action",
+          "number": "30 MIN",
+          "title": "REVUE HEBDOMADAIRE",
+          "detail": "DEMANDES · ACTIONS · DÉCISIONS",
+          "tags": [
+            "SOURCE",
+            "QUALIFICATION",
+            "CONVERSION"
+          ]
+        },
+        {
+          "id": "amelioration",
+          "startSeconds": 14,
+          "cue": "Puis prenez",
+          "template": "statement",
+          "eyebrow": "Chaque semaine",
+          "lines": [
+            "UNE DÉCISION",
+            "D’AMÉLIORATION"
+          ],
+          "accentIndex": 1
+        }
+      ]
+    }
+  ]
+}

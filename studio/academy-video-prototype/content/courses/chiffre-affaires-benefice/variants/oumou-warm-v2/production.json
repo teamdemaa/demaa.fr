@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "course": "chiffre-affaires-benefice",
+  "variant": "oumou-warm-v2",
+  "status": "render-ready",
+  "createdAt": "2026-07-29T09:17:22Z",
+  "editorial": {
+    "baselineSnapshot": "content/editorial-snapshots/2026-07-29-pre-oumou-warm-v2/chiffre-affaires-benefice/course.json",
+    "baselineSha256": "d0b1b183fe049137f938699c33a631049be7807eef14c0dc0f9ec9dd08d00535",
+    "creditsConsumed": 0
+  },
+  "futureVoiceProfile": {
+    "voiceId": "9HTNhnzaWIkUTIhaJhPM",
+    "speed": 1.15,
+    "stability": 0.55,
+    "similarityBoost": 0.78,
+    "style": 0,
+    "speakerBoost": true,
+    "postprocessRate": 1
+  },
+  "updatedAt": "2026-07-29T14:34:05.615Z",
+  "script": {
+    "approvedAt": "2026-07-29T10:52:50.441Z",
+    "sha256": "adb6c5f930794256b684a8e05b14692a353c275e23b530c22e95731e9622bb51"
+  },
+  "voice": {
+    "approvedAt": "2026-07-29T12:00:21.986Z",
+    "voiceId": "9HTNhnzaWIkUTIhaJhPM",
+    "modelId": "eleven_multilingual_v2",
+    "sourceAudioSha256": "304b1b3a8b5a92bd2f65c4631c4a7bf1994958e9219c043d076aa09f8f8618e8",
+    "alignmentSha256": "d36eeabe25a382df6c549b195eeb4b1f019d706f74b4c1ae0fd8fb8da17f03c5",
+    "sourceTimingSha256": "1df00cba0f5189f2f973f68ca572be9e61430d622b7e0e90fdc68897269ef2c3"
+  },
+  "render": {
+    "approvedAt": "2026-07-29T14:34:05.615Z",
+    "pace": 1,
+    "audioSha256": "304b1b3a8b5a92bd2f65c4631c4a7bf1994958e9219c043d076aa09f8f8618e8",
+    "timingSha256": "c434e101afc5d1d454f0a73838db3bb997b7f42bbcb3473c6e1fff60541ce7b3"
+  }
+}

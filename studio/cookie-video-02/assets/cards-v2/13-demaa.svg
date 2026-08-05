@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <rect width="1080" height="1920" fill="#F4EDDF"/>
+  <text x="84" y="706" fill="#2B1914" font-family="Gambetta,Satoshi,Arial,sans-serif" font-size="186" font-weight="300" font-style="italic" letter-spacing="-5">Demaa</text>
+  <text x="84" y="792" fill="#2B1914" font-family="Satoshi,Arial,sans-serif" font-size="29" font-weight="700" letter-spacing="4.5">AVEC DEUX A</text>
+  <circle cx="84" cy="932" r="10" fill="#F2BC52"/>
+  <text x="84" y="1138" fill="#2B1914" font-family="Satoshi,Arial,sans-serif" font-size="62" font-weight="700" letter-spacing="-1.5">Une idée.</text>
+  <text x="84" y="1224" fill="#2B1914" font-family="Satoshi,Arial,sans-serif" font-size="62" font-weight="700" letter-spacing="-1.5">Un plan.</text>
+  <text x="84" y="1310" fill="#2B1914" font-family="Satoshi,Arial,sans-serif" font-size="62" font-weight="700" letter-spacing="-1.5">Une direction.</text>
+</svg>

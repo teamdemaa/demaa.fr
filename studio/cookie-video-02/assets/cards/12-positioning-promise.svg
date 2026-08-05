@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <rect width="1080" height="1920" fill="#F4EDDF"/>
+  <path d="M80 104H232M80 104V256M1000 1816H848M1000 1816V1664" stroke="#2B1914" stroke-width="2" opacity=".28"/>
+  <text x="80" y="154" fill="#C17A29" font-family="Satoshi,Arial,sans-serif" font-size="28" font-weight="700" letter-spacing="5">LA PROMESSE</text>
+  <text x="80" y="725" fill="#2B1914" font-family="Satoshi,Arial,sans-serif" font-size="126" font-weight="700">
+    <tspan x="80">Pas healthy.</tspan>
+  </text>
+  <text x="80" y="995" fill="#2B1914" font-family="Satoshi,Arial,sans-serif" font-size="78" font-weight="600">
+    <tspan x="80">Bonne jusqu’à</tspan>
+    <tspan x="80" dy="102">la dernière bouchée.</tspan>
+  </text>
+  <circle cx="929" cy="161" r="18" fill="#F2BC52"/>
+</svg>

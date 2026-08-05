@@ -138,7 +138,7 @@ export default function SystemSearchHero({
 
     trackSelection(index, "keyboard");
     setIsOpen(false);
-    router.push(`/kit-operationnel/${suggestion.slug}`);
+    router.push(`/systemes-operationnels/${suggestion.slug}`);
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
@@ -248,7 +248,7 @@ export default function SystemSearchHero({
                   <Link
                     key={suggestion.slug}
                     id={`system-search-suggestion-${suggestion.slug}`}
-                    href={`/kit-operationnel/${suggestion.slug}`}
+                    href={`/systemes-operationnels/${suggestion.slug}`}
                     prefetch
                     onClick={() => trackSelection(index, "click")}
                     onMouseEnter={() => setActiveIndex(index)}

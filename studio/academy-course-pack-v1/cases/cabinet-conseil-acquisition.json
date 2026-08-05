@@ -1,0 +1,139 @@
+{
+  "version": "1.0",
+  "kind": "case-study",
+  "status": "ready",
+  "identity": {
+    "slug": "cabinet-conseil-acquisition",
+    "title": "Cabinet de conseil — construire une acquisition au-delà du bouche-à-oreille",
+    "shortTitle": "Cabinet de conseil",
+    "category": "Acquisition",
+    "promise": "Voir comment un cabinet peut obtenir des demandes plus régulières sans publier tous les jours ni démarcher au hasard.",
+    "audience": "Entreprises qui vendent leurs prestations après un échange ou un devis",
+    "durationMinutes": 8,
+    "card": {
+      "section": "Cas concrets",
+      "title": "Cabinet de conseil — sortir du bouche-à-oreille",
+      "meta": "Cas concret · environ 8 min",
+      "image": "/images/courses/cases-acquisition/cabinet-conseil-storyboard-v1.png",
+      "imageAlt": "Aïcha construit un système d’acquisition pour son cabinet de conseil."
+    }
+  },
+  "lessons": [
+    {
+      "id": "conseil-situation",
+      "type": "case",
+      "eyebrow": "La situation",
+      "title": "Une expertise reconnue, mais des demandes irrégulières",
+      "body": "Dans ce cas fictif, Aïcha réalise neuf missions sur dix grâce aux recommandations. Son cabinet fonctionne, mais deux mois calmes suffisent à fragiliser le planning. Le problème n’est pas la qualité du conseil : aucune porte d’entrée simple ne permet à un nouveau prospect de comprendre quand l’appeler.",
+      "visual": {
+        "type": "story",
+        "data": {
+          "image": "/images/courses/cases-acquisition/cabinet-conseil-storyboard-v1.png",
+          "panel": 1,
+          "alt": "Aïcha constate que les demandes de son cabinet dépendent du bouche-à-oreille."
+        }
+      },
+      "takeaway": "Le bouche-à-oreille reste précieux, mais il ne doit pas être la seule porte d’entrée."
+    },
+    {
+      "id": "conseil-attirer",
+      "type": "method",
+      "eyebrow": "1 · Attirer",
+      "title": "Partir d’un problème précis, pas d’une liste de services",
+      "body": "Aïcha choisit un seul problème prioritaire : une équipe qui grandit mais perd du temps dans son organisation. Une page explique les signes du problème, montre un exemple et propose un diagnostic de 30 minutes. Deux publications utiles par mois et les recommandations du réseau renvoient vers cette même page.",
+      "visual": {
+        "type": "story",
+        "data": {
+          "image": "/images/courses/cases-acquisition/cabinet-conseil-storyboard-v1.png",
+          "panel": 2,
+          "alt": "Aïcha présente à une dirigeante une réponse à un problème précis."
+        }
+      },
+      "takeaway": "Un message précis et une seule suite à donner rendent l’acquisition plus simple à piloter."
+    },
+    {
+      "id": "conseil-transformer",
+      "type": "example",
+      "eyebrow": "2 · Transformer",
+      "title": "Qualifier avant de préparer une proposition",
+      "body": "Le formulaire demande le problème, son impact, la décision attendue et l’échéance. Pendant le diagnostic, Aïcha vérifie ces quatre points avant de proposer une mission. Dans cet exemple pédagogique, 12 demandes donnent 8 diagnostics, puis 4 propositions et 2 missions signées.",
+      "visual": {
+        "type": "story",
+        "data": {
+          "image": "/images/courses/cases-acquisition/cabinet-conseil-storyboard-v1.png",
+          "panel": 3,
+          "alt": "Aïcha qualifie un besoin avant de préparer une proposition."
+        }
+      },
+      "takeaway": "Une proposition n’est préparée qu’après avoir confirmé le besoin, l’impact, la décision et le délai."
+    },
+    {
+      "id": "conseil-fideliser",
+      "type": "method",
+      "eyebrow": "3 · Fidéliser",
+      "title": "Transformer la fin de mission en prochaine étape",
+      "body": "À la clôture, Aïcha remet une synthèse des résultats et fixe un point 30 jours plus tard. Une revue trimestrielle permet ensuite d’identifier le prochain besoin. La recommandation n’est demandée qu’après un résultat visible, avec une phrase simple pour expliquer le profil recherché.",
+      "visual": {
+        "type": "story",
+        "data": {
+          "image": "/images/courses/cases-acquisition/cabinet-conseil-storyboard-v1.png",
+          "panel": 4,
+          "alt": "Aïcha réalise un suivi avec sa cliente après la mission."
+        }
+      },
+      "takeaway": "La fidélisation commence avant que la relation ne s’arrête complètement."
+    }
+  ],
+  "recap": {
+    "title": "Le cas en quatre phrases",
+    "points": [
+      "Le réseau reste utile, mais une seconde porte d’entrée rend les demandes plus régulières.",
+      "Une page répond à un problème précis et propose un seul diagnostic.",
+      "Le cabinet qualifie le besoin avant de consacrer du temps à une proposition.",
+      "La fin de mission prépare le suivi, la prochaine mission et la recommandation."
+    ]
+  },
+  "quiz": {
+    "title": "Avez-vous bien retenu ?",
+    "questions": [
+      {
+        "id": "conseil-message",
+        "question": "Que doit présenter la page d’acquisition en priorité ?",
+        "choices": [
+          { "id": "services", "label": "Toute la liste des services" },
+          { "id": "probleme", "label": "Un problème précis et un diagnostic" }
+        ],
+        "correctChoiceId": "probleme",
+        "explanation": "Une entrée précise aide le prospect à se reconnaître et à savoir quelle action effectuer."
+      },
+      {
+        "id": "conseil-proposition",
+        "question": "Quand préparer une proposition commerciale ?",
+        "choices": [
+          { "id": "immediatement", "label": "Dès qu’un formulaire arrive" },
+          { "id": "qualification", "label": "Après avoir qualifié le besoin et la décision" }
+        ],
+        "correctChoiceId": "qualification",
+        "explanation": "La qualification évite de produire gratuitement des propositions pour des demandes trop vagues."
+      },
+      {
+        "id": "conseil-recommandation",
+        "question": "Quel est le meilleur moment pour demander une recommandation ?",
+        "choices": [
+          { "id": "avant", "label": "Avant le début de la mission" },
+          { "id": "resultat", "label": "Après qu’un résultat visible a été obtenu" }
+        ],
+        "correctChoiceId": "resultat",
+        "explanation": "Un client recommande plus naturellement lorsqu’il peut expliquer le résultat obtenu."
+      }
+    ]
+  },
+  "action": {
+    "resourceType": "template",
+    "resourceId": "pilotage-marketing-vente",
+    "title": "Tableau de pilotage Marketing & Vente",
+    "description": "Un modèle simple pour suivre les demandes, les diagnostics, les propositions, les relances et les signatures.",
+    "ctaLabel": "Ouvrir le tableau",
+    "deliveryMode": "external"
+  }
+}

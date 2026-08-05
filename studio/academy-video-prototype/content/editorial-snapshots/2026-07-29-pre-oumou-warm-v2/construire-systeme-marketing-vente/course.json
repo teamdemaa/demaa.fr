@@ -1,0 +1,342 @@
+{
+  "id": "construire-systeme-marketing-vente",
+  "title": "Construire son système marketing et vente",
+  "shortTitle": "Des actions dispersées à un parcours commercial fiable.",
+  "courseTitle": "SYSTÈME MARKETING\nET VENTE",
+  "introVisual": {
+    "primaryLabel": "PROSPECTS",
+    "secondaryLabel": "CLIENTS"
+  },
+  "audience": "Dirigeants de TPE en France",
+  "status": "draft",
+  "format": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "targetDurationSeconds": 165
+  },
+  "editorialContract": {
+    "tone": "Professeur expérimenté, calme, direct, humain. Aucun jargon non expliqué.",
+    "rule": "Une idée par écran. Chaque chiffre doit permettre de refaire le calcul.",
+    "screenTextRule": "Le texte à l’écran résume ou chiffre. Il ne retranscrit pas la narration."
+  },
+  "question": "Comment organiser un parcours simple pour attirer les bons prospects, les qualifier, les convertir et savoir ce qui fonctionne réellement ?",
+  "scenes": [
+    {
+      "id": "systeme",
+      "title": "Un système, pas des actions isolées",
+      "targetSeconds": 23,
+      "narration": "Une publication, une recommandation, une campagne, puis un devis envoyé dans l’urgence. Beaucoup d’entreprises font du marketing et de la vente comme une succession d’actions séparées. Le problème n’est pas toujours le manque de demandes. C’est souvent l’absence de chemin clair entre une personne qui découvre l’entreprise et une personne qui devient cliente. Un système marketing et vente, c’est ce chemin, avec des étapes, des règles et quelques indicateurs.",
+      "onScreen": [
+        "Attirer",
+        "Qualifier",
+        "Vendre",
+        "Suivre"
+      ],
+      "visual": {
+        "type": "illustration",
+        "asset": "illustrations/casting-v2/04-construire-systeme-marketing-vente-clean.png",
+        "assetScale": 1.3,
+        "assetOffsetX": -15,
+        "layout": "text-left"
+      },
+      "beats": [
+        {
+          "id": "actions",
+          "startSeconds": 0,
+          "template": "statement",
+          "eyebrow": "Le problème",
+          "lines": [
+            "DES ACTIONS",
+            "SÉPARÉES"
+          ],
+          "accentIndex": 1
+        },
+        {
+          "id": "parcours",
+          "startSeconds": 12,
+          "cue": "Un système marketing",
+          "template": "timeline"
+        }
+      ]
+    },
+    {
+      "id": "cible",
+      "title": "Définir qui attirer",
+      "targetSeconds": 19,
+      "narration": "Le système commence avant les outils. Choisissez le type de client que vous voulez attirer, le problème prioritaire qu’il cherche à résoudre et le résultat que vous pouvez réellement l’aider à obtenir. Si vous vous adressez à tout le monde, votre message devient vague et chaque échange commercial recommence de zéro. Votre positionnement doit répondre simplement à trois questions : pour qui, pour quel problème et pour quel résultat ?",
+      "onScreen": [
+        "Pour qui ?",
+        "Quel problème ?",
+        "Quel résultat ?"
+      ],
+      "visual": {
+        "type": "definition",
+        "layout": "center"
+      },
+      "beats": [
+        {
+          "id": "questions",
+          "startSeconds": 0,
+          "template": "chips",
+          "eyebrow": "Votre positionnement",
+          "title": "TROIS QUESTIONS",
+          "items": [
+            "POUR QUI ?",
+            "QUEL PROBLÈME ?",
+            "QUEL RÉSULTAT ?"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "entrees",
+      "title": "Choisir ses points d’entrée",
+      "targetSeconds": 19,
+      "narration": "Choisissez ensuite peu de canaux. Un canal principal, puis éventuellement un canal complémentaire. Cela peut être Google, la recommandation, la prospection directe, les réseaux sociaux ou du contenu utile. Chaque canal doit conduire vers une prochaine étape claire : appeler, remplir un formulaire, demander un diagnostic ou prendre rendez-vous. L’objectif n’est pas d’être partout. C’est de rendre l’entrée dans votre système simple et mesurable.",
+      "onScreen": [
+        "1 canal principal",
+        "1 action claire"
+      ],
+      "visual": {
+        "type": "definition",
+        "layout": "center"
+      },
+      "beats": [
+        {
+          "id": "canaux",
+          "startSeconds": 0,
+          "template": "chips",
+          "eyebrow": "Rester simple",
+          "title": "CHOISIR PEU DE CANAUX",
+          "items": [
+            "1 CANAL PRINCIPAL",
+            "1 CANAL COMPLÉMENTAIRE"
+          ]
+        },
+        {
+          "id": "action",
+          "startSeconds": 10,
+          "cue": "Chaque canal",
+          "template": "term",
+          "eyebrow": "À la sortie",
+          "term": "UNE ACTION CLAIRE",
+          "definition": "APPELER, REMPLIR, DEMANDER OU PRENDRE RENDEZ-VOUS"
+        }
+      ]
+    },
+    {
+      "id": "centraliser",
+      "title": "Centraliser toutes les opportunités",
+      "targetSeconds": 20,
+      "narration": "Chaque demande doit ensuite arriver au même endroit. Un tableur bien tenu peut suffire avant d’investir dans un logiciel plus complexe. Pour chaque opportunité, enregistrez la source, le besoin, le responsable, l’étape actuelle et la prochaine action avec sa date. Si les demandes restent dispersées entre les e-mails, les messages et les carnets personnels, votre système dépend de la mémoire. Et la mémoire constitue un outil commercial assez peu fiable.",
+      "onScreen": [
+        "Source",
+        "Besoin",
+        "Étape",
+        "Prochaine action"
+      ],
+      "visual": {
+        "type": "definition",
+        "layout": "center"
+      },
+      "beats": [
+        {
+          "id": "registre",
+          "startSeconds": 0,
+          "template": "chips",
+          "eyebrow": "Un seul endroit",
+          "title": "CHAQUE OPPORTUNITÉ",
+          "items": [
+            "SOURCE",
+            "BESOIN",
+            "ÉTAPE",
+            "PROCHAINE ACTION"
+          ]
+        },
+        {
+          "id": "memoire",
+          "startSeconds": 13,
+          "cue": "Si les demandes",
+          "template": "statement",
+          "eyebrow": "À éviter",
+          "lines": [
+            "NE PAS DÉPENDRE",
+            "DE LA MÉMOIRE"
+          ],
+          "accentIndex": 1
+        }
+      ]
+    },
+    {
+      "id": "qualifier",
+      "title": "Qualifier avant de proposer",
+      "targetSeconds": 20,
+      "narration": "Toutes les demandes ne doivent pas devenir immédiatement un devis. Vérifiez d’abord cinq éléments : le besoin, l’urgence, le périmètre, la personne qui décide et les contraintes de délai ou de budget. L’objectif n’est pas de transformer l’échange en interrogatoire. Il est de décider où investir votre temps commercial. À la fin de la qualification, choisissez clairement : continuer, entretenir la relation, rediriger ou clôturer.",
+      "onScreen": [
+        "Continuer",
+        "Suivre",
+        "Rediriger",
+        "Clôturer"
+      ],
+      "visual": {
+        "type": "definition",
+        "layout": "center"
+      },
+      "beats": [
+        {
+          "id": "criteres",
+          "startSeconds": 0,
+          "template": "chips",
+          "eyebrow": "Avant le devis",
+          "title": "QUALIFIER LA DEMANDE",
+          "items": [
+            "BESOIN",
+            "URGENCE",
+            "DÉCIDEUR",
+            "CONTRAINTES"
+          ]
+        },
+        {
+          "id": "decision",
+          "startSeconds": 12,
+          "cue": "À la fin",
+          "template": "chips",
+          "eyebrow": "Décider",
+          "title": "UNE ISSUE CLAIRE",
+          "items": [
+            "CONTINUER",
+            "SUIVRE",
+            "REDIRIGER",
+            "CLÔTURER"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "avancer",
+      "title": "Faire avancer chaque opportunité",
+      "targetSeconds": 20,
+      "narration": "Utilisez un parcours commercial très simple : nouvelle demande, à qualifier, qualifiée, proposition envoyée, gagnée ou perdue. Chaque opportunité ouverte doit posséder une prochaine action et une date. Sans cela, « en cours » devient rapidement un cimetière de prospects oubliés. Le marketing crée des opportunités. La vente les fait avancer. Le système garantit qu’aucune opportunité ne disparaît silencieusement entre les deux.",
+      "onScreen": [
+        "Demande",
+        "Qualification",
+        "Proposition",
+        "Décision"
+      ],
+      "visual": {
+        "type": "timeline",
+        "layout": "center"
+      },
+      "beats": [
+        {
+          "id": "etapes",
+          "startSeconds": 0,
+          "template": "timeline"
+        },
+        {
+          "id": "prochaine",
+          "startSeconds": 10,
+          "cue": "Chaque opportunité",
+          "template": "term",
+          "eyebrow": "La règle",
+          "term": "PROCHAINE ACTION",
+          "definition": "TOUJOURS ASSOCIÉE À UNE DATE"
+        }
+      ]
+    },
+    {
+      "id": "mesurer",
+      "title": "Lire le parcours avec des chiffres",
+      "targetSeconds": 25,
+      "narration": "Prenons une petite entreprise qui reçoit trente demandes pendant un mois. Dix-huit correspondent réellement à sa cible. Dix donnent lieu à un échange commercial. Six reçoivent une proposition et trois deviennent clientes. Ce résultat n’est pas une promesse. Il sert à localiser les pertes. Si très peu de demandes sont qualifiées, revoyez le ciblage. Si les prospects qualifiés n’avancent pas, examinez le délai de réponse, la proposition ou la relance. Vous savez enfin où agir.",
+      "onScreen": [
+        "30 demandes",
+        "18 qualifiées",
+        "6 propositions",
+        "3 clients"
+      ],
+      "visual": {
+        "type": "growth",
+        "layout": "center"
+      },
+      "beats": [
+        {
+          "id": "entonnoir",
+          "startSeconds": 0,
+          "template": "metrics",
+          "eyebrow": "Exemple sur un mois",
+          "cards": [
+            {
+              "label": "Demandes",
+              "value": "30"
+            },
+            {
+              "label": "Qualifiées",
+              "value": "18"
+            },
+            {
+              "label": "Clients",
+              "value": "3",
+              "accent": true
+            }
+          ]
+        },
+        {
+          "id": "diagnostic",
+          "startSeconds": 14,
+          "cue": "Ce résultat",
+          "template": "statement",
+          "eyebrow": "Le but",
+          "lines": [
+            "LOCALISER",
+            "LES PERTES"
+          ],
+          "accentIndex": 1
+        }
+      ]
+    },
+    {
+      "id": "piloter",
+      "title": "Piloter le système chaque semaine",
+      "targetSeconds": 24,
+      "narration": "Une fois par semaine, consacrez trente minutes au système. Vérifiez les nouvelles demandes, les opportunités sans prochaine action, les décisions en attente et les raisons des ventes perdues. Suivez seulement quatre indicateurs : les demandes par source, le taux de qualification, le passage des propositions aux clients et la durée moyenne du parcours. Puis prenez une décision d’amélioration. Un système marketing et vente ne consiste pas à faire davantage de bruit. Il consiste à transformer des actions dispersées en un parcours fiable, suivi et améliorable.",
+      "onScreen": [
+        "Un parcours clair",
+        "Une prochaine action",
+        "Une amélioration par semaine"
+      ],
+      "visual": {
+        "type": "closing",
+        "layout": "actions"
+      },
+      "beats": [
+        {
+          "id": "revue",
+          "startSeconds": 0,
+          "template": "action",
+          "number": "30 MIN",
+          "title": "REVUE HEBDOMADAIRE",
+          "detail": "DEMANDES · ACTIONS · DÉCISIONS",
+          "tags": [
+            "SOURCE",
+            "QUALIFICATION",
+            "CONVERSION"
+          ]
+        },
+        {
+          "id": "amelioration",
+          "startSeconds": 14,
+          "cue": "Puis prenez",
+          "template": "statement",
+          "eyebrow": "Chaque semaine",
+          "lines": [
+            "UNE DÉCISION",
+            "D’AMÉLIORATION"
+          ],
+          "accentIndex": 1
+        }
+      ]
+    }
+  ]
+}

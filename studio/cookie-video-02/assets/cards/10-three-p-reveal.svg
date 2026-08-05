@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <rect width="1080" height="1920" fill="#F4EDDF"/>
+  <path d="M80 104H232M80 104V256M1000 1816H848M1000 1816V1664" stroke="#2B1914" stroke-width="2" opacity=".28"/>
+  <text x="80" y="154" fill="#2B1914" font-family="Satoshi,Arial,sans-serif" font-size="28" font-weight="700" letter-spacing="5">LE PLAN / 3P</text>
+  <g font-family="Satoshi,Arial,sans-serif" fill="#2B1914">
+    <text x="80" y="530" font-size="38" font-weight="700" fill="#C17A29">01</text>
+    <text x="80" y="625" font-size="80" font-weight="700">POSITIONNEMENT</text>
+    <line x1="80" y1="685" x2="1000" y2="685" stroke="#2B1914" opacity=".18"/>
+    <text x="80" y="890" font-size="38" font-weight="700" fill="#F2BC52">02</text>
+    <text x="80" y="985" font-size="80" font-weight="700">PROMOTION</text>
+    <line x1="80" y1="1045" x2="1000" y2="1045" stroke="#2B1914" opacity=".18"/>
+    <text x="80" y="1250" font-size="38" font-weight="700" fill="#8A2133">03</text>
+    <text x="80" y="1345" font-size="80" font-weight="700">PRODUIT</text>
+  </g>
+  <circle cx="932" cy="158" r="18" fill="#F2BC52"/>
+</svg>

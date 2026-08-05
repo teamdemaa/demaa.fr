@@ -1,0 +1,182 @@
+{
+  "version": 1,
+  "course": "gestion-tresorerie",
+  "strictNarrativeEntrances": true,
+  "frame": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30
+  },
+  "safeZone": {
+    "x": 240,
+    "y": 0,
+    "width": 1440,
+    "height": 1080
+  },
+  "thresholds": {
+    "continuityScalePercent": 5,
+    "continuityCentroidPixels": 24,
+    "minimumCopyGapPixels": 48
+  },
+  "slots": {
+    "character-single": {
+      "kind": "character-single",
+      "targetVisibleHeight": 520,
+      "tolerancePercent": 5,
+      "center": {
+        "x": 1305,
+        "y": 540
+      }
+    },
+    "character-single-c1-primary": {
+      "kind": "character-single",
+      "targetVisibleHeight": 520,
+      "tolerancePercent": 5,
+      "center": {
+        "x": 1183,
+        "y": 540
+      }
+    }
+  },
+  "assets": {
+    "illustrations/casting-v2/01-gestion-tresorerie-canonical-v2.png": {
+      "sha256": "04f48845e3d3ba7a15f0999725d605946f845e02552e825825102e4a9dd845e7",
+      "imageWidth": 1536,
+      "imageHeight": 1024,
+      "alphaThreshold": 8,
+      "alphaBoundingBox": {
+        "x": 154,
+        "y": 50,
+        "width": 1209,
+        "height": 896
+      }
+    },
+    "illustrations/casting-v2/01b-gestion-tresorerie-decalage-char4-clean.png": {
+      "sha256": "c3ac609b198aac770a8756648c256cec2d50ebf92a03dabf9534c29fa6f1409b",
+      "imageWidth": 1536,
+      "imageHeight": 1024,
+      "alphaThreshold": 8,
+      "alphaBoundingBox": {
+        "x": 309,
+        "y": 150,
+        "width": 1015,
+        "height": 740
+      }
+    },
+    "illustrations/casting-v2/01c-gestion-tresorerie-decisions-char7-clean.png": {
+      "sha256": "f38d3099597487dbb4c5346c76747e4e69a4570f943fefe5db4147d6388ada00",
+      "imageWidth": 1536,
+      "imageHeight": 1024,
+      "alphaThreshold": 8,
+      "alphaBoundingBox": {
+        "x": 203,
+        "y": 87,
+        "width": 1099,
+        "height": 861
+      }
+    }
+  },
+  "assetProvenance": {
+    "illustrations/casting-v2/01-gestion-tresorerie-canonical-v2.png": {
+      "source": "illustrations/casting-v2/01-gestion-tresorerie-canonical-v2.svg",
+      "sourceSha256": "719f743f1c5b212c64c3eee66735d35c209461e90c4e9af5c619df92a247de24",
+      "outputSha256": "04f48845e3d3ba7a15f0999725d605946f845e02552e825825102e4a9dd845e7",
+      "transform": {
+        "name": "canonical-svg-native-export",
+        "version": 1,
+        "alphaPolicy": "native-vector-antialiasing",
+        "alphaThreshold": null,
+        "dilationRadius": 0,
+        "morphology": "none",
+        "filter": "none",
+        "scale": 1,
+        "strokeWidth": 4,
+        "linecap": "round",
+        "linejoin": "round",
+        "palette": {
+          "white": [255, 255, 255],
+          "sage": [215, 227, 218]
+        },
+        "quality": {
+          "characterBoundingBoxHeight": 764,
+          "equivalentCoreStroke": 3.421,
+          "antialiasEnvelope": 4.3941,
+          "coreToEnvelopeRatio": 0.7942,
+          "alphaLevels": 256,
+          "densityWithinGlobalBoundingBox": 0.0686
+        },
+        "semanticGroups": {
+          "measurement": "native SVG group isolation at alpha threshold 8",
+          "character": {
+            "id": "character",
+            "alphaBoundingBox": {
+              "x": 296,
+              "y": 50,
+              "width": 750,
+              "height": 764
+            }
+          },
+          "props": {
+            "id": "props",
+            "alphaBoundingBox": {
+              "x": 154,
+              "y": 485,
+              "width": 1209,
+              "height": 461
+            }
+          },
+          "global": {
+            "alphaBoundingBox": {
+              "x": 154,
+              "y": 50,
+              "width": 1209,
+              "height": 896
+            }
+          }
+        }
+      }
+    }
+  },
+  "placements": {
+    "intro-transition/paradoxe": {
+      "asset": "illustrations/casting-v2/01-gestion-tresorerie-canonical-v2.png",
+      "slot": "character-single-c1-primary",
+      "copyBounds": {
+        "x": 392,
+        "y": 190,
+        "width": 392,
+        "height": 700
+      }
+    },
+    "scene/paradoxe": {
+      "asset": "illustrations/casting-v2/01-gestion-tresorerie-canonical-v2.png",
+      "slot": "character-single-c1-primary",
+      "copyBounds": {
+        "x": 392,
+        "y": 190,
+        "width": 392,
+        "height": 700
+      }
+    },
+    "beat/deux-realites/distinction": {
+      "asset": "illustrations/casting-v2/01b-gestion-tresorerie-decalage-char4-clean.png",
+      "slot": "character-single",
+      "copyBounds": {
+        "x": 260,
+        "y": 190,
+        "width": 640,
+        "height": 700
+      }
+    },
+    "beat/decisions/introduction": {
+      "asset": "illustrations/casting-v2/01c-gestion-tresorerie-decisions-char7-clean.png",
+      "slot": "character-single",
+      "copyBounds": {
+        "x": 260,
+        "y": 190,
+        "width": 640,
+        "height": 700
+      }
+    }
+  }
+}

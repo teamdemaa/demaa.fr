@@ -1,0 +1,301 @@
+{
+  "version": 1,
+  "kind": "NarrativeBeatContract",
+  "course": "gestion-tresorerie",
+  "variant": "oumou-warm-v2",
+  "immutableSources": {
+    "script": {
+      "file": "content/courses/gestion-tresorerie/variants/oumou-warm-v2/course.json",
+      "sha256": "f2490a32dad7100c84e121abe2ede0b9f5c131897ff9fb187a0546e60392d1a8"
+    },
+    "audio": {
+      "file": "public/courses/gestion-tresorerie/variants/oumou-warm-v2/audio/narration.mp3",
+      "sha256": "53b557d7e271a54306288c4087924f179d4da22a3e570214f3e3bd8be3516ad6"
+    },
+    "alignment": {
+      "file": "public/courses/gestion-tresorerie/variants/oumou-warm-v2/audio/alignment.json",
+      "sha256": "6eb16f4ecc40864ebae5a879a7eacca3c7a72055102d5a6c89026cfa750a1d7d"
+    },
+    "timing": {
+      "file": "content/courses/gestion-tresorerie/variants/oumou-warm-v2/timing.generated.json",
+      "sha256": "c587007a252ec49fe87b51adbeb8be808e957464a7d7a4fd3c550e42a0b855ca"
+    }
+  },
+  "renderAudio": {
+    "file": "public/courses/gestion-tresorerie/variants/oumou-warm-v2/audio/candidates/c1-mastering-v2/narration-mastered.wav",
+    "sha256": "44fb08899317cd122c5690d011a3b8ac3426dbc2063c7c9ffd03a52670a13ce3",
+    "provenance": "c1-mastering-v2 déjà validé, aucun crédit vocal"
+  },
+  "policy": {
+    "sceneStartTrigger": "first beat starts exactly at scene boundary",
+    "cueLeadSeconds": 0.25,
+    "cueLeadToleranceSeconds": 0.02,
+    "hiddenElementDelayFrames": 0
+  },
+  "beats": [
+    {
+      "sceneId": "paradoxe",
+      "beatId": "scene",
+      "trigger": {"type": "scene-start", "cue": null},
+      "sourcePhrase": "Une entreprise peut être rentable et quand même manquer d’argent pour payer ses charges à la fin du mois.",
+      "sourcePhraseRange": {"sceneRelativeStart": 0, "sceneRelativeEnd": 104, "absoluteStart": 0, "absoluteEnd": 104},
+      "sceneStartSeconds": 0,
+      "cueAudioSeconds": 0,
+      "visualStartSeconds": 0,
+      "visualLeadSeconds": 0,
+      "elements": ["onScreen.0:Rentable.", "onScreen.1:Mais sans trésorerie."]
+    },
+    {
+      "sceneId": "deux-realites",
+      "beatId": "distinction",
+      "trigger": {"type": "scene-start", "cue": null},
+      "sourcePhrase": "Le résultat mesure ce que l’activité a gagné sur une période.",
+      "sourcePhraseRange": {"sceneRelativeStart": 0, "sceneRelativeEnd": 60, "absoluteStart": 295, "absoluteEnd": 355},
+      "sceneStartSeconds": 12.0285,
+      "cueAudioSeconds": 12.168,
+      "visualStartSeconds": 12.0285,
+      "visualLeadSeconds": 0.1395,
+      "elements": ["line.0:RÉSULTAT", "line.1:≠", "line.2:TRÉSORERIE"]
+    },
+    {
+      "sceneId": "deux-realites",
+      "beatId": "definitions",
+      "trigger": {"type": "cue", "cue": "La trésorerie mesure"},
+      "sourcePhrase": "La trésorerie mesure",
+      "sourcePhraseRange": {"sceneRelativeStart": 62, "sceneRelativeEnd": 81, "absoluteStart": 357, "absoluteEnd": 376},
+      "sceneStartSeconds": 12.0285,
+      "cueAudioSeconds": 14.664,
+      "visualStartSeconds": 14.414,
+      "visualLeadSeconds": 0.25,
+      "elements": ["eyebrow:Deux mesures différentes", "left:RÉSULTAT|Ce que l’activité a gagné", "sign:≠", "right:TRÉSORERIE|Ce qui est disponible"]
+    },
+    {
+      "sceneId": "facturer-encaisser",
+      "beatId": "cycle",
+      "trigger": {"type": "scene-start", "cue": null},
+      "sourcePhrase": "Dans les faits, vous réalisez le travail, vous envoyez la facture, puis le client paie plus tard.",
+      "sourcePhraseRange": {"sceneRelativeStart": 0, "sceneRelativeEnd": 96, "absoluteStart": 697, "absoluteEnd": 793},
+      "sceneStartSeconds": 28.521,
+      "cueAudioSeconds": 28.643,
+      "visualStartSeconds": 28.521,
+      "visualLeadSeconds": 0.122,
+      "elements": ["timeline.0:Facturé", "timeline.1:Délai", "timeline.2:Encaissé"]
+    },
+    {
+      "sceneId": "facturer-encaisser",
+      "beatId": "sorties",
+      "trigger": {"type": "cue", "cue": "Entre-temps"},
+      "sourcePhrase": "Entre-temps",
+      "sourcePhraseRange": {"sceneRelativeStart": 98, "sceneRelativeEnd": 108, "absoluteStart": 795, "absoluteEnd": 805},
+      "sceneStartSeconds": 28.521,
+      "cueAudioSeconds": 32.706,
+      "visualStartSeconds": 32.456,
+      "visualLeadSeconds": 0.25,
+      "elements": ["eyebrow:Pendant le délai de paiement", "title:Les sorties continuent.", "chip.0:SALAIRES", "chip.1:CHARGES", "chip.2:LOYER", "chip.3:FOURNISSEURS"]
+    },
+    {
+      "sceneId": "exemple",
+      "beatId": "mission",
+      "trigger": {"type": "scene-start", "cue": null},
+      "sourcePhrase": "Prenons une petite société de services.",
+      "sourcePhraseRange": {"sceneRelativeStart": 0, "sceneRelativeEnd": 38, "absoluteStart": 992, "absoluteEnd": 1030},
+      "sceneStartSeconds": 41.227999999999994,
+      "cueAudioSeconds": 41.321,
+      "visualStartSeconds": 41.227999999999994,
+      "visualLeadSeconds": 0.093,
+      "elements": ["eyebrow:Un exemple concret", "left:MISSION FACTURÉE|30 000 €", "right:GAIN FINAL|+8 000 €"]
+    },
+    {
+      "sceneId": "exemple",
+      "beatId": "besoin",
+      "trigger": {"type": "cue", "cue": "Mais le client règle"},
+      "sourcePhrase": "Mais le client règle",
+      "sourcePhraseRange": {"sceneRelativeStart": 210, "sceneRelativeEnd": 229, "absoluteStart": 1202, "absoluteEnd": 1221},
+      "sceneStartSeconds": 41.227999999999994,
+      "cueAudioSeconds": 50.028,
+      "visualStartSeconds": 49.778,
+      "visualLeadSeconds": 0.25,
+      "elements": ["eyebrow:Avant le paiement du client", "metric.0:Délai client|45 jours", "metric.1:À décaisser|16 000 €", "metric.2:Disponible en banque|9 000 €"]
+    },
+    {
+      "sceneId": "exemple",
+      "beatId": "benefice",
+      "trigger": {"type": "cue", "cue": "Son point bas"},
+      "sourcePhrase": "Son point bas",
+      "sourcePhraseRange": {"sceneRelativeStart": 368, "sceneRelativeEnd": 380, "absoluteStart": 1360, "absoluteEnd": 1372},
+      "sceneStartSeconds": 41.227999999999994,
+      "cueAudioSeconds": 56.576,
+      "visualStartSeconds": 56.326,
+      "visualLeadSeconds": 0.25,
+      "elements": ["eyebrow:Le point bas n’est pas", "line.0:+8 000 €", "line.1:DE BÉNÉFICE"]
+    },
+    {
+      "sceneId": "exemple",
+      "beatId": "point-bas",
+      "trigger": {"type": "cue", "cue": "Il est de moins sept mille"},
+      "sourcePhrase": "Il est de moins sept mille",
+      "sourcePhraseRange": {"sceneRelativeStart": 420, "sceneRelativeEnd": 445, "absoluteStart": 1412, "absoluteEnd": 1437},
+      "sceneStartSeconds": 41.227999999999994,
+      "cueAudioSeconds": 58.735,
+      "visualStartSeconds": 58.485,
+      "visualLeadSeconds": 0.25,
+      "elements": ["eyebrow:Le véritable point bas", "line.0:−7 000 €", "line.1:DE TRÉSORERIE"]
+    },
+    {
+      "sceneId": "exemple",
+      "beatId": "papier-banque",
+      "trigger": {"type": "cue", "cue": "Le papier dit"},
+      "sourcePhrase": "Le papier dit",
+      "sourcePhraseRange": {"sceneRelativeStart": 506, "sceneRelativeEnd": 518, "absoluteStart": 1498, "absoluteEnd": 1510},
+      "sceneStartSeconds": 41.227999999999994,
+      "cueAudioSeconds": 62.578,
+      "visualStartSeconds": 62.328,
+      "visualLeadSeconds": 0.25,
+      "elements": ["eyebrow:Au même moment", "left:LE PAPIER DIT|+8 000 €", "middle:MAIS", "right:LA BANQUE DIT|−7 000 €"]
+    },
+    {
+      "sceneId": "bfr",
+      "beatId": "decalage",
+      "trigger": {"type": "scene-start", "cue": null},
+      "sourcePhrase": "Ce décalage entre ce que l’entreprise paie et ce qu’elle encaisse s’appelle le besoin en fonds de roulement, ou BFR.",
+      "sourcePhraseRange": {"sceneRelativeStart": 0, "sceneRelativeEnd": 115, "absoluteStart": 1639, "absoluteEnd": 1754},
+      "sceneStartSeconds": 68.319,
+      "cueAudioSeconds": 68.673,
+      "visualStartSeconds": 68.319,
+      "visualLeadSeconds": 0.354,
+      "elements": ["eyebrow:Le décalage", "line.0:DÉPENSES", "line.1:→", "line.2:ENCAISSEMENTS"]
+    },
+    {
+      "sceneId": "bfr",
+      "beatId": "nom",
+      "trigger": {"type": "cue", "cue": "le besoin en fonds de roulement"},
+      "sourcePhrase": "le besoin en fonds de roulement",
+      "sourcePhraseRange": {"sceneRelativeStart": 76, "sceneRelativeEnd": 106, "absoluteStart": 1715, "absoluteEnd": 1745},
+      "sceneStartSeconds": 68.319,
+      "cueAudioSeconds": 71.819,
+      "visualStartSeconds": 71.569,
+      "visualLeadSeconds": 0.25,
+      "elements": ["eyebrow:Le décalage a un nom", "term:BFR", "definition:BESOIN EN FONDS DE ROULEMENT"]
+    },
+    {
+      "sceneId": "bfr",
+      "beatId": "origines",
+      "trigger": {"type": "cue", "cue": "Dans une activité de services"},
+      "sourcePhrase": "Dans une activité de services",
+      "sourcePhraseRange": {"sceneRelativeStart": 195, "sceneRelativeEnd": 223, "absoluteStart": 1834, "absoluteEnd": 1862},
+      "sceneStartSeconds": 68.319,
+      "cueAudioSeconds": 77.044,
+      "visualStartSeconds": 76.794,
+      "visualLeadSeconds": 0.25,
+      "elements": ["eyebrow:D’où vient le décalage ?", "left:SERVICES|Factures clients", "sign:+", "right:COMMERCE|Stocks"]
+    },
+    {
+      "sceneId": "croissance",
+      "beatId": "croissance",
+      "trigger": {"type": "scene-start", "cue": null},
+      "sourcePhrase": "C’est pour ça que la croissance peut tendre la trésorerie.",
+      "sourcePhraseRange": {"sceneRelativeStart": 0, "sceneRelativeEnd": 57, "absoluteStart": 1995, "absoluteEnd": 2052},
+      "sceneStartSeconds": 83.95750000000001,
+      "cueAudioSeconds": 84.01,
+      "visualStartSeconds": 83.95750000000001,
+      "visualLeadSeconds": 0.0525,
+      "elements": ["growth.0:Plus de ventes", "growth.1:peut demander", "growth.2:plus de trésorerie"]
+    },
+    {
+      "sceneId": "croissance",
+      "beatId": "cash",
+      "trigger": {"type": "cue", "cue": "Davantage de commandes"},
+      "sourcePhrase": "Davantage de commandes",
+      "sourcePhraseRange": {"sceneRelativeStart": 292, "sceneRelativeEnd": 313, "absoluteStart": 2287, "absoluteEnd": 2308},
+      "sceneStartSeconds": 83.95750000000001,
+      "cueAudioSeconds": 95.434,
+      "visualStartSeconds": 95.184,
+      "visualLeadSeconds": 0.25,
+      "elements": ["line.0:PLUS DE COMMANDES", "line.1:≠", "line.2:PLUS DE CASH"]
+    },
+    {
+      "sceneId": "point-bas",
+      "beatId": "rentabilite",
+      "trigger": {"type": "scene-start", "cue": null},
+      "sourcePhrase": "La question n’est donc pas seulement : est-ce que l’entreprise sera rentable cette année ?",
+      "sourcePhraseRange": {"sceneRelativeStart": 0, "sceneRelativeEnd": 89, "absoluteStart": 2419, "absoluteEnd": 2508},
+      "sceneStartSeconds": 100.368,
+      "cueAudioSeconds": 100.461,
+      "visualStartSeconds": 100.368,
+      "visualLeadSeconds": 0.093,
+      "elements": ["line.0:ÊTRE RENTABLE", "line.1:NE SUFFIT PAS"]
+    },
+    {
+      "sceneId": "point-bas",
+      "beatId": "question",
+      "trigger": {"type": "cue", "cue": "Elle est aussi"},
+      "sourcePhrase": "Elle est aussi",
+      "sourcePhraseRange": {"sceneRelativeStart": 91, "sceneRelativeEnd": 104, "absoluteStart": 2510, "absoluteEnd": 2523},
+      "sceneStartSeconds": 100.368,
+      "cueAudioSeconds": 104.211,
+      "visualStartSeconds": 103.961,
+      "visualLeadSeconds": 0.25,
+      "elements": ["low-point.0:Quel sera notre point le plus bas ?", "low-point.1:Quand ?", "low-point.2:Pourquoi ?"]
+    },
+    {
+      "sceneId": "decisions",
+      "beatId": "introduction",
+      "trigger": {"type": "scene-start", "cue": null},
+      "sourcePhrase": "Trois actions changent vraiment la situation.",
+      "sourcePhraseRange": {"sceneRelativeStart": 0, "sceneRelativeEnd": 44, "absoluteStart": 2810, "absoluteEnd": 2854},
+      "sceneStartSeconds": 117.684,
+      "cueAudioSeconds": 117.806,
+      "visualStartSeconds": 117.684,
+      "visualLeadSeconds": 0.122,
+      "elements": ["eyebrow:Réduire le risque", "line.0:3", "line.1:ACTIONS"]
+    },
+    {
+      "sceneId": "decisions",
+      "beatId": "facturer",
+      "trigger": {"type": "cue", "cue": "Premièrement"},
+      "sourcePhrase": "Premièrement",
+      "sourcePhraseRange": {"sceneRelativeStart": 46, "sceneRelativeEnd": 57, "absoluteStart": 2856, "absoluteEnd": 2867},
+      "sceneStartSeconds": 117.684,
+      "cueAudioSeconds": 119.548,
+      "visualStartSeconds": 119.298,
+      "visualLeadSeconds": 0.25,
+      "elements": ["number:01", "title:FACTURER VITE", "detail:Dès que le travail le permet.", "tag.0:Pas quinze jours plus tard"]
+    },
+    {
+      "sceneId": "decisions",
+      "beatId": "encaisser",
+      "trigger": {"type": "cue", "cue": "Deuxièmement"},
+      "sourcePhrase": "Deuxièmement",
+      "sourcePhraseRange": {"sceneRelativeStart": 127, "sceneRelativeEnd": 138, "absoluteStart": 2937, "absoluteEnd": 2948},
+      "sceneStartSeconds": 117.684,
+      "cueAudioSeconds": 122.973,
+      "visualStartSeconds": 122.723,
+      "visualLeadSeconds": 0.25,
+      "elements": ["number:02", "title:ENCAISSER PLUS TÔT", "detail:Ne pas attendre l’impayé pour agir.", "tag.0:ACOMPTE", "tag.1:ÉCHÉANCIER", "tag.2:RELANCE"]
+    },
+    {
+      "sceneId": "decisions",
+      "beatId": "prevoir",
+      "trigger": {"type": "cue", "cue": "Troisièmement"},
+      "sourcePhrase": "Troisièmement",
+      "sourcePhraseRange": {"sceneRelativeStart": 276, "sceneRelativeEnd": 288, "absoluteStart": 3086, "absoluteEnd": 3098},
+      "sceneStartSeconds": 117.684,
+      "cueAudioSeconds": 129.346,
+      "visualStartSeconds": 129.096,
+      "visualLeadSeconds": 0.25,
+      "elements": ["number:03", "title:PRÉVOIR 12 SEMAINES", "detail:Voir le point bas avant l’urgence.", "tag.0:MISE À JOUR CHAQUE SEMAINE"]
+    },
+    {
+      "sceneId": "regle",
+      "beatId": "scene",
+      "trigger": {"type": "scene-start", "cue": null},
+      "sourcePhrase": "Retenez ceci : une facture ne paie rien tant qu’elle n’est pas encaissée.",
+      "sourcePhraseRange": {"sceneRelativeStart": 0, "sceneRelativeEnd": 72, "absoluteStart": 3281, "absoluteEnd": 3353},
+      "sceneStartSeconds": 137.235,
+      "cueAudioSeconds": 137.299,
+      "visualStartSeconds": 137.235,
+      "visualLeadSeconds": 0.064,
+      "elements": ["onScreen.0:Une facture ne finance rien", "onScreen.1:tant qu’elle n’est pas encaissée."]
+    }
+  ]
+}

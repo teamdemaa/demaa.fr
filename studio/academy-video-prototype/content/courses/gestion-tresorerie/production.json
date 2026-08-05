@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "course": "gestion-tresorerie",
+  "status": "final",
+  "updatedAt": "2026-07-27T20:21:34.167Z",
+  "script": {
+    "approvedAt": "2026-07-27T20:21:17.774Z",
+    "sha256": "7a5d7db727f9fcd1ca098134d41a741a8344c0fe167cadaead8f92bec1b1902f"
+  },
+  "voice": {
+    "approvedAt": "2026-07-27T20:21:17.963Z",
+    "voiceId": "0lp4RIz96WD1RUtvEu3Q",
+    "modelId": "eleven_multilingual_v2",
+    "sourceAudioSha256": "8c52d7bf2d91546f3752083b6b2a91bc0e853947aaa69854b1a146376ff1ac05",
+    "alignmentSha256": "981d3a35b2562375a50124c80fc3e2ae6e50de5c7c3067952e60f08847a7ef71",
+    "sourceTimingSha256": "280c5d8eb50825caf774d7c56d6b53a57c7231abd8a9ca95cb84e33a409e68c9"
+  },
+  "render": {
+    "approvedAt": "2026-07-27T20:21:18.148Z",
+    "pace": 1.2,
+    "audioSha256": "bea1c893732ae190892ffbda15d142d0f25f4801f117893f8a084d2484500cac",
+    "timingSha256": "dbf33dff9fbafebd8b4509dda50fd66857d89d529df853879f4a14d3c2da7119"
+  },
+  "final": {
+    "approvedAt": "2026-07-27T20:21:34.167Z",
+    "output": "../../../output/cours-gestion-tresorerie-final.mp4",
+    "sha256": "3fd426d921c33a6f483d17fe5fd3e26bf61e6d6f71ca309e34dd7a41008fe69c",
+    "qa": {
+      "durationSeconds": 198.2,
+      "loudnessLufs": -15.87,
+      "videoCodec": "h264",
+      "audioCodec": "aac",
+      "width": 1920,
+      "height": 1080,
+      "fps": "30/1",
+      "fullDecode": true
+    }
+  }
+}

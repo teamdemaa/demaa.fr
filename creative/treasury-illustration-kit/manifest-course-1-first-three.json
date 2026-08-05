@@ -1,0 +1,51 @@
+{
+  "project": "Cours 1 — Gérer sa trésorerie au quotidien",
+  "version": "first-three-bold-1",
+  "status": "ready_for_validation",
+  "delivery": {
+    "png_directory": "output/course-1-first-three/png",
+    "svg_directory": "output/course-1-first-three/svg",
+    "boards_directory": "output/course-1-first-three/boards",
+    "validation_report": "output/course-1-first-three/validation_report.json",
+    "zip": "output/course-1-first-three/zip/course_1_first_three_bold.zip",
+    "inventory": "DELIVERY_INVENTORY_COURSE_1_FIRST_THREE.md"
+  },
+  "scope": "Trois premières phrases du contenu pédagogique",
+  "direction": {
+    "line": "blanc, épais et dessiné à la main",
+    "character": "adulte androgyne, ethniquement non assigné, sans couleur de peau",
+    "emotion": "lisible dans le visage, la posture et la composition"
+  },
+  "palette": {
+    "line": "#FFFFFF",
+    "accent": "#D7E3DA",
+    "test_background": "#305F46",
+    "background": "transparent"
+  },
+  "illustrations": [
+    {
+      "id": "01",
+      "sentence": "Ne jamais être surpris par un manque de cash, même quand le carnet de commandes est plein.",
+      "filename_png": "01_objectif_commandes_cash.png",
+      "filename_svg": "01_objectif_commandes_cash.svg",
+      "emotion": "surprise et inquiétude contenues",
+      "status": "ready_for_validation"
+    },
+    {
+      "id": "02",
+      "sentence": "La trésorerie n’est pas le bénéfice.",
+      "filename_png": "02_tresorerie_pas_benefice.png",
+      "filename_svg": "02_tresorerie_pas_benefice.svg",
+      "emotion": "comparaison puis déclic",
+      "status": "ready_for_validation"
+    },
+    {
+      "id": "03",
+      "sentence": "Une TPE peut être rentable sur le papier et faire faillite parce que l’argent rentre trop tard par rapport aux sorties.",
+      "filename_png": "03_rentable_papier_cash_retard.png",
+      "filename_svg": "03_rentable_papier_cash_retard.svg",
+      "emotion": "vulnérabilité et urgence maîtrisée",
+      "status": "ready_for_validation"
+    }
+  ]
+}

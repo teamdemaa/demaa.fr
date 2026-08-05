@@ -1,0 +1,140 @@
+{
+  "version": "1.0",
+  "kind": "case-study",
+  "status": "ready",
+  "identity": {
+    "slug": "cabinet-recrutement-acquisition",
+    "title": "Cabinet de recrutement — obtenir des mandats sans prospecter au hasard",
+    "shortTitle": "Cabinet de recrutement",
+    "category": "Acquisition",
+    "promise": "Voir comment un cabinet de recrutement peut attirer des entreprises avec un besoin réel, qualifier le mandat et construire une relation durable.",
+    "audience": "Entreprises qui vendent leurs prestations après un échange ou une proposition",
+    "durationMinutes": 8,
+    "card": {
+      "section": "Cas concrets",
+      "title": "Cabinet de recrutement — obtenir de vrais mandats",
+      "meta": "Cas concret · environ 8 min",
+      "image": "/images/marketing-ethique/personnages/personnage-05-v2.png",
+      "imageAlt": "Mariam structure l’acquisition de son cabinet de recrutement."
+    }
+  },
+  "lessons": [
+    {
+      "id": "recrutement-situation",
+      "type": "case",
+      "eyebrow": "La situation",
+      "title": "Mariam échange beaucoup, mais reçoit peu de mandats précis",
+      "body": "Dans ce cas fictif, Mariam dirige un cabinet de recrutement B2B. Son réseau lui apporte des prises de contact, mais les demandes sont souvent vagues, urgentes ou sans budget défini. Elle passe du temps à conseiller des entreprises qui ne sont pas encore prêtes à confier une mission.",
+      "visual": {
+        "type": "metrics",
+        "data": {
+          "items": [
+            { "label": "Contacts", "value": "15" },
+            { "label": "Besoins qualifiés", "value": "9" },
+            { "label": "Mandats", "value": "5" }
+          ]
+        }
+      },
+      "takeaway": "Une prise de contact n’est pas encore un mandat : il faut d’abord vérifier que le besoin est réel et finançable."
+    },
+    {
+      "id": "recrutement-attirer",
+      "type": "method",
+      "eyebrow": "1 · Attirer",
+      "title": "Parler d’un recrutement difficile, pas de recrutement en général",
+      "body": "Mariam choisit les entreprises de services qui doivent recruter un premier manager ou un profil pénurique. Sa page décrit cette situation précise, explique son approche et propose un diagnostic de vingt minutes. Ses contenus répondent aux questions que le dirigeant se pose avant de lancer la recherche.",
+      "visual": {
+        "type": "steps",
+        "data": {
+          "steps": ["Une situation précise", "Une méthode visible", "Un diagnostic court"]
+        }
+      },
+      "takeaway": "Un problème bien nommé attire moins de curieux et davantage d’entreprises réellement concernées."
+    },
+    {
+      "id": "recrutement-transformer",
+      "type": "example",
+      "eyebrow": "2 · Transformer",
+      "title": "Qualifier le mandat avant de parler de candidats",
+      "body": "Pendant le diagnostic, Mariam vérifie le poste, son impact, la fourchette de salaire, les décideurs et la date souhaitée. Si le besoin est mûr, elle propose une mission avec un calendrier et des engagements réciproques. Dans l’exemple, 15 demandes donnent 9 diagnostics, 5 propositions et 3 mandats signés.",
+      "visual": {
+        "type": "pipeline",
+        "data": {
+          "steps": [
+            { "label": "Demandes", "value": 15 },
+            { "label": "Diagnostics", "value": 9 },
+            { "label": "Propositions", "value": 5 },
+            { "label": "Mandats", "value": 3 }
+          ]
+        }
+      },
+      "takeaway": "La qualification protège le temps du cabinet et donne au client un cadre de décision clair."
+    },
+    {
+      "id": "recrutement-fideliser",
+      "type": "method",
+      "eyebrow": "3 · Fidéliser",
+      "title": "Suivre l’intégration pour préparer la prochaine mission",
+      "body": "Mariam organise un point avec l’entreprise après 15, 45 et 90 jours. Elle vérifie l’intégration, corrige rapidement les incompréhensions et note les futurs besoins de l’équipe. Une fois le recrutement stabilisé, elle demande une recommandation précise, sans pression.",
+      "visual": {
+        "type": "timeline",
+        "data": {
+          "points": ["15 jours", "45 jours", "90 jours"]
+        }
+      },
+      "takeaway": "Le suivi après la signature prouve la valeur du cabinet et transforme une mission ponctuelle en relation durable."
+    }
+  ],
+  "recap": {
+    "title": "Le cas en quatre phrases",
+    "points": [
+      "Mariam nomme une situation de recrutement précise au lieu de parler à toutes les entreprises.",
+      "Le diagnostic permet de distinguer une demande vague d’un besoin réellement prêt à être traité.",
+      "La proposition formalise le calendrier et les engagements des deux parties.",
+      "Le suivi à 15, 45 et 90 jours sécurise l’intégration et prépare les prochaines missions."
+    ]
+  },
+  "quiz": {
+    "title": "Avez-vous bien retenu ?",
+    "questions": [
+      {
+        "id": "recrutement-message",
+        "question": "Quel message attire les demandes les plus pertinentes ?",
+        "choices": [
+          { "id": "general", "label": "Nous recrutons tous les profils pour toutes les entreprises" },
+          { "id": "precis", "label": "Nous aidons à résoudre une situation de recrutement précise" }
+        ],
+        "correctChoiceId": "precis",
+        "explanation": "Une situation précise aide l’entreprise à se reconnaître et limite les demandes sans rapport avec l’expertise du cabinet."
+      },
+      {
+        "id": "recrutement-qualification",
+        "question": "Que faut-il vérifier avant de proposer une mission ?",
+        "choices": [
+          { "id": "cadre", "label": "Le poste, le budget, les décideurs et le calendrier" },
+          { "id": "cv", "label": "Uniquement le nombre de CV disponibles" }
+        ],
+        "correctChoiceId": "cadre",
+        "explanation": "Ces éléments confirment que l’entreprise peut réellement décider et permettent de cadrer la mission."
+      },
+      {
+        "id": "recrutement-suivi",
+        "question": "Pourquoi suivre l’intégration après le recrutement ?",
+        "choices": [
+          { "id": "relation", "label": "Pour sécuriser le résultat et construire une relation durable" },
+          { "id": "aucun", "label": "Ce suivi n’a plus d’utilité après la signature" }
+        ],
+        "correctChoiceId": "relation",
+        "explanation": "Le suivi protège la réussite de la mission, révèle les prochains besoins et rend la valeur du cabinet visible."
+      }
+    ]
+  },
+  "action": {
+    "resourceType": "template",
+    "resourceId": "pilotage-marketing-vente",
+    "title": "Tableau de pilotage Marketing & Vente",
+    "description": "Un modèle simple pour suivre les demandes, les diagnostics, les propositions, les mandats et les relances.",
+    "ctaLabel": "Ouvrir le tableau",
+    "deliveryMode": "external"
+  }
+}

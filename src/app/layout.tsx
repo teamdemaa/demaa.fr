@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import ConditionalFooter from "@/components/ConditionalFooter";
 import CookieConsentManager from "@/components/CookieConsentManager";
 import Footer from "@/components/Footer";
 
@@ -74,6 +75,11 @@ export const metadata: Metadata = {
   formatDetection: {
     telephone: false,
   },
+  verification: {
+    other: {
+      "facebook-domain-verification": "q8v7yql2wdk1p643wdls8vnr4e8b4h",
+    },
+  },
 };
 
 export const viewport: Viewport = {
@@ -99,7 +105,9 @@ export default function RootLayout({
       >
         {children}
         {modal}
-        <Footer />
+        <ConditionalFooter>
+          <Footer />
+        </ConditionalFooter>
         <CookieConsentManager />
       </body>
     </html>

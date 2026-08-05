@@ -1,0 +1,49 @@
+{
+  "project": "Kit d’illustrations — Trésorerie d’entreprise",
+  "version": "pilot-3",
+  "status": "ready_for_validation",
+  "delivery": {
+    "png_directory": "output/pilot-v3/png",
+    "svg_directory": "output/pilot-v3/svg",
+    "boards_directory": "output/pilot-v3/boards",
+    "validation_report": "output/pilot-v3/validation_report.json",
+    "zip": "output/pilot-v3/zip/treasury_illustrations_pilot_v3.zip",
+    "svg_note": "Les SVG sont des conteneurs de compatibilité avec PNG transparent intégré ; ce ne sont pas des tracés vectoriels natifs."
+  },
+  "direction": "Plus de personnalité par les gestes, l’asymétrie et le rythme de la ligne.",
+  "palette": {
+    "line": "#FFFFFF",
+    "accent": "#D7E3DA",
+    "test_background": "#305F46",
+    "background": "transparent"
+  },
+  "illustrations": [
+    {
+      "id": "01",
+      "filename_png": "01_ouverture_bureau.png",
+      "filename_svg": "01_ouverture_bureau.svg",
+      "title": "Ouverture — le bureau",
+      "concept": "Une posture plus expressive et quelques détails humains donnent du caractère à la réflexion face au calendrier.",
+      "status": "pilot_v3_ready_for_validation",
+      "notes": "Coiffure graphique, manche ample, vapeur et calendrier désaxé."
+    },
+    {
+      "id": "07",
+      "filename_png": "07_facture_delai_banque.png",
+      "filename_svg": "07_facture_delai_banque.svg",
+      "title": "De la facture à la banque",
+      "concept": "Le délai devient une trajectoire vivante qui retarde le jeton avant son arrivée.",
+      "status": "pilot_v3_ready_for_validation",
+      "notes": "Deux boucles et un rythme visuel plus mémorable."
+    },
+    {
+      "id": "15",
+      "filename_png": "15_plan_action.png",
+      "filename_svg": "15_plan_action.svg",
+      "title": "Le plan d’action",
+      "concept": "Une main termine la coche et transforme la nature morte en instant d’action.",
+      "status": "pilot_v3_ready_for_validation",
+      "notes": "Main, page soulevée et ruban en mouvement."
+    }
+  ]
+}

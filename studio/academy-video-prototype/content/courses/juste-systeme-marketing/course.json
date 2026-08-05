@@ -1,0 +1,169 @@
+{
+  "id": "juste-systeme-marketing",
+  "title": "JUSTE — un système marketing qui ressemble à sa fondatrice",
+  "shortTitle": "Un bon produit ne suffit pas à créer des ventes.",
+  "courseTitle": "JUSTE\nUN SYSTÈME MARKETING QUI LUI RESSEMBLE",
+  "introVisual": {
+    "primaryLabel": "ATTIRER",
+    "secondaryLabel": "FIDÉLISER"
+  },
+  "audience": "Entrepreneurs et dirigeants de TPE en France",
+  "status": "draft",
+  "format": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "targetDurationSeconds": 290
+  },
+  "editorialContract": {
+    "tone": "Professeur expérimenté, calme, direct, humain. Aucun jargon non expliqué.",
+    "rule": "Une idée par écran. Le système doit rester compatible avec la personnalité de la fondatrice.",
+    "screenTextRule": "Le texte à l’écran résume ou structure. Il ne retranscrit pas la narration."
+  },
+  "scenes": [
+    {
+      "id": "juste-donne-envie",
+      "title": "Une marque qui donne envie",
+      "targetSeconds": 22,
+      "narration": "Ça, c’est JUSTE. Une marque de cookies-pâtisserie avec juste ce qu’il faut de sucre et de beurre pour rester gourmande sans devenir écœurante. On garde les classiques — chocolat, brownie — et on ajoute des parfums inspirés de la pâtisserie : tarte tatin, forêt-noire ou hibiscus. Ça vous donne envie, non ?",
+      "onScreen": [
+        "JUSTE.",
+        "Le sucre à sa place."
+      ],
+      "visual": {
+        "type": "illustration",
+        "asset": "courses/juste-systeme-marketing/images/07-brand-reveal-juste.png",
+        "layout": "full"
+      }
+    },
+    {
+      "id": "produit-sans-ventes",
+      "title": "Le produit plaît mais ne se vend pas",
+      "targetSeconds": 29,
+      "narration": "JUSTE n’existe pas. Mais imaginons son histoire. La marque a été lancée il y a dix mois. Le produit est bon, l’univers donne envie… pourtant, elle n’a enregistré que cinq ventes. Sa fondatrice reçoit mille et un conseils contradictoires : publier tous les jours, suivre les tendances, se filmer constamment… Et surtout, faire des choses qui ne lui ressemblent pas.",
+      "onScreen": [
+        "10 mois",
+        "5 ventes",
+        "1 001 conseils"
+      ],
+      "visual": {
+        "type": "illustration",
+        "asset": "courses/juste-systeme-marketing/images/12-positioning-last-bite.png",
+        "layout": "full"
+      }
+    },
+    {
+      "id": "demaa-systeme",
+      "title": "Construire un système adapté",
+      "targetSeconds": 25,
+      "narration": "Alors, comment construire un système marketing qui respecte sa personnalité et lui permette réellement de vendre ? Moi, c’est Demaa, avec deux a. J’aide les entrepreneurs à construire des systèmes marketing simples, sans faire des pirouettes sur Internet. Pour JUSTE, je construirais le système en trois étapes : attirer, transformer et fidéliser.",
+      "onScreen": [
+        "Attirer",
+        "Transformer",
+        "Fidéliser"
+      ],
+      "visual": {
+        "type": "timeline",
+        "layout": "full"
+      }
+    },
+    {
+      "id": "attirer-contenu-signature",
+      "title": "Attirer avec un contenu reconnaissable",
+      "targetSeconds": 35,
+      "narration": "Première étape : attirer. Le contenu doit créer de la confiance, mais surtout donner envie. Le contenu signature de JUSTE, ce serait une roue avec tous les parfums. On la fait tourner, puis on réalise de A à Z la recette sur laquelle elle s’arrête. À la fin, on demande aux abonnés de nommer une personne à qui ils aimeraient offrir la box. Une personne est sélectionnée chaque semaine : quatre box par mois, pour environ cent euros, fabrication et envoi compris.",
+      "onScreen": [
+        "La roue des parfums",
+        "4 box par mois",
+        "≈ 100 €"
+      ],
+      "visual": {
+        "type": "growth",
+        "asset": "courses/juste-systeme-marketing/images/13-recipe-testing.png",
+        "layout": "full"
+      }
+    },
+    {
+      "id": "attirer-ecosysteme",
+      "title": "Produire un mois de contenu en deux jours",
+      "targetSeconds": 42,
+      "narration": "Le planning est simple. Une journée par mois, elle tourne quatre contenus signature : quatre parfums, quatre recettes et quatre vidéos principales. À partir des mêmes images, elle crée quatre contenus éducatifs en ajoutant une narration : réussir la cuisson, obtenir une crème mascarpone parfaite ou équilibrer un cookie à l’hibiscus. Les plans de préparation, de courses et de ratés deviennent quatre contenus en coulisses. Une deuxième journée est consacrée au montage et à la programmation. Douze contenus, trois publications par semaine : en deux jours, le mois est prêt.",
+      "onScreen": [
+        "1 jour de tournage",
+        "4 contenus signature",
+        "1 jour de montage",
+        "1 mois programmé"
+      ],
+      "visual": {
+        "type": "timeline",
+        "asset": "courses/juste-systeme-marketing/images/16-content-filming.png",
+        "layout": "full"
+      }
+    },
+    {
+      "id": "attirer-amplifier",
+      "title": "Tester 500 euros de publicité",
+      "targetSeconds": 50,
+      "narration": "Ensuite, on fixe un budget publicitaire test de cinq cents euros pour le premier mois. Les quatre contenus signature sont testés à dix euros par jour pendant cinq jours : deux cents euros au total. On ne cherche pas la vidéo qui obtient le plus de likes, mais celle qui génère des visites qualifiées, des ajouts au panier et des commandes. Si une vidéo fonctionne, les trois cents euros restants sont investis sur celle-ci pendant quinze jours. Si aucune ne crée d’intention d’achat après les deux cents premiers euros, on arrête. On retravaille le message, l’offre ou la page de vente. Un budget est une limite, pas une obligation de tout dépenser.",
+      "onScreen": [
+        "200 € pour tester",
+        "300 € pour amplifier",
+        "Mesurer les commandes"
+      ],
+      "visual": {
+        "type": "cash-example",
+        "asset": "courses/juste-systeme-marketing/images/14-street-tasting-wide.png",
+        "layout": "full"
+      }
+    },
+    {
+      "id": "transformer-offre",
+      "title": "Transformer avec une offre simple",
+      "targetSeconds": 46,
+      "narration": "Deuxième étape : transformer. Tout le contenu renvoie vers une boutique Shopify très simple, configurée avec l’aide de Codex. Une seule offre : une box de cinq cookies avec un sixième goût mystère offert pour la première commande. Pour l’exemple, imaginons la box vendue trente euros, livraison facturée séparément. Les ingrédients, l’emballage, les frais de paiement et la préparation représentent quatorze euros. Il reste seize euros avant la publicité et les coûts fixes. On fixe donc un coût d’acquisition maximal de dix euros. Si la publicité coûte quinze euros pour vendre une box, le contenu peut être joli : le système ne gagne pas d’argent.",
+      "onScreen": [
+        "Prix : 30 €",
+        "Coûts : 14 €",
+        "Acquisition max. : 10 €"
+      ],
+      "visual": {
+        "type": "cash-example",
+        "asset": "courses/juste-systeme-marketing/images/19-product-packing.png",
+        "layout": "full"
+      }
+    },
+    {
+      "id": "fideliser-relation",
+      "title": "Fidéliser avec une relation régulière",
+      "targetSeconds": 31,
+      "narration": "Troisième étape : fidéliser. Pas besoin d’ajouter immédiatement un nouvel outil. Shopify permet déjà d’automatiser l’essentiel : une relance pour les paniers abandonnés, un message après la livraison pour demander un avis, puis une proposition de nouveau parfum trois semaines après la commande. À cela s’ajoutent deux newsletters par mois avec les nouveaux parfums, les meilleures recettes, les coulisses et les offres réservées aux clientes.",
+      "onScreen": [
+        "Panier abandonné",
+        "Avis après livraison",
+        "Nouveau parfum à J+21",
+        "2 newsletters par mois"
+      ],
+      "visual": {
+        "type": "timeline",
+        "asset": "courses/juste-systeme-marketing/images/20-home-unboxing.png",
+        "layout": "full"
+      }
+    },
+    {
+      "id": "tenir-dans-la-duree",
+      "title": "Un marketing que la fondatrice peut tenir",
+      "targetSeconds": 20,
+      "narration": "Le système est complet : douze contenus produits en deux jours, cent euros de box offertes, cinq cents euros de publicité plafonnée, une offre principale et quelques automatisations. Surtout, il ne demande pas à la fondatrice de devenir quelqu’un d’autre. Le marketing n’a pas besoin d’être bruyant. Il doit être tenable, mesurable et rentable.",
+      "onScreen": [
+        "Tenable",
+        "Mesurable",
+        "Rentable"
+      ],
+      "visual": {
+        "type": "closing",
+        "asset": "courses/juste-systeme-marketing/images/07-brand-reveal-juste.png",
+        "layout": "center"
+      }
+    }
+  ]
+}

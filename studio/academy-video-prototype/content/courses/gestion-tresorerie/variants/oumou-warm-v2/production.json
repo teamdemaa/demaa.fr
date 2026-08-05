@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "course": "gestion-tresorerie",
+  "variant": "oumou-warm-v2",
+  "status": "render-ready",
+  "createdAt": "2026-07-29T09:17:22Z",
+  "editorial": {
+    "baselineSnapshot": "content/editorial-snapshots/2026-07-29-pre-oumou-warm-v2/gestion-tresorerie/course.json",
+    "baselineSha256": "43676cfd4f19261ca7225ce87f71f3c582799271ab768c4c5381dafb4172b65a",
+    "creditsConsumed": 0
+  },
+  "futureVoiceProfile": {
+    "voiceId": "9HTNhnzaWIkUTIhaJhPM",
+    "speed": 1.15,
+    "stability": 0.55,
+    "similarityBoost": 0.78,
+    "style": 0,
+    "speakerBoost": true,
+    "postprocessRate": 1
+  },
+  "updatedAt": "2026-07-29T14:34:05.512Z",
+  "script": {
+    "approvedAt": "2026-07-29T10:52:50.169Z",
+    "sha256": "f2490a32dad7100c84e121abe2ede0b9f5c131897ff9fb187a0546e60392d1a8"
+  },
+  "voice": {
+    "approvedAt": "2026-07-29T12:00:21.787Z",
+    "voiceId": "9HTNhnzaWIkUTIhaJhPM",
+    "modelId": "eleven_multilingual_v2",
+    "sourceAudioSha256": "53b557d7e271a54306288c4087924f179d4da22a3e570214f3e3bd8be3516ad6",
+    "alignmentSha256": "6eb16f4ecc40864ebae5a879a7eacca3c7a72055102d5a6c89026cfa750a1d7d",
+    "sourceTimingSha256": "9788b60aa94ca31d98e37e26ec877937d4aa9e9502b1d07eb70059086c612705"
+  },
+  "render": {
+    "approvedAt": "2026-07-29T14:34:05.512Z",
+    "pace": 1,
+    "audioSha256": "53b557d7e271a54306288c4087924f179d4da22a3e570214f3e3bd8be3516ad6",
+    "timingSha256": "c587007a252ec49fe87b51adbeb8be808e957464a7d7a4fd3c550e42a0b855ca"
+  }
+}

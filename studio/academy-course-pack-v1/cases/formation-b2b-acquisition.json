@@ -1,0 +1,139 @@
+{
+  "version": "1.0",
+  "kind": "case-study",
+  "status": "ready",
+  "identity": {
+    "slug": "formation-b2b-acquisition",
+    "title": "Formation B2B — remplir une session sans communiquer dans l’urgence",
+    "shortTitle": "Formation B2B",
+    "category": "Acquisition",
+    "promise": "Voir comment un organisme de formation peut attirer les bonnes entreprises, qualifier leur besoin et remplir ses sessions.",
+    "audience": "Entreprises qui vendent leurs prestations après un échange ou un devis",
+    "durationMinutes": 8,
+    "card": {
+      "section": "Cas concrets",
+      "title": "Formation B2B — remplir une session",
+      "meta": "Cas concret · environ 8 min",
+      "image": "/images/courses/cases-acquisition/formation-b2b-storyboard-v1.png",
+      "imageAlt": "Claire construit un système d’acquisition pour ses formations en entreprise."
+    }
+  },
+  "lessons": [
+    {
+      "id": "formation-situation",
+      "type": "case",
+      "eyebrow": "La situation",
+      "title": "Des sessions utiles, mais remplies au dernier moment",
+      "body": "Dans ce cas fictif, Claire reçoit de bons retours sur ses formations, mais commence à communiquer seulement quand une date approche. Les demandes arrivent trop tard, certaines entreprises n’ont pas le temps de décider et elle multiplie les messages sans savoir lesquels produisent réellement des inscriptions.",
+      "visual": {
+        "type": "story",
+        "data": {
+          "image": "/images/courses/cases-acquisition/formation-b2b-storyboard-v1.png",
+          "panel": 1,
+          "alt": "Claire constate que sa prochaine session se remplit trop tard."
+        }
+      },
+      "takeaway": "Une session se remplit plus sereinement lorsque l’acquisition commence avant l’urgence."
+    },
+    {
+      "id": "formation-attirer",
+      "type": "method",
+      "eyebrow": "1 · Attirer",
+      "title": "Donner un aperçu utile avant de parler du programme",
+      "body": "Claire crée une fiche pratique qui résout un petit problème lié à la formation. Une page présente ensuite le résultat attendu, le public concerné et les prochaines dates. Le réseau, LinkedIn et un courriel aux anciens contacts renvoient tous vers la même fiche et le même formulaire.",
+      "visual": {
+        "type": "story",
+        "data": {
+          "image": "/images/courses/cases-acquisition/formation-b2b-storyboard-v1.png",
+          "panel": 2,
+          "alt": "Claire remet une fiche pratique à une responsable d’équipe."
+        }
+      },
+      "takeaway": "Un contenu immédiatement utile aide l’entreprise à juger la pertinence de la formation."
+    },
+    {
+      "id": "formation-transformer",
+      "type": "example",
+      "eyebrow": "2 · Transformer",
+      "title": "Qualifier l’entreprise, pas seulement le participant",
+      "body": "Le formulaire précise le nombre de personnes, le niveau actuel, l’échéance et la personne qui décide. Claire confirme ensuite le format adapté pendant un court échange. Dans cet exemple pédagogique, 20 téléchargements donnent 8 échanges, puis 4 propositions et 2 groupes réservés.",
+      "visual": {
+        "type": "story",
+        "data": {
+          "image": "/images/courses/cases-acquisition/formation-b2b-storyboard-v1.png",
+          "panel": 3,
+          "alt": "Claire qualifie le besoin avant de proposer une session."
+        }
+      },
+      "takeaway": "La bonne proposition dépend du besoin collectif, du calendrier et de la décision de l’entreprise."
+    },
+    {
+      "id": "formation-fideliser",
+      "type": "method",
+      "eyebrow": "3 · Fidéliser",
+      "title": "Mesurer l’usage après la formation",
+      "body": "À chaud, les participants indiquent ce qu’ils comptent appliquer. Trente jours plus tard, Claire vérifie les changements réels et les blocages avec la responsable. Elle propose un approfondissement, un nouveau groupe ou une autre formation seulement si un besoin apparaît.",
+      "visual": {
+        "type": "story",
+        "data": {
+          "image": "/images/courses/cases-acquisition/formation-b2b-storyboard-v1.png",
+          "panel": 4,
+          "alt": "Claire mesure l’application de la formation avec la responsable et les participants."
+        }
+      },
+      "takeaway": "Le suivi transforme une formation ponctuelle en résultat observable et en relation durable."
+    }
+  ],
+  "recap": {
+    "title": "Le cas en quatre phrases",
+    "points": [
+      "L’acquisition commence avant que la date de la session devienne urgente.",
+      "Une fiche pratique donne un premier résultat et mène vers une page claire.",
+      "Le formulaire qualifie le besoin de l’entreprise, le calendrier et la décision.",
+      "Le suivi à 30 jours mesure l’usage avant de proposer une nouvelle formation."
+    ]
+  },
+  "quiz": {
+    "title": "Avez-vous bien retenu ?",
+    "questions": [
+      {
+        "id": "formation-contenu",
+        "question": "À quoi sert la fiche pratique ?",
+        "choices": [
+          { "id": "attirer", "label": "Donner un premier résultat et attirer les bonnes entreprises" },
+          { "id": "remplacer", "label": "Remplacer toute la formation" }
+        ],
+        "correctChoiceId": "attirer",
+        "explanation": "La fiche permet de vérifier l’intérêt du sujet avant de demander un échange."
+      },
+      {
+        "id": "formation-qualification",
+        "question": "Quelle information est essentielle pour une formation en entreprise ?",
+        "choices": [
+          { "id": "couleur", "label": "La couleur préférée des participants" },
+          { "id": "decision", "label": "Le besoin collectif, l’échéance et la décision" }
+        ],
+        "correctChoiceId": "decision",
+        "explanation": "Ces informations déterminent le bon format et la possibilité réelle de réserver un groupe."
+      },
+      {
+        "id": "formation-suivi",
+        "question": "Pourquoi prévoir un point 30 jours après ?",
+        "choices": [
+          { "id": "usage", "label": "Pour vérifier ce qui a réellement été appliqué" },
+          { "id": "avis", "label": "Uniquement pour demander une note" }
+        ],
+        "correctChoiceId": "usage",
+        "explanation": "Le suivi relie la formation à un changement concret et fait apparaître la suite utile."
+      }
+    ]
+  },
+  "action": {
+    "resourceType": "template",
+    "resourceId": "pilotage-marketing-vente",
+    "title": "Tableau de pilotage Marketing & Vente",
+    "description": "Un modèle simple pour suivre les téléchargements, les échanges, les propositions, les groupes et les relances.",
+    "ctaLabel": "Ouvrir le tableau",
+    "deliveryMode": "external"
+  }
+}

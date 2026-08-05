@@ -1,0 +1,399 @@
+{
+  "id": "fixer-ses-prix",
+  "editorialVariant": "oumou-oral-final-v1",
+  "title": "Fixer ses prix sans vendre à perte",
+  "shortTitle": "Un prix qui vend n’est pas forcément un prix rentable.",
+  "courseTitle": "FIXER SES PRIX\nSANS VENDRE À PERTE",
+  "introVisual": {
+    "primaryLabel": "PRIX H.T.",
+    "secondaryLabel": "MARGE"
+  },
+  "audience": "Dirigeants de TPE en France",
+  "operationalQuestion": "Quel prix H.T. minimum couvre réellement tous mes coûts avant que chaque vente ne me fasse perdre de l’argent ?",
+  "status": "draft",
+  "format": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "targetDurationSeconds": 230
+  },
+  "editorialContract": {
+    "tone": "Chaleureux, lucide, bienveillant et constructif. Dire les choses clairement sans juger le dirigeant.",
+    "rule": "Une idée par écran. Chaque chiffre doit permettre de refaire le calcul.",
+    "screenTextRule": "Le texte à l’écran résume ou chiffre. Il ne retranscrit pas la narration.",
+    "pronouns": "Employer « on » pour les erreurs fréquentes et « vous » pour les actions."
+  },
+  "scenes": [
+    {
+      "id": "prix-piege",
+      "title": "Le prix qui fait perdre de l’argent",
+      "targetSeconds": 26,
+      "narration": "Quand on fixe un prix, on pense vite aux clients, aux concurrents et au marché. Mais avant ça, il faut savoir ce que la vente coûte. Dépasser le prix d’achat ne suffit pas : il reste les commissions, le temps de travail et les charges de l’entreprise. Pour éviter cela, calculez votre prix plancher. C’est le prix hors taxes en dessous duquel la vente ne couvre plus tous ses coûts.",
+      "onScreen": [
+        "Un prix peut vendre.",
+        "Et faire perdre de l’argent."
+      ],
+    "visual": {
+      "type": "low-point",
+      "asset": "illustrations/casting-v2/03-fixer-ses-prix-clean.png",
+      "assetScale": 1.4,
+      "assetOffsetX": -20,
+      "layout": "center"
+    },
+      "beats": [
+        {
+          "id": "alerte",
+          "startSeconds": 0,
+          "template": "statement",
+          "eyebrow": "Le piège",
+          "lines": [
+            "UN PRIX PEUT VENDRE",
+            "ET FAIRE PERDRE"
+          ],
+          "accentIndex": 1,
+          "zoom": true
+        },
+        {
+          "id": "plancher",
+          "startSeconds": 15,
+          "cue": "Pour éviter cela",
+          "template": "term",
+          "eyebrow": "Le chiffre à connaître",
+          "term": "PRIX PLANCHER",
+          "definition": "EN DESSOUS, CHAQUE VENTE COÛTE DE L’ARGENT"
+        }
+      ]
+    },
+    {
+      "id": "hors-taxes",
+      "title": "Calculer sur la bonne base",
+      "targetSeconds": 32,
+      "narration": "Si votre entreprise récupère la TVA, faites vos calculs en hors taxes. La TVA facturée au client n’est pas votre revenu : elle est reversée. Comparez donc le prix et les coûts sur une base hors taxes lorsque la TVA est récupérable. Ici, « vendre à perte » veut dire que la vente ne couvre pas ses coûts. La revente à perte, au sens juridique, est une autre règle, notamment pour un commerçant qui revend un produit sans le transformer.",
+      "onScreen": [
+        "Prix H.T.",
+        "à comparer aux coûts H.T.",
+        "Règle juridique distincte"
+      ],
+      "visual": {
+        "type": "definition",
+        "layout": "center"
+      },
+      "beats": [
+        {
+          "id": "base",
+          "startSeconds": 0,
+          "template": "term",
+          "eyebrow": "La bonne base de calcul",
+          "term": "HORS TAXES",
+          "definition": "PRIX H.T. FACE AUX COÛTS H.T. RÉCUPÉRABLES"
+        },
+        {
+          "id": "distinction",
+          "startSeconds": 20,
+          "cue": "Ici",
+          "template": "statement",
+          "eyebrow": "Deux sujets différents",
+          "lines": [
+            "PERTE ÉCONOMIQUE",
+            "≠",
+            "REVENTE À PERTE JURIDIQUE"
+          ],
+          "accentIndex": 2
+        }
+      ]
+    },
+    {
+      "id": "cout-complet",
+      "title": "Ce que le prix doit réellement couvrir",
+      "targetSeconds": 40,
+      "narration": "Votre prix doit couvrir quatre choses. D’abord, les achats liés à la vente : marchandise, matière ou sous-traitance. Ensuite, les coûts qui varient avec chaque vente : emballage, livraison, paiement en ligne ou commission. Ajoutez le temps passé à produire et à servir le client, avec un taux horaire cohérent. Enfin, ajoutez une part des charges fixes : loyer, logiciels, assurances, comptabilité et rémunération de direction. Oublier son propre temps, c’est simplement décider de le payer soi-même.",
+      "onScreen": [
+        "Achats directs",
+        "Coûts variables",
+        "Temps de travail",
+        "Charges fixes"
+      ],
+      "visual": {
+        "type": "timeline",
+        "layout": "full"
+      },
+      "beats": [
+        {
+          "id": "familles",
+          "startSeconds": 0,
+          "template": "chips",
+          "eyebrow": "Le coût complet",
+          "title": "Tout ce que la vente doit payer.",
+          "items": [
+            "ACHATS",
+            "COÛTS VARIABLES",
+            "TEMPS",
+            "CHARGES FIXES"
+          ]
+        },
+        {
+          "id": "temps",
+          "startSeconds": 27,
+          "cue": "Oublier son propre temps",
+          "template": "statement",
+          "eyebrow": "Le grand classique",
+          "lines": [
+            "TEMPS NON COMPTÉ",
+            "=",
+            "TRAVAIL GRATUIT"
+          ],
+          "accentIndex": 2,
+          "zoom": true
+        }
+      ]
+    },
+    {
+      "id": "charges-fixes",
+      "title": "Répartir les charges fixes sans tricher",
+      "targetSeconds": 34,
+      "narration": "Supposons que l’entreprise ait deux mille quatre cents euros de charges fixes par mois et qu’elle puisse vendre cent vingt unités. Chaque vente doit alors couvrir vingt euros de charges fixes : deux mille quatre cents divisés par cent vingt. Prenez un volume réaliste, pas votre meilleur mois. Si vous ne vendez finalement que quatre-vingts unités, la part monte à trente euros. Avec un volume prévu trop haut, le prix semble rentable sur le papier, mais pas dans les faits.",
+      "onScreen": [
+        "2 400 € de charges fixes",
+        "120 ventes prévues",
+        "20 € par vente"
+      ],
+      "visual": {
+        "type": "cash-example",
+        "layout": "full"
+      },
+      "beats": [
+        {
+          "id": "hypothese",
+          "startSeconds": 0,
+          "template": "metrics",
+          "eyebrow": "L’hypothèse réaliste",
+          "cards": [
+            {
+              "label": "Charges fixes mensuelles",
+              "value": "2 400 €"
+            },
+            {
+              "label": "Volume prévu",
+              "value": "120 ventes"
+            },
+            {
+              "label": "Part par vente",
+              "value": "20 €",
+              "accent": true
+            }
+          ]
+        },
+        {
+          "id": "volume-reel",
+          "startSeconds": 19,
+          "cue": "Si vous ne vendez",
+          "template": "metrics",
+          "eyebrow": "Avec seulement 80 ventes",
+          "cards": [
+            {
+              "label": "Charges fixes",
+              "value": "2 400 €"
+            },
+            {
+              "label": "Volume réel",
+              "value": "80 ventes"
+            },
+            {
+              "label": "Part réelle",
+              "value": "30 €",
+              "accent": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "calcul-plancher",
+      "title": "Calculer le prix plancher",
+      "targetSeconds": 38,
+      "narration": "Prenons un produit acheté quarante euros. L’emballage et la préparation coûtent six euros. Le temps de travail coûte douze euros, et la part de charges fixes vingt euros. Avant commission, le total est de soixante-dix-huit euros. La plateforme prend huit pour cent du prix de vente. Il reste donc quatre-vingt-douze pour cent du prix pour couvrir les coûts. On divise soixante-dix-huit par zéro virgule quatre-vingt-douze. Le prix plancher hors taxes est de quatre-vingt-quatre euros et soixante-dix-huit centimes.",
+      "onScreen": [
+        "78 € de coûts",
+        "8 % de commission",
+        "84,78 € H.T. minimum"
+      ],
+      "visual": {
+        "type": "cash-example",
+        "layout": "full"
+      },
+      "beats": [
+        {
+          "id": "couts",
+          "startSeconds": 0,
+          "template": "metrics",
+          "eyebrow": "Avant la commission",
+          "cards": [
+            {
+              "label": "Achat",
+              "value": "40 €"
+            },
+            {
+              "label": "Emballage + temps",
+              "value": "18 €"
+            },
+            {
+              "label": "Charges fixes",
+              "value": "20 €"
+            }
+          ]
+        },
+        {
+          "id": "formule",
+          "startSeconds": 21,
+          "cue": "Le prix plancher",
+          "template": "statement",
+          "eyebrow": "Avec 8 % de commission",
+          "lines": [
+            "78 € ÷ (1 − 8 %)",
+            "=",
+            "84,78 € H.T."
+          ],
+          "accentIndex": 2,
+          "zoom": true
+        }
+      ]
+    },
+    {
+      "id": "perte-volume",
+      "title": "Le volume amplifie une mauvaise vente",
+      "targetSeconds": 30,
+      "narration": "Si le produit est vendu quatre-vingts euros hors taxes, la commission est de six euros quarante. Avec les soixante-dix-huit euros de coûts, la vente perd quatre euros quarante. Dix ventes ne corrigent pas le problème : elles font perdre quarante-quatre euros. Plus on vend, plus cette perte se répète. Avant de chercher davantage de clients, vérifiez donc ce qu’il reste réellement sur chaque vente.",
+      "onScreen": [
+        "80 € vendus",
+        "−4,40 € par vente",
+        "−44 € sur 10 ventes"
+      ],
+      "visual": {
+        "type": "growth",
+        "layout": "full"
+      },
+      "beats": [
+        {
+          "id": "une-vente",
+          "startSeconds": 0,
+          "template": "metrics",
+          "eyebrow": "Une vente à 80 € H.T.",
+          "cards": [
+            {
+              "label": "Coûts",
+              "value": "78 €"
+            },
+            {
+              "label": "Commission",
+              "value": "6,40 €"
+            },
+            {
+              "label": "Résultat par vente",
+              "value": "−4,40 €",
+              "accent": true
+            }
+          ]
+        },
+        {
+          "id": "dix-ventes",
+          "startSeconds": 15,
+          "cue": "Dix ventes",
+          "template": "statement",
+          "eyebrow": "Vendre plus ne répare rien",
+          "lines": [
+            "10 VENTES",
+            "=",
+            "−44 €"
+          ],
+          "accentIndex": 2,
+          "zoom": true
+        }
+      ]
+    },
+    {
+      "id": "prix-cible",
+      "title": "Du plancher au vrai prix de vente",
+      "targetSeconds": 40,
+      "narration": "Le prix plancher vous empêche seulement de perdre de l’argent. Il ne laisse encore rien pour les imprévus, l’investissement ou le développement. Ajoutez donc une marge pour obtenir votre prix cible, puis confrontez le résultat aux prix du marché. Vos clients comprennent-ils clairement ce que l’offre leur apporte ? Si le prix paraît trop élevé, ne le baissez pas au hasard : revoyez l’offre, le temps passé, les achats, les commissions ou le public visé.",
+      "onScreen": [
+        "Plancher ≠ prix de vente",
+        "Ajouter une marge",
+        "Tester le marché",
+        "Corriger le modèle"
+      ],
+      "visual": {
+        "type": "illustration",
+        "layout": "actions"
+      },
+      "beats": [
+        {
+          "id": "distinction",
+          "startSeconds": 0,
+          "template": "statement",
+          "eyebrow": "Ne vous arrêtez pas au minimum",
+          "lines": [
+            "PRIX PLANCHER",
+            "≠",
+            "PRIX DE VENTE"
+          ],
+          "accentIndex": 2
+        },
+        {
+          "id": "marge",
+          "startSeconds": 10,
+          "cue": "Ajoutez donc",
+          "template": "action",
+          "number": "01",
+          "title": "AJOUTER UNE MARGE",
+          "detail": "Financer les imprévus et le développement.",
+          "tags": [
+            "SÉCURITÉ",
+            "INVESTISSEMENT"
+          ]
+        },
+        {
+          "id": "marche",
+          "startSeconds": 17,
+          "cue": "confrontez le résultat",
+          "template": "action",
+          "number": "02",
+          "title": "TESTER LE MARCHÉ",
+          "detail": "Vérifier que le client comprend ce qu’il obtient.",
+          "tags": [
+            "OFFRE",
+            "CLIENT"
+          ]
+        },
+        {
+          "id": "corriger",
+          "startSeconds": 25,
+          "cue": "revoyez l’offre",
+          "template": "action",
+          "number": "03",
+          "title": "CORRIGER LE MODÈLE",
+          "detail": "Revoir l’offre et ses coûts, pas cacher le calcul.",
+          "tags": [
+            "COÛTS",
+            "POSITIONNEMENT"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "regle",
+      "title": "La méthode à retenir",
+      "targetSeconds": 20,
+      "narration": "Retenez la méthode. Additionnez les coûts directs, le temps de travail et une part réaliste des charges fixes. Intégrez les commissions liées au prix. Vous obtenez votre prix plancher : le minimum qui couvre les coûts. Fixez ensuite un prix cible au-dessus. Puis vérifiez vos coûts, votre volume réel et la réaction des personnes pour lesquelles l’offre a été conçue. Le calcul donne le minimum. Il ne choisit pas le prix à votre place.",
+      "onScreen": [
+        "Calculer le coût complet",
+        "Trouver le plancher",
+        "Ajouter la marge",
+        "Vérifier dans le réel"
+      ],
+      "visual": {
+        "type": "closing",
+        "layout": "center"
+      }
+    }
+  ]
+}

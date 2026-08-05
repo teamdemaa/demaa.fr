@@ -1,0 +1,139 @@
+{
+  "version": "1.0",
+  "kind": "case-study",
+  "status": "ready",
+  "identity": {
+    "slug": "nettoyage-professionnel-acquisition",
+    "title": "Nettoyage professionnel — transformer des demandes ponctuelles en contrats récurrents",
+    "shortTitle": "Nettoyage professionnel",
+    "category": "Acquisition",
+    "promise": "Voir comment une entreprise de nettoyage peut attirer les bons locaux, mieux chiffrer et fidéliser ses clients.",
+    "audience": "Entreprises qui vendent leurs prestations après un échange ou un devis",
+    "durationMinutes": 8,
+    "card": {
+      "section": "Cas concrets",
+      "title": "Nettoyage professionnel — signer du récurrent",
+      "meta": "Cas concret · environ 8 min",
+      "image": "/images/courses/cases-acquisition/nettoyage-professionnel-storyboard-v1.png",
+      "imageAlt": "Nadia structure les demandes et le suivi de son entreprise de nettoyage professionnel."
+    }
+  },
+  "lessons": [
+    {
+      "id": "nettoyage-situation",
+      "type": "case",
+      "eyebrow": "La situation",
+      "title": "Nadia envoie beaucoup de devis pour des demandes peu précises",
+      "body": "Dans ce cas fictif, Nadia reçoit des demandes très différentes : intervention unique, bureaux, commerces ou grands locaux. Les prospects demandent souvent un prix sans indiquer la surface, la fréquence ou les contraintes. Elle visite de nombreux sites, mais trop de devis restent sans réponse.",
+      "visual": {
+        "type": "story",
+        "data": {
+          "image": "/images/courses/cases-acquisition/nettoyage-professionnel-storyboard-v1.png",
+          "panel": 1,
+          "alt": "Nadia trie plusieurs demandes et devis de nettoyage peu précis."
+        }
+      },
+      "takeaway": "Un devis ne peut pas être efficace lorsque la demande et le type de client restent flous."
+    },
+    {
+      "id": "nettoyage-attirer",
+      "type": "method",
+      "eyebrow": "1 · Attirer",
+      "title": "Choisir les locaux que l’entreprise sait servir régulièrement",
+      "body": "Nadia concentre son message sur les bureaux de 200 à 1 000 m² dans sa zone. Sa page précise les prestations, la fréquence minimale et le déroulement de la visite. Google, sa fiche locale et les recommandations de gestionnaires d’immeubles mènent vers une demande de visite qualifiée.",
+      "visual": {
+        "type": "story",
+        "data": {
+          "image": "/images/courses/cases-acquisition/nettoyage-professionnel-storyboard-v1.png",
+          "panel": 2,
+          "alt": "Nadia présente une offre claire à la gestionnaire de bureaux."
+        }
+      },
+      "takeaway": "Une cible concrète rend le message, le déplacement et le chiffrage plus efficaces."
+    },
+    {
+      "id": "nettoyage-transformer",
+      "type": "example",
+      "eyebrow": "2 · Transformer",
+      "title": "Qualifier avant la visite, standardiser après",
+      "body": "Le formulaire demande la surface, la fréquence, les horaires et les contraintes particulières. Nadia ne visite que les sites compatibles, puis utilise le même format de devis avec périmètre, fréquence et contrôle qualité. Dans l’exemple, 16 demandes donnent 9 visites, 6 devis et 3 contrats.",
+      "visual": {
+        "type": "story",
+        "data": {
+          "image": "/images/courses/cases-acquisition/nettoyage-professionnel-storyboard-v1.png",
+          "panel": 3,
+          "alt": "Nadia qualifie les locaux avant de préparer un devis standardisé."
+        }
+      },
+      "takeaway": "La visite confirme une demande déjà qualifiée ; elle ne sert pas à découvrir toutes les informations."
+    },
+    {
+      "id": "nettoyage-fideliser",
+      "type": "method",
+      "eyebrow": "3 · Fidéliser",
+      "title": "Contrôler la qualité avant que le client ne réclame",
+      "body": "Après la première semaine, Nadia vérifie les points sensibles avec la cliente. Un contrôle mensuel très court suit les écarts et les actions corrigées. Avant le renouvellement, elle récapitule la régularité du service et ajuste le périmètre si les locaux ou les usages ont changé.",
+      "visual": {
+        "type": "story",
+        "data": {
+          "image": "/images/courses/cases-acquisition/nettoyage-professionnel-storyboard-v1.png",
+          "panel": 4,
+          "alt": "Nadia effectue un contrôle qualité avec sa cliente."
+        }
+      },
+      "takeaway": "Le contrôle régulier protège le contrat en traitant les écarts avant qu’ils deviennent un conflit."
+    }
+  ],
+  "recap": {
+    "title": "Le cas en quatre phrases",
+    "points": [
+      "Nadia choisit les locaux pour lesquels son organisation est réellement adaptée.",
+      "La page annonce le périmètre, la fréquence minimale et le déroulement de la visite.",
+      "Le formulaire qualifie la demande avant tout déplacement et tout devis.",
+      "Le contrôle qualité régulier rend le service visible et protège le renouvellement."
+    ]
+  },
+  "quiz": {
+    "title": "Avez-vous bien retenu ?",
+    "questions": [
+      {
+        "id": "nettoyage-cible",
+        "question": "Pourquoi Nadia choisit-elle un type de locaux précis ?",
+        "choices": [
+          { "id": "efficace", "label": "Pour rendre l’offre et l’organisation plus efficaces" },
+          { "id": "mode", "label": "Uniquement pour suivre une tendance" }
+        ],
+        "correctChoiceId": "efficace",
+        "explanation": "La cible choisie facilite le message, les tournées, le chiffrage et la qualité de service."
+      },
+      {
+        "id": "nettoyage-visite",
+        "question": "Que doit-on connaître avant de se déplacer ?",
+        "choices": [
+          { "id": "informations", "label": "La surface, la fréquence, les horaires et les contraintes" },
+          { "id": "rien", "label": "Rien, toutes les visites doivent être acceptées" }
+        ],
+        "correctChoiceId": "informations",
+        "explanation": "Ces informations permettent de vérifier que la demande correspond à l’offre avant la visite."
+      },
+      {
+        "id": "nettoyage-controle",
+        "question": "Quand faut-il contrôler la qualité ?",
+        "choices": [
+          { "id": "plainte", "label": "Uniquement après une plainte" },
+          { "id": "regulier", "label": "Régulièrement, avant qu’un écart devienne un conflit" }
+        ],
+        "correctChoiceId": "regulier",
+        "explanation": "Un contrôle préventif permet de corriger rapidement et de sécuriser le contrat."
+      }
+    ]
+  },
+  "action": {
+    "resourceType": "template",
+    "resourceId": "pilotage-marketing-vente",
+    "title": "Tableau de pilotage Marketing & Vente",
+    "description": "Un modèle simple pour suivre les demandes, les visites, les devis, les contrats, les relances et les renouvellements.",
+    "ctaLabel": "Ouvrir le tableau",
+    "deliveryMode": "external"
+  }
+}

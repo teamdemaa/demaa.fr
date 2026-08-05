@@ -1,0 +1,139 @@
+{
+  "project": "Kit d’illustrations — Trésorerie d’entreprise",
+  "phase": "pilot",
+  "status": "ready_for_validation",
+  "automated_checks": [
+    {
+      "filename": "01_ouverture_bureau.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "has_alpha": true,
+      "transparent_corners": true,
+      "alpha_pixels": {
+        "transparent": 1273343,
+        "partial": 21018,
+        "opaque": 278503
+      },
+      "palette_rgb": {
+        "line": "#2F2F2F",
+        "accent": "#305F46",
+        "pale": "#F2F5F2"
+      },
+      "accent_visible_pixel_ratio": 0.0111,
+      "content_margins_px": {
+        "left": 101,
+        "top": 164,
+        "right": 101,
+        "bottom": 90
+      },
+      "horizontal_ratio": 1.5,
+      "manual_review": {
+        "readable_text": false,
+        "checkerboard_baked_in": false,
+        "single_editorial_scene": true,
+        "style_consistent_with_pilot": true
+      },
+      "svg_export": {
+        "filename": "01_ouverture_bureau.svg",
+        "type": "compatibility_wrapper",
+        "native_vector": false,
+        "notes": "PNG transparent haute définition intégré dans un conteneur SVG."
+      }
+    },
+    {
+      "filename": "07_facture_delai_banque.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "has_alpha": true,
+      "transparent_corners": true,
+      "alpha_pixels": {
+        "transparent": 1438892,
+        "partial": 5024,
+        "opaque": 128948
+      },
+      "palette_rgb": {
+        "line": "#2F2F2F",
+        "accent": "#305F46",
+        "pale": "#F2F5F2"
+      },
+      "accent_visible_pixel_ratio": 0.0068,
+      "content_margins_px": {
+        "left": 168,
+        "top": 307,
+        "right": 163,
+        "bottom": 336
+      },
+      "horizontal_ratio": 1.5,
+      "manual_review": {
+        "readable_text": false,
+        "checkerboard_baked_in": false,
+        "single_editorial_scene": true,
+        "style_consistent_with_pilot": true
+      },
+      "svg_export": {
+        "filename": "07_facture_delai_banque.svg",
+        "type": "compatibility_wrapper",
+        "native_vector": false,
+        "notes": "PNG transparent haute définition intégré dans un conteneur SVG."
+      }
+    },
+    {
+      "filename": "15_plan_action.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "has_alpha": true,
+      "transparent_corners": true,
+      "alpha_pixels": {
+        "transparent": 1204375,
+        "partial": 2986,
+        "opaque": 365503
+      },
+      "palette_rgb": {
+        "line": "#2F2F2F",
+        "accent": "#305F46",
+        "pale": "#F2F5F2"
+      },
+      "accent_visible_pixel_ratio": 0.0246,
+      "content_margins_px": {
+        "left": 258,
+        "top": 301,
+        "right": 195,
+        "bottom": 218
+      },
+      "horizontal_ratio": 1.5,
+      "manual_review": {
+        "readable_text": false,
+        "checkerboard_baked_in": false,
+        "single_editorial_scene": true,
+        "style_consistent_with_pilot": true
+      },
+      "svg_export": {
+        "filename": "15_plan_action.svg",
+        "type": "compatibility_wrapper",
+        "native_vector": false,
+        "notes": "PNG transparent haute définition intégré dans un conteneur SVG."
+      }
+    }
+  ],
+  "boards": [
+    "pilot_contact_sheet.png",
+    "pilot_green_background_test.png"
+  ],
+  "quality_gate": {
+    "alpha_channel": true,
+    "transparent_corners": true,
+    "palette_locked": true,
+    "readable_text_absent_after_visual_review": true,
+    "green_background_board_created": true,
+    "series_homogeneous_after_visual_review": true
+  }
+}

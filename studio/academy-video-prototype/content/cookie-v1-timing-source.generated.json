@@ -1,0 +1,51 @@
+{
+  "source": "elevenlabs-character-alignment",
+  "modelId": "eleven_multilingual_v2",
+  "fps": 30,
+  "audioDurationSeconds": 50.248,
+  "totalDurationSeconds": 51.448,
+  "scenes": {
+    "hook": {
+      "startSeconds": 0,
+      "endSeconds": 3.419,
+      "durationSeconds": 3.419,
+      "speechStartSeconds": 0,
+      "speechEndSeconds": 3.1
+    },
+    "demaa": {
+      "startSeconds": 3.419,
+      "endSeconds": 9.619,
+      "durationSeconds": 6.199999999999999,
+      "speechStartSeconds": 3.738,
+      "speechEndSeconds": 9.253
+    },
+    "positioning": {
+      "startSeconds": 9.619,
+      "endSeconds": 20.5435,
+      "durationSeconds": 10.924500000000002,
+      "speechStartSeconds": 9.985,
+      "speechEndSeconds": 20.375
+    },
+    "promotion": {
+      "startSeconds": 20.5435,
+      "endSeconds": 34.6325,
+      "durationSeconds": 14.088999999999999,
+      "speechStartSeconds": 20.712,
+      "speechEndSeconds": 34.435
+    },
+    "product": {
+      "startSeconds": 34.6325,
+      "endSeconds": 44.443,
+      "durationSeconds": 9.810499999999998,
+      "speechStartSeconds": 34.83,
+      "speechEndSeconds": 44.211
+    },
+    "close": {
+      "startSeconds": 44.443,
+      "endSeconds": 51.448,
+      "durationSeconds": 7.005000000000003,
+      "speechStartSeconds": 44.675,
+      "speechEndSeconds": 50.248
+    }
+  }
+}

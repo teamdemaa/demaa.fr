@@ -1,0 +1,148 @@
+{
+  "id": "pennylane-pour-cabinet",
+  "title": "Pennylane : peut-il devenir le système central du cabinet ?",
+  "shortTitle": "De la facture à la supervision, un même flux.",
+  "courseTitle": "PENNYLANE\nLE FLUX COMPLET",
+  "introVisual": {
+    "primaryLabel": "CLIENT",
+    "secondaryLabel": "CABINET"
+  },
+  "audience": "Dirigeants, associés et collaborateurs de cabinets d'expertise comptable en France",
+  "status": "draft",
+  "format": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "targetDurationSeconds": 225
+  },
+  "editorialContract": {
+    "tone": "Pédagogue expérimenté, calme, simple et direct. Il parle à des professionnels intelligents sans supposer qu'ils connaissent chaque terme technique.",
+    "rule": "Une idée par écran. Expliquer les mots métier utiles, montrer un parcours réel et nommer clairement les limites.",
+    "screenTextRule": "Le texte à l’écran résume ou chiffre. Il ne retranscrit pas la narration."
+  },
+  "question": "Pourquoi Pennylane peut-il devenir le système central d'un cabinet comptable, et quelles conditions faut-il vérifier avant de le choisir ?",
+  "scenes": [
+    {
+      "id": "flux-complet",
+      "title": "L’enjeu n’est pas un bouton",
+      "targetSeconds": 32,
+      "narration": "Dans un cabinet, la difficulté vient souvent des ruptures entre les outils. Une facture arrive par e-mail, la banque se trouve ailleurs, une pièce manque, puis l’information passe dans la comptabilité et la révision. À chaque rupture, il faut rechercher, relancer ou ressaisir. La proposition de Pennylane est de faire travailler le client et le cabinet sur la même donnée, depuis la facture jusqu’au contrôle final. Voyons si cette continuité est réelle, et à quelles conditions.",
+      "onScreen": [
+        "Une donnée",
+        "Un même flux",
+        "Du client au cabinet"
+      ],
+      "visual": {
+        "type": "timeline",
+        "layout": "full"
+      }
+    },
+    {
+      "id": "client-cabinet",
+      "title": "Le client et le cabinet partagent le dossier",
+      "targetSeconds": 32,
+      "narration": "Côté client, les factures, les justificatifs et les opérations bancaires arrivent dans Pennylane. Côté cabinet, ces éléments alimentent la production comptable. Depuis la vue portefeuille, l’équipe repère les opérations à traiter, les banques déconnectées et les comptes à contrôler. L’intérêt n’est pas seulement de stocker des documents. C’est de savoir ce qui est arrivé, ce qui manque et qui doit agir. Cela suppose que les flux soient bien connectés et que le client utilise réellement ce canal.",
+      "onScreen": [
+        "Ce qui est arrivé",
+        "Ce qui manque",
+        "Qui doit agir"
+      ],
+      "visual": {
+        "type": "illustration",
+        "layout": "text-left"
+      }
+    },
+    {
+      "id": "autopilot",
+      "title": "Ce qu’Autopilot automatise vraiment",
+      "targetSeconds": 34,
+      "narration": "Prenons une dépense de cent vingt euros. La facture arrive dans Pennylane et l’outil en lit les informations. L’opération bancaire correspondante remonte ensuite. Selon les règles du dossier, Autopilot peut traiter une facture complète, proposer son classement, la rapprocher du paiement ou demander un justificatif manquant. Le collaborateur contrôle alors les éléments qui demandent son attention. Le niveau d’automatisation se règle dossier par dossier et chaque rapprochement reste modifiable. L’outil exécute une règle ; le cabinet reste responsable de la validation.",
+      "onScreen": [
+        "Lire",
+        "Classer",
+        "Rapprocher",
+        "Contrôler"
+      ],
+      "visual": {
+        "type": "illustration",
+        "layout": "text-left"
+      }
+    },
+    {
+      "id": "facturation-electronique",
+      "title": "La facturation électronique change l’échelle",
+      "targetSeconds": 35,
+      "narration": "La facturation électronique rend cette organisation stratégique. Selon le calendrier prévu, dès le premier septembre deux mille vingt-six, les entreprises assujetties à la TVA doivent pouvoir recevoir leurs factures par une plateforme agréée. Pennylane en est une. Le cabinet peut suivre le déploiement chez ses clients, recueillir les mandats et centraliser les factures reçues. Une facture structurée peut alors entrer directement dans le flux comptable. Le cabinet doit néanmoins vérifier le périmètre, l’accompagnement des clients, les outils existants et les cas particuliers.",
+      "onScreen": [
+        "Recevoir",
+        "Suivre",
+        "Comptabiliser"
+      ],
+      "visual": {
+        "type": "timeline",
+        "layout": "full"
+      }
+    },
+    {
+      "id": "production",
+      "title": "Aller jusqu’à la production comptable",
+      "targetSeconds": 32,
+      "narration": "Une fois les données collectées, le même dossier alimente les achats, les ventes, la banque et, selon les connexions, les écritures de paie. Le cabinet poursuit avec le traitement des comptes, la TVA, les déclarations, la liasse fiscale et les états financiers. Pennylane n’est donc pas seulement un espace de dépôt : il couvre la chaîne de production. Cette continuité améliore la traçabilité, mais elle ne corrige ni un mauvais réglage fiscal ni une donnée incomplète.",
+      "onScreen": [
+        "Tenue",
+        "Déclarations",
+        "États financiers"
+      ],
+      "visual": {
+        "type": "timeline",
+        "layout": "full"
+      }
+    },
+    {
+      "id": "revision",
+      "title": "Réviser sans perdre la trace du raisonnement",
+      "targetSeconds": 36,
+      "narration": "Pour la révision, le dossier de travail organise les contrôles par cycles. Les comptes à revoir, les anomalies, les commentaires et les justificatifs restent liés au dossier. Pennylane propose une revue automatique sur certaines diligences standards, ainsi que des analyses et des projets de synthèse avec ComptAssistant. La limite est importante : l’automatisation ne couvre qu’une partie des contrôles et ses résultats doivent être confirmés. L’intelligence artificielle peut aider à repérer ou à rédiger. Elle ne porte ni le jugement professionnel ni la responsabilité finale.",
+      "onScreen": [
+        "Repérer",
+        "Documenter",
+        "Superviser"
+      ],
+      "visual": {
+        "type": "illustration",
+        "layout": "text-left"
+      }
+    },
+    {
+      "id": "pilotage-cabinet",
+      "title": "Piloter aussi le cabinet",
+      "targetSeconds": 31,
+      "narration": "Pour les dirigeants et les associés, le parcours ne s’arrête pas à la comptabilité des clients. Pennylane propose aussi le suivi des missions, la facturation récurrente, les temps, les budgets et la rentabilité par dossier. Des intégrations permettent de relier la paie, les caisses, les outils métier ou le reporting. Un outil central n’a de valeur que s’il dialogue avec l’écosystème existant. Avant de signer, il faut donc dresser la liste des connexions indispensables.",
+      "onScreen": [
+        "Missions",
+        "Facturation",
+        "Temps",
+        "Rentabilité"
+      ],
+      "visual": {
+        "type": "timeline",
+        "layout": "full"
+      }
+    },
+    {
+      "id": "decision",
+      "title": "La bonne manière de décider",
+      "targetSeconds": 38,
+      "narration": "Pennylane peut devenir le système central d’un cabinet parce qu’il relie le client, la production, la facturation électronique, la révision et le pilotage interne. Mais cette cohérence doit être prouvée sur vos dossiers. Testez une reprise réelle, un client peu autonome, plusieurs banques, votre logiciel de paie et un cycle complet de révision. Mesurez aussi la formation, le déploiement et le coût total. Demaa ne défend pas un logiciel : notre rôle est de vérifier si cette chaîne fonctionne dans votre organisation. Le bon outil est celui qui tient sur un dossier réel.",
+      "onScreen": [
+        "Tester",
+        "Mesurer",
+        "Décider"
+      ],
+      "visual": {
+        "type": "closing",
+        "layout": "center"
+      }
+    }
+  ]
+}

@@ -1,0 +1,150 @@
+{
+  "version": "1.0",
+  "kind": "case-study",
+  "status": "ready",
+  "identity": {
+    "slug": "juste-systeme-marketing",
+    "title": "JUSTE — un système marketing qui ressemble à sa fondatrice",
+    "shortTitle": "JUSTE — un marketing tenable",
+    "category": "Marketing & vente",
+    "promise": "Voir comment une marque désirable mais peu vendue peut construire un marketing simple, mesurable, rentable et tenable dans la durée.",
+    "audience": "Dirigeants de TPE et créateurs de marque",
+    "durationMinutes": 9,
+    "card": {
+      "section": "Cas concrets",
+      "title": "JUSTE — construire un marketing tenable",
+      "meta": "Cas concret · environ 9 min",
+      "image": "/images/courses/juste-systeme-marketing/academy-card-v1.png",
+      "imageAlt": "Boîte ouverte de la marque fictive JUSTE contenant cinq cookies-pâtisserie aux parfums différents."
+    }
+  },
+  "lessons": [
+    {
+      "id": "produit-plait-mais-ne-se-vend-pas",
+      "type": "case",
+      "eyebrow": "La situation",
+      "title": "Le produit plaît, mais il ne se vend pas",
+      "body": "JUSTE propose une box de cookies-pâtisserie désirable. Pourtant, après dix mois, la marque n’a enregistré que cinq ventes et sa fondatrice reçoit surtout des conseils marketing qui lui demandent de publier sans arrêt et de devenir quelqu’un d’autre.",
+      "visual": {
+        "type": "brand-case",
+        "data": {
+          "brand": "JUSTE",
+          "business": "Cookies-pâtisserie",
+          "monthsSinceLaunch": 10,
+          "sales": 5,
+          "problem": "Un bon produit sans système régulier pour attirer et vendre"
+        }
+      },
+      "takeaway": "Un bon produit ne remplace pas un système pour le faire connaître et le vendre."
+    },
+    {
+      "id": "attirer-en-deux-jours",
+      "type": "method",
+      "eyebrow": "2 · Attirer",
+      "eyebrow": "1 · Attirer",
+      "title": "Créer régulièrement, puis tester sans tout dépenser",
+      "body": "JUSTE concentre la production du mois sur deux jours pour obtenir douze contenus. Les quatre recettes signature sont ensuite testées à 10 € par jour pendant cinq jours, soit 200 € maximum. La marque renforce uniquement le contenu qui génère une vraie intention d’achat.",
+      "visual": {
+        "type": "timeline",
+        "data": {
+          "steps": [
+            { "timing": "2 jours", "label": "Tourner, monter et programmer" },
+            { "timing": "12 contenus par mois", "label": "Publier sans être présente chaque jour" },
+            { "timing": "200 € maximum", "label": "Tester quatre recettes signature" },
+            { "timing": "Seulement si le test vend", "label": "Renforcer le meilleur contenu" }
+          ]
+        }
+      },
+      "takeaway": "Un rythme tenable attire régulièrement ; la publicité ne renforce que ce qui montre une intention d’achat."
+    },
+    {
+      "id": "transformer-avec-une-offre-simple",
+      "type": "example",
+      "eyebrow": "2 · Transformer",
+      "title": "Une offre simple doit rester rentable",
+      "body": "JUSTE propose une box de cinq cookies avec un sixième goût mystère offert à la première commande. Vendue 30 €, elle coûte 14 € à produire et laisse 16 € avant publicité et coûts fixes. Le coût d’acquisition maximal est donc fixé à 10 €.",
+      "visual": {
+        "type": "metrics",
+        "data": {
+          "offer": "5 cookies + 1 goût mystère",
+          "sellingPrice": "30 €",
+          "directCosts": "14 €",
+          "contributionBeforeAds": "16 €",
+          "maximumAcquisitionCost": "10 €"
+        }
+      },
+      "takeaway": "Une campagne qui vend mais dépasse la marge disponible ne construit pas un système rentable."
+    },
+    {
+      "id": "fideliser-sans-ajouter-un-outil",
+      "type": "method",
+      "eyebrow": "3 · Fidéliser",
+      "title": "Automatiser l’essentiel avant d’ajouter de nouveaux outils",
+      "body": "Shopify suffit pour relancer un panier abandonné, demander un avis après la livraison et proposer un nouveau parfum trois semaines après la commande. Deux newsletters par mois entretiennent ensuite la relation avec les clientes.",
+      "visual": {
+        "type": "timeline",
+        "data": {
+          "steps": [
+            { "timing": "Après l’abandon", "label": "Relance du panier" },
+            { "timing": "Après la livraison", "label": "Demande d’avis" },
+            { "timing": "Trois semaines après", "label": "Nouveau parfum" }
+          ],
+          "newsletterFrequency": "2 par mois"
+        }
+      },
+      "takeaway": "La fidélisation commence avec quelques messages utiles et réguliers, pas avec davantage d’outils."
+    }
+  ],
+  "recap": {
+    "title": "Le cas en quatre phrases",
+    "points": [
+      "Un bon produit ne remplace pas un système pour le faire connaître.",
+      "Un contenu signature peut alimenter le mois sans publier chaque jour.",
+      "La publicité doit être plafonnée et jugée sur les ventes, pas sur les likes.",
+      "Le bon marketing reste tenable, mesurable et rentable pour l’entreprise."
+    ]
+  },
+  "quiz": {
+    "title": "Avez-vous bien retenu ?",
+    "questions": [
+      {
+        "id": "rythme-de-contenu",
+        "question": "Pourquoi JUSTE ne cherche-t-elle pas à publier tous les jours ?",
+        "choices": [
+          { "id": "prix", "label": "Pour réduire le prix des cookies" },
+          { "id": "tenable", "label": "Pour tenir le rythme dans la durée" }
+        ],
+        "correctChoiceId": "tenable",
+        "explanation": "Le système concentre la production sur deux jours afin que la fondatrice puisse réellement le maintenir."
+      },
+      {
+        "id": "arret-du-test",
+        "question": "Quand faut-il arrêter le premier test publicitaire ?",
+        "choices": [
+          { "id": "likes", "label": "Quand le nombre de likes diminue" },
+          { "id": "aucune-intention", "label": "Quand aucune intention d’achat n’apparaît" }
+        ],
+        "correctChoiceId": "aucune-intention",
+        "explanation": "Le test est jugé sur les visites qualifiées, les ajouts au panier et les commandes, pas sur la popularité seule."
+      },
+      {
+        "id": "cout-acquisition-maximal",
+        "question": "Quel coût d’acquisition maximal est retenu dans l’exemple ?",
+        "choices": [
+          { "id": "dix", "label": "10 €" },
+          { "id": "seize", "label": "16 €" }
+        ],
+        "correctChoiceId": "dix",
+        "explanation": "La box laisse 16 € avant publicité et coûts fixes ; le cas fixe donc une limite prudente de 10 €."
+      }
+    ]
+  },
+  "action": {
+    "resourceType": "template",
+    "resourceId": "pilotage-marketing-vente",
+    "title": "Tableau de pilotage Marketing & Vente",
+    "description": "Un modèle simple pour centraliser les actions, les opportunités, les relances et les conversions du système commercial.",
+    "ctaLabel": "Ouvrir le tableau",
+    "deliveryMode": "external"
+  }
+}

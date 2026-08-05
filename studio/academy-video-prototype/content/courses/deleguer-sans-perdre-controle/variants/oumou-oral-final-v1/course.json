@@ -1,0 +1,406 @@
+{
+  "id": "deleguer-sans-perdre-controle",
+  "editorialVariant": "oumou-oral-final-v1",
+  "title": "Déléguer sans perdre le contrôle",
+  "shortTitle": "Contrôler le résultat ne signifie pas contrôler chaque geste.",
+  "courseTitle": "DÉLÉGUER SANS\nPERDRE LE CONTRÔLE",
+  "introVisual": {
+    "primaryLabel": "AUTONOMIE",
+    "secondaryLabel": "REPÈRES"
+  },
+  "audience": "Dirigeants de TPE en France",
+  "operationalQuestion": "Comment choisir une tâche à déléguer, cadrer le résultat attendu et suivre son exécution sans reprendre le travail à la moindre difficulté ?",
+  "status": "draft",
+  "format": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "targetDurationSeconds": 230
+  },
+  "editorialContract": {
+    "tone": "Chaleureux, lucide, bienveillant et constructif. Dire les choses clairement sans juger le dirigeant.",
+    "rule": "Une idée par écran. Chaque chiffre doit permettre de refaire le calcul.",
+    "screenTextRule": "Le texte à l’écran résume ou chiffre. Il ne retranscrit pas la narration.",
+    "pronouns": "Employer « on » pour les erreurs fréquentes et « vous » pour les actions."
+  },
+  "scenes": [
+    {
+      "id": "deleguer-resultat",
+    "title": "Le bon équilibre",
+      "targetSeconds": 27,
+      "narration": "Déléguer, ce n’est ni dire « occupe-toi de ça » puis disparaître, ni vérifier chaque détail. Cela consiste à confier un résultat en donnant assez de contexte et de repères pour que l’autre personne puisse avancer. Sans cadre, les questions, les retards et les corrections reviennent vite vers vous. Avec trop de contrôle, la personne attend votre accord à chaque étape. L’équilibre, c’est de laisser de l’autonomie dans des limites claires.",
+    "onScreen": [
+      "Déléguer",
+      "sans perdre le contrôle"
+    ],
+    "visual": {
+      "type": "low-point",
+      "asset": "illustrations/casting-v2/05-deleguer-sans-perdre-controle-clean.png",
+      "assetScale": 1.5,
+      "assetOffsetX": -40,
+      "layout": "center"
+    },
+      "beats": [
+        {
+          "id": "faux-choix",
+          "startSeconds": 0,
+          "template": "statement",
+          "eyebrow": "Deux façons d’échouer",
+          "lines": [
+            "ABANDONNER",
+            "OU",
+            "TOUT CONTRÔLER"
+          ],
+          "accentIndex": 2
+        },
+        {
+          "id": "definition",
+          "startSeconds": 16,
+          "cue": "Cela consiste",
+          "template": "term",
+          "eyebrow": "Déléguer",
+          "term": "UN RÉSULTAT",
+          "definition": "AVEC DU CONTEXTE ET DES REPÈRES"
+        }
+      ]
+    },
+    {
+      "id": "quoi-deleguer",
+      "title": "Choisir une tâche qui se prête à la délégation",
+      "targetSeconds": 33,
+      "narration": "Commencez par une tâche fréquente, facile à expliquer et dont les erreurs peuvent être repérées puis corrigées. Par exemple : préparer un planning, produire un rapport régulier ou organiser un dossier client. Gardez au départ les décisions sensibles ou irréversibles. Gardez aussi les tâches que personne dans l’équipe ne maîtrise encore. Ne déléguez pas seulement ce que vous n’aimez pas faire. Choisissez une tâche qui vous libère du temps, sans confier à l’équipe un risque qu’elle n’est pas encore prête à gérer.",
+      "onScreen": [
+        "Fréquente",
+        "Explicable",
+        "Erreur détectable",
+        "Risque maîtrisable"
+      ],
+      "visual": {
+        "type": "timeline",
+        "layout": "full"
+      },
+      "beats": [
+        {
+          "id": "bons-candidats",
+          "startSeconds": 0,
+          "template": "chips",
+          "eyebrow": "Bon candidat à la délégation",
+          "title": "Une tâche que l’on peut apprendre et corriger.",
+          "items": [
+            "FRÉQUENTE",
+            "EXPLICABLE",
+            "VÉRIFIABLE",
+            "RÉPARABLE"
+          ]
+        },
+        {
+          "id": "risque",
+          "startSeconds": 20,
+          "cue": "Gardez au départ",
+          "template": "statement",
+          "eyebrow": "À conserver provisoirement",
+          "lines": [
+            "SENSIBLE",
+            "IRRÉVERSIBLE",
+            "NON MAÎTRISÉ"
+          ],
+          "accentIndex": 2
+        }
+      ]
+    },
+    {
+      "id": "resultat-attendu",
+      "title": "Décrire un résultat observable",
+      "targetSeconds": 31,
+      "narration": "Décrivez d’abord un résultat que vous pourrez vérifier. Qu’est-ce qui doit être prêt ? À quelle date ? Pour qui ? Quels critères faut-il respecter ? Quelles sont les contraintes ? Dire « fais un planning propre » laisse trop de place à l’interprétation. Soyez précis : jeudi à seize heures, le planning doit être prêt. Les dix-huit interventions doivent être attribuées à un technicien qualifié. Aucune journée ne doit dépasser huit heures. Le résultat devient vérifiable, sans expliquer chaque clic.",
+      "onScreen": [
+        "Livrable",
+        "Échéance",
+        "Critères de qualité",
+        "Contraintes"
+      ],
+      "visual": {
+        "type": "timeline",
+        "layout": "full"
+      },
+      "beats": [
+        {
+          "id": "cadre",
+          "startSeconds": 0,
+          "template": "chips",
+          "eyebrow": "Le résultat attendu",
+          "title": "Ce qui permettra de dire : c’est terminé.",
+          "items": [
+            "LIVRABLE",
+            "DATE",
+            "QUALITÉ",
+            "CONTRAINTES"
+          ]
+        },
+        {
+          "id": "observable",
+          "startSeconds": 18,
+          "cue": "Dire « fais",
+          "template": "statement",
+          "eyebrow": "Remplacer le flou",
+          "lines": [
+            "« FAIS AU MIEUX »",
+            "≠",
+            "RÉSULTAT VÉRIFIABLE"
+          ],
+          "accentIndex": 2
+        }
+      ]
+    },
+    {
+      "id": "transmettre-contexte",
+      "title": "Transmettre le contexte qui aide à décider",
+      "targetSeconds": 29,
+      "narration": "Donnez ensuite le contexte utile. Pourquoi cette tâche compte-t-elle ? Qui utilisera le travail ? Quelles décisions sont déjà prises ? Quel résultat attendez-vous ? Quelles erreurs faut-il éviter ? Donnez aussi les accès, les contacts, les informations et les outils nécessaires. Inutile de raconter toute l’histoire de l’entreprise. Posez-vous une question simple : de quoi cette personne a-t-elle besoin pour décider sans revenir vers moi à chaque étape ?",
+      "onScreen": [
+        "Pourquoi",
+        "Décisions déjà prises",
+        "Exemples",
+        "Accès · contacts · outils"
+      ],
+      "visual": {
+        "type": "illustration",
+        "layout": "actions"
+      },
+      "beats": [
+        {
+          "id": "comprendre",
+          "startSeconds": 0,
+          "template": "action",
+          "number": "01",
+          "title": "DONNER LE CONTEXTE",
+          "detail": "Pourquoi, pour qui et avec quelles décisions.",
+          "tags": [
+            "SENS",
+            "EXEMPLES"
+          ]
+        },
+        {
+          "id": "agir",
+          "startSeconds": 17,
+          "cue": "Donnez aussi",
+          "template": "action",
+          "number": "02",
+          "title": "DONNER LES MOYENS",
+          "detail": "Accès, contacts, informations et outils.",
+          "tags": [
+            "AGIR",
+            "DÉCIDER"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "autonomie-alertes",
+      "title": "Définir l’autonomie et les seuils d’alerte",
+      "targetSeconds": 35,
+      "narration": "Dites clairement ce que la personne peut décider seule. Précisez aussi ce qu’elle doit faire valider avant d’agir. Enfin, dites ce qu’elle peut décider avant de vous en informer. Ajoutez des seuils d’alerte concrets : plus d’un jour de retard ou plus de cinq pour cent de dépassement du budget. Prévenez aussi en cas de problème avec un client ou de risque pour la sécurité. Ainsi, la personne sait quand avancer seule et quand vous prévenir.",
+      "onScreen": [
+        "Décider seul",
+        "Faire valider",
+        "Décider puis informer",
+        "Seuils d’alerte"
+      ],
+      "visual": {
+        "type": "timeline",
+        "layout": "full"
+      },
+      "beats": [
+        {
+          "id": "zones",
+          "startSeconds": 0,
+          "template": "chips",
+          "eyebrow": "Trois zones de décision",
+          "title": "L’autonomie doit être explicite.",
+          "items": [
+            "DÉCIDER SEUL",
+            "FAIRE VALIDER",
+            "DÉCIDER + INFORMER"
+          ]
+        },
+        {
+          "id": "seuils",
+          "startSeconds": 20,
+          "cue": "Ajoutez des seuils",
+          "template": "metrics",
+          "eyebrow": "Exemples de seuils d’alerte",
+          "cards": [
+            {
+              "label": "Retard",
+              "value": "> 1 jour"
+            },
+            {
+              "label": "Budget",
+              "value": "> 5 %"
+            },
+            {
+              "label": "Client ou sécurité",
+              "value": "Alerte",
+              "accent": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "suivi-leger",
+      "title": "Suivre avec peu d’indicateurs",
+      "targetSeconds": 29,
+      "narration": "Suivez le résultat, pas chaque mouvement. Fixez un point de contrôle avant l’échéance et choisissez deux ou trois repères : l’avancement, la qualité, le délai ou le budget. Adaptez la fréquence au risque et à l’expérience de la personne. Un tableau de vingt colonnes peut rassurer, mais il ajoute souvent du travail sans aider à décider. Gardez seulement les informations qui vous permettent d’agir.",
+      "onScreen": [
+        "Un point avant l’échéance",
+        "2 ou 3 indicateurs",
+        "Fréquence proportionnée au risque"
+      ],
+      "visual": {
+        "type": "timeline",
+        "layout": "full"
+      },
+      "beats": [
+        {
+          "id": "indicateurs",
+          "startSeconds": 0,
+          "template": "metrics",
+          "eyebrow": "Le suivi minimum utile",
+          "cards": [
+            {
+              "label": "Avancement",
+              "value": "1 jalon"
+            },
+            {
+              "label": "Qualité",
+              "value": "1 critère"
+            },
+            {
+              "label": "Délai ou budget",
+              "value": "1 alerte",
+              "accent": true
+            }
+          ]
+        },
+        {
+          "id": "limite",
+          "startSeconds": 18,
+          "cue": "Un tableau",
+          "template": "statement",
+          "eyebrow": "Le faux contrôle",
+          "lines": [
+            "20 COLONNES",
+            "≠",
+            "BON PILOTAGE"
+          ],
+          "accentIndex": 2
+        }
+      ]
+    },
+    {
+      "id": "exemple-planning",
+      "title": "Exemple : déléguer un planning d’interventions",
+      "targetSeconds": 39,
+      "narration": "Prenons une entreprise de maintenance qui organise dix-huit interventions par semaine. Le planning est confié à l’assistante. Il doit être envoyé le jeudi à seize heures, avec un technicien qualifié pour chaque intervention et aucune journée de plus de huit heures. L’assistante déplace seule les créneaux. Elle prévient si un client attend plus de vingt-quatre heures, s’il manque une compétence ou si des heures supplémentaires sont probables. En fin de semaine, trois chiffres suffisent : seize interventions réalisées, deux reprogrammées et trois heures supplémentaires. On peut alors voir ce qui doit être corrigé.",
+      "onScreen": [
+        "18 interventions",
+        "Jeudi · 16 h",
+        "16 réalisées · 2 reprogrammées",
+        "3 h supplémentaires"
+      ],
+      "visual": {
+        "type": "cash-example",
+        "layout": "full"
+      },
+      "beats": [
+        {
+          "id": "cadre-chiffre",
+          "startSeconds": 0,
+          "template": "metrics",
+          "eyebrow": "Le résultat attendu",
+          "cards": [
+            {
+              "label": "Interventions",
+              "value": "18"
+            },
+            {
+              "label": "Planning envoyé",
+              "value": "Jeudi · 16 h"
+            },
+            {
+              "label": "Journée maximale",
+              "value": "8 h",
+              "accent": true
+            }
+          ]
+        },
+        {
+          "id": "bilan-chiffre",
+          "startSeconds": 24,
+          "cue": "En fin de semaine",
+          "template": "metrics",
+          "eyebrow": "Le bilan réel",
+          "cards": [
+            {
+              "label": "Réalisées",
+              "value": "16"
+            },
+            {
+              "label": "Reprogrammées",
+              "value": "2"
+            },
+            {
+              "label": "Heures supplémentaires",
+              "value": "3 h",
+              "accent": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "corriger-sans-reprendre",
+      "title": "Corriger sans reprendre tout le travail",
+      "targetSeconds": 35,
+      "narration": "Quand le résultat n’est pas au niveau attendu, ne reprenez pas automatiquement toute la tâche. Cherchez d’abord la cause : consigne floue, contexte manquant, compétence à renforcer, seuil d’alerte absent ou mauvaise décision. Demandez à la personne de proposer une correction, puis améliorez le cadre pour la prochaine fois. En cas d’urgence ou de risque grave, reprenez bien sûr la main. Retenez la séquence : choisir, cadrer, donner les moyens, laisser de l’autonomie, suivre, puis corriger.",
+      "onScreen": [
+        "Chercher la cause",
+        "Faire corriger",
+        "Améliorer le cadre",
+        "Ne reprendre qu’en cas de nécessité"
+      ],
+      "visual": {
+        "type": "closing",
+        "layout": "center"
+      },
+      "beats": [
+        {
+          "id": "diagnostic",
+          "startSeconds": 0,
+          "template": "action",
+          "number": "01",
+          "title": "CORRIGER LE SYSTÈME",
+          "detail": "Chercher la cause et faire proposer la correction.",
+          "tags": [
+            "APPRENDRE",
+            "RENFORCER"
+          ]
+        },
+        {
+          "id": "methode",
+          "startSeconds": 21,
+          "cue": "Retenez la séquence",
+          "template": "statement",
+          "eyebrow": "La méthode",
+          "lines": [
+            "CADRER",
+            "AUTONOMISER",
+            "APPRENDRE"
+          ],
+          "accentIndex": 2
+        }
+      ]
+    }
+  ]
+}

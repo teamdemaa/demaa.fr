@@ -1,0 +1,133 @@
+{
+  "version": 1,
+  "kind": "full-course-narration-delivery",
+  "course": "deleguer-sans-perdre-controle",
+  "variant": "oumou-warm-v2",
+  "notVoiceApproved": true,
+  "generatedAt": "2026-07-29T11:36:30.535Z",
+  "verifiedAt": "2026-07-29T11:36:39.611Z",
+  "elevenLabsCalls": 1,
+  "characterCount": 3744,
+  "creditsEngagedEstimated": 3744,
+  "script": {
+    "statusBefore": "script-approved",
+    "statusAfter": "script-approved",
+    "byteIdenticalToApprovedSha": true,
+    "sha256": "4c5bed3bf2a24e7b8e70d713e8ec825760dd28a69e7278345de29b90f4a3bfd0"
+  },
+  "voice": {
+    "voiceId": "9HTNhnzaWIkUTIhaJhPM",
+    "modelId": "eleven_multilingual_v2",
+    "speed": 1.15,
+    "stability": 0.55,
+    "similarityBoost": 0.78,
+    "style": 0,
+    "speakerBoost": true,
+    "postprocessRate": 1
+  },
+  "audio": {
+    "file": "/Users/oumougory/Apps/Demaa.fr/studio/academy-video-prototype/public/courses/deleguer-sans-perdre-controle/variants/oumou-warm-v2/audio/narration-source.mp3",
+    "codec": "mp3",
+    "sampleRate": 44100,
+    "channels": 1,
+    "fileDurationSeconds": 161.462857,
+    "alignedSpeechEndSeconds": 161.427,
+    "sizeBytes": 2583867,
+    "sha256": "3fe7edfd9c0056ec967dbcc21c937aa365c6493d62d04867e36a4620aca4c01e",
+    "fullDecode": true
+  },
+  "alignment": {
+    "file": "/Users/oumougory/Apps/Demaa.fr/studio/academy-video-prototype/public/courses/deleguer-sans-perdre-controle/variants/oumou-warm-v2/audio/alignment.json",
+    "sha256": "1a035c575f1afac3d93f57df517a6ceaf4258b08bbd8f28d2295c021a694d9c0",
+    "characterCount": 3744,
+    "textExact": true,
+    "charactersExact": true,
+    "timesMonotonic": true,
+    "firstStartSeconds": 0,
+    "lastEndSeconds": 161.427
+  },
+  "timing": {
+    "file": "/Users/oumougory/Apps/Demaa.fr/studio/academy-video-prototype/content/courses/deleguer-sans-perdre-controle/variants/oumou-warm-v2/timing-source.generated.json",
+    "sha256": "900dea76ee18ffc9de237b75ddc4cde78bba064852476c440bb01e53845ce71d",
+    "audioDurationSeconds": 161.427,
+    "totalDurationSeconds": 162.62699999999998,
+    "scenes": [
+      {
+        "id": "deleguer-resultat",
+        "characterCount": 440,
+        "speechStartSeconds": 0,
+        "speechEndSeconds": 19.668,
+        "speechDurationSeconds": 19.668,
+        "sceneDurationSeconds": 19.773
+      },
+      {
+        "id": "quoi-deleguer",
+        "characterCount": 466,
+        "speechStartSeconds": 19.877,
+        "speechEndSeconds": 39.974,
+        "speechDurationSeconds": 20.097,
+        "sceneDurationSeconds": 20.34
+      },
+      {
+        "id": "resultat-attendu",
+        "characterCount": 428,
+        "speechStartSeconds": 40.252,
+        "speechEndSeconds": 57.818,
+        "speechDurationSeconds": 17.566,
+        "sceneDurationSeconds": 17.769
+      },
+      {
+        "id": "transmettre-contexte",
+        "characterCount": 453,
+        "speechStartSeconds": 57.945,
+        "speechEndSeconds": 76.858,
+        "speechDurationSeconds": 18.913,
+        "sceneDurationSeconds": 19.099
+      },
+      {
+        "id": "autonomie-alertes",
+        "characterCount": 432,
+        "speechStartSeconds": 77.102,
+        "speechEndSeconds": 95.424,
+        "speechDurationSeconds": 18.322,
+        "sceneDurationSeconds": 18.519
+      },
+      {
+        "id": "suivi-leger",
+        "characterCount": 399,
+        "speechStartSeconds": 95.574,
+        "speechEndSeconds": 113.013,
+        "speechDurationSeconds": 17.439,
+        "sceneDurationSeconds": 17.607
+      },
+      {
+        "id": "exemple-planning",
+        "characterCount": 619,
+        "speechStartSeconds": 113.199,
+        "speechEndSeconds": 139.321,
+        "speechDurationSeconds": 26.122,
+        "sceneDurationSeconds": 26.407
+      },
+      {
+        "id": "corriger-sans-reprendre",
+        "characterCount": 493,
+        "speechStartSeconds": 139.705,
+        "speechEndSeconds": 161.427,
+        "speechDurationSeconds": 21.722,
+        "sceneDurationSeconds": 23.114
+      }
+    ]
+  },
+  "requestManifest": {
+    "file": "/Users/oumougory/Apps/Demaa.fr/studio/academy-video-prototype/public/courses/deleguer-sans-perdre-controle/variants/oumou-warm-v2/audio/narration-source.mp3.manifest.json",
+    "sha256": "cff85c15564eb59cda617793644db95b6df5b8c7d70165b8b5c3c3b1db11750a",
+    "requestSha256": "11115d6f7a01335ce0f69dc2a02e7eba0ad49add94db58bd2c5218e2c43bb7c4"
+  },
+  "qa": {
+    "sceneCoverageExact": true,
+    "longSilenceThresholdSeconds": 1.2,
+    "longSilenceEvents": 0,
+    "obviousTruncation": false,
+    "obviousDuplication": false
+  }
+}

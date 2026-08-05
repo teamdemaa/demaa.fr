@@ -1,0 +1,74 @@
+{
+  "source": "elevenlabs-character-alignment+postprocessed-1.2x",
+  "modelId": "eleven_multilingual_v2",
+  "fps": 25,
+  "audioDurationSeconds": 186.49583333333334,
+  "totalDurationSeconds": 187.69583333333333,
+  "scenes": {
+    "juste-donne-envie": {
+      "startSeconds": 0,
+      "endSeconds": 19.964583333333337,
+      "durationSeconds": 19.964583333333337,
+      "speechStartSeconds": 0,
+      "speechEndSeconds": 19.775833333333335,
+      "beats": {}
+    },
+    "produit-sans-ventes": {
+      "startSeconds": 19.964583333333337,
+      "endSeconds": 44.67875,
+      "durationSeconds": 24.714166666666664,
+      "speechStartSeconds": 20.153333333333336,
+      "speechEndSeconds": 44.417500000000004,
+      "beats": {}
+    },
+    "demaa-systeme": {
+      "startSeconds": 44.67875,
+      "endSeconds": 71.44500000000001,
+      "durationSeconds": 26.766250000000007,
+      "speechStartSeconds": 44.94,
+      "speechEndSeconds": 71.17916666666667,
+      "beats": {}
+    },
+    "attirer-contenu-signature": {
+      "startSeconds": 71.44500000000001,
+      "endSeconds": 102.26875,
+      "durationSeconds": 30.82374999999999,
+      "speechStartSeconds": 71.71083333333334,
+      "speechEndSeconds": 101.8575,
+      "beats": {}
+    },
+    "attirer-ecosysteme": {
+      "startSeconds": 102.26875,
+      "endSeconds": 131.22125,
+      "durationSeconds": 28.9525,
+      "speechStartSeconds": 102.67999999999999,
+      "speechEndSeconds": 130.7375,
+      "beats": {}
+    },
+    "transformer-offre": {
+      "startSeconds": 131.22125,
+      "endSeconds": 148.97041666666667,
+      "durationSeconds": 17.749166666666667,
+      "speechStartSeconds": 131.705,
+      "speechEndSeconds": 148.50083333333333,
+      "beats": {}
+    },
+    "fideliser-relation": {
+      "startSeconds": 148.97041666666667,
+      "endSeconds": 172.50041666666667,
+      "durationSeconds": 23.53,
+      "speechStartSeconds": 149.44,
+      "speechEndSeconds": 172.0991666666667,
+      "beats": {}
+    },
+    "tenir-dans-la-duree": {
+      "startSeconds": 172.50041666666667,
+      "endSeconds": 187.69583333333333,
+      "durationSeconds": 15.19541666666666,
+      "speechStartSeconds": 172.90166666666667,
+      "speechEndSeconds": 186.49583333333334,
+      "beats": {}
+    }
+  },
+  "postprocessRate": 1.2
+}

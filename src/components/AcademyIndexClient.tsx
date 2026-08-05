@@ -1,0 +1,388 @@
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import { ChevronDown, ChevronUp, Search } from "lucide-react";
+import { useMemo, useState } from "react";
+import type { AcademyContentDefinition } from "@/lib/academy-course-content";
+import { matchesSearchQuery } from "@/lib/search";
+
+type AcademyIndexClientProps = {
+  contents: AcademyContentDefinition[];
+  backLink?: {
+    href: string;
+    label: string;
+  };
+};
+
+type CaseStudyPresentation = {
+  title: string;
+  sector: string;
+  character: string;
+  characterAlt: string;
+  characterClassName?: string;
+};
+
+const CASE_STUDY_ORDER = [
+  "cabinet-conseil-acquisition",
+  "maintenance-informatique-acquisition",
+  "cabinet-recrutement-acquisition",
+  "nettoyage-professionnel-acquisition",
+  "formation-b2b-acquisition",
+  "bureau-etudes-acquisition",
+];
+
+const CASE_STUDY_PRESENTATIONS: Record<string, CaseStudyPresentation> = {
+  "cabinet-conseil-acquisition": {
+    title: "Comment obtenir des demandes sans dépendre du bouche-à-oreille ?",
+    sector: "Cabinet de conseil",
+    character: "/images/marketing-ethique/personnages/personnage-01.png",
+    characterAlt: "Entrepreneuse à la tête d’un cabinet de conseil",
+  },
+  "maintenance-informatique-acquisition": {
+    title: "Comment ne plus perdre les demandes entrantes ?",
+    sector: "Maintenance informatique",
+    character: "/images/marketing-ethique/personnages/personnage-04.png",
+    characterAlt: "Entrepreneur en maintenance informatique",
+  },
+  "cabinet-recrutement-acquisition": {
+    title: "Comment obtenir des mandats sans prospecter au hasard ?",
+    sector: "Cabinet de recrutement",
+    character: "/images/marketing-ethique/personnages/personnage-05-v2.png",
+    characterAlt: "Entrepreneuse à la tête d’un cabinet de recrutement",
+  },
+  "nettoyage-professionnel-acquisition": {
+    title: "Comment remplir son planning avec des contrats récurrents ?",
+    sector: "Nettoyage professionnel",
+    character: "/images/marketing-ethique/personnages/personnage-03.png",
+    characterAlt: "Entrepreneuse dans le nettoyage professionnel",
+  },
+  "formation-b2b-acquisition": {
+    title: "Comment vendre une formation B2B sans forcer ?",
+    sector: "Formation B2B",
+    character: "/images/marketing-ethique/personnages/personnage-10-v2.png",
+    characterAlt: "Formatrice B2B préparant une session",
+  },
+  "bureau-etudes-acquisition": {
+    title: "Comment rendre une expertise technique facile à acheter ?",
+    sector: "Bureau d’études",
+    character: "/images/marketing-ethique/personnages/personnage-11-v2.png",
+    characterAlt: "Expert d’un bureau d’études présentant sa méthode",
+  },
+};
+
+const COURSE_TITLES: Record<string, string> = {
+  "construire-systeme-marketing-vente": "Construire son système marketing",
+};
+
+function CourseDiagram({ slug }: { slug: string }) {
+  if (slug === "piloter-sa-tresorerie") {
+    return (
+      <svg viewBox="0 0 520 292.5" className="h-full w-full" aria-hidden="true">
+        <path d="M50 190H470" fill="none" stroke="#9FB3A7" strokeWidth="2" />
+        <path
+          d="M54 116L110 140L166 103L222 166L278 126L334 192L390 145L446 101L472 89"
+          fill="none"
+          stroke="#315F46"
+          strokeWidth="4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <circle cx="334" cy="192" r="10" fill="#F1F3F0" stroke="#315F46" strokeWidth="4" />
+        <path d="M334 204V226" fill="none" stroke="#315F46" strokeWidth="2" strokeDasharray="3 5" />
+      </svg>
+    );
+  }
+
+  if (slug === "comprendre-chiffre-affaires-benefice") {
+    return (
+      <svg viewBox="0 0 520 292.5" className="h-full w-full" aria-hidden="true">
+        <rect x="80" y="114" width="360" height="82" rx="18" fill="#FFFFFF" stroke="#9FB3A7" strokeWidth="2" />
+        <path d="M80 158H358V196H98Q80 196 80 178Z" fill="#DCE5DF" />
+        <path d="M358 158H440V178Q440 196 422 196H358Z" fill="#315F46" />
+        <text x="260" y="143" textAnchor="middle" fill="#315F46" fontSize="15" fontWeight="600" letterSpacing="1.5">
+          CHIFFRE D’AFFAIRES
+        </text>
+        <text x="110" y="184" fill="#6E7C74" fontSize="14" fontWeight="500">CHARGES</text>
+        <text x="399" y="184" textAnchor="middle" fill="#F1F3F0" fontSize="13" fontWeight="600">BÉNÉFICE</text>
+      </svg>
+    );
+  }
+
+  if (slug === "fixer-ses-prix-sans-vendre-a-perte") {
+    return (
+      <svg viewBox="0 0 520 292.5" className="h-full w-full" aria-hidden="true">
+        <text x="58" y="82" fill="#315F46" fontSize="15" fontWeight="600" letterSpacing="1.5">
+          COMPOSITION DU PRIX
+        </text>
+        <rect x="58" y="118" width="274" height="72" rx="17" fill="#DCE5DF" stroke="#A8BBB0" strokeWidth="2" />
+        <path d="M238 118H315Q332 118 332 135V173Q332 190 315 190H238Z" fill="#C5D3C9" />
+        <text x="148" y="162" textAnchor="middle" fill="#315F46" fontSize="15" fontWeight="600">COÛTS</text>
+        <text x="285" y="162" textAnchor="middle" fill="#315F46" fontSize="15" fontWeight="600">MARGE</text>
+        <path d="M352 154H422M407 138L423 154L407 170" fill="none" stroke="#315F46" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+        <text x="456" y="160" textAnchor="middle" fill="#315F46" fontSize="15" fontWeight="600">PRIX</text>
+      </svg>
+    );
+  }
+
+  if (slug === "construire-systeme-marketing-vente") {
+    return (
+      <svg viewBox="0 0 520 292.5" className="h-full w-full" aria-hidden="true">
+        <path d="M82 140H438" fill="none" stroke="#A8BBB0" strokeWidth="2" />
+        <circle cx="90" cy="140" r="10" fill="#315F46" />
+        <circle cx="260" cy="140" r="10" fill="#789987" />
+        <circle cx="430" cy="140" r="10" fill="#315F46" />
+        <text x="90" y="181" textAnchor="middle" fill="#315F46" fontSize="15" fontWeight="600">ATTIRER</text>
+        <text x="90" y="203" textAnchor="middle" fill="#315F46" fontSize="10" fontWeight="500" opacity="0.5">LES BONS CLIENTS</text>
+        <text x="260" y="181" textAnchor="middle" fill="#315F46" fontSize="15" fontWeight="600">FACILITER</text>
+        <text x="260" y="203" textAnchor="middle" fill="#315F46" fontSize="10" fontWeight="500" opacity="0.5">L’ACHAT</text>
+        <text x="430" y="181" textAnchor="middle" fill="#315F46" fontSize="15" fontWeight="600">FIDÉLISER</text>
+        <text x="430" y="203" textAnchor="middle" fill="#315F46" fontSize="10" fontWeight="500" opacity="0.5">SUR LE LONG TERME</text>
+      </svg>
+    );
+  }
+
+  if (slug === "construire-offre-facile-a-acheter") {
+    return (
+      <svg viewBox="0 0 520 292.5" className="h-full w-full" aria-hidden="true">
+        <rect x="42" y="116" width="122" height="60" rx="16" fill="#FFFFFF" stroke="#A8BBB0" strokeWidth="2" />
+        <text x="103" y="151" textAnchor="middle" fill="#315F46" fontSize="13" fontWeight="600">PROBLÈME</text>
+        <path d="M180 146H204M196 138L204 146L196 154" fill="none" stroke="#789987" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+        <rect x="220" y="103" width="148" height="86" rx="20" fill="#DCE5DF" stroke="#A8BBB0" strokeWidth="2" />
+        <text x="294" y="141" textAnchor="middle" fill="#315F46" fontSize="13" fontWeight="600">OFFRE CLAIRE</text>
+        <text x="294" y="162" textAnchor="middle" fill="#315F46" fontSize="10" fontWeight="500" opacity="0.55">RÉSULTAT · PÉRIMÈTRE</text>
+        <path d="M384 146H408M400 138L408 146L400 154" fill="none" stroke="#789987" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+        <rect x="424" y="116" width="66" height="60" rx="16" fill="#315F46" />
+        <text x="457" y="151" textAnchor="middle" fill="#FFFFFF" fontSize="12" fontWeight="600">CHOIX</text>
+      </svg>
+    );
+  }
+
+  if (slug === "livrer-prestation-sans-tout-reinventer") {
+    return (
+      <svg viewBox="0 0 520 292.5" className="h-full w-full" aria-hidden="true">
+        <path d="M62 140H458" fill="none" stroke="#A8BBB0" strokeWidth="2" />
+        <circle cx="68" cy="140" r="10" fill="#315F46" />
+        <circle cx="196" cy="140" r="10" fill="#789987" />
+        <circle cx="324" cy="140" r="10" fill="#789987" />
+        <circle cx="452" cy="140" r="10" fill="#315F46" />
+        <text x="68" y="184" textAnchor="middle" fill="#315F46" fontSize="12" fontWeight="600">DÉMARRER</text>
+        <text x="196" y="184" textAnchor="middle" fill="#315F46" fontSize="12" fontWeight="600">PRODUIRE</text>
+        <text x="324" y="184" textAnchor="middle" fill="#315F46" fontSize="12" fontWeight="600">VALIDER</text>
+        <text x="452" y="184" textAnchor="middle" fill="#315F46" fontSize="12" fontWeight="600">CLÔTURER</text>
+      </svg>
+    );
+  }
+
+  if (slug === "transformer-demande-en-client") {
+    return (
+      <svg viewBox="0 0 520 292.5" className="h-full w-full" aria-hidden="true">
+        <path d="M90 48H430L402 106H118Z" fill="#FFFFFF" stroke="#A8BBB0" strokeWidth="2" />
+        <path d="M126 118H394L367 176H153Z" fill="#DCE5DF" stroke="#A8BBB0" strokeWidth="2" />
+        <path d="M162 188H358L326 246H194Z" fill="#315F46" />
+        <text x="260" y="83" textAnchor="middle" fill="#315F46" fontSize="14" fontWeight="600">DEMANDES</text>
+        <text x="260" y="153" textAnchor="middle" fill="#315F46" fontSize="14" fontWeight="600">ÉCHANGES</text>
+        <text x="260" y="223" textAnchor="middle" fill="#FFFFFF" fontSize="14" fontWeight="600">CLIENTS</text>
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 520 292.5" className="h-full w-full" aria-hidden="true">
+      <rect x="45" y="64" width="120" height="50" rx="25" fill="#FFFFFF" stroke="#A8BBB0" strokeWidth="2" />
+      <text x="105" y="95" textAnchor="middle" fill="#315F46" fontSize="13" fontWeight="600">OBJECTIF</text>
+      <text x="185" y="97" textAnchor="middle" fill="#315F46" fontSize="22" fontWeight="300">+</text>
+      <rect x="205" y="64" width="130" height="50" rx="25" fill="#DCE5DF" stroke="#A8BBB0" strokeWidth="2" />
+      <text x="270" y="95" textAnchor="middle" fill="#315F46" fontSize="13" fontWeight="600">AUTONOMIE</text>
+      <text x="355" y="97" textAnchor="middle" fill="#315F46" fontSize="22" fontWeight="300">+</text>
+      <rect x="375" y="64" width="100" height="50" rx="25" fill="#FFFFFF" stroke="#A8BBB0" strokeWidth="2" />
+      <text x="425" y="95" textAnchor="middle" fill="#315F46" fontSize="13" fontWeight="600">SUIVI</text>
+      <path
+        d="M55 122C55 133 65 138 82 138H232C251 138 260 144 270 155C280 144 289 138 308 138H448C465 138 475 133 475 122"
+        fill="none"
+        stroke="#789987"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path d="M270 155V170M260 162L270 172L280 162" fill="none" stroke="#789987" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      <rect x="158" y="180" width="224" height="64" rx="32" fill="#315F46" />
+      <text x="270" y="219" textAnchor="middle" fill="#FFFFFF" fontSize="16" fontWeight="600">RÉSULTAT</text>
+    </svg>
+  );
+}
+
+function AcademyCard({ content, eager = false }: { content: AcademyContentDefinition; eager?: boolean }) {
+  const { identity, kind } = content;
+  const isCaseStudy = kind === "case-study";
+  const caseStudy = isCaseStudy ? CASE_STUDY_PRESENTATIONS[identity.slug] : undefined;
+  const title = caseStudy?.title ?? COURSE_TITLES[identity.slug] ?? identity.card.title;
+  const meta = caseStudy
+    ? `${caseStudy.sector} · ${identity.durationMinutes} min`
+    : `${identity.durationMinutes} min`;
+
+  return (
+    <Link
+      href={`/academie/${identity.slug}`}
+      className="group block rounded-[1.25rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-4"
+      aria-label={`Ouvrir ${title}`}
+    >
+      <article className="transition-transform duration-200 ease-out group-hover:-translate-y-px motion-reduce:transform-none">
+        <div
+          className={`relative aspect-video overflow-hidden rounded-[1.25rem] transition-colors duration-200 ${
+            isCaseStudy ? "bg-dema-forest" : "border border-[#E7EBE8] bg-[#F1F3F0]"
+          }`}
+        >
+          {caseStudy ? (
+            <div className="absolute inset-4 flex items-center justify-center overflow-hidden sm:inset-[1.125rem]">
+              <div className="relative aspect-square h-full overflow-hidden">
+                <Image
+                  src={caseStudy.character}
+                  alt={caseStudy.characterAlt}
+                  fill
+                  priority={eager}
+                  sizes="(max-width: 767px) 80vw, (max-width: 1199px) 40vw, 25vw"
+                  className={`object-contain ${caseStudy.characterClassName ?? ""}`}
+                />
+              </div>
+            </div>
+          ) : (
+            <CourseDiagram slug={identity.slug} />
+          )}
+        </div>
+
+        <div className="px-0.5 pb-1 pt-3.5">
+          <h3 className="text-[1.05rem] font-semibold leading-[1.3] text-brand-blue transition-colors group-hover:text-dema-forest sm:text-lg">
+            {title}
+          </h3>
+          <p className="mt-1.5 text-sm text-dema-muted">{meta}</p>
+        </div>
+      </article>
+    </Link>
+  );
+}
+
+export default function AcademyIndexClient({ contents, backLink }: AcademyIndexClientProps) {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showAllFundamentals, setShowAllFundamentals] = useState(false);
+
+  const filteredContents = useMemo(() => {
+    return contents.filter((content) =>
+      matchesSearchQuery(searchQuery, [
+        content.identity.title,
+        content.identity.shortTitle,
+        content.identity.category,
+        content.identity.promise,
+        content.identity.audience,
+        CASE_STUDY_PRESENTATIONS[content.identity.slug]?.title,
+        CASE_STUDY_PRESENTATIONS[content.identity.slug]?.sector,
+        ...content.recap.points,
+      ]),
+    );
+  }, [contents, searchQuery]);
+
+  const fundamentals = filteredContents.filter((content) => content.kind === "course");
+  const caseStudies = filteredContents
+    .filter((content) => content.kind === "case-study")
+    .sort(
+      (first, second) =>
+        CASE_STUDY_ORDER.indexOf(first.identity.slug) - CASE_STUDY_ORDER.indexOf(second.identity.slug),
+    );
+  const isSearching = searchQuery.trim().length > 0;
+  const visibleFundamentals = isSearching || showAllFundamentals ? fundamentals : fundamentals.slice(0, 6);
+  const canToggleFundamentals = !isSearching && fundamentals.length > 6;
+
+  return (
+    <div className="min-h-[85vh] bg-[#FAFAFA]">
+      <header className="px-4 pb-12 pt-12 md:pb-16 md:pt-16">
+        <div className="mx-auto max-w-7xl">
+          {backLink ? (
+            <Link
+              href={backLink.href}
+              className="mb-8 inline-flex text-sm font-medium text-dema-muted transition hover:text-dema-forest"
+            >
+              {backLink.label}
+            </Link>
+          ) : null}
+
+          <div className="text-center">
+            <h1 className="text-balance text-[3.25rem] font-light leading-[0.9] tracking-[-0.055em] text-brand-blue sm:text-[4rem] md:text-[4.5rem]">
+              <span className="block">Apprendre à</span>
+              <span className="demaa-section-title mt-1 block text-dema-forest">entreprendre</span>
+            </h1>
+            <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-dema-muted sm:text-base">
+              Des cours courts et concrets, à suivre selon ce dont vous avez besoin.
+            </p>
+          </div>
+
+          <label className="demaa-search-shell mx-auto mt-7 flex max-w-3xl items-center gap-3 px-5 py-3 md:mt-8 md:px-6">
+            <Search className="h-5 w-5 shrink-0 text-dema-muted" aria-hidden="true" />
+            <span className="sr-only">Rechercher dans l’Académie</span>
+            <input
+              type="search"
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+              placeholder="Rechercher un cours ou une question…"
+              className="min-w-0 flex-1 bg-transparent py-1 text-base text-brand-blue outline-none placeholder:text-dema-muted/70"
+            />
+          </label>
+        </div>
+      </header>
+
+      <main className="mx-auto max-w-7xl px-4 pb-16 md:pb-20">
+        {fundamentals.length ? (
+          <section aria-labelledby="fundamental-courses-title">
+            <h2 id="fundamental-courses-title" className="text-2xl font-semibold text-brand-blue md:text-[2rem]">
+              Cours fondamentaux
+            </h2>
+
+            <div className="mt-7 grid grid-cols-1 gap-x-8 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
+              {visibleFundamentals.map((content, index) => (
+                <AcademyCard key={content.identity.slug} content={content} eager={index < 3} />
+              ))}
+            </div>
+
+            {canToggleFundamentals ? (
+              <div className="mt-7 flex justify-end">
+                <button
+                  type="button"
+                  onClick={() => setShowAllFundamentals((current) => !current)}
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-dema-forest transition hover:text-brand-blue"
+                  aria-expanded={showAllFundamentals}
+                >
+                  {showAllFundamentals ? "Voir moins" : "Voir plus de cours"}
+                  {showAllFundamentals ? (
+                    <ChevronUp className="h-4 w-4" aria-hidden="true" />
+                  ) : (
+                    <ChevronDown className="h-4 w-4" aria-hidden="true" />
+                  )}
+                </button>
+              </div>
+            ) : null}
+          </section>
+        ) : null}
+
+        {caseStudies.length ? (
+          <section className="mt-12 border-t border-dema-line/75 pt-9 md:mt-14 md:pt-10" aria-labelledby="case-studies-title">
+            <h2 id="case-studies-title" className="text-2xl font-semibold text-brand-blue md:text-[2rem]">
+              Cas concrets
+            </h2>
+
+            <div className="mt-7 grid grid-cols-1 gap-x-8 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
+              {caseStudies.map((content, index) => (
+                <AcademyCard key={content.identity.slug} content={content} eager={index < 3} />
+              ))}
+            </div>
+          </section>
+        ) : null}
+
+        {filteredContents.length === 0 ? (
+          <section className="rounded-[1.25rem] border border-dashed border-dema-line bg-white px-6 py-14 text-center">
+            <h2 className="text-xl font-semibold text-brand-blue">Aucun cours trouvé</h2>
+            <p className="mt-2 text-sm text-dema-muted">Essayez un mot plus simple ou un autre sujet.</p>
+          </section>
+        ) : null}
+      </main>
+    </div>
+  );
+}

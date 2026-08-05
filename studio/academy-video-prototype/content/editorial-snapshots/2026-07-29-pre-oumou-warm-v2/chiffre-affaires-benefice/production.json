@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "course": "chiffre-affaires-benefice",
+  "status": "final",
+  "updatedAt": "2026-07-27T20:21:41.407Z",
+  "script": {
+    "approvedAt": "2026-07-27T20:21:18.332Z",
+    "sha256": "4743d1e8d9a5833fcf6407ce6594363f6bcfbd69411e8c24bd52034f46ca7cb9"
+  },
+  "voice": {
+    "approvedAt": "2026-07-27T20:21:18.525Z",
+    "voiceId": "0lp4RIz96WD1RUtvEu3Q",
+    "modelId": "eleven_multilingual_v2",
+    "sourceAudioSha256": "e44e7d00c614aaf96f8629ceb10494a5baef0adb4d0d061f7581926284bfcf1f",
+    "alignmentSha256": "c4c6cab649d3790a03859de3508bcc7055ea00bc8ed754601946a5537b5b8c31",
+    "sourceTimingSha256": "08de2c96aa66dcf0fdadd03f9a84034179e0896490a54d64a9a94b9bd92cc5b1"
+  },
+  "render": {
+    "approvedAt": "2026-07-27T20:21:18.711Z",
+    "pace": 1.2,
+    "audioSha256": "48fb2bb7a9ebac010389dde400bfb8f957d1f026bd7846bfae98325298fd2aa6",
+    "timingSha256": "ddd7cb3be22e2c65a83ac46c30015c4ebaa0cdffd381a9c4c03ed68b67189966"
+  },
+  "final": {
+    "approvedAt": "2026-07-27T20:21:41.407Z",
+    "output": "../../../output/cours-chiffre-affaires-benefice-final.mp4",
+    "sha256": "5dc0b4ebd81d64e104d6f2b35bb4be4fad5ca77ee8480c4efa9f2c30139fd8ea",
+    "qa": {
+      "durationSeconds": 211.667,
+      "loudnessLufs": -15.78,
+      "videoCodec": "h264",
+      "audioCodec": "aac",
+      "width": 1920,
+      "height": 1080,
+      "fps": "30/1",
+      "fullDecode": true
+    }
+  }
+}

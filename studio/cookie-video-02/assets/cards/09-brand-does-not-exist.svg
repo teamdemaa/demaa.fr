@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <rect width="1080" height="1920" fill="#2B1914"/>
+  <circle cx="905" cy="181" r="18" fill="#F2BC52"/>
+  <path d="M84 110H240M84 110V266M996 1810H840M996 1810V1654" stroke="#F4EDDF" stroke-width="2" opacity=".35"/>
+  <text x="84" y="160" fill="#F2BC52" font-family="Satoshi,Arial,sans-serif" font-size="28" font-weight="700" letter-spacing="5">JUSTE. / 00</text>
+  <text x="84" y="805" fill="#F4EDDF" font-family="Satoshi,Arial,sans-serif" font-size="102" font-weight="700">
+    <tspan x="84" dy="0">Cette marque</tspan>
+    <tspan x="84" dy="118">n’existe pas.</tspan>
+  </text>
+  <text x="84" y="1115" fill="#F4EDDF" opacity=".7" font-family="Satoshi,Arial,sans-serif" font-size="38" font-weight="500">
+    Mais son plan, oui.
+  </text>
+</svg>

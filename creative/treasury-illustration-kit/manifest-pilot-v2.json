@@ -1,0 +1,49 @@
+{
+  "project": "Kit d’illustrations — Trésorerie d’entreprise",
+  "version": "pilot-2",
+  "status": "ready_for_validation",
+  "delivery": {
+    "png_directory": "output/pilot-v2/png",
+    "svg_directory": "output/pilot-v2/svg",
+    "boards_directory": "output/pilot-v2/boards",
+    "validation_report": "output/pilot-v2/validation_report.json",
+    "zip": "output/pilot-v2/zip/treasury_illustrations_pilot_v2.zip",
+    "svg_note": "Les SVG sont des conteneurs de compatibilité avec PNG transparent intégré ; ce ne sont pas des tracés vectoriels natifs."
+  },
+  "palette": {
+    "line": "#FFFFFF",
+    "accent": "#D7E3DA",
+    "user_swatch": "#EFF1EE",
+    "test_background": "#305F46",
+    "background": "transparent"
+  },
+  "illustrations": [
+    {
+      "id": "01",
+      "filename_png": "01_ouverture_bureau.png",
+      "filename_svg": "01_ouverture_bureau.svg",
+      "title": "Ouverture — le bureau",
+      "concept": "Une personne réfléchit à son bureau face à un calendrier abstrait.",
+      "status": "pilot_v2_ready_for_validation",
+      "notes": "Trait blanc et repère calendrier menthe. PNG alpha et SVG de compatibilité disponibles."
+    },
+    {
+      "id": "07",
+      "filename_png": "07_facture_delai_banque.png",
+      "filename_svg": "07_facture_delai_banque.svg",
+      "title": "De la facture à la banque",
+      "concept": "Une facture, un délai et une réserve bancaire sont reliés dans une scène horizontale.",
+      "status": "pilot_v2_ready_for_validation",
+      "notes": "Trait blanc, délai et arrivée menthe. PNG alpha et SVG de compatibilité disponibles."
+    },
+    {
+      "id": "15",
+      "filename_png": "15_plan_action.png",
+      "filename_svg": "15_plan_action.svg",
+      "title": "Le plan d’action",
+      "concept": "Un carnet ouvert et un crayon matérialisent l’action de la semaine.",
+      "status": "pilot_v2_ready_for_validation",
+      "notes": "Trait blanc, coche et crayon menthe. PNG alpha et SVG de compatibilité disponibles."
+    }
+  ]
+}

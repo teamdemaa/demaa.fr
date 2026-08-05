@@ -22,7 +22,7 @@ export async function GET(request: Request, context: KitOpenRouteContext) {
   const { slug } = await context.params;
 
   if (!isValidKitSlug(slug)) {
-    return NextResponse.json({ error: "Kit invalide." }, { status: 400 });
+    return NextResponse.json({ error: "Système invalide." }, { status: 400 });
   }
 
   if (hasEditableOperationalSystemAsset(slug)) {
@@ -36,7 +36,7 @@ export async function GET(request: Request, context: KitOpenRouteContext) {
   const enterprise = await getEnterpriseBySlug(slug);
 
   if (!copyUrl || !enterprise) {
-    return NextResponse.json({ error: "Kit introuvable." }, { status: 404 });
+    return NextResponse.json({ error: "Système introuvable." }, { status: 404 });
   }
 
   if (shouldCountKitOpen(request)) {

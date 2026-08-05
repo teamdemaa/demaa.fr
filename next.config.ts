@@ -53,33 +53,53 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: '/cours',
+        destination: '/academie',
+        permanent: true,
+      },
+      {
+        source: '/marketing-ethique',
+        destination: '/systeme-marketing',
+        permanent: true,
+      },
+      {
+        source: '/kits-operationnels',
+        destination: '/systemes-operationnels',
+        permanent: true,
+      },
+      {
+        source: '/kit-operationnel/:slug',
+        destination: '/systemes-operationnels/:slug',
+        permanent: true,
+      },
+      {
         source: '/systemes',
-        destination: '/',
+        destination: '/systemes-operationnels',
         permanent: true,
       },
       {
         source: '/systemes/:slug',
-        destination: '/kit-operationnel/:slug',
+        destination: '/systemes-operationnels/:slug',
         permanent: true,
       },
       {
         source: '/kit-systeme/:slug',
-        destination: '/kit-operationnel/:slug',
+        destination: '/systemes-operationnels/:slug',
         permanent: true,
       },
       {
         source: '/modeles-de-documents/tableau-de-pilotage-:slug',
-        destination: '/kit-operationnel/:slug',
+        destination: '/systemes-operationnels/:slug',
         permanent: true,
       },
       {
         source: '/plans-organisation/:slug',
-        destination: '/kit-operationnel/:slug',
+        destination: '/systemes-operationnels/:slug',
         permanent: true,
       },
       {
         source: '/documents-structuration/:slug',
-        destination: '/kit-operationnel/:slug',
+        destination: '/systemes-operationnels/:slug',
         permanent: true,
       },
       {

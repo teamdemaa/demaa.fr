@@ -1,0 +1,153 @@
+{
+  "source": "elevenlabs-character-alignment",
+  "modelId": "eleven_multilingual_v2",
+  "fps": 30,
+  "audioDurationSeconds": 128.358,
+  "totalDurationSeconds": 129.558,
+  "scenes": {
+    "paradoxe": {
+      "startSeconds": 0,
+      "endSeconds": 10.158999999999999,
+      "durationSeconds": 10.158999999999999,
+      "speechStartSeconds": 0,
+      "speechEndSeconds": 10.02,
+      "beats": {}
+    },
+    "deux-realites": {
+      "startSeconds": 10.158999999999999,
+      "endSeconds": 23.662,
+      "durationSeconds": 13.503,
+      "speechStartSeconds": 10.298,
+      "speechEndSeconds": 23.569,
+      "beats": {
+        "definitions": {
+          "startSeconds": 2.6290000000000013,
+          "cueStartSeconds": 13.038,
+          "leadSeconds": 0.25
+        }
+      }
+    },
+    "facturer-encaisser": {
+      "startSeconds": 23.662,
+      "endSeconds": 35.6315,
+      "durationSeconds": 11.969500000000004,
+      "speechStartSeconds": 23.755,
+      "speechEndSeconds": 35.527,
+      "beats": {
+        "sorties": {
+          "startSeconds": 4.3820000000000014,
+          "cueStartSeconds": 28.294,
+          "leadSeconds": 0.25
+        }
+      }
+    },
+    "exemple": {
+      "startSeconds": 35.6315,
+      "endSeconds": 63.541,
+      "durationSeconds": 27.909499999999994,
+      "speechStartSeconds": 35.736,
+      "speechEndSeconds": 63.402,
+      "beats": {
+        "besoin": {
+          "startSeconds": 9.316499999999998,
+          "cueStartSeconds": 45.198,
+          "leadSeconds": 0.25
+        },
+        "benefice": {
+          "startSeconds": 16.433499999999995,
+          "cueStartSeconds": 52.315,
+          "leadSeconds": 0.25
+        },
+        "point-bas": {
+          "startSeconds": 18.6965,
+          "cueStartSeconds": 54.578,
+          "leadSeconds": 0.25
+        },
+        "papier-banque": {
+          "startSeconds": 20.775499999999994,
+          "cueStartSeconds": 56.657,
+          "leadSeconds": 0.25
+        }
+      }
+    },
+    "bfr": {
+      "startSeconds": 63.541,
+      "endSeconds": 75.4825,
+      "durationSeconds": 11.941500000000005,
+      "speechStartSeconds": 63.68,
+      "speechEndSeconds": 75.407,
+      "beats": {
+        "nom": {
+          "startSeconds": 3.174999999999997,
+          "cueStartSeconds": 66.966,
+          "leadSeconds": 0.25
+        },
+        "origines": {
+          "startSeconds": 5.486000000000004,
+          "cueStartSeconds": 69.277,
+          "leadSeconds": 0.25
+        }
+      }
+    },
+    "croissance": {
+      "startSeconds": 75.4825,
+      "endSeconds": 87.8055,
+      "durationSeconds": 12.322999999999993,
+      "speechStartSeconds": 75.558,
+      "speechEndSeconds": 87.666,
+      "beats": {
+        "cash": {
+          "startSeconds": 8.532499999999999,
+          "cueStartSeconds": 84.265,
+          "leadSeconds": 0.25
+        }
+      }
+    },
+    "point-bas": {
+      "startSeconds": 87.8055,
+      "endSeconds": 100.5295,
+      "durationSeconds": 12.724000000000004,
+      "speechStartSeconds": 87.945,
+      "speechEndSeconds": 100.39,
+      "beats": {
+        "question": {
+          "startSeconds": 3.441500000000005,
+          "cueStartSeconds": 91.497,
+          "leadSeconds": 0.25
+        }
+      }
+    },
+    "decisions": {
+      "startSeconds": 100.5295,
+      "endSeconds": 120.1615,
+      "durationSeconds": 19.632000000000005,
+      "speechStartSeconds": 100.669,
+      "speechEndSeconds": 120.022,
+      "beats": {
+        "facturer": {
+          "startSeconds": 1.9555000000000007,
+          "cueStartSeconds": 102.735,
+          "leadSeconds": 0.25
+        },
+        "encaisser": {
+          "startSeconds": 5.751500000000007,
+          "cueStartSeconds": 106.531,
+          "leadSeconds": 0.25
+        },
+        "prevoir": {
+          "startSeconds": 11.069500000000005,
+          "cueStartSeconds": 111.849,
+          "leadSeconds": 0.25
+        }
+      }
+    },
+    "regle": {
+      "startSeconds": 120.1615,
+      "endSeconds": 129.558,
+      "durationSeconds": 9.396499999999989,
+      "speechStartSeconds": 120.301,
+      "speechEndSeconds": 128.358,
+      "beats": {}
+    }
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "version": "1.0",
+  "kind": "course",
+  "status": "ready",
+  "identity": {
+    "slug": "fixer-ses-prix-sans-vendre-a-perte",
+    "title": "Fixer ses prix sans vendre à perte",
+    "shortTitle": "Fixer un prix rentable",
+    "category": "Pilotage & finances",
+    "promise": "Calculer un prix plancher réaliste qui couvre les coûts directs, le temps, les charges fixes et les commissions.",
+    "audience": "Dirigeants de TPE et indépendants",
+    "durationMinutes": 9,
+    "card": {
+      "section": "Piloter son entreprise",
+      "title": "Fixer un prix rentable",
+      "meta": "6 notions · environ 9 min",
+      "image": "/images/academy/thumbnails/fixer-ses-prix-sans-vendre-a-perte-v1.png",
+      "imageAlt": "Calcul d’un prix rentable à partir des achats, du temps de travail, des charges fixes et d’une commission."
+    }
+  },
+  "outline": [
+    {
+      "title": "Comprendre",
+      "description": "Identifier tous les coûts réellement supportés."
+    },
+    {
+      "title": "Calculer",
+      "description": "Trouver un prix minimum cohérent et vérifiable."
+    },
+    {
+      "title": "Décider",
+      "description": "Passer du minimum au prix réellement proposé."
+    }
+  ],
+  "lessons": [
+    {
+      "id": "connaitre-son-prix-plancher",
+      "type": "concept",
+      "eyebrow": "Notion 1 sur 6",
+      "title": "Un prix supérieur au coût d’achat peut quand même faire perdre de l’argent",
+      "body": "Une vente doit aussi payer les commissions, le temps consacré au client et une part des charges de l’entreprise. Le prix plancher est le prix en dessous duquel chaque vente détruit de la valeur au lieu d’en créer.",
+      "visual": { "type": "comparison", "data": { "leftLabel": "Prix affiché", "leftText": "Supérieur au coût d’achat", "operator": "mais", "rightLabel": "Résultat réel", "rightText": "Négatif après tous les coûts" } },
+      "takeaway": "Comparer seulement le prix de vente au coût d’achat donne une vision incomplète."
+    },
+    {
+      "id": "calculer-sur-la-bonne-base",
+      "type": "concept",
+      "eyebrow": "Notion 2 sur 6",
+      "title": "Comparer des montants hors taxes lorsque la TVA est récupérée",
+      "body": "La TVA collectée n’est pas un revenu : elle doit être reversée selon les règles applicables. Lorsque l’entreprise récupère la TVA, elle compare donc un prix hors taxes à des coûts hors taxes récupérables pour mesurer correctement l’économie de la vente.",
+      "visual": { "type": "comparison", "data": { "leftLabel": "Prix", "leftText": "Hors taxes", "operator": "à comparer avec", "rightLabel": "Coûts", "rightText": "Hors taxes récupérables" } },
+      "takeaway": "Un calcul cohérent compare toujours des montants établis sur la même base."
+    },
+    {
+      "id": "quatre-couts-a-couvrir",
+      "type": "method",
+      "eyebrow": "Notion 3 sur 6",
+      "title": "Le prix doit couvrir quatre familles de coûts",
+      "body": "Additionnez les achats directement liés à la vente, les autres coûts variables comme l’emballage ou la livraison, le temps réellement passé valorisé à un taux cohérent et une part réaliste des charges fixes de l’entreprise.",
+      "visual": { "type": "steps", "data": { "steps": [{ "number": "01", "title": "Achats directs", "detail": "Matière, marchandise, sous-traitance" }, { "number": "02", "title": "Coûts variables", "detail": "Emballage, livraison, paiement" }, { "number": "03", "title": "Temps", "detail": "Production et service client" }, { "number": "04", "title": "Charges fixes", "detail": "Loyer, logiciels, assurances" }] } },
+      "takeaway": "Oublier son temps ou les charges fixes revient souvent à travailler gratuitement."
+    },
+    {
+      "id": "repartir-les-charges-fixes",
+      "type": "example",
+      "eyebrow": "Notion 4 sur 6",
+      "title": "Une hypothèse de volume trop optimiste fabrique un faux prix rentable",
+      "body": "Avec 2 400 € de charges fixes et 120 ventes réalistes par mois, chaque vente doit absorber 20 €. Si l’entreprise ne réalise que 80 ventes, la part réelle atteint 30 €. Le meilleur mois rêvé ne doit jamais servir de base au calcul.",
+      "visual": { "type": "comparison", "data": { "leftLabel": "120 ventes", "leftText": "20 € de charges fixes par vente", "operator": "contre", "rightLabel": "80 ventes", "rightText": "30 € de charges fixes par vente" } },
+      "takeaway": "La part de charges fixes augmente dès que le volume réel est inférieur à l’hypothèse."
+    },
+    {
+      "id": "calculer-le-prix-plancher",
+      "type": "example",
+      "eyebrow": "Notion 5 sur 6",
+      "title": "Intégrer la commission dans la formule du prix plancher",
+      "body": "Le produit coûte 40 €, l’emballage et la préparation 6 €, le temps 12 € et les charges fixes 20 €, soit 78 € avant commission. Avec une commission de 8 % du prix, le plancher hors taxes est 78 € divisé par 92 %, soit 84,78 €.",
+      "visual": { "type": "calculation", "data": { "directCost": "40 €", "otherVariableCosts": "6 €", "time": "12 €", "fixedCostsShare": "20 €", "beforeCommission": "78 €", "commissionRate": "8 %", "formula": "78 € ÷ (1 − 8 %)", "floorPrice": "84,78 € HT" } },
+      "takeaway": "Une commission calculée sur le prix doit être intégrée dans la formule, pas ajoutée au hasard."
+    },
+    {
+      "id": "passer-du-plancher-au-prix",
+      "type": "decision",
+      "eyebrow": "Notion 6 sur 6",
+      "title": "Le prix plancher indique seulement où l’entreprise cesse de perdre",
+      "body": "Le plancher ne finance ni imprévu, ni investissement, ni développement. Ajoutez une marge de sécurité et confrontez le prix au marché. S’il paraît invendable, revoyez l’offre, le temps, les achats, les commissions ou le client ciblé.",
+      "visual": { "type": "steps", "data": { "steps": [{ "number": "01", "title": "Calculer le plancher", "detail": "Couvrir le coût complet" }, { "number": "02", "title": "Ajouter une marge", "detail": "Financer le risque et le développement" }, { "number": "03", "title": "Tester le marché", "detail": "Corriger le modèle si nécessaire" }] } },
+      "takeaway": "Un marché qui refuse le coût complet signale un modèle à corriger, pas un calcul à cacher."
+    }
+  ],
+  "recap": {
+    "title": "Le cours en quatre phrases",
+    "points": [
+      "Le prix doit couvrir davantage que le seul coût d’achat du produit.",
+      "Le temps et une part réaliste des charges fixes appartiennent au coût complet.",
+      "Une commission proportionnelle au prix doit être intégrée directement dans la formule.",
+      "Le prix plancher évite la perte ; le vrai prix doit aussi financer le développement."
+    ]
+  },
+  "quiz": {
+    "title": "Avez-vous bien retenu ?",
+    "questions": [
+      { "id": "role-prix-plancher", "question": "Que représente le prix plancher ?", "choices": [{ "id": "minimum", "label": "Le prix minimal avant de perdre de l’argent" }, { "id": "maximum", "label": "Le prix maximal accepté par le marché" }], "correctChoiceId": "minimum", "explanation": "Le plancher est le seuil économique sous lequel chaque vente fait perdre de l’argent." },
+      { "id": "charges-fixes-par-vente", "question": "Avec 2 400 € de charges fixes et 120 ventes, quelle part revient à chaque vente ?", "choices": [{ "id": "vingt", "label": "20 €" }, { "id": "trente", "label": "30 €" }], "correctChoiceId": "vingt", "explanation": "2 400 € divisés par 120 ventes donnent 20 € de charges fixes par vente." },
+      { "id": "prix-plancher-exemple", "question": "Quel est le prix plancher de l’exemple avec 78 € de coûts et 8 % de commission ?", "choices": [{ "id": "soixante-dix-huit", "label": "78 € HT" }, { "id": "quatre-vingt-quatre", "label": "84,78 € HT" }], "correctChoiceId": "quatre-vingt-quatre", "explanation": "Il faut diviser 78 € par 92 % afin que la commission de 8 % soit couverte par le prix." }
+    ]
+  },
+  "action": {
+    "resourceType": "tool",
+    "resourceId": "levier",
+    "title": "Levier",
+    "description": "Un tableau de pilotage opérationnel pour suivre les ventes, les coûts, la marge et le résultat réel de l’activité.",
+    "ctaLabel": "Recevoir Levier",
+    "deliveryMode": "email"
+  }
+}

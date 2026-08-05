@@ -30,7 +30,7 @@ export async function GET(request: Request) {
   const overview = await getKitAnalyticsOverview(period);
   const rows = [
     [
-      "Kit",
+      "Système",
       "Slug",
       "Ouvertures suivies",
       "Distributions historiques",
@@ -57,7 +57,7 @@ export async function GET(request: Request) {
   return new NextResponse(`\uFEFF${csv}`, {
     headers: {
       "Cache-Control": "private, no-store, max-age=0",
-      "Content-Disposition": `attachment; filename="suivi-kits-${period}-jours.csv"`,
+      "Content-Disposition": `attachment; filename="suivi-systemes-${period}-jours.csv"`,
       "Content-Type": "text/csv; charset=utf-8",
     },
   });

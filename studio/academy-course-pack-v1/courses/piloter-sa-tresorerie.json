@@ -1,0 +1,216 @@
+{
+  "version": "1.0",
+  "kind": "course",
+  "status": "ready",
+  "identity": {
+    "slug": "piloter-sa-tresorerie",
+    "title": "Piloter sa trésorerie sans attendre l’urgence",
+    "shortTitle": "Piloter sa trésorerie",
+    "category": "Pilotage & finances",
+    "promise": "Comprendre pourquoi une entreprise rentable peut manquer d’argent et anticiper son solde minimum sur les trois prochains mois.",
+    "audience": "Dirigeants de TPE",
+    "durationMinutes": 8,
+    "card": {
+      "section": "Piloter son entreprise",
+      "title": "Piloter sa trésorerie",
+      "meta": "7 notions · environ 8 min",
+      "image": "/images/academy/thumbnails/piloter-sa-tresorerie-test.png",
+      "imageAlt": "Entrepreneure devant une courbe de trésorerie sur trois mois avec plusieurs fluctuations et son solde minimum prévu."
+    }
+  },
+  "outline": [
+    {
+      "title": "Comprendre",
+      "description": "Distinguer résultat, trésorerie et BFR."
+    },
+    {
+      "title": "Anticiper",
+      "description": "Voir le décalage et repérer le solde minimum prévu."
+    },
+    {
+      "title": "Agir",
+      "description": "Prendre trois décisions avant l’urgence."
+    }
+  ],
+  "lessons": [
+    {
+      "id": "resultat-et-tresorerie",
+      "type": "concept",
+      "eyebrow": "Notion 1 sur 7",
+      "title": "Résultat et trésorerie sont deux chiffres différents",
+      "body": "Le résultat mesure ce que l’activité a gagné sur une période. La trésorerie mesure ce qui est réellement disponible sur le compte aujourd’hui. Une entreprise peut donc être rentable et manquer temporairement d’argent.",
+      "visual": {
+        "type": "comparison",
+        "data": {
+          "leftLabel": "Le résultat",
+          "leftText": "Est-ce que l’activité rapporte plus qu’elle ne coûte ?",
+          "operator": "≠",
+          "rightLabel": "La trésorerie",
+          "rightText": "Combien d’argent est réellement disponible aujourd’hui ?"
+        }
+      },
+      "takeaway": "Une entreprise rentable peut manquer d’argent disponible au même moment."
+    },
+    {
+      "id": "facturer-et-encaisser",
+      "type": "concept",
+      "eyebrow": "Notion 2 sur 7",
+      "title": "Facturer n’est pas encaisser",
+      "body": "Le travail est réalisé, puis la facture est envoyée, mais le client paie plus tard. Pendant ce délai, les salaires, les charges, le loyer et les fournisseurs continuent d’être payés avec la trésorerie déjà disponible.",
+      "visual": {
+        "type": "timeline",
+        "data": {
+          "steps": [
+            { "label": "Travail terminé", "timing": "Jour 1" },
+            { "label": "Facture envoyée", "timing": "Jour 2" },
+            { "label": "Paiement reçu", "timing": "Jour 45" }
+          ],
+          "duringDelay": ["Salaires", "Charges", "Loyer", "Fournisseurs"]
+        }
+      },
+      "takeaway": "Une facture ne protège le compte bancaire qu’une fois encaissée."
+    },
+    {
+      "id": "exemple-du-solde-minimum",
+      "type": "example",
+      "eyebrow": "Notion 3 sur 7",
+      "title": "Le même projet peut afficher +8 000 € et −7 000 €",
+      "body": "Une société facture 30 000 € et conservera 8 000 € une fois tous les coûts payés. Mais le client règle à quarante-cinq jours. Avant ce paiement, l’entreprise doit sortir 16 000 € alors qu’elle ne dispose que de 9 000 €.",
+      "visual": {
+        "type": "calculation",
+        "data": {
+          "result": { "label": "Résultat de la mission", "value": "+8 000 €" },
+          "cash": {
+            "available": "9 000 €",
+            "payments": "16 000 €",
+            "lowPoint": "−7 000 €"
+          },
+          "formula": "9 000 € − 16 000 € = −7 000 €"
+        }
+      },
+      "takeaway": "Le papier peut afficher +8 000 € tandis que le compte atteint −7 000 €."
+    },
+    {
+      "id": "comprendre-le-bfr",
+      "type": "concept",
+      "eyebrow": "Notion 4 sur 7",
+      "title": "Le BFR, c’est l’argent avancé en attendant d’être payé",
+      "body": "Ce décalage porte un nom : le besoin en fonds de roulement, ou BFR. Dans les services, il vient surtout des factures clients en attente. Dans le commerce, les stocks payés avant leur vente créent aussi ce besoin.",
+      "visual": {
+        "type": "timeline",
+        "data": {
+          "steps": [
+            { "label": "Dépenses payées", "timing": "Aujourd’hui" },
+            { "label": "Argent avancé", "timing": "BFR" },
+            { "label": "Client encaissé", "timing": "Plus tard" }
+          ]
+        }
+      },
+      "takeaway": "Le BFR mesure l’argent que l’entreprise doit avancer pendant le délai."
+    },
+    {
+      "id": "croissance-et-tresorerie",
+      "type": "concept",
+      "eyebrow": "Notion 5 sur 7",
+      "title": "Plus de ventes peut d’abord vouloir dire moins de trésorerie",
+      "body": "Si les ventes doublent sans réduire les délais de paiement, l’entreprise doit parfois financer deux fois plus de travail avant d’encaisser. La croissance est positive, mais elle augmente temporairement l’argent à avancer.",
+      "visual": {
+        "type": "steps",
+        "data": {
+          "steps": [
+            { "number": "01", "title": "Plus de commandes", "detail": "L’activité augmente." },
+            { "number": "02", "title": "Plus de dépenses avancées", "detail": "Le BFR augmente." },
+            { "number": "03", "title": "Encaissement plus tard", "detail": "Le compte se tend entre-temps." }
+          ]
+        }
+      },
+      "takeaway": "La croissance doit être financée jusqu’au paiement des clients."
+    },
+    {
+      "id": "prevoir-treize-semaines",
+      "type": "method",
+      "eyebrow": "Notion 6 sur 7",
+      "title": "Regarder trois mois devant soi",
+      "body": "Utilisez treize colonnes hebdomadaires, soit environ trois mois. Placez le solde disponible, les encaissements attendus à une date réaliste et les paiements déjà prévus. Repérez ensuite le solde minimum prévu, sa date et sa cause.",
+      "visual": {
+        "type": "metrics",
+        "data": {
+          "horizon": "13 semaines · environ 3 mois",
+          "inputs": ["Solde de départ", "Encaissements réalistes", "Paiements datés"],
+          "output": "Solde minimum prévu"
+        }
+      },
+      "takeaway": "Voir le solde minimum prévu assez tôt permet de décider avant l’urgence."
+    },
+    {
+      "id": "trois-decisions-utiles",
+      "type": "decision",
+      "eyebrow": "Notion 7 sur 7",
+      "title": "Trois actions changent réellement la situation",
+      "body": "Facturez dès que le travail le permet. Encaissez plus tôt grâce aux acomptes, aux échéanciers et aux relances préparées. Enfin, mettez à jour chaque semaine votre plan de trésorerie sur treize semaines.",
+      "visual": {
+        "type": "steps",
+        "data": {
+          "steps": [
+            { "number": "01", "title": "Facturer vite", "detail": "Dès que le travail le permet." },
+            { "number": "02", "title": "Encaisser plus tôt", "detail": "Acompte, échéancier et relance." },
+            { "number": "03", "title": "Prévoir les 3 prochains mois", "detail": "Mise à jour chaque semaine." }
+          ]
+        }
+      },
+      "takeaway": "Le plan de trésorerie sert à agir plus tôt, pas à deviner parfaitement l’avenir."
+    }
+  ],
+  "recap": {
+    "title": "Le cours en quatre phrases",
+    "points": [
+      "Le résultat dit si l’activité gagne de l’argent ; la trésorerie dit ce qui est disponible maintenant.",
+      "Le BFR est l’argent avancé entre les dépenses et l’encaissement du client.",
+      "La croissance peut augmenter temporairement ce besoin d’argent.",
+      "Un plan hebdomadaire sur trois mois permet de voir le solde minimum prévu et d’agir avant l’urgence."
+    ]
+  },
+  "quiz": {
+    "title": "Avez-vous bien retenu ?",
+    "questions": [
+      {
+        "id": "mesure-disponible-aujourdhui",
+        "question": "Quel chiffre indique ce que l’entreprise peut réellement payer aujourd’hui ?",
+        "choices": [
+          { "id": "resultat", "label": "Le résultat de la période" },
+          { "id": "tresorerie", "label": "La trésorerie disponible" }
+        ],
+        "correctChoiceId": "tresorerie",
+        "explanation": "La trésorerie correspond à l’argent réellement disponible sur le compte aujourd’hui."
+      },
+      {
+        "id": "croissance-tresorerie",
+        "question": "Pourquoi une hausse des ventes peut-elle tendre la trésorerie ?",
+        "choices": [
+          { "id": "avance", "label": "Il faut financer plus de travail avant d’encaisser" },
+          { "id": "resultat", "label": "Une hausse des ventes supprime le bénéfice" }
+        ],
+        "correctChoiceId": "avance",
+        "explanation": "Avec les mêmes délais de paiement, davantage de ventes peut signifier davantage de dépenses à avancer."
+      },
+      {
+        "id": "chiffre-projection",
+        "question": "Quel chiffre faut-il surtout repérer dans une projection de trésorerie sur trois mois ?",
+        "choices": [
+          { "id": "plus-grosse-facture", "label": "La plus grosse facture" },
+          { "id": "solde-minimum", "label": "Le solde minimum prévu" }
+        ],
+        "correctChoiceId": "solde-minimum",
+        "explanation": "Le solde minimum prévu indique le moment où l’entreprise disposera du moins d’argent sur la période."
+      }
+    ]
+  },
+  "action": {
+    "resourceType": "tool",
+    "resourceId": "levier",
+    "title": "Levier",
+    "description": "Un tableau de pilotage opérationnel simple pour suivre l’activité, les chiffres et les décisions à prendre.",
+    "ctaLabel": "Recevoir Levier",
+    "deliveryMode": "email"
+  }
+}

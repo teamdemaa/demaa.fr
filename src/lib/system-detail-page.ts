@@ -311,7 +311,7 @@ function buildSystemPageDescription(data: SystemDetailPageData): string {
 export function buildSystemPageMetadata(data: SystemDetailPageData): Metadata {
   const title = buildSystemPageTitle(data);
   const description = buildSystemPageDescription(data);
-  const url = `/kit-operationnel/${data.system.slug}`;
+  const url = `/systemes-operationnels/${data.system.slug}`;
 
   return {
     title,
@@ -344,7 +344,7 @@ export function buildSystemPageMetadata(data: SystemDetailPageData): Metadata {
 }
 
 export function buildSystemPageJsonLd(data: SystemDetailPageData) {
-  const url = `https://demaa.fr/kit-operationnel/${data.system.slug}`;
+  const url = `https://demaa.fr/systemes-operationnels/${data.system.slug}`;
   const description = buildSystemPageDescription(data);
   const listedProcesses = (
     data.detail.systeme?.cards.flatMap((card) =>
@@ -404,7 +404,7 @@ export function buildSystemPageJsonLd(data: SystemDetailPageData) {
           "@type": "ListItem",
           position: 2,
           name: "Systèmes opérationnels",
-          item: "https://demaa.fr/kits-operationnels",
+          item: "https://demaa.fr/systemes-operationnels",
         },
         {
           "@type": "ListItem",

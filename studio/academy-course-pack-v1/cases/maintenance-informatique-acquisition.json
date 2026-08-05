@@ -1,0 +1,139 @@
+{
+  "version": "1.0",
+  "kind": "case-study",
+  "status": "ready",
+  "identity": {
+    "slug": "maintenance-informatique-acquisition",
+    "title": "Maintenance informatique — recevoir des demandes adaptées à une offre récurrente",
+    "shortTitle": "Maintenance informatique",
+    "category": "Acquisition",
+    "promise": "Voir comment un prestataire informatique peut attirer, qualifier et convertir des entreprises adaptées à son offre.",
+    "audience": "Entreprises qui vendent leurs prestations après un échange ou un devis",
+    "durationMinutes": 8,
+    "card": {
+      "section": "Cas concrets",
+      "title": "Maintenance informatique — qualifier les demandes",
+      "meta": "Cas concret · environ 8 min",
+      "image": "/images/courses/cases-acquisition/maintenance-informatique-storyboard-v1.png",
+      "imageAlt": "Karim structure les demandes et le suivi de son entreprise de maintenance informatique."
+    }
+  },
+  "lessons": [
+    {
+      "id": "informatique-situation",
+      "type": "case",
+      "eyebrow": "La situation",
+      "title": "Karim répond à toutes les urgences, mais construit peu de récurrence",
+      "body": "Dans ce cas fictif, Karim reçoit surtout des appels urgents et des demandes ponctuelles. Certaines entreprises sont trop petites, d’autres attendent une intervention immédiate sans contrat. Son savoir-faire est reconnu, mais son offre de maintenance reste difficile à comprendre avant de l’appeler.",
+      "visual": {
+        "type": "story",
+        "data": {
+          "image": "/images/courses/cases-acquisition/maintenance-informatique-storyboard-v1.png",
+          "panel": 1,
+          "alt": "Karim reçoit plusieurs demandes informatiques urgentes et désorganisées."
+        }
+      },
+      "takeaway": "Répondre à toutes les urgences occupe l’équipe sans nécessairement construire une activité régulière."
+    },
+    {
+      "id": "informatique-attirer",
+      "type": "method",
+      "eyebrow": "1 · Attirer",
+      "title": "Présenter une offre claire au moment où le besoin apparaît",
+      "body": "Karim crée une page destinée aux entreprises de 10 à 50 postes. Elle explique ce qui est surveillé, le délai de réponse et ce qui reste hors contrat. La recherche Google, les recommandations de partenaires et sa fiche locale renvoient vers un diagnostic informatique plutôt que vers un simple numéro d’urgence.",
+      "visual": {
+        "type": "story",
+        "data": {
+          "image": "/images/courses/cases-acquisition/maintenance-informatique-storyboard-v1.png",
+          "panel": 2,
+          "alt": "Karim présente son offre de maintenance informatique à une dirigeante."
+        }
+      },
+      "takeaway": "Une offre précise attire les entreprises compatibles et réduit les demandes impossibles à servir."
+    },
+    {
+      "id": "informatique-transformer",
+      "type": "example",
+      "eyebrow": "2 · Transformer",
+      "title": "Diagnostiquer le parc avant de chiffrer le contrat",
+      "body": "Le formulaire demande le nombre de postes, les sites, l’urgence et le prestataire actuel. Karim réalise ensuite un diagnostic court avant toute proposition. Dans cet exemple pédagogique, 14 demandes donnent 8 diagnostics, puis 5 propositions et 3 contrats de maintenance signés.",
+      "visual": {
+        "type": "story",
+        "data": {
+          "image": "/images/courses/cases-acquisition/maintenance-informatique-storyboard-v1.png",
+          "panel": 3,
+          "alt": "Karim réalise un diagnostic structuré avant de présenter sa proposition."
+        }
+      },
+      "takeaway": "Le diagnostic protège le temps du prestataire et permet de chiffrer une responsabilité réelle."
+    },
+    {
+      "id": "informatique-fideliser",
+      "type": "method",
+      "eyebrow": "3 · Fidéliser",
+      "title": "Rendre visible le travail préventif",
+      "body": "Chaque mois, Karim remet un bilan d’une page : incidents évités, points surveillés et prochaine action. Un point trimestriel permet de préparer les renouvellements de matériel ou les nouveaux besoins. Le client ne paie plus seulement pour les pannes visibles, mais pour la continuité obtenue.",
+      "visual": {
+        "type": "story",
+        "data": {
+          "image": "/images/courses/cases-acquisition/maintenance-informatique-storyboard-v1.png",
+          "panel": 4,
+          "alt": "Karim présente un bilan mensuel clair à sa cliente."
+        }
+      },
+      "takeaway": "Un bilan régulier rend la prévention concrète et renforce la valeur du contrat."
+    }
+  ],
+  "recap": {
+    "title": "Le cas en quatre phrases",
+    "points": [
+      "Karim cesse de présenter son entreprise comme un numéro d’urgence généraliste.",
+      "Une page précise la taille d’entreprise, le périmètre et le délai de réponse.",
+      "Le diagnostic précède toujours la proposition de maintenance.",
+      "Le bilan mensuel rend le travail préventif visible et prépare la suite."
+    ]
+  },
+  "quiz": {
+    "title": "Avez-vous bien retenu ?",
+    "questions": [
+      {
+        "id": "informatique-cible",
+        "question": "Pourquoi Karim indique-t-il la taille d’entreprise adaptée ?",
+        "choices": [
+          { "id": "exclure", "label": "Pour refuser le plus de demandes possible" },
+          { "id": "compatibles", "label": "Pour attirer des entreprises compatibles avec son offre" }
+        ],
+        "correctChoiceId": "compatibles",
+        "explanation": "Une cible explicite améliore la qualité des demandes avant même le premier échange."
+      },
+      {
+        "id": "informatique-diagnostic",
+        "question": "Que faut-il faire avant de proposer un contrat ?",
+        "choices": [
+          { "id": "prix", "label": "Envoyer immédiatement un prix standard" },
+          { "id": "parc", "label": "Diagnostiquer le parc et la responsabilité attendue" }
+        ],
+        "correctChoiceId": "parc",
+        "explanation": "Le coût et le risque dépendent du parc, des sites et du niveau de service demandé."
+      },
+      {
+        "id": "informatique-bilan",
+        "question": "À quoi sert le bilan mensuel ?",
+        "choices": [
+          { "id": "visible", "label": "À rendre le travail préventif visible" },
+          { "id": "technique", "label": "À ajouter le plus de jargon technique possible" }
+        ],
+        "correctChoiceId": "visible",
+        "explanation": "Le client comprend ainsi ce que le contrat protège, même lorsqu’aucune panne majeure ne survient."
+      }
+    ]
+  },
+  "action": {
+    "resourceType": "template",
+    "resourceId": "pilotage-marketing-vente",
+    "title": "Tableau de pilotage Marketing & Vente",
+    "description": "Un modèle simple pour suivre les demandes, les diagnostics, les propositions, les contrats et les relances.",
+    "ctaLabel": "Ouvrir le tableau",
+    "deliveryMode": "external"
+  }
+}

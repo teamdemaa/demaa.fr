@@ -1,0 +1,2 @@
+file '../output/music-test-intro-video.mp4'
+file '../output/music-test-course-5-to-25-video.mp4'

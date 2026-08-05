@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <rect width="1080" height="1920" fill="#F4EDDF"/>
+  <rect x="72" y="72" width="936" height="1776" rx="8" fill="none" stroke="#2B1914" stroke-width="2" opacity=".24"/>
+  <text x="108" y="170" fill="#C17A29" font-family="Satoshi,Arial,sans-serif" font-size="28" font-weight="700" letter-spacing="5">POSITIONNEMENT / 01</text>
+  <g fill="#2B1914" font-family="Satoshi,Arial,sans-serif" font-size="124" font-weight="700">
+    <text x="108" y="680">Trop gros.</text>
+    <text x="108" y="850">Trop sucré.</text>
+    <text x="108" y="1020">Trop lourd.</text>
+  </g>
+  <circle cx="882" cy="1542" r="54" fill="#F2BC52"/>
+  <circle cx="942" cy="1602" r="20" fill="#8A2133"/>
+</svg>

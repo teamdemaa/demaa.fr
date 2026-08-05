@@ -1,0 +1,125 @@
+{
+  "version": 1,
+  "kind": "full-course-narration-delivery",
+  "course": "chiffre-affaires-benefice",
+  "variant": "oumou-warm-v2",
+  "notVoiceApproved": true,
+  "generatedAt": "2026-07-29T11:33:42.908Z",
+  "verifiedAt": "2026-07-29T11:33:55.493Z",
+  "elevenLabsCalls": 1,
+  "characterCount": 3323,
+  "creditsEngagedEstimated": 3323,
+  "script": {
+    "statusBefore": "script-approved",
+    "statusAfter": "script-approved",
+    "byteIdenticalToApprovedSha": true,
+    "sha256": "adb6c5f930794256b684a8e05b14692a353c275e23b530c22e95731e9622bb51"
+  },
+  "voice": {
+    "voiceId": "9HTNhnzaWIkUTIhaJhPM",
+    "modelId": "eleven_multilingual_v2",
+    "speed": 1.15,
+    "stability": 0.55,
+    "similarityBoost": 0.78,
+    "style": 0,
+    "speakerBoost": true,
+    "postprocessRate": 1
+  },
+  "audio": {
+    "file": "/Users/oumougory/Apps/Demaa.fr/studio/academy-video-prototype/public/courses/chiffre-affaires-benefice/variants/oumou-warm-v2/audio/narration-source.mp3",
+    "codec": "mp3",
+    "sampleRate": 44100,
+    "channels": 1,
+    "fileDurationSeconds": 146.834286,
+    "alignedSpeechEndSeconds": 146.797,
+    "sizeBytes": 2349810,
+    "sha256": "304b1b3a8b5a92bd2f65c4631c4a7bf1994958e9219c043d076aa09f8f8618e8",
+    "fullDecode": true
+  },
+  "alignment": {
+    "file": "/Users/oumougory/Apps/Demaa.fr/studio/academy-video-prototype/public/courses/chiffre-affaires-benefice/variants/oumou-warm-v2/audio/alignment.json",
+    "sha256": "d36eeabe25a382df6c549b195eeb4b1f019d706f74b4c1ae0fd8fb8da17f03c5",
+    "characterCount": 3323,
+    "textExact": true,
+    "charactersExact": true,
+    "timesMonotonic": true,
+    "firstStartSeconds": 0,
+    "lastEndSeconds": 146.797
+  },
+  "timing": {
+    "file": "/Users/oumougory/Apps/Demaa.fr/studio/academy-video-prototype/content/courses/chiffre-affaires-benefice/variants/oumou-warm-v2/timing-source.generated.json",
+    "sha256": "1df00cba0f5189f2f973f68ca572be9e61430d622b7e0e90fdc68897269ef2c3",
+    "audioDurationSeconds": 146.797,
+    "totalDurationSeconds": 147.99699999999999,
+    "scenes": [
+      {
+        "id": "confusion",
+        "characterCount": 390,
+        "speechStartSeconds": 0,
+        "speechEndSeconds": 17.16,
+        "speechDurationSeconds": 17.16,
+        "sceneDurationSeconds": 17.328
+      },
+      {
+        "id": "equation",
+        "characterCount": 429,
+        "speechStartSeconds": 17.496,
+        "speechEndSeconds": 36.827,
+        "speechDurationSeconds": 19.331,
+        "sceneDurationSeconds": 19.592
+      },
+      {
+        "id": "exemple",
+        "characterCount": 587,
+        "speechStartSeconds": 37.013,
+        "speechEndSeconds": 63.367,
+        "speechDurationSeconds": 26.354,
+        "sceneDurationSeconds": 26.615
+      },
+      {
+        "id": "mauvaise-croissance",
+        "characterCount": 509,
+        "speechStartSeconds": 63.704,
+        "speechEndSeconds": 86.25,
+        "speechDurationSeconds": 22.546,
+        "sceneDurationSeconds": 22.808
+      },
+      {
+        "id": "point-mort",
+        "characterCount": 554,
+        "speechStartSeconds": 86.436,
+        "speechEndSeconds": 110.643,
+        "speechDurationSeconds": 24.207,
+        "sceneDurationSeconds": 24.491
+      },
+      {
+        "id": "pilotage",
+        "characterCount": 548,
+        "speechStartSeconds": 111.026,
+        "speechEndSeconds": 134.153,
+        "speechDurationSeconds": 23.127,
+        "sceneDurationSeconds": 23.487
+      },
+      {
+        "id": "regle",
+        "characterCount": 294,
+        "speechStartSeconds": 134.49,
+        "speechEndSeconds": 146.797,
+        "speechDurationSeconds": 12.307,
+        "sceneDurationSeconds": 13.675
+      }
+    ]
+  },
+  "requestManifest": {
+    "file": "/Users/oumougory/Apps/Demaa.fr/studio/academy-video-prototype/public/courses/chiffre-affaires-benefice/variants/oumou-warm-v2/audio/narration-source.mp3.manifest.json",
+    "sha256": "9b7b8e43f96fe78252f5bb2d028edb102dc7e476d4996f765a342c259c4b992e",
+    "requestSha256": "5287fd7bb5b63ead93e0fc1a0903547d0e934164bc52ed9f4a7ff2a91611c046"
+  },
+  "qa": {
+    "sceneCoverageExact": true,
+    "longSilenceThresholdSeconds": 1.2,
+    "longSilenceEvents": 0,
+    "obviousTruncation": false,
+    "obviousDuplication": false
+  }
+}

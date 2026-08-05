@@ -1,0 +1,121 @@
+{
+  "id": "rentable-sans-tresorerie-short",
+  "title": "Rentable, mais à court de trésorerie : comment est-ce possible ?",
+  "shortTitle": "Rentable. Mais sans trésorerie.",
+  "audience": "Dirigeants de TPE en France",
+  "format": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "targetDurationSeconds": 175
+  },
+  "editorialContract": {
+    "tone": "Professeur expérimenté, calme, direct, humain, légèrement amusé par les contradictions du métier.",
+    "rule": "Une idée par séquence. Aucun remplissage. L’exemple doit permettre de refaire le raisonnement.",
+    "screenTextRule": "Le texte à l’écran résume ou chiffre. Il ne retranscrit jamais la narration."
+  },
+  "scenes": [
+    {
+      "id": "paradoxe",
+      "title": "Le paradoxe",
+      "targetSeconds": 12,
+      "narration": "Une entreprise peut être rentable et manquer d’argent vendredi. Ce n’est pas une anomalie : bénéfice et trésorerie ne mesurent pas la même réalité.",
+      "onScreen": ["Rentable.", "Mais sans trésorerie."],
+      "visual": {
+        "type": "illustration",
+        "asset": "illustrations/01_commandes_pleines_cash_vide.png",
+        "layout": "text-left"
+      }
+    },
+    {
+      "id": "deux-realites",
+      "title": "Deux réalités",
+      "targetSeconds": 18,
+      "narration": "Le résultat mesure ce que l’activité gagne. La trésorerie mesure l’argent disponible aujourd’hui. Une vente améliore parfois le premier bien avant le second. Or, pour payer les salaires ou l’Urssaf, seul le compte bancaire répond.",
+      "onScreen": ["Résultat", "≠", "Trésorerie"],
+      "visual": {
+        "type": "illustration",
+        "asset": "illustrations/02_benefice_cash_retard.png",
+        "layout": "comparison"
+      }
+    },
+    {
+      "id": "facturer-encaisser",
+      "title": "Facturer n’est pas encaisser",
+      "targetSeconds": 16,
+      "narration": "Vous travaillez, vous facturez, puis le client paie plus tard. Pendant ce délai, salaires, charges et fournisseurs continuent de sortir. La valeur existe ; l’argent, pas encore.",
+      "onScreen": ["Facturé", "Délai", "Encaissé"],
+      "visual": {
+        "type": "timeline",
+        "layout": "full"
+      }
+    },
+    {
+      "id": "exemple",
+      "title": "Un exemple concret",
+      "targetSeconds": 35,
+      "narration": "Exemple. Une société facture une mission trente mille euros hors taxes. Elle lui rapportera huit mille euros : elle est rentable. Mais le client paie à quarante-cinq jours. Avant cela, l’entreprise doit sortir seize mille euros et ne possède que neuf mille euros. Son point bas est donc moins sept mille euros. Le papier dit plus huit mille. Le compte dit moins sept mille. Pour payer vendredi, c’est le compte qui tranche.",
+      "onScreen": ["30 000 € facturés", "8 000 € de gain final", "9 000 € disponibles", "−7 000 € au point bas"],
+      "visual": {
+        "type": "cash-example",
+        "layout": "full"
+      }
+    },
+    {
+      "id": "bfr",
+      "title": "Le décalage a un nom",
+      "targetSeconds": 17,
+      "narration": "Ce décalage s’appelle le BFR. Dans les services, il vient surtout des factures en attente. Dans le commerce, le stock ajoute souvent un second décalage.",
+      "onScreen": ["Le décalage", "=", "BFR"],
+      "visual": {
+        "type": "definition",
+        "layout": "center"
+      }
+    },
+    {
+      "id": "croissance",
+      "title": "La croissance amplifie le besoin",
+      "targetSeconds": 18,
+      "narration": "Et la croissance peut l’aggraver. Doubler les ventes avec les mêmes délais, c’est parfois financer deux fois plus de travail avant d’encaisser. Plus de commandes ne signifie pas plus de cash immédiat.",
+      "onScreen": ["Plus de ventes", "peut demander", "plus de trésorerie"],
+      "visual": {
+        "type": "growth",
+        "layout": "full"
+      }
+    },
+    {
+      "id": "point-bas",
+      "title": "La question du dirigeant",
+      "targetSeconds": 18,
+      "narration": "La bonne question n’est donc pas seulement : serons-nous rentables ? Demandez aussi : quel sera notre point de trésorerie le plus bas dans les douze prochaines semaines, quand, et pourquoi ?",
+      "onScreen": ["Quel sera notre point bas ?", "Quand ?", "Pourquoi ?"],
+      "visual": {
+        "type": "low-point",
+        "layout": "full"
+      }
+    },
+    {
+      "id": "decisions",
+      "title": "Les décisions utiles",
+      "targetSeconds": 31,
+      "narration": "Trois décisions : facturer dès que le travail le permet ; encaisser plus tôt avec acompte, échéancier et relance préparée ; mettre à jour chaque semaine un plan de trésorerie sur douze semaines. Pas pour deviner parfaitement l’avenir. Pour voir le point bas assez tôt et décider avant l’urgence.",
+      "onScreen": ["Facturer vite", "Encaisser plus tôt", "Prévoir 12 semaines"],
+      "visual": {
+        "type": "illustration",
+        "asset": "illustrations/03_rituel_lundi_controle.png",
+        "layout": "actions"
+      }
+    },
+    {
+      "id": "regle",
+      "title": "La règle",
+      "targetSeconds": 10,
+      "narration": "Retenez ceci : une facture ne finance rien tant qu’elle n’est pas encaissée. Le bénéfice dit si l’activité vaut la peine. La trésorerie dit si elle peut continuer.",
+      "onScreen": ["Une facture ne finance rien", "tant qu’elle n’est pas encaissée."],
+      "visual": {
+        "type": "closing",
+        "layout": "center"
+      }
+    }
+  ]
+}

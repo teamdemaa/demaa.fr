@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "course": "construire-systeme-marketing-vente",
+  "status": "final",
+  "createdAt": "2026-07-29T07:20:57.485Z",
+  "updatedAt": "2026-07-29T08:26:10.042Z",
+  "script": {
+    "approvedAt": "2026-07-29T07:20:57.485Z",
+    "sha256": "28ee9f69f3c873a798e72a47ced1ea2e853641da28fab1a797f5bcde313b52d1"
+  },
+  "voice": {
+    "approvedAt": "2026-07-29T08:20:33.452Z",
+    "voiceId": "9HTNhnzaWIkUTIhaJhPM",
+    "modelId": "eleven_multilingual_v2",
+    "sourceAudioSha256": "b383296f04f22e5d4c5d83fa5629bd8d3c307b95846a3e41827c782ac8e03a76",
+    "alignmentSha256": "506b004df70495b9e663f7d82b87e0a0637776fc2e79250ca5009f317a4f08fc",
+    "sourceTimingSha256": "5a37fab47018f94d01972bb5d7be4c8d594eabafba08dfdd0243a9a0cb02cd78"
+  },
+  "render": {
+    "approvedAt": "2026-07-29T08:20:33.972Z",
+    "pace": 1,
+    "audioSha256": "b383296f04f22e5d4c5d83fa5629bd8d3c307b95846a3e41827c782ac8e03a76",
+    "timingSha256": "d45fca5f50653f8b11355461860a79c7d8589b399fbc56fc48c2cbfb53385082"
+  },
+  "final": {
+    "approvedAt": "2026-07-29T08:26:10.042Z",
+    "output": "../../../../../output/staging/oumou-v1/cours-construire-systeme-marketing-vente-final.mp4",
+    "sha256": "a207bae16e8618ac6aa1e48a12a7b700d6ce39e23d80edb9baabce1574ff1679",
+    "qa": {
+      "durationSeconds": 160.333,
+      "loudnessLufs": -15.32,
+      "videoCodec": "h264",
+      "audioCodec": "aac",
+      "width": 1920,
+      "height": 1080,
+      "fps": "30/1",
+      "fullDecode": true
+    }
+  }
+}

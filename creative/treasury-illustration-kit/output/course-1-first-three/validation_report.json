@@ -1,0 +1,133 @@
+{
+  "project": "Kit d’illustrations — Trésorerie d’entreprise",
+  "version": "course-1-first-three",
+  "status": "ready_for_validation",
+  "automated_checks": [
+    {
+      "filename": "01_objectif_commandes_cash.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "has_alpha": true,
+      "transparent_corners": true,
+      "palette_rgb": [
+        "#FFFFFF",
+        "#D7E3DA"
+      ],
+      "mint_visible_pixel_ratio": 0.0414,
+      "alpha_pixels": {
+        "transparent": 1453539,
+        "partial": 0,
+        "opaque": 119325
+      },
+      "content_margins_px": {
+        "left": 45,
+        "top": 64,
+        "right": 64,
+        "bottom": 80
+      },
+      "horizontal_ratio": 1.5,
+      "manual_review": {
+        "readable_text": false,
+        "dark_strokes": false,
+        "background_baked_in": false,
+        "reference_style_respected": true
+      },
+      "svg_export": {
+        "filename": "01_objectif_commandes_cash.svg",
+        "native_vector": false,
+        "type": "compatibility_wrapper"
+      }
+    },
+    {
+      "filename": "02_tresorerie_pas_benefice.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "has_alpha": true,
+      "transparent_corners": true,
+      "palette_rgb": [
+        "#FFFFFF",
+        "#D7E3DA"
+      ],
+      "mint_visible_pixel_ratio": 0.0264,
+      "alpha_pixels": {
+        "transparent": 1484128,
+        "partial": 0,
+        "opaque": 88736
+      },
+      "content_margins_px": {
+        "left": 110,
+        "top": 101,
+        "right": 80,
+        "bottom": 107
+      },
+      "horizontal_ratio": 1.5,
+      "manual_review": {
+        "readable_text": false,
+        "dark_strokes": false,
+        "background_baked_in": false,
+        "reference_style_respected": true
+      },
+      "svg_export": {
+        "filename": "02_tresorerie_pas_benefice.svg",
+        "native_vector": false,
+        "type": "compatibility_wrapper"
+      }
+    },
+    {
+      "filename": "03_rentable_papier_cash_retard.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "has_alpha": true,
+      "transparent_corners": true,
+      "palette_rgb": [
+        "#FFFFFF",
+        "#D7E3DA"
+      ],
+      "mint_visible_pixel_ratio": 0.0432,
+      "alpha_pixels": {
+        "transparent": 1485102,
+        "partial": 0,
+        "opaque": 87762
+      },
+      "content_margins_px": {
+        "left": 36,
+        "top": 87,
+        "right": 49,
+        "bottom": 61
+      },
+      "horizontal_ratio": 1.5,
+      "manual_review": {
+        "readable_text": false,
+        "dark_strokes": false,
+        "background_baked_in": false,
+        "reference_style_respected": true
+      },
+      "svg_export": {
+        "filename": "03_rentable_papier_cash_retard.svg",
+        "native_vector": false,
+        "type": "compatibility_wrapper"
+      }
+    }
+  ],
+  "boards": [
+    "course_1_first_three_green.png",
+    "course_1_first_three_contrast.png"
+  ],
+  "quality_gate": {
+    "alpha_channel": true,
+    "transparent_corners": true,
+    "white_strokes_only": true,
+    "mint_accent_only": true,
+    "readable_text_absent_after_visual_review": true,
+    "dark_green_background_test_created": true
+  }
+}

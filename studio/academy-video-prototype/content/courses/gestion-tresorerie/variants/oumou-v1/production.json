@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "course": "gestion-tresorerie",
+  "status": "final",
+  "createdAt": "2026-07-28T22:21:21.078Z",
+  "updatedAt": "2026-07-29T07:25:54.735Z",
+  "script": {
+    "approvedAt": "2026-07-29T07:20:57.057Z",
+    "sha256": "43676cfd4f19261ca7225ce87f71f3c582799271ab768c4c5381dafb4172b65a"
+  },
+  "voice": {
+    "approvedAt": "2026-07-29T07:22:25.594Z",
+    "voiceId": "9HTNhnzaWIkUTIhaJhPM",
+    "modelId": "eleven_multilingual_v2",
+    "sourceAudioSha256": "74987b17e81e026eb8dfe425d1603d238caca0f1a2f653a529ce80d573864023",
+    "alignmentSha256": "462ad48f560697ea6a2d49735304dc127b061d60a944ef445f79716ea258d57e",
+    "sourceTimingSha256": "e62226d6d744a65327cdd5e427d4271535300b64b5dedecfd444f0483946f5dc"
+  },
+  "render": {
+    "approvedAt": "2026-07-29T07:22:25.814Z",
+    "pace": 1,
+    "audioSha256": "74987b17e81e026eb8dfe425d1603d238caca0f1a2f653a529ce80d573864023",
+    "timingSha256": "95f67b617d2e88d5c6d80bc5b17c4b4c24e58d56e64a4cb7795355b2d115fd37"
+  },
+  "final": {
+    "approvedAt": "2026-07-29T07:25:54.735Z",
+    "output": "../../../../../output/staging/oumou-v1/cours-gestion-tresorerie-final.mp4",
+    "sha256": "af8ce8299c13f833c5c24a06f385a246f759d16859761db66e70d80076a1467a",
+    "qa": {
+      "durationSeconds": 129.567,
+      "loudnessLufs": -16.79,
+      "videoCodec": "h264",
+      "audioCodec": "aac",
+      "width": 1920,
+      "height": 1080,
+      "fps": "30/1",
+      "fullDecode": true
+    }
+  }
+}

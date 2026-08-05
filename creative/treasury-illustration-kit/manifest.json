@@ -1,0 +1,165 @@
+{
+  "project": "Kit d’illustrations — Trésorerie d’entreprise",
+  "version": "pilot-1",
+  "pilot_delivery": {
+    "status": "ready_for_validation",
+    "png_directory": "output/pilot/png",
+    "svg_directory": "output/pilot/svg",
+    "boards_directory": "output/pilot/boards",
+    "validation_report": "output/pilot/validation_report.json",
+    "zip": "output/pilot/zip/treasury_illustrations_pilot.zip",
+    "svg_note": "Les SVG pilotes sont des conteneurs de compatibilité avec PNG transparent haute définition intégré ; ce ne sont pas des tracés vectoriels natifs."
+  },
+  "palette": {
+    "line": "#2F2F2F",
+    "accent": "#305F46",
+    "accent_secondary": "#F2F5F2",
+    "background": "transparent"
+  },
+  "illustrations": [
+    {
+      "id": "01",
+      "filename_png": "01_ouverture_bureau.png",
+      "filename_svg": "01_ouverture_bureau.svg",
+      "title": "Ouverture — le bureau",
+      "concept": "Une personne réfléchit à son bureau en regardant un calendrier mural, avec une date discrètement mise en évidence.",
+      "status": "pilot_ready_for_validation",
+      "notes": "Pilote livré. Scène narrative horizontale, objets secondaires sobres. PNG alpha et SVG de compatibilité disponibles."
+    },
+    {
+      "id": "02",
+      "filename_png": "02_equipe.png",
+      "filename_svg": "02_equipe.svg",
+      "title": "L’équipe",
+      "concept": "Quatre à cinq personnes discutent calmement autour d’un document central.",
+      "status": "queued_after_pilot_validation",
+      "notes": "Accent sur le point de focus central."
+    },
+    {
+      "id": "03",
+      "filename_png": "03_ligne_flottaison.png",
+      "filename_svg": "03_ligne_flottaison.svg",
+      "title": "La ligne de flottaison",
+      "concept": "Un petit bateau et une ligne horizontale matérialisent le seuil au-dessus et au-dessous duquel l’entreprise évolue.",
+      "status": "queued_after_pilot_validation",
+      "notes": "Composition conceptuelle, mais toujours éditoriale."
+    },
+    {
+      "id": "04",
+      "filename_png": "04_salaires_calendrier.png",
+      "filename_svg": "04_salaires_calendrier.svg",
+      "title": "Les salaires et le calendrier",
+      "concept": "Un calendrier minimal montre la récurrence fixe des échéances mensuelles.",
+      "status": "queued_after_pilot_validation",
+      "notes": "Aucun chiffre lisible."
+    },
+    {
+      "id": "05",
+      "filename_png": "05_piege_calcul.png",
+      "filename_svg": "05_piege_calcul.svg",
+      "title": "Le piège de calcul",
+      "concept": "Un document financier est mis sous tension par un signal d’attention discret entre deux niveaux de coût.",
+      "status": "queued_after_pilot_validation",
+      "notes": "Aucun montant lisible."
+    },
+    {
+      "id": "06",
+      "filename_png": "06_methode_4_etapes.png",
+      "filename_svg": "06_methode_4_etapes.svg",
+      "title": "La méthode en quatre étapes",
+      "concept": "Quatre repères simples reliés forment un chemin : tracer, mesurer, surveiller et réduire.",
+      "status": "queued_after_pilot_validation",
+      "notes": "Éviter l’apparence de pack d’icônes."
+    },
+    {
+      "id": "07",
+      "filename_png": "07_facture_delai_banque.png",
+      "filename_svg": "07_facture_delai_banque.svg",
+      "title": "De la facture à la banque",
+      "concept": "Une facture, un délai et une réserve bancaire sont reliés pour montrer que facturer ne signifie pas encore encaisser.",
+      "status": "pilot_ready_for_validation",
+      "notes": "Pilote livré. Accent sur le délai et l’arrivée du flux. PNG alpha et SVG de compatibilité disponibles."
+    },
+    {
+      "id": "08",
+      "filename_png": "08_actions.png",
+      "filename_svg": "08_actions.svg",
+      "title": "Les actions",
+      "concept": "Un carnet d’action évoque l’acompte, des délais plus courts et la relance.",
+      "status": "queued_after_pilot_validation",
+      "notes": "Lignes abstraites uniquement."
+    },
+    {
+      "id": "09",
+      "filename_png": "09_client_paie.png",
+      "filename_svg": "09_client_paie.svg",
+      "title": "Le client paie",
+      "concept": "Un flux de paiement part du client et atteint réellement l’entreprise.",
+      "status": "queued_after_pilot_validation",
+      "notes": "Accent sur le point d’arrivée."
+    },
+    {
+      "id": "10",
+      "filename_png": "10_banque.png",
+      "filename_svg": "10_banque.svg",
+      "title": "La réserve bancaire",
+      "concept": "Une réserve financière stylisée montre combien de temps l’entreprise peut tenir.",
+      "status": "queued_after_pilot_validation",
+      "notes": "Pas de symbole monétaire ni chiffre lisible."
+    },
+    {
+      "id": "11",
+      "filename_png": "11_coussin_securite.png",
+      "filename_svg": "11_coussin_securite.svg",
+      "title": "Le coussin de sécurité",
+      "concept": "Une réserve protectrice est représentée par un coussin ou une bouée sobre.",
+      "status": "queued_after_pilot_validation",
+      "notes": "Traitement symbolique mais non iconique."
+    },
+    {
+      "id": "12",
+      "filename_png": "12_suivi.png",
+      "filename_svg": "12_suivi.svg",
+      "title": "Le suivi",
+      "concept": "Une loupe révèle le repère clé d’un petit graphe de suivi.",
+      "status": "queued_after_pilot_validation",
+      "notes": "Aucun axe ni label lisible."
+    },
+    {
+      "id": "13",
+      "filename_png": "13_reduire_depenses.png",
+      "filename_svg": "13_reduire_depenses.svg",
+      "title": "Réduire les dépenses",
+      "concept": "Une composition sobre met en scène une réduction nette des sorties.",
+      "status": "queued_after_pilot_validation",
+      "notes": "Éviter le pictogramme ciseaux générique isolé."
+    },
+    {
+      "id": "14",
+      "filename_png": "14_objectif.png",
+      "filename_svg": "14_objectif.svg",
+      "title": "L’objectif",
+      "concept": "Un repère clair matérialise le seuil à atteindre.",
+      "status": "queued_after_pilot_validation",
+      "notes": "Accent concentré sur la destination."
+    },
+    {
+      "id": "15",
+      "filename_png": "15_plan_action.png",
+      "filename_svg": "15_plan_action.svg",
+      "title": "Le plan d’action",
+      "concept": "Un carnet ouvert et un crayon incarnent l’action concrète de la semaine.",
+      "status": "pilot_ready_for_validation",
+      "notes": "Pilote livré. Quelques lignes abstraites et une coche, sans texte. PNG alpha et SVG de compatibilité disponibles."
+    },
+    {
+      "id": "16",
+      "filename_png": "16_cloture.png",
+      "filename_svg": "16_cloture.svg",
+      "title": "La clôture",
+      "concept": "Une trajectoire claire mène vers un sommet et un drapeau discret.",
+      "status": "queued_after_pilot_validation",
+      "notes": "Accent sur l’arrivée."
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "course": "juste-systeme-marketing",
+  "status": "script-approved",
+  "createdAt": "2026-07-28T14:55:46.332Z",
+  "updatedAt": "2026-07-28T16:55:41.367Z",
+  "script": {
+    "approvedAt": "2026-07-28T16:55:41.367Z",
+    "sha256": "ca68b1717c45b4f268be8a574092c0f8bce7404972e80f9cad40e328be934a89"
+  }
+}

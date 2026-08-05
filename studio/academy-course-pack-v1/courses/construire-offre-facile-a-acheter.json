@@ -1,0 +1,182 @@
+{
+  "version": "1.0",
+  "kind": "course",
+  "status": "ready",
+  "identity": {
+    "slug": "construire-offre-facile-a-acheter",
+    "title": "Construire une offre facile à acheter",
+    "shortTitle": "Construire une offre facile à acheter",
+    "category": "Offre & positionnement",
+    "promise": "Transformer une liste de services en une offre que le bon client peut comprendre, comparer et décider plus facilement.",
+    "audience": "Dirigeants de TPE et prestataires de services B2B",
+    "durationMinutes": 9,
+    "card": {
+      "section": "Développer son activité",
+      "title": "Construire une offre facile à acheter",
+      "meta": "6 notions · environ 9 min",
+      "image": null,
+      "imageAlt": "Un problème précis devient une offre claire puis une décision simple."
+    }
+  },
+  "outline": [
+    {
+      "title": "Choisir",
+      "description": "Partir d’une situation et d’un problème que le client reconnaît."
+    },
+    {
+      "title": "Cadrer",
+      "description": "Rendre le résultat, le périmètre et les limites explicites."
+    },
+    {
+      "title": "Simplifier",
+      "description": "Présenter un prix et une prochaine décision faciles à comprendre."
+    }
+  ],
+  "lessons": [
+    {
+      "id": "offre-pas-liste-services",
+      "type": "concept",
+      "eyebrow": "Notion 1 sur 6",
+      "title": "Une offre n’est pas une liste de services",
+      "body": "Une liste décrit ce que l’entreprise sait faire. Une offre aide un client précis à résoudre une situation précise, avec un résultat, un périmètre et une manière d’avancer. Plus le client doit recomposer lui-même la solution, plus la décision devient difficile.",
+      "visual": {
+        "type": "comparison",
+        "data": {
+          "leftLabel": "Liste de services",
+          "leftText": "Tout ce que nous savons faire",
+          "operator": "→",
+          "rightLabel": "Offre claire",
+          "rightText": "Ce que le client peut décider maintenant"
+        }
+      },
+      "takeaway": "Une bonne offre réduit le travail de compréhension et de décision demandé au client."
+    },
+    {
+      "id": "offre-situation-precise",
+      "type": "method",
+      "eyebrow": "Notion 2 sur 6",
+      "title": "Choisir une situation que le client reconnaît immédiatement",
+      "body": "Décrivez qui rencontre le problème, ce qui se passe aujourd’hui, pourquoi cela devient gênant et à quel moment une décision doit être prise. « Accompagnement en organisation » reste abstrait. « Structurer le suivi des demandes avant de recruter un commercial » permet au dirigeant de se reconnaître.",
+      "visual": {
+        "type": "metrics",
+        "data": {
+          "fields": ["Client concerné", "Situation actuelle", "Problème visible", "Conséquence", "Moment de décision"]
+        }
+      },
+      "takeaway": "Une situation concrète permet au bon client de comprendre rapidement que l’offre le concerne."
+    },
+    {
+      "id": "offre-resultat-observable",
+      "type": "method",
+      "eyebrow": "Notion 3 sur 6",
+      "title": "Promettre un résultat observable sans promettre l’impossible",
+      "body": "Le résultat doit décrire ce qui sera différent après la prestation, sans garantir ce que l’entreprise ne contrôle pas. Vous pouvez promettre un système installé, une décision préparée ou un processus documenté. Vous ne pouvez pas garantir le chiffre d’affaires futur du client.",
+      "visual": {
+        "type": "comparison",
+        "data": {
+          "leftLabel": "Promesse fragile",
+          "leftText": "Garantir un résultat hors de votre contrôle",
+          "operator": "≠",
+          "rightLabel": "Résultat observable",
+          "rightText": "Décrire ce qui sera livré, utilisable ou décidé"
+        }
+      },
+      "takeaway": "La promesse porte sur une transformation vérifiable que l’entreprise peut réellement produire."
+    },
+    {
+      "id": "offre-perimetre-limites",
+      "type": "method",
+      "eyebrow": "Notion 4 sur 6",
+      "title": "Définir ce qui est inclus, ce qui ne l’est pas et quand le travail se termine",
+      "body": "Précisez les livrables, les étapes, le nombre de retours, les contributions attendues du client et les exclusions. Les limites ne rendent pas l’offre moins généreuse : elles évitent les malentendus et permettent de comparer le prix à un périmètre réel.",
+      "visual": {
+        "type": "steps",
+        "data": {
+          "steps": [
+            { "number": "01", "title": "Livrables", "detail": "Ce que le client reçoit" },
+            { "number": "02", "title": "Étapes", "detail": "Comment la prestation avance" },
+            { "number": "03", "title": "Limites", "detail": "Retours, responsabilités et exclusions" }
+          ]
+        }
+      },
+      "takeaway": "Un périmètre clair protège la relation, le délai et la marge de la prestation."
+    },
+    {
+      "id": "offre-prix-decision",
+      "type": "decision",
+      "eyebrow": "Notion 5 sur 6",
+      "title": "Relier le prix à un périmètre et terminer par une décision simple",
+      "body": "Présentez le prix avec ce qu’il couvre, les modalités de paiement et les éventuelles options clairement séparées. La prochaine étape doit être visible : valider, réserver un échange ou choisir une option avant une date convenue. Une proposition sans décision attendue reste facilement en attente.",
+      "visual": {
+        "type": "timeline",
+        "data": {
+          "steps": [
+            { "timing": "Offre", "label": "Résultat et périmètre" },
+            { "timing": "Prix", "label": "Montant et modalités" },
+            { "timing": "Décision", "label": "Une prochaine étape datée" }
+          ]
+        }
+      },
+      "takeaway": "Le prix devient plus compréhensible lorsqu’il est relié à un périmètre et à une prochaine décision."
+    },
+    {
+      "id": "offre-tester-comprehension",
+      "type": "example",
+      "eyebrow": "Notion 6 sur 6",
+      "title": "Tester la compréhension avant d’ajouter des arguments",
+      "body": "Montrez l’offre à trois personnes proches de la cible et demandez-leur à qui elle s’adresse, quel problème elle résout, ce qui est livré et quelle est la prochaine étape. Si les réponses divergent, simplifiez les mots ou le périmètre avant d’ajouter des preuves et des options.",
+      "visual": {
+        "type": "metrics",
+        "data": {
+          "fields": ["Pour qui ?", "Quel problème ?", "Quel résultat ?", "Qu’est-ce qui est inclus ?", "Quelle prochaine étape ?"]
+        }
+      },
+      "takeaway": "Une offre est claire lorsque le client peut la reformuler sans votre aide."
+    }
+  ],
+  "recap": {
+    "title": "Le cours en quatre phrases",
+    "points": [
+      "Une offre aide un client précis à résoudre une situation précise ; elle ne présente pas tout le savoir-faire de l’entreprise.",
+      "Le résultat promis doit être observable et rester dans ce que l’entreprise peut réellement contrôler.",
+      "Le périmètre, les limites, le prix et les responsabilités rendent la prestation comparable et sécurisante.",
+      "Une offre est prête lorsque le client comprend seul ce qu’il achète et quelle décision prendre."
+    ]
+  },
+  "quiz": {
+    "title": "Avez-vous bien retenu ?",
+    "questions": [
+      {
+        "id": "offre-definition",
+        "question": "Qu’est-ce qui distingue principalement une offre d’une liste de services ?",
+        "choices": [
+          { "id": "catalogue", "label": "Elle présente davantage de compétences" },
+          { "id": "decision", "label": "Elle aide un client précis à prendre une décision" }
+        ],
+        "correctChoiceId": "decision",
+        "explanation": "L’offre relie une situation, un résultat, un périmètre et une prochaine étape compréhensibles."
+      },
+      {
+        "id": "offre-promesse",
+        "question": "Quelle promesse est la plus saine ?",
+        "choices": [
+          { "id": "controle", "label": "Un résultat observable que l’entreprise peut produire" },
+          { "id": "garantie", "label": "Un chiffre d’affaires futur garanti" }
+        ],
+        "correctChoiceId": "controle",
+        "explanation": "Une promesse crédible porte sur ce que la prestation permet réellement de livrer, d’utiliser ou de décider."
+      },
+      {
+        "id": "offre-test",
+        "question": "Comment vérifier rapidement qu’une offre est claire ?",
+        "choices": [
+          { "id": "reformulation", "label": "Demander à des personnes de la cible de la reformuler" },
+          { "id": "longueur", "label": "Ajouter davantage de texte à la présentation" }
+        ],
+        "correctChoiceId": "reformulation",
+        "explanation": "Si les personnes comprennent pour qui est l’offre, le problème, le résultat et la suite, sa structure est claire."
+      }
+    ]
+  },
+  "action": null
+}

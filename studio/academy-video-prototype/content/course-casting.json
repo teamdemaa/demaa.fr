@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "variants": {
+    "oumou-warm-v2": {
+      "courses": {
+        "gestion-tresorerie": {
+          "beats": {
+            "deux-realites/distinction": {
+              "asset": "illustrations/casting-v2/01b-gestion-tresorerie-decalage-char4-clean.png",
+              "characterIds": [4],
+              "fit": "single"
+            },
+            "decisions/introduction": {
+              "asset": "illustrations/casting-v2/01c-gestion-tresorerie-decisions-char7-clean.png",
+              "characterIds": [7],
+              "fit": "single"
+            }
+          }
+        },
+        "chiffre-affaires-benefice": {
+          "beats": {
+            "pilotage/introduction": {
+              "asset": "illustrations/casting-v2/02b-chiffre-affaires-pilotage-char8-char2-clean.png",
+              "characterIds": [8, 2],
+              "fit": "group"
+            }
+          }
+        },
+        "fixer-ses-prix": {
+          "beats": {
+            "prix-piege/alerte": {
+              "asset": "illustrations/casting-v2/03-fixer-ses-prix-clean.png",
+              "characterIds": [5],
+              "fit": "single"
+            },
+            "prix-cible/distinction": {
+              "asset": "illustrations/casting-v2/03b-fixer-ses-prix-prix-cible-char6-char9-clean.png",
+              "characterIds": [6, 9],
+              "fit": "group"
+            }
+          }
+        },
+        "construire-systeme-marketing-vente": {
+          "beats": {
+            "systeme/actions": {
+              "asset": "illustrations/casting-v2/04b-systeme-marketing-equipe-char9-char11-char12-clean.png",
+              "characterIds": [9, 11, 12],
+              "fit": "group"
+            }
+          }
+        },
+        "deleguer-sans-perdre-controle": {
+          "beats": {
+            "deleguer-resultat/faux-choix": {
+              "asset": "illustrations/casting-v2/05-deleguer-sans-perdre-controle-clean.png",
+              "characterIds": [10],
+              "scale": 0.94,
+              "fit": "single"
+            },
+            "transmettre-contexte/comprendre": {
+              "asset": "illustrations/casting-v2/05b-deleguer-contexte-char2-char4-char7-clean.png",
+              "characterIds": [2, 4, 7],
+              "fit": "group"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "entreprise-rentable-sans-tresorerie": {
+    "artwork": "illustrations/01_commandes_pleines_cash_vide.png",
+    "composition": {
+      "artwork": {
+        "scale": 1.25,
+        "offsetXPercent": -10,
+        "offsetYPercent": 0
+      },
+      "title": {
+        "scale": 1,
+        "offsetXPercent": 17,
+        "offsetYPercent": 0
+      },
+      "safeZone": {
+        "targetAspectRatio": 1.3333333333333333,
+        "minimumSafeAspectRatio": 1.2722
+      }
+    },
+    "eyebrow": "Le paradoxe",
+    "lines": [
+      "Rentable.",
+      "Mais sans trésorerie."
+    ],
+    "theme": "forest",
+    "output": "output/thumbnails/entreprise-rentable-sans-tresorerie.png"
+  },
+  "chiffre-affaires-benefice": {
+    "artwork": "illustrations/02_benefice_cash_retard.png",
+    "composition": {
+      "artwork": {
+        "scale": 1.4142135623730951,
+        "offsetXPercent": -6.3,
+        "offsetYPercent": 0
+      },
+      "title": {
+        "scale": 0.69,
+        "offsetXPercent": 15.9,
+        "offsetYPercent": 0
+      },
+      "safeZone": {
+        "targetAspectRatio": 1.3333333333333333,
+        "minimumSafeAspectRatio": 1.3056
+      }
+    },
+    "eyebrow": "Les essentiels",
+    "lines": [
+      "Vendre plus",
+      "ne veut pas dire",
+      "gagner plus."
+    ],
+    "theme": "sage",
+    "output": "output/thumbnails/chiffre-affaires-benefice.png"
+  }
+}

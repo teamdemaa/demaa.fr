@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <rect width="1080" height="1920" fill="#F4EDDF"/>
+  <text x="84" y="156" fill="#2B1914" font-family="Satoshi,Arial,sans-serif" font-size="34" font-weight="750">JUSTE</text>
+  <circle cx="196" cy="146" r="9" fill="#F2BC52"/>
+  <text x="84" y="570" fill="#2B1914" font-family="Satoshi,Arial,sans-serif" font-size="176" font-weight="750" letter-spacing="-7">1</text>
+  <text x="230" y="520" fill="#2B1914" font-family="Satoshi,Arial,sans-serif" font-size="54" font-weight="700">session / mois</text>
+  <text x="84" y="1010" fill="#2B1914" font-family="Satoshi,Arial,sans-serif" font-size="176" font-weight="750" letter-spacing="-7">10</text>
+  <text x="330" y="960" fill="#2B1914" font-family="Satoshi,Arial,sans-serif" font-size="54" font-weight="700">vidéos</text>
+  <text x="84" y="1450" fill="#2B1914" font-family="Satoshi,Arial,sans-serif" font-size="176" font-weight="750" letter-spacing="-7">2</text>
+  <text x="230" y="1400" fill="#2B1914" font-family="Satoshi,Arial,sans-serif" font-size="54" font-weight="700">publications / semaine</text>
+</svg>

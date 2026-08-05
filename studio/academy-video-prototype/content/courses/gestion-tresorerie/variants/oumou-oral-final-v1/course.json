@@ -1,0 +1,340 @@
+{
+  "id": "rentable-sans-tresorerie",
+  "editorialVariant": "oumou-oral-final-v1",
+  "status": "draft",
+  "title": "Rentable, mais à court de trésorerie : comment est-ce possible ?",
+  "shortTitle": "Rentable. Mais sans trésorerie.",
+  "courseTitle": "GESTION DE LA\nTRÉSORERIE",
+  "introVisual": {
+    "primaryLabel": "TRÉSORERIE",
+    "secondaryLabel": "12 SEM."
+  },
+  "audience": "Dirigeants de TPE en France",
+  "format": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "targetDurationSeconds": 245
+  },
+  "editorialContract": {
+    "tone": "Chaleureux, lucide, bienveillant et constructif. Dire les choses clairement sans juger le dirigeant.",
+    "rule": "Une idée par séquence. Aucun remplissage. L’exemple doit permettre de refaire le raisonnement.",
+    "screenTextRule": "Le texte à l’écran résume ou chiffre. Il ne retranscrit jamais la narration.",
+    "pronouns": "Employer « on » pour les erreurs fréquentes et « vous » pour les actions."
+  },
+  "scenes": [
+    {
+      "id": "paradoxe",
+      "title": "Le paradoxe",
+      "targetSeconds": 18,
+      "narration": "Une entreprise peut être rentable et manquer quand même d’argent pour payer ses charges à la fin du mois. Ce n’est pas forcément le signe d’une mauvaise gestion ni une contradiction comptable. Le résultat peut être positif avant que l’argent arrive réellement sur le compte.",
+      "onScreen": ["Rentable.", "Mais sans trésorerie."],
+    "visual": {
+      "type": "illustration",
+      "asset": "illustrations/casting-v2/01-gestion-tresorerie-clean.png",
+      "assetScale": 1.5,
+      "assetOffsetX": -40,
+      "layout": "text-left"
+    }
+    },
+    {
+      "id": "deux-realites",
+      "title": "Deux réalités",
+      "targetSeconds": 27,
+      "narration": "Le résultat mesure ce que l’activité a gagné sur une période. La trésorerie mesure ce qui est réellement disponible sur le compte aujourd’hui. Une vente peut donc améliorer votre résultat avant que le client vous ait payé. Vous avez fait le travail, vous avez facturé, mais l’argent n’est pas encore là. Et pour payer un salaire, un fournisseur ou l’Urssaf, c’est bien le solde disponible qui compte.",
+      "onScreen": ["Résultat", "≠", "Trésorerie"],
+      "visual": {
+        "type": "illustration",
+        "asset": "illustrations/02_benefice_cash_retard.png",
+        "layout": "comparison"
+      },
+      "beats": [
+        {
+          "id": "distinction",
+          "startSeconds": 0,
+          "template": "statement",
+          "lines": ["RÉSULTAT", "≠", "TRÉSORERIE"],
+          "accentIndex": 2,
+          "zoom": true
+        },
+        {
+          "id": "definitions",
+          "startSeconds": 4.45,
+          "cue": "La trésorerie mesure",
+          "template": "comparison",
+          "eyebrow": "Deux mesures différentes",
+          "sign": "≠",
+          "left": {
+            "label": "RÉSULTAT",
+            "title": "Ce que l’activité a gagné",
+            "detail": "sur une période"
+          },
+          "right": {
+            "label": "TRÉSORERIE",
+            "title": "Ce qui est disponible",
+            "detail": "sur le compte aujourd’hui"
+          }
+        }
+      ]
+    },
+    {
+      "id": "facturer-encaisser",
+      "title": "Facturer n’est pas encaisser",
+      "targetSeconds": 25,
+      "narration": "Dans les faits, vous réalisez le travail, vous envoyez la facture, puis le client paie plus tard. Entre-temps, les salaires, les charges, le loyer et certains fournisseurs doivent quand même être payés. Le travail est terminé, mais l’argent correspondant n’est pas encore arrivé sur le compte.",
+      "onScreen": ["Facturé", "Délai", "Encaissé"],
+      "visual": {
+        "type": "timeline",
+        "layout": "full"
+      },
+      "beats": [
+        {
+          "id": "cycle",
+          "startSeconds": 0,
+          "template": "timeline"
+        },
+        {
+          "id": "sorties",
+          "startSeconds": 7.15,
+          "cue": "Entre-temps",
+          "template": "chips",
+          "eyebrow": "Pendant le délai de paiement",
+          "title": "Les sorties continuent.",
+          "items": ["SALAIRES", "CHARGES", "LOYER", "FOURNISSEURS"]
+        }
+      ]
+    },
+    {
+      "id": "exemple",
+      "title": "Un exemple concret",
+      "targetSeconds": 48,
+      "narration": "Prenons une petite société de services. Le trente avril, elle facture une mission de trente mille euros hors taxes. Une fois tous les coûts payés, il lui restera huit mille euros. La mission est donc rentable. Mais le client règle à quarante-cinq jours. Avant ce paiement, l’entreprise doit sortir seize mille euros alors qu’elle n’en a que neuf mille sur son compte. Son point bas n’est donc pas plus huit mille euros. Il est de moins sept mille euros : neuf mille disponibles, moins seize mille à payer. Le papier dit plus huit mille. Le compte dit moins sept mille. Les deux chiffres sont justes, mais ils ne répondent pas à la même question.",
+      "onScreen": ["30 000 € facturés", "8 000 € de gain final", "9 000 € disponibles", "−7 000 € au point bas"],
+      "visual": {
+        "type": "cash-example",
+        "layout": "full"
+      },
+      "beats": [
+        {
+          "id": "mission",
+          "startSeconds": 0,
+          "template": "example-pair",
+          "eyebrow": "Un exemple concret",
+          "left": {"label": "MISSION FACTURÉE", "value": "30 000 €"},
+          "right": {"label": "GAIN FINAL", "value": "+8 000 €"}
+        },
+        {
+          "id": "besoin",
+          "startSeconds": 15.35,
+          "cue": "Mais le client règle",
+          "template": "metrics",
+          "eyebrow": "Avant le paiement du client",
+          "cards": [
+            {"label": "Délai client", "value": "45 jours"},
+            {"label": "À décaisser", "value": "16 000 €"},
+            {
+              "label": "Disponible en banque",
+              "value": "9 000 €",
+              "accent": true
+            }
+          ]
+        },
+        {
+          "id": "benefice",
+          "startSeconds": 25.65,
+          "cue": "Son point bas",
+          "template": "statement",
+          "eyebrow": "Le point bas n’est pas",
+          "lines": ["+8 000 €", "DE BÉNÉFICE"],
+          "accentIndex": 0
+        },
+        {
+          "id": "point-bas",
+          "startSeconds": 28.55,
+          "cue": "Il est de moins sept mille",
+          "template": "statement",
+          "eyebrow": "Le véritable point bas",
+          "lines": ["−7 000 €", "DE TRÉSORERIE"],
+          "accentIndex": 0,
+          "zoom": true
+        },
+        {
+          "id": "papier-banque",
+          "startSeconds": 31.45,
+          "cue": "Le papier dit",
+          "template": "paper-bank",
+          "eyebrow": "Au même moment",
+          "middle": "MAIS",
+          "left": {"label": "LE PAPIER DIT", "value": "+8 000 €"},
+          "right": {"label": "LA BANQUE DIT", "value": "−7 000 €"}
+        }
+      ]
+    },
+    {
+      "id": "bfr",
+      "title": "Le décalage a un nom",
+      "targetSeconds": 25,
+      "narration": "Ce décalage entre les paiements de l’entreprise et ses encaissements crée le besoin en fonds de roulement, ou BFR. Le BFR, c’est l’argent que l’entreprise doit avancer pour payer ses dépenses avant d’encaisser ses clients. Dans une activité de services, ce besoin vient souvent des factures clients qui ne sont pas encore payées. Dans le commerce, il vient aussi des stocks payés avant d’être vendus.",
+      "onScreen": ["Le décalage", "=", "BFR"],
+      "visual": {
+        "type": "definition",
+        "layout": "center"
+      },
+      "beats": [
+        {
+          "id": "decalage",
+          "startSeconds": 0,
+          "template": "statement",
+          "eyebrow": "Le décalage",
+          "lines": ["DÉPENSES", "→", "ENCAISSEMENTS"],
+          "accentIndex": 2
+        },
+        {
+          "id": "nom",
+          "startSeconds": 4.35,
+          "cue": "le besoin en fonds de roulement",
+          "template": "term",
+          "eyebrow": "Le décalage a un nom",
+          "term": "BFR",
+          "definition": "BESOIN EN FONDS DE ROULEMENT"
+        },
+        {
+          "id": "origines",
+          "startSeconds": 8.05,
+          "cue": "Dans une activité de services",
+          "template": "comparison",
+          "eyebrow": "D’où vient le décalage ?",
+          "sign": "+",
+          "rowClass": "bfr-origins-row",
+          "rightDelay": 155,
+          "left": {
+            "label": "SERVICES",
+            "title": "Factures clients",
+            "detail": "en attente d’encaissement"
+          },
+          "right": {
+            "label": "COMMERCE",
+            "title": "Stocks",
+            "detail": "payés avant d’être vendus"
+          }
+        }
+      ]
+    },
+    {
+      "id": "croissance",
+      "title": "La croissance amplifie le besoin",
+      "targetSeconds": 25,
+      "narration": "C’est pour ça que la croissance peut tendre la trésorerie. Si vous doublez les ventes sans réduire les délais de paiement, vous devez parfois financer deux fois plus de travail avant d’encaisser. On peut donc avoir plus de commandes et moins d’argent sur le compte pendant quelques semaines. Davantage de commandes ne signifie pas automatiquement davantage d’argent disponible. Il faut prévoir le décalage qu’elles créent.",
+      "onScreen": ["Plus de ventes", "peut demander", "plus de trésorerie"],
+      "visual": {
+        "type": "growth",
+        "layout": "full"
+      },
+      "beats": [
+        {
+          "id": "croissance",
+          "startSeconds": 0,
+          "template": "growth"
+        },
+        {
+          "id": "cash",
+          "startSeconds": 13.1,
+          "cue": "Davantage de commandes",
+          "template": "statement",
+          "lines": ["PLUS DE COMMANDES", "≠", "PLUS DE CASH"],
+          "accentIndex": 2,
+          "zoom": true
+        }
+      ]
+    },
+    {
+      "id": "point-bas",
+      "title": "La question du dirigeant",
+      "targetSeconds": 25,
+      "narration": "La question n’est donc pas seulement : est-ce que l’entreprise sera rentable cette année ? Elle est aussi : quel sera notre point de trésorerie le plus bas sur les douze prochaines semaines, à quelle date et pourquoi ? Sur cette période, vous placez les encaissements attendus et les paiements prévus. Vous voyez ainsi le moment où le compte risque de passer trop bas, assez tôt pour agir.",
+      "onScreen": ["Quel sera notre point le plus bas ?", "Quand ?", "Pourquoi ?"],
+      "visual": {
+        "type": "low-point",
+        "layout": "full"
+      },
+      "beats": [
+        {
+          "id": "rentabilite",
+          "startSeconds": 0,
+          "template": "statement",
+          "lines": ["ÊTRE RENTABLE", "NE SUFFIT PAS"],
+          "accentIndex": 1
+        },
+        {
+          "id": "question",
+          "startSeconds": 5.3,
+          "cue": "Elle est aussi",
+          "template": "low-point"
+        }
+      ]
+    },
+    {
+      "id": "decisions",
+      "title": "Les décisions utiles",
+      "targetSeconds": 38,
+      "narration": "Trois actions changent vraiment la situation. Premièrement, facturez dès que le travail le permet, pas quinze jours plus tard. Deuxièmement, encaissez plus tôt : demandez un acompte quand c’est possible, prévoyez un échéancier clair et préparez les relances avant l’échéance. Troisièmement, mettez à jour chaque semaine votre plan de trésorerie sur douze semaines. Le but n’est pas de deviner l’avenir.\n\nC’est de voir le point bas assez tôt pour décider avant l’urgence.",
+      "onScreen": ["Facturer vite", "Encaisser plus tôt", "Prévoir 12 semaines"],
+      "visual": {
+        "type": "illustration",
+        "asset": "illustrations/03_rituel_lundi_controle.png",
+        "layout": "actions"
+      },
+      "beats": [
+        {
+          "id": "introduction",
+          "startSeconds": 0,
+          "template": "statement",
+          "eyebrow": "Réduire le risque",
+          "lines": ["3", "ACTIONS"],
+          "accentIndex": 0
+        },
+        {
+          "id": "facturer",
+          "startSeconds": 3.3,
+          "cue": "Premièrement",
+          "template": "action",
+          "number": "01",
+          "title": "FACTURER VITE",
+          "detail": "Dès que le travail le permet.",
+          "tags": ["Pas quinze jours plus tard"]
+        },
+        {
+          "id": "encaisser",
+          "startSeconds": 9.15,
+          "cue": "Deuxièmement",
+          "template": "action",
+          "number": "02",
+          "title": "ENCAISSER PLUS TÔT",
+          "detail": "Ne pas attendre l’impayé pour agir.",
+          "tags": ["ACOMPTE", "ÉCHÉANCIER", "RELANCE"]
+        },
+        {
+          "id": "prevoir",
+          "startSeconds": 17.2,
+          "cue": "Troisièmement",
+          "template": "action",
+          "number": "03",
+          "title": "PRÉVOIR 12 SEMAINES",
+          "detail": "Voir le point bas avant l’urgence.",
+          "tags": ["MISE À JOUR CHAQUE SEMAINE"]
+        }
+      ]
+    },
+    {
+      "id": "regle",
+      "title": "La règle",
+      "targetSeconds": 14,
+      "narration": "Retenez ceci : une facture ne met pas d’argent sur le compte tant qu’elle n’est pas encaissée ou financée. Le résultat vous dit si l’activité gagne de l’argent. La trésorerie vous dit si l’entreprise peut tenir jusqu’aux prochains encaissements.\n\nVous avez besoin des deux.",
+      "onScreen": ["Une facture ne met pas d’argent sur le compte", "tant qu’elle n’est pas encaissée ou financée."],
+      "visual": {
+        "type": "closing",
+        "layout": "center"
+      }
+    }
+  ]
+}

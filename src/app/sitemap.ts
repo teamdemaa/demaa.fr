@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getCanonicalBaseUrl } from "@/lib/site-url";
 import { getAllCourseEntries } from "@/lib/course-content";
+import { getAllAcademyContent } from "@/lib/academy-course-content";
 import { getAllDocumentModels } from "@/lib/document-models";
 import { getAllNewsletters } from "@/lib/newsletter-content";
 import { aidFamilies, demaaAidItems } from "@/lib/aid-catalog";
@@ -35,7 +36,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: base, lastModified: now, changeFrequency: "weekly", priority: 1 },
-    { url: `${base}/kits-operationnels`, lastModified: now, changeFrequency: "weekly", priority: 0.95 },
+    { url: `${base}/systemes-operationnels`, lastModified: now, changeFrequency: "weekly", priority: 0.95 },
     { url: `${base}/annuaire-outils`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/annuaire-fournisseurs`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-financement`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
@@ -46,7 +47,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/annuaire-newsletters`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-experts-comptables`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/modeles-de-documents`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${base}/cours`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
+    { url: `${base}/academie`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/mentions-legales`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
     { url: `${base}/conditions-d-utilisation`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
     { url: `${base}/politique-de-confidentialite`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
@@ -63,12 +64,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   const courseEntries = getAllCourseEntries();
-  const courseContentEntries: MetadataRoute.Sitemap = courseEntries.map((entry) => ({
-    url: `${base}/cours/${entry.slug}`,
-    lastModified: new Date(entry.date),
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
-  }));
+  const courseContentEntries: MetadataRoute.Sitemap = [
+    ...courseEntries.map((entry) => ({
+      url: `${base}/cours/${entry.slug}`,
+      lastModified: new Date(entry.date),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
+    ...getAllAcademyContent().map((content) => ({
+      url: `${base}/academie/${content.identity.slug}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: content.kind === "case-study" ? 0.72 : 0.75,
+    })),
+  ];
 
   const newsletterEntries = getAllNewsletters();
   const newsletterSitemapEntries: MetadataRoute.Sitemap = newsletterEntries.map((entry) => ({
@@ -186,7 +195,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   const systemEntries: MetadataRoute.Sitemap = enterprises.map((enterprise) => ({
-    url: `${base}/kit-operationnel/${enterprise.slug}`,
+    url: `${base}/systemes-operationnels/${enterprise.slug}`,
     lastModified: now,
     changeFrequency: "monthly" as const,
     priority: 0.75,

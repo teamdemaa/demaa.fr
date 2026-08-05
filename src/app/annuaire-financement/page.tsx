@@ -48,7 +48,7 @@ export default async function AnnuaireFinancementPage({
     : null;
   const backLink = returnEnterprise
     ? {
-        href: `/kit-operationnel/${encodeURIComponent(returnEnterprise.slug)}`,
+        href: `/systemes-operationnels/${encodeURIComponent(returnEnterprise.slug)}`,
         label: `Retour à ${returnEnterprise.name}`,
       }
     : undefined;

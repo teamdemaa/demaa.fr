@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { BriefcaseBusiness } from "lucide-react";
+import { BookOpen, BriefcaseBusiness } from "lucide-react";
 import DemaaWordmark from "@/components/DemaaWordmark";
 
 export default function Navbar({
@@ -12,15 +12,43 @@ export default function Navbar({
 }) {
   const router = useRouter();
   const pathname = usePathname();
-  const showSystemSearchCta =
-    pathname === "/kits-operationnels" ||
-    pathname.startsWith("/kit-operationnel/");
-  const isPlumbingPilotPage =
-    pathname === "/kit-operationnel/plomberie-chauffage";
-  const showSystemsCta =
+  const showSystemNavigation =
+    pathname === "/systemes-operationnels" ||
+    pathname.startsWith("/systemes-operationnels/");
+  const showAcademyNavigation =
+    pathname === "/academie" || pathname.startsWith("/academie/");
+  const showServicesNavigation = pathname === "/" || pathname === "/services";
+
+  const secondaryLink = showAcademyNavigation
+    ? {
+        href: "/systemes-operationnels",
+        label: "Voir les systèmes opérationnels",
+        mobileLabel: "Systèmes",
+        icon: BriefcaseBusiness,
+      }
+    : {
+        href: "/academie",
+        label: "Découvrir l’Académie",
+        mobileLabel: "Académie",
+        icon: BookOpen,
+      };
+
+  const primaryLink = showSystemNavigation
+    ? { href: "/", label: "Voir les services", mobileLabel: "Services" }
+    : showServicesNavigation
+      ? {
+          href: "/systemes-operationnels",
+          label: "Voir les systèmes opérationnels",
+          mobileLabel: "Systèmes",
+        }
+      : showAcademyNavigation
+        ? { href: "/", label: "Voir les services", mobileLabel: "Services" }
+        : null;
+
+  const showCrossNavigation =
     !minimal &&
-    (pathname === "/annuaire-services" ||
-      pathname.startsWith("/annuaire-services/"));
+    (showSystemNavigation || showAcademyNavigation || showServicesNavigation);
+  const SecondaryIcon = secondaryLink.icon;
   return (
     <>
       <nav className="sticky top-0 z-40 border-b border-dema-line/70 bg-dema-cream/92 py-1 backdrop-blur-md">
@@ -36,28 +64,25 @@ export default function Navbar({
               <DemaaWordmark className="text-[1.4rem] sm:text-[1.7rem]" />
             </Link>
             <div className="flex items-center gap-2 sm:gap-3">
-              {showSystemSearchCta ? (
-                <Link
-                  href={
-                    isPlumbingPilotPage
-                      ? "/kit-operationnel/plomberie-chauffage?tab=process"
-                      : "/"
-                  }
-                  className="demaa-primary-button min-h-10 px-4 text-xs sm:px-5 sm:text-sm"
-                >
-                  {isPlumbingPilotPage
-                    ? "Voir les process"
-                    : "Trouver mon système"}
-                </Link>
-              ) : showSystemsCta ? (
-                <Link
-                  href="/kits-operationnels"
-                  className="demaa-secondary-button hidden min-h-10 items-center justify-center gap-2 px-4 py-2 md:inline-flex"
-                  aria-label="Voir les systèmes opérationnels"
-                >
-                  <BriefcaseBusiness className="h-4 w-4 shrink-0" aria-hidden="true" />
-                  <span>Voir les systèmes opérationnels</span>
-                </Link>
+              {showCrossNavigation && primaryLink ? (
+                <>
+                  <Link
+                    href={secondaryLink.href}
+                    className="demaa-secondary-button min-h-10 gap-2 px-3 text-xs sm:px-4 sm:text-sm"
+                    aria-label={secondaryLink.label}
+                  >
+                    <SecondaryIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
+                    <span className="hidden sm:inline">{secondaryLink.label}</span>
+                    <span className="sm:hidden">{secondaryLink.mobileLabel}</span>
+                  </Link>
+                  <Link
+                    href={primaryLink.href}
+                    className="demaa-primary-button min-h-10 px-3 text-xs sm:px-5 sm:text-sm"
+                  >
+                    <span className="hidden sm:inline">{primaryLink.label}</span>
+                    <span className="sm:hidden">{primaryLink.mobileLabel}</span>
+                  </Link>
+                </>
               ) : null}
             </div>
           </div>
