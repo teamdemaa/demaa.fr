@@ -230,7 +230,7 @@ describe("free operational system delivery route", () => {
           workbookVersion: "1.0.0",
         },
         contact: { email: "maya@example.com", firstName: null },
-        title: "Livraison de Levier - Plomberie & chauffage",
+        title: "Livraison du tableau de pilotage opérationnel - Plomberie & chauffage",
       }),
     );
     expect(mocks.sendDeliveryEmail).toHaveBeenCalledWith(
@@ -244,6 +244,55 @@ describe("free operational system delivery route", () => {
         firstName: null,
       }),
     );
+  });
+
+  it("delivers a catalog resource without exposing its destination", async () => {
+    const assetSnapshot = {
+      assetRevision: "crm-suivi-commercial-airtable-v1-2026-08-05",
+      resourceId: "crm-suivi-commercial",
+      workbookVersion: "1.0.0",
+    };
+    mocks.submitLeadRequest.mockResolvedValueOnce({
+      assetSnapshot,
+      duplicate: false,
+      leadId: "lead-crm",
+    });
+
+    const response = await POST(buildRequest({
+      firstName: undefined,
+      marketingConsent: true,
+      resourceSlug: "crm-suivi-commercial",
+    }));
+    const rawPayload = await response.text();
+
+    expect(response.status).toBe(200);
+    expect(JSON.parse(rawPayload)).toEqual({ ok: true });
+    expect(rawPayload).not.toMatch(/airtable|resourceId|destination/i);
+    expect(mocks.hasEditableOperationalSystemAsset).not.toHaveBeenCalled();
+    expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
+      assetSnapshot,
+      contact: { email: "maya@example.com", firstName: null },
+      fields: [{ label: "Ressource", value: "CRM - suivi commercial" }],
+      marketingConsent: expect.objectContaining({ granted: true }),
+      title: "Livraison de ressource - CRM - suivi commercial - Plomberie & chauffage",
+    }));
+    expect(mocks.sendDeliveryEmail).toHaveBeenCalledWith(expect.objectContaining({
+      assetSnapshot,
+      deliveryId: "lead-lead-crm-system",
+      firstName: null,
+    }));
+  });
+
+  it("rejects an unknown catalog resource", async () => {
+    const response = await POST(buildRequest({
+      resourceSlug: "ressource-inconnue",
+    }));
+
+    expect(response.status).toBe(404);
+    expect(await response.json()).toEqual({
+      error: "La ressource demandée est introuvable.",
+    });
+    expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
   });
 
   it("fails closed when the private Levier Google Sheets config is missing", async () => {

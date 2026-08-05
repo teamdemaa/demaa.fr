@@ -48,6 +48,7 @@ export function trackSystemJourneyEvent(
     method?: string;
     position?: number;
     queryLength?: number;
+    resourceSlug?: string;
     statusCode?: number;
     systemSlug: string;
   },
@@ -61,6 +62,9 @@ export function trackSystemJourneyEvent(
     method: input.method?.slice(0, 40) || "none",
     position: input.position ?? -1,
     query_length: input.queryLength ?? 0,
+    ...(input.resourceSlug
+      ? { resource_slug: input.resourceSlug.slice(0, 120) }
+      : {}),
     status_code: input.statusCode ?? 0,
     system_slug: input.systemSlug.slice(0, 120),
   };

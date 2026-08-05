@@ -94,14 +94,18 @@ describe("Levier private Google Sheets contract", () => {
     const modalSource = await readSource(
       "src/components/OperationalSystemCopyRequestModal.tsx",
     );
+    const resourceCatalogSource = await readSource(
+      "src/lib/system-resource-catalog.ts",
+    );
 
     expect(previewSource).toContain(
       'src: "/images/levier/levier-tableau-de-bord-preview.webp"',
     );
     expect(previewSource).not.toContain("/copy");
-    expect(modalSource).toContain(
+    expect(resourceCatalogSource).toContain(
       "Aperçu avec des données d’exemple. Votre copie sera vierge",
     );
+    expect(modalSource).toContain("resource.previewDisclosure");
     const preview = await readFile(
       new URL(
         "../public/images/levier/levier-tableau-de-bord-preview.webp",

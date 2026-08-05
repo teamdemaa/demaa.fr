@@ -125,8 +125,9 @@ describe("operational system delivery email", () => {
       text: string;
     };
     expect(payload).not.toHaveProperty("attachments");
-    expect(payload.subject).toBe("Votre tableau de pilotage Levier");
-    expect(payload.html).toContain("Créer ma copie de Levier");
+    expect(payload.subject).toBe("Votre ressource Demaa - Tableau de pilotage opérationnel");
+    expect(payload.html).toContain("Ouvrir la ressource");
+    expect(payload.html).not.toContain("Levier");
     expect(payload.html).toContain(LEVIER_COPY_URL);
     expect(payload.text).toContain(LEVIER_COPY_URL);
     expect(`${payload.html}${payload.text}`).not.toContain("Maya");

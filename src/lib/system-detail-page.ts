@@ -8,6 +8,7 @@ import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 import type { OperationalSystemDetail } from "@/lib/system-operations";
 import { hasEditableOperationalSystemAsset } from "@/lib/editable-operational-system-assets.server";
 import type { RenderableSolutionSectionDto } from "@/lib/system-solutions-ui-dto";
+import { SYSTEM_RESOURCES } from "@/lib/system-resource-catalog";
 import { buildSystemeDetail } from "@/lib/systeme-catalog";
 import type { System } from "@/lib/types";
 
@@ -303,6 +304,7 @@ function getPublishedSolutionResources(sections: SystemPageSolutionSections) {
   const resources = new Map<string, RenderableSolutionSectionDto["placements"][number]["resource"]>();
 
   for (const section of sections) {
+    if (section.section === "models") continue;
     for (const placement of section.placements) {
       resources.set(placement.resource.resourceSlug, placement.resource);
     }
@@ -315,7 +317,9 @@ function buildSystemPageTitle(
   data: SystemDetailPageData,
   solutionSections: SystemPageSolutionSections,
 ): string {
-  const contentLabel = solutionSections.length > 0 ? "Process et Solutions" : "Process";
+  const contentLabel = solutionSections.length > 0 || SYSTEM_RESOURCES.length > 0
+    ? "Process et Solutions"
+    : "Process";
   return `Système opérationnel ${data.system.name} : ${contentLabel} | Demaa`;
 }
 
@@ -342,10 +346,6 @@ function buildSystemPageDescription(
     : `${processCount} process opérationnels pour structurer une activité de ${sectorLabel}.`;
   const parts = [processSummary];
   const publishedResources = getPublishedSolutionResources(solutionSections);
-  const hasPublishedLevier = publishedResources.some(
-    ({ interaction, resourceSlug }) =>
-      resourceSlug === "levier" && interaction.interactionMode === "system_delivery",
-  );
 
   if (override) {
     parts.push(`${processCount} process opérationnels structurent ce système.`);
@@ -353,9 +353,7 @@ function buildSystemPageDescription(
 
   if (hasEditableOperationalSystemAsset(data.system.slug)) {
     parts.push(
-      hasPublishedLevier
-        ? "Recevez gratuitement par e-mail Levier, le tableau de pilotage opérationnel à copier dans Google Sheets."
-        : "Découvrez une démonstration remplie et recevez gratuitement par e-mail le lien permettant de créer votre copie personnelle dans Google Drive.",
+      `${SYSTEM_RESOURCES.length} ressources pratiques sont disponibles avec un aperçu réel et un envoi gratuit par e-mail.`,
     );
   }
 
@@ -387,6 +385,7 @@ export function buildSystemPageMetadata(
         `système opérationnel ${data.system.name.toLowerCase()}`,
         `process ${data.system.name.toLowerCase()}`,
         `modèle entreprise ${data.system.name.toLowerCase()}`,
+        ...SYSTEM_RESOURCES.map((resource) => resource.title),
         ...(publishedResources.length > 0
           ? [
               `solutions ${data.system.name.toLowerCase()}`,
@@ -426,6 +425,7 @@ export function buildSystemPageJsonLd(
     ) ?? []
   ).slice(0, 8);
   const listedSolutions = getPublishedSolutionResources(solutionSections).slice(0, 8);
+  const listedResources = SYSTEM_RESOURCES;
 
   return [
     {
@@ -448,10 +448,10 @@ export function buildSystemPageJsonLd(
     {
       "@context": "https://schema.org",
       "@type": "ItemList",
-      name: listedSolutions.length > 0
+      name: listedSolutions.length > 0 || listedResources.length > 0
         ? `Process et Solutions du système opérationnel ${data.system.name}`
         : `Process du système opérationnel ${data.system.name}`,
-      numberOfItems: listedProcesses.length + listedSolutions.length,
+      numberOfItems: listedProcesses.length + listedSolutions.length + listedResources.length,
       itemListElement: [
         ...listedProcesses.map((process, index) => ({
           "@type": "ListItem",
@@ -477,6 +477,11 @@ export function buildSystemPageJsonLd(
               : resource.interaction.href,
           };
         }),
+        ...listedResources.map((resource, index) => ({
+          "@type": "ListItem",
+          position: listedProcesses.length + listedSolutions.length + index + 1,
+          name: resource.title,
+        })),
       ],
     },
     {

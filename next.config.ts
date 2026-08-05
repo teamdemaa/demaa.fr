@@ -163,12 +163,12 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/ressources/obligations-tpe',
-        destination: '/cours/obligations-finances-entreprise',
+        destination: '/systemes',
         permanent: true,
       },
       {
         source: '/ressources/obligations-tpe-template',
-        destination: '/cours/obligations-finances-entreprise',
+        destination: '/systemes',
         permanent: true,
       },
       {
@@ -198,7 +198,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/cours/systeme-marketing-vente',
-        destination: '/cours/organisation-marketing-vente',
+        destination: '/academie/construire-systeme-marketing-vente',
         permanent: true,
       },
     ];

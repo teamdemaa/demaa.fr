@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   Check,
-  FileSpreadsheet,
   LoaderCircle,
   X,
 } from "lucide-react";
@@ -28,12 +27,11 @@ import type {
   OperationalSystemDeliveryRequest,
   OperationalSystemDeliverySuccess,
 } from "@/lib/operational-system-delivery-contract";
-import type { SystemKitPreview } from "@/lib/system-kit-previews";
+import type { SystemResource } from "@/lib/system-resource-catalog";
 
 type OperationalSystemCopyRequestModalProps = {
   onClose: () => void;
-  preview: SystemKitPreview | null;
-  systemName: string;
+  resource: SystemResource;
   systemSlug: string;
 };
 
@@ -60,18 +58,18 @@ function getErrorMessage(response: Response, payload: DeliveryPayload) {
     return serverError;
   }
   if (response.status === 404) {
-    return "Levier n’est pas disponible pour le moment.";
+    return "Cette ressource n’est pas disponible pour le moment.";
   }
   if (response.status === 429) {
     return "Vous avez effectué trop de demandes. Réessayez un peu plus tard.";
   }
 
-  return "Impossible d’envoyer Levier pour le moment. Réessayez dans quelques instants.";
+  return "Impossible d’envoyer cette ressource pour le moment. Réessayez dans quelques instants.";
 }
 
 export default function OperationalSystemCopyRequestModal({
   onClose,
-  preview,
+  resource,
   systemSlug,
 }: OperationalSystemCopyRequestModalProps) {
   const dialogRef = useRef<HTMLElement>(null);
@@ -82,6 +80,7 @@ export default function OperationalSystemCopyRequestModal({
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [marketingConsent, setMarketingConsent] = useState(false);
   const [website, setWebsite] = useState("");
 
   useEffect(() => {
@@ -142,9 +141,12 @@ export default function OperationalSystemCopyRequestModal({
   useEffect(() => {
     if (!trackedOpenRef.current) {
       trackedOpenRef.current = true;
-      trackSystemJourneyEvent("system_copy_form_opened", { systemSlug });
+      trackSystemJourneyEvent("system_copy_form_opened", {
+        resourceSlug: resource.resourceSlug,
+        systemSlug,
+      });
     }
-  }, [systemSlug]);
+  }, [resource.resourceSlug, systemSlug]);
 
   useEffect(() => {
     if (isSuccess) successRef.current?.focus();
@@ -166,13 +168,18 @@ export default function OperationalSystemCopyRequestModal({
 
     setError(null);
     setIsSubmitting(true);
-    trackSystemJourneyEvent("system_copy_form_submitted", { systemSlug });
+    trackSystemJourneyEvent("system_copy_form_submitted", {
+      resourceSlug: resource.resourceSlug,
+      systemSlug,
+    });
 
-    const flowKey = `levier:${systemSlug}`;
+    const flowKey = `resource:${resource.resourceSlug}:${systemSlug}`;
     const requestPayload: OperationalSystemDeliveryRequest = {
       attribution: getLeadAttributionPayload(),
       email: normalizedEmail,
       idempotencyKey: getLeadSubmissionKey(flowKey),
+      marketingConsent,
+      resourceSlug: resource.resourceSlug,
       systemSlug,
       website,
     };
@@ -189,6 +196,7 @@ export default function OperationalSystemCopyRequestModal({
         setError(getErrorMessage(response, payload));
         trackSystemJourneyEvent("system_copy_form_failed", {
           statusCode: response.status,
+          resourceSlug: resource.resourceSlug,
           systemSlug,
         });
         return;
@@ -202,9 +210,12 @@ export default function OperationalSystemCopyRequestModal({
       });
     } catch {
       setError(
-        "Impossible d’envoyer Levier pour le moment. Réessayez dans quelques instants.",
+        "Impossible d’envoyer cette ressource pour le moment. Réessayez dans quelques instants.",
       );
-      trackSystemJourneyEvent("system_copy_form_failed", { systemSlug });
+      trackSystemJourneyEvent("system_copy_form_failed", {
+        resourceSlug: resource.resourceSlug,
+        systemSlug,
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -236,20 +247,14 @@ export default function OperationalSystemCopyRequestModal({
 
         <div className="grid md:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]">
           <div className="flex min-h-[14rem] items-center justify-center bg-dema-sage/45 p-5 sm:min-h-[18rem] sm:p-7 md:min-h-[25rem]">
-            {preview ? (
-              <Image
-                src={preview.src}
-                alt={preview.alt}
-                width={preview.width}
-                height={preview.height}
-                sizes="(max-width: 767px) calc(100vw - 72px), 340px"
-                className="h-auto w-full rounded-[0.8rem] shadow-[0_14px_35px_rgba(23,35,29,0.1)]"
-              />
-            ) : (
-              <span className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-dema-paper text-dema-forest shadow-sm">
-                <FileSpreadsheet className="h-8 w-8" aria-hidden="true" />
-              </span>
-            )}
+            <Image
+              src={resource.preview.src}
+              alt={resource.preview.alt}
+              width={resource.preview.width}
+              height={resource.preview.height}
+              sizes="(max-width: 767px) calc(100vw - 72px), 340px"
+              className="h-auto w-full rounded-[0.8rem] shadow-[0_14px_35px_rgba(23,35,29,0.1)]"
+            />
           </div>
 
           <div className="flex min-w-0 flex-col justify-center p-6 sm:p-8">
@@ -267,14 +272,13 @@ export default function OperationalSystemCopyRequestModal({
                   id="system-copy-modal-title"
                   className="mt-5 pr-10 text-2xl font-semibold leading-tight tracking-[-0.025em] text-brand-blue"
                 >
-                  Levier est dans votre boîte mail.
+                  Votre ressource est dans votre boîte mail.
                 </h2>
                 <p
                   id="system-copy-modal-description"
                   className="mt-3 text-sm leading-relaxed text-dema-muted"
                 >
-                  Vous y trouverez le lien pour créer votre copie personnelle.
-                  Pensez à vérifier vos courriers indésirables.
+                  {resource.successDescription}
                 </p>
                 <button
                   type="button"
@@ -287,26 +291,25 @@ export default function OperationalSystemCopyRequestModal({
             ) : (
               <>
                 <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-                  Outil de pilotage
+                  {resource.formatLabel}
                 </p>
                 <h2
                   id="system-copy-modal-title"
                   className="mt-3 pr-10 text-2xl font-semibold leading-tight tracking-[-0.025em] text-brand-blue"
                 >
-                  Levier
+                  {resource.title}
                 </h2>
                 <p
                   id="system-copy-modal-description"
                   className="mt-3 text-sm leading-relaxed text-dema-muted"
                 >
-                  Tableau de pilotage opérationnel
+                  {resource.description}
                 </p>
                 <p
-                  data-levier-preview-disclosure
+                  data-resource-preview-disclosure
                   className="mt-3 text-xs leading-relaxed text-dema-muted"
                 >
-                  Aperçu avec des données d’exemple. Votre copie sera vierge
-                  et prête à compléter.
+                  {resource.previewDisclosure}
                 </p>
 
                 <form
@@ -349,6 +352,17 @@ export default function OperationalSystemCopyRequestModal({
                     />
                   </div>
 
+                  <label className="flex items-start gap-3 rounded-xl bg-dema-sage/45 px-3 py-3 text-xs leading-relaxed text-dema-muted">
+                    <input
+                      name="marketingConsent"
+                      type="checkbox"
+                      checked={marketingConsent}
+                      onChange={(event) => setMarketingConsent(event.target.checked)}
+                      className="mt-0.5 h-4 w-4 shrink-0 accent-dema-forest"
+                    />
+                    <span>J’accepte de recevoir les conseils et actualités Demaa par e-mail. Facultatif.</span>
+                  </label>
+
                   {error ? (
                     <p className="text-sm text-brand-coral" role="alert">
                       {error}
@@ -366,11 +380,11 @@ export default function OperationalSystemCopyRequestModal({
                         aria-hidden="true"
                       />
                     ) : null}
-                    {isSubmitting ? "Envoi…" : "Recevoir Levier"}
+                    {isSubmitting ? "Envoi…" : resource.deliveryLabel}
                   </button>
 
                   <p className="text-center text-xs leading-relaxed text-dema-muted">
-                    Cette adresse est utilisée pour vous envoyer Levier.{" "}
+                    Cette adresse est utilisée pour vous envoyer la ressource demandée.{" "}
                     <Link
                       href="/politique-de-confidentialite"
                       className="font-medium text-dema-forest underline underline-offset-2"

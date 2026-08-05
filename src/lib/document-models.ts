@@ -147,8 +147,8 @@ Ce modèle est particulièrement utile si vous voulez :
   },
   {
     slug: "pilotage-marketing-vente",
-    title: "Tableau de pilotage Marketing & Vente",
-    seoTitle: "Tableau de pilotage Marketing & Vente pour TPE | Modèle Airtable Demaa",
+    title: "CRM - suivi commercial",
+    seoTitle: "CRM de suivi commercial pour TPE | Modèle Airtable Demaa",
     description:
       "Une base Airtable pour structurer votre pipeline commercial, vos relances et le suivi des conversions.",
     seoDescription:

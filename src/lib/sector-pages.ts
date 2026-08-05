@@ -144,7 +144,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
       "serrurier",
     ],
     highlights: [
-      { label: "Voir le cours obligations", href: "/cours/obligations-finances-entreprise" },
+      { label: "Voir les ressources utiles", href: "/systemes" },
       { label: "Voir le previsionnel financier", href: "/modeles-de-documents/suivi-previsionnel-financier" },
       { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("BTP & services techniques") },
       { label: "Voir les partenaires utiles", href: "/annuaire-fournisseurs" },
@@ -265,8 +265,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
       "food-truck",
     ],
     highlights: [
-      { label: "Voir le cours obligations", href: "/cours/obligations-finances-entreprise" },
-      { label: "Voir le cours facture électronique", href: "/cours/facture-electronique" },
+      { label: "Voir les ressources utiles", href: "/systemes" },
       { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Restauration") },
     ],
   }),
@@ -291,8 +290,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
       "tabac-presse-point-relais",
     ],
     highlights: [
-      { label: "Voir le cours obligations", href: "/cours/obligations-finances-entreprise" },
-      { label: "Voir le cours facture électronique", href: "/cours/facture-electronique" },
+      { label: "Voir les ressources utiles", href: "/systemes" },
       { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Commerce & retail") },
     ],
   }),
@@ -371,7 +369,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
       "creche",
     ],
     highlights: [
-      { label: "Voir le cours facture électronique", href: "/cours/facture-electronique" },
+      { label: "Voir les ressources utiles", href: "/systemes" },
       { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Éducation & formation") },
       { label: "Voir les services utiles", href: "/annuaire-services" },
     ],
@@ -412,7 +410,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
       "carrosserie",
     ],
     highlights: [
-      { label: "Voir le cours facture électronique", href: "/cours/facture-electronique" },
+      { label: "Voir les ressources utiles", href: "/systemes" },
       { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Automobile & réparation") },
       { label: "Voir les partenaires utiles", href: "/annuaire-fournisseurs" },
     ],

@@ -26,6 +26,8 @@ import type { OperationalSystemDeliveryRequest } from "@/lib/operational-system-
 import { sendOperationalSystemDeliveryEmail } from "@/lib/operational-system-delivery-email.server";
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
 import { getPublishedSolutionPlacementsForSystem } from "@/lib/solution-registry.server";
+import { getSystemResourceAssetSnapshot } from "@/lib/system-resource-assets.server";
+import { getSystemResource } from "@/lib/system-resource-catalog";
 
 export const runtime = "nodejs";
 
@@ -110,6 +112,7 @@ async function handlePost(request: Request) {
   );
   const email = normalizeEmail(normalizeText(body?.email, 160));
   const marketingConsent = body?.marketingConsent === true;
+  const resourceSlug = normalizeText(body?.resourceSlug, 120);
 
   if (!systemSlug || !email) {
     return NextResponse.json(
@@ -132,6 +135,14 @@ async function handlePost(request: Request) {
     );
   }
 
+  const requestedResource = resourceSlug ? getSystemResource(resourceSlug) : null;
+  if (resourceSlug && !requestedResource) {
+    return NextResponse.json(
+      { error: "La ressource demandée est introuvable." },
+      { status: 404 },
+    );
+  }
+
   const limitedByEmail = await enforceRateLimit(
     request,
     {
@@ -148,21 +159,23 @@ async function handlePost(request: Request) {
       resource.resourceSlug === "levier" &&
       resource.interaction.interactionMode === "system_delivery"
     );
-  if (!hasPublishedLevier && !firstName) {
+  if (!requestedResource && !hasPublishedLevier && !firstName) {
     return NextResponse.json(
       { error: "Merci de renseigner votre prénom et votre e-mail." },
       { status: 400 },
     );
   }
-  if (!hasPublishedLevier && !hasEditableOperationalSystemAsset(systemSlug)) {
+  if (!requestedResource && !hasPublishedLevier && !hasEditableOperationalSystemAsset(systemSlug)) {
     return NextResponse.json(
       { error: "Le système opérationnel demandé est introuvable." },
       { status: 404 },
     );
   }
-  const requestedAssetSnapshot = hasPublishedLevier
-    ? getLevierAssetSnapshot()
-    : getActiveOperationalSystemDeliverySnapshot(systemSlug);
+  const requestedAssetSnapshot = requestedResource
+    ? getSystemResourceAssetSnapshot(requestedResource.resourceSlug)
+    : hasPublishedLevier
+      ? getLevierAssetSnapshot()
+      : getActiveOperationalSystemDeliverySnapshot(systemSlug);
   if (!requestedAssetSnapshot) {
     return NextResponse.json(
       { error: "Le système opérationnel demandé est indisponible." },
@@ -187,8 +200,10 @@ async function handlePost(request: Request) {
   }
   const context = await resolveLeadContext({
     systemSlug,
-    source: hasPublishedLevier
-      ? "Livraison de Levier"
+    source: requestedResource
+      ? `Livraison de la ressource - ${requestedResource.title}`
+      : hasPublishedLevier
+      ? "Livraison du tableau de pilotage opérationnel"
       : "Livraison du système opérationnel gratuit",
     sourceUrl: request.headers.get("referer"),
   });
@@ -227,6 +242,9 @@ async function handlePost(request: Request) {
     contact: { email, firstName: firstName || null },
     context,
     emoji: "📦",
+    fields: requestedResource
+      ? [{ label: "Ressource", value: requestedResource.title }]
+      : [],
     idempotencyKey,
     marketingConsent: {
       capturedAt: consentCapturedAt,
@@ -235,8 +253,10 @@ async function handlePost(request: Request) {
       version: MARKETING_CONSENT_VERSION,
     },
     requestType: "system_kit_request",
-    title: hasPublishedLevier
-      ? `Livraison de Levier - ${systemName}`
+    title: requestedResource
+      ? `Livraison de ressource - ${requestedResource.title} - ${systemName}`
+      : hasPublishedLevier
+      ? `Livraison du tableau de pilotage opérationnel - ${systemName}`
       : `Livraison du système opérationnel gratuit - ${systemName}`,
   });
 
@@ -272,8 +292,8 @@ async function handlePost(request: Request) {
     return NextResponse.json(
       {
         error:
-          hasPublishedLevier
-            ? "Impossible d’envoyer Levier pour le moment. Merci de réessayer dans quelques instants."
+          requestedResource || hasPublishedLevier
+            ? "Impossible d’envoyer la ressource pour le moment. Merci de réessayer dans quelques instants."
             : "Impossible d’envoyer le système pour le moment. Merci de réessayer dans quelques instants.",
       },
       { status: 502 },

@@ -84,7 +84,7 @@ describe("academy course content", () => {
     expect(action).not.toBeNull();
     expect(getAcademyActionHref(action!)).toBe("/systemes");
     expect(getAcademyActionLabel(action!)).toBe(
-      "Trouver mon système pour recevoir Levier",
+      "Trouver mon système et ses ressources",
     );
   });
 
