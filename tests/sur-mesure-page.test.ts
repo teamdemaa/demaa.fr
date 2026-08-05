@@ -48,8 +48,8 @@ describe("Sur mesure commercial page", () => {
     expect(markup.match(/<section/g)).toHaveLength(8);
     expect(markup.match(/<details/g)).toHaveLength(4);
     expect(markup.match(/>Discuter</g)).toHaveLength(2);
-    expect(markup).toContain('data-source="Page sur mesure — Hero"');
-    expect(markup).toContain('data-source="Page sur mesure — Final"');
+    expect(markup).toContain('data-source="Page sur mesure : Hero"');
+    expect(markup).toContain('data-source="Page sur mesure : Final"');
     expect(markup).toContain('aria-label="Navigation principale"');
     expect(markup).toContain("Exemple d’interface");
     expect(markup).not.toMatch(/marketplace|partenariat|200 dirigeants|30 000 €|1 500 €/i);
@@ -94,8 +94,8 @@ describe("Sur mesure commercial page", () => {
     ]);
 
     expect(pageSource).toContain("<OrganisationSessionBookingButton");
-    expect(pageSource).toContain('source="Page sur mesure — Hero"');
-    expect(pageSource).toContain('source="Page sur mesure — Final"');
+    expect(pageSource).toContain('source="Page sur mesure : Hero"');
+    expect(pageSource).toContain('source="Page sur mesure : Final"');
     expect(pageSource).not.toContain("sourceIsAuthoritative");
     expect(buttonSource).toContain('searchParams.get("source") || source');
     expect(buttonSource).toContain("getFilloutAttributionParameters");
