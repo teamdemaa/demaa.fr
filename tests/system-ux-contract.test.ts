@@ -75,12 +75,13 @@ describe("system UX contract", () => {
     );
     const panelEnd = detailSource.indexOf("</section>");
     const processCall = detailSource.indexOf("<SystemProcessCallCta");
-    const academyStart = detailSource.indexOf("academyVideos.length");
 
     expect(panelEnd).toBeGreaterThan(-1);
     expect(processCall).toBeGreaterThan(panelEnd);
-    expect(processCall).toBeLessThan(academyStart);
     expect(detailSource.match(/<SystemProcessCallCta\b/g)).toHaveLength(1);
+    expect(detailSource).not.toMatch(
+      /academyVideos|Académie Demaa|Comprendre les indicateurs de ce système|Lire la fiche/,
+    );
     expect(processCallSource).toContain(
       'import OrganisationSessionBookingButton from "@/components/OrganisationSessionBookingButton"',
     );

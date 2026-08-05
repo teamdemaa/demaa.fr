@@ -35,12 +35,12 @@ describe("system kit page audit contract", () => {
   it("reads the ordered public Solution payload without widening its boundary", () => {
     const html = [
       '<script>"solutionSections":',
-      '{"resourceSlug":"levier"},{"resourceSlug":"obat"}',
-      ',"academyVideos":[]</script>',
+      '[{"resourceSlug":"levier"},{"resourceSlug":"obat"}]},\\"$abc',
+      "Demaa footer</script>",
     ].join("");
 
     expect(collectSerializedSolutionSlugs(html)).toEqual(["levier", "obat"]);
     expect(getSerializedSolutionPayload(html)).toContain('resourceSlug":"levier');
-    expect(getSerializedSolutionPayload(html)).not.toContain("academyVideos");
+    expect(getSerializedSolutionPayload(html)).not.toContain("Demaa footer");
   });
 });

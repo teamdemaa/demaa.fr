@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import SystemDetailContent from "@/components/SystemDetailContent";
 import { hasEditableOperationalSystemAsset } from "@/lib/editable-operational-system-assets.server";
-import { getAcademyContentForSystem } from "@/lib/academy-course-content";
 import {
   getPublishedRenderableSolutionSectionsForSystem,
   getRenderableSolutionSectionsForSystem,
@@ -64,13 +63,6 @@ export default async function OperationalKitPage({
   const initialTab = getParamValue(resolvedSearchParams.tab);
   const jsonLd = buildSystemPageJsonLd(data, publishedSolutionSections);
   const hasEditableSystem = hasEditableOperationalSystemAsset(data.system.slug);
-  const academyVideos = getAcademyContentForSystem(data.system.slug).map(
-    (content) => ({
-      slug: content.identity.slug,
-      title: content.identity.card.title,
-      category: content.identity.category,
-    }),
-  );
 
   if (!hasEditableSystem) {
     notFound();
@@ -94,7 +86,6 @@ export default async function OperationalKitPage({
             initialActiveTab={normalizeSystemDetailTab(initialTab)}
             headingAs="h1"
             solutionSections={solutionSections}
-            academyVideos={academyVideos}
           />
         </div>
       </main>

@@ -110,8 +110,11 @@ export function collectSerializedSolutionSlugs(html) {
 export function getSerializedSolutionPayload(html) {
   const start = html.indexOf("solutionSections");
   if (start < 0) return "";
-  const end = html.indexOf("academyVideos", start);
-  return html.slice(start, end < 0 ? undefined : end);
+  const rscPropEnd = html.indexOf(']},\\"$', start);
+  if (rscPropEnd >= 0) return html.slice(start, rscPropEnd + 2);
+
+  const scriptEnd = html.indexOf("</script>", start);
+  return html.slice(start, scriptEnd < 0 ? undefined : scriptEnd);
 }
 
 function sameOrder(actual, expected) {
@@ -192,6 +195,16 @@ export function inspectPage({ response, html, tab, expectedSolutionOrder }) {
   ]) {
     if (renderedHtml.includes(removedCallText)) {
       errors.push(`removed call control still visible: ${removedCallText}`);
+    }
+  }
+
+  for (const removedAcademyText of [
+    "Académie Demaa",
+    "Comprendre les indicateurs de ce système",
+    "Lire la fiche",
+  ]) {
+    if (renderedHtml.includes(removedAcademyText)) {
+      errors.push(`removed Academy block still visible: ${removedAcademyText}`);
     }
   }
 
