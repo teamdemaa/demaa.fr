@@ -809,13 +809,12 @@
       "family": "transport-logistique-terrain",
       "systemSlug": "aide-a-domicile-menage",
       "systemName": "Aide à domicile & ménage",
-      "reviewedAt": "2026-08-04",
+      "reviewedAt": "2026-08-05",
       "excludedResourceSlugs": [
         "alan",
         "bravus-akademy",
         "defacto",
         "em2a-expertise",
-        "fesp",
         "orus",
         "prevention-risques-domicile-iperia",
         "qonto",
@@ -893,6 +892,33 @@
           "status": "published",
           "publicationBlockers": [],
           "interactionMode": "system_delivery"
+        },
+        {
+          "resourceSlug": "fesp",
+          "resourceType": "directory",
+          "section": "networks",
+          "rank": 1,
+          "displayCategory": "Fédération professionnelle privée",
+          "description": "Fédération privée d'entreprises de services à la personne.",
+          "ownerBenefit": "Accéder à une représentation sectorielle et à des ressources selon l'adhésion.",
+          "fitRationale": "Option conditionnelle si l'activité d'aide ou de ménage relève des services à la personne.",
+          "checksBeforeChoosing": [
+            "Fédération privée, non autorité administrative",
+            "Vérifier le régime SAP applicable à l'activité"
+          ],
+          "reviewedAt": "2026-08-05",
+          "checkedAt": "2026-08-05",
+          "expiresAt": "2027-08-05",
+          "evidenceUrls": [
+            "https://www.fesp.fr/"
+          ],
+          "catalogDestination": "https://www.fesp.fr/",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
         }
       ]
     },
@@ -901,10 +927,9 @@
       "family": "btp-travaux-ingenierie",
       "systemSlug": "architecte-maitre-oeuvre",
       "systemName": "Architecte / maître d’œuvre",
-      "reviewedAt": "2026-08-04",
+      "reviewedAt": "2026-08-05",
       "excludedResourceSlugs": [
         "alan",
-        "architectes-locaux",
         "bravus-akademy",
         "defacto",
         "em2a-expertise",
@@ -986,6 +1011,60 @@
           "status": "published",
           "publicationBlockers": [],
           "interactionMode": "system_delivery"
+        },
+        {
+          "resourceSlug": "architectes-locaux",
+          "resourceType": "directory",
+          "section": "networks",
+          "rank": 1,
+          "displayCategory": "Instance officielle des architectes",
+          "description": "Ordre des architectes et annuaire officiel des professionnels inscrits.",
+          "ownerBenefit": "Accéder aux informations ordinales et à l'annuaire officiel de la profession.",
+          "fitRationale": "À retenir uniquement pour un architecte inscrit à l'Ordre, pas pour tout maître d'œuvre.",
+          "checksBeforeChoosing": [
+            "Réservé au périmètre réglementé des architectes",
+            "Vérifier l'inscription et le conseil régional compétent"
+          ],
+          "reviewedAt": "2026-08-05",
+          "checkedAt": "2026-08-05",
+          "expiresAt": "2027-08-05",
+          "evidenceUrls": [
+            "https://www.architectes.org/"
+          ],
+          "catalogDestination": "https://www.architectes.org/",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "maitres-oeuvre",
+          "resourceType": "directory",
+          "section": "networks",
+          "rank": 2,
+          "displayCategory": "Syndicat professionnel d’architectes",
+          "description": "Syndicat professionnel privé représentant les agences d'architecture.",
+          "ownerBenefit": "Accéder à une représentation syndicale et à des ressources professionnelles selon l'adhésion.",
+          "fitRationale": "Option conditionnelle pour une agence d'architecture éligible, non universelle aux maîtres d'œuvre.",
+          "checksBeforeChoosing": [
+            "Vérifier le statut d'architecte et l'éligibilité",
+            "Comparer les services proposés aux adhérents"
+          ],
+          "reviewedAt": "2026-08-05",
+          "checkedAt": "2026-08-05",
+          "expiresAt": "2027-08-05",
+          "evidenceUrls": [
+            "https://www.unsfa.fr/"
+          ],
+          "catalogDestination": "https://www.unsfa.fr/",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
         }
       ]
     },
@@ -1365,7 +1444,7 @@
       "family": "restauration",
       "systemSlug": "bar-cafe",
       "systemName": "Café",
-      "reviewedAt": "2026-08-04",
+      "reviewedAt": "2026-08-05",
       "excludedResourceSlugs": [
         "alan",
         "bravus-akademy",
@@ -1384,10 +1463,10 @@
           "displayCategory": "Caisse & réservation",
           "description": "Caisse enregistreuse iPad pour restaurants, bars, brasseries, traiteurs et établissements de restauration.",
           "ownerBenefit": "Gérer caisse, prise de commande, salle, paiement et pilotage restaurant.",
-          "fitRationale": "L’Addition répond à un besoin concret de café sans imposer une solution générique à toute l'activité.",
+          "fitRationale": "À privilégier pour une exploitation CHR centrée sur le service, la salle et l'encaissement.",
           "checksBeforeChoosing": [
-            "Vérifier matériel et installation",
-            "Comparer les frais de paiement"
+            "Comparer le flux de service et de prise de commande",
+            "Vérifier matériel, installation et frais de paiement"
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
@@ -1409,10 +1488,10 @@
           "displayCategory": "Caisse & réservation",
           "description": "Caisse, inventaire, commandes et pilotage pour commerces et restaurants.",
           "ownerBenefit": "Structurer les ventes et le suivi opérationnel.",
-          "fitRationale": "Lightspeed répond à un besoin concret de café sans imposer une solution générique à toute l'activité.",
+          "fitRationale": "Alternative à étudier pour un établissement multi-site ou avec une gestion de stock plus large.",
           "checksBeforeChoosing": [
-            "Comparer les modules caisse et restaurant",
-            "Vérifier matériel et engagement"
+            "Comparer les besoins multi-site et d'inventaire",
+            "Vérifier matériel, modules et engagement"
           ],
           "reviewedAt": "2026-08-04",
           "evidenceUrls": [
@@ -1472,6 +1551,87 @@
             "commercial-relationship-unconfirmed"
           ],
           "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "france-boissons",
+          "resourceType": "provider",
+          "section": "providers",
+          "rank": 1,
+          "displayCategory": "Distributeur de boissons CHR",
+          "description": "Distributeur de boissons et services dédiés aux cafés, hôtels et restaurants.",
+          "ownerBenefit": "Structurer l'approvisionnement en boissons et les services associés au débit de boissons.",
+          "fitRationale": "Distributeur spécialisé cohérent avec le cœur d'activité boissons d'un café ou bar.",
+          "checksBeforeChoosing": [
+            "Vérifier la couverture de distribution locale",
+            "Comparer assortiment, consignes et conditions"
+          ],
+          "reviewedAt": "2026-08-05",
+          "checkedAt": "2026-08-05",
+          "expiresAt": "2027-08-05",
+          "evidenceUrls": [
+            "https://www.france-boissons.fr/"
+          ],
+          "catalogDestination": "https://www.france-boissons.fr/",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "metro-france",
+          "resourceType": "provider",
+          "section": "providers",
+          "rank": 2,
+          "displayCategory": "Grossiste alimentaire et équipement",
+          "description": "Grossiste pour métiers de bouche, avec produits alimentaires, boissons et équipement.",
+          "ownerBenefit": "Acheter en entrepôt ou en ligne un assortiment large adapté aux métiers de bouche.",
+          "fitRationale": "Complément pour l'alimentaire, les boissons et l'équipement courant.",
+          "checksBeforeChoosing": [
+            "Vérifier les conditions d'accès professionnel",
+            "Comparer disponibilité locale et livraison"
+          ],
+          "reviewedAt": "2026-08-05",
+          "checkedAt": "2026-08-05",
+          "expiresAt": "2027-08-05",
+          "evidenceUrls": [
+            "https://www.metro.fr/metro/univers-metiers"
+          ],
+          "catalogDestination": "https://www.metro.fr/metro/univers-metiers",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "transgourmet",
+          "resourceType": "provider",
+          "section": "providers",
+          "rank": 3,
+          "displayCategory": "Grossiste alimentaire livré",
+          "description": "Grossiste alimentaire pour professionnels avec livraison et assortiment restauration.",
+          "ownerBenefit": "Regrouper les achats alimentaires et organiser des livraisons professionnelles.",
+          "fitRationale": "Conditionnel à une offre alimentaire et à des volumes justifiant la livraison.",
+          "checksBeforeChoosing": [
+            "Vérifier la zone et les jours de livraison",
+            "Comparer minimums de commande et tarifs"
+          ],
+          "reviewedAt": "2026-08-05",
+          "checkedAt": "2026-08-05",
+          "expiresAt": "2027-08-05",
+          "evidenceUrls": [
+            "https://www.transgourmet.fr/"
+          ],
+          "catalogDestination": "https://www.transgourmet.fr/",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
         }
       ]
     },
@@ -1480,7 +1640,7 @@
       "family": "restauration",
       "systemSlug": "boulangerie",
       "systemName": "Boulangerie",
-      "reviewedAt": "2026-08-04",
+      "reviewedAt": "2026-08-05",
       "excludedResourceSlugs": [
         "alan",
         "bravus-akademy",
@@ -1509,31 +1669,6 @@
             "https://www.lightspeedhq.fr/"
           ],
           "catalogDestination": "https://www.lightspeedhq.fr/",
-          "commercialRelationship": "unknown",
-          "status": "draft",
-          "publicationBlockers": [
-            "commercial-relationship-unconfirmed"
-          ],
-          "interactionMode": "external_link"
-        },
-        {
-          "resourceSlug": "canva",
-          "resourceType": "software",
-          "section": "software",
-          "rank": 2,
-          "displayCategory": "Création contenu",
-          "description": "Création simple de visuels, présentations, documents et supports marketing.",
-          "ownerBenefit": "Produire des supports propres sans dépendre d’un studio.",
-          "fitRationale": "Pour boulangerie, Canva couvre directement visuels et presentations.",
-          "checksBeforeChoosing": [
-            "Vérifier les droits des contenus",
-            "Organiser les modèles partagés"
-          ],
-          "reviewedAt": "2026-08-04",
-          "evidenceUrls": [
-            "https://www.canva.com/"
-          ],
-          "catalogDestination": "https://www.canva.com/",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -1581,6 +1716,87 @@
             "https://www.artisanat.fr/"
           ],
           "catalogDestination": "https://www.artisanat.fr/",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "transgourmet",
+          "resourceType": "provider",
+          "section": "providers",
+          "rank": 1,
+          "displayCategory": "Grossiste alimentaire livré",
+          "description": "Grossiste alimentaire pour professionnels avec livraison et assortiment restauration.",
+          "ownerBenefit": "Regrouper les achats alimentaires et organiser des livraisons professionnelles.",
+          "fitRationale": "Approvisionnement livré utile pour les ingrédients et produits complémentaires.",
+          "checksBeforeChoosing": [
+            "Vérifier la zone et les jours de livraison",
+            "Comparer minimums de commande et tarifs"
+          ],
+          "reviewedAt": "2026-08-05",
+          "checkedAt": "2026-08-05",
+          "expiresAt": "2027-08-05",
+          "evidenceUrls": [
+            "https://www.transgourmet.fr/"
+          ],
+          "catalogDestination": "https://www.transgourmet.fr/",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "metro-france",
+          "resourceType": "provider",
+          "section": "providers",
+          "rank": 2,
+          "displayCategory": "Grossiste alimentaire et équipement",
+          "description": "Grossiste pour métiers de bouche, avec produits alimentaires, boissons et équipement.",
+          "ownerBenefit": "Acheter en entrepôt ou en ligne un assortiment large adapté aux métiers de bouche.",
+          "fitRationale": "Complément multi-catégories adapté à une boulangerie avec offre de snacking.",
+          "checksBeforeChoosing": [
+            "Vérifier les conditions d'accès professionnel",
+            "Comparer disponibilité locale et livraison"
+          ],
+          "reviewedAt": "2026-08-05",
+          "checkedAt": "2026-08-05",
+          "expiresAt": "2027-08-05",
+          "evidenceUrls": [
+            "https://www.metro.fr/metro/univers-metiers"
+          ],
+          "catalogDestination": "https://www.metro.fr/metro/univers-metiers",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "firplast",
+          "resourceType": "provider",
+          "section": "providers",
+          "rank": 3,
+          "displayCategory": "Emballages alimentaires",
+          "description": "Fournisseur d'emballages pour vente à emporter, livraison et événementiel alimentaire.",
+          "ownerBenefit": "Sourcer des contenants adaptés au transport, au service et à la conservation.",
+          "fitRationale": "Conditionnel à une offre de snacking ou de vente à emporter.",
+          "checksBeforeChoosing": [
+            "Vérifier formats et compatibilité avec les usages",
+            "Comparer minimums, stockage et délais"
+          ],
+          "reviewedAt": "2026-08-05",
+          "checkedAt": "2026-08-05",
+          "expiresAt": "2027-08-05",
+          "evidenceUrls": [
+            "https://www.firplast.com/emballages-alimentaire-81"
+          ],
+          "catalogDestination": "https://www.firplast.com/emballages-alimentaire-81",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -4565,7 +4781,7 @@
       "family": "expertise-droit-finance-externalise",
       "systemSlug": "courtier-credit-assurance",
       "systemName": "Courtier crédit / assurance",
-      "reviewedAt": "2026-08-04",
+      "reviewedAt": "2026-08-05",
       "excludedResourceSlugs": [
         "alan",
         "banques-professionnelles",
@@ -4673,6 +4889,33 @@
           "status": "published",
           "publicationBlockers": [],
           "interactionMode": "system_delivery"
+        },
+        {
+          "resourceSlug": "anacofi",
+          "resourceType": "directory",
+          "section": "networks",
+          "rank": 1,
+          "displayCategory": "Association professionnelle privée",
+          "description": "Association professionnelle privée pour intermédiaires en assurance et opérations de banque.",
+          "ownerBenefit": "Accéder à une représentation et à des services adaptés aux statuts IAS ou IOBSP.",
+          "fitRationale": "À considérer seulement si le courtier exerce sous un statut IAS ou IOBSP couvert.",
+          "checksBeforeChoosing": [
+            "Vérifier le statut réglementaire exact",
+            "Comparer l'adhésion avec les autres associations agréées"
+          ],
+          "reviewedAt": "2026-08-05",
+          "checkedAt": "2026-08-05",
+          "expiresAt": "2027-08-05",
+          "evidenceUrls": [
+            "https://www.anacofi.asso.fr/anacofi-courtage/"
+          ],
+          "catalogDestination": "https://www.anacofi.asso.fr/anacofi-courtage/",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
         }
       ]
     },
@@ -5359,7 +5602,7 @@
       "family": "restauration",
       "systemSlug": "dark-kitchen",
       "systemName": "Dark kitchen",
-      "reviewedAt": "2026-08-04",
+      "reviewedAt": "2026-08-05",
       "excludedResourceSlugs": [
         "alan",
         "bravus-akademy",
@@ -5421,32 +5664,6 @@
           "interactionMode": "external_link"
         },
         {
-          "resourceSlug": "brevo",
-          "resourceType": "software",
-          "section": "software",
-          "rank": 3,
-          "displayCategory": "Marketing & visibilité",
-          "description": "Emailing, SMS, automatisation marketing et CRM pour relancer clients et prospects.",
-          "ownerBenefit": "Relancer les clients et automatiser les campagnes marketing simples.",
-          "fitRationale": "Pour dark kitchen, Brevo couvre directement email marketing et sms marketing.",
-          "checksBeforeChoosing": [
-            "Vérifier le volume de contacts",
-            "Préparer le consentement marketing"
-          ],
-          "reviewedAt": "2026-08-04",
-          "evidenceUrls": [
-            "https://www.brevo.com/fr/",
-            "https://www.brevo.com/fr/tarifs/"
-          ],
-          "catalogDestination": "https://www.brevo.com/fr/",
-          "commercialRelationship": "unknown",
-          "status": "draft",
-          "publicationBlockers": [
-            "commercial-relationship-unconfirmed"
-          ],
-          "interactionMode": "external_link"
-        },
-        {
           "resourceSlug": "levier",
           "resourceType": "tool",
           "section": "software",
@@ -5486,6 +5703,87 @@
             "https://www.cci.fr/"
           ],
           "catalogDestination": "https://www.cci.fr/",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "transgourmet",
+          "resourceType": "provider",
+          "section": "providers",
+          "rank": 1,
+          "displayCategory": "Grossiste alimentaire livré",
+          "description": "Grossiste alimentaire pour professionnels avec livraison et assortiment restauration.",
+          "ownerBenefit": "Regrouper les achats alimentaires et organiser des livraisons professionnelles.",
+          "fitRationale": "Livraison professionnelle cohérente avec une production sans salle.",
+          "checksBeforeChoosing": [
+            "Vérifier la zone et les jours de livraison",
+            "Comparer minimums de commande et tarifs"
+          ],
+          "reviewedAt": "2026-08-05",
+          "checkedAt": "2026-08-05",
+          "expiresAt": "2027-08-05",
+          "evidenceUrls": [
+            "https://www.transgourmet.fr/"
+          ],
+          "catalogDestination": "https://www.transgourmet.fr/",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "metro-france",
+          "resourceType": "provider",
+          "section": "providers",
+          "rank": 2,
+          "displayCategory": "Grossiste alimentaire et équipement",
+          "description": "Grossiste pour métiers de bouche, avec produits alimentaires, boissons et équipement.",
+          "ownerBenefit": "Acheter en entrepôt ou en ligne un assortiment large adapté aux métiers de bouche.",
+          "fitRationale": "Alternative multi-catégories pour sécuriser les achats et les dépannages.",
+          "checksBeforeChoosing": [
+            "Vérifier les conditions d'accès professionnel",
+            "Comparer disponibilité locale et livraison"
+          ],
+          "reviewedAt": "2026-08-05",
+          "checkedAt": "2026-08-05",
+          "expiresAt": "2027-08-05",
+          "evidenceUrls": [
+            "https://www.metro.fr/metro/univers-metiers"
+          ],
+          "catalogDestination": "https://www.metro.fr/metro/univers-metiers",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "firplast",
+          "resourceType": "provider",
+          "section": "providers",
+          "rank": 3,
+          "displayCategory": "Emballages alimentaires",
+          "description": "Fournisseur d'emballages pour vente à emporter, livraison et événementiel alimentaire.",
+          "ownerBenefit": "Sourcer des contenants adaptés au transport, au service et à la conservation.",
+          "fitRationale": "Emballages essentiels lorsque toute la production part en livraison.",
+          "checksBeforeChoosing": [
+            "Vérifier formats et compatibilité avec les usages",
+            "Comparer minimums, stockage et délais"
+          ],
+          "reviewedAt": "2026-08-05",
+          "checkedAt": "2026-08-05",
+          "expiresAt": "2027-08-05",
+          "evidenceUrls": [
+            "https://www.firplast.com/emballages-alimentaire-81"
+          ],
+          "catalogDestination": "https://www.firplast.com/emballages-alimentaire-81",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -6610,7 +6908,7 @@
       "family": "restauration",
       "systemSlug": "fast-food",
       "systemName": "Fast-food",
-      "reviewedAt": "2026-08-04",
+      "reviewedAt": "2026-08-05",
       "excludedResourceSlugs": [
         "alan",
         "bravus-akademy",
@@ -6711,6 +7009,87 @@
             "https://www.umih.fr/"
           ],
           "catalogDestination": "https://www.umih.fr/",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "metro-france",
+          "resourceType": "provider",
+          "section": "providers",
+          "rank": 1,
+          "displayCategory": "Grossiste alimentaire et équipement",
+          "description": "Grossiste pour métiers de bouche, avec produits alimentaires, boissons et équipement.",
+          "ownerBenefit": "Acheter en entrepôt ou en ligne un assortiment large adapté aux métiers de bouche.",
+          "fitRationale": "Assortiment large adapté à la restauration rapide et aux achats fréquents.",
+          "checksBeforeChoosing": [
+            "Vérifier les conditions d'accès professionnel",
+            "Comparer disponibilité locale et livraison"
+          ],
+          "reviewedAt": "2026-08-05",
+          "checkedAt": "2026-08-05",
+          "expiresAt": "2027-08-05",
+          "evidenceUrls": [
+            "https://www.metro.fr/metro/univers-metiers"
+          ],
+          "catalogDestination": "https://www.metro.fr/metro/univers-metiers",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "transgourmet",
+          "resourceType": "provider",
+          "section": "providers",
+          "rank": 2,
+          "displayCategory": "Grossiste alimentaire livré",
+          "description": "Grossiste alimentaire pour professionnels avec livraison et assortiment restauration.",
+          "ownerBenefit": "Regrouper les achats alimentaires et organiser des livraisons professionnelles.",
+          "fitRationale": "Livraison pertinente lorsque les volumes et la cadence sont suffisamment réguliers.",
+          "checksBeforeChoosing": [
+            "Vérifier la zone et les jours de livraison",
+            "Comparer minimums de commande et tarifs"
+          ],
+          "reviewedAt": "2026-08-05",
+          "checkedAt": "2026-08-05",
+          "expiresAt": "2027-08-05",
+          "evidenceUrls": [
+            "https://www.transgourmet.fr/"
+          ],
+          "catalogDestination": "https://www.transgourmet.fr/",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "firplast",
+          "resourceType": "provider",
+          "section": "providers",
+          "rank": 3,
+          "displayCategory": "Emballages alimentaires",
+          "description": "Fournisseur d'emballages pour vente à emporter, livraison et événementiel alimentaire.",
+          "ownerBenefit": "Sourcer des contenants adaptés au transport, au service et à la conservation.",
+          "fitRationale": "Emballages centraux pour la vente à emporter et la livraison.",
+          "checksBeforeChoosing": [
+            "Vérifier formats et compatibilité avec les usages",
+            "Comparer minimums, stockage et délais"
+          ],
+          "reviewedAt": "2026-08-05",
+          "checkedAt": "2026-08-05",
+          "expiresAt": "2027-08-05",
+          "evidenceUrls": [
+            "https://www.firplast.com/emballages-alimentaire-81"
+          ],
+          "catalogDestination": "https://www.firplast.com/emballages-alimentaire-81",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -6867,7 +7246,7 @@
       "family": "restauration",
       "systemSlug": "food-truck",
       "systemName": "Food truck",
-      "reviewedAt": "2026-08-04",
+      "reviewedAt": "2026-08-05",
       "excludedResourceSlugs": [
         "alan",
         "bravus-akademy",
@@ -6968,6 +7347,87 @@
             "https://www.cci.fr/"
           ],
           "catalogDestination": "https://www.cci.fr/",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "metro-france",
+          "resourceType": "provider",
+          "section": "providers",
+          "rank": 1,
+          "displayCategory": "Grossiste alimentaire et équipement",
+          "description": "Grossiste pour métiers de bouche, avec produits alimentaires, boissons et équipement.",
+          "ownerBenefit": "Acheter en entrepôt ou en ligne un assortiment large adapté aux métiers de bouche.",
+          "fitRationale": "Assortiment accessible adapté aux achats d'une petite unité mobile.",
+          "checksBeforeChoosing": [
+            "Vérifier les conditions d'accès professionnel",
+            "Comparer disponibilité locale et livraison"
+          ],
+          "reviewedAt": "2026-08-05",
+          "checkedAt": "2026-08-05",
+          "expiresAt": "2027-08-05",
+          "evidenceUrls": [
+            "https://www.metro.fr/metro/univers-metiers"
+          ],
+          "catalogDestination": "https://www.metro.fr/metro/univers-metiers",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "transgourmet",
+          "resourceType": "provider",
+          "section": "providers",
+          "rank": 2,
+          "displayCategory": "Grossiste alimentaire livré",
+          "description": "Grossiste alimentaire pour professionnels avec livraison et assortiment restauration.",
+          "ownerBenefit": "Regrouper les achats alimentaires et organiser des livraisons professionnelles.",
+          "fitRationale": "Conditionnel à des volumes réguliers et à une adresse de livraison exploitable.",
+          "checksBeforeChoosing": [
+            "Vérifier la zone et les jours de livraison",
+            "Comparer minimums de commande et tarifs"
+          ],
+          "reviewedAt": "2026-08-05",
+          "checkedAt": "2026-08-05",
+          "expiresAt": "2027-08-05",
+          "evidenceUrls": [
+            "https://www.transgourmet.fr/"
+          ],
+          "catalogDestination": "https://www.transgourmet.fr/",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "firplast",
+          "resourceType": "provider",
+          "section": "providers",
+          "rank": 3,
+          "displayCategory": "Emballages alimentaires",
+          "description": "Fournisseur d'emballages pour vente à emporter, livraison et événementiel alimentaire.",
+          "ownerBenefit": "Sourcer des contenants adaptés au transport, au service et à la conservation.",
+          "fitRationale": "Emballages essentiels pour servir et transporter les produits du food truck.",
+          "checksBeforeChoosing": [
+            "Vérifier formats et compatibilité avec les usages",
+            "Comparer minimums, stockage et délais"
+          ],
+          "reviewedAt": "2026-08-05",
+          "checkedAt": "2026-08-05",
+          "expiresAt": "2027-08-05",
+          "evidenceUrls": [
+            "https://www.firplast.com/emballages-alimentaire-81"
+          ],
+          "catalogDestination": "https://www.firplast.com/emballages-alimentaire-81",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -7650,7 +8110,7 @@
       "family": "expertise-droit-finance-externalise",
       "systemSlug": "gestionnaire-de-patrimoine",
       "systemName": "Gestionnaire de patrimoine dirigeant",
-      "reviewedAt": "2026-08-04",
+      "reviewedAt": "2026-08-05",
       "excludedResourceSlugs": [
         "alan",
         "bravus-akademy",
@@ -7751,6 +8211,33 @@
             "https://www.cncgp.fr/"
           ],
           "catalogDestination": "https://www.cncgp.fr/",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "anacofi",
+          "resourceType": "directory",
+          "section": "networks",
+          "rank": 2,
+          "displayCategory": "Association professionnelle privée",
+          "description": "Association professionnelle privée couvrant notamment des conseillers en investissements financiers.",
+          "ownerBenefit": "Accéder à une représentation et à des services liés au statut professionnel couvert.",
+          "fitRationale": "Option conditionnelle pour un CGP disposant notamment du statut CIF approprié.",
+          "checksBeforeChoosing": [
+            "Vérifier les statuts CIF, IAS ou IOBSP réellement exercés",
+            "Comparer les obligations et services de l'adhésion"
+          ],
+          "reviewedAt": "2026-08-05",
+          "checkedAt": "2026-08-05",
+          "expiresAt": "2027-08-05",
+          "evidenceUrls": [
+            "https://www.anacofi.asso.fr/adhesion/"
+          ],
+          "catalogDestination": "https://www.anacofi.asso.fr/adhesion/",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -10668,7 +11155,7 @@
       "family": "sante",
       "systemSlug": "osteopathe",
       "systemName": "Ostéopathe",
-      "reviewedAt": "2026-08-04",
+      "reviewedAt": "2026-08-05",
       "excludedResourceSlugs": [],
       "placements": [
         {
@@ -10739,6 +11226,33 @@
             "https://www.distrimed.com/"
           ],
           "catalogDestination": "https://www.distrimed.com/",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "osteopathes-de-france",
+          "resourceType": "directory",
+          "section": "networks",
+          "rank": 1,
+          "displayCategory": "Organisation socioprofessionnelle d’ostéopathes",
+          "description": "Organisation professionnelle privée représentant et informant les ostéopathes.",
+          "ownerBenefit": "Suivre les enjeux de la profession et accéder aux services réservés selon l'adhésion.",
+          "fitRationale": "Pertinent pour un ostéopathe qui recherche une organisation de sa profession, sans statut ordinal.",
+          "checksBeforeChoosing": [
+            "Organisation privée, non ordre professionnel",
+            "Vérifier les services et conditions d'adhésion"
+          ],
+          "reviewedAt": "2026-08-05",
+          "checkedAt": "2026-08-05",
+          "expiresAt": "2027-08-05",
+          "evidenceUrls": [
+            "https://osteofrance.com/"
+          ],
+          "catalogDestination": "https://osteofrance.com/",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -12125,7 +12639,7 @@
       "family": "sante",
       "systemSlug": "psychologue",
       "systemName": "Psychologue",
-      "reviewedAt": "2026-08-04",
+      "reviewedAt": "2026-08-05",
       "excludedResourceSlugs": [],
       "placements": [
         {
@@ -12171,6 +12685,33 @@
             "https://info.doctolib.fr/psychologue/"
           ],
           "catalogDestination": "https://info.doctolib.fr/psychologue/",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "ffpp",
+          "resourceType": "directory",
+          "section": "networks",
+          "rank": 1,
+          "displayCategory": "Fédération professionnelle privée",
+          "description": "Fédération privée d'organisations et de psychologues en France.",
+          "ownerBenefit": "Accéder à une représentation professionnelle et à des ressources selon l'adhésion.",
+          "fitRationale": "Option pertinente pour un psychologue souhaitant rejoindre une fédération professionnelle privée.",
+          "checksBeforeChoosing": [
+            "Fédération privée, non ordre professionnel",
+            "Vérifier l'éligibilité et les services adhérents"
+          ],
+          "reviewedAt": "2026-08-05",
+          "checkedAt": "2026-08-05",
+          "expiresAt": "2027-08-05",
+          "evidenceUrls": [
+            "https://ffpp.net/"
+          ],
+          "catalogDestination": "https://ffpp.net/",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -12518,7 +13059,7 @@
       "family": "restauration",
       "systemSlug": "restaurant",
       "systemName": "Restaurant",
-      "reviewedAt": "2026-08-04",
+      "reviewedAt": "2026-08-05",
       "excludedResourceSlugs": [
         "alan",
         "bravus-akademy",
@@ -12644,6 +13185,114 @@
             "https://www.umih.fr/"
           ],
           "catalogDestination": "https://www.umih.fr/",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "transgourmet",
+          "resourceType": "provider",
+          "section": "providers",
+          "rank": 1,
+          "displayCategory": "Grossiste alimentaire livré",
+          "description": "Grossiste alimentaire pour professionnels avec livraison et assortiment restauration.",
+          "ownerBenefit": "Regrouper les achats alimentaires et organiser des livraisons professionnelles.",
+          "fitRationale": "Approvisionnement livré adapté aux volumes et à la régularité d'un restaurant.",
+          "checksBeforeChoosing": [
+            "Vérifier la zone et les jours de livraison",
+            "Comparer minimums de commande et tarifs"
+          ],
+          "reviewedAt": "2026-08-05",
+          "checkedAt": "2026-08-05",
+          "expiresAt": "2027-08-05",
+          "evidenceUrls": [
+            "https://www.transgourmet.fr/"
+          ],
+          "catalogDestination": "https://www.transgourmet.fr/",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "metro-france",
+          "resourceType": "provider",
+          "section": "providers",
+          "rank": 2,
+          "displayCategory": "Grossiste alimentaire et équipement",
+          "description": "Grossiste pour métiers de bouche, avec produits alimentaires, boissons et équipement.",
+          "ownerBenefit": "Acheter en entrepôt ou en ligne un assortiment large adapté aux métiers de bouche.",
+          "fitRationale": "Complément pertinent pour l'achat multi-catégories et le dépannage en entrepôt.",
+          "checksBeforeChoosing": [
+            "Vérifier les conditions d'accès professionnel",
+            "Comparer disponibilité locale et livraison"
+          ],
+          "reviewedAt": "2026-08-05",
+          "checkedAt": "2026-08-05",
+          "expiresAt": "2027-08-05",
+          "evidenceUrls": [
+            "https://www.metro.fr/metro/univers-metiers"
+          ],
+          "catalogDestination": "https://www.metro.fr/metro/univers-metiers",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "france-boissons",
+          "resourceType": "provider",
+          "section": "providers",
+          "rank": 3,
+          "displayCategory": "Distributeur de boissons CHR",
+          "description": "Distributeur de boissons et services dédiés aux cafés, hôtels et restaurants.",
+          "ownerBenefit": "Structurer l'approvisionnement en boissons et les services associés au débit de boissons.",
+          "fitRationale": "À retenir si les boissons représentent un poste d'approvisionnement structurant.",
+          "checksBeforeChoosing": [
+            "Vérifier la couverture de distribution locale",
+            "Comparer assortiment, consignes et conditions"
+          ],
+          "reviewedAt": "2026-08-05",
+          "checkedAt": "2026-08-05",
+          "expiresAt": "2027-08-05",
+          "evidenceUrls": [
+            "https://www.france-boissons.fr/"
+          ],
+          "catalogDestination": "https://www.france-boissons.fr/",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "firplast",
+          "resourceType": "provider",
+          "section": "providers",
+          "rank": 4,
+          "displayCategory": "Emballages alimentaires",
+          "description": "Fournisseur d'emballages pour vente à emporter, livraison et événementiel alimentaire.",
+          "ownerBenefit": "Sourcer des contenants adaptés au transport, au service et à la conservation.",
+          "fitRationale": "Conditionnel aux besoins de vente à emporter ou de livraison.",
+          "checksBeforeChoosing": [
+            "Vérifier formats et compatibilité avec les usages",
+            "Comparer minimums, stockage et délais"
+          ],
+          "reviewedAt": "2026-08-05",
+          "checkedAt": "2026-08-05",
+          "expiresAt": "2027-08-05",
+          "evidenceUrls": [
+            "https://www.firplast.com/emballages-alimentaire-81"
+          ],
+          "catalogDestination": "https://www.firplast.com/emballages-alimentaire-81",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -13428,14 +14077,13 @@
       "family": "transport-logistique-terrain",
       "systemSlug": "services-a-la-personne",
       "systemName": "Services à la personne",
-      "reviewedAt": "2026-08-04",
+      "reviewedAt": "2026-08-05",
       "excludedResourceSlugs": [
         "alan",
         "audit-conformite-fiscale",
         "ayvens",
         "bravus-akademy",
         "em2a-expertise",
-        "fesp",
         "orus",
         "prevention-risques-domicile-iperia",
         "qonto",
@@ -13513,6 +14161,33 @@
           "status": "published",
           "publicationBlockers": [],
           "interactionMode": "system_delivery"
+        },
+        {
+          "resourceSlug": "fesp",
+          "resourceType": "directory",
+          "section": "networks",
+          "rank": 1,
+          "displayCategory": "Fédération professionnelle privée",
+          "description": "Fédération privée d'entreprises de services à la personne.",
+          "ownerBenefit": "Accéder à une représentation sectorielle et à des ressources selon l'adhésion.",
+          "fitRationale": "Pertinent pour une structure relevant effectivement du secteur des services à la personne.",
+          "checksBeforeChoosing": [
+            "Fédération privée, non autorité administrative",
+            "Vérifier le périmètre d'activité et l'adhésion"
+          ],
+          "reviewedAt": "2026-08-05",
+          "checkedAt": "2026-08-05",
+          "expiresAt": "2027-08-05",
+          "evidenceUrls": [
+            "https://www.fesp.fr/"
+          ],
+          "catalogDestination": "https://www.fesp.fr/",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
         }
       ]
     },
@@ -13905,7 +14580,7 @@
       "family": "restauration",
       "systemSlug": "traiteur",
       "systemName": "Traiteur événementiel B2B",
-      "reviewedAt": "2026-08-04",
+      "reviewedAt": "2026-08-05",
       "excludedResourceSlugs": [
         "alan",
         "bravus-akademy",
@@ -13967,31 +14642,6 @@
           "interactionMode": "external_link"
         },
         {
-          "resourceSlug": "canva",
-          "resourceType": "software",
-          "section": "software",
-          "rank": 3,
-          "displayCategory": "Création contenu",
-          "description": "Création simple de visuels, présentations, documents et supports marketing.",
-          "ownerBenefit": "Produire des supports propres sans dépendre d’un studio.",
-          "fitRationale": "Pour traiteur événementiel b2b, Canva couvre directement visuels et presentations.",
-          "checksBeforeChoosing": [
-            "Vérifier les droits des contenus",
-            "Organiser les modèles partagés"
-          ],
-          "reviewedAt": "2026-08-04",
-          "evidenceUrls": [
-            "https://www.canva.com/"
-          ],
-          "catalogDestination": "https://www.canva.com/",
-          "commercialRelationship": "unknown",
-          "status": "draft",
-          "publicationBlockers": [
-            "commercial-relationship-unconfirmed"
-          ],
-          "interactionMode": "external_link"
-        },
-        {
           "resourceSlug": "levier",
           "resourceType": "tool",
           "section": "software",
@@ -14031,6 +14681,114 @@
             "https://www.umih.fr/"
           ],
           "catalogDestination": "https://www.umih.fr/",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "transgourmet",
+          "resourceType": "provider",
+          "section": "providers",
+          "rank": 1,
+          "displayCategory": "Grossiste alimentaire livré",
+          "description": "Grossiste alimentaire pour professionnels avec livraison et assortiment restauration.",
+          "ownerBenefit": "Regrouper les achats alimentaires et organiser des livraisons professionnelles.",
+          "fitRationale": "Livraison adaptée à des volumes planifiés par événement.",
+          "checksBeforeChoosing": [
+            "Vérifier la zone et les jours de livraison",
+            "Comparer minimums de commande et tarifs"
+          ],
+          "reviewedAt": "2026-08-05",
+          "checkedAt": "2026-08-05",
+          "expiresAt": "2027-08-05",
+          "evidenceUrls": [
+            "https://www.transgourmet.fr/"
+          ],
+          "catalogDestination": "https://www.transgourmet.fr/",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "metro-france",
+          "resourceType": "provider",
+          "section": "providers",
+          "rank": 2,
+          "displayCategory": "Grossiste alimentaire et équipement",
+          "description": "Grossiste pour métiers de bouche, avec produits alimentaires, boissons et équipement.",
+          "ownerBenefit": "Acheter en entrepôt ou en ligne un assortiment large adapté aux métiers de bouche.",
+          "fitRationale": "Large assortiment utile pour compléter des achats événementiels variables.",
+          "checksBeforeChoosing": [
+            "Vérifier les conditions d'accès professionnel",
+            "Comparer disponibilité locale et livraison"
+          ],
+          "reviewedAt": "2026-08-05",
+          "checkedAt": "2026-08-05",
+          "expiresAt": "2027-08-05",
+          "evidenceUrls": [
+            "https://www.metro.fr/metro/univers-metiers"
+          ],
+          "catalogDestination": "https://www.metro.fr/metro/univers-metiers",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "firplast",
+          "resourceType": "provider",
+          "section": "providers",
+          "rank": 3,
+          "displayCategory": "Emballages alimentaires",
+          "description": "Fournisseur d'emballages pour vente à emporter, livraison et événementiel alimentaire.",
+          "ownerBenefit": "Sourcer des contenants adaptés au transport, au service et à la conservation.",
+          "fitRationale": "Conditionnel aux besoins de transport, dressage jetable ou vente à emporter.",
+          "checksBeforeChoosing": [
+            "Vérifier formats et compatibilité avec les usages",
+            "Comparer minimums, stockage et délais"
+          ],
+          "reviewedAt": "2026-08-05",
+          "checkedAt": "2026-08-05",
+          "expiresAt": "2027-08-05",
+          "evidenceUrls": [
+            "https://www.firplast.com/emballages-alimentaire-81"
+          ],
+          "catalogDestination": "https://www.firplast.com/emballages-alimentaire-81",
+          "commercialRelationship": "unknown",
+          "status": "draft",
+          "publicationBlockers": [
+            "commercial-relationship-unconfirmed"
+          ],
+          "interactionMode": "external_link"
+        },
+        {
+          "resourceSlug": "france-boissons",
+          "resourceType": "provider",
+          "section": "providers",
+          "rank": 4,
+          "displayCategory": "Distributeur de boissons CHR",
+          "description": "Distributeur de boissons et services dédiés aux cafés, hôtels et restaurants.",
+          "ownerBenefit": "Structurer l'approvisionnement en boissons et les services associés au débit de boissons.",
+          "fitRationale": "À retenir si le traiteur prend aussi en charge les boissons des événements.",
+          "checksBeforeChoosing": [
+            "Vérifier la couverture de distribution locale",
+            "Comparer assortiment, consignes et conditions"
+          ],
+          "reviewedAt": "2026-08-05",
+          "checkedAt": "2026-08-05",
+          "expiresAt": "2027-08-05",
+          "evidenceUrls": [
+            "https://www.france-boissons.fr/"
+          ],
+          "catalogDestination": "https://www.france-boissons.fr/",
           "commercialRelationship": "unknown",
           "status": "draft",
           "publicationBlockers": [
@@ -14527,11 +15285,13 @@
       "source": "operations",
       "family": "transport-logistique-terrain",
       "systemSlug": "aide-a-domicile-menage",
-      "section": "providers",
+      "section": "unassigned",
       "rank": 1,
       "resourceSlug": "secourisme-sst",
-      "reason": "resource-absent-from-supported-public-catalogue",
-      "auditedOfficialUrl": "https://www.inrs.fr/services/formation/demarche/sst.html"
+      "reason": "conditional-regulatory-resource-outside-four-rails",
+      "auditedOfficialUrl": "https://www.inrs.fr/formation/themes/sauvetage-secourisme/pourquoi-se-former.html",
+      "checkedAt": "2026-08-05",
+      "expiresAt": "2027-02-05"
     },
     {
       "source": "knowledge",
@@ -14557,31 +15317,37 @@
       "source": "operations",
       "family": "restauration",
       "systemSlug": "bar-cafe",
-      "section": "providers",
+      "section": "unassigned",
       "rank": 1,
       "resourceSlug": "permis-exploitation",
-      "reason": "resource-absent-from-supported-public-catalogue",
-      "auditedOfficialUrl": "https://www.umihformation.fr/nos-formations/15-PERMIS-D-EXPLOITATION-INITIAL"
+      "reason": "official-regulatory-resource-outside-four-rails",
+      "auditedOfficialUrl": "https://entreprendre.service-public.gouv.fr/vosdroits/F22379",
+      "checkedAt": "2026-08-05",
+      "expiresAt": "2027-02-05"
     },
     {
       "source": "operations",
       "family": "restauration",
       "systemSlug": "bar-cafe",
-      "section": "providers",
+      "section": "unassigned",
       "rank": 3,
-      "resourceSlug": "haccp-hygiene-alimentaire",
-      "reason": "resource-absent-from-supported-public-catalogue",
-      "auditedOfficialUrl": "https://www.umihformation.fr/nos-formations/82-HYGIENE-ALIMENTAIRE"
+      "resourceSlug": "bonnes-pratiques-hygiene-alimentaire",
+      "reason": "conditional-regulatory-resource-outside-four-rails",
+      "auditedOfficialUrl": "https://entreprendre.service-public.gouv.fr/vosdroits/F32189",
+      "checkedAt": "2026-08-05",
+      "expiresAt": "2027-02-05"
     },
     {
       "source": "operations",
       "family": "restauration",
       "systemSlug": "boulangerie",
-      "section": "providers",
+      "section": "unassigned",
       "rank": 1,
-      "resourceSlug": "haccp-hygiene-alimentaire",
-      "reason": "resource-absent-from-supported-public-catalogue",
-      "auditedOfficialUrl": "https://www.umihformation.fr/nos-formations/82-HYGIENE-ALIMENTAIRE"
+      "resourceSlug": "bonnes-pratiques-hygiene-alimentaire",
+      "reason": "conditional-regulatory-resource-outside-four-rails",
+      "auditedOfficialUrl": "https://entreprendre.service-public.gouv.fr/vosdroits/F32189",
+      "checkedAt": "2026-08-05",
+      "expiresAt": "2027-02-05"
     },
     {
       "source": "knowledge",
@@ -14617,11 +15383,13 @@
       "source": "operations",
       "family": "restauration",
       "systemSlug": "commerce-alimentaire",
-      "section": "providers",
+      "section": "unassigned",
       "rank": 1,
-      "resourceSlug": "haccp-hygiene-alimentaire",
-      "reason": "resource-absent-from-supported-public-catalogue",
-      "auditedOfficialUrl": "https://www.umihformation.fr/nos-formations/82-HYGIENE-ALIMENTAIRE"
+      "resourceSlug": "bonnes-pratiques-hygiene-alimentaire",
+      "reason": "conditional-regulatory-resource-outside-four-rails",
+      "auditedOfficialUrl": "https://entreprendre.service-public.gouv.fr/vosdroits/F32189",
+      "checkedAt": "2026-08-05",
+      "expiresAt": "2027-02-05"
     },
     {
       "source": "people",
@@ -14667,71 +15435,73 @@
       "source": "operations",
       "family": "restauration",
       "systemSlug": "dark-kitchen",
-      "section": "providers",
+      "section": "unassigned",
       "rank": 1,
-      "resourceSlug": "haccp-hygiene-alimentaire",
-      "reason": "resource-absent-from-supported-public-catalogue",
-      "auditedOfficialUrl": "https://www.umihformation.fr/nos-formations/82-HYGIENE-ALIMENTAIRE"
+      "resourceSlug": "hygiene-alimentaire-restauration-commerciale",
+      "reason": "conditional-regulatory-resource-outside-four-rails",
+      "auditedOfficialUrl": "https://entreprendre.service-public.gouv.fr/vosdroits/F32189",
+      "checkedAt": "2026-08-05",
+      "expiresAt": "2027-02-05"
     },
     {
       "source": "operations",
       "family": "transport-logistique-terrain",
       "systemSlug": "demenagement",
-      "section": "providers",
+      "section": "unassigned",
       "rank": 1,
       "resourceSlug": "secourisme-sst",
-      "reason": "resource-absent-from-supported-public-catalogue",
-      "auditedOfficialUrl": "https://www.inrs.fr/services/formation/demarche/sst.html"
+      "reason": "conditional-regulatory-resource-outside-four-rails",
+      "auditedOfficialUrl": "https://www.inrs.fr/formation/themes/sauvetage-secourisme/pourquoi-se-former.html",
+      "checkedAt": "2026-08-05",
+      "expiresAt": "2027-02-05"
     },
     {
       "source": "operations",
       "family": "transport-logistique-terrain",
       "systemSlug": "entreprise-de-securite",
-      "section": "providers",
+      "section": "unassigned",
       "rank": 1,
       "resourceSlug": "secourisme-sst",
-      "reason": "resource-absent-from-supported-public-catalogue",
-      "auditedOfficialUrl": "https://www.inrs.fr/services/formation/demarche/sst.html"
+      "reason": "conditional-regulatory-resource-outside-four-rails",
+      "auditedOfficialUrl": "https://www.inrs.fr/formation/themes/sauvetage-secourisme/pourquoi-se-former.html",
+      "checkedAt": "2026-08-05",
+      "expiresAt": "2027-02-05"
     },
     {
       "source": "operations",
       "family": "restauration",
       "systemSlug": "fast-food",
-      "section": "providers",
+      "section": "unassigned",
       "rank": 1,
-      "resourceSlug": "haccp-hygiene-alimentaire",
-      "reason": "resource-absent-from-supported-public-catalogue",
-      "auditedOfficialUrl": "https://www.umihformation.fr/nos-formations/82-HYGIENE-ALIMENTAIRE"
+      "resourceSlug": "hygiene-alimentaire-restauration-commerciale",
+      "reason": "conditional-regulatory-resource-outside-four-rails",
+      "auditedOfficialUrl": "https://entreprendre.service-public.gouv.fr/vosdroits/F32189",
+      "checkedAt": "2026-08-05",
+      "expiresAt": "2027-02-05"
     },
     {
       "source": "operations",
       "family": "restauration",
       "systemSlug": "food-truck",
-      "section": "providers",
+      "section": "unassigned",
       "rank": 1,
-      "resourceSlug": "haccp-hygiene-alimentaire",
-      "reason": "resource-absent-from-supported-public-catalogue",
-      "auditedOfficialUrl": "https://www.umihformation.fr/nos-formations/82-HYGIENE-ALIMENTAIRE"
+      "resourceSlug": "hygiene-alimentaire-restauration-commerciale",
+      "reason": "conditional-regulatory-resource-outside-four-rails",
+      "auditedOfficialUrl": "https://entreprendre.service-public.gouv.fr/vosdroits/F32189",
+      "checkedAt": "2026-08-05",
+      "expiresAt": "2027-02-05"
     },
     {
       "source": "operations",
       "family": "btp-travaux-ingenierie",
       "systemSlug": "geometre",
-      "section": "providers",
+      "section": "unassigned",
       "rank": 1,
       "resourceSlug": "aipr-chantier",
-      "reason": "resource-absent-from-supported-public-catalogue",
-      "auditedOfficialUrl": "https://formation.bureauveritas.fr/formation/aipr"
-    },
-    {
-      "source": "knowledge",
-      "family": "expertise-droit-finance-externalise",
-      "systemSlug": "gestionnaire-de-patrimoine",
-      "section": "providers",
-      "rank": 2,
-      "resourceSlug": "anacofi-presentiels-patrimoine",
-      "reason": "resource-absent-from-supported-public-catalogue",
-      "auditedOfficialUrl": "https://www.formations-anacofi.fr/all_formation_page_anacofi.php"
+      "reason": "conditional-regulatory-resource-outside-four-rails",
+      "auditedOfficialUrl": "https://www.reseaux-et-canalisations.ineris.fr/gu-presentation/construire-sans-detruire/aipr-et-examen-qcm.html",
+      "checkedAt": "2026-08-05",
+      "expiresAt": "2027-02-05"
     },
     {
       "source": "knowledge",
@@ -14764,44 +15534,28 @@
       "auditedOfficialUrl": "https://www.bpifrance-universite.fr/thematique/cybersecurite/"
     },
     {
-      "source": "knowledge",
-      "family": "expertise-droit-finance-externalise",
-      "systemSlug": "investissement-entreprise",
-      "section": "providers",
-      "rank": 2,
-      "resourceSlug": "anacofi-presentiels-patrimoine",
-      "reason": "resource-absent-from-supported-public-catalogue",
-      "auditedOfficialUrl": "https://www.formations-anacofi.fr/all_formation_page_anacofi.php"
-    },
-    {
-      "source": "knowledge",
-      "family": "expertise-droit-finance-externalise",
-      "systemSlug": "investissement-financier",
-      "section": "providers",
-      "rank": 2,
-      "resourceSlug": "anacofi-presentiels-patrimoine",
-      "reason": "resource-absent-from-supported-public-catalogue",
-      "auditedOfficialUrl": "https://www.formations-anacofi.fr/all_formation_page_anacofi.php"
-    },
-    {
       "source": "operations",
       "family": "transport-logistique-terrain",
       "systemSlug": "livraison-dernier-kilometre",
-      "section": "providers",
+      "section": "unassigned",
       "rank": 1,
       "resourceSlug": "caces-logistique-manutention",
-      "reason": "resource-absent-from-supported-public-catalogue",
-      "auditedOfficialUrl": "https://france.apave.com/Vos-besoins/Former-vos-equipes/CACES-LEVAGE-MANUTENTION"
+      "reason": "conditional-regulatory-resource-outside-four-rails",
+      "auditedOfficialUrl": "https://www.inrs.fr/publications/bdd/caces.html",
+      "checkedAt": "2026-08-05",
+      "expiresAt": "2027-02-05"
     },
     {
       "source": "operations",
       "family": "btp-travaux-ingenierie",
       "systemSlug": "nettoyage-professionnel",
-      "section": "providers",
+      "section": "unassigned",
       "rank": 1,
       "resourceSlug": "secourisme-sst",
-      "reason": "resource-absent-from-supported-public-catalogue",
-      "auditedOfficialUrl": "https://www.inrs.fr/services/formation/demarche/sst.html"
+      "reason": "conditional-regulatory-resource-outside-four-rails",
+      "auditedOfficialUrl": "https://www.inrs.fr/formation/themes/sauvetage-secourisme/pourquoi-se-former.html",
+      "checkedAt": "2026-08-05",
+      "expiresAt": "2027-02-05"
     },
     {
       "source": "knowledge",
@@ -14837,11 +15591,13 @@
       "source": "operations",
       "family": "restauration",
       "systemSlug": "restaurant",
-      "section": "providers",
+      "section": "unassigned",
       "rank": 1,
-      "resourceSlug": "haccp-hygiene-alimentaire",
-      "reason": "resource-absent-from-supported-public-catalogue",
-      "auditedOfficialUrl": "https://www.umihformation.fr/nos-formations/82-HYGIENE-ALIMENTAIRE"
+      "resourceSlug": "hygiene-alimentaire-restauration-commerciale",
+      "reason": "conditional-regulatory-resource-outside-four-rails",
+      "auditedOfficialUrl": "https://entreprendre.service-public.gouv.fr/vosdroits/F32189",
+      "checkedAt": "2026-08-05",
+      "expiresAt": "2027-02-05"
     },
     {
       "source": "knowledge",
@@ -14857,11 +15613,13 @@
       "source": "operations",
       "family": "transport-logistique-terrain",
       "systemSlug": "services-a-la-personne",
-      "section": "providers",
+      "section": "unassigned",
       "rank": 1,
       "resourceSlug": "secourisme-sst",
-      "reason": "resource-absent-from-supported-public-catalogue",
-      "auditedOfficialUrl": "https://www.inrs.fr/services/formation/demarche/sst.html"
+      "reason": "conditional-regulatory-resource-outside-four-rails",
+      "auditedOfficialUrl": "https://www.inrs.fr/formation/themes/sauvetage-secourisme/pourquoi-se-former.html",
+      "checkedAt": "2026-08-05",
+      "expiresAt": "2027-02-05"
     },
     {
       "source": "knowledge",
@@ -14877,31 +15635,61 @@
       "source": "operations",
       "family": "restauration",
       "systemSlug": "traiteur",
-      "section": "providers",
+      "section": "unassigned",
       "rank": 1,
-      "resourceSlug": "haccp-hygiene-alimentaire",
-      "reason": "resource-absent-from-supported-public-catalogue",
-      "auditedOfficialUrl": "https://www.umihformation.fr/nos-formations/82-HYGIENE-ALIMENTAIRE"
+      "resourceSlug": "bonnes-pratiques-hygiene-alimentaire",
+      "reason": "conditional-regulatory-resource-outside-four-rails",
+      "auditedOfficialUrl": "https://entreprendre.service-public.gouv.fr/vosdroits/F32189",
+      "checkedAt": "2026-08-05",
+      "expiresAt": "2027-02-05"
     },
     {
       "source": "operations",
       "family": "transport-logistique-terrain",
       "systemSlug": "transport-de-marchandise",
-      "section": "providers",
+      "section": "unassigned",
       "rank": 2,
       "resourceSlug": "caces-logistique-manutention",
-      "reason": "resource-absent-from-supported-public-catalogue",
-      "auditedOfficialUrl": "https://france.apave.com/Vos-besoins/Former-vos-equipes/CACES-LEVAGE-MANUTENTION"
+      "reason": "conditional-regulatory-resource-outside-four-rails",
+      "auditedOfficialUrl": "https://www.inrs.fr/publications/bdd/caces.html",
+      "checkedAt": "2026-08-05",
+      "expiresAt": "2027-02-05"
     },
     {
       "source": "operations",
       "family": "transport-logistique-terrain",
       "systemSlug": "transport-de-personnes",
-      "section": "providers",
+      "section": "unassigned",
       "rank": 2,
       "resourceSlug": "secourisme-sst",
-      "reason": "resource-absent-from-supported-public-catalogue",
-      "auditedOfficialUrl": "https://www.inrs.fr/services/formation/demarche/sst.html"
+      "reason": "conditional-regulatory-resource-outside-four-rails",
+      "auditedOfficialUrl": "https://www.inrs.fr/formation/themes/sauvetage-secourisme/pourquoi-se-former.html",
+      "checkedAt": "2026-08-05",
+      "expiresAt": "2027-02-05"
+    },
+    {
+      "source": "operations",
+      "family": "transport-logistique-terrain",
+      "systemSlug": "entreprise-de-securite",
+      "section": "unassigned",
+      "rank": 2,
+      "resourceSlug": "cnaps-titres-securite-privee",
+      "reason": "official-regulatory-resource-outside-four-rails",
+      "auditedOfficialUrl": "https://cnaps.interieur.gouv.fr/Demarches-en-ligne/Vous-etes-un-particulier/Exercer-le-metier-d-agent-de-securite-privee/Exercer-le-metier-d-agent-de-securite-privee",
+      "checkedAt": "2026-08-05",
+      "expiresAt": "2027-02-05"
+    },
+    {
+      "source": "people",
+      "family": "sante",
+      "systemSlug": "cabinet-paramedical",
+      "section": "unassigned",
+      "rank": 1,
+      "resourceSlug": "paps-installation-profession-sante",
+      "reason": "conditional-official-resource-outside-four-rails",
+      "auditedOfficialUrl": "https://sante.gouv.fr/professionnels/se-former-s-installer-exercer/article/les-portails-d-accompagnement-des-professionnels-de-sante-paps",
+      "checkedAt": "2026-08-05",
+      "expiresAt": "2027-02-05"
     }
   ]
 }

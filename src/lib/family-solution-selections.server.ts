@@ -41,6 +41,8 @@ export type FamilySolutionSelection = Readonly<{
   fitRationale: string;
   checksBeforeChoosing: readonly string[];
   reviewedAt: string;
+  checkedAt?: string;
+  expiresAt?: string;
   evidenceUrls: readonly string[];
   catalogDestination?: string;
   commercialRelationship: "owned" | "unknown";
@@ -63,11 +65,13 @@ type FamilySolutionGap = Readonly<{
   source: string;
   family?: string;
   systemSlug: string;
-  section: SolutionSection;
+  section: SolutionSection | "unassigned";
   rank: number;
   resourceSlug: string;
   reason: string;
   auditedOfficialUrl?: string;
+  checkedAt?: string;
+  expiresAt?: string;
 }>;
 
 type ResolvedCatalogSelection = Readonly<{
@@ -85,6 +89,16 @@ const manifest = familySolutionSelections as unknown as Readonly<{
   systems: readonly FamilySystemSolutionSelection[];
   gaps: readonly FamilySolutionGap[];
 }>;
+
+function hasValidAuditWindow(checkedAt: string | undefined, expiresAt: string | undefined) {
+  if (!checkedAt && !expiresAt) return true;
+  if (!checkedAt || !expiresAt) return false;
+  const checkedTimestamp = Date.parse(checkedAt);
+  const expiresTimestamp = Date.parse(expiresAt);
+  return Number.isFinite(checkedTimestamp)
+    && Number.isFinite(expiresTimestamp)
+    && checkedTimestamp < expiresTimestamp;
+}
 
 function assertFamilySolutionManifest() {
   if (manifest.schemaVersion !== 1 || manifest.manifestVersion !== "family-solution-selections.v1") {
@@ -125,6 +139,12 @@ function assertFamilySolutionManifest() {
     }
     for (const placement of system.placements) {
       const isLevier = placement.resourceSlug === "levier";
+      if (
+        !hasValidAuditWindow(placement.checkedAt, placement.expiresAt)
+        || ((placement.checkedAt || placement.expiresAt) && placement.evidenceUrls.length === 0)
+      ) {
+        throw new Error(`Invalid family solution audit window: ${system.systemSlug}:${placement.resourceSlug}.`);
+      }
       if (isLevier) {
         if (
           placement.status !== "published" ||
@@ -143,6 +163,16 @@ function assertFamilySolutionManifest() {
       ) {
         throw new Error(`Unsafe third-party family placement: ${system.systemSlug}:${placement.resourceSlug}.`);
       }
+    }
+  }
+  for (const gap of manifest.gaps) {
+    if (
+      !KNOWN_SYSTEM_SLUGS.has(gap.systemSlug)
+      || !["software", "providers", "models", "networks", "unassigned"].includes(gap.section)
+      || !hasValidAuditWindow(gap.checkedAt, gap.expiresAt)
+      || ((gap.checkedAt || gap.expiresAt) && !gap.auditedOfficialUrl)
+    ) {
+      throw new Error(`Invalid family solution gap: ${gap.systemSlug}:${gap.resourceSlug}.`);
     }
   }
 }

@@ -60,7 +60,7 @@ describe("family solution selections", () => {
     });
     const placements = systems.flatMap(({ placements }) => placements);
 
-    expect(placements).toHaveLength(514);
+    expect(placements).toHaveLength(542);
     expect(placements.filter(({ resourceSlug }) => resourceSlug === "levier")).toHaveLength(81);
     for (const system of systems) {
       for (const section of ["software", "providers", "networks"] as const) {
@@ -87,7 +87,7 @@ describe("family solution selections", () => {
     }
     expect(placements.filter(({ resourceType }) => resourceType === "directory")
       .every(({ section }) => section === "networks")).toBe(true);
-    expect(JSON.stringify(systems)).not.toMatch(/capturedAt|expiresAt/);
+    expect(JSON.stringify(systems)).not.toMatch(/capturedAt/);
   });
 
   it("uses the 19 audited destination policies without inventing proof URLs", () => {
@@ -116,18 +116,20 @@ describe("family solution selections", () => {
 
   it("excludes unsupported resources and fails closed when a catalog URL drifts", () => {
     const gaps = getFamilySolutionGaps();
-    expect(gaps).toHaveLength(38);
+    expect(gaps).toHaveLength(37);
     expect([...new Set(gaps.map(({ resourceSlug }) => resourceSlug))].sort()).toEqual([
       "aipr-chantier",
       "airbnb",
-      "anacofi-presentiels-patrimoine",
+      "bonnes-pratiques-hygiene-alimentaire",
       "booking-com",
       "caces-logistique-manutention",
+      "cnaps-titres-securite-privee",
       "cybersecurite-bpifrance-universite",
       "documents-obligations-rgpd",
       "formation-benevoles-associations-gouv",
       "habilitation-electrique-b0-h0v",
-      "haccp-hygiene-alimentaire",
+      "hygiene-alimentaire-restauration-commerciale",
+      "paps-installation-profession-sante",
       "permis-exploitation",
       "secourisme-sst",
     ]);
@@ -152,7 +154,7 @@ describe("family solution selections", () => {
         : []
     );
 
-    expect(placements).toHaveLength(545);
+    expect(placements).toHaveLength(573);
     const violations = placements.flatMap((placement) =>
       forbiddenPublicClaims.test(JSON.stringify(placement))
         ? [`${placement.systemSlug}:${placement.resource.resourceSlug}`]
@@ -183,6 +185,57 @@ describe("family solution selections", () => {
     expect(getFamilySystemSolutionSelection("food-truck")?.placements
       .find(({ resourceSlug }) => resourceSlug === "uber-eats")?.displayCategory)
       .toBe("Plateforme de commande et livraison");
+  });
+
+  it("curates regulated networks, food suppliers and non-rendered regulatory gaps", () => {
+    const slugsFor = (systemSlug: string, section: "providers" | "networks") =>
+      getFamilySystemSolutionSelection(systemSlug)?.placements
+        .filter((placement) => placement.section === section)
+        .sort((left, right) => left.rank - right.rank)
+        .map(({ resourceSlug }) => resourceSlug) ?? [];
+
+    expect(slugsFor("osteopathe", "networks")).toEqual(["osteopathes-de-france"]);
+    expect(slugsFor("psychologue", "networks")).toEqual(["ffpp"]);
+    expect(slugsFor("architecte-maitre-oeuvre", "networks")).toEqual([
+      "architectes-locaux",
+      "maitres-oeuvre",
+    ]);
+    expect(slugsFor("services-a-la-personne", "networks")).toEqual(["fesp"]);
+    expect(slugsFor("courtier-credit-assurance", "networks")).toEqual(["anacofi"]);
+    expect(slugsFor("gestionnaire-de-patrimoine", "networks")).toEqual(["cncgp", "anacofi"]);
+    expect(slugsFor("investissement-entreprise", "networks")).toEqual([]);
+
+    expect(slugsFor("restaurant", "providers")).toEqual([
+      "transgourmet",
+      "metro-france",
+      "france-boissons",
+      "firplast",
+    ]);
+    expect(slugsFor("bar-cafe", "providers")).toEqual([
+      "france-boissons",
+      "metro-france",
+      "transgourmet",
+    ]);
+    expect(slugsFor("food-truck", "providers")).toEqual([
+      "metro-france",
+      "transgourmet",
+      "firplast",
+    ]);
+
+    const regulatedGaps = getFamilySolutionGaps().filter(({ resourceSlug }) => [
+      "aipr-chantier",
+      "caces-logistique-manutention",
+      "cnaps-titres-securite-privee",
+      "hygiene-alimentaire-restauration-commerciale",
+      "paps-installation-profession-sante",
+      "permis-exploitation",
+      "secourisme-sst",
+    ].includes(resourceSlug));
+    expect(regulatedGaps.length).toBeGreaterThan(0);
+    expect(regulatedGaps.every(({ section }) => section === "unassigned")).toBe(true);
+    expect(regulatedGaps.every(({ auditedOfficialUrl, checkedAt, expiresAt }) =>
+      auditedOfficialUrl?.startsWith("https://") && checkedAt && expiresAt
+    )).toBe(true);
   });
 
   it("only exposes pricing while its official capture is fresh", () => {

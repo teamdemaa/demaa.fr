@@ -6,8 +6,8 @@ import type {
 } from "@/lib/solution-registry-contract";
 const PILOT_REVIEW = {
   reviewer: "Master Demaa",
-  reviewedAt: "2026-08-03T20:00:00.000Z",
-  expiresAt: "2027-02-03T00:00:00.000Z",
+  reviewedAt: "2026-08-05T00:01:00.000Z",
+  expiresAt: "2027-02-05T00:00:00.000Z",
 } as const;
 
 const THIRD_PARTY_BLOCKERS = ["commercial-relationship-unconfirmed"] as const;
@@ -210,6 +210,24 @@ export const PILOT_SOLUTION_DRAFT_RESOURCES: readonly SolutionResource[] = [
     claim: "La page officielle présente les fonctions de paie et de gestion RH de Silae.",
   }),
   draftResource({
+    resourceSlug: "ordre-experts-comptables",
+    resourceType: "directory",
+    name: "Ordre des experts-comptables",
+    description: "Instance officielle de la profession et point d’accès à ses ressources nationales.",
+    officialSource: "https://www.experts-comptables.fr/",
+    capturedAt: "2026-08-05T00:00:00.000Z",
+    claim: "Le site officiel présente le Conseil national de l’Ordre et les ressources destinées à la profession comptable.",
+  }),
+  draftResource({
+    resourceSlug: "croec-regional",
+    resourceType: "directory",
+    name: "Conseil régional de l’Ordre",
+    description: "Relais officiel de l’Ordre pour l’inscription, le stage, la veille et la vie professionnelle en région.",
+    officialSource: "https://www.experts-comptables.fr/l-institution/notre-presence-en-region",
+    capturedAt: "2026-08-05T00:00:00.000Z",
+    claim: "La page officielle recense les Conseils régionaux de l’Ordre et décrit leur rôle dans chaque circonscription.",
+  }),
+  draftResource({
     resourceSlug: "airtable",
     resourceType: "software",
     name: "Airtable",
@@ -364,6 +382,24 @@ export const PILOT_SOLUTION_DRAFT_PLACEMENTS: readonly SolutionPlacement[] = [
     usage: "Produire la paie et structurer les opérations sociales du cabinet.",
     fitRationale: "Silae répond au besoin spécialisé de paie et de gestion sociale.",
     fitConstraints: ["Vérifier le modèle d’accès, la formation et le périmètre des modules retenus."],
+  }),
+  draftPlacement({
+    systemSlug: "cabinet-comptable",
+    resourceSlug: "ordre-experts-comptables",
+    rank: 1,
+    section: "networks",
+    usage: "Accéder au cadre officiel, aux ressources et à l’actualité nationale de la profession.",
+    fitRationale: "L’Ordre est l’instance officielle directement liée à l’exercice de l’expertise comptable.",
+    fitConstraints: ["Cette carte institutionnelle ne constitue pas un prestataire de délégation juridique."],
+  }),
+  draftPlacement({
+    systemSlug: "cabinet-comptable",
+    resourceSlug: "croec-regional",
+    rank: 2,
+    section: "networks",
+    usage: "Identifier le Conseil régional compétent et les ressources professionnelles de proximité.",
+    fitRationale: "Le CROEC apporte le relais territorial officiel distinct du Conseil national.",
+    fitConstraints: ["Choisir le Conseil correspondant à la circonscription du cabinet."],
   }),
   draftPlacement({
     systemSlug: "agence-marketing",

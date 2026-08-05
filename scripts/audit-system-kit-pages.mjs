@@ -25,7 +25,17 @@ const PILOT_SOLUTION_ORDERS = new Map([
       "capeb",
     ],
   ],
-  ["cabinet-comptable", ["pennylane", "tiimora", "silae", "levier"]],
+  [
+    "cabinet-comptable",
+    [
+      "pennylane",
+      "tiimora",
+      "silae",
+      "levier",
+      "ordre-experts-comptables",
+      "croec-regional",
+    ],
+  ],
   [
     "agence-marketing",
     ["airtable", "canva", "brevo", "metricool", "chatgpt", "levier"],
@@ -37,6 +47,8 @@ const PRIVATE_SOLUTION_MARKERS = [
   "publicationBlockers",
   "evidenceUrls",
   "catalogDestination",
+  "checkedAt",
+  "expiresAt",
   "paid_referral",
   "commercial_partner",
   "affiliate",
