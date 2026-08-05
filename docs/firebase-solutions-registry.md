@@ -107,6 +107,13 @@ L’authentification distante utilise uniquement un jeton utilisateur éphémèr
 fourni au processus d’import. Aucune clé de compte de service n’est créée ou
 conservée, et l’ADC partagé avec un autre projet n’est pas utilisé.
 
+Les fonctions Vercel utilisent également une identité sans clé. Le fournisseur
+OIDC Google n’accepte que le projet Vercel `demaa-fr` dans l’environnement
+`preview`. Il peut seulement emprunter le compte
+`demaa-solutions-preview-reader`, limité au rôle `roles/datastore.viewer` sur
+`demaa-preview-2026`. Les jetons expirent après une heure ; aucune clé privée
+Firebase Preview n’est stockée dans Vercel.
+
 ## Recette Firebase Preview du 5 août 2026
 
 La révision de parité active a été importée, relue et activée dans

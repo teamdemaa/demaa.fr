@@ -3,6 +3,11 @@ import "server-only";
 import { applicationDefault, cert, getApps, initializeApp } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
 
+import {
+  createFirebaseVercelWorkloadIdentityCredential,
+  hasFirebaseVercelWorkloadIdentityConfiguration,
+} from "@/lib/firebase-vercel-oidc-credential.server";
+
 function getPrivateKey() {
   return process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n");
 }
@@ -12,6 +17,10 @@ function shouldUseApplicationDefaultCredential() {
 }
 
 function getFirebaseCredential() {
+  if (hasFirebaseVercelWorkloadIdentityConfiguration()) {
+    return createFirebaseVercelWorkloadIdentityCredential();
+  }
+
   const serviceAccountKey = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
 
   if (serviceAccountKey) {

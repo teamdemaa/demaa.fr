@@ -117,6 +117,7 @@
   "dependencies": {
     "@fillout/react": "^3.1.2",
     "@vercel/analytics": "^2.0.1",
+    "@vercel/oidc": "^3.8.2",
     "firebase-admin": "^14.2.0",
     "html-to-image": "^1.11.13",
     "lucide-react": "^1.7.0",
