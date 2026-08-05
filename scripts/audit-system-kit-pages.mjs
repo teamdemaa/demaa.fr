@@ -113,6 +113,18 @@ export function getTabs() {
   return ["process", "solutions"];
 }
 
+export function getExpectedCallTexts(tab) {
+  return tab === "solutions"
+    ? [
+        "Besoin d’aide pour identifier la bonne solution ?",
+        "Échanger 30 minutes",
+      ]
+    : [
+        "Besoin de prendre du recul sur votre organisation ?",
+        "Réserver mon échange offert",
+      ];
+}
+
 export function collectSerializedSolutionSlugs(html) {
   return Array.from(
     html.matchAll(/resourceSlug\\?"\s*:\s*\\?"([^"\\]+)\\?"/g),
@@ -191,12 +203,9 @@ export function inspectPage({ response, html, tab, expectedSolutionOrder }) {
     errors.push(`${tab} tab is not selected`);
   }
 
-  for (const callText of [
-    "Besoin de prendre du recul sur votre organisation ?",
-    "Réserver mon échange offert",
-  ]) {
+  for (const callText of getExpectedCallTexts(tab)) {
     if (!renderedHtml.includes(callText)) {
-      errors.push(`missing organization call control: ${callText}`);
+      errors.push(`missing ${tab} call control: ${callText}`);
     }
   }
   for (const removedCallText of [
