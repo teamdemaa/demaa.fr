@@ -36,9 +36,11 @@ export const SOLUTION_INTERACTION_MODES = [
   "referral_form",
 ] as const;
 export const SOLUTION_SECTIONS = ["software", "providers", "models", "networks"] as const;
+export const SOLUTION_EDITORIAL_STATUSES = ["selected", "hidden"] as const;
 
 export type SolutionResourceType = (typeof SOLUTION_RESOURCE_TYPES)[number];
 export type SolutionSection = (typeof SOLUTION_SECTIONS)[number];
+export type SolutionEditorialStatus = (typeof SOLUTION_EDITORIAL_STATUSES)[number];
 export type SolutionInteraction =
   | Readonly<{ interactionMode: "external_link"; href: string }>
   | Readonly<{ interactionMode: "detail"; href: string }>
@@ -70,6 +72,7 @@ export type SolutionPlacement = ReviewMetadata & Readonly<{
   usage: string;
   fitRationale: string;
   fitConstraints: readonly string[];
+  editorialStatus: SolutionEditorialStatus;
   commercialRelationship: CommercialRelationship;
   status: RegistryPublicationStatus;
   placementVersion: string;
@@ -82,7 +85,7 @@ const RESOURCE_BASE_KEYS = [
 ] as const;
 const PLACEMENT_KEYS = [
   ...REVIEW_FIELD_NAMES, "placementId", "systemSlug", "resourceSlug", "rank", "section",
-  "usage", "fitRationale", "fitConstraints", "commercialRelationship", "status",
+  "usage", "fitRationale", "fitConstraints", "editorialStatus", "commercialRelationship", "status",
   "placementVersion", "publicationBlockers",
 ] as const;
 
@@ -163,6 +166,11 @@ export function parseSolutionPlacement(input: unknown, path = "solutionPlacement
     usage: parseString(record.usage, `${path}.usage`),
     fitRationale: parseString(record.fitRationale, `${path}.fitRationale`),
     fitConstraints: parseStringArray(record.fitConstraints, `${path}.fitConstraints`),
+    editorialStatus: parseEnum(
+      record.editorialStatus,
+      SOLUTION_EDITORIAL_STATUSES,
+      `${path}.editorialStatus`,
+    ),
     commercialRelationship: parseEnum(
       record.commercialRelationship,
       COMMERCIAL_RELATIONSHIPS,
@@ -323,7 +331,11 @@ export function selectPublishedSolutionPlacements(
   const selected = envelope.placements.flatMap((entry) => {
     if (validateSolutionPlacement(entry, now).length > 0) return [];
     const placement = parseSolutionPlacement(entry);
-    if (placement.systemSlug !== envelope.systemSlug || placement.status !== "published") return [];
+    if (
+      placement.systemSlug !== envelope.systemSlug ||
+      placement.status !== "published" ||
+      placement.editorialStatus !== "selected"
+    ) return [];
     const resource = resourcesBySlug.get(placement.resourceSlug);
     if (!resource || resource.commercialRelationship !== placement.commercialRelationship) return [];
     if (

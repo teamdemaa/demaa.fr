@@ -169,6 +169,7 @@ export const LEVIER_SOLUTION_PLACEMENTS: readonly SolutionPlacement[] =
       fitConstraints: [
         "Adapter les objectifs, responsables et rythmes de suivi à l’organisation.",
       ],
+      editorialStatus: "selected",
       commercialRelationship: "owned",
       status: "published",
       placementVersion: "levier.v1",

@@ -53,7 +53,7 @@ describe("family solution selections", () => {
     expect(FAMILY_SOLUTION_SENTINEL_SLUGS).toHaveLength(5);
   });
 
-  it("keeps ranks bounded, exclusions inactive and third parties private drafts", () => {
+  it("keeps editorial visibility independent from commercial relationships", () => {
     const systems = enterpriseCatalog.flatMap(({ slug }) => {
       const system = getFamilySystemSolutionSelection(slug);
       return system ? [system] : [];
@@ -78,13 +78,28 @@ describe("family solution selections", () => {
     }
     for (const placement of placements.filter(({ resourceSlug }) => resourceSlug !== "levier")) {
       expect(placement).toMatchObject({
+        editorialStatus: "selected",
         status: "draft",
         commercialRelationship: "unknown",
         publicationBlockers: ["commercial-relationship-unconfirmed"],
         interactionMode: "external_link",
       });
       expect(resolveFamilySolutionCatalogSelection(placement)).not.toBeNull();
+      expect(resolveFamilySolutionCatalogSelection({
+        ...placement,
+        editorialStatus: "hidden",
+      })).toBeNull();
     }
+    for (const placement of placements.filter(({ resourceSlug }) => resourceSlug === "levier")) {
+      expect(placement).toMatchObject({
+        editorialStatus: "selected",
+        section: "models",
+        rank: 1,
+        status: "published",
+        commercialRelationship: "owned",
+      });
+    }
+    expect(placements.filter(({ resourceSlug }) => resourceSlug !== "levier")).toHaveLength(457);
     expect(placements.filter(({ resourceType }) => resourceType === "directory")
       .every(({ section }) => section === "networks")).toBe(true);
     expect(JSON.stringify(systems)).not.toMatch(/capturedAt/);
@@ -185,6 +200,18 @@ describe("family solution selections", () => {
     expect(getFamilySystemSolutionSelection("food-truck")?.placements
       .find(({ resourceSlug }) => resourceSlug === "uber-eats")?.displayCategory)
       .toBe("Plateforme de commande et livraison");
+    expect(getFamilySystemSolutionSelection("agence-web")?.placements
+      .find(({ resourceSlug }) => resourceSlug === "github")?.displayCategory)
+      .toBe("Développement & collaboration");
+    expect(getFamilySystemSolutionSelection("saas")?.placements
+      .find(({ resourceSlug }) => resourceSlug === "github")?.displayCategory)
+      .toBe("Développement & collaboration");
+    expect(getFamilySystemSolutionSelection("saas")?.placements
+      .find(({ resourceSlug }) => resourceSlug === "sentry")?.displayCategory)
+      .toBe("Monitoring applicatif");
+    expect(getFamilySystemSolutionSelection("evenementiel")?.placements
+      .find(({ resourceSlug }) => resourceSlug === "livestorm")?.displayCategory)
+      .toBe("Webinaire & événement en ligne");
   });
 
   it("curates regulated networks, food suppliers and non-rendered regulatory gaps", () => {

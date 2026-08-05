@@ -137,11 +137,11 @@ describe("system Solutions UI", () => {
     );
     const bySection = Object.groupBy(placements, ({ section }) => section);
 
-    expect(placements).toHaveLength(565);
-    expect(bySection.software).toHaveLength(308);
-    expect(bySection.providers).toHaveLength(63);
+    expect(placements).toHaveLength(591);
+    expect(bySection.software).toHaveLength(305);
+    expect(bySection.providers).toHaveLength(82);
     expect(bySection.models).toHaveLength(115);
-    expect(bySection.networks).toHaveLength(79);
+    expect(bySection.networks).toHaveLength(89);
     expect(bySection.software?.every(({ resource }) => resource.resourceType === "software"))
       .toBe(true);
     expect(bySection.providers?.every(({ resource }) => resource.resourceType === "provider"))
@@ -162,6 +162,7 @@ describe("system Solutions UI", () => {
       ],
       restaurant: [
         ["lightspeed", "zenchef", "deliverect"],
+        ["transgourmet", "metro-france", "france-boissons", "firplast"],
         ["levier"],
         ["umih"],
       ],
@@ -189,7 +190,7 @@ describe("system Solutions UI", () => {
       )).toEqual(expectedSections);
       expect(sections.every(({ placements }) => placements.length <= 5)).toBe(true);
       expect(JSON.stringify(sections)).not.toMatch(
-        /commercialRelationship|publicationBlockers|status|evidenceUrls|reviewedAt|catalogDestination/i,
+        /commercialRelationship|editorialStatus|publicationBlockers|status|evidenceUrls|reviewedAt|catalogDestination/i,
       );
     }
   });
@@ -234,6 +235,7 @@ describe("system Solutions UI", () => {
       "cabinet-comptable": [
         ["pennylane", "tiimora", "silae"],
         ["levier"],
+        ["ordre-experts-comptables", "croec-regional"],
       ],
       "agence-marketing": [
         ["airtable", "canva", "brevo", "metricool", "chatgpt"],
@@ -265,7 +267,7 @@ describe("system Solutions UI", () => {
       }
       const serialized = JSON.stringify(sections);
       expect(serialized).not.toMatch(
-        /commercialRelationship|publicationBlockers|status|reviewer|reviewedAt|expiresAt|evidence|ODEMA|owned|affiliate|commercial_partner|paid_referral/i,
+        /commercialRelationship|editorialStatus|publicationBlockers|status|reviewer|reviewedAt|expiresAt|evidence|ODEMA|owned|affiliate|commercial_partner|paid_referral/i,
       );
     }
 
@@ -280,7 +282,7 @@ describe("system Solutions UI", () => {
     }))).not.toContain("Prestataires et fournisseurs");
     expect(renderToStaticMarkup(createElement(SystemSolutionsTab, {
       sections: getRenderableSolutionSectionsForSystem("cabinet-comptable"),
-    }))).not.toContain("Réseaux professionnels");
+    }))).toContain("Réseaux professionnels");
 
     expect(getPublishedRenderableSolutionSectionsForSystem("batiment")[0]?.placements)
       .toHaveLength(1);
@@ -294,14 +296,25 @@ describe("system Solutions UI", () => {
     expect(bySlug.get("obat")).toMatchObject({
       displayCategory: "Logiciel",
       ctaLabel: "Voir l’outil",
-      indicativePricing: "À partir de 39 € HT/mois (paiement annuel)",
       interaction: { interactionMode: "external_link", href: "https://www.obat.fr/" },
     });
     expect(bySlug.get("costructor")).toMatchObject({
       ctaLabel: "Voir l’outil",
-      indicativePricing: "Gratuit, puis à partir de 12,50 € HT/mois (paiement annuel)",
       interaction: { interactionMode: "external_link", href: "https://costructor.co/" },
     });
+    for (const resourceSlug of [
+      "obat",
+      "costructor",
+      "progbat",
+      "vertuoza",
+      "point-p",
+      "plateforme-du-batiment",
+      "kiloutou",
+      "wurth",
+      "capeb",
+    ]) {
+      expect(bySlug.get(resourceSlug)?.indicativePricing).toBeUndefined();
+    }
     expect(bySlug.get("point-p")).toMatchObject({
       displayCategory: "Fournisseur de matériaux",
       ctaLabel: "Voir le fournisseur",

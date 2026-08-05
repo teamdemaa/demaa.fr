@@ -29,7 +29,7 @@ import {
   getRenderableSolutionSectionsForSystem,
 } from "@/lib/system-solutions-ui.server";
 
-const now = new Date("2026-08-03T21:00:00.000Z");
+const now = new Date("2026-08-05T12:00:00.000Z");
 const expectedResourceSlugs = [
   "obat",
   "costructor",
@@ -45,6 +45,8 @@ const expectedResourceSlugs = [
   "tiimora",
   "pennylane",
   "silae",
+  "ordre-experts-comptables",
+  "croec-regional",
   "airtable",
   "canva",
   "brevo",
@@ -63,11 +65,11 @@ describe("three-pilot draft Solutions registry", () => {
   it("stores the reviewed resources, placements and unmet needs without inventing slugs", () => {
     expect(PILOT_SOLUTION_DRAFT_RESOURCES.map(({ resourceSlug }) => resourceSlug))
       .toEqual(expectedResourceSlugs);
-    expect(PILOT_SOLUTION_DRAFT_PLACEMENTS).toHaveLength(17);
+    expect(PILOT_SOLUTION_DRAFT_PLACEMENTS).toHaveLength(19);
     expect(PILOT_SOLUTION_DRAFT_PLACEMENTS.map(({ systemSlug }) => systemSlug))
       .toEqual([
         "batiment", "batiment", "batiment", "batiment", "batiment", "batiment", "batiment", "batiment", "batiment",
-        "cabinet-comptable", "cabinet-comptable", "cabinet-comptable",
+        "cabinet-comptable", "cabinet-comptable", "cabinet-comptable", "cabinet-comptable", "cabinet-comptable",
         "agence-marketing", "agence-marketing", "agence-marketing", "agence-marketing", "agence-marketing",
       ]);
     expect(PILOT_SOLUTION_UNMET_NEEDS).toEqual([
@@ -99,8 +101,8 @@ describe("three-pilot draft Solutions registry", () => {
         && Date.parse(entry.capturedAt) <= now.getTime()
       ))).toBe(true);
       expect(resource.reviewer).toBe("Master Demaa");
-      expect(resource.reviewedAt).toBe("2026-08-03T20:00:00.000Z");
-      expect(resource.expiresAt).toBe("2027-02-03T00:00:00.000Z");
+      expect(resource.reviewedAt).toBe("2026-08-05T00:01:00.000Z");
+      expect(resource.expiresAt).toBe("2027-02-05T00:00:00.000Z");
       expect(resource.description.length).toBeGreaterThan(20);
       expect(resource.commercialRelationship).toBe("unknown");
       expect(resource.description).not.toMatch(/ODEMA|Demaa/i);
@@ -115,6 +117,7 @@ describe("three-pilot draft Solutions registry", () => {
       );
       expect(resource).toBeDefined();
       expect(placement.status).toBe("draft");
+      expect(placement.editorialStatus).toBe("selected");
       expect(placement.commercialRelationship).toBe(
         resource?.commercialRelationship,
       );
@@ -202,7 +205,11 @@ describe("three-pilot draft Solutions registry", () => {
     ]);
     expect(getRenderableSolutionSectionsForSystem("cabinet-comptable").map(({ placements }) =>
       placements.map(({ resource }) => resource.resourceSlug)
-    )).toEqual([["pennylane", "tiimora", "silae"], ["levier"]]);
+    )).toEqual([
+      ["pennylane", "tiimora", "silae"],
+      ["levier"],
+      ["ordre-experts-comptables", "croec-regional"],
+    ]);
     expect(getRenderableSolutionSectionsForSystem("agence-marketing").map(({ placements }) =>
       placements.map(({ resource }) => resource.resourceSlug)
     )).toEqual([["airtable", "canva", "brevo", "metricool", "chatgpt"], ["levier"]]);
@@ -230,7 +237,7 @@ describe("three-pilot draft Solutions registry", () => {
     for (const systemSlug of ["batiment", "cabinet-comptable", "agence-marketing"]) {
       const serializedUi = JSON.stringify(getRenderableSolutionSectionsForSystem(systemSlug));
       expect(serializedUi).not.toMatch(
-        /commercialRelationship|publicationBlockers|status|reviewer|reviewedAt|expiresAt|evidence|ODEMA|owned|affiliate|commercial_partner|paid_referral/i,
+        /commercialRelationship|editorialStatus|publicationBlockers|status|reviewer|reviewedAt|expiresAt|evidence|ODEMA|owned|affiliate|commercial_partner|paid_referral/i,
       );
       expect(getPublishedRenderableSolutionSectionsForSystem(systemSlug)[0]?.placements)
         .toHaveLength(1);

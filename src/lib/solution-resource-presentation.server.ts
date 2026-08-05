@@ -10,6 +10,7 @@ type ResourcePresentation = Readonly<{
   displayCategory: string;
   indicativePricing?: string;
   pricingReviewedAt?: string;
+  pricingExpiresAt?: string;
   pricingSource?: string;
 }>;
 
@@ -86,8 +87,33 @@ const DEFAULT_PRESENTATIONS: Readonly<Record<SolutionResource["resourceType"], R
   directory: { ctaLabel: "Découvrir l’organisation", displayCategory: "Organisation professionnelle" },
 };
 
-export function getSolutionResourcePresentation(resource: SolutionResource) {
-  return RESOURCE_PRESENTATIONS[resource.resourceSlug] ?? DEFAULT_PRESENTATIONS[resource.resourceType];
+export function getSolutionResourcePresentation(
+  resource: SolutionResource,
+  now = new Date(),
+): ResourcePresentation {
+  const presentation = RESOURCE_PRESENTATIONS[resource.resourceSlug]
+    ?? DEFAULT_PRESENTATIONS[resource.resourceType];
+  if (!presentation.indicativePricing) return presentation;
+
+  const reviewedAt = Date.parse(presentation.pricingReviewedAt ?? "");
+  const expiresAt = Date.parse(presentation.pricingExpiresAt ?? "");
+  if (
+    !Number.isFinite(now.getTime()) ||
+    !Number.isFinite(reviewedAt) ||
+    !Number.isFinite(expiresAt) ||
+    reviewedAt > now.getTime() ||
+    reviewedAt >= expiresAt ||
+    expiresAt <= now.getTime()
+  ) {
+    return {
+      ctaLabel: presentation.ctaLabel,
+      displayCategory: presentation.displayCategory,
+      pricingReviewedAt: presentation.pricingReviewedAt,
+      pricingExpiresAt: presentation.pricingExpiresAt,
+      pricingSource: presentation.pricingSource,
+    };
+  }
+  return presentation;
 }
 
 export function resolveSolutionOfficialDestination(resource: SolutionResource): string | null {

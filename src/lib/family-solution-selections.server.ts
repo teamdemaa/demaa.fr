@@ -45,6 +45,7 @@ export type FamilySolutionSelection = Readonly<{
   expiresAt?: string;
   evidenceUrls: readonly string[];
   catalogDestination?: string;
+  editorialStatus: "selected" | "hidden";
   commercialRelationship: "owned" | "unknown";
   status: "published" | "draft";
   publicationBlockers: readonly string[];
@@ -91,6 +92,9 @@ const manifest = familySolutionSelections as unknown as Readonly<{
 }>;
 
 function hasValidAuditWindow(checkedAt: string | undefined, expiresAt: string | undefined) {
+  // The v2 migration deliberately preserves legacy selections with no audit window.
+  // Never infer dates for them: any visible price still requires its own complete,
+  // fresh pricing capture and expiration through getFreshFamilyPricingSummary.
   if (!checkedAt && !expiresAt) return true;
   if (!checkedAt || !expiresAt) return false;
   const checkedTimestamp = Date.parse(checkedAt);
@@ -101,7 +105,7 @@ function hasValidAuditWindow(checkedAt: string | undefined, expiresAt: string | 
 }
 
 function assertFamilySolutionManifest() {
-  if (manifest.schemaVersion !== 1 || manifest.manifestVersion !== "family-solution-selections.v1") {
+  if (manifest.schemaVersion !== 2 || manifest.manifestVersion !== "family-solution-selections.v2") {
     throw new Error("Invalid family solution selection manifest version.");
   }
   const sourceHashes = Object.fromEntries(
@@ -148,6 +152,7 @@ function assertFamilySolutionManifest() {
       if (isLevier) {
         if (
           placement.status !== "published" ||
+          placement.editorialStatus !== "selected" ||
           placement.commercialRelationship !== "owned" ||
           placement.publicationBlockers.length !== 0 ||
           placement.interactionMode !== "system_delivery"
@@ -155,6 +160,7 @@ function assertFamilySolutionManifest() {
           throw new Error(`Invalid Levier family placement: ${system.systemSlug}.`);
         }
       } else if (
+        !["selected", "hidden"].includes(placement.editorialStatus) ||
         placement.status !== "draft" ||
         placement.commercialRelationship !== "unknown" ||
         placement.publicationBlockers.length !== 1 ||
@@ -223,7 +229,11 @@ export function getFamilySolutionGaps(): readonly FamilySolutionGap[] {
 export function resolveFamilySolutionCatalogSelection(
   selection: FamilySolutionSelection,
 ): ResolvedCatalogSelection | null {
-  if (selection.resourceSlug === "levier" || !selection.catalogDestination) return null;
+  if (
+    selection.resourceSlug === "levier" ||
+    selection.editorialStatus !== "selected" ||
+    !selection.catalogDestination
+  ) return null;
 
   const tool = selection.section === "software"
     ? getToolDirectoryItemBySlug(selection.resourceSlug)

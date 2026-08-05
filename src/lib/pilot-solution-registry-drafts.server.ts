@@ -75,6 +75,7 @@ function draftPlacement(input: DraftPlacementInput): SolutionPlacement {
     usage: input.usage,
     fitRationale: input.fitRationale,
     fitConstraints: input.fitConstraints,
+    editorialStatus: "selected",
     commercialRelationship: "unknown",
     status: "draft",
     placementVersion: "pilot.v1",

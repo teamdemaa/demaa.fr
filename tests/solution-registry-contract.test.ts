@@ -46,6 +46,7 @@ function publishedPlacement(): SolutionPlacement {
   return {
     ...structuredClone(solutionMigrationCandidatePlacements[0]),
     ...reviewed,
+    editorialStatus: "selected",
     commercialRelationship: "none",
     status: "published",
     publicationBlockers: [],
@@ -53,6 +54,16 @@ function publishedPlacement(): SolutionPlacement {
 }
 
 describe("Solutions registry contract", () => {
+  it("keeps editorial selection independent from commercial relationship", () => {
+    const placement = {
+      ...structuredClone(solutionMigrationCandidatePlacements[0]),
+      editorialStatus: "selected" as const,
+    };
+    expect(placement.status).toBe("draft");
+    expect(placement.commercialRelationship).toBe("unknown");
+    expect(validateSolutionPlacement(placement, now)).toEqual([]);
+  });
+
   it("keeps Qonto, La Plateforme and CAPEB as test-only migration fixtures", () => {
     expect(solutionMigrationCandidateResources.map((resource) => resource.resourceSlug)).toEqual([
       "qonto",
@@ -144,6 +155,12 @@ describe("Solutions registry contract", () => {
       knownSystemSlugs: ["cabinet-comptable"],
       resources: [],
       placements: [placement],
+    }, now)).toEqual([]);
+    expect(selectPublishedSolutionPlacements({
+      systemSlug: "cabinet-comptable",
+      knownSystemSlugs: ["cabinet-comptable"],
+      resources: [resource],
+      placements: [{ ...placement, editorialStatus: "hidden" }],
     }, now)).toEqual([]);
   });
 

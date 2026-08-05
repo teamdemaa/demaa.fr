@@ -113,6 +113,7 @@ function isEditoriallySelectedDraftPlacement(
 ) {
   return (
     placement.status === "draft" &&
+    placement.editorialStatus === "selected" &&
     placement.commercialRelationship === "unknown" &&
     placement.publicationBlockers.length === 1 &&
     placement.publicationBlockers[0] === "commercial-relationship-unconfirmed" &&
@@ -123,11 +124,12 @@ function isEditoriallySelectedDraftPlacement(
 function toRenderableDraftPlacement(
   placement: SolutionPlacement,
   resource: SolutionResource,
+  now: Date,
 ): RenderableSolutionPlacementDto | null {
   if (!hasSupportedDraftInteraction(resource)) return null;
   const officialDestination = resolveSolutionOfficialDestination(resource);
   if (!officialDestination) return null;
-  const presentation = getSolutionResourcePresentation(resource);
+  const presentation = getSolutionResourcePresentation(resource, now);
   const interaction = { interactionMode: "external_link", href: officialDestination } as const;
   return {
     placementId: placement.placementId,
@@ -166,7 +168,7 @@ function toRenderableFamilyPlacement(
   selection: FamilySolutionSelection,
   now: Date,
 ): RenderableSolutionPlacementDto | null {
-  if (selection.resourceSlug === "levier") return null;
+  if (selection.resourceSlug === "levier" || selection.editorialStatus !== "selected") return null;
 
   const resolved = resolveFamilySolutionCatalogSelection(selection);
   if (!resolved) return null;
@@ -197,7 +199,9 @@ function getRenderableFamilySolutionSections(systemSlug: string, now: Date) {
   if (!system) return [];
   const publishedSections = getPublishedRenderableSolutionSectionsForSystem(systemSlug);
   const familyPlacements = system.placements
-    .filter((placement) => placement.resourceSlug !== "levier")
+    .filter((placement) => (
+      placement.resourceSlug !== "levier" && placement.editorialStatus === "selected"
+    ))
     .flatMap((placement) => {
       const rendered = toRenderableFamilyPlacement(systemSlug, placement, now);
       return rendered ? [rendered] : [];
@@ -256,7 +260,7 @@ export function getRenderableSolutionSectionsForSystem(
     if (!resource || resource.commercialRelationship !== placement.commercialRelationship) {
       return [];
     }
-    const rendered = toRenderableDraftPlacement(placement, resource);
+    const rendered = toRenderableDraftPlacement(placement, resource, now);
     return rendered ? [rendered] : [];
   });
 
