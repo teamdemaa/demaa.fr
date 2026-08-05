@@ -47,6 +47,21 @@ export const ACADEMY_PERMANENT_REDIRECTS = [
       },
     ],
   ),
+  {
+    source: "/cours/facture-electronique",
+    destination: "/systemes",
+    permanent: true,
+  },
+  {
+    source: "/cours/obligations-finances-entreprise",
+    destination: "/systemes",
+    permanent: true,
+  },
+  {
+    source: "/cours/organisation-marketing-vente",
+    destination: "/academie/construire-systeme-marketing-vente",
+    permanent: true,
+  },
 ] as const;
 
 export type AcademyContentSlug = (typeof ACADEMY_CONTENT_SLUGS)[number];

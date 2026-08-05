@@ -4,6 +4,7 @@ export type OperationalSystemDeliveryRequest = {
   firstName?: string;
   idempotencyKey: string;
   marketingConsent?: boolean;
+  resourceSlug?: string;
   systemSlug: string;
   website?: string;
 };

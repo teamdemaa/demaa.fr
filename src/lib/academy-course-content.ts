@@ -194,7 +194,7 @@ export function getAcademyActionHref(action: AcademyAction) {
 
 export function getAcademyActionLabel(action: AcademyAction) {
   if (action.resourceId === "levier") {
-    return "Trouver mon système pour recevoir Levier";
+    return "Trouver mon système et ses ressources";
   }
 
   return action.ctaLabel;

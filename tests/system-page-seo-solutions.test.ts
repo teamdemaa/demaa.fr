@@ -57,30 +57,32 @@ function itemList(jsonLd: ReturnType<typeof buildSystemPageJsonLd>) {
 }
 
 describe("system page SEO published Solutions boundary", () => {
-  it("describes Process only when the published registry is empty", () => {
+  it("describes Process and the universal Resources when the registry is empty", () => {
     const metadata = buildSystemPageMetadata(processOnlyData, []);
     const jsonLd = buildSystemPageJsonLd(processOnlyData, []);
     const exposed = JSON.stringify({ metadata, jsonLd });
     const { system } = processOnlyData;
 
     expect(metadata.title).toBe(
-      `Système opérationnel ${system.name} : Process | Demaa`,
+      `Système opérationnel ${system.name} : Process et Solutions | Demaa`,
     );
     expect(metadata.description).toContain("process");
-    expect(metadata.keywords).toEqual([
+    expect(metadata.keywords).toEqual(expect.arrayContaining([
       system.name,
       `système opérationnel ${system.name.toLowerCase()}`,
       `process ${system.name.toLowerCase()}`,
       `modèle entreprise ${system.name.toLowerCase()}`,
-    ]);
+      "Tableau de pilotage opérationnel",
+      "CRM - suivi commercial",
+    ]));
     expect(itemList(jsonLd)?.name).toBe(
-      `Process du système opérationnel ${system.name}`,
+      `Process et Solutions du système opérationnel ${system.name}`,
     );
     expect(exposed).not.toMatch(/Legacy Outil Fantôme|\boutils?\b|annuaire-outils|écosystème/i);
-    expect(exposed).not.toMatch(/Process et Solutions|solutions e-commerce/i);
+    expect(exposed).toContain("Guide de la facturation électronique");
   });
 
-  it("keeps all 115 empty-registry pages free of historical SEO resources", () => {
+  it("keeps all 115 empty-registry pages free of historical Models while listing Resources", () => {
     expect(enterpriseCatalog).toHaveLength(115);
 
     for (const currentEnterprise of enterpriseCatalog) {
@@ -90,12 +92,13 @@ describe("system page SEO published Solutions boundary", () => {
       const exposed = JSON.stringify({ metadata, jsonLd });
 
       expect(metadata.title).toBe(
-        `Système opérationnel ${currentData.system.name} : Process | Demaa`,
+        `Système opérationnel ${currentData.system.name} : Process et Solutions | Demaa`,
       );
       expect(metadata.description).toMatch(/process/i);
       expect(exposed).not.toMatch(
-        /Legacy Outil Fantôme|\boutils?\b|annuaire-outils|écosystème|Process et Solutions|Solutions publiées/i,
+        /Legacy Outil Fantôme|\boutils?\b|annuaire-outils|écosystème|Solutions publiées|Levier/i,
       );
+      expect(exposed).toContain("Tableau de pilotage opérationnel");
     }
   });
 
@@ -145,15 +148,15 @@ describe("system page SEO published Solutions boundary", () => {
     expect(pageSource.match(/getActiveRenderableSolutionSectionsForSystem\(slug\)/g)).toHaveLength(1);
     expect(pageSource.match(/getActivePublishedRenderableSolutionSectionsForSystem\(slug\)/g))
       .toHaveLength(2);
-    expect(pageSource).toContain("buildSystemPageMetadata(data, solutionSections)");
+    expect(pageSource).toContain("buildSystemPageMetadata(data, withoutLegacyModels(solutionSections))");
     expect(pageSource).toContain(
-      "buildSystemPageJsonLd(data, publishedSolutionSections)",
+      "buildSystemPageJsonLd(data, visiblePublishedSolutionSections)",
     );
     expect(pageSource).toContain('JSON.stringify(jsonLd).replace(/</g, "\\\\u003c")');
     expect(detailSource).not.toContain("data.detail.tools");
   });
 
-  it("describes Levier without publishing an asset or Drive URL", () => {
+  it("filters the historical Levier model and describes the neutral Resources", () => {
     const metadata = buildSystemPageMetadata(
       publishedSolutionsData,
       publishedLevierSolutionSectionsFixture,
@@ -164,20 +167,20 @@ describe("system page SEO published Solutions boundary", () => {
     );
     const exposed = JSON.stringify({ metadata, jsonLd });
 
-    expect(metadata.description).toContain(
-      "Recevez gratuitement par e-mail Levier, le tableau de pilotage opérationnel à copier dans Google Sheets.",
-    );
+    expect(metadata.description).toContain("5 ressources pratiques");
     expect(exposed).not.toMatch(/Google Drive|docs\.google|private-assets/);
+    expect(exposed).not.toContain("Levier");
     const list = itemList(jsonLd);
     expect(list?.itemListElement).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({ name: "Levier" }),
+        expect.objectContaining({ name: "Tableau de pilotage opérationnel" }),
+        expect.objectContaining({ name: "CRM - suivi commercial" }),
       ]),
     );
     if (!list?.itemListElement) throw new Error("ItemList JSON-LD manquant");
-    const levierItem = list.itemListElement.find(
-      (item) => item.name === "Levier",
+    const resourceItem = list.itemListElement.find(
+      (item) => item.name === "Tableau de pilotage opérationnel",
     );
-    expect(levierItem).not.toHaveProperty("url");
+    expect(resourceItem).not.toHaveProperty("url");
   });
 });

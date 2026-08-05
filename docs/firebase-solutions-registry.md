@@ -43,13 +43,13 @@ la limite d’un document Firestore.
   commerciale `unknown` et ses blocages.
 - Aucune recommandation n’est déclarée partenaire, affiliée, Demaa ou ODEMA
   sans décision et preuve séparées.
-- Levier est la seule ressource `owned` actuellement publiée.
+- Levier reste la seule ressource `owned` publiée dans la révision Firebase historique.
 - Le statut de la révision décrit son activation technique. Les statuts des
   ressources et placements décrivent leur validation éditoriale séparément.
 - Une révision active peut conserver des recommandations tierces en `draft`,
   avec une relation `unknown` et leurs blocages explicites. Cela ne les
   transforme jamais en partenaires ou recommandations validées.
-- Chaque métier possède exactement un Levier dans `Modèles`, au maximum cinq
+- Chaque métier possède encore exactement un Levier dans `Modèles`, au maximum cinq
   cartes par section et des rangs continus.
 - Toute tarification visible porte une source, une date de capture et une date
   d’expiration. Une tarification expirée est masquée.
@@ -66,8 +66,10 @@ La révision active `solutions-2026-08-05-active-v1` couvre :
 
 Elle est techniquement active, mais conserve 247 ressources et 485 placements
 tiers en `draft`. Seuls Levier et ses 115 placements sont éditorialement
-`published`. Le rendu normal lit cette révision ; le rendu SEO structuré ne
-retient que les entrées éditorialement publiées.
+`published`. Depuis le chantier Ressources, le rendu normal et le rendu SEO
+filtrent entièrement la section historique `models`. Les cinq ressources Demaa
+communes sont servies par `system-resource-catalog.ts`; la révision Firebase
+reste intacte uniquement pour permettre un retour arrière sans écriture distante.
 
 ## Commandes locales
 

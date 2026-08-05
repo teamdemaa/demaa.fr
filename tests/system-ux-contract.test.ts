@@ -6,7 +6,7 @@ async function readSource(path: string) {
 }
 
 describe("system UX contract", () => {
-  it("keeps the Levier preview, e-mail form and confirmation in one modal", async () => {
+  it("keeps each resource preview, e-mail form and confirmation in one modal", async () => {
     const detailSource = await readSource(
       "src/components/SystemDetailContent.tsx",
     );
@@ -24,25 +24,20 @@ describe("system UX contract", () => {
     expect(detailSource).not.toContain("Recevoir ma copie modifiable");
     expect(detailSource).not.toContain("deliveryAvailable");
     expect(detailSource).not.toContain("hasLevierSolution");
-    expect(detailSource).toContain("onOpenSystemDelivery");
-    expect(detailSource).toContain('setDeliveryModal("levier")');
-    expect(detailSource).toContain('deliveryModal === "levier"');
-    expect(detailSource).toContain("preview={LEVIER_PREVIEW}");
+    expect(detailSource).toContain("onOpenResource={setSelectedResource}");
+    expect(detailSource).toContain("selectedResource ?");
+    expect(detailSource).toContain("resource={selectedResource}");
     expect(detailSource).not.toContain("HistoricalOperationalSystemCopyRequestModal");
     expect(modalSource).not.toMatch(/"overview"\s*\|\s*"form"/);
-    expect(modalSource).toContain("Recevoir Levier");
-    expect(modalSource).toContain("Levier est dans votre boîte mail.");
-    expect(modalSource).toContain(
-      "Vous y trouverez le lien pour créer votre copie personnelle.",
-    );
-    expect(modalSource).toContain(
-      "Pensez à vérifier vos courriers indésirables.",
-    );
-    expect(modalSource).not.toContain("Votre demande de Levier pour");
-    expect(modalSource).toContain("Tableau de pilotage opérationnel");
+    expect(modalSource).toContain("resource.deliveryLabel");
+    expect(modalSource).toContain("Votre ressource est dans votre boîte mail.");
+    expect(modalSource).toContain("resource.successDescription");
+    expect(modalSource).toContain("resource.previewDisclosure");
     expect(modalSource).toContain('name="email"');
     expect(modalSource).not.toContain('name="firstName"');
     expect(modalSource).not.toContain("Prénom");
+    expect(modalSource).toContain('name="marketingConsent"');
+    expect(modalSource).toContain("Facultatif");
     expect(modalSource).not.toContain("openForm");
     expect(modalSource).not.toMatch(/Voir la démonstration|Google Drive/);
     expect(modalSource).not.toContain(
@@ -56,7 +51,7 @@ describe("system UX contract", () => {
     expect(historicalModalSource).toContain("Recevoir ma copie modifiable");
     expect(historicalModalSource).toContain('firstName: normalizedFirstName');
     expect(historicalModalSource).toContain('const flowKey = `system-copy:${systemSlug}`');
-    expect(modalSource).toContain('const flowKey = `levier:${systemSlug}`');
+    expect(modalSource).toContain('const flowKey = `resource:${resource.resourceSlug}:${systemSlug}`');
     expect(historicalModalSource).toContain('fetch("/api/systeme-kit/request"');
     expect(pageSource).not.toContain("getOperationalSystemDemoUrl");
     expect(pageSource).not.toContain("deliveryAvailable=");

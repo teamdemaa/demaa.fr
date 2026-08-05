@@ -37,7 +37,7 @@ async function readSource(path: string) {
 describe("system Solutions UI", () => {
   it("shows the validated empty state and hides empty section rails", () => {
     expect(
-      renderToStaticMarkup(createElement(SystemSolutionsTab, { sections: [] })),
+      renderToStaticMarkup(createElement(SystemSolutionsTab, { resources: [], sections: [] })),
     ).toContain(
       "Nous vérifions encore les solutions les plus pertinentes pour ce métier.",
     );
@@ -50,21 +50,23 @@ describe("system Solutions UI", () => {
     expect(markup).toContain("Outils");
     expect(markup).toContain("Qonto");
     expect(markup).toContain("Prestataires et fournisseurs");
-    expect(markup).not.toMatch(/en cours|bientôt|à venir|placeholder/i);
+    expect(markup).not.toMatch(/bientôt|placeholder/i);
   });
 
-  it("renders Levier as the universal model card without a public asset URL", () => {
+  it("replaces the legacy Models rail with the neutral Resources catalog", () => {
     const markup = renderToStaticMarkup(
       createElement(SystemSolutionsTab, {
         sections: publishedLevierSolutionSectionsFixture,
       }),
     );
 
-    expect(markup).toContain("Modèles");
-    expect(markup).toContain("Levier");
+    expect(markup).toContain("Ressources");
+    expect(markup).not.toContain("Modèles");
+    expect(markup).not.toContain("Levier");
     expect(markup).toContain("Tableau de pilotage opérationnel");
-    expect(markup).toContain("Ouvrir Levier");
-    expect(markup).not.toMatch(/Outil Demaa|Service/);
+    expect(markup).toContain("Suivi et prévisionnel financier");
+    expect(markup).toContain("CRM - suivi commercial");
+    expect(markup).toContain("Guide de la facturation électronique");
     expect(JSON.stringify(publishedLevierSolutionSectionsFixture)).not.toMatch(
       /https?:\/\/|drive|\.xlsx/i,
     );
@@ -126,7 +128,12 @@ describe("system Solutions UI", () => {
             .toBeLessThan(markup.indexOf(label));
         }
       }
-      expect(visibleRailLabels.at(-1)).toBe("Modèles");
+      expect(markup).not.toContain('aria-label="Ouvrir Levier"');
+      expect(markup).toContain('aria-label="Ouvrir Tableau de pilotage opérationnel"');
+      const lastLegacyRailLabel = visibleRailLabels.at(-1);
+      if (lastLegacyRailLabel) {
+        expect(markup.indexOf(lastLegacyRailLabel)).toBeLessThan(markup.indexOf("Ressources"));
+      }
       expect(normalizeSystemDetailTab("solutions")).toBe("solutions");
       expect(normalizeSystemDetailTab("outils")).toBe("solutions");
       expect(normalizeSystemDetailTab("ecosysteme")).toBe("solutions");
@@ -260,7 +267,8 @@ describe("system Solutions UI", () => {
         createElement(SystemSolutionsTab, { sections }),
       );
       expect(markup).toContain("Outils");
-      expect(markup).toContain('aria-label="Ouvrir Levier"');
+      expect(markup).not.toContain('aria-label="Ouvrir Levier"');
+      expect(markup).toContain('aria-label="Ouvrir Tableau de pilotage opérationnel"');
       const orderedNames = SOLUTION_RAIL_DISPLAY_ORDER.flatMap((section) =>
         sections
           .filter((candidate) => candidate.section === section)
@@ -379,7 +387,8 @@ describe("system Solutions UI", () => {
     expect(pageSource).toContain(
       'from "@/lib/firebase-solution-registry-selection.server"',
     );
-    expect(pageSource).toContain("solutionSections={solutionSections}");
+    expect(pageSource).toContain("solutionSections={visibleSolutionSections}");
+    expect(pageSource).toContain('section !== "models"');
     expect(pageSource).not.toContain("getMigrationSafe");
     expect(detailSource).not.toMatch(/solution-registry\.(?:server|contract)/);
     expect(solutionsSource).toContain("import type {");
@@ -408,7 +417,7 @@ describe("system Solutions UI", () => {
     expect(detailSource).toContain("systeme: SystemeDetail | null");
   });
 
-  it("keeps only Levier as the public delivery entry point", async () => {
+  it("uses the neutral Resources catalog as the public delivery entry point", async () => {
     const detailSource = await readSource("src/components/SystemDetailContent.tsx");
     const levierModalSource = await readSource(
       "src/components/OperationalSystemCopyRequestModal.tsx",
@@ -418,17 +427,17 @@ describe("system Solutions UI", () => {
     );
 
     expect(detailSource).not.toContain('setDeliveryModal("system")');
-    expect(detailSource).toContain('onOpenSystemDelivery={() => setDeliveryModal("levier")}');
-    expect(detailSource).toContain('deliveryModal === "levier"');
-    expect(detailSource).toContain("preview={LEVIER_PREVIEW}");
+    expect(detailSource).toContain("onOpenResource={setSelectedResource}");
+    expect(detailSource).toContain("selectedResource ?");
+    expect(detailSource).toContain("resource={selectedResource}");
     expect(detailSource).not.toContain("HistoricalOperationalSystemCopyRequestModal");
     expect(detailSource).not.toContain("Voir le système");
     expect(systemModalSource).toContain("Système opérationnel - {systemName}");
     expect(systemModalSource).toContain("Recevoir ma copie modifiable");
     expect(systemModalSource).toContain('const flowKey = `system-copy:${systemSlug}`');
-    expect(levierModalSource).toContain("Tableau de pilotage opérationnel");
-    expect(levierModalSource).toContain("Recevoir Levier");
-    expect(levierModalSource).toContain('const flowKey = `levier:${systemSlug}`');
+    expect(levierModalSource).toContain("resource.title");
+    expect(levierModalSource).toContain("resource.deliveryLabel");
+    expect(levierModalSource).toContain('const flowKey = `resource:${resource.resourceSlug}:${systemSlug}`');
   });
 
   it("reuses the accessible modal lifecycle and resets selection on close", async () => {
@@ -469,7 +478,7 @@ describe("system Solutions UI", () => {
     expect(gate).toContain("JSON-LD");
     expect(gate).toContain("published-only");
     expect(pageSource).toContain(
-      "buildSystemPageJsonLd(data, publishedSolutionSections)",
+      "buildSystemPageJsonLd(data, visiblePublishedSolutionSections)",
     );
   });
 });

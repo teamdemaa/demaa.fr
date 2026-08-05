@@ -54,7 +54,7 @@ export default function PolitiqueConfidentialitePage() {
               <li>numéro de téléphone / WhatsApp ;</li>
               <li>nom d&apos;entreprise ;</li>
               <li>secteur d&apos;activité ;</li>
-              <li>système opérationnel dont vous demandez la copie ;</li>
+              <li>système opérationnel et ressource dont vous demandez l&apos;envoi ;</li>
               <li>contenu de votre demande, besoin métier, préférences outils et informations transmises dans les formulaires ;</li>
               <li>contenu saisi dans l&apos;assistant IA et plans générés ;</li>
               <li>données techniques liées à la navigation et à la mesure d&apos;audience ;</li>
@@ -68,9 +68,9 @@ export default function PolitiqueConfidentialitePage() {
       <PrivacySection title="3. Finalités et bases juridiques">
             <ul className="list-disc space-y-2 pl-5">
               <li><strong>Répondre à vos demandes, devis, audits et demandes d&apos;automatisation :</strong> exécution de mesures précontractuelles prises à votre demande.</li>
-              <li><strong>Vous envoyer, à votre demande, le lien permettant de créer une copie personnelle d&apos;un système opérationnel :</strong> exécution du service demandé.</li>
+              <li><strong>Vous envoyer, à votre demande, une ressource ou le lien permettant de créer une copie personnelle :</strong> exécution du service demandé.</li>
               <li><strong>Gérer les formulaires de contact, rappels et échanges commerciaux :</strong> intérêt légitime et, selon les cas, mesures précontractuelles.</li>
-              <li><strong>Vous adresser des conseils et actualités par e-mail :</strong> uniquement lorsque vous y consentez séparément ; ce choix n&apos;est jamais nécessaire pour recevoir la copie demandée.</li>
+              <li><strong>Vous adresser des conseils et actualités par e-mail :</strong> uniquement lorsque vous y consentez séparément ; ce choix facultatif n&apos;est jamais nécessaire pour recevoir la ressource demandée.</li>
               <li><strong>Fournir l&apos;assistant IA et enregistrer vos générations :</strong> exécution du service demandé et intérêt légitime d&apos;amélioration et de suivi.</li>
               <li><strong>Gérer les listes d&apos;attente ou demandes d&apos;information sur un outil :</strong> consentement ou intérêt légitime selon le contexte de la demande.</li>
               <li><strong>Comprendre l&apos;origine d&apos;une demande et mesurer l&apos;efficacité des contenus et campagnes :</strong> intérêt légitime pour les informations rattachées à la demande, et consentement préalable pour les traceurs ou stockages optionnels.</li>

@@ -15,7 +15,7 @@ import {
   isVisibleSystemDetailTab,
   type SystemDetailTab,
 } from "@/lib/system-detail-tabs";
-import { LEVIER_PREVIEW } from "@/lib/system-kit-previews";
+import type { SystemResource } from "@/lib/system-resource-catalog";
 import type { RenderableSolutionSectionDto } from "@/lib/system-solutions-ui-dto";
 import type { System } from "@/lib/types";
 
@@ -39,8 +39,6 @@ const systemTabDefinitions: ReadonlyArray<{
 
 const EMPTY_SOLUTION_SECTIONS: readonly RenderableSolutionSectionDto[] = [];
 
-type DeliveryModal = "levier" | null;
-
 export default function SystemDetailContent({
   system,
   systeme,
@@ -61,10 +59,10 @@ export default function SystemDetailContent({
       ? initialActiveTab
       : "process",
   );
-  const [deliveryModal, setDeliveryModal] = useState<DeliveryModal>(null);
+  const [selectedResource, setSelectedResource] = useState<SystemResource | null>(null);
   const closeDeliveryModal = useCallback(() => {
-    setDeliveryModal(null);
-  }, [setDeliveryModal]);
+    setSelectedResource(null);
+  }, []);
 
   function selectTab(tab: SystemDetailTab) {
     setActiveTab(tab);
@@ -162,17 +160,16 @@ export default function SystemDetailContent({
 
           {activeTab === "solutions" ? (
             <SystemSolutionsTab
-              onOpenSystemDelivery={() => setDeliveryModal("levier")}
+              onOpenResource={setSelectedResource}
               sections={solutionSections}
             />
           ) : null}
         </section>
         <SystemCustomOfferCta context={activeTab} systemSlug={system.slug} />
       </article>
-      {deliveryModal === "levier" ? (
+      {selectedResource ? (
         <OperationalSystemCopyRequestModal
-          preview={LEVIER_PREVIEW}
-          systemName={system.name}
+          resource={selectedResource}
           systemSlug={system.slug}
           onClose={closeDeliveryModal}
         />

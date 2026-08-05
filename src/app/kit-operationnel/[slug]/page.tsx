@@ -20,6 +20,10 @@ type OperationalKitPageProps = {
   searchParams: Promise<{ tab?: string | string[] }>;
 };
 
+function withoutLegacyModels<T extends Readonly<{ section: string }>>(sections: readonly T[]) {
+  return sections.filter(({ section }) => section !== "models");
+}
+
 function getParamValue(value?: string | string[]) {
   return Array.isArray(value) ? value[0] : value;
 }
@@ -42,7 +46,7 @@ export async function generateMetadata({
     };
   }
 
-  return buildSystemPageMetadata(data, solutionSections);
+  return buildSystemPageMetadata(data, withoutLegacyModels(solutionSections));
 }
 
 export default async function OperationalKitPage({
@@ -61,7 +65,9 @@ export default async function OperationalKitPage({
   }
 
   const initialTab = getParamValue(resolvedSearchParams.tab);
-  const jsonLd = buildSystemPageJsonLd(data, publishedSolutionSections);
+  const visibleSolutionSections = withoutLegacyModels(solutionSections);
+  const visiblePublishedSolutionSections = withoutLegacyModels(publishedSolutionSections);
+  const jsonLd = buildSystemPageJsonLd(data, visiblePublishedSolutionSections);
   const hasEditableSystem = hasEditableOperationalSystemAsset(data.system.slug);
 
   if (!hasEditableSystem) {
@@ -85,7 +91,7 @@ export default async function OperationalKitPage({
             intro={buildSystemPageIntro(data)}
             initialActiveTab={normalizeSystemDetailTab(initialTab)}
             headingAs="h1"
-            solutionSections={solutionSections}
+            solutionSections={visibleSolutionSections}
           />
         </div>
       </main>

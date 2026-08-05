@@ -134,7 +134,7 @@ const liveTrainings = [
       "Mettre en place un rythme de suivi pour améliorer les résultats.",
     ],
     includedModels: [
-      "Tableau de pilotage Marketing & Vente sur Airtable",
+      "CRM de suivi commercial sur Airtable",
       "Pipeline commercial, relances et suivi des conversions",
     ],
     qAndA: "Un temps de questions-réponses pour adapter le tableau à votre cycle de vente.",

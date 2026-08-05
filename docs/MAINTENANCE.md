@@ -18,6 +18,8 @@ Les catalogues sont encore repartis entre plusieurs sources:
 - `src/lib/enterprise-annuaire.json`: kits operationnels par activite.
 - `src/lib/service-catalog.ts`: catalogue officiel des services Demaa.
 - `src/lib/service-recommendations.ts`: ordre des services recommandes par kit.
+- `src/lib/system-resource-catalog.ts`: metadonnees publiques des ressources communes aux systemes.
+- `src/lib/system-resource-assets.server.ts`: revisions et destinations privees utilisees pour leur livraison.
 - `src/lib/supplier-catalog.ts`: annuaire fournisseurs, banques, assurances, mutuelles et partenaires metier.
 - `src/lib/supplier-recommendations.ts`: ordre des fournisseurs recommandes par kit.
 - Firestore: source distante avec fallback local pour certains catalogues.
@@ -70,7 +72,7 @@ Regle simple: reutiliser les classes ou composants existants avant d'ajouter des
 
 Routes critiques:
 
-- `/api/systeme-kit/request`: ancien endpoint gratuit conservé en garde-fou et retourne `410 Gone`.
+- `/api/systeme-kit/request`: livraison active et idempotente des ressources et des anciennes copies de systemes ; ne renvoie jamais la destination au navigateur.
 - `/api/cron/system-kit-followups`: clôt les anciennes séquences gratuites et exécute la maintenance opérationnelle.
 - `/api/customer-space/*`: acces securise a Mon espace.
 - `/api/service-introduction-request`: demande de mise en relation avec un service.
@@ -132,4 +134,5 @@ Puis verifier manuellement les parcours touches:
 - page modifiee charge sans erreur;
 - formulaire modifie affiche bien succes/erreur;
 - route API modifiee garde ses statuts attendus;
-- email de kit recu et lien `/copy` fonctionnel.
+- email de ressource recu et destination fonctionnelle ;
+- case de consentement marketing facultative et decochee par defaut.
