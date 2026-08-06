@@ -21,6 +21,7 @@ describe("system UX contract", () => {
     );
 
     expect(detailSource).not.toContain("Voir le système");
+    expect(detailSource).not.toContain("Système opérationnel");
     expect(detailSource).not.toContain("Recevoir ma copie modifiable");
     expect(detailSource).not.toContain("deliveryAvailable");
     expect(detailSource).not.toContain("hasLevierSolution");

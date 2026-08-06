@@ -66,7 +66,7 @@ describe("system Solutions UI", () => {
     expect(markup).toContain("Tableau de pilotage opérationnel");
     expect(markup).toContain("Suivi et prévisionnel financier");
     expect(markup).toContain("CRM - suivi commercial");
-    expect(markup).toContain("Guide de la facturation électronique");
+    expect(markup).toContain("La facturation électronique");
     expect(JSON.stringify(publishedLevierSolutionSectionsFixture)).not.toMatch(
       /https?:\/\/|drive|\.xlsx/i,
     );

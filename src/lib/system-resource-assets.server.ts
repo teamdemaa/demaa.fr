@@ -4,31 +4,49 @@ import { getLevierAssetSnapshot, getLevierCopyUrl, LEVIER_ASSET_REVISION } from 
 import type { LeadAssetSnapshot } from "@/lib/lead-storage";
 import { getSystemResource, type SystemResourceSlug } from "@/lib/system-resource-catalog";
 
-const RESOURCE_ASSETS: Readonly<Record<Exclude<SystemResourceSlug, "tableau-pilotage-operationnel">, Readonly<{
+type ExternalResourceSlug = Exclude<SystemResourceSlug, "tableau-pilotage-operationnel">;
+
+type ResourceAssetRevision = Readonly<{
   assetRevision: string;
   destination: string;
   workbookVersion: string;
-}>>> = {
-  "suivi-previsionnel-financier": {
+}>;
+
+const RESOURCE_ASSET_REVISIONS: Readonly<Record<ExternalResourceSlug, readonly ResourceAssetRevision[]>> = {
+  "suivi-previsionnel-financier": [{
     assetRevision: "suivi-previsionnel-financier-v1-2026-08-05",
     destination: "https://docs.google.com/spreadsheets/d/1-7IDhGAtwNQJtZDYYvhDvM3VHfHVeGwOMTFKdAQuIOE/copy",
     workbookVersion: "1.0.0",
-  },
-  "crm-suivi-commercial": {
+  }],
+  "crm-suivi-commercial": [{
     assetRevision: "crm-suivi-commercial-airtable-v1-2026-08-05",
     destination: "https://airtable.com/app3fRlYVjiFAnrjW/shraiL72hO4EvQoh2",
     workbookVersion: "1.0.0",
-  },
-  "guide-facturation-electronique": {
-    assetRevision: "guide-facturation-electronique-v1-2026-08-05",
-    destination: "https://demaa.fr/downloads/guides/guide-facturation-electronique-demaa.pdf",
-    workbookVersion: "1.0.0",
-  },
-  "guide-obligations-fiscales-sociales-comptables": {
-    assetRevision: "guide-obligations-fiscales-sociales-comptables-v1-2026-08-05",
-    destination: "https://demaa.fr/downloads/guides/guide-obligations-fiscales-sociales-comptables-demaa.pdf",
-    workbookVersion: "1.0.0",
-  },
+  }],
+  "guide-facturation-electronique": [
+    {
+      assetRevision: "guide-facturation-electronique-slides-v2-2026-08-06",
+      destination: "https://demaa.fr/downloads/presentations/presentation-facturation-electronique-demaa.pdf",
+      workbookVersion: "2.0.0",
+    },
+    {
+      assetRevision: "guide-facturation-electronique-v1-2026-08-05",
+      destination: "https://demaa.fr/downloads/guides/guide-facturation-electronique-demaa.pdf",
+      workbookVersion: "1.0.0",
+    },
+  ],
+  "guide-obligations-fiscales-sociales-comptables": [
+    {
+      assetRevision: "guide-obligations-fiscales-sociales-comptables-slides-v2-2026-08-06",
+      destination: "https://demaa.fr/downloads/presentations/presentation-obligations-finances-demaa.pdf",
+      workbookVersion: "2.0.0",
+    },
+    {
+      assetRevision: "guide-obligations-fiscales-sociales-comptables-v1-2026-08-05",
+      destination: "https://demaa.fr/downloads/guides/guide-obligations-fiscales-sociales-comptables-demaa.pdf",
+      workbookVersion: "1.0.0",
+    },
+  ],
 };
 
 export function getSystemResourceAssetSnapshot(resourceSlug: string): LeadAssetSnapshot | null {
@@ -37,7 +55,7 @@ export function getSystemResourceAssetSnapshot(resourceSlug: string): LeadAssetS
     return getLevierAssetSnapshot();
   }
 
-  const asset = RESOURCE_ASSETS[resourceSlug as keyof typeof RESOURCE_ASSETS];
+  const asset = RESOURCE_ASSET_REVISIONS[resourceSlug as ExternalResourceSlug]?.[0];
   if (!asset) return null;
   return {
     assetRevision: asset.assetRevision,
@@ -57,9 +75,11 @@ export function resolveSystemResourceDelivery(snapshot: LeadAssetSnapshot): Read
       : null;
   }
 
-  const resourceSlug = snapshot.resourceId as Exclude<SystemResourceSlug, "tableau-pilotage-operationnel"> | undefined;
+  const resourceSlug = snapshot.resourceId as ExternalResourceSlug | undefined;
   if (!resourceSlug) return null;
-  const asset = RESOURCE_ASSETS[resourceSlug];
-  if (!asset || asset.assetRevision !== snapshot.assetRevision) return null;
+  const asset = RESOURCE_ASSET_REVISIONS[resourceSlug]?.find(
+    (revision) => revision.assetRevision === snapshot.assetRevision,
+  );
+  if (!asset) return null;
   return { destination: asset.destination, resourceSlug };
 }
