@@ -39,7 +39,7 @@ candidat exact W7/W8.
 
 | Domaine | Propriétaire de décision | Propriétaire d'exécution | Contrôle indépendant |
 | --- | --- | --- | --- |
-| Architecture Système, Process, Solutions | Master Demaa + utilisatrice | chantier Systèmes UI | recette intégration |
+| Architecture Système, Process, Solutions, Ressources | Master Demaa + utilisatrice | chantier Systèmes UI | recette intégration |
 | Registres Process et routines | Master Demaa | chantier Données | audit 115 métiers |
 | Placements Logiciels et prestataires | Master Demaa | chantier Données | audit pertinence par métier |
 | Catalogue Services Demaa | utilisatrice + Master Demaa | chantier Services | revue commerciale et légale |

@@ -253,6 +253,7 @@ export default function OperationalSystemCopyRequestModal({
               width={resource.preview.width}
               height={resource.preview.height}
               sizes="(max-width: 767px) calc(100vw - 72px), 340px"
+              loading="eager"
               className="h-auto w-full rounded-[0.8rem] shadow-[0_14px_35px_rgba(23,35,29,0.1)]"
             />
           </div>

@@ -1,6 +1,7 @@
 export const SYSTEM_DETAIL_TABS = [
   "process",
   "solutions",
+  "resources",
 ] as const;
 
 export type SystemDetailTab = (typeof SYSTEM_DETAIL_TABS)[number];
@@ -22,6 +23,9 @@ export function isVisibleSystemDetailTab(
 const LEGACY_SYSTEM_DETAIL_TABS: Readonly<Record<string, SystemDetailTab>> = {
   outils: "solutions",
   ecosysteme: "solutions",
+  ressources: "resources",
+  modeles: "resources",
+  "modeles-de-documents": "resources",
   kit: "process",
   pilotage: "process",
   accompagnement: "process",

@@ -1,8 +1,8 @@
-# ADR 0001 - Architecture Systèmes, Solutions et Services
+# ADR 0001 - Architecture Systèmes, Solutions, Ressources et Services
 
 - Statut : `validated`
 - Date : 31 juillet 2026
-- Mise à jour d'état : 1er août 2026, checkpoint documentaire W6.0
+- Mise à jour d'état : 6 août 2026, clôture de l'interface Systèmes
 - Portée : cible produit et état de l'implémentation locale consolidée
 - Implémentation locale : W3, W4 et W5 présents, activation publique bloquée
 
@@ -12,15 +12,19 @@ Le parcours principal reste l'entrée par un **Système opérationnel**. La page
 d'un métier conserve son en-tête et le bouton contour `Voir le système`, qui
 ouvre la modale existante.
 
-Sous cet en-tête, la navigation cible ne comporte que deux espaces :
+Sous cet en-tête, la navigation cible comporte trois espaces :
 
 1. **Process** : routines et méthodes opérationnelles issues du référentiel
    canonique ;
-2. **Solutions** : ressources externes permettant d'exécuter le système.
+2. **Solutions** : outils, prestataires, fournisseurs et réseaux recommandés
+   pour exécuter le système ;
+3. **Ressources** : supports Demaa directement utilisables, présentés avec un
+   aperçu réel avant une éventuelle demande par e-mail.
 
-Le nom des sous-sections de Solutions reste non figé. La direction de travail
-est de distinguer les logiciels recommandés des prestataires et fournisseurs,
-sans créer un troisième onglet.
+Les cours et contenus pédagogiques restent dans l'Académie. Ils ne sont pas
+dupliqués dans Ressources. Les anciennes ressources placées dans `Modèles` ou
+affichées comme « Ressources héritées » ne doivent plus apparaître dans
+Solutions.
 
 Les prestations réalisées ou vendues par Demaa ne sont pas injectées dans les
 systèmes métier. Elles vivent dans une marketplace autonome à la route
@@ -37,6 +41,7 @@ Système opérationnel
   - Voir le système -> modale existante
   - Process
   - Solutions
+  - Ressources
 
 Navigation globale
   - Découvrir l'Académie
@@ -44,7 +49,9 @@ Navigation globale
 ```
 
 La présence d'un encart d'aide à l'organisation sous le panneau actif de
-**Process et de Solutions** est `validated`. Son texte exact reste `working`.
+**Process et de Solutions** est `validated`. Ressources conserve son parcours
+d'aperçu et de réception propre, sans dupliquer cet encart. Son texte exact
+reste `working`.
 L'implémentation locale place bien un seul composant après le contenu du panneau
 actif, mais son attribution Fillout est encore libellée
 `Système opérationnel - Process`. Cette attribution doit être corrigée avant
@@ -68,6 +75,22 @@ Fillout ne doit pas être dupliqué.
 - exige un placement explicite et auditable par métier ;
 - ne contient pas les Services opérés par Demaa ;
 - remplace les usages web des anciens onglets `Outils` et `Écosystème`.
+
+Les sous-sections visibles sont `Outils`, `Prestataires et fournisseurs` et
+`Réseaux professionnels`. Les ressources Demaa et les modèles de documents en
+sont exclus.
+
+### Ressources
+
+- présente cinq supports neutres et directement utilisables sur chaque fiche :
+  tableau de pilotage opérationnel, suivi et prévisionnel financier, CRM –
+  suivi commercial, guide sur la facturation électronique, guide sur les
+  obligations et les finances ;
+- montre un aperçu réel au clic avant toute demande ;
+- ne demande l'adresse e-mail que pour recevoir ou copier la ressource ;
+- ne contient aucun cours, ceux-ci restant exclusivement dans l'Académie ;
+- accepte les anciens paramètres d'URL `modeles` et `modeles-de-documents`
+  comme alias de `resources` afin de préserver les liens existants.
 
 Au checkpoint W6.0, l'interface et son adaptateur serveur `published-only` sont
 implémentés localement. Le registre produit contient **0 Solution publiée** :
@@ -104,7 +127,6 @@ révisions D-061 v2 pilotes ne sont ni généralisées, ni activées par W6.0.
 Les éléments suivants restent à valider avant implémentation définitive :
 
 - le libellé public `Routines essentielles` ;
-- les libellés internes des sous-sections de Solutions ;
 - le texte exact de l'encart d'aide à l'organisation ;
 - la présence et le comportement d'une recherche sur `/services` ;
 - le périmètre exact du Site vitrine à 950 EUR HT ;

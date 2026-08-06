@@ -21,7 +21,6 @@ const PILOT_SOLUTION_ORDERS = new Map([
       "plateforme-du-batiment",
       "kiloutou",
       "wurth",
-      "levier",
       "capeb",
     ],
   ],
@@ -31,16 +30,23 @@ const PILOT_SOLUTION_ORDERS = new Map([
       "pennylane",
       "tiimora",
       "silae",
-      "levier",
       "ordre-experts-comptables",
       "croec-regional",
     ],
   ],
   [
     "agence-marketing",
-    ["airtable", "canva", "brevo", "metricool", "chatgpt", "levier"],
+    ["airtable", "canva", "brevo", "metricool", "chatgpt"],
   ],
 ]);
+
+const EXPECTED_RESOURCE_TITLES = [
+  "Tableau de pilotage opérationnel",
+  "Suivi et prévisionnel financier",
+  "CRM - suivi commercial",
+  "La facturation électronique",
+  "Maîtriser les obligations et les finances de son entreprise",
+];
 
 const PRIVATE_SOLUTION_MARKERS = [
   "commercialRelationship",
@@ -79,9 +85,9 @@ export function buildExpectedSolutionOrders() {
   const orders = new Map(
     manifest.systems.map((system) => [
       system.systemSlug,
-      ["software", "providers", "models", "networks"].flatMap((section) =>
-        [
-          ...system.placements.filter((placement) => {
+      ["software", "providers", "networks"].flatMap((section) =>
+        system.placements
+          .filter((placement) => {
             if (placement.editorialStatus !== "selected") return false;
             if (placement.resourceSlug === "levier") return false;
             if (section === "networks") return placement.resourceType === "directory";
@@ -89,9 +95,7 @@ export function buildExpectedSolutionOrders() {
               return placement.section === "providers" && placement.resourceType === "provider";
             }
             return placement.section === section;
-          }),
-          ...(section === "models" ? [{ resourceSlug: "levier", rank: 1 }] : []),
-        ]
+          })
           .sort((left, right) => left.rank - right.rank)
           .map((placement) => placement.resourceSlug),
       ),
@@ -101,7 +105,6 @@ export function buildExpectedSolutionOrders() {
   for (const [systemSlug, order] of PILOT_SOLUTION_ORDERS) {
     orders.set(systemSlug, [...order]);
   }
-
   return orders;
 }
 
@@ -110,10 +113,11 @@ function countOccurrences(source, value) {
 }
 
 export function getTabs() {
-  return ["process", "solutions"];
+  return ["process", "solutions", "resources"];
 }
 
 export function getExpectedCallTexts(tab) {
+  if (tab === "resources") return [];
   return tab === "solutions"
     ? [
         "Besoin d’aide pour identifier la bonne solution ?",
@@ -172,7 +176,7 @@ export function inspectPage({ response, html, tab, expectedSolutionOrder }) {
     }
   }
 
-  for (const expectedTab of ["Process", "Solutions"]) {
+  for (const expectedTab of ["Process", "Solutions", "Ressources"]) {
     if (!renderedHtml.includes(`>${expectedTab}</button>`)) {
       errors.push(`missing direct tab: ${expectedTab}`);
     }
@@ -187,9 +191,9 @@ export function inspectPage({ response, html, tab, expectedSolutionOrder }) {
     renderedHtml,
     'aria-controls="kit-content-panel"',
   );
-  if (controlledPanelCount !== 2) {
+  if (controlledPanelCount !== 3) {
     errors.push(
-      `expected 2 tab controls for the shared panel, found ${controlledPanelCount}`,
+      `expected 3 tab controls for the shared panel, found ${controlledPanelCount}`,
     );
   }
   if (!renderedHtml.includes('id="kit-content-panel"')) {
@@ -289,6 +293,9 @@ export function inspectPage({ response, html, tab, expectedSolutionOrder }) {
     if (renderedHtml.includes("data-solution-resource-card")) {
       errors.push("Solution cards leaked into Process");
     }
+    if (renderedHtml.includes("data-system-resource-card")) {
+      errors.push("Resource cards leaked into Process");
+    }
     if (collectSerializedSolutionSlugs(renderedHtml).length > 0) {
       errors.push("serialized Solution payload leaked into visible Process markup");
     }
@@ -296,6 +303,7 @@ export function inspectPage({ response, html, tab, expectedSolutionOrder }) {
 
   let solutionCardCount = 0;
   let solutionSlugs = [];
+  let resourceCardCount = 0;
   if (tab === "solutions") {
     solutionCardCount = countOccurrences(
       renderedHtml,
@@ -314,14 +322,12 @@ export function inspectPage({ response, html, tab, expectedSolutionOrder }) {
       );
     }
 
-    const expectedLevier = expectedSolutionOrder.includes("levier");
-    const levierCount = solutionSlugs.filter((slug) => slug === "levier").length;
     const hasLevierCard = renderedHtml.includes('aria-label="Ouvrir Levier"');
-    if (levierCount !== (expectedLevier ? 1 : 0)) {
-      errors.push(`expected ${expectedLevier ? 1 : 0} Levier placement, found ${levierCount}`);
+    if (solutionSlugs.includes("levier") || hasLevierCard) {
+      errors.push("legacy Levier resource leaked into Solutions");
     }
-    if (hasLevierCard !== expectedLevier) {
-      errors.push(`Levier card presence mismatch: ${hasLevierCard}/${expectedLevier}`);
+    if (renderedHtml.includes("data-system-resource-card")) {
+      errors.push("Resource cards leaked into Solutions");
     }
 
     const payload = getSerializedSolutionPayload(html);
@@ -332,7 +338,36 @@ export function inspectPage({ response, html, tab, expectedSolutionOrder }) {
     }
   }
 
-  return { errors, solutionCardCount, solutionSlugs };
+  if (tab === "resources") {
+    resourceCardCount = countOccurrences(
+      renderedHtml,
+      "data-system-resource-card",
+    );
+
+    if (resourceCardCount !== EXPECTED_RESOURCE_TITLES.length) {
+      errors.push(
+        `expected ${EXPECTED_RESOURCE_TITLES.length} Resource cards, found ${resourceCardCount}`,
+      );
+    }
+    for (const resourceTitle of EXPECTED_RESOURCE_TITLES) {
+      if (!renderedHtml.includes(`aria-label="Ouvrir ${resourceTitle}"`)) {
+        errors.push(`missing Resource card: ${resourceTitle}`);
+      }
+    }
+    if (renderedHtml.includes("data-solution-resource-card")) {
+      errors.push("Solution cards leaked into Resources");
+    }
+    for (const callText of [
+      ...getExpectedCallTexts("process"),
+      ...getExpectedCallTexts("solutions"),
+    ]) {
+      if (renderedHtml.includes(callText)) {
+        errors.push(`custom offer leaked into Resources: ${callText}`);
+      }
+    }
+  }
+
+  return { errors, resourceCardCount, solutionCardCount, solutionSlugs };
 }
 
 async function inspectState({ baseUrl, enterprise, expectedSolutionOrder, request, tab }) {
@@ -363,6 +398,7 @@ async function inspectState({ baseUrl, enterprise, expectedSolutionOrder, reques
           status: null,
           attempts: attempt + 1,
           errors: [error instanceof Error ? error.message : String(error)],
+          resourceCardCount: 0,
           solutionCardCount: 0,
           solutionSlugs: [],
         };
@@ -435,23 +471,26 @@ export async function runAudit(options = {}) {
   const results = await runPool(tasks, concurrency);
   const failures = results.filter((result) => result.errors.length);
   const solutionResults = results.filter((result) => result.tab === "solutions");
+  const resourceResults = results.filter((result) => result.tab === "resources");
 
   return {
     baseUrl,
     kits: enterprises.length,
-    tabsPerKit: 2,
+    tabsPerKit: getTabs().length,
     statesChecked: results.length,
     processStatus200: results.filter(
       (result) => result.tab === "process" && result.status === 200,
     ).length,
     solutionsStatus200: solutionResults.filter((result) => result.status === 200).length,
+    resourcesStatus200: resourceResults.filter((result) => result.status === 200).length,
     solutionCards: solutionResults.reduce(
       (total, result) => total + result.solutionCardCount,
       0,
     ),
-    levierSystems: solutionResults.filter((result) =>
-      result.solutionSlugs.includes("levier")
-    ).length,
+    resourceCards: resourceResults.reduce(
+      (total, result) => total + result.resourceCardCount,
+      0,
+    ),
     failureCount: failures.length,
     failures: failures.slice(0, 100),
     failuresTruncated: failures.length > 100,

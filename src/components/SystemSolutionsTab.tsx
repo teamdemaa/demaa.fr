@@ -7,7 +7,6 @@ import {
   ChevronLeft,
   ChevronRight,
   ExternalLink,
-  FileText,
   Gauge,
   Wrench,
 } from "lucide-react";
@@ -16,7 +15,6 @@ import DirectoryDetailDialogShell from "@/components/DirectoryDetailDialogShell"
 import SolutionReferralForm from "@/components/SolutionReferralForm";
 import { trackSystemSolutionEvent } from "@/lib/kit-analytics-client";
 import type { SolutionSection } from "@/lib/solution-registry-dto";
-import { SYSTEM_RESOURCES, type SystemResource } from "@/lib/system-resource-catalog";
 import type {
   RenderableSolutionPlacementDto,
   RenderableSolutionSectionDto,
@@ -28,16 +26,19 @@ type RailState = Readonly<{
   canPrevious: boolean;
 }>;
 
+type VisibleSolutionSection = Exclude<SolutionSection, "models">;
+
 // Working UI copy only. These labels are intentionally centralized so W6 can
 // align final editorial and SEO wording before integration.
-export const SOLUTION_UI_WORKING_LABELS: Readonly<Record<SolutionSection, string>> = {
+export const SOLUTION_UI_WORKING_LABELS: Readonly<
+  Record<VisibleSolutionSection, string>
+> = {
   software: "Outils",
   providers: "Prestataires et fournisseurs",
-  models: "Ressources héritées",
   networks: "Réseaux professionnels",
 };
 
-export const SOLUTION_RAIL_DISPLAY_ORDER: readonly SolutionSection[] = [
+export const SOLUTION_RAIL_DISPLAY_ORDER: readonly VisibleSolutionSection[] = [
   "software",
   "providers",
   "networks",
@@ -203,12 +204,8 @@ function SolutionDialog({
 }
 
 export default function SystemSolutionsTab({
-  onOpenResource,
-  resources = SYSTEM_RESOURCES,
   sections,
 }: {
-  onOpenResource?: (resource: SystemResource) => void;
-  resources?: readonly SystemResource[];
   sections: readonly RenderableSolutionSectionDto[];
 }) {
   const visibleSections = useMemo(
@@ -218,15 +215,10 @@ export default function SystemSolutionsTab({
     [sections],
   );
   const railRefs = useRef<Partial<Record<SolutionSection, HTMLDivElement | null>>>({});
-  const resourceRailRef = useRef<HTMLDivElement | null>(null);
   const [railStates, setRailStates] = useState(() =>
     buildInitialRailState(visibleSections),
   );
   const [selected, setSelected] = useState<RenderableSolutionPlacementDto | null>(null);
-  const [resourceRailState, setResourceRailState] = useState<RailState>({
-    canNext: resources.length > 1,
-    canPrevious: false,
-  });
 
   const updateRailState = useCallback((group: RenderableSolutionSectionDto) => {
     const rail = railRefs.current[group.section];
@@ -250,22 +242,13 @@ export default function SystemSolutionsTab({
   }, []);
 
   useEffect(() => {
-    const updateResourceRail = () => {
-      const rail = resourceRailRef.current;
-      if (!rail) return;
-      setResourceRailState({
-        canNext: rail.scrollLeft + rail.clientWidth < rail.scrollWidth - 2,
-        canPrevious: rail.scrollLeft > 2,
-      });
-    };
     const updateAllRails = () => {
       visibleSections.forEach(updateRailState);
-      updateResourceRail();
     };
     updateAllRails();
     window.addEventListener("resize", updateAllRails);
     return () => window.removeEventListener("resize", updateAllRails);
-  }, [resources.length, updateRailState, visibleSections]);
+  }, [updateRailState, visibleSections]);
 
   const closeSolution = useCallback(() => {
     setSelected(null);
@@ -281,18 +264,7 @@ export default function SystemSolutionsTab({
     rail.scrollBy({ behavior: "smooth", left: direction * step });
   }
 
-  function navigateResourceRail(direction: -1 | 1) {
-    const rail = resourceRailRef.current;
-    const firstCard = rail?.querySelector<HTMLElement>("[data-system-resource-card]");
-    if (!rail || !firstCard) return;
-    const gap = Number.parseFloat(window.getComputedStyle(rail).columnGap) || 0;
-    rail.scrollBy({
-      behavior: "smooth",
-      left: direction * (firstCard.getBoundingClientRect().width + gap),
-    });
-  }
-
-  if (visibleSections.length === 0 && resources.length === 0) {
+  if (visibleSections.length === 0) {
     return (
       <p
         className="rounded-[1.15rem] border border-dema-line bg-dema-paper px-5 py-6 text-sm leading-relaxed text-dema-muted sm:px-6"
@@ -307,7 +279,9 @@ export default function SystemSolutionsTab({
     <>
       <div className="max-w-full space-y-10 overflow-hidden">
         {visibleSections.map((group) => {
-          const label = SOLUTION_UI_WORKING_LABELS[group.section];
+          const label = SOLUTION_UI_WORKING_LABELS[
+            group.section as VisibleSolutionSection
+          ];
           const railState = railStates[group.section];
 
           return (
@@ -397,79 +371,6 @@ export default function SystemSolutionsTab({
             </section>
           );
         })}
-
-        {resources.length > 0 ? (
-          <section aria-labelledby="solution-section-resources" className="min-w-0 max-w-full">
-            <div className="flex items-center justify-between gap-4">
-              <h3
-                id="solution-section-resources"
-                className="text-xl font-semibold tracking-[-0.025em] text-brand-blue sm:text-2xl"
-              >
-                Ressources
-              </h3>
-              {resources.length > 1 ? (
-                <div className="flex shrink-0 items-center gap-2">
-                  <button
-                    type="button"
-                    aria-label="Voir les ressources précédentes"
-                    onClick={() => navigateResourceRail(-1)}
-                    disabled={!resourceRailState.canPrevious}
-                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest disabled:cursor-not-allowed disabled:opacity-30"
-                  >
-                    <ChevronLeft className="h-4 w-4" aria-hidden="true" />
-                  </button>
-                  <button
-                    type="button"
-                    aria-label="Voir les ressources suivantes"
-                    onClick={() => navigateResourceRail(1)}
-                    disabled={!resourceRailState.canNext}
-                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest disabled:cursor-not-allowed disabled:opacity-30"
-                  >
-                    <ChevronRight className="h-4 w-4" aria-hidden="true" />
-                  </button>
-                </div>
-              ) : null}
-            </div>
-            <div
-              ref={resourceRailRef}
-              onScroll={() => {
-                const rail = resourceRailRef.current;
-                if (!rail) return;
-                setResourceRailState({
-                  canNext: rail.scrollLeft + rail.clientWidth < rail.scrollWidth - 2,
-                  canPrevious: rail.scrollLeft > 2,
-                });
-              }}
-              className="mt-4 grid max-w-full snap-x snap-mandatory grid-flow-col auto-cols-[82%] gap-4 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] md:auto-cols-[calc((100%_-_2rem)_/_3)] [&::-webkit-scrollbar]:hidden"
-            >
-              {resources.map((resource) => (
-                <button
-                  key={resource.resourceSlug}
-                  type="button"
-                  data-system-resource-card
-                  onClick={() => onOpenResource?.(resource)}
-                  className="group min-h-[248px] min-w-0 snap-start overflow-hidden rounded-[1.2rem] border border-dema-line bg-dema-paper p-5 text-left shadow-[0_10px_28px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/20 hover:shadow-[0_14px_32px_rgba(23,35,29,0.07)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:p-6 md:aspect-square md:min-h-0"
-                  aria-label={`Ouvrir ${resource.title}`}
-                >
-                  <span className="flex h-full min-h-0 flex-col">
-                    <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
-                      <FileText className="h-5 w-5" aria-hidden="true" />
-                    </span>
-                    <span className="mt-4 block text-[10px] font-semibold uppercase tracking-[0.15em] text-dema-muted md:mt-5">
-                      {resource.formatLabel}
-                    </span>
-                    <span className="mt-1.5 block text-lg font-semibold leading-snug text-brand-blue sm:text-xl md:mt-2">
-                      {resource.title}
-                    </span>
-                    <span className="mt-2 text-[13px] leading-5 text-dema-muted md:mt-3 md:text-sm md:leading-relaxed">
-                      {resource.description}
-                    </span>
-                  </span>
-                </button>
-              ))}
-            </div>
-          </section>
-        ) : null}
       </div>
 
       {selected ? (
