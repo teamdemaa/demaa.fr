@@ -10,15 +10,15 @@ import {
 } from "../scripts/audit-system-kit-pages.mjs";
 
 describe("system kit page audit contract", () => {
-  it("audits only Process and Solutions with all 115 expected orders", () => {
-    expect(getTabs()).toEqual(["process", "solutions"]);
+  it("audits Process, Solutions and Resources with all 115 expected orders", () => {
+    expect(getTabs()).toEqual(["process", "solutions", "resources"]);
 
     const enterprises = loadEnterprises();
     const orders = buildExpectedSolutionOrders();
     expect(enterprises).toHaveLength(115);
     expect(orders.size).toBe(115);
     expect([...orders.values()].filter((order) => order.includes("levier")))
-      .toHaveLength(115);
+      .toHaveLength(0);
     expect(orders.get("batiment")).toEqual([
       "obat",
       "costructor",
@@ -28,14 +28,12 @@ describe("system kit page audit contract", () => {
       "plateforme-du-batiment",
       "kiloutou",
       "wurth",
-      "levier",
       "capeb",
     ]);
     expect(orders.get("marchand-de-biens")).toEqual([
       "apimo",
       "modelo",
       "pipedrive",
-      "levier",
       "notaires",
       "fnaim",
     ]);
@@ -43,7 +41,6 @@ describe("system kit page audit contract", () => {
       "apimo",
       "modelo",
       "pipedrive",
-      "levier",
       "fnaim",
       "notaires",
     ]);
@@ -59,6 +56,7 @@ describe("system kit page audit contract", () => {
       "Besoin d’aide pour identifier la bonne solution ?",
       "Échanger 30 minutes",
     ]);
+    expect(getExpectedCallTexts("resources")).toEqual([]);
   });
 
   it("reads the ordered public Solution payload without widening its boundary", () => {

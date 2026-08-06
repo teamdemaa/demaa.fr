@@ -5,12 +5,13 @@ remplacé et la nouvelle référence à consulter.
 
 | Ancienne source ou décision | Statut | Nouvelle référence ou action |
 | --- | --- | --- |
-| Navigation web `Process / Outils / Écosystème` | `superseded` | `Process / Solutions`, voir ADR 0001 |
+| Navigation web `Process / Outils / Écosystème` | `superseded` | `Process / Solutions / Ressources`, voir ADR 0001 |
+| Ressources dans `Solutions > Modèles` ou « Ressources héritées » | `superseded` | onglet autonome `Ressources`, sans cours de l'Académie |
 | Écosystème D-012 à quatre groupes | `superseded` | inventaire vers Solutions dans W2c-W3 |
 | Outils comme onglet autonome | `superseded` | sous-section de Solutions, libellé exact non figé |
 | Prestations Demaa dans Écosystème | `superseded` | marketplace autonome `/services` |
 | D-062 dans Écosystème | `superseded` | `Système & automatisation commerciale` dans Services V1 |
-| D-064 uniquement sous Process | `superseded` | encart unique après le panneau actif Process/future Solutions ; attribution source encore `Process` à corriger avant activation, copie finale non figée |
+| D-064 uniquement sous Process | `superseded` | encart unique après le panneau actif Process/Solutions ; Ressources conserve son parcours d'aperçu et de réception |
 | Newsletter D-063 sous Outils ou Écosystème | `deferred` | backlog sans impact sur la base active |
 | `/annuaire-services` comme marketplace cible | `superseded` | index déjà 404/noindex ; fiches et modale historiques encore runtime jusqu'à la migration W6 |
 | `/services` actuellement retiré par le proxy | `working` | pages W4 implémentées localement, mais 7 offres encore `draft` et activation/matrice de routes réservées à W6 |

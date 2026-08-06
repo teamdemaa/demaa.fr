@@ -317,9 +317,9 @@ function buildSystemPageTitle(
   data: SystemDetailPageData,
   solutionSections: SystemPageSolutionSections,
 ): string {
-  const contentLabel = solutionSections.length > 0 || SYSTEM_RESOURCES.length > 0
-    ? "Process et Solutions"
-    : "Process";
+  const contentLabel = solutionSections.length > 0
+    ? "Process, Solutions et Ressources"
+    : "Process et Ressources";
   return `Système opérationnel ${data.system.name} : ${contentLabel} | Demaa`;
 }
 
@@ -448,9 +448,9 @@ export function buildSystemPageJsonLd(
     {
       "@context": "https://schema.org",
       "@type": "ItemList",
-      name: listedSolutions.length > 0 || listedResources.length > 0
-        ? `Process et Solutions du système opérationnel ${data.system.name}`
-        : `Process du système opérationnel ${data.system.name}`,
+      name: listedSolutions.length > 0
+        ? `Process, Solutions et Ressources du système opérationnel ${data.system.name}`
+        : `Process et Ressources du système opérationnel ${data.system.name}`,
       numberOfItems: listedProcesses.length + listedSolutions.length + listedResources.length,
       itemListElement: [
         ...listedProcesses.map((process, index) => ({

@@ -9,6 +9,7 @@ import SystemSolutionsTab, {
   SOLUTION_RAIL_DISPLAY_ORDER,
   SOLUTION_UI_WORKING_LABELS,
 } from "@/components/SystemSolutionsTab";
+import SystemResourcesTab from "@/components/SystemResourcesTab";
 import { enterpriseCatalog } from "@/lib/enterprise-annuaire";
 import {
   getVisibleSystemDetailTabs,
@@ -37,7 +38,7 @@ async function readSource(path: string) {
 describe("system Solutions UI", () => {
   it("shows the validated empty state and hides empty section rails", () => {
     expect(
-      renderToStaticMarkup(createElement(SystemSolutionsTab, { resources: [], sections: [] })),
+      renderToStaticMarkup(createElement(SystemSolutionsTab, { sections: [] })),
     ).toContain(
       "Nous vérifions encore les solutions les plus pertinentes pour ce métier.",
     );
@@ -53,20 +54,27 @@ describe("system Solutions UI", () => {
     expect(markup).not.toMatch(/bientôt|placeholder/i);
   });
 
-  it("replaces the legacy Models rail with the neutral Resources catalog", () => {
-    const markup = renderToStaticMarkup(
+  it("keeps Resources out of Solutions and renders them in their own tab", () => {
+    const solutionsMarkup = renderToStaticMarkup(
       createElement(SystemSolutionsTab, {
         sections: publishedLevierSolutionSectionsFixture,
       }),
     );
+    const resourcesMarkup = renderToStaticMarkup(
+      createElement(SystemResourcesTab, { systemSlug: "batiment" }),
+    );
 
-    expect(markup).toContain("Ressources");
-    expect(markup).not.toContain("Modèles");
-    expect(markup).not.toContain("Levier");
-    expect(markup).toContain("Tableau de pilotage opérationnel");
-    expect(markup).toContain("Suivi et prévisionnel financier");
-    expect(markup).toContain("CRM - suivi commercial");
-    expect(markup).toContain("La facturation électronique");
+    expect(solutionsMarkup).not.toContain("Ressources");
+    expect(solutionsMarkup).not.toContain("Modèles");
+    expect(solutionsMarkup).not.toContain("Levier");
+    expect(solutionsMarkup).not.toContain("Tableau de pilotage opérationnel");
+    expect(resourcesMarkup).toContain("Tableau de pilotage opérationnel");
+    expect(resourcesMarkup).toContain("Suivi et prévisionnel financier");
+    expect(resourcesMarkup).toContain("CRM - suivi commercial");
+    expect(resourcesMarkup).toContain("La facturation électronique");
+    expect(resourcesMarkup).toContain(
+      "Maîtriser les obligations et les finances de son entreprise",
+    );
     expect(JSON.stringify(publishedLevierSolutionSectionsFixture)).not.toMatch(
       /https?:\/\/|drive|\.xlsx/i,
     );
@@ -121,7 +129,10 @@ describe("system Solutions UI", () => {
       }
       const visibleRailLabels = SOLUTION_RAIL_DISPLAY_ORDER
         .filter((section) => sections.some((candidate) => candidate.section === section))
-        .map((section) => SOLUTION_UI_WORKING_LABELS[section]);
+        .flatMap((section) => {
+          const label = SOLUTION_UI_WORKING_LABELS[section];
+          return label ? [label] : [];
+        });
       for (const [index, label] of visibleRailLabels.entries()) {
         if (index > 0) {
           expect(markup.indexOf(visibleRailLabels[index - 1]))
@@ -129,17 +140,15 @@ describe("system Solutions UI", () => {
         }
       }
       expect(markup).not.toContain('aria-label="Ouvrir Levier"');
-      expect(markup).toContain('aria-label="Ouvrir Tableau de pilotage opérationnel"');
-      const lastLegacyRailLabel = visibleRailLabels.at(-1);
-      if (lastLegacyRailLabel) {
-        expect(markup.indexOf(lastLegacyRailLabel)).toBeLessThan(markup.indexOf("Ressources"));
-      }
+      expect(markup).not.toContain('aria-label="Ouvrir Tableau de pilotage opérationnel"');
+      expect(markup).not.toContain("Ressources héritées");
       expect(normalizeSystemDetailTab("solutions")).toBe("solutions");
       expect(normalizeSystemDetailTab("outils")).toBe("solutions");
       expect(normalizeSystemDetailTab("ecosysteme")).toBe("solutions");
       expect(getVisibleSystemDetailTabs()).toEqual([
         "process",
         "solutions",
+        "resources",
       ]);
     }
   });
@@ -268,7 +277,7 @@ describe("system Solutions UI", () => {
       );
       expect(markup).toContain("Outils");
       expect(markup).not.toContain('aria-label="Ouvrir Levier"');
-      expect(markup).toContain('aria-label="Ouvrir Tableau de pilotage opérationnel"');
+      expect(markup).not.toContain('aria-label="Ouvrir Tableau de pilotage opérationnel"');
       const orderedNames = SOLUTION_RAIL_DISPLAY_ORDER.flatMap((section) =>
         sections
           .filter((candidate) => candidate.section === section)
@@ -419,6 +428,7 @@ describe("system Solutions UI", () => {
 
   it("uses the neutral Resources catalog as the public delivery entry point", async () => {
     const detailSource = await readSource("src/components/SystemDetailContent.tsx");
+    const resourcesSource = await readSource("src/components/SystemResourcesTab.tsx");
     const levierModalSource = await readSource(
       "src/components/OperationalSystemCopyRequestModal.tsx",
     );
@@ -427,9 +437,11 @@ describe("system Solutions UI", () => {
     );
 
     expect(detailSource).not.toContain('setDeliveryModal("system")');
-    expect(detailSource).toContain("onOpenResource={setSelectedResource}");
-    expect(detailSource).toContain("selectedResource ?");
-    expect(detailSource).toContain("resource={selectedResource}");
+    expect(detailSource).toContain('<SystemResourcesTab systemSlug={system.slug} />');
+    expect(detailSource).not.toContain("OperationalSystemCopyRequestModal");
+    expect(resourcesSource).toContain("selectedResource ?");
+    expect(resourcesSource).toContain("resource={selectedResource}");
+    expect(resourcesSource).toContain("SYSTEM_RESOURCES");
     expect(detailSource).not.toContain("HistoricalOperationalSystemCopyRequestModal");
     expect(detailSource).not.toContain("Voir le système");
     expect(systemModalSource).toContain("Système opérationnel - {systemName}");
@@ -442,11 +454,13 @@ describe("system Solutions UI", () => {
 
   it("reuses the accessible modal lifecycle and resets selection on close", async () => {
     const solutionsSource = await readSource("src/components/SystemSolutionsTab.tsx");
+    const resourcesSource = await readSource("src/components/SystemResourcesTab.tsx");
     const dialogSource = await readSource("src/components/DirectoryDetailDialogShell.tsx");
     const hookSource = await readSource("src/components/useAccessibleDialog.ts");
 
     expect(solutionsSource).toContain("DirectoryDetailDialogShell");
     expect(solutionsSource).toContain("setSelected(null)");
+    expect(resourcesSource).toContain("setSelectedResource(null)");
     expect(dialogSource).toContain("useAccessibleDialog({ onClose })");
     expect(dialogSource).toContain("data-dialog-initial-focus");
     expect(hookSource).toContain('event.key === "Escape"');

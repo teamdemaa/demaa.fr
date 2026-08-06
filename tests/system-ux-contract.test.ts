@@ -13,6 +13,9 @@ describe("system UX contract", () => {
     const modalSource = await readSource(
       "src/components/OperationalSystemCopyRequestModal.tsx",
     );
+    const resourcesSource = await readSource(
+      "src/components/SystemResourcesTab.tsx",
+    );
     const historicalModalSource = await readSource(
       "src/components/HistoricalOperationalSystemCopyRequestModal.tsx",
     );
@@ -25,15 +28,17 @@ describe("system UX contract", () => {
     expect(detailSource).not.toContain("Recevoir ma copie modifiable");
     expect(detailSource).not.toContain("deliveryAvailable");
     expect(detailSource).not.toContain("hasLevierSolution");
-    expect(detailSource).toContain("onOpenResource={setSelectedResource}");
-    expect(detailSource).toContain("selectedResource ?");
-    expect(detailSource).toContain("resource={selectedResource}");
+    expect(detailSource).toContain('<SystemResourcesTab systemSlug={system.slug} />');
+    expect(detailSource).not.toContain("OperationalSystemCopyRequestModal");
+    expect(resourcesSource).toContain("selectedResource ?");
+    expect(resourcesSource).toContain("resource={selectedResource}");
     expect(detailSource).not.toContain("HistoricalOperationalSystemCopyRequestModal");
     expect(modalSource).not.toMatch(/"overview"\s*\|\s*"form"/);
     expect(modalSource).toContain("resource.deliveryLabel");
     expect(modalSource).toContain("Votre ressource est dans votre boîte mail.");
     expect(modalSource).toContain("resource.successDescription");
     expect(modalSource).toContain("resource.previewDisclosure");
+    expect(modalSource).toContain('loading="eager"');
     expect(modalSource).toContain('name="email"');
     expect(modalSource).not.toContain('name="firstName"');
     expect(modalSource).not.toContain("Prénom");
@@ -59,7 +64,7 @@ describe("system UX contract", () => {
     expect(pageSource).toContain("hasEditableOperationalSystemAsset");
   });
 
-  it("renders one contextual custom offer after the active panel", async () => {
+  it("renders one contextual custom offer after Process and Solutions only", async () => {
     const detailSource = await readSource(
       "src/components/SystemDetailContent.tsx",
     );
@@ -77,6 +82,7 @@ describe("system UX contract", () => {
     expect(detailSource.match(/<SystemCustomOfferCta\b/g)).toHaveLength(1);
     expect(detailSource).toContain("systemSlug={system.slug}");
     expect(detailSource).toContain("context={activeTab}");
+    expect(detailSource).toContain('activeTab !== "resources"');
     expect(detailSource).not.toContain("Votre solution peut aider ce métier ?");
     expect(detailSource).not.toContain('href="/partenaires"');
     expect(detailSource).not.toMatch(
@@ -108,13 +114,13 @@ describe("system UX contract", () => {
     );
   });
 
-  it("keeps Process and Solutions as lightweight balanced tabs", async () => {
+  it("keeps Process, Solutions and Resources as lightweight balanced tabs", async () => {
     const detailSource = await readSource(
       "src/components/SystemDetailContent.tsx",
     );
 
     expect(detailSource).toContain(
-      "grid w-full grid-cols-2 border-b border-dema-line",
+      "grid w-full grid-cols-3 border-b border-dema-line",
     );
     expect(detailSource).toContain("min-h-11");
     expect(detailSource).toContain(
@@ -124,7 +130,7 @@ describe("system UX contract", () => {
       "border-transparent font-medium text-dema-muted",
     );
     expect(detailSource).not.toContain(
-      "grid w-full grid-cols-2 gap-1 rounded-full",
+      "grid w-full grid-cols-3 gap-1 rounded-full",
     );
   });
 });

@@ -1,5 +1,14 @@
 # Plan d'exécution W2-W8
 
+## Clôture Systèmes — 6 août 2026
+
+L'interface publique des fiches Systèmes est désormais stabilisée autour de
+trois espaces : `Process / Solutions / Ressources`. Ressources est séparé de
+Solutions et contient cinq supports directement utilisables ; les cours
+restent dans l'Académie. Les sections W2-W8 ci-dessous décrivent la séquence
+historique du chantier et ne remplacent pas l'architecture active définie par
+l'ADR 0001.
+
 ## Checkpoint W6.0 — consolidation documentaire
 
 Le checkpoint local de référence est le commit
@@ -160,7 +169,7 @@ combiné.
   - `tests/system-detail-tabs.test.ts` ;
   - `tests/system-solutions-ui.test.ts` ;
   - `tests/system-ux-contract.test.ts`.
-- Gate : 115 systèmes, Process/Solutions, mobile/desktop, aucun Service Demaa
+- Gate : 115 systèmes, Process/Solutions/Ressources, mobile/desktop, aucun Service Demaa
   dans Solutions, aucun lien privé ou support fantôme ; metadata et JSON-LD
   alignés sur le même sélecteur publié ; attribution D-064 corrigée avant
   activation de Solutions, sans inventer la copie finale.
