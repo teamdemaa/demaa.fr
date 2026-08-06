@@ -5,10 +5,12 @@ import { enterpriseCatalog } from "@/lib/enterprise-annuaire";
 import { getOperationalWorkbookV2PilotProfile } from "@/lib/operational-workbook-v2-profiles";
 import {
   CURATED_SYSTEM_PROCESS_ROUTINE_SLUGS,
+  findCuratedSystemProcessRoutines,
   getCuratedSystemProcessRoutines,
 } from "@/lib/system-process-routines";
 import { buildSystemeDetail } from "@/lib/systeme-catalog";
-import expectedFingerprints from "./fixtures/systeme-detail-output-fingerprints-r1.json";
+import legacyFingerprints from "./fixtures/systeme-detail-output-fingerprints-r1.json";
+import expectedFingerprints from "./fixtures/systeme-detail-output-fingerprints-r2.json";
 
 describe("system Process routine decoupling", () => {
   it("keeps the five curated profiles complete and stable", () => {
@@ -39,7 +41,7 @@ describe("system Process routine decoupling", () => {
     }
   });
 
-  it("keeps every public DTO byte-for-byte equivalent to the R1 baseline", () => {
+  it("keeps every public DTO byte-for-byte equivalent to the R2 cadence baseline", () => {
     expect(enterpriseCatalog).toHaveLength(115);
     expect(Object.keys(expectedFingerprints)).toHaveLength(115);
 
@@ -58,6 +60,65 @@ describe("system Process routine decoupling", () => {
       ).toEqual(
         expectedFingerprints[
           enterprise.slug as keyof typeof expectedFingerprints
+        ],
+      );
+    }
+  });
+
+  it("changes only the Process cadence contract from the R1 public DTO", () => {
+    expect(Object.keys(legacyFingerprints)).toHaveLength(115);
+
+    for (const enterprise of enterpriseCatalog) {
+      const detail = buildSystemeDetail(enterprise);
+      expect(detail, enterprise.slug).not.toBeNull();
+
+      const curatedFrequencyByRoutineId = new Map(
+        (findCuratedSystemProcessRoutines(enterprise.slug) ?? []).map(
+          (routine) => [routine.routineId, routine.frequency],
+        ),
+      );
+      const processById = new Map(
+        detail?.cards.flatMap((card) =>
+          card.items.map((item) => [item.processId, item] as const),
+        ),
+      );
+      const routinePrefix = `routine.${enterprise.slug}.`;
+      const legacyDetail = detail
+        ? {
+            cards: detail.cards,
+            routines: detail.routines.map((routine) => {
+              const processId = routine.routineId.slice(routinePrefix.length);
+              const frequency =
+                curatedFrequencyByRoutineId.get(routine.routineId) ??
+                processById
+                  .get(processId)
+                  ?.steps.find((step) => step.recurrence.trim())?.recurrence;
+
+              expect(frequency, routine.routineId).toBeTruthy();
+
+              return {
+                bullets: routine.bullets,
+                frequency,
+                routineId: routine.routineId,
+                support: routine.support,
+                title: routine.title,
+              };
+            }),
+          }
+        : null;
+      const sha256 = createHash("sha256")
+        .update(JSON.stringify(legacyDetail))
+        .digest("hex");
+
+      expect(
+        {
+          sha256,
+          routines: legacyDetail?.routines.length ?? 0,
+        },
+        enterprise.slug,
+      ).toEqual(
+        legacyFingerprints[
+          enterprise.slug as keyof typeof legacyFingerprints
         ],
       );
     }

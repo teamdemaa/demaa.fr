@@ -36,8 +36,11 @@ function RoutineItem({
           <span className="block text-[15px] font-medium leading-snug tracking-[-0.015em] text-brand-blue sm:text-base">
             {routine.title}
           </span>
-          <span className="mt-1 block text-xs text-dema-muted">
-            {routine.frequency}
+          <span
+            data-process-cadence={routine.cadence}
+            className="mt-1 block text-xs text-dema-muted"
+          >
+            {routine.cadence}
           </span>
         </span>
         <ChevronDown

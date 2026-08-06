@@ -2,6 +2,10 @@ import type { EnterpriseDefinition } from "@/lib/enterprise-annuaire";
 import rawProcessRegistry from "@/lib/process-registry.generated.json";
 import rawProcessSteps from "@/lib/process-steps.generated.json";
 import type { SystemePillar } from "@/lib/system-canon";
+import {
+  getSystemProcessCadence,
+  normalizePublicProcessCadence,
+} from "@/lib/system-process-cadences";
 import { findCuratedSystemProcessRoutines } from "@/lib/system-process-routines";
 
 export type SystemeProcessStep = {
@@ -28,7 +32,7 @@ export type SystemePillarCard = {
 
 export type SystemeRoutine = {
   bullets: string[];
-  frequency: string;
+  cadence: string;
   routineId: string;
   support: null | {
     assetRevision: string;
@@ -172,10 +176,9 @@ function buildDerivedRoutines(
     const bullets = item.steps
       .slice(0, MAX_ROUTINE_BULLETS)
       .map((step) => step.step);
-    const frequency = item.steps.find((step) => step.recurrence.trim())
-      ?.recurrence;
+    const cadence = getSystemProcessCadence(enterprise.slug, item.processId);
 
-    if (bullets.length < 2 || !frequency) {
+    if (bullets.length < 2 || !cadence) {
       throw new Error(
         `[systeme] Routine publique incomplète pour ${enterprise.slug}: ${item.processId}`,
       );
@@ -183,7 +186,7 @@ function buildDerivedRoutines(
 
     return {
       bullets,
-      frequency,
+      cadence,
       routineId: `routine.${enterprise.slug}.${item.processId}`,
       support: null,
       title: item.process,
@@ -252,7 +255,7 @@ export function buildSystemeDetail(
           }
           return step.step;
         }),
-        frequency: routine.frequency,
+        cadence: normalizePublicProcessCadence(routine.frequency),
         routineId: routine.routineId,
         support: null,
         title: routine.title,

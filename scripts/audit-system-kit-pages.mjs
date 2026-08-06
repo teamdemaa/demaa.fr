@@ -284,6 +284,18 @@ export function inspectPage({ response, html, tab, expectedSolutionOrder }) {
         `expected 8 to 12 Process routines, found ${routineControlCount}`,
       );
     }
+    const cadenceCount = countOccurrences(
+      renderedHtml,
+      "data-process-cadence",
+    );
+    if (cadenceCount !== routineControlCount) {
+      errors.push(
+        `expected one cadence per Process routine, found ${cadenceCount} for ${routineControlCount}`,
+      );
+    }
+    if (renderedHtml.includes("Une fois, puis à revoir si besoin")) {
+      errors.push("setup recurrence leaked into a public Process cadence");
+    }
     if (renderedHtml.includes("system-process-panel-")) {
       errors.push("legacy Process family accordion is still rendered");
     }
