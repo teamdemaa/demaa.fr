@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
-import { type KeyboardEvent, useCallback, useState } from "react";
+import { type KeyboardEvent, useState } from "react";
 import OperationalSystemCopyRequestModal from "@/components/OperationalSystemCopyRequestModal";
 import SystemCustomOfferCta from "@/components/SystemCustomOfferCta";
 import SystemSolutionsTab from "@/components/SystemSolutionsTab";
@@ -60,9 +60,9 @@ export default function SystemDetailContent({
       : "process",
   );
   const [selectedResource, setSelectedResource] = useState<SystemResource | null>(null);
-  const closeDeliveryModal = useCallback(() => {
+  function closeDeliveryModal() {
     setSelectedResource(null);
-  }, []);
+  }
 
   function selectTab(tab: SystemDetailTab) {
     setActiveTab(tab);
@@ -101,12 +101,9 @@ export default function SystemDetailContent({
         </Link>
 
         <div className="max-w-4xl">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-            Système opérationnel
-          </p>
           <Heading
             id={headingId}
-            className="mt-3 text-3xl font-semibold tracking-[-0.035em] text-brand-blue sm:text-4xl"
+            className="text-3xl font-semibold tracking-[-0.035em] text-brand-blue sm:text-4xl"
           >
             {system.name}
           </Heading>
