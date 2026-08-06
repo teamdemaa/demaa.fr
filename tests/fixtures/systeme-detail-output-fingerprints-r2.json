@@ -1,0 +1,462 @@
+{
+  "cabinet-comptable": {
+    "sha256": "9715a668b62960497227be4fd8894b643a6acc33532c28c9cc12e1712d4bb841",
+    "routines": 12
+  },
+  "cabinet-davocat": {
+    "sha256": "cc1cf851dcf419cedc5c251590fe91b09762f26fc77e891e54b5c8d903a3d323",
+    "routines": 12
+  },
+  "cabinet-de-conseil": {
+    "sha256": "eceea73ccfeb8f9e823b151e72a01024d11125e4bfa388290e4e5a4c6dc9ca8a",
+    "routines": 12
+  },
+  "agence-marketing": {
+    "sha256": "2e6c8f0206f346a9fa1c7e915b4d23c185b2e370b86679d573877e3e94e5f638",
+    "routines": 8
+  },
+  "freelance": {
+    "sha256": "15604eaae76d5b8000754a2d00956a6a9f69c7d41cda9f7721031df162d577a9",
+    "routines": 12
+  },
+  "agence-de-recrutement": {
+    "sha256": "7be1dc0b1b584a2ae085a7c05afd6c368f3b4757ff82773fb61c01c3311fa694",
+    "routines": 12
+  },
+  "agence-web": {
+    "sha256": "2d090e86d775f2558b96ae94e24940d11937bfdcd4aa0ec0839894a8640c0b0f",
+    "routines": 12
+  },
+  "creation-de-contenu": {
+    "sha256": "8f2888d2608be17cb9699173fe2981d534d8bdf8f34e0e1478b22d93c6624b8b",
+    "routines": 12
+  },
+  "marketplace": {
+    "sha256": "ea07425cd62e22c2635245e322d2dee00f257603ea9f562f6abc9b89c7842a1f",
+    "routines": 12
+  },
+  "media": {
+    "sha256": "4fef4b59f810f5740a896376fdaa60fe8178bc13a07c38fd8ed22af85d00d65a",
+    "routines": 12
+  },
+  "saas": {
+    "sha256": "9e44f692249ec16a3493dad9b8dd2649da1c593b1e524bed2fa38074ed6d404e",
+    "routines": 12
+  },
+  "batiment": {
+    "sha256": "b0400698038a8af80f24713647fe2384a77daf07fb6fa0a6a022c67477613d54",
+    "routines": 8
+  },
+  "nettoyage-professionnel": {
+    "sha256": "b1c9e358cee7c024e8e645947f008799ebf9876312216394f94d7a3313b4aa6e",
+    "routines": 9
+  },
+  "agence-immobiliere": {
+    "sha256": "a38e39ce09c0add88a3f669456e156eb4344aa37cb79cfa6419fe813c36b09c4",
+    "routines": 12
+  },
+  "syndic": {
+    "sha256": "7e2a67f986cad753d70842706e50e5a959a447d2d4b671828183ba0e77277285",
+    "routines": 12
+  },
+  "gestion-locative": {
+    "sha256": "c9f3c3282503c72a41cd1e09f067b9289e2ecf49484e680b8c5dd3577f33636d",
+    "routines": 12
+  },
+  "marchand-de-biens": {
+    "sha256": "86c07dce695fb099d828fc11f3937063b16f59ee10d206ccac280f01f27b31a2",
+    "routines": 12
+  },
+  "investissement-locatif": {
+    "sha256": "76d81a96e303d3495129e793be2f5f1fc1748cd7a4d6029afdb83adb2423a04d",
+    "routines": 12
+  },
+  "conciergerie-airbnb": {
+    "sha256": "83f08aaa14a937343165321d7a9458adfe65a27f9305916f09cbb26c75b788f0",
+    "routines": 12
+  },
+  "investissement-immobilier": {
+    "sha256": "fc84d2738872d7df4a7fdfd4f99236077e77140c0a1c4890f8b9766c98a7d34f",
+    "routines": 12
+  },
+  "investissement-financier": {
+    "sha256": "b9ef799b3f675721873b21c0fcb91c17aa0766e432b55162eaca46dbf9ad762a",
+    "routines": 12
+  },
+  "investissement-entreprise": {
+    "sha256": "ae7676c6efdf31461ebf6f27616bbbfd934936b0e79f4f11d546485eab70dc3e",
+    "routines": 12
+  },
+  "demenagement": {
+    "sha256": "4dbe41fa6fd718dfb04f0fccd3f2edd5cbac312a5bc27504882aaed034a43692",
+    "routines": 11
+  },
+  "livraison-dernier-kilometre": {
+    "sha256": "abc618669f939225ef65b20105902f01a3ce36dc846000fbce50acea9cdf3733",
+    "routines": 11
+  },
+  "transport-de-marchandise": {
+    "sha256": "6468910a520ebbb7bd1fe65078d5089493dff2f9122f6a3570a8cda9545e4e09",
+    "routines": 11
+  },
+  "transport-de-personnes": {
+    "sha256": "5761430d278858258cd426ed67ce747b022838c3bc326cad65e36638b7ebab7d",
+    "routines": 11
+  },
+  "restaurant": {
+    "sha256": "6c0fba1b5b515832bd2922116256b1255d072438d631614d9423ddf599d3f9ef",
+    "routines": 8
+  },
+  "fast-food": {
+    "sha256": "0987201ee92739e5d8c4d4d90af7cce2a2975eee0d1a7c594fdf60b25cd4b5de",
+    "routines": 12
+  },
+  "traiteur": {
+    "sha256": "cb92953a2ea4783b23c3cb00392bb895e2066c1985d59ea4d9bd31ed1704bcfa",
+    "routines": 12
+  },
+  "dark-kitchen": {
+    "sha256": "1f439201c23d28a35dba5fb39e9e9e73690d8286f1f5eeb3a235f68a045d29fb",
+    "routines": 12
+  },
+  "boulangerie": {
+    "sha256": "7e26a05c32dcbe653f6ae8e7534a54848a0393e08dfdc1befadd92a9306b0da4",
+    "routines": 12
+  },
+  "commerce-de-detail": {
+    "sha256": "2eb473e392d6a74696cb1cc42c1cd259a6758f76271b999847a21e756c4d1656",
+    "routines": 12
+  },
+  "e-commerce": {
+    "sha256": "901d1dda0681549933f6a30f7fabcc87c06ce0d292505f1b7181bc54ba482f12",
+    "routines": 12
+  },
+  "institut-de-beaute": {
+    "sha256": "48572c0b1499211bd72f0de99159fcc4298952afa6b99692a70bce0059ae7bed",
+    "routines": 12
+  },
+  "salon-de-coiffure": {
+    "sha256": "efefde24e2a6802d829b47f0b4421b4d62d381de026c2d3af8ffb6a55ce03d64",
+    "routines": 12
+  },
+  "esthetique": {
+    "sha256": "09e602a3c90ad859c2d44612f2647b47ce60fac404b8a1611e6d6288ecba1067",
+    "routines": 12
+  },
+  "services-a-la-personne": {
+    "sha256": "bdeb9cf2e6959ff9bbe2648bccbf9d8f1dd6e726b173be481226bf95ffa329fc",
+    "routines": 12
+  },
+  "organisme-de-formation": {
+    "sha256": "2e5052bd422009779f8be4fabe3955b6056b4a0a3beb1a5f84568c1bc3e6da9e",
+    "routines": 12
+  },
+  "cfa": {
+    "sha256": "3a2e530b99aa39499650c63fbdcfaad260f06cbdbb430ec955852538e2588cc4",
+    "routines": 12
+  },
+  "formation-en-ligne": {
+    "sha256": "190d9db47834e50a5211d50a679de0f2ee75e76c7523306e912cc6e0b2f6b21c",
+    "routines": 12
+  },
+  "production-industrie": {
+    "sha256": "700b1cc4974d9b3613c8964b7d494ad6df2608082fb8a2027bbc11660489c631",
+    "routines": 11
+  },
+  "plomberie-chauffage": {
+    "sha256": "cb2a078bab8e373a06f8a85a907ad730eb8fe667bb1e1606f289cea1df9d9890",
+    "routines": 12
+  },
+  "electricite-generale": {
+    "sha256": "0ff71e5a74e652e66399ebf4add4a940424e7e626a7e08cfcab115640bd45c72",
+    "routines": 12
+  },
+  "renovation-interieur": {
+    "sha256": "9e129c411260b25f50f3106c14e0d5f3ea8a046e494be8c0caca49700afc2c21",
+    "routines": 12
+  },
+  "menuiserie-agencement": {
+    "sha256": "da4db833999f1a26516630522ded26542ede64a40580025a6b3504d6820801cd",
+    "routines": 12
+  },
+  "maconnerie-gros-oeuvre": {
+    "sha256": "dee9b850f447cea93b366b9bf25d0389ae4464f8dbbf769d2c2b928c8d173eb1",
+    "routines": 12
+  },
+  "paysagiste": {
+    "sha256": "832472e98297b25d675532efa9382f209e17c89729e5f42c33ea0a30f322f054",
+    "routines": 12
+  },
+  "garage-automobile": {
+    "sha256": "a8895ce57c2e764a0275dfe965422435de3c4ea172ad93e964601bbc6cf0ea4d",
+    "routines": 11
+  },
+  "carrosserie": {
+    "sha256": "b8bc14ae1bdf6b5a11e905002df4bfd9d04fc43566914aa9da4f198b102f28a2",
+    "routines": 11
+  },
+  "commerce-alimentaire": {
+    "sha256": "f098113e37700fd05950ba8b8743e76847d4cf2603600f6cec5c196bee0e8c51",
+    "routines": 12
+  },
+  "boutique-specialisee": {
+    "sha256": "83bd1474b2857c2a9b808f9d06f45f29f7ac92886f9442d40078b5f73cf63115",
+    "routines": 12
+  },
+  "tabac-presse-point-relais": {
+    "sha256": "f896a0c6645de0ea67c8661169795a6e9b170b339b6a93c37b59ff6111fa0b73",
+    "routines": 12
+  },
+  "bar-cafe": {
+    "sha256": "ca0a233aa5ded307c32c26382ea13e0e0623889842f045e153960bbb329ccc6c",
+    "routines": 12
+  },
+  "hotel-hebergement-independant": {
+    "sha256": "c3f23a701b08d001d45b6e5c55f7706ae9777245fe12627ab998106975e0db3f",
+    "routines": 9
+  },
+  "cabinet-medical": {
+    "sha256": "f8bcd09972cec8dc52443e879b42bf9bcaaef3b3e8501dc8fadc41e28829319e",
+    "routines": 12
+  },
+  "cabinet-paramedical": {
+    "sha256": "8d465b7d5f05fd7f14cb8b8b4d56049f844e80b1ef729fd3374ff735a36e451b",
+    "routines": 12
+  },
+  "infirmier-liberal": {
+    "sha256": "458d08b69a17f70d0e46161175a6c96e298d5b6982937ed51af8e16def7c6d19",
+    "routines": 12
+  },
+  "aide-a-domicile-menage": {
+    "sha256": "2cffa5e8029d37295c8b6f8be829fac95aa7f8928dce543b3e9a2f8531ba0719",
+    "routines": 12
+  },
+  "reparation-informatique-mobile": {
+    "sha256": "0c28e35ddb5e6dd46ff7dd661bde354e3190ba35262f8758bb1079f165f2326e",
+    "routines": 12
+  },
+  "architecte-maitre-oeuvre": {
+    "sha256": "6c12370305a8e93e9d763cbc4c51711a17cddc59c803667ff2c90fbc272f471c",
+    "routines": 12
+  },
+  "courtier-credit-assurance": {
+    "sha256": "21d91c071b25aad6054d9b21c8c945ce2fdec3be3d4a48f2285b9ba8cf18bb9b",
+    "routines": 12
+  },
+  "auto-ecole": {
+    "sha256": "728dbea5bf4488a42a6c3c0e241f3ea8539c03bb6e3951f1396c40bb5d3ae86e",
+    "routines": 12
+  },
+  "photographe-videaste": {
+    "sha256": "86812e987185834689b432575267cfe7710dc4e4efe4aba759ab8ec08d6d816a",
+    "routines": 12
+  },
+  "evenementiel": {
+    "sha256": "1f5af5050f677e9faea3e4b2a084ee5da790bf8adf03bb91788d1516ae65d28e",
+    "routines": 12
+  },
+  "salle-de-sport": {
+    "sha256": "855f4c371a25db81c75aa1c2ba39ea5c84c57a5bcee51cc18a2432d565dadbae",
+    "routines": 12
+  },
+  "dentiste": {
+    "sha256": "fd5bd35848bd72e1e98e6a2ffa1367d45f7f43ca1b46054ac699558269f29f9e",
+    "routines": 12
+  },
+  "pharmacie": {
+    "sha256": "7e87be65cccc515d179dbc4545f80344f3320eac1bd0c9856cbb4fd0a8774034",
+    "routines": 8
+  },
+  "notaire": {
+    "sha256": "2051f4636fc1be8760a92057a8859168814a2941b78897143a33ae32932574ce",
+    "routines": 12
+  },
+  "veterinaire": {
+    "sha256": "2da8687f1bdadb8d3f6a03201555860acb6ec2efcdb9cd302f1bc3d784c993c6",
+    "routines": 12
+  },
+  "agence-de-voyage": {
+    "sha256": "1b8729ae87831b9bd0a34ab1836a2932fecc869c3414908b720827d95a55e785",
+    "routines": 12
+  },
+  "opticien": {
+    "sha256": "474d8cf9f6a86e4a16cdc6e0246c2f3c90668f301cb5a478f904fe2e082a1d24",
+    "routines": 12
+  },
+  "pisciniste": {
+    "sha256": "aa8ef709640887e4de60e46d678fcb2464754589975110c76f238464a2e48d57",
+    "routines": 12
+  },
+  "diagnostiqueur-immobilier": {
+    "sha256": "52c2a9885c8fe76e1d7774ff2fb2d7aa9532256cb12e06860822338a27b7ff5a",
+    "routines": 12
+  },
+  "fleuriste": {
+    "sha256": "a92f5cac25abc28c6bcf04c440f31bafcfa0a8d01b6b4ff245d36b18f21062b6",
+    "routines": 12
+  },
+  "pressing": {
+    "sha256": "849443fc4f850d2f23653276ae8f8a964011f1e05c71de0351d465daca8aadc6",
+    "routines": 12
+  },
+  "food-truck": {
+    "sha256": "3df399d7fe4c1adbb214d894ef970fde2b37942e8a47c8d41bc5c46ef83990d9",
+    "routines": 12
+  },
+  "consultant-independant": {
+    "sha256": "2a9f7bffe4db15cb46cce4bf909d87a2bcbda8f5a72efca7af504ef6d08e07fd",
+    "routines": 12
+  },
+  "cabinet-assurance": {
+    "sha256": "860b5bc121713a558acaf4163fd27800ca784dab3d89317836cb13873bc90d92",
+    "routines": 12
+  },
+  "vtc": {
+    "sha256": "ef0c2d0f07a660ee6f92bb76215dab47ca1a398ca8ed33992620c07f3bdffbf1",
+    "routines": 11
+  },
+  "coach-professionnel": {
+    "sha256": "f2f8dcf94ffa84f3142a90fff279e9b94544bb438b39d36caf3bc65ac85489d4",
+    "routines": 12
+  },
+  "coach-sportif": {
+    "sha256": "dba8fd871005f919b048b3a378ed9bd23ca1413d333dcde5a191ea03fba3cb5b",
+    "routines": 12
+  },
+  "laverie-automatique": {
+    "sha256": "5b8151a72aeb5e5417d6dd12aae7bb12a64119d90ca2af428deda55f1b8e6961",
+    "routines": 11
+  },
+  "entreprise-de-securite": {
+    "sha256": "98fb6ab38131614f316b92b3aad48d63de9f97e8eb26ff9e193a558bad8dec2c",
+    "routines": 9
+  },
+  "association": {
+    "sha256": "2090eaa5dd3c8d721142330e41750fba6c2a715390c5bc66e5538cb18a271a00",
+    "routines": 8
+  },
+  "couvreur": {
+    "sha256": "c9f48a63d95caff4528349070c9600a9b6331503bd4bf617086f7c15bd05a09e",
+    "routines": 12
+  },
+  "peintre-en-batiment": {
+    "sha256": "50443890ffd621a7a98431baa50beb4343e6fa87910b4fac2ecc4cd2e378aa8a",
+    "routines": 12
+  },
+  "carreleur": {
+    "sha256": "0b7de52b9ad33f51006bbd0f49a91ac18d46c947486cc61ba36dd0d7d826ba3f",
+    "routines": 12
+  },
+  "climatisation": {
+    "sha256": "bb5aee8aeffec67e1c40954bf6115b684e912c7a8cc32815ed78985e3e9d28e3",
+    "routines": 12
+  },
+  "serrurier": {
+    "sha256": "29847ade27f3e5084af1bfca9e1df90b99891d9d178946f28c13413c9b6e7515",
+    "routines": 12
+  },
+  "librairie": {
+    "sha256": "8f976b6ea298e23f2415f78ca8ad97dc8bdda45e910fb0dbb61394dcd597f3ef",
+    "routines": 12
+  },
+  "osteopathe": {
+    "sha256": "1f1c99497b6c4341a2c31e811aeb307ff609afe2f8dfa5c89a79a3e976df8363",
+    "routines": 12
+  },
+  "psychologue": {
+    "sha256": "d5b679e158bcf73ce8889ea4c03264675d6757d40a9dc2d80f2587bd204e4d60",
+    "routines": 12
+  },
+  "creche": {
+    "sha256": "ca64f028b2640d9dd846ff91ab48942c1eecd02f5fa79e93c3ed08b6c11d5346",
+    "routines": 12
+  },
+  "gestionnaire-de-patrimoine": {
+    "sha256": "9ef0b4128db0f9ef0fff682a3ffc79bc3d47cc26e5e4fff58b36d38726d170ef",
+    "routines": 12
+  },
+  "chasseur-immobilier": {
+    "sha256": "714526644639e77077071c69a678a4a0bcf7b55900f3a8e59f85f6392b4e9514",
+    "routines": 12
+  },
+  "geometre": {
+    "sha256": "eee2122986bb02913bce119bc6214263cf8f582bba6d8466723667257c56914e",
+    "routines": 12
+  },
+  "daf-externalise": {
+    "sha256": "608a8ecf3c753dcba035a4d753a6c0b9ab9e8215f28c85c90ebd47a6cc0ac925",
+    "routines": 12
+  },
+  "office-manager-externalise": {
+    "sha256": "b01da869b6a8682e33267d8bf51acab656232d8230d335908b8e56adf0ffa69c",
+    "routines": 12
+  },
+  "assistant-administratif-externalise": {
+    "sha256": "6a23b0221cd6be37c43caa3c131b35b0c8b0b6bb2c082ecd23b4471fe2a9f5ee",
+    "routines": 9
+  },
+  "secretariat-externalise": {
+    "sha256": "3c7c7b9b0b4caf0490dba788692b523d81e057a19577c841e1213f63ff45416b",
+    "routines": 12
+  },
+  "gestionnaire-paie-independant": {
+    "sha256": "a2df15cdbf15986bce2ca383db3968a7ae579787c66f1a55fdfd65704bb9eade",
+    "routines": 12
+  },
+  "cabinet-rh-externalise": {
+    "sha256": "1acf7bf155b7299bf4ad57cd7cccb16a16c84589565dbf9fa074358bd757e0b0",
+    "routines": 12
+  },
+  "centre-appels-support-client": {
+    "sha256": "9edde95fae9c3fa21777e259f058aab488743139edf299d1ba3150097aec0584",
+    "routines": 12
+  },
+  "societe-recouvrement": {
+    "sha256": "ff23edc22841277b12375443154f4ec53b1cf5284d2823f0f7969a4a4d2adcf3",
+    "routines": 12
+  },
+  "centre-affaires-coworking": {
+    "sha256": "032015314a7da9f51795a75094d4a08ecf2e5d9d1305974a75b4c7b00851aa47",
+    "routines": 12
+  },
+  "cabinet-qhse-conformite": {
+    "sha256": "9144bf0764a2605ba1e77d00a6db2fa016ff06c725a1101c34d2823f84f9d8fb",
+    "routines": 12
+  },
+  "bureau-etudes": {
+    "sha256": "79565897ef9e2e0aa8424869b3b2432ac99ca6ea694c2961de827959434f652a",
+    "routines": 12
+  },
+  "cabinet-etudes": {
+    "sha256": "1e0f77f3a3ac027344c938a581b49361137f16b539f5da289f33f52fa66c7127",
+    "routines": 12
+  },
+  "infogerance-informatique": {
+    "sha256": "866ace96e7d78758113f524a25ea82d73dd32e6100db22ea2f6e5819b52bd88e",
+    "routines": 12
+  },
+  "cybersecurite-pme": {
+    "sha256": "65e6d6c3d8cd5c20ba132674589520dd7e7e5626f656337d550eb17c0eb6256f",
+    "routines": 12
+  },
+  "integrateur-crm-erp": {
+    "sha256": "cb62c9c211cffe094f608a5457868e0fbbae66f6f791f63ddb938b052e616a1e",
+    "routines": 12
+  },
+  "consultant-data-bi": {
+    "sha256": "db6d5e00d7e5ce2859ad7e3b776c0748156492d57ab6ec4bcdf01d0c512a619e",
+    "routines": 12
+  },
+  "agence-seo": {
+    "sha256": "592881ec5e769a663c9fb7af523facf5408f81ae5dc036e0f68a1fc8c387e256",
+    "routines": 12
+  },
+  "agence-acquisition-paid-ads": {
+    "sha256": "e89015715c852bf04cf782cc5a93c595e7fab48daa5264727473819618a5ec65",
+    "routines": 12
+  },
+  "studio-branding-design": {
+    "sha256": "3bda2fca49c5eab2de7b0cebe2be01cb4dcb7eb2049e99252dc8ebc2f84fa6df",
+    "routines": 12
+  }
+}

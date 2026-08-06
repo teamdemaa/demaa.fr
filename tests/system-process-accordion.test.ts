@@ -45,7 +45,7 @@ const systeme: SystemeDetail = {
         "Mettre à jour les indicateurs",
         "Analyser les écarts",
       ],
-      frequency: "Hebdomadaire",
+      cadence: "Chaque semaine",
       routineId: "routine.cabinet-conseil.process-direction",
       support: null,
       title: "Piloter l’activité",
@@ -55,7 +55,7 @@ const systeme: SystemeDetail = {
         "Qualifier le besoin",
         "Confirmer la prochaine étape",
       ],
-      frequency: "À chaque demande",
+      cadence: "À chaque demande",
       routineId: "routine.cabinet-conseil.process-marketing",
       support: null,
       title: "Qualifier les prospects",
@@ -88,6 +88,10 @@ describe("system process accordion", () => {
     expect(html).not.toContain("font-semibold leading-snug");
     expect(html).toContain(">01<");
     expect(html).toContain(">02<");
+    expect(html).toContain("Chaque semaine");
+    expect(html).toContain("À chaque demande");
+    expect(html.match(/data-process-cadence/g)).toHaveLength(2);
+    expect(html).not.toContain("Une fois, puis à revoir si besoin");
     expect(html).not.toContain("01.01");
   });
 
@@ -101,7 +105,7 @@ describe("system process accordion", () => {
             "Préparer le devis détaillé",
             "Confirmer le calendrier",
           ],
-          frequency: "À chaque demande",
+          cadence: "À chaque demande",
           routineId: "routine.batiment.devis",
           support: null,
           title: "Qualifier une demande et préparer le devis",
@@ -111,7 +115,7 @@ describe("system process accordion", () => {
             "Planifier les équipes",
             "Confirmer le matériel",
           ],
-          frequency: "Chaque semaine",
+          cadence: "Chaque semaine",
           routineId: "routine.batiment.planning",
           support: {
             assetRevision: "support-test",

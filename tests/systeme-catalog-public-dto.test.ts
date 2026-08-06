@@ -63,7 +63,7 @@ describe("public operational system DTO", () => {
           (routine) =>
             routine.bullets.length >= 2 &&
             routine.bullets.length <= 4 &&
-            routine.frequency.trim().length > 0 &&
+            routine.cadence.trim().length > 0 &&
             routine.support === null &&
             routine.title.trim().length > 0,
         ),
@@ -92,6 +92,9 @@ describe("public operational system DTO", () => {
     }
 
     expect(JSON.stringify(details)).not.toContain("docs.google.com");
+    expect(
+      JSON.stringify(details.map(({ detail }) => detail?.routines)),
+    ).not.toContain("Une fois, puis à revoir si besoin");
   });
 
   it("builds public Process routines without reading workbook activation pointers", async () => {
