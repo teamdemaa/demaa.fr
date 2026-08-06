@@ -49,6 +49,9 @@ describe("conventional systems and Academy navbar", () => {
     expect(source).not.toContain('aria-current={activeSection === "sur-mesure"');
     expect(source).toContain("data-navbar-section-selector");
     expect(source).toContain("max-w-[55.2rem] grid-cols-2");
+    expect(source).toContain(
+      "px-[0.84rem] pb-3 pt-3 md:px-[1.4rem] md:pb-4 md:pt-4 lg:px-[3.36rem]",
+    );
     expect(source).toContain("bg-dema-sage text-dema-forest");
     expect(source.indexOf("</nav>")).toBeLessThan(
       source.indexOf("data-navbar-section-selector"),

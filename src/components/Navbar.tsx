@@ -61,7 +61,7 @@ export default function Navbar({ minimal = false }: { minimal?: boolean }) {
           </div>
         </div>
       </nav>
-      <div className="bg-dema-cream px-6 pb-3 pt-3 md:px-10 md:pb-4 md:pt-4 lg:px-24">
+      <div className="bg-dema-cream px-[0.84rem] pb-3 pt-3 md:px-[1.4rem] md:pb-4 md:pt-4 lg:px-[3.36rem]">
         <div
           aria-label="Navigation principale"
           data-navbar-section-selector
