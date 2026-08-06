@@ -79,7 +79,7 @@ describe("system page SEO published Solutions boundary", () => {
       `Process et Solutions du système opérationnel ${system.name}`,
     );
     expect(exposed).not.toMatch(/Legacy Outil Fantôme|\boutils?\b|annuaire-outils|écosystème/i);
-    expect(exposed).toContain("Guide de la facturation électronique");
+    expect(exposed).toContain("La facturation électronique");
   });
 
   it("keeps all 115 empty-registry pages free of historical Models while listing Resources", () => {

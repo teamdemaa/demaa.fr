@@ -17,8 +17,8 @@ describe("system Resources catalog", () => {
       "Tableau de pilotage opérationnel",
       "Suivi et prévisionnel financier",
       "CRM - suivi commercial",
-      "Guide de la facturation électronique",
-      "Guide des obligations fiscales, sociales et comptables",
+      "La facturation électronique",
+      "Maîtriser les obligations et les finances de son entreprise",
     ]);
     expect(SYSTEM_RESOURCES.map(({ rank }) => rank)).toEqual([1, 2, 3, 4, 5]);
     expect(JSON.stringify(SYSTEM_RESOURCES)).not.toMatch(
@@ -31,7 +31,7 @@ describe("system Resources catalog", () => {
       const snapshot = getSystemResourceAssetSnapshot(resource.resourceSlug);
       expect(snapshot).toMatchObject({
         resourceId: resource.resourceSlug,
-        workbookVersion: "1.0.0",
+        workbookVersion: resource.resourceSlug.startsWith("guide-") ? "2.0.0" : "1.0.0",
       });
       expect(snapshot?.assetRevision).toContain(resource.resourceSlug);
       expect(resolveSystemResourceDelivery(snapshot!)).toMatchObject({
@@ -48,5 +48,37 @@ describe("system Resources catalog", () => {
       resourceId: "crm-suivi-commercial",
       workbookVersion: "1.0.0",
     })).toBeNull();
+  });
+
+  it("keeps the replaced guides resolvable for historical deliveries", () => {
+    expect(resolveSystemResourceDelivery({
+      assetRevision: "guide-facturation-electronique-v1-2026-08-05",
+      resourceId: "guide-facturation-electronique",
+      workbookVersion: "1.0.0",
+    })).toEqual({
+      destination: "https://demaa.fr/downloads/guides/guide-facturation-electronique-demaa.pdf",
+      resourceSlug: "guide-facturation-electronique",
+    });
+    expect(resolveSystemResourceDelivery({
+      assetRevision: "guide-obligations-fiscales-sociales-comptables-v1-2026-08-05",
+      resourceId: "guide-obligations-fiscales-sociales-comptables",
+      workbookVersion: "1.0.0",
+    })).toEqual({
+      destination: "https://demaa.fr/downloads/guides/guide-obligations-fiscales-sociales-comptables-demaa.pdf",
+      resourceSlug: "guide-obligations-fiscales-sociales-comptables",
+    });
+  });
+
+  it("delivers the original slide presentations for new requests", () => {
+    for (const resourceSlug of [
+      "guide-facturation-electronique",
+      "guide-obligations-fiscales-sociales-comptables",
+    ] as const) {
+      const snapshot = getSystemResourceAssetSnapshot(resourceSlug);
+      expect(snapshot?.workbookVersion).toBe("2.0.0");
+      expect(resolveSystemResourceDelivery(snapshot!)?.destination).toMatch(
+        /^https:\/\/demaa\.fr\/downloads\/presentations\/presentation-.+\.pdf$/,
+      );
+    }
   });
 });
