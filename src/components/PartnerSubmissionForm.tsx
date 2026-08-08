@@ -5,6 +5,8 @@ import {
   ArrowLeft,
   ArrowRight,
   Check,
+  ChevronDown,
+  ChevronUp,
   Info,
   LoaderCircle,
   Search,
@@ -35,12 +37,11 @@ type PartnerSubmissionFormProps = Readonly<{
   systems: readonly SystemOption[];
 }>;
 
-type FormStep = 1 | 2 | 3;
+type FormStep = 1 | 2;
 
 const steps: ReadonlyArray<Readonly<{ label: string; step: FormStep }>> = [
   { step: 1, label: "La solution" },
-  { step: 2, label: "Les métiers" },
-  { step: 3, label: "Votre contact" },
+  { step: 2, label: "Votre contact" },
 ];
 
 const fieldClassName =
@@ -66,6 +67,7 @@ export default function PartnerSubmissionForm({
 }: PartnerSubmissionFormProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const [step, setStep] = useState<FormStep>(1);
+  const [metiersOpen, setMetiersOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [selectedSystemSlugs, setSelectedSystemSlugs] = useState<string[]>([]);
   const [fax, setFax] = useState("");
@@ -109,7 +111,7 @@ export default function PartnerSubmissionForm({
     return typeof value === "string" ? value.trim() : "";
   }
 
-  function openSystemsStep() {
+  function continueToContactStep() {
     const description = getFormValue("description");
     if (
       !getFormValue("solutionName")
@@ -117,24 +119,18 @@ export default function PartnerSubmissionForm({
       || !getFormValue("solutionType")
       || description.length < 20
     ) {
-      setFormError(
-        "Complétez la présentation de votre solution avant de choisir les métiers.",
-      );
+      setFormError("Complétez la présentation de votre solution.");
       return;
     }
 
-    setFormError(null);
-    setStep(2);
-  }
-
-  function openContactStep() {
     if (selectedSystemSlugs.length === 0) {
+      setMetiersOpen(true);
       setFormError("Sélectionnez au moins un métier concerné.");
       return;
     }
 
     setFormError(null);
-    setStep(3);
+    setStep(2);
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -246,10 +242,13 @@ export default function PartnerSubmissionForm({
           Présentez-nous votre solution
         </h2>
         <p className="mt-2 max-w-xl text-sm font-light leading-6 text-dema-muted">
-          Trois étapes courtes pour nous aider à la positionner au bon endroit.
+          Deux étapes courtes pour nous aider à la positionner au bon endroit.
+        </p>
+        <p className="mt-2 text-xs font-light text-dema-muted">
+          Les champs marqués d&rsquo;un <span aria-hidden="true" className="text-brand-coral">*</span> sont obligatoires.
         </p>
 
-        <ol className="mt-6 grid grid-cols-3 gap-2" aria-label="Étapes du formulaire">
+        <ol className="mt-6 grid grid-cols-2 gap-2" aria-label="Étapes du formulaire">
           {steps.map((item) => {
             const isCurrent = item.step === step;
             const isComplete = item.step < step;
@@ -295,7 +294,7 @@ export default function PartnerSubmissionForm({
         <section hidden={step !== 1} aria-label="La solution">
           <div className="grid gap-5 sm:grid-cols-2">
             <label className={labelClassName}>
-              Nom
+              Nom <span aria-hidden="true" className="text-brand-coral">*</span>
               <input
                 name="solutionName"
                 type="text"
@@ -307,7 +306,7 @@ export default function PartnerSubmissionForm({
               />
             </label>
             <label className={labelClassName}>
-              Site web
+              Site web <span aria-hidden="true" className="text-brand-coral">*</span>
               <input
                 name="website"
                 type="url"
@@ -320,26 +319,32 @@ export default function PartnerSubmissionForm({
               />
             </label>
             <label className={labelClassName}>
-              Catégorie
-              <select
-                name="solutionType"
-                defaultValue=""
-                required
-                className={fieldClassName}
-              >
-                <option value="" disabled>
-                  Sélectionner une catégorie
-                </option>
-                <option value="software">Logiciel</option>
-                <option value="service-provider">Prestataire de services</option>
-                <option value="supplier">Fournisseur</option>
-                <option value="network">Réseau professionnel</option>
-                <option value="training">Formation</option>
-                <option value="funding">Financement</option>
-              </select>
+              Catégorie <span aria-hidden="true" className="text-brand-coral">*</span>
+              <span className="relative mt-2 block">
+                <select
+                  name="solutionType"
+                  defaultValue=""
+                  required
+                  className={`${fieldClassName} mt-0 appearance-none pr-10`}
+                >
+                  <option value="" disabled>
+                    Sélectionner une catégorie
+                  </option>
+                  <option value="software">Logiciel</option>
+                  <option value="service-provider">Prestataire de services</option>
+                  <option value="supplier">Fournisseur</option>
+                  <option value="network">Réseau professionnel</option>
+                  <option value="training">Formation</option>
+                  <option value="funding">Financement</option>
+                </select>
+                <ChevronDown
+                  className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-dema-muted"
+                  aria-hidden="true"
+                />
+              </span>
             </label>
             <label className={`${labelClassName} sm:col-span-2`}>
-              Description
+              Description <span aria-hidden="true" className="text-brand-coral">*</span>
               <span className="mt-1 block text-xs font-light leading-5 text-dema-muted">
                 Le besoin traité, le public concerné et ce qui rend votre solution utile.
               </span>
@@ -355,6 +360,103 @@ export default function PartnerSubmissionForm({
             </label>
           </div>
 
+          <div className="mt-7 border-t border-dema-line pt-6">
+            <button
+              type="button"
+              onClick={() => setMetiersOpen((current) => !current)}
+              className="flex w-full items-center justify-between gap-3 text-left"
+              aria-expanded={metiersOpen}
+            >
+              <span className="flex items-center gap-2">
+                <span className={labelClassName}>
+                  Les métiers concernés <span aria-hidden="true" className="text-brand-coral">*</span>
+                </span>
+                {selectedSystemSlugs.length > 0 ? (
+                  <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-dema-sage px-1.5 text-[11px] font-medium text-dema-forest">
+                    {selectedSystemSlugs.length}
+                  </span>
+                ) : null}
+              </span>
+              {metiersOpen ? (
+                <ChevronUp className="h-4 w-4 shrink-0 text-dema-muted" aria-hidden="true" />
+              ) : (
+                <ChevronDown className="h-4 w-4 shrink-0 text-dema-muted" aria-hidden="true" />
+              )}
+            </button>
+
+            {selectedSystemSlugs.length > 0 ? (
+              <div className="mt-3 flex flex-wrap gap-2" aria-label="Métiers sélectionnés">
+                {selectedSystemSlugs.map((slug) => {
+                  const selectedSystem = systemsBySlug.get(slug);
+                  if (!selectedSystem) return null;
+                  return (
+                    <button
+                      key={slug}
+                      type="button"
+                      onClick={() => toggleSystem(slug)}
+                      className="inline-flex items-center gap-1.5 rounded-full bg-dema-sage px-3 py-1.5 text-xs font-medium text-dema-forest transition hover:bg-dema-line"
+                      aria-label={`Retirer ${selectedSystem.name}`}
+                    >
+                      {selectedSystem.name}
+                      <X className="h-3.5 w-3.5" aria-hidden="true" />
+                    </button>
+                  );
+                })}
+              </div>
+            ) : null}
+
+            {metiersOpen ? (
+              <div className="mt-4">
+                <label className={labelClassName}>
+                  Rechercher un métier
+                  <span className="relative mt-2 block">
+                    <Search
+                      className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-dema-muted"
+                      aria-hidden="true"
+                    />
+                    <input
+                      type="search"
+                      value={query}
+                      onChange={(event) => setQuery(event.target.value)}
+                      placeholder="Ex. agence marketing, cabinet comptable…"
+                      className={`${fieldClassName} mt-0 pl-11`}
+                    />
+                  </span>
+                </label>
+
+                <div
+                  className="mt-3 max-h-64 overflow-y-auto rounded-xl border border-dema-line bg-white p-2"
+                  role="group"
+                  aria-label="Résultats des métiers"
+                >
+                  {filteredSystems.length > 0 ? (
+                    filteredSystems.map((system) => {
+                      const isSelected = selectedSystemSlugs.includes(system.slug);
+                      return (
+                        <label
+                          key={system.slug}
+                          className="flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-light text-brand-blue transition hover:bg-dema-sage/70"
+                        >
+                          <input
+                            type="checkbox"
+                            checked={isSelected}
+                            onChange={() => toggleSystem(system.slug)}
+                            className="h-4 w-4 rounded border-dema-line accent-dema-forest"
+                          />
+                          <span>{system.name}</span>
+                        </label>
+                      );
+                    })
+                  ) : (
+                    <p className="px-3 py-6 text-center text-sm font-light text-dema-muted">
+                      Aucun métier trouvé. Essayez un terme plus simple.
+                    </p>
+                  )}
+                </div>
+              </div>
+            ) : null}
+          </div>
+
           {formError ? (
             <p className="mt-5 text-sm text-brand-coral" role="alert">
               {formError}
@@ -364,116 +466,16 @@ export default function PartnerSubmissionForm({
           <div className="mt-7 flex justify-end">
             <button
               type="button"
-              onClick={openSystemsStep}
+              onClick={continueToContactStep}
               className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-dema-forest px-5 py-3 text-sm font-medium text-white transition hover:bg-brand-blue"
             >
-              Choisir les métiers
+              Continuer
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </button>
           </div>
         </section>
 
-        <section hidden={step !== 2} aria-label="Les métiers concernés">
-          {selectedSystemSlugs.length > 0 ? (
-            <div className="flex flex-wrap gap-2" aria-label="Métiers sélectionnés">
-              {selectedSystemSlugs.map((slug) => {
-                const selectedSystem = systemsBySlug.get(slug);
-                if (!selectedSystem) return null;
-                return (
-                  <button
-                    key={slug}
-                    type="button"
-                    onClick={() => toggleSystem(slug)}
-                    className="inline-flex items-center gap-1.5 rounded-full bg-dema-sage px-3 py-1.5 text-xs font-medium text-dema-forest transition hover:bg-dema-line"
-                    aria-label={`Retirer ${selectedSystem.name}`}
-                  >
-                    {selectedSystem.name}
-                    <X className="h-3.5 w-3.5" aria-hidden="true" />
-                  </button>
-                );
-              })}
-            </div>
-          ) : null}
-
-          <label
-            className={`${labelClassName} ${selectedSystemSlugs.length > 0 ? "mt-5" : ""}`}
-          >
-            Rechercher un métier
-            <span className="relative mt-2 block">
-              <Search
-                className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-dema-muted"
-                aria-hidden="true"
-              />
-              <input
-                type="search"
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder="Ex. agence marketing, cabinet comptable…"
-                className={`${fieldClassName} mt-0 pl-11`}
-              />
-            </span>
-          </label>
-
-          <div
-            className="mt-3 max-h-64 overflow-y-auto rounded-xl border border-dema-line bg-white p-2"
-            role="group"
-            aria-label="Résultats des métiers"
-          >
-            {filteredSystems.length > 0 ? (
-              filteredSystems.map((system) => {
-                const isSelected = selectedSystemSlugs.includes(system.slug);
-                return (
-                  <label
-                    key={system.slug}
-                    className="flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-light text-brand-blue transition hover:bg-dema-sage/70"
-                  >
-                    <input
-                      type="checkbox"
-                      checked={isSelected}
-                      onChange={() => toggleSystem(system.slug)}
-                      className="h-4 w-4 rounded border-dema-line accent-dema-forest"
-                    />
-                    <span>{system.name}</span>
-                  </label>
-                );
-              })
-            ) : (
-              <p className="px-3 py-6 text-center text-sm font-light text-dema-muted">
-                Aucun métier trouvé. Essayez un terme plus simple.
-              </p>
-            )}
-          </div>
-
-          {formError ? (
-            <p className="mt-5 text-sm text-brand-coral" role="alert">
-              {formError}
-            </p>
-          ) : null}
-
-          <div className="mt-7 flex items-center justify-between gap-4">
-            <button
-              type="button"
-              onClick={() => {
-                setFormError(null);
-                setStep(1);
-              }}
-              className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-dema-muted transition hover:text-dema-forest"
-            >
-              <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-              Retour
-            </button>
-            <button
-              type="button"
-              onClick={openContactStep}
-              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-dema-forest px-5 py-3 text-sm font-medium text-white transition hover:bg-brand-blue"
-            >
-              Ajouter mon contact
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </button>
-          </div>
-        </section>
-
-        <section hidden={step !== 3} aria-labelledby="partner-step-contact">
+        <section hidden={step !== 2} aria-labelledby="partner-step-contact">
           <h3
             id="partner-step-contact"
             className="text-sm font-medium uppercase tracking-[0.14em] text-dema-forest"
@@ -482,7 +484,7 @@ export default function PartnerSubmissionForm({
           </h3>
           <div className="mt-5 grid gap-5 sm:grid-cols-2">
             <label className={labelClassName}>
-              Prénom et nom
+              Prénom et nom <span aria-hidden="true" className="text-brand-coral">*</span>
               <input
                 name="fullName"
                 type="text"
@@ -495,7 +497,7 @@ export default function PartnerSubmissionForm({
               />
             </label>
             <label className={labelClassName}>
-              E-mail professionnel
+              E-mail professionnel <span aria-hidden="true" className="text-brand-coral">*</span>
               <input
                 name="email"
                 type="email"
@@ -507,7 +509,7 @@ export default function PartnerSubmissionForm({
               />
             </label>
             <label className={`${labelClassName} sm:col-span-2`}>
-              Entreprise
+              Entreprise <span aria-hidden="true" className="text-brand-coral">*</span>
               <input
                 name="company"
                 type="text"
@@ -575,7 +577,7 @@ export default function PartnerSubmissionForm({
               type="button"
               onClick={() => {
                 setFormError(null);
-                setStep(2);
+                setStep(1);
               }}
               className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-dema-muted transition hover:text-dema-forest"
             >

@@ -76,8 +76,8 @@ describe("Levier private Google Sheets contract", () => {
   it("keeps the resource server-only and removes the XLSX runtime contract", async () => {
     const assetSource = await readSource("src/lib/levier-asset.server.ts");
     const configSource = await readSource("next.config.ts");
-    const modalSource = await readSource(
-      "src/components/OperationalSystemCopyRequestModal.tsx",
+    const openRouteSource = await readSource(
+      "src/app/api/systeme-kit/open/[resourceSlug]/route.ts",
     );
     const vercelIgnoreSource = await readSource(".vercelignore");
 
@@ -86,14 +86,11 @@ describe("Levier private Google Sheets contract", () => {
     expect(assetSource).not.toMatch(/NEXT_PUBLIC|private-assets|readFile|\.xlsx/);
     expect(configSource).not.toMatch(/private-assets\/levier|Levier\.xlsx/);
     expect(vercelIgnoreSource).not.toContain("!private-assets/levier/Levier.xlsx");
-    expect(modalSource).not.toMatch(/\/copy|docs\.google|Google Sheets|resourceId/);
+    expect(openRouteSource).not.toMatch(/NEXT_PUBLIC|private-assets|\.xlsx/);
   });
 
   it("keeps the public demonstration separate from the private copy link", async () => {
     const previewSource = await readSource("src/lib/system-kit-previews.ts");
-    const modalSource = await readSource(
-      "src/components/OperationalSystemCopyRequestModal.tsx",
-    );
     const resourceCatalogSource = await readSource(
       "src/lib/system-resource-catalog.ts",
     );
@@ -105,7 +102,6 @@ describe("Levier private Google Sheets contract", () => {
     expect(resourceCatalogSource).toContain(
       "Aperçu avec des données d’exemple. Votre copie sera vierge",
     );
-    expect(modalSource).toContain("resource.previewDisclosure");
     const preview = await readFile(
       new URL(
         "../public/images/levier/levier-tableau-de-bord-preview.webp",

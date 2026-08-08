@@ -12,22 +12,42 @@ import {
 } from "@/lib/system-resource-assets.server";
 
 describe("system Resources catalog", () => {
-  it("publishes the five neutral resources in the agreed order", () => {
-    expect(SYSTEM_RESOURCES.map(({ title }) => title)).toEqual([
+  it("publishes the templates and guides catalog in the agreed order", () => {
+    const templates = SYSTEM_RESOURCES.filter((resource) => resource.format === "template");
+    const guides = SYSTEM_RESOURCES.filter((resource) => resource.format === "guide");
+
+    expect(templates.map(({ title }) => title)).toEqual([
       "Tableau de pilotage opérationnel",
       "Suivi et prévisionnel financier",
       "CRM - suivi commercial",
-      "La facturation électronique",
-      "Maîtriser les obligations et les finances de son entreprise",
     ]);
-    expect(SYSTEM_RESOURCES.map(({ rank }) => rank)).toEqual([1, 2, 3, 4, 5]);
+    expect(templates.map(({ rank }) => rank)).toEqual([1, 2, 3]);
+
+    expect(guides.map(({ title }) => title)).toEqual([
+      "Maîtriser les obligations et les finances de son entreprise",
+      "La facturation électronique",
+      "Comment ouvrir un restaurant ?",
+      "Comment gérer un restaurant ?",
+    ]);
+    expect(guides.map(({ availability }) => availability)).toEqual([
+      "available",
+      "available",
+      "coming-soon",
+      "coming-soon",
+    ]);
     expect(JSON.stringify(SYSTEM_RESOURCES)).not.toMatch(
       /docs\.google\.com|airtable\.com|downloads\/guides|Levier/,
     );
   });
 
   it("keeps destinations server-only and ties delivery to an immutable revision", () => {
-    for (const resource of SYSTEM_RESOURCES.slice(1)) {
+    const availableResources = SYSTEM_RESOURCES.filter(
+      (resource) =>
+        resource.availability === "available" &&
+        resource.resourceSlug !== "tableau-pilotage-operationnel",
+    );
+
+    for (const resource of availableResources) {
       const snapshot = getSystemResourceAssetSnapshot(resource.resourceSlug);
       expect(snapshot).toMatchObject({
         resourceId: resource.resourceSlug,
@@ -37,6 +57,16 @@ describe("system Resources catalog", () => {
       expect(resolveSystemResourceDelivery(snapshot!)).toMatchObject({
         resourceSlug: resource.resourceSlug,
       });
+    }
+  });
+
+  it("has no delivery asset for coming-soon guides", () => {
+    const comingSoonResources = SYSTEM_RESOURCES.filter(
+      (resource) => resource.availability === "coming-soon",
+    );
+    expect(comingSoonResources.length).toBeGreaterThan(0);
+    for (const resource of comingSoonResources) {
+      expect(getSystemResourceAssetSnapshot(resource.resourceSlug)).toBeNull();
     }
   });
 

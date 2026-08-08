@@ -2,10 +2,15 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronDown, ChevronUp, Search, SlidersHorizontal } from "lucide-react";
+import { ChevronDown, ChevronUp, FileText, Search, SlidersHorizontal } from "lucide-react";
 import { useMemo, useState } from "react";
 import type { AcademyContentDefinition } from "@/lib/academy-course-content";
 import { matchesSearchQuery } from "@/lib/search";
+import { SYSTEM_RESOURCES } from "@/lib/system-resource-catalog";
+
+const ACADEMY_MODEL_RESOURCES = SYSTEM_RESOURCES
+  .filter((resource) => resource.format === "template")
+  .sort((left, right) => left.rank - right.rank);
 
 type AcademyIndexClientProps = {
   contents: AcademyContentDefinition[];
@@ -422,6 +427,43 @@ export default function AcademyIndexClient({ contents, backLink }: AcademyIndexC
                 </button>
               </div>
             ) : null}
+          </section>
+        ) : null}
+
+        {ACADEMY_MODEL_RESOURCES.length ? (
+          <section className="mt-12 border-t border-dema-line/75 pt-9 md:mt-14 md:pt-10" aria-labelledby="academy-models-title">
+            <h2 id="academy-models-title" className="text-2xl font-semibold text-brand-blue md:text-[2rem]">
+              Modèles et documents
+            </h2>
+            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-dema-muted">
+              Les mêmes modèles que dans vos systèmes métier, accessibles directement.
+            </p>
+
+            <div className="mt-7 grid grid-cols-1 gap-x-8 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
+              {ACADEMY_MODEL_RESOURCES.map((resource) => (
+                <a
+                  key={resource.resourceSlug}
+                  href={`/api/systeme-kit/open/${resource.resourceSlug}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group block rounded-[1.25rem] border border-[#E7EBE8] bg-[#F1F3F0] p-6 transition hover:border-dema-forest/25"
+                  aria-label={`Ouvrir ${resource.title}`}
+                >
+                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-dema-forest">
+                    <FileText className="h-5 w-5" aria-hidden="true" />
+                  </span>
+                  <span className="mt-4 block text-[10px] font-semibold uppercase tracking-[0.15em] text-dema-muted">
+                    {resource.formatLabel}
+                  </span>
+                  <span className="mt-1.5 block text-lg font-semibold leading-snug text-brand-blue transition-colors group-hover:text-dema-forest">
+                    {resource.title}
+                  </span>
+                  <span className="mt-2 block text-sm leading-relaxed text-dema-muted">
+                    {resource.description}
+                  </span>
+                </a>
+              ))}
+            </div>
           </section>
         ) : null}
 

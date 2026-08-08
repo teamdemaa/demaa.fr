@@ -3,11 +3,13 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
-import { type KeyboardEvent, useState } from "react";
+import { type KeyboardEvent, useMemo, useState } from "react";
 import SystemCustomOfferCta from "@/components/SystemCustomOfferCta";
+import SystemGuidesRail from "@/components/SystemGuidesRail";
 import SystemResourcesTab from "@/components/SystemResourcesTab";
 import SystemSolutionsTab from "@/components/SystemSolutionsTab";
 import SystemeTabContent from "@/components/SystemeTabContent";
+import { getSystemResourcesForSystem } from "@/lib/system-resource-catalog";
 import type { SystemeDetail } from "@/lib/systeme-catalog";
 import {
   getVisibleSystemDetailTabs,
@@ -49,6 +51,10 @@ export default function SystemDetailContent({
   solutionSections = EMPTY_SOLUTION_SECTIONS,
 }: SystemDetailContentProps) {
   const router = useRouter();
+  const scopedResources = useMemo(
+    () => getSystemResourcesForSystem(system.slug),
+    [system.slug],
+  );
   const visibleTabSlugs = getVisibleSystemDetailTabs();
   const tabs = systemTabDefinitions.filter((tab) =>
     visibleTabSlugs.includes(tab.slug),
@@ -156,7 +162,28 @@ export default function SystemDetailContent({
         ) : null}
 
         {activeTab === "resources" ? (
-          <SystemResourcesTab systemSlug={system.slug} />
+          <div className="space-y-10">
+            <SystemGuidesRail
+              resources={scopedResources.filter((resource) => resource.format === "guide")}
+              systemSlug={system.slug}
+            />
+            <SystemResourcesTab
+              resources={scopedResources.filter((resource) => resource.format === "template")}
+              systemSlug={system.slug}
+            />
+            <div className="rounded-[1.15rem] border border-dema-line bg-dema-paper px-5 py-5 text-center sm:px-6">
+              <p className="text-sm text-dema-muted">
+                Pour voir plus de documents,{" "}
+                <Link
+                  href="/academie"
+                  className="font-medium text-dema-forest underline decoration-dema-forest/35 underline-offset-2"
+                >
+                  allez dans Académie
+                </Link>
+                .
+              </p>
+            </div>
+          </div>
         ) : null}
       </section>
       {activeTab !== "resources" ? (

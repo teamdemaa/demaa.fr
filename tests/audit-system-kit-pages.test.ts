@@ -53,8 +53,8 @@ describe("system kit page audit contract", () => {
       "Réserver mon échange offert",
     ]);
     expect(getExpectedCallTexts("solutions")).toEqual([
-      "Besoin d’aide pour identifier la bonne solution ?",
-      "Échanger 30 minutes",
+      "Des tarifs préférentiels avec les partenaires Demaa",
+      "Recevoir les tarifs préférentiels",
     ]);
     expect(getExpectedCallTexts("resources")).toEqual([]);
   });

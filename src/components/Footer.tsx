@@ -15,10 +15,10 @@ const directoryLinks = [
 
 const resourceLinks = [
   { label: "Systèmes métier", href: "/systemes" },
-  { label: "Modèles de documents", href: "/modeles-de-documents" },
   { label: "Académie", href: "/academie" },
   { label: "Cours", href: "/cours" },
   { label: "Aides & subventions", href: "/aides-et-subventions" },
+  { label: "Opportunités B2B", href: "/opportunites-b2b" },
   { label: "Proposer votre solution", href: "/partenaires" },
 ];
 

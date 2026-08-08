@@ -2,7 +2,6 @@ import type { MetadataRoute } from "next";
 import { getCanonicalBaseUrl } from "@/lib/site-url";
 import { getAllCourseEntries } from "@/lib/course-content";
 import { getAllAcademyContent } from "@/lib/academy-course-content";
-import { getAllDocumentModels } from "@/lib/document-models";
 import { getAllNewsletters } from "@/lib/newsletter-content";
 import { aidFamilies, demaaAidItems } from "@/lib/aid-catalog";
 import { getAccountingFirms } from "@/lib/accounting-directory";
@@ -47,8 +46,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/annuaire-recrutement`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-newsletters`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-experts-comptables`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${base}/modeles-de-documents`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/academie`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${base}/opportunites-b2b`, lastModified: now, changeFrequency: "weekly", priority: 0.6 },
     { url: `${base}/partenaires`, lastModified: now, changeFrequency: "monthly", priority: 0.55 },
     { url: `${base}/mentions-legales`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
     { url: `${base}/conditions-d-utilisation`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
@@ -56,14 +55,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/politique-de-cookies`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
     { url: `${base}/cgv`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
   ];
-
-  const documentModelEntries = getAllDocumentModels();
-  const documentModelSitemapEntries: MetadataRoute.Sitemap = documentModelEntries.map((entry) => ({
-    url: `${base}/modeles-de-documents/${entry.slug}`,
-    lastModified: new Date(entry.date),
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
-  }));
 
   const courseEntries = getAllCourseEntries();
   const courseContentEntries: MetadataRoute.Sitemap = courseEntries.map((entry) => ({
@@ -206,7 +197,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     ...staticRoutes,
-    ...documentModelSitemapEntries,
     ...academyEntries,
     ...courseContentEntries,
     ...newsletterSitemapEntries,

@@ -26,9 +26,13 @@ export function trackKitOpen(input: {
 }
 
 type SystemJourneyEvent =
+  | "guide_waitlist_form_failed"
+  | "guide_waitlist_form_opened"
+  | "guide_waitlist_form_submitted"
   | "system_copy_form_failed"
   | "system_copy_form_opened"
   | "system_copy_form_submitted"
+  | "system_resource_opened"
   | "system_search_selected";
 
 type SystemEcosystemEvent =

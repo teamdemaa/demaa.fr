@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import OrganisationSessionBookingButton from "@/components/OrganisationSessionBookingButton";
+import PreferentialRatesTrigger from "@/components/PreferentialRatesTrigger";
 
 type SystemCustomOfferCtaProps = {
   context: "process" | "solutions";
@@ -12,14 +13,16 @@ const ctaCopy = {
     description:
       "Échangez 30 minutes avec un spécialiste Demaa pour clarifier ce qui bloque, identifier votre priorité et repartir avec une prochaine étape concrète.",
     source: "Système métier - Échange organisation",
+    tag: "30 minutes · Gratuit · Sans engagement",
     title: "Besoin de prendre du recul sur votre organisation ?",
   },
   solutions: {
-    buttonLabel: "Échanger 30 minutes",
+    buttonLabel: "Recevoir les tarifs préférentiels",
     description:
-      "En 30 minutes, clarifiez votre besoin, ce qu’il faut traiter en priorité et le type de solution adapté à votre organisation.",
-    source: "Système métier - Aide au choix de solution",
-    title: "Besoin d’aide pour identifier la bonne solution ?",
+      "Recevez la liste des partenaires recommandés et les réductions négociées pour vous.",
+    source: "Système métier - Tarifs préférentiels partenaires",
+    tag: "Partenaires recommandés · Tarifs négociés",
+    title: "Des tarifs préférentiels avec les partenaires Demaa",
   },
 } as const;
 
@@ -60,19 +63,27 @@ export default function SystemCustomOfferCta({
           {copy.description}
         </p>
         <p className="mt-2 text-xs font-medium text-dema-forest/75">
-          30 minutes · Gratuit · Sans engagement
+          {copy.tag}
         </p>
       </div>
 
-      <Suspense fallback={<BookingButtonFallback label={copy.buttonLabel} />}>
-        <OrganisationSessionBookingButton
+      {context === "solutions" ? (
+        <PreferentialRatesTrigger
           systemSlug={systemSlug}
-          source={copy.source}
-          sourceIsAuthoritative
           label={copy.buttonLabel}
           className={bookingButtonClass}
         />
-      </Suspense>
+      ) : (
+        <Suspense fallback={<BookingButtonFallback label={copy.buttonLabel} />}>
+          <OrganisationSessionBookingButton
+            systemSlug={systemSlug}
+            source={copy.source}
+            sourceIsAuthoritative
+            label={copy.buttonLabel}
+            className={bookingButtonClass}
+          />
+        </Suspense>
+      )}
     </aside>
   );
 }
