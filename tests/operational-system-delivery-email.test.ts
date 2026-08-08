@@ -155,6 +155,39 @@ describe("operational system delivery email", () => {
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
+  it("sends the canonical system recap link", async () => {
+    const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValue(
+      new Response(JSON.stringify({ id: "email_recap" }), { status: 200 }),
+    );
+
+    const result = await sendOperationalSystemDeliveryEmail({
+      assetSnapshot: {
+        assetRevision: "recapitulatif-systeme-v1-2026-08-08",
+        resourceId: "recapitulatif-systeme",
+        workbookVersion: "1.0.0",
+      },
+      deliveryId: "lead-recap-system",
+      email: "maya@example.com",
+      systemName: "Cabinet comptable",
+      systemSlug: "cabinet-comptable",
+    });
+
+    expect(result).toEqual({ sent: true, reason: null });
+    const [, init] = fetchMock.mock.calls[0];
+    const payload = JSON.parse(String(init?.body)) as {
+      html: string;
+      subject: string;
+      text: string;
+    };
+    expect(payload.subject).toBe("Votre ressource Demaa - Récapitulatif du système");
+    expect(payload.html).toContain(
+      "https://demaa.fr/kit-operationnel/cabinet-comptable/recapitulatif",
+    );
+    expect(payload.text).toContain(
+      "https://demaa.fr/kit-operationnel/cabinet-comptable/recapitulatif",
+    );
+  });
+
   it("never falls through a retired attachment revision to a system workbook", async () => {
     const fetchMock = vi.spyOn(globalThis, "fetch");
 

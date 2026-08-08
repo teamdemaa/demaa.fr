@@ -155,7 +155,7 @@ describe("system page SEO published Solutions boundary", () => {
       "buildSystemPageJsonLd(data, visiblePublishedSolutionSections)",
     );
     expect(pageSource).toContain(
-      "filterPublicSolutionSections(mergeRenderableSections([",
+      "filterPublicSolutionSections(mergeRenderableSolutionSections([",
     );
     expect(pageSource).toContain('JSON.stringify(jsonLd).replace(/</g, "\\\\u003c")');
     expect(detailSource).not.toContain("data.detail.tools");
@@ -172,7 +172,7 @@ describe("system page SEO published Solutions boundary", () => {
     );
     const exposed = JSON.stringify({ metadata, jsonLd });
 
-    expect(metadata.description).toContain("5 ressources pratiques");
+    expect(metadata.description).toContain("6 ressources pratiques");
     expect(exposed).not.toMatch(/Google Drive|docs\.google|private-assets/);
     expect(exposed).not.toContain("Levier");
     const list = itemList(jsonLd);

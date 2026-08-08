@@ -19,11 +19,12 @@ describe("system Resources catalog", () => {
     const guides = SYSTEM_RESOURCES.filter((resource) => resource.format === "guide");
 
     expect(templates.map(({ title }) => title)).toEqual([
+      "Récapitulatif du système",
       "Tableau de pilotage opérationnel",
       "Suivi et prévisionnel financier",
       "CRM - suivi commercial",
     ]);
-    expect(templates.map(({ rank }) => rank)).toEqual([1, 2, 3]);
+    expect(templates.map(({ rank }) => rank)).toEqual([0, 1, 2, 3]);
 
     expect(guides.map(({ title }) => title)).toEqual([
       "Maîtriser les obligations et les finances de son entreprise",
@@ -52,7 +53,7 @@ describe("system Resources catalog", () => {
         workbookVersion: resource.resourceSlug.startsWith("guide-") ? "2.0.0" : "1.0.0",
       });
       expect(snapshot?.assetRevision).toContain(resource.resourceSlug);
-      expect(resolveSystemResourceDelivery(snapshot!)).toMatchObject({
+      expect(resolveSystemResourceDelivery(snapshot!, "cabinet-comptable")).toMatchObject({
         resourceSlug: resource.resourceSlug,
       });
     }
@@ -117,6 +118,20 @@ describe("system Resources catalog", () => {
       resourceId: "crm-suivi-commercial",
       workbookVersion: "1.0.0",
     })).toBeNull();
+  });
+
+  it("resolves the system recap to the requested system only", () => {
+    const snapshot = getSystemResourceAssetSnapshot("recapitulatif-systeme");
+    expect(snapshot).toEqual({
+      assetRevision: "recapitulatif-systeme-v1-2026-08-08",
+      resourceId: "recapitulatif-systeme",
+      workbookVersion: "1.0.0",
+    });
+    expect(resolveSystemResourceDelivery(snapshot!, "cabinet-comptable")).toEqual({
+      destination: "https://demaa.fr/kit-operationnel/cabinet-comptable/recapitulatif",
+      resourceSlug: "recapitulatif-systeme",
+    });
+    expect(resolveSystemResourceDelivery(snapshot!)).toBeNull();
   });
 
   it("keeps the replaced guides resolvable for historical deliveries", () => {

@@ -32,3 +32,23 @@ export type RenderableSolutionSectionDto = Readonly<{
   section: SolutionSection;
   placements: readonly RenderableSolutionPlacementDto[];
 }>;
+
+export function mergeRenderableSolutionSections(
+  sections: readonly RenderableSolutionSectionDto[],
+): RenderableSolutionSectionDto[] {
+  const bySection = new Map<
+    RenderableSolutionSectionDto["section"],
+    RenderableSolutionSectionDto["placements"][number][]
+  >();
+
+  for (const group of sections) {
+    const placements = bySection.get(group.section) ?? [];
+    placements.push(...group.placements);
+    bySection.set(group.section, placements);
+  }
+
+  return [...bySection.entries()].map(([section, placements]) => ({
+    section,
+    placements: placements.toSorted((left, right) => left.rank - right.rank),
+  }));
+}

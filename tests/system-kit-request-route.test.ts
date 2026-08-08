@@ -284,6 +284,37 @@ describe("free operational system delivery route", () => {
     }));
   });
 
+  it("delivers the system recap with e-mail only", async () => {
+    const assetSnapshot = {
+      assetRevision: "recapitulatif-systeme-v1-2026-08-08",
+      resourceId: "recapitulatif-systeme",
+      workbookVersion: "1.0.0",
+    };
+    mocks.submitLeadRequest.mockResolvedValueOnce({
+      assetSnapshot,
+      duplicate: false,
+      leadId: "lead-recap",
+    });
+
+    const response = await POST(buildRequest({
+      firstName: undefined,
+      resourceSlug: "recapitulatif-systeme",
+    }));
+
+    expect(response.status).toBe(200);
+    await expect(response.json()).resolves.toEqual({ ok: true });
+    expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
+      assetSnapshot,
+      contact: { email: "maya@example.com", firstName: null },
+      fields: [{ label: "Ressource", value: "Récapitulatif du système" }],
+      title: "Livraison de ressource - Récapitulatif du système - Plomberie & chauffage",
+    }));
+    expect(mocks.sendDeliveryEmail).toHaveBeenCalledWith(expect.objectContaining({
+      assetSnapshot,
+      systemSlug: "plomberie-chauffage",
+    }));
+  });
+
   it("rejects an unknown catalog resource", async () => {
     const response = await POST(buildRequest({
       resourceSlug: "ressource-inconnue",

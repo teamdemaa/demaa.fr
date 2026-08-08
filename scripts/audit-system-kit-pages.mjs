@@ -23,6 +23,7 @@ const TRANSVERSAL_PURCHASING_SECTORS = new Set([
 ]);
 
 const EXPECTED_TEMPLATE_TITLES = [
+  "Récapitulatif du système",
   "Tableau de pilotage opérationnel",
   "Suivi et prévisionnel financier",
   "CRM - suivi commercial",
@@ -357,7 +358,8 @@ export function inspectPage({ response, html, tab, expectedSolutionOrder }) {
       );
     }
     for (const resourceTitle of EXPECTED_TEMPLATE_TITLES) {
-      if (!renderedHtml.includes(`aria-label="Ouvrir ${resourceTitle}"`)) {
+      const action = resourceTitle === "Récapitulatif du système" ? "Recevoir" : "Ouvrir";
+      if (!renderedHtml.includes(`aria-label="${action} ${resourceTitle}"`)) {
         errors.push(`missing template card: ${resourceTitle}`);
       }
     }

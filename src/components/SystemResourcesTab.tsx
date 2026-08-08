@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight, FileText } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { trackSystemJourneyEvent } from "@/lib/kit-analytics-client";
 import type { SystemResource } from "@/lib/system-resource-catalog";
+import SystemRecapRequestModal from "@/components/SystemRecapRequestModal";
 
 type RailState = Readonly<{
   canNext: boolean;
@@ -12,9 +13,11 @@ type RailState = Readonly<{
 
 export default function SystemResourcesTab({
   resources,
+  systemName,
   systemSlug,
 }: {
   resources: readonly SystemResource[];
+  systemName: string;
   systemSlug: string;
 }) {
   const orderedResources = useMemo(
@@ -26,6 +29,7 @@ export default function SystemResourcesTab({
     canNext: orderedResources.length > 1,
     canPrevious: false,
   });
+  const [isRecapModalOpen, setIsRecapModalOpen] = useState(false);
 
   const updateRailState = useCallback(() => {
     const rail = railRef.current;
@@ -102,20 +106,9 @@ export default function SystemResourcesTab({
           onScroll={updateRailState}
           className="grid max-w-full snap-x snap-mandatory grid-flow-col auto-cols-[82%] gap-4 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] md:auto-cols-[calc((100%_-_2rem)_/_3)] [&::-webkit-scrollbar]:hidden"
         >
-          {orderedResources.map((resource) => (
-            <a
-              key={resource.resourceSlug}
-              href={`/api/systeme-kit/open/${resource.resourceSlug}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-system-resource-card
-              onClick={() => trackSystemJourneyEvent("system_resource_opened", {
-                resourceSlug: resource.resourceSlug,
-                systemSlug,
-              })}
-              className="group min-h-[248px] min-w-0 snap-start overflow-hidden rounded-[1.2rem] border border-dema-line bg-dema-paper p-5 text-left shadow-[0_10px_28px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/20 hover:shadow-[0_14px_32px_rgba(23,35,29,0.07)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:p-6 md:aspect-square md:min-h-0"
-              aria-label={`Ouvrir ${resource.title}`}
-            >
+          {orderedResources.map((resource) => {
+            const className = "group min-h-[248px] min-w-0 snap-start overflow-hidden rounded-[1.2rem] border border-dema-line bg-dema-paper p-5 text-left shadow-[0_10px_28px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/20 hover:shadow-[0_14px_32px_rgba(23,35,29,0.07)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:p-6 md:aspect-square md:min-h-0";
+            const content = (
               <span className="flex h-full min-h-0 flex-col">
                 <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
                   <FileText className="h-5 w-5" aria-hidden="true" />
@@ -130,10 +123,46 @@ export default function SystemResourcesTab({
                   {resource.description}
                 </span>
               </span>
-            </a>
-          ))}
+            );
+
+            return resource.resourceSlug === "recapitulatif-systeme" ? (
+              <button
+                key={resource.resourceSlug}
+                type="button"
+                data-system-resource-card
+                onClick={() => setIsRecapModalOpen(true)}
+                className={className}
+                aria-label={`Recevoir ${resource.title}`}
+              >
+                {content}
+              </button>
+            ) : (
+              <a
+                key={resource.resourceSlug}
+                href={`/api/systeme-kit/open/${resource.resourceSlug}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-system-resource-card
+                onClick={() => trackSystemJourneyEvent("system_resource_opened", {
+                  resourceSlug: resource.resourceSlug,
+                  systemSlug,
+                })}
+                className={className}
+                aria-label={`Ouvrir ${resource.title}`}
+              >
+                {content}
+              </a>
+            );
+          })}
         </div>
       </section>
+      {isRecapModalOpen ? (
+        <SystemRecapRequestModal
+          onClose={() => setIsRecapModalOpen(false)}
+          systemName={systemName}
+          systemSlug={systemSlug}
+        />
+      ) : null}
     </>
   );
 }

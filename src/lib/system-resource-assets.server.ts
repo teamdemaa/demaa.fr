@@ -4,8 +4,14 @@ import { getDocumentModelBySlug } from "@/lib/document-models";
 import { getLevierAssetSnapshot, getLevierCopyUrl, LEVIER_ASSET_REVISION } from "@/lib/levier-asset.server";
 import type { LeadAssetSnapshot } from "@/lib/lead-storage";
 import { getSystemResource, type SystemResourceSlug } from "@/lib/system-resource-catalog";
+import { getCanonicalOrigin } from "@/lib/site-url";
 
-type ExternalResourceSlug = Exclude<SystemResourceSlug, "tableau-pilotage-operationnel">;
+type ExternalResourceSlug = Exclude<
+  SystemResourceSlug,
+  "tableau-pilotage-operationnel" | "recapitulatif-systeme"
+>;
+
+const SYSTEM_RECAP_ASSET_REVISION = "recapitulatif-systeme-v1-2026-08-08";
 
 type ResourceAssetRevision = Readonly<{
   assetRevision: string;
@@ -73,6 +79,13 @@ const RESOURCE_ASSET_REVISIONS: Readonly<Partial<Record<ExternalResourceSlug, re
 
 export function getSystemResourceAssetSnapshot(resourceSlug: string): LeadAssetSnapshot | null {
   if (!getSystemResource(resourceSlug)) return null;
+  if (resourceSlug === "recapitulatif-systeme") {
+    return {
+      assetRevision: SYSTEM_RECAP_ASSET_REVISION,
+      resourceId: resourceSlug,
+      workbookVersion: "1.0.0",
+    };
+  }
   if (resourceSlug === "tableau-pilotage-operationnel") {
     return getLevierAssetSnapshot();
   }
@@ -86,10 +99,20 @@ export function getSystemResourceAssetSnapshot(resourceSlug: string): LeadAssetS
   };
 }
 
-export function resolveSystemResourceDelivery(snapshot: LeadAssetSnapshot): Readonly<{
+export function resolveSystemResourceDelivery(
+  snapshot: LeadAssetSnapshot,
+  systemSlug?: string,
+): Readonly<{
   destination: string;
   resourceSlug: SystemResourceSlug;
 }> | null {
+  if (snapshot.assetRevision === SYSTEM_RECAP_ASSET_REVISION) {
+    if (!systemSlug || !/^[a-z0-9-]{2,120}$/.test(systemSlug)) return null;
+    return {
+      destination: `${getCanonicalOrigin()}/kit-operationnel/${systemSlug}/recapitulatif`,
+      resourceSlug: "recapitulatif-systeme",
+    };
+  }
   if (snapshot.assetRevision === LEVIER_ASSET_REVISION) {
     const destination = getLevierCopyUrl(snapshot);
     return destination

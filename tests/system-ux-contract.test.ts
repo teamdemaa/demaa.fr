@@ -41,7 +41,7 @@ describe("system UX contract", () => {
     expect(detailSource).not.toContain("OperationalSystemCopyRequestModal");
     expect(detailSource).not.toContain("HistoricalOperationalSystemCopyRequestModal");
     expect(resourcesSource).not.toContain("OperationalSystemCopyRequestModal");
-    expect(resourcesSource).not.toContain("selectedResource");
+    expect(resourcesSource).toContain("SystemRecapRequestModal");
     expect(resourcesSource).toContain("/api/systeme-kit/open/${resource.resourceSlug}");
     expect(resourcesSource).toContain('target="_blank"');
     expect(resourcesSource).toContain('rel="noopener noreferrer"');

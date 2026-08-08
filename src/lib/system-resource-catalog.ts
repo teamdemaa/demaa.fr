@@ -2,6 +2,7 @@ import type { SystemKitPreview } from "@/lib/system-kit-previews";
 import { enterpriseCatalogBySlug } from "@/lib/enterprise-annuaire";
 
 export const SYSTEM_RESOURCE_SLUGS = [
+  "recapitulatif-systeme",
   "tableau-pilotage-operationnel",
   "suivi-previsionnel-financier",
   "crm-suivi-commercial",
@@ -37,6 +38,17 @@ export type SystemResource = Readonly<{
 }>;
 
 export const SYSTEM_RESOURCES: readonly SystemResource[] = Object.freeze([
+  {
+    availability: "available",
+    description: "Tous les process, solutions et ressources de ce métier réunis dans un récapitulatif facile à consulter.",
+    deliveryLabel: "Recevoir le récapitulatif",
+    format: "template",
+    formatLabel: "Récapitulatif",
+    rank: 0,
+    resourceSlug: "recapitulatif-systeme",
+    successDescription: "Le lien vers votre récapitulatif vient de vous être envoyé. Pensez à vérifier vos courriers indésirables.",
+    title: "Récapitulatif du système",
+  },
   {
     availability: "available",
     description: "Un tableau simple pour suivre les priorités, les actions et les résultats de votre activité.",
