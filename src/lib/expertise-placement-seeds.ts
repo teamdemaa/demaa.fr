@@ -34,8 +34,8 @@ export function buildExpertisePlacementSeeds(): readonly ExpertisePlacement[] {
   return parseExpertisePlacements([
     ...accountantPlacements,
     {
-      expertisePlacementId: "cabinet-comptable:legal-services",
-      expertiseId: "legal-services",
+      expertisePlacementId: "cabinet-comptable:legal-formalist",
+      expertiseId: "legal-formalist",
       systemSlug: "cabinet-comptable",
       rank: 1,
       usage:

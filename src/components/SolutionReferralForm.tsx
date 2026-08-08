@@ -107,10 +107,12 @@ export async function submitSolutionReferral(
 }
 
 export default function SolutionReferralForm({
+  referralMode = "direct",
   resourceName,
   resourceSlug,
   systemSlug,
 }: {
+  referralMode?: "direct" | "matching";
   resourceName: string;
   resourceSlug: string;
   systemSlug: string;
@@ -172,7 +174,9 @@ export default function SolutionReferralForm({
         role="status"
         className="mt-6 rounded-[1rem] border border-dema-line bg-dema-sage/55 px-4 py-4 text-sm leading-relaxed text-brand-blue"
       >
-        Votre demande a bien été envoyée. Demaa revient vers vous rapidement pour organiser la mise en relation.
+        {referralMode === "matching"
+          ? "Votre demande a bien été envoyée. Demaa revient vers vous après avoir étudié votre besoin."
+          : "Votre demande a bien été envoyée. Demaa revient vers vous rapidement pour organiser la mise en relation."}
       </p>
     );
   }
@@ -236,7 +240,9 @@ export default function SolutionReferralForm({
           name="need"
           rows={4}
           maxLength={2000}
-          placeholder="Décrivez en quelques mots ce que vous souhaitez déléguer."
+          placeholder={referralMode === "matching"
+            ? "Décrivez en quelques mots ce dont vous avez besoin."
+            : "Décrivez en quelques mots ce que vous souhaitez déléguer."}
           value={fields.need}
           onChange={(event) => updateField("need", event.target.value)}
           aria-invalid={Boolean(errors.need)}
@@ -248,7 +254,9 @@ export default function SolutionReferralForm({
       </label>
 
       <p className="text-xs leading-relaxed text-dema-muted">
-        En envoyant cette demande, vous acceptez que Demaa transmette ces informations à {resourceName} afin d’organiser la mise en relation. {" "}
+        {referralMode === "matching"
+          ? "En envoyant cette demande, vous acceptez que Demaa utilise ces informations pour étudier votre besoin et vous recontacter au sujet d’une éventuelle mise en relation."
+          : `En envoyant cette demande, vous acceptez que Demaa transmette ces informations à ${resourceName} afin d’organiser la mise en relation.`} {" "}
         <Link
           href="/politique-de-confidentialite"
           className="font-medium text-dema-forest underline underline-offset-2"

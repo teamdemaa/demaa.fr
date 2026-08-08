@@ -29,72 +29,76 @@ export async function retryDueServiceSolutionDeliveries(limit = 30, now = new Da
   const results: Array<{ channel: string; requestType: string; status: "failed" | "sent" }> = [];
 
   for (const due of services) {
-    const claim = await claimServiceRequestDelivery({ now, requestId: due.id, workerId });
-    if (!claim) continue;
-    try {
-      await deliverServiceRequestChannel({
-        channel: claim.channel,
-        record: claim.record,
-        requestId: claim.requestId,
-      });
-      await completeServiceRequestDelivery({
-        channel: claim.channel,
-        now,
-        requestId: claim.requestId,
-        success: true,
-        workerId,
-      });
-      results.push({ channel: claim.channel, requestType: "service_request", status: "sent" });
-    } catch (error) {
-      const code = errorCode(error);
-      await completeServiceRequestDelivery({
-        channel: claim.channel,
-        errorCode: code,
-        now,
-        requestId: claim.requestId,
-        success: false,
-        workerId,
-      });
-      logOperationalError("service_request.delivery_failed", new Error(code), {
-        channel: claim.channel,
-        requestId: claim.requestId,
-      });
-      results.push({ channel: claim.channel, requestType: "service_request", status: "failed" });
+    while (true) {
+      const claim = await claimServiceRequestDelivery({ now, requestId: due.id, workerId });
+      if (!claim) break;
+      try {
+        await deliverServiceRequestChannel({
+          channel: claim.channel,
+          record: claim.record,
+          requestId: claim.requestId,
+        });
+        await completeServiceRequestDelivery({
+          channel: claim.channel,
+          now,
+          requestId: claim.requestId,
+          success: true,
+          workerId,
+        });
+        results.push({ channel: claim.channel, requestType: "service_request", status: "sent" });
+      } catch (error) {
+        const code = errorCode(error);
+        await completeServiceRequestDelivery({
+          channel: claim.channel,
+          errorCode: code,
+          now,
+          requestId: claim.requestId,
+          success: false,
+          workerId,
+        });
+        logOperationalError("service_request.delivery_failed", new Error(code), {
+          channel: claim.channel,
+          requestId: claim.requestId,
+        });
+        results.push({ channel: claim.channel, requestType: "service_request", status: "failed" });
+      }
     }
   }
 
   for (const due of solutions) {
-    const claim = await claimSolutionReferralDelivery({ now, requestId: due.id, workerId });
-    if (!claim) continue;
-    try {
-      await deliverSolutionReferralChannel({
-        channel: claim.channel,
-        record: claim.record,
-        requestId: claim.requestId,
-      });
-      await completeSolutionReferralDelivery({
-        channel: claim.channel,
-        now,
-        requestId: claim.requestId,
-        success: true,
-        workerId,
-      });
-      results.push({ channel: claim.channel, requestType: "solution_referral", status: "sent" });
-    } catch (error) {
-      const code = errorCode(error);
-      await completeSolutionReferralDelivery({
-        channel: claim.channel,
-        errorCode: code,
-        now,
-        requestId: claim.requestId,
-        success: false,
-        workerId,
-      });
-      logOperationalError("solution_referral.delivery_failed", new Error(code), {
-        channel: claim.channel,
-        requestId: claim.requestId,
-      });
-      results.push({ channel: claim.channel, requestType: "solution_referral", status: "failed" });
+    while (true) {
+      const claim = await claimSolutionReferralDelivery({ now, requestId: due.id, workerId });
+      if (!claim) break;
+      try {
+        await deliverSolutionReferralChannel({
+          channel: claim.channel,
+          record: claim.record,
+          requestId: claim.requestId,
+        });
+        await completeSolutionReferralDelivery({
+          channel: claim.channel,
+          now,
+          requestId: claim.requestId,
+          success: true,
+          workerId,
+        });
+        results.push({ channel: claim.channel, requestType: "solution_referral", status: "sent" });
+      } catch (error) {
+        const code = errorCode(error);
+        await completeSolutionReferralDelivery({
+          channel: claim.channel,
+          errorCode: code,
+          now,
+          requestId: claim.requestId,
+          success: false,
+          workerId,
+        });
+        logOperationalError("solution_referral.delivery_failed", new Error(code), {
+          channel: claim.channel,
+          requestId: claim.requestId,
+        });
+        results.push({ channel: claim.channel, requestType: "solution_referral", status: "failed" });
+      }
     }
   }
 

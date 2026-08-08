@@ -108,7 +108,7 @@ export const demaaSuppliers: readonly DemaaSupplier[] = [
       "Les petites entreprises qui achètent régulièrement des fournitures ou des équipements non spécialisés.",
     offerHint: "Compte professionnel",
     tags: ["Achats", "Fournitures", "Réapprovisionnement"],
-    icon: "ShoppingCart",
+    icon: "Package",
     usefulFor: ["Achats", "Fournitures", "Équipe"],
     href: "https://business.amazon.fr/fr/industries/small-business",
     cta: "Voir le fournisseur",

@@ -6,6 +6,7 @@ import { logOperationalError, logOperationalEvent } from "@/lib/operational-log"
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
 import { getPublishedServiceOfferV2BySlug } from "@/lib/service-catalog-v2";
 import { enforceServiceRequestRateLimit } from "@/lib/service-request-security.server";
+import { scheduleServiceSolutionDeliveries } from "@/lib/service-request-delivery-scheduler.server";
 import { buildServiceRequestSnapshot } from "@/lib/service-request-snapshots.server";
 import {
   createServiceRequest,
@@ -104,6 +105,7 @@ export async function POST(request: Request) {
       serviceSlug: stored.record.service.service_slug,
       systemSlug: stored.record.system_slug,
     });
+    scheduleServiceSolutionDeliveries();
     return response();
   } catch (error) {
     if (error instanceof RequestIdempotencyConflictError) {

@@ -5,6 +5,8 @@
 Firebase est la seule source de vérité en environnement configuré :
 
 - `expertise_catalog/{expertiseId}` contient les 23 expertises publiques ;
+- `expertise_placements/{placementId}` contient les 115 placements éditoriaux
+  vers les systèmes métier ;
 - `opportunities/{opportunityId}` contient les besoins ouverts, fermés ou en brouillon ;
 - `lead_requests/{leadId}` reçoit les profils généraux et les candidatures ;
 - chaque profil ou candidature programme une notification Slack.
@@ -27,7 +29,11 @@ Les deux parcours utilisent le même formulaire et la même route d’enregistre
 
 `/admin/opportunites` permet de créer, fermer ou rouvrir une opportunité avec la variable privée `OPPORTUNITIES_ADMIN_SECRET`. Cet écran ne gère ni matching ni publication automatique de prestataires.
 
-Le placement dans un système métier reste manuel : une carte représente une expertise générique, jamais une personne. Demaa choisit ensuite le professionnel pertinent après réception du besoin.
+Une carte placée dans un système représente une expertise générique, jamais une
+personne. La sélection de la personne reste manuelle après réception du besoin.
+Le registre initial place `Expert-comptable` dans 114 systèmes et `Délégation et
+formalités juridiques` dans le cabinet comptable. Aucun de ces placements ne
+déclare une relation de partenariat, d'affiliation, Demaa ou ODEMA.
 
 ## Import initial
 

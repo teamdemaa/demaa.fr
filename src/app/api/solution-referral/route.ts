@@ -4,6 +4,7 @@ import { resolveLeadAttribution } from "@/lib/lead-attribution-server";
 import { logOperationalError, logOperationalEvent } from "@/lib/operational-log";
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
 import { enforceServiceRequestRateLimit } from "@/lib/service-request-security.server";
+import { scheduleServiceSolutionDeliveries } from "@/lib/service-request-delivery-scheduler.server";
 import { buildSolutionReferralSnapshot } from "@/lib/service-request-snapshots.server";
 import {
   createSolutionReferral,
@@ -133,6 +134,7 @@ export async function POST(request: Request) {
       resourceSlug: stored.record.solution.resource_slug,
       systemSlug: stored.record.system_slug,
     });
+    scheduleServiceSolutionDeliveries();
     return response();
   } catch (error) {
     if (error instanceof RequestIdempotencyConflictError) {

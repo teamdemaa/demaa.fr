@@ -17,9 +17,9 @@ import { SOLUTION_SECTIONS } from "@/lib/solution-registry-contract";
 import { getRenderableSolutionSectionsForSystem } from "@/lib/system-solutions-ui.server";
 import type { RenderableSolutionPlacementDto } from "@/lib/system-solutions-ui-dto";
 
-const MIGRATION_TIMESTAMP = "2026-08-05T12:00:00.000Z";
-const MIGRATION_EXPIRY = "2027-02-05T12:00:00.000Z";
-const MIGRATION_REVISION_ID = "solutions-2026-08-05-active-v1";
+const MIGRATION_TIMESTAMP = "2026-08-08T12:00:00.000Z";
+const MIGRATION_EXPIRY = "2027-02-08T12:00:00.000Z";
+const MIGRATION_REVISION_ID = "solutions-2026-08-08-active-v2";
 const EMPTY_FINGERPRINT = "0".repeat(64);
 const TRANSVERSAL_PURCHASING_SECTORS = new Set([
   "Conseil & services aux entreprises",

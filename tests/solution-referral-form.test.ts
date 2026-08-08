@@ -33,6 +33,21 @@ describe("solution referral form", () => {
     expect(markup).not.toMatch(/Téléphone|newsletter|volume|marque blanche/i);
   });
 
+  it("describes manual matching without claiming a provider is already selected", () => {
+    const markup = renderToStaticMarkup(createElement(SolutionReferralForm, {
+      referralMode: "matching",
+      resourceName: "Délégation et formalités juridiques",
+      resourceSlug: "legal-formalist",
+      systemSlug: "cabinet-comptable",
+    }));
+
+    expect(markup).toContain("Demaa utilise ces informations pour étudier votre besoin");
+    expect(markup).toContain("éventuelle mise en relation");
+    expect(markup).not.toContain(
+      "transmette ces informations à Délégation et formalités juridiques",
+    );
+  });
+
   it("builds only the server contract fields", () => {
     expect(validateSolutionReferralFields(fields)).toEqual({});
     expect(buildSolutionReferralPayload(fields, {

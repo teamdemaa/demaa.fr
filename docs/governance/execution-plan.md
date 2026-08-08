@@ -209,6 +209,7 @@ combiné.
   - `src/app/api/service-request/route.ts` ;
   - `src/app/api/solution-referral/route.ts` ;
   - `src/lib/operational-maintenance.ts` ;
+  - `src/lib/service-request-delivery-scheduler.server.ts` ;
   - `src/lib/service-request-delivery-worker.server.ts` ;
   - `src/lib/service-request-notifications.server.ts` ;
   - `src/lib/service-request-security.server.ts` ;
@@ -229,8 +230,10 @@ combiné.
   consentement et les notifications. Il ne modifie pas le DOM du formulaire ni
   les metadata des pages. L'attribution consent-aware et les logs opérationnels
   ne valent pas activation d'une mesure client.
-- Gate : planifier explicitement `/api/cron/service-request-deliveries` dans
-  `vercel.json`, configurer `CRON_SECRET` et un
+- Livraison immédiate : chaque demande acceptée programme le worker après la
+  réponse HTTP. Le cron quotidien `/api/cron/service-request-deliveries` est
+  configuré dans `vercel.json` comme filet de reprise persistant.
+- Gate distant restant : configurer `CRON_SECRET` et un
   `SERVICE_REQUEST_RATE_LIMIT_HMAC_SECRET` d'au moins 32 caractères, puis
   valider la supervision des échecs/reprises/files persistées ; consentement
   séparé, retrait possible, aucune PII dans une future mesure ou URL, politique

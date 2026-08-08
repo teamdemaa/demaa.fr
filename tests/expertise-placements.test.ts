@@ -20,7 +20,7 @@ describe("expertise placements", () => {
     )).toBe(false);
     expect(placements).toContainEqual(expect.objectContaining({
       systemSlug: "cabinet-comptable",
-      expertiseId: "legal-services",
+      expertiseId: "legal-formalist",
       nameOverride: "Délégation et formalités juridiques",
     }));
   });

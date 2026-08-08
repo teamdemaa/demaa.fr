@@ -17,6 +17,7 @@ const mocks = vi.hoisted(() => ({
   logOperationalEvent: vi.fn(),
   RequestIdempotencyConflictError: class extends Error {},
   resolveLeadAttribution: vi.fn(),
+  scheduleServiceSolutionDeliveries: vi.fn(),
 }));
 
 vi.mock("@/lib/enterprise-annuaire-server", () => ({
@@ -34,6 +35,9 @@ vi.mock("@/lib/service-catalog-v2", () => ({
 }));
 vi.mock("@/lib/service-request-security.server", () => ({
   enforceServiceRequestRateLimit: mocks.enforceSecurity,
+}));
+vi.mock("@/lib/service-request-delivery-scheduler.server", () => ({
+  scheduleServiceSolutionDeliveries: mocks.scheduleServiceSolutionDeliveries,
 }));
 vi.mock("@/lib/service-request-storage.server", () => ({
   createServiceRequest: mocks.createServiceRequest,
@@ -228,6 +232,7 @@ describe("service and solution request routes", () => {
       "service_request.scheduled",
       expect.not.objectContaining({ email: expect.anything(), need: expect.anything() }),
     );
+    expect(mocks.scheduleServiceSolutionDeliveries).toHaveBeenCalledOnce();
   });
 
   it("refuses an unavailable solution referral by default", async () => {
@@ -268,6 +273,7 @@ describe("service and solution request routes", () => {
         transparency: expect.stringContaining("rémunération"),
       }),
     }));
+    expect(mocks.scheduleServiceSolutionDeliveries).toHaveBeenCalledOnce();
   });
 
   it("stores a canonical expertise request without inventing a partner relationship", async () => {
@@ -319,6 +325,7 @@ describe("service and solution request routes", () => {
         transparency: expect.not.stringMatching(/partenaire|affilié/i),
       }),
     }));
+    expect(mocks.scheduleServiceSolutionDeliveries).toHaveBeenCalledOnce();
   });
 
   it("never routes an owned solution through the external referral workflow", async () => {

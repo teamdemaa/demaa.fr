@@ -149,6 +149,7 @@ function SolutionDialog({
               : `${resource.name} contracte et facture ses prestations. Demaa facilite uniquement la mise en relation.`}
           </p>
           <SolutionReferralForm
+            referralMode={resource.resourceType === "expertise" ? "matching" : "direct"}
             resourceName={resource.name}
             resourceSlug={resource.resourceSlug}
             systemSlug={placement.systemSlug}

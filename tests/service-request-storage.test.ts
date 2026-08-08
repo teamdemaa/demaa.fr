@@ -246,12 +246,12 @@ describe("dedicated request storage and leases", () => {
     const now = new Date(stored.record.created_at);
     const first = await retryDueServiceSolutionDeliveries(30, now);
     const second = await retryDueServiceSolutionDeliveries(30, now);
-    const third = await retryDueServiceSolutionDeliveries(30, now);
-    const fourth = await retryDueServiceSolutionDeliveries(30, now);
-    expect(first).toEqual([{ channel: "customer_email", requestType: "service_request", status: "sent" }]);
-    expect(second).toEqual([{ channel: "internal_email", requestType: "service_request", status: "sent" }]);
-    expect(third).toEqual([{ channel: "slack", requestType: "service_request", status: "sent" }]);
-    expect(fourth).toEqual([]);
+    expect(first).toEqual([
+      { channel: "customer_email", requestType: "service_request", status: "sent" },
+      { channel: "internal_email", requestType: "service_request", status: "sent" },
+      { channel: "slack", requestType: "service_request", status: "sent" },
+    ]);
+    expect(second).toEqual([]);
     expect(fetch).toHaveBeenCalledTimes(3);
     vi.unstubAllGlobals();
   });
@@ -265,7 +265,11 @@ describe("dedicated request storage and leases", () => {
     process.env.RESEND_FROM_EMAIL = "Demaa <test@demaa.fr>";
     const stored = await createServiceRequest(serviceInput());
     const results = await retryDueServiceSolutionDeliveries(30, new Date(stored.record.created_at));
-    expect(results).toEqual([{ channel: "customer_email", requestType: "service_request", status: "failed" }]);
+    expect(results).toEqual([
+      { channel: "customer_email", requestType: "service_request", status: "failed" },
+      { channel: "internal_email", requestType: "service_request", status: "failed" },
+      { channel: "slack", requestType: "service_request", status: "failed" },
+    ]);
     const record = firestore.collections.get(SERVICE_REQUEST_COLLECTION)?.get(stored.id);
     const state = (record?.notification_status as Record<string, { last_error_code: string }>).customer_email;
     expect(state.last_error_code).toBe("email_provider_rejected");

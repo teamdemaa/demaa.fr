@@ -1,5 +1,4 @@
-import snapshot from "@/lib/firebase-solution-registry.snapshot.generated.json";
-import { parseFirebaseSolutionRegistryRevision } from "@/lib/firebase-solution-registry-contract";
+import { buildFirebaseSolutionRegistryMigrationRevision } from "@/lib/firebase-solution-registry-migration.server";
 import { buildFirestoreSolutionRegistryImportPlan } from "@/lib/firebase-solution-registry-firestore-plan";
 
 if (process.argv.includes("--apply")) {
@@ -9,7 +8,7 @@ if (process.argv.includes("--apply")) {
 }
 
 const plan = buildFirestoreSolutionRegistryImportPlan(
-  parseFirebaseSolutionRegistryRevision(snapshot),
+  buildFirebaseSolutionRegistryMigrationRevision(),
 );
 
 console.log(JSON.stringify({

@@ -38,8 +38,9 @@ produit.
 - D-061 ne peut être activé qu'après un preflight frais, la vérification de la
   révision `d061-v2-pilot-2026-07-30-03` et la réconciliation des pointeurs
   public et privé.
-- Le worker de livraison W5 ne peut être activé qu'après ajout explicite de sa
-  planification dans `vercel.json`, configuration de `CRON_SECRET` et de
+- Le worker de livraison W5 est programmé immédiatement après chaque demande,
+  avec un cron quotidien de reprise déclaré dans `vercel.json`. Son activation
+  distante exige encore la configuration de `CRON_SECRET` et de
   `SERVICE_REQUEST_RATE_LIMIT_HMAC_SECRET`, puis validation de la supervision
   des échecs, reprises et files persistées.
 - `docs/governance/release-manifest.json` reste une preuve W1 historique. Il ne
