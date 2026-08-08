@@ -1,11 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, Download, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-export default function GuideSlidesDialog({ title, slides, onClose, downloadHref }: {
-  title: string; slides: readonly string[]; onClose: () => void; downloadHref?: string;
+export default function GuideSlidesDialog({ title, slides, onClose }: {
+  title: string; slides: readonly string[]; onClose: () => void;
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -38,7 +38,6 @@ export default function GuideSlidesDialog({ title, slides, onClose, downloadHref
         <header className="flex items-center justify-between gap-3 border-b border-dema-line px-4 py-3 sm:px-6">
           <p className="min-w-0 truncate text-sm font-medium text-brand-blue">{title} <span className="ml-2 text-dema-muted">{activeIndex + 1} / {slides.length}</span></p>
           <div className="flex gap-2">
-            {downloadHref ? <a href={downloadHref} target="_blank" rel="noopener noreferrer" className="inline-flex h-10 items-center gap-2 rounded-full border border-dema-line px-3 text-sm font-medium"><Download className="h-4 w-4" aria-hidden="true" /><span className="hidden sm:inline">Télécharger le PDF</span></a> : null}
             <button type="button" onClick={onClose} aria-label="Fermer" className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line"><X className="h-4 w-4" /></button>
           </div>
         </header>

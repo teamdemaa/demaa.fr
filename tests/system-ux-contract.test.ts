@@ -50,7 +50,8 @@ describe("system UX contract", () => {
     expect(guidesSource).toContain("Bientôt disponible");
     expect(guidesSource).toContain("Être informé");
     expect(guidesSource).toContain("<GuideNotifyModal");
-    expect(slidesSource).toContain("Télécharger le PDF");
+    expect(slidesSource).not.toContain("Télécharger le PDF");
+    expect(slidesSource).not.toContain("downloadHref");
     expect(slidesSource).toContain('event.key === "ArrowRight"');
     expect(slidesSource).toContain('event.key === "ArrowLeft"');
     expect(notifySource).toContain('fetch("/api/systeme-kit/notify"');
