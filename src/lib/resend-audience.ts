@@ -85,3 +85,17 @@ export async function syncResendNewsletterContact(input: { email: string }) {
 
   return { email };
 }
+
+export async function syncResendAudienceContact(input: {
+  audienceId: string;
+  email: string;
+}) {
+  const email = input.email.trim().toLowerCase();
+
+  await resendRequest(`/audiences/${encodeURIComponent(input.audienceId)}/contacts`, {
+    method: "POST",
+    body: JSON.stringify({ email, unsubscribed: false }),
+  });
+
+  return { email };
+}

@@ -5,6 +5,10 @@
     {
       "path": "/api/cron/system-kit-followups",
       "schedule": "0 9 * * *"
+    },
+    {
+      "path": "/api/cron/service-request-deliveries",
+      "schedule": "0 10 * * *"
     }
   ]
 }

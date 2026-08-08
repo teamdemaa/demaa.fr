@@ -1,7 +1,6 @@
 import { getApps, initializeApp } from "firebase-admin/app";
 import { FieldPath, getFirestore } from "firebase-admin/firestore";
 
-import snapshot from "@/lib/firebase-solution-registry.snapshot.generated.json";
 import {
   FIREBASE_SOLUTION_REGISTRY_ACTIVE_POINTER,
   FIREBASE_SOLUTION_REGISTRY_REVISIONS_COLLECTION,
@@ -10,10 +9,11 @@ import {
   type FirebaseSolutionPlacementEntry,
   type FirebaseSolutionResourceEntry,
 } from "@/lib/firebase-solution-registry-contract";
+import { buildFirebaseSolutionRegistryMigrationRevision } from "@/lib/firebase-solution-registry-migration.server";
 import { buildFirestoreSolutionRegistryImportPlan } from "@/lib/firebase-solution-registry-firestore-plan";
 
 const EMULATOR_PROJECT_ID = "demo-demaa-solutions";
-const SOLUTION_SECTIONS = ["software", "providers", "models", "networks"] as const;
+const SOLUTION_SECTIONS = ["software", "services", "providers", "models", "networks"] as const;
 
 if (!process.env.FIRESTORE_EMULATOR_HOST) {
   throw new Error("FIRESTORE_EMULATOR_HOST is required; remote Firestore is forbidden.");
@@ -22,7 +22,7 @@ if (process.env.GCLOUD_PROJECT && process.env.GCLOUD_PROJECT !== EMULATOR_PROJEC
   throw new Error("The emulator project ID is not the expected disposable project.");
 }
 
-const revision = parseFirebaseSolutionRegistryRevision(snapshot);
+const revision = buildFirebaseSolutionRegistryMigrationRevision();
 const plan = buildFirestoreSolutionRegistryImportPlan(revision);
 if (plan.revisionStatus !== "published" || !plan.activation) {
   throw new Error("Emulator verification requires a complete active revision plan.");

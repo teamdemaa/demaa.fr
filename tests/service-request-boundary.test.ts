@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 const backendFiles = [
   "src/app/api/service-request/route.ts",
   "src/app/api/solution-referral/route.ts",
+  "src/lib/service-request-delivery-scheduler.server.ts",
   "src/lib/service-request-notifications.server.ts",
   "src/lib/service-request-delivery-worker.server.ts",
   "src/lib/service-request-security.server.ts",
@@ -21,6 +22,7 @@ describe("service request backend boundaries", () => {
   it("keeps storage, delivery and legal disclosure modules server-only", () => {
     for (const path of [
       "src/lib/service-request-notifications.server.ts",
+      "src/lib/service-request-delivery-scheduler.server.ts",
       "src/lib/service-request-delivery-worker.server.ts",
       "src/lib/service-request-security.server.ts",
       "src/lib/service-request-snapshots.server.ts",
@@ -68,5 +70,27 @@ describe("service request backend boundaries", () => {
     expect(maintenance).toContain('{ collection: "service_requests", field: "retention_expires_at"');
     expect(maintenance).toContain('{ collection: "solution_referrals", field: "retention_expires_at"');
     expect(maintenance).toContain('{ collection: "service_request_rate_limits", field: "expires_at"');
+  });
+
+  it("schedules immediate delivery after accepted requests and keeps a cron fallback", () => {
+    const routes = [
+      source("src/app/api/service-request/route.ts"),
+      source("src/app/api/solution-referral/route.ts"),
+    ];
+    for (const route of routes) {
+      expect(route).toContain("scheduleServiceSolutionDeliveries();");
+    }
+
+    const scheduler = source("src/lib/service-request-delivery-scheduler.server.ts");
+    expect(scheduler).toContain("after(async () =>");
+    expect(scheduler).toContain("retryDueServiceSolutionDeliveries(30)");
+
+    const vercelConfig = JSON.parse(source("vercel.json")) as {
+      crons?: Array<{ path: string; schedule: string }>;
+    };
+    expect(vercelConfig.crons).toContainEqual({
+      path: "/api/cron/service-request-deliveries",
+      schedule: "0 10 * * *",
+    });
   });
 });

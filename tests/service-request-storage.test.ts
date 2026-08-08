@@ -212,7 +212,11 @@ describe("dedicated request storage and leases", () => {
     });
     const internal = await claimServiceRequestDelivery({ now, requestId: stored.id, workerId: "worker-a" });
     expect(internal?.channel).toBe("internal_email");
-    expect(await claimServiceRequestDelivery({ now, requestId: stored.id, workerId: "worker-b" })).toBeNull();
+    const slack = await claimServiceRequestDelivery({ now, requestId: stored.id, workerId: "worker-b" });
+    expect(slack?.channel).toBe("slack");
+    await completeServiceRequestDelivery({
+      channel: "slack", now, requestId: stored.id, success: true, workerId: "worker-b",
+    });
 
     for (let attempt = 1; attempt <= MAX_REQUEST_DELIVERY_ATTEMPTS; attempt += 1) {
       await completeServiceRequestDelivery({
@@ -237,15 +241,18 @@ describe("dedicated request storage and leases", () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response("{}", { status: 200 })));
     process.env.RESEND_API_KEY = "test-key";
     process.env.RESEND_FROM_EMAIL = "Demaa <test@demaa.fr>";
+    process.env.SLACK_WEBHOOK_URL = "https://hooks.slack.test/services/test";
     const stored = await createServiceRequest(serviceInput());
     const now = new Date(stored.record.created_at);
     const first = await retryDueServiceSolutionDeliveries(30, now);
     const second = await retryDueServiceSolutionDeliveries(30, now);
-    const third = await retryDueServiceSolutionDeliveries(30, now);
-    expect(first).toEqual([{ channel: "customer_email", requestType: "service_request", status: "sent" }]);
-    expect(second).toEqual([{ channel: "internal_email", requestType: "service_request", status: "sent" }]);
-    expect(third).toEqual([]);
-    expect(fetch).toHaveBeenCalledTimes(2);
+    expect(first).toEqual([
+      { channel: "customer_email", requestType: "service_request", status: "sent" },
+      { channel: "internal_email", requestType: "service_request", status: "sent" },
+      { channel: "slack", requestType: "service_request", status: "sent" },
+    ]);
+    expect(second).toEqual([]);
+    expect(fetch).toHaveBeenCalledTimes(3);
     vi.unstubAllGlobals();
   });
 
@@ -258,7 +265,11 @@ describe("dedicated request storage and leases", () => {
     process.env.RESEND_FROM_EMAIL = "Demaa <test@demaa.fr>";
     const stored = await createServiceRequest(serviceInput());
     const results = await retryDueServiceSolutionDeliveries(30, new Date(stored.record.created_at));
-    expect(results).toEqual([{ channel: "customer_email", requestType: "service_request", status: "failed" }]);
+    expect(results).toEqual([
+      { channel: "customer_email", requestType: "service_request", status: "failed" },
+      { channel: "internal_email", requestType: "service_request", status: "failed" },
+      { channel: "slack", requestType: "service_request", status: "failed" },
+    ]);
     const record = firestore.collections.get(SERVICE_REQUEST_COLLECTION)?.get(stored.id);
     const state = (record?.notification_status as Record<string, { last_error_code: string }>).customer_email;
     expect(state.last_error_code).toBe("email_provider_rejected");

@@ -34,7 +34,7 @@ function getAssets(trainingSlug: string, sourceSystemSlug: string | null) {
           id: "suivi-previsionnel-financier",
           label: "P&L, suivi et prévisionnel financier",
           description: "Le modèle pour suivre le résultat, la trésorerie, le budget et les mois à venir.",
-          href: "/modeles-de-documents/suivi-previsionnel-financier",
+          href: "/api/systeme-kit/open/suivi-previsionnel-financier",
         },
         ...(system
           ? [
@@ -107,7 +107,7 @@ function getAssets(trainingSlug: string, sourceSystemSlug: string | null) {
           id: "systeme-marketing-vente-airtable",
           label: "CRM de suivi commercial sur Airtable",
           description: "La base pour structurer le pipeline, les relances et le suivi des conversions.",
-          href: "/modeles-de-documents/pilotage-marketing-vente",
+          href: "/api/systeme-kit/open/crm-suivi-commercial",
         },
       ];
     default:

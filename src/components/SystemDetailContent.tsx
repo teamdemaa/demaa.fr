@@ -3,11 +3,12 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
-import { type KeyboardEvent, useState } from "react";
-import SystemCustomOfferCta from "@/components/SystemCustomOfferCta";
+import { type KeyboardEvent, useMemo, useState } from "react";
+import SystemGuidesRail from "@/components/SystemGuidesRail";
 import SystemResourcesTab from "@/components/SystemResourcesTab";
 import SystemSolutionsTab from "@/components/SystemSolutionsTab";
 import SystemeTabContent from "@/components/SystemeTabContent";
+import { getSystemResourcesForSystem } from "@/lib/system-resource-catalog";
 import type { SystemeDetail } from "@/lib/systeme-catalog";
 import {
   getVisibleSystemDetailTabs,
@@ -49,6 +50,10 @@ export default function SystemDetailContent({
   solutionSections = EMPTY_SOLUTION_SECTIONS,
 }: SystemDetailContentProps) {
   const router = useRouter();
+  const scopedResources = useMemo(
+    () => getSystemResourcesForSystem(system.slug),
+    [system.slug],
+  );
   const visibleTabSlugs = getVisibleSystemDetailTabs();
   const tabs = systemTabDefinitions.filter((tab) =>
     visibleTabSlugs.includes(tab.slug),
@@ -156,12 +161,18 @@ export default function SystemDetailContent({
         ) : null}
 
         {activeTab === "resources" ? (
-          <SystemResourcesTab systemSlug={system.slug} />
+          <div className="space-y-10">
+            <SystemGuidesRail
+              resources={scopedResources.filter((resource) => resource.format === "guide")}
+              systemSlug={system.slug}
+            />
+            <SystemResourcesTab
+              resources={scopedResources.filter((resource) => resource.format === "template")}
+              systemSlug={system.slug}
+            />
+          </div>
         ) : null}
       </section>
-      {activeTab !== "resources" ? (
-        <SystemCustomOfferCta context={activeTab} systemSlug={system.slug} />
-      ) : null}
     </article>
   );
 }

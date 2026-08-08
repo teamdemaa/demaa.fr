@@ -71,6 +71,42 @@ filtrent entièrement la section historique `models`. Les cinq ressources Demaa
 communes sont servies par `system-resource-catalog.ts`; la révision Firebase
 reste intacte uniquement pour permettre un retour arrière sans écriture distante.
 
+## Audit de couverture des Solutions — 8 août 2026
+
+Cet audit porte sur la révision Firebase active et son snapshot exporté. Les
+sections sont affichées uniquement lorsqu'elles contiennent au moins une
+recommandation sélectionnée : une section vide ne doit jamais être rendue.
+
+| Section | Cartes sélectionnées | Systèmes couverts | Systèmes sans carte |
+| --- | ---: | ---: | ---: |
+| Outils | 313 | 114 | 1 |
+| Prestataires et fournisseurs | 82 | 39 | 76 |
+| Réseaux professionnels | 90 | 77 | 38 |
+| Modèles | 115 | 115 | 0 |
+
+Les 82 cartes de la section `Prestataires et fournisseurs` restent toutes en
+relation commerciale `unknown`. Leur visibilité ne signifie ni partenariat,
+ni affiliation, ni recommandation commerciale de Demaa ou d’ODEMA.
+
+### Décision de structure
+
+- `Fournisseurs` reste une section **métier et conditionnelle**.
+  Elle est réservée aux acteurs réellement utiles à l'activité concernée : par
+  exemple un négoce de matériaux pour le BTP ou un grossiste pour la restauration.
+- Il ne faut pas créer une carte vide, ni forcer la section sur les 115 systèmes
+  pour donner l'illusion d'une couverture complète.
+- `Prestations` est une section distincte. Elle expose une compétence générique,
+  jamais une personne ou un partenaire imposé. L'expert-comptable y est proposé
+  aux 114 systèmes hors cabinet comptable ; le cabinet comptable reçoit à la
+  place `Délégation et formalités juridiques`.
+- Amazon Business est ajouté uniquement aux systèmes des secteurs Conseil et
+  Tech & Digital. Alan et Swile restent au catalogue sans placement automatique,
+  car leur pertinence dépend notamment du pays et de la présence de salariés.
+
+Cette règle préserve la valeur éditoriale des rails existants tout en rendant
+possible un futur parcours comptable universel, sans promesse implicite ni
+recommandation forcée.
+
 ## Commandes locales
 
 ```bash
@@ -82,14 +118,28 @@ npm run verify:firebase-solutions-emulator
 La première commande exporte la révision Firebase active vers le snapshot de
 secours local. Elle exige des identifiants serveur et ne lit aucune source
 historique. La deuxième commande est strictement en lecture seule. Elle produit
-un plan de 849 écritures réparties en lots de 400 maximum et refuse `--apply`.
+le plan de la prochaine révision immuable et refuse `--apply`. La révision V2
+préparée le 8 août contient 250 ressources, 643 placements et 894 écritures,
+réparties en lots de 400 maximum.
 
 La troisième commande démarre un projet Firestore Emulator jetable, applique
-réellement les 849 écritures, relit les 248 ressources et les 600 placements,
+réellement les 894 écritures, relit les 250 ressources et les 643 placements,
 revalide les deux empreintes et vérifie le pointeur actif. Le
 script refuse de démarrer sans `FIRESTORE_EMULATOR_HOST` et utilise uniquement
 le projet de démonstration `demo-demaa-solutions`, qui ne peut pas atteindre un
 service Firebase distant.
+
+## Révision V2 préparée localement — non activée
+
+La révision `solutions-2026-08-08-active-v2` est un candidat distinct de la
+révision V1 actuellement active. Elle conserve toutes les 600 cartes existantes
+et ajoute 43 placements fournisseurs, dont Amazon Business sur 40 systèmes de
+services ou du numérique. Elle ne modifie aucun document V1.
+
+Son import exige les empreintes exactes du nouveau plan et de la révision, mais
+aussi l'identifiant et l'empreinte du pointeur actif à remplacer. La mise à jour
+du pointeur utilise la date de version Firestore lue juste avant l'import : une
+modification concurrente fait donc échouer l'activation au lieu d'être écrasée.
 
 ## Séparation Preview / Production
 

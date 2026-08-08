@@ -18,6 +18,10 @@ const serviceCatalogSource = fs.readFileSync(
   path.join(process.cwd(), "src/lib/service-catalog.ts"),
   "utf8",
 );
+const systemResourceCatalogSource = fs.readFileSync(
+  path.join(process.cwd(), "src/lib/system-resource-catalog.ts"),
+  "utf8",
+);
 
 const staticRoutes = new Set([
   "/organisation",
@@ -36,6 +40,10 @@ function extractSlugs(source) {
 const serviceSlugs = extractSlugs(serviceCatalogSource);
 const courseSlugs = extractSlugs(courseContentSource);
 const documentModelSlugs = extractSlugs(documentModelsSource);
+const systemResourceSlugs = new Set(
+  [...systemResourceCatalogSource.matchAll(/resourceSlug:\s*"([^"]+)"/g)]
+    .map((match) => match[1]),
+);
 const publicSectorLabels = new Set(
   sectorTaxonomyPayload.sectors.map((sector) => sector.publicLabel),
 );
@@ -77,6 +85,14 @@ function validateStaticHref(href, context) {
     return;
   }
 
+  if (href.startsWith("/api/systeme-kit/open/")) {
+    const slug = href.replace("/api/systeme-kit/open/", "");
+    if (!systemResourceSlugs.has(slug)) {
+      addUnique(errors, `${context} references unknown system resource slug "${slug}".`);
+    }
+    return;
+  }
+
   addUnique(errors, `${context} references unsupported internal href "${href}".`);
 }
 
@@ -98,6 +114,7 @@ const result = {
   services: serviceSlugs.size,
   courses: courseSlugs.size,
   documentModels: documentModelSlugs.size,
+  systemResources: systemResourceSlugs.size,
   errors,
 };
 

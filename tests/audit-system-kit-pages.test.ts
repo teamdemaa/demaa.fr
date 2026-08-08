@@ -45,17 +45,21 @@ describe("system kit page audit contract", () => {
       "notaires",
     ]);
     expect([...orders.values()].some((order) => order.includes("netty"))).toBe(false);
+    expect(orders.get("cabinet-comptable")).not.toContain("legal-formalist");
+    expect([...orders.entries()].filter(([, order]) => order.includes("chartered-accountant")))
+      .toHaveLength(0);
   });
 
-  it("expects the CTA copy that belongs to each active tab", () => {
-    expect(getExpectedCallTexts("process")).toEqual([
-      "Besoin de prendre du recul sur votre organisation ?",
-      "Réserver mon échange offert",
-    ]);
-    expect(getExpectedCallTexts("solutions")).toEqual([
-      "Besoin d’aide pour identifier la bonne solution ?",
-      "Échanger 30 minutes",
-    ]);
+  it("can audit the sealed V2 supplier augmentation explicitly", () => {
+    const orders = buildExpectedSolutionOrders({ expectCandidateV2: true });
+    expect(orders.get("agence-marketing")).toContain("amazon-business");
+    expect(orders.get("cabinet-davocat")).toContain("amazon-business");
+    expect(orders.get("batiment")).not.toContain("amazon-business");
+  });
+
+  it("expects no contact CTA in any system tab", () => {
+    expect(getExpectedCallTexts("process")).toEqual([]);
+    expect(getExpectedCallTexts("solutions")).toEqual([]);
     expect(getExpectedCallTexts("resources")).toEqual([]);
   });
 

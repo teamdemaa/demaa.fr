@@ -2,11 +2,8 @@
 
 import { ChevronLeft, ChevronRight, FileText } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import OperationalSystemCopyRequestModal from "@/components/OperationalSystemCopyRequestModal";
-import {
-  SYSTEM_RESOURCES,
-  type SystemResource,
-} from "@/lib/system-resource-catalog";
+import { trackSystemJourneyEvent } from "@/lib/kit-analytics-client";
+import type { SystemResource } from "@/lib/system-resource-catalog";
 
 type RailState = Readonly<{
   canNext: boolean;
@@ -14,10 +11,10 @@ type RailState = Readonly<{
 }>;
 
 export default function SystemResourcesTab({
-  resources = SYSTEM_RESOURCES,
+  resources,
   systemSlug,
 }: {
-  resources?: readonly SystemResource[];
+  resources: readonly SystemResource[];
   systemSlug: string;
 }) {
   const orderedResources = useMemo(
@@ -25,7 +22,6 @@ export default function SystemResourcesTab({
     [resources],
   );
   const railRef = useRef<HTMLDivElement | null>(null);
-  const [selectedResource, setSelectedResource] = useState<SystemResource | null>(null);
   const [railState, setRailState] = useState<RailState>({
     canNext: orderedResources.length > 1,
     canPrevious: false,
@@ -72,29 +68,34 @@ export default function SystemResourcesTab({
 
   return (
     <>
-      <section aria-label="Ressources du système" className="min-w-0 max-w-full overflow-hidden">
-        {orderedResources.length > 1 ? (
-          <div className="mb-4 flex justify-end gap-2">
-            <button
-              type="button"
-              aria-label="Voir les ressources précédentes"
-              onClick={() => navigateRail(-1)}
-              disabled={!railState.canPrevious}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest disabled:cursor-not-allowed disabled:opacity-30"
-            >
-              <ChevronLeft className="h-4 w-4" aria-hidden="true" />
-            </button>
-            <button
-              type="button"
-              aria-label="Voir les ressources suivantes"
-              onClick={() => navigateRail(1)}
-              disabled={!railState.canNext}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest disabled:cursor-not-allowed disabled:opacity-30"
-            >
-              <ChevronRight className="h-4 w-4" aria-hidden="true" />
-            </button>
-          </div>
-        ) : null}
+      <section aria-label="Modèles et documents du système" className="min-w-0 max-w-full overflow-hidden">
+        <div className="mb-4 flex items-center justify-between gap-3">
+          <h3 className="text-[11px] font-semibold uppercase tracking-[0.15em] text-dema-muted">
+            Modèles et documents
+          </h3>
+          {orderedResources.length > 1 ? (
+            <div className="flex gap-2">
+              <button
+                type="button"
+                aria-label="Voir les ressources précédentes"
+                onClick={() => navigateRail(-1)}
+                disabled={!railState.canPrevious}
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest disabled:cursor-not-allowed disabled:opacity-30"
+              >
+                <ChevronLeft className="h-4 w-4" aria-hidden="true" />
+              </button>
+              <button
+                type="button"
+                aria-label="Voir les ressources suivantes"
+                onClick={() => navigateRail(1)}
+                disabled={!railState.canNext}
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest disabled:cursor-not-allowed disabled:opacity-30"
+              >
+                <ChevronRight className="h-4 w-4" aria-hidden="true" />
+              </button>
+            </div>
+          ) : null}
+        </div>
 
         <div
           ref={railRef}
@@ -102,11 +103,16 @@ export default function SystemResourcesTab({
           className="grid max-w-full snap-x snap-mandatory grid-flow-col auto-cols-[82%] gap-4 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] md:auto-cols-[calc((100%_-_2rem)_/_3)] [&::-webkit-scrollbar]:hidden"
         >
           {orderedResources.map((resource) => (
-            <button
+            <a
               key={resource.resourceSlug}
-              type="button"
+              href={`/api/systeme-kit/open/${resource.resourceSlug}`}
+              target="_blank"
+              rel="noopener noreferrer"
               data-system-resource-card
-              onClick={() => setSelectedResource(resource)}
+              onClick={() => trackSystemJourneyEvent("system_resource_opened", {
+                resourceSlug: resource.resourceSlug,
+                systemSlug,
+              })}
               className="group min-h-[248px] min-w-0 snap-start overflow-hidden rounded-[1.2rem] border border-dema-line bg-dema-paper p-5 text-left shadow-[0_10px_28px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/20 hover:shadow-[0_14px_32px_rgba(23,35,29,0.07)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:p-6 md:aspect-square md:min-h-0"
               aria-label={`Ouvrir ${resource.title}`}
             >
@@ -124,18 +130,10 @@ export default function SystemResourcesTab({
                   {resource.description}
                 </span>
               </span>
-            </button>
+            </a>
           ))}
         </div>
       </section>
-
-      {selectedResource ? (
-        <OperationalSystemCopyRequestModal
-          resource={selectedResource}
-          systemSlug={systemSlug}
-          onClose={() => setSelectedResource(null)}
-        />
-      ) : null}
     </>
   );
 }

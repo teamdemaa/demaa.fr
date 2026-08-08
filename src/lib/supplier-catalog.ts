@@ -1,4 +1,6 @@
 type SupplierCategory =
+  | "Achats professionnels"
+  | "Avantages salariés"
   | "Banque"
   | "Assurance"
   | "Mutuelle"
@@ -6,6 +8,7 @@ type SupplierCategory =
   | "Équipement"
   | "Grossiste"
   | "Paiement"
+  | "Protection sociale"
   | "Téléphonie"
   | "Énergie"
   | "Transport"
@@ -36,6 +39,8 @@ export type DemaaSupplier = {
   href: string;
   cta: SupplierCta;
   partner?: boolean;
+  markets?: readonly string[];
+  eligibility?: string;
 };
 
 export const demaaSuppliers: readonly DemaaSupplier[] = [
@@ -59,35 +64,56 @@ export const demaaSuppliers: readonly DemaaSupplier[] = [
     slug: "alan",
     name: "Alan",
     family: "Finance & protection",
-    category: "Mutuelle",
+    category: "Protection sociale",
     shortDescription: "Mutuelle santé et prévention pour les équipes.",
     description:
       "Mutuelle et services santé pour simplifier la couverture des équipes et le suivi RH.",
     bestFor: "Les entreprises avec salariés qui veulent une mutuelle claire et simple à gérer.",
-    offerHint: "Offre partenaire à venir",
+    offerHint: "Offre et tarifs à vérifier",
     tags: ["Mutuelle", "Santé", "RH"],
     icon: "HeartPulse",
     usefulFor: ["Salariés", "Santé", "RH"],
     href: "https://alan.com/fr-fr",
     cta: "Voir le fournisseur",
-    partner: true,
+    markets: ["FR"],
+    eligibility: "Entreprise ou indépendant éligible à une offre Alan en France.",
   },
   {
     slug: "swile",
     name: "Swile",
     family: "Finance & protection",
-    category: "Support",
+    category: "Avantages salariés",
     shortDescription: "Titres-resto et avantages salariés.",
     description:
       "Solution d'avantages salariés : titres-resto, avantages d'équipe et gestion sociale du quotidien.",
     bestFor: "Les entreprises qui structurent leurs avantages salariés.",
-    offerHint: "Offre partenaire à venir",
+    offerHint: "Offre et tarifs à vérifier",
     tags: ["Avantages", "Titres-resto", "RH"],
     icon: "Gift",
     usefulFor: ["Salariés", "Avantages", "Restauration"],
-    href: "https://www.swile.co/",
+    href: "https://www.swile.co/fr-fr/",
     cta: "Voir le fournisseur",
-    partner: true,
+    markets: ["FR"],
+    eligibility: "Entreprise employant des salariés éligibles aux avantages proposés en France.",
+  },
+  {
+    slug: "amazon-business",
+    name: "Amazon Business",
+    family: "Équipement & exploitation",
+    category: "Achats professionnels",
+    shortDescription: "Achats, fournitures et réapprovisionnement pour les entreprises.",
+    description:
+      "Compte professionnel pour centraliser les achats courants, gérer plusieurs utilisateurs et suivre les dépenses et les commandes.",
+    bestFor:
+      "Les petites entreprises qui achètent régulièrement des fournitures ou des équipements non spécialisés.",
+    offerHint: "Compte professionnel",
+    tags: ["Achats", "Fournitures", "Réapprovisionnement"],
+    icon: "Package",
+    usefulFor: ["Achats", "Fournitures", "Équipe"],
+    href: "https://business.amazon.fr/fr/industries/small-business",
+    cta: "Voir le fournisseur",
+    markets: ["FR"],
+    eligibility: "Organisation disposant d’un compte professionnel en France.",
   },
   {
     slug: "plateforme-du-batiment",

@@ -148,9 +148,14 @@ describe("system page SEO published Solutions boundary", () => {
     expect(pageSource.match(/getActiveRenderableSolutionSectionsForSystem\(slug\)/g)).toHaveLength(1);
     expect(pageSource.match(/getActivePublishedRenderableSolutionSectionsForSystem\(slug\)/g))
       .toHaveLength(2);
-    expect(pageSource).toContain("buildSystemPageMetadata(data, withoutLegacyModels(solutionSections))");
+    expect(pageSource).toContain(
+      "buildSystemPageMetadata(data, filterPublicSolutionSections(solutionSections))",
+    );
     expect(pageSource).toContain(
       "buildSystemPageJsonLd(data, visiblePublishedSolutionSections)",
+    );
+    expect(pageSource).toContain(
+      "filterPublicSolutionSections(mergeRenderableSections([",
     );
     expect(pageSource).toContain('JSON.stringify(jsonLd).replace(/</g, "\\\\u003c")');
     expect(detailSource).not.toContain("data.detail.tools");

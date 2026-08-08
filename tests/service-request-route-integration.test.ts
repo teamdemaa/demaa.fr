@@ -1,6 +1,7 @@
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("server-only", () => ({}));
+vi.mock("next/cache", () => ({ unstable_cache: (callback: unknown) => callback }));
 
 const firestore = vi.hoisted(() => {
   const documents = new Map<string, Record<string, unknown>>();
@@ -23,7 +24,10 @@ const firestore = vi.hoisted(() => {
     },
   };
 });
-vi.mock("@/lib/firebase-admin", () => ({ getAdminFirestore: () => firestore.database }));
+vi.mock("@/lib/firebase-admin", () => ({
+  getAdminFirestore: () => firestore.database,
+  hasFirebaseAdminConfiguration: () => false,
+}));
 
 import { POST as submitService } from "@/app/api/service-request/route";
 import { POST as submitSolution } from "@/app/api/solution-referral/route";
@@ -64,6 +68,8 @@ describe("real service request route boundaries", () => {
     resetServiceRequestMemoryRateLimitsForTests();
     process.env.SITE_URL = "https://demaa.fr";
     process.env.VERCEL = "1";
+    process.env.VERCEL_ENV = "";
+    process.env.DEMAA_FORCE_LOCAL_DATA = "true";
     process.env.SERVICE_REQUEST_RATE_LIMIT_HMAC_SECRET = "test-only-rate-limit-pepper-32-characters";
   });
   afterAll(() => { process.env = { ...originalEnv }; });

@@ -182,7 +182,7 @@ export function getAcademyContentForSystem(systemSlug: string) {
 
 export function getAcademyActionHref(action: AcademyAction) {
   if (action.resourceId === "pilotage-marketing-vente") {
-    return "/modeles-de-documents/pilotage-marketing-vente";
+    return "/api/systeme-kit/open/crm-suivi-commercial";
   }
 
   if (action.resourceId === "levier") {

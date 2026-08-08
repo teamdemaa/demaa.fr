@@ -3,11 +3,17 @@ import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import SystemDetailContent from "@/components/SystemDetailContent";
 import { hasEditableOperationalSystemAsset } from "@/lib/editable-operational-system-assets.server";
+import { getRenderableExpertiseSectionForSystem } from "@/lib/expertise-solutions.server";
 import {
   getActivePublishedRenderableSolutionSectionsForSystem,
   getActiveRenderableSolutionSectionsForSystem,
 } from "@/lib/firebase-solution-registry-selection.server";
+import {
+  filterPublicSolutionSections,
+  isPublicSolutionSectionVisible,
+} from "@/lib/public-solution-section-visibility";
 import { normalizeSystemDetailTab } from "@/lib/system-detail-tabs";
+import type { RenderableSolutionSectionDto } from "@/lib/system-solutions-ui-dto";
 import {
   buildSystemPageIntro,
   buildSystemPageJsonLd,
@@ -20,8 +26,22 @@ type OperationalKitPageProps = {
   searchParams: Promise<{ tab?: string | string[] }>;
 };
 
-function withoutLegacyModels<T extends Readonly<{ section: string }>>(sections: readonly T[]) {
-  return sections.filter(({ section }) => section !== "models");
+function mergeRenderableSections(
+  sections: readonly RenderableSolutionSectionDto[],
+): RenderableSolutionSectionDto[] {
+  const bySection = new Map<
+    RenderableSolutionSectionDto["section"],
+    RenderableSolutionSectionDto["placements"][number][]
+  >();
+  for (const group of sections) {
+    const placements = bySection.get(group.section) ?? [];
+    placements.push(...group.placements);
+    bySection.set(group.section, placements);
+  }
+  return [...bySection.entries()].map(([section, placements]) => ({
+    section,
+    placements: placements.toSorted((left, right) => left.rank - right.rank),
+  }));
 }
 
 function getParamValue(value?: string | string[]) {
@@ -46,7 +66,7 @@ export async function generateMetadata({
     };
   }
 
-  return buildSystemPageMetadata(data, withoutLegacyModels(solutionSections));
+  return buildSystemPageMetadata(data, filterPublicSolutionSections(solutionSections));
 }
 
 export default async function OperationalKitPage({
@@ -54,10 +74,13 @@ export default async function OperationalKitPage({
   searchParams,
 }: OperationalKitPageProps) {
   const [{ slug }, resolvedSearchParams] = await Promise.all([params, searchParams]);
-  const [data, solutionSections, publishedSolutionSections] = await Promise.all([
+  const [data, solutionSections, publishedSolutionSections, expertiseSection] = await Promise.all([
     getSystemDetailPageData(slug),
     getActiveRenderableSolutionSectionsForSystem(slug),
     getActivePublishedRenderableSolutionSectionsForSystem(slug),
+    isPublicSolutionSectionVisible("services")
+      ? getRenderableExpertiseSectionForSystem(slug)
+      : Promise.resolve(null),
   ]);
 
   if (!data) {
@@ -65,8 +88,13 @@ export default async function OperationalKitPage({
   }
 
   const initialTab = getParamValue(resolvedSearchParams.tab);
-  const visibleSolutionSections = withoutLegacyModels(solutionSections);
-  const visiblePublishedSolutionSections = withoutLegacyModels(publishedSolutionSections);
+  const visibleSolutionSections = filterPublicSolutionSections(mergeRenderableSections([
+    ...solutionSections,
+    ...(expertiseSection ? [expertiseSection] : []),
+  ]));
+  const visiblePublishedSolutionSections = filterPublicSolutionSections(
+    publishedSolutionSections,
+  );
   const jsonLd = buildSystemPageJsonLd(data, visiblePublishedSolutionSections);
   const hasEditableSystem = hasEditableOperationalSystemAsset(data.system.slug);
 

@@ -251,7 +251,7 @@ export const freeToolSeo = {
     ],
     related: [
       { label: "Signature email pro", href: "/outils/signature-pro" },
-      { label: "Tableau de pilotage Marketing & Vente", href: "/modeles-de-documents/pilotage-marketing-vente" },
+      { label: "Tableau de pilotage Marketing & Vente", href: "/api/systeme-kit/open/crm-suivi-commercial" },
       { label: "Signer un document électroniquement", href: "/outils/signez-un-document-electroniquement" },
     ],
   },
@@ -319,7 +319,7 @@ export const freeToolSeo = {
     ],
     related: [
       { label: "Générateur de tampon", href: "/outils/generation-de-tampon" },
-      { label: "Suivi et prévisionnel financier", href: "/modeles-de-documents/suivi-previsionnel-financier" },
+      { label: "Suivi et prévisionnel financier", href: "/api/systeme-kit/open/suivi-previsionnel-financier" },
       { label: "Signature email pro", href: "/outils/signature-pro" },
     ],
   },

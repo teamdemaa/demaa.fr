@@ -10,11 +10,14 @@ const mocks = vi.hoisted(() => ({
   getService: vi.fn(),
   getSolution: vi.fn(),
   getSolutionDisclosure: vi.fn(),
+  getExpertiseReferralContext: vi.fn(),
+  getExpertiseReferralDisclosure: vi.fn(),
   getSolutionPlacements: vi.fn(),
   logOperationalError: vi.fn(),
   logOperationalEvent: vi.fn(),
   RequestIdempotencyConflictError: class extends Error {},
   resolveLeadAttribution: vi.fn(),
+  scheduleServiceSolutionDeliveries: vi.fn(),
 }));
 
 vi.mock("@/lib/enterprise-annuaire-server", () => ({
@@ -33,6 +36,9 @@ vi.mock("@/lib/service-catalog-v2", () => ({
 vi.mock("@/lib/service-request-security.server", () => ({
   enforceServiceRequestRateLimit: mocks.enforceSecurity,
 }));
+vi.mock("@/lib/service-request-delivery-scheduler.server", () => ({
+  scheduleServiceSolutionDeliveries: mocks.scheduleServiceSolutionDeliveries,
+}));
 vi.mock("@/lib/service-request-storage.server", () => ({
   createServiceRequest: mocks.createServiceRequest,
   createSolutionReferral: mocks.createSolutionReferral,
@@ -44,6 +50,10 @@ vi.mock("@/lib/solution-registry.server", () => ({
 }));
 vi.mock("@/lib/solution-referral-disclosures.server", () => ({
   getSolutionReferralDisclosure: mocks.getSolutionDisclosure,
+  getExpertiseReferralDisclosure: mocks.getExpertiseReferralDisclosure,
+}));
+vi.mock("@/lib/expertise-solutions.server", () => ({
+  getExpertiseReferralContext: mocks.getExpertiseReferralContext,
 }));
 
 import { POST as submitService } from "@/app/api/service-request/route";
@@ -133,6 +143,8 @@ describe("service and solution request routes", () => {
     mocks.getService.mockReturnValue(null);
     mocks.getSolution.mockReturnValue(null);
     mocks.getSolutionDisclosure.mockReturnValue(null);
+    mocks.getExpertiseReferralContext.mockResolvedValue(null);
+    mocks.getExpertiseReferralDisclosure.mockReturnValue(null);
     mocks.getSolutionPlacements.mockReturnValue([]);
     mocks.resolveLeadAttribution.mockReturnValue({ conversion: {} });
     mocks.createServiceRequest.mockImplementation(async (input) => ({
@@ -220,6 +232,7 @@ describe("service and solution request routes", () => {
       "service_request.scheduled",
       expect.not.objectContaining({ email: expect.anything(), need: expect.anything() }),
     );
+    expect(mocks.scheduleServiceSolutionDeliveries).toHaveBeenCalledOnce();
   });
 
   it("refuses an unavailable solution referral by default", async () => {
@@ -260,6 +273,59 @@ describe("service and solution request routes", () => {
         transparency: expect.stringContaining("rémunération"),
       }),
     }));
+    expect(mocks.scheduleServiceSolutionDeliveries).toHaveBeenCalledOnce();
+  });
+
+  it("stores a canonical expertise request without inventing a partner relationship", async () => {
+    const expertiseResource = {
+      ...publishedResource,
+      commercialRelationship: "none" as const,
+      name: "Expert-comptable",
+      resourceSlug: "chartered-accountant",
+      resourceType: "expertise" as const,
+    };
+    const expertisePlacement = {
+      ...publishedPlacement,
+      placementId: "cabinet-davocat:chartered-accountant:services:1",
+      resource: expertiseResource,
+      section: "services" as const,
+      systemSlug: "cabinet-davocat",
+    };
+    mocks.getEnterpriseBySlug.mockResolvedValue({ slug: "cabinet-davocat" });
+    mocks.getExpertiseReferralContext.mockResolvedValue({
+      placement: expertisePlacement,
+      resource: expertiseResource,
+    });
+    mocks.getExpertiseReferralDisclosure.mockReturnValue({
+      billingParty: "Le professionnel retenu après qualification",
+      commercialRelationship: "none",
+      contractingParty: "Le professionnel retenu après qualification",
+      disclosureVersion: "1.0.0",
+      effectiveAt: "2026-08-08T00:00:00.000Z",
+      expiresAt: "2027-08-08T00:00:00.000Z",
+      placementId: expertisePlacement.placementId,
+      resourceSlug: expertiseResource.resourceSlug,
+      reviewedAt: "2026-08-08T00:00:00.000Z",
+      reviewer: "Master Demaa",
+      transparency: "Demaa qualifie le besoin sans imposer de professionnel.",
+    });
+
+    const response = await submitSolution(request("/api/solution-referral", solutionBody({
+      resourceSlug: "chartered-accountant",
+      systemSlug: "cabinet-davocat",
+    })));
+
+    expect(response.status).toBe(202);
+    expect(mocks.createSolutionReferral).toHaveBeenCalledWith(expect.objectContaining({
+      solution: expect.objectContaining({
+        commercial_relationship: "none",
+        resource_name: "Expert-comptable",
+        resource_slug: "chartered-accountant",
+        section: "services",
+        transparency: expect.not.stringMatching(/partenaire|affilié/i),
+      }),
+    }));
+    expect(mocks.scheduleServiceSolutionDeliveries).toHaveBeenCalledOnce();
   });
 
   it("never routes an owned solution through the external referral workflow", async () => {

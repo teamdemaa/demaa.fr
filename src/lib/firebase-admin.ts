@@ -18,6 +18,19 @@ function shouldUseApplicationDefaultCredential() {
   return process.env.FIREBASE_USE_APPLICATION_DEFAULT === "true";
 }
 
+export function hasFirebaseAdminConfiguration() {
+  return Boolean(
+    process.env.FIREBASE_SERVICE_ACCOUNT_KEY
+    || hasFirebaseVercelWorkloadIdentityConfiguration()
+    || (
+      process.env.FIREBASE_PROJECT_ID
+      && process.env.FIREBASE_CLIENT_EMAIL
+      && process.env.FIREBASE_PRIVATE_KEY
+    )
+    || shouldUseApplicationDefaultCredential()
+  );
+}
+
 function getFirebaseCredential() {
   const serviceAccountKey = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
 

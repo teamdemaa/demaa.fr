@@ -42,7 +42,6 @@ export const demaaFinanceItems: readonly DemaaFinanceItem[] = [
     usefulFor: ["Compte pro", "Trésorerie", "Crédit"],
     href: "https://qonto.com/fr",
     cta: "Voir le financement",
-    partner: true,
   },
   {
     slug: "defacto",

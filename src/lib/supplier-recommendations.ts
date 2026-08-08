@@ -18,10 +18,10 @@ const DEFAULT_SUPPLIER_ORDER = [
 
 const SUPPLIER_RECOMMENDATIONS_BY_SECTOR: Record<string, SupplierRecommendationRule> = {
   "Conseil & services aux entreprises": {
-    order: ["orus", "onoff-business", "alan", "swile", "insify"],
+    order: ["amazon-business", "alan", "swile", "orus", "onoff-business", "insify"],
   },
   "Tech & Digital": {
-    order: ["onoff-business", "orus", "alan", "swile", "insify"],
+    order: ["amazon-business", "alan", "swile", "onoff-business", "orus", "insify"],
   },
   "BTP & services techniques": {
     order: [

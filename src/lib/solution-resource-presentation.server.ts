@@ -85,6 +85,7 @@ const DEFAULT_PRESENTATIONS: Readonly<Record<SolutionResource["resourceType"], R
   software: { ctaLabel: "Voir l’outil", displayCategory: "Logiciel" },
   provider: { ctaLabel: "Voir le fournisseur", displayCategory: "Fournisseur" },
   directory: { ctaLabel: "Découvrir l’organisation", displayCategory: "Organisation professionnelle" },
+  expertise: { ctaLabel: "Décrire mon besoin", displayCategory: "Prestation" },
 };
 
 export function getSolutionResourcePresentation(

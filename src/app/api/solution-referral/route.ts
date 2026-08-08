@@ -4,6 +4,7 @@ import { resolveLeadAttribution } from "@/lib/lead-attribution-server";
 import { logOperationalError, logOperationalEvent } from "@/lib/operational-log";
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
 import { enforceServiceRequestRateLimit } from "@/lib/service-request-security.server";
+import { scheduleServiceSolutionDeliveries } from "@/lib/service-request-delivery-scheduler.server";
 import { buildSolutionReferralSnapshot } from "@/lib/service-request-snapshots.server";
 import {
   createSolutionReferral,
@@ -11,6 +12,8 @@ import {
 } from "@/lib/service-request-storage.server";
 import { parseSolutionReferralPayload } from "@/lib/service-solution-request-contract";
 import { getSolutionReferralDisclosure } from "@/lib/solution-referral-disclosures.server";
+import { getExpertiseReferralDisclosure } from "@/lib/solution-referral-disclosures.server";
+import { getExpertiseReferralContext } from "@/lib/expertise-solutions.server";
 import {
   getPublishedSolutionPlacementsForSystem,
   getPublishedSolutionResourceBySlug,
@@ -58,16 +61,30 @@ export async function POST(request: Request) {
       );
     }
 
-    const resource = getPublishedSolutionResourceBySlug(payload.resourceSlug);
-    const placement = getPublishedSolutionPlacementsForSystem(payload.systemSlug)
+    let resource = getPublishedSolutionResourceBySlug(payload.resourceSlug);
+    let placement = getPublishedSolutionPlacementsForSystem(payload.systemSlug)
       .find((candidate) => candidate.resource.resourceSlug === payload.resourceSlug);
-    const disclosure = placement && resource
+    let disclosure = placement && resource
       ? getSolutionReferralDisclosure({
           commercialRelationship: resource.commercialRelationship,
           placementId: placement.placementId,
           resourceSlug: resource.resourceSlug,
         })
       : null;
+    if (!resource || !placement || !disclosure) {
+      const expertise = await getExpertiseReferralContext(
+        payload.systemSlug,
+        payload.resourceSlug,
+      );
+      if (expertise) {
+        resource = expertise.resource;
+        placement = expertise.placement;
+        disclosure = getExpertiseReferralDisclosure({
+          placementId: placement.placementId,
+          resourceSlug: resource.resourceSlug,
+        });
+      }
+    }
     if (
       !resource
       || !placement
@@ -117,6 +134,7 @@ export async function POST(request: Request) {
       resourceSlug: stored.record.solution.resource_slug,
       systemSlug: stored.record.system_slug,
     });
+    scheduleServiceSolutionDeliveries();
     return response();
   } catch (error) {
     if (error instanceof RequestIdempotencyConflictError) {

@@ -1,6 +1,5 @@
 import { isDeepStrictEqual } from "node:util";
 
-import snapshot from "@/lib/firebase-solution-registry.snapshot.generated.json";
 import {
   FIREBASE_SOLUTION_REGISTRY_ACTIVE_POINTER,
   parseFirebaseSolutionRegistryRevision,
@@ -8,13 +7,14 @@ import {
   type FirebaseSolutionPlacementEntry,
   type FirebaseSolutionResourceEntry,
 } from "@/lib/firebase-solution-registry-contract";
+import { buildFirebaseSolutionRegistryMigrationRevision } from "@/lib/firebase-solution-registry-migration.server";
 import {
   buildFirestoreSolutionRegistryImportPlan,
   type FirestoreSolutionRegistryWrite,
 } from "@/lib/firebase-solution-registry-firestore-plan";
 import { resolveFirebaseSolutionRegistryImportTarget } from "@/lib/firebase-solution-registry-import-gate";
 
-const SOLUTION_SECTIONS = ["software", "providers", "models", "networks"] as const;
+const SOLUTION_SECTIONS = ["software", "services", "providers", "models", "networks"] as const;
 
 type FirestoreValue =
   | { nullValue: null }
@@ -28,6 +28,7 @@ type FirestoreValue =
 type FirestoreDocument = {
   name: string;
   fields?: Record<string, FirestoreValue>;
+  updateTime?: string;
 };
 
 type BatchGetResponse = {
@@ -114,7 +115,7 @@ const {
   environment: process.env,
 });
 
-const revision = parseFirebaseSolutionRegistryRevision(snapshot);
+const revision = buildFirebaseSolutionRegistryMigrationRevision();
 const plan = buildFirestoreSolutionRegistryImportPlan(revision);
 const confirmedPlanFingerprint = commandArgument("--confirm-plan=");
 if (confirmedPlanFingerprint !== plan.planFingerprint) {
@@ -153,7 +154,10 @@ async function readActivePointer() {
   if (response.status === 404) return null;
   if (!response.ok) throw new Error(`Unable to read the active pointer (${response.status}).`);
   const document = await response.json() as FirestoreDocument;
-  return decodeFields(document.fields);
+  return {
+    data: decodeFields(document.fields),
+    updateTime: document.updateTime ?? null,
+  };
 }
 
 async function batchGet(paths: readonly string[]) {
@@ -170,11 +174,21 @@ async function batchGet(paths: readonly string[]) {
 }
 
 const pointerBeforeImport = await readActivePointer();
-if (
-  pointerBeforeImport &&
-  !isDeepStrictEqual(pointerBeforeImport, plan.activation.data)
-) {
-  throw new Error(`${targetLabel} points to another Solutions revision; activation refused.`);
+const targetAlreadyActive = Boolean(
+  pointerBeforeImport && isDeepStrictEqual(pointerBeforeImport.data, plan.activation.data),
+);
+if (pointerBeforeImport && !targetAlreadyActive) {
+  const confirmedCurrentRevision = commandArgument("--confirm-current-revision=");
+  const confirmedCurrentFingerprint = commandArgument("--confirm-current-fingerprint=");
+  if (
+    pointerBeforeImport.data.revisionId !== confirmedCurrentRevision
+    || pointerBeforeImport.data.sourceFingerprint !== confirmedCurrentFingerprint
+    || !pointerBeforeImport.updateTime
+  ) {
+    throw new Error(
+      `${targetLabel} active revision and fingerprint must be confirmed before replacement.`,
+    );
+  }
 }
 
 const missingWrites: FirestoreSolutionRegistryWrite[] = [];
@@ -267,8 +281,8 @@ if (importedRevision.sourceFingerprint !== revision.sourceFingerprint) {
   throw new Error("Imported revision fingerprint differs from the sealed snapshot.");
 }
 
-let pointerCreated = false;
-if (!pointerBeforeImport) {
+let pointerChanged = false;
+if (!targetAlreadyActive) {
   const response = await firestoreRequest(`${documentsEndpoint}:commit`, {
     method: "POST",
     body: JSON.stringify({
@@ -277,7 +291,9 @@ if (!pointerBeforeImport) {
           name: documentName(plan.activation.path),
           fields: encodeFields(plan.activation.data),
         },
-        currentDocument: { exists: false },
+        currentDocument: pointerBeforeImport
+          ? { updateTime: pointerBeforeImport.updateTime }
+          : { exists: false },
       }],
     }),
   });
@@ -285,10 +301,10 @@ if (!pointerBeforeImport) {
     const detail = (await response.text()).slice(0, 1_000);
     throw new Error(`Unable to activate the ${targetLabel} revision (${response.status}): ${detail}`);
   }
-  pointerCreated = true;
+  pointerChanged = true;
 }
 const activePointer = await readActivePointer();
-if (!isDeepStrictEqual(activePointer, plan.activation.data)) {
+if (!activePointer || !isDeepStrictEqual(activePointer.data, plan.activation.data)) {
   throw new Error(`${targetLabel} active pointer does not match the sealed revision after activation.`);
 }
 
@@ -301,8 +317,8 @@ console.log(JSON.stringify({
   writesCreated: missingWrites.length,
   resourcesReadBack: resources.length,
   placementsReadBack: placements.length,
-  pointerCreated,
-  activePointer,
+  pointerChanged,
+  activePointer: activePointer.data,
   sourceFingerprint: importedRevision.sourceFingerprint,
   planFingerprint: plan.planFingerprint,
 }, null, 2));

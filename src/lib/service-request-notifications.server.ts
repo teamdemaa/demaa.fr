@@ -1,6 +1,8 @@
 import "server-only";
 
 import { syncResendLeadContact } from "@/lib/resend-audience";
+import { escapeSlackMrkdwn } from "@/lib/api-security";
+import { sendSlackMessage } from "@/lib/slack";
 import type {
   RequestDeliveryChannel,
   StoredServiceRequest,
@@ -71,6 +73,43 @@ function internalRecipient() {
   return process.env.LEAD_NOTIFICATION_EMAIL?.trim() || "team@demaa.fr";
 }
 
+function slackLine(label: string, value: string) {
+  return `*${escapeSlackMrkdwn(label)}* : ${escapeSlackMrkdwn(value)}`;
+}
+
+async function sendServiceRequestSlack(record: StoredServiceRequest, requestId: string) {
+  const lines = [
+    `*[Services] ${escapeSlackMrkdwn(record.service.service_name)}*`,
+    slackLine("Référence", requestId),
+    slackLine("Prénom", record.contact.first_name),
+    slackLine("E-mail", record.contact.email),
+    slackLine("Entreprise", record.contact.company),
+    slackLine("Système", record.system_slug ?? "Non renseigné"),
+    slackLine("Besoin", record.need),
+  ];
+  return sendSlackMessage({
+    text: `[Services] ${record.service.service_name}`,
+    blocks: [{ type: "section", text: { type: "mrkdwn", text: lines.join("\n") } }],
+  });
+}
+
+async function sendSolutionReferralSlack(record: StoredSolutionReferral, requestId: string) {
+  const lines = [
+    `*[Solutions] Mise en relation - ${escapeSlackMrkdwn(record.solution.resource_name)}*`,
+    slackLine("Référence", requestId),
+    slackLine("Prénom", record.contact.first_name),
+    slackLine("E-mail", record.contact.email),
+    slackLine("Entreprise", record.contact.company),
+    slackLine("Système", record.system_slug),
+    slackLine("Relation", record.solution.commercial_relationship),
+    slackLine("Besoin", record.need),
+  ];
+  return sendSlackMessage({
+    text: `[Solutions] Mise en relation - ${record.solution.resource_name}`,
+    blocks: [{ type: "section", text: { type: "mrkdwn", text: lines.join("\n") } }],
+  });
+}
+
 async function syncMarketing(record: StoredServiceRequest | StoredSolutionReferral) {
   if (record.marketing_consent?.granted !== true) return;
   try {
@@ -90,6 +129,7 @@ export async function deliverServiceRequestChannel(input: {
 }) {
   const { channel, record, requestId } = input;
   if (channel === "marketing_sync") return syncMarketing(record);
+  if (channel === "slack") return sendServiceRequestSlack(record, requestId);
   if (channel === "customer_email") {
     const subject = `Demande reçue - ${record.service.service_name}`;
     return sendResendEmail({
@@ -133,6 +173,7 @@ export async function deliverSolutionReferralChannel(input: {
 }) {
   const { channel, record, requestId } = input;
   if (channel === "marketing_sync") return syncMarketing(record);
+  if (channel === "slack") return sendSolutionReferralSlack(record, requestId);
   if (channel === "customer_email") {
     const subject = `Demande de mise en relation reçue - ${record.solution.resource_name}`;
     return sendResendEmail({

@@ -34,12 +34,14 @@ export const SOLUTION_UI_WORKING_LABELS: Readonly<
   Record<VisibleSolutionSection, string>
 > = {
   software: "Outils",
-  providers: "Prestataires et fournisseurs",
+  services: "Prestations",
+  providers: "Fournisseurs",
   networks: "Réseaux professionnels",
 };
 
 export const SOLUTION_RAIL_DISPLAY_ORDER: readonly VisibleSolutionSection[] = [
   "software",
+  "services",
   "providers",
   "networks",
 ];
@@ -49,6 +51,7 @@ const RESOURCE_ICONS = {
   software: Wrench,
   provider: BriefcaseBusiness,
   directory: Building2,
+  expertise: BriefcaseBusiness,
 } as const;
 
 const DEFAULT_RESOURCE_LABELS: Readonly<
@@ -58,6 +61,7 @@ const DEFAULT_RESOURCE_LABELS: Readonly<
   software: "Logiciel",
   provider: "Fournisseur",
   directory: "Organisation professionnelle",
+  expertise: "Prestation",
 };
 
 function buildInitialRailState(sections: readonly RenderableSolutionSectionDto[]) {
@@ -140,9 +144,12 @@ function SolutionDialog({
             {placement.usage}
           </p>
           <p className="mt-2 text-xs leading-relaxed text-dema-muted">
-            {resource.name} contracte et facture ses prestations. Demaa facilite uniquement la mise en relation.
+            {resource.resourceType === "expertise"
+              ? "Demaa examine votre besoin puis vous oriente, si possible, vers un professionnel adapté. Vous restez libre d’accepter ou non la mise en relation."
+              : `${resource.name} contracte et facture ses prestations. Demaa facilite uniquement la mise en relation.`}
           </p>
           <SolutionReferralForm
+            referralMode={resource.resourceType === "expertise" ? "matching" : "direct"}
             resourceName={resource.name}
             resourceSlug={resource.resourceSlug}
             systemSlug={placement.systemSlug}
