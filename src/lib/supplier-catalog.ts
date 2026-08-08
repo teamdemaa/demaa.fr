@@ -64,13 +64,12 @@ export const demaaSuppliers: readonly DemaaSupplier[] = [
     description:
       "Mutuelle et services santé pour simplifier la couverture des équipes et le suivi RH.",
     bestFor: "Les entreprises avec salariés qui veulent une mutuelle claire et simple à gérer.",
-    offerHint: "Offre partenaire à venir",
+    offerHint: "Offre et tarifs à vérifier",
     tags: ["Mutuelle", "Santé", "RH"],
     icon: "HeartPulse",
     usefulFor: ["Salariés", "Santé", "RH"],
     href: "https://alan.com/fr-fr",
     cta: "Voir le fournisseur",
-    partner: true,
   },
   {
     slug: "swile",
@@ -81,13 +80,12 @@ export const demaaSuppliers: readonly DemaaSupplier[] = [
     description:
       "Solution d'avantages salariés : titres-resto, avantages d'équipe et gestion sociale du quotidien.",
     bestFor: "Les entreprises qui structurent leurs avantages salariés.",
-    offerHint: "Offre partenaire à venir",
+    offerHint: "Offre et tarifs à vérifier",
     tags: ["Avantages", "Titres-resto", "RH"],
     icon: "Gift",
     usefulFor: ["Salariés", "Avantages", "Restauration"],
     href: "https://www.swile.co/",
     cta: "Voir le fournisseur",
-    partner: true,
   },
   {
     slug: "plateforme-du-batiment",

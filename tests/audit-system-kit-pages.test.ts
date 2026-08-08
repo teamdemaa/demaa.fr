@@ -50,11 +50,11 @@ describe("system kit page audit contract", () => {
   it("expects the CTA copy that belongs to each active tab", () => {
     expect(getExpectedCallTexts("process")).toEqual([
       "Besoin de prendre du recul sur votre organisation ?",
-      "Réserver mon échange offert",
+      "Demander à être rappelé(e)",
     ]);
     expect(getExpectedCallTexts("solutions")).toEqual([
-      "Des tarifs préférentiels avec les partenaires Demaa",
-      "Recevoir les tarifs préférentiels",
+      "Besoin d’aide pour identifier la bonne solution ?",
+      "Demander à être rappelé(e)",
     ]);
     expect(getExpectedCallTexts("resources")).toEqual([]);
   });

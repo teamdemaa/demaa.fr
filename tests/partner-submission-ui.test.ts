@@ -12,28 +12,28 @@ describe("solution proposal UI contract", () => {
   it("exposes one neutral public entry without promising a partnership", async () => {
     const [footer, page, sitemap] = await Promise.all([
       readSource("src/components/Footer.tsx"),
-      readSource("src/app/partenaires/page.tsx"),
+      readSource("src/app/rejoindre-le-reseau/page.tsx"),
       readSource("src/app/sitemap.ts"),
     ]);
 
-    expect(footer).toContain('{ label: "Proposer votre solution", href: "/partenaires" }');
-    expect(page).toContain("Proposer votre solution");
+    expect(footer).toContain('{ label: "Rejoindre le réseau", href: "/rejoindre-le-reseau" }');
+    expect(page).toContain("Rejoindre le réseau");
+    expect(page).toContain("lorsqu’un besoin correspond à votre expertise");
     expect(page).not.toMatch(/partenaire Demaa|devenir partenaire|partenariat garanti/i);
-    expect(sitemap).toContain("`${base}/partenaires`");
+    expect(sitemap).toContain("`${base}/rejoindre-le-reseau`");
   });
 
-  it("keeps consent, limits and publication review explicit", async () => {
-    const [form, contract] = await Promise.all([
-      readSource("src/components/PartnerSubmissionForm.tsx"),
-      readSource("src/lib/partner-submission-contract.ts"),
+  it("uses one shared short form without asking candidates to choose systems", async () => {
+    const [form, route] = await Promise.all([
+      readSource("src/components/ProviderProfileModal.tsx"),
+      readSource("src/app/api/provider-profile-submission/route.ts"),
     ]);
 
-    expect(contract).toContain("MAX_PARTNER_SELECTED_SYSTEMS = 12");
-    expect(form).toContain("Chaque proposition est étudiée manuellement");
-    expect(form).toContain("L’envoi ne garantit pas le");
-    expect(form).toContain("PARTNER_SUBMISSION_CONSENT_TEXT");
-    expect(form).toContain('href="/politique-de-confidentialite"');
+    expect(form).toContain("Vos expertises");
+    expect(form).toContain("Pays ou zones couverts");
+    expect(form).not.toContain("selectedSystemSlugs");
+    expect(route).toContain('channels: { email: false, resend: false, slack: true }');
     expect(form).toContain('role="alert"');
-    expect(form).toContain('role="status"');
+    expect(form).toContain('aria-live="polite"');
   });
 });

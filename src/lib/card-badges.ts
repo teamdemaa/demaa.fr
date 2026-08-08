@@ -6,7 +6,6 @@ const GENERIC_SUPPLIER_HINTS = new Set([
   "À vérifier",
   "Comparaison partenaire",
   "Comparaison à venir",
-  "Offre partenaire à venir",
   "Annuaire partenaire",
   "Conditions pro à vérifier",
   "Sélection à venir",

@@ -1,6 +1,4 @@
-import { Suspense } from "react";
-import OrganisationSessionBookingButton from "@/components/OrganisationSessionBookingButton";
-import PreferentialRatesTrigger from "@/components/PreferentialRatesTrigger";
+import OrganisationCallbackRequestButton from "@/components/OrganisationCallbackRequestButton";
 
 type SystemCustomOfferCtaProps = {
   context: "process" | "solutions";
@@ -9,37 +7,25 @@ type SystemCustomOfferCtaProps = {
 
 const ctaCopy = {
   process: {
-    buttonLabel: "Réserver mon échange offert",
+    buttonLabel: "Demander à être rappelé(e)",
     description:
-      "Échangez 30 minutes avec un spécialiste Demaa pour clarifier ce qui bloque, identifier votre priorité et repartir avec une prochaine étape concrète.",
-    source: "Système métier - Échange organisation",
-    tag: "30 minutes · Gratuit · Sans engagement",
+      "Décrivez brièvement ce que vous souhaitez améliorer. Nous vous rappelons pour clarifier ce qui bloque et identifier votre prochaine étape.",
+    source: "Système métier - Demande de rappel organisation",
+    tag: "Premier échange offert · Sans engagement",
     title: "Besoin de prendre du recul sur votre organisation ?",
   },
   solutions: {
-    buttonLabel: "Recevoir les tarifs préférentiels",
+    buttonLabel: "Demander à être rappelé(e)",
     description:
-      "Recevez la liste des partenaires recommandés et les réductions négociées pour vous.",
-    source: "Système métier - Tarifs préférentiels partenaires",
-    tag: "Partenaires recommandés · Tarifs négociés",
-    title: "Des tarifs préférentiels avec les partenaires Demaa",
+      "Décrivez brièvement votre besoin. Nous vous rappelons pour vous aider à comparer les options et identifier la solution la plus adaptée à votre activité.",
+    source: "Système métier - Demande de rappel solution",
+    tag: "Premier échange offert · Sans engagement",
+    title: "Besoin d’aide pour identifier la bonne solution ?",
   },
 } as const;
 
-const bookingButtonClass =
+const ctaButtonClass =
   "inline-flex min-h-11 shrink-0 items-center justify-center rounded-full bg-dema-forest px-5 py-3 text-center text-sm font-semibold text-dema-paper transition hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2";
-
-function BookingButtonFallback({ label }: { label: string }) {
-  return (
-    <button
-      type="button"
-      disabled
-      className={`${bookingButtonClass} opacity-60`}
-    >
-      {label}
-    </button>
-  );
-}
 
 export default function SystemCustomOfferCta({
   context,
@@ -67,23 +53,12 @@ export default function SystemCustomOfferCta({
         </p>
       </div>
 
-      {context === "solutions" ? (
-        <PreferentialRatesTrigger
-          systemSlug={systemSlug}
-          label={copy.buttonLabel}
-          className={bookingButtonClass}
-        />
-      ) : (
-        <Suspense fallback={<BookingButtonFallback label={copy.buttonLabel} />}>
-          <OrganisationSessionBookingButton
-            systemSlug={systemSlug}
-            source={copy.source}
-            sourceIsAuthoritative
-            label={copy.buttonLabel}
-            className={bookingButtonClass}
-          />
-        </Suspense>
-      )}
+      <OrganisationCallbackRequestButton
+        systemSlug={systemSlug}
+        source={copy.source}
+        label={copy.buttonLabel}
+        className={ctaButtonClass}
+      />
     </aside>
   );
 }

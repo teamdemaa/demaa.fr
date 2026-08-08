@@ -37,7 +37,8 @@ vi.mock("@/lib/editable-operational-system-assets.server", () => ({
     mocks.hasEditableOperationalSystemAsset,
 }));
 
-vi.mock("@/lib/enterprise-annuaire", () => ({
+vi.mock("@/lib/enterprise-annuaire", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("@/lib/enterprise-annuaire")>()),
   enterpriseToSystem: (enterprise: { name: string }) => ({
     name: enterprise.name,
   }),

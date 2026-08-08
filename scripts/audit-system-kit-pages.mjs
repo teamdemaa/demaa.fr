@@ -120,12 +120,12 @@ export function getExpectedCallTexts(tab) {
   if (tab === "resources") return [];
   return tab === "solutions"
     ? [
-        "Des tarifs préférentiels avec les partenaires Demaa",
-        "Recevoir les tarifs préférentiels",
+        "Besoin d’aide pour identifier la bonne solution ?",
+        "Demander à être rappelé(e)",
       ]
     : [
         "Besoin de prendre du recul sur votre organisation ?",
-        "Réserver mon échange offert",
+        "Demander à être rappelé(e)",
       ];
 }
 

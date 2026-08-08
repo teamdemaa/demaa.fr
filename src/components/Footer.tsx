@@ -18,8 +18,8 @@ const resourceLinks = [
   { label: "Académie", href: "/academie" },
   { label: "Cours", href: "/cours" },
   { label: "Aides & subventions", href: "/aides-et-subventions" },
-  { label: "Opportunités B2B", href: "/opportunites-b2b" },
-  { label: "Proposer votre solution", href: "/partenaires" },
+  { label: "Opportunités", href: "/opportunites" },
+  { label: "Rejoindre le réseau", href: "/rejoindre-le-reseau" },
 ];
 
 export default function Footer() {

@@ -28,7 +28,7 @@ import type {
   SolutionInteractionDto,
 } from "@/lib/solution-registry-dto";
 
-export const SOLUTION_RESOURCE_TYPES = ["tool", "software", "provider", "directory"] as const;
+export const SOLUTION_RESOURCE_TYPES = ["tool", "software", "provider", "directory", "expertise"] as const;
 export const SOLUTION_INTERACTION_MODES = [
   "external_link",
   "detail",
@@ -61,7 +61,8 @@ export type SolutionResource =
   | (BaseSolutionResource & Readonly<{ resourceType: "tool" }>)
   | (BaseSolutionResource & Readonly<{ resourceType: "software" }>)
   | (BaseSolutionResource & Readonly<{ resourceType: "provider" }>)
-  | (BaseSolutionResource & Readonly<{ resourceType: "directory" }>);
+  | (BaseSolutionResource & Readonly<{ resourceType: "directory" }>)
+  | (BaseSolutionResource & Readonly<{ resourceType: "expertise" }>);
 
 export type SolutionPlacement = ReviewMetadata & Readonly<{
   placementId: string;
@@ -345,7 +346,8 @@ export function selectPublishedSolutionPlacements(
     ) return [];
     if (
       placement.section === "providers" &&
-      resource.resourceType !== "provider"
+      resource.resourceType !== "provider" &&
+      resource.resourceType !== "expertise"
     ) return [];
     if (
       placement.section === "models" &&
@@ -421,9 +423,10 @@ export function validateSolutionRegistries(input: unknown, now = new Date()): st
     if (
       resource &&
       placement.section === "providers" &&
-      resource.resourceType !== "provider"
+      resource.resourceType !== "provider" &&
+      resource.resourceType !== "expertise"
     ) {
-      errors.push(`${placement.placementId}: providers section requires provider resources`);
+      errors.push(`${placement.placementId}: providers section requires provider or expertise resources`);
     }
     if (
       resource &&

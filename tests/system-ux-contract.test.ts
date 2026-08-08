@@ -45,9 +45,11 @@ describe("system UX contract", () => {
     expect(resourcesSource).toContain('rel="noopener noreferrer"');
     expect(resourcesSource).toContain("system_resource_opened");
     expect(guidesRailSource).not.toContain("OperationalSystemCopyRequestModal");
-    expect(guidesRailSource).toContain("downloadHref=");
+    expect(guidesRailSource).toContain("Être informé(e)");
+    expect(guidesRailSource).not.toContain("downloadHref=");
     expect(guidesRailSource).toContain("system_resource_opened");
-    expect(guideDialogSource).toContain("downloadHref");
+    expect(guideDialogSource).not.toContain("downloadHref");
+    expect(guideDialogSource).not.toContain("Télécharger le PDF");
     expect(guideDialogSource).not.toContain("onRequestEmail");
     expect(openRouteSource).toContain("getSystemResourceAssetSnapshot");
     expect(openRouteSource).toContain("resolveSystemResourceDelivery");
@@ -92,24 +94,23 @@ describe("system UX contract", () => {
       "Besoin de prendre du recul sur votre organisation ?",
     );
     expect(customOfferSource).toContain(
-      "Des tarifs préférentiels avec les partenaires Demaa",
+      "Besoin d’aide pour identifier la bonne solution ?",
     );
-    expect(customOfferSource).toContain("Échangez 30 minutes avec un spécialiste Demaa");
+    expect(customOfferSource).toContain("Décrivez brièvement ce que vous souhaitez améliorer.");
     expect(customOfferSource).toContain(
-      "Recevez la liste des partenaires recommandés et les réductions négociées pour vous.",
+      "Nous vous rappelons pour vous aider à comparer les options",
     );
-    expect(customOfferSource).toContain("30 minutes · Gratuit · Sans engagement");
-    expect(customOfferSource).toContain("OrganisationSessionBookingButton");
-    expect(customOfferSource).toContain("PreferentialRatesTrigger");
-    expect(customOfferSource).toContain('buttonLabel: "Réserver mon échange offert"');
+    expect(customOfferSource).toContain("Premier échange offert · Sans engagement");
+    expect(customOfferSource).toContain("OrganisationCallbackRequestButton");
+    expect(customOfferSource).not.toContain("OrganisationSessionBookingButton");
+    expect(customOfferSource).not.toContain("PreferentialRatesTrigger");
+    expect(customOfferSource).toContain('buttonLabel: "Demander à être rappelé(e)"');
     expect(customOfferSource).toContain(
-      'buttonLabel: "Recevoir les tarifs préférentiels"',
+      'source: "Système métier - Demande de rappel solution"',
     );
     expect(customOfferSource).toContain(
-      'source: "Système métier - Tarifs préférentiels partenaires"',
+      'source: "Système métier - Demande de rappel organisation"',
     );
-    expect(customOfferSource).toContain('sourceIsAuthoritative');
-    expect(customOfferSource).toContain('context === "solutions"');
     expect(customOfferSource).not.toMatch(
       /href="\/services"|Voir les services|application sur mesure/,
     );
