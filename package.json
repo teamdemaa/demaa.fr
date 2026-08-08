@@ -110,6 +110,7 @@
     "sync:tool-directory": "node scripts/sync-tool-directory.mjs",
     "generate:operational-blueprints": "vite-node --config vitest.config.ts scripts/build-operational-workbook-blueprints.ts",
     "generate:operational-v2-pilots": "vite-node --config vitest.config.ts scripts/build-operational-workbook-v2-pilots.ts",
+    "generate:levier-process-projection": "vite-node --config vitest.config.ts scripts/build-levier-process-projection.ts",
     "export:firebase-solutions-snapshot": "vite-node --config vite.firebase-registry.config.ts scripts/build-firebase-solution-registry-snapshot.ts --write",
     "plan:firebase-solutions-import": "vite-node --config vite.firebase-registry.config.ts scripts/plan-firebase-solution-registry-import.ts",
     "plan:firebase-solutions-france-cleanup": "vite-node --config vite.firebase-registry.config.ts scripts/plan-firebase-solutions-france-cleanup.ts",
