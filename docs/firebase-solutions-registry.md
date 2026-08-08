@@ -71,6 +71,42 @@ filtrent entièrement la section historique `models`. Les cinq ressources Demaa
 communes sont servies par `system-resource-catalog.ts`; la révision Firebase
 reste intacte uniquement pour permettre un retour arrière sans écriture distante.
 
+## Audit de couverture des Solutions — 8 août 2026
+
+Cet audit porte sur la révision Firebase active et son snapshot exporté. Les
+sections sont affichées uniquement lorsqu'elles contiennent au moins une
+recommandation sélectionnée : une section vide ne doit jamais être rendue.
+
+| Section | Cartes sélectionnées | Systèmes couverts | Systèmes sans carte |
+| --- | ---: | ---: | ---: |
+| Outils | 313 | 114 | 1 |
+| Prestataires et fournisseurs | 82 | 39 | 76 |
+| Réseaux professionnels | 90 | 77 | 38 |
+| Modèles | 115 | 115 | 0 |
+
+Les 82 cartes de la section `Prestataires et fournisseurs` restent toutes en
+relation commerciale `unknown`. Leur visibilité ne signifie ni partenariat,
+ni affiliation, ni recommandation commerciale de Demaa ou d’ODEMA.
+
+### Décision de structure
+
+- `Prestataires et fournisseurs` reste une section **métier et conditionnelle**.
+  Elle est réservée aux acteurs réellement utiles à l'activité concernée : par
+  exemple un négoce de matériaux pour le BTP ou un grossiste pour la restauration.
+- Il ne faut pas créer une carte vide, ni forcer la section sur les 115 systèmes
+  pour donner l'illusion d'une couverture complète.
+- Le besoin d'expertise comptable est transversal. S'il est proposé à tous les
+  dirigeants, il doit être traité comme un accès distinct et neutre, par exemple
+  `Besoin d’un expert-comptable adapté à votre activité ?`, avec une demande de
+  mise en relation qualifiée par pays, activité et besoin. Il ne doit pas être
+  présenté comme un fournisseur métier ni comme le cabinet partenaire de Demaa
+  tant que son périmètre, sa zone d'intervention et la relation commerciale ne
+  sont pas validés.
+
+Cette règle préserve la valeur éditoriale des rails existants tout en rendant
+possible un futur parcours comptable universel, sans promesse implicite ni
+recommandation forcée.
+
 ## Commandes locales
 
 ```bash

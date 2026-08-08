@@ -87,6 +87,11 @@ describe("system Solutions UI", () => {
     expect(guidesMarkup).toContain(
       "Maîtriser les obligations et les finances de son entreprise",
     );
+    expect(guidesMarkup).toContain("Être informé(e)");
+    expect(guidesMarkup).toContain("Créer une entreprise du bâtiment");
+    expect(guidesMarkup).toContain("Piloter vos chantiers et votre équipe");
+    expect(guidesMarkup).not.toContain("Créer et lancer votre activité");
+    expect(guidesMarkup).not.toContain("Gérer votre activité au quotidien");
     expect(JSON.stringify(publishedLevierSolutionSectionsFixture)).not.toMatch(
       /https?:\/\/|drive|\.xlsx/i,
     );

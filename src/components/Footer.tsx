@@ -5,6 +5,7 @@ import DemaaWordmark from "@/components/DemaaWordmark";
 const directoryLinks = [
   { label: "Annuaire outils", href: "/annuaire-outils" },
   { label: "Annuaire financement", href: "/annuaire-financement" },
+  { label: "Aides et subventions", href: "/aides-et-subventions" },
   { label: "Annuaire fournisseurs", href: "/annuaire-fournisseurs" },
   { label: "Annuaire réseaux professionnels", href: "/annuaire-reseaux-pro" },
   { label: "Annuaire formations", href: "/annuaire-formations" },
@@ -13,13 +14,15 @@ const directoryLinks = [
   { label: "Annuaire experts-comptables", href: "/annuaire-experts-comptables" },
 ];
 
+const collaborationLinks = [
+  { label: "Opportunités", href: "/opportunites" },
+  { label: "Rejoindre le réseau", href: "/rejoindre-le-reseau" },
+  { label: "Nous contacter", href: "mailto:team@demaa.fr" },
+];
+
 const resourceLinks = [
   { label: "Systèmes métier", href: "/systemes" },
   { label: "Académie", href: "/academie" },
-  { label: "Cours", href: "/cours" },
-  { label: "Aides & subventions", href: "/aides-et-subventions" },
-  { label: "Opportunités", href: "/opportunites" },
-  { label: "Rejoindre le réseau", href: "/rejoindre-le-reseau" },
 ];
 
 export default function Footer() {
@@ -29,7 +32,7 @@ export default function Footer() {
   return (
     <footer className="mt-auto border-t border-neutral-200 bg-white py-16 text-neutral-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-5">
           
           {/* Brand Info */}
           <div className="space-y-4">
@@ -46,10 +49,10 @@ export default function Footer() {
 
           <div>
             <h3 className="text-lg font-semibold mb-6">
-              Annuaires
+              Collaborer avec Demaa
             </h3>
             <ul className="space-y-3">
-              {directoryLinks.map((link) => (
+              {collaborationLinks.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className={linkClass}>{link.label}</Link>
                 </li>
@@ -67,9 +70,19 @@ export default function Footer() {
                   <Link href={link.href} className={linkClass}>{link.label}</Link>
                 </li>
               ))}
-              <li>
-                <Link href="mailto:team@demaa.fr" className={linkClass}>Nous contacter</Link>
-              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-semibold mb-6">
+              Annuaires
+            </h3>
+            <ul className="space-y-3">
+              {directoryLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className={linkClass}>{link.label}</Link>
+                </li>
+              ))}
             </ul>
           </div>
 

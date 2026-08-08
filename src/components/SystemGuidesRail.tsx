@@ -61,12 +61,12 @@ export default function SystemGuidesRail({
     });
   }
 
-  function handleCardClick(resource: SystemResource) {
-    if (resource.availability === "available") {
-      setSlideResource(resource);
-    } else {
-      setNotifyResource(resource);
-    }
+  function handleOpenSlides(resource: SystemResource) {
+    setSlideResource(resource);
+    trackSystemJourneyEvent("system_resource_opened", {
+      resourceSlug: resource.resourceSlug,
+      systemSlug,
+    });
   }
 
   if (orderedResources.length === 0) return null;
@@ -108,61 +108,68 @@ export default function SystemGuidesRail({
       >
         {orderedResources.map((resource) => {
           const isAvailable = resource.availability === "available";
-          return (
-            <button
-              key={resource.resourceSlug}
-              type="button"
-              data-guide-resource-card
-              onClick={() => handleCardClick(resource)}
-              className="group min-w-0 snap-start text-left focus-visible:outline-none"
-              aria-label={
-                isAvailable
-                  ? `Ouvrir ${resource.title}`
-                  : `${resource.title} — bientôt disponible`
-              }
-            >
-              <div
-                className={`relative aspect-[16/9] overflow-hidden rounded-[0.9rem] transition ${
-                  isAvailable
-                    ? "shadow-[0_10px_28px_rgba(23,35,29,0.06)] group-hover:shadow-[0_14px_32px_rgba(23,35,29,0.1)]"
-                    : ""
-                }`}
+          if (isAvailable) {
+            return (
+              <button
+                key={resource.resourceSlug}
+                type="button"
+                data-guide-resource-card
+                onClick={() => handleOpenSlides(resource)}
+                className="group min-w-0 snap-start text-left focus-visible:outline-none"
+                aria-label={`Ouvrir ${resource.title}`}
               >
-                {isAvailable && resource.preview ? (
-                  <Image
-                    src={resource.preview.src}
-                    alt={resource.preview.alt}
-                    fill
-                    sizes="(max-width: 640px) 78vw, (max-width: 768px) 46vw, 33vw"
-                    className="object-cover transition group-hover:scale-[1.02]"
-                  />
-                ) : (
-                  <div className="absolute inset-0 border border-dema-line bg-dema-line/60">
-                    <div className="absolute inset-y-0 left-0 flex max-w-[80%] items-center pl-4 sm:pl-5">
-                      <span className="text-base font-medium leading-snug text-dema-muted sm:text-lg">
-                        {resource.title}
-                      </span>
-                    </div>
-                  </div>
-                )}
+                <div className="relative aspect-[16/9] overflow-hidden rounded-[0.9rem] shadow-[0_10px_28px_rgba(23,35,29,0.06)] transition group-hover:shadow-[0_14px_32px_rgba(23,35,29,0.1)]">
+                  {resource.preview ? (
+                    <Image
+                      src={resource.preview.src}
+                      alt={resource.preview.alt}
+                      fill
+                      sizes="(max-width: 640px) 78vw, (max-width: 768px) 46vw, 33vw"
+                      className="object-cover transition group-hover:scale-[1.02]"
+                    />
+                  ) : null}
+                </div>
+                <div className="mt-3">
+                  <p className="text-sm font-medium leading-snug text-brand-blue">
+                    {resource.tagline ?? resource.title}
+                  </p>
+                  <p className="mt-1 text-xs text-dema-muted">
+                    {resource.readingMinutes
+                      ? `${resource.readingMinutes} min de lecture`
+                      : resource.formatLabel}
+                  </p>
+                </div>
+              </button>
+            );
+          }
+
+          return (
+            <article
+              key={resource.resourceSlug}
+              data-guide-resource-card
+              className="min-w-0 snap-start"
+            >
+              <div className="relative aspect-[16/9] overflow-hidden rounded-[0.9rem] border border-dema-line bg-dema-line/60">
+                <div className="absolute inset-0 flex items-center px-5 sm:px-7">
+                  <span className="max-w-[88%] text-[clamp(1.25rem,2.4vw,1.8rem)] font-light leading-[1.08] tracking-[-0.025em] text-dema-muted">
+                    {resource.title}
+                  </span>
+                </div>
               </div>
               <div className="mt-3">
-                <p
-                  className={`text-sm font-medium leading-snug ${
-                    isAvailable ? "text-brand-blue" : "text-dema-muted"
-                  }`}
-                >
+                <p className="text-sm font-medium leading-snug text-dema-muted">
                   {resource.tagline ?? resource.title}
                 </p>
-                <p className="mt-1 text-xs text-dema-muted">
-                  {isAvailable
-                    ? resource.readingMinutes
-                      ? `${resource.readingMinutes} min de lecture`
-                      : resource.formatLabel
-                    : "Bientôt disponible"}
-                </p>
+                <p className="mt-1 text-xs text-dema-muted">Bientôt disponible</p>
+                <button
+                  type="button"
+                  onClick={() => setNotifyResource(resource)}
+                  className="mt-3 text-sm font-medium text-dema-forest underline decoration-dema-forest/35 underline-offset-4 transition hover:text-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
+                >
+                  Être informé(e)
+                </button>
               </div>
-            </button>
+            </article>
           );
         })}
       </div>
@@ -172,11 +179,6 @@ export default function SystemGuidesRail({
           title={slideResource.title}
           slides={getGuideSlides(slideResource.resourceSlug)}
           onClose={() => setSlideResource(null)}
-          downloadHref={`/api/systeme-kit/open/${slideResource.resourceSlug}`}
-          onDownload={() => trackSystemJourneyEvent("system_resource_opened", {
-            resourceSlug: slideResource.resourceSlug,
-            systemSlug,
-          })}
         />
       ) : null}
 

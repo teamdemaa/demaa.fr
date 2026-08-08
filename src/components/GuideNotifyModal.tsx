@@ -44,7 +44,6 @@ export default function GuideNotifyModal({
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [marketingConsent, setMarketingConsent] = useState(false);
   const [website, setWebsite] = useState("");
 
   useEffect(() => {
@@ -142,7 +141,6 @@ export default function GuideNotifyModal({
           attribution: getLeadAttributionPayload(),
           email: normalizedEmail,
           idempotencyKey: getLeadSubmissionKey(flowKey),
-          marketingConsent,
           resourceSlug: resource.resourceSlug,
           systemSlug,
           website,
@@ -213,13 +211,13 @@ export default function GuideNotifyModal({
                 id="guide-waitlist-modal-title"
                 className="mt-5 pr-10 text-2xl font-semibold leading-tight tracking-[-0.025em] text-brand-blue"
               >
-                Vous serez prévenu.
+                C’est noté.
               </h2>
               <p
                 id="guide-waitlist-modal-description"
                 className="mt-3 text-sm leading-relaxed text-dema-muted"
               >
-                Dès que « {resource.title} » sera disponible, vous recevrez un e-mail.
+                Nous vous écrirons dès que ce guide sera disponible.
               </p>
               <button
                 type="button"
@@ -234,20 +232,17 @@ export default function GuideNotifyModal({
               <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
                 <Bell className="h-5 w-5" aria-hidden="true" />
               </span>
-              <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-                Bientôt disponible
-              </p>
               <h2
                 id="guide-waitlist-modal-title"
-                className="mt-2 pr-10 text-2xl font-semibold leading-tight tracking-[-0.025em] text-brand-blue"
+                className="mt-4 pr-10 text-2xl font-semibold leading-tight tracking-[-0.025em] text-brand-blue"
               >
-                {resource.title}
+                Être informé(e)
               </h2>
               <p
                 id="guide-waitlist-modal-description"
                 className="mt-3 text-sm leading-relaxed text-dema-muted"
               >
-                Ce guide est encore en préparation. Laissez votre e-mail pour être prévenu dès sa sortie.
+                Recevez un e-mail lorsque « {resource.title} » sera disponible.
               </p>
 
               <form
@@ -290,17 +285,6 @@ export default function GuideNotifyModal({
                   />
                 </div>
 
-                <label className="flex items-start gap-3 rounded-xl bg-dema-sage/45 px-3 py-3 text-xs leading-relaxed text-dema-muted">
-                  <input
-                    name="marketingConsent"
-                    type="checkbox"
-                    checked={marketingConsent}
-                    onChange={(event) => setMarketingConsent(event.target.checked)}
-                    className="mt-0.5 h-4 w-4 shrink-0 accent-dema-forest"
-                  />
-                  <span>J’accepte de recevoir les conseils et actualités Demaa par e-mail. Facultatif.</span>
-                </label>
-
                 {error ? (
                   <p className="text-sm text-brand-coral" role="alert">
                     {error}
@@ -315,7 +299,7 @@ export default function GuideNotifyModal({
                   {isSubmitting ? (
                     <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
                   ) : null}
-                  {isSubmitting ? "Envoi…" : "Être prévenu par e-mail"}
+                  {isSubmitting ? "Envoi…" : "M’informer"}
                 </button>
               </form>
             </>

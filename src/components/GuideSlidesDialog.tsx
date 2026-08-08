@@ -2,22 +2,18 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Download, Minus, Plus, RotateCcw, X } from "lucide-react";
+import { Minus, Plus, RotateCcw, X } from "lucide-react";
 
 type GuideSlidesDialogProps = {
   title: string;
   slides: readonly string[];
   onClose: () => void;
-  downloadHref?: string;
-  onDownload?: () => void;
 };
 
 export default function GuideSlidesDialog({
   title,
   slides,
   onClose,
-  downloadHref,
-  onDownload,
 }: GuideSlidesDialogProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [zoomLevels, setZoomLevels] = useState<Record<number, number>>({});
@@ -173,18 +169,6 @@ export default function GuideSlidesDialog({
             >
               <RotateCcw className="h-4 w-4" />
             </button>
-            {downloadHref ? (
-              <a
-                href={downloadHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={onDownload}
-                className="inline-flex h-10 items-center gap-2 rounded-full border border-dema-line bg-dema-cream px-4 text-sm font-medium text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
-              >
-                <Download className="h-4 w-4" aria-hidden="true" />
-                <span className="hidden sm:inline">Télécharger le PDF</span>
-              </a>
-            ) : null}
             <button
               type="button"
               onClick={onClose}
