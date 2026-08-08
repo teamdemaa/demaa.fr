@@ -48,6 +48,11 @@ describe("Firebase Vercel workload identity credential", () => {
     expect(first.expires_in).toBeGreaterThan(3_500);
     expect(second).toEqual(first);
     expect(fetchMock).toHaveBeenCalledTimes(2);
+    const { getVercelOidcToken } = await import("@vercel/oidc");
+    expect(getVercelOidcToken).toHaveBeenCalledWith({
+      audience:
+        "//iam.googleapis.com/projects/123/locations/global/workloadIdentityPools/vercel/providers/demaa",
+    });
     expect(fetchMock.mock.calls[0][0]).toBe("https://sts.googleapis.com/v1/token");
     expect(String(fetchMock.mock.calls[1][0])).toContain(
       "reader%40example.iam.gserviceaccount.com:generateAccessToken",

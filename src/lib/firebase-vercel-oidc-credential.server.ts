@@ -118,7 +118,7 @@ export function createFirebaseVercelWorkloadIdentityCredential(): Credential {
       const serviceAccount = requiredEnvironment(
         "FIREBASE_WORKLOAD_IDENTITY_SERVICE_ACCOUNT",
       );
-      const oidcToken = await getVercelOidcToken();
+      const oidcToken = await getVercelOidcToken({ audience: provider });
       const federatedToken = await exchangeForFederatedToken(oidcToken, provider);
       cached = await impersonateServiceAccount(federatedToken, serviceAccount);
       return cached.token;
