@@ -40,12 +40,18 @@ const PILOT_SOLUTION_ORDERS = new Map([
   ],
 ]);
 
-const EXPECTED_RESOURCE_TITLES = [
+const EXPECTED_MODEL_TITLES = [
   "Tableau de pilotage opérationnel",
   "Suivi et prévisionnel financier",
   "CRM : suivi commercial",
+];
+const EXPECTED_GUIDE_TITLES = [
   "La facturation électronique",
   "Maîtriser les obligations et les finances de son entreprise",
+];
+const RESTAURANT_FUTURE_GUIDE_TITLES = [
+  "Comment ouvrir un restaurant ?",
+  "Comment gérer un restaurant ?",
 ];
 
 const PRIVATE_SOLUTION_MARKERS = [
@@ -120,12 +126,12 @@ export function getExpectedCallTexts(tab) {
   if (tab === "resources") return [];
   return tab === "solutions"
     ? [
-        "Besoin d’aide pour identifier la bonne solution ?",
-        "Échanger 30 minutes",
+        "Besoin d’aide pour choisir la bonne solution ?",
+        "Demander à être rappelé",
       ]
     : [
         "Besoin de prendre du recul sur votre organisation ?",
-        "Réserver mon échange offert",
+        "Demander à être rappelé",
       ];
 }
 
@@ -153,7 +159,13 @@ function sameOrder(actual, expected) {
   );
 }
 
-export function inspectPage({ response, html, tab, expectedSolutionOrder }) {
+export function inspectPage({
+  response,
+  html,
+  tab,
+  enterprise,
+  expectedSolutionOrder,
+}) {
   const errors = [];
   const renderedHtml = html
     .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "")
@@ -316,6 +328,7 @@ export function inspectPage({ response, html, tab, expectedSolutionOrder }) {
   let solutionCardCount = 0;
   let solutionSlugs = [];
   let resourceCardCount = 0;
+  let guideCardCount = 0;
   if (tab === "solutions") {
     solutionCardCount = countOccurrences(
       renderedHtml,
@@ -355,16 +368,42 @@ export function inspectPage({ response, html, tab, expectedSolutionOrder }) {
       renderedHtml,
       "data-system-resource-card",
     );
+    guideCardCount = countOccurrences(renderedHtml, "data-system-guide-card");
 
-    if (resourceCardCount !== EXPECTED_RESOURCE_TITLES.length) {
+    if (resourceCardCount !== EXPECTED_MODEL_TITLES.length) {
       errors.push(
-        `expected ${EXPECTED_RESOURCE_TITLES.length} Resource cards, found ${resourceCardCount}`,
+        `expected ${EXPECTED_MODEL_TITLES.length} Model cards, found ${resourceCardCount}`,
       );
     }
-    for (const resourceTitle of EXPECTED_RESOURCE_TITLES) {
+    for (const resourceTitle of EXPECTED_MODEL_TITLES) {
       if (!renderedHtml.includes(`aria-label="Ouvrir ${resourceTitle}"`)) {
-        errors.push(`missing Resource card: ${resourceTitle}`);
+        errors.push(`missing Model card: ${resourceTitle}`);
       }
+    }
+    const expectedGuideTitles = [
+      ...EXPECTED_GUIDE_TITLES,
+      ...(enterprise.slug === "restaurant" ? RESTAURANT_FUTURE_GUIDE_TITLES : []),
+    ];
+    if (guideCardCount !== expectedGuideTitles.length) {
+      errors.push(
+        `expected ${expectedGuideTitles.length} Guide cards, found ${guideCardCount}`,
+      );
+    }
+    for (const guideTitle of expectedGuideTitles) {
+      if (!renderedHtml.includes(guideTitle)) {
+        errors.push(`missing Guide card: ${guideTitle}`);
+      }
+    }
+    if (enterprise.slug === "restaurant") {
+      const comingSoonCount = countOccurrences(
+        renderedHtml,
+        'data-guide-availability="coming-soon"',
+      );
+      if (comingSoonCount !== RESTAURANT_FUTURE_GUIDE_TITLES.length) {
+        errors.push(`expected 2 future Restaurant guides, found ${comingSoonCount}`);
+      }
+    } else if (renderedHtml.includes('data-guide-availability="coming-soon"')) {
+      errors.push("future Restaurant guide leaked into another system");
     }
     if (renderedHtml.includes("data-solution-resource-card")) {
       errors.push("Solution cards leaked into Resources");
@@ -379,7 +418,7 @@ export function inspectPage({ response, html, tab, expectedSolutionOrder }) {
     }
   }
 
-  return { errors, resourceCardCount, solutionCardCount, solutionSlugs };
+  return { errors, guideCardCount, resourceCardCount, solutionCardCount, solutionSlugs };
 }
 
 async function inspectState({ baseUrl, enterprise, expectedSolutionOrder, request, tab }) {
@@ -399,7 +438,13 @@ async function inspectState({ baseUrl, enterprise, expectedSolutionOrder, reques
         url,
         status: response.status,
         attempts: attempt + 1,
-        ...inspectPage({ response, html, tab, expectedSolutionOrder }),
+        ...inspectPage({
+          response,
+          html,
+          tab,
+          enterprise,
+          expectedSolutionOrder,
+        }),
       };
     } catch (error) {
       if (attempt === request.retryCount) {
@@ -410,6 +455,7 @@ async function inspectState({ baseUrl, enterprise, expectedSolutionOrder, reques
           status: null,
           attempts: attempt + 1,
           errors: [error instanceof Error ? error.message : String(error)],
+          guideCardCount: 0,
           resourceCardCount: 0,
           solutionCardCount: 0,
           solutionSlugs: [],
@@ -501,6 +547,10 @@ export async function runAudit(options = {}) {
     ),
     resourceCards: resourceResults.reduce(
       (total, result) => total + result.resourceCardCount,
+      0,
+    ),
+    guideCards: resourceResults.reduce(
+      (total, result) => total + result.guideCardCount,
       0,
     ),
     failureCount: failures.length,
