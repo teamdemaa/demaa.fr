@@ -63,7 +63,7 @@ function request(overrides: Record<string, unknown> = {}) {
     headers: {
       "Content-Type": "application/json",
       Origin: "https://demaa.fr",
-      Referer: "https://demaa.fr/rejoindre-le-reseau",
+      Referer: "https://demaa.fr/rejoindre-team-demaa",
     },
     body: JSON.stringify({
       company: "Studio Calme",
@@ -95,8 +95,8 @@ describe("provider profile submission route", () => {
     mocks.getOpportunityById.mockResolvedValue(null);
     mocks.resolveLeadAttribution.mockReturnValue({ conversion: {} });
     mocks.resolveLeadContext.mockResolvedValue({
-      source: "Rejoindre le réseau - Profil",
-      sourceUrl: "https://demaa.fr/rejoindre-le-reseau",
+      source: "Rejoindre Team Demaa - Profil",
+      sourceUrl: "https://demaa.fr/rejoindre-team-demaa",
     });
     mocks.submitLeadRequest.mockResolvedValue({ duplicate: false, leadId: "provider-1" });
   });

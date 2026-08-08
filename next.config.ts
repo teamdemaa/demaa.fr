@@ -57,6 +57,16 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: '/rejoindre-le-reseau',
+        destination: '/rejoindre-team-demaa',
+        permanent: true,
+      },
+      {
+        source: '/partenaires',
+        destination: '/rejoindre-team-demaa',
+        permanent: true,
+      },
+      {
         source: '/systemes-operationnels/:slug',
         destination: '/kit-operationnel/:slug',
         permanent: true,

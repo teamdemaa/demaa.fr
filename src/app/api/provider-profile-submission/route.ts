@@ -179,7 +179,7 @@ async function handlePost(request: Request) {
   const context = await resolveLeadContext({
     source: opportunity
       ? `Opportunité - ${opportunity.title}`
-      : "Rejoindre le réseau - Profil",
+      : "Rejoindre Team Demaa - Profil",
     sourceUrl: request.headers.get("referer"),
   });
   if (!context) {
