@@ -5,6 +5,7 @@ vi.mock("server-only", () => ({}));
 import {
   SYSTEM_RESOURCES,
   getSystemResource,
+  getSystemResourcesForSystem,
 } from "@/lib/system-resource-catalog";
 import {
   getSystemResourceAssetSnapshot,
@@ -13,22 +14,38 @@ import {
 import { getAllDocumentModels } from "@/lib/document-models";
 
 describe("system Resources catalog", () => {
-  it("publishes the two shared guides, then restaurant-only upcoming guides", () => {
+  it("publishes shared resources and generates two planned guides for every known system", () => {
     expect(SYSTEM_RESOURCES.map(({ title }) => title)).toEqual([
       "Tableau de pilotage opérationnel",
       "Suivi et prévisionnel financier",
       "CRM : suivi commercial",
       "Maîtriser les obligations et les finances de son entreprise",
       "La facturation électronique",
-      "Comment ouvrir un restaurant ?",
-      "Comment gérer un restaurant ?",
     ]);
     expect(SYSTEM_RESOURCES.filter(({ format }) => format === "template").map(({ title }) => title)).toEqual([
       "Tableau de pilotage opérationnel",
       "Suivi et prévisionnel financier",
       "CRM : suivi commercial",
     ]);
-    expect(SYSTEM_RESOURCES.filter(({ availability }) => availability === "coming-soon").every((resource) => resource.systemSlugs?.includes("restaurant"))).toBe(true);
+    expect(SYSTEM_RESOURCES.filter(({ availability }) => availability === "coming-soon")).toHaveLength(0);
+    expect(getSystemResourcesForSystem("cabinet-comptable").filter(({ format }) => format === "guide").map(({ title }) => title)).toEqual([
+      "Maîtriser les obligations et les finances de son entreprise",
+      "La facturation électronique",
+      "Créer et lancer votre activité",
+      "Gérer votre activité au quotidien",
+    ]);
+    expect(getSystemResourcesForSystem("restaurant").filter(({ format }) => format === "guide").map(({ title }) => title)).toEqual([
+      "Maîtriser les obligations et les finances de son entreprise",
+      "La facturation électronique",
+      "Comment ouvrir un restaurant ?",
+      "Comment gérer un restaurant ?",
+    ]);
+    expect(getSystemResource("guide-cabinet-comptable-lancer")).toMatchObject({
+      availability: "coming-soon",
+      systemSlugs: ["cabinet-comptable"],
+      title: "Créer et lancer votre activité",
+    });
+    expect(getSystemResource("guide-un-systeme-inconnu-lancer")).toBeNull();
     expect(JSON.stringify(SYSTEM_RESOURCES)).not.toMatch(
       /docs\.google\.com|airtable\.com|downloads\/guides|Levier/,
     );

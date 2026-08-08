@@ -1,4 +1,5 @@
 import type { SystemKitPreview } from "@/lib/system-kit-previews";
+import { enterpriseCatalogBySlug } from "@/lib/enterprise-annuaire";
 
 export const SYSTEM_RESOURCE_SLUGS = [
   "tableau-pilotage-operationnel",
@@ -6,11 +7,14 @@ export const SYSTEM_RESOURCE_SLUGS = [
   "crm-suivi-commercial",
   "guide-obligations-fiscales-sociales-comptables",
   "guide-facturation-electronique",
-  "guide-comment-ouvrir-un-restaurant",
-  "guide-comment-gerer-un-restaurant",
 ] as const;
 
-export type SystemResourceSlug = (typeof SYSTEM_RESOURCE_SLUGS)[number];
+type AvailableSystemResourceSlug = (typeof SYSTEM_RESOURCE_SLUGS)[number];
+type PlannedGuideKind = "lancer" | "gerer";
+
+export type SystemResourceSlug =
+  | AvailableSystemResourceSlug
+  | `guide-${string}-${PlannedGuideKind}`;
 
 export type SystemResource = Readonly<{
   availability: "available" | "coming-soon";
@@ -18,7 +22,7 @@ export type SystemResource = Readonly<{
   deliveryLabel?: string;
   format: "guide" | "template";
   formatLabel: string;
-  preview: SystemKitPreview;
+  preview?: SystemKitPreview;
   previewDisclosure?: string;
   rank: number;
   readingMinutes?: number;
@@ -111,38 +115,74 @@ export const SYSTEM_RESOURCES: readonly SystemResource[] = Object.freeze([
     tagline: "Ce qui va vraiment changer pour votre entreprise",
     title: "La facturation électronique",
   },
-  {
-    availability: "coming-soon",
-    description: "Un guide pratique pour ouvrir un restaurant : du concept au premier service.",
-    format: "guide",
-    formatLabel: "Présentation",
-    preview: { alt: "Guide restaurant bientôt disponible", height: 1755, src: "/images/courses/obligations-finances/01.png", width: 3120 },
-    rank: 3,
-    resourceSlug: "guide-comment-ouvrir-un-restaurant",
-    systemSlugs: ["restaurant"],
-    tagline: "De l’idée au premier service",
-    title: "Comment ouvrir un restaurant ?",
-  },
-  {
-    availability: "coming-soon",
-    description: "Un guide pratique pour gérer un restaurant : ventes, marge, équipe et stocks.",
-    format: "guide",
-    formatLabel: "Présentation",
-    preview: { alt: "Guide restaurant bientôt disponible", height: 1755, src: "/images/courses/obligations-finances/01.png", width: 3120 },
-    rank: 4,
-    resourceSlug: "guide-comment-gerer-un-restaurant",
-    systemSlugs: ["restaurant"],
-    tagline: "Tenir la marge, service après service",
-    title: "Comment gérer un restaurant ?",
-  },
 ]);
 
+const PLANNED_GUIDE_COPY: Readonly<
+  Partial<Record<string, Readonly<Record<PlannedGuideKind, Pick<SystemResource, "description" | "tagline" | "title">>>>>
+> = {
+  restaurant: {
+    lancer: {
+      description: "Un guide pratique pour ouvrir un restaurant : du concept au premier service.",
+      tagline: "De l’idée au premier service",
+      title: "Comment ouvrir un restaurant ?",
+    },
+    gerer: {
+      description: "Un guide pratique pour gérer un restaurant : ventes, marge, équipe et stocks.",
+      tagline: "Tenir la marge, service après service",
+      title: "Comment gérer un restaurant ?",
+    },
+  },
+};
+
+function getPlannedGuideResource(
+  systemSlug: string,
+  kind: PlannedGuideKind,
+): SystemResource | null {
+  const enterprise = enterpriseCatalogBySlug[systemSlug];
+  if (!enterprise) return null;
+
+  const copy = PLANNED_GUIDE_COPY[systemSlug]?.[kind] ?? {
+    description:
+      kind === "lancer"
+        ? "Les étapes essentielles pour créer et lancer votre activité avec des bases solides."
+        : "Les repères essentiels pour suivre l’activité et garder votre entreprise sous contrôle.",
+    tagline: `Pour ${enterprise.name}`,
+    title:
+      kind === "lancer"
+        ? "Créer et lancer votre activité"
+        : "Gérer votre activité au quotidien",
+  };
+
+  return {
+    availability: "coming-soon",
+    description: copy.description,
+    format: "guide",
+    formatLabel: "Présentation",
+    rank: kind === "lancer" ? 3 : 4,
+    resourceSlug: `guide-${systemSlug}-${kind}`,
+    systemSlugs: [systemSlug],
+    tagline: copy.tagline,
+    title: copy.title,
+  };
+}
+
 export function getSystemResource(resourceSlug: string): SystemResource | null {
-  return SYSTEM_RESOURCES.find((resource) => resource.resourceSlug === resourceSlug) ?? null;
+  const staticResource = SYSTEM_RESOURCES.find(
+    (resource) => resource.resourceSlug === resourceSlug,
+  );
+  if (staticResource) return staticResource;
+
+  const match = resourceSlug.match(/^guide-([a-z0-9-]+)-(lancer|gerer)$/);
+  return match ? getPlannedGuideResource(match[1], match[2] as PlannedGuideKind) : null;
 }
 
 export function getSystemResourcesForSystem(systemSlug: string): readonly SystemResource[] {
-  return SYSTEM_RESOURCES.filter((resource) =>
+  const sharedResources = SYSTEM_RESOURCES.filter((resource) =>
     !resource.systemSlugs || resource.systemSlugs.includes(systemSlug),
   );
+  const plannedGuides = (["lancer", "gerer"] as const)
+    .map((kind) => getPlannedGuideResource(systemSlug, kind))
+    .filter((resource): resource is SystemResource => resource !== null);
+
+  return [...sharedResources, ...plannedGuides];
 }

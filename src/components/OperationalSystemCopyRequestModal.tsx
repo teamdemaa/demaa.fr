@@ -248,10 +248,10 @@ export default function OperationalSystemCopyRequestModal({
         <div className="grid md:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]">
           <div className="flex min-h-[14rem] items-center justify-center bg-dema-sage/45 p-5 sm:min-h-[18rem] sm:p-7 md:min-h-[25rem]">
             <Image
-              src={resource.preview.src}
-              alt={resource.preview.alt}
-              width={resource.preview.width}
-              height={resource.preview.height}
+              src={resource.preview!.src}
+              alt={resource.preview!.alt}
+              width={resource.preview!.width}
+              height={resource.preview!.height}
               sizes="(max-width: 767px) calc(100vw - 72px), 340px"
               loading="eager"
               className="h-auto w-full rounded-[0.8rem] shadow-[0_14px_35px_rgba(23,35,29,0.1)]"

@@ -72,7 +72,7 @@ function getDocumentModelResourceFields(slug: DocumentModelResourceSlug) {
     ctaHref: `/api/systeme-kit/open/${resource.resourceSlug}`,
     ctaLabel: "Ouvrir le modèle",
     description: resource.description,
-    image: resource.preview.src,
+    image: resource.preview!.src,
     slug: resource.resourceSlug,
     title: resource.title,
   } as const;

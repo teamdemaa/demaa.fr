@@ -53,6 +53,10 @@ const RESTAURANT_FUTURE_GUIDE_TITLES = [
   "Comment ouvrir un restaurant ?",
   "Comment gérer un restaurant ?",
 ];
+const DEFAULT_FUTURE_GUIDE_TITLES = [
+  "Créer et lancer votre activité",
+  "Gérer votre activité au quotidien",
+];
 
 const PRIVATE_SOLUTION_MARKERS = [
   "commercialRelationship",
@@ -382,7 +386,9 @@ export function inspectPage({
     }
     const expectedGuideTitles = [
       ...EXPECTED_GUIDE_TITLES,
-      ...(enterprise.slug === "restaurant" ? RESTAURANT_FUTURE_GUIDE_TITLES : []),
+      ...(enterprise.slug === "restaurant"
+        ? RESTAURANT_FUTURE_GUIDE_TITLES
+        : DEFAULT_FUTURE_GUIDE_TITLES),
     ];
     if (guideCardCount !== expectedGuideTitles.length) {
       errors.push(
@@ -394,16 +400,16 @@ export function inspectPage({
         errors.push(`missing Guide card: ${guideTitle}`);
       }
     }
+    const comingSoonCount = countOccurrences(
+      renderedHtml,
+      'data-guide-availability="coming-soon"',
+    );
     if (enterprise.slug === "restaurant") {
-      const comingSoonCount = countOccurrences(
-        renderedHtml,
-        'data-guide-availability="coming-soon"',
-      );
       if (comingSoonCount !== RESTAURANT_FUTURE_GUIDE_TITLES.length) {
         errors.push(`expected 2 future Restaurant guides, found ${comingSoonCount}`);
       }
-    } else if (renderedHtml.includes('data-guide-availability="coming-soon"')) {
-      errors.push("future Restaurant guide leaked into another system");
+    } else if (comingSoonCount !== DEFAULT_FUTURE_GUIDE_TITLES.length) {
+      errors.push(`expected 2 future guides, found ${comingSoonCount}`);
     }
     if (renderedHtml.includes("data-solution-resource-card")) {
       errors.push("Solution cards leaked into Resources");
