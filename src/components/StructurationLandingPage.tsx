@@ -22,7 +22,6 @@ import {
 } from "lucide-react";
 import DemaaWordmark from "@/components/DemaaWordmark";
 import OrganisationSessionBookingButton from "@/components/OrganisationSessionBookingButton";
-import { StructureNewsletterSignup } from "@/components/StructureNewsletterSignup";
 
 type IconType = ComponentType<{ className?: string; "aria-hidden"?: boolean }>;
 
@@ -909,30 +908,6 @@ export default function StructurationLandingPage() {
         </div>
       </section>
 
-      <section
-        aria-labelledby="structure-newsletter-title"
-        className="bg-dema-cream px-5 py-16 sm:px-8 sm:py-20 lg:px-12"
-      >
-        <div className="mx-auto grid max-w-[92rem] items-center gap-12 rounded-[1.5rem] bg-dema-forest px-7 py-12 text-dema-paper shadow-[0_22px_70px_rgba(23,35,29,0.08)] sm:px-12 sm:py-16 lg:grid-cols-[minmax(20rem,0.78fr)_minmax(32rem,1.22fr)] lg:gap-20 lg:px-20 lg:py-16">
-          <div>
-            <p className="text-[0.7rem] font-medium uppercase tracking-[0.32em] text-dema-paper/75 sm:text-xs">
-              La lettre Demaa
-            </p>
-            <h2
-              id="structure-newsletter-title"
-              className="mt-4 font-serif text-[clamp(3.4rem,6vw,5.3rem)] font-light italic leading-[0.9] tracking-[-0.04em] text-dema-paper"
-            >
-              Structure.
-            </h2>
-            <p className="mt-7 max-w-md text-base leading-7 text-dema-paper/75 sm:text-lg sm:leading-8">
-              5 minutes de lecture pour que votre entreprise dépende moins de
-              vous.
-            </p>
-          </div>
-
-          <StructureNewsletterSignup />
-        </div>
-      </section>
     </main>
   );
 }

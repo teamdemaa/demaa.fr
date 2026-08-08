@@ -7,6 +7,7 @@ import { useMemo, useState } from "react";
 import type { AcademyContentDefinition } from "@/lib/academy-course-content";
 import { matchesSearchQuery } from "@/lib/search";
 import { SYSTEM_RESOURCES } from "@/lib/system-resource-catalog";
+import StructureNewsletterBlock from "@/components/StructureNewsletterBlock";
 
 const ACADEMY_MODEL_RESOURCES = SYSTEM_RESOURCES
   .filter((resource) => resource.format === "template")
@@ -487,6 +488,10 @@ export default function AcademyIndexClient({ contents, backLink }: AcademyIndexC
             <p className="mt-2 text-sm text-dema-muted">Essayez un mot plus simple ou un autre sujet.</p>
           </section>
         ) : null}
+
+        <div className="mt-12 md:mt-14">
+          <StructureNewsletterBlock />
+        </div>
       </main>
     </div>
   );

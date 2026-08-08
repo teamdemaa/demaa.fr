@@ -6,6 +6,7 @@ import { ArrowLeft } from "lucide-react";
 import { type KeyboardEvent, useMemo, useState } from "react";
 import SystemGuidesRail from "@/components/SystemGuidesRail";
 import SystemResourcesTab from "@/components/SystemResourcesTab";
+import StructureNewsletterBlock from "@/components/StructureNewsletterBlock";
 import SystemSolutionsTab from "@/components/SystemSolutionsTab";
 import SystemeTabContent from "@/components/SystemeTabContent";
 import { getSystemResourcesForSystem } from "@/lib/system-resource-catalog";
@@ -171,6 +172,7 @@ export default function SystemDetailContent({
               systemName={system.name}
               systemSlug={system.slug}
             />
+            <StructureNewsletterBlock />
           </div>
         ) : null}
       </section>

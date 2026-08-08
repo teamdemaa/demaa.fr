@@ -45,7 +45,7 @@ describe("Sur mesure commercial page", () => {
     ]);
     expect(markup).toContain(content.commercialFrame.title);
     expect(markup).toContain(content.faq.title);
-    expect(markup.match(/<section/g)).toHaveLength(8);
+    expect(markup.match(/<section/g)).toHaveLength(9);
     expect(markup.match(/<details/g)).toHaveLength(4);
     expect(markup.match(/>Discutons de votre projet</g)).toHaveLength(2);
     expect(markup).toContain('data-source="Page sur mesure : Hero"');
