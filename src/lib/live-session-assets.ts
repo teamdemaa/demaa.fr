@@ -107,7 +107,7 @@ function getAssets(trainingSlug: string, sourceSystemSlug: string | null) {
           id: "systeme-marketing-vente-airtable",
           label: "CRM de suivi commercial sur Airtable",
           description: "La base pour structurer le pipeline, les relances et le suivi des conversions.",
-          href: "/modeles-de-documents/pilotage-marketing-vente",
+          href: "/modeles-de-documents/crm-suivi-commercial",
         },
       ];
     default:

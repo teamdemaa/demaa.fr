@@ -1,6 +1,5 @@
 import "server-only";
 
-import { getDocumentModelBySlug } from "@/lib/document-models";
 import { getLevierAssetSnapshot, getLevierCopyUrl, LEVIER_ASSET_REVISION } from "@/lib/levier-asset.server";
 import type { LeadAssetSnapshot } from "@/lib/lead-storage";
 import { getSystemResource, type SystemResourceSlug } from "@/lib/system-resource-catalog";
@@ -13,22 +12,13 @@ type ResourceAssetRevision = Readonly<{
   workbookVersion: string;
 }>;
 
-function getDocumentModelDestination(
-  documentModelSlug: string,
-  mode: "copy" | "direct",
-): string {
-  const destination = getDocumentModelBySlug(documentModelSlug)?.ctaHref;
-  if (!destination) {
-    throw new Error(`Missing document model destination: ${documentModelSlug}.`);
-  }
-  if (mode === "direct") return destination;
-
+function toGoogleSheetsCopyUrl(destination: string): string {
   const parsed = new URL(destination);
   const sheetId = parsed.pathname.match(
     /^\/spreadsheets\/d\/([A-Za-z0-9_-]{20,160})\/edit$/,
   )?.[1];
   if (parsed.protocol !== "https:" || parsed.hostname !== "docs.google.com" || !sheetId) {
-    throw new Error(`Invalid Google Sheets document model: ${documentModelSlug}.`);
+    throw new Error("Invalid Google Sheets document model destination.");
   }
 
   return new URL(`/spreadsheets/d/${sheetId}/copy`, parsed.origin).toString();
@@ -37,12 +27,14 @@ function getDocumentModelDestination(
 const RESOURCE_ASSET_REVISIONS: Readonly<Partial<Record<ExternalResourceSlug, readonly ResourceAssetRevision[]>>> = {
   "suivi-previsionnel-financier": [{
     assetRevision: "suivi-previsionnel-financier-v1-2026-08-05",
-    destination: getDocumentModelDestination("suivi-previsionnel-financier", "copy"),
+    destination: toGoogleSheetsCopyUrl(
+      "https://docs.google.com/spreadsheets/d/1-7IDhGAtwNQJtZDYYvhDvM3VHfHVeGwOMTFKdAQuIOE/edit?usp=sharing",
+    ),
     workbookVersion: "1.0.0",
   }],
   "crm-suivi-commercial": [{
     assetRevision: "crm-suivi-commercial-airtable-v1-2026-08-05",
-    destination: getDocumentModelDestination("crm-suivi-commercial", "direct"),
+    destination: "https://airtable.com/app3fRlYVjiFAnrjW/shraiL72hO4EvQoh2",
     workbookVersion: "1.0.0",
   }],
   "guide-facturation-electronique": [

@@ -272,9 +272,9 @@ describe("free operational system delivery route", () => {
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
       assetSnapshot,
       contact: { email: "maya@example.com", firstName: null },
-      fields: [{ label: "Ressource", value: "CRM - suivi commercial" }],
+      fields: [{ label: "Ressource", value: "CRM : suivi commercial" }],
       marketingConsent: expect.objectContaining({ granted: true }),
-      title: "Livraison de ressource - CRM - suivi commercial - Plomberie & chauffage",
+      title: "Livraison de ressource - CRM : suivi commercial - Plomberie & chauffage",
     }));
     expect(mocks.sendDeliveryEmail).toHaveBeenCalledWith(expect.objectContaining({
       assetSnapshot,

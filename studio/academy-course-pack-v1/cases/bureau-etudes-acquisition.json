@@ -130,7 +130,7 @@
   },
   "action": {
     "resourceType": "template",
-    "resourceId": "pilotage-marketing-vente",
+    "resourceId": "crm-suivi-commercial",
     "title": "Tableau de pilotage Marketing & Vente",
     "description": "Un modèle simple pour suivre les demandes, les cadrages, les devis, les relances et les projets signés.",
     "ctaLabel": "Ouvrir le tableau",

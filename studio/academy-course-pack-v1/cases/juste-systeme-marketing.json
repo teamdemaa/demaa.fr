@@ -141,7 +141,7 @@
   },
   "action": {
     "resourceType": "template",
-    "resourceId": "pilotage-marketing-vente",
+    "resourceId": "crm-suivi-commercial",
     "title": "Tableau de pilotage Marketing & Vente",
     "description": "Un modèle simple pour centraliser les actions, les opportunités, les relances et les conversions du système commercial.",
     "ctaLabel": "Ouvrir le tableau",

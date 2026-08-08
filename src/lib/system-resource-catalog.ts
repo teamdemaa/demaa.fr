@@ -41,6 +41,8 @@ export const SYSTEM_RESOURCES: readonly SystemResource[] = Object.freeze([
       src: "/images/levier/levier-tableau-de-bord-preview.webp",
       width: 1400,
     },
+    previewDisclosure:
+      "Aperçu avec des données d’exemple. Votre copie sera vierge",
     rank: 1,
     resourceSlug: "tableau-pilotage-operationnel",
     title: "Tableau de pilotage opérationnel",
@@ -73,7 +75,7 @@ export const SYSTEM_RESOURCES: readonly SystemResource[] = Object.freeze([
     },
     rank: 3,
     resourceSlug: "crm-suivi-commercial",
-    title: "CRM - suivi commercial",
+    title: "CRM : suivi commercial",
   },
   {
     availability: "available",

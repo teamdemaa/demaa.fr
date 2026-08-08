@@ -43,7 +43,7 @@ const PILOT_SOLUTION_ORDERS = new Map([
 const EXPECTED_RESOURCE_TITLES = [
   "Tableau de pilotage opérationnel",
   "Suivi et prévisionnel financier",
-  "CRM - suivi commercial",
+  "CRM : suivi commercial",
   "La facturation électronique",
   "Maîtriser les obligations et les finances de son entreprise",
 ];

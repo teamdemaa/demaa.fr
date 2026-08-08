@@ -1,4 +1,8 @@
 import { RELATED_SYSTEM_SLUGS_BY_CONTENT_SLUG } from "@/lib/content-relationships";
+import {
+  getSystemResource,
+  type SystemResourceSlug,
+} from "@/lib/system-resource-catalog";
 import type { System } from "@/lib/types";
 import rawEnterpriseAnnuaire from "@/lib/enterprise-annuaire.json";
 import rawOperationalSystemDemoAssets from "@/lib/operational-system-demo-assets.generated.json";
@@ -50,6 +54,30 @@ export type DocumentModel = {
   featuredRank?: number;
 };
 
+type DocumentModelResourceSlug = Extract<
+  SystemResourceSlug,
+  | "tableau-pilotage-operationnel"
+  | "suivi-previsionnel-financier"
+  | "crm-suivi-commercial"
+>;
+
+function getDocumentModelResourceFields(slug: DocumentModelResourceSlug) {
+  const resource = getSystemResource(slug);
+
+  if (!resource || resource.format !== "template") {
+    throw new Error(`Missing document model resource: ${slug}.`);
+  }
+
+  return {
+    ctaHref: `/api/systeme-kit/open/${resource.resourceSlug}`,
+    ctaLabel: "Ouvrir le modèle",
+    description: resource.description,
+    image: resource.preview.src,
+    slug: resource.resourceSlug,
+    title: resource.title,
+  } as const;
+}
+
 function getGoogleDriveFileId(url: string): string | null {
   const match = url.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
 
@@ -89,25 +117,17 @@ export function getOperationalSystemDemoUrl(
 
 const globalDocumentModels: DocumentModel[] = [
   {
-    slug: "tableau-pilotage-operationnel",
-    title: "Tableau de pilotage opérationnel",
+    ...getDocumentModelResourceFields("tableau-pilotage-operationnel"),
     seoTitle: "Tableau de pilotage opérationnel pour TPE | Modèle Demaa",
-    description: "Un tableau simple pour suivre les priorités, les actions et les résultats de votre activité.",
     content: "## Piloter l’essentiel\n\nUn modèle pour organiser les priorités, les actions et les indicateurs utiles à votre activité.",
     category: "Pilotage",
     date: "2026-08-08",
-    image: "/images/levier/levier-tableau-de-bord-preview.webp",
-    ctaLabel: "Ouvrir le modèle",
-    ctaHref: "https://demaa.fr/api/systeme-kit/open/tableau-pilotage-operationnel",
     tags: ["modele", "pilotage", "tableau de bord"],
     featuredRank: 1,
   },
   {
-    slug: "suivi-previsionnel-financier",
-    title: "Suivi et prévisionnel financier",
+    ...getDocumentModelResourceFields("suivi-previsionnel-financier"),
     seoTitle: "Suivi et prévisionnel financier pour TPE | Modèle Demaa",
-    description:
-      "L'outil indispensable pour piloter votre trésorerie, le nerf de la guerre de toute entreprise.",
     seoDescription:
       "Téléchargez un modèle de suivi et prévisionnel financier pour TPE afin de piloter budget, trésorerie et anticipation plus sereinement.",
     content: `
@@ -144,15 +164,11 @@ Ce modèle est particulièrement utile si vous voulez :
     `.trim(),
     category: "Finance",
     date: "2026-01-11",
-    image: "/images/academy/budget-1.png",
     slides: [
       "/images/academy/budget-1.png",
       "/images/academy/budget-2.png",
       "/images/academy/budget-3.png",
     ],
-    ctaLabel: "Ouvrir le modèle",
-    ctaHref:
-      "https://docs.google.com/spreadsheets/d/1-7IDhGAtwNQJtZDYYvhDvM3VHfHVeGwOMTFKdAQuIOE/edit?usp=sharing",
     tags: ["modele", "budget", "tresorerie", "finance"],
     relatedSystemSlugs:
       RELATED_SYSTEM_SLUGS_BY_CONTENT_SLUG["suivi-previsionnel-financier"] ??
@@ -160,11 +176,8 @@ Ce modèle est particulièrement utile si vous voulez :
     featuredRank: 2,
   },
   {
-    slug: "crm-suivi-commercial",
-    title: "CRM - suivi commercial",
+    ...getDocumentModelResourceFields("crm-suivi-commercial"),
     seoTitle: "CRM de suivi commercial pour TPE | Modèle Airtable Demaa",
-    description:
-      "Une base Airtable pour structurer votre pipeline commercial, vos relances et le suivi des conversions.",
     seoDescription:
       "Découvrez un modèle Airtable pour structurer le marketing et les ventes d'une TPE : pipeline, actions, relances et conversions.",
     content: `
@@ -199,17 +212,14 @@ Ce modèle est particulièrement utile si vous voulez :
     `.trim(),
     category: "Marketing & Vente",
     date: "2026-02-12",
-    image: "/images/academy/organisation-1.png",
     slides: [
       "/images/academy/organisation-1.png",
       "/images/academy/organisation-2.png",
       "/images/academy/organisation-3.png",
     ],
-    ctaLabel: "Ouvrir le modèle",
-    ctaHref: "https://airtable.com/app3fRlYVjiFAnrjW/shraiL72hO4EvQoh2",
     tags: ["modele", "marketing", "vente", "pipeline", "airtable"],
     relatedSystemSlugs:
-      RELATED_SYSTEM_SLUGS_BY_CONTENT_SLUG["pilotage-marketing-vente"] ??
+      RELATED_SYSTEM_SLUGS_BY_CONTENT_SLUG["crm-suivi-commercial"] ??
       [],
     featuredRank: 3,
   },

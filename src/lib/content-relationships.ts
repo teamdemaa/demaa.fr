@@ -52,7 +52,7 @@ export const RELATED_SYSTEM_SLUGS_BY_CONTENT_SLUG: Record<string, string[]> = {
     "transport-de-personnes",
     "vtc",
   ],
-  "pilotage-marketing-vente": [
+  "crm-suivi-commercial": [
     "cabinet-de-conseil",
     "consultant-independant",
     "freelance",

@@ -130,7 +130,7 @@
   },
   "action": {
     "resourceType": "template",
-    "resourceId": "pilotage-marketing-vente",
+    "resourceId": "crm-suivi-commercial",
     "title": "Tableau de pilotage Marketing & Vente",
     "description": "Un modèle simple pour suivre les téléchargements, les échanges, les propositions, les groupes et les relances.",
     "ctaLabel": "Ouvrir le tableau",

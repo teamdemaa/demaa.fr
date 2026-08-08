@@ -14,7 +14,6 @@ export default function SystemResourcesTab({
   resources = SYSTEM_RESOURCES.filter((resource) => resource.format === "template"),
 }: {
   resources?: readonly SystemResource[];
-  systemSlug?: string;
 }) {
   const orderedResources = useMemo(
     () => [...resources].sort((left, right) => left.rank - right.rank),

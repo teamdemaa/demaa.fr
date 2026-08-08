@@ -10,13 +10,14 @@ import {
   getSystemResourceAssetSnapshot,
   resolveSystemResourceDelivery,
 } from "@/lib/system-resource-assets.server";
+import { getAllDocumentModels } from "@/lib/document-models";
 
 describe("system Resources catalog", () => {
   it("publishes the two shared guides, then restaurant-only upcoming guides", () => {
     expect(SYSTEM_RESOURCES.map(({ title }) => title)).toEqual([
       "Tableau de pilotage opérationnel",
       "Suivi et prévisionnel financier",
-      "CRM - suivi commercial",
+      "CRM : suivi commercial",
       "Maîtriser les obligations et les finances de son entreprise",
       "La facturation électronique",
       "Comment ouvrir un restaurant ?",
@@ -25,7 +26,7 @@ describe("system Resources catalog", () => {
     expect(SYSTEM_RESOURCES.filter(({ format }) => format === "template").map(({ title }) => title)).toEqual([
       "Tableau de pilotage opérationnel",
       "Suivi et prévisionnel financier",
-      "CRM - suivi commercial",
+      "CRM : suivi commercial",
     ]);
     expect(SYSTEM_RESOURCES.filter(({ availability }) => availability === "coming-soon").every((resource) => resource.systemSlugs?.includes("restaurant"))).toBe(true);
     expect(JSON.stringify(SYSTEM_RESOURCES)).not.toMatch(
@@ -87,5 +88,22 @@ describe("system Resources catalog", () => {
         /^https:\/\/demaa\.fr\/downloads\/presentations\/presentation-.+\.pdf$/,
       );
     }
+  });
+
+  it("derives the three document models from the shared editorial catalog", () => {
+    const templates = SYSTEM_RESOURCES
+      .filter(({ format }) => format === "template")
+      .sort((left, right) => left.rank - right.rank);
+    const models = getAllDocumentModels();
+
+    expect(models).toHaveLength(3);
+    expect(models.map(({ slug, title, description }) => ({ slug, title, description }))).toEqual(
+      templates.map(({ resourceSlug, title, description }) => ({
+        description,
+        slug: resourceSlug,
+        title,
+      })),
+    );
+    expect(models.every(({ ctaHref, slug }) => ctaHref === `/api/systeme-kit/open/${slug}`)).toBe(true);
   });
 });

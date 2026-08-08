@@ -73,7 +73,7 @@ describe("system page SEO published Solutions boundary", () => {
       `process ${system.name.toLowerCase()}`,
       `modèle entreprise ${system.name.toLowerCase()}`,
       "Tableau de pilotage opérationnel",
-      "CRM - suivi commercial",
+      "CRM : suivi commercial",
     ]));
     expect(itemList(jsonLd)?.name).toBe(
       `Process et Ressources du système opérationnel ${system.name}`,
@@ -174,7 +174,7 @@ describe("system page SEO published Solutions boundary", () => {
     expect(list?.itemListElement).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ name: "Tableau de pilotage opérationnel" }),
-        expect.objectContaining({ name: "CRM - suivi commercial" }),
+        expect.objectContaining({ name: "CRM : suivi commercial" }),
       ]),
     );
     if (!list?.itemListElement) throw new Error("ItemList JSON-LD manquant");

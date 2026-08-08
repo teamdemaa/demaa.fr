@@ -6,18 +6,24 @@ async function readSource(path: string) {
 }
 
 describe("system UX contract", () => {
-  it("keeps each resource preview, e-mail form and confirmation in one modal", async () => {
+  it("separates direct models, available guides and future-guide notifications", async () => {
     const detailSource = await readSource(
       "src/components/SystemDetailContent.tsx",
-    );
-    const modalSource = await readSource(
-      "src/components/OperationalSystemCopyRequestModal.tsx",
     );
     const resourcesSource = await readSource(
       "src/components/SystemResourcesTab.tsx",
     );
-    const historicalModalSource = await readSource(
-      "src/components/HistoricalOperationalSystemCopyRequestModal.tsx",
+    const modelCardSource = await readSource(
+      "src/components/ModelResourceCard.tsx",
+    );
+    const guidesSource = await readSource(
+      "src/components/SystemGuidesRail.tsx",
+    );
+    const slidesSource = await readSource(
+      "src/components/GuideSlidesDialog.tsx",
+    );
+    const notifySource = await readSource(
+      "src/components/GuideNotifyModal.tsx",
     );
     const pageSource = await readSource(
       "src/app/kit-operationnel/[slug]/page.tsx",
@@ -28,37 +34,30 @@ describe("system UX contract", () => {
     expect(detailSource).not.toContain("Recevoir ma copie modifiable");
     expect(detailSource).not.toContain("deliveryAvailable");
     expect(detailSource).not.toContain("hasLevierSolution");
-    expect(detailSource).toContain('<SystemResourcesTab systemSlug={system.slug} />');
+    expect(detailSource).toContain("<SystemGuidesRail");
+    expect(detailSource).toContain("<SystemResourcesTab");
+    expect(detailSource).toContain('resource.format === "guide"');
+    expect(detailSource).toContain('resource.format === "template"');
     expect(detailSource).not.toContain("OperationalSystemCopyRequestModal");
-    expect(resourcesSource).toContain("selectedResource ?");
-    expect(resourcesSource).toContain("resource={selectedResource}");
-    expect(detailSource).not.toContain("HistoricalOperationalSystemCopyRequestModal");
-    expect(modalSource).not.toMatch(/"overview"\s*\|\s*"form"/);
-    expect(modalSource).toContain("resource.deliveryLabel");
-    expect(modalSource).toContain("Votre ressource est dans votre boîte mail.");
-    expect(modalSource).toContain("resource.successDescription");
-    expect(modalSource).toContain("resource.previewDisclosure");
-    expect(modalSource).toContain('loading="eager"');
-    expect(modalSource).toContain('name="email"');
-    expect(modalSource).not.toContain('name="firstName"');
-    expect(modalSource).not.toContain("Prénom");
-    expect(modalSource).toContain('name="marketingConsent"');
-    expect(modalSource).toContain("Facultatif");
-    expect(modalSource).not.toContain("openForm");
-    expect(modalSource).not.toMatch(/Voir la démonstration|Google Drive/);
-    expect(modalSource).not.toContain(
-      "Des process concrets, des outils recommandés",
+    expect(resourcesSource).toContain("<ModelResourceCard resource={resource}");
+    expect(resourcesSource).not.toContain("selectedResource");
+    expect(modelCardSource).toContain(
+      "`/api/systeme-kit/open/${resource.resourceSlug}`",
     );
-    expect(modalSource).toContain('fetch("/api/systeme-kit/request"');
-    expect(modalSource).not.toMatch(/Stripe|checkout|\/copy|\.xlsx/);
-    expect(historicalModalSource).toContain('name="firstName"');
-    expect(historicalModalSource).toContain("Prénom");
-    expect(historicalModalSource).toContain("Voir la démonstration");
-    expect(historicalModalSource).toContain("Recevoir ma copie modifiable");
-    expect(historicalModalSource).toContain('firstName: normalizedFirstName');
-    expect(historicalModalSource).toContain('const flowKey = `system-copy:${systemSlug}`');
-    expect(modalSource).toContain('const flowKey = `resource:${resource.resourceSlug}:${systemSlug}`');
-    expect(historicalModalSource).toContain('fetch("/api/systeme-kit/request"');
+    expect(modelCardSource).toContain('target="_blank"');
+    expect(guidesSource).toContain('resource.availability === "available"');
+    expect(guidesSource).toContain("<GuideSlidesDialog");
+    expect(guidesSource).toContain("Bientôt disponible");
+    expect(guidesSource).toContain("Être informé");
+    expect(guidesSource).toContain("<GuideNotifyModal");
+    expect(slidesSource).toContain("Télécharger le PDF");
+    expect(slidesSource).toContain('event.key === "ArrowRight"');
+    expect(slidesSource).toContain('event.key === "ArrowLeft"');
+    expect(notifySource).toContain('fetch("/api/systeme-kit/notify"');
+    expect(notifySource).toContain("Ce n’est pas une inscription à une newsletter.");
+    expect(notifySource).toContain("M’informer");
+    expect(notifySource).not.toContain('name="marketingConsent"');
+    expect(notifySource).not.toContain("Prénom");
     expect(pageSource).not.toContain("getOperationalSystemDemoUrl");
     expect(pageSource).not.toContain("deliveryAvailable=");
     expect(pageSource).toContain("hasEditableOperationalSystemAsset");

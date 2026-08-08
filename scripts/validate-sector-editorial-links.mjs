@@ -35,7 +35,12 @@ function extractSlugs(source) {
 
 const serviceSlugs = extractSlugs(serviceCatalogSource);
 const courseSlugs = extractSlugs(courseContentSource);
-const documentModelSlugs = extractSlugs(documentModelsSource);
+const documentModelSlugs = new Set([
+  ...extractSlugs(documentModelsSource),
+  ...[...documentModelsSource.matchAll(
+    /getDocumentModelResourceFields\("([^"]+)"\)/g,
+  )].map((match) => match[1]),
+]);
 const publicSectorLabels = new Set(
   sectorTaxonomyPayload.sectors.map((sector) => sector.publicLabel),
 );

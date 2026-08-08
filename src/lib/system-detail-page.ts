@@ -6,9 +6,8 @@ import { cache } from "react";
 import { enterpriseToSystem, type EnterpriseDefinition } from "@/lib/enterprise-annuaire";
 import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 import type { OperationalSystemDetail } from "@/lib/system-operations";
-import { hasEditableOperationalSystemAsset } from "@/lib/editable-operational-system-assets.server";
 import type { RenderableSolutionSectionDto } from "@/lib/system-solutions-ui-dto";
-import { SYSTEM_RESOURCES } from "@/lib/system-resource-catalog";
+import { getSystemResourcesForSystem } from "@/lib/system-resource-catalog";
 import { buildSystemeDetail } from "@/lib/systeme-catalog";
 import type { System } from "@/lib/types";
 
@@ -346,16 +345,15 @@ function buildSystemPageDescription(
     : `${processCount} process opérationnels pour structurer une activité de ${sectorLabel}.`;
   const parts = [processSummary];
   const publishedResources = getPublishedSolutionResources(solutionSections);
+  const systemResources = getSystemResourcesForSystem(data.system.slug);
 
   if (override) {
     parts.push(`${processCount} process opérationnels structurent ce système.`);
   }
 
-  if (hasEditableOperationalSystemAsset(data.system.slug)) {
-    parts.push(
-      "Des guides et modèles pratiques sont accessibles directement.",
-    );
-  }
+  parts.push(
+    `${systemResources.length} ressources pratiques sont accessibles directement : guides et modèles.`,
+  );
 
   if (publishedResources.length > 0) {
     const names = publishedResources.slice(0, 3).map((resource) => resource.name);
@@ -375,6 +373,7 @@ export function buildSystemPageMetadata(
   const description = buildSystemPageDescription(data, solutionSections);
   const url = `/kit-operationnel/${data.system.slug}`;
   const publishedResources = getPublishedSolutionResources(solutionSections);
+  const systemResources = getSystemResourcesForSystem(data.system.slug);
 
   return {
     title,
@@ -385,7 +384,7 @@ export function buildSystemPageMetadata(
         `système opérationnel ${data.system.name.toLowerCase()}`,
         `process ${data.system.name.toLowerCase()}`,
         `modèle entreprise ${data.system.name.toLowerCase()}`,
-        ...SYSTEM_RESOURCES.map((resource) => resource.title),
+        ...systemResources.map((resource) => resource.title),
         ...(publishedResources.length > 0
           ? [
               `solutions ${data.system.name.toLowerCase()}`,
@@ -425,7 +424,7 @@ export function buildSystemPageJsonLd(
     ) ?? []
   ).slice(0, 8);
   const listedSolutions = getPublishedSolutionResources(solutionSections).slice(0, 8);
-  const listedResources = SYSTEM_RESOURCES;
+  const listedResources = getSystemResourcesForSystem(data.system.slug);
 
   return [
     {

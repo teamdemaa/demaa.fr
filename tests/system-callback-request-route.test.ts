@@ -44,4 +44,46 @@ describe("callback request route", () => {
     expect(mocks.rateLimits.map((limit) => limit.keyPrefix)).toEqual(["callback-request-ip"]);
     expect(mocks.submitted).toHaveLength(0);
   });
+
+  it("stores a distinct authoritative source for a Solutions callback", async () => {
+    mocks.rateLimits.length = 0;
+    mocks.submitted.length = 0;
+    const response = await POST(request({
+      context: "solutions",
+      firstName: "Maya",
+      phone: "+225 07 12 34 56 78",
+      need: "Choisir un outil de suivi",
+      preferredTime: "Après-midi",
+      systemSlug: "plomberie",
+      idempotencyKey: "web:callback:solutions:12345678",
+    }));
+
+    expect(response.status).toBe(202);
+    expect(mocks.submitted[0]).toMatchObject({
+      contact: { firstName: "Maya", phone: "+2250712345678" },
+      context: {
+        source: "Système métier - Demande de rappel (Solutions)",
+        systemSlug: "plomberie",
+      },
+      fields: expect.arrayContaining([
+        { label: "Moment préféré", value: "Après-midi" },
+      ]),
+    });
+  });
+
+  it("silently accepts the honeypot without storing a lead", async () => {
+    mocks.rateLimits.length = 0;
+    mocks.submitted.length = 0;
+    const response = await POST(request({
+      context: "process",
+      firstName: "Robot",
+      phone: "+33123456789",
+      need: "Spam",
+      systemSlug: "plomberie",
+      website: "https://spam.invalid",
+    }));
+
+    expect(response.status).toBe(202);
+    expect(mocks.submitted).toHaveLength(0);
+  });
 });

@@ -10,11 +10,13 @@ import SystemSolutionsTab, {
   SOLUTION_UI_WORKING_LABELS,
 } from "@/components/SystemSolutionsTab";
 import SystemResourcesTab from "@/components/SystemResourcesTab";
+import SystemGuidesRail from "@/components/SystemGuidesRail";
 import { enterpriseCatalog } from "@/lib/enterprise-annuaire";
 import {
   getVisibleSystemDetailTabs,
   normalizeSystemDetailTab,
 } from "@/lib/system-detail-tabs";
+import { getSystemResourcesForSystem } from "@/lib/system-resource-catalog";
 import {
   filterRenderableSolutionSections,
   getPublishedRenderableSolutionSectionsForSystem,
@@ -61,7 +63,15 @@ describe("system Solutions UI", () => {
       }),
     );
     const resourcesMarkup = renderToStaticMarkup(
-      createElement(SystemResourcesTab, { systemSlug: "batiment" }),
+      createElement(SystemResourcesTab),
+    );
+    const guidesMarkup = renderToStaticMarkup(
+      createElement(SystemGuidesRail, {
+        resources: getSystemResourcesForSystem("batiment").filter(
+          (resource) => resource.format === "guide",
+        ),
+        systemSlug: "batiment",
+      }),
     );
 
     expect(solutionsMarkup).not.toContain("Ressources");
@@ -70,9 +80,9 @@ describe("system Solutions UI", () => {
     expect(solutionsMarkup).not.toContain("Tableau de pilotage opérationnel");
     expect(resourcesMarkup).toContain("Tableau de pilotage opérationnel");
     expect(resourcesMarkup).toContain("Suivi et prévisionnel financier");
-    expect(resourcesMarkup).toContain("CRM - suivi commercial");
-    expect(resourcesMarkup).toContain("La facturation électronique");
-    expect(resourcesMarkup).toContain(
+    expect(resourcesMarkup).toContain("CRM : suivi commercial");
+    expect(guidesMarkup).toContain("La facturation électronique");
+    expect(guidesMarkup).toContain(
       "Maîtriser les obligations et les finances de son entreprise",
     );
     expect(JSON.stringify(publishedLevierSolutionSectionsFixture)).not.toMatch(
@@ -429,43 +439,39 @@ describe("system Solutions UI", () => {
   it("uses the neutral Resources catalog as the public delivery entry point", async () => {
     const detailSource = await readSource("src/components/SystemDetailContent.tsx");
     const resourcesSource = await readSource("src/components/SystemResourcesTab.tsx");
-    const levierModalSource = await readSource(
-      "src/components/OperationalSystemCopyRequestModal.tsx",
-    );
-    const systemModalSource = await readSource(
-      "src/components/HistoricalOperationalSystemCopyRequestModal.tsx",
+    const modelCardSource = await readSource(
+      "src/components/ModelResourceCard.tsx",
     );
 
     expect(detailSource).not.toContain('setDeliveryModal("system")');
-    expect(detailSource).toContain('<SystemResourcesTab systemSlug={system.slug} />');
+    expect(detailSource).toContain("<SystemResourcesTab");
+    expect(detailSource).toContain("<SystemGuidesRail");
     expect(detailSource).not.toContain("OperationalSystemCopyRequestModal");
-    expect(resourcesSource).toContain("selectedResource ?");
-    expect(resourcesSource).toContain("resource={selectedResource}");
+    expect(resourcesSource).toContain("<ModelResourceCard");
     expect(resourcesSource).toContain("SYSTEM_RESOURCES");
     expect(detailSource).not.toContain("HistoricalOperationalSystemCopyRequestModal");
     expect(detailSource).not.toContain("Voir le système");
-    expect(systemModalSource).toContain("Système opérationnel - {systemName}");
-    expect(systemModalSource).toContain("Recevoir ma copie modifiable");
-    expect(systemModalSource).toContain('const flowKey = `system-copy:${systemSlug}`');
-    expect(levierModalSource).toContain("resource.title");
-    expect(levierModalSource).toContain("resource.deliveryLabel");
-    expect(levierModalSource).toContain('const flowKey = `resource:${resource.resourceSlug}:${systemSlug}`');
+    expect(modelCardSource).toContain("/api/systeme-kit/open/");
+    expect(modelCardSource).not.toContain('name="email"');
   });
 
-  it("reuses the accessible modal lifecycle and resets selection on close", async () => {
+  it("reuses accessible modal lifecycles for Solutions and guide slides", async () => {
     const solutionsSource = await readSource("src/components/SystemSolutionsTab.tsx");
-    const resourcesSource = await readSource("src/components/SystemResourcesTab.tsx");
     const dialogSource = await readSource("src/components/DirectoryDetailDialogShell.tsx");
     const hookSource = await readSource("src/components/useAccessibleDialog.ts");
+    const guideDialogSource = await readSource("src/components/GuideSlidesDialog.tsx");
 
     expect(solutionsSource).toContain("DirectoryDetailDialogShell");
     expect(solutionsSource).toContain("setSelected(null)");
-    expect(resourcesSource).toContain("setSelectedResource(null)");
     expect(dialogSource).toContain("useAccessibleDialog({ onClose })");
     expect(dialogSource).toContain("data-dialog-initial-focus");
     expect(hookSource).toContain('event.key === "Escape"');
     expect(hookSource).toContain('event.key !== "Tab"');
     expect(hookSource).toContain("previouslyFocused?.focus()");
+    expect(guideDialogSource).toContain('event.key === "Escape"');
+    expect(guideDialogSource).toContain('event.key === "ArrowRight"');
+    expect(guideDialogSource).toContain('event.key === "Tab"');
+    expect(guideDialogSource).toContain("previousFocus?.focus()");
   });
 
   it("keeps the D012 rail constrained without page-level horizontal overflow", async () => {

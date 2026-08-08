@@ -183,17 +183,22 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/ressources/systeme-operationnel-airtable',
-        destination: '/modeles-de-documents/pilotage-marketing-vente',
+        destination: '/modeles-de-documents/crm-suivi-commercial',
         permanent: true,
       },
       {
         source: '/ressources/systeme-operationnel-template',
-        destination: '/modeles-de-documents/pilotage-marketing-vente',
+        destination: '/modeles-de-documents/crm-suivi-commercial',
         permanent: true,
       },
       {
         source: '/modeles-de-documents/systeme-operationnel',
-        destination: '/modeles-de-documents/pilotage-marketing-vente',
+        destination: '/modeles-de-documents/crm-suivi-commercial',
+        permanent: true,
+      },
+      {
+        source: '/modeles-de-documents/pilotage-marketing-vente',
+        destination: '/modeles-de-documents/crm-suivi-commercial',
         permanent: true,
       },
       {

@@ -112,7 +112,7 @@ export default function SystemDetailContent({
         <div
           className="grid w-full grid-cols-3 border-b border-dema-line"
           role="tablist"
-          aria-label="Contenu du système opérationnel"
+          aria-label="Contenu du système métier"
           aria-orientation="horizontal"
         >
           {tabs.map((tab) => (
@@ -159,8 +159,17 @@ export default function SystemDetailContent({
 
         {activeTab === "resources" ? (
           <div className="space-y-10">
-            <SystemGuidesRail systemSlug={system.slug} resources={getSystemResourcesForSystem(system.slug).filter((resource) => resource.format === "guide")} />
-            <SystemResourcesTab systemSlug={system.slug} resources={getSystemResourcesForSystem(system.slug).filter((resource) => resource.format === "template")} />
+            <SystemGuidesRail
+              systemSlug={system.slug}
+              resources={getSystemResourcesForSystem(system.slug).filter(
+                (resource) => resource.format === "guide",
+              )}
+            />
+            <SystemResourcesTab
+              resources={getSystemResourcesForSystem(system.slug).filter(
+                (resource) => resource.format === "template",
+              )}
+            />
           </div>
         ) : null}
       </section>

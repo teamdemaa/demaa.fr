@@ -43,7 +43,7 @@ export default function GuideSlidesDialog({ title, slides, onClose, downloadHref
           </div>
         </header>
         <div className="relative flex min-h-0 flex-1 items-center justify-center bg-[#f7f6f1] p-2">
-          <Image src={slides[activeIndex]} alt={`${title} — diapositive ${activeIndex + 1}`} width={1560} height={878} className="max-h-[76vh] w-auto max-w-full object-contain" priority />
+          <Image src={slides[activeIndex]} alt={`${title}, diapositive ${activeIndex + 1}`} width={1560} height={878} className="max-h-[76vh] w-auto max-w-full object-contain" priority />
           <button type="button" aria-label="Diapositive précédente" disabled={activeIndex === 0} onClick={previous} className="absolute left-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/90 disabled:opacity-35"><ChevronLeft className="h-5 w-5" /></button>
           <button type="button" aria-label="Diapositive suivante" disabled={activeIndex === slides.length - 1} onClick={next} className="absolute right-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/90 disabled:opacity-35"><ChevronRight className="h-5 w-5" /></button>
         </div>
