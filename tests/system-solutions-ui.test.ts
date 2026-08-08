@@ -414,7 +414,8 @@ describe("system Solutions UI", () => {
       'from "@/lib/firebase-solution-registry-selection.server"',
     );
     expect(pageSource).toContain("solutionSections={visibleSolutionSections}");
-    expect(pageSource).toContain('section !== "models"');
+    expect(pageSource).toContain("filterPublicSolutionSections");
+    expect(pageSource).toContain('isPublicSolutionSectionVisible("services")');
     expect(pageSource).not.toContain("getMigrationSafe");
     expect(detailSource).not.toMatch(/solution-registry\.(?:server|contract)/);
     expect(solutionsSource).toContain("import type {");

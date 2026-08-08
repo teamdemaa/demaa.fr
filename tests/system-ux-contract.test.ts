@@ -32,6 +32,8 @@ describe("system UX contract", () => {
     expect(detailSource).not.toContain("Voir le système");
     expect(detailSource).not.toContain("Système opérationnel");
     expect(detailSource).not.toContain("Recevoir ma copie modifiable");
+    expect(detailSource).not.toContain("Pour voir plus de documents");
+    expect(detailSource).not.toContain("allez dans Académie");
     expect(detailSource).not.toContain("deliveryAvailable");
     expect(detailSource).not.toContain("hasLevierSolution");
     expect(detailSource).toContain("<SystemGuidesRail");
@@ -66,53 +68,20 @@ describe("system UX contract", () => {
     expect(pageSource).toContain("hasEditableOperationalSystemAsset");
   });
 
-  it("renders one contextual custom offer after Process and Solutions only", async () => {
+  it("keeps every system tab free of contact CTAs", async () => {
     const detailSource = await readSource(
       "src/components/SystemDetailContent.tsx",
-    );
-    const customOfferSource = await readSource(
-      "src/components/SystemCustomOfferCta.tsx",
     );
     const solutionsSource = await readSource(
       "src/components/SystemSolutionsTab.tsx",
     );
-    const panelEnd = detailSource.indexOf("</section>");
-    const customOffer = detailSource.indexOf("<SystemCustomOfferCta");
 
-    expect(panelEnd).toBeGreaterThan(-1);
-    expect(customOffer).toBeGreaterThan(panelEnd);
-    expect(detailSource.match(/<SystemCustomOfferCta\b/g)).toHaveLength(1);
-    expect(detailSource).toContain("systemSlug={system.slug}");
-    expect(detailSource).toContain("context={activeTab}");
-    expect(detailSource).toContain('activeTab !== "resources"');
+    expect(detailSource).not.toContain("SystemCustomOfferCta");
+    expect(detailSource).not.toContain("OrganisationCallbackRequestButton");
     expect(detailSource).not.toContain("Votre solution peut aider ce métier ?");
     expect(detailSource).not.toContain('href="/partenaires"');
     expect(detailSource).not.toMatch(
       /academyVideos|Académie Demaa|Comprendre les indicateurs de ce système|Lire la fiche/,
-    );
-    expect(customOfferSource).toContain(
-      "Besoin de prendre du recul sur votre organisation ?",
-    );
-    expect(customOfferSource).toContain(
-      "Besoin d’aide pour identifier la bonne solution ?",
-    );
-    expect(customOfferSource).toContain("Décrivez brièvement ce que vous souhaitez améliorer.");
-    expect(customOfferSource).toContain(
-      "Nous vous rappelons pour vous aider à comparer les options",
-    );
-    expect(customOfferSource).toContain("Premier échange offert · Sans engagement");
-    expect(customOfferSource).toContain("OrganisationCallbackRequestButton");
-    expect(customOfferSource).not.toContain("OrganisationSessionBookingButton");
-    expect(customOfferSource).not.toContain("PreferentialRatesTrigger");
-    expect(customOfferSource).toContain('buttonLabel: "Demander à être rappelé(e)"');
-    expect(customOfferSource).toContain(
-      'source: "Système métier - Demande de rappel solution"',
-    );
-    expect(customOfferSource).toContain(
-      'source: "Système métier - Demande de rappel organisation"',
-    );
-    expect(customOfferSource).not.toMatch(
-      /href="\/services"|Voir les services|application sur mesure/,
     );
     expect(solutionsSource).not.toMatch(
       /SystemCustomOfferCta|Diagnostic offert|appel gratuit/,

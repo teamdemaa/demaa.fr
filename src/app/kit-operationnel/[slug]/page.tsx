@@ -8,6 +8,10 @@ import {
   getActivePublishedRenderableSolutionSectionsForSystem,
   getActiveRenderableSolutionSectionsForSystem,
 } from "@/lib/firebase-solution-registry-selection.server";
+import {
+  filterPublicSolutionSections,
+  isPublicSolutionSectionVisible,
+} from "@/lib/public-solution-section-visibility";
 import { normalizeSystemDetailTab } from "@/lib/system-detail-tabs";
 import type { RenderableSolutionSectionDto } from "@/lib/system-solutions-ui-dto";
 import {
@@ -21,10 +25,6 @@ type OperationalKitPageProps = {
   params: Promise<{ slug: string }>;
   searchParams: Promise<{ tab?: string | string[] }>;
 };
-
-function withoutLegacyModels<T extends Readonly<{ section: string }>>(sections: readonly T[]) {
-  return sections.filter(({ section }) => section !== "models");
-}
 
 function mergeRenderableSections(
   sections: readonly RenderableSolutionSectionDto[],
@@ -66,7 +66,7 @@ export async function generateMetadata({
     };
   }
 
-  return buildSystemPageMetadata(data, withoutLegacyModels(solutionSections));
+  return buildSystemPageMetadata(data, filterPublicSolutionSections(solutionSections));
 }
 
 export default async function OperationalKitPage({
@@ -78,7 +78,9 @@ export default async function OperationalKitPage({
     getSystemDetailPageData(slug),
     getActiveRenderableSolutionSectionsForSystem(slug),
     getActivePublishedRenderableSolutionSectionsForSystem(slug),
-    getRenderableExpertiseSectionForSystem(slug),
+    isPublicSolutionSectionVisible("services")
+      ? getRenderableExpertiseSectionForSystem(slug)
+      : Promise.resolve(null),
   ]);
 
   if (!data) {
@@ -86,11 +88,13 @@ export default async function OperationalKitPage({
   }
 
   const initialTab = getParamValue(resolvedSearchParams.tab);
-  const visibleSolutionSections = mergeRenderableSections([
-    ...withoutLegacyModels(solutionSections),
+  const visibleSolutionSections = filterPublicSolutionSections(mergeRenderableSections([
+    ...solutionSections,
     ...(expertiseSection ? [expertiseSection] : []),
-  ]);
-  const visiblePublishedSolutionSections = withoutLegacyModels(publishedSolutionSections);
+  ]));
+  const visiblePublishedSolutionSections = filterPublicSolutionSections(
+    publishedSolutionSections,
+  );
   const jsonLd = buildSystemPageJsonLd(data, visiblePublishedSolutionSections);
   const hasEditableSystem = hasEditableOperationalSystemAsset(data.system.slug);
 

@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { type KeyboardEvent, useMemo, useState } from "react";
-import SystemCustomOfferCta from "@/components/SystemCustomOfferCta";
 import SystemGuidesRail from "@/components/SystemGuidesRail";
 import SystemResourcesTab from "@/components/SystemResourcesTab";
 import SystemSolutionsTab from "@/components/SystemSolutionsTab";
@@ -171,24 +170,9 @@ export default function SystemDetailContent({
               resources={scopedResources.filter((resource) => resource.format === "template")}
               systemSlug={system.slug}
             />
-            <div className="rounded-[1.15rem] border border-dema-line bg-dema-paper px-5 py-5 text-center sm:px-6">
-              <p className="text-sm text-dema-muted">
-                Pour voir plus de documents,{" "}
-                <Link
-                  href="/academie"
-                  className="font-medium text-dema-forest underline decoration-dema-forest/35 underline-offset-2"
-                >
-                  allez dans Académie
-                </Link>
-                .
-              </p>
-            </div>
           </div>
         ) : null}
       </section>
-      {activeTab !== "resources" ? (
-        <SystemCustomOfferCta context={activeTab} systemSlug={system.slug} />
-      ) : null}
     </article>
   );
 }
