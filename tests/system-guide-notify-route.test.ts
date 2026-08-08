@@ -34,6 +34,9 @@ vi.mock("@/lib/enterprise-annuaire-server", () => ({
     slug === "restaurant" ? { slug, name: "Restaurant" } : null,
 }));
 vi.mock("@/lib/enterprise-annuaire", () => ({
+  enterpriseCatalogBySlug: {
+    restaurant: { name: "Restaurant", slug: "restaurant" },
+  },
   enterpriseToSystem: () => ({ name: "Restaurant" }),
 }));
 vi.mock("@/lib/lead-attribution-server", () => ({
@@ -69,11 +72,11 @@ describe("system guide notification route", () => {
     mocks.submitted.length = 0;
   });
 
-  it("stores a release-only notification for a future Restaurant guide", async () => {
+  it("stores a release-only notification for a future guide on its matching system", async () => {
     const response = await POST(
       request({
         email: "dirigeant@example.com",
-        resourceSlug: "guide-comment-ouvrir-un-restaurant",
+        resourceSlug: "guide-restaurant-lancer",
         systemSlug: "restaurant",
       }),
     );

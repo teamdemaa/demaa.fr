@@ -167,7 +167,7 @@ describe("system page SEO published Solutions boundary", () => {
     );
     const exposed = JSON.stringify({ metadata, jsonLd });
 
-    expect(metadata.description).toContain("5 ressources pratiques");
+    expect(metadata.description).toContain("7 ressources pratiques");
     expect(exposed).not.toMatch(/Google Drive|docs\.google|private-assets/);
     expect(exposed).not.toContain("Levier");
     const list = itemList(jsonLd);
