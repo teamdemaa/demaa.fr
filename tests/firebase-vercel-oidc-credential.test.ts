@@ -69,6 +69,20 @@ describe("Firebase Vercel workload identity credential", () => {
     ).toBe(false);
   });
 
+  it("reports the safe Google STS diagnostic without exposing the token", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValueOnce(new Response(JSON.stringify({
+      error: "invalid_grant",
+      error_description: "The given credential is rejected by the attribute condition.",
+    }), { status: 400 })));
+
+    const credential = credentialModule
+      .createFirebaseVercelWorkloadIdentityCredential();
+
+    await expect(credential.getAccessToken()).rejects.toThrow(
+      "The given credential is rejected by the attribute condition.",
+    );
+  });
+
   it("exposes the short-lived identity through GoogleAuth for Firestore", async () => {
     const fetchMock = vi.fn()
       .mockResolvedValueOnce(new Response(JSON.stringify({

@@ -41,7 +41,18 @@ async function exchangeForFederatedToken(
     }),
   });
   if (!response.ok) {
-    throw new Error(`Google STS refused the Vercel identity (${response.status}).`);
+    const errorPayload = await response.json().catch(() => null) as {
+      error?: unknown;
+      error_description?: unknown;
+    } | null;
+    const reason = typeof errorPayload?.error_description === "string"
+      ? errorPayload.error_description.slice(0, 500)
+      : typeof errorPayload?.error === "string"
+        ? errorPayload.error.slice(0, 120)
+        : "No diagnostic was returned.";
+    throw new Error(
+      `Google STS refused the Vercel identity (${response.status}): ${reason}`,
+    );
   }
   const payload = await response.json() as {
     access_token?: unknown;
