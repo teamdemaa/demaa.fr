@@ -26,6 +26,7 @@ import { resolveProviderNetworkSource } from "@/lib/provider-network-source";
 export const EXPERTISE_CATALOG_COLLECTION = "expertise_catalog";
 export const EXPERTISE_PLACEMENTS_COLLECTION = "expertise_placements";
 export const OPPORTUNITIES_COLLECTION = "opportunities";
+const PROVIDER_NETWORK_CACHE_VERSION = "firebase-v1";
 
 function sortExpertises(entries: readonly ExpertiseCatalogEntry[]) {
   return [...entries].sort((left, right) => {
@@ -96,7 +97,7 @@ export const getExpertiseCatalog = unstable_cache(
     fallback: parseExpertiseSnapshot,
     remote: loadExpertisesFromFirestore,
   }),
-  ["provider-network-expertise-catalog"],
+  [PROVIDER_NETWORK_CACHE_VERSION, "provider-network-expertise-catalog"],
   { revalidate: 300, tags: ["provider-network-expertises"] },
 );
 
@@ -105,7 +106,7 @@ export const getAllOpportunities = unstable_cache(
     fallback: parseOpportunitySnapshot,
     remote: loadOpportunitiesFromFirestore,
   }),
-  ["provider-network-opportunities"],
+  [PROVIDER_NETWORK_CACHE_VERSION, "provider-network-opportunities"],
   { revalidate: 60, tags: ["provider-network-opportunities"] },
 );
 
@@ -114,7 +115,7 @@ export const getExpertisePlacements = unstable_cache(
     fallback: buildExpertisePlacementSeeds,
     remote: loadExpertisePlacementsFromFirestore,
   }),
-  ["provider-network-expertise-placements"],
+  [PROVIDER_NETWORK_CACHE_VERSION, "provider-network-expertise-placements"],
   { revalidate: 300, tags: ["provider-network-expertise-placements"] },
 );
 
