@@ -45,6 +45,12 @@ const redirectCases = [
     [`/cours/${legacySlug}`, `/academie/${canonicalSlug}`],
     [`/academie/${legacySlug}`, `/academie/${canonicalSlug}`],
   ]),
+  ["/cours/facture-electronique", "/systemes"],
+  ["/cours/obligations-finances-entreprise", "/systemes"],
+  [
+    "/cours/organisation-marketing-vente",
+    "/academie/construire-systeme-marketing-vente",
+  ],
   ["/cours?retourSysteme=batiment", "/academie?retourSysteme=batiment"],
 ];
 
@@ -66,22 +72,6 @@ for (const [source, expectedDestination] of redirectCases) {
       actual: { status: response.status, location: normalizedLocation },
     });
   }
-}
-
-const historicalResponse = await fetch(
-  new URL("/cours/facture-electronique", baseUrl),
-  { redirect: "manual" },
-);
-const historicalHtml = await historicalResponse.text();
-if (
-  historicalResponse.status !== 200 ||
-  !historicalHtml.includes("La facturation électronique")
-) {
-  failures.push({
-    source: "/cours/facture-electronique",
-    expected: { status: 200, content: "La facturation électronique" },
-    actual: { status: historicalResponse.status },
-  });
 }
 
 for (const slug of slugs) {
@@ -118,7 +108,6 @@ console.log(
       baseUrl: baseUrl.origin,
       redirects: redirectCases.length,
       academyPages: slugs.length,
-      historicalCoursePreserved: true,
     },
     null,
     2,
