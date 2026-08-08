@@ -209,7 +209,7 @@ export default function ProviderProfileModal({
         ) : (
           <>
             <p className="pr-12 text-xs font-medium uppercase tracking-[0.14em] text-dema-forest">
-              {opportunity ? "Candidater" : "Rejoindre le réseau"}
+              {opportunity ? "Candidater" : "Rejoindre Team Demaa"}
             </p>
             <h2 id="provider-profile-title" className="mt-2 pr-12 text-2xl font-medium tracking-[-0.025em] text-brand-blue sm:text-3xl">
               {opportunity?.title ?? selectedLabels[0] ?? "Présenter votre profil"}

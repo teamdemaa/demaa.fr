@@ -17,10 +17,10 @@ Les pages publiques attendent une requête avant de charger leurs données. En e
 
 ## Deux parcours publics
 
-- `/rejoindre-le-reseau` : inscription permanente d’un professionnel sur une à trois expertises ;
+- `/rejoindre-team-demaa` : inscription permanente d’un professionnel sur une à trois expertises ;
 - `/opportunites` : besoins concrets et actuellement ouverts.
 
-Les anciennes routes `/partenaires` et `/opportunites-b2b` redirigent définitivement vers ces routes.
+Les anciennes routes `/rejoindre-le-reseau`, `/partenaires` et `/opportunites-b2b` redirigent définitivement vers ces routes.
 L’ancien dossier public `/opportunites/0034` redirige également vers le catalogue dynamique.
 
 Les deux parcours utilisent le même formulaire et la même route d’enregistrement : `/api/provider-profile-submission`.
