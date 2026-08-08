@@ -13,7 +13,7 @@ export const SERVICE_REQUEST_COLLECTION = "service_requests";
 export const SOLUTION_REFERRAL_COLLECTION = "solution_referrals";
 export const MAX_REQUEST_DELIVERY_ATTEMPTS = 4;
 const DELIVERY_LEASE_MS = 5 * 60 * 1000;
-const DELIVERY_CHANNELS = ["customer_email", "internal_email", "marketing_sync"] as const;
+const DELIVERY_CHANNELS = ["customer_email", "internal_email", "slack", "marketing_sync"] as const;
 
 export type RequestDeliveryChannel = (typeof DELIVERY_CHANNELS)[number];
 export type RequestDeliveryStatus =
@@ -131,6 +131,11 @@ function initialDeliveryState(marketingConsent: MarketingConsentSnapshot | null,
       status: "pending" as const,
     },
     internal_email: {
+      attempt_count: 0,
+      next_attempt_at: now,
+      status: "pending" as const,
+    },
+    slack: {
       attempt_count: 0,
       next_attempt_at: now,
       status: "pending" as const,

@@ -102,3 +102,33 @@ export function getSolutionReferralDisclosure(input: {
   }
   return disclosure;
 }
+
+export function getExpertiseReferralDisclosure(input: {
+  placementId: string;
+  resourceSlug: unknown;
+  now?: Date;
+}): SolutionReferralDisclosure | null {
+  let resourceSlug: string;
+  try {
+    resourceSlug = parseSlug(input.resourceSlug, "resourceSlug");
+  } catch {
+    return null;
+  }
+  const disclosure: SolutionReferralDisclosure = {
+    billingParty: "Le professionnel retenu après qualification",
+    commercialRelationship: "none",
+    contractingParty: "Le professionnel retenu après qualification",
+    disclosureVersion: "1.0.0",
+    effectiveAt: "2026-08-08T00:00:00.000Z",
+    expiresAt: "2027-08-08T00:00:00.000Z",
+    placementId: input.placementId,
+    resourceSlug,
+    reviewedAt: "2026-08-08T00:00:00.000Z",
+    reviewer: "Master Demaa",
+    transparency:
+      "Demaa qualifie votre besoin et peut vous orienter vers un professionnel adapté. Aucun professionnel n’est imposé et la mission reste soumise à votre accord.",
+  };
+  return validateSolutionReferralDisclosure(disclosure, input.now).length === 0
+    ? deepFreeze(disclosure)
+    : null;
+}

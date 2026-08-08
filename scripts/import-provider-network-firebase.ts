@@ -1,6 +1,7 @@
 import { isDeepStrictEqual } from "node:util";
 import expertiseSnapshot from "@/lib/expertise-catalog.snapshot.generated.json";
 import opportunitySnapshot from "@/lib/opportunities.snapshot.generated.json";
+import { buildExpertisePlacementSeeds } from "@/lib/expertise-placement-seeds";
 import { parseExpertiseCatalogEntry } from "@/lib/expertise-catalog-contract";
 import { getAdminFirestore } from "@/lib/firebase-admin";
 import { parseOpportunity } from "@/lib/opportunity-contract";
@@ -30,9 +31,14 @@ const expertises = expertiseSnapshot.map((entry, index) =>
 const opportunities = opportunitySnapshot.map((entry, index) =>
   parseOpportunity(entry, `opportunity[${index}]`)
 );
+const expertisePlacements = buildExpertisePlacementSeeds();
 const writes = [
   ...expertises.map((data) => ({ path: `expertise_catalog/${data.expertiseId}`, data })),
   ...opportunities.map((data) => ({ path: `opportunities/${data.opportunityId}`, data })),
+  ...expertisePlacements.map((data) => ({
+    path: `expertise_placements/${data.expertisePlacementId}`,
+    data,
+  })),
 ];
 const { createHash } = await import("node:crypto");
 const planFingerprint = createHash("sha256")
@@ -78,6 +84,7 @@ for (let start = 0; start < missing.length; start += 400) {
 
 console.log(JSON.stringify({
   created: missing.length,
+  expertisePlacementCount: expertisePlacements.length,
   mode: `firebase-${target}`,
   planFingerprint,
   projectId,

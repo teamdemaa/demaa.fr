@@ -1,6 +1,7 @@
 "use client";
 
-import { Bell, Check, LoaderCircle, X } from "lucide-react";
+import { Check, LoaderCircle, X } from "lucide-react";
+import Link from "next/link";
 import { type FormEvent, useEffect, useRef, useState } from "react";
 import {
   getLeadAttributionPayload,
@@ -229,12 +230,9 @@ export default function GuideNotifyModal({
             </div>
           ) : (
             <>
-              <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
-                <Bell className="h-5 w-5" aria-hidden="true" />
-              </span>
               <h2
                 id="guide-waitlist-modal-title"
-                className="mt-4 pr-10 text-2xl font-semibold leading-tight tracking-[-0.025em] text-brand-blue"
+                className="pr-10 text-2xl font-semibold leading-tight tracking-[-0.025em] text-brand-blue"
               >
                 Être informé(e)
               </h2>
@@ -242,7 +240,7 @@ export default function GuideNotifyModal({
                 id="guide-waitlist-modal-description"
                 className="mt-3 text-sm leading-relaxed text-dema-muted"
               >
-                Recevez un e-mail lorsque « {resource.title} » sera disponible.
+                Nous vous préviendrons par e-mail dès la publication de ce guide.
               </p>
 
               <form
@@ -301,6 +299,16 @@ export default function GuideNotifyModal({
                   ) : null}
                   {isSubmitting ? "Envoi…" : "M’informer"}
                 </button>
+                <p className="text-center text-[11px] leading-relaxed text-dema-muted">
+                  Consultez notre{" "}
+                  <Link
+                    href="/politique-de-confidentialite"
+                    className="underline underline-offset-2 hover:text-dema-forest"
+                  >
+                    politique de confidentialité
+                  </Link>
+                  .
+                </p>
               </form>
             </>
           )}

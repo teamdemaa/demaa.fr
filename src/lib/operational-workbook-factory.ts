@@ -489,7 +489,13 @@ function buildEcosystemRows(
   const operationalSuppliers = suppliers
     .filter(
       (supplier) =>
-        !["Banque", "Assurance", "Mutuelle"].includes(supplier.category),
+        ![
+          "Banque",
+          "Assurance",
+          "Mutuelle",
+          "Avantages salariés",
+          "Protection sociale",
+        ].includes(supplier.category),
     )
     .slice(0, 3)
     .map((supplier) => ({
@@ -504,7 +510,13 @@ function buildEcosystemRows(
       notes: supplier.bestFor,
     }));
   const financialSupplier = suppliers.find((supplier) =>
-    ["Banque", "Assurance", "Mutuelle"].includes(supplier.category),
+    [
+      "Banque",
+      "Assurance",
+      "Mutuelle",
+      "Avantages salariés",
+      "Protection sociale",
+    ].includes(supplier.category),
   );
   const rows: OperationalWorkbookEcosystemRow[] = [
     ...toolRows,

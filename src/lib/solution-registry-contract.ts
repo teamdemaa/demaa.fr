@@ -35,7 +35,13 @@ export const SOLUTION_INTERACTION_MODES = [
   "system_delivery",
   "referral_form",
 ] as const;
-export const SOLUTION_SECTIONS = ["software", "providers", "models", "networks"] as const;
+export const SOLUTION_SECTIONS = [
+  "software",
+  "services",
+  "providers",
+  "models",
+  "networks",
+] as const;
 export const SOLUTION_EDITORIAL_STATUSES = ["selected", "hidden"] as const;
 
 export type SolutionResourceType = (typeof SOLUTION_RESOURCE_TYPES)[number];

@@ -34,12 +34,14 @@ export const SOLUTION_UI_WORKING_LABELS: Readonly<
   Record<VisibleSolutionSection, string>
 > = {
   software: "Outils",
-  providers: "Prestataires et fournisseurs",
+  services: "Prestations",
+  providers: "Fournisseurs",
   networks: "Réseaux professionnels",
 };
 
 export const SOLUTION_RAIL_DISPLAY_ORDER: readonly VisibleSolutionSection[] = [
   "software",
+  "services",
   "providers",
   "networks",
 ];

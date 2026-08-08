@@ -1,8 +1,12 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("server-only", () => ({}));
-const mocks = vi.hoisted(() => ({ syncResendLeadContact: vi.fn() }));
+const mocks = vi.hoisted(() => ({
+  sendSlackMessage: vi.fn(),
+  syncResendLeadContact: vi.fn(),
+}));
 vi.mock("@/lib/resend-audience", () => ({ syncResendLeadContact: mocks.syncResendLeadContact }));
+vi.mock("@/lib/slack", () => ({ sendSlackMessage: mocks.sendSlackMessage }));
 
 import {
   deliverServiceRequestChannel,
@@ -24,6 +28,7 @@ const attribution = {
 const notification_status = {
   customer_email: { attempt_count: 0, next_attempt_at: "2026-08-01T00:00:00.000Z", status: "pending" as const },
   internal_email: { attempt_count: 0, next_attempt_at: "2026-08-01T00:00:00.000Z", status: "pending" as const },
+  slack: { attempt_count: 0, next_attempt_at: "2026-08-01T00:00:00.000Z", status: "pending" as const },
   marketing_sync: { attempt_count: 0, next_attempt_at: null, status: "skipped" as const },
 };
 
@@ -101,6 +106,19 @@ describe("request notification providers", () => {
     const body = String(vi.mocked(fetch).mock.calls[0]?.[1]?.body);
     expect(body).toContain("Contractant");
     expect(body).toContain("Facturant");
+  });
+
+  it("sends service and solution requests to Slack without partner claims", async () => {
+    await deliverServiceRequestChannel({ channel: "slack", record: serviceRecord(), requestId: "service-1" });
+    await deliverSolutionReferralChannel({ channel: "slack", record: solutionRecord(), requestId: "solution-1" });
+
+    expect(mocks.sendSlackMessage).toHaveBeenNthCalledWith(1, expect.objectContaining({
+      text: "[Services] Site vitrine & prise de contact",
+    }));
+    expect(mocks.sendSlackMessage).toHaveBeenNthCalledWith(2, expect.objectContaining({
+      text: "[Solutions] Mise en relation - Partenaire Juridique",
+    }));
+    expect(JSON.stringify(mocks.sendSlackMessage.mock.calls)).not.toContain("partenaire Demaa");
   });
 
   it("drops provider response bodies and exposes only a stable code and status", async () => {

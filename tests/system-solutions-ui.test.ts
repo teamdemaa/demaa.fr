@@ -52,7 +52,7 @@ describe("system Solutions UI", () => {
     );
     expect(markup).toContain("Outils");
     expect(markup).toContain("Qonto");
-    expect(markup).toContain("Prestataires et fournisseurs");
+    expect(markup).toContain("Fournisseurs");
     expect(markup).not.toMatch(/bientôt|placeholder/i);
   });
 
@@ -315,13 +315,13 @@ describe("system Solutions UI", () => {
 
     expect(renderToStaticMarkup(createElement(SystemSolutionsTab, {
       sections: getRenderableSolutionSectionsForSystem("batiment"),
-    }))).toContain("Prestataires et fournisseurs");
+    }))).toContain("Fournisseurs");
     expect(renderToStaticMarkup(createElement(SystemSolutionsTab, {
       sections: getRenderableSolutionSectionsForSystem("batiment"),
     }))).toContain("Réseaux professionnels");
     expect(renderToStaticMarkup(createElement(SystemSolutionsTab, {
       sections: getRenderableSolutionSectionsForSystem("cabinet-comptable"),
-    }))).toContain("Prestataires et fournisseurs");
+    }))).toContain("Fournisseurs");
     expect(renderToStaticMarkup(createElement(SystemSolutionsTab, {
       sections: getRenderableSolutionSectionsForSystem("cabinet-comptable"),
     }))).toContain("JuridiConsulting");

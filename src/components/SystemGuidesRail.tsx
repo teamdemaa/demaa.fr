@@ -106,7 +106,7 @@ export default function SystemGuidesRail({
         onScroll={updateRailState}
         className="grid max-w-full snap-x snap-mandatory grid-flow-col auto-cols-[78%] gap-6 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] sm:auto-cols-[46%] md:auto-cols-[calc((100%_-_3rem)_/_3)] [&::-webkit-scrollbar]:hidden"
       >
-        {orderedResources.map((resource) => {
+        {orderedResources.map((resource, resourceIndex) => {
           const isAvailable = resource.availability === "available";
           if (isAvailable) {
             return (
@@ -124,6 +124,7 @@ export default function SystemGuidesRail({
                       src={resource.preview.src}
                       alt={resource.preview.alt}
                       fill
+                      loading={resourceIndex === 0 ? "eager" : "lazy"}
                       sizes="(max-width: 640px) 78vw, (max-width: 768px) 46vw, 33vw"
                       className="object-cover transition group-hover:scale-[1.02]"
                     />
@@ -149,9 +150,9 @@ export default function SystemGuidesRail({
               data-guide-resource-card
               className="min-w-0 snap-start"
             >
-              <div className="relative aspect-[16/9] overflow-hidden rounded-[0.9rem] border border-dema-line bg-dema-line/60">
-                <div className="absolute inset-0 flex items-center px-5 sm:px-7">
-                  <span className="max-w-[88%] text-[clamp(1.25rem,2.4vw,1.8rem)] font-light leading-[1.08] tracking-[-0.025em] text-dema-muted">
+              <div className="relative aspect-[16/9] overflow-hidden rounded-[0.9rem] border border-dema-line bg-[#f4f5f2] shadow-[0_10px_28px_rgba(23,35,29,0.035)]">
+                <div className="absolute inset-0 flex items-center px-5 sm:px-6">
+                  <span className="max-w-[88%] text-[clamp(1rem,1.5vw,1.25rem)] font-light leading-[1.18] tracking-[-0.02em] text-dema-muted">
                     {resource.title}
                   </span>
                 </div>
@@ -160,14 +161,17 @@ export default function SystemGuidesRail({
                 <p className="text-sm font-medium leading-snug text-dema-muted">
                   {resource.tagline ?? resource.title}
                 </p>
-                <p className="mt-1 text-xs text-dema-muted">Bientôt disponible</p>
-                <button
-                  type="button"
-                  onClick={() => setNotifyResource(resource)}
-                  className="mt-3 text-sm font-medium text-dema-forest underline decoration-dema-forest/35 underline-offset-4 transition hover:text-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
-                >
-                  Être informé(e)
-                </button>
+                <p className="mt-1 flex flex-wrap items-baseline gap-x-1 text-xs text-dema-muted">
+                  <span>Bientôt disponible</span>
+                  <span aria-hidden="true">·</span>
+                  <button
+                    type="button"
+                    onClick={() => setNotifyResource(resource)}
+                    className="font-medium text-dema-forest underline decoration-dema-forest/35 underline-offset-4 transition hover:text-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
+                  >
+                    Être informé(e)
+                  </button>
+                </p>
               </div>
             </article>
           );

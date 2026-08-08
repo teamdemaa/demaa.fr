@@ -118,7 +118,11 @@ async function handlePost(request: Request) {
   }
 
   const resource = getSystemResource(resourceSlug);
-  if (!resource || resource.availability !== "coming-soon") {
+  if (
+    !resource ||
+    resource.availability !== "coming-soon" ||
+    (resource.systemSlugs && !resource.systemSlugs.includes(systemSlug))
+  ) {
     return NextResponse.json(
       { error: "Cette ressource n’est pas en liste d’attente." },
       { status: 404 },

@@ -46,7 +46,7 @@ describe("Firebase Solutions revision contract", () => {
     const revision = migrationRevision;
     const expectedSystemSlugs = modules.enterpriseCatalog.map(({ slug }) => slug);
     const sectionCounts = Object.fromEntries(
-      ["software", "providers", "models", "networks"].map((section) => [
+      ["software", "services", "providers", "models", "networks"].map((section) => [
         section,
         revision.placements.filter(({ placement }) => placement.section === section).length,
       ]),
@@ -54,10 +54,11 @@ describe("Firebase Solutions revision contract", () => {
 
     expect(revision.revisionStatus).toBe("published");
     expect(revision.knownSystemSlugs).toEqual(expectedSystemSlugs);
-    expect(revision.placements).toHaveLength(603);
+    expect(revision.placements).toHaveLength(643);
     expect(sectionCounts).toEqual({
       software: 313,
-      providers: 85,
+      services: 0,
+      providers: 125,
       models: 115,
       networks: 90,
     });
@@ -140,8 +141,8 @@ describe("Firebase Solutions revision contract", () => {
     const revision = migrationRevision;
     const plan = modules.buildImportPlan(revision);
 
-    expect(plan.writes).toHaveLength(853);
-    expect(plan.writeBatches.map((batch) => batch.length)).toEqual([400, 400, 53]);
+    expect(plan.writes).toHaveLength(894);
+    expect(plan.writeBatches.map((batch) => batch.length)).toEqual([400, 400, 94]);
     expect(plan.activation).toEqual({
       path: "solution_registry_config/active",
       data: {
@@ -153,7 +154,7 @@ describe("Firebase Solutions revision contract", () => {
     expect(modules.buildRollback(revision)).toEqual(plan.activation);
   });
 
-  it("preserves the visible card contract for every system", () => {
+  it("preserves every existing card and adds Amazon Business only to service and digital systems", () => {
     const now = new Date("2026-08-05T12:00:00.000Z");
     const revision = migrationRevision;
     const comparable = (sections: ReturnType<RegistryModules["getLegacySections"]>) =>
@@ -167,10 +168,26 @@ describe("Firebase Solutions revision contract", () => {
       }))));
 
     for (const { slug } of modules.enterpriseCatalog) {
+      const selected = modules.selectSections(revision, slug, { now });
+      const withoutAmazon = selected.flatMap(({ section, placements }) => {
+        const remaining = placements.filter(
+          ({ resource }) => resource.resourceSlug !== "amazon-business",
+        );
+        return remaining.length > 0 ? [{ section, placements: remaining }] : [];
+      });
+      expect(comparable(withoutAmazon), slug)
+        .toEqual(comparable(modules.getLegacySections(slug, now)));
+
+      const enterprise = modules.enterpriseCatalog.find((entry) => entry.slug === slug);
+      const expectsAmazon = enterprise
+        ? ["Conseil & services aux entreprises", "Tech & Digital"]
+          .includes(enterprise.sectorLabel)
+        : false;
       expect(
-        comparable(modules.selectSections(revision, slug, { now })),
+        selected.flatMap(({ placements }) => placements)
+          .some(({ resource }) => resource.resourceSlug === "amazon-business"),
         slug,
-      ).toEqual(comparable(modules.getLegacySections(slug, now)));
+      ).toBe(expectsAmazon);
     }
   });
 });

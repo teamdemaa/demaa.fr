@@ -8,6 +8,11 @@ import {
   type ExpertiseCatalogEntry,
 } from "@/lib/expertise-catalog-contract";
 import {
+  parseExpertisePlacement,
+  type ExpertisePlacement,
+} from "@/lib/expertise-placement-contract";
+import { buildExpertisePlacementSeeds } from "@/lib/expertise-placement-seeds";
+import {
   isPublicOpenOpportunity,
   parseOpportunity,
   type PublicOpportunity,
@@ -19,6 +24,7 @@ import {
 import { resolveProviderNetworkSource } from "@/lib/provider-network-source";
 
 export const EXPERTISE_CATALOG_COLLECTION = "expertise_catalog";
+export const EXPERTISE_PLACEMENTS_COLLECTION = "expertise_placements";
 export const OPPORTUNITIES_COLLECTION = "opportunities";
 
 function sortExpertises(entries: readonly ExpertiseCatalogEntry[]) {
@@ -50,6 +56,15 @@ async function loadExpertisesFromFirestore() {
     snapshot.docs.map((document) =>
       parseExpertiseCatalogEntry(document.data(), `expertise:${document.id}`)
     ),
+  );
+}
+
+async function loadExpertisePlacementsFromFirestore() {
+  const snapshot = await getAdminFirestore()
+    .collection(EXPERTISE_PLACEMENTS_COLLECTION)
+    .get();
+  return snapshot.docs.map((document) =>
+    parseExpertisePlacement(document.data(), `expertisePlacement:${document.id}`)
   );
 }
 
@@ -94,6 +109,15 @@ export const getAllOpportunities = unstable_cache(
   { revalidate: 60, tags: ["provider-network-opportunities"] },
 );
 
+export const getExpertisePlacements = unstable_cache(
+  async (): Promise<readonly ExpertisePlacement[]> => loadFromAuthoritativeSource({
+    fallback: buildExpertisePlacementSeeds,
+    remote: loadExpertisePlacementsFromFirestore,
+  }),
+  ["provider-network-expertise-placements"],
+  { revalidate: 300, tags: ["provider-network-expertise-placements"] },
+);
+
 export async function getPublicOpenOpportunities(now = new Date()) {
   const opportunities = await getAllOpportunities();
   return opportunities
@@ -111,6 +135,14 @@ export async function getPublicExpertises() {
 export async function getExpertiseById(expertiseId: string) {
   return (await getExpertiseCatalog())
     .find((entry) => entry.expertiseId === expertiseId) ?? null;
+}
+
+export async function getSelectedExpertisePlacementsForSystem(systemSlug: string) {
+  return (await getExpertisePlacements())
+    .filter((placement) => (
+      placement.systemSlug === systemSlug && placement.visibility === "selected"
+    ))
+    .sort((left, right) => left.rank - right.rank);
 }
 
 export async function getOpportunityById(opportunityId: string) {

@@ -363,7 +363,7 @@ describe("family solution selections", () => {
   });
 
   it("curates the selected under-covered trades without widening the deferred set", () => {
-    const sectionOrder = ["software", "providers", "models", "networks"] as const;
+    const sectionOrder = ["software", "services", "providers", "models", "networks"] as const;
     const slugsFor = (systemSlug: string, section?: "software" | "networks") =>
       getFamilySystemSolutionSelection(systemSlug)?.placements
         .filter(({ resourceSlug, section: placementSection }) =>
