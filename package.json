@@ -113,6 +113,7 @@
     "export:firebase-solutions-snapshot": "vite-node --config vite.firebase-registry.config.ts scripts/build-firebase-solution-registry-snapshot.ts --write",
     "plan:firebase-solutions-import": "vite-node --config vite.firebase-registry.config.ts scripts/plan-firebase-solution-registry-import.ts",
     "plan:firebase-opportunities-import": "vite-node --config vite.firebase-registry.config.ts scripts/plan-b2b-opportunities-firebase-import.ts",
+    "import:firebase-opportunities-preview": "vite-node --config vite.firebase-registry.config.ts scripts/import-b2b-opportunities-firebase-preview.ts",
     "import:firebase-solutions-preview": "vite-node --config vite.firebase-registry.config.ts scripts/import-firebase-solution-registry-preview.ts",
     "import:firebase-solutions-production": "vite-node --config vite.firebase-registry.config.ts scripts/import-firebase-solution-registry-preview.ts --target=production",
     "verify:firebase-solutions-emulator": "npx --yes firebase-tools emulators:exec --only firestore --project demo-demaa-solutions --config firebase.solutions-emulator.json \"vite-node --config vite.firebase-registry.config.ts scripts/verify-firebase-solution-registry-emulator.ts\"",
