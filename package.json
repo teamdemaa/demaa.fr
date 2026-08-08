@@ -112,6 +112,7 @@
     "generate:operational-v2-pilots": "vite-node --config vitest.config.ts scripts/build-operational-workbook-v2-pilots.ts",
     "export:firebase-solutions-snapshot": "vite-node --config vite.firebase-registry.config.ts scripts/build-firebase-solution-registry-snapshot.ts --write",
     "plan:firebase-solutions-import": "vite-node --config vite.firebase-registry.config.ts scripts/plan-firebase-solution-registry-import.ts",
+    "plan:firebase-solutions-france-cleanup": "vite-node --config vite.firebase-registry.config.ts scripts/plan-firebase-solutions-france-cleanup.ts",
     "plan:provider-network-import": "vite-node --config vite.firebase-registry.config.ts scripts/plan-provider-network-import.ts",
     "import:provider-network": "vite-node --config vite.firebase-registry.config.ts scripts/import-provider-network-firebase.ts",
     "import:firebase-solutions-preview": "vite-node --config vite.firebase-registry.config.ts scripts/import-firebase-solution-registry-preview.ts",
