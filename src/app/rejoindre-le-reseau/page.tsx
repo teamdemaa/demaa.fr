@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { connection } from "next/server";
 import ExpertiseCatalogClient from "@/components/ExpertiseCatalogClient";
 import Navbar from "@/components/Navbar";
 import { getPublicExpertises } from "@/lib/provider-network.server";
@@ -22,6 +23,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ProviderNetworkPage() {
+  await connection();
   const expertises = await getPublicExpertises();
 
   return (

@@ -36,4 +36,20 @@ describe("solution proposal UI contract", () => {
     expect(form).toContain('role="alert"');
     expect(form).toContain('aria-live="polite"');
   });
+
+  it("loads Firebase-backed pages at request time and retires the legacy dossier", async () => {
+    const [networkPage, opportunitiesPage, adminPage, legacyPage] = await Promise.all([
+      readSource("src/app/rejoindre-le-reseau/page.tsx"),
+      readSource("src/app/opportunites/page.tsx"),
+      readSource("src/app/admin/opportunites/page.tsx"),
+      readSource("src/app/opportunites/0034/page.tsx"),
+    ]);
+
+    for (const source of [networkPage, opportunitiesPage, adminPage]) {
+      expect(source).toContain('import { connection } from "next/server"');
+      expect(source).toContain("await connection()");
+    }
+    expect(legacyPage).toContain('permanentRedirect("/opportunites")');
+    expect(legacyPage).not.toContain("Cabinet d’expertise comptable");
+  });
 });

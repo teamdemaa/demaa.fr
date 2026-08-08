@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { connection } from "next/server";
 import Navbar from "@/components/Navbar";
 import OpportunityAdminClient from "@/components/OpportunityAdminClient";
 import { getPublicExpertises } from "@/lib/provider-network.server";
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default async function OpportunityAdminPage() {
+  await connection();
   const expertises = await getPublicExpertises();
   return (
     <>

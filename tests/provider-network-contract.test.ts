@@ -6,6 +6,7 @@ import {
   parseExpertiseCatalogEntry,
 } from "@/lib/expertise-catalog-contract";
 import { isPublicOpenOpportunity, parseOpportunity } from "@/lib/opportunity-contract";
+import { resolveProviderNetworkSource } from "@/lib/provider-network-source";
 
 describe("provider network contract", () => {
   it("contains the 23 canonical public expertises without duplicate IDs", () => {
@@ -28,5 +29,28 @@ describe("provider network contract", () => {
     expect(entries.every((entry) =>
       isPublicOpenOpportunity(entry, new Date("2026-08-08T12:00:00.000Z"))
     )).toBe(true);
+  });
+
+  it("uses snapshots only outside deployed environments", () => {
+    expect(resolveProviderNetworkSource(
+      { NODE_ENV: "test" },
+      false,
+    )).toBe("snapshot");
+    expect(resolveProviderNetworkSource(
+      { NODE_ENV: "development" },
+      true,
+    )).toBe("firebase");
+    expect(resolveProviderNetworkSource(
+      { NODE_ENV: "production" },
+      true,
+    )).toBe("firebase");
+    expect(() => resolveProviderNetworkSource(
+      { NODE_ENV: "production" },
+      false,
+    )).toThrow(/Firebase Admin doit être configuré/);
+    expect(() => resolveProviderNetworkSource(
+      { NODE_ENV: "development", VERCEL_ENV: "preview" },
+      false,
+    )).toThrow(/Firebase Admin doit être configuré/);
   });
 });

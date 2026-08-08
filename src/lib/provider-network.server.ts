@@ -16,6 +16,7 @@ import {
   getAdminFirestore,
   hasFirebaseAdminConfiguration,
 } from "@/lib/firebase-admin";
+import { resolveProviderNetworkSource } from "@/lib/provider-network-source";
 
 export const EXPERTISE_CATALOG_COLLECTION = "expertise_catalog";
 export const OPPORTUNITIES_COLLECTION = "opportunities";
@@ -65,10 +66,11 @@ async function loadFromAuthoritativeSource<T>(input: {
   fallback: () => T;
   remote: () => Promise<T>;
 }) {
-  if (
-    process.env.DEMAA_FORCE_LOCAL_DATA === "true"
-    || !hasFirebaseAdminConfiguration()
-  ) {
+  const source = resolveProviderNetworkSource(
+    process.env,
+    hasFirebaseAdminConfiguration(),
+  );
+  if (source === "snapshot") {
     return input.fallback();
   }
   return input.remote();

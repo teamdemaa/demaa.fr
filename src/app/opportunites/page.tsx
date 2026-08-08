@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { connection } from "next/server";
 import Navbar from "@/components/Navbar";
 import PublicOpportunitiesClient from "@/components/PublicOpportunitiesClient";
 import {
@@ -25,6 +26,7 @@ export const metadata: Metadata = {
 };
 
 export default async function OpportunitiesPage() {
+  await connection();
   const [expertises, opportunities] = await Promise.all([
     getPublicExpertises(),
     getPublicOpenOpportunities(),
