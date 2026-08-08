@@ -1,12 +1,11 @@
 "use client";
 
-import Link from "next/link";
 import { useMemo, useState } from "react";
-import { BookOpen } from "lucide-react";
-import DocumentModelPreview from "@/components/DocumentModelPreview";
+import ModelResourceCard from "@/components/ModelResourceCard";
 import LibraryIndexHeader from "@/components/LibraryIndexHeader";
 import type { DocumentModel } from "@/lib/document-models";
 import { matchesSearchQuery } from "@/lib/search";
+import { SYSTEM_RESOURCES } from "@/lib/system-resource-catalog";
 
 type ResourcesIndexClientProps = {
   entries: DocumentModel[];
@@ -92,50 +91,17 @@ export default function ResourcesIndexClient({
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 gap-3 sm:gap-6 xl:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {filteredEntries.map((entry) => {
+              const resource = SYSTEM_RESOURCES.find((item) => item.resourceSlug === entry.slug);
+              if (!resource) return null;
               return (
-                <Link
+                <div
                   key={entry.slug}
-                  href={`/modeles-de-documents/${entry.slug}`}
-                  className="block h-full group"
+                  className="h-full"
                 >
-                  <article className="flex h-full flex-col overflow-hidden rounded-3xl border border-gray-100 bg-white transition-all duration-300 group-hover:-translate-y-0.5 group-hover:shadow-[0_6px_18px_rgba(0,0,0,0.045)]">
-                    <div className="relative aspect-[16/9] overflow-hidden border-b border-gray-100 bg-white">
-                      <DocumentModelPreview model={entry} />
-                    </div>
-                    <div className="flex flex-1 flex-col p-6">
-                      <div className="flex items-center gap-4">
-                        <div className="flex items-center space-x-2 text-sm font-medium text-brand-coral">
-                          <BookOpen className="h-4 w-4" />
-                          <span>
-                            {new Date(entry.date).toLocaleDateString("fr-FR", {
-                              year: "numeric",
-                              month: "long",
-                              day: "numeric",
-                            })}
-                          </span>
-                        </div>
-                      </div>
-                      <h2 className="mt-4 text-[1.85rem] font-normal leading-tight text-brand-blue transition-colors group-hover:text-neutral-700">
-                        {entry.title}
-                      </h2>
-                      <p className="mt-3 leading-relaxed text-gray-500">
-                        {entry.description}
-                      </p>
-                      <div className="mt-4 flex flex-wrap gap-2">
-                        {entry.tags.slice(0, 3).map((tag) => (
-                          <span
-                            key={tag}
-                            className="rounded-full bg-dema-sage/75 px-2.5 py-1 text-[10px] font-medium text-brand-blue/75"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </article>
-                </Link>
+                  <ModelResourceCard resource={resource} />
+                </div>
               );
             })}
           </div>

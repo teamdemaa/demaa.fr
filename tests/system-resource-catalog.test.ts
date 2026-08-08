@@ -12,22 +12,29 @@ import {
 } from "@/lib/system-resource-assets.server";
 
 describe("system Resources catalog", () => {
-  it("publishes the five neutral resources in the agreed order", () => {
+  it("publishes the two shared guides, then restaurant-only upcoming guides", () => {
     expect(SYSTEM_RESOURCES.map(({ title }) => title)).toEqual([
       "Tableau de pilotage opérationnel",
       "Suivi et prévisionnel financier",
       "CRM - suivi commercial",
-      "La facturation électronique",
       "Maîtriser les obligations et les finances de son entreprise",
+      "La facturation électronique",
+      "Comment ouvrir un restaurant ?",
+      "Comment gérer un restaurant ?",
     ]);
-    expect(SYSTEM_RESOURCES.map(({ rank }) => rank)).toEqual([1, 2, 3, 4, 5]);
+    expect(SYSTEM_RESOURCES.filter(({ format }) => format === "template").map(({ title }) => title)).toEqual([
+      "Tableau de pilotage opérationnel",
+      "Suivi et prévisionnel financier",
+      "CRM - suivi commercial",
+    ]);
+    expect(SYSTEM_RESOURCES.filter(({ availability }) => availability === "coming-soon").every((resource) => resource.systemSlugs?.includes("restaurant"))).toBe(true);
     expect(JSON.stringify(SYSTEM_RESOURCES)).not.toMatch(
       /docs\.google\.com|airtable\.com|downloads\/guides|Levier/,
     );
   });
 
   it("keeps destinations server-only and ties delivery to an immutable revision", () => {
-    for (const resource of SYSTEM_RESOURCES.slice(1)) {
+    for (const resource of SYSTEM_RESOURCES.filter(({ availability }) => availability === "available").slice(1)) {
       const snapshot = getSystemResourceAssetSnapshot(resource.resourceSlug);
       expect(snapshot).toMatchObject({
         resourceId: resource.resourceSlug,

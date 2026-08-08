@@ -34,7 +34,7 @@ function getDocumentModelDestination(
   return new URL(`/spreadsheets/d/${sheetId}/copy`, parsed.origin).toString();
 }
 
-const RESOURCE_ASSET_REVISIONS: Readonly<Record<ExternalResourceSlug, readonly ResourceAssetRevision[]>> = {
+const RESOURCE_ASSET_REVISIONS: Readonly<Partial<Record<ExternalResourceSlug, readonly ResourceAssetRevision[]>>> = {
   "suivi-previsionnel-financier": [{
     assetRevision: "suivi-previsionnel-financier-v1-2026-08-05",
     destination: getDocumentModelDestination("suivi-previsionnel-financier", "copy"),
@@ -42,7 +42,7 @@ const RESOURCE_ASSET_REVISIONS: Readonly<Record<ExternalResourceSlug, readonly R
   }],
   "crm-suivi-commercial": [{
     assetRevision: "crm-suivi-commercial-airtable-v1-2026-08-05",
-    destination: getDocumentModelDestination("pilotage-marketing-vente", "direct"),
+    destination: getDocumentModelDestination("crm-suivi-commercial", "direct"),
     workbookVersion: "1.0.0",
   }],
   "guide-facturation-electronique": [

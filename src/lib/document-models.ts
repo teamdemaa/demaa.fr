@@ -89,6 +89,20 @@ export function getOperationalSystemDemoUrl(
 
 const globalDocumentModels: DocumentModel[] = [
   {
+    slug: "tableau-pilotage-operationnel",
+    title: "Tableau de pilotage opérationnel",
+    seoTitle: "Tableau de pilotage opérationnel pour TPE | Modèle Demaa",
+    description: "Un tableau simple pour suivre les priorités, les actions et les résultats de votre activité.",
+    content: "## Piloter l’essentiel\n\nUn modèle pour organiser les priorités, les actions et les indicateurs utiles à votre activité.",
+    category: "Pilotage",
+    date: "2026-08-08",
+    image: "/images/levier/levier-tableau-de-bord-preview.webp",
+    ctaLabel: "Ouvrir le modèle",
+    ctaHref: "https://demaa.fr/api/systeme-kit/open/tableau-pilotage-operationnel",
+    tags: ["modele", "pilotage", "tableau de bord"],
+    featuredRank: 1,
+  },
+  {
     slug: "suivi-previsionnel-financier",
     title: "Suivi et prévisionnel financier",
     seoTitle: "Suivi et prévisionnel financier pour TPE | Modèle Demaa",
@@ -143,10 +157,10 @@ Ce modèle est particulièrement utile si vous voulez :
     relatedSystemSlugs:
       RELATED_SYSTEM_SLUGS_BY_CONTENT_SLUG["suivi-previsionnel-financier"] ??
       [],
-    featuredRank: 1,
+    featuredRank: 2,
   },
   {
-    slug: "pilotage-marketing-vente",
+    slug: "crm-suivi-commercial",
     title: "CRM - suivi commercial",
     seoTitle: "CRM de suivi commercial pour TPE | Modèle Airtable Demaa",
     description:
@@ -197,7 +211,7 @@ Ce modèle est particulièrement utile si vous voulez :
     relatedSystemSlugs:
       RELATED_SYSTEM_SLUGS_BY_CONTENT_SLUG["pilotage-marketing-vente"] ??
       [],
-    featuredRank: 2,
+    featuredRank: 3,
   },
 ];
 

@@ -1,12 +1,9 @@
 "use client";
 
-import { ChevronLeft, ChevronRight, FileText } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import OperationalSystemCopyRequestModal from "@/components/OperationalSystemCopyRequestModal";
-import {
-  SYSTEM_RESOURCES,
-  type SystemResource,
-} from "@/lib/system-resource-catalog";
+import ModelResourceCard from "@/components/ModelResourceCard";
+import { SYSTEM_RESOURCES, type SystemResource } from "@/lib/system-resource-catalog";
 
 type RailState = Readonly<{
   canNext: boolean;
@@ -14,18 +11,16 @@ type RailState = Readonly<{
 }>;
 
 export default function SystemResourcesTab({
-  resources = SYSTEM_RESOURCES,
-  systemSlug,
+  resources = SYSTEM_RESOURCES.filter((resource) => resource.format === "template"),
 }: {
   resources?: readonly SystemResource[];
-  systemSlug: string;
+  systemSlug?: string;
 }) {
   const orderedResources = useMemo(
     () => [...resources].sort((left, right) => left.rank - right.rank),
     [resources],
   );
   const railRef = useRef<HTMLDivElement | null>(null);
-  const [selectedResource, setSelectedResource] = useState<SystemResource | null>(null);
   const [railState, setRailState] = useState<RailState>({
     canNext: orderedResources.length > 1,
     canPrevious: false,
@@ -71,10 +66,11 @@ export default function SystemResourcesTab({
   }
 
   return (
-    <>
-      <section aria-label="Ressources du système" className="min-w-0 max-w-full overflow-hidden">
+      <section aria-labelledby="system-models-title" className="min-w-0 max-w-full overflow-hidden">
+        <div className="mb-4 flex items-center justify-between gap-3">
+          <h3 id="system-models-title" className="text-[11px] font-semibold uppercase tracking-[0.15em] text-dema-muted">Modèles et documents</h3>
         {orderedResources.length > 1 ? (
-          <div className="mb-4 flex justify-end gap-2">
+          <div className="flex gap-2">
             <button
               type="button"
               aria-label="Voir les ressources précédentes"
@@ -95,6 +91,7 @@ export default function SystemResourcesTab({
             </button>
           </div>
         ) : null}
+        </div>
 
         <div
           ref={railRef}
@@ -102,40 +99,15 @@ export default function SystemResourcesTab({
           className="grid max-w-full snap-x snap-mandatory grid-flow-col auto-cols-[82%] gap-4 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] md:auto-cols-[calc((100%_-_2rem)_/_3)] [&::-webkit-scrollbar]:hidden"
         >
           {orderedResources.map((resource) => (
-            <button
+            <div
               key={resource.resourceSlug}
-              type="button"
               data-system-resource-card
-              onClick={() => setSelectedResource(resource)}
-              className="group min-h-[248px] min-w-0 snap-start overflow-hidden rounded-[1.2rem] border border-dema-line bg-dema-paper p-5 text-left shadow-[0_10px_28px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/20 hover:shadow-[0_14px_32px_rgba(23,35,29,0.07)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:p-6 md:aspect-square md:min-h-0"
-              aria-label={`Ouvrir ${resource.title}`}
+              className="min-w-0 snap-start"
             >
-              <span className="flex h-full min-h-0 flex-col">
-                <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
-                  <FileText className="h-5 w-5" aria-hidden="true" />
-                </span>
-                <span className="mt-4 block text-[10px] font-semibold uppercase tracking-[0.15em] text-dema-muted md:mt-5">
-                  {resource.formatLabel}
-                </span>
-                <span className="mt-1.5 block text-lg font-semibold leading-snug text-brand-blue sm:text-xl md:mt-2">
-                  {resource.title}
-                </span>
-                <span className="mt-2 text-[13px] leading-5 text-dema-muted md:mt-3 md:text-sm md:leading-relaxed">
-                  {resource.description}
-                </span>
-              </span>
-            </button>
+              <ModelResourceCard resource={resource} />
+            </div>
           ))}
         </div>
       </section>
-
-      {selectedResource ? (
-        <OperationalSystemCopyRequestModal
-          resource={selectedResource}
-          systemSlug={systemSlug}
-          onClose={() => setSelectedResource(null)}
-        />
-      ) : null}
-    </>
   );
 }

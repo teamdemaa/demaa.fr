@@ -6,6 +6,7 @@ import { ArrowLeft } from "lucide-react";
 import { type KeyboardEvent, useState } from "react";
 import SystemCustomOfferCta from "@/components/SystemCustomOfferCta";
 import SystemResourcesTab from "@/components/SystemResourcesTab";
+import SystemGuidesRail from "@/components/SystemGuidesRail";
 import SystemSolutionsTab from "@/components/SystemSolutionsTab";
 import SystemeTabContent from "@/components/SystemeTabContent";
 import type { SystemeDetail } from "@/lib/systeme-catalog";
@@ -17,6 +18,7 @@ import {
 } from "@/lib/system-detail-tabs";
 import type { RenderableSolutionSectionDto } from "@/lib/system-solutions-ui-dto";
 import type { System } from "@/lib/types";
+import { getSystemResourcesForSystem } from "@/lib/system-resource-catalog";
 
 type SystemDetailContentProps = {
   system: System;
@@ -156,7 +158,10 @@ export default function SystemDetailContent({
         ) : null}
 
         {activeTab === "resources" ? (
-          <SystemResourcesTab systemSlug={system.slug} />
+          <div className="space-y-10">
+            <SystemGuidesRail systemSlug={system.slug} resources={getSystemResourcesForSystem(system.slug).filter((resource) => resource.format === "guide")} />
+            <SystemResourcesTab systemSlug={system.slug} resources={getSystemResourcesForSystem(system.slug).filter((resource) => resource.format === "template")} />
+          </div>
         ) : null}
       </section>
       {activeTab !== "resources" ? (

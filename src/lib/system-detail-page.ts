@@ -353,7 +353,7 @@ function buildSystemPageDescription(
 
   if (hasEditableOperationalSystemAsset(data.system.slug)) {
     parts.push(
-      `${SYSTEM_RESOURCES.length} ressources pratiques sont disponibles avec un aperçu réel et un envoi gratuit par e-mail.`,
+      "Des guides et modèles pratiques sont accessibles directement.",
     );
   }
 

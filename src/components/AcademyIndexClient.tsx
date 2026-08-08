@@ -6,6 +6,8 @@ import { ChevronDown, ChevronUp, Search, SlidersHorizontal } from "lucide-react"
 import { useMemo, useState } from "react";
 import type { AcademyContentDefinition } from "@/lib/academy-course-content";
 import { matchesSearchQuery } from "@/lib/search";
+import ModelResourceCard from "@/components/ModelResourceCard";
+import { SYSTEM_RESOURCES } from "@/lib/system-resource-catalog";
 
 type AcademyIndexClientProps = {
   contents: AcademyContentDefinition[];
@@ -424,6 +426,14 @@ export default function AcademyIndexClient({ contents, backLink }: AcademyIndexC
             ) : null}
           </section>
         ) : null}
+
+        <section className="mt-12 border-t border-dema-line/75 pt-9 md:mt-14 md:pt-10" aria-labelledby="academy-models-title">
+          <h2 id="academy-models-title" className="text-2xl font-semibold text-brand-blue md:text-[2rem]">Modèles et documents</h2>
+          <p className="mt-2 text-sm leading-relaxed text-dema-muted">Des modèles directement accessibles pour structurer et piloter votre activité.</p>
+          <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {SYSTEM_RESOURCES.filter((resource) => resource.format === "template").sort((a, b) => a.rank - b.rank).map((resource) => <ModelResourceCard key={resource.resourceSlug} resource={resource} />)}
+          </div>
+        </section>
 
         {caseStudies.length ? (
           <section className="mt-12 border-t border-dema-line/75 pt-9 md:mt-14 md:pt-10" aria-labelledby="case-studies-title">
