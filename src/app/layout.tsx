@@ -4,6 +4,7 @@ import "./globals.css";
 import ConditionalFooter from "@/components/ConditionalFooter";
 import CookieConsentManager from "@/components/CookieConsentManager";
 import Footer from "@/components/Footer";
+import { getCanonicalOrigin } from "@/lib/site-url";
 
 const satoshi = localFont({
   src: [
@@ -56,7 +57,7 @@ export const metadata: Metadata = {
   title: "Demaa | Structurez votre entreprise",
   description:
     "Demaa clarifie les responsabilités, formalise les processus et configure un espace de pilotage pour que votre entreprise dépende moins de vous.",
-  metadataBase: new URL('https://demaa.fr'),
+  metadataBase: new URL(getCanonicalOrigin()),
   openGraph: {
     title: "Demaa | Structurez votre entreprise",
     description:

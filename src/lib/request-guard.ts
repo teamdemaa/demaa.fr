@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
-import { getCanonicalSiteUrl, isAllowedRequestHost } from "@/lib/site-url";
+import {
+  getCanonicalSiteUrl,
+  isAllowedRequestHost,
+  isAllowedRequestOrigin,
+} from "@/lib/site-url";
 
 export function enforceAllowedHost(request: Request) {
   if (isAllowedRequestHost(request)) {
@@ -20,8 +24,7 @@ export function enforceSameOrigin(request: Request) {
   try {
     if (
       origin &&
-      new URL(origin).origin === new URL(request.url).origin &&
-      isAllowedRequestHost(request)
+      isAllowedRequestOrigin(request, origin)
     ) {
       return null;
     }

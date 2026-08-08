@@ -12,6 +12,7 @@ import {
 } from "@/lib/academy-course-content";
 import { getCourseEntryBySlug } from "@/lib/course-content";
 import { getRelatedSystemsForContentSlug } from "@/lib/related-systems";
+import { getCanonicalOrigin } from "@/lib/site-url";
 
 export async function generateMetadata(
   props: { params: Promise<{ slug: string }> }
@@ -109,7 +110,7 @@ export default async function CourseDetailPage(
       "@type": "Organization",
       name: "Demaa",
     },
-    mainEntityOfPage: `https://demaa.fr/cours/${entry.slug}`,
+    mainEntityOfPage: `${getCanonicalOrigin()}/cours/${entry.slug}`,
   };
   const faqJsonLd = entry.faq?.length
     ? {

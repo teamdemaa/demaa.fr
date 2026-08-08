@@ -19,4 +19,3 @@ export const STRUCTURE_VOICE_SUBMISSION = {
 
 export const STRUCTURE_PROBLEM_REQUEST_TYPE =
   "structure_problem_submission";
-

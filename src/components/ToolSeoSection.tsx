@@ -1,11 +1,13 @@
 import Link from "next/link";
 import type { FreeToolSeo } from "@/lib/free-tool-seo";
+import { getCanonicalOrigin } from "@/lib/site-url";
 
 type ToolSeoSectionProps = {
   tool: FreeToolSeo;
 };
 
 export default function ToolSeoSection({ tool }: ToolSeoSectionProps) {
+  const origin = getCanonicalOrigin();
   const jsonLd = [
     {
       "@context": "https://schema.org",
@@ -13,7 +15,7 @@ export default function ToolSeoSection({ tool }: ToolSeoSectionProps) {
       name: tool.title,
       applicationCategory: "BusinessApplication",
       operatingSystem: "Web",
-      url: `https://demaa.fr${tool.path}`,
+      url: `${origin}${tool.path}`,
       offers: {
         "@type": "Offer",
         price: "0",
@@ -41,19 +43,19 @@ export default function ToolSeoSection({ tool }: ToolSeoSectionProps) {
           "@type": "ListItem",
           position: 1,
           name: "Accueil",
-          item: "https://demaa.fr",
+          item: origin,
         },
         {
           "@type": "ListItem",
           position: 2,
           name: "Annuaire outils",
-          item: "https://demaa.fr/annuaire-outils",
+          item: `${origin}/annuaire-outils`,
         },
         {
           "@type": "ListItem",
           position: 3,
           name: tool.title,
-          item: `https://demaa.fr${tool.path}`,
+          item: `${origin}${tool.path}`,
         },
       ],
     },

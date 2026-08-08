@@ -54,24 +54,24 @@ const RESOURCE_ASSET_REVISIONS: Readonly<Partial<Record<ExternalResourceSlug, re
   "guide-facturation-electronique": [
     {
       assetRevision: "guide-facturation-electronique-slides-v2-2026-08-06",
-      destination: "https://demaa.fr/downloads/presentations/presentation-facturation-electronique-demaa.pdf",
+      destination: "https://demaa.co/downloads/presentations/presentation-facturation-electronique-demaa.pdf",
       workbookVersion: "2.0.0",
     },
     {
       assetRevision: "guide-facturation-electronique-v1-2026-08-05",
-      destination: "https://demaa.fr/downloads/guides/guide-facturation-electronique-demaa.pdf",
+      destination: "https://demaa.co/downloads/guides/guide-facturation-electronique-demaa.pdf",
       workbookVersion: "1.0.0",
     },
   ],
   "guide-obligations-fiscales-sociales-comptables": [
     {
       assetRevision: "guide-obligations-fiscales-sociales-comptables-slides-v2-2026-08-06",
-      destination: "https://demaa.fr/downloads/presentations/presentation-obligations-finances-demaa.pdf",
+      destination: "https://demaa.co/downloads/presentations/presentation-obligations-finances-demaa.pdf",
       workbookVersion: "2.0.0",
     },
     {
       assetRevision: "guide-obligations-fiscales-sociales-comptables-v1-2026-08-05",
-      destination: "https://demaa.fr/downloads/guides/guide-obligations-fiscales-sociales-comptables-demaa.pdf",
+      destination: "https://demaa.co/downloads/guides/guide-obligations-fiscales-sociales-comptables-demaa.pdf",
       workbookVersion: "1.0.0",
     },
   ],

@@ -53,7 +53,7 @@ describe("Academy SEO, redirects and assets", () => {
   it("uses every short title and exact canonical URL in route metadata", async () => {
     for (const content of getAllAcademyContent()) {
       const expectedTitle = `${content.identity.shortTitle} | Académie Demaa`;
-      const expectedCanonical = `https://demaa.fr/academie/${content.identity.slug}`;
+      const expectedCanonical = `https://demaa.co/academie/${content.identity.slug}`;
       const metadata = buildAcademyContentMetadata(content);
       const routeMetadata = await generateMetadata({
         params: Promise.resolve({ slug: content.identity.slug }),
@@ -70,7 +70,7 @@ describe("Academy SEO, redirects and assets", () => {
   it("emits BreadcrumbList plus Course/LearningResource for fundamentals", () => {
     for (const content of getAcademyFundamentals()) {
       const jsonLd = buildAcademyContentJsonLd(content);
-      const canonicalUrl = `https://demaa.fr/academie/${content.identity.slug}`;
+      const canonicalUrl = `https://demaa.co/academie/${content.identity.slug}`;
 
       expect(jsonLd).toHaveLength(2);
       expect(jsonLd[0]).toEqual({
@@ -81,13 +81,13 @@ describe("Academy SEO, redirects and assets", () => {
             "@type": "ListItem",
             position: 1,
             name: "Accueil",
-            item: "https://demaa.fr",
+            item: "https://demaa.co",
           },
           {
             "@type": "ListItem",
             position: 2,
             name: "Académie",
-            item: "https://demaa.fr/academie",
+            item: "https://demaa.co/academie",
           },
           {
             "@type": "ListItem",
@@ -108,7 +108,7 @@ describe("Academy SEO, redirects and assets", () => {
         provider: {
           "@type": "Organization",
           name: "Demaa",
-          url: "https://demaa.fr",
+          url: "https://demaa.co",
         },
       });
       expect(JSON.stringify(jsonLd)).not.toContain("VideoObject");
@@ -118,7 +118,7 @@ describe("Academy SEO, redirects and assets", () => {
   it("emits BreadcrumbList plus Article for case studies", () => {
     for (const content of getAcademyCaseStudies()) {
       const jsonLd = buildAcademyContentJsonLd(content);
-      const canonicalUrl = `https://demaa.fr/academie/${content.identity.slug}`;
+      const canonicalUrl = `https://demaa.co/academie/${content.identity.slug}`;
 
       expect(jsonLd).toHaveLength(2);
       expect(jsonLd[0]).toMatchObject({ "@type": "BreadcrumbList" });

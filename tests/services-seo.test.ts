@@ -37,13 +37,13 @@ describe("Services SEO and structured data", () => {
           "@type": "ListItem",
           position: 1,
           name: "Accueil",
-          item: "https://demaa.fr",
+          item: "https://demaa.co",
         },
         {
           "@type": "ListItem",
           position: 2,
           name: "Services",
-          item: "https://demaa.fr/services",
+          item: "https://demaa.co/services",
         },
       ],
     });
@@ -57,12 +57,12 @@ describe("Services SEO and structured data", () => {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       itemListElement: [
-        { position: 1, name: "Accueil", item: "https://demaa.fr" },
-        { position: 2, name: "Services", item: "https://demaa.fr/services" },
+        { position: 1, name: "Accueil", item: "https://demaa.co" },
+        { position: 2, name: "Services", item: "https://demaa.co/services" },
         {
           position: 3,
           name: "Système & automatisation commerciale",
-          item: "https://demaa.fr/services/systeme-automatisation-commerciale",
+          item: "https://demaa.co/services/systeme-automatisation-commerciale",
         },
       ],
     });
@@ -71,7 +71,7 @@ describe("Services SEO and structured data", () => {
       "@type": "Service",
       name: "Système & automatisation commerciale",
       description: "Structurer le suivi commercial et automatiser les tâches répétitives.",
-      url: "https://demaa.fr/services/systeme-automatisation-commerciale",
+      url: "https://demaa.co/services/systeme-automatisation-commerciale",
       serviceType: "Structurer et digitaliser votre activité",
       provider: { "@type": "Organization", name: "Demaa" },
     });
@@ -94,7 +94,7 @@ describe("Services SEO and structured data", () => {
           priceCurrency: "EUR",
           valueAddedTaxIncluded: false,
         },
-        url: "https://demaa.fr/services/site-vitrine-prise-contact",
+        url: "https://demaa.co/services/site-vitrine-prise-contact",
       },
     });
 

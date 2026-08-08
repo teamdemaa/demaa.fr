@@ -76,7 +76,7 @@ describe("plumbing ecosystem pilot", () => {
     expect(accountingRecommendations[0]).toMatchObject({
       name: "EM2A Expertise",
       cost: "Sur devis",
-      url: "https://demaa.fr/annuaire-experts-comptables/cabinets/em2a-expertise",
+      url: "https://demaa.co/annuaire-experts-comptables/cabinets/em2a-expertise",
     });
   });
 

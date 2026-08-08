@@ -6,8 +6,8 @@ import { proxy } from "@/proxy";
 describe("proxy content security policy", () => {
   it("allows only the active Fillout embed consumer while preserving the policy", () => {
     const response = proxy(
-      new NextRequest("https://demaa.fr/cours/exemple", {
-        headers: { host: "demaa.fr" },
+      new NextRequest("https://demaa.co/cours/exemple", {
+        headers: { host: "demaa.co" },
       }),
     );
     const policy = response.headers.get("content-security-policy");
@@ -21,5 +21,48 @@ describe("proxy content security policy", () => {
     expect(policy).toContain("default-src 'self'");
     expect(policy).toContain("frame-ancestors 'none'");
     expect(policy).toContain("object-src 'none'");
+  });
+
+  it.each(["demaa.fr", "www.demaa.fr", "www.demaa.co"])(
+    "redirects %s to the canonical domain while preserving path and query",
+    (host) => {
+      const response = proxy(
+        new NextRequest(`https://${host}/kit-operationnel/restaurant?tab=solutions`, {
+          headers: { host },
+        }),
+      );
+
+      expect(response.status).toBe(308);
+      expect(response.headers.get("location")).toBe(
+        "https://demaa.co/kit-operationnel/restaurant?tab=solutions",
+      );
+    },
+  );
+
+  it("redirects a legacy API request without dropping its query", () => {
+    const response = proxy(
+      new NextRequest("https://demaa.fr/api/systeme-kit/request?source=legacy", {
+        headers: { host: "demaa.fr" },
+        method: "POST",
+      }),
+    );
+
+    expect(response.status).toBe(308);
+    expect(response.headers.get("location")).toBe(
+      "https://demaa.co/api/systeme-kit/request?source=legacy",
+    );
+  });
+
+  it("redirects a retired legacy path before applying the canonical 404 policy", () => {
+    const response = proxy(
+      new NextRequest("https://demaa.fr/structuration?source=legacy", {
+        headers: { host: "demaa.fr" },
+      }),
+    );
+
+    expect(response.status).toBe(308);
+    expect(response.headers.get("location")).toBe(
+      "https://demaa.co/structuration?source=legacy",
+    );
   });
 });
