@@ -92,20 +92,23 @@ describe("system UX contract", () => {
       "Besoin de prendre du recul sur votre organisation ?",
     );
     expect(customOfferSource).toContain(
-      "Besoin d’aide pour identifier la bonne solution ?",
+      "Besoin d’aide pour choisir la bonne solution ?",
     );
-    expect(customOfferSource).toContain("Échangez 30 minutes avec un spécialiste Demaa");
+    expect(customOfferSource).toContain("Décrivez-nous ce qui vous bloque.");
     expect(customOfferSource).toContain(
-      "En 30 minutes, clarifiez votre besoin, ce qu’il faut traiter en priorité",
+      "Expliquez-nous votre besoin.",
     );
-    expect(customOfferSource).toContain("30 minutes · Gratuit · Sans engagement");
-    expect(customOfferSource).toContain("OrganisationSessionBookingButton");
-    expect(customOfferSource).toContain('buttonLabel: "Réserver mon échange offert"');
-    expect(customOfferSource).toContain('buttonLabel: "Échanger 30 minutes"');
-    expect(customOfferSource).toContain(
-      'source: "Système métier - Aide au choix de solution"',
+    expect(customOfferSource).toContain("SystemCallbackRequestButton");
+    expect(customOfferSource).toContain('buttonLabel: "Demander à être rappelé"');
+    const callbackButtonSource = await readSource(
+      "src/components/SystemCallbackRequestButton.tsx",
     );
-    expect(customOfferSource).toContain('sourceIsAuthoritative');
+    expect(callbackButtonSource).toContain('"/api/callback-request"');
+    expect(callbackButtonSource).toContain("Demander à être rappelé");
+    expect(callbackButtonSource).toContain("aria-modal");
+    expect(callbackButtonSource).toContain("firstName");
+    expect(callbackButtonSource).toContain("preferredTime");
+    expect(callbackButtonSource).not.toContain('name="email"');
     expect(customOfferSource).not.toMatch(
       /href="\/services"|Voir les services|application sur mesure/,
     );
