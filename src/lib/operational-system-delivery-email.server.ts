@@ -38,7 +38,10 @@ export async function sendOperationalSystemDeliveryEmail(input: {
     return { sent: false as const, reason: "missing_resend_config" as const };
   }
 
-  const resourceDelivery = resolveSystemResourceDelivery(input.assetSnapshot);
+  const resourceDelivery = resolveSystemResourceDelivery(
+    input.assetSnapshot,
+    input.systemSlug,
+  );
   if (resourceDelivery) {
     return sendSystemResourceDeliveryEmail({
       ...input,

@@ -356,7 +356,7 @@ function buildSystemPageDescription(
 
   if (hasEditableOperationalSystemAsset(data.system.slug)) {
     parts.push(
-      `${availableResourceCount} ressources pratiques sont disponibles avec un aperçu réel et un envoi gratuit par e-mail.`,
+      `${availableResourceCount} ressources pratiques sont disponibles en accès direct ou par e-mail.`,
     );
   }
 

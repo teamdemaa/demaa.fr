@@ -168,6 +168,7 @@ export default function SystemDetailContent({
             />
             <SystemResourcesTab
               resources={scopedResources.filter((resource) => resource.format === "template")}
+              systemName={system.name}
               systemSlug={system.slug}
             />
           </div>

@@ -13,7 +13,7 @@ import {
   isPublicSolutionSectionVisible,
 } from "@/lib/public-solution-section-visibility";
 import { normalizeSystemDetailTab } from "@/lib/system-detail-tabs";
-import type { RenderableSolutionSectionDto } from "@/lib/system-solutions-ui-dto";
+import { mergeRenderableSolutionSections } from "@/lib/system-solutions-ui-dto";
 import {
   buildSystemPageIntro,
   buildSystemPageJsonLd,
@@ -25,24 +25,6 @@ type OperationalKitPageProps = {
   params: Promise<{ slug: string }>;
   searchParams: Promise<{ tab?: string | string[] }>;
 };
-
-function mergeRenderableSections(
-  sections: readonly RenderableSolutionSectionDto[],
-): RenderableSolutionSectionDto[] {
-  const bySection = new Map<
-    RenderableSolutionSectionDto["section"],
-    RenderableSolutionSectionDto["placements"][number][]
-  >();
-  for (const group of sections) {
-    const placements = bySection.get(group.section) ?? [];
-    placements.push(...group.placements);
-    bySection.set(group.section, placements);
-  }
-  return [...bySection.entries()].map(([section, placements]) => ({
-    section,
-    placements: placements.toSorted((left, right) => left.rank - right.rank),
-  }));
-}
 
 function getParamValue(value?: string | string[]) {
   return Array.isArray(value) ? value[0] : value;
@@ -88,7 +70,7 @@ export default async function OperationalKitPage({
   }
 
   const initialTab = getParamValue(resolvedSearchParams.tab);
-  const visibleSolutionSections = filterPublicSolutionSections(mergeRenderableSections([
+  const visibleSolutionSections = filterPublicSolutionSections(mergeRenderableSolutionSections([
     ...solutionSections,
     ...(expertiseSection ? [expertiseSection] : []),
   ]));

@@ -66,6 +66,7 @@ describe("system Solutions UI", () => {
     const resourcesMarkup = renderToStaticMarkup(
       createElement(SystemResourcesTab, {
         resources: scopedResources.filter((resource) => resource.format === "template"),
+        systemName: "Bâtiment",
         systemSlug: "batiment",
       }),
     );
@@ -81,6 +82,7 @@ describe("system Solutions UI", () => {
     expect(solutionsMarkup).not.toContain("Levier");
     expect(solutionsMarkup).not.toContain("Tableau de pilotage opérationnel");
     expect(resourcesMarkup).toContain("Tableau de pilotage opérationnel");
+    expect(resourcesMarkup).toContain("Récapitulatif du système");
     expect(resourcesMarkup).toContain("Suivi et prévisionnel financier");
     expect(resourcesMarkup).toContain("CRM - suivi commercial");
     expect(guidesMarkup).toContain("La facturation électronique");
