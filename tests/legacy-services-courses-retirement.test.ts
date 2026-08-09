@@ -33,7 +33,9 @@ describe("legacy Services and Courses retirement", () => {
       "/marketing-ethique",
       "/annuaire-services/expert-comptable",
       "/annuaire-services/marketing-vente",
+      "/annuaire-services/marketing-externalise",
       "/annuaire-services/assistante-facturation",
+      "/annuaire-services/assistance-facturation",
     ]) {
       expect(redirects).toContain(route);
     }

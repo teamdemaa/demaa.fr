@@ -82,7 +82,17 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: '/annuaire-services/marketing-externalise',
+        destination: '/services/marketing-vente',
+        permanent: true,
+      },
+      {
         source: '/annuaire-services/assistante-facturation',
+        destination: '/services/assistance-facturation',
+        permanent: true,
+      },
+      {
+        source: '/annuaire-services/assistance-facturation',
         destination: '/services/assistance-facturation',
         permanent: true,
       },
