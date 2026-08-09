@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { type FormEvent, useRef, useState } from "react";
 import {
   getLeadAttributionPayload,
@@ -84,6 +85,7 @@ export default function ServiceCallbackForm({
   serviceName: string;
   serviceSlug: string;
 }) {
+  const searchParams = useSearchParams();
   const formRef = useRef<HTMLFormElement>(null);
   const submissionInFlightRef = useRef(false);
   const [fields, setFields] = useState<CallbackFields>(EMPTY_FIELDS);
@@ -126,6 +128,8 @@ export default function ServiceCallbackForm({
         idempotencyKey,
         phone: fields.phone.trim(),
         serviceSlug,
+        source: searchParams.get("source") ?? undefined,
+        systemSlug: searchParams.get("systemSlug") ?? undefined,
         website: fields.website,
       });
       clearLeadSubmissionKey(flowKey);

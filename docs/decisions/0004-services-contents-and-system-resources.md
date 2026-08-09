@@ -14,7 +14,7 @@ Demaa publie exactement trois services canoniques :
 
 1. Expert-comptable (`/services/expert-comptable`) ;
 2. Marketing externalisé (`/services/marketing-vente`) ;
-3. Assistance facturation (`/services/assistante-facturation`).
+3. Assistance facturation (`/services/assistance-facturation`).
 
 `/services` est l'annuaire public de ces trois offres. `/sur-mesure` reste une
 offre séparée. Les anciens catalogues, prix et promesses ne constituent plus
@@ -99,4 +99,3 @@ réel, acteur et URL officielle, catégorie, pays, limites et date de contrôle.
 Les placements sont préparés en brouillon puis validés avant activation. Alan,
 Swile ou tout autre acteur ne sont que des candidats et ne sont jamais ajoutés
 universellement.
-

@@ -21,6 +21,8 @@ type ServiceCallbackRequestBody = Readonly<{
   idempotencyKey?: unknown;
   phone?: unknown;
   serviceSlug?: unknown;
+  source?: unknown;
+  systemSlug?: unknown;
   website?: unknown;
 }>;
 
@@ -62,6 +64,8 @@ export async function POST(request: Request) {
         "idempotencyKey",
         "phone",
         "serviceSlug",
+        "source",
+        "systemSlug",
         "website",
       ]) as ServiceCallbackRequestBody;
     } catch {
@@ -77,6 +81,8 @@ export async function POST(request: Request) {
     const company = normalizeText(body?.company, 160);
     const phone = normalizeText(body?.phone, 60);
     const serviceSlug = normalizeText(body?.serviceSlug, 120);
+    const requestedSource = normalizeText(body?.source, 80);
+    const systemSlug = normalizeText(body?.systemSlug, 120);
     const idempotencyKey = normalizeIdempotencyKey(body?.idempotencyKey);
     const service = getCanonicalServiceBySlug(serviceSlug);
 
@@ -103,7 +109,11 @@ export async function POST(request: Request) {
     if (limitedByPhone) return limitedByPhone;
 
     const context = await resolveLeadContext({
-      source: `Services - ${service.name}`,
+      systemSlug: systemSlug || null,
+      source:
+        requestedSource === "solutions-systeme" && systemSlug
+          ? `Solutions - ${service.name}`
+          : `Services - ${service.name}`,
       sourceUrl: request.headers.get("referer"),
     });
     if (!context) {
@@ -122,6 +132,9 @@ export async function POST(request: Request) {
       fields: [
         { label: "Service", value: service.name },
         { label: "Slug du service", value: service.slug },
+        ...(context.systemName
+          ? [{ label: "Système métier", value: context.systemName }]
+          : []),
       ],
       idempotencyKey,
       requestType: "service_callback_request",

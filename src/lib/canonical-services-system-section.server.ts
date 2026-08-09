@@ -36,7 +36,7 @@ function buildCanonicalServicePlacements(
       indicativePricing: service.pricing.label,
       interaction: {
         interactionMode: "detail",
-        href: `/services/${service.slug}`,
+        href: `/services/${service.slug}?systemSlug=${encodeURIComponent(systemSlug)}&source=solutions-systeme`,
       },
     },
   }));

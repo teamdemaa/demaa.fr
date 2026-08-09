@@ -139,6 +139,20 @@ describe("service callback request route", () => {
     }));
   });
 
+  it("preserves the originating system context without exposing another field", async () => {
+    const response = await POST(request(validBody({
+      source: "solutions-systeme",
+      systemSlug: "cabinet-comptable",
+    })));
+
+    expect(response.status).toBe(202);
+    expect(mocks.resolveLeadContext).toHaveBeenCalledWith({
+      source: "Solutions - Expert-comptable",
+      sourceUrl: "https://demaa.co/services/expert-comptable",
+      systemSlug: "cabinet-comptable",
+    });
+  });
+
   it("treats the honeypot as accepted without creating a lead", async () => {
     const response = await POST(request(validBody({ website: "bot.example" })));
 
