@@ -5,8 +5,9 @@ import Link from "next/link";
 import { ChevronDown, ChevronUp, FileText, Search, SlidersHorizontal } from "lucide-react";
 import { useMemo, useState } from "react";
 import type { AcademyContentDefinition } from "@/lib/academy-course-content";
+import SystemResourcePreviewModal from "@/components/SystemResourcePreviewModal";
 import { matchesSearchQuery } from "@/lib/search";
-import { SYSTEM_RESOURCES } from "@/lib/system-resource-catalog";
+import { SYSTEM_RESOURCES, type SystemResource } from "@/lib/system-resource-catalog";
 import StructureNewsletterBlock from "@/components/StructureNewsletterBlock";
 import AcademyLiveTrainingSection from "@/components/AcademyLiveTrainingSection";
 import type { PublicLiveTraining } from "@/lib/live-session-catalog";
@@ -269,6 +270,7 @@ export default function AcademyIndexClient({ contents, liveTrainings, backLink }
   const [showAllFundamentals, setShowAllFundamentals] = useState(false);
   const [activeCategory, setActiveCategory] = useState(ALL_ACADEMY_CATEGORIES);
   const [areCategoryTagsVisible, setAreCategoryTagsVisible] = useState(false);
+  const [previewResource, setPreviewResource] = useState<SystemResource | null>(null);
 
   const categories = useMemo(
     () => [
@@ -427,19 +429,14 @@ export default function AcademyIndexClient({ contents, liveTrainings, backLink }
               Modèles et documents
             </h2>
             <p className="mt-2 max-w-2xl text-sm leading-relaxed text-dema-muted">
-              Les mêmes modèles que dans vos systèmes métier, accessibles directement.
+              Les mêmes modèles que dans vos systèmes métier, avec un aperçu avant ouverture.
             </p>
 
             <div className="mt-7 grid grid-cols-1 gap-x-8 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
-              {ACADEMY_MODEL_RESOURCES.map((resource) => (
-                <a
-                  key={resource.resourceSlug}
-                  href={`/api/systeme-kit/open/${resource.resourceSlug}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group block rounded-[1.25rem] border border-[#E7EBE8] bg-[#F1F3F0] p-6 transition hover:border-dema-forest/25"
-                  aria-label={`Ouvrir ${resource.title}`}
-                >
+              {ACADEMY_MODEL_RESOURCES.map((resource) => {
+                const className = "group block rounded-[1.25rem] border border-[#E7EBE8] bg-[#F1F3F0] p-6 text-left transition hover:border-dema-forest/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2";
+                const content = (
+                  <>
                   <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-dema-forest">
                     <FileText className="h-5 w-5" aria-hidden="true" />
                   </span>
@@ -452,8 +449,33 @@ export default function AcademyIndexClient({ contents, liveTrainings, backLink }
                   <span className="mt-2 block text-sm leading-relaxed text-dema-muted">
                     {resource.description}
                   </span>
-                </a>
-              ))}
+                  </>
+                );
+
+                return resource.resourceSlug === "recapitulatif-systeme" ? (
+                  <Link
+                    key={resource.resourceSlug}
+                    href="/systemes"
+                    className={className}
+                    aria-label="Choisir un système pour voir son récapitulatif"
+                  >
+                    {content}
+                    <span className="mt-4 block text-sm font-medium text-dema-forest">
+                      Choisir un système
+                    </span>
+                  </Link>
+                ) : (
+                  <button
+                    key={resource.resourceSlug}
+                    type="button"
+                    onClick={() => setPreviewResource(resource)}
+                    className={className}
+                    aria-label={`Voir un aperçu de ${resource.title}`}
+                  >
+                    {content}
+                  </button>
+                );
+              })}
             </div>
           </section>
         ) : null}
@@ -468,6 +490,14 @@ export default function AcademyIndexClient({ contents, liveTrainings, backLink }
         <div className="mt-12 md:mt-14">
           <StructureNewsletterBlock />
         </div>
+
+        {previewResource ? (
+          <SystemResourcePreviewModal
+            resource={previewResource}
+            trackingContext="academie"
+            onClose={() => setPreviewResource(null)}
+          />
+        ) : null}
       </main>
     </div>
   );

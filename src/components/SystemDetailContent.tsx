@@ -171,7 +171,6 @@ export default function SystemDetailContent({
           <div className="space-y-10">
             <SystemResourcesTab
               resources={scopedResources.filter((resource) => resource.format === "template")}
-              systemName={system.name}
               systemSlug={system.slug}
             />
             {contextualCaseStudy ? (

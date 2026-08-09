@@ -66,7 +66,6 @@ describe("system Solutions UI", () => {
     const resourcesMarkup = renderToStaticMarkup(
       createElement(SystemResourcesTab, {
         resources: scopedResources.filter((resource) => resource.format === "template"),
-        systemName: "Bâtiment",
         systemSlug: "batiment",
       }),
     );
@@ -452,6 +451,9 @@ describe("system Solutions UI", () => {
   it("uses the neutral Resources catalog as the public delivery entry point", async () => {
     const detailSource = await readSource("src/components/SystemDetailContent.tsx");
     const resourcesSource = await readSource("src/components/SystemResourcesTab.tsx");
+    const resourcePreviewSource = await readSource(
+      "src/components/SystemResourcePreviewModal.tsx",
+    );
     const systemModalSource = await readSource(
       "src/components/HistoricalOperationalSystemCopyRequestModal.tsx",
     );
@@ -462,7 +464,9 @@ describe("system Solutions UI", () => {
     expect(detailSource).toContain("getSystemResourcesForSystem(system.slug)");
     expect(detailSource).not.toContain("OperationalSystemCopyRequestModal");
     expect(resourcesSource).not.toContain("OperationalSystemCopyRequestModal");
-    expect(resourcesSource).toContain("/api/systeme-kit/open/${resource.resourceSlug}");
+    expect(resourcesSource).toContain("SystemResourcePreviewModal");
+    expect(resourcesSource).toContain("/kit-operationnel/${systemSlug}/recapitulatif");
+    expect(resourcePreviewSource).toContain("/api/systeme-kit/open/${resource.resourceSlug}");
     expect(resourcesSource).toContain("resources: readonly SystemResource[]");
     expect(detailSource).not.toContain("HistoricalOperationalSystemCopyRequestModal");
     expect(detailSource).not.toContain("Voir le système");

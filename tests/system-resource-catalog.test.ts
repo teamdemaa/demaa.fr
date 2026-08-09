@@ -26,6 +26,13 @@ describe("system Resources catalog", () => {
       "CRM - suivi commercial",
     ]);
     expect(templates.map(({ rank }) => rank)).toEqual([0, 1, 2, 3]);
+    expect(templates.map(({ openLabel }) => openLabel)).toEqual([
+      "Voir le récapitulatif",
+      "Créer ma copie",
+      "Créer ma copie",
+      "Ouvrir le modèle",
+    ]);
+    expect(templates.slice(1).every((resource) => Boolean(resource.preview))).toBe(true);
 
     expect(guides).toEqual([]);
     expect(JSON.stringify(SYSTEM_RESOURCES)).not.toMatch(

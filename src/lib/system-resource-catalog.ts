@@ -28,6 +28,7 @@ export type SystemResource = Readonly<{
   description: string;
   format: SystemResourceFormat;
   formatLabel: string;
+  openLabel?: string;
   preview?: SystemKitPreview;
   previewDisclosure?: string;
   rank: number;
@@ -46,6 +47,7 @@ export const SYSTEM_RESOURCES: readonly SystemResource[] = Object.freeze([
     deliveryLabel: "Recevoir le récapitulatif",
     format: "template",
     formatLabel: "Récapitulatif",
+    openLabel: "Voir le récapitulatif",
     rank: 0,
     resourceSlug: "recapitulatif-systeme",
     successDescription: "Le lien vers votre récapitulatif vient de vous être envoyé. Pensez à vérifier vos courriers indésirables.",
@@ -57,6 +59,7 @@ export const SYSTEM_RESOURCES: readonly SystemResource[] = Object.freeze([
     deliveryLabel: "Recevoir le tableau",
     format: "template",
     formatLabel: "Tableau de pilotage",
+    openLabel: "Créer ma copie",
     preview: {
       alt: "Aperçu du tableau de pilotage opérationnel avec des données d’exemple",
       height: 933,
@@ -75,13 +78,14 @@ export const SYSTEM_RESOURCES: readonly SystemResource[] = Object.freeze([
     deliveryLabel: "Recevoir le modèle",
     format: "template",
     formatLabel: "Modèle financier",
+    openLabel: "Créer ma copie",
     preview: {
       alt: "Aperçu du modèle de suivi et prévisionnel financier",
       height: 1890,
       src: "/images/academy/budget-1.png",
       width: 3360,
     },
-    previewDisclosure: "Aperçu du modèle. Le lien reçu vous permettra de créer votre propre copie.",
+    previewDisclosure: "Aperçu du modèle. Le bouton vous permettra de créer votre propre copie.",
     rank: 2,
     resourceSlug: "suivi-previsionnel-financier",
     successDescription: "Vous y trouverez le lien vers le modèle financier. Pensez à vérifier vos courriers indésirables.",
@@ -93,13 +97,14 @@ export const SYSTEM_RESOURCES: readonly SystemResource[] = Object.freeze([
     deliveryLabel: "Recevoir le CRM",
     format: "template",
     formatLabel: "Modèle CRM",
+    openLabel: "Ouvrir le modèle",
     preview: {
       alt: "Aperçu du modèle CRM de suivi commercial",
       height: 1890,
       src: "/images/academy/organisation-1.png",
       width: 3360,
     },
-    previewDisclosure: "Aperçu de la structure CRM. Le lien reçu vous permettra d’utiliser le modèle Airtable.",
+    previewDisclosure: "Aperçu de la structure CRM. Le bouton ouvrira le modèle Airtable.",
     rank: 3,
     resourceSlug: "crm-suivi-commercial",
     successDescription: "Vous y trouverez le lien vers le modèle CRM. Pensez à vérifier vos courriers indésirables.",

@@ -1,10 +1,11 @@
 "use client";
 
 import { ChevronLeft, ChevronRight, FileText } from "lucide-react";
+import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { trackSystemJourneyEvent } from "@/lib/kit-analytics-client";
 import type { SystemResource } from "@/lib/system-resource-catalog";
-import SystemRecapRequestModal from "@/components/SystemRecapRequestModal";
+import SystemResourcePreviewModal from "@/components/SystemResourcePreviewModal";
 
 type RailState = Readonly<{
   canNext: boolean;
@@ -13,11 +14,9 @@ type RailState = Readonly<{
 
 export default function SystemResourcesTab({
   resources,
-  systemName,
   systemSlug,
 }: {
   resources: readonly SystemResource[];
-  systemName: string;
   systemSlug: string;
 }) {
   const orderedResources = useMemo(
@@ -29,7 +28,7 @@ export default function SystemResourcesTab({
     canNext: orderedResources.length > 1,
     canPrevious: false,
   });
-  const [isRecapModalOpen, setIsRecapModalOpen] = useState(false);
+  const [previewResource, setPreviewResource] = useState<SystemResource | null>(null);
 
   const updateRailState = useCallback(() => {
     const rail = railRef.current;
@@ -126,22 +125,9 @@ export default function SystemResourcesTab({
             );
 
             return resource.resourceSlug === "recapitulatif-systeme" ? (
-              <button
+              <Link
                 key={resource.resourceSlug}
-                type="button"
-                data-system-resource-card
-                onClick={() => setIsRecapModalOpen(true)}
-                className={className}
-                aria-label={`Recevoir ${resource.title}`}
-              >
-                {content}
-              </button>
-            ) : (
-              <a
-                key={resource.resourceSlug}
-                href={`/api/systeme-kit/open/${resource.resourceSlug}`}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={`/kit-operationnel/${systemSlug}/recapitulatif`}
                 data-system-resource-card
                 onClick={() => trackSystemJourneyEvent("system_resource_opened", {
                   resourceSlug: resource.resourceSlug,
@@ -151,16 +137,27 @@ export default function SystemResourcesTab({
                 aria-label={`Ouvrir ${resource.title}`}
               >
                 {content}
-              </a>
+              </Link>
+            ) : (
+              <button
+                key={resource.resourceSlug}
+                type="button"
+                data-system-resource-card
+                onClick={() => setPreviewResource(resource)}
+                className={className}
+                aria-label={`Voir un aperçu de ${resource.title}`}
+              >
+                {content}
+              </button>
             );
           })}
         </div>
       </section>
-      {isRecapModalOpen ? (
-        <SystemRecapRequestModal
-          onClose={() => setIsRecapModalOpen(false)}
-          systemName={systemName}
-          systemSlug={systemSlug}
+      {previewResource ? (
+        <SystemResourcePreviewModal
+          resource={previewResource}
+          trackingContext={systemSlug}
+          onClose={() => setPreviewResource(null)}
         />
       ) : null}
     </>
