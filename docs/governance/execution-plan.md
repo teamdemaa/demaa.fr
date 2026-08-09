@@ -1,5 +1,27 @@
 # Plan d'exécution W2-W8
 
+## Statut canonique — clôture Production du 9 août 2026
+
+Le plan W2-W8 ci-dessous est désormais une archive de construction. Il ne doit
+plus être utilisé pour déterminer l'état public ni relancer un ancien lot.
+L'état exécutable courant est défini par les ADR 0003 et 0004 ainsi que par la
+section « État de clôture Production » de `docs/central-backlog.md`.
+
+À la clôture :
+
+- le code produit déployé est `3486703` ; le lot documentaire de clôture ne
+  modifie aucun fichier runtime ;
+- les 115 Systèmes, les quatre Services canoniques, Firebase Solutions,
+  Ressources et `/contenus/facturation-electronique` sont actifs ;
+- les Formations en direct et les Cas concrets restent volontairement masqués ;
+- les parcours de collecte et de livraison ont passé leurs tests Production ;
+- les futures activations doivent repartir d'un `origin/main` à jour, dans une
+  branche et une Preview dédiées, jamais d'un ancien checkpoint W2-W8.
+
+Les mentions contraires plus bas — Services absents, routes bloquées, aucune
+Solution publiée ou Production interdite — décrivent uniquement leur époque et
+sont supersédées.
+
 ## Clôture Systèmes — 6 août 2026
 
 L'interface publique des fiches Systèmes est désormais stabilisée autour de

@@ -218,14 +218,20 @@ La même révision scellée a été importée puis activée dans le projet canon
 
 Les fonctions Vercel Production utilisent le provider OIDC
 `demaa-fr-production`, limité au projet Vercel `demaa-fr` et à
-`environment=production`. Il peut uniquement emprunter le compte sans clé
-`demaa-solutions-prod-reader`, lui-même limité à
-`roles/datastore.viewer`. Le déploiement final
-`demaa-n24a1htef-hiteamdemaa-2292s-projects.vercel.app` a été reconstruit après
-le retrait des identifiants statiques. La lecture de la révision Firebase par
-OIDC ne produit ni fallback, ni avertissement, ni erreur. L’audit final contrôle
+`environment=production`. Depuis la clôture du 9 août, le runtime emprunte le
+compte sans clé `demaa-prod-app@demaa-dde32.iam.gserviceaccount.com`, limité à
+`roles/datastore.user`. Ce rôle couvre la lecture du registre Solutions et les
+écritures strictement nécessaires aux leads ; la confiance
+`roles/iam.workloadIdentityUser` reste limitée au principal Vercel du projet
+Demaa. L'ancien compte `demaa-solutions-prod-reader` décrit l'étape historique
+de lecture seule et n'est plus l'identité runtime active. Aucune clé privée
+Firebase Production n'est stockée dans Vercel.
+
+Le code Production est aligné sur `3486703`. La lecture de la révision Firebase
+par OIDC ne produit ni fallback, ni avertissement, ni erreur. L'audit contrôle
 115 pages Process, 115 pages Solutions, 600 cartes et 115 placements Levier,
-sans échec.
+sans échec. Les parcours de leads ont également été vérifiés en Production avec
+l'identité runtime actuelle.
 
 ## Activation et rollback
 
