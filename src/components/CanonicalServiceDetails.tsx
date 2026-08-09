@@ -1,6 +1,5 @@
 import { Check, CircleAlert, ClipboardCheck } from "lucide-react";
 import { Suspense } from "react";
-import OrganisationSessionBookingButton from "@/components/OrganisationSessionBookingButton";
 import ServiceCallbackForm from "@/components/ServiceCallbackForm";
 import type { CanonicalService } from "@/lib/canonical-service-catalog";
 
@@ -65,22 +64,12 @@ function ServicePricingAndCta({
       </p>
 
       <Suspense fallback={<ServiceCtaFallback label={service.cta.label} />}>
-        {service.cta.kind === "fillout" ? (
-          <OrganisationSessionBookingButton
-            className="mt-6 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-dema-forest px-5 py-3 text-center text-sm font-semibold text-white transition hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
-            label={service.cta.label}
-            source="Service - marketing-vente"
-            sourceIsAuthoritative
-            requestType="marketing_strategy_booking"
+        <div className="mt-6 border-t border-dema-line/80 pt-1">
+          <ServiceCallbackForm
+            serviceName={service.name}
+            serviceSlug={service.slug}
           />
-        ) : (
-          <div className="mt-6 border-t border-dema-line/80 pt-1">
-            <ServiceCallbackForm
-              serviceName={service.name}
-              serviceSlug={service.slug}
-            />
-          </div>
-        )}
+        </div>
       </Suspense>
     </aside>
   );

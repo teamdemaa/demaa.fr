@@ -54,6 +54,9 @@ l'ADR 0004 prévaut.
   Automatisation des processus, Marketing et prospection, Assistance
   facturation et Expert-comptable. Ce dernier est absent de la fiche Cabinet
   comptable.
+- Les quatre Services utilisent le même formulaire de rappel minimal
+  (entreprise et téléphone), avec attribution silencieuse du service et du
+  Système métier puis notification Slack.
 - Ressources contient les guides, modèles et documents contextualisés. Les
   contenus pédagogiques globaux restent dans l'Académie.
 - Firebase est la source distante autoritaire pour Solutions et le réseau de
@@ -84,8 +87,11 @@ l'ADR 0004 prévaut.
   concernés seulement après validation éditoriale, recette des liens et bascule
   explicite de `systemContextualCaseStudies`. Les relations et routes sont
   conservées pendant le masquage.
-- [ ] Curater les fournisseurs pertinents par familles de métiers, en brouillon
-  puis après validation éditoriale ; aucun acteur universel par défaut.
+- [x] Curater le premier lot Fournisseurs pour Cabinet comptable et Cabinet de
+  conseil : Orus, Alan, Swile et Amazon Business, en `draft`, relation
+  `unknown`, avec conditions d'éligibilité explicites.
+- [ ] Étendre les Fournisseurs aux autres familles de métiers après validation
+  du premier lot ; aucun acteur universel par défaut.
 - [ ] Préparer l'internationalisation seulement après stabilisation France :
   locales, pays, contenu, Solutions et SEO.
 - [ ] Produire les guides annoncés et les vidéos Restaurant sans créer de

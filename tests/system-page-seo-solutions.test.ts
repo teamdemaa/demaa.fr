@@ -64,19 +64,19 @@ describe("system page SEO published Solutions boundary", () => {
     const { system } = processOnlyData;
 
     expect(metadata.title).toBe(
-      `Système opérationnel ${system.name} : Process et Ressources | Demaa`,
+      `Système métier ${system.name} : Process et Ressources | Demaa`,
     );
     expect(metadata.description).toContain("process");
     expect(metadata.keywords).toEqual(expect.arrayContaining([
       system.name,
-      `système opérationnel ${system.name.toLowerCase()}`,
+      `système métier ${system.name.toLowerCase()}`,
       `process ${system.name.toLowerCase()}`,
       `modèle entreprise ${system.name.toLowerCase()}`,
       "Tableau de pilotage opérationnel",
       "CRM - suivi commercial",
     ]));
     expect(itemList(jsonLd)?.name).toBe(
-      `Process et Ressources du système opérationnel ${system.name}`,
+      `Process et Ressources du système métier ${system.name}`,
     );
     expect(exposed).not.toMatch(/Legacy Outil Fantôme|\boutils?\b|annuaire-outils|écosystème/i);
     expect(exposed).not.toMatch(
@@ -94,7 +94,7 @@ describe("system page SEO published Solutions boundary", () => {
       const exposed = JSON.stringify({ metadata, jsonLd });
 
       expect(metadata.title).toBe(
-        `Système opérationnel ${currentData.system.name} : Process et Ressources | Demaa`,
+        `Système métier ${currentData.system.name} : Process et Ressources | Demaa`,
       );
       expect(metadata.description).toMatch(/process/i);
       expect(exposed).not.toMatch(
@@ -117,7 +117,7 @@ describe("system page SEO published Solutions boundary", () => {
     const { system } = publishedSolutionsData;
 
     expect(metadata.title).toBe(
-      `Système opérationnel ${system.name} : Process, Solutions et Ressources | Demaa`,
+      `Système métier ${system.name} : Process, Solutions et Ressources | Demaa`,
     );
     expect(metadata.description).toContain("3 Solutions publiées");
     expect(metadata.description).toContain("Qonto, Demaa Pilotage, Prestataire Facturation");
@@ -128,7 +128,7 @@ describe("system page SEO published Solutions boundary", () => {
       "Prestataire Facturation",
     ]));
     expect(itemList(jsonLd)?.name).toBe(
-      `Process, Solutions et Ressources du système opérationnel ${system.name}`,
+      `Process, Solutions et Ressources du système métier ${system.name}`,
     );
     expect(exposed).toContain("https://qonto.com/fr");
     expect(exposed).toContain("https://demaa.co/solutions/prestataire-facturation");

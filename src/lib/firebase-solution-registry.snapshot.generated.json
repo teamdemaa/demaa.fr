@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "revisionId": "solutions-2026-08-09-france-clean-published-v3",
+  "revisionId": "solutions-2026-08-10-professional-suppliers-published-v1",
   "revisionStatus": "published",
-  "createdAt": "2026-08-09T14:00:00.000Z",
-  "createdBy": "release://solutions-france-2026-08-09",
-  "sourceFingerprint": "8d9a178d891dde31da2931f288aff20ae2335eeac7844ab2c78faa6a9817253f",
+  "createdAt": "2026-08-09T12:00:00.000Z",
+  "createdBy": "release://professional-suppliers-france-2026-08-10",
+  "sourceFingerprint": "2f8946b766e93f618d5c4d4ad68903f8a10882976297111ffe17d2050103d875",
   "knownSystemSlugs": [
     "cabinet-comptable",
     "cabinet-davocat",
@@ -267,6 +267,34 @@
       "resource": {
         "evidence": [
           {
+            "evidenceId": "professional-suppliers-resource-alan",
+            "sourceRef": "https://alan.com/fr-fr",
+            "claim": "Alan présente officiellement des offres de complémentaire santé et de prévoyance pour les petites entreprises et leurs équipes.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-09T12:00:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-09T12:00:00.000Z",
+        "expiresAt": "2027-02-09T12:00:00.000Z",
+        "interactionMode": "external_link",
+        "href": "https://alan.com/fr-fr",
+        "resourceSlug": "alan",
+        "resourceType": "provider",
+        "name": "Alan",
+        "description": "Mutuelle santé et prévention pour les équipes.",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "resourceVersion": "professional-suppliers.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      }
+    },
+    {
+      "resource": {
+        "evidence": [
+          {
             "evidenceId": "firebase-migration-resource-infirmier-liberal-albus-air",
             "sourceRef": "https://www.albus.fr/",
             "claim": "Albus Air est une ressource actuellement affichée dans les Solutions Demaa.",
@@ -314,6 +342,34 @@
         "commercialRelationship": "unknown",
         "status": "draft",
         "resourceVersion": "firebase.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      }
+    },
+    {
+      "resource": {
+        "evidence": [
+          {
+            "evidenceId": "professional-suppliers-resource-amazon-business",
+            "sourceRef": "https://business.amazon.fr/fr/industries/small-business",
+            "claim": "Amazon Business présente officiellement un compte professionnel et des fonctions d’achat destinés aux petites entreprises.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-09T12:00:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-09T12:00:00.000Z",
+        "expiresAt": "2027-02-09T12:00:00.000Z",
+        "interactionMode": "external_link",
+        "href": "https://business.amazon.fr/fr/industries/small-business",
+        "resourceSlug": "amazon-business",
+        "resourceType": "provider",
+        "name": "Amazon Business",
+        "description": "Achats, fournitures et réapprovisionnement pour les entreprises.",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "resourceVersion": "professional-suppliers.v1",
         "publicationBlockers": [
           "commercial-relationship-unconfirmed"
         ]
@@ -4828,6 +4884,34 @@
       "resource": {
         "evidence": [
           {
+            "evidenceId": "professional-suppliers-resource-orus",
+            "sourceRef": "https://www.orus.eu/",
+            "claim": "Orus présente officiellement des offres d’assurance professionnelle destinées aux indépendants et petites entreprises.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-09T12:00:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-09T12:00:00.000Z",
+        "expiresAt": "2027-02-09T12:00:00.000Z",
+        "interactionMode": "external_link",
+        "href": "https://www.orus.eu/",
+        "resourceSlug": "orus",
+        "resourceType": "provider",
+        "name": "Orus",
+        "description": "Assurance professionnelle en ligne pour indépendants et petites entreprises.",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "resourceVersion": "professional-suppliers.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      }
+    },
+    {
+      "resource": {
+        "evidence": [
+          {
             "evidenceId": "firebase-migration-resource-osteopathe-osteopathes-de-france",
             "sourceRef": "https://osteofrance.com/",
             "claim": "Ostéopathes de France est une ressource actuellement affichée dans les Solutions Demaa.",
@@ -5967,6 +6051,34 @@
         "commercialRelationship": "unknown",
         "status": "draft",
         "resourceVersion": "firebase.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      }
+    },
+    {
+      "resource": {
+        "evidence": [
+          {
+            "evidenceId": "professional-suppliers-resource-swile",
+            "sourceRef": "https://www.swile.co/fr-fr/",
+            "claim": "Swile présente officiellement une solution de titres-restaurant et d’avantages destinée aux employeurs et à leurs salariés.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-09T12:00:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-09T12:00:00.000Z",
+        "expiresAt": "2027-02-09T12:00:00.000Z",
+        "interactionMode": "external_link",
+        "href": "https://www.swile.co/fr-fr/",
+        "resourceSlug": "swile",
+        "resourceType": "provider",
+        "name": "Swile",
+        "description": "Titres-resto et avantages salariés.",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "resourceVersion": "professional-suppliers.v1",
         "publicationBlockers": [
           "commercial-relationship-unconfirmed"
         ]
@@ -7163,6 +7275,166 @@
       "placement": {
         "evidence": [
           {
+            "evidenceId": "professional-suppliers-placement-cabinet-comptable-orus",
+            "sourceRef": "https://www.orus.eu/",
+            "claim": "Une couverture professionnelle est structurante pour sécuriser l’activité et ses principaux risques.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-09T12:00:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-09T12:00:00.000Z",
+        "expiresAt": "2027-02-09T12:00:00.000Z",
+        "placementId": "cabinet-comptable:orus:providers:1",
+        "systemSlug": "cabinet-comptable",
+        "resourceSlug": "orus",
+        "rank": 1,
+        "section": "providers",
+        "usage": "Protéger le cabinet, sa responsabilité professionnelle et ses locaux selon les garanties retenues.",
+        "fitRationale": "Une couverture professionnelle est structurante pour sécuriser l’activité et ses principaux risques.",
+        "fitConstraints": [
+          "Comparer les garanties, exclusions, franchises et obligations propres à l’activité réglementée."
+        ],
+        "editorialStatus": "selected",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "placementVersion": "professional-suppliers.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      },
+      "presentation": {
+        "displayCategory": "Assurance professionnelle",
+        "nameOverride": "Orus",
+        "hrefOverride": "https://www.orus.eu/",
+        "ctaLabel": "Voir le fournisseur",
+        "descriptionOverride": "Assurance professionnelle en ligne pour indépendants et petites entreprises."
+      }
+    },
+    {
+      "placement": {
+        "evidence": [
+          {
+            "evidenceId": "professional-suppliers-placement-cabinet-comptable-alan",
+            "sourceRef": "https://alan.com/fr-fr",
+            "claim": "La solution devient pertinente lorsque le cabinet emploie des salariés ou recherche une couverture adaptée au dirigeant.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-09T12:00:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-09T12:00:00.000Z",
+        "expiresAt": "2027-02-09T12:00:00.000Z",
+        "placementId": "cabinet-comptable:alan:providers:2",
+        "systemSlug": "cabinet-comptable",
+        "resourceSlug": "alan",
+        "rank": 2,
+        "section": "providers",
+        "usage": "Mettre en place et administrer la protection sociale de l’équipe du cabinet.",
+        "fitRationale": "La solution devient pertinente lorsque le cabinet emploie des salariés ou recherche une couverture adaptée au dirigeant.",
+        "fitConstraints": [
+          "Vérifier l’éligibilité, la convention collective, les garanties et la situation exacte de l’équipe."
+        ],
+        "editorialStatus": "selected",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "placementVersion": "professional-suppliers.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      },
+      "presentation": {
+        "displayCategory": "Protection sociale",
+        "nameOverride": "Alan",
+        "hrefOverride": "https://alan.com/fr-fr",
+        "ctaLabel": "Voir le fournisseur",
+        "descriptionOverride": "Mutuelle santé et prévention pour les équipes."
+      }
+    },
+    {
+      "placement": {
+        "evidence": [
+          {
+            "evidenceId": "professional-suppliers-placement-cabinet-comptable-swile",
+            "sourceRef": "https://www.swile.co/fr-fr/",
+            "claim": "La solution simplifie un avantage récurrent lorsque le cabinet emploie une équipe éligible.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-09T12:00:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-09T12:00:00.000Z",
+        "expiresAt": "2027-02-09T12:00:00.000Z",
+        "placementId": "cabinet-comptable:swile:providers:3",
+        "systemSlug": "cabinet-comptable",
+        "resourceSlug": "swile",
+        "rank": 3,
+        "section": "providers",
+        "usage": "Gérer les titres-restaurant et les avantages proposés aux salariés du cabinet.",
+        "fitRationale": "La solution simplifie un avantage récurrent lorsque le cabinet emploie une équipe éligible.",
+        "fitConstraints": [
+          "Pertinent uniquement avec des salariés éligibles ; vérifier les règles d’attribution applicables."
+        ],
+        "editorialStatus": "selected",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "placementVersion": "professional-suppliers.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      },
+      "presentation": {
+        "displayCategory": "Avantages salariés",
+        "nameOverride": "Swile",
+        "hrefOverride": "https://www.swile.co/fr-fr/",
+        "ctaLabel": "Voir le fournisseur",
+        "descriptionOverride": "Titres-resto et avantages salariés."
+      }
+    },
+    {
+      "placement": {
+        "evidence": [
+          {
+            "evidenceId": "professional-suppliers-placement-cabinet-comptable-amazon-business",
+            "sourceRef": "https://business.amazon.fr/fr/industries/small-business",
+            "claim": "Un compte professionnel peut simplifier les commandes récurrentes et le suivi des dépenses courantes.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-09T12:00:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-09T12:00:00.000Z",
+        "expiresAt": "2027-02-09T12:00:00.000Z",
+        "placementId": "cabinet-comptable:amazon-business:providers:4",
+        "systemSlug": "cabinet-comptable",
+        "resourceSlug": "amazon-business",
+        "rank": 4,
+        "section": "providers",
+        "usage": "Centraliser les achats courants, fournitures et petits équipements du cabinet.",
+        "fitRationale": "Un compte professionnel peut simplifier les commandes récurrentes et le suivi des dépenses courantes.",
+        "fitConstraints": [
+          "Comparer les prix et réserver ce canal aux achats non spécialisés adaptés aux besoins du cabinet."
+        ],
+        "editorialStatus": "selected",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "placementVersion": "professional-suppliers.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      },
+      "presentation": {
+        "displayCategory": "Achats professionnels",
+        "nameOverride": "Amazon Business",
+        "hrefOverride": "https://business.amazon.fr/fr/industries/small-business",
+        "ctaLabel": "Voir le fournisseur",
+        "descriptionOverride": "Achats, fournitures et réapprovisionnement pour les entreprises."
+      }
+    },
+    {
+      "placement": {
+        "evidence": [
+          {
             "evidenceId": "firebase-migration-placement-cabinet-comptable-levier",
             "sourceRef": "decision://systems/levier-2026-08-03",
             "claim": "Levier fournit le socle de pilotage commun nécessaire pour exécuter ce système opérationnel.",
@@ -7637,6 +7909,166 @@
         "hrefOverride": "https://www.notion.com/",
         "ctaLabel": "Voir l’outil",
         "descriptionOverride": "Espace simple pour documenter les processus, suivre les projets et créer une base interne."
+      }
+    },
+    {
+      "placement": {
+        "evidence": [
+          {
+            "evidenceId": "professional-suppliers-placement-cabinet-de-conseil-orus",
+            "sourceRef": "https://www.orus.eu/",
+            "claim": "Une assurance adaptée aide à sécuriser les missions, les actifs et les principaux risques du cabinet.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-09T12:00:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-09T12:00:00.000Z",
+        "expiresAt": "2027-02-09T12:00:00.000Z",
+        "placementId": "cabinet-de-conseil:orus:providers:1",
+        "systemSlug": "cabinet-de-conseil",
+        "resourceSlug": "orus",
+        "rank": 1,
+        "section": "providers",
+        "usage": "Couvrir la responsabilité professionnelle, le matériel et les locaux selon le fonctionnement du cabinet.",
+        "fitRationale": "Une assurance adaptée aide à sécuriser les missions, les actifs et les principaux risques du cabinet.",
+        "fitConstraints": [
+          "Comparer les garanties, exclusions, franchises et niveaux de couverture avec les risques réels des missions."
+        ],
+        "editorialStatus": "selected",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "placementVersion": "professional-suppliers.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      },
+      "presentation": {
+        "displayCategory": "Assurance professionnelle",
+        "nameOverride": "Orus",
+        "hrefOverride": "https://www.orus.eu/",
+        "ctaLabel": "Voir le fournisseur",
+        "descriptionOverride": "Assurance professionnelle en ligne pour indépendants et petites entreprises."
+      }
+    },
+    {
+      "placement": {
+        "evidence": [
+          {
+            "evidenceId": "professional-suppliers-placement-cabinet-de-conseil-alan",
+            "sourceRef": "https://alan.com/fr-fr",
+            "claim": "La solution devient pertinente lorsque le cabinet recrute ou doit administrer une protection sociale collective.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-09T12:00:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-09T12:00:00.000Z",
+        "expiresAt": "2027-02-09T12:00:00.000Z",
+        "placementId": "cabinet-de-conseil:alan:providers:2",
+        "systemSlug": "cabinet-de-conseil",
+        "resourceSlug": "alan",
+        "rank": 2,
+        "section": "providers",
+        "usage": "Organiser la complémentaire santé et la prévoyance de l’équipe du cabinet.",
+        "fitRationale": "La solution devient pertinente lorsque le cabinet recrute ou doit administrer une protection sociale collective.",
+        "fitConstraints": [
+          "Vérifier l’éligibilité, la convention collective et les garanties nécessaires avant de choisir."
+        ],
+        "editorialStatus": "selected",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "placementVersion": "professional-suppliers.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      },
+      "presentation": {
+        "displayCategory": "Protection sociale",
+        "nameOverride": "Alan",
+        "hrefOverride": "https://alan.com/fr-fr",
+        "ctaLabel": "Voir le fournisseur",
+        "descriptionOverride": "Mutuelle santé et prévention pour les équipes."
+      }
+    },
+    {
+      "placement": {
+        "evidence": [
+          {
+            "evidenceId": "professional-suppliers-placement-cabinet-de-conseil-swile",
+            "sourceRef": "https://www.swile.co/fr-fr/",
+            "claim": "La solution est utile aux cabinets employeurs qui souhaitent centraliser ces avantages.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-09T12:00:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-09T12:00:00.000Z",
+        "expiresAt": "2027-02-09T12:00:00.000Z",
+        "placementId": "cabinet-de-conseil:swile:providers:3",
+        "systemSlug": "cabinet-de-conseil",
+        "resourceSlug": "swile",
+        "rank": 3,
+        "section": "providers",
+        "usage": "Gérer les titres-restaurant et les avantages proposés aux salariés du cabinet.",
+        "fitRationale": "La solution est utile aux cabinets employeurs qui souhaitent centraliser ces avantages.",
+        "fitConstraints": [
+          "Pertinent uniquement avec des salariés éligibles ; vérifier les règles d’attribution applicables."
+        ],
+        "editorialStatus": "selected",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "placementVersion": "professional-suppliers.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      },
+      "presentation": {
+        "displayCategory": "Avantages salariés",
+        "nameOverride": "Swile",
+        "hrefOverride": "https://www.swile.co/fr-fr/",
+        "ctaLabel": "Voir le fournisseur",
+        "descriptionOverride": "Titres-resto et avantages salariés."
+      }
+    },
+    {
+      "placement": {
+        "evidence": [
+          {
+            "evidenceId": "professional-suppliers-placement-cabinet-de-conseil-amazon-business",
+            "sourceRef": "https://business.amazon.fr/fr/industries/small-business",
+            "claim": "Un compte professionnel peut simplifier les commandes, les utilisateurs autorisés et le suivi des dépenses.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-09T12:00:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-09T12:00:00.000Z",
+        "expiresAt": "2027-02-09T12:00:00.000Z",
+        "placementId": "cabinet-de-conseil:amazon-business:providers:4",
+        "systemSlug": "cabinet-de-conseil",
+        "resourceSlug": "amazon-business",
+        "rank": 4,
+        "section": "providers",
+        "usage": "Centraliser les fournitures, équipements et achats récurrents du cabinet.",
+        "fitRationale": "Un compte professionnel peut simplifier les commandes, les utilisateurs autorisés et le suivi des dépenses.",
+        "fitConstraints": [
+          "Comparer les prix et réserver ce canal aux achats non spécialisés adaptés au fonctionnement du cabinet."
+        ],
+        "editorialStatus": "selected",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "placementVersion": "professional-suppliers.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      },
+      "presentation": {
+        "displayCategory": "Achats professionnels",
+        "nameOverride": "Amazon Business",
+        "hrefOverride": "https://business.amazon.fr/fr/industries/small-business",
+        "ctaLabel": "Voir le fournisseur",
+        "descriptionOverride": "Achats, fournitures et réapprovisionnement pour les entreprises."
       }
     },
     {

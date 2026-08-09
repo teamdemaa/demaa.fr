@@ -101,11 +101,17 @@ describe("service callback request route", () => {
     expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
   });
 
-  it("rejects callback submissions for the Fillout-only marketing service", async () => {
+  it("accepts the same callback journey for marketing and prospecting", async () => {
     const response = await POST(request(validBody({ serviceSlug: "marketing-vente" })));
 
-    expect(response.status).toBe(404);
-    expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
+    expect(response.status).toBe(202);
+    expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
+      fields: [
+        { label: "Service", value: "Marketing et prospection" },
+        { label: "Slug du service", value: "marketing-vente" },
+      ],
+      requestType: "service_callback_request",
+    }));
   });
 
   it("accepts the simple callback journey for process automation", async () => {

@@ -122,7 +122,7 @@ export default function SystemDetailContent({
         <div
           className="grid w-full grid-cols-3 border-b border-dema-line"
           role="tablist"
-          aria-label="Contenu du système opérationnel"
+          aria-label="Contenu du système métier"
           aria-orientation="horizontal"
         >
           {tabs.map((tab) => (

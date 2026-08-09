@@ -26,12 +26,24 @@ Les premières familles d'analyse pourront couvrir notamment BTP, restauration,
 commerce, santé, services aux entreprises, Tech & Digital et activités employeuses.
 La couverture attendue peut donc différer fortement d'une famille à l'autre.
 
+## Premier lot exécuté : cabinets comptables et cabinets de conseil
+
+La première révision ajoute quatre fournisseurs aux deux systèmes pilotes :
+Orus, Alan, Swile et Amazon Business. Alan et Swile indiquent explicitement
+leur condition liée à la présence d'une équipe ou de salariés. Les ressources
+restent en `draft`, leur relation commerciale reste `unknown` et aucune carte
+ne les présente comme partenaires de Demaa.
+
+Le Cabinet comptable conserve ses réseaux professionnels existants. Aucun
+réseau générique n'est inventé pour le Cabinet de conseil.
+
 ## Alan et Swile
 
 Alan et Swile sont seulement deux candidats potentiels parmi d'autres. Leur
 pertinence dépend notamment du pays, de la présence de salariés et du besoin RH.
-Ils ne sont ajoutés ni activés dans ce lot, et ne recevront aucun placement
-automatique sur les 115 systèmes.
+Ils ne reçoivent aucun placement automatique sur les 115 systèmes. Leur
+présence dans le premier lot est limitée aux deux métiers pilotes et assortie
+d'une condition éditoriale explicite.
 
 ## Gates éditoriaux
 

@@ -48,11 +48,10 @@ pris en charge au maximum, tarif, condition essentielle et CTA. Les blocs
 détaillés `Ce qui est inclus`, `Conditions` et `Non inclus` restent réservés à
 la fiche complète `/services/[slug]`.
 
-Les CTA restent :
-
-- `Être rappelé` pour Automatisation des processus, Assistance facturation et
-  Expert-comptable ;
-- `Construire ma stratégie marketing` pour Marketing et prospection.
+Les quatre services utilisent le même parcours de rappel : entreprise et
+téléphone uniquement, avec le CTA `Être rappelé`. Le contexte du service, du
+système métier et de la source est transmis silencieusement au pipeline de
+leads sécurisé.
 
 Les clés internes de suivi utilisent le slug stable du service et non son nom
 commercial susceptible d’évoluer.

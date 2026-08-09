@@ -58,8 +58,8 @@ describe("canonical Services marketplace", () => {
       "Espace d’échange dédié avec une réponse sous 24 à 48 heures",
     );
     expect(marketing?.cta).toEqual({
-      kind: "fillout",
-      label: "Construire ma stratégie marketing",
+      kind: "callback",
+      label: "Être rappelé",
     });
   });
 

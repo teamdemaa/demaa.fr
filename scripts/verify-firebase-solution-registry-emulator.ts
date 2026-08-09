@@ -11,6 +11,7 @@ import {
 } from "@/lib/firebase-solution-registry-contract";
 import { buildFirebaseSolutionRegistryMigrationRevision } from "@/lib/firebase-solution-registry-migration.server";
 import { buildPublishedFranceSolutionsCleanupRevision } from "@/lib/firebase-solution-registry-france-cleanup.server";
+import { buildPublishedProfessionalSuppliersRevision } from "@/lib/firebase-solution-registry-professional-suppliers.server";
 import { buildFirestoreSolutionRegistryImportPlan } from "@/lib/firebase-solution-registry-firestore-plan";
 
 const EMULATOR_PROJECT_ID = "demo-demaa-solutions";
@@ -25,12 +26,16 @@ if (process.env.GCLOUD_PROJECT && process.env.GCLOUD_PROJECT !== EMULATOR_PROJEC
 
 const revisionSource = process.argv.find((argument) => argument.startsWith("--revision="))
   ?.slice("--revision=".length) ?? "migration";
-if (revisionSource !== "migration" && revisionSource !== "france-cleanup") {
-  throw new Error("Emulator revision must be migration or france-cleanup.");
+if (!["migration", "france-cleanup", "professional-suppliers"].includes(revisionSource)) {
+  throw new Error(
+    "Emulator revision must be migration, france-cleanup or professional-suppliers.",
+  );
 }
-const revision = revisionSource === "france-cleanup"
-  ? buildPublishedFranceSolutionsCleanupRevision()
-  : buildFirebaseSolutionRegistryMigrationRevision();
+const revision = revisionSource === "professional-suppliers"
+  ? buildPublishedProfessionalSuppliersRevision()
+  : revisionSource === "france-cleanup"
+    ? buildPublishedFranceSolutionsCleanupRevision()
+    : buildFirebaseSolutionRegistryMigrationRevision();
 const plan = buildFirestoreSolutionRegistryImportPlan(revision);
 if (plan.revisionStatus !== "published" || !plan.activation) {
   throw new Error("Emulator verification requires a complete active revision plan.");

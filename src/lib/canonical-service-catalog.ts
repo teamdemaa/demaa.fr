@@ -16,11 +16,6 @@ type CallbackCta = Readonly<{
   label: "Être rappelé";
 }>;
 
-type FilloutCta = Readonly<{
-  kind: "fillout";
-  label: "Construire ma stratégie marketing";
-}>;
-
 type CanonicalServicePricing =
   | Readonly<{
       mode: "fixed-daily";
@@ -65,7 +60,7 @@ export type CanonicalService = Readonly<{
   description: string;
   result: string;
   pricing: CanonicalServicePricing;
-  cta: CallbackCta | FilloutCta;
+  cta: CallbackCta;
   included: readonly string[];
   conditions: readonly string[];
   notIncluded: readonly string[];
@@ -129,8 +124,8 @@ const canonicalServices = deepFreeze([
       note: "Engagement initial de trois mois, puis reconduction mensuelle.",
     },
     cta: {
-      kind: "fillout",
-      label: "Construire ma stratégie marketing",
+      kind: "callback",
+      label: "Être rappelé",
     },
     included: [
       "Définition et pilotage de la stratégie marketing et commerciale",
