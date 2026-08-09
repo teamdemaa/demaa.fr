@@ -9,6 +9,46 @@ Ce document remplace les listes d'actions dispersées dans les chats Demaa. Il
 distingue ce qui est déjà livré, ce qui est prêt mais non publié et ce qui reste
 à réaliser.
 
+## Mise à jour canonique du 9 août 2026
+
+Cette section et l'ADR 0003 remplacent les décisions historiques incompatibles
+plus bas dans ce document.
+
+- `demaa.co` est le domaine canonique du lancement France, sans préfixe de
+  locale. L'internationalisation reste différée.
+- La navigation principale contient uniquement `Système métier` et `Académie`.
+- Une fiche Système contient `Process`, `Solutions` et `Ressources`.
+- Les CTA commerciaux et de diagnostic sont retirés de Process et Solutions ;
+  le contact général reste disponible dans le footer.
+- Ressources contient les guides, modèles et documents contextualisés. Les
+  contenus pédagogiques globaux restent dans l'Académie.
+- Firebase est la source distante autoritaire pour Solutions et le réseau de
+  prestataires lorsque l'environnement est configuré.
+- `/opportunites` et `/rejoindre-team-demaa` sont les deux parcours publics du
+  réseau. Les anciennes URL correspondantes doivent rediriger, jamais devenir
+  des 404 lorsqu'un successeur exact existe.
+- Les anciennes pages globales Modèles/Ressources sont retirées. Une URL connue
+  redirige vers son cours ou sa fiche Système ; seul un chemin sans successeur
+  répond 404/noindex. La matrice canonique est
+  `docs/legacy-route-retirement-matrix.md`.
+- Les endpoints, destinations privées et révisions historiques de livraison
+  restent intacts pendant le retrait des pages publiques.
+- `/services` et `/sur-mesure` restent hors navigation principale et hors de ce
+  retrait. Leur avenir éditorial fera l'objet d'une décision distincte.
+
+### Backlog actif après ce lot
+
+- [ ] Arbitrer séparément le maintien, la fusion ou le retrait de `/services`
+  et `/sur-mesure`.
+- [ ] Préparer l'internationalisation seulement après stabilisation France :
+  locales, pays, contenu, Solutions et SEO.
+- [ ] Auditer et enrichir progressivement la pertinence des Solutions ; ne pas
+  réactiver les prestations pendant le go-to-market France.
+- [ ] Produire les guides annoncés et les vidéos Restaurant sans créer de
+  nouvelles routes publiques avant disponibilité réelle.
+- [ ] Activer le vocal de Structure uniquement avec stockage privé,
+  transcription et politique de suppression validés.
+
 ## Mise à jour canonique du 30 juillet 2026
 
 Cette section remplace les états historiques plus bas lorsqu'ils divergent.
