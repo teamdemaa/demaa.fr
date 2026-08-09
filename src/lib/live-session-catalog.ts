@@ -1,3 +1,5 @@
+import { PUBLIC_EDITORIAL_VISIBILITY } from "@/lib/public-editorial-visibility";
+
 export type LiveSessionSlot = {
   id: string;
   startsAt: string;
@@ -323,6 +325,12 @@ assertPublicLiveCatalog();
 
 export function getPublicLiveTrainings(): readonly PublicLiveTraining[] {
   return publicLiveTrainings;
+}
+
+export function getVisibleAcademyLiveTrainings(): readonly PublicLiveTraining[] {
+  return PUBLIC_EDITORIAL_VISIBILITY.academyLiveTrainings
+    ? publicLiveTrainings
+    : [];
 }
 
 export function getPublicLiveTrainingBySlug(slug: string): PublicLiveTraining | null {

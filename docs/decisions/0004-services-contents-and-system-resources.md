@@ -75,6 +75,17 @@ Stripe n'est prévue.
 L'index global « Cas concrets » disparaît de l'Académie, mais ses routes restent
 canoniques et les cas sont rattachés aux Systèmes concernés.
 
+### Dérogation temporaire de lancement
+
+Pour le lancement France, les surfaces « Formations en direct » de l'Académie
+et « Cas concret » des Ressources Système sont masquées par les indicateurs
+centralisés de `src/lib/public-editorial-visibility.ts`.
+
+Leurs catalogues, relations et routes sont conservés. Leur réactivation exige
+une décision éditoriale, une recette desktop/mobile et la mise à jour des tests
+de visibilité. Cette dérogation temporaire prévaut sur l'ordre public décrit
+ci-dessus tant que les deux indicateurs restent désactivés.
+
 ## Parcours
 
 - Expert-comptable et Assistance facturation : CTA « Être rappelé » puis

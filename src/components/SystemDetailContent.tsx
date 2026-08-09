@@ -11,7 +11,7 @@ import StructureNewsletterBlock from "@/components/StructureNewsletterBlock";
 import SystemSolutionsTab from "@/components/SystemSolutionsTab";
 import SystemeTabContent from "@/components/SystemeTabContent";
 import { getSystemResourcesForSystem } from "@/lib/system-resource-catalog";
-import { getContextualAcademyCaseStudy } from "@/lib/academy-case-study-placement";
+import { getVisibleContextualAcademyCaseStudy } from "@/lib/academy-case-study-placement";
 import type { SystemeDetail } from "@/lib/systeme-catalog";
 import {
   getVisibleSystemDetailTabs,
@@ -58,7 +58,7 @@ export default function SystemDetailContent({
     [system.slug],
   );
   const contextualCaseStudy = useMemo(
-    () => getContextualAcademyCaseStudy(system.slug),
+    () => getVisibleContextualAcademyCaseStudy(system.slug),
     [system.slug],
   );
   const visibleTabSlugs = getVisibleSystemDetailTabs();

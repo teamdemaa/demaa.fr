@@ -44,7 +44,13 @@ Services, Contenus, l'Académie ou les Ressources, l'ADR 0004 prévaut.
 - [ ] Créer `/contenus` et publier la fiche Facturation électronique comme
   article et diaporama avant la future vidéo.
 - [ ] Réordonner les Ressources et conserver les guides métier annoncés.
-- [ ] Publier les six formations Académie validées, sans Stripe.
+- [ ] Réactiver la section « Formations en direct » de l'Académie seulement
+  après validation des créneaux, recette desktop/mobile et bascule explicite de
+  `academyLiveTrainings` dans `src/lib/public-editorial-visibility.ts`.
+- [ ] Réactiver les « Cas concrets » dans les Ressources des six Systèmes
+  concernés seulement après validation éditoriale, recette des liens et bascule
+  explicite de `systemContextualCaseStudies`. Les relations et routes sont
+  conservées pendant le masquage.
 - [ ] Curater les fournisseurs pertinents par familles de métiers, en brouillon
   puis après validation éditoriale ; aucun acteur universel par défaut.
 - [ ] Préparer l'internationalisation seulement après stabilisation France :

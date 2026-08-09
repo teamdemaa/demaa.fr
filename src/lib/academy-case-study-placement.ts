@@ -1,3 +1,5 @@
+import { PUBLIC_EDITORIAL_VISIBILITY } from "@/lib/public-editorial-visibility";
+
 export type ContextualAcademyCaseStudy = Readonly<{
   contentSlug: string;
   durationMinutes: number;
@@ -53,6 +55,12 @@ const CONTEXTUAL_CASE_STUDIES: readonly ContextualAcademyCaseStudy[] = [
 
 export function getContextualAcademyCaseStudy(systemSlug: string) {
   return CONTEXTUAL_CASE_STUDIES.find((placement) => placement.systemSlug === systemSlug) ?? null;
+}
+
+export function getVisibleContextualAcademyCaseStudy(systemSlug: string) {
+  return PUBLIC_EDITORIAL_VISIBILITY.systemContextualCaseStudies
+    ? getContextualAcademyCaseStudy(systemSlug)
+    : null;
 }
 
 export function getContextualAcademyCaseStudyPlacements() {

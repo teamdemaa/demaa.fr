@@ -4,17 +4,20 @@ import {
   getLiveSessionPurchaseDetails,
   getPublicLiveSessionSlot,
   getPublicLiveTrainings,
+  getVisibleAcademyLiveTrainings,
   PUBLIC_LIVE_CATALOG_VERSION,
 } from "@/lib/live-session-catalog";
 import {
   getContextualAcademyCaseStudy,
   getContextualAcademyCaseStudyPlacements,
+  getVisibleContextualAcademyCaseStudy,
 } from "@/lib/academy-case-study-placement";
+import { PUBLIC_EDITORIAL_VISIBILITY } from "@/lib/public-editorial-visibility";
 import { enterpriseCatalog } from "@/lib/enterprise-annuaire";
 import { getAcademyContentBySlug } from "@/lib/academy-course-content";
 
 describe("Academy live sessions and contextual cases", () => {
-  it("publishes exactly the six validated 2 h themes at 250 € HT without inventing dates", () => {
+  it("preserves exactly the six validated 2 h themes at 250 € HT without inventing dates", () => {
     const trainings = getPublicLiveTrainings();
     expect(trainings.map((training) => training.title)).toEqual([
       "Être visible sur Google",
@@ -36,6 +39,11 @@ describe("Academy live sessions and contextual cases", () => {
       expect(training.slots).toEqual([]);
     }
     expect(getPublicLiveSessionSlot("etre-visible-sur-google", "unvalidated-slot")).toBeNull();
+  });
+
+  it("hides live trainings from the public Academy through a reversible gate", () => {
+    expect(PUBLIC_EDITORIAL_VISIBILITY.academyLiveTrainings).toBe(false);
+    expect(getVisibleAcademyLiveTrainings()).toEqual([]);
   });
 
   it("preserves historical Stripe purchase decoding without exposing it in registration", () => {
@@ -71,14 +79,25 @@ describe("Academy live sessions and contextual cases", () => {
     }
   });
 
-  it("orders the Academy sections and removes only the global cases index", async () => {
-    const source = await readFile(
-      new URL("../src/components/AcademyIndexClient.tsx", import.meta.url),
-      "utf8",
-    );
-    expect(source.indexOf("Cours fondamentaux")).toBeLessThan(source.indexOf("<AcademyLiveTrainingSection"));
-    expect(source.indexOf("<AcademyLiveTrainingSection")).toBeLessThan(source.indexOf("Modèles et documents"));
-    expect(source).not.toContain("Cas concrets");
+  it("hides contextual case-study placements from public system resources", () => {
+    expect(PUBLIC_EDITORIAL_VISIBILITY.systemContextualCaseStudies).toBe(false);
+    for (const placement of getContextualAcademyCaseStudyPlacements()) {
+      expect(getVisibleContextualAcademyCaseStudy(placement.systemSlug)).toBeNull();
+    }
+  });
+
+  it("keeps the dormant Academy section wired while the server provides no visible training", async () => {
+    const [clientSource, pageSource] = await Promise.all([
+      readFile(
+        new URL("../src/components/AcademyIndexClient.tsx", import.meta.url),
+        "utf8",
+      ),
+      readFile(new URL("../src/app/academie/page.tsx", import.meta.url), "utf8"),
+    ]);
+    expect(clientSource.indexOf("Cours fondamentaux")).toBeLessThan(clientSource.indexOf("<AcademyLiveTrainingSection"));
+    expect(clientSource.indexOf("<AcademyLiveTrainingSection")).toBeLessThan(clientSource.indexOf("Modèles et documents"));
+    expect(clientSource).not.toContain("Cas concrets");
+    expect(pageSource).toContain("getVisibleAcademyLiveTrainings()");
   });
 
   it("does not restore the retired public course catalog", async () => {
