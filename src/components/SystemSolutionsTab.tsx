@@ -338,25 +338,8 @@ export default function SystemSolutionsTab({
                 {group.placements.map((placement) => {
                   const { resource } = placement;
                   const ResourceIcon = RESOURCE_ICONS[resource.resourceType];
-                  return (
-                    <button
-                      key={placement.placementId}
-                      type="button"
-                      data-solution-resource-card
-                      onClick={() => {
-                        if (resource.interaction.interactionMode === "system_delivery") return;
-                        trackSystemSolutionEvent("system_solution_resource_opened", {
-                          rank: placement.rank,
-                          resourceSlug: resource.resourceSlug,
-                          resourceType: resource.resourceType,
-                          section: placement.section,
-                          systemSlug: placement.systemSlug,
-                        });
-                        setSelected(placement);
-                      }}
-                      className="group min-h-[248px] min-w-0 snap-start overflow-hidden rounded-[1.2rem] border border-dema-line bg-dema-paper p-5 text-left shadow-[0_10px_28px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/20 hover:shadow-[0_14px_32px_rgba(23,35,29,0.07)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:p-6 md:aspect-square md:min-h-0"
-                      aria-label={`Ouvrir ${resource.name}`}
-                    >
+                  const cardClassName = "group min-h-[248px] min-w-0 snap-start overflow-hidden rounded-[1.2rem] border border-dema-line bg-dema-paper p-5 text-left shadow-[0_10px_28px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/20 hover:shadow-[0_14px_32px_rgba(23,35,29,0.07)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:p-6 md:aspect-square md:min-h-0";
+                  const cardContent = (
                       <span className="flex h-full min-h-0 flex-col">
                         <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
                           <ResourceIcon className="h-5 w-5" aria-hidden="true" />
@@ -371,6 +354,51 @@ export default function SystemSolutionsTab({
                           {resource.description}
                         </span>
                       </span>
+                  );
+                  const openEvent = () => trackSystemSolutionEvent(
+                    "system_solution_resource_opened",
+                    {
+                      rank: placement.rank,
+                      resourceSlug: resource.resourceSlug,
+                      resourceType: resource.resourceType,
+                      section: placement.section,
+                      systemSlug: placement.systemSlug,
+                    },
+                  );
+
+                  if (
+                    group.section === "services" &&
+                    resource.interaction.interactionMode === "detail" &&
+                    resource.interaction.href.startsWith("/services/")
+                  ) {
+                    return (
+                      <Link
+                        key={placement.placementId}
+                        href={resource.interaction.href}
+                        data-solution-resource-card
+                        onClick={openEvent}
+                        className={cardClassName}
+                        aria-label={`Ouvrir ${resource.name}`}
+                      >
+                        {cardContent}
+                      </Link>
+                    );
+                  }
+
+                  return (
+                    <button
+                      key={placement.placementId}
+                      type="button"
+                      data-solution-resource-card
+                      onClick={() => {
+                        if (resource.interaction.interactionMode === "system_delivery") return;
+                        openEvent();
+                        setSelected(placement);
+                      }}
+                      className={cardClassName}
+                      aria-label={`Ouvrir ${resource.name}`}
+                    >
+                      {cardContent}
                     </button>
                   );
                 })}

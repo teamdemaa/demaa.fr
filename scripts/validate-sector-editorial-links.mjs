@@ -18,12 +18,6 @@ const staticRoutes = new Set([
   "/annuaire-outils",
 ]);
 
-function extractSlugs(source) {
-  return new Set(
-    [...source.matchAll(/slug:\s*"([^"]+)"/g)].map((match) => match[1]),
-  );
-}
-
 const systemResourceSlugs = new Set(
   [...systemResourceCatalogSource.matchAll(/resourceSlug:\s*"([^"]+)"/g)]
     .map((match) => match[1]),

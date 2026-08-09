@@ -1,4 +1,4 @@
-import { readFile } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
 import { describe, expect, it } from "vitest";
 import {
   getLiveSessionPurchaseDetails,
@@ -11,7 +11,6 @@ import {
   getContextualAcademyCaseStudyPlacements,
 } from "@/lib/academy-case-study-placement";
 import { enterpriseCatalog } from "@/lib/enterprise-annuaire";
-import { getAllCourseEntries, getCourseEntryBySlug } from "@/lib/course-content";
 import { getAcademyContentBySlug } from "@/lib/academy-course-content";
 
 describe("Academy live sessions and contextual cases", () => {
@@ -67,8 +66,8 @@ describe("Academy live sessions and contextual cases", () => {
       expect(contextual).toMatchObject({
         contentSlug: content?.identity.slug,
         promise: content?.identity.promise,
-        title: content?.identity.card.title,
       });
+      expect(contextual?.title).not.toContain("—");
     }
   });
 
@@ -82,13 +81,10 @@ describe("Academy live sessions and contextual cases", () => {
     expect(source).not.toContain("Cas concrets");
   });
 
-  it("hides the two archived presentations from the public course index while preserving direct resolution", () => {
-    expect(getAllCourseEntries().map((entry) => entry.slug)).not.toEqual(expect.arrayContaining([
-      "obligations-finances-entreprise",
-      "facture-electronique",
-    ]));
-    expect(getCourseEntryBySlug("obligations-finances-entreprise")).not.toBeNull();
-    expect(getCourseEntryBySlug("facture-electronique")).not.toBeNull();
+  it("does not restore the retired public course catalog", async () => {
+    await expect(
+      access(new URL("../src/lib/course-content.ts", import.meta.url)),
+    ).rejects.toThrow();
   });
 
   it("keeps the new registration path independent from Stripe checkout", async () => {

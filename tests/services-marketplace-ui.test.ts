@@ -129,11 +129,12 @@ describe("canonical Services marketplace", () => {
   });
 
   it("implements the documented intercepted modal contract", async () => {
-    const [layout, modalDefault, modalPage, routeDialog] = await Promise.all([
+    const [layout, modalDefault, modalPage, routeDialog, systemSolutions] = await Promise.all([
       readSource("src/app/layout.tsx"),
       readSource("src/app/@modal/default.tsx"),
       readSource("src/app/@modal/(.)services/[slug]/page.tsx"),
       readSource("src/components/ServiceRouteDialog.tsx"),
+      readSource("src/components/SystemSolutionsTab.tsx"),
     ]);
 
     expect(layout).toContain("modal: React.ReactNode");
@@ -141,5 +142,7 @@ describe("canonical Services marketplace", () => {
     expect(modalDefault).toContain("return null");
     expect(modalPage).toContain("ServiceRouteDialog");
     expect(routeDialog).toContain("router.back()");
+    expect(systemSolutions).toContain('group.section === "services"');
+    expect(systemSolutions).toContain('href={resource.interaction.href}');
   });
 });
