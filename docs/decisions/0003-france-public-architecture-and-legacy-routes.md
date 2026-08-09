@@ -6,6 +6,9 @@
   retrait des anciennes URL
 - Base d'implémentation : `a58a191847867b700ad71ad40e6e8e6436d34d44`
 
+> Mise à jour : les passages relatifs aux Services, à leur placement dans les
+> Systèmes, à l'Académie et aux Ressources sont supersédés par l'ADR 0004.
+
 ## Contexte
 
 Demaa prépare son lancement France sur `demaa.co`. Le produit a évolué par
@@ -32,13 +35,12 @@ canonique par intention, sans casser les liens qui possèdent encore un
    **Process**, **Solutions** et **Ressources**.
 5. Ressources conserve les guides, modèles et documents contextualisés au
    métier. L'Académie reste le hub global des contenus pédagogiques.
-6. Les CTA commerciaux sont absents des panneaux Process et Solutions. Le
-   contact général reste disponible dans le footer.
+6. La règle historique sur les CTA de Process et Solutions est supersédée par
+   les parcours définis dans l'ADR 0004.
 7. `/opportunites` et `/rejoindre-team-demaa` sont les deux parcours publics
    du réseau de prestataires. Ils restent distincts des Solutions d'un métier.
 8. `/services` et `/sur-mesure` ne font pas partie de la navigation principale.
-   Leur avenir éditorial est différé ; cette ADR ne les retire ni ne modifie
-   leur contenu.
+   Leur contenu et leur placement sont désormais définis par l'ADR 0004.
 9. L'internationalisation, les préfixes de locale et les variantes par pays
    restent différés. Le lancement courant est la version France sans préfixe
    `/fr`.

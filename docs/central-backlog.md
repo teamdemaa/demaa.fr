@@ -11,15 +11,16 @@ distingue ce qui est déjà livré, ce qui est prêt mais non publié et ce qui 
 
 ## Mise à jour canonique du 9 août 2026
 
-Cette section et l'ADR 0003 remplacent les décisions historiques incompatibles
-plus bas dans ce document.
+Cette section, l'ADR 0003 et surtout l'ADR 0004 remplacent les décisions
+historiques incompatibles plus bas dans ce document. En cas de conflit sur les
+Services, Contenus, l'Académie ou les Ressources, l'ADR 0004 prévaut.
 
 - `demaa.co` est le domaine canonique du lancement France, sans préfixe de
   locale. L'internationalisation reste différée.
 - La navigation principale contient uniquement `Système métier` et `Académie`.
 - Une fiche Système contient `Process`, `Solutions` et `Ressources`.
-- Les CTA commerciaux et de diagnostic sont retirés de Process et Solutions ;
-  le contact général reste disponible dans le footer.
+- Trois Services Demaa canoniques sont affichés dans Solutions, après Outils :
+  Expert-comptable, Marketing externalisé et Assistance facturation.
 - Ressources contient les guides, modèles et documents contextualisés. Les
   contenus pédagogiques globaux restent dans l'Académie.
 - Firebase est la source distante autoritaire pour Solutions et le réseau de
@@ -33,17 +34,21 @@ plus bas dans ce document.
   `docs/legacy-route-retirement-matrix.md`.
 - Les endpoints, destinations privées et révisions historiques de livraison
   restent intacts pendant le retrait des pages publiques.
-- `/services` et `/sur-mesure` restent hors navigation principale et hors de ce
-  retrait. Leur avenir éditorial fera l'objet d'une décision distincte.
+- `/services` publie exactement les trois offres canoniques. `/sur-mesure`
+  reste une offre distincte, hors navigation principale.
 
-### Backlog actif après ce lot
+### Lots actifs après ce lot
 
-- [ ] Arbitrer séparément le maintien, la fusion ou le retrait de `/services`
-  et `/sur-mesure`.
+- [ ] Remplacer les catalogues Services concurrents par le catalogue canonique
+  de trois offres, puis le composer dans les 115 Systèmes.
+- [ ] Créer `/contenus` et publier la fiche Facturation électronique comme
+  article et diaporama avant la future vidéo.
+- [ ] Réordonner les Ressources et conserver les guides métier annoncés.
+- [ ] Publier les six formations Académie validées, sans Stripe.
+- [ ] Curater les fournisseurs pertinents par familles de métiers, en brouillon
+  puis après validation éditoriale ; aucun acteur universel par défaut.
 - [ ] Préparer l'internationalisation seulement après stabilisation France :
   locales, pays, contenu, Solutions et SEO.
-- [ ] Auditer et enrichir progressivement la pertinence des Solutions ; ne pas
-  réactiver les prestations pendant le go-to-market France.
 - [ ] Produire les guides annoncés et les vidéos Restaurant sans créer de
   nouvelles routes publiques avant disponibilité réelle.
 - [ ] Activer le vocal de Structure uniquement avec stockage privé,
