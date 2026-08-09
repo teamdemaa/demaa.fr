@@ -20,8 +20,9 @@ async function readSource(path: string) {
 }
 
 describe("canonical Services SEO and redirects", () => {
-  it("publishes only the three canonical detail routes", async () => {
+  it("publishes only the four canonical detail routes", async () => {
     expect(generateStaticParams()).toEqual([
+      { slug: "automatisation-processus" },
       { slug: "expert-comptable" },
       { slug: "marketing-vente" },
       { slug: "assistance-facturation" },

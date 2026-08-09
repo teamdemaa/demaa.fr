@@ -21,7 +21,7 @@ produit.
 | Académie cours 3 à 5 | `deferred` | Drafts éditoriaux et assets non publics | hors release Systèmes | Aucun draft ne devient public sans publication réelle et gate dédié. |
 | Vidéos | `deferred` | Production, casting et publication vidéo | chantier ultérieur | Les scripts, voix et assets locaux ne valent pas autorisation de publication. |
 | Tiimora D-049 à D-060 | `deferred` | Intégration Demaa-Tiimora et retargeting | backlog distinct | Ce chantier ne doit ni orienter ni ralentir la base Systèmes/Services. |
-| Services V1 | `superseded` | Marketplace de sept services | remplacée par l'ADR 0004 | `/services` publie exactement trois offres canoniques, également composées dans les 115 Systèmes après Outils. |
+| Services V1 | `superseded` | Marketplace de sept services | remplacée par l'ADR 0004 | `/services` publie exactement quatre offres canoniques, également composées dans les 115 Systèmes après Outils. |
 | Solutions V1 | `validated` | Registre Firebase et interface par système | actif pour la France | Firebase est la source distante autoritaire ; les sections visibles restent conditionnelles à des placements pertinents. |
 | D-072 | `validated` | Architecture publique France et retrait legacy | ADR 0003 | `demaa.co` est canonique ; navigation `Système métier / Académie` ; fiches `Process / Solutions / Ressources` ; redirection si un successeur existe, 404 sinon. |
 | D-073 | `validated` | Services, Contenus, Académie et Ressources | ADR 0004 | Trois Services canoniques, `/contenus`, Ressources réordonnées et six formations en direct ; l'ADR 0004 prévaut sur les anciens arbitrages incompatibles. |

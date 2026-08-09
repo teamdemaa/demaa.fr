@@ -24,11 +24,12 @@ async function readSource(path: string) {
 }
 
 describe("canonical Services marketplace", () => {
-  it("publishes exactly the three approved services from one immutable source", () => {
+  it("publishes exactly the four approved services from one immutable source", () => {
     const services = getCanonicalServices();
 
     expect(services.map((service) => service.slug)).toEqual(CANONICAL_SERVICE_SLUGS);
     expect(services.map((service) => service.name)).toEqual([
+      "Automatisation des processus",
       "Expert-comptable",
       "Marketing externalisé",
       "Assistance facturation",
@@ -60,12 +61,23 @@ describe("canonical Services marketplace", () => {
     });
   });
 
-  it("renders three linked cards without exposing retired catalog prices", () => {
+  it("places process automation first with the simple callback journey", () => {
+    const automation = getCanonicalServiceBySlug("automatisation-processus");
+
+    expect(getCanonicalServices()[0]).toBe(automation);
+    expect(automation).toMatchObject({
+      name: "Automatisation des processus",
+      pricing: { label: "Sur devis", mode: "quote" },
+      cta: { kind: "callback", label: "Être rappelé" },
+    });
+  });
+
+  it("renders four linked cards without exposing retired catalog prices", () => {
     const markup = renderToStaticMarkup(
       createElement(ServicesCatalog, { services: getCanonicalServices() }),
     );
 
-    expect(markup.match(/<article/g)).toHaveLength(3);
+    expect(markup.match(/<article/g)).toHaveLength(4);
     for (const slug of CANONICAL_SERVICE_SLUGS) {
       expect(markup).toContain(`/services/${slug}`);
     }

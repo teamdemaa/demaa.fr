@@ -108,6 +108,21 @@ describe("service callback request route", () => {
     expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
   });
 
+  it("accepts the simple callback journey for process automation", async () => {
+    const response = await POST(request(validBody({
+      serviceSlug: "automatisation-processus",
+    })));
+
+    expect(response.status).toBe(202);
+    expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
+      fields: [
+        { label: "Service", value: "Automatisation des processus" },
+        { label: "Slug du service", value: "automatisation-processus" },
+      ],
+      requestType: "service_callback_request",
+    }));
+  });
+
   it("stores company and phone in Firebase before delivering to Slack", async () => {
     const response = await POST(request(validBody()));
 

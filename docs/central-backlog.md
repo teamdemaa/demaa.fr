@@ -19,8 +19,9 @@ Services, Contenus, l'Académie ou les Ressources, l'ADR 0004 prévaut.
   locale. L'internationalisation reste différée.
 - La navigation principale contient uniquement `Système métier` et `Académie`.
 - Une fiche Système contient `Process`, `Solutions` et `Ressources`.
-- Trois Services Demaa canoniques sont affichés dans Solutions, après Outils :
-  Expert-comptable, Marketing externalisé et Assistance facturation.
+- Quatre Services Demaa canoniques sont affichés dans Solutions, après Outils :
+  Automatisation des processus, Expert-comptable, Marketing externalisé et
+  Assistance facturation.
 - Ressources contient les guides, modèles et documents contextualisés. Les
   contenus pédagogiques globaux restent dans l'Académie.
 - Firebase est la source distante autoritaire pour Solutions et le réseau de
@@ -34,13 +35,13 @@ Services, Contenus, l'Académie ou les Ressources, l'ADR 0004 prévaut.
   `docs/legacy-route-retirement-matrix.md`.
 - Les endpoints, destinations privées et révisions historiques de livraison
   restent intacts pendant le retrait des pages publiques.
-- `/services` publie exactement les trois offres canoniques. `/sur-mesure`
+- `/services` publie exactement les quatre offres canoniques. `/sur-mesure`
   reste une offre distincte, hors navigation principale.
 
 ### Lots actifs après ce lot
 
-- [ ] Remplacer les catalogues Services concurrents par le catalogue canonique
-  de trois offres, puis le composer dans les 115 Systèmes.
+- [ ] Conserver un catalogue Services canonique unique de quatre offres,
+  composé au rendu dans les 115 Systèmes.
 - [ ] Créer `/contenus` et publier la fiche Facturation électronique comme
   article et diaporama avant la future vidéo.
 - [ ] Réordonner les Ressources et conserver les guides métier annoncés.

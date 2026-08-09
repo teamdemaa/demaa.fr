@@ -68,7 +68,7 @@ const sectionsWithLegacyReferral = [
 ] as const satisfies readonly RenderableSolutionSectionDto[];
 
 describe("canonical Services composition in every system", () => {
-  it("composes exactly three service cards on all 115 systems", () => {
+  it("composes exactly four service cards on all 115 systems", () => {
     expect(enterpriseCatalog).toHaveLength(115);
 
     for (const system of enterpriseCatalog) {
@@ -77,7 +77,7 @@ describe("canonical Services composition in every system", () => {
 
       expect(services?.placements.map(({ resource }) => resource.resourceSlug))
         .toEqual(CANONICAL_SERVICE_SLUGS);
-      expect(services?.placements).toHaveLength(3);
+      expect(services?.placements).toHaveLength(4);
       expect(services?.placements.every(({ placementId }) =>
         placementId.startsWith(`render:${system.slug}:service:`)
       )).toBe(true);

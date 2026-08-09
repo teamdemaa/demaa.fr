@@ -60,7 +60,7 @@ une date injectée en test.
 
 Le catalogue V2 à sept offres et son formulaire ont été retirés. La source
 publique unique est désormais `src/lib/canonical-service-catalog.ts`, avec
-exactement trois offres. Voir ADR 0004.
+exactement quatre offres. Voir ADR 0004.
 
 ### W3c — registres Solutions serveur
 

@@ -10,11 +10,12 @@
 
 ### Services Demaa
 
-Demaa publie exactement trois services canoniques :
+Demaa publie exactement quatre services canoniques :
 
-1. Expert-comptable (`/services/expert-comptable`) ;
-2. Marketing externalisé (`/services/marketing-vente`) ;
-3. Assistance facturation (`/services/assistance-facturation`).
+1. Automatisation des processus (`/services/automatisation-processus`) ;
+2. Expert-comptable (`/services/expert-comptable`) ;
+3. Marketing externalisé (`/services/marketing-vente`) ;
+4. Assistance facturation (`/services/assistance-facturation`).
 
 `/services` est l'annuaire public de ces trois offres. `/sur-mesure` reste une
 offre séparée. Les anciens catalogues, prix et promesses ne constituent plus
@@ -25,8 +26,8 @@ La source produit du Marketing externalisé est le document
 initial de trois mois, point d'avancement hebdomadaire, bilan mensuel et support
 sous 24 à 48 heures.
 
-Les trois offres sont composées au rendu dans les 115 fiches Système. Elles ne
-sont pas copiées 345 fois dans Firebase.
+Les quatre offres sont composées au rendu dans les 115 fiches Système. Elles ne
+sont pas copiées 460 fois dans Firebase.
 
 ### Ordre de Solutions
 
@@ -88,7 +89,8 @@ ci-dessus tant que les deux indicateurs restent désactivés.
 
 ## Parcours
 
-- Expert-comptable et Assistance facturation : CTA « Être rappelé » puis
+- Automatisation des processus, Expert-comptable et Assistance facturation :
+  CTA « Être rappelé » puis
   formulaire strict `entreprise + téléphone`.
 - Marketing externalisé : CTA « Construire ma stratégie marketing » puis
   réservation existante d'un échange de trente minutes.

@@ -3,6 +3,7 @@ import "server-only";
 import { deepFreeze } from "@/lib/registry-contract-utils";
 
 export const CANONICAL_SERVICE_SLUGS = [
+  "automatisation-processus",
   "expert-comptable",
   "marketing-vente",
   "assistance-facturation",
@@ -51,6 +52,39 @@ export type CanonicalService = Readonly<{
 }>;
 
 const canonicalServices = deepFreeze([
+  {
+    slug: "automatisation-processus",
+    name: "Automatisation des processus",
+    eyebrow: "Organisation et automatisation",
+    summary:
+      "Automatisez les tâches répétitives et reliez vos outils pour réduire les ressaisies, les oublis et les relances manuelles.",
+    description:
+      "Demaa analyse le processus concerné, simplifie son fonctionnement puis met en place les automatisations adaptées à vos outils et à votre organisation.",
+    result:
+      "Un processus plus fluide et plus fiable, avec moins d’actions manuelles à effectuer et à contrôler au quotidien.",
+    pricing: {
+      mode: "quote",
+      label: "Sur devis",
+    },
+    cta: {
+      kind: "callback",
+      label: "Être rappelé",
+    },
+    included: [
+      "Analyse du processus et des tâches répétitives",
+      "Simplification des étapes avant automatisation",
+      "Connexion des outils et mise en place des automatisations validées",
+      "Tests, documentation et prise en main",
+    ],
+    conditions: [
+      "Le périmètre est cadré avant le devis",
+      "Les accès et licences nécessaires restent sous votre contrôle",
+    ],
+    notIncluded: [
+      "La refonte complète de tous les processus de l’entreprise",
+      "Les abonnements et licences facturés par des outils tiers",
+    ],
+  },
   {
     slug: "expert-comptable",
     name: "Expert-comptable",

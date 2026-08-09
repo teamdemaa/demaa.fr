@@ -16,7 +16,7 @@ Les catalogues publics ont une source canonique par univers:
 
 - `src/lib/tool-directory.json`: annuaire logiciel principal.
 - `src/lib/enterprise-annuaire.json`: kits operationnels par activite.
-- `src/lib/canonical-service-catalog.ts`: catalogue officiel unique des trois services Demaa, compose au rendu dans les systemes.
+- `src/lib/canonical-service-catalog.ts`: catalogue officiel unique des quatre services Demaa, compose au rendu dans les systemes.
 - `src/lib/content-catalog.ts`: catalogue canonique des contenus editoriaux publies.
 - `src/lib/system-resource-catalog.ts`: metadonnees publiques des ressources communes aux systemes.
 - `src/lib/system-resource-assets.server.ts`: revisions et destinations privees utilisees pour leur livraison.
@@ -24,7 +24,7 @@ Les catalogues publics ont une source canonique par univers:
 - `src/lib/supplier-recommendations.ts`: ordre des fournisseurs recommandes par kit.
 - Firestore: source distante avec fallback local pour certains catalogues.
 
-Regle pragmatique: avant d'ajouter un outil, un service ou un kit, verifier quelle page le consomme. Ne pas recreer de catalogue Services concurrent ni persister les trois services 115 fois.
+Regle pragmatique: avant d'ajouter un outil, un service ou un kit, verifier quelle page le consomme. Ne pas recreer de catalogue Services concurrent ni persister les quatre services 115 fois.
 
 Pour `src/lib/enterprise-annuaire.json`, Git est la source de verite editoriale. Firestore sert de base de lecture runtime et doit rester synchronise via:
 
