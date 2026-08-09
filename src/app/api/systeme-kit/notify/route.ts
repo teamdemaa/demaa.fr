@@ -149,9 +149,10 @@ async function handlePost(request: Request) {
   }
 
   const systemName = enterpriseToSystem(enterprise).name;
+  const source = `Liste d’attente - ${resource.title}`;
   const context = await resolveLeadContext({
     systemSlug,
-    source: `Liste d’attente - ${resource.title}`,
+    source,
     sourceUrl: request.headers.get("referer"),
   });
 
@@ -171,14 +172,19 @@ async function handlePost(request: Request) {
   await submitLeadRequest({
     attribution: resolveLeadAttribution(request, body?.attribution),
     channels: {
-      email: false,
+      email: true,
       resend: marketingConsent,
       slack: true,
     },
     contact: { email, firstName: null },
     context,
     emoji: "🔔",
-    fields: [{ label: "Guide", value: resource.title }],
+    fields: [
+      { label: "Guide", value: resource.title },
+      { label: "Resource slug", value: resource.resourceSlug },
+      { label: "System slug", value: systemSlug },
+      { label: "Source", value: source },
+    ],
     idempotencyKey,
     marketingConsent: {
       capturedAt: consentCapturedAt,

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import AcademyIndexClient from "@/components/AcademyIndexClient";
-import { getAllAcademyContent } from "@/lib/academy-course-content";
+import { getAcademyFundamentals } from "@/lib/academy-course-content";
+import { getPublicLiveTrainings } from "@/lib/live-session-catalog";
 
 const title = "Apprendre à entreprendre | Académie Demaa";
 const description =
@@ -49,7 +50,11 @@ export default async function AcademyIndexPage({ searchParams }: AcademyIndexPag
   return (
     <>
       <Navbar />
-      <AcademyIndexClient contents={getAllAcademyContent()} backLink={backLink} />
+      <AcademyIndexClient
+        contents={getAcademyFundamentals()}
+        liveTrainings={getPublicLiveTrainings()}
+        backLink={backLink}
+      />
     </>
   );
 }

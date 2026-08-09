@@ -1,4 +1,4 @@
-type LiveSessionSlot = {
+export type LiveSessionSlot = {
   id: string;
   startsAt: string;
 };
@@ -11,7 +11,7 @@ type LiveTrainingSession = {
   learningGoals: readonly [string, string, string];
   includedModels: readonly string[];
   qAndA: string;
-  duration: "2 h 30";
+  duration: string;
   unitAmount: number;
   slots: readonly LiveSessionSlot[];
 };
@@ -24,7 +24,140 @@ export type LiveSessionPurchaseDetails = {
 
 const LIVE_SESSION_SYSTEM_SEPARATOR = "--systeme-";
 
-const liveTrainings = [
+export const PUBLIC_LIVE_CATALOG_VERSION = "academy-live-catalog-2026-08-v1";
+
+export type PublicLiveTraining = LiveTrainingSession & {
+  duration: "2 h";
+  publicationStatus: "published";
+  catalogVersion: typeof PUBLIC_LIVE_CATALOG_VERSION;
+  scheduleValidationStatus: "pending";
+  validationStatus: "validated";
+};
+
+const publicLiveTrainings = [
+  {
+    slug: "etre-visible-sur-google",
+    title: "Être visible sur Google",
+    description: "Améliorer sa présence locale et rendre son activité plus facile à trouver au bon moment.",
+    audience: "Dirigeants et indépendants qui souhaitent développer une visibilité Google utile et durable.",
+    learningGoals: [
+      "Comprendre les leviers de visibilité locale.",
+      "Améliorer sa fiche et ses contenus prioritaires.",
+      "Construire un plan d’action mesurable sur un mois.",
+    ],
+    includedModels: ["Checklist de visibilité Google", "Plan d’action local sur 30 jours"],
+    qAndA: "Un temps de questions-réponses pour adapter les actions à votre activité.",
+    duration: "2 h",
+    unitAmount: 250_00,
+    publicationStatus: "published",
+    validationStatus: "validated",
+    catalogVersion: PUBLIC_LIVE_CATALOG_VERSION,
+    scheduleValidationStatus: "pending",
+    slots: [],
+  },
+  {
+    slug: "trouver-des-clients",
+    title: "Trouver des clients",
+    description: "Choisir des actions d’acquisition cohérentes et mettre en place une prospection régulière.",
+    audience: "Dirigeants et indépendants qui veulent rendre leur acquisition plus prévisible.",
+    learningGoals: [
+      "Préciser les clients à cibler en priorité.",
+      "Choisir des canaux d’acquisition adaptés.",
+      "Organiser un rythme de prospection réaliste.",
+    ],
+    includedModels: ["Trame de cible client", "Plan de prospection hebdomadaire"],
+    qAndA: "Un temps de questions-réponses pour adapter la méthode à votre marché.",
+    duration: "2 h",
+    unitAmount: 250_00,
+    publicationStatus: "published",
+    validationStatus: "validated",
+    catalogVersion: PUBLIC_LIVE_CATALOG_VERSION,
+    scheduleValidationStatus: "pending",
+    slots: [],
+  },
+  {
+    slug: "communiquer-reseaux-sociaux",
+    title: "Communiquer sur les réseaux sociaux",
+    description: "Construire une présence régulière sans multiplier les plateformes ni publier au hasard.",
+    audience: "Dirigeants et indépendants qui veulent communiquer avec constance et clarté.",
+    learningGoals: [
+      "Choisir les réseaux réellement utiles.",
+      "Définir des thèmes de publication durables.",
+      "Préparer un calendrier simple à tenir.",
+    ],
+    includedModels: ["Matrice de contenus", "Calendrier éditorial mensuel"],
+    qAndA: "Un temps de questions-réponses pour construire votre ligne éditoriale.",
+    duration: "2 h",
+    unitAmount: 250_00,
+    publicationStatus: "published",
+    validationStatus: "validated",
+    catalogVersion: PUBLIC_LIVE_CATALOG_VERSION,
+    scheduleValidationStatus: "pending",
+    slots: [],
+  },
+  {
+    slug: "vendre-et-convaincre",
+    title: "Vendre et convaincre",
+    description: "Mener un échange commercial clair, traiter les objections et aider le client à décider.",
+    audience: "Dirigeants et équipes commerciales qui souhaitent vendre avec plus de méthode.",
+    learningGoals: [
+      "Structurer un entretien de vente utile.",
+      "Présenter la valeur de son offre avec clarté.",
+      "Répondre aux objections sans pression.",
+    ],
+    includedModels: ["Trame d’entretien commercial", "Grille de suivi des objections"],
+    qAndA: "Un temps de questions-réponses pour travailler vos situations de vente.",
+    duration: "2 h",
+    unitAmount: 250_00,
+    publicationStatus: "published",
+    validationStatus: "validated",
+    catalogVersion: PUBLIC_LIVE_CATALOG_VERSION,
+    scheduleValidationStatus: "pending",
+    slots: [],
+  },
+  {
+    slug: "outils-numeriques-ia",
+    title: "Utiliser les outils numériques et l’IA",
+    description: "Choisir des usages numériques et IA concrets pour gagner du temps sans perdre le contrôle.",
+    audience: "Dirigeants et équipes qui veulent adopter des outils utiles avec méthode.",
+    learningGoals: [
+      "Repérer les tâches qui peuvent être simplifiées.",
+      "Choisir des outils adaptés à ses besoins.",
+      "Encadrer les usages de l’IA et les données sensibles.",
+    ],
+    includedModels: ["Grille de choix d’outils", "Cadre d’usage responsable de l’IA"],
+    qAndA: "Un temps de questions-réponses pour prioriser vos propres usages.",
+    duration: "2 h",
+    unitAmount: 250_00,
+    publicationStatus: "published",
+    validationStatus: "validated",
+    catalogVersion: PUBLIC_LIVE_CATALOG_VERSION,
+    scheduleValidationStatus: "pending",
+    slots: [],
+  },
+  {
+    slug: "gestion-financiere-cadre-legal",
+    title: "Maîtriser la gestion financière et le cadre légal de son entreprise",
+    description: "Suivre les bons indicateurs et mieux comprendre les obligations essentielles de l’entreprise.",
+    audience: "Dirigeants qui veulent prendre de meilleures décisions financières et administratives.",
+    learningGoals: [
+      "Lire les indicateurs financiers utiles au dirigeant.",
+      "Identifier les principales échéances et obligations.",
+      "Mettre en place un suivi mensuel simple.",
+    ],
+    includedModels: ["Tableau de suivi financier", "Calendrier des obligations essentielles"],
+    qAndA: "Un temps de questions-réponses pour appliquer les repères à votre entreprise.",
+    duration: "2 h",
+    unitAmount: 250_00,
+    publicationStatus: "published",
+    validationStatus: "validated",
+    catalogVersion: PUBLIC_LIVE_CATALOG_VERSION,
+    scheduleValidationStatus: "pending",
+    slots: [],
+  },
+] as const satisfies readonly PublicLiveTraining[];
+
+const historicalLiveTrainings = [
   {
     slug: "obligations-finances-entreprise",
     title: "Maîtriser les obligations et les finances de son entreprise",
@@ -149,26 +282,58 @@ const liveTrainings = [
   },
 ] as const satisfies readonly LiveTrainingSession[];
 
-const allLiveTrainings = [...liveTrainings];
+const historicalDecodableLiveTrainings: readonly LiveTrainingSession[] = [
+  ...historicalLiveTrainings,
+];
 
-export function formatLiveSessionDate(startsAt: string) {
-  const date = new Date(startsAt);
-  const day = new Intl.DateTimeFormat("fr-FR", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-    timeZone: "Europe/Paris",
-  }).format(date);
-  const time = new Intl.DateTimeFormat("fr-FR", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hourCycle: "h23",
-    timeZone: "Europe/Paris",
-  })
-    .format(date)
-    .replace(":", "h");
+function assertPublicLiveCatalog() {
+  const expectedTitles = new Set([
+    "Être visible sur Google",
+    "Trouver des clients",
+    "Communiquer sur les réseaux sociaux",
+    "Vendre et convaincre",
+    "Utiliser les outils numériques et l’IA",
+    "Maîtriser la gestion financière et le cadre légal de son entreprise",
+  ]);
+  if (publicLiveTrainings.length !== 6) {
+    throw new Error("Le catalogue public doit contenir exactement six formations en direct.");
+  }
 
-  return `${day} à ${time}`;
+  for (const training of publicLiveTrainings) {
+    if (
+      !expectedTitles.delete(training.title) ||
+      training.duration !== "2 h" ||
+      training.unitAmount !== 250_00 ||
+      training.publicationStatus !== "published" ||
+      training.validationStatus !== "validated" ||
+      training.catalogVersion !== PUBLIC_LIVE_CATALOG_VERSION ||
+      training.scheduleValidationStatus !== "pending" ||
+      training.slots.length !== 0
+    ) {
+      throw new Error(`Formation publique invalide : ${training.slug}.`);
+    }
+  }
+
+  if (expectedTitles.size > 0) {
+    throw new Error("Le catalogue public ne contient pas les six intitulés validés.");
+  }
+}
+
+assertPublicLiveCatalog();
+
+export function getPublicLiveTrainings(): readonly PublicLiveTraining[] {
+  return publicLiveTrainings;
+}
+
+export function getPublicLiveTrainingBySlug(slug: string): PublicLiveTraining | null {
+  return publicLiveTrainings.find((training) => training.slug === slug) ?? null;
+}
+
+export function getPublicLiveSessionSlot(trainingSlug: string, slotId: string) {
+  const training = getPublicLiveTrainingBySlug(trainingSlug);
+  if (!training) return null;
+  const slot = training.slots.find((candidate) => candidate.id === slotId);
+  return slot ? { training, slot } : null;
 }
 
 function getLiveSessionPurchaseSlug(
@@ -187,7 +352,7 @@ function getLiveSessionPurchaseSlug(
 export function getLiveSessionPurchaseDetails(
   purchaseSlug: string,
 ): LiveSessionPurchaseDetails | null {
-  for (const training of allLiveTrainings) {
+  for (const training of historicalDecodableLiveTrainings) {
     for (const slot of training.slots) {
       const baseSlug = getLiveSessionPurchaseSlug(training.slug, slot.id);
 
@@ -209,3 +374,4 @@ export function getLiveSessionPurchaseDetails(
 
   return null;
 }
+export { formatLiveSessionDate } from "@/lib/live-session-format";

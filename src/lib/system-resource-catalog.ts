@@ -6,15 +6,17 @@ export const SYSTEM_RESOURCE_SLUGS = [
   "tableau-pilotage-operationnel",
   "suivi-previsionnel-financier",
   "crm-suivi-commercial",
-  "guide-obligations-fiscales-sociales-comptables",
-  "guide-facturation-electronique",
 ] as const;
 
 type AvailableSystemResourceSlug = (typeof SYSTEM_RESOURCE_SLUGS)[number];
+type HistoricalSystemResourceSlug =
+  | "guide-obligations-fiscales-sociales-comptables"
+  | "guide-facturation-electronique";
 type PlannedGuideKind = "lancer" | "gerer";
 
 export type SystemResourceSlug =
   | AvailableSystemResourceSlug
+  | HistoricalSystemResourceSlug
   | `guide-${string}-${PlannedGuideKind}`;
 
 export type SystemResourceFormat = "template" | "guide";
@@ -103,6 +105,14 @@ export const SYSTEM_RESOURCES: readonly SystemResource[] = Object.freeze([
     successDescription: "Vous y trouverez le lien vers le modèle CRM. Pensez à vérifier vos courriers indésirables.",
     title: "CRM - suivi commercial",
   },
+]);
+
+/**
+ * Ressources retirées de toutes les sélections publiques. Elles restent
+ * résolubles uniquement par la chaîne de livraison afin que les liens déjà
+ * envoyés continuent de fonctionner.
+ */
+const HISTORICAL_SYSTEM_RESOURCES: readonly SystemResource[] = Object.freeze([
   {
     availability: "available",
     description: "La présentation d’origine pour comprendre les principales obligations et les finances de votre entreprise.",
@@ -322,6 +332,22 @@ export function getSystemResource(resourceSlug: string): SystemResource | null {
 
   const match = resourceSlug.match(/^guide-([a-z0-9-]+)-(lancer|gerer)$/);
   return match ? getPlannedGuideResource(match[1], match[2] as PlannedGuideKind) : null;
+}
+
+export function getHistoricalSystemResource(
+  resourceSlug: string,
+): SystemResource | null {
+  return (
+    HISTORICAL_SYSTEM_RESOURCES.find(
+      (resource) => resource.resourceSlug === resourceSlug,
+    ) ?? null
+  );
+}
+
+export function getSystemResourceForHistoricalDelivery(
+  resourceSlug: string,
+): SystemResource | null {
+  return getSystemResource(resourceSlug) ?? getHistoricalSystemResource(resourceSlug);
 }
 
 export function getSystemResourcesForSystem(systemSlug: string): readonly SystemResource[] {

@@ -75,7 +75,7 @@ export default function SystemGuidesRail({
     <section aria-label="Guides du système" className="min-w-0 max-w-full overflow-hidden">
       <div className="mb-4 flex items-center justify-between gap-3">
         <h3 className="text-[11px] font-semibold uppercase tracking-[0.15em] text-dema-muted">
-          Guides
+          Guides métier
         </h3>
         {orderedResources.length > 1 ? (
           <div className="flex gap-2">

@@ -5,7 +5,7 @@ import {
   getSystemResourceAssetSnapshot,
   resolveSystemResourceDelivery,
 } from "@/lib/system-resource-assets.server";
-import { getSystemResource } from "@/lib/system-resource-catalog";
+import { getSystemResourceForHistoricalDelivery } from "@/lib/system-resource-catalog";
 
 export const runtime = "nodejs";
 
@@ -28,7 +28,7 @@ export async function GET(
   if (limited) return limited;
 
   const { resourceSlug } = await params;
-  const resource = getSystemResource(resourceSlug);
+  const resource = getSystemResourceForHistoricalDelivery(resourceSlug);
   if (!resource || resource.availability !== "available") {
     return fallbackRedirect(request);
   }

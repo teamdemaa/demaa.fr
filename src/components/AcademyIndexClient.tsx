@@ -8,6 +8,8 @@ import type { AcademyContentDefinition } from "@/lib/academy-course-content";
 import { matchesSearchQuery } from "@/lib/search";
 import { SYSTEM_RESOURCES } from "@/lib/system-resource-catalog";
 import StructureNewsletterBlock from "@/components/StructureNewsletterBlock";
+import AcademyLiveTrainingSection from "@/components/AcademyLiveTrainingSection";
+import type { PublicLiveTraining } from "@/lib/live-session-catalog";
 
 const ACADEMY_MODEL_RESOURCES = SYSTEM_RESOURCES
   .filter((resource) => resource.format === "template")
@@ -15,6 +17,7 @@ const ACADEMY_MODEL_RESOURCES = SYSTEM_RESOURCES
 
 type AcademyIndexClientProps = {
   contents: AcademyContentDefinition[];
+  liveTrainings: readonly PublicLiveTraining[];
   backLink?: {
     href: string;
     label: string;
@@ -28,15 +31,6 @@ type CaseStudyPresentation = {
   characterAlt: string;
   characterClassName?: string;
 };
-
-const CASE_STUDY_ORDER = [
-  "cabinet-conseil-acquisition",
-  "maintenance-informatique-acquisition",
-  "cabinet-recrutement-acquisition",
-  "nettoyage-professionnel-acquisition",
-  "formation-b2b-acquisition",
-  "bureau-etudes-acquisition",
-];
 
 const CASE_STUDY_PRESENTATIONS: Record<string, CaseStudyPresentation> = {
   "cabinet-conseil-acquisition": {
@@ -270,7 +264,7 @@ function AcademyCard({ content, eager = false }: { content: AcademyContentDefini
   );
 }
 
-export default function AcademyIndexClient({ contents, backLink }: AcademyIndexClientProps) {
+export default function AcademyIndexClient({ contents, liveTrainings, backLink }: AcademyIndexClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [showAllFundamentals, setShowAllFundamentals] = useState(false);
   const [activeCategory, setActiveCategory] = useState(ALL_ACADEMY_CATEGORIES);
@@ -305,12 +299,6 @@ export default function AcademyIndexClient({ contents, backLink }: AcademyIndexC
   }, [activeCategory, contents, searchQuery]);
 
   const fundamentals = filteredContents.filter((content) => content.kind === "course");
-  const caseStudies = filteredContents
-    .filter((content) => content.kind === "case-study")
-    .sort(
-      (first, second) =>
-        CASE_STUDY_ORDER.indexOf(first.identity.slug) - CASE_STUDY_ORDER.indexOf(second.identity.slug),
-    );
   const isSearching = searchQuery.trim().length > 0;
   const visibleFundamentals = isSearching || showAllFundamentals ? fundamentals : fundamentals.slice(0, 6);
   const canToggleFundamentals = !isSearching && fundamentals.length > 6;
@@ -431,6 +419,8 @@ export default function AcademyIndexClient({ contents, backLink }: AcademyIndexC
           </section>
         ) : null}
 
+        <AcademyLiveTrainingSection trainings={liveTrainings} />
+
         {ACADEMY_MODEL_RESOURCES.length ? (
           <section className="mt-12 border-t border-dema-line/75 pt-9 md:mt-14 md:pt-10" aria-labelledby="academy-models-title">
             <h2 id="academy-models-title" className="text-2xl font-semibold text-brand-blue md:text-[2rem]">
@@ -463,20 +453,6 @@ export default function AcademyIndexClient({ contents, backLink }: AcademyIndexC
                     {resource.description}
                   </span>
                 </a>
-              ))}
-            </div>
-          </section>
-        ) : null}
-
-        {caseStudies.length ? (
-          <section className="mt-12 border-t border-dema-line/75 pt-9 md:mt-14 md:pt-10" aria-labelledby="case-studies-title">
-            <h2 id="case-studies-title" className="text-2xl font-semibold text-brand-blue md:text-[2rem]">
-              Cas concrets
-            </h2>
-
-            <div className="mt-7 grid grid-cols-1 gap-x-8 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
-              {caseStudies.map((content, index) => (
-                <AcademyCard key={content.identity.slug} content={content} eager={index < 3} />
               ))}
             </div>
           </section>

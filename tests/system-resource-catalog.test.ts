@@ -4,6 +4,7 @@ vi.mock("server-only", () => ({}));
 
 import {
   SYSTEM_RESOURCES,
+  getHistoricalSystemResource,
   getSystemResource,
   getSystemResourcesForSystem,
 } from "@/lib/system-resource-catalog";
@@ -14,7 +15,7 @@ import {
 } from "@/lib/system-resource-assets.server";
 
 describe("system Resources catalog", () => {
-  it("publishes the templates and guides catalog in the agreed order", () => {
+  it("publishes only the four models and documents in the shared catalog", () => {
     const templates = SYSTEM_RESOURCES.filter((resource) => resource.format === "template");
     const guides = SYSTEM_RESOURCES.filter((resource) => resource.format === "guide");
 
@@ -26,14 +27,7 @@ describe("system Resources catalog", () => {
     ]);
     expect(templates.map(({ rank }) => rank)).toEqual([0, 1, 2, 3]);
 
-    expect(guides.map(({ title }) => title)).toEqual([
-      "Maîtriser les obligations et les finances de son entreprise",
-      "La facturation électronique",
-    ]);
-    expect(guides.map(({ availability }) => availability)).toEqual([
-      "available",
-      "available",
-    ]);
+    expect(guides).toEqual([]);
     expect(JSON.stringify(SYSTEM_RESOURCES)).not.toMatch(
       /docs\.google\.com|airtable\.com|downloads\/guides|Levier/,
     );
@@ -50,7 +44,7 @@ describe("system Resources catalog", () => {
       const snapshot = getSystemResourceAssetSnapshot(resource.resourceSlug);
       expect(snapshot).toMatchObject({
         resourceId: resource.resourceSlug,
-        workbookVersion: resource.resourceSlug.startsWith("guide-") ? "2.0.0" : "1.0.0",
+        workbookVersion: "1.0.0",
       });
       expect(snapshot?.assetRevision).toContain(resource.resourceSlug);
       expect(resolveSystemResourceDelivery(snapshot!, "cabinet-comptable")).toMatchObject({
@@ -77,19 +71,15 @@ describe("system Resources catalog", () => {
     for (const system of enterpriseCatalog) {
       const guides = getSystemResourcesForSystem(system.slug)
         .filter((resource) => resource.format === "guide");
-      expect(guides).toHaveLength(4);
-      expect(guides.slice(0, 2).map((resource) => resource.availability)).toEqual([
-        "available",
-        "available",
-      ]);
-      expect(guides.slice(2).map((resource) => resource.availability)).toEqual([
+      expect(guides).toHaveLength(2);
+      expect(guides.map((resource) => resource.availability)).toEqual([
         "coming-soon",
         "coming-soon",
       ]);
-      expect(guides.slice(2).map((resource) => resource.title)).not.toContain(
+      expect(guides.map((resource) => resource.title)).not.toContain(
         "Créer et lancer votre activité",
       );
-      expect(guides.slice(2).map((resource) => resource.title)).not.toContain(
+      expect(guides.map((resource) => resource.title)).not.toContain(
         "Gérer votre activité au quotidien",
       );
     }
@@ -135,6 +125,11 @@ describe("system Resources catalog", () => {
   });
 
   it("keeps the replaced guides resolvable for historical deliveries", () => {
+    expect(getSystemResource("guide-facturation-electronique")).toBeNull();
+    expect(getSystemResource("guide-obligations-fiscales-sociales-comptables")).toBeNull();
+    expect(getHistoricalSystemResource("guide-facturation-electronique")?.availability).toBe(
+      "available",
+    );
     expect(resolveSystemResourceDelivery({
       assetRevision: "guide-facturation-electronique-v1-2026-08-05",
       resourceId: "guide-facturation-electronique",
@@ -153,7 +148,7 @@ describe("system Resources catalog", () => {
     });
   });
 
-  it("delivers the original slide presentations for new requests", () => {
+  it("keeps the original slide presentations for historical email links only", () => {
     for (const resourceSlug of [
       "guide-facturation-electronique",
       "guide-obligations-fiscales-sociales-comptables",

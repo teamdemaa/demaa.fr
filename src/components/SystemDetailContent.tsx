@@ -5,11 +5,13 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { type KeyboardEvent, useMemo, useState } from "react";
 import SystemGuidesRail from "@/components/SystemGuidesRail";
+import SystemContextualCaseStudy from "@/components/SystemContextualCaseStudy";
 import SystemResourcesTab from "@/components/SystemResourcesTab";
 import StructureNewsletterBlock from "@/components/StructureNewsletterBlock";
 import SystemSolutionsTab from "@/components/SystemSolutionsTab";
 import SystemeTabContent from "@/components/SystemeTabContent";
 import { getSystemResourcesForSystem } from "@/lib/system-resource-catalog";
+import { getContextualAcademyCaseStudy } from "@/lib/academy-case-study-placement";
 import type { SystemeDetail } from "@/lib/systeme-catalog";
 import {
   getVisibleSystemDetailTabs,
@@ -53,6 +55,10 @@ export default function SystemDetailContent({
   const router = useRouter();
   const scopedResources = useMemo(
     () => getSystemResourcesForSystem(system.slug),
+    [system.slug],
+  );
+  const contextualCaseStudy = useMemo(
+    () => getContextualAcademyCaseStudy(system.slug),
     [system.slug],
   );
   const visibleTabSlugs = getVisibleSystemDetailTabs();
@@ -163,13 +169,16 @@ export default function SystemDetailContent({
 
         {activeTab === "resources" ? (
           <div className="space-y-10">
-            <SystemGuidesRail
-              resources={scopedResources.filter((resource) => resource.format === "guide")}
-              systemSlug={system.slug}
-            />
             <SystemResourcesTab
               resources={scopedResources.filter((resource) => resource.format === "template")}
               systemName={system.name}
+              systemSlug={system.slug}
+            />
+            {contextualCaseStudy ? (
+              <SystemContextualCaseStudy content={contextualCaseStudy} />
+            ) : null}
+            <SystemGuidesRail
+              resources={scopedResources.filter((resource) => resource.format === "guide")}
               systemSlug={system.slug}
             />
             <StructureNewsletterBlock />

@@ -85,10 +85,12 @@ describe("system Solutions UI", () => {
     expect(resourcesMarkup).toContain("Récapitulatif du système");
     expect(resourcesMarkup).toContain("Suivi et prévisionnel financier");
     expect(resourcesMarkup).toContain("CRM - suivi commercial");
-    expect(guidesMarkup).toContain("La facturation électronique");
-    expect(guidesMarkup).toContain(
+    expect(guidesMarkup).not.toContain("La facturation électronique");
+    expect(guidesMarkup).not.toContain(
       "Maîtriser les obligations et les finances de son entreprise",
     );
+    expect(guidesMarkup.match(/Bientôt disponible/g)).toHaveLength(2);
+    expect(guidesMarkup.match(/Être informé\(e\)/g)).toHaveLength(2);
     expect(guidesMarkup).toContain("Être informé(e)");
     expect(guidesMarkup).toContain("Créer une entreprise du bâtiment");
     expect(guidesMarkup).toContain("Piloter vos chantiers et votre équipe");
