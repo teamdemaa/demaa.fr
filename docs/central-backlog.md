@@ -1,6 +1,6 @@
 # Backlog central Demaa
 
-Dernière consolidation : 30 juillet 2026.
+Dernière consolidation : 9 août 2026.
 
 Backlog de pilotage :
 [Demaa — Backlog maître](https://docs.google.com/spreadsheets/d/19uwK54Pd2XiPzPM8OBvNkFSaSHYsJO_IHk8ZxzvvmQY/edit).
@@ -8,6 +8,36 @@ Backlog de pilotage :
 Ce document remplace les listes d'actions dispersées dans les chats Demaa. Il
 distingue ce qui est déjà livré, ce qui est prêt mais non publié et ce qui reste
 à réaliser.
+
+## État de clôture Production — 9 août 2026
+
+Cette section est l'état exécutable courant. Toutes les sections historiques
+datées plus bas sont conservées comme journal et ne doivent plus servir de plan
+de déploiement.
+
+- Le code produit déployé est
+  `3486703917d20a0314c279f33c0e3751db9ebd40`. Le présent lot documentaire ne
+  modifie aucun fichier runtime.
+- `https://demaa.co` est le domaine canonique ; `demaa.fr` redirige vers lui.
+- Les 115 Systèmes exposent `Process / Solutions / Ressources` et Firebase est
+  la source distante active des Solutions.
+- Les quatre Services canoniques sont publiés et composés au rendu dans les
+  Systèmes, sans duplication dans Firebase.
+- `/contenus/facturation-electronique` est publié comme article et diaporama ;
+  les deux présentations universelles ne sont plus rendues dans les Ressources
+  des Systèmes.
+- Les guides métier annoncés restent visibles et leur liste d'attente est
+  opérationnelle. Les Formations en direct et les Cas concrets restent masqués
+  par des bascules éditoriales explicites.
+- Les parcours guide, newsletter, Structure, Rejoindre Team Demaa, callback
+  Services et Levier ont été testés en Production avec `team@demaa.fr`.
+- Le runtime Firebase Production utilise l'identité sans clé
+  `demaa-prod-app@demaa-dde32.iam.gserviceaccount.com`, limitée à
+  `roles/datastore.user` et empruntable uniquement par le projet Vercel Demaa.
+- `SLACK_WEBHOOK_URL`, le secret de rate limit, l'identité Firebase et la
+  variable Levier sont classés Sensitive en Production. Le test Levier final a créé son lead,
+  envoyé la notification Slack et accepté la livraison e-mail sans exposer le
+  lien Google Sheets au navigateur.
 
 ## Mise à jour canonique du 9 août 2026
 
@@ -38,13 +68,13 @@ Services, Contenus, l'Académie ou les Ressources, l'ADR 0004 prévaut.
 - `/services` publie exactement les quatre offres canoniques. `/sur-mesure`
   reste une offre distincte, hors navigation principale.
 
-### Lots actifs après ce lot
+### Lots restant réellement au backlog
 
-- [ ] Conserver un catalogue Services canonique unique de quatre offres,
+- [x] Conserver un catalogue Services canonique unique de quatre offres,
   composé au rendu dans les 115 Systèmes.
-- [ ] Créer `/contenus` et publier la fiche Facturation électronique comme
+- [x] Créer `/contenus` et publier la fiche Facturation électronique comme
   article et diaporama avant la future vidéo.
-- [ ] Réordonner les Ressources et conserver les guides métier annoncés.
+- [x] Réordonner les Ressources et conserver les guides métier annoncés.
 - [ ] Réactiver la section « Formations en direct » de l'Académie seulement
   après validation des créneaux, recette desktop/mobile et bascule explicite de
   `academyLiveTrainings` dans `src/lib/public-editorial-visibility.ts`.

@@ -24,7 +24,7 @@ produit.
 | Services V1 | `superseded` | Marketplace de sept services | remplacée par l'ADR 0004 | `/services` publie exactement quatre offres canoniques, également composées dans les 115 Systèmes après Outils. |
 | Solutions V1 | `validated` | Registre Firebase et interface par système | actif pour la France | Firebase est la source distante autoritaire ; les sections visibles restent conditionnelles à des placements pertinents. |
 | D-072 | `validated` | Architecture publique France et retrait legacy | ADR 0003 | `demaa.co` est canonique ; navigation `Système métier / Académie` ; fiches `Process / Solutions / Ressources` ; redirection si un successeur existe, 404 sinon. |
-| D-073 | `validated` | Services, Contenus, Académie et Ressources | ADR 0004 | Trois Services canoniques, `/contenus`, Ressources réordonnées et six formations en direct ; l'ADR 0004 prévaut sur les anciens arbitrages incompatibles. |
+| D-073 | `validated` | Services, Contenus, Académie et Ressources | ADR 0004 | Quatre Services canoniques, `/contenus`, Ressources réordonnées et six formations en direct ; l'ADR 0004 prévaut sur les anciens arbitrages incompatibles. |
 | Mesure client Services/Solutions | `deferred` | Événements de parcours et conversion sans PII | chantier ultérieur après contrat de mesure | La branche ne contient que l'attribution consent-aware jointe aux demandes et des logs opérationnels serveur ; aucun dispositif client spécifique n'est déclaré actif. |
 | Boutique en ligne | `superseded` | Offre Services | retirée avant implémentation | Aucune carte V1. |
 | Site 1 350 EUR + cadeaux | `deferred` | Hypothèse d'offre enrichie D-071 | revue commerciale ultérieure | Elle ne modifie pas l'offre active à 950 EUR HT. |

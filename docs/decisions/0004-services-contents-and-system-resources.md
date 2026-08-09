@@ -99,7 +99,7 @@ ci-dessus tant que les deux indicateurs restent désactivés.
 
 ## Sources de vérité
 
-- un seul catalogue actif pour les trois Services ;
+- un seul catalogue actif pour les quatre Services ;
 - un seul catalogue actif pour les Contenus ;
 - Firebase reste la source distante autoritaire des Solutions tierces ;
 - le fallback Solutions est généré depuis la révision Firebase active et ne se
