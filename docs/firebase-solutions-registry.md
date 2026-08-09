@@ -95,13 +95,18 @@ ni affiliation, ni recommandation commerciale de Demaa ou d’ODEMA.
   exemple un négoce de matériaux pour le BTP ou un grossiste pour la restauration.
 - Il ne faut pas créer une carte vide, ni forcer la section sur les 115 systèmes
   pour donner l'illusion d'une couverture complète.
-- `Prestations` est une section distincte. Elle expose une compétence générique,
-  jamais une personne ou un partenaire imposé. L'expert-comptable y est proposé
-  aux 114 systèmes hors cabinet comptable ; le cabinet comptable reçoit à la
-  place `Délégation et formalités juridiques`.
+- `Prestations` est une section distincte. Elle expose uniquement une compétence
+  explicitement pertinente pour le métier, jamais une personne ou un partenaire
+  imposé. Les 114 placements universels Expert-comptable sont retirés du seed ;
+  seul le placement contextuel `Délégation et formalités juridiques` du cabinet
+  comptable reste préparé.
 - Amazon Business est ajouté uniquement aux systèmes des secteurs Conseil et
   Tech & Digital. Alan et Swile restent au catalogue sans placement automatique,
   car leur pertinence dépend notamment du pays et de la présence de salariés.
+
+Le futur audit général des fournisseurs est suivi séparément dans
+`docs/providers-by-business-family-backlog.md`. Il couvre tous les fournisseurs qui
+font sens par famille de métiers ; il ne se limite pas à Alan et Swile.
 
 Cette règle préserve la valeur éditoriale des rails existants tout en rendant
 possible un futur parcours comptable universel, sans promesse implicite ni
@@ -140,6 +145,20 @@ Son import exige les empreintes exactes du nouveau plan et de la révision, mais
 aussi l'identifiant et l'empreinte du pointeur actif à remplacer. La mise à jour
 du pointeur utilise la date de version Firestore lue juste avant l'import : une
 modification concurrente fait donc échouer l'activation au lieu d'être écrasée.
+
+## Candidat France clean DRAFT — 9 août 2026
+
+Le candidat `solutions-2026-08-08-france-clean-v1` reste `draft` : 115 systèmes,
+247 ressources, 599 placements et 847 écritures. Son plan possède une activation
+`null`. La recette Emulator a écrit et relu tous les documents sans modifier le
+pointeur actif. L'import distant n'a pas été exécuté faute d'identité d'écriture
+autorisée ; Production reste donc sur `solutions-2026-08-05-active-v1`.
+
+Le seed réseau contient désormais un seul placement contextuel et une garde refuse
+toute réintroduction de `chartered-accountant`. La suppression distante des 114
+documents historiques est accompagnée d'une capture exacte obligatoire et d'un
+rollback scellé ; elle reste en attente de l'identité Firebase adéquate. Aucun
+fallback n'est régénéré avant une future activation vérifiée.
 
 ## Séparation Preview / Production
 
