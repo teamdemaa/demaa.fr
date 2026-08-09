@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getCanonicalBaseUrl } from "@/lib/site-url";
 import { getAllCourseEntries } from "@/lib/course-content";
+import { getAllPublishedContent } from "@/lib/content-catalog";
 import { getAllAcademyContent } from "@/lib/academy-course-content";
 import { getAllNewsletters } from "@/lib/newsletter-content";
 import { aidFamilies, demaaAidItems } from "@/lib/aid-catalog";
@@ -48,6 +49,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/annuaire-newsletters`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-experts-comptables`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/academie`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${base}/contenus`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/opportunites`, lastModified: now, changeFrequency: "weekly", priority: 0.65 },
     { url: `${base}/rejoindre-team-demaa`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     { url: `${base}/mentions-legales`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
@@ -57,7 +59,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/cgv`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
   ];
 
-  const courseEntries = getAllCourseEntries();
+  const courseEntries = getAllCourseEntries().filter(
+    (entry) => entry.slug !== "facture-electronique",
+  );
   const courseContentEntries: MetadataRoute.Sitemap = courseEntries.map((entry) => ({
     url: `${base}/cours/${entry.slug}`,
     lastModified: new Date(entry.date),
@@ -71,6 +75,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: now,
       changeFrequency: "monthly" as const,
       priority: content.kind === "case-study" ? 0.72 : 0.78,
+    }),
+  );
+
+  const contentEntries: MetadataRoute.Sitemap = getAllPublishedContent().map(
+    (entry) => ({
+      url: `${base}/contenus/${entry.slug}`,
+      lastModified: new Date(entry.updatedAt),
+      changeFrequency: "monthly" as const,
+      priority: 0.78,
+      ...(entry.media.slides?.[0]
+        ? { images: [`${base}${entry.media.slides[0]}`] }
+        : {}),
     }),
   );
 
@@ -198,6 +214,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     ...staticRoutes,
+    ...contentEntries,
     ...academyEntries,
     ...courseContentEntries,
     ...newsletterSitemapEntries,

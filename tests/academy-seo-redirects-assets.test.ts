@@ -162,7 +162,7 @@ describe("Academy SEO, redirects and assets", () => {
     expect(redirects).toContainEqual(
       expect.objectContaining({
         source: "/cours/facture-electronique",
-        destination: "/systemes",
+        destination: "/contenus/facturation-electronique",
         permanent: true,
       }),
     );
