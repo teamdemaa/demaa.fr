@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 import { getAdminFirestore } from "@/lib/firebase-admin";
 import { logOperationalError } from "@/lib/operational-log";
 
-type RateLimitScope = "email" | "ip";
+type RateLimitScope = "email" | "ip" | "phone";
 type RateLimitOptions = Readonly<{
   identity?: string;
   limit: number;

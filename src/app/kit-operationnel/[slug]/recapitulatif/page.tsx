@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import SystemRecapPrintButton from "@/components/SystemRecapPrintButton";
+import { composeCanonicalServicesForSystem } from "@/lib/canonical-services-system-section.server";
 import { getActiveRenderableSolutionSectionsForSystem } from "@/lib/firebase-solution-registry-selection.server";
 import { filterPublicSolutionSections } from "@/lib/public-solution-section-visibility";
 import { getSystemDetailPageData } from "@/lib/system-detail-page";
@@ -15,7 +16,7 @@ type SystemRecapPageProps = {
 
 const SECTION_LABELS = {
   software: "Outils",
-  services: "Prestations",
+  services: "Services",
   providers: "Fournisseurs",
   models: "Modèles",
   networks: "Réseaux professionnels",
@@ -54,8 +55,9 @@ export default async function SystemRecapPage({ params }: SystemRecapPageProps) 
 
   if (!data) notFound();
 
-  const visibleSolutionSections = filterPublicSolutionSections(
-    mergeRenderableSolutionSections(solutionSections),
+  const visibleSolutionSections = composeCanonicalServicesForSystem(
+    slug,
+    filterPublicSolutionSections(mergeRenderableSolutionSections(solutionSections)),
   );
   const resources = getSystemResourcesForSystem(slug).filter(
     (resource) => resource.resourceSlug !== "recapitulatif-systeme",

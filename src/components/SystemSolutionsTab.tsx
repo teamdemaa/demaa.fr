@@ -34,7 +34,7 @@ export const SOLUTION_UI_WORKING_LABELS: Readonly<
   Record<VisibleSolutionSection, string>
 > = {
   software: "Outils",
-  services: "Prestations",
+  services: "Services",
   providers: "Fournisseurs",
   networks: "Réseaux professionnels",
 };

@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getCanonicalBaseUrl } from "@/lib/site-url";
+import { getCanonicalServices } from "@/lib/canonical-service-catalog";
 import { getAllCourseEntries } from "@/lib/course-content";
 import { getAllPublishedContent } from "@/lib/content-catalog";
 import { getAllAcademyContent } from "@/lib/academy-course-content";
@@ -11,17 +12,11 @@ import { demaaFinanceItems } from "@/lib/finance-catalog";
 import { demaaProNetworks } from "@/lib/pro-network-catalog";
 import { sectorPageDefinitions } from "@/lib/sector-pages";
 import { sectorTaxonomy } from "@/lib/sector-taxonomy";
-import { demaaServices } from "@/lib/service-catalog";
 import { demaaSuppliers } from "@/lib/supplier-catalog";
 import { getDemaaRecruitmentItems } from "@/lib/recruitment-catalog";
 import { getDemaaTrainings } from "@/lib/training-catalog";
 import { getToolDirectorySlug, hasStandaloneToolPage } from "@/lib/tool-directory";
 import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
-
-const HIDDEN_SERVICE_SLUGS = new Set([
-  "recrutement-assistante-facturation",
-  "organisation-automatisation",
-]);
 
 export const dynamic = "force-dynamic";
 
@@ -126,10 +121,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  const serviceEntries: MetadataRoute.Sitemap = demaaServices
-    .filter((service) => !HIDDEN_SERVICE_SLUGS.has(service.slug))
+  const serviceEntries: MetadataRoute.Sitemap = getCanonicalServices()
     .map((service) => ({
-      url: `${base}/annuaire-services/${service.slug}`,
+      url: `${base}/services/${service.slug}`,
       lastModified: now,
       changeFrequency: "monthly" as const,
       priority: 0.7,

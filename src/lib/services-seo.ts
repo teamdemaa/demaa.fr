@@ -1,15 +1,7 @@
 import "server-only";
 
-import type { PublishedServiceOfferDto } from "@/lib/service-catalog-v2-dto";
+import type { CanonicalService } from "@/lib/canonical-service-catalog";
 import { getCanonicalOrigin } from "@/lib/site-url";
-
-function hasLegallyCompleteFixedPrice(offer: PublishedServiceOfferDto) {
-  return (
-    offer.pricing.mode === "fixed" &&
-    (offer.operatorType === "demaa" || offer.operatorType === "odema") &&
-    Object.values(offer.scope).every((entries) => entries.length > 0)
-  );
-}
 
 export function buildServicesIndexJsonLd() {
   const origin = getCanonicalOrigin();
@@ -34,31 +26,32 @@ export function buildServicesIndexJsonLd() {
   };
 }
 
-export function buildServicePageJsonLd(offer: PublishedServiceOfferDto) {
+export function buildServicePageJsonLd(serviceEntry: CanonicalService) {
   const origin = getCanonicalOrigin();
-  const pageUrl = `${origin}/services/${offer.slug}`;
+  const pageUrl = `${origin}/services/${serviceEntry.slug}`;
   const service = {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: offer.title,
-    description: offer.description,
+    name: serviceEntry.name,
+    description: serviceEntry.summary,
     url: pageUrl,
-    serviceType: offer.categoryTitle,
+    serviceType: serviceEntry.eyebrow,
     provider: {
       "@type": "Organization",
-      name: offer.operatorType === "demaa" ? "Demaa" : "ODEMA",
+      name: "Demaa",
     },
-    ...(hasLegallyCompleteFixedPrice(offer) && offer.pricing.mode === "fixed"
+    ...(serviceEntry.pricing.mode === "fixed-monthly"
       ? {
           offers: {
             "@type": "Offer",
-            price: (offer.pricing.amountMinor / 100).toFixed(2),
-            priceCurrency: offer.pricing.currency,
+            price: (serviceEntry.pricing.amountMinor / 100).toFixed(2),
+            priceCurrency: serviceEntry.pricing.currency,
             priceSpecification: {
               "@type": "UnitPriceSpecification",
-              price: (offer.pricing.amountMinor / 100).toFixed(2),
-              priceCurrency: offer.pricing.currency,
-              valueAddedTaxIncluded: offer.pricing.taxMode !== "excluding_tax",
+              price: (serviceEntry.pricing.amountMinor / 100).toFixed(2),
+              priceCurrency: serviceEntry.pricing.currency,
+              valueAddedTaxIncluded: false,
+              unitText: "MONTH",
             },
             url: pageUrl,
           },
@@ -86,7 +79,7 @@ export function buildServicePageJsonLd(offer: PublishedServiceOfferDto) {
         {
           "@type": "ListItem",
           position: 3,
-          name: offer.title,
+          name: serviceEntry.name,
           item: pageUrl,
         },
       ],

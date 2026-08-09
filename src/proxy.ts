@@ -22,9 +22,9 @@ const RETIRED_EXACT_PATHS = new Set([
   "/sw.js",
 ]);
 const RETIRED_PATH_PREFIXES = [
+  "/annuaire-services/",
   "/modeles-de-documents/",
   "/ressources/",
-  "/services/",
 ];
 const CONTENT_SECURITY_POLICY = buildContentSecurityPolicy({
   allowUnsafeEval: process.env.NODE_ENV === "development",

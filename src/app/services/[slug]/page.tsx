@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { notFound } from "next/navigation";
-import ServiceOfferDetails from "@/components/ServiceOfferDetails";
+import CanonicalServiceDetails from "@/components/CanonicalServiceDetails";
+import Navbar from "@/components/Navbar";
 import {
-  getPublishedServiceOfferV2BySlug,
-  getPublishedServiceOffersV2,
-} from "@/lib/service-catalog-v2";
+  getCanonicalServiceBySlug,
+  getCanonicalServices,
+} from "@/lib/canonical-service-catalog";
 import {
   buildServicePageJsonLd,
   serializeServicesJsonLd,
@@ -19,25 +20,25 @@ type ServicePageProps = {
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return getPublishedServiceOffersV2().map((offer) => ({ slug: offer.slug }));
+  return getCanonicalServices().map((service) => ({ slug: service.slug }));
 }
 
 export async function generateMetadata({ params }: ServicePageProps): Promise<Metadata> {
   const { slug } = await params;
-  const offer = getPublishedServiceOfferV2BySlug(slug);
+  const service = getCanonicalServiceBySlug(slug);
 
-  if (!offer) notFound();
+  if (!service) notFound();
 
-  const title = `${offer.title} | Services Demaa`;
-  const canonical = `/services/${offer.slug}`;
+  const title = `${service.name} | Services Demaa`;
+  const canonical = `/services/${service.slug}`;
 
   return {
     title,
-    description: offer.description,
+    description: service.summary,
     alternates: { canonical },
     openGraph: {
       title,
-      description: offer.description,
+      description: service.summary,
       url: canonical,
       siteName: "Demaa",
       locale: "fr_FR",
@@ -48,18 +49,19 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
 
 export default async function ServicePage({ params }: ServicePageProps) {
   const { slug } = await params;
-  const offer = getPublishedServiceOfferV2BySlug(slug);
+  const service = getCanonicalServiceBySlug(slug);
 
-  if (!offer) notFound();
+  if (!service) notFound();
 
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: serializeServicesJsonLd(buildServicePageJsonLd(offer)),
+          __html: serializeServicesJsonLd(buildServicePageJsonLd(service)),
         }}
       />
+      <Navbar />
       <main className="min-h-screen min-w-0 max-w-full bg-dema-cream px-4 pb-20 pt-8 sm:px-6 lg:px-8">
         <div className="mx-auto min-w-0 max-w-5xl">
           <Link
@@ -69,7 +71,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             Tous les services
           </Link>
-          <ServiceOfferDetails offer={offer} headingAs="h1" />
+          <CanonicalServiceDetails service={service} />
         </div>
       </main>
     </>

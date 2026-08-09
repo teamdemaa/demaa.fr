@@ -155,8 +155,9 @@ describe("system page SEO published Solutions boundary", () => {
       "buildSystemPageJsonLd(data, visiblePublishedSolutionSections)",
     );
     expect(pageSource).toContain(
-      "filterPublicSolutionSections(mergeRenderableSolutionSections([",
+      "filterPublicSolutionSections(mergeRenderableSolutionSections(solutionSections))",
     );
+    expect(pageSource).toContain("composeCanonicalServicesForSystem(");
     expect(pageSource).toContain('JSON.stringify(jsonLd).replace(/</g, "\\\\u003c")');
     expect(detailSource).not.toContain("data.detail.tools");
   });

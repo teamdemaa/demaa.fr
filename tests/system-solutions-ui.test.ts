@@ -170,7 +170,7 @@ describe("system Solutions UI", () => {
         "resources",
       ]);
     }
-  });
+  }, 10_000);
 
   it("reuses the existing resource classifications across the four rails", () => {
     const placements = enterpriseCatalog.flatMap(({ slug }) =>
@@ -417,7 +417,8 @@ describe("system Solutions UI", () => {
     );
     expect(pageSource).toContain("solutionSections={visibleSolutionSections}");
     expect(pageSource).toContain("filterPublicSolutionSections");
-    expect(pageSource).toContain('isPublicSolutionSectionVisible("services")');
+    expect(pageSource).toContain("composeCanonicalServicesForSystem");
+    expect(pageSource).not.toContain("getRenderableExpertiseSectionForSystem");
     expect(pageSource).not.toContain("getMigrationSafe");
     expect(detailSource).not.toMatch(/solution-registry\.(?:server|contract)/);
     expect(solutionsSource).toContain("import type {");

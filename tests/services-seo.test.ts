@@ -8,124 +8,87 @@ import {
   generateStaticParams,
 } from "@/app/services/[slug]/page";
 import { metadata as servicesIndexMetadata } from "@/app/services/page";
+import { getCanonicalServiceBySlug } from "@/lib/canonical-service-catalog";
 import {
   buildServicePageJsonLd,
   buildServicesIndexJsonLd,
   serializeServicesJsonLd,
 } from "@/lib/services-seo";
-import { publishedServiceOffersFixture } from "./fixtures/published-service-offers";
 
 async function readSource(path: string) {
   return readFile(new URL(`../${path}`, import.meta.url), "utf8");
 }
 
-describe("Services SEO and structured data", () => {
-  it("keeps drafts and unknown slugs out of static params and metadata", async () => {
-    expect(generateStaticParams()).toEqual([]);
+describe("canonical Services SEO and redirects", () => {
+  it("publishes only the three canonical detail routes", async () => {
+    expect(generateStaticParams()).toEqual([
+      { slug: "expert-comptable" },
+      { slug: "marketing-vente" },
+      { slug: "assistance-facturation" },
+    ]);
     expect(servicesIndexMetadata.alternates).toEqual({ canonical: "/services" });
     await expect(generateMetadata({
-      params: Promise.resolve({ slug: "site-vitrine-prise-contact" }),
+      params: Promise.resolve({ slug: "ancienne-offre" }),
     })).rejects.toMatchObject({ digest: "NEXT_HTTP_ERROR_FALLBACK;404" });
   });
 
-  it("builds the exact index breadcrumb from the canonical origin", () => {
+  it("builds the canonical index breadcrumb", () => {
     expect(buildServicesIndexJsonLd()).toEqual({
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "Accueil",
-          item: "https://demaa.co",
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "Services",
-          item: "https://demaa.co/services",
-        },
+        { "@type": "ListItem", position: 1, name: "Accueil", item: "https://demaa.co" },
+        { "@type": "ListItem", position: 2, name: "Services", item: "https://demaa.co/services" },
       ],
     });
   });
 
-  it("emits BreadcrumbList and Service without Offer for quote pricing", () => {
-    const jsonLd = buildServicePageJsonLd(publishedServiceOffersFixture[0]);
+  it("emits the fixed monthly Offer only for Marketing externalisé", () => {
+    const marketing = getCanonicalServiceBySlug("marketing-vente");
+    const expert = getCanonicalServiceBySlug("expert-comptable");
+    if (!marketing || !expert) throw new Error("missing canonical service fixture");
 
-    expect(jsonLd).toHaveLength(2);
-    expect(jsonLd[0]).toMatchObject({
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        { position: 1, name: "Accueil", item: "https://demaa.co" },
-        { position: 2, name: "Services", item: "https://demaa.co/services" },
-        {
-          position: 3,
-          name: "Système & automatisation commerciale",
-          item: "https://demaa.co/services/systeme-automatisation-commerciale",
-        },
-      ],
-    });
-    expect(jsonLd[1]).toEqual({
-      "@context": "https://schema.org",
+    expect(buildServicePageJsonLd(marketing)[1]).toMatchObject({
       "@type": "Service",
-      name: "Système & automatisation commerciale",
-      description: "Structurer le suivi commercial et automatiser les tâches répétitives.",
-      url: "https://demaa.co/services/systeme-automatisation-commerciale",
-      serviceType: "Structurer et digitaliser votre activité",
+      name: "Marketing externalisé",
       provider: { "@type": "Organization", name: "Demaa" },
-    });
-    expect(JSON.stringify(jsonLd)).not.toContain('"@type":"Offer"');
-  });
-
-  it("emits Offer only for a complete published fixed-price DTO", () => {
-    const jsonLd = buildServicePageJsonLd(publishedServiceOffersFixture[2]);
-
-    expect(jsonLd[1]).toMatchObject({
-      "@type": "Service",
-      provider: { "@type": "Organization", name: "ODEMA" },
       offers: {
         "@type": "Offer",
         price: "950.00",
         priceCurrency: "EUR",
         priceSpecification: {
-          "@type": "UnitPriceSpecification",
-          price: "950.00",
-          priceCurrency: "EUR",
           valueAddedTaxIncluded: false,
+          unitText: "MONTH",
         },
-        url: "https://demaa.co/services/site-vitrine-prise-contact",
       },
     });
-
-    const incomplete = {
-      ...publishedServiceOffersFixture[2],
-      scope: { ...publishedServiceOffersFixture[2].scope, exclusions: [] },
-    };
-    expect(JSON.stringify(buildServicePageJsonLd(incomplete))).not.toContain(
-      '"@type":"Offer"',
-    );
+    expect(JSON.stringify(buildServicePageJsonLd(expert))).not.toContain('"@type":"Offer"');
   });
 
-  it("escapes less-than characters before embedding JSON-LD", () => {
+  it("escapes embedded JSON-LD", () => {
     expect(serializeServicesJsonLd({ value: "</script><script>" })).toBe(
       '{"value":"\\u003c/script>\\u003cscript>"}',
     );
   });
 
-  it("keeps detail structured data behind published-only server selectors", async () => {
-    const indexSource = await readSource("src/app/services/page.tsx");
-    const detailSource = await readSource("src/app/services/[slug]/page.tsx");
-    const seoSource = await readSource("src/lib/services-seo.ts");
+  it("owns canonical metadata and the relevant permanent redirects", async () => {
+    const [detailSource, nextConfig, proxy, sitemap] = await Promise.all([
+      readSource("src/app/services/[slug]/page.tsx"),
+      readSource("next.config.ts"),
+      readSource("src/proxy.ts"),
+      readSource("src/app/sitemap.ts"),
+    ]);
 
-    expect(indexSource).toContain("ServicesLandingPage");
-    expect(indexSource).toContain('canonical: "/services"');
-    expect(indexSource).not.toContain("getPublishedServiceOffersV2");
-    expect(detailSource).toContain("getPublishedServiceOfferV2BySlug");
-    expect(detailSource).toContain("if (!offer) notFound()");
-    expect(detailSource).toContain("export const dynamicParams = false");
-    expect(detailSource).not.toMatch(/service-catalog-v2\.generated|parseServiceCatalogV2/);
-    expect(seoSource).toContain('import "server-only"');
-    expect(seoSource).not.toMatch(/status\s*===\s*["']draft["']/);
+    expect(detailSource).toContain("alternates: { canonical }");
+    expect(detailSource).toContain("url: canonical");
+    expect(nextConfig).toContain("source: '/systeme-marketing'");
+    expect(nextConfig).toContain("source: '/marketing-ethique'");
+    expect(nextConfig).toContain("destination: '/services/marketing-vente'");
+    expect(nextConfig).toContain("destination: '/services/expert-comptable'");
+    expect(nextConfig).toContain("destination: '/services/assistance-facturation'");
+    expect(proxy).not.toContain('"/services/"');
+    expect(proxy).toContain('"/annuaire-services/"');
+    expect(sitemap).toContain('`${base}/services/${service.slug}`');
+    expect(sitemap).not.toContain('`${base}/annuaire-services/${service.slug}`');
   });
 });

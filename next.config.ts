@@ -62,6 +62,36 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: '/systeme-marketing',
+        destination: '/services/marketing-vente',
+        permanent: true,
+      },
+      {
+        source: '/marketing-ethique',
+        destination: '/services/marketing-vente',
+        permanent: true,
+      },
+      {
+        source: '/annuaire-services/expert-comptable',
+        destination: '/services/expert-comptable',
+        permanent: true,
+      },
+      {
+        source: '/annuaire-services/marketing-vente',
+        destination: '/services/marketing-vente',
+        permanent: true,
+      },
+      {
+        source: '/annuaire-services/assistante-facturation',
+        destination: '/services/assistance-facturation',
+        permanent: true,
+      },
+      {
+        source: '/annuaire-services/recrutement-assistante-facturation',
+        destination: '/services/assistance-facturation',
+        permanent: true,
+      },
+      {
         source: '/partenaires',
         destination: '/rejoindre-team-demaa',
         permanent: true,
