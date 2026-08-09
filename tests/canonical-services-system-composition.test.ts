@@ -89,6 +89,9 @@ describe("canonical Services composition in every system", () => {
         resource.interaction.href ===
           `/services/${resource.resourceSlug}?systemSlug=${system.slug}&source=solutions-systeme`
       )).toBe(true);
+      expect(services?.placements.every(({ resource }) =>
+        resource.displayCategory !== "Service Demaa"
+      )).toBe(true);
     }
   });
 

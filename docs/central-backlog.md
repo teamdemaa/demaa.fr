@@ -41,17 +41,19 @@ de déploiement.
 
 ## Mise à jour canonique du 9 août 2026
 
-Cette section, l'ADR 0003 et surtout l'ADR 0004 remplacent les décisions
+Cette section, l'ADR 0003, l'ADR 0004 et l'ADR 0005 remplacent les décisions
 historiques incompatibles plus bas dans ce document. En cas de conflit sur les
-Services, Contenus, l'Académie ou les Ressources, l'ADR 0004 prévaut.
+Services, l'ADR 0005 prévaut. Pour les Contenus, l'Académie et les Ressources,
+l'ADR 0004 prévaut.
 
 - `demaa.co` est le domaine canonique du lancement France, sans préfixe de
   locale. L'internationalisation reste différée.
 - La navigation principale contient uniquement `Système métier` et `Académie`.
 - Une fiche Système contient `Process`, `Solutions` et `Ressources`.
 - Quatre Services Demaa canoniques sont affichés dans Solutions, après Outils :
-  Automatisation des processus, Expert-comptable, Marketing externalisé et
-  Assistance facturation.
+  Automatisation des processus, Marketing et prospection, Assistance
+  facturation et Expert-comptable. Ce dernier est absent de la fiche Cabinet
+  comptable.
 - Ressources contient les guides, modèles et documents contextualisés. Les
   contenus pédagogiques globaux restent dans l'Académie.
 - Firebase est la source distante autoritaire pour Solutions et le réseau de

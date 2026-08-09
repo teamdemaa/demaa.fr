@@ -23,9 +23,9 @@ describe("canonical Services SEO and redirects", () => {
   it("publishes only the four canonical detail routes", async () => {
     expect(generateStaticParams()).toEqual([
       { slug: "automatisation-processus" },
-      { slug: "expert-comptable" },
       { slug: "marketing-vente" },
       { slug: "assistance-facturation" },
+      { slug: "expert-comptable" },
     ]);
     expect(servicesIndexMetadata.alternates).toEqual({ canonical: "/services" });
     await expect(generateMetadata({
@@ -44,14 +44,28 @@ describe("canonical Services SEO and redirects", () => {
     });
   });
 
-  it("emits the fixed monthly Offer only for Marketing externalisé", () => {
+  it("emits direct Demaa offers without attributing third-party accounting fees to Demaa", () => {
+    const automation = getCanonicalServiceBySlug("automatisation-processus");
     const marketing = getCanonicalServiceBySlug("marketing-vente");
+    const billing = getCanonicalServiceBySlug("assistance-facturation");
     const expert = getCanonicalServiceBySlug("expert-comptable");
-    if (!marketing || !expert) throw new Error("missing canonical service fixture");
+    if (!automation || !marketing || !billing || !expert) {
+      throw new Error("missing canonical service fixture");
+    }
+
+    expect(buildServicePageJsonLd(automation)[1]).toMatchObject({
+      offers: {
+        price: "500.00",
+        priceSpecification: {
+          unitText: "DAY",
+          valueAddedTaxIncluded: false,
+        },
+      },
+    });
 
     expect(buildServicePageJsonLd(marketing)[1]).toMatchObject({
       "@type": "Service",
-      name: "Marketing externalisé",
+      name: "Marketing et prospection",
       provider: { "@type": "Organization", name: "Demaa" },
       offers: {
         "@type": "Offer",
@@ -60,6 +74,16 @@ describe("canonical Services SEO and redirects", () => {
         priceSpecification: {
           valueAddedTaxIncluded: false,
           unitText: "MONTH",
+        },
+      },
+    });
+    expect(buildServicePageJsonLd(billing)[1]).toMatchObject({
+      offers: {
+        description: "20 heures incluses, puis 25 € HT par heure supplémentaire.",
+        price: "500.00",
+        priceSpecification: {
+          unitText: "MONTH",
+          valueAddedTaxIncluded: false,
         },
       },
     });

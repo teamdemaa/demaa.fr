@@ -36,7 +36,7 @@ function buildCanonicalServicePlacements(
       resourceType: "provider",
       name: service.name,
       description: service.summary,
-      displayCategory: "Service Demaa",
+      displayCategory: service.eyebrow,
       ctaLabel: "Voir le service",
       indicativePricing: service.pricing.label,
       interaction: {

@@ -29,6 +29,9 @@ export function buildServicesIndexJsonLd() {
 export function buildServicePageJsonLd(serviceEntry: CanonicalService) {
   const origin = getCanonicalOrigin();
   const pageUrl = `${origin}/services/${serviceEntry.slug}`;
+  const pricing = serviceEntry.pricing;
+  const isDirectDemaaOffer = pricing.mode !== "third-party-starting-monthly";
+  const unitText = pricing.mode === "fixed-daily" ? "DAY" : "MONTH";
   const service = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -40,18 +43,19 @@ export function buildServicePageJsonLd(serviceEntry: CanonicalService) {
       "@type": "Organization",
       name: "Demaa",
     },
-    ...(serviceEntry.pricing.mode === "fixed-monthly"
+    ...(isDirectDemaaOffer
       ? {
           offers: {
             "@type": "Offer",
-            price: (serviceEntry.pricing.amountMinor / 100).toFixed(2),
-            priceCurrency: serviceEntry.pricing.currency,
+            description: pricing.note,
+            price: (pricing.amountMinor / 100).toFixed(2),
+            priceCurrency: pricing.currency,
             priceSpecification: {
               "@type": "UnitPriceSpecification",
-              price: (serviceEntry.pricing.amountMinor / 100).toFixed(2),
-              priceCurrency: serviceEntry.pricing.currency,
+              price: (pricing.amountMinor / 100).toFixed(2),
+              priceCurrency: pricing.currency,
               valueAddedTaxIncluded: false,
-              unitText: "MONTH",
+              unitText,
             },
             url: pageUrl,
           },

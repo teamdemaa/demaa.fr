@@ -4,9 +4,9 @@ import { deepFreeze } from "@/lib/registry-contract-utils";
 
 export const CANONICAL_SERVICE_SLUGS = [
   "automatisation-processus",
-  "expert-comptable",
   "marketing-vente",
   "assistance-facturation",
+  "expert-comptable",
 ] as const;
 
 export type CanonicalServiceSlug = (typeof CANONICAL_SERVICE_SLUGS)[number];
@@ -23,18 +23,38 @@ type FilloutCta = Readonly<{
 
 type CanonicalServicePricing =
   | Readonly<{
-      mode: "introduction";
-      label: "Mise en relation gratuite";
+      mode: "fixed-daily";
+      amountMinor: 50000;
+      currency: "EUR";
+      heading: "Tarif";
+      label: "500 € HT / jour";
+      note: string;
     }>
   | Readonly<{
       mode: "fixed-monthly";
       amountMinor: 95000;
       currency: "EUR";
+      heading: "Tarif";
       label: "950 € HT / mois";
+      note: string;
     }>
   | Readonly<{
-      mode: "quote";
-      label: "Sur devis";
+      mode: "fixed-monthly-hours";
+      amountMinor: 50000;
+      currency: "EUR";
+      heading: "Forfait";
+      hourlyRateMinor: 2500;
+      includedHours: 20;
+      label: "500 € HT / mois";
+      note: string;
+    }>
+  | Readonly<{
+      mode: "third-party-starting-monthly";
+      amountMinor: 25000;
+      currency: "EUR";
+      heading: "Honoraires du cabinet";
+      label: "À partir de 250 € HT / mois";
+      note: string;
     }>;
 
 export type CanonicalService = Readonly<{
@@ -63,8 +83,13 @@ const canonicalServices = deepFreeze([
     result:
       "Un processus plus fluide et plus fiable, avec moins d’actions manuelles à effectuer et à contrôler au quotidien.",
     pricing: {
-      mode: "quote",
-      label: "Sur devis",
+      mode: "fixed-daily",
+      amountMinor: 50000,
+      currency: "EUR",
+      heading: "Tarif",
+      label: "500 € HT / jour",
+      note:
+        "Le nombre de jours et l’enveloppe totale sont validés avant le démarrage.",
     },
     cta: {
       kind: "callback",
@@ -86,52 +111,22 @@ const canonicalServices = deepFreeze([
     ],
   },
   {
-    slug: "expert-comptable",
-    name: "Expert-comptable",
-    eyebrow: "Comptabilité et pilotage",
-    summary:
-      "Trouvez un cabinet adapté à votre activité, à votre organisation et à votre situation.",
-    description:
-      "Demaa qualifie votre besoin puis recherche un cabinet pertinent pour votre situation. Vous choisissez librement le professionnel avec lequel poursuivre.",
-    result:
-      "Un échange avec des cabinets qui comprennent votre contexte, sans parcourir seul des dizaines de profils.",
-    pricing: {
-      mode: "introduction",
-      label: "Mise en relation gratuite",
-    },
-    cta: {
-      kind: "callback",
-      label: "Être rappelé",
-    },
-    included: [
-      "Qualification de votre activité et de votre besoin",
-      "Recherche d’un cabinet adapté à votre situation",
-      "Mise en relation avec l’interlocuteur retenu",
-    ],
-    conditions: [
-      "Vous restez libre de donner suite ou non",
-      "La mission comptable est contractualisée directement avec le cabinet choisi",
-    ],
-    notIncluded: [
-      "La tenue comptable, la paie ou les formalités réalisées par Demaa",
-      "La garantie qu’un cabinet acceptera la mission avant qualification",
-    ],
-  },
-  {
     slug: "marketing-vente",
-    name: "Marketing externalisé",
+    name: "Marketing et prospection",
     eyebrow: "Marketing et vente",
     summary:
-      "Une équipe externalisée pour définir, exécuter et ajuster votre stratégie marketing et commerciale.",
+      "Rendez votre entreprise plus visible, générez davantage de demandes et organisez le suivi de vos prospects.",
     description:
-      "Demaa construit une stratégie à partir de votre activité, de vos objectifs et de vos clients, puis exécute les leviers validés avec vous.",
+      "Demaa construit une stratégie à partir de votre activité, de vos objectifs et de vos clients, puis exécute les actions de visibilité et de prospection validées avec vous.",
     result:
       "Une acquisition plus régulière, pilotée avec un plan clair et un interlocuteur unique, sans recrutement interne.",
     pricing: {
       mode: "fixed-monthly",
       amountMinor: 95000,
       currency: "EUR",
+      heading: "Tarif",
       label: "950 € HT / mois",
+      note: "Engagement initial de trois mois, puis reconduction mensuelle.",
     },
     cta: {
       kind: "fillout",
@@ -164,12 +159,18 @@ const canonicalServices = deepFreeze([
     summary:
       "Déléguez les tâches récurrentes de facturation et préparez une transmission comptable plus fiable.",
     description:
-      "Le besoin est cadré selon votre volume, vos outils et votre organisation avant de vous orienter vers un renfort adapté.",
+      "Demaa organise un renfort récurrent selon votre volume, vos outils et votre organisation pour fiabiliser la facturation et la transmission comptable.",
     result:
       "Des factures et pièces mieux suivies, avec un cadre de travail clair entre votre entreprise, l’assistance et votre comptable.",
     pricing: {
-      mode: "quote",
-      label: "Sur devis",
+      mode: "fixed-monthly-hours",
+      amountMinor: 50000,
+      currency: "EUR",
+      heading: "Forfait",
+      hourlyRateMinor: 2500,
+      includedHours: 20,
+      label: "500 € HT / mois",
+      note: "20 heures incluses, puis 25 € HT par heure supplémentaire.",
     },
     cta: {
       kind: "callback",
@@ -182,12 +183,49 @@ const canonicalServices = deepFreeze([
       "Préparation de la transmission vers l’outil ou le cabinet comptable",
     ],
     conditions: [
-      "Le périmètre et le rythme sont confirmés après qualification",
+      "Forfait minimum de 20 heures par mois",
       "L’accès aux outils nécessaires est organisé avec votre accord",
     ],
     notIncluded: [
       "La tenue ou la validation comptable réservée à un professionnel habilité",
-      "Un forfait standard imposé avant l’analyse de votre volume",
+      "Les licences et abonnements facturés par des outils tiers",
+    ],
+  },
+  {
+    slug: "expert-comptable",
+    name: "Expert-comptable",
+    eyebrow: "Comptabilité et pilotage",
+    summary:
+      "Trouvez un cabinet adapté à votre activité, à votre organisation et à votre situation.",
+    description:
+      "Demaa qualifie votre besoin puis recherche un cabinet pertinent pour votre situation. Vous choisissez librement le professionnel avec lequel poursuivre.",
+    result:
+      "Un échange avec des cabinets qui comprennent votre contexte, sans parcourir seul des dizaines de profils.",
+    pricing: {
+      mode: "third-party-starting-monthly",
+      amountMinor: 25000,
+      currency: "EUR",
+      heading: "Honoraires du cabinet",
+      label: "À partir de 250 € HT / mois",
+      note:
+        "Le montant dépend de l’activité, du volume, de la paie et des obligations. La mise en relation Demaa est sans frais.",
+    },
+    cta: {
+      kind: "callback",
+      label: "Être rappelé",
+    },
+    included: [
+      "Qualification de votre activité et de votre besoin",
+      "Recherche d’un cabinet adapté à votre situation",
+      "Mise en relation avec l’interlocuteur retenu",
+    ],
+    conditions: [
+      "Vous restez libre de donner suite ou non",
+      "La mission comptable est contractualisée directement avec le cabinet choisi",
+    ],
+    notIncluded: [
+      "La tenue comptable, la paie ou les formalités réalisées par Demaa",
+      "La garantie qu’un cabinet acceptera la mission avant qualification",
     ],
   },
 ] satisfies readonly CanonicalService[]);

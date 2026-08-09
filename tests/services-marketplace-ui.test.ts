@@ -30,9 +30,9 @@ describe("canonical Services marketplace", () => {
     expect(services.map((service) => service.slug)).toEqual(CANONICAL_SERVICE_SLUGS);
     expect(services.map((service) => service.name)).toEqual([
       "Automatisation des processus",
-      "Expert-comptable",
-      "Marketing externalisé",
+      "Marketing et prospection",
       "Assistance facturation",
+      "Expert-comptable",
     ]);
     expect(generateStaticParams()).toEqual(CANONICAL_SERVICE_SLUGS.map((slug) => ({ slug })));
     expect(Object.isFrozen(services)).toBe(true);
@@ -46,8 +46,10 @@ describe("canonical Services marketplace", () => {
     expect(marketing?.pricing).toEqual({
       amountMinor: 95000,
       currency: "EUR",
+      heading: "Tarif",
       label: "950 € HT / mois",
       mode: "fixed-monthly",
+      note: "Engagement initial de trois mois, puis reconduction mensuelle.",
     });
     expect(marketing?.conditions).toContain("Engagement initial de trois mois");
     expect(marketing?.included).toContain("Rapport d’avancement chaque semaine");
@@ -67,8 +69,28 @@ describe("canonical Services marketplace", () => {
     expect(getCanonicalServices()[0]).toBe(automation);
     expect(automation).toMatchObject({
       name: "Automatisation des processus",
-      pricing: { label: "Sur devis", mode: "quote" },
+      pricing: {
+        amountMinor: 50000,
+        label: "500 € HT / jour",
+        mode: "fixed-daily",
+      },
       cta: { kind: "callback", label: "Être rappelé" },
+    });
+  });
+
+  it("publishes the validated billing and accounting price references", () => {
+    expect(getCanonicalServiceBySlug("assistance-facturation")?.pricing).toMatchObject({
+      amountMinor: 50000,
+      hourlyRateMinor: 2500,
+      includedHours: 20,
+      label: "500 € HT / mois",
+      mode: "fixed-monthly-hours",
+    });
+    expect(getCanonicalServiceBySlug("expert-comptable")?.pricing).toMatchObject({
+      amountMinor: 25000,
+      heading: "Honoraires du cabinet",
+      label: "À partir de 250 € HT / mois",
+      mode: "third-party-starting-monthly",
     });
   });
 
@@ -82,6 +104,8 @@ describe("canonical Services marketplace", () => {
       expect(markup).toContain(`/services/${slug}`);
     }
     expect(markup).toContain("950 € HT / mois");
+    expect(markup).toContain("500 € HT / jour");
+    expect(markup).toContain("À partir de 250 € HT / mois");
     expect(markup).not.toMatch(/750 €|350 €|600 €|490 €/);
   });
 
@@ -153,7 +177,9 @@ describe("canonical Services marketplace", () => {
     expect(layout).toContain("{modal}");
     expect(modalDefault).toContain("return null");
     expect(modalPage).toContain("ServiceRouteDialog");
+    expect(modalPage).toContain('variant="modal"');
     expect(routeDialog).toContain("router.back()");
+    expect(routeDialog).toContain('maxWidthClassName="max-w-3xl"');
     expect(systemSolutions).toContain('group.section === "services"');
     expect(systemSolutions).toContain('href={resource.interaction.href}');
   });
