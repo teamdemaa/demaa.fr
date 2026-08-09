@@ -67,12 +67,14 @@ describe("Structure newsletter public contract", () => {
     );
   });
 
-  it("keeps voice collection closed until its secure lifecycle exists", () => {
+  it("keeps voice collection closed and hidden until its secure lifecycle exists", () => {
     expect(STRUCTURE_VOICE_SUBMISSION).toMatchObject({
       enabled: false,
       maximumDurationSeconds: 120,
       recordingRetentionDays: 30,
     });
-    expect(component).toContain('data-structure-voice-status={STRUCTURE_VOICE_SUBMISSION.enabled ? "enabled" : "disabled"}');
+    expect(component).not.toContain("STRUCTURE_VOICE_SUBMISSION");
+    expect(component).not.toContain("Message vocal");
+    expect(component).not.toContain("<Mic");
   });
 });
