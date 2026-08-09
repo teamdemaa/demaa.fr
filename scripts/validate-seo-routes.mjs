@@ -6,9 +6,10 @@ const ROUTE_FILES = {
   toolDirectoryIndex: "src/app/annuaire-outils/page.tsx",
   toolSectorPage: "src/app/annuaire-outils/secteur/[slug]/page.tsx",
   sectorHubPage: "src/app/secteurs/[slug]/page.tsx",
-  documentModelsIndex: "src/app/modeles-de-documents/page.tsx",
   redirectConfig: "next.config.ts",
   legacyResourcesDetail: "src/app/ressources/[slug]/page.tsx",
+  legacyDocumentModelsIndex: "src/app/modeles-de-documents/page.tsx",
+  legacyDocumentModelsDetail: "src/app/modeles-de-documents/[slug]/page.tsx",
   sitemap: "src/app/sitemap.ts",
   sectorPages: "src/lib/sector-pages.ts",
 };
@@ -79,7 +80,7 @@ function collectLegacyMatches(pattern, { allowlist = [] } = {}) {
 }
 
 for (const [key, relativePath] of Object.entries(ROUTE_FILES)) {
-  if (key === "legacyResourcesDetail") {
+  if (key.startsWith("legacy")) {
     continue;
   }
 
@@ -88,22 +89,28 @@ for (const [key, relativePath] of Object.entries(ROUTE_FILES)) {
   }
 }
 
-if (fileExists(ROUTE_FILES.legacyResourcesDetail)) {
-  addUnique(
-    errors,
-    `Legacy resources detail route should be deleted: ${ROUTE_FILES.legacyResourcesDetail}`,
-  );
+for (const key of [
+  "legacyResourcesDetail",
+  "legacyDocumentModelsIndex",
+  "legacyDocumentModelsDetail",
+]) {
+  const relativePath = ROUTE_FILES[key];
+  if (fileExists(relativePath)) {
+    addUnique(errors, `Legacy route should be deleted: ${relativePath}`);
+  }
 }
 
 const redirectConfigSource = readFile(ROUTE_FILES.redirectConfig);
-if (
-  !redirectConfigSource.includes("source: '/ressources'") ||
-  !redirectConfigSource.includes("destination: '/modeles-de-documents'")
-) {
-  addUnique(
-    errors,
-    'Legacy resources index must redirect to "/modeles-de-documents".',
-  );
+for (const requiredRedirect of [
+  "source: '/modeles-de-documents'",
+  "source: '/modeles-de-documents/tableau-de-pilotage-:slug'",
+  "source: '/ressources'",
+  "source: '/opportunites-b2b'",
+  "source: '/opportunites/0034'",
+]) {
+  if (!redirectConfigSource.includes(requiredRedirect)) {
+    addUnique(errors, `Missing safe legacy redirect: ${requiredRedirect}`);
+  }
 }
 
 const toolDirectoryIndexSource = readFile(ROUTE_FILES.toolDirectoryIndex);

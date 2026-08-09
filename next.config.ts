@@ -82,8 +82,28 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: '/modeles-de-documents',
+        destination: '/academie',
+        permanent: true,
+      },
+      {
         source: '/modeles-de-documents/tableau-de-pilotage-:slug',
-        destination: '/kit-operationnel/:slug',
+        destination: '/kit-operationnel/:slug?tab=resources',
+        permanent: true,
+      },
+      {
+        source: '/modeles-de-documents/suivi-previsionnel-financier',
+        destination: '/academie/piloter-sa-tresorerie',
+        permanent: true,
+      },
+      {
+        source: '/modeles-de-documents/pilotage-marketing-vente',
+        destination: '/academie/construire-systeme-marketing-vente',
+        permanent: true,
+      },
+      {
+        source: '/modeles-de-documents/systeme-operationnel',
+        destination: '/academie/construire-systeme-marketing-vente',
         permanent: true,
       },
       {
@@ -94,11 +114,6 @@ const nextConfig: NextConfig = {
       {
         source: '/documents-structuration/:slug',
         destination: '/kit-operationnel/:slug',
-        permanent: true,
-      },
-      {
-        source: '/ressources',
-        destination: '/modeles-de-documents',
         permanent: true,
       },
       {
@@ -172,6 +187,11 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: '/ressources',
+        destination: '/academie',
+        permanent: true,
+      },
+      {
         source: '/ressources/obligations-tpe',
         destination: '/systemes',
         permanent: true,
@@ -183,27 +203,32 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/ressources/previsionnel-financier',
-        destination: '/modeles-de-documents/suivi-previsionnel-financier',
+        destination: '/academie/piloter-sa-tresorerie',
         permanent: true,
       },
       {
         source: '/ressources/suivi-previsionnel-financier-template',
-        destination: '/modeles-de-documents/suivi-previsionnel-financier',
+        destination: '/academie/piloter-sa-tresorerie',
         permanent: true,
       },
       {
         source: '/ressources/systeme-operationnel-airtable',
-        destination: '/modeles-de-documents/pilotage-marketing-vente',
+        destination: '/academie/construire-systeme-marketing-vente',
         permanent: true,
       },
       {
         source: '/ressources/systeme-operationnel-template',
-        destination: '/modeles-de-documents/pilotage-marketing-vente',
+        destination: '/academie/construire-systeme-marketing-vente',
         permanent: true,
       },
       {
-        source: '/modeles-de-documents/systeme-operationnel',
-        destination: '/modeles-de-documents/pilotage-marketing-vente',
+        source: '/opportunites-b2b',
+        destination: '/opportunites',
+        permanent: true,
+      },
+      {
+        source: '/opportunites/0034',
+        destination: '/opportunites',
         permanent: true,
       },
       {

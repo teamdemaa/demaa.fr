@@ -15,8 +15,8 @@ la query string.
 | `/modeles-de-documents/systeme-operationnel` | `308` vers `/academie/construire-systeme-marketing-vente` | Ancien alias du modèle Marketing & Vente. |
 | `/modeles-de-documents/:slug` inconnu | `404` + `noindex, nofollow` | Aucun successeur fiable ne doit être inventé. |
 | `/ressources` | `308` vers `/academie` | L'ancien hub global est remplacé par l'Académie ; Ressources reste contextualisé dans chaque système. |
-| `/ressources/obligations-tpe` | `308` vers `/cours/obligations-finances-entreprise` | La présentation d'origine est conservée sur sa route de cours. |
-| `/ressources/obligations-tpe-template` | `308` vers `/cours/obligations-finances-entreprise` | Même contenu, ancien alias de téléchargement. |
+| `/ressources/obligations-tpe` | `308` vers `/systemes` | La présentation universelle est retirée des Ressources ; le hub Systèmes reste le successeur public le plus proche. |
+| `/ressources/obligations-tpe-template` | `308` vers `/systemes` | Même ancien contenu, sans maintenir une route pédagogique obsolète. |
 | `/ressources/previsionnel-financier` | `308` vers `/academie/piloter-sa-tresorerie` | Successeur pédagogique canonique. |
 | `/ressources/suivi-previsionnel-financier-template` | `308` vers `/academie/piloter-sa-tresorerie` | Même intention, ancien alias de téléchargement. |
 | `/ressources/systeme-operationnel-airtable` | `308` vers `/academie/construire-systeme-marketing-vente` | Successeur pédagogique canonique. |

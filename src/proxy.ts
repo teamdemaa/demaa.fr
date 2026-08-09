@@ -11,13 +11,19 @@ const RETIRED_EXACT_PATHS = new Set([
   "/logo-preview",
   "/manifest.webmanifest",
   "/miniature-preview",
+  "/modeles-de-documents",
   "/offline",
   "/organisation",
   "/organisation-automatisation",
+  "/opportunites-b2b",
+  "/opportunites/0034",
+  "/ressources",
   "/structuration",
   "/sw.js",
 ]);
 const RETIRED_PATH_PREFIXES = [
+  "/modeles-de-documents/",
+  "/ressources/",
   "/services/",
 ];
 const CONTENT_SECURITY_POLICY = buildContentSecurityPolicy({
