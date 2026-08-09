@@ -1,9 +1,4 @@
-import { createHash } from "node:crypto";
-import expertiseSnapshot from "@/lib/expertise-catalog.snapshot.generated.json";
-import opportunitySnapshot from "@/lib/opportunities.snapshot.generated.json";
-import { buildExpertisePlacementSeeds } from "@/lib/expertise-placement-seeds";
-import { parseExpertiseCatalogEntry } from "@/lib/expertise-catalog-contract";
-import { parseOpportunity } from "@/lib/opportunity-contract";
+import { buildProviderNetworkImportPlan } from "@/lib/provider-network-import-plan";
 
 if (process.argv.some((argument) => argument.startsWith("--apply"))) {
   throw new Error(
@@ -11,36 +6,19 @@ if (process.argv.some((argument) => argument.startsWith("--apply"))) {
   );
 }
 
-const expertises = expertiseSnapshot.map((entry, index) =>
-  parseExpertiseCatalogEntry(entry, `expertise[${index}]`)
-);
-const opportunities = opportunitySnapshot.map((entry, index) =>
-  parseOpportunity(entry, `opportunity[${index}]`)
-);
-const expertisePlacements = buildExpertisePlacementSeeds();
-const writes = [
-  ...expertises.map((entry) => ({
-    data: entry,
-    path: `expertise_catalog/${entry.expertiseId}`,
-  })),
-  ...opportunities.map((entry) => ({
-    data: entry,
-    path: `opportunities/${entry.opportunityId}`,
-  })),
-  ...expertisePlacements.map((entry) => ({
-    data: entry,
-    path: `expertise_placements/${entry.expertisePlacementId}`,
-  })),
-];
-const fingerprint = createHash("sha256")
-  .update(JSON.stringify(writes))
-  .digest("hex");
+const {
+  expertises,
+  expertisePlacements,
+  opportunities,
+  planFingerprint,
+  writes,
+} = buildProviderNetworkImportPlan();
 
 console.log(JSON.stringify({
   expertiseCount: expertises.length,
   expertisePlacementCount: expertisePlacements.length,
   mode: "dry-run",
   opportunityCount: opportunities.length,
-  planFingerprint: fingerprint,
+  planFingerprint,
   writeCount: writes.length,
 }, null, 2));

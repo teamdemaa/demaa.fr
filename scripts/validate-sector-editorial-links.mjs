@@ -24,9 +24,8 @@ const systemResourceCatalogSource = fs.readFileSync(
 );
 
 const staticRoutes = new Set([
-  "/organisation",
   "/systemes",
-  "/annuaire-services",
+  "/services",
   "/annuaire-fournisseurs",
   "/annuaire-outils",
 ]);

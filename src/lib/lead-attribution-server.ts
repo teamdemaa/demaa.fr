@@ -8,6 +8,7 @@ import type {
   LeadAttributionTouch,
 } from "@/lib/lead-attribution";
 import { resolveLeadAttributionSource } from "@/lib/lead-attribution";
+import { getCanonicalOrigin, LEGACY_SITE_ORIGINS } from "@/lib/site-url";
 
 const CLICK_ID_KEYS = [
   "gclid",
@@ -53,8 +54,9 @@ function cleanTrackedPath(value: unknown) {
   if (!normalized) return null;
 
   try {
-    const url = new URL(normalized, "https://demaa.fr");
-    if (url.origin !== "https://demaa.fr") return null;
+    const canonicalOrigin = getCanonicalOrigin();
+    const url = new URL(normalized, canonicalOrigin);
+    if (![canonicalOrigin, ...LEGACY_SITE_ORIGINS].includes(url.origin)) return null;
 
     const params = new URLSearchParams();
     for (const key of TRACKED_QUERY_KEYS) {

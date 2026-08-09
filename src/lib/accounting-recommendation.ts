@@ -4,5 +4,5 @@ export const ACCOUNTING_RECOMMENDATION = {
   profilePath:
     "/annuaire-experts-comptables/cabinets/em2a-expertise",
   profileUrl:
-    "https://demaa.fr/annuaire-experts-comptables/cabinets/em2a-expertise",
+    "https://demaa.co/annuaire-experts-comptables/cabinets/em2a-expertise",
 } as const;

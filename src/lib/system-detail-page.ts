@@ -10,6 +10,7 @@ import { hasEditableOperationalSystemAsset } from "@/lib/editable-operational-sy
 import type { RenderableSolutionSectionDto } from "@/lib/system-solutions-ui-dto";
 import { getSystemResourcesForSystem } from "@/lib/system-resource-catalog";
 import { buildSystemeDetail } from "@/lib/systeme-catalog";
+import { getCanonicalOrigin } from "@/lib/site-url";
 import type { System } from "@/lib/types";
 
 export type SystemDetailPageData = {
@@ -420,7 +421,8 @@ export function buildSystemPageJsonLd(
   data: SystemDetailPageData,
   solutionSections: SystemPageSolutionSections,
 ) {
-  const url = `https://demaa.fr/kit-operationnel/${data.system.slug}`;
+  const origin = getCanonicalOrigin();
+  const url = `${origin}/kit-operationnel/${data.system.slug}`;
   const description = buildSystemPageDescription(data, solutionSections);
   const pageName = buildSystemPageTitle(data, solutionSections).replace(/ \| Demaa$/, "");
   const listedProcesses = (
@@ -446,7 +448,7 @@ export function buildSystemPageJsonLd(
       isPartOf: {
         "@type": "WebSite",
         name: "Demaa",
-        url: "https://demaa.fr",
+        url: origin,
       },
     },
     {
@@ -477,7 +479,7 @@ export function buildSystemPageJsonLd(
           return {
             ...item,
             url: resource.interaction.href.startsWith("/")
-              ? `https://demaa.fr${resource.interaction.href}`
+              ? `${origin}${resource.interaction.href}`
               : resource.interaction.href,
           };
         }),
@@ -496,13 +498,13 @@ export function buildSystemPageJsonLd(
           "@type": "ListItem",
           position: 1,
           name: "Accueil",
-          item: "https://demaa.fr",
+          item: origin,
         },
         {
           "@type": "ListItem",
           position: 2,
           name: "Systèmes métier",
-          item: "https://demaa.fr/systemes",
+          item: `${origin}/systemes`,
         },
         {
           "@type": "ListItem",

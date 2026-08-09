@@ -1,10 +1,8 @@
 import { isDeepStrictEqual } from "node:util";
-import expertiseSnapshot from "@/lib/expertise-catalog.snapshot.generated.json";
-import opportunitySnapshot from "@/lib/opportunities.snapshot.generated.json";
-import { buildExpertisePlacementSeeds } from "@/lib/expertise-placement-seeds";
-import { parseExpertiseCatalogEntry } from "@/lib/expertise-catalog-contract";
+import { Firestore } from "firebase-admin/firestore";
+import { GoogleAuth, Impersonated, OAuth2Client } from "google-auth-library";
 import { getAdminFirestore } from "@/lib/firebase-admin";
-import { parseOpportunity } from "@/lib/opportunity-contract";
+import { buildProviderNetworkImportPlan } from "@/lib/provider-network-import-plan";
 
 const PRODUCTION_PROJECT_ID = "demaa-dde32";
 const argument = (prefix: string) =>
@@ -16,6 +14,10 @@ if (target !== "preview" && !isProduction) {
 }
 
 const projectId = process.env.FIREBASE_PROJECT_ID ?? "";
+const importServiceAccount =
+  process.env.FIREBASE_IMPORT_IMPERSONATE_SERVICE_ACCOUNT?.trim() ?? "";
+const importAccessToken =
+  process.env.FIREBASE_IMPORT_ACCESS_TOKEN?.trim() ?? "";
 const expectedProjectId = isProduction
   ? process.env.FIREBASE_PROVIDER_NETWORK_PRODUCTION_PROJECT_ID
   : process.env.FIREBASE_PROVIDER_NETWORK_PREVIEW_PROJECT_ID;
@@ -25,25 +27,11 @@ const applyGate = isProduction
   ? process.argv.includes("--apply-provider-network-production")
   : process.argv.includes("--apply-provider-network-preview");
 
-const expertises = expertiseSnapshot.map((entry, index) =>
-  parseExpertiseCatalogEntry(entry, `expertise[${index}]`)
-);
-const opportunities = opportunitySnapshot.map((entry, index) =>
-  parseOpportunity(entry, `opportunity[${index}]`)
-);
-const expertisePlacements = buildExpertisePlacementSeeds();
-const writes = [
-  ...expertises.map((data) => ({ path: `expertise_catalog/${data.expertiseId}`, data })),
-  ...opportunities.map((data) => ({ path: `opportunities/${data.opportunityId}`, data })),
-  ...expertisePlacements.map((data) => ({
-    path: `expertise_placements/${data.expertisePlacementId}`,
-    data,
-  })),
-];
-const { createHash } = await import("node:crypto");
-const planFingerprint = createHash("sha256")
-  .update(JSON.stringify(writes))
-  .digest("hex");
+const {
+  expertisePlacements,
+  planFingerprint,
+  writes,
+} = buildProviderNetworkImportPlan();
 
 if (
   !applyGate
@@ -53,7 +41,14 @@ if (
   || confirmedPlan !== planFingerprint
 ) {
   throw new Error(
-    "Projet, empreinte et autorisation d’écriture Firebase doivent être confirmés explicitement.",
+    `Projet, empreinte et autorisation d’écriture Firebase doivent être confirmés explicitement. ${JSON.stringify({
+      applyGate,
+      confirmedPlanMatches: confirmedPlan === planFingerprint,
+      confirmedProjectMatches: confirmedProjectId === projectId,
+      expectedProjectMatches: expectedProjectId === projectId,
+      hasExpectedProject: Boolean(expectedProjectId),
+      target,
+    })}`,
   );
 }
 if (isProduction && projectId !== PRODUCTION_PROJECT_ID) {
@@ -63,7 +58,29 @@ if (!isProduction && (!/(preview|staging|test|e2e)/i.test(projectId) || projectI
   throw new Error("La cible Preview n’est pas suffisamment isolée de Production.");
 }
 
-const firestore = getAdminFirestore();
+const importAuth = importAccessToken
+  ? (() => {
+      const auth = new OAuth2Client();
+      auth.setCredentials({ access_token: importAccessToken });
+      return auth;
+    })()
+  : importServiceAccount
+    ? new Impersonated({
+        sourceClient: await new GoogleAuth({
+          scopes: ["https://www.googleapis.com/auth/cloud-platform"],
+        }).getClient(),
+        targetPrincipal: importServiceAccount,
+        targetScopes: ["https://www.googleapis.com/auth/datastore"],
+        lifetime: 600,
+      })
+    : null;
+const firestore = importAuth
+  ? new Firestore({
+      auth: importAuth,
+      preferRest: true,
+      projectId,
+    })
+  : getAdminFirestore();
 const missing: typeof writes = [];
 for (const write of writes) {
   const snapshot = await firestore.doc(write.path).get();

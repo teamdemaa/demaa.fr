@@ -1,6 +1,9 @@
 import type { MetadataRoute } from "next";
+import { getCanonicalOrigin } from "@/lib/site-url";
 
 export default function robots(): MetadataRoute.Robots {
+  const origin = getCanonicalOrigin();
+
   return {
     rules: [
       {
@@ -8,7 +11,7 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
       },
     ],
-    sitemap: "https://demaa.fr/sitemap.xml",
-    host: "https://demaa.fr",
+    sitemap: `${origin}/sitemap.xml`,
+    host: origin,
   };
 }

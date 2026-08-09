@@ -924,21 +924,25 @@ Critère d'acceptation : la prestation est découvrable depuis Écosystème dans
 format des autres cartes, sans concurrencer Process ni créer une seconde
 source de vérité commerciale.
 
-#### D-063 — Newsletter Structure sous Outils et Écosystème
+#### D-063 — Newsletter Structure
 
-- [ ] Réutiliser `StructureNewsletterSignup` et
-  `/api/newsletter-subscribe` dans un bloc partagé adapté au fond de la page
-  système.
-- [ ] Afficher une seule occurrence à la fin de l'onglet actif, uniquement sous
-  Outils ou Écosystème.
-- [ ] Ne jamais afficher le bloc sous Process.
-- [ ] Conserver une inscription explicite, la désinscription en un clic, les
-  états existants et l'absence de PII dans les événements.
-- [ ] Ne promettre des tarifs ou conditions négociés que lorsqu'ils existent
-  réellement et sont contractualisés.
+- [x] Remplacer l'ancien bloc « La lettre Demaa » par un composant partagé
+  `StructureNewsletterBlock` utilisant `/api/newsletter-subscribe`.
+- [x] Réutiliser exactement le même encart en bas de Ressources, de la page
+  principale Académie et de l'offre publique `/sur-mesure`, sans l'ajouter aux
+  cours ou leçons. La route historique `/structuration` reste retirée du public.
+- [x] Conserver une inscription directe e-mail + `S'abonner`, sans modale, et
+  un lien secondaire `Proposer ma problématique`.
+- [x] Enregistrer les propositions écrites dans Firebase avec un consentement
+  versionné et envoyer une notification interne Slack.
+- [x] Préciser que l'équipe contacte l'entreprise avant publication et que
+  toutes les propositions ne seront pas traitées.
+- [ ] Activer le vocal uniquement après mise en place d'un stockage privé,
+  d'une transcription et d'une suppression automatique sous 30 jours.
 
-Critère d'acceptation : D-063 et D-064 sont exclusifs par onglet et ne peuvent
-jamais apparaître simultanément dans le même panneau.
+Critère d'acceptation : une seule newsletter propriétaire Demaa, un composant
+identique aux trois emplacements validés, aucune répétition dans les cours, et
+aucun enregistrement vocal tant que son cycle de vie sécurisé n'est pas prêt.
 
 #### D-064 — Appel gratuit sous Process
 

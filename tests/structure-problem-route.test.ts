@@ -53,32 +53,31 @@ vi.mock("@/lib/request-guard", () => ({
   enforceSameOrigin: mocks.enforceSameOrigin,
 }));
 
-import { POST } from "@/app/api/organisation-callback-request/route";
+import { POST } from "@/app/api/structure-problem/route";
 
 function request(overrides: Record<string, unknown> = {}) {
-  return new Request("https://demaa.fr/api/organisation-callback-request", {
+  return new Request("https://demaa.fr/api/structure-problem", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Origin: "https://demaa.fr",
-      Referer: "https://demaa.fr/kit-operationnel/cabinet-comptable",
+      Referer: "https://demaa.fr/academie",
     },
     body: JSON.stringify({
       attribution: { version: 1 },
+      companyActivity: "Atelier Horizon — architecture intérieure",
+      consent: true,
       email: "maya@example.com",
-      firstName: "Maya",
-      idempotencyKey: "web:callback:12345678",
-      need: "Mieux organiser le suivi de mes dossiers et les relances de l’équipe.",
-      phone: "+33 6 12 34 56 78",
-      source: "Système métier - Demande de rappel organisation",
-      systemSlug: "cabinet-comptable",
-      website: "",
+      faxNumber: "",
+      idempotencyKey: "structure:12345678",
+      problem: "Notre équipe perd trop de temps à coordonner les validations entre les clients et les artisans.",
+      professionalPage: "https://atelier-horizon.example/a-propos#equipe",
       ...overrides,
     }),
   });
 }
 
-describe("organisation callback request route", () => {
+describe("Structure problem submission route", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mocks.enforceAllowedHost.mockReturnValue(null);
@@ -86,71 +85,78 @@ describe("organisation callback request route", () => {
     mocks.enforceRateLimit.mockResolvedValue(null);
     mocks.resolveLeadAttribution.mockReturnValue({ conversion: {} });
     mocks.resolveLeadContext.mockResolvedValue({
-      sectorLabel: "Conseil",
-      sectorSlug: "conseil",
-      source: "Système métier - Demande de rappel organisation",
-      sourceUrl: "https://demaa.fr/kit-operationnel/cabinet-comptable",
-      systemName: "Cabinet comptable",
-      systemSlug: "cabinet-comptable",
+      source: "Newsletter Structure - Proposition de problématique",
+      sourceUrl: "https://demaa.fr/academie",
     });
-    mocks.submitLeadRequest.mockResolvedValue({ duplicate: false, leadId: "callback-1" });
+    mocks.submitLeadRequest.mockResolvedValue({ duplicate: false, leadId: "structure-1" });
   });
 
-  it("enregistre une demande de rappel attribuée au système", async () => {
+  it("stores a written proposal with Slack-only delivery and consent evidence", async () => {
     const response = await POST(request());
 
     expect(response.status).toBe(202);
     await expect(response.json()).resolves.toEqual({ ok: true });
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
-      channels: { email: true, resend: false, slack: true },
+      channels: { email: false, resend: false, slack: true },
       contact: {
+        company: "Atelier Horizon — architecture intérieure",
         email: "maya@example.com",
-        name: "Maya",
-        phone: "+33 6 12 34 56 78",
       },
-      emoji: "📞",
-      requestType: "organisation_callback_request",
-      title: "Demande de rappel - Organisation",
+      requestType: "structure_problem_submission",
+      title: "Proposition de problématique - Structure",
     }));
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
-      fields: [{
-        label: "Besoin à clarifier",
-        value: "Mieux organiser le suivi de mes dossiers et les relances de l’équipe.",
-      }],
+      consents: [expect.objectContaining({
+        granted: true,
+        purpose: "structure_case_publication",
+        version: "structure-case-publication-v1",
+      })],
+      fields: expect.arrayContaining([
+        { label: "Site ou page professionnelle", value: "https://atelier-horizon.example/a-propos" },
+        { label: "Traitement garanti", value: "Non" },
+      ]),
     }));
   });
 
-  it("refuse une demande incomplète ou des coordonnées invalides", async () => {
-    const missingNeed = await POST(request({ need: "" }));
-    const invalidPhone = await POST(request({ phone: "abc" }));
-    const invalidEmail = await POST(request({ email: "maya.example.com" }));
+  it("rejects incomplete, invalid, unconsented or voice submissions", async () => {
+    const cases = [
+      { companyActivity: "" },
+      { email: "maya.example.com" },
+      { problem: "Trop court" },
+      { professionalPage: "javascript:alert(1)" },
+      { consent: false },
+      { voice: { blob: "not-accepted" } },
+    ];
 
-    expect(missingNeed.status).toBe(400);
-    expect(invalidPhone.status).toBe(400);
-    expect(invalidEmail.status).toBe(400);
+    for (const invalidCase of cases) {
+      const response = await POST(request(invalidCase));
+      expect(response.status).toBe(400);
+    }
     expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
   });
 
-  it("silently accepts a honeypot submission", async () => {
-    const response = await POST(request({ website: "robot.example" }));
+  it("silently accepts honeypots", async () => {
+    const response = await POST(request({ faxNumber: "robot" }));
 
     expect(response.status).toBe(202);
     expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
   });
 
-  it("stops before storage when origin or rate limiting rejects the request", async () => {
+  it("stops before storage when host, origin or rate limiting rejects", async () => {
+    mocks.enforceAllowedHost.mockReturnValueOnce(
+      Response.json({ error: "host" }, { status: 403 }),
+    );
+    expect((await POST(request())).status).toBe(403);
+
     mocks.enforceSameOrigin.mockReturnValueOnce(
       Response.json({ error: "origin" }, { status: 403 }),
     );
-    const forbidden = await POST(request());
-    expect(forbidden.status).toBe(403);
-    expect(mocks.enforceRateLimit).not.toHaveBeenCalled();
+    expect((await POST(request())).status).toBe(403);
 
     mocks.enforceRateLimit.mockResolvedValueOnce(
       Response.json({ error: "rate" }, { status: 429 }),
     );
-    const limited = await POST(request());
-    expect(limited.status).toBe(429);
+    expect((await POST(request())).status).toBe(429);
     expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
   });
 });

@@ -2,8 +2,9 @@ import { NextResponse, type NextRequest } from "next/server";
 import { buildContentSecurityPolicy } from "@/lib/content-security-policy";
 import { isVercelPreviewHost } from "@/lib/site-url";
 
-const CANONICAL_HOST = "demaa.fr";
+const CANONICAL_HOST = "demaa.co";
 const CANONICAL_ORIGIN = `https://${CANONICAL_HOST}`;
+const LEGACY_HOSTS = new Set(["demaa.fr", "www.demaa.fr"]);
 const RETIRED_EXACT_PATHS = new Set([
   "/annuaire-services",
   "/cockpit-preview",
@@ -30,6 +31,27 @@ function withContentSecurityPolicy(response: NextResponse) {
 
 export function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
+  const host = request.headers.get("host")?.toLowerCase();
+
+  if (host) {
+    const shouldRedirect =
+      host === "www.demaa.co" ||
+      LEGACY_HOSTS.has(host) ||
+      (host.endsWith(".vercel.app") && !isVercelPreviewHost(host));
+
+    if (shouldRedirect) {
+      const url = request.nextUrl.clone();
+      url.protocol = "https:";
+      url.host = CANONICAL_HOST;
+
+      return withContentSecurityPolicy(
+        NextResponse.redirect(
+          `${CANONICAL_ORIGIN}${url.pathname}${url.search}`,
+          308,
+        ),
+      );
+    }
+  }
 
   if (
     RETIRED_EXACT_PATHS.has(pathname) ||
@@ -45,34 +67,11 @@ export function proxy(request: NextRequest) {
     );
   }
 
-  const host = request.headers.get("host")?.toLowerCase();
-
-  if (!host) {
-    return withContentSecurityPolicy(NextResponse.next());
-  }
-
-  const shouldRedirect =
-    host === "www.demaa.fr" ||
-    (host.endsWith(".vercel.app") && !isVercelPreviewHost(host));
-
-  if (!shouldRedirect) {
-    return withContentSecurityPolicy(NextResponse.next());
-  }
-
-  const url = request.nextUrl.clone();
-  url.protocol = "https:";
-  url.host = CANONICAL_HOST;
-
-  return withContentSecurityPolicy(
-    NextResponse.redirect(
-      `${CANONICAL_ORIGIN}${url.pathname}${url.search}`,
-      308,
-    ),
-  );
+  return withContentSecurityPolicy(NextResponse.next());
 }
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
+    "/((?!_next/static|_next/image|favicon.ico).*)",
   ],
 };

@@ -56,6 +56,8 @@ export default function PolitiqueConfidentialitePage() {
               <li>secteur d&apos;activité ;</li>
               <li>système opérationnel et ressource dont vous demandez l&apos;envoi ;</li>
               <li>contenu de votre demande, besoin métier, préférences outils et informations transmises dans les formulaires ;</li>
+              <li>entreprise, site ou page professionnelle et problématique proposés à la newsletter Structure, ainsi que la preuve de votre accord de publication lorsque vous le donnez ;</li>
+              <li>enregistrement vocal et transcription associés à une proposition Structure, uniquement lorsque cette option est disponible et que vous choisissez de l&apos;utiliser ;</li>
               <li>contenu saisi dans l&apos;assistant IA et plans générés ;</li>
               <li>données techniques liées à la navigation et à la mesure d&apos;audience ;</li>
               <li>données agrégées d&apos;ouverture des systèmes : système concerné, date, page d&apos;origine et paramètres UTM éventuels, sans adresse email, adresse IP enregistrée ni identifiant visiteur ;</li>
@@ -71,6 +73,7 @@ export default function PolitiqueConfidentialitePage() {
               <li><strong>Vous envoyer, à votre demande, une ressource ou le lien permettant de créer une copie personnelle :</strong> exécution du service demandé.</li>
               <li><strong>Gérer les formulaires de contact, rappels et échanges commerciaux :</strong> intérêt légitime et, selon les cas, mesures précontractuelles.</li>
               <li><strong>Vous adresser des conseils et actualités par e-mail :</strong> uniquement lorsque vous y consentez séparément ; ce choix facultatif n&apos;est jamais nécessaire pour recevoir la ressource demandée.</li>
+              <li><strong>Étudier une problématique proposée à la newsletter Structure :</strong> traitement de votre demande et consentement explicite avant toute présentation de votre entreprise, de votre site ou de votre situation ; l&apos;équipe vous contacte avant toute publication.</li>
               <li><strong>Fournir l&apos;assistant IA et enregistrer vos générations :</strong> exécution du service demandé et intérêt légitime d&apos;amélioration et de suivi.</li>
               <li><strong>Gérer les listes d&apos;attente ou demandes d&apos;information sur un outil :</strong> consentement ou intérêt légitime selon le contexte de la demande.</li>
               <li><strong>Comprendre l&apos;origine d&apos;une demande et mesurer l&apos;efficacité des contenus et campagnes :</strong> intérêt légitime pour les informations rattachées à la demande, et consentement préalable pour les traceurs ou stockages optionnels.</li>
@@ -98,6 +101,8 @@ export default function PolitiqueConfidentialitePage() {
       <PrivacySection title="5. Durée de conservation">
             <ul className="list-disc space-y-2 pl-5">
               <li><strong>Demandes commerciales et de contact :</strong> jusqu&apos;à 3 ans à compter du dernier échange utile, sauf obligation légale contraire.</li>
+              <li><strong>Propositions écrites à la newsletter Structure et preuve du consentement associé :</strong> jusqu&apos;à 3 ans à compter du dernier échange utile, sauf retrait de votre consentement ou obligation légale contraire.</li>
+              <li><strong>Enregistrements vocaux Structure, lorsque cette option sera activée :</strong> 30 jours maximum ; leur transcription suit ensuite la durée applicable à la proposition écrite.</li>
               <li><strong>Données d&apos;attribution rattachées à une demande :</strong> même durée que la demande concernée, avec suppression ou anonymisation lors de sa suppression.</li>
               <li><strong>Attribution enregistrée dans le navigateur après consentement :</strong> 90 jours maximum.</li>
               <li><strong>Choix relatifs aux traceurs :</strong> 6 mois maximum avant une nouvelle demande de choix.</li>

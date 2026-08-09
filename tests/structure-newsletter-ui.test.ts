@@ -1,0 +1,78 @@
+import { readFileSync } from "node:fs";
+import { describe, expect, it } from "vitest";
+import {
+  STRUCTURE_NEWSLETTER_NAME,
+  STRUCTURE_NEWSLETTER_PROMISE,
+  STRUCTURE_PUBLICATION_CONSENT,
+  STRUCTURE_VOICE_SUBMISSION,
+} from "@/lib/structure-newsletter-contract";
+
+const read = (path: string) => readFileSync(path, "utf8");
+
+describe("Structure newsletter public contract", () => {
+  const component = read("src/components/StructureNewsletterBlock.tsx");
+
+  it("keeps one exact editorial promise and a direct subscription", () => {
+    expect(STRUCTURE_NEWSLETTER_NAME).toBe("Structure.");
+    expect(STRUCTURE_NEWSLETTER_PROMISE).toBe(
+      "Tous les quinze jours, l’équipe Demaa étudie une problématique réelle d’entreprise et construit une réponse concrète, utile à tous.",
+    );
+    expect(component).toContain('fetch("/api/newsletter-subscribe"');
+    expect(component).toContain("S’abonner");
+    expect(component).toContain("Proposer ma problématique");
+    expect(component).not.toContain("La lettre Demaa");
+  });
+
+  it("requires the versioned publication consent", () => {
+    expect(STRUCTURE_PUBLICATION_CONSENT).toEqual({
+      purpose: "structure_case_publication",
+      text: "J’accepte que mon entreprise, mon site et ma problématique soient présentés dans Structure si ma proposition est sélectionnée.",
+      version: "structure-case-publication-v1",
+    });
+    expect(component.replace(/\s+/g, " ")).toContain(
+      "Toutes les propositions ne pourront pas être traitées",
+    );
+    expect(component.replace(/\s+/g, " ")).toContain(
+      "l’équipe vous contactera avant toute publication",
+    );
+  });
+
+  it("renders the same component at the three approved surfaces only", () => {
+    const approved = [
+      "src/components/SystemDetailContent.tsx",
+      "src/components/AcademyIndexClient.tsx",
+      "src/app/sur-mesure/page.tsx",
+    ];
+
+    for (const path of approved) {
+      expect(read(path)).toContain("<StructureNewsletterBlock />");
+    }
+
+    const academyCourseFiles = [
+      "src/app/academie/[courseSlug]/page.tsx",
+      "src/components/AcademyCourseReader.tsx",
+    ].filter((path) => {
+      try {
+        read(path);
+        return true;
+      } catch {
+        return false;
+      }
+    });
+    for (const path of academyCourseFiles) {
+      expect(read(path)).not.toContain("StructureNewsletterBlock");
+    }
+    expect(read("src/components/StructurationLandingPage.tsx")).not.toContain(
+      "StructureNewsletterBlock",
+    );
+  });
+
+  it("keeps voice collection closed until its secure lifecycle exists", () => {
+    expect(STRUCTURE_VOICE_SUBMISSION).toMatchObject({
+      enabled: false,
+      maximumDurationSeconds: 120,
+      recordingRetentionDays: 30,
+    });
+    expect(component).toContain('data-structure-voice-status={STRUCTURE_VOICE_SUBMISSION.enabled ? "enabled" : "disabled"}');
+  });
+});

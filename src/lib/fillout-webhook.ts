@@ -5,6 +5,7 @@ import type {
 } from "@/lib/lead-attribution";
 import type { LeadContact } from "@/lib/lead-storage";
 import { isValidEmail, normalizeEmail } from "@/lib/email";
+import { getCanonicalOrigin, LEGACY_SITE_ORIGINS } from "@/lib/site-url";
 
 type FilloutEntry = {
   id?: unknown;
@@ -41,8 +42,9 @@ function cleanPath(value: unknown) {
   if (!normalized) return null;
 
   try {
-    const url = new URL(normalized, "https://demaa.fr");
-    if (url.origin !== "https://demaa.fr") return null;
+    const canonicalOrigin = getCanonicalOrigin();
+    const url = new URL(normalized, canonicalOrigin);
+    if (![canonicalOrigin, ...LEGACY_SITE_ORIGINS].includes(url.origin)) return null;
     return `${url.pathname}${url.search}`.slice(0, 700);
   } catch {
     return null;
@@ -283,7 +285,7 @@ export function parseFilloutWebhookSubmission(value: unknown): ParsedFilloutSubm
     contact,
     formId,
     source,
-    sourceUrl: sourceUrl ? `https://demaa.fr${sourceUrl}` : null,
+    sourceUrl: sourceUrl ? `${getCanonicalOrigin()}${sourceUrl}` : null,
     submissionId,
     systemSlug: readParameter(parameters, "systemslug", 160),
   };

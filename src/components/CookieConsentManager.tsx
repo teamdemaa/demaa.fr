@@ -29,6 +29,7 @@ function clearTrackingCookies(prefixes: string[]) {
     if (!name || !prefixes.some((prefix) => name.startsWith(prefix))) continue;
 
     document.cookie = `${name}=; Max-Age=0; path=/; SameSite=Lax`;
+    document.cookie = `${name}=; Max-Age=0; path=/; domain=.demaa.co; SameSite=Lax`;
     document.cookie = `${name}=; Max-Age=0; path=/; domain=.demaa.fr; SameSite=Lax`;
   }
 }

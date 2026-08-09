@@ -48,6 +48,8 @@ describe("Firebase Vercel workload identity credential", () => {
     expect(first.expires_in).toBeGreaterThan(3_500);
     expect(second).toEqual(first);
     expect(fetchMock).toHaveBeenCalledTimes(2);
+    const { getVercelOidcToken } = await import("@vercel/oidc");
+    expect(getVercelOidcToken).toHaveBeenCalledWith();
     expect(fetchMock.mock.calls[0][0]).toBe("https://sts.googleapis.com/v1/token");
     expect(String(fetchMock.mock.calls[1][0])).toContain(
       "reader%40example.iam.gserviceaccount.com:generateAccessToken",
@@ -62,6 +64,20 @@ describe("Firebase Vercel workload identity credential", () => {
     expect(
       credentialModule.hasFirebaseVercelWorkloadIdentityConfiguration(),
     ).toBe(false);
+  });
+
+  it("reports the safe Google STS diagnostic without exposing the token", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValueOnce(new Response(JSON.stringify({
+      error: "invalid_grant",
+      error_description: "The given credential is rejected by the attribute condition.",
+    }), { status: 400 })));
+
+    const credential = credentialModule
+      .createFirebaseVercelWorkloadIdentityCredential();
+
+    await expect(credential.getAccessToken()).rejects.toThrow(
+      "The given credential is rejected by the attribute condition.",
+    );
   });
 
   it("exposes the short-lived identity through GoogleAuth for Firestore", async () => {

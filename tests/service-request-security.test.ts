@@ -12,7 +12,7 @@ import {
 const originalEnv = { ...process.env };
 const pepper = "test-only-rate-limit-pepper-32-characters";
 
-function request(url = "https://demaa.fr/api/service-request", headers: Record<string, string> = {}) {
+function request(url = "https://demaa.co/api/service-request", headers: Record<string, string> = {}) {
   return new Request(url, { method: "POST", headers });
 }
 
@@ -43,7 +43,7 @@ function database(options: { fail?: boolean } = {}) {
 
 describe("service request network security", () => {
   beforeEach(() => {
-    process.env = { ...originalEnv, NODE_ENV: "test", SITE_URL: "https://demaa.fr" };
+    process.env = { ...originalEnv, NODE_ENV: "test", SITE_URL: "https://demaa.co" };
     resetServiceRequestMemoryRateLimitsForTests();
   });
   afterEach(() => { process.env = { ...originalEnv }; });
@@ -73,6 +73,15 @@ describe("service request network security", () => {
     });
     expect(enforceAllowedHost(preview)).toBeNull();
     expect(enforceSameOrigin(preview)).toBeNull();
+  });
+
+  it("accepts the controlled legacy origin during the domain transition", () => {
+    expect(enforceSameOrigin(request(undefined, { origin: "https://demaa.fr" }))).toBeNull();
+    expect(
+      enforceSameOrigin(
+        request("https://demaa.fr/api/service-request", { origin: "https://demaa.co" }),
+      ),
+    ).toBeNull();
   });
 
   it("requires a secret pepper, HMACs identity and enforces the durable limit", async () => {

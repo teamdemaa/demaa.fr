@@ -115,7 +115,7 @@ export function resolveLeadAttributionSource(
   if (SOCIAL_DOMAINS.some((domain) => host === domain || host.endsWith(`.${domain}`))) {
     return { campaign: null, confidence: "inferred", medium: "social", source: host };
   }
-  if (host && host !== "demaa.fr") {
+  if (host && host !== "demaa.co" && host !== "demaa.fr") {
     return { campaign: null, confidence: "inferred", medium: "referral", source: host };
   }
 

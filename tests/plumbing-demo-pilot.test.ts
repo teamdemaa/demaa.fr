@@ -57,7 +57,7 @@ describe("plumbing filled demonstration", () => {
       "Déjà utilisé",
       "Sur devis",
       "2026-12-31",
-      "https://demaa.fr/annuaire-experts-comptables/cabinets/em2a-expertise",
+      "https://demaa.co/annuaire-experts-comptables/cabinets/em2a-expertise",
       "Point mensuel prévu le 10.",
     ]);
   });

@@ -1,4 +1,12 @@
-const DEFAULT_SITE_URL = "https://demaa.fr";
+export const DEFAULT_SITE_URL = "https://demaa.co";
+export const LEGACY_SITE_ORIGINS = [
+  "https://demaa.fr",
+  "https://www.demaa.fr",
+] as const;
+
+const LEGACY_SITE_HOSTS = new Set(
+  LEGACY_SITE_ORIGINS.map((origin) => new URL(origin).host),
+);
 
 function normalizeSiteUrl(value: string) {
   return value.replace(/\/$/, "");
@@ -20,7 +28,11 @@ export function getCanonicalSiteUrl() {
 
   const parsedUrl = parseSiteUrl(configuredUrl);
 
-  return parsedUrl ? parsedUrl.toString() : DEFAULT_SITE_URL;
+  if (!parsedUrl || LEGACY_SITE_HOSTS.has(parsedUrl.host.toLowerCase())) {
+    return DEFAULT_SITE_URL;
+  }
+
+  return normalizeSiteUrl(parsedUrl.toString());
 }
 
 export function getCanonicalOrigin() {
@@ -70,7 +82,7 @@ export function isAllowedRequestHost(request: Request) {
   const host = requestUrl.host.toLowerCase();
   const canonicalHost = getCanonicalHost();
 
-  if (host === canonicalHost) {
+  if (host === canonicalHost || LEGACY_SITE_HOSTS.has(host)) {
     return true;
   }
 
@@ -88,4 +100,34 @@ export function isAllowedRequestHost(request: Request) {
   }
 
   return false;
+}
+
+export function isAllowedRequestOrigin(request: Request, origin: string) {
+  let originUrl: URL;
+  let requestUrl: URL;
+
+  try {
+    originUrl = new URL(origin);
+    requestUrl = new URL(request.url);
+  } catch {
+    return false;
+  }
+
+  if (!isAllowedRequestHost(request)) {
+    return false;
+  }
+
+  if (originUrl.origin === requestUrl.origin) {
+    return true;
+  }
+
+  const trustedProductionOrigins = new Set([
+    getCanonicalOrigin(),
+    ...LEGACY_SITE_ORIGINS,
+  ]);
+
+  return (
+    trustedProductionOrigins.has(originUrl.origin) &&
+    trustedProductionOrigins.has(requestUrl.origin)
+  );
 }

@@ -39,6 +39,14 @@ export type LeadMarketingConsent = {
   version: string;
 };
 
+export type LeadConsent = {
+  capturedAt: string;
+  granted: boolean;
+  purpose: string;
+  text: string;
+  version: string;
+};
+
 export type LeadAssetSnapshot = {
   assetRevision: string;
   resourceId?: string | null;
@@ -50,6 +58,7 @@ export type LeadRequestInput = {
   attribution: LeadAttributionRecord;
   channels: Record<LeadNotificationChannel, boolean>;
   contact: LeadContact;
+  consents?: LeadConsent[];
   context: LeadContext;
   fields: LeadField[];
   idempotencyKey?: string | null;
@@ -74,6 +83,13 @@ export type StoredLeadRequest = {
     name: string | null;
     phone: string | null;
   };
+  consents?: Array<{
+    captured_at: string;
+    granted: boolean;
+    purpose: string;
+    text: string;
+    version: string;
+  }>;
   context: {
     sector_label: string | null;
     sector_slug: string | null;
@@ -159,6 +175,13 @@ export async function createLeadRequest(input: LeadRequestInput) {
       name: cleanString(input.contact.name),
       phone: cleanString(input.contact.phone),
     },
+    consents: (input.consents ?? []).map((consent) => ({
+      captured_at: consent.capturedAt,
+      granted: consent.granted,
+      purpose: consent.purpose,
+      text: consent.text,
+      version: consent.version,
+    })),
     context: {
       system_slug: input.context.systemSlug,
       system_name: input.context.systemName,

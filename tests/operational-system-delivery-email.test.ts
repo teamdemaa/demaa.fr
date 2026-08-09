@@ -181,10 +181,10 @@ describe("operational system delivery email", () => {
     };
     expect(payload.subject).toBe("Votre ressource Demaa - Récapitulatif du système");
     expect(payload.html).toContain(
-      "https://demaa.fr/kit-operationnel/cabinet-comptable/recapitulatif",
+      "https://demaa.co/kit-operationnel/cabinet-comptable/recapitulatif",
     );
     expect(payload.text).toContain(
-      "https://demaa.fr/kit-operationnel/cabinet-comptable/recapitulatif",
+      "https://demaa.co/kit-operationnel/cabinet-comptable/recapitulatif",
     );
   });
 

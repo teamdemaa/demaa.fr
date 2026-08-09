@@ -20,6 +20,7 @@ import {
 } from "@/lib/sector-taxonomy";
 import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
 import { withSoftwareDetailUrls } from "@/lib/tool-directory-page";
+import { getCanonicalOrigin } from "@/lib/site-url";
 
 type ToolSectorPageProps = {
   params: Promise<{ slug: string }>;
@@ -80,14 +81,12 @@ function getParamValue(value?: string | string[]) {
   return Array.isArray(value) ? value[0] : value;
 }
 
-const SITE_URL = "https://demaa.fr";
-
 function toAbsoluteUrl(url: string): string {
   if (url.startsWith("http://") || url.startsWith("https://")) {
     return url;
   }
 
-  return `${SITE_URL}${url}`;
+  return `${getCanonicalOrigin()}${url}`;
 }
 
 export default async function ToolSectorPage({
@@ -135,7 +134,8 @@ export default async function ToolSectorPage({
         href: sectorHubPath,
         label: `Retour au secteur ${sector.publicLabel}`,
       };
-  const canonicalUrl = `${SITE_URL}/annuaire-outils/secteur/${sector.seoSlug}`;
+  const siteUrl = getCanonicalOrigin();
+  const canonicalUrl = `${siteUrl}/annuaire-outils/secteur/${sector.seoSlug}`;
   const jsonLd = [
     {
       "@context": "https://schema.org",
@@ -165,13 +165,13 @@ export default async function ToolSectorPage({
           "@type": "ListItem",
           position: 1,
           name: "Accueil",
-          item: SITE_URL,
+          item: siteUrl,
         },
         {
           "@type": "ListItem",
           position: 2,
           name: "Annuaire outils",
-          item: `${SITE_URL}/annuaire-outils`,
+          item: `${siteUrl}/annuaire-outils`,
         },
         {
           "@type": "ListItem",

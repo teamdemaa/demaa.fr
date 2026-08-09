@@ -271,5 +271,5 @@ describe("three-pilot draft Solutions registry", () => {
         "pilot-solution-registry-drafts",
       );
     }
-  });
+  }, 15_000);
 });

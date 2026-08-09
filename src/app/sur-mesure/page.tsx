@@ -17,6 +17,7 @@ import {
 import { Suspense, type ComponentType } from "react";
 import Navbar from "@/components/Navbar";
 import OrganisationSessionBookingButton from "@/components/OrganisationSessionBookingButton";
+import StructureNewsletterBlock from "@/components/StructureNewsletterBlock";
 import { surMesurePageContent as content } from "@/lib/sur-mesure-page-content";
 
 const title = "Application métier sur mesure | Demaa";
@@ -463,6 +464,12 @@ export default function SurMesureLandingPage() {
             </div>
           </div>
         </section>
+
+        <div className="px-4 pb-20 sm:px-6 sm:pb-24 lg:px-8">
+          <div className="mx-auto max-w-6xl">
+            <StructureNewsletterBlock />
+          </div>
+        </div>
       </main>
     </>
   );

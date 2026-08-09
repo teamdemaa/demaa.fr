@@ -36,6 +36,13 @@ type LeadSubmission = {
     slack: boolean;
   };
   contact: LeadContact;
+  consents?: Array<{
+    capturedAt: string;
+    granted: boolean;
+    purpose: string;
+    text: string;
+    version: string;
+  }>;
   context: LeadContext;
   emoji: string;
   fields?: LeadField[];
@@ -201,6 +208,7 @@ export async function submitLeadRequest(input: LeadSubmission) {
     attribution: input.attribution,
     channels: input.channels,
     contact: input.contact,
+    consents: input.consents,
     context: input.context,
     fields: input.fields ?? [],
     idempotencyKey: input.idempotencyKey,
@@ -296,6 +304,13 @@ function rebuildLeadSubmission(data: StoredLeadRequest): LeadSubmission {
       name: data.contact.name,
       phone: data.contact.phone,
     },
+    consents: (data.consents ?? []).map((consent) => ({
+      capturedAt: consent.captured_at,
+      granted: consent.granted,
+      purpose: consent.purpose,
+      text: consent.text,
+      version: consent.version,
+    })),
     context: {
       sectorLabel: data.context.sector_label,
       sectorSlug: data.context.sector_slug,
