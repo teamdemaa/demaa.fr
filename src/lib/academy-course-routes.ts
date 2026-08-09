@@ -49,7 +49,7 @@ export const ACADEMY_PERMANENT_REDIRECTS = [
   ),
   {
     source: "/cours/facture-electronique",
-    destination: "/systemes",
+    destination: "/contenus/facturation-electronique",
     permanent: true,
   },
   {

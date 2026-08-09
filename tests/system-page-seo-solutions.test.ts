@@ -57,7 +57,7 @@ function itemList(jsonLd: ReturnType<typeof buildSystemPageJsonLd>) {
 }
 
 describe("system page SEO published Solutions boundary", () => {
-  it("describes Process and the universal Resources when the registry is empty", () => {
+  it("describes Process and contextual Resources without archived presentations", () => {
     const metadata = buildSystemPageMetadata(processOnlyData, []);
     const jsonLd = buildSystemPageJsonLd(processOnlyData, []);
     const exposed = JSON.stringify({ metadata, jsonLd });
@@ -79,7 +79,9 @@ describe("system page SEO published Solutions boundary", () => {
       `Process et Ressources du système opérationnel ${system.name}`,
     );
     expect(exposed).not.toMatch(/Legacy Outil Fantôme|\boutils?\b|annuaire-outils|écosystème/i);
-    expect(exposed).toContain("La facturation électronique");
+    expect(exposed).not.toMatch(
+      /La facturation électronique|Maîtriser les obligations et les finances de son entreprise/,
+    );
   });
 
   it("keeps all 115 empty-registry pages free of historical Models while listing Resources", () => {
@@ -155,8 +157,9 @@ describe("system page SEO published Solutions boundary", () => {
       "buildSystemPageJsonLd(data, visiblePublishedSolutionSections)",
     );
     expect(pageSource).toContain(
-      "filterPublicSolutionSections(mergeRenderableSolutionSections([",
+      "filterPublicSolutionSections(mergeRenderableSolutionSections(solutionSections))",
     );
+    expect(pageSource).toContain("composeCanonicalServicesForSystem(");
     expect(pageSource).toContain('JSON.stringify(jsonLd).replace(/</g, "\\\\u003c")');
     expect(detailSource).not.toContain("data.detail.tools");
   });
@@ -172,7 +175,7 @@ describe("system page SEO published Solutions boundary", () => {
     );
     const exposed = JSON.stringify({ metadata, jsonLd });
 
-    expect(metadata.description).toContain("6 ressources pratiques");
+    expect(metadata.description).toContain("4 ressources pratiques");
     expect(exposed).not.toMatch(/Google Drive|docs\.google|private-assets/);
     expect(exposed).not.toContain("Levier");
     const list = itemList(jsonLd);

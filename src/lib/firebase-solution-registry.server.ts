@@ -3,6 +3,8 @@ import "server-only";
 import { unstable_cache } from "next/cache";
 
 import { enterpriseCatalog } from "@/lib/enterprise-annuaire";
+import { type Firestore } from "firebase-admin/firestore";
+
 import { getAdminFirestore } from "@/lib/firebase-admin";
 import { hasFirebaseVercelWorkloadIdentityConfiguration } from "@/lib/firebase-vercel-oidc-credential.server";
 import snapshot from "@/lib/firebase-solution-registry.snapshot.generated.json";
@@ -100,8 +102,9 @@ function parseActivePointer(input: unknown) {
   };
 }
 
-export async function fetchActiveFirebaseSolutionRegistryRevisionFromFirestore() {
-  const database = getAdminFirestore();
+export async function fetchActiveFirebaseSolutionRegistryRevisionFromFirestore(
+  database: Firestore = getAdminFirestore(),
+) {
   const [pointerCollection, pointerDocument] =
     FIREBASE_SOLUTION_REGISTRY_ACTIVE_POINTER.split("/");
   const pointerSnapshot = await database
@@ -129,7 +132,7 @@ export async function fetchActiveFirebaseSolutionRegistryRevisionFromFirestore()
     resources: resourcesSnapshot.docs.map((document) => document.data()),
     placements: placementsSnapshot.docs.map((document) => document.data()),
   };
-  const parsed = parseFirebaseSolutionRegistryRevision(revision);
+  const parsed = normalizeRevisionEntryOrder(revision);
   if (parsed.sourceFingerprint !== pointer.sourceFingerprint) {
     throw new Error("Firebase Solutions pointer fingerprint mismatch");
   }

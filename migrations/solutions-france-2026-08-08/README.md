@@ -93,9 +93,27 @@ acteurs ne sont ni ressources ni placements de la révision Firebase active ; il
 sont donc pas modifiés dans ce lot afin de ne pas confondre le runtime public et le
 catalogue historique.
 
-## Étape suivante, volontairement non exécutée
+## Import DRAFT gardé
 
-Après validation éditoriale : importer le candidat comme révision Firebase Preview
-non active, contrôler les 115 fiches, puis produire une révision publiée et déplacer
-le pointeur actif dans un jalon séparé. Le fallback local ne devra être régénéré
-qu'après activation vérifiée.
+L'importeur `import:firebase-solutions-france-cleanup` accepte uniquement cette
+révision `draft`. Il exige le projet, le plan, l'empreinte de révision et le pointeur
+actif courant exacts. Après écriture, il relit les 247 ressources et 599 placements,
+revalide la révision et vérifie que les données ainsi que la date de mise à jour du
+pointeur actif n'ont pas changé.
+
+Empreintes scellées :
+
+- révision : `66718297385ad6c23221c3bb9c62d3b41f86749637b2ecdb7b8a6b4feeeb9dd9` ;
+- plan : `4b4bfdadcd6abb4cd24880aeeaff27024a69e542266da23ef319d7c04f0eefcb` ;
+- pointeur à préserver : `solutions-2026-08-05-active-v1` /
+  `759558daa13d489231fb1040a236173a61e35d316955ded530f97442108c2401`.
+
+La recette Emulator a réellement écrit et relu les 847 documents, contrôlé les 115
+systèmes et confirmé `activePointerChanged: false`. L'import Production n'a pas été
+exécuté : l'identité locale disponible reçoit `PERMISSION_DENIED`, et le reader OIDC
+Production n'est pas une identité d'import. Aucun pointeur distant n'a donc changé.
+
+Après obtention d'une identité éphémère autorisée : importer le candidat comme
+révision non active, refaire les contrôles 115/115, puis produire une révision
+publiée et déplacer le pointeur actif dans un jalon séparé. Le fallback local ne
+devra être régénéré qu'après cette activation vérifiée.

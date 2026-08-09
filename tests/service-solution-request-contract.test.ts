@@ -1,6 +1,5 @@
 import { describe, expect, it } from "vitest";
 import {
-  parseServiceRequestPayload,
   parseSolutionReferralPayload,
 } from "@/lib/service-solution-request-contract";
 
@@ -16,21 +15,6 @@ const base = {
 };
 
 describe("service and solution request contracts", () => {
-  it("normalizes the four visible service fields and bounded hidden fields", () => {
-    expect(parseServiceRequestPayload({
-      ...base,
-      serviceSlug: "site-vitrine-prise-contact",
-    })).toEqual(expect.objectContaining({
-      company: "Atelier Martin",
-      email: "maya@atelier-martin.fr",
-      firstName: "Maya",
-      marketingConsent: false,
-      need: "Nous voulons mieux organiser les demandes.",
-      serviceSlug: "site-vitrine-prise-contact",
-      systemSlug: "batiment",
-    }));
-  });
-
   it("requires a system for an external solution referral", () => {
     expect(() => parseSolutionReferralPayload({
       ...base,
@@ -40,48 +24,44 @@ describe("service and solution request contracts", () => {
   });
 
   it("rejects telephone and any unknown field", () => {
-    expect(() => parseServiceRequestPayload({
+    expect(() => parseSolutionReferralPayload({
       ...base,
       phone: "0612345678",
-      serviceSlug: "site-vitrine-prise-contact",
+      resourceSlug: "partenaire-juridique",
     })).toThrow("unknown fields: phone");
   });
 
   it("accepts any valid contact email without an arbitrary provider denylist", () => {
-    expect(parseServiceRequestPayload({
+    expect(parseSolutionReferralPayload({
       ...base,
       email: "maya@gmail.com",
-      serviceSlug: "site-vitrine-prise-contact",
+      resourceSlug: "partenaire-juridique",
     }).email).toBe("maya@gmail.com");
   });
 
   it("rejects malformed slugs, idempotency keys and consent", () => {
-    expect(() => parseServiceRequestPayload({
-      ...base,
-      serviceSlug: "Site vitrine",
-    })).toThrow("lowercase slug");
-    expect(() => parseServiceRequestPayload({
+    expect(() => parseSolutionReferralPayload({
       ...base,
       idempotencyKey: "short",
-      serviceSlug: "site-vitrine-prise-contact",
+      resourceSlug: "partenaire-juridique",
     })).toThrow("idempotencyKey is invalid");
-    expect(() => parseServiceRequestPayload({
+    expect(() => parseSolutionReferralPayload({
       ...base,
       marketingConsent: "yes",
-      serviceSlug: "site-vitrine-prise-contact",
+      resourceSlug: "partenaire-juridique",
     })).toThrow("marketingConsent must be a boolean");
   });
 
   it("rejects oversized or unsafe attribution payloads", () => {
-    expect(() => parseServiceRequestPayload({
+    expect(() => parseSolutionReferralPayload({
       ...base,
       attribution: { payload: "x".repeat(6100) },
-      serviceSlug: "site-vitrine-prise-contact",
+      resourceSlug: "partenaire-juridique",
     })).toThrow();
-    expect(() => parseServiceRequestPayload({
+    expect(() => parseSolutionReferralPayload({
       ...base,
       attribution: new Date(),
-      serviceSlug: "site-vitrine-prise-contact",
+      resourceSlug: "partenaire-juridique",
     })).toThrow("JSON data only");
   });
 

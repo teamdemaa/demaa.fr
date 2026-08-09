@@ -6,18 +6,6 @@ const sectorPagesSource = fs.readFileSync(
   path.join(process.cwd(), "src/lib/sector-pages.ts"),
   "utf8",
 );
-const courseContentSource = fs.readFileSync(
-  path.join(process.cwd(), "src/lib/course-content.ts"),
-  "utf8",
-);
-const documentModelsSource = fs.readFileSync(
-  path.join(process.cwd(), "src/lib/document-models.ts"),
-  "utf8",
-);
-const serviceCatalogSource = fs.readFileSync(
-  path.join(process.cwd(), "src/lib/service-catalog.ts"),
-  "utf8",
-);
 const systemResourceCatalogSource = fs.readFileSync(
   path.join(process.cwd(), "src/lib/system-resource-catalog.ts"),
   "utf8",
@@ -30,15 +18,6 @@ const staticRoutes = new Set([
   "/annuaire-outils",
 ]);
 
-function extractSlugs(source) {
-  return new Set(
-    [...source.matchAll(/slug:\s*"([^"]+)"/g)].map((match) => match[1]),
-  );
-}
-
-const serviceSlugs = extractSlugs(serviceCatalogSource);
-const courseSlugs = extractSlugs(courseContentSource);
-const documentModelSlugs = extractSlugs(documentModelsSource);
 const systemResourceSlugs = new Set(
   [...systemResourceCatalogSource.matchAll(/resourceSlug:\s*"([^"]+)"/g)]
     .map((match) => match[1]),
@@ -60,27 +39,8 @@ function validateStaticHref(href, context) {
     return;
   }
 
-  if (href.startsWith("/annuaire-services/")) {
-    const slug = href.replace("/annuaire-services/", "");
-    if (!serviceSlugs.has(slug)) {
-      addUnique(errors, `${context} references unknown service slug "${slug}".`);
-    }
-    return;
-  }
-
   if (href.startsWith("/modeles-de-documents/")) {
-    const slug = href.replace("/modeles-de-documents/", "");
-    if (!documentModelSlugs.has(slug)) {
-      addUnique(errors, `${context} references unknown document model slug "${slug}".`);
-    }
-    return;
-  }
-
-  if (href.startsWith("/cours/")) {
-    const slug = href.replace("/cours/", "");
-    if (!courseSlugs.has(slug)) {
-      addUnique(errors, `${context} references unknown course slug "${slug}".`);
-    }
+    addUnique(errors, `${context} references retired document model route "${href}".`);
     return;
   }
 
@@ -110,9 +70,6 @@ for (const match of sectorPagesSource.matchAll(/href:\s*getSectorToolDirectoryHr
 
 const result = {
   sectors: sectorTaxonomyPayload.sectors.length,
-  services: serviceSlugs.size,
-  courses: courseSlugs.size,
-  documentModels: documentModelSlugs.size,
   systemResources: systemResourceSlugs.size,
   errors,
 };

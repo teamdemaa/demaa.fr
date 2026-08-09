@@ -17,6 +17,10 @@ export const FRANCE_SOLUTIONS_CLEANUP_EXPIRY =
   "2027-02-08T18:00:00.000Z" as const;
 export const FRANCE_SOLUTIONS_CLEANUP_REVISION_ID =
   "solutions-2026-08-08-france-clean-v1" as const;
+export const FRANCE_SOLUTIONS_PUBLISHED_TIMESTAMP =
+  "2026-08-09T14:00:00.000Z" as const;
+export const FRANCE_SOLUTIONS_PUBLISHED_REVISION_ID =
+  "solutions-2026-08-09-france-clean-published-v3" as const;
 
 const EMPTY_FINGERPRINT = "0".repeat(64);
 
@@ -151,7 +155,17 @@ function updatePlacement(
   } as MutablePlacementEntry;
 }
 
-export function buildFranceSolutionsCleanupRevision(): FirebaseSolutionRegistryRevision {
+function buildFranceSolutionsRevision({
+  createdAt,
+  createdBy,
+  revisionId,
+  revisionStatus,
+}: {
+  createdAt: string;
+  createdBy: string;
+  revisionId: string;
+  revisionStatus: "draft" | "published";
+}): FirebaseSolutionRegistryRevision {
   const activeRevision = parseFirebaseSolutionRegistryRevision(activeSnapshot);
   const resources = activeRevision.resources
     .filter(({ resource }) => resource.resourceSlug !== "regate")
@@ -162,10 +176,10 @@ export function buildFranceSolutionsCleanupRevision(): FirebaseSolutionRegistryR
 
   const baseRevision = {
     ...activeRevision,
-    revisionId: FRANCE_SOLUTIONS_CLEANUP_REVISION_ID,
-    revisionStatus: "draft" as const,
-    createdAt: FRANCE_SOLUTIONS_CLEANUP_TIMESTAMP,
-    createdBy: "audit://solutions-france-2026-08-08",
+    revisionId,
+    revisionStatus,
+    createdAt,
+    createdBy,
     sourceFingerprint: EMPTY_FINGERPRINT,
     resources,
     placements,
@@ -176,10 +190,28 @@ export function buildFranceSolutionsCleanupRevision(): FirebaseSolutionRegistryR
   });
   const errors = validateFirebaseSolutionRegistryRevision(candidate, {
     expectedSystemSlugs: enterpriseCatalog.map(({ slug }) => slug),
-    now: new Date(FRANCE_SOLUTIONS_CLEANUP_TIMESTAMP),
+    now: new Date(createdAt),
   });
   if (errors.length > 0) {
     throw new Error(`Invalid France Solutions cleanup revision:\n${errors.join("\n")}`);
   }
   return candidate;
+}
+
+export function buildFranceSolutionsCleanupRevision(): FirebaseSolutionRegistryRevision {
+  return buildFranceSolutionsRevision({
+    revisionId: FRANCE_SOLUTIONS_CLEANUP_REVISION_ID,
+    revisionStatus: "draft",
+    createdAt: FRANCE_SOLUTIONS_CLEANUP_TIMESTAMP,
+    createdBy: "audit://solutions-france-2026-08-08",
+  });
+}
+
+export function buildPublishedFranceSolutionsCleanupRevision(): FirebaseSolutionRegistryRevision {
+  return buildFranceSolutionsRevision({
+    revisionId: FRANCE_SOLUTIONS_PUBLISHED_REVISION_ID,
+    revisionStatus: "published",
+    createdAt: FRANCE_SOLUTIONS_PUBLISHED_TIMESTAMP,
+    createdBy: "release://solutions-france-2026-08-09",
+  });
 }

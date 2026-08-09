@@ -5,9 +5,12 @@ import Link from "next/link";
 import { ChevronDown, ChevronUp, FileText, Search, SlidersHorizontal } from "lucide-react";
 import { useMemo, useState } from "react";
 import type { AcademyContentDefinition } from "@/lib/academy-course-content";
+import SystemResourcePreviewModal from "@/components/SystemResourcePreviewModal";
 import { matchesSearchQuery } from "@/lib/search";
-import { SYSTEM_RESOURCES } from "@/lib/system-resource-catalog";
+import { SYSTEM_RESOURCES, type SystemResource } from "@/lib/system-resource-catalog";
 import StructureNewsletterBlock from "@/components/StructureNewsletterBlock";
+import AcademyLiveTrainingSection from "@/components/AcademyLiveTrainingSection";
+import type { PublicLiveTraining } from "@/lib/live-session-catalog";
 
 const ACADEMY_MODEL_RESOURCES = SYSTEM_RESOURCES
   .filter((resource) => resource.format === "template")
@@ -15,6 +18,7 @@ const ACADEMY_MODEL_RESOURCES = SYSTEM_RESOURCES
 
 type AcademyIndexClientProps = {
   contents: AcademyContentDefinition[];
+  liveTrainings: readonly PublicLiveTraining[];
   backLink?: {
     href: string;
     label: string;
@@ -28,15 +32,6 @@ type CaseStudyPresentation = {
   characterAlt: string;
   characterClassName?: string;
 };
-
-const CASE_STUDY_ORDER = [
-  "cabinet-conseil-acquisition",
-  "maintenance-informatique-acquisition",
-  "cabinet-recrutement-acquisition",
-  "nettoyage-professionnel-acquisition",
-  "formation-b2b-acquisition",
-  "bureau-etudes-acquisition",
-];
 
 const CASE_STUDY_PRESENTATIONS: Record<string, CaseStudyPresentation> = {
   "cabinet-conseil-acquisition": {
@@ -270,11 +265,12 @@ function AcademyCard({ content, eager = false }: { content: AcademyContentDefini
   );
 }
 
-export default function AcademyIndexClient({ contents, backLink }: AcademyIndexClientProps) {
+export default function AcademyIndexClient({ contents, liveTrainings, backLink }: AcademyIndexClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [showAllFundamentals, setShowAllFundamentals] = useState(false);
   const [activeCategory, setActiveCategory] = useState(ALL_ACADEMY_CATEGORIES);
   const [areCategoryTagsVisible, setAreCategoryTagsVisible] = useState(false);
+  const [previewResource, setPreviewResource] = useState<SystemResource | null>(null);
 
   const categories = useMemo(
     () => [
@@ -305,12 +301,6 @@ export default function AcademyIndexClient({ contents, backLink }: AcademyIndexC
   }, [activeCategory, contents, searchQuery]);
 
   const fundamentals = filteredContents.filter((content) => content.kind === "course");
-  const caseStudies = filteredContents
-    .filter((content) => content.kind === "case-study")
-    .sort(
-      (first, second) =>
-        CASE_STUDY_ORDER.indexOf(first.identity.slug) - CASE_STUDY_ORDER.indexOf(second.identity.slug),
-    );
   const isSearching = searchQuery.trim().length > 0;
   const visibleFundamentals = isSearching || showAllFundamentals ? fundamentals : fundamentals.slice(0, 6);
   const canToggleFundamentals = !isSearching && fundamentals.length > 6;
@@ -431,25 +421,22 @@ export default function AcademyIndexClient({ contents, backLink }: AcademyIndexC
           </section>
         ) : null}
 
+        <AcademyLiveTrainingSection trainings={liveTrainings} />
+
         {ACADEMY_MODEL_RESOURCES.length ? (
           <section className="mt-12 border-t border-dema-line/75 pt-9 md:mt-14 md:pt-10" aria-labelledby="academy-models-title">
             <h2 id="academy-models-title" className="text-2xl font-semibold text-brand-blue md:text-[2rem]">
               Modèles et documents
             </h2>
             <p className="mt-2 max-w-2xl text-sm leading-relaxed text-dema-muted">
-              Les mêmes modèles que dans vos systèmes métier, accessibles directement.
+              Les mêmes modèles que dans vos systèmes métier, avec un aperçu avant ouverture.
             </p>
 
             <div className="mt-7 grid grid-cols-1 gap-x-8 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
-              {ACADEMY_MODEL_RESOURCES.map((resource) => (
-                <a
-                  key={resource.resourceSlug}
-                  href={`/api/systeme-kit/open/${resource.resourceSlug}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group block rounded-[1.25rem] border border-[#E7EBE8] bg-[#F1F3F0] p-6 transition hover:border-dema-forest/25"
-                  aria-label={`Ouvrir ${resource.title}`}
-                >
+              {ACADEMY_MODEL_RESOURCES.map((resource) => {
+                const className = "group block rounded-[1.25rem] border border-[#E7EBE8] bg-[#F1F3F0] p-6 text-left transition hover:border-dema-forest/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2";
+                const content = (
+                  <>
                   <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-dema-forest">
                     <FileText className="h-5 w-5" aria-hidden="true" />
                   </span>
@@ -462,22 +449,33 @@ export default function AcademyIndexClient({ contents, backLink }: AcademyIndexC
                   <span className="mt-2 block text-sm leading-relaxed text-dema-muted">
                     {resource.description}
                   </span>
-                </a>
-              ))}
-            </div>
-          </section>
-        ) : null}
+                  </>
+                );
 
-        {caseStudies.length ? (
-          <section className="mt-12 border-t border-dema-line/75 pt-9 md:mt-14 md:pt-10" aria-labelledby="case-studies-title">
-            <h2 id="case-studies-title" className="text-2xl font-semibold text-brand-blue md:text-[2rem]">
-              Cas concrets
-            </h2>
-
-            <div className="mt-7 grid grid-cols-1 gap-x-8 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
-              {caseStudies.map((content, index) => (
-                <AcademyCard key={content.identity.slug} content={content} eager={index < 3} />
-              ))}
+                return resource.resourceSlug === "recapitulatif-systeme" ? (
+                  <Link
+                    key={resource.resourceSlug}
+                    href="/systemes"
+                    className={className}
+                    aria-label="Choisir un système pour voir son récapitulatif"
+                  >
+                    {content}
+                    <span className="mt-4 block text-sm font-medium text-dema-forest">
+                      Choisir un système
+                    </span>
+                  </Link>
+                ) : (
+                  <button
+                    key={resource.resourceSlug}
+                    type="button"
+                    onClick={() => setPreviewResource(resource)}
+                    className={className}
+                    aria-label={`Voir un aperçu de ${resource.title}`}
+                  >
+                    {content}
+                  </button>
+                );
+              })}
             </div>
           </section>
         ) : null}
@@ -492,6 +490,14 @@ export default function AcademyIndexClient({ contents, backLink }: AcademyIndexC
         <div className="mt-12 md:mt-14">
           <StructureNewsletterBlock />
         </div>
+
+        {previewResource ? (
+          <SystemResourcePreviewModal
+            resource={previewResource}
+            trackingContext="academie"
+            onClose={() => setPreviewResource(null)}
+          />
+        ) : null}
       </main>
     </div>
   );

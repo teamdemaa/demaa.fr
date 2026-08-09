@@ -13,6 +13,9 @@ describe("system UX contract", () => {
     const resourcesSource = await readSource(
       "src/components/SystemResourcesTab.tsx",
     );
+    const resourcePreviewSource = await readSource(
+      "src/components/SystemResourcePreviewModal.tsx",
+    );
     const guidesRailSource = await readSource(
       "src/components/SystemGuidesRail.tsx",
     );
@@ -41,10 +44,14 @@ describe("system UX contract", () => {
     expect(detailSource).not.toContain("OperationalSystemCopyRequestModal");
     expect(detailSource).not.toContain("HistoricalOperationalSystemCopyRequestModal");
     expect(resourcesSource).not.toContain("OperationalSystemCopyRequestModal");
-    expect(resourcesSource).toContain("SystemRecapRequestModal");
-    expect(resourcesSource).toContain("/api/systeme-kit/open/${resource.resourceSlug}");
-    expect(resourcesSource).toContain('target="_blank"');
-    expect(resourcesSource).toContain('rel="noopener noreferrer"');
+    expect(resourcesSource).not.toContain("SystemRecapRequestModal");
+    expect(resourcesSource).toContain("SystemResourcePreviewModal");
+    expect(resourcesSource).toContain("/kit-operationnel/${systemSlug}/recapitulatif");
+    expect(resourcesSource).not.toContain("/api/systeme-kit/request");
+    expect(resourcePreviewSource).toContain("/api/systeme-kit/open/${resource.resourceSlug}");
+    expect(resourcePreviewSource).toContain('target="_blank"');
+    expect(resourcePreviewSource).toContain('rel="noopener noreferrer"');
+    expect(resourcePreviewSource).toContain("resource.preview");
     expect(resourcesSource).toContain("system_resource_opened");
     expect(guidesRailSource).not.toContain("OperationalSystemCopyRequestModal");
     expect(guidesRailSource).toContain("Être informé(e)");
@@ -66,6 +73,33 @@ describe("system UX contract", () => {
     expect(pageSource).not.toContain("getOperationalSystemDemoUrl");
     expect(pageSource).not.toContain("deliveryAvailable=");
     expect(pageSource).toContain("hasEditableOperationalSystemAsset");
+  });
+
+  it("keeps Academy models aligned with the same preview journey", async () => {
+    const academySource = await readSource(
+      "src/components/AcademyIndexClient.tsx",
+    );
+
+    expect(academySource).toContain("SystemResourcePreviewModal");
+    expect(academySource).toContain('href="/systemes"');
+    expect(academySource).toContain("Choisir un système");
+    expect(academySource).not.toContain("/api/systeme-kit/request");
+    expect(academySource).not.toContain("accessibles directement");
+  });
+
+  it("provides a clear fallback when native printing is unavailable", async () => {
+    const [printButtonSource, recapSource, globalStyles] = await Promise.all([
+      readSource("src/components/SystemRecapPrintButton.tsx"),
+      readSource("src/app/kit-operationnel/[slug]/recapitulatif/page.tsx"),
+      readSource("src/app/globals.css"),
+    ]);
+
+    expect(printButtonSource).toContain('typeof window.print === "function"');
+    expect(printButtonSource).toContain("Copier le lien");
+    expect(printButtonSource).toContain("Chrome, Safari ou Firefox");
+    expect(recapSource).toContain("data-system-recap");
+    expect(globalStyles).toContain("@page");
+    expect(globalStyles).toContain("size: A4");
   });
 
   it("keeps every system tab free of contact CTAs", async () => {

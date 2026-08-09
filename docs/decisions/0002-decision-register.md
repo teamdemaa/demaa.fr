@@ -2,7 +2,7 @@
 
 - Statut : `validated`
 - Date : 31 juillet 2026
-- Mise à jour d'état : 1er août 2026, checkpoint documentaire W6.0
+- Mise à jour d'état : 9 août 2026, architecture publique France
 
 Les seuls statuts autorisés sont `validated`, `working`, `deferred` et
 `superseded`. Le **scope** décrit la décision ; la **phase** décrit son niveau
@@ -13,16 +13,18 @@ produit.
 | --- | --- | --- | --- | --- |
 | D-012 | `superseded` | Navigation et contenus de l'ancien Écosystème | audit de migration W2c-W3 | Les quatre groupes ne sont plus l'architecture cible. Chaque contenu et placement doit être audité avant migration dans Solutions. |
 | D-061 | `working` | Contrats v2, routines Process et cinq pilotes | 115 révisions v1 actives ; pilotes v2 non activés | Les fondations v2 et l'unification Process sont conservées. La révision pilote attendue est `d061-v2-pilot-2026-07-30-03`, sans activation ni généralisation par W6.0. |
-| D-062 | `superseded` | Prestation marketing et commerciale dans Écosystème | migration W2b-W4 | L'offre devient `Système & automatisation commerciale` sur `/services`. |
-| D-063 | `deferred` | Newsletter Structure | backlog | Elle ne façonne ni Process, ni Solutions, ni Services dans la base active. |
-| D-064 placement | `validated` | Emplacement de l'aide à l'organisation | implémenté localement, non activé pour Solutions | Afficher un seul encart sous le panneau actif de Process et de Solutions. Le composant est au bon niveau, mais l'attribution source reste `Système opérationnel - Process` et doit être corrigée avant activation de Solutions. |
-| D-064 copie | `working` | Texte de l'aide à l'organisation | copie finale non figée | Conserver un seul parcours Fillout. W6.0 n'invente ni ne valide de nouvelle copie. |
-| Académie D-033/D-036 | `validated` | Navigation réciproque, catalogue et composition des deux cours publics | staging à préserver | Aucun changement de contenu dans ce chantier. La matrice de navigation de l'ADR 0001 est obligatoire. |
+| D-062 | `superseded` | Prestation marketing et commerciale dans Écosystème | retirée de l'architecture principale | Aucun service Demaa n'est injecté dans Process ou Solutions. L'avenir de `/services` est arbitré séparément. |
+| D-063 | `validated` | Newsletter Structure | texte et formulaire actifs | Un même bloc est utilisé sous Ressources, sur la page Académie et sur `/sur-mesure`, jamais dans les cours. Le vocal reste différé. |
+| D-064 placement | `superseded` | Emplacement de l'aide à l'organisation | retiré du parcours média | Aucun CTA commercial ou de diagnostic n'est rendu dans Process ou Solutions. Le contact général reste dans le footer. |
+| D-064 copie | `superseded` | Texte de l'aide à l'organisation | retiré du parcours média | Le parcours Fillout n'est plus un élément des fiches Système. |
+| Académie D-033/D-036 | `validated` | Navigation réciproque et catalogue Académie | publié | La navigation principale contient uniquement `Système métier` et `Académie`. Les contenus pédagogiques restent dans l'Académie. |
 | Académie cours 3 à 5 | `deferred` | Drafts éditoriaux et assets non publics | hors release Systèmes | Aucun draft ne devient public sans publication réelle et gate dédié. |
 | Vidéos | `deferred` | Production, casting et publication vidéo | chantier ultérieur | Les scripts, voix et assets locaux ne valent pas autorisation de publication. |
 | Tiimora D-049 à D-060 | `deferred` | Intégration Demaa-Tiimora et retargeting | backlog distinct | Ce chantier ne doit ni orienter ni ralentir la base Systèmes/Services. |
-| Services V1 | `validated` | Sept services, deux catégories, deux prix et cinq offres sur devis | W3b/W4/W5 implémentés localement, activation bloquée | Les sept offres restent `draft` et aucune n'est publique. Pas de paiement immédiat et aucune offre supplémentaire sans validation. |
-| Solutions V1 | `working` | Registre et interface `published-only` par système | W3c/W3 implémentés localement, activation bloquée | Le registre produit contient 0 Solution publiée. Les candidats de migration restent des preuves `pending`, jamais un fallback runtime. |
+| Services V1 | `superseded` | Marketplace de sept services | remplacée par l'ADR 0004 | `/services` publie exactement quatre offres canoniques, également composées dans les 115 Systèmes après Outils. |
+| Solutions V1 | `validated` | Registre Firebase et interface par système | actif pour la France | Firebase est la source distante autoritaire ; les sections visibles restent conditionnelles à des placements pertinents. |
+| D-072 | `validated` | Architecture publique France et retrait legacy | ADR 0003 | `demaa.co` est canonique ; navigation `Système métier / Académie` ; fiches `Process / Solutions / Ressources` ; redirection si un successeur existe, 404 sinon. |
+| D-073 | `validated` | Services, Contenus, Académie et Ressources | ADR 0004 | Trois Services canoniques, `/contenus`, Ressources réordonnées et six formations en direct ; l'ADR 0004 prévaut sur les anciens arbitrages incompatibles. |
 | Mesure client Services/Solutions | `deferred` | Événements de parcours et conversion sans PII | chantier ultérieur après contrat de mesure | La branche ne contient que l'attribution consent-aware jointe aux demandes et des logs opérationnels serveur ; aucun dispositif client spécifique n'est déclaré actif. |
 | Boutique en ligne | `superseded` | Offre Services | retirée avant implémentation | Aucune carte V1. |
 | Site 1 350 EUR + cadeaux | `deferred` | Hypothèse d'offre enrichie D-071 | revue commerciale ultérieure | Elle ne modifie pas l'offre active à 950 EUR HT. |

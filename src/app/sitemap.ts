@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getCanonicalBaseUrl } from "@/lib/site-url";
-import { getAllCourseEntries } from "@/lib/course-content";
+import { getCanonicalServices } from "@/lib/canonical-service-catalog";
+import { getAllPublishedContent } from "@/lib/content-catalog";
 import { getAllAcademyContent } from "@/lib/academy-course-content";
 import { getAllNewsletters } from "@/lib/newsletter-content";
 import { aidFamilies, demaaAidItems } from "@/lib/aid-catalog";
@@ -10,17 +11,11 @@ import { demaaFinanceItems } from "@/lib/finance-catalog";
 import { demaaProNetworks } from "@/lib/pro-network-catalog";
 import { sectorPageDefinitions } from "@/lib/sector-pages";
 import { sectorTaxonomy } from "@/lib/sector-taxonomy";
-import { demaaServices } from "@/lib/service-catalog";
 import { demaaSuppliers } from "@/lib/supplier-catalog";
 import { getDemaaRecruitmentItems } from "@/lib/recruitment-catalog";
 import { getDemaaTrainings } from "@/lib/training-catalog";
 import { getToolDirectorySlug, hasStandaloneToolPage } from "@/lib/tool-directory";
 import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
-
-const HIDDEN_SERVICE_SLUGS = new Set([
-  "recrutement-assistante-facturation",
-  "organisation-automatisation",
-]);
 
 export const dynamic = "force-dynamic";
 
@@ -48,6 +43,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/annuaire-newsletters`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-experts-comptables`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/academie`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${base}/contenus`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/opportunites`, lastModified: now, changeFrequency: "weekly", priority: 0.65 },
     { url: `${base}/rejoindre-team-demaa`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     { url: `${base}/mentions-legales`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
@@ -57,20 +53,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/cgv`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
   ];
 
-  const courseEntries = getAllCourseEntries();
-  const courseContentEntries: MetadataRoute.Sitemap = courseEntries.map((entry) => ({
-    url: `${base}/cours/${entry.slug}`,
-    lastModified: new Date(entry.date),
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
-  }));
-
   const academyEntries: MetadataRoute.Sitemap = getAllAcademyContent().map(
     (content) => ({
       url: `${base}/academie/${content.identity.slug}`,
       lastModified: now,
       changeFrequency: "monthly" as const,
       priority: content.kind === "case-study" ? 0.72 : 0.78,
+    }),
+  );
+
+  const contentEntries: MetadataRoute.Sitemap = getAllPublishedContent().map(
+    (entry) => ({
+      url: `${base}/contenus/${entry.slug}`,
+      lastModified: new Date(entry.updatedAt),
+      changeFrequency: "monthly" as const,
+      priority: 0.78,
+      ...(entry.media.slides?.[0]
+        ? { images: [`${base}${entry.media.slides[0]}`] }
+        : {}),
     }),
   );
 
@@ -110,10 +110,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  const serviceEntries: MetadataRoute.Sitemap = demaaServices
-    .filter((service) => !HIDDEN_SERVICE_SLUGS.has(service.slug))
+  const serviceEntries: MetadataRoute.Sitemap = getCanonicalServices()
     .map((service) => ({
-      url: `${base}/annuaire-services/${service.slug}`,
+      url: `${base}/services/${service.slug}`,
       lastModified: now,
       changeFrequency: "monthly" as const,
       priority: 0.7,
@@ -198,8 +197,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     ...staticRoutes,
+    ...contentEntries,
     ...academyEntries,
-    ...courseContentEntries,
     ...newsletterSitemapEntries,
     ...toolEntries,
     ...freeToolEntries,

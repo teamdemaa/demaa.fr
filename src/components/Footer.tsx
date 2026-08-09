@@ -23,6 +23,7 @@ const collaborationLinks = [
 const resourceLinks = [
   { label: "Systèmes métier", href: "/systemes" },
   { label: "Académie", href: "/academie" },
+  { label: "Contenus", href: "/contenus" },
 ];
 
 export default function Footer() {

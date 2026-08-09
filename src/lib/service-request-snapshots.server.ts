@@ -1,7 +1,6 @@
 import "server-only";
 
 import { createHash } from "node:crypto";
-import type { PublishedServiceOfferDto } from "@/lib/service-catalog-v2-dto";
 import type {
   PublishedSolutionPlacementDto,
   PublishedSolutionResourceDto,
@@ -29,27 +28,6 @@ function canonicalize(value: unknown): Json {
 
 export function hashRequestSnapshot(value: unknown) {
   return createHash("sha256").update(JSON.stringify(canonicalize(value))).digest("hex");
-}
-
-export function buildServiceRequestSnapshot(service: PublishedServiceOfferDto) {
-  const snapshot = {
-    category_id: service.categoryId,
-    category_title: service.categoryTitle,
-    description: service.description,
-    offer_version: service.offerVersion,
-    operator_type: service.operatorType,
-    pricing: service.pricing,
-    scope: service.scope,
-    service_name: service.title,
-    service_slug: service.slug,
-    billing_party: service.operatorType === "demaa" ? "Demaa" as const : "ODEMA" as const,
-    contracting_party: service.operatorType === "demaa" ? "Demaa" as const : "ODEMA" as const,
-    transparency: `La prestation est contractée et facturée par ${service.operatorType === "demaa" ? "Demaa" : "ODEMA"}.`,
-  };
-  return {
-    ...snapshot,
-    content_hash: hashRequestSnapshot(snapshot),
-  };
 }
 
 export function buildSolutionReferralSnapshot(input: {

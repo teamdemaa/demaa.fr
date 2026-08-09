@@ -9,6 +9,7 @@ import { recordFilloutLeadSubmission } from "@/lib/fillout-lead-client";
 type OrganisationSessionBookingButtonProps = {
   className?: string;
   label?: string;
+  requestType?: string;
   source?: string;
   sourceIsAuthoritative?: boolean;
   systemSlug?: string;
@@ -17,6 +18,7 @@ type OrganisationSessionBookingButtonProps = {
 export default function OrganisationSessionBookingButton({
   className = "demaa-primary-button mt-5 w-fit",
   label = "Réserver ma session offerte",
+  requestType = "organisation_session_booking",
   source = "Page session stratégique",
   sourceIsAuthoritative = false,
   systemSlug,
@@ -62,6 +64,7 @@ export default function OrganisationSessionBookingButton({
         onClose={() => setIsOpen(false)}
         onSubmit={() => {
           recordFilloutLeadSubmission({
+            requestType,
             systemSlug: inheritedSystemSlug,
           });
         }}

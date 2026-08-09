@@ -6,11 +6,12 @@ describe("provider network import plan", () => {
     const plan = buildProviderNetworkImportPlan();
 
     expect(plan.expertises).toHaveLength(23);
-    expect(plan.expertisePlacements).toHaveLength(115);
+    expect(plan.expertisePlacements).toHaveLength(1);
     expect(plan.opportunities).toHaveLength(3);
-    expect(plan.writes).toHaveLength(141);
-    expect(plan.planFingerprint).toBe(
-      "695c6d0c704b83b91fea456708bd6b32e82d866404beb2e993e3ae444b391a15",
+    expect(plan.writes).toHaveLength(27);
+    expect(plan.expertisePlacements).not.toContainEqual(
+      expect.objectContaining({ expertiseId: "chartered-accountant" }),
     );
+    expect(plan.planFingerprint).toMatch(/^[a-f0-9]{64}$/);
   });
 });

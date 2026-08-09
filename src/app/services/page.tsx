@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import ServicesLandingPage from "@/components/ServicesLandingPage";
+import {
+  buildServicesIndexJsonLd,
+  serializeServicesJsonLd,
+} from "@/lib/services-seo";
 
 const title = "Services pour structurer et développer votre entreprise | Demaa";
 const description =
@@ -25,5 +29,15 @@ export const metadata: Metadata = {
 };
 
 export default function ServicesPage() {
-  return <ServicesLandingPage />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: serializeServicesJsonLd(buildServicesIndexJsonLd()),
+        }}
+      />
+      <ServicesLandingPage />
+    </>
+  );
 }

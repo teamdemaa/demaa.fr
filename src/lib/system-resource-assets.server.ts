@@ -3,7 +3,10 @@ import "server-only";
 import { getDocumentModelBySlug } from "@/lib/document-models";
 import { getLevierAssetSnapshot, getLevierCopyUrl, LEVIER_ASSET_REVISION } from "@/lib/levier-asset.server";
 import type { LeadAssetSnapshot } from "@/lib/lead-storage";
-import { getSystemResource, type SystemResourceSlug } from "@/lib/system-resource-catalog";
+import {
+  getSystemResourceForHistoricalDelivery,
+  type SystemResourceSlug,
+} from "@/lib/system-resource-catalog";
 import { getCanonicalOrigin } from "@/lib/site-url";
 
 type ExternalResourceSlug = Exclude<
@@ -78,7 +81,7 @@ const RESOURCE_ASSET_REVISIONS: Readonly<Partial<Record<ExternalResourceSlug, re
 };
 
 export function getSystemResourceAssetSnapshot(resourceSlug: string): LeadAssetSnapshot | null {
-  if (!getSystemResource(resourceSlug)) return null;
+  if (!getSystemResourceForHistoricalDelivery(resourceSlug)) return null;
   if (resourceSlug === "recapitulatif-systeme") {
     return {
       assetRevision: SYSTEM_RECAP_ASSET_REVISION,

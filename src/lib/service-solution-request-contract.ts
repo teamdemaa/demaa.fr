@@ -17,22 +17,9 @@ const REQUEST_COMMON_KEYS = [
   "need",
   "systemSlug",
 ] as const;
-const SERVICE_REQUEST_KEYS = [...REQUEST_COMMON_KEYS, "serviceSlug"] as const;
 const SOLUTION_REFERRAL_KEYS = [...REQUEST_COMMON_KEYS, "resourceSlug"] as const;
 const IDEMPOTENCY_KEY_PATTERN = /^[A-Za-z0-9:_-]{8,160}$/;
 const attributionEncoder = new TextEncoder();
-
-export type ServiceRequestPayload = Readonly<{
-  attribution?: LeadAttributionPayload;
-  company: string;
-  email: string;
-  firstName: string;
-  idempotencyKey: string;
-  marketingConsent: boolean;
-  need: string;
-  serviceSlug: string;
-  systemSlug: string | null;
-}>;
 
 export type SolutionReferralPayload = Readonly<{
   attribution?: LeadAttributionPayload;
@@ -135,15 +122,6 @@ function parseCommon(record: Record<string, unknown>) {
     marketingConsent: parseMarketingConsent(record.marketingConsent),
     need: normalizeRequiredText(record.need, "request.need", 2000, true),
   };
-}
-
-export function parseServiceRequestPayload(input: unknown): ServiceRequestPayload {
-  const record = parseRecord(input, "request", SERVICE_REQUEST_KEYS);
-  return deepFreeze({
-    ...parseCommon(record),
-    serviceSlug: parseSlug(record.serviceSlug, "request.serviceSlug"),
-    systemSlug: parseOptionalSystemSlug(record.systemSlug),
-  });
 }
 
 export function parseSolutionReferralPayload(input: unknown): SolutionReferralPayload {

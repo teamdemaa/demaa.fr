@@ -312,3 +312,20 @@ body::-webkit-scrollbar-thumb {
   border: 2px solid transparent;
   background-clip: padding-box;
 }
+
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+
+  [data-system-recap] {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  [data-system-recap] a {
+    color: inherit;
+    text-decoration: none;
+  }
+}

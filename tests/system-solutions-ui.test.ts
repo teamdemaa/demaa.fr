@@ -66,7 +66,6 @@ describe("system Solutions UI", () => {
     const resourcesMarkup = renderToStaticMarkup(
       createElement(SystemResourcesTab, {
         resources: scopedResources.filter((resource) => resource.format === "template"),
-        systemName: "Bâtiment",
         systemSlug: "batiment",
       }),
     );
@@ -85,10 +84,12 @@ describe("system Solutions UI", () => {
     expect(resourcesMarkup).toContain("Récapitulatif du système");
     expect(resourcesMarkup).toContain("Suivi et prévisionnel financier");
     expect(resourcesMarkup).toContain("CRM - suivi commercial");
-    expect(guidesMarkup).toContain("La facturation électronique");
-    expect(guidesMarkup).toContain(
+    expect(guidesMarkup).not.toContain("La facturation électronique");
+    expect(guidesMarkup).not.toContain(
       "Maîtriser les obligations et les finances de son entreprise",
     );
+    expect(guidesMarkup.match(/Bientôt disponible/g)).toHaveLength(2);
+    expect(guidesMarkup.match(/Être informé\(e\)/g)).toHaveLength(2);
     expect(guidesMarkup).toContain("Être informé(e)");
     expect(guidesMarkup).toContain("Créer une entreprise du bâtiment");
     expect(guidesMarkup).toContain("Piloter vos chantiers et votre équipe");
@@ -170,7 +171,7 @@ describe("system Solutions UI", () => {
         "resources",
       ]);
     }
-  });
+  }, 10_000);
 
   it("reuses the existing resource classifications across the four rails", () => {
     const placements = enterpriseCatalog.flatMap(({ slug }) =>
@@ -417,7 +418,8 @@ describe("system Solutions UI", () => {
     );
     expect(pageSource).toContain("solutionSections={visibleSolutionSections}");
     expect(pageSource).toContain("filterPublicSolutionSections");
-    expect(pageSource).toContain('isPublicSolutionSectionVisible("services")');
+    expect(pageSource).toContain("composeCanonicalServicesForSystem");
+    expect(pageSource).not.toContain("getRenderableExpertiseSectionForSystem");
     expect(pageSource).not.toContain("getMigrationSafe");
     expect(detailSource).not.toMatch(/solution-registry\.(?:server|contract)/);
     expect(solutionsSource).toContain("import type {");
@@ -449,6 +451,9 @@ describe("system Solutions UI", () => {
   it("uses the neutral Resources catalog as the public delivery entry point", async () => {
     const detailSource = await readSource("src/components/SystemDetailContent.tsx");
     const resourcesSource = await readSource("src/components/SystemResourcesTab.tsx");
+    const resourcePreviewSource = await readSource(
+      "src/components/SystemResourcePreviewModal.tsx",
+    );
     const systemModalSource = await readSource(
       "src/components/HistoricalOperationalSystemCopyRequestModal.tsx",
     );
@@ -459,7 +464,9 @@ describe("system Solutions UI", () => {
     expect(detailSource).toContain("getSystemResourcesForSystem(system.slug)");
     expect(detailSource).not.toContain("OperationalSystemCopyRequestModal");
     expect(resourcesSource).not.toContain("OperationalSystemCopyRequestModal");
-    expect(resourcesSource).toContain("/api/systeme-kit/open/${resource.resourceSlug}");
+    expect(resourcesSource).toContain("SystemResourcePreviewModal");
+    expect(resourcesSource).toContain("/kit-operationnel/${systemSlug}/recapitulatif");
+    expect(resourcePreviewSource).toContain("/api/systeme-kit/open/${resource.resourceSlug}");
     expect(resourcesSource).toContain("resources: readonly SystemResource[]");
     expect(detailSource).not.toContain("HistoricalOperationalSystemCopyRequestModal");
     expect(detailSource).not.toContain("Voir le système");

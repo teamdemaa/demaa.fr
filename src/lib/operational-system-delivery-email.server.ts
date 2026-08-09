@@ -8,7 +8,7 @@ import {
 } from "@/lib/levier-asset.server";
 import type { LeadAssetSnapshot } from "@/lib/lead-storage";
 import { resolveSystemResourceDelivery } from "@/lib/system-resource-assets.server";
-import { getSystemResource } from "@/lib/system-resource-catalog";
+import { getSystemResourceForHistoricalDelivery } from "@/lib/system-resource-catalog";
 
 function escapeHtml(value: string) {
   return value
@@ -127,7 +127,7 @@ async function sendSystemResourceDeliveryEmail(input: {
   from: string;
   resourceSlug: string;
 }) {
-  const resource = getSystemResource(input.resourceSlug);
+  const resource = getSystemResourceForHistoricalDelivery(input.resourceSlug);
   if (!resource) {
     return { sent: false as const, reason: "missing_asset" as const };
   }

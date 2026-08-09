@@ -65,4 +65,21 @@ describe("proxy content security policy", () => {
       "https://demaa.co/structuration?source=legacy",
     );
   });
+
+  it.each([
+    "/modeles-de-documents/ancien-modele",
+    "/ressources/ancien-modele",
+  ])("returns a real 404 for retired route %s", (pathname) => {
+    const response = proxy(
+      new NextRequest(`https://demaa.co${pathname}`, {
+        headers: { host: "demaa.co" },
+      }),
+    );
+
+    expect(response.status).toBe(404);
+    expect(response.headers.get("x-robots-tag")).toBe("noindex, nofollow");
+    expect(response.headers.get("x-middleware-rewrite")).toBe(
+      "https://demaa.co/_not-found",
+    );
+  });
 });

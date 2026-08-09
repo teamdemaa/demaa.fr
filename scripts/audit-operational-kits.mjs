@@ -126,7 +126,7 @@ async function inspectEnterprise(enterprise) {
       },
       {
         from: `/modeles-de-documents/tableau-de-pilotage-${slug}`,
-        to: canonicalPath,
+        to: `${canonicalPath}?tab=resources`,
         label: "tableau-de-pilotage",
       },
     ];

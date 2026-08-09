@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import SystemRecapPrintButton from "@/components/SystemRecapPrintButton";
+import { composeCanonicalServicesForSystem } from "@/lib/canonical-services-system-section.server";
 import { getActiveRenderableSolutionSectionsForSystem } from "@/lib/firebase-solution-registry-selection.server";
 import { filterPublicSolutionSections } from "@/lib/public-solution-section-visibility";
 import { getSystemDetailPageData } from "@/lib/system-detail-page";
@@ -15,7 +16,7 @@ type SystemRecapPageProps = {
 
 const SECTION_LABELS = {
   software: "Outils",
-  services: "Prestations",
+  services: "Services",
   providers: "Fournisseurs",
   models: "Modèles",
   networks: "Réseaux professionnels",
@@ -54,8 +55,9 @@ export default async function SystemRecapPage({ params }: SystemRecapPageProps) 
 
   if (!data) notFound();
 
-  const visibleSolutionSections = filterPublicSolutionSections(
-    mergeRenderableSolutionSections(solutionSections),
+  const visibleSolutionSections = composeCanonicalServicesForSystem(
+    slug,
+    filterPublicSolutionSections(mergeRenderableSolutionSections(solutionSections)),
   );
   const resources = getSystemResourcesForSystem(slug).filter(
     (resource) => resource.resourceSlug !== "recapitulatif-systeme",
@@ -68,7 +70,7 @@ export default async function SystemRecapPage({ params }: SystemRecapPageProps) 
         <Navbar minimal />
       </div>
       <main className="min-h-screen bg-background px-4 py-10 text-brand-blue print:bg-white print:px-0 print:py-0 sm:px-6 lg:px-8">
-        <article className="mx-auto w-full max-w-4xl rounded-[1.5rem] border border-dema-line bg-dema-paper p-6 shadow-[0_18px_50px_rgba(23,35,29,0.06)] print:max-w-none print:rounded-none print:border-0 print:p-0 print:shadow-none sm:p-10">
+        <article data-system-recap className="mx-auto w-full max-w-4xl rounded-[1.5rem] border border-dema-line bg-dema-paper p-6 shadow-[0_18px_50px_rgba(23,35,29,0.06)] print:max-w-none print:rounded-none print:border-0 print:p-0 print:shadow-none sm:p-10">
           <header className="border-b border-dema-line pb-8">
             <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
               <div>

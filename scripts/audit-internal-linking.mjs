@@ -10,10 +10,6 @@ const contentRelationshipsSource = fs.readFileSync(
   path.join(process.cwd(), "src/lib/content-relationships.ts"),
   "utf8",
 );
-const courseContentSource = fs.readFileSync(
-  path.join(process.cwd(), "src/lib/course-content.ts"),
-  "utf8",
-);
 const documentModelsSource = fs.readFileSync(
   path.join(process.cwd(), "src/lib/document-models.ts"),
   "utf8",
@@ -56,7 +52,6 @@ function extractSlugs(source) {
 
 const sectorPageFeaturedSystems = extractSectorPageFeaturedSystems(sectorPagesSource);
 const contentRelationships = extractContentRelationships(contentRelationshipsSource);
-const courseSlugs = new Set(extractSlugs(courseContentSource));
 const documentModelSlugs = new Set(extractSlugs(documentModelsSource));
 
 const systemScores = new Map(
@@ -88,7 +83,6 @@ for (const page of sectorPageFeaturedSystems) {
 }
 
 for (const [contentSlug, systemSlugs] of contentRelationships.entries()) {
-  const isCourse = courseSlugs.has(contentSlug);
   const isDocumentModel = documentModelSlugs.has(contentSlug);
 
   for (const slug of systemSlugs) {
@@ -98,7 +92,7 @@ for (const [contentSlug, systemSlugs] of contentRelationships.entries()) {
       continue;
     }
 
-    if (isCourse) {
+    if (!isDocumentModel) {
       entry.courseLinkCount += 1;
     }
 

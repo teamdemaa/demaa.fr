@@ -2,15 +2,14 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import SystemDetailContent from "@/components/SystemDetailContent";
+import { composeCanonicalServicesForSystem } from "@/lib/canonical-services-system-section.server";
 import { hasEditableOperationalSystemAsset } from "@/lib/editable-operational-system-assets.server";
-import { getRenderableExpertiseSectionForSystem } from "@/lib/expertise-solutions.server";
 import {
   getActivePublishedRenderableSolutionSectionsForSystem,
   getActiveRenderableSolutionSectionsForSystem,
 } from "@/lib/firebase-solution-registry-selection.server";
 import {
   filterPublicSolutionSections,
-  isPublicSolutionSectionVisible,
 } from "@/lib/public-solution-section-visibility";
 import { normalizeSystemDetailTab } from "@/lib/system-detail-tabs";
 import { mergeRenderableSolutionSections } from "@/lib/system-solutions-ui-dto";
@@ -56,13 +55,10 @@ export default async function OperationalKitPage({
   searchParams,
 }: OperationalKitPageProps) {
   const [{ slug }, resolvedSearchParams] = await Promise.all([params, searchParams]);
-  const [data, solutionSections, publishedSolutionSections, expertiseSection] = await Promise.all([
+  const [data, solutionSections, publishedSolutionSections] = await Promise.all([
     getSystemDetailPageData(slug),
     getActiveRenderableSolutionSectionsForSystem(slug),
     getActivePublishedRenderableSolutionSectionsForSystem(slug),
-    isPublicSolutionSectionVisible("services")
-      ? getRenderableExpertiseSectionForSystem(slug)
-      : Promise.resolve(null),
   ]);
 
   if (!data) {
@@ -70,10 +66,10 @@ export default async function OperationalKitPage({
   }
 
   const initialTab = getParamValue(resolvedSearchParams.tab);
-  const visibleSolutionSections = filterPublicSolutionSections(mergeRenderableSolutionSections([
-    ...solutionSections,
-    ...(expertiseSection ? [expertiseSection] : []),
-  ]));
+  const visibleSolutionSections = composeCanonicalServicesForSystem(
+    slug,
+    filterPublicSolutionSections(mergeRenderableSolutionSections(solutionSections)),
+  );
   const visiblePublishedSolutionSections = filterPublicSolutionSections(
     publishedSolutionSections,
   );

@@ -85,14 +85,24 @@ describe("system guide waitlist route", () => {
     mocks.submitLeadRequest.mockResolvedValue({ duplicate: false, leadId: "waitlist-1" });
   });
 
-  it("stores a minimal waitlist request and sends it to Slack", async () => {
+  it("stores the contextual guide identifiers and alerts the team by email and Slack", async () => {
     const response = await POST(request());
 
     expect(response.status).toBe(200);
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
-      channels: { email: false, resend: false, slack: true },
+      channels: { email: true, resend: false, slack: true },
       contact: { email: "maya@example.com", firstName: null },
+      fields: [
+        { label: "Guide", value: "Créer un cabinet comptable" },
+        { label: "Resource slug", value: "guide-cabinet-comptable-lancer" },
+        { label: "System slug", value: "cabinet-comptable" },
+        { label: "Source", value: "Liste d’attente - Créer un cabinet comptable" },
+      ],
       requestType: "guide_waitlist",
+    }));
+    expect(mocks.resolveLeadContext).toHaveBeenCalledWith(expect.objectContaining({
+      source: "Liste d’attente - Créer un cabinet comptable",
+      systemSlug: "cabinet-comptable",
     }));
   });
 

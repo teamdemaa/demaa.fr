@@ -9,6 +9,58 @@ Ce document remplace les listes d'actions dispersées dans les chats Demaa. Il
 distingue ce qui est déjà livré, ce qui est prêt mais non publié et ce qui reste
 à réaliser.
 
+## Mise à jour canonique du 9 août 2026
+
+Cette section, l'ADR 0003 et surtout l'ADR 0004 remplacent les décisions
+historiques incompatibles plus bas dans ce document. En cas de conflit sur les
+Services, Contenus, l'Académie ou les Ressources, l'ADR 0004 prévaut.
+
+- `demaa.co` est le domaine canonique du lancement France, sans préfixe de
+  locale. L'internationalisation reste différée.
+- La navigation principale contient uniquement `Système métier` et `Académie`.
+- Une fiche Système contient `Process`, `Solutions` et `Ressources`.
+- Quatre Services Demaa canoniques sont affichés dans Solutions, après Outils :
+  Automatisation des processus, Expert-comptable, Marketing externalisé et
+  Assistance facturation.
+- Ressources contient les guides, modèles et documents contextualisés. Les
+  contenus pédagogiques globaux restent dans l'Académie.
+- Firebase est la source distante autoritaire pour Solutions et le réseau de
+  prestataires lorsque l'environnement est configuré.
+- `/opportunites` et `/rejoindre-team-demaa` sont les deux parcours publics du
+  réseau. Les anciennes URL correspondantes doivent rediriger, jamais devenir
+  des 404 lorsqu'un successeur exact existe.
+- Les anciennes pages globales Modèles/Ressources sont retirées. Une URL connue
+  redirige vers son cours ou sa fiche Système ; seul un chemin sans successeur
+  répond 404/noindex. La matrice canonique est
+  `docs/legacy-route-retirement-matrix.md`.
+- Les endpoints, destinations privées et révisions historiques de livraison
+  restent intacts pendant le retrait des pages publiques.
+- `/services` publie exactement les quatre offres canoniques. `/sur-mesure`
+  reste une offre distincte, hors navigation principale.
+
+### Lots actifs après ce lot
+
+- [ ] Conserver un catalogue Services canonique unique de quatre offres,
+  composé au rendu dans les 115 Systèmes.
+- [ ] Créer `/contenus` et publier la fiche Facturation électronique comme
+  article et diaporama avant la future vidéo.
+- [ ] Réordonner les Ressources et conserver les guides métier annoncés.
+- [ ] Réactiver la section « Formations en direct » de l'Académie seulement
+  après validation des créneaux, recette desktop/mobile et bascule explicite de
+  `academyLiveTrainings` dans `src/lib/public-editorial-visibility.ts`.
+- [ ] Réactiver les « Cas concrets » dans les Ressources des six Systèmes
+  concernés seulement après validation éditoriale, recette des liens et bascule
+  explicite de `systemContextualCaseStudies`. Les relations et routes sont
+  conservées pendant le masquage.
+- [ ] Curater les fournisseurs pertinents par familles de métiers, en brouillon
+  puis après validation éditoriale ; aucun acteur universel par défaut.
+- [ ] Préparer l'internationalisation seulement après stabilisation France :
+  locales, pays, contenu, Solutions et SEO.
+- [ ] Produire les guides annoncés et les vidéos Restaurant sans créer de
+  nouvelles routes publiques avant disponibilité réelle.
+- [ ] Activer le vocal de Structure uniquement avec stockage privé,
+  transcription et politique de suppression validés.
+
 ## Mise à jour canonique du 30 juillet 2026
 
 Cette section remplace les états historiques plus bas lorsqu'ils divergent.
