@@ -56,20 +56,11 @@ enums invalides sans erreur inattendue, figent récursivement les valeurs parsé
 et contrôlent dates, chronologie et expiration avec `new Date()` par défaut ou
 une date injectée en test.
 
-### W3b — catalogue Services serveur
+### W3b — catalogue Services serveur (supersédé)
 
-- `src/lib/service-catalog-v2-contract.ts` ;
-- `src/lib/service-catalog-v2-dto.ts` ;
-- `src/lib/service-catalog-v2.generated.json` ;
-- `src/lib/service-catalog-v2.ts` ;
-- `tests/service-catalog-v2-boundary.test.ts` ;
-- `tests/service-catalog-v2.test.ts`.
-
-Gate : exactement sept offres toutes `draft`, deux prix serveur de 95 000 et
-49 000 centimes EUR HT, cinq offres sur devis, aucun export brut ou `getAll`,
-aucune donnée draft importable depuis un module client et aucun validateur MJS
-concurrent. Le DTO public est type-only et peut être importé par W4 avec
-`import type` sans ouvrir l'accès au registre serveur.
+Le catalogue V2 à sept offres et son formulaire ont été retirés. La source
+publique unique est désormais `src/lib/canonical-service-catalog.ts`, avec
+exactement trois offres. Voir ADR 0004.
 
 ### W3c — registres Solutions serveur
 
@@ -174,20 +165,18 @@ combiné.
   alignés sur le même sélecteur publié ; attribution D-064 corrigée avant
   activation de Solutions, sans inventer la copie finale.
 
-## W4 - Interface de la marketplace Services
+## W4 - Interface Services (supersédée puis remplacée)
 
 - Propriétaire : chantier Services produit/UX
-- Statut : implémenté localement, non activé ; 7 offres `draft`, 0 publiée.
+- Statut : ancienne marketplace retirée ; interface canonique à trois offres active.
 - Objectif : créer les pages, cartes, fiches et le formulaire visible qui
   consomment exclusivement les sélecteurs publiés du registre W3b.
 - Allowlist d'écriture :
   - `docs/services-marketplace-w6-integration-gate.md` ;
   - `src/app/services/page.tsx` ;
   - `src/app/services/[slug]/page.tsx` ;
-  - `src/components/ServiceOfferDetails.tsx` ;
-  - `src/components/ServiceRequestForm.tsx` ;
-  - `src/components/ServicesMarketplace.tsx` ;
-  - `tests/fixtures/published-service-offers.ts` ;
+  - `src/components/CanonicalServiceDetails.tsx` ;
+  - `src/components/ServicesCatalog.tsx` ;
   - `tests/services-marketplace-ui.test.ts`.
 - Frontière : W4 possède les quatre champs visibles, les validations client,
   les metadata et le canonical des pages `/services` et
@@ -206,7 +195,6 @@ combiné.
   et conversions n'est pas implémentée dans ce lot.
 - Allowlist d'écriture :
   - `src/app/api/cron/service-request-deliveries/route.ts` ;
-  - `src/app/api/service-request/route.ts` ;
   - `src/app/api/solution-referral/route.ts` ;
   - `src/lib/operational-maintenance.ts` ;
   - `src/lib/service-request-delivery-scheduler.server.ts` ;
@@ -219,7 +207,6 @@ combiné.
   - `src/lib/solution-referral-disclosures.server.ts` ;
   - `tests/service-request-boundary.test.ts` ;
   - `tests/service-request-notifications.test.ts` ;
-  - `tests/service-request-route-integration.test.ts` ;
   - `tests/service-request-security.test.ts` ;
   - `tests/service-request-snapshots.test.ts` ;
   - `tests/service-request-storage.test.ts` ;

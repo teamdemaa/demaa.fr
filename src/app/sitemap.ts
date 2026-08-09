@@ -1,7 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getCanonicalBaseUrl } from "@/lib/site-url";
 import { getCanonicalServices } from "@/lib/canonical-service-catalog";
-import { getAllCourseEntries } from "@/lib/course-content";
 import { getAllPublishedContent } from "@/lib/content-catalog";
 import { getAllAcademyContent } from "@/lib/academy-course-content";
 import { getAllNewsletters } from "@/lib/newsletter-content";
@@ -53,16 +52,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/politique-de-cookies`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
     { url: `${base}/cgv`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
   ];
-
-  const courseEntries = getAllCourseEntries().filter(
-    (entry) => entry.slug !== "facture-electronique",
-  );
-  const courseContentEntries: MetadataRoute.Sitemap = courseEntries.map((entry) => ({
-    url: `${base}/cours/${entry.slug}`,
-    lastModified: new Date(entry.date),
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
-  }));
 
   const academyEntries: MetadataRoute.Sitemap = getAllAcademyContent().map(
     (content) => ({
@@ -210,7 +199,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...staticRoutes,
     ...contentEntries,
     ...academyEntries,
-    ...courseContentEntries,
     ...newsletterSitemapEntries,
     ...toolEntries,
     ...freeToolEntries,

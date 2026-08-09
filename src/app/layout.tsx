@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import ConditionalFooter from "@/components/ConditionalFooter";
 import CookieConsentManager from "@/components/CookieConsentManager";
 import Footer from "@/components/Footer";
 import { getCanonicalOrigin } from "@/lib/site-url";
@@ -106,9 +105,7 @@ export default function RootLayout({
       >
         {children}
         {modal}
-        <ConditionalFooter>
-          <Footer />
-        </ConditionalFooter>
+        <Footer />
         <CookieConsentManager />
       </body>
     </html>

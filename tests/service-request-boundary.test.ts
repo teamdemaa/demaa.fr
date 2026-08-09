@@ -2,7 +2,6 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
 const backendFiles = [
-  "src/app/api/service-request/route.ts",
   "src/app/api/solution-referral/route.ts",
   "src/lib/service-request-delivery-scheduler.server.ts",
   "src/lib/service-request-notifications.server.ts",
@@ -42,11 +41,7 @@ describe("service request backend boundaries", () => {
   });
 
   it("uses only published selectors and never imports raw registry JSON", () => {
-    const routes = [
-      source("src/app/api/service-request/route.ts"),
-      source("src/app/api/solution-referral/route.ts"),
-    ].join("\n");
-    expect(routes).toContain("getPublishedServiceOfferV2BySlug");
+    const routes = source("src/app/api/solution-referral/route.ts");
     expect(routes).toContain("getPublishedSolutionResourceBySlug");
     expect(routes).toContain("getPublishedSolutionPlacementsForSystem");
     expect(routes).not.toMatch(/generated\.json/);
@@ -54,10 +49,7 @@ describe("service request backend boundaries", () => {
   });
 
   it("does not log or return visible contact fields", () => {
-    const routes = [
-      source("src/app/api/service-request/route.ts"),
-      source("src/app/api/solution-referral/route.ts"),
-    ].join("\n");
+    const routes = source("src/app/api/solution-referral/route.ts");
     expect(routes).not.toMatch(/console\./);
     expect(routes).not.toMatch(
       /logOperational(?:Event|Error)\([^;]*payload\.(?:email|need|company|firstName)/,
@@ -73,10 +65,7 @@ describe("service request backend boundaries", () => {
   });
 
   it("schedules immediate delivery after accepted requests and keeps a cron fallback", () => {
-    const routes = [
-      source("src/app/api/service-request/route.ts"),
-      source("src/app/api/solution-referral/route.ts"),
-    ];
+    const routes = [source("src/app/api/solution-referral/route.ts")];
     for (const route of routes) {
       expect(route).toContain("scheduleServiceSolutionDeliveries();");
     }

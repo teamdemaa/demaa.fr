@@ -73,12 +73,13 @@ describe("canonical content catalog", () => {
     });
   });
 
-  it("exposes the hub in the footer and removes the redirected course from the sitemap source", () => {
+  it("exposes the hub in the footer without restoring legacy Courses entries", () => {
     const footer = readFileSync(resolve(process.cwd(), "src/components/Footer.tsx"), "utf8");
     const sitemap = readFileSync(resolve(process.cwd(), "src/app/sitemap.ts"), "utf8");
     expect(footer).toContain('{ label: "Contenus", href: "/contenus" }');
     expect(sitemap).toContain("`${base}/contenus`");
     expect(sitemap).toContain("`${base}/contenus/${entry.slug}`");
-    expect(sitemap).toContain('entry.slug !== "facture-electronique"');
+    expect(sitemap).not.toContain("courseContentEntries");
+    expect(sitemap).not.toMatch(/from ["']@\/lib\/course-content["']/);
   });
 });

@@ -5,7 +5,6 @@ import { getAdminFirestore } from "@/lib/firebase-admin";
 import type { LeadAttributionPayload, LeadAttributionRecord } from "@/lib/lead-attribution";
 import {
   hashRequestSnapshot,
-  type buildServiceRequestSnapshot,
   type buildSolutionReferralSnapshot,
 } from "@/lib/service-request-snapshots.server";
 
@@ -63,7 +62,32 @@ type BaseStoredRequest = Readonly<{
 
 export type StoredServiceRequest = BaseStoredRequest & Readonly<{
   request_type: "service_request";
-  service: ReturnType<typeof buildServiceRequestSnapshot>;
+  service: Readonly<{
+    billing_party: string;
+    category_id: string;
+    category_title: string;
+    content_hash: string;
+    contracting_party: string;
+    description: string;
+    offer_version: string;
+    operator_type: string;
+    pricing:
+      | Readonly<{
+          amountMinor: number;
+          currency: string;
+          mode: "fixed";
+          taxMode: string;
+        }>
+      | Readonly<{
+          currency: string;
+          mode: "quote";
+          taxMode: string;
+        }>;
+    scope: unknown;
+    service_name: string;
+    service_slug: string;
+    transparency: string;
+  }>;
 }>;
 
 export type StoredSolutionReferral = BaseStoredRequest & Readonly<{

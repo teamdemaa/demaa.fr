@@ -138,19 +138,19 @@ const contentCatalog = [
     ],
     sources: [
       {
-        label: "Facturation électronique et plateformes agréées — impots.gouv.fr",
+      label: "Facturation électronique et plateformes agréées - impots.gouv.fr",
         href: "https://www.impots.gouv.fr/facturation-electronique-et-plateformes-agreees",
       },
       {
-        label: "Tout savoir sur la facturation électronique pour les entreprises — economie.gouv.fr",
+      label: "Tout savoir sur la facturation électronique pour les entreprises - economie.gouv.fr",
         href: "https://www.economie.gouv.fr/tout-savoir-sur-la-facturation-electronique-pour-les-entreprises",
       },
       {
-        label: "À partir de quand suis-je concerné ? — impots.gouv.fr",
+      label: "À partir de quand suis-je concerné ? - impots.gouv.fr",
         href: "https://www.impots.gouv.fr/professionnel/questions/partir-de-quand-suis-je-concerne-par-la-reforme-de-la-facturation",
       },
       {
-        label: "FAQ facturation électronique — impots.gouv.fr",
+      label: "FAQ facturation électronique - impots.gouv.fr",
         href: "https://www.impots.gouv.fr/foire-aux-questions-japprofondis-la-facturation-electronique",
       },
     ],

@@ -6,14 +6,6 @@ const sectorPagesSource = fs.readFileSync(
   path.join(process.cwd(), "src/lib/sector-pages.ts"),
   "utf8",
 );
-const courseContentSource = fs.readFileSync(
-  path.join(process.cwd(), "src/lib/course-content.ts"),
-  "utf8",
-);
-const serviceCatalogSource = fs.readFileSync(
-  path.join(process.cwd(), "src/lib/service-catalog.ts"),
-  "utf8",
-);
 const systemResourceCatalogSource = fs.readFileSync(
   path.join(process.cwd(), "src/lib/system-resource-catalog.ts"),
   "utf8",
@@ -32,8 +24,6 @@ function extractSlugs(source) {
   );
 }
 
-const serviceSlugs = extractSlugs(serviceCatalogSource);
-const courseSlugs = extractSlugs(courseContentSource);
 const systemResourceSlugs = new Set(
   [...systemResourceCatalogSource.matchAll(/resourceSlug:\s*"([^"]+)"/g)]
     .map((match) => match[1]),
@@ -52,22 +42,6 @@ function addUnique(list, value) {
 
 function validateStaticHref(href, context) {
   if (staticRoutes.has(href)) {
-    return;
-  }
-
-  if (href.startsWith("/annuaire-services/")) {
-    const slug = href.replace("/annuaire-services/", "");
-    if (!serviceSlugs.has(slug)) {
-      addUnique(errors, `${context} references unknown service slug "${slug}".`);
-    }
-    return;
-  }
-
-  if (href.startsWith("/cours/")) {
-    const slug = href.replace("/cours/", "");
-    if (!courseSlugs.has(slug)) {
-      addUnique(errors, `${context} references unknown course slug "${slug}".`);
-    }
     return;
   }
 
@@ -102,8 +76,6 @@ for (const match of sectorPagesSource.matchAll(/href:\s*getSectorToolDirectoryHr
 
 const result = {
   sectors: sectorTaxonomyPayload.sectors.length,
-  services: serviceSlugs.size,
-  courses: courseSlugs.size,
   systemResources: systemResourceSlugs.size,
   errors,
 };

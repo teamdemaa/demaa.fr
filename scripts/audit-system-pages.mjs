@@ -3,20 +3,12 @@ import processRegistry from "../src/lib/process-registry.generated.json" with { 
 import fs from "node:fs";
 import path from "node:path";
 
-const serviceRulesSource = fs.readFileSync(
-  path.join(process.cwd(), "src/lib/service-recommendations.ts"),
-  "utf8"
-);
 const supplierRulesSource = fs.readFileSync(
   path.join(process.cwd(), "src/lib/supplier-recommendations.ts"),
   "utf8"
 );
 const contentRelationshipsSource = fs.readFileSync(
   path.join(process.cwd(), "src/lib/content-relationships.ts"),
-  "utf8"
-);
-const courseContentSource = fs.readFileSync(
-  path.join(process.cwd(), "src/lib/course-content.ts"),
   "utf8"
 );
 const documentModelsSource = fs.readFileSync(
@@ -47,10 +39,8 @@ function extractContentRelationships(source) {
   return relationships;
 }
 
-const serviceRuleKeys = extractRuleKeys(serviceRulesSource);
 const supplierRuleKeys = extractRuleKeys(supplierRulesSource);
 const contentRelationships = extractContentRelationships(contentRelationshipsSource);
-const courseSlugs = [...courseContentSource.matchAll(/slug:\s*"([^"]+)"/g)].map((match) => match[1]);
 const documentModelSlugs = [...documentModelsSource.matchAll(/slug:\s*"([^"]+)"/g)].map((match) => match[1]);
 const familyBySlug = new Map(
   processRegistry["métiers"].map((metier) => [metier.slug, metier.familyId]),
@@ -67,8 +57,8 @@ for (const process of processRegistry.processes) {
 function getRelatedContentCount(systemSlug) {
   let count = 0;
 
-  for (const courseSlug of courseSlugs) {
-    if ((contentRelationships.get(courseSlug) ?? []).includes(systemSlug)) {
+  for (const [contentSlug, relatedSystems] of contentRelationships.entries()) {
+    if (!documentModelSlugs.includes(contentSlug) && relatedSystems.includes(systemSlug)) {
       count += 1;
     }
   }
@@ -93,13 +83,11 @@ const systems = enterpriseAnnuaire.enterprises
   .map((enterprise) => {
     const processes = processCountByFamily.get(familyBySlug.get(enterprise.slug)) ?? 0;
     const tools = enterprise.toolRefs?.length || enterprise.tools?.length || 0;
-    const hasCustomServiceRule = serviceRuleKeys.has(enterprise.slug);
     const hasCustomSupplierRule = supplierRuleKeys.has(enterprise.slug);
     const resourceCount = getRelatedContentCount(enterprise.slug);
     const specificityScore =
       processes +
       tools +
-      (hasCustomServiceRule ? 2 : 0) +
       (hasCustomSupplierRule ? 2 : 0) +
       resourceCount;
 
@@ -109,7 +97,6 @@ const systems = enterpriseAnnuaire.enterprises
       sector: enterprise.sectorLabel,
       processes,
       tools,
-      hasCustomServiceRule,
       hasCustomSupplierRule,
       resourceCount,
       specificityScore,

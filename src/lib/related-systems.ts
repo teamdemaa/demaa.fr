@@ -7,7 +7,6 @@ import { RELATED_SYSTEM_SLUGS_BY_CONTENT_SLUG } from "@/lib/content-relationship
 import { getRecommendedFinanceForSystem } from "@/lib/finance-recommendations";
 import { getRecommendedProNetworksForSystem } from "@/lib/pro-network-recommendations";
 import { getRecommendedRecruitmentItemsForSystem } from "@/lib/recruitment-recommendations";
-import { getRecommendedServicesForSystem } from "@/lib/service-recommendations";
 import { getRecommendedSuppliersForSystem } from "@/lib/supplier-recommendations";
 import { getRecommendedTrainingsForSystem } from "@/lib/training-recommendations";
 import type { System } from "@/lib/types";
@@ -24,28 +23,6 @@ function uniqueSystemsFromSlugs(slugs: string[], limit = 6): System[] {
 
 export function getRelatedSystemsForContentSlug(slug: string, limit = 6): System[] {
   return uniqueSystemsFromSlugs(RELATED_SYSTEM_SLUGS_BY_CONTENT_SLUG[slug] ?? [], limit);
-}
-
-export function getRelatedSystemsForServiceSlug(serviceSlug: string, limit = 6): System[] {
-  const matches = enterpriseCatalog
-    .map((enterprise) => {
-      const recommendations = getRecommendedServicesForSystem(enterprise.slug);
-      const index = recommendations.findIndex((service) => service.slug === serviceSlug);
-
-      if (index === -1) {
-        return null;
-      }
-
-      return {
-        enterprise,
-        index,
-      };
-    })
-    .filter((match): match is { enterprise: (typeof enterpriseCatalog)[number]; index: number } => Boolean(match))
-    .sort((a, b) => a.index - b.index || a.enterprise.name.localeCompare(b.enterprise.name, "fr"))
-    .slice(0, limit);
-
-  return matches.map(({ enterprise }) => enterpriseToSystem(enterprise));
 }
 
 export function getRelatedSystemsForSupplierSlug(supplierSlug: string, limit = 6): System[] {
