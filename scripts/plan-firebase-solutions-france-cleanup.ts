@@ -5,6 +5,7 @@ import {
 } from "@/lib/firebase-solution-registry-firestore-plan";
 import {
   buildFranceSolutionsCleanupRevision,
+  buildPublishedFranceSolutionsCleanupRevision,
   FRANCE_SOLUTIONS_OFFICIAL_DESTINATIONS,
   FRANCE_SOLUTIONS_REMOVED_RESOURCES,
 } from "@/lib/firebase-solution-registry-france-cleanup.server";
@@ -17,12 +18,15 @@ if (process.argv.includes("--apply") || process.argv.includes("--write")) {
 }
 
 const activeRevision = parseFirebaseSolutionRegistryRevision(snapshot);
-const candidate = buildFranceSolutionsCleanupRevision();
+const published = process.argv.includes("--published");
+const candidate = published
+  ? buildPublishedFranceSolutionsCleanupRevision()
+  : buildFranceSolutionsCleanupRevision();
 const plan = buildFirestoreSolutionRegistryImportPlan(candidate);
 const rollback = buildFirestoreSolutionRegistryRollbackPointer(activeRevision);
 
 console.log(JSON.stringify({
-  mode: "dry-run",
+  mode: published ? "published-dry-run" : "draft-dry-run",
   remoteWritesExecuted: 0,
   activeRevision: {
     revisionId: activeRevision.revisionId,

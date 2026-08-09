@@ -5,6 +5,7 @@ vi.mock("server-only", () => ({}));
 type Modules = Readonly<{
   enterpriseCatalog: typeof import("@/lib/enterprise-annuaire").enterpriseCatalog;
   buildCandidate: typeof import("@/lib/firebase-solution-registry-france-cleanup.server").buildFranceSolutionsCleanupRevision;
+  buildPublishedCandidate: typeof import("@/lib/firebase-solution-registry-france-cleanup.server").buildPublishedFranceSolutionsCleanupRevision;
   destinations: typeof import("@/lib/firebase-solution-registry-france-cleanup.server").FRANCE_SOLUTIONS_OFFICIAL_DESTINATIONS;
   timestamp: typeof import("@/lib/firebase-solution-registry-france-cleanup.server").FRANCE_SOLUTIONS_CLEANUP_TIMESTAMP;
   validate: typeof import("@/lib/firebase-solution-registry-contract").validateFirebaseSolutionRegistryRevision;
@@ -33,6 +34,7 @@ beforeAll(async () => {
   modules = {
     enterpriseCatalog: catalog.enterpriseCatalog,
     buildCandidate: cleanup.buildFranceSolutionsCleanupRevision,
+    buildPublishedCandidate: cleanup.buildPublishedFranceSolutionsCleanupRevision,
     destinations: cleanup.FRANCE_SOLUTIONS_OFFICIAL_DESTINATIONS,
     timestamp: cleanup.FRANCE_SOLUTIONS_CLEANUP_TIMESTAMP,
     validate: contract.validateFirebaseSolutionRegistryRevision,
@@ -58,6 +60,27 @@ describe("Firebase Solutions France cleanup candidate", () => {
       expectedSystemSlugs: slugs,
       now: new Date(modules.timestamp),
     })).toEqual([]);
+  });
+
+  it("builds an activatable immutable revision without validating individual third parties", () => {
+    const published = modules.buildPublishedCandidate();
+    const plan = modules.buildPlan(published);
+    expect(published.revisionStatus).toBe("published");
+    expect(plan.activation).toEqual({
+      path: "solution_registry_config/active",
+      data: {
+        revisionId: published.revisionId,
+        sourceFingerprint: published.sourceFingerprint,
+      },
+    });
+    expect(
+      published.resources
+        .filter(({ resource }) => resource.resourceSlug !== "levier")
+        .every(({ resource }) =>
+          resource.status === "draft" &&
+          resource.commercialRelationship === "unknown"
+        ),
+    ).toBe(true);
   });
 
   it("uses every verified official destination in the resource and its presentations", () => {

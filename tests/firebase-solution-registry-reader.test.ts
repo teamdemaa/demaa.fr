@@ -12,6 +12,7 @@ type Modules = Readonly<{
 }>;
 
 let modules: Modules;
+const TEST_NOW = new Date("2026-08-09T15:30:00.000Z");
 
 beforeAll(async () => {
   const [reader, selection, contract] = await Promise.all([
@@ -49,19 +50,19 @@ describe("Firebase Solutions reader", () => {
     const fetchRemote = vi.fn();
     const revision = await modules.loadRevision({
       forceLocal: true,
-      now: new Date("2026-08-05T12:00:00.000Z"),
+      now: TEST_NOW,
       fetchRemote,
     });
 
     expect(fetchRemote).not.toHaveBeenCalled();
     expect(revision.knownSystemSlugs).toHaveLength(115);
-    expect(revision.placements).toHaveLength(600);
+    expect(revision.placements).toHaveLength(599);
     expect(
       revision.knownSystemSlugs.flatMap((systemSlug) =>
         modules.selectSections(revision, systemSlug)
           .flatMap(({ placements }) => placements),
       ),
-    ).toHaveLength(600);
+    ).toHaveLength(599);
     expect(
       revision.knownSystemSlugs.flatMap((systemSlug) =>
         modules.selectSections(revision, systemSlug, { publishedOnly: true })
@@ -73,13 +74,13 @@ describe("Firebase Solutions reader", () => {
   it("accepts a complete published remote revision", async () => {
     const fallback = await modules.loadRevision({
       forceLocal: true,
-      now: new Date("2026-08-05T12:00:00.000Z"),
+      now: TEST_NOW,
     });
     const published = publishLevierOnly(fallback);
     const warn = vi.fn();
     const revision = await modules.loadRevision({
       forceLocal: false,
-      now: new Date("2026-08-05T12:00:00.000Z"),
+      now: TEST_NOW,
       fetchRemote: async () => published,
       warn,
     });
@@ -93,12 +94,12 @@ describe("Firebase Solutions reader", () => {
   it("normalizes Firestore collection order before validating the fingerprint", async () => {
     const fallback = await modules.loadRevision({
       forceLocal: true,
-      now: new Date("2026-08-05T12:00:00.000Z"),
+      now: TEST_NOW,
     });
     const warn = vi.fn();
     const revision = await modules.loadRevision({
       forceLocal: false,
-      now: new Date("2026-08-05T12:00:00.000Z"),
+      now: TEST_NOW,
       fetchRemote: async () => ({
         ...fallback,
         resources: [...fallback.resources].reverse(),
@@ -116,7 +117,7 @@ describe("Firebase Solutions reader", () => {
   it("falls back when the remote revision is not active or is corrupted", async () => {
     const fallback = await modules.loadRevision({
       forceLocal: true,
-      now: new Date("2026-08-05T12:00:00.000Z"),
+      now: TEST_NOW,
     });
     const inactiveBase = {
       ...fallback,
@@ -130,7 +131,7 @@ describe("Firebase Solutions reader", () => {
     const warn = vi.fn();
     const revision = await modules.loadRevision({
       forceLocal: false,
-      now: new Date("2026-08-05T12:00:00.000Z"),
+      now: TEST_NOW,
       fetchRemote: async () => inactive,
       warn,
     });

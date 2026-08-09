@@ -10,6 +10,7 @@ import {
   type FirebaseSolutionResourceEntry,
 } from "@/lib/firebase-solution-registry-contract";
 import { buildFirebaseSolutionRegistryMigrationRevision } from "@/lib/firebase-solution-registry-migration.server";
+import { buildPublishedFranceSolutionsCleanupRevision } from "@/lib/firebase-solution-registry-france-cleanup.server";
 import { buildFirestoreSolutionRegistryImportPlan } from "@/lib/firebase-solution-registry-firestore-plan";
 
 const EMULATOR_PROJECT_ID = "demo-demaa-solutions";
@@ -22,7 +23,14 @@ if (process.env.GCLOUD_PROJECT && process.env.GCLOUD_PROJECT !== EMULATOR_PROJEC
   throw new Error("The emulator project ID is not the expected disposable project.");
 }
 
-const revision = buildFirebaseSolutionRegistryMigrationRevision();
+const revisionSource = process.argv.find((argument) => argument.startsWith("--revision="))
+  ?.slice("--revision=".length) ?? "migration";
+if (revisionSource !== "migration" && revisionSource !== "france-cleanup") {
+  throw new Error("Emulator revision must be migration or france-cleanup.");
+}
+const revision = revisionSource === "france-cleanup"
+  ? buildPublishedFranceSolutionsCleanupRevision()
+  : buildFirebaseSolutionRegistryMigrationRevision();
 const plan = buildFirestoreSolutionRegistryImportPlan(revision);
 if (plan.revisionStatus !== "published" || !plan.activation) {
   throw new Error("Emulator verification requires a complete active revision plan.");
@@ -109,6 +117,7 @@ if (importedRevision.sourceFingerprint !== revision.sourceFingerprint) {
 
 console.log(JSON.stringify({
   mode: "firestore-emulator",
+  revisionSource,
   projectId: EMULATOR_PROJECT_ID,
   revisionId: revision.revisionId,
   revisionStatus: revision.revisionStatus,

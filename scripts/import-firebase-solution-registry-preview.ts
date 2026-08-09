@@ -8,6 +8,7 @@ import {
   type FirebaseSolutionResourceEntry,
 } from "@/lib/firebase-solution-registry-contract";
 import { buildFirebaseSolutionRegistryMigrationRevision } from "@/lib/firebase-solution-registry-migration.server";
+import { buildPublishedFranceSolutionsCleanupRevision } from "@/lib/firebase-solution-registry-france-cleanup.server";
 import {
   buildFirestoreSolutionRegistryImportPlan,
   type FirestoreSolutionRegistryWrite,
@@ -115,7 +116,13 @@ const {
   environment: process.env,
 });
 
-const revision = buildFirebaseSolutionRegistryMigrationRevision();
+const revisionSource = commandArgument("--revision=") ?? "migration";
+if (revisionSource !== "migration" && revisionSource !== "france-cleanup") {
+  throw new Error("Remote import revision must be migration or france-cleanup.");
+}
+const revision = revisionSource === "france-cleanup"
+  ? buildPublishedFranceSolutionsCleanupRevision()
+  : buildFirebaseSolutionRegistryMigrationRevision();
 const plan = buildFirestoreSolutionRegistryImportPlan(revision);
 const confirmedPlanFingerprint = commandArgument("--confirm-plan=");
 if (confirmedPlanFingerprint !== plan.planFingerprint) {
@@ -310,6 +317,7 @@ if (!activePointer || !isDeepStrictEqual(activePointer.data, plan.activation.dat
 
 console.log(JSON.stringify({
   mode: `firebase-${target}-active-revision`,
+  revisionSource,
   projectId: confirmedTargetProjectId,
   revisionId: revision.revisionId,
   revisionStatus: revision.revisionStatus,
