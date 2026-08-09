@@ -93,7 +93,12 @@ l'ADR 0004 prévaut.
 - [ ] Étendre les Fournisseurs aux autres familles de métiers après validation
   du premier lot ; aucun acteur universel par défaut.
 - [ ] Préparer l'internationalisation seulement après stabilisation France :
-  locales, pays, contenu, Solutions et SEO.
+  locales, pays, contenu, Solutions et SEO. Conserver `Systèmes` comme libellé
+  court de navigation en français et `Systèmes métier` comme nom développé ;
+  employer `Business systems` en anglais, jamais la traduction littérale
+  `Operational systems`. Adapter les titres à l'usage (`Trouvez le système
+  adapté à votre entreprise` / `Find the right system for your business`) et
+  traduire le concept plutôt que les mots ou les slugs historiques.
 - [ ] Produire les guides annoncés et les vidéos Restaurant sans créer de
   nouvelles routes publiques avant disponibilité réelle.
 - [ ] Activer le vocal de Structure uniquement avec stockage privé,
