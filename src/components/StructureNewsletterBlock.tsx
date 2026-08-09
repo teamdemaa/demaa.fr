@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, LoaderCircle, Mic } from "lucide-react";
+import { Check, LoaderCircle } from "lucide-react";
 import { type FormEvent, useState } from "react";
 import DirectoryDetailDialogShell from "@/components/DirectoryDetailDialogShell";
 import {
@@ -15,7 +15,6 @@ import {
   STRUCTURE_NEWSLETTER_NAME,
   STRUCTURE_NEWSLETTER_PROMISE,
   STRUCTURE_PUBLICATION_CONSENT,
-  STRUCTURE_VOICE_SUBMISSION,
 } from "@/lib/structure-newsletter-contract";
 
 type ApiResponse = { error?: string; ok?: boolean } | null;
@@ -340,27 +339,6 @@ export default function StructureNewsletterBlock() {
                     maxLength={4000}
                     placeholder="Expliquez ce qui bloque aujourd’hui et ce que vous avez déjà essayé."
                   />
-                </div>
-
-                <div
-                  className="rounded-xl border border-dema-line bg-dema-sage/30 p-4"
-                  data-structure-voice-status={STRUCTURE_VOICE_SUBMISSION.enabled ? "enabled" : "disabled"}
-                >
-                  <div className="flex items-start gap-3">
-                    <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-dema-paper text-dema-muted">
-                      <Mic className="h-4 w-4" aria-hidden="true" />
-                    </span>
-                    <div>
-                      <p className="text-sm font-medium text-brand-blue">
-                        Message vocal · bientôt disponible
-                      </p>
-                      <p className="mt-1 text-xs leading-relaxed text-dema-muted">
-                        L’enregistrement de {STRUCTURE_VOICE_SUBMISSION.maximumDurationSeconds / 60} minutes sera activé après la mise en
-                        place de son stockage sécurisé et de sa suppression
-                        automatique à {STRUCTURE_VOICE_SUBMISSION.recordingRetentionDays} jours.
-                      </p>
-                    </div>
-                  </div>
                 </div>
 
                 <div>
