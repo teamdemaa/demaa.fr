@@ -8,7 +8,7 @@ import {
 import type { SolutionSection } from "@/lib/solution-registry-dto";
 
 describe("public Solution section visibility", () => {
-  it("hides Prestations without removing its registry data", () => {
+  it("shows canonical Services while keeping legacy models hidden", () => {
     const sections = [
       { section: "software", value: "Outils" },
       { section: "services", value: "Prestations" },
@@ -20,10 +20,11 @@ describe("public Solution section visibility", () => {
       value: string;
     }>[];
 
-    expect(PUBLIC_SOLUTION_SECTION_VISIBILITY.services).toBe(false);
-    expect(isPublicSolutionSectionVisible("services")).toBe(false);
+    expect(PUBLIC_SOLUTION_SECTION_VISIBILITY.services).toBe(true);
+    expect(isPublicSolutionSectionVisible("services")).toBe(true);
     expect(filterPublicSolutionSections(sections).map(({ section }) => section)).toEqual([
       "software",
+      "services",
       "providers",
       "networks",
     ]);

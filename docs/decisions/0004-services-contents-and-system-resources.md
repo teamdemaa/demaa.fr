@@ -17,7 +17,7 @@ Demaa publie exactement quatre services canoniques :
 3. Marketing externalisé (`/services/marketing-vente`) ;
 4. Assistance facturation (`/services/assistance-facturation`).
 
-`/services` est l'annuaire public de ces trois offres. `/sur-mesure` reste une
+`/services` est l'annuaire public de ces quatre offres. `/sur-mesure` reste une
 offre séparée. Les anciens catalogues, prix et promesses ne constituent plus
 une source de vérité.
 

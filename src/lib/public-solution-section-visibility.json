@@ -1,6 +1,6 @@
 {
   "software": true,
-  "services": false,
+  "services": true,
   "providers": true,
   "models": false,
   "networks": true

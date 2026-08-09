@@ -2,7 +2,7 @@
 
 > Document historique supersédé le 9 août 2026 par l’ADR 0004. La marketplace
 > V2, son catalogue à sept offres et `/api/service-request` ont été retirés.
-> Les trois offres actives proviennent exclusivement de
+> Les quatre offres actives proviennent exclusivement de
 > `src/lib/canonical-service-catalog.ts`.
 
 La publication reste volontairement fermée tant que le registre ne contient

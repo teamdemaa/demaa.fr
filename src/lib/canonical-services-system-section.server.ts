@@ -18,7 +18,12 @@ const SECTION_ORDER: readonly SolutionSection[] = [
 function buildCanonicalServicePlacements(
   systemSlug: string,
 ): readonly RenderableSolutionPlacementDto[] {
-  return getCanonicalServices().map((service, index) => ({
+  const services = getCanonicalServices().filter(
+    (service) =>
+      !(systemSlug === "cabinet-comptable" && service.slug === "expert-comptable"),
+  );
+
+  return services.map((service, index) => ({
     placementId: `render:${systemSlug}:service:${service.slug}`,
     systemSlug,
     rank: index + 1,

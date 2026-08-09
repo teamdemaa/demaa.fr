@@ -168,7 +168,7 @@ combiné.
 ## W4 - Interface Services (supersédée puis remplacée)
 
 - Propriétaire : chantier Services produit/UX
-- Statut : ancienne marketplace retirée ; interface canonique à trois offres active.
+- Statut : ancienne marketplace retirée ; interface canonique à quatre offres active.
 - Objectif : créer les pages, cartes, fiches et le formulaire visible qui
   consomment exclusivement les sélecteurs publiés du registre W3b.
 - Allowlist d'écriture :

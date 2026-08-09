@@ -68,16 +68,19 @@ const sectionsWithLegacyReferral = [
 ] as const satisfies readonly RenderableSolutionSectionDto[];
 
 describe("canonical Services composition in every system", () => {
-  it("composes exactly four service cards on all 115 systems", () => {
+  it("composes the four canonical services, except Expert-comptable on Cabinet comptable", () => {
     expect(enterpriseCatalog).toHaveLength(115);
 
     for (const system of enterpriseCatalog) {
       const sections = composeCanonicalServicesForSystem(system.slug, []);
       const services = sections.find(({ section }) => section === "services");
+      const expectedSlugs = system.slug === "cabinet-comptable"
+        ? CANONICAL_SERVICE_SLUGS.filter((slug) => slug !== "expert-comptable")
+        : CANONICAL_SERVICE_SLUGS;
 
       expect(services?.placements.map(({ resource }) => resource.resourceSlug))
-        .toEqual(CANONICAL_SERVICE_SLUGS);
-      expect(services?.placements).toHaveLength(4);
+        .toEqual(expectedSlugs);
+      expect(services?.placements).toHaveLength(expectedSlugs.length);
       expect(services?.placements.every(({ placementId }) =>
         placementId.startsWith(`render:${system.slug}:service:`)
       )).toBe(true);
@@ -104,7 +107,7 @@ describe("canonical Services composition in every system", () => {
     expect(sectionsWithLegacyReferral).toEqual(inputSnapshot);
   });
 
-  it("replaces legacy service placements and never duplicates the expert referral", () => {
+  it("replaces legacy service placements and removes the expert referral on Cabinet comptable", () => {
     const sections = composeCanonicalServicesForSystem(
       "cabinet-comptable",
       sectionsWithLegacyReferral,
@@ -113,10 +116,14 @@ describe("canonical Services composition in every system", () => {
     const serialized = JSON.stringify(services);
 
     expect(services?.placements.map(({ resource }) => resource.resourceSlug))
-      .toEqual(CANONICAL_SERVICE_SLUGS);
+      .toEqual([
+        "automatisation-processus",
+        "marketing-vente",
+        "assistance-facturation",
+      ]);
     expect(services?.placements.filter(({ resource }) =>
       resource.resourceSlug === "expert-comptable"
-    )).toHaveLength(1);
+    )).toHaveLength(0);
     expect(serialized).not.toContain("chartered-accountant");
     expect(serialized).not.toContain("referral_form");
     expect(serialized).not.toContain("firebase:test");

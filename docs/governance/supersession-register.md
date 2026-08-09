@@ -14,9 +14,9 @@ remplacé et la nouvelle référence à consulter.
 | D-064 uniquement sous Process | `superseded` | encart unique après le panneau actif Process/Solutions ; Ressources conserve son parcours d'aperçu et de réception |
 | Newsletter D-063 sous Outils ou Écosystème | `deferred` | backlog sans impact sur la base active |
 | `/annuaire-services` comme marketplace cible | `retired` | routes exactes utiles redirigées vers `/services/*`; ancien runtime supprimé |
-| Marketplace Services V2 à sept offres | `retired` | remplacée par les trois offres de `canonical-service-catalog.ts` |
+| Marketplace Services V2 à sept offres | `retired` | remplacée par les quatre offres de `canonical-service-catalog.ts` |
 | Fiches `/annuaire-services/[slug]` générées au runtime | `retired` | composants/pages supprimés; redirects permanents conservés |
-| Catalogue historique de services mixtes | `retired` | remplacé physiquement par le catalogue canonique à trois offres |
+| Catalogue historique de services mixtes | `retired` | remplacé physiquement par le catalogue canonique à quatre offres |
 | Pages `/cours` générées au runtime et sitemappées | `retired` | contenus canoniques sous `/academie` ou `/contenus`; redirects historiques conservés |
 | Boutique en ligne | `superseded` | aucune carte V1 |
 | Site vitrine 1 350 EUR avec cadeaux | `deferred` | Site vitrine actif à 950 EUR HT, portée non figée |
