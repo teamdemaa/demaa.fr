@@ -24,6 +24,22 @@ function noStore<T extends Response>(response: T) {
   return response;
 }
 
+function getGenerationErrorMetadata(error: unknown) {
+  if (!error || typeof error !== "object") {
+    return { providerErrorName: "unknown", providerStatusCode: null };
+  }
+
+  const candidate = error as { name?: unknown; statusCode?: unknown };
+  return {
+    providerErrorName:
+      typeof candidate.name === "string"
+        ? candidate.name.slice(0, 80)
+        : "unknown",
+    providerStatusCode:
+      typeof candidate.statusCode === "number" ? candidate.statusCode : null,
+  };
+}
+
 export async function POST(request: Request) {
   const blockedHost = enforceAllowedHost(request);
   if (blockedHost) return noStore(blockedHost);
@@ -58,12 +74,15 @@ export async function POST(request: Request) {
   try {
     const plan = await generateActionPlan(parsed.data.situation, request.signal);
     return json({ plan });
-  } catch {
+  } catch (error) {
     // Le texte du dirigeant et l'erreur fournisseur ne sont jamais journalises.
     logOperationalError(
       "action_plan.generate.failed",
       new Error("action_plan_generation_failed"),
-      { requestType: "action_plan_generation" },
+      {
+        requestType: "action_plan_generation",
+        ...getGenerationErrorMetadata(error),
+      },
     );
 
     return json(

@@ -129,5 +129,13 @@ describe("action plan generation route", () => {
     expect(JSON.stringify(mocks.logOperationalError.mock.calls)).not.toContain(
       sensitiveSituation,
     );
+    expect(mocks.logOperationalError).toHaveBeenCalledWith(
+      "action_plan.generate.failed",
+      expect.any(Error),
+      expect.objectContaining({
+        providerErrorName: "Error",
+        providerStatusCode: null,
+      }),
+    );
   });
 });
