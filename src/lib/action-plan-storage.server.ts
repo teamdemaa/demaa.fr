@@ -287,6 +287,7 @@ export async function updateOwnedActionPlanWorkspace(
         workspace_state: normalizedWorkspace,
         revision: nextRevision,
         updated_at: updatedAt,
+        retention_expires_at: getLeadRetentionExpiry(),
       },
       { merge: true },
     );

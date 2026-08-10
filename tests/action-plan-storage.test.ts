@@ -273,6 +273,9 @@ describe("action plan Firebase persistence", () => {
     expect(plans[0]?.workspaceState.tasks["action-1"]?.status).toBe("done");
     expect(plans[0]?.workspaceState.tasks["action-1"]?.notes).toContain("équipe");
     expect(plans[0]?.plan.summary).toBe(plan.summary);
+    expect(
+      firestore.documents.get(`action_plans/${created.id}`)?.retention_expires_at,
+    ).toBe("2029-08-10T00:00:00.000Z");
   });
 
   it("reads legacy V1 plans and workspace overrides without losing progress", async () => {

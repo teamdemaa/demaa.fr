@@ -80,7 +80,7 @@ l'ADR 0004 prévaut.
 
 ### Lots restant réellement au backlog
 
-- [ ] Livrer D-076 par lots : prototype du grand champ libre, génération JSON
+- [x] Livrer le MVP D-076 : grand champ libre, génération JSON
   unique, Actions + quatre piliers, sélection déterministe parmi les 115
   Systèmes, puis sauvegarde Firebase. L'ADR 0008 et
   `docs/action-plan-generator-product-contract.md` sont les références ;
@@ -89,9 +89,11 @@ l'ADR 0004 prévaut.
   phase payante, capacité humaine, délais, messagerie, confidentialité,
   conservation des échanges et prix. Aucun de ces éléments ne doit être promis
   ou simulé dans le générateur courant.
-- [ ] Concevoir avec ce lot la navigation authentifiée complète (`Accueil`,
-  `Système`, `Académie`, `Accompagnement`, profil), sans rendre privés les hubs
-  publics ni afficher un onglet Accompagnement avant que le produit existe.
+- [ ] Finaliser la navigation authentifiée complète (`Accueil`, `Système`,
+  `Académie`, `Accompagnement`, profil), sans rendre privés les hubs publics.
+  Le repère Accompagnement peut rester visible comme espace annoncé, mais ne
+  doit simuler ni capacité, ni délai, ni prix tant que le produit n'est pas
+  cadré.
 - [ ] Cadrer le partage sécurisé d'un plan sauvegardé : accès en lecture seule,
   consentement, lien révocable, durée et protection contre l'indexation. Le MVP
   permet déjà de sauvegarder et retrouver un plan, mais ne crée aucun lien

@@ -107,6 +107,32 @@ export type ActionPlanWorkspaceState = z.infer<
   typeof actionPlanWorkspaceStateSchema
 >;
 
+export function compactActionPlanSteps(
+  lines: readonly string[],
+  completedStepIndexes: readonly number[],
+) {
+  const completed = new Set(completedStepIndexes);
+  const steps: string[] = [];
+  const remappedCompletedStepIndexes: number[] = [];
+
+  for (const [originalIndex, rawStep] of lines.entries()) {
+    const step = rawStep.trim();
+    if (!step) continue;
+    if (steps.length >= 7) break;
+
+    const nextIndex = steps.length;
+    steps.push(step);
+    if (completed.has(originalIndex)) {
+      remappedCompletedStepIndexes.push(nextIndex);
+    }
+  }
+
+  return {
+    steps,
+    completedStepIndexes: remappedCompletedStepIndexes,
+  };
+}
+
 export function createActionPlanWorkspaceState(
   plan: ActionPlan,
 ): ActionPlanWorkspaceState {

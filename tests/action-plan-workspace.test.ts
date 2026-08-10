@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { ACTION_PLAN_DEMO } from "@/lib/action-plan-demo";
 import {
   actionPlanWorkspaceStateSchema,
+  compactActionPlanSteps,
   createActionPlanWorkspaceState,
   normalizeActionPlanWorkspaceState,
 } from "@/lib/action-plan-workspace";
@@ -88,5 +89,17 @@ describe("action plan workspace state", () => {
 
     expect(normalized.version).toBe("1");
     expect(normalized.selectedSystemId).toBe(ACTION_PLAN_DEMO.systemId);
+  });
+
+  it("remaps checked steps when an earlier step is deleted", () => {
+    const compacted = compactActionPlanSteps(
+      ["Première étape", "", "Troisième étape", "Quatrième étape"],
+      [0, 2, 3],
+    );
+
+    expect(compacted).toEqual({
+      steps: ["Première étape", "Troisième étape", "Quatrième étape"],
+      completedStepIndexes: [0, 1, 2],
+    });
   });
 });

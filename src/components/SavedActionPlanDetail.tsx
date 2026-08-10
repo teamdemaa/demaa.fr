@@ -30,11 +30,8 @@ export default function SavedActionPlanDetail({
   const firstRenderRef = useRef(true);
   const pendingSaveRef = useRef<ActionPlanWorkspaceState | null>(null);
   const saveRunningRef = useRef(false);
+  const saveTimeoutRef = useRef<number | null>(null);
   const mountedRef = useRef(true);
-
-  useEffect(() => () => {
-    mountedRef.current = false;
-  }, []);
 
   const flushWorkspaceSave = useCallback(async () => {
     if (saveRunningRef.current) return;
@@ -52,6 +49,7 @@ export default function SavedActionPlanDetail({
         const response = await fetch(`/api/action-plans/${encodeURIComponent(planId)}`, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
+          keepalive: true,
           body: JSON.stringify({
             expectedRevision: revisionRef.current,
             workspaceState: nextWorkspace,
@@ -85,13 +83,43 @@ export default function SavedActionPlanDetail({
       return;
     }
 
-    const timeout = window.setTimeout(() => {
-      pendingSaveRef.current = workspace;
+    pendingSaveRef.current = workspace;
+    if (mountedRef.current) {
+      setSaveState("saving");
+      setSaveError(null);
+    }
+    if (saveTimeoutRef.current !== null) {
+      window.clearTimeout(saveTimeoutRef.current);
+    }
+    saveTimeoutRef.current = window.setTimeout(() => {
+      saveTimeoutRef.current = null;
       void flushWorkspaceSave();
     }, 700);
 
-    return () => window.clearTimeout(timeout);
+    return () => {
+      if (saveTimeoutRef.current !== null) {
+        window.clearTimeout(saveTimeoutRef.current);
+        saveTimeoutRef.current = null;
+      }
+    };
   }, [flushWorkspaceSave, workspace]);
+
+  useEffect(() => {
+    function flushBeforeLeaving() {
+      if (saveTimeoutRef.current !== null) {
+        window.clearTimeout(saveTimeoutRef.current);
+        saveTimeoutRef.current = null;
+      }
+      void flushWorkspaceSave();
+    }
+
+    window.addEventListener("pagehide", flushBeforeLeaving);
+    return () => {
+      mountedRef.current = false;
+      window.removeEventListener("pagehide", flushBeforeLeaving);
+      flushBeforeLeaving();
+    };
+  }, [flushWorkspaceSave]);
 
   return (
     <div className="contents">

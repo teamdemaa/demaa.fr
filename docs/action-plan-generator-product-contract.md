@@ -166,9 +166,9 @@ restent accessibles. L'ADR 0008 ne transforme pas ces routes en espace privé.
 
 ### Après connexion
 
-La cible de navigation connectée est Accueil, Système, Académie et profil.
-Cette navigation applicative complète est coordonnée avec le futur lot
-Accompagnement. Accompagnement est exclu du MVP et reste un produit différé.
+La navigation applicative affiche Plan d'action, Système, Académie et un repère
+Accompagnement. Ce dernier reste un espace annoncé : Accompagnement est exclu
+du MVP et aucune capacité, aucun délai ni aucun prix n'y est promis.
 
 ## Persistance
 
@@ -187,9 +187,13 @@ Accompagnement. Accompagnement est exclu du MVP et reste un produit différé.
   seule, révocable, limité et non indexable.
 - Aucun miroir local durable concurrent n'est maintenu.
 
-Le parcours de rattachement exact doit rester idempotent. Un éventuel brouillon
-temporaire créé avant le lien de connexion doit avoir un TTL et ne devient pas
-une nouvelle source produit permanente.
+Pour un invité, la sauvegarde crée un plan temporaire `pending_claim` avec un
+TTL d'une heure et un secret non stocké en clair. Le lien magique associe le
+jeton, l'e-mail normalisé et ce plan ; sa consommation rattache atomiquement le
+plan à l'adresse vérifiée. Pour une personne déjà connectée, la sauvegarde crée
+directement le plan actif puis ouvre sa page persistée. Les modifications y
+sont enregistrées avec révision optimiste et prolongent la durée de
+conservation depuis la dernière mise à jour.
 
 ## Marketing et prospection éthiques
 
@@ -252,8 +256,8 @@ tokens.
 - pricing et frontière gratuite/payante ;
 - modèle et fournisseur après mesure sur des cas représentatifs ;
 - valeurs exactes des quotas et du plafond budgétaire ;
-- TTL, suppression, export et partage révocable ;
-- mécanisme final de rattachement du brouillon à l'espace membre.
+- suppression, export et partage révocable ;
+- durée de conservation définitive au-delà de la politique actuelle.
 
 Ces arbitrages ne bloquent pas le prototype et le moteur Preview lorsqu'ils
 sont implémentés derrière des limites conservatrices réversibles.

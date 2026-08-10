@@ -1,6 +1,7 @@
 "use client";
 
 import { CheckCircle2, LoaderCircle, Mail, Save, X } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import type { ActionPlan } from "@/lib/action-plan-contract";
@@ -31,6 +32,7 @@ export default function ActionPlanSaveControl({
   workspace: ActionPlanWorkspaceState;
   demoMode?: boolean;
 }) {
+  const router = useRouter();
   const [state, setState] = useState<SaveState>("idle");
   const [pendingClaim, setPendingClaim] = useState<PendingClaim | null>(null);
   const [email, setEmail] = useState("");
@@ -88,6 +90,7 @@ export default function ActionPlanSaveControl({
       const body = (await response.json().catch(() => null)) as
         | {
             status?: "saved" | "pending_claim";
+            actionPlan?: { id?: string };
             actionPlanId?: string;
             actionPlanClaimSecret?: string;
             error?: string;
@@ -99,7 +102,12 @@ export default function ActionPlanSaveControl({
       }
 
       if (body?.status === "saved") {
+        const savedPlanId = body.actionPlan?.id;
+        if (!savedPlanId || !/^[A-Za-z0-9_-]{12,64}$/.test(savedPlanId)) {
+          throw new Error("Le plan est sauvegardé, mais son accès est indisponible.");
+        }
         setState("saved");
+        router.push(`/mon-espace/plans/${encodeURIComponent(savedPlanId)}`);
         return;
       }
 

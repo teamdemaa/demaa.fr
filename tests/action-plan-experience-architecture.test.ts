@@ -19,6 +19,7 @@ describe("action plan experience architecture", () => {
     expect(experience).not.toMatch(/localStorage|sessionStorage/);
     expect(saveControl).not.toMatch(/localStorage|sessionStorage/);
     expect(saveControl).toContain('fetch("/api/action-plans"');
+    expect(saveControl).toContain("router.push(`/mon-espace/plans/");
     expect(saveControl).toContain('"Sauvegarder"');
     expect(saveControl).toContain("if (demoMode)");
     expect(saveControl).toContain("Créer mon compte");
@@ -45,6 +46,15 @@ describe("action plan experience architecture", () => {
     expect(result).toContain('type TaskView = "list" | "kanban"');
     expect(result).toContain("Notes personnelles");
     expect(result).not.toContain("demaa-accordion");
+  });
+
+  it("keeps the latest authenticated edit when the user leaves quickly", () => {
+    const savedPlan = source("src/components/SavedActionPlanDetail.tsx");
+
+    expect(savedPlan).toContain("pendingSaveRef.current = workspace");
+    expect(savedPlan).toContain('window.addEventListener("pagehide", flushBeforeLeaving)');
+    expect(savedPlan).toContain("keepalive: true");
+    expect(savedPlan).toContain("flushBeforeLeaving();");
   });
 
   it("changes the selected system deterministically without another AI call", () => {

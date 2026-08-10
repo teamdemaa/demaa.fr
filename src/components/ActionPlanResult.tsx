@@ -18,9 +18,10 @@ import {
   useState,
 } from "react";
 import type { ActionPlan, ActionPlanAction } from "@/lib/action-plan-contract";
-import type {
-  ActionPlanTaskStatus,
-  ActionPlanWorkspaceState,
+import {
+  compactActionPlanSteps,
+  type ActionPlanTaskStatus,
+  type ActionPlanWorkspaceState,
 } from "@/lib/action-plan-workspace";
 
 type PlanSection = "tasks" | "strategy";
@@ -182,17 +183,20 @@ function ActionDrawer({
   }
 
   function saveSteps() {
-    const nextSteps = draftSteps
-      .split("\n")
-      .map((step) => step.trim())
-      .filter(Boolean)
-      .slice(0, 7);
+    const {
+      steps: nextSteps,
+      completedStepIndexes,
+    } = compactActionPlanSteps(
+      draftSteps.split("\n"),
+      taskState.completedStepIndexes,
+    );
     if (nextSteps.length === 0) {
       setDraftSteps(effectiveSteps.join("\n"));
       return;
     }
     updateTask((current) => ({
       ...current,
+      completedStepIndexes,
       overrides: {
         ...current.overrides,
         steps: nextSteps,
