@@ -21,7 +21,9 @@ export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = getCanonicalBaseUrl();
-  const now = new Date();
+  // Keep sitemap modification dates stable. Using the request time would tell
+  // crawlers that every one of the 800+ URLs changed on every request.
+  const siteUpdatedAt = new Date("2026-08-10T00:00:00.000Z");
   const [tools, enterprises, accountingFirms] = await Promise.all([
     getUnifiedToolDirectory(),
     getEnterpriseCatalog(),
@@ -29,34 +31,34 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ]);
 
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: base, lastModified: now, changeFrequency: "weekly", priority: 1 },
-    { url: `${base}/systemes`, lastModified: now, changeFrequency: "weekly", priority: 0.95 },
-    { url: `${base}/services`, lastModified: now, changeFrequency: "monthly", priority: 0.65 },
-    { url: `${base}/sur-mesure`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${base}/annuaire-outils`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${base}/annuaire-fournisseurs`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
-    { url: `${base}/annuaire-financement`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
-    { url: `${base}/aides-et-subventions`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
-    { url: `${base}/annuaire-reseaux-pro`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
-    { url: `${base}/annuaire-formations`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
-    { url: `${base}/annuaire-recrutement`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
-    { url: `${base}/annuaire-newsletters`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
-    { url: `${base}/annuaire-experts-comptables`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${base}/academie`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${base}/contenus`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
-    { url: `${base}/opportunites`, lastModified: now, changeFrequency: "weekly", priority: 0.65 },
-    { url: `${base}/rejoindre-team-demaa`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
-    { url: `${base}/mentions-legales`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
-    { url: `${base}/conditions-d-utilisation`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
-    { url: `${base}/politique-de-confidentialite`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
-    { url: `${base}/politique-de-cookies`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
-    { url: `${base}/cgv`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
+    { url: base, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 1 },
+    { url: `${base}/systemes`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.95 },
+    { url: `${base}/services`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.65 },
+    { url: `${base}/sur-mesure`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${base}/annuaire-outils`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${base}/annuaire-fournisseurs`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
+    { url: `${base}/annuaire-financement`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
+    { url: `${base}/aides-et-subventions`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
+    { url: `${base}/annuaire-reseaux-pro`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
+    { url: `${base}/annuaire-formations`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
+    { url: `${base}/annuaire-recrutement`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
+    { url: `${base}/annuaire-newsletters`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
+    { url: `${base}/annuaire-experts-comptables`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${base}/academie`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${base}/contenus`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
+    { url: `${base}/opportunites`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.65 },
+    { url: `${base}/rejoindre-team-demaa`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${base}/mentions-legales`, lastModified: siteUpdatedAt, changeFrequency: "yearly", priority: 0.3 },
+    { url: `${base}/conditions-d-utilisation`, lastModified: siteUpdatedAt, changeFrequency: "yearly", priority: 0.3 },
+    { url: `${base}/politique-de-confidentialite`, lastModified: siteUpdatedAt, changeFrequency: "yearly", priority: 0.3 },
+    { url: `${base}/politique-de-cookies`, lastModified: siteUpdatedAt, changeFrequency: "yearly", priority: 0.3 },
+    { url: `${base}/cgv`, lastModified: siteUpdatedAt, changeFrequency: "yearly", priority: 0.3 },
   ];
 
   const academyEntries: MetadataRoute.Sitemap = getAllAcademyContent().map(
     (content) => ({
       url: `${base}/academie/${content.identity.slug}`,
-      lastModified: now,
+      lastModified: siteUpdatedAt,
       changeFrequency: "monthly" as const,
       priority: content.kind === "case-study" ? 0.72 : 0.78,
     }),
@@ -77,7 +79,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const newsletterEntries = getAllNewsletters();
   const newsletterSitemapEntries: MetadataRoute.Sitemap = newsletterEntries.map((entry) => ({
     url: `${base}/annuaire-newsletters/${entry.slug}`,
-    lastModified: now,
+    lastModified: siteUpdatedAt,
     changeFrequency: "monthly" as const,
     priority: 0.72,
   }));
@@ -86,7 +88,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .filter((tool) => !hasStandaloneToolPage(tool))
     .map((tool) => ({
       url: `${base}/annuaire-outils/${getToolDirectorySlug(tool)}`,
-      lastModified: now,
+      lastModified: siteUpdatedAt,
       changeFrequency: "monthly" as const,
       priority: 0.7,
     }));
@@ -105,7 +107,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const freeToolEntries: MetadataRoute.Sitemap = freeToolRoutes.map((slug) => ({
     url: `${base}/outils/${slug}`,
-    lastModified: now,
+    lastModified: siteUpdatedAt,
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
@@ -113,84 +115,84 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const serviceEntries: MetadataRoute.Sitemap = getCanonicalServices()
     .map((service) => ({
       url: `${base}/services/${service.slug}`,
-      lastModified: now,
+      lastModified: siteUpdatedAt,
       changeFrequency: "monthly" as const,
       priority: 0.7,
     }));
 
   const supplierEntries: MetadataRoute.Sitemap = demaaSuppliers.map((supplier) => ({
     url: `${base}/annuaire-fournisseurs/${supplier.slug}`,
-    lastModified: now,
+    lastModified: siteUpdatedAt,
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
 
   const financeEntries: MetadataRoute.Sitemap = demaaFinanceItems.map((item) => ({
     url: `${base}/annuaire-financement/${item.slug}`,
-    lastModified: now,
+    lastModified: siteUpdatedAt,
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
 
   const aidFamilyEntries: MetadataRoute.Sitemap = aidFamilies.map((family) => ({
     url: `${base}/aides-et-subventions/${family.slug}`,
-    lastModified: now,
+    lastModified: siteUpdatedAt,
     changeFrequency: "monthly" as const,
     priority: 0.72,
   }));
 
   const aidEntries: MetadataRoute.Sitemap = demaaAidItems.map((item) => ({
     url: `${base}/aides-et-subventions/${item.slug}`,
-    lastModified: now,
+    lastModified: siteUpdatedAt,
     changeFrequency: "monthly" as const,
     priority: 0.72,
   }));
 
   const proNetworkEntries: MetadataRoute.Sitemap = demaaProNetworks.map((network) => ({
     url: `${base}/annuaire-reseaux-pro/${network.slug}`,
-    lastModified: now,
+    lastModified: siteUpdatedAt,
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
 
   const trainingEntries: MetadataRoute.Sitemap = getDemaaTrainings().map((training) => ({
     url: `${base}/annuaire-formations/${training.slug}`,
-    lastModified: now,
+    lastModified: siteUpdatedAt,
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
 
   const recruitmentEntries: MetadataRoute.Sitemap = getDemaaRecruitmentItems().map((item) => ({
     url: `${base}/annuaire-recrutement/${item.slug}`,
-    lastModified: now,
+    lastModified: siteUpdatedAt,
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
 
   const accountingFirmEntries: MetadataRoute.Sitemap = accountingFirms.map((firm) => ({
     url: `${base}/annuaire-experts-comptables/cabinets/${firm.slug}`,
-    lastModified: now,
+    lastModified: siteUpdatedAt,
     changeFrequency: "monthly" as const,
     priority: 0.75,
   }));
 
   const sectorEntries: MetadataRoute.Sitemap = sectorPageDefinitions.map((sector) => ({
     url: `${base}/secteurs/${sector.slug}`,
-    lastModified: now,
+    lastModified: siteUpdatedAt,
     changeFrequency: "monthly" as const,
     priority: 0.8,
   }));
 
   const toolSectorEntries: MetadataRoute.Sitemap = sectorTaxonomy.map((sector) => ({
     url: `${base}/annuaire-outils/secteur/${sector.seoSlug}`,
-    lastModified: now,
+    lastModified: siteUpdatedAt,
     changeFrequency: "monthly" as const,
     priority: 0.76,
   }));
 
   const systemEntries: MetadataRoute.Sitemap = enterprises.map((enterprise) => ({
-    url: `${base}/kit-operationnel/${enterprise.slug}`,
-    lastModified: now,
+    url: `${base}/systemes/${enterprise.slug}`,
+    lastModified: siteUpdatedAt,
     changeFrequency: "monthly" as const,
     priority: 0.75,
   }));

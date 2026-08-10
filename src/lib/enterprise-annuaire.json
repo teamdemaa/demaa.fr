@@ -4,18 +4,18 @@
       "id": "e1",
       "slug": "cabinet-comptable",
       "name": "Cabinet comptable",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Reprenez le contrôle des dossiers, échéances et relances clients pour produire sereinement sans tout garder dans votre tête.",
       "tags": [
         "Conseil",
         "B2B",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Briefcase",
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Cabinet comptable",
-      "imageSubtitle": "Aperçu du système opérationnel pour cabinet comptable",
+      "imageSubtitle": "Aperçu du système métier pour cabinet comptable",
       "toolRefs": [
         {
           "slug": "tiimora",
@@ -105,18 +105,18 @@
       "id": "e2",
       "slug": "cabinet-davocat",
       "name": "Cabinet d’avocat",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Gardez dossiers, audiences, pièces et priorités sous contrôle pour sécuriser le cabinet sans subir chaque urgence.",
       "tags": [
         "Conseil",
         "B2B",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Briefcase",
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Cabinet d’avocat",
-      "imageSubtitle": "Aperçu du système opérationnel pour cabinet d’avocat",
+      "imageSubtitle": "Aperçu du système métier pour cabinet d’avocat",
       "toolRefs": [
         {
           "slug": "calendly",
@@ -175,18 +175,18 @@
       "id": "e3",
       "slug": "cabinet-de-conseil",
       "name": "Cabinet de conseil",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Gardez missions, livrables, clients et marge sous contrôle pour avancer sans dépendre de votre mémoire.",
       "tags": [
         "Conseil",
         "B2B",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Briefcase",
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Cabinet de conseil",
-      "imageSubtitle": "Aperçu du système opérationnel pour cabinet de conseil",
+      "imageSubtitle": "Aperçu du système métier pour cabinet de conseil",
       "toolRefs": [
         {
           "slug": "hubspot",
@@ -265,18 +265,18 @@
       "id": "e4",
       "slug": "agence-marketing",
       "name": "Agence marketing",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Pilotez prospects, campagnes, livrables et marges pour faire grandir l’agence sans courir après chaque client.",
       "tags": [
         "Conseil",
         "B2B",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Briefcase",
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Agence marketing",
-      "imageSubtitle": "Aperçu du système opérationnel pour agence marketing",
+      "imageSubtitle": "Aperçu du système métier pour agence marketing",
       "toolRefs": [
         {
           "slug": "google-workspace",
@@ -379,18 +379,18 @@
       "id": "e5",
       "slug": "freelance",
       "name": "Freelance B2B",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Structurez offres, clients, missions, relances et marge sans dépendre de l’improvisation.",
       "tags": [
         "B2B",
         "Services",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Briefcase",
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Freelance B2B",
-      "imageSubtitle": "Aperçu du système opérationnel pour freelance B2B",
+      "imageSubtitle": "Aperçu du système métier pour freelance B2B",
       "toolRefs": [
         {
           "slug": "malt",
@@ -442,18 +442,18 @@
       "id": "e6",
       "slug": "agence-de-recrutement",
       "name": "Agence de recrutement",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Suivez candidats, clients, postes et relances pour placer plus vite sans laisser filer les bonnes opportunités.",
       "tags": [
         "Conseil",
         "B2B",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Briefcase",
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Agence de recrutement",
-      "imageSubtitle": "Aperçu du système opérationnel pour agence de recrutement",
+      "imageSubtitle": "Aperçu du système métier pour agence de recrutement",
       "toolRefs": [
         {
           "slug": "recruitee",
@@ -504,18 +504,18 @@
       "id": "e7",
       "slug": "agence-web",
       "name": "Agence web",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Gardez prospects, projets, livraisons et marge sous contrôle pour livrer proprement sans courir après chaque client.",
       "tags": [
         "Tech",
         "Digital",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Code2",
       "price": "",
       "sectorLabel": "Tech & Digital",
       "imageTitle": "Agence web",
-      "imageSubtitle": "Aperçu du système opérationnel pour agence web",
+      "imageSubtitle": "Aperçu du système métier pour agence web",
       "toolRefs": [
         {
           "slug": "google-workspace",
@@ -614,18 +614,18 @@
       "id": "e8",
       "slug": "creation-de-contenu",
       "name": "Création de contenu",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Gardez idées, contenus, publications et revenus sous contrôle pour produire régulièrement sans vous disperser.",
       "tags": [
         "Tech",
         "Digital",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Code2",
       "price": "",
       "sectorLabel": "Tech & Digital",
       "imageTitle": "Création de contenu",
-      "imageSubtitle": "Aperçu du système opérationnel pour création de contenu",
+      "imageSubtitle": "Aperçu du système métier pour création de contenu",
       "toolRefs": [
         {
           "slug": "google-workspace",
@@ -696,18 +696,18 @@
       "id": "e9",
       "slug": "marketplace",
       "name": "Marketplace",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Pilotez vendeurs, commandes, paiements et litiges sans laisser le support de la marketplace déborder.",
       "tags": [
         "Tech",
         "Digital",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Code2",
       "price": "",
       "sectorLabel": "Tech & Digital",
       "imageTitle": "Marketplace",
-      "imageSubtitle": "Aperçu du système opérationnel pour marketplace",
+      "imageSubtitle": "Aperçu du système métier pour marketplace",
       "toolRefs": [
         {
           "slug": "stripe",
@@ -774,18 +774,18 @@
       "id": "e10",
       "slug": "media",
       "name": "Média",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Pilotez contenus, audience, partenariats et revenus pour tenir le rythme sans avancer à l’instinct.",
       "tags": [
         "Tech",
         "Digital",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Code2",
       "price": "",
       "sectorLabel": "Tech & Digital",
       "imageTitle": "Média",
-      "imageSubtitle": "Aperçu du système opérationnel pour média",
+      "imageSubtitle": "Aperçu du système métier pour média",
       "toolRefs": [
         {
           "slug": "hubspot",
@@ -848,18 +848,18 @@
       "id": "e11",
       "slug": "saas",
       "name": "SaaS",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Pilotez acquisition, produit, support et revenus pour faire grandir le SaaS sans perdre la trajectoire.",
       "tags": [
         "Tech",
         "Digital",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Code2",
       "price": "",
       "sectorLabel": "Tech & Digital",
       "imageTitle": "SaaS",
-      "imageSubtitle": "Aperçu du système opérationnel pour saas",
+      "imageSubtitle": "Aperçu du système métier pour saas",
       "toolRefs": [
         {
           "slug": "stripe",
@@ -962,18 +962,18 @@
       "id": "e12",
       "slug": "batiment",
       "name": "Bâtiment",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Gardez devis, chantiers, équipes et marge sous contrôle pour livrer sans courir après l’information terrain.",
       "tags": [
         "BTP",
         "Terrain",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Wrench",
       "price": "",
       "sectorLabel": "BTP & services techniques",
       "imageTitle": "Bâtiment",
-      "imageSubtitle": "Aperçu du système opérationnel pour bâtiment",
+      "imageSubtitle": "Aperçu du système métier pour bâtiment",
       "toolRefs": [
         {
           "slug": "vertuoza",
@@ -1044,18 +1044,18 @@
       "id": "e13",
       "slug": "nettoyage-professionnel",
       "name": "Nettoyage professionnel",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Coordonnez équipes, passages, contrôles et réclamations pour assurer la qualité sans tout garder dans votre tête.",
       "tags": [
         "BTP",
         "Terrain",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Wrench",
       "price": "",
       "sectorLabel": "BTP & services techniques",
       "imageTitle": "Nettoyage professionnel",
-      "imageSubtitle": "Aperçu du système opérationnel pour nettoyage professionnel",
+      "imageSubtitle": "Aperçu du système métier pour nettoyage professionnel",
       "toolRefs": [
         {
           "slug": "organilog",
@@ -1094,18 +1094,18 @@
       "id": "e14",
       "slug": "agence-immobiliere",
       "name": "Agence immobilière professionnelle",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Gardez mandats, prospects, visites et signatures sous contrôle pour vendre sans perdre le fil commercial.",
       "tags": [
         "B2B",
         "Immobilier",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Home",
       "price": "",
       "sectorLabel": "Immobilier",
       "imageTitle": "Agence immobilière professionnelle",
-      "imageSubtitle": "Aperçu du système opérationnel pour agence immobilière professionnelle",
+      "imageSubtitle": "Aperçu du système métier pour agence immobilière professionnelle",
       "toolRefs": [
         {
           "slug": "hektor",
@@ -1152,18 +1152,18 @@
       "id": "e55",
       "slug": "syndic",
       "name": "Syndic",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Tenez copropriétés, urgences, assemblées et décisions sans subir la pression permanente.",
       "tags": [
         "Immobilier",
         "Copropriété",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Building2",
       "price": "Sur devis",
       "sectorLabel": "Immobilier",
       "imageTitle": "Syndic",
-      "imageSubtitle": "Aperçu du système opérationnel pour syndic",
+      "imageSubtitle": "Aperçu du système métier pour syndic",
       "toolRefs": [
         {
           "slug": "lockimmo",
@@ -1198,18 +1198,18 @@
       "id": "e56",
       "slug": "gestion-locative",
       "name": "Gestion locative pour investisseurs",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Pilotez loyers, incidents, locataires et documents sans multiplier les relances.",
       "tags": [
         "B2B",
         "Immobilier",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "KeyRound",
       "price": "Sur devis",
       "sectorLabel": "Immobilier",
       "imageTitle": "Gestion locative pour investisseurs",
-      "imageSubtitle": "Aperçu du système opérationnel pour gestion locative investisseurs",
+      "imageSubtitle": "Aperçu du système métier pour gestion locative investisseurs",
       "toolRefs": [
         {
           "slug": "lockimmo",
@@ -1252,18 +1252,18 @@
       "id": "e57",
       "slug": "marchand-de-biens",
       "name": "Marchand de biens",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Maîtrisez achats, travaux, financement et revente pour préserver la marge de chaque opération.",
       "tags": [
         "Immobilier",
         "Opérations",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Landmark",
       "price": "Sur devis",
       "sectorLabel": "Immobilier",
       "imageTitle": "Marchand de biens",
-      "imageSubtitle": "Aperçu du système opérationnel pour marchand de biens",
+      "imageSubtitle": "Aperçu du système métier pour marchand de biens",
       "toolRefs": [
         {
           "slug": "apimo",
@@ -1302,7 +1302,7 @@
       "id": "e58",
       "slug": "investissement-locatif",
       "name": "Investissement locatif",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Gardez financement, loyers, travaux et rendement sous contrôle pour investir sans avancer dans le flou.",
       "tags": [
         "Immobilier",
@@ -1313,7 +1313,7 @@
       "price": "Sur devis",
       "sectorLabel": "Immobilier",
       "imageTitle": "Investissement locatif",
-      "imageSubtitle": "Aperçu du système opérationnel pour investissement locatif",
+      "imageSubtitle": "Aperçu du système métier pour investissement locatif",
       "toolRefs": [
         {
           "slug": "lockimmo",
@@ -1348,18 +1348,18 @@
       "id": "e15",
       "slug": "conciergerie-airbnb",
       "name": "Conciergerie multi-biens",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Maîtrisez réservations, ménage, voyageurs et imprévus pour louer sereinement sans gérer chaque urgence vous-même.",
       "tags": [
         "B2B",
         "Immobilier",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Home",
       "price": "",
       "sectorLabel": "Hébergement & tourisme",
       "imageTitle": "Conciergerie multi-biens",
-      "imageSubtitle": "Aperçu du système opérationnel pour conciergerie multi-biens",
+      "imageSubtitle": "Aperçu du système métier pour conciergerie multi-biens",
       "toolRefs": [
         {
           "slug": "guesty",
@@ -1410,18 +1410,18 @@
       "id": "e16",
       "slug": "investissement-immobilier",
       "name": "Investissement immobilier",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Gardez biens, travaux, loyers et rendements sous contrôle pour arbitrer sans perdre la vision d’ensemble.",
       "tags": [
         "Patrimoine",
         "Investissement",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Landmark",
       "price": "",
       "sectorLabel": "Patrimoine",
       "imageTitle": "Investissement immobilier",
-      "imageSubtitle": "Aperçu du système opérationnel pour investissement immobilier",
+      "imageSubtitle": "Aperçu du système métier pour investissement immobilier",
       "toolRefs": [
         {
           "slug": "lockimmo",
@@ -1456,18 +1456,18 @@
       "id": "e17",
       "slug": "investissement-financier",
       "name": "Investissement financier",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Gardez allocations, risques, frais et décisions sous contrôle pour piloter votre patrimoine sans bruit inutile.",
       "tags": [
         "Patrimoine",
         "Investissement",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Landmark",
       "price": "",
       "sectorLabel": "Patrimoine",
       "imageTitle": "Investissement financier",
-      "imageSubtitle": "Aperçu du système opérationnel pour investissement financier",
+      "imageSubtitle": "Aperçu du système métier pour investissement financier",
       "toolRefs": [
         {
           "slug": "harvest-patrimoine",
@@ -1510,18 +1510,18 @@
       "id": "e18",
       "slug": "investissement-entreprise",
       "name": "Investissement entreprise",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Suivez participations, performance, risques et décisions clés sans perdre la vision d’ensemble.",
       "tags": [
         "Patrimoine",
         "Investissement",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Landmark",
       "price": "",
       "sectorLabel": "Patrimoine",
       "imageTitle": "Investissement entreprise",
-      "imageSubtitle": "Aperçu du système opérationnel pour investissement entreprise",
+      "imageSubtitle": "Aperçu du système métier pour investissement entreprise",
       "toolRefs": [
         {
           "slug": "pipedrive",
@@ -1568,18 +1568,18 @@
       "id": "e19",
       "slug": "demenagement",
       "name": "Déménagement professionnel",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Cadrez visites, devis, équipes, planning et marge pour les déménagements d’entreprise.",
       "tags": [
         "B2B",
         "Logistique",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Truck",
       "price": "",
       "sectorLabel": "Mobilité & logistique",
       "imageTitle": "Déménagement professionnel",
-      "imageSubtitle": "Aperçu du système opérationnel pour déménagement professionnel",
+      "imageSubtitle": "Aperçu du système métier pour déménagement professionnel",
       "toolRefs": [
         {
           "slug": "organilog",
@@ -1618,18 +1618,18 @@
       "id": "e20",
       "slug": "livraison-dernier-kilometre",
       "name": "Livraison dernier kilomètre",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Pilotez tournées, délais, chauffeurs et incidents pour livrer à l’heure sans surveiller chaque course à la main.",
       "tags": [
         "Logistique",
         "Transport",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Truck",
       "price": "",
       "sectorLabel": "Mobilité & logistique",
       "imageTitle": "Livraison dernier kilomètre",
-      "imageSubtitle": "Aperçu du système opérationnel pour livraison dernier kilomètre",
+      "imageSubtitle": "Aperçu du système métier pour livraison dernier kilomètre",
       "toolRefs": [
         {
           "slug": "urbantz",
@@ -1672,18 +1672,18 @@
       "id": "e21",
       "slug": "transport-de-marchandise",
       "name": "Transport de marchandises",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Suivez flotte, fret, expéditions et marge pour transporter sans perdre la trace des dossiers.",
       "tags": [
         "Logistique",
         "Transport",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Truck",
       "price": "",
       "sectorLabel": "Mobilité & logistique",
       "imageTitle": "Transport de marchandises",
-      "imageSubtitle": "Aperçu du système opérationnel pour transport de marchandises",
+      "imageSubtitle": "Aperçu du système métier pour transport de marchandises",
       "toolRefs": [
         {
           "slug": "dashdoc",
@@ -1734,18 +1734,18 @@
       "id": "e22",
       "slug": "transport-de-personnes",
       "name": "Transport de personnes B2B",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Pilotez réservations, trajets, chauffeurs, incidents et rentabilité pour clients professionnels.",
       "tags": [
         "B2B",
         "Transport",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Truck",
       "price": "",
       "sectorLabel": "Mobilité & logistique",
       "imageTitle": "Transport de personnes B2B",
-      "imageSubtitle": "Aperçu du système opérationnel pour transport de personnes B2B",
+      "imageSubtitle": "Aperçu du système métier pour transport de personnes B2B",
       "toolRefs": [
         {
           "slug": "geotab",
@@ -1784,18 +1784,18 @@
       "id": "e23",
       "slug": "restaurant",
       "name": "Restaurant",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Gardez service, équipe, achats et marge sous contrôle pour tenir vos rushs sans découvrir trop tard ce qui coûte cher.",
       "tags": [
         "Restauration",
         "Service",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Utensils",
       "price": "",
       "sectorLabel": "Restauration",
       "imageTitle": "Restaurant",
-      "imageSubtitle": "Aperçu du système opérationnel pour restaurant",
+      "imageSubtitle": "Aperçu du système métier pour restaurant",
       "toolRefs": [
         {
           "slug": "lightspeed",
@@ -1858,18 +1858,18 @@
       "id": "e24",
       "slug": "fast-food",
       "name": "Fast-food",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Gardez commandes, équipe, stocks et marge sous contrôle pour encaisser les rushs sans perdre la rentabilité.",
       "tags": [
         "Restauration",
         "Service",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Utensils",
       "price": "",
       "sectorLabel": "Restauration",
       "imageTitle": "Fast-food",
-      "imageSubtitle": "Aperçu du système opérationnel pour fast-food",
+      "imageSubtitle": "Aperçu du système métier pour fast-food",
       "toolRefs": [
         {
           "slug": "zelty",
@@ -1924,18 +1924,18 @@
       "id": "e25",
       "slug": "traiteur",
       "name": "Traiteur événementiel B2B",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Cadrez demandes, devis, production, livraison, extras et marge par événement professionnel.",
       "tags": [
         "B2B",
         "Événementiel",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Utensils",
       "price": "",
       "sectorLabel": "Restauration",
       "imageTitle": "Traiteur événementiel B2B",
-      "imageSubtitle": "Aperçu du système opérationnel pour traiteur événementiel B2B",
+      "imageSubtitle": "Aperçu du système métier pour traiteur événementiel B2B",
       "toolRefs": [
         {
           "slug": "lightspeed",
@@ -1982,18 +1982,18 @@
       "id": "e26",
       "slug": "dark-kitchen",
       "name": "Dark kitchen",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Pilotez commandes, cuisine, plateformes et marge pour produire vite sans subir le rythme des applis.",
       "tags": [
         "Restauration",
         "Service",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Utensils",
       "price": "",
       "sectorLabel": "Restauration",
       "imageTitle": "Dark kitchen",
-      "imageSubtitle": "Aperçu du système opérationnel pour dark kitchen",
+      "imageSubtitle": "Aperçu du système métier pour dark kitchen",
       "toolRefs": [
         {
           "slug": "zelty",
@@ -2040,18 +2040,18 @@
       "id": "e27",
       "slug": "boulangerie",
       "name": "Boulangerie",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Gardez production, vente, équipe et marge sous contrôle pour faire tourner la boulangerie sans tout porter au quotidien.",
       "tags": [
         "Retail",
         "Vente",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Store",
       "price": "",
       "sectorLabel": "Commerce & retail",
       "imageTitle": "Boulangerie",
-      "imageSubtitle": "Aperçu du système opérationnel pour boulangerie",
+      "imageSubtitle": "Aperçu du système métier pour boulangerie",
       "toolRefs": [
         {
           "slug": "lightspeed",
@@ -2098,18 +2098,18 @@
       "id": "e28",
       "slug": "commerce-de-detail",
       "name": "Commerce de détail",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Pilotez stock, ventes, caisse et équipe sans découvrir les problèmes trop tard.",
       "tags": [
         "Retail",
         "Vente",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Store",
       "price": "",
       "sectorLabel": "Commerce & retail",
       "imageTitle": "Commerce de détail",
-      "imageSubtitle": "Aperçu du système opérationnel pour commerce de détail",
+      "imageSubtitle": "Aperçu du système métier pour commerce de détail",
       "toolRefs": [
         {
           "slug": "lightspeed",
@@ -2168,18 +2168,18 @@
       "id": "e29",
       "slug": "e-commerce",
       "name": "E-commerce",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Gardez ventes, commandes, stock et marge lisibles du trafic jusqu’au SAV, sans vous perdre entre pub, retours et outils.",
       "tags": [
         "Retail",
         "Vente",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Store",
       "price": "",
       "sectorLabel": "Commerce & retail",
       "imageTitle": "E-commerce",
-      "imageSubtitle": "Aperçu du système opérationnel pour e-commerce",
+      "imageSubtitle": "Aperçu du système métier pour e-commerce",
       "toolRefs": [
         {
           "slug": "shopify",
@@ -2262,18 +2262,18 @@
       "id": "e30",
       "slug": "institut-de-beaute",
       "name": "Institut de beauté",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Gardez agenda, prestations, clientes et marge sous contrôle pour remplir l’institut sans charge mentale permanente.",
       "tags": [
         "Bien-être",
         "RDV",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "HeartHandshake",
       "price": "",
       "sectorLabel": "Santé, bien-être & esthétique",
       "imageTitle": "Institut de beauté",
-      "imageSubtitle": "Aperçu du système opérationnel pour institut de beauté",
+      "imageSubtitle": "Aperçu du système métier pour institut de beauté",
       "toolRefs": [
         {
           "slug": "planity",
@@ -2316,18 +2316,18 @@
       "id": "e31",
       "slug": "salon-de-coiffure",
       "name": "Salon de coiffure",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Gardez agenda, équipe, clientes et ventes sous contrôle pour remplir le salon sans subir les trous ni les rushs.",
       "tags": [
         "Bien-être",
         "RDV",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "HeartHandshake",
       "price": "",
       "sectorLabel": "Santé, bien-être & esthétique",
       "imageTitle": "Salon de coiffure",
-      "imageSubtitle": "Aperçu du système opérationnel pour salon de coiffure",
+      "imageSubtitle": "Aperçu du système métier pour salon de coiffure",
       "toolRefs": [
         {
           "slug": "planity",
@@ -2370,18 +2370,18 @@
       "id": "e32",
       "slug": "esthetique",
       "name": "Esthétique",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Gardez rendez-vous, prestations, relances et ventes sous contrôle pour développer l’activité sans vous disperser.",
       "tags": [
         "Bien-être",
         "RDV",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "HeartHandshake",
       "price": "",
       "sectorLabel": "Santé, bien-être & esthétique",
       "imageTitle": "Esthétique",
-      "imageSubtitle": "Aperçu du système opérationnel pour esthétique",
+      "imageSubtitle": "Aperçu du système métier pour esthétique",
       "toolRefs": [
         {
           "slug": "planity",
@@ -2424,18 +2424,18 @@
       "id": "e33",
       "slug": "services-a-la-personne",
       "name": "Services à la personne",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Coordonnez demandes, intervenants, plannings et familles sans tout porter dans votre tête.",
       "tags": [
         "Particuliers",
         "Service",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "UserCheck",
       "price": "",
       "sectorLabel": "Services aux particuliers",
       "imageTitle": "Services à la personne",
-      "imageSubtitle": "Aperçu du système opérationnel pour services à la personne",
+      "imageSubtitle": "Aperçu du système métier pour services à la personne",
       "toolRefs": [
         {
           "slug": "ogust",
@@ -2478,18 +2478,18 @@
       "id": "e34",
       "slug": "organisme-de-formation",
       "name": "Organisme de formation",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Pilotez inscriptions, sessions, formateurs et preuves Qualiopi sans vous noyer dans l’administratif.",
       "tags": [
         "Formation",
         "Apprenants",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "GraduationCap",
       "price": "",
       "sectorLabel": "Éducation & formation",
       "imageTitle": "Organisme de formation",
-      "imageSubtitle": "Aperçu du système opérationnel pour organisme de formation",
+      "imageSubtitle": "Aperçu du système métier pour organisme de formation",
       "toolRefs": [
         {
           "slug": "digiforma",
@@ -2556,18 +2556,18 @@
       "id": "e97",
       "slug": "cfa",
       "name": "CFA",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Pilotez candidats, contrats d’apprentissage, entreprises, alternance, OPCO et suivi apprentis sans perdre la trace des obligations.",
       "tags": [
         "Formation",
         "Apprentissage",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "GraduationCap",
       "price": "",
       "sectorLabel": "Éducation & formation",
       "imageTitle": "CFA",
-      "imageSubtitle": "Aperçu du système opérationnel pour centre de formation d’apprentis",
+      "imageSubtitle": "Aperçu du système métier pour centre de formation d’apprentis",
       "toolRefs": [
         {
           "slug": "ypareo",
@@ -2622,18 +2622,18 @@
       "id": "e35",
       "slug": "formation-en-ligne",
       "name": "Formation en ligne",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Gardez ventes, apprenants, contenus et progression sous contrôle pour vendre vos formations sans disperser votre énergie.",
       "tags": [
         "Formation",
         "Apprenants",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "GraduationCap",
       "price": "",
       "sectorLabel": "Éducation & formation",
       "imageTitle": "Formation en ligne",
-      "imageSubtitle": "Aperçu du système opérationnel pour formation en ligne",
+      "imageSubtitle": "Aperçu du système métier pour formation en ligne",
       "toolRefs": [
         {
           "slug": "kajabi",
@@ -2696,18 +2696,18 @@
       "id": "e36",
       "slug": "production-industrie",
       "name": "Production & Industrie",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Pilotez production, stocks, délais et priorités sans gérer chaque urgence de l’atelier à la main.",
       "tags": [
         "Industrie",
         "Production",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Factory",
       "price": "",
       "sectorLabel": "Industrie & production",
       "imageTitle": "Production & Industrie",
-      "imageSubtitle": "Aperçu du système opérationnel pour production & industrie",
+      "imageSubtitle": "Aperçu du système métier pour production & industrie",
       "toolRefs": [
         {
           "slug": "odoo",
@@ -2750,18 +2750,18 @@
       "id": "e37",
       "slug": "plomberie-chauffage",
       "name": "Plomberie & chauffage",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Gardez urgences, devis, chantiers et pièces sous contrôle pour intervenir vite sans courir après chaque dossier.",
       "tags": [
         "BTP",
         "Intervention",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Wrench",
       "price": "",
       "sectorLabel": "BTP & services techniques",
       "imageTitle": "Plomberie & chauffage",
-      "imageSubtitle": "Aperçu du système opérationnel pour plomberie & chauffage",
+      "imageSubtitle": "Aperçu du système métier pour plomberie & chauffage",
       "toolRefs": [
         {
           "slug": "obat",
@@ -2820,18 +2820,18 @@
       "id": "e38",
       "slug": "electricite-generale",
       "name": "Électricité générale",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Maîtrisez urgences, devis, conformité et équipes pour sécuriser les chantiers sans perdre la vision terrain.",
       "tags": [
         "BTP",
         "Intervention",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Wrench",
       "price": "",
       "sectorLabel": "BTP & services techniques",
       "imageTitle": "Électricité générale",
-      "imageSubtitle": "Aperçu du système opérationnel pour électricité générale",
+      "imageSubtitle": "Aperçu du système métier pour électricité générale",
       "toolRefs": [
         {
           "slug": "esabora",
@@ -2890,18 +2890,18 @@
       "id": "e39",
       "slug": "renovation-interieur",
       "name": "Rénovation intérieure",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Gardez clients, choix, chantiers et marge sous contrôle pour avancer sans multiplier les allers-retours.",
       "tags": [
         "BTP",
         "Chantier",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Hammer",
       "price": "",
       "sectorLabel": "BTP & services techniques",
       "imageTitle": "Rénovation intérieure",
-      "imageSubtitle": "Aperçu du système opérationnel pour rénovation intérieure",
+      "imageSubtitle": "Aperçu du système métier pour rénovation intérieure",
       "toolRefs": [
         {
           "slug": "vertuoza",
@@ -2968,18 +2968,18 @@
       "id": "e40",
       "slug": "menuiserie-agencement",
       "name": "Menuiserie & agencement",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Gardez devis, atelier, pose et validations client sous contrôle pour livrer sans tout garder en tête.",
       "tags": [
         "BTP",
         "Atelier",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Hammer",
       "price": "",
       "sectorLabel": "BTP & services techniques",
       "imageTitle": "Menuiserie & agencement",
-      "imageSubtitle": "Aperçu du système opérationnel pour menuiserie & agencement",
+      "imageSubtitle": "Aperçu du système métier pour menuiserie & agencement",
       "toolRefs": [
         {
           "slug": "progbat",
@@ -3042,18 +3042,18 @@
       "id": "e41",
       "slug": "maconnerie-gros-oeuvre",
       "name": "Maçonnerie & gros œuvre",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Cadrez planning, matériaux, équipes et sous-traitants pour sécuriser chaque chantier.",
       "tags": [
         "BTP",
         "Chantier",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Building2",
       "price": "",
       "sectorLabel": "BTP & services techniques",
       "imageTitle": "Maçonnerie & gros œuvre",
-      "imageSubtitle": "Aperçu du système opérationnel pour maçonnerie & gros œuvre",
+      "imageSubtitle": "Aperçu du système métier pour maçonnerie & gros œuvre",
       "toolRefs": [
         {
           "slug": "onaya",
@@ -3112,18 +3112,18 @@
       "id": "e42",
       "slug": "paysagiste",
       "name": "Paysagiste",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Gardez devis, équipes, chantiers et entretiens sous contrôle pour servir les clients sans perdre les demandes.",
       "tags": [
         "Terrain",
         "Service",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Sparkles",
       "price": "",
       "sectorLabel": "BTP & services techniques",
       "imageTitle": "Paysagiste",
-      "imageSubtitle": "Aperçu du système opérationnel pour paysagiste",
+      "imageSubtitle": "Aperçu du système métier pour paysagiste",
       "toolRefs": [
         {
           "slug": "paysagio",
@@ -3182,18 +3182,18 @@
       "id": "e43",
       "slug": "garage-automobile",
       "name": "Garage automobile",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Gardez atelier, clients, pièces et marge sous contrôle du premier contact jusqu’à la facture.",
       "tags": [
         "Auto",
         "Réparation",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Car",
       "price": "",
       "sectorLabel": "Automobile & réparation",
       "imageTitle": "Garage automobile",
-      "imageSubtitle": "Aperçu du système opérationnel pour garage automobile",
+      "imageSubtitle": "Aperçu du système métier pour garage automobile",
       "toolRefs": [
         {
           "slug": "autoprogestion",
@@ -3228,18 +3228,18 @@
       "id": "e44",
       "slug": "carrosserie",
       "name": "Carrosserie",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Suivez sinistres, accords, pièces et travaux pour faire avancer l’atelier sans dossiers bloqués.",
       "tags": [
         "Auto",
         "Réparation",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Car",
       "price": "",
       "sectorLabel": "Automobile & réparation",
       "imageTitle": "Carrosserie",
-      "imageSubtitle": "Aperçu du système opérationnel pour carrosserie",
+      "imageSubtitle": "Aperçu du système métier pour carrosserie",
       "toolRefs": [
         {
           "slug": "repairsoft",
@@ -3274,18 +3274,18 @@
       "id": "e45",
       "slug": "commerce-alimentaire",
       "name": "Commerce alimentaire",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Gardez produits frais, caisse, fournisseurs et marge sous contrôle sans subir les urgences du quotidien.",
       "tags": [
         "Retail",
         "Alimentaire",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Store",
       "price": "",
       "sectorLabel": "Commerce & retail",
       "imageTitle": "Commerce alimentaire",
-      "imageSubtitle": "Aperçu du système opérationnel pour commerce alimentaire",
+      "imageSubtitle": "Aperçu du système métier pour commerce alimentaire",
       "toolRefs": [
         {
           "slug": "lightspeed",
@@ -3340,18 +3340,18 @@
       "id": "e46",
       "slug": "boutique-specialisee",
       "name": "Boutique spécialisée",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Gardez assortiment, conseil client, stock et marge sous contrôle pour diriger la boutique sereinement.",
       "tags": [
         "Retail",
         "Vente",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Store",
       "price": "",
       "sectorLabel": "Commerce & retail",
       "imageTitle": "Boutique spécialisée",
-      "imageSubtitle": "Aperçu du système opérationnel pour boutique spécialisée",
+      "imageSubtitle": "Aperçu du système métier pour boutique spécialisée",
       "toolRefs": [
         {
           "slug": "lightspeed",
@@ -3406,18 +3406,18 @@
       "id": "e47",
       "slug": "tabac-presse-point-relais",
       "name": "Tabac / presse / point relais",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Maîtrisez caisse, stocks, relais et services malgré le flux permanent du point de vente.",
       "tags": [
         "Retail",
         "Proximité",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Newspaper",
       "price": "",
       "sectorLabel": "Commerce & retail",
       "imageTitle": "Tabac / presse / point relais",
-      "imageSubtitle": "Aperçu du système opérationnel pour tabac presse point relais",
+      "imageSubtitle": "Aperçu du système métier pour tabac presse point relais",
       "toolRefs": [
         {
           "slug": "lightspeed",
@@ -3460,18 +3460,18 @@
       "id": "e48",
       "slug": "bar-cafe",
       "name": "Café",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Gardez service, caisse, équipe et marge sous contrôle du matin à la fermeture.",
       "tags": [
         "Restauration",
         "Service",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "ChefHat",
       "price": "",
       "sectorLabel": "Restauration",
       "imageTitle": "Café",
-      "imageSubtitle": "Aperçu du système opérationnel pour café",
+      "imageSubtitle": "Aperçu du système métier pour café",
       "toolRefs": [
         {
           "slug": "tiller",
@@ -3518,18 +3518,18 @@
       "id": "e49",
       "slug": "hotel-hebergement-independant",
       "name": "Hôtel & hébergement indépendant",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Gardez réservations, chambres, ménage et avis clients sous contrôle sans subir les pics d’activité.",
       "tags": [
         "Tourisme",
         "Réservation",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Home",
       "price": "",
       "sectorLabel": "Hébergement & tourisme",
       "imageTitle": "Hôtel & hébergement indépendant",
-      "imageSubtitle": "Aperçu du système opérationnel pour hôtel & hébergement indépendant",
+      "imageSubtitle": "Aperçu du système métier pour hôtel & hébergement indépendant",
       "toolRefs": [
         {
           "slug": "amenitiz",
@@ -3576,18 +3576,18 @@
       "id": "e50",
       "slug": "cabinet-medical",
       "name": "Cabinet médical",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Gardez agenda, demandes patients, documents et suivis sous contrôle sans alourdir le cabinet.",
       "tags": [
         "Santé",
         "RDV",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "HeartHandshake",
       "price": "",
       "sectorLabel": "Santé, bien-être & esthétique",
       "imageTitle": "Cabinet médical",
-      "imageSubtitle": "Aperçu du système opérationnel pour cabinet médical",
+      "imageSubtitle": "Aperçu du système métier pour cabinet médical",
       "toolRefs": [
         {
           "slug": "doctolib",
@@ -3622,18 +3622,18 @@
       "id": "e51",
       "slug": "cabinet-paramedical",
       "name": "Cabinet paramédical",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Gardez séances, suivis, facturation et documents sous contrôle sans surcharge administrative inutile.",
       "tags": [
         "Santé",
         "RDV",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "HeartHandshake",
       "price": "",
       "sectorLabel": "Santé, bien-être & esthétique",
       "imageTitle": "Cabinet paramédical",
-      "imageSubtitle": "Aperçu du système opérationnel pour cabinet paramédical",
+      "imageSubtitle": "Aperçu du système métier pour cabinet paramédical",
       "toolRefs": [
         {
           "slug": "doctolib",
@@ -3672,18 +3672,18 @@
       "id": "e52",
       "slug": "infirmier-liberal",
       "name": "Infirmier libéral",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Gardez tournées, soins, patients et documents sous contrôle sans épuiser votre organisation.",
       "tags": [
         "Santé",
         "Terrain",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "HeartHandshake",
       "price": "",
       "sectorLabel": "Santé, bien-être & esthétique",
       "imageTitle": "Infirmier libéral",
-      "imageSubtitle": "Aperçu du système opérationnel pour infirmier libéral",
+      "imageSubtitle": "Aperçu du système métier pour infirmier libéral",
       "toolRefs": [
         {
           "slug": "doctolib",
@@ -3726,18 +3726,18 @@
       "id": "e53",
       "slug": "aide-a-domicile-menage",
       "name": "Aide à domicile & ménage",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Gardez bénéficiaires, plannings, intervenants et remplacements sous contrôle sans gérer chaque imprévu à chaud.",
       "tags": [
         "Particuliers",
         "Service",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Home",
       "price": "",
       "sectorLabel": "Services aux particuliers",
       "imageTitle": "Aide à domicile & ménage",
-      "imageSubtitle": "Aperçu du système opérationnel pour aide à domicile & ménage",
+      "imageSubtitle": "Aperçu du système métier pour aide à domicile & ménage",
       "toolRefs": [
         {
           "slug": "ogust",
@@ -3780,18 +3780,18 @@
       "id": "e54",
       "slug": "reparation-informatique-mobile",
       "name": "Maintenance informatique B2B",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Centralisez tickets, interventions, parc client, délais, contrats et facturation.",
       "tags": [
         "B2B",
         "IT",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Smartphone",
       "price": "",
       "sectorLabel": "Tech & Digital",
       "imageTitle": "Maintenance informatique B2B",
-      "imageSubtitle": "Aperçu du système opérationnel pour maintenance informatique B2B",
+      "imageSubtitle": "Aperçu du système métier pour maintenance informatique B2B",
       "toolRefs": [
         {
           "slug": "repairdesk",
@@ -3826,18 +3826,18 @@
       "id": "e59",
       "slug": "architecte-maitre-oeuvre",
       "name": "Architecte / maître d’œuvre",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Gardez clients, plans, artisans et marges sous contrôle sans porter chaque chantier dans votre tête.",
       "tags": [
         "BTP",
         "Projet",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Home",
       "price": "",
       "sectorLabel": "BTP & services techniques",
       "imageTitle": "Architecte / maître d’œuvre",
-      "imageSubtitle": "Aperçu du système opérationnel pour architecte / maître d’œuvre",
+      "imageSubtitle": "Aperçu du système métier pour architecte / maître d’œuvre",
       "toolRefs": [
         {
           "slug": "archipad",
@@ -3880,18 +3880,18 @@
       "id": "e60",
       "slug": "courtier-credit-assurance",
       "name": "Courtier crédit / assurance",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Gardez dossiers, pièces, partenaires et relances sous contrôle pour conclure sans laisser filer les opportunités.",
       "tags": [
         "Finance",
         "Conseil",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Shield",
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Courtier crédit / assurance",
-      "imageSubtitle": "Aperçu du système opérationnel pour courtier crédit / assurance",
+      "imageSubtitle": "Aperçu du système métier pour courtier crédit / assurance",
       "toolRefs": [
         {
           "slug": "kiilt",
@@ -3930,18 +3930,18 @@
       "id": "e61",
       "slug": "auto-ecole",
       "name": "Centre de formation conduite pro",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Suivez inscriptions, plannings, moniteurs, sessions, examens et facturation professionnelle.",
       "tags": [
         "B2B",
         "Formation",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Car",
       "price": "",
       "sectorLabel": "Éducation & formation",
       "imageTitle": "Centre de formation conduite pro",
-      "imageSubtitle": "Aperçu du système opérationnel pour centre de formation conduite pro",
+      "imageSubtitle": "Aperçu du système métier pour centre de formation conduite pro",
       "toolRefs": [
         {
           "slug": "kopilo",
@@ -3988,18 +3988,18 @@
       "id": "e62",
       "slug": "photographe-videaste",
       "name": "Photographe / vidéaste corporate",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Cadrez briefs, tournages, validations, livrables et marge pour les missions d’entreprise.",
       "tags": [
         "B2B",
         "Production",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Aperture",
       "price": "",
       "sectorLabel": "Tech & Digital",
       "imageTitle": "Photographe / vidéaste corporate",
-      "imageSubtitle": "Aperçu du système opérationnel pour photographe / vidéaste corporate",
+      "imageSubtitle": "Aperçu du système métier pour photographe / vidéaste corporate",
       "toolRefs": [
         {
           "slug": "picstudio",
@@ -4054,18 +4054,18 @@
       "id": "e63",
       "slug": "evenementiel",
       "name": "Événementiel professionnel",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Structurez briefs, prestataires, planning, budget et exécution des événements clients.",
       "tags": [
         "B2B",
         "Événementiel",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "PartyPopper",
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Événementiel professionnel",
-      "imageSubtitle": "Aperçu du système opérationnel pour événementiel professionnel",
+      "imageSubtitle": "Aperçu du système métier pour événementiel professionnel",
       "toolRefs": [
         {
           "slug": "weezevent",
@@ -4124,18 +4124,18 @@
       "id": "e64",
       "slug": "salle-de-sport",
       "name": "Salle de sport",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Gardez abonnements, planning, équipe et fidélisation sous contrôle sans subir les creux d’activité.",
       "tags": [
         "Sport",
         "Abonnement",
-        "Système opérationnel"
+        "Système métier"
       ],
       "icon": "Dumbbell",
       "price": "",
       "sectorLabel": "Santé, bien-être & esthétique",
       "imageTitle": "Salle de sport",
-      "imageSubtitle": "Aperçu du système opérationnel pour salle de sport",
+      "imageSubtitle": "Aperçu du système métier pour salle de sport",
       "toolRefs": [
         {
           "slug": "gesfit",
@@ -4176,10 +4176,10 @@
     },
     {
       "id": "e65",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "price": "",
       "imageTitle": "Dentiste",
-      "imageSubtitle": "Aperçu du système opérationnel pour dentiste",
+      "imageSubtitle": "Aperçu du système métier pour dentiste",
       "slug": "dentiste",
       "name": "Dentiste",
       "sectorLabel": "Santé, bien-être & esthétique",
@@ -4187,7 +4187,7 @@
       "tags": [
         "Santé",
         "Rendez-vous",
-        "Système opérationnel"
+        "Système métier"
       ],
       "description": "Gardez patients, soins, devis et rappels sous contrôle pour soigner sans saturer le cabinet.",
       "toolRefs": [
@@ -4226,10 +4226,10 @@
     },
     {
       "id": "e66",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "price": "",
       "imageTitle": "Pharmacie",
-      "imageSubtitle": "Aperçu du système opérationnel pour pharmacie",
+      "imageSubtitle": "Aperçu du système métier pour pharmacie",
       "slug": "pharmacie",
       "name": "Pharmacie",
       "sectorLabel": "Santé, bien-être & esthétique",
@@ -4237,7 +4237,7 @@
       "tags": [
         "Santé",
         "Stock",
-        "Système opérationnel"
+        "Système métier"
       ],
       "description": "Maîtrisez stock, comptoir, équipe et obligations santé pour servir les patients sans perdre le fil.",
       "toolRefs": [
@@ -4272,10 +4272,10 @@
     },
     {
       "id": "e67",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "price": "",
       "imageTitle": "Notaire",
-      "imageSubtitle": "Aperçu du système opérationnel pour notaire",
+      "imageSubtitle": "Aperçu du système métier pour notaire",
       "slug": "notaire",
       "name": "Notaire",
       "sectorLabel": "Conseil & services aux entreprises",
@@ -4283,7 +4283,7 @@
       "tags": [
         "Juridique",
         "Dossiers",
-        "Système opérationnel"
+        "Système métier"
       ],
       "description": "Gardez actes, pièces, échéances et clients sous contrôle sans perdre le fil des dossiers.",
       "toolRefs": [
@@ -4322,10 +4322,10 @@
     },
     {
       "id": "e68",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "price": "",
       "imageTitle": "Vétérinaire",
-      "imageSubtitle": "Aperçu du système opérationnel pour vétérinaire",
+      "imageSubtitle": "Aperçu du système métier pour vétérinaire",
       "slug": "veterinaire",
       "name": "Vétérinaire",
       "sectorLabel": "Santé, bien-être & esthétique",
@@ -4333,7 +4333,7 @@
       "tags": [
         "Santé",
         "Animaux",
-        "Système opérationnel"
+        "Système métier"
       ],
       "description": "Pilotez rendez-vous, dossiers animaux, soins et stock pour faire tourner la clinique sans surcharge.",
       "toolRefs": [
@@ -4368,10 +4368,10 @@
     },
     {
       "id": "e69",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "price": "",
       "imageTitle": "Agence de voyage",
-      "imageSubtitle": "Aperçu du système opérationnel pour agence de voyage",
+      "imageSubtitle": "Aperçu du système métier pour agence de voyage",
       "slug": "agence-de-voyage",
       "name": "Agence de voyage",
       "sectorLabel": "Hébergement & tourisme",
@@ -4379,7 +4379,7 @@
       "tags": [
         "Tourisme",
         "Réservation",
-        "Système opérationnel"
+        "Système métier"
       ],
       "description": "Pilotez offres, voyageurs, fournisseurs et paiements pour vendre des séjours sans dispersion.",
       "toolRefs": [
@@ -4422,10 +4422,10 @@
     },
     {
       "id": "e70",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "price": "",
       "imageTitle": "Opticien",
-      "imageSubtitle": "Aperçu du système opérationnel pour opticien",
+      "imageSubtitle": "Aperçu du système métier pour opticien",
       "slug": "opticien",
       "name": "Opticien",
       "sectorLabel": "Santé, bien-être & esthétique",
@@ -4433,7 +4433,7 @@
       "tags": [
         "Santé",
         "Commerce",
-        "Système opérationnel"
+        "Système métier"
       ],
       "description": "Suivez clients, verres, montures, mutuelles et commandes pour servir sans bloquer la boutique.",
       "toolRefs": [
@@ -4472,10 +4472,10 @@
     },
     {
       "id": "e71",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "price": "",
       "imageTitle": "Pisciniste",
-      "imageSubtitle": "Aperçu du système opérationnel pour pisciniste",
+      "imageSubtitle": "Aperçu du système métier pour pisciniste",
       "slug": "pisciniste",
       "name": "Pisciniste",
       "sectorLabel": "BTP & services techniques",
@@ -4483,7 +4483,7 @@
       "tags": [
         "BTP",
         "SAV",
-        "Système opérationnel"
+        "Système métier"
       ],
       "description": "Gardez devis, chantiers, entretiens et SAV piscine sous contrôle malgré la saisonnalité.",
       "toolRefs": [
@@ -4534,10 +4534,10 @@
     },
     {
       "id": "e72",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "price": "",
       "imageTitle": "Diagnostiqueur immobilier",
-      "imageSubtitle": "Aperçu du système opérationnel pour diagnostiqueur immobilier",
+      "imageSubtitle": "Aperçu du système métier pour diagnostiqueur immobilier",
       "slug": "diagnostiqueur-immobilier",
       "name": "Diagnostiqueur immobilier",
       "sectorLabel": "Immobilier",
@@ -4545,7 +4545,7 @@
       "tags": [
         "Immobilier",
         "Diagnostic",
-        "Système opérationnel"
+        "Système métier"
       ],
       "description": "Gardez rendez-vous, diagnostics, rapports et conformité sous contrôle du terrain jusqu’à l’envoi.",
       "toolRefs": [
@@ -4588,10 +4588,10 @@
     },
     {
       "id": "e73",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "price": "",
       "imageTitle": "Fleuriste événementiel B2B",
-      "imageSubtitle": "Aperçu du système opérationnel pour fleuriste événementiel B2B",
+      "imageSubtitle": "Aperçu du système métier pour fleuriste événementiel B2B",
       "slug": "fleuriste",
       "name": "Fleuriste événementiel B2B",
       "sectorLabel": "Conseil & services aux entreprises",
@@ -4599,7 +4599,7 @@
       "tags": [
         "B2B",
         "Événementiel",
-        "Système opérationnel"
+        "Système métier"
       ],
       "description": "Structurez commandes entreprises, événements, compositions, livraison, stock et marge.",
       "toolRefs": [
@@ -4654,10 +4654,10 @@
     },
     {
       "id": "e74",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "price": "",
       "imageTitle": "Pressing",
-      "imageSubtitle": "Aperçu du système opérationnel pour pressing",
+      "imageSubtitle": "Aperçu du système métier pour pressing",
       "slug": "pressing",
       "name": "Pressing",
       "sectorLabel": "Services aux particuliers",
@@ -4665,7 +4665,7 @@
       "tags": [
         "Service local",
         "Caisse",
-        "Système opérationnel"
+        "Système métier"
       ],
       "description": "Gardez dépôts, traitements, délais et clients sous contrôle sans perdre une pièce.",
       "toolRefs": [
@@ -4700,10 +4700,10 @@
     },
     {
       "id": "e75",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "price": "",
       "imageTitle": "Food truck",
-      "imageSubtitle": "Aperçu du système opérationnel pour food truck",
+      "imageSubtitle": "Aperçu du système métier pour food truck",
       "slug": "food-truck",
       "name": "Food truck",
       "sectorLabel": "Restauration",
@@ -4711,7 +4711,7 @@
       "tags": [
         "Restauration",
         "Mobilité",
-        "Système opérationnel"
+        "Système métier"
       ],
       "description": "Maîtrisez emplacements, stock, service et autorisations malgré les déplacements.",
       "toolRefs": [
@@ -4758,10 +4758,10 @@
     },
     {
       "id": "e76",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "price": "",
       "imageTitle": "Consultant indépendant",
-      "imageSubtitle": "Aperçu du système opérationnel pour consultant indépendant",
+      "imageSubtitle": "Aperçu du système métier pour consultant indépendant",
       "slug": "consultant-independant",
       "name": "Consultant indépendant",
       "sectorLabel": "Conseil & services aux entreprises",
@@ -4769,7 +4769,7 @@
       "tags": [
         "Conseil",
         "Mission",
-        "Système opérationnel"
+        "Système métier"
       ],
       "description": "Gardez missions, livrables, relances et marge sous contrôle sans vous disperser.",
       "toolRefs": [
@@ -4838,10 +4838,10 @@
     },
     {
       "id": "e77",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "price": "",
       "imageTitle": "Cabinet d’assurance",
-      "imageSubtitle": "Aperçu du système opérationnel pour cabinet d’assurance",
+      "imageSubtitle": "Aperçu du système métier pour cabinet d’assurance",
       "slug": "cabinet-assurance",
       "name": "Cabinet d’assurance",
       "sectorLabel": "Conseil & services aux entreprises",
@@ -4849,7 +4849,7 @@
       "tags": [
         "Assurance",
         "Contrats",
-        "Système opérationnel"
+        "Système métier"
       ],
       "description": "Gardez portefeuille, contrats, sinistres et renouvellements sous contrôle sans perdre les échéances.",
       "toolRefs": [
@@ -4892,10 +4892,10 @@
     },
     {
       "id": "e78",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "price": "",
       "imageTitle": "VTC",
-      "imageSubtitle": "Aperçu du système opérationnel pour vtc",
+      "imageSubtitle": "Aperçu du système métier pour vtc",
       "slug": "vtc",
       "name": "VTC",
       "sectorLabel": "Mobilité & logistique",
@@ -4903,7 +4903,7 @@
       "tags": [
         "Transport",
         "Planning",
-        "Système opérationnel"
+        "Système métier"
       ],
       "description": "Pilotez courses, clients, chauffeurs et rentabilité sans subir chaque imprévu.",
       "toolRefs": [
@@ -4938,10 +4938,10 @@
     },
     {
       "id": "e79",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "price": "",
       "imageTitle": "Coach professionnel",
-      "imageSubtitle": "Aperçu du système opérationnel pour coach professionnel",
+      "imageSubtitle": "Aperçu du système métier pour coach professionnel",
       "slug": "coach-professionnel",
       "name": "Coach professionnel",
       "sectorLabel": "Conseil & services aux entreprises",
@@ -4949,7 +4949,7 @@
       "tags": [
         "Coaching",
         "Accompagnement",
-        "Système opérationnel"
+        "Système métier"
       ],
       "description": "Gardez clients, objectifs, séances et progression sous contrôle sans perdre le cadre.",
       "toolRefs": [
@@ -5012,10 +5012,10 @@
     },
     {
       "id": "e80",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "price": "",
       "imageTitle": "Coach sportif",
-      "imageSubtitle": "Aperçu du système opérationnel pour coach sportif",
+      "imageSubtitle": "Aperçu du système métier pour coach sportif",
       "slug": "coach-sportif",
       "name": "Coach sportif",
       "sectorLabel": "Santé, bien-être & esthétique",
@@ -5023,7 +5023,7 @@
       "tags": [
         "Sport",
         "Coaching",
-        "Système opérationnel"
+        "Système métier"
       ],
       "description": "Gardez clients, séances, programmes et paiements sous contrôle sans perdre le suivi terrain.",
       "toolRefs": [
@@ -5074,10 +5074,10 @@
     },
     {
       "id": "e81",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "price": "",
       "imageTitle": "Laverie automatique",
-      "imageSubtitle": "Aperçu du système opérationnel pour laverie automatique",
+      "imageSubtitle": "Aperçu du système métier pour laverie automatique",
       "slug": "laverie-automatique",
       "name": "Laverie automatique",
       "sectorLabel": "Services aux particuliers",
@@ -5085,7 +5085,7 @@
       "tags": [
         "Service local",
         "Maintenance",
-        "Système opérationnel"
+        "Système métier"
       ],
       "description": "Surveillez machines, paiements, maintenance et incidents sans présence permanente.",
       "toolRefs": [
@@ -5124,10 +5124,10 @@
     },
     {
       "id": "e82",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "price": "",
       "imageTitle": "Entreprise de sécurité B2B",
-      "imageSubtitle": "Aperçu du système opérationnel pour entreprise de sécurité B2B",
+      "imageSubtitle": "Aperçu du système métier pour entreprise de sécurité B2B",
       "slug": "entreprise-de-securite",
       "name": "Entreprise de sécurité B2B",
       "sectorLabel": "Conseil & services aux entreprises",
@@ -5135,7 +5135,7 @@
       "tags": [
         "B2B",
         "Sécurité",
-        "Système opérationnel"
+        "Système métier"
       ],
       "description": "Suivez sites clients, agents, plannings, agréments, incidents et facturation.",
       "toolRefs": [
@@ -5182,10 +5182,10 @@
     },
     {
       "id": "e83",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "price": "",
       "imageTitle": "Association",
-      "imageSubtitle": "Aperçu du système opérationnel pour association",
+      "imageSubtitle": "Aperçu du système métier pour association",
       "slug": "association",
       "name": "Association",
       "sectorLabel": "Associations & événements",
@@ -5193,7 +5193,7 @@
       "tags": [
         "Association",
         "Membres",
-        "Système opérationnel"
+        "Système métier"
       ],
       "description": "Structurez membres, adhésions, événements et finances pour avancer sans épuiser les bénévoles.",
       "toolRefs": [
@@ -5236,10 +5236,10 @@
     },
     {
       "id": "e84",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "price": "",
       "imageTitle": "Couvreur",
-      "imageSubtitle": "Aperçu du système opérationnel pour couvreur",
+      "imageSubtitle": "Aperçu du système métier pour couvreur",
       "slug": "couvreur",
       "name": "Couvreur",
       "sectorLabel": "BTP & services techniques",
@@ -5247,7 +5247,7 @@
       "tags": [
         "BTP",
         "Chantier",
-        "Système opérationnel"
+        "Système métier"
       ],
       "description": "Gardez urgences, devis, chantiers et sécurité toiture sous contrôle sans perdre les priorités terrain.",
       "toolRefs": [
@@ -5306,10 +5306,10 @@
     },
     {
       "id": "e85",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "price": "",
       "imageTitle": "Peintre en bâtiment",
-      "imageSubtitle": "Aperçu du système opérationnel pour peintre en bâtiment",
+      "imageSubtitle": "Aperçu du système métier pour peintre en bâtiment",
       "slug": "peintre-en-batiment",
       "name": "Peintre en bâtiment",
       "sectorLabel": "BTP & services techniques",
@@ -5317,7 +5317,7 @@
       "tags": [
         "BTP",
         "Chantier",
-        "Système opérationnel"
+        "Système métier"
       ],
       "description": "Gardez devis, chantiers, teintes et finitions sous contrôle sans perdre les demandes client.",
       "toolRefs": [
@@ -5376,10 +5376,10 @@
     },
     {
       "id": "e86",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "price": "",
       "imageTitle": "Carreleur",
-      "imageSubtitle": "Aperçu du système opérationnel pour carreleur",
+      "imageSubtitle": "Aperçu du système métier pour carreleur",
       "slug": "carreleur",
       "name": "Carreleur",
       "sectorLabel": "BTP & services techniques",
@@ -5387,7 +5387,7 @@
       "tags": [
         "BTP",
         "Chantier",
-        "Système opérationnel"
+        "Système métier"
       ],
       "description": "Gardez métrés, matériaux, poses et réserves sous contrôle du devis jusqu’à la réception.",
       "toolRefs": [
@@ -5446,10 +5446,10 @@
     },
     {
       "id": "e87",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "price": "",
       "imageTitle": "Climatisation",
-      "imageSubtitle": "Aperçu du système opérationnel pour climatisation",
+      "imageSubtitle": "Aperçu du système métier pour climatisation",
       "slug": "climatisation",
       "name": "Climatisation",
       "sectorLabel": "BTP & services techniques",
@@ -5457,7 +5457,7 @@
       "tags": [
         "BTP",
         "Installation",
-        "Système opérationnel"
+        "Système métier"
       ],
       "description": "Gardez diagnostics, installations, entretiens et SAV climatisation sous contrôle au quotidien.",
       "toolRefs": [
@@ -5516,10 +5516,10 @@
     },
     {
       "id": "e88",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "price": "",
       "imageTitle": "Serrurier",
-      "imageSubtitle": "Aperçu du système opérationnel pour serrurier",
+      "imageSubtitle": "Aperçu du système métier pour serrurier",
       "slug": "serrurier",
       "name": "Serrurier",
       "sectorLabel": "BTP & services techniques",
@@ -5527,7 +5527,7 @@
       "tags": [
         "Dépannage",
         "BTP",
-        "Système opérationnel"
+        "Système métier"
       ],
       "description": "Gardez urgences, devis, interventions et pièces sous contrôle sans perdre les priorités terrain.",
       "toolRefs": [
@@ -5582,10 +5582,10 @@
     },
     {
       "id": "e90",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "price": "",
       "imageTitle": "Librairie",
-      "imageSubtitle": "Aperçu du système opérationnel pour librairie",
+      "imageSubtitle": "Aperçu du système métier pour librairie",
       "slug": "librairie",
       "name": "Librairie",
       "sectorLabel": "Commerce & retail",
@@ -5593,7 +5593,7 @@
       "tags": [
         "Commerce",
         "Livre",
-        "Système opérationnel"
+        "Système métier"
       ],
       "description": "Gardez catalogue, commandes, stock et animations sous contrôle sans perdre les demandes lecteurs.",
       "toolRefs": [
@@ -5640,10 +5640,10 @@
     },
     {
       "id": "e91",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "price": "",
       "imageTitle": "Ostéopathe",
-      "imageSubtitle": "Aperçu du système opérationnel pour ostéopathe",
+      "imageSubtitle": "Aperçu du système métier pour ostéopathe",
       "slug": "osteopathe",
       "name": "Ostéopathe",
       "sectorLabel": "Santé, bien-être & esthétique",
@@ -5651,7 +5651,7 @@
       "tags": [
         "Santé",
         "Rendez-vous",
-        "Système opérationnel"
+        "Système métier"
       ],
       "description": "Gardez rendez-vous, dossiers patients, suivis et paiements sous contrôle sans alourdir le cabinet.",
       "toolRefs": [
@@ -5694,10 +5694,10 @@
     },
     {
       "id": "e92",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "price": "",
       "imageTitle": "Psychologue",
-      "imageSubtitle": "Aperçu du système opérationnel pour psychologue",
+      "imageSubtitle": "Aperçu du système métier pour psychologue",
       "slug": "psychologue",
       "name": "Psychologue",
       "sectorLabel": "Santé, bien-être & esthétique",
@@ -5705,7 +5705,7 @@
       "tags": [
         "Santé",
         "Accompagnement",
-        "Système opérationnel"
+        "Système métier"
       ],
       "description": "Gardez rendez-vous, suivis, notes et cadre administratif sous contrôle sans perdre le fil.",
       "toolRefs": [
@@ -5752,10 +5752,10 @@
     },
     {
       "id": "e93",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "price": "",
       "imageTitle": "Crèche",
-      "imageSubtitle": "Aperçu du système opérationnel pour crèche",
+      "imageSubtitle": "Aperçu du système métier pour crèche",
       "slug": "creche",
       "name": "Crèche",
       "sectorLabel": "Éducation & formation",
@@ -5763,7 +5763,7 @@
       "tags": [
         "Petite enfance",
         "Familles",
-        "Système opérationnel"
+        "Système métier"
       ],
       "description": "Coordonnez enfants, familles, équipe, transmissions et facturation sans surcharger la structure.",
       "toolRefs": [
@@ -5802,10 +5802,10 @@
     },
     {
       "id": "e94",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "price": "",
       "imageTitle": "Gestionnaire de patrimoine dirigeant",
-      "imageSubtitle": "Aperçu du système opérationnel pour gestionnaire de patrimoine dirigeant",
+      "imageSubtitle": "Aperçu du système métier pour gestionnaire de patrimoine dirigeant",
       "slug": "gestionnaire-de-patrimoine",
       "name": "Gestionnaire de patrimoine dirigeant",
       "sectorLabel": "Patrimoine",
@@ -5813,7 +5813,7 @@
       "tags": [
         "B2B",
         "Patrimoine",
-        "Système opérationnel"
+        "Système métier"
       ],
       "description": "Structurez découverte client, conformité, recommandations, arbitrages et suivi patrimonial.",
       "toolRefs": [
@@ -5856,10 +5856,10 @@
     },
     {
       "id": "e95",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "price": "",
       "imageTitle": "Chasseur immobilier",
-      "imageSubtitle": "Aperçu du système opérationnel pour chasseur immobilier",
+      "imageSubtitle": "Aperçu du système métier pour chasseur immobilier",
       "slug": "chasseur-immobilier",
       "name": "Chasseur immobilier",
       "sectorLabel": "Immobilier",
@@ -5867,7 +5867,7 @@
       "tags": [
         "Immobilier",
         "Recherche",
-        "Système opérationnel"
+        "Système métier"
       ],
       "description": "Gardez mandats, recherches, visites et négociations sous contrôle sans perdre les critères client.",
       "toolRefs": [
@@ -5906,10 +5906,10 @@
     },
     {
       "id": "e96",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "price": "",
       "imageTitle": "Géomètre",
-      "imageSubtitle": "Aperçu du système opérationnel pour géomètre",
+      "imageSubtitle": "Aperçu du système métier pour géomètre",
       "slug": "geometre",
       "name": "Géomètre",
       "sectorLabel": "BTP & services techniques",
@@ -5917,7 +5917,7 @@
       "tags": [
         "Foncier",
         "Terrain",
-        "Système opérationnel"
+        "Système métier"
       ],
       "description": "Gardez missions, relevés, plans et dossiers fonciers sous contrôle du terrain à la livraison.",
       "toolRefs": [
@@ -5962,7 +5962,7 @@
       "id": "e98",
       "slug": "daf-externalise",
       "name": "DAF externalisé",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Structurez budget, trésorerie, reporting, décisions financières et échanges dirigeant.",
       "tags": [
         "B2B",
@@ -5973,7 +5973,7 @@
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "DAF externalisé",
-      "imageSubtitle": "Aperçu du système opérationnel pour daf externalisé",
+      "imageSubtitle": "Aperçu du système métier pour daf externalisé",
       "toolRefs": [
         {
           "slug": "pennylane",
@@ -5998,7 +5998,7 @@
       "id": "e99",
       "slug": "office-manager-externalise",
       "name": "Office manager externalisé",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Cadrez administration, fournisseurs, contrats, équipe et routines internes.",
       "tags": [
         "B2B",
@@ -6009,7 +6009,7 @@
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Office manager externalisé",
-      "imageSubtitle": "Aperçu du système opérationnel pour office manager externalisé",
+      "imageSubtitle": "Aperçu du système métier pour office manager externalisé",
       "toolRefs": [
         {
           "slug": "notion",
@@ -6032,7 +6032,7 @@
       "id": "e100",
       "slug": "assistant-administratif-externalise",
       "name": "Assistant administratif externalisé",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Organisez documents, relances, factures, rendez-vous et support administratif client.",
       "tags": [
         "B2B",
@@ -6043,7 +6043,7 @@
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Assistant administratif externalisé",
-      "imageSubtitle": "Aperçu du système opérationnel pour assistant administratif externalisé",
+      "imageSubtitle": "Aperçu du système métier pour assistant administratif externalisé",
       "toolRefs": [
         {
           "slug": "google-workspace",
@@ -6066,7 +6066,7 @@
       "id": "e101",
       "slug": "secretariat-externalise",
       "name": "Secrétariat externalisé",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Structurez appels, agenda, accueil, messages et transmission des informations.",
       "tags": [
         "B2B",
@@ -6077,7 +6077,7 @@
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Secrétariat externalisé",
-      "imageSubtitle": "Aperçu du système opérationnel pour secrétariat externalisé",
+      "imageSubtitle": "Aperçu du système métier pour secrétariat externalisé",
       "toolRefs": [
         {
           "slug": "google-workspace",
@@ -6100,7 +6100,7 @@
       "id": "e102",
       "slug": "gestionnaire-paie-independant",
       "name": "Gestionnaire de paie indépendant",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Suivez variables, bulletins, DSN, échéances sociales et demandes salariés.",
       "tags": [
         "B2B",
@@ -6111,7 +6111,7 @@
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Gestionnaire de paie indépendant",
-      "imageSubtitle": "Aperçu du système opérationnel pour gestionnaire de paie indépendant",
+      "imageSubtitle": "Aperçu du système métier pour gestionnaire de paie indépendant",
       "toolRefs": [
         {
           "slug": "silae",
@@ -6134,7 +6134,7 @@
       "id": "e103",
       "slug": "cabinet-rh-externalise",
       "name": "Cabinet RH externalisé",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Structurez recrutements, contrats, entretiens, obligations RH et suivi équipe.",
       "tags": [
         "B2B",
@@ -6145,7 +6145,7 @@
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Cabinet RH externalisé",
-      "imageSubtitle": "Aperçu du système opérationnel pour cabinet rh externalisé",
+      "imageSubtitle": "Aperçu du système métier pour cabinet rh externalisé",
       "toolRefs": [
         {
           "slug": "lucca",
@@ -6168,7 +6168,7 @@
       "id": "e104",
       "slug": "centre-appels-support-client",
       "name": "Centre d’appels / support client",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Pilotez tickets, appels, SLA, réponses, escalades et qualité de support.",
       "tags": [
         "B2B",
@@ -6179,7 +6179,7 @@
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Centre d’appels / support client",
-      "imageSubtitle": "Aperçu du système opérationnel pour centre d’appels / support client",
+      "imageSubtitle": "Aperçu du système métier pour centre d’appels / support client",
       "toolRefs": [
         {
           "slug": "aircall",
@@ -6206,7 +6206,7 @@
       "id": "e105",
       "slug": "societe-recouvrement",
       "name": "Société de recouvrement",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Cadrez créances, relances, dossiers, preuves, échéanciers et encaissements.",
       "tags": [
         "B2B",
@@ -6217,7 +6217,7 @@
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Société de recouvrement",
-      "imageSubtitle": "Aperçu du système opérationnel pour société de recouvrement",
+      "imageSubtitle": "Aperçu du système métier pour société de recouvrement",
       "toolRefs": [
         {
           "slug": "leanpay",
@@ -6244,7 +6244,7 @@
       "id": "e107",
       "slug": "centre-affaires-coworking",
       "name": "Centre d’affaires / coworking",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Pilotez espaces, réservations, membres, services, contrats et facturation.",
       "tags": [
         "B2B",
@@ -6255,7 +6255,7 @@
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Centre d’affaires / coworking",
-      "imageSubtitle": "Aperçu du système opérationnel pour centre d’affaires / coworking",
+      "imageSubtitle": "Aperçu du système métier pour centre d’affaires / coworking",
       "toolRefs": [
         {
           "slug": "nexudus",
@@ -6282,7 +6282,7 @@
       "id": "e108",
       "slug": "cabinet-qhse-conformite",
       "name": "Cabinet QHSE / conformité",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Structurez audits, plans d’action, preuves, risques et obligations clients.",
       "tags": [
         "B2B",
@@ -6293,7 +6293,7 @@
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Cabinet QHSE / conformité",
-      "imageSubtitle": "Aperçu du système opérationnel pour cabinet qhse / conformité",
+      "imageSubtitle": "Aperçu du système métier pour cabinet qhse / conformité",
       "toolRefs": [
         {
           "slug": "bluekango",
@@ -6320,7 +6320,7 @@
       "id": "e109",
       "slug": "bureau-etudes",
       "name": "Bureau d’études",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Cadrez demandes, études, chiffrages, livrables, validations et marge projet.",
       "tags": [
         "B2B",
@@ -6331,7 +6331,7 @@
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Bureau d’études",
-      "imageSubtitle": "Aperçu du système opérationnel pour bureau d’études",
+      "imageSubtitle": "Aperçu du système métier pour bureau d’études",
       "toolRefs": [
         {
           "slug": "everwin",
@@ -6358,7 +6358,7 @@
       "id": "e110",
       "slug": "cabinet-etudes",
       "name": "Cabinet d’études",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Structurez enquêtes, analyses, livrables, validations et recommandations clients.",
       "tags": [
         "B2B",
@@ -6369,7 +6369,7 @@
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Cabinet d’études",
-      "imageSubtitle": "Aperçu du système opérationnel pour cabinet d’études",
+      "imageSubtitle": "Aperçu du système métier pour cabinet d’études",
       "toolRefs": [
         {
           "slug": "typeform",
@@ -6400,7 +6400,7 @@
       "id": "e111",
       "slug": "infogerance-informatique",
       "name": "Infogérance informatique",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Pilotez parc client, tickets, contrats, interventions, sécurité et SLA.",
       "tags": [
         "B2B",
@@ -6411,7 +6411,7 @@
       "price": "",
       "sectorLabel": "Tech & Digital",
       "imageTitle": "Infogérance informatique",
-      "imageSubtitle": "Aperçu du système opérationnel pour infogérance informatique",
+      "imageSubtitle": "Aperçu du système métier pour infogérance informatique",
       "toolRefs": [
         {
           "slug": "ninjaone",
@@ -6438,7 +6438,7 @@
       "id": "e112",
       "slug": "cybersecurite-pme",
       "name": "Cybersécurité PME",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Structurez audits, risques, remédiations, preuves et sensibilisation sécurité.",
       "tags": [
         "B2B",
@@ -6449,7 +6449,7 @@
       "price": "",
       "sectorLabel": "Tech & Digital",
       "imageTitle": "Cybersécurité PME",
-      "imageSubtitle": "Aperçu du système opérationnel pour cybersécurité pme",
+      "imageSubtitle": "Aperçu du système métier pour cybersécurité pme",
       "toolRefs": [
         {
           "slug": "tenable-vulnerability-management",
@@ -6480,7 +6480,7 @@
       "id": "e113",
       "slug": "integrateur-crm-erp",
       "name": "Intégrateur CRM / ERP",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Cadrez besoins, paramétrage, migration, recettes, formation et support client.",
       "tags": [
         "B2B",
@@ -6491,7 +6491,7 @@
       "price": "",
       "sectorLabel": "Tech & Digital",
       "imageTitle": "Intégrateur CRM / ERP",
-      "imageSubtitle": "Aperçu du système opérationnel pour intégrateur crm / erp",
+      "imageSubtitle": "Aperçu du système métier pour intégrateur crm / erp",
       "toolRefs": [
         {
           "slug": "odoo",
@@ -6514,7 +6514,7 @@
       "id": "e114",
       "slug": "consultant-data-bi",
       "name": "Consultant data / BI",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Structurez sources, tableaux de bord, indicateurs, qualité des données et décisions.",
       "tags": [
         "B2B",
@@ -6525,7 +6525,7 @@
       "price": "",
       "sectorLabel": "Tech & Digital",
       "imageTitle": "Consultant data / BI",
-      "imageSubtitle": "Aperçu du système opérationnel pour consultant data / bi",
+      "imageSubtitle": "Aperçu du système métier pour consultant data / bi",
       "toolRefs": [
         {
           "slug": "power-bi",
@@ -6552,7 +6552,7 @@
       "id": "e115",
       "slug": "agence-seo",
       "name": "Agence SEO",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Pilotez audit, contenus, technique, backlinks, reporting et performance organique.",
       "tags": [
         "B2B",
@@ -6563,7 +6563,7 @@
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Agence SEO",
-      "imageSubtitle": "Aperçu du système opérationnel pour agence seo",
+      "imageSubtitle": "Aperçu du système métier pour agence seo",
       "toolRefs": [
         {
           "slug": "semrush",
@@ -6630,7 +6630,7 @@
       "id": "e116",
       "slug": "agence-acquisition-paid-ads",
       "name": "Agence acquisition paid ads",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Structurez campagnes, budgets, créas, tracking, leads et rentabilité client.",
       "tags": [
         "B2B",
@@ -6641,7 +6641,7 @@
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Agence acquisition paid ads",
-      "imageSubtitle": "Aperçu du système opérationnel pour agence acquisition paid ads",
+      "imageSubtitle": "Aperçu du système métier pour agence acquisition paid ads",
       "toolRefs": [
         {
           "slug": "google-ads",
@@ -6700,7 +6700,7 @@
       "id": "e117",
       "slug": "studio-branding-design",
       "name": "Studio branding / design",
-      "category": "Système opérationnel",
+      "category": "Système métier",
       "description": "Cadrez stratégie de marque, créations, retours, livrables et validations client.",
       "tags": [
         "B2B",
@@ -6711,7 +6711,7 @@
       "price": "",
       "sectorLabel": "Conseil & services aux entreprises",
       "imageTitle": "Studio branding / design",
-      "imageSubtitle": "Aperçu du système opérationnel pour studio branding / design",
+      "imageSubtitle": "Aperçu du système métier pour studio branding / design",
       "toolRefs": [
         {
           "slug": "figma",

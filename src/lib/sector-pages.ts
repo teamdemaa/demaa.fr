@@ -45,11 +45,11 @@ function createSectorPageDefinition(
 
 const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
   createSectorPageDefinition("Conseil & services aux entreprises", {
-    title: "Systèmes opérationnels pour le conseil et les services aux entreprises",
+    title: "Systèmes métier pour le conseil et les services aux entreprises",
     description:
-      "Explorez les systèmes opérationnels, outils, services et ressources utiles pour structurer une activité de conseil ou de services B2B.",
+      "Explorez les systèmes métier, outils, services et ressources utiles pour structurer une activité de conseil ou de services B2B.",
     intro:
-      "Une page hub pour retrouver les principaux systèmes opérationnels à cadrer dans les activités de conseil, support, gestion, délégation et services aux entreprises.",
+      "Une page hub pour retrouver les principaux systèmes métier à cadrer dans les activités de conseil, support, gestion, délégation et services aux entreprises.",
     priorities: [
       "Cadrer les demandes entrantes, les relances et le suivi commercial.",
       "Structurer les livrables, la production et la marge par mission.",
@@ -85,11 +85,11 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     ],
   }),
   createSectorPageDefinition("Tech & Digital", {
-    title: "Systèmes opérationnels pour les activités tech et digitales",
+    title: "Systèmes métier pour les activités tech et digitales",
     description:
-      "Explorez les systèmes opérationnels, outils, services et ressources utiles pour structurer une activité tech, digitale ou logicielle.",
+      "Explorez les systèmes métier, outils, services et ressources utiles pour structurer une activité tech, digitale ou logicielle.",
     intro:
-      "Une vue d'ensemble des systèmes opérationnels à cadrer pour mieux piloter support, delivery, acquisition, données et exploitation dans les activités tech et digitales.",
+      "Une vue d'ensemble des systèmes métier à cadrer pour mieux piloter support, delivery, acquisition, données et exploitation dans les activités tech et digitales.",
     priorities: [
       "Fiabiliser le delivery, le support et le suivi client.",
       "Choisir des outils cohérents pour éviter les doublons et les ruptures.",
@@ -115,9 +115,9 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     ],
   }),
   createSectorPageDefinition("BTP & services techniques", {
-    title: "Systèmes opérationnels pour le BTP et les services techniques",
+    title: "Systèmes métier pour le BTP et les services techniques",
     description:
-      "Explorez les systèmes opérationnels, outils, services et ressources utiles pour structurer une activité BTP, chantier ou technique.",
+      "Explorez les systèmes métier, outils, services et ressources utiles pour structurer une activité BTP, chantier ou technique.",
     intro:
       "Une page hub pour cadrer devis, chantiers, équipes, sécurité, marge et exécution terrain dans le bâtiment et les services techniques.",
     priorities: [
@@ -151,11 +151,11 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     ],
   }),
   createSectorPageDefinition("Immobilier", {
-    title: "Systèmes opérationnels pour les activités immobilières",
+    title: "Systèmes métier pour les activités immobilières",
     description:
-      "Explorez les systèmes opérationnels, outils, services et ressources utiles pour structurer une activité immobilière, locative ou de transaction.",
+      "Explorez les systèmes métier, outils, services et ressources utiles pour structurer une activité immobilière, locative ou de transaction.",
     intro:
-      "Une vue d'ensemble des systèmes opérationnels à cadrer pour mieux suivre mandats, biens, loyers, incidents, transactions et coordination terrain.",
+      "Une vue d'ensemble des systèmes métier à cadrer pour mieux suivre mandats, biens, loyers, incidents, transactions et coordination terrain.",
     priorities: [
       "Structurer le suivi des mandats, biens, visites et transactions.",
       "Clarifier la gestion des incidents, documents et relances locatives.",
@@ -177,11 +177,11 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     ],
   }),
   createSectorPageDefinition("Hébergement & tourisme", {
-    title: "Systèmes opérationnels pour l'hébergement et le tourisme",
+    title: "Systèmes métier pour l'hébergement et le tourisme",
     description:
-      "Explorez les systèmes opérationnels, outils, services et ressources utiles pour structurer une activité d'hébergement, de conciergerie ou de voyage.",
+      "Explorez les systèmes métier, outils, services et ressources utiles pour structurer une activité d'hébergement, de conciergerie ou de voyage.",
     intro:
-      "Une page hub pour retrouver les systèmes opérationnels à cadrer autour des réservations, du planning, du ménage, des voyageurs et de l'exploitation saisonnière.",
+      "Une page hub pour retrouver les systèmes métier à cadrer autour des réservations, du planning, du ménage, des voyageurs et de l'exploitation saisonnière.",
     priorities: [
       "Tenir les réservations, la coordination terrain et les incidents sous controle.",
       "Mieux gérer ménage, voyageurs, disponibilites et saisonnalité.",
@@ -199,9 +199,9 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     ],
   }),
   createSectorPageDefinition("Patrimoine", {
-    title: "Systèmes opérationnels pour les activités patrimoniales",
+    title: "Systèmes métier pour les activités patrimoniales",
     description:
-      "Explorez les systèmes opérationnels, outils, services et ressources utiles pour structurer une activité de patrimoine, investissement ou conseil patrimonial.",
+      "Explorez les systèmes métier, outils, services et ressources utiles pour structurer une activité de patrimoine, investissement ou conseil patrimonial.",
     intro:
       "Une page hub pour cadrer le suivi client, les arbitrages, la conformité, les recommandations et la lecture financière dans les activités patrimoniales.",
     priorities: [
@@ -222,9 +222,9 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     ],
   }),
   createSectorPageDefinition("Mobilité & logistique", {
-    title: "Systèmes opérationnels pour la mobilité et la logistique",
+    title: "Systèmes métier pour la mobilité et la logistique",
     description:
-      "Explorez les systèmes opérationnels, outils, services et ressources utiles pour structurer une activité de transport, mobilité ou livraison.",
+      "Explorez les systèmes métier, outils, services et ressources utiles pour structurer une activité de transport, mobilité ou livraison.",
     intro:
       "Une page hub pour piloter tournées, chauffeurs, délais, incidents et rentabilité dans les activités de mobilité et de logistique.",
     priorities: [
@@ -246,9 +246,9 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     ],
   }),
   createSectorPageDefinition("Restauration", {
-    title: "Systèmes opérationnels pour les activités de restauration",
+    title: "Systèmes métier pour les activités de restauration",
     description:
-      "Explorez les systèmes opérationnels, outils, services et ressources utiles pour structurer un restaurant, fast-food, traiteur ou food truck.",
+      "Explorez les systèmes métier, outils, services et ressources utiles pour structurer un restaurant, fast-food, traiteur ou food truck.",
     intro:
       "Une page hub pour cadrer service, commandes, stocks, planning, production et marge dans les activités de restauration.",
     priorities: [
@@ -270,9 +270,9 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     ],
   }),
   createSectorPageDefinition("Commerce & retail", {
-    title: "Systèmes opérationnels pour le commerce et le retail",
+    title: "Systèmes métier pour le commerce et le retail",
     description:
-      "Explorez les systèmes opérationnels, outils, services et ressources utiles pour structurer un commerce, une boutique ou une activité e-commerce.",
+      "Explorez les systèmes métier, outils, services et ressources utiles pour structurer un commerce, une boutique ou une activité e-commerce.",
     intro:
       "Une page hub pour cadrer stock, caisse, commandes, marge, assortiment et suivi client dans les activités de commerce et retail.",
     priorities: [
@@ -295,9 +295,9 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     ],
   }),
   createSectorPageDefinition("Santé, bien-être & esthétique", {
-    title: "Systèmes opérationnels pour la santé, le bien-être et l'esthétique",
+    title: "Systèmes métier pour la santé, le bien-être et l'esthétique",
     description:
-      "Explorez les systèmes opérationnels, outils, services et ressources utiles pour structurer un cabinet, une activité de soin, de beauté ou de suivi patient.",
+      "Explorez les systèmes métier, outils, services et ressources utiles pour structurer un cabinet, une activité de soin, de beauté ou de suivi patient.",
     intro:
       "Une page hub pour cadrer agenda, dossiers, suivi client ou patient, planning, paiements et conformité dans les activités de santé et bien-être.",
     priorities: [
@@ -328,11 +328,11 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     ],
   }),
   createSectorPageDefinition("Services aux particuliers", {
-    title: "Systèmes opérationnels pour les services aux particuliers",
+    title: "Systèmes métier pour les services aux particuliers",
     description:
-      "Explorez les systèmes opérationnels, outils, services et ressources utiles pour structurer une activité de service récurrent ou terrain auprès des particuliers.",
+      "Explorez les systèmes métier, outils, services et ressources utiles pour structurer une activité de service récurrent ou terrain auprès des particuliers.",
     intro:
-      "Une page hub pour retrouver les systèmes opérationnels à cadrer autour des plannings, interventions, suivi client, remplacements et exécution terrain.",
+      "Une page hub pour retrouver les systèmes métier à cadrer autour des plannings, interventions, suivi client, remplacements et exécution terrain.",
     priorities: [
       "Mieux suivre plannings, interventions et remplacements.",
       "Garder demandes, bénéficiaires ou clients et execution terrain alignés.",
@@ -351,9 +351,9 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     ],
   }),
   createSectorPageDefinition("Éducation & formation", {
-    title: "Systèmes opérationnels pour l'éducation et la formation",
+    title: "Systèmes métier pour l'éducation et la formation",
     description:
-      "Explorez les systèmes opérationnels, outils, services et ressources utiles pour structurer un organisme de formation, un CFA ou une offre éducative.",
+      "Explorez les systèmes métier, outils, services et ressources utiles pour structurer un organisme de formation, un CFA ou une offre éducative.",
     intro:
       "Une page hub pour cadrer inscriptions, sessions, apprenants, intervenants, conformité et suivi pédagogique dans l'éducation et la formation.",
     priorities: [
@@ -375,9 +375,9 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     ],
   }),
   createSectorPageDefinition("Industrie & production", {
-    title: "Systèmes opérationnels pour l'industrie et la production",
+    title: "Systèmes métier pour l'industrie et la production",
     description:
-      "Explorez les systèmes opérationnels, outils, services et ressources utiles pour structurer une activité de production, atelier ou industrie.",
+      "Explorez les systèmes métier, outils, services et ressources utiles pour structurer une activité de production, atelier ou industrie.",
     intro:
       "Une page hub pour cadrer production, stocks, priorités, délais et exécution dans les activités d'industrie et de production.",
     priorities: [
@@ -395,9 +395,9 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     ],
   }),
   createSectorPageDefinition("Automobile & réparation", {
-    title: "Systèmes opérationnels pour l'automobile et la réparation",
+    title: "Systèmes métier pour l'automobile et la réparation",
     description:
-      "Explorez les systèmes opérationnels, outils, services et ressources utiles pour structurer un garage, une carrosserie ou une activité de réparation.",
+      "Explorez les systèmes métier, outils, services et ressources utiles pour structurer un garage, une carrosserie ou une activité de réparation.",
     intro:
       "Une page hub pour cadrer atelier, pièces, rendez-vous, sinistres, facturation et suivi client dans l'automobile et la réparation.",
     priorities: [
@@ -416,9 +416,9 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     ],
   }),
   createSectorPageDefinition("Associations & événements", {
-    title: "Systèmes opérationnels pour les associations et l'événementiel",
+    title: "Systèmes métier pour les associations et l'événementiel",
     description:
-      "Explorez les systèmes opérationnels, outils, services et ressources utiles pour structurer une association ou une activité événementielle.",
+      "Explorez les systèmes métier, outils, services et ressources utiles pour structurer une association ou une activité événementielle.",
     intro:
       "Une page hub pour cadrer adhésions, bénévoles, planning, budget, prestataires et exécution dans les associations et l'événementiel.",
     priorities: [

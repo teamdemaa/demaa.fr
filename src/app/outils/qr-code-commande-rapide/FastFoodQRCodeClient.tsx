@@ -19,7 +19,7 @@ import { toPng } from "html-to-image";
 
 export default function FastFoodQRCode() {
   const [restaurantName, setRestaurantName] = useState("Mon établissement");
-  const [orderUrl, setOrderUrl] = useState("https://demaa.fr/order-now");
+  const [orderUrl, setOrderUrl] = useState("https://demaa.co/order-now");
   const [ctaText, setCtaText] = useState("Commandez ici");
   const [color, setColor] = useState("#141414");
   const [icon, setIcon] = useState<"time" | "order" | "payment">("time");

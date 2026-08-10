@@ -79,7 +79,7 @@ async function request(url, method) {
     headers: {
       accept: "text/html,application/xhtml+xml,application/json;q=0.9,*/*;q=0.8",
       "accept-language": "fr-FR,fr;q=0.9,en;q=0.7",
-      "user-agent": "Mozilla/5.0 (compatible; DemaaLinkAudit/1.0; +https://demaa.fr)",
+      "user-agent": "Mozilla/5.0 (compatible; DemaaLinkAudit/1.0; +https://demaa.co)",
     },
   });
 
@@ -104,7 +104,7 @@ async function requestWithCurl(url, headOnly = true) {
       "--max-time",
       String(Math.ceil(requestTimeoutMs / 1000)),
       "--user-agent",
-      "Mozilla/5.0 (compatible; DemaaLinkAudit/1.0; +https://demaa.fr)",
+      "Mozilla/5.0 (compatible; DemaaLinkAudit/1.0; +https://demaa.co)",
       ...(headOnly ? ["--head"] : []),
       "--write-out",
       "%{http_code}\t%{url_effective}",

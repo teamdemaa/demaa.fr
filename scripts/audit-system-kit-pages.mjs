@@ -394,7 +394,7 @@ export function inspectPage({ response, html, tab, expectedSolutionOrder }) {
 }
 
 async function inspectState({ baseUrl, enterprise, expectedSolutionOrder, request, tab }) {
-  const url = `${baseUrl}/kit-operationnel/${encodeURIComponent(enterprise.slug)}?tab=${tab}`;
+  const url = `${baseUrl}/systemes/${encodeURIComponent(enterprise.slug)}?tab=${tab}`;
 
   for (let attempt = 0; attempt <= request.retryCount; attempt += 1) {
     try {

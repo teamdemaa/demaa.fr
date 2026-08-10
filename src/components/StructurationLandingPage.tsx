@@ -384,17 +384,17 @@ export default function StructurationLandingPage() {
           </Link>
           <div className="flex items-center gap-3">
             <Link
-              href="/systemes-operationnels"
-              aria-label="Découvrir les systèmes opérationnels"
+              href="/systemes"
+              aria-label="Découvrir les systèmes métier"
               className="demaa-secondary-button h-10 min-h-10 w-auto shrink-0 gap-2 px-3 text-xs md:px-4 md:text-sm"
             >
               <BriefcaseBusiness
                 className="h-4 w-4 shrink-0"
                 aria-hidden="true"
               />
-              <span className="md:hidden">Système opérationnel</span>
+              <span className="md:hidden">Système métier</span>
               <span className="hidden md:inline">
-                Découvrir les systèmes opérationnels
+                Découvrir les systèmes métier
               </span>
             </Link>
             <Link
@@ -524,7 +524,7 @@ export default function StructurationLandingPage() {
               </span>
               <div>
                 <p className="font-medium text-dema-forest">
-                  Votre système opérationnel sert de base
+                  Votre système métier sert de base
                 </p>
                 <p className="mt-1 text-sm leading-6 text-dema-muted">
                   Nous l’adaptons à vos chiffres, vos rôles, vos outils et votre

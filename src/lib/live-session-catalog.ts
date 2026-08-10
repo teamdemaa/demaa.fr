@@ -221,7 +221,7 @@ const historicalLiveTrainings = [
       "Mettre en place un rythme de délégation et de suivi simple.",
     ],
     includedModels: [
-      "Système opérationnel adapté à votre activité",
+      "Système métier adapté à votre activité",
       "Modèles de process, responsabilités et routines de suivi",
     ],
     qAndA: "Un temps de questions-réponses pour adapter les process à votre organisation.",

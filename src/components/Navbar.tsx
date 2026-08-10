@@ -22,7 +22,7 @@ export function getNavbarActiveSection(pathname: string): NavbarSection {
     pathname.startsWith("/academie/") ||
     pathname === "/cours" ||
     pathname.startsWith("/cours/");
-  const isSystemDetailPage = pathname.startsWith("/kit-operationnel/");
+  const isSystemDetailPage = pathname.startsWith("/systemes/");
 
   if (
     pathname === "/systemes" ||

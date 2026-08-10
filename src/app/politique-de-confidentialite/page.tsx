@@ -54,7 +54,7 @@ export default function PolitiqueConfidentialitePage() {
               <li>numéro de téléphone / WhatsApp ;</li>
               <li>nom d&apos;entreprise ;</li>
               <li>secteur d&apos;activité ;</li>
-              <li>système opérationnel et ressource dont vous demandez l&apos;envoi ;</li>
+              <li>système métier et ressource dont vous demandez l&apos;envoi ;</li>
               <li>contenu de votre demande, besoin métier, préférences outils et informations transmises dans les formulaires ;</li>
               <li>entreprise, site ou page professionnelle et problématique proposés à la newsletter Structure, ainsi que la preuve de votre accord de publication lorsque vous le donnez ;</li>
               <li>enregistrement vocal et transcription associés à une proposition Structure, uniquement lorsque cette option est disponible et que vous choisissez de l&apos;utiliser ;</li>

@@ -88,8 +88,8 @@ function buildFailedLead() {
       context: {
         sector_label: "BTP",
         sector_slug: "btp",
-        source: "Livraison du système opérationnel gratuit",
-        source_url: "/kit-operationnel/plomberie-chauffage",
+        source: "Livraison du système métier gratuit",
+        source_url: "/systemes/plomberie-chauffage",
         system_name: "Plomberie & chauffage",
         system_slug: "plomberie-chauffage",
       },

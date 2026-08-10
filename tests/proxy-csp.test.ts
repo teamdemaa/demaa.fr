@@ -27,14 +27,14 @@ describe("proxy content security policy", () => {
     "redirects %s to the canonical domain while preserving path and query",
     (host) => {
       const response = proxy(
-        new NextRequest(`https://${host}/kit-operationnel/restaurant?tab=solutions`, {
+        new NextRequest(`https://${host}/systemes/restaurant?tab=solutions`, {
           headers: { host },
         }),
       );
 
       expect(response.status).toBe(308);
       expect(response.headers.get("location")).toBe(
-        "https://demaa.co/kit-operationnel/restaurant?tab=solutions",
+        "https://demaa.co/systemes/restaurant?tab=solutions",
       );
     },
   );

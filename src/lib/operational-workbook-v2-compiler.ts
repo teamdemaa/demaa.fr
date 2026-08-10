@@ -553,8 +553,8 @@ function operationalWorkbookTitle(
   }
 
   return blueprint.variant === "demo"
-    ? `Démonstration - Système opérationnel - ${canonicalSystemName}`
-    : `Système opérationnel modifiable - ${canonicalSystemName}`;
+    ? `Démonstration - Système métier - ${canonicalSystemName}`
+    : `Système métier modifiable - ${canonicalSystemName}`;
 }
 
 function normalizePreflightForFingerprint(
@@ -1364,7 +1364,7 @@ function buildSummaryRows(
     )}`;
 
   return [
-    [`${blueprint.systemName.toUpperCase()} - SYSTÈME OPÉRATIONNEL`],
+    [`${blueprint.systemName.toUpperCase()} - SYSTÈME MÉTIER`],
     [
       blueprint.variant === "demo"
         ? "Démonstration fictive à remplacer par les données réelles de l’entreprise."

@@ -125,7 +125,7 @@ describe("system Resources catalog", () => {
       workbookVersion: "1.0.0",
     });
     expect(resolveSystemResourceDelivery(snapshot!, "cabinet-comptable")).toEqual({
-      destination: "https://demaa.co/kit-operationnel/cabinet-comptable/recapitulatif",
+      destination: "https://demaa.co/systemes/cabinet-comptable/recapitulatif",
       resourceSlug: "recapitulatif-systeme",
     });
     expect(resolveSystemResourceDelivery(snapshot!)).toBeNull();

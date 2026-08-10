@@ -29,7 +29,7 @@ describe("system UX contract", () => {
       "src/components/HistoricalOperationalSystemCopyRequestModal.tsx",
     );
     const pageSource = await readSource(
-      "src/app/kit-operationnel/[slug]/page.tsx",
+      "src/app/systemes/[slug]/page.tsx",
     );
 
     expect(detailSource).not.toContain("Voir le système");
@@ -46,7 +46,7 @@ describe("system UX contract", () => {
     expect(resourcesSource).not.toContain("OperationalSystemCopyRequestModal");
     expect(resourcesSource).not.toContain("SystemRecapRequestModal");
     expect(resourcesSource).toContain("SystemResourcePreviewModal");
-    expect(resourcesSource).toContain("/kit-operationnel/${systemSlug}/recapitulatif");
+    expect(resourcesSource).toContain("/systemes/${systemSlug}/recapitulatif");
     expect(resourcesSource).not.toContain("/api/systeme-kit/request");
     expect(resourcePreviewSource).toContain("/api/systeme-kit/open/${resource.resourceSlug}");
     expect(resourcePreviewSource).toContain('target="_blank"');
@@ -90,7 +90,7 @@ describe("system UX contract", () => {
   it("provides a clear fallback when native printing is unavailable", async () => {
     const [printButtonSource, recapSource, globalStyles] = await Promise.all([
       readSource("src/components/SystemRecapPrintButton.tsx"),
-      readSource("src/app/kit-operationnel/[slug]/recapitulatif/page.tsx"),
+      readSource("src/app/systemes/[slug]/recapitulatif/page.tsx"),
       readSource("src/app/globals.css"),
     ]);
 

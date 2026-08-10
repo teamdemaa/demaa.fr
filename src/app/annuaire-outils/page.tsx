@@ -69,7 +69,7 @@ export default async function AnnuaireOutilsPage({
   const directoryTools = withSoftwareDetailUrls(toolDirectoryMeta.tools);
   const backLink = returnEnterprise
     ? {
-        href: `/systemes-operationnels/${encodeURIComponent(returnEnterprise.slug)}?tab=outils`,
+        href: `/systemes/${encodeURIComponent(returnEnterprise.slug)}?tab=solutions`,
         label: `Retour à ${returnEnterprise.name}`,
       }
     : undefined;

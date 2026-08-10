@@ -89,7 +89,7 @@ export default function SystemsCatalogClient({
       (currentSections, system) => {
         const title =
           detailsBySlug[system.slug]?.sectorLabel ??
-          "Autres systèmes opérationnels";
+          "Autres systèmes métier";
         const section = currentSections.find((current) => current.title === title);
 
         if (section) {
@@ -122,7 +122,7 @@ export default function SystemsCatalogClient({
         {showIntro ? (
           <div className="max-w-3xl">
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-dema-forest">
-              Systèmes opérationnels
+              Systèmes métier
             </p>
             <h1 className="mt-3 demaa-section-title text-4xl tracking-tight text-brand-blue md:text-5xl">
               Les processus essentiels par entreprise
@@ -186,7 +186,7 @@ export default function SystemsCatalogClient({
         {systemSections.length === 0 ? (
           <div className="mt-8 rounded-[1.25rem] border border-dashed border-dema-line bg-dema-paper p-10 text-center">
             <h2 className="text-xl font-bold text-brand-blue">
-              Aucun système opérationnel trouvé
+              Aucun système métier trouvé
             </h2>
             <p className="mt-3 text-sm font-normal text-dema-muted">
               Essayez un autre mot-clé ou un secteur plus large.
@@ -215,7 +215,7 @@ export default function SystemsCatalogClient({
                       return (
                         <SystemCard
                           key={system.id}
-                          href={`/systemes-operationnels/${system.slug}`}
+                          href={`/systemes/${system.slug}`}
                           icon={
                             <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper">
                               {icon}

@@ -408,7 +408,7 @@ describe("system Solutions UI", () => {
   });
 
   it("keeps the registry server-side and crosses RSC with public DTOs only", async () => {
-    const pageSource = await readSource("src/app/kit-operationnel/[slug]/page.tsx");
+    const pageSource = await readSource("src/app/systemes/[slug]/page.tsx");
     const detailSource = await readSource("src/components/SystemDetailContent.tsx");
     const solutionsSource = await readSource("src/components/SystemSolutionsTab.tsx");
 
@@ -465,12 +465,12 @@ describe("system Solutions UI", () => {
     expect(detailSource).not.toContain("OperationalSystemCopyRequestModal");
     expect(resourcesSource).not.toContain("OperationalSystemCopyRequestModal");
     expect(resourcesSource).toContain("SystemResourcePreviewModal");
-    expect(resourcesSource).toContain("/kit-operationnel/${systemSlug}/recapitulatif");
+    expect(resourcesSource).toContain("/systemes/${systemSlug}/recapitulatif");
     expect(resourcePreviewSource).toContain("/api/systeme-kit/open/${resource.resourceSlug}");
     expect(resourcesSource).toContain("resources: readonly SystemResource[]");
     expect(detailSource).not.toContain("HistoricalOperationalSystemCopyRequestModal");
     expect(detailSource).not.toContain("Voir le système");
-    expect(systemModalSource).toContain("Système opérationnel - {systemName}");
+    expect(systemModalSource).toContain("Système métier - {systemName}");
     expect(systemModalSource).toContain("Recevoir ma copie modifiable");
     expect(systemModalSource).toContain('const flowKey = `system-copy:${systemSlug}`');
   });
@@ -507,7 +507,7 @@ describe("system Solutions UI", () => {
 
   it("keeps the W6 SEO and JSON-LD integration gate explicit", async () => {
     const gate = await readSource("docs/system-solutions-ui-w6-integration-gate.md");
-    const pageSource = await readSource("src/app/kit-operationnel/[slug]/page.tsx");
+    const pageSource = await readSource("src/app/systemes/[slug]/page.tsx");
 
     expect(gate).toContain("bloqué avant W6");
     expect(gate).toContain("JSON-LD");

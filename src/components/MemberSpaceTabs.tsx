@@ -121,7 +121,7 @@ function RequestCardArticle({
 
       {hasSectorSystem ? (
         <p className="mt-5 rounded-full bg-dema-sage px-4 py-2 text-center text-sm text-dema-forest">
-          Achat confirmé. Demaa vous envoie la suite pour accéder au système opérationnel acheté.
+          Achat confirmé. Demaa vous envoie la suite pour accéder au système métier acheté.
         </p>
       ) : (
         <>

@@ -165,7 +165,7 @@ export const LEVIER_SOLUTION_PLACEMENTS: readonly SolutionPlacement[] =
       usage:
         "Suivre l’activité, les finances, les actions et les responsabilités dans un tableau unique.",
       fitRationale:
-        "Levier fournit le socle de pilotage commun nécessaire pour exécuter ce système opérationnel.",
+        "Levier fournit le socle de pilotage commun nécessaire pour exécuter ce système métier.",
       fitConstraints: [
         "Adapter les objectifs, responsables et rythmes de suivi à l’organisation.",
       ],

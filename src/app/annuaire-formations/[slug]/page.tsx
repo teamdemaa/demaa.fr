@@ -80,7 +80,7 @@ export default async function TrainingDetailPage({
     : null;
   const backLink = returnEnterprise
     ? {
-        href: `/systemes-operationnels/${encodeURIComponent(returnEnterprise.slug)}`,
+        href: `/systemes/${encodeURIComponent(returnEnterprise.slug)}`,
         label: `Retour à ${returnEnterprise.name}`,
       }
     : {
@@ -108,7 +108,7 @@ export default async function TrainingDetailPage({
           <section className="mt-5">
             <RelatedSystemsLinks
               systems={relatedSystems}
-              description="Quelques systèmes opérationnels où cette formation revient souvent."
+              description="Quelques systèmes métier où cette formation revient souvent."
             />
           </section>
         </div>

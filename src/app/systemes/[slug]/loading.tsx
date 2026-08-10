@@ -13,7 +13,7 @@ function LoadingCard() {
     </div>
   );
 }
-export default function Loading() {
+export default function SystemPageLoading() {
   return (
     <>
       <Navbar minimal />
