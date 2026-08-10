@@ -167,7 +167,7 @@ async function handlePost(request: Request) {
   }
   if (!requestedResource && !hasPublishedLevier && !hasEditableOperationalSystemAsset(systemSlug)) {
     return NextResponse.json(
-      { error: "Le système opérationnel demandé est introuvable." },
+      { error: "Le système métier demandé est introuvable." },
       { status: 404 },
     );
   }
@@ -178,7 +178,7 @@ async function handlePost(request: Request) {
       : getActiveOperationalSystemDeliverySnapshot(systemSlug);
   if (!requestedAssetSnapshot) {
     return NextResponse.json(
-      { error: "Le système opérationnel demandé est indisponible." },
+      { error: "Le système métier demandé est indisponible." },
       { status: 503 },
     );
   }
@@ -194,7 +194,7 @@ async function handlePost(request: Request) {
   const systemName = enterpriseToSystem(enterprise).name;
   if (!systemName) {
     return NextResponse.json(
-      { error: "Le nom du système opérationnel est introuvable." },
+      { error: "Le nom du système métier est introuvable." },
       { status: 404 },
     );
   }
@@ -204,7 +204,7 @@ async function handlePost(request: Request) {
       ? `Livraison de la ressource - ${requestedResource.title}`
       : hasPublishedLevier
       ? "Livraison du tableau de pilotage opérationnel"
-      : "Livraison du système opérationnel gratuit",
+      : "Livraison du système métier gratuit",
     sourceUrl: request.headers.get("referer"),
   });
 
@@ -257,7 +257,7 @@ async function handlePost(request: Request) {
       ? `Livraison de ressource - ${requestedResource.title} - ${systemName}`
       : hasPublishedLevier
       ? `Livraison du tableau de pilotage opérationnel - ${systemName}`
-      : `Livraison du système opérationnel gratuit - ${systemName}`,
+      : `Livraison du système métier gratuit - ${systemName}`,
   });
 
   const deliveryState = await getLeadDeliveryState(lead.leadId, "kit_email");

@@ -1090,7 +1090,7 @@ describe("operational workbook v2 pilots", () => {
       sheets: buildingDemoV2.sheets,
       spreadsheetId: buildingDemoV2.spreadsheetId,
       spreadsheetTitle:
-        "Démonstration - Système opérationnel - Restaurant",
+        "Démonstration - Système métier - Restaurant",
     });
     expect(() =>
       compileOperationalWorkbookV2ApplicationPlan(

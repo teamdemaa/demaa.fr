@@ -33,13 +33,13 @@ async function fetchPage(path, redirect = "follow") {
   return fetch(`${baseUrl}${path}`, {
     redirect,
     signal: AbortSignal.timeout(timeoutMs),
-    headers: { "user-agent": "Demaa operational kit audit" },
+    headers: { "user-agent": "Demaa system audit (+https://demaa.co)" },
   });
 }
 
 async function inspectEnterprise(enterprise) {
   const slug = encodeURIComponent(enterprise.slug);
-  const canonicalPath = `/kit-operationnel/${slug}`;
+  const canonicalPath = `/systemes/${slug}`;
   const errors = [];
 
   try {
@@ -50,20 +50,11 @@ async function inspectEnterprise(enterprise) {
       .replace(/<!--[\s\S]*?-->/g, "");
 
     if (overviewResponse.status !== 200) errors.push(`canonical HTTP ${overviewResponse.status}`);
-    if (!overviewHtml.includes(`<link rel="canonical" href="https://demaa.fr${canonicalPath}"/>`)) {
+    if (!overviewHtml.includes(`<link rel="canonical" href="https://demaa.co${canonicalPath}"/>`)) {
       errors.push("canonical link missing or incorrect");
     }
-    if (!overviewHtml.includes("Système opérationnel")) {
+    if (!overviewHtml.includes("Système métier")) {
       errors.push("SEO title missing");
-    }
-
-    for (const expectedText of [
-      "Besoin d’une application adaptée à votre métier ?",
-      "Voir l’offre sur mesure",
-    ]) {
-      if (!renderedOverviewHtml.includes(expectedText)) {
-        errors.push(`system journey control missing: ${expectedText}`);
-      }
     }
     if (renderedOverviewHtml.includes("Voir le système")) {
       errors.push("hidden historical system delivery entry point is still visible");
@@ -115,9 +106,14 @@ async function inspectEnterprise(enterprise) {
 
     const redirects = [
       {
-        from: `/systemes/${slug}?tab=outils`,
-        to: `${canonicalPath}?tab=outils`,
-        label: "systemes",
+        from: `/kit-operationnel/${slug}?tab=solutions`,
+        to: `${canonicalPath}?tab=solutions`,
+        label: "kit-operationnel",
+      },
+      {
+        from: `/systemes-operationnels/${slug}`,
+        to: canonicalPath,
+        label: "systemes-operationnels",
       },
       {
         from: `/kit-systeme/${slug}`,

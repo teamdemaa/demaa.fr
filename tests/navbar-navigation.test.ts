@@ -6,7 +6,7 @@ describe("conventional systems and Academy navbar", () => {
   it("marks system discovery pages as active", () => {
     expect(getNavbarActiveSection("/systemes")).toBe("systems");
     expect(getNavbarActiveSection("/kits-operationnels")).toBe("systems");
-    expect(getNavbarActiveSection("/kit-operationnel/batiment")).toBe(
+    expect(getNavbarActiveSection("/systemes/batiment")).toBe(
       "systems",
     );
   });
@@ -63,8 +63,8 @@ describe("conventional systems and Academy navbar", () => {
 
   it("keeps the navbar on system detail and loading states", async () => {
     const [pageSource, loadingSource] = await Promise.all([
-      readFile(new URL("../src/app/kit-operationnel/[slug]/page.tsx", import.meta.url), "utf8"),
-      readFile(new URL("../src/app/kit-operationnel/[slug]/loading.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/systemes/[slug]/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/systemes/[slug]/loading.tsx", import.meta.url), "utf8"),
     ]);
 
     expect(pageSource).toContain("<Navbar minimal />");

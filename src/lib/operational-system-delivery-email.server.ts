@@ -88,10 +88,10 @@ export async function sendOperationalSystemDeliveryEmail(input: {
         <html lang="fr">
           <body style="margin:0;padding:32px 16px;background:#f9faf8;font-family:Arial,sans-serif;color:#17231d;">
             <div style="max-width:560px;margin:0 auto;border:1px solid #e7ece6;border-radius:24px;background:#ffffff;padding:32px;">
-              <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#315f46;">Système opérationnel</p>
+              <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#315f46;">Système métier</p>
               <h1 style="margin:14px 0;font-size:28px;line-height:1.2;">Votre système est prêt</h1>
               <p style="margin:0 0 16px;font-size:16px;line-height:1.7;color:#52606d;">${greeting}</p>
-              <p style="margin:0 0 16px;font-size:16px;line-height:1.7;color:#52606d;">Voici votre système opérationnel <strong>${safeSystemName}</strong>.</p>
+              <p style="margin:0 0 16px;font-size:16px;line-height:1.7;color:#52606d;">Voici votre système métier <strong>${safeSystemName}</strong>.</p>
               <p style="margin:0 0 22px;font-size:16px;line-height:1.7;color:#52606d;">Connectez-vous à Google, puis créez gratuitement votre copie personnelle et modifiable dans votre Drive.</p>
               <a href="${safeCopyUrl}" style="display:inline-block;border-radius:999px;background:#315f46;padding:14px 22px;font-size:15px;font-weight:700;color:#ffffff;text-decoration:none;">Créer ma copie dans Google Drive</a>
               <p style="margin:24px 0 8px;font-size:13px;line-height:1.6;color:#52606d;">Si le bouton ne fonctionne pas, copiez ce lien :</p>
@@ -103,7 +103,7 @@ export async function sendOperationalSystemDeliveryEmail(input: {
       text: [
         firstName ? `Bonjour ${firstName},` : "Bonjour,",
         "",
-        `Votre système opérationnel ${input.systemName} est prêt.`,
+        `Votre système métier ${input.systemName} est prêt.`,
         "",
         "Connectez-vous à Google, puis créez gratuitement votre copie personnelle et modifiable dans votre Drive :",
         copyUrl,

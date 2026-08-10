@@ -181,8 +181,8 @@ export function compileOperationalWorkbookSheetRequests(
   const calendarEnd = 5 + blueprint.calendarRows.length;
   const ecosystemEnd = 5 + blueprint.ecosystemRows.length;
   const workbookTitle = isDemo
-    ? `Démonstration - Système opérationnel - ${blueprint.systemName}`
-    : `Système opérationnel modifiable - ${blueprint.systemName}`;
+    ? `Démonstration - Système métier - ${blueprint.systemName}`
+    : `Système métier modifiable - ${blueprint.systemName}`;
   const requests: unknown[] = [
     {
       updateSpreadsheetProperties: {
@@ -204,7 +204,7 @@ export function compileOperationalWorkbookSheetRequests(
       },
     })),
     writeValues(gridRange(sheetIds.summary, 0, 2, 0, 1), [
-      [`${blueprint.systemName.toUpperCase()} - SYSTÈME OPÉRATIONNEL`],
+      [`${blueprint.systemName.toUpperCase()} - SYSTÈME MÉTIER`],
       [blueprint.notices.Synthèse],
     ]),
     writeValues(gridRange(sheetIds.actions, 0, 2, 2, 3), [

@@ -80,7 +80,7 @@ export default async function ProNetworkDetailPage({
     : null;
   const backLink = returnEnterprise
     ? {
-        href: `/systemes-operationnels/${encodeURIComponent(returnEnterprise.slug)}`,
+        href: `/systemes/${encodeURIComponent(returnEnterprise.slug)}`,
         label: `Retour à ${returnEnterprise.name}`,
       }
     : {
@@ -108,7 +108,7 @@ export default async function ProNetworkDetailPage({
           <section className="mt-5">
             <RelatedSystemsLinks
               systems={relatedSystems}
-              description="Quelques systèmes opérationnels où ce réseau pro est particulièrement utile."
+              description="Quelques systèmes métier où ce réseau pro est particulièrement utile."
             />
           </section>
         </div>

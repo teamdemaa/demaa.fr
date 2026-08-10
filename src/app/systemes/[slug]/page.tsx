@@ -20,7 +20,7 @@ import {
   getSystemDetailPageData,
 } from "@/lib/system-detail-page";
 
-type OperationalKitPageProps = {
+type SystemPageProps = {
   params: Promise<{ slug: string }>;
   searchParams: Promise<{ tab?: string | string[] }>;
 };
@@ -30,7 +30,7 @@ function getParamValue(value?: string | string[]) {
 }
 export async function generateMetadata({
   params,
-}: OperationalKitPageProps): Promise<Metadata> {
+}: SystemPageProps): Promise<Metadata> {
   const { slug } = await params;
   const [data, solutionSections] = await Promise.all([
     getSystemDetailPageData(slug),
@@ -39,7 +39,7 @@ export async function generateMetadata({
 
   if (!data) {
     return {
-      title: "Système opérationnel introuvable - Demaa",
+      title: "Système métier introuvable - Demaa",
       robots: {
         index: false,
         follow: false,
@@ -50,10 +50,10 @@ export async function generateMetadata({
   return buildSystemPageMetadata(data, filterPublicSolutionSections(solutionSections));
 }
 
-export default async function OperationalKitPage({
+export default async function SystemPage({
   params,
   searchParams,
-}: OperationalKitPageProps) {
+}: SystemPageProps) {
   const [{ slug }, resolvedSearchParams] = await Promise.all([params, searchParams]);
   const [data, solutionSections, publishedSolutionSections] = await Promise.all([
     getSystemDetailPageData(slug),

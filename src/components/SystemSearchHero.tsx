@@ -161,7 +161,7 @@ export default function SystemSearchHero({
 
     trackSelection(index, "keyboard");
     setIsOpen(false);
-    router.push(`/systemes-operationnels/${suggestion.slug}`);
+    router.push(`/systemes/${suggestion.slug}`);
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
@@ -309,7 +309,7 @@ export default function SystemSearchHero({
                   <Link
                     key={suggestion.slug}
                     id={`system-search-suggestion-${suggestion.slug}`}
-                    href={`/systemes-operationnels/${suggestion.slug}`}
+                    href={`/systemes/${suggestion.slug}`}
                     prefetch
                     onClick={() => trackSelection(index, "click")}
                     onMouseEnter={() => setActiveIndex(index)}
@@ -388,7 +388,7 @@ function SystemDirectoryCard({ system }: { system: System }) {
 
   return (
     <Link
-      href={`/kit-operationnel/${system.slug}`}
+      href={`/systemes/${system.slug}`}
       className="demaa-card group relative flex aspect-square w-[74vw] max-w-[15rem] shrink-0 flex-col overflow-hidden rounded-[1.2rem] p-4 sm:w-[15rem] sm:p-5 [content-visibility:auto] [contain-intrinsic-size:15rem_15rem]"
     >
       <span className="relative z-10 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper sm:h-10 sm:w-10">

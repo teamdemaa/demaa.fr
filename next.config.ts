@@ -107,18 +107,33 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: '/systemes-operationnels/:slug',
-        destination: '/kit-operationnel/:slug',
+        source: '/systemes-operationnels/:slug/recapitulatif',
+        destination: '/systemes/:slug/recapitulatif',
         permanent: true,
       },
       {
-        source: '/systemes/:slug',
-        destination: '/kit-operationnel/:slug',
+        source: '/kit-operationnel/:slug/recapitulatif',
+        destination: '/systemes/:slug/recapitulatif',
+        permanent: true,
+      },
+      {
+        source: '/kit-systeme/:slug/recapitulatif',
+        destination: '/systemes/:slug/recapitulatif',
+        permanent: true,
+      },
+      {
+        source: '/systemes-operationnels/:slug',
+        destination: '/systemes/:slug',
+        permanent: true,
+      },
+      {
+        source: '/kit-operationnel/:slug',
+        destination: '/systemes/:slug',
         permanent: true,
       },
       {
         source: '/kit-systeme/:slug',
-        destination: '/kit-operationnel/:slug',
+        destination: '/systemes/:slug',
         permanent: true,
       },
       {
@@ -128,7 +143,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/modeles-de-documents/tableau-de-pilotage-:slug',
-        destination: '/kit-operationnel/:slug?tab=resources',
+        destination: '/systemes/:slug?tab=resources',
         permanent: true,
       },
       {
@@ -148,12 +163,12 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/plans-organisation/:slug',
-        destination: '/kit-operationnel/:slug',
+        destination: '/systemes/:slug',
         permanent: true,
       },
       {
         source: '/documents-structuration/:slug',
-        destination: '/kit-operationnel/:slug',
+        destination: '/systemes/:slug',
         permanent: true,
       },
       {

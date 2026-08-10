@@ -83,7 +83,7 @@ export default async function RecruitmentDetailPage({
     : null;
   const backLink = returnEnterprise
     ? {
-        href: `/systemes-operationnels/${encodeURIComponent(returnEnterprise.slug)}`,
+        href: `/systemes/${encodeURIComponent(returnEnterprise.slug)}`,
         label: `Retour à ${returnEnterprise.name}`,
       }
     : {
@@ -111,7 +111,7 @@ export default async function RecruitmentDetailPage({
           <section className="mt-5">
             <RelatedSystemsLinks
               systems={relatedSystems}
-              description="Quelques systèmes opérationnels où cette solution de recrutement revient souvent."
+              description="Quelques systèmes métier où cette solution de recrutement revient souvent."
             />
           </section>
         </div>

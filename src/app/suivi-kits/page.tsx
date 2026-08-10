@@ -312,7 +312,7 @@ export default async function KitAnalyticsPage({
                     <tr key={row.kitSlug} className="border-b border-dema-line/70 last:border-b-0">
                       <td className="px-5 py-4 sm:px-6">
                         <Link
-                          href={`/systemes-operationnels/${row.kitSlug}`}
+                          href={`/systemes/${row.kitSlug}`}
                           target="_blank"
                           className="inline-flex items-center gap-2 font-semibold text-brand-blue hover:text-dema-forest"
                         >

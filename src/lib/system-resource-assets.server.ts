@@ -112,7 +112,7 @@ export function resolveSystemResourceDelivery(
   if (snapshot.assetRevision === SYSTEM_RECAP_ASSET_REVISION) {
     if (!systemSlug || !/^[a-z0-9-]{2,120}$/.test(systemSlug)) return null;
     return {
-      destination: `${getCanonicalOrigin()}/kit-operationnel/${systemSlug}/recapitulatif`,
+      destination: `${getCanonicalOrigin()}/systemes/${systemSlug}/recapitulatif`,
       resourceSlug: "recapitulatif-systeme",
     };
   }

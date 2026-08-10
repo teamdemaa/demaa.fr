@@ -127,7 +127,7 @@ export default function SystemResourcesTab({
             return resource.resourceSlug === "recapitulatif-systeme" ? (
               <Link
                 key={resource.resourceSlug}
-                href={`/kit-operationnel/${systemSlug}/recapitulatif`}
+                href={`/systemes/${systemSlug}/recapitulatif`}
                 data-system-resource-card
                 onClick={() => trackSystemJourneyEvent("system_resource_opened", {
                   resourceSlug: resource.resourceSlug,

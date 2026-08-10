@@ -7,7 +7,8 @@
 - Base d'implémentation : `a58a191847867b700ad71ad40e6e8e6436d34d44`
 
 > Mise à jour : les passages relatifs aux Services, à leur placement dans les
-> Systèmes, à l'Académie et aux Ressources sont supersédés par l'ADR 0004.
+> Systèmes, à l'Académie et aux Ressources sont supersédés par l'ADR 0004. La
+> route canonique des fiches Système est supersédée par l'ADR 0007.
 
 ## Contexte
 
@@ -31,7 +32,7 @@ canonique par intention, sans casser les liens qui possèdent encore un
    **Système métier** et **Académie**.
 3. `/systemes` est le hub canonique des 115 systèmes. `/` peut présenter le
    même point d'entrée, sans créer un troisième univers de navigation.
-4. Une fiche `/kit-operationnel/[slug]` contient seulement :
+4. Une fiche `/systemes/[slug]` contient seulement :
    **Process**, **Solutions** et **Ressources**.
 5. Ressources conserve les guides, modèles et documents contextualisés au
    métier. L'Académie reste le hub global des contenus pédagogiques.

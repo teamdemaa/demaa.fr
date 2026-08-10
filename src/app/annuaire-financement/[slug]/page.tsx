@@ -83,7 +83,7 @@ export default async function FinanceDetailPage({
     : null;
   const backLink = returnEnterprise
     ? {
-        href: `/systemes-operationnels/${encodeURIComponent(returnEnterprise.slug)}`,
+        href: `/systemes/${encodeURIComponent(returnEnterprise.slug)}`,
         label: `Retour à ${returnEnterprise.name}`,
       }
     : {
@@ -111,7 +111,7 @@ export default async function FinanceDetailPage({
           <section className="mt-5">
             <RelatedSystemsLinks
               systems={relatedSystems}
-              description="Quelques systèmes opérationnels où ce sujet financement revient souvent."
+              description="Quelques systèmes métier où ce sujet financement revient souvent."
             />
           </section>
         </div>

@@ -42,7 +42,7 @@ export default async function AcademyIndexPage({ searchParams }: AcademyIndexPag
   const returnSystemSlug = getParamValue(resolvedSearchParams.retourSysteme);
   const backLink = returnSystemSlug
     ? {
-        href: `/kit-operationnel/${returnSystemSlug}`,
+        href: `/systemes/${returnSystemSlug}`,
         label: "Retour au système métier",
       }
     : undefined;

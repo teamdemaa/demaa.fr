@@ -549,7 +549,7 @@ pour permettre à un dirigeant de chercher rapidement une réponse pratique.
 - [ ] Prévoir les états recherche vide, aucune vidéo et vidéo indisponible.
 - [ ] Ajouter sous la recherche principale de la home un lien secondaire
   `Découvrir l'Académie`, sans concurrencer `Trouver le système opérationnel`.
-- [ ] Sur toutes les pages `/kit-operationnel/[slug]`, remplacer le CTA de
+- [ ] Sur toutes les pages `/systemes/[slug]`, remplacer le CTA de
   navbar `Trouver mon système` par `Découvrir l'Académie` et le faire pointer
   vers `/academie`, y compris sur mobile. Ne pas publier ce changement avant
   que la route existe.
@@ -709,7 +709,7 @@ formulaire, transmission de coordonnées ou promesse de mise en relation.
 
 - [ ] Rediriger `/kits-operationnels` vers `/` après audit SEO et analytics.
 - [ ] Conserver pour l'instant les anciennes routes individuelles
-  `/kit-operationnel/[slug]`.
+  `/systemes/[slug]`.
 - [ ] Relire la landing `/structuration` restaurée localement et décider si elle
   doit rester un prototype, être réécrite ou être abandonnée.
 - [ ] Si elle est conservée, aligner son offre, son tarif, ses CTA, ses

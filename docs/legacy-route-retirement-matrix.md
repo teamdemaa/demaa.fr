@@ -9,7 +9,10 @@ la query string.
 | URL historique | Résultat canonique | Motif |
 | --- | --- | --- |
 | `/modeles-de-documents` | `308` vers `/academie` | L'Académie est le hub global des contenus ; les modèles contextualisés restent dans Ressources. |
-| `/modeles-de-documents/tableau-de-pilotage-:slug` | `308` vers `/kit-operationnel/:slug?tab=resources` | La ressource est désormais attachée au système concerné. |
+| `/modeles-de-documents/tableau-de-pilotage-:slug` | `308` vers `/systemes/:slug?tab=resources` | La ressource est désormais attachée au système concerné. |
+| `/kit-operationnel/:slug` | `308` vers `/systemes/:slug` | Ancienne route des fiches Système métier. |
+| `/systemes-operationnels/:slug` | `308` vers `/systemes/:slug` | Ancienne appellation publique. |
+| `/kit-systeme/:slug` | `308` vers `/systemes/:slug` | Ancienne route courte. |
 | `/modeles-de-documents/suivi-previsionnel-financier` | `308` vers `/academie/piloter-sa-tresorerie` | Le cours Trésorerie est le successeur pédagogique global ; le modèle reste disponible dans les Ressources des systèmes. |
 | `/modeles-de-documents/pilotage-marketing-vente` | `308` vers `/academie/construire-systeme-marketing-vente` | Le cours Marketing & Vente porte désormais le contenu et son action associée. |
 | `/modeles-de-documents/systeme-operationnel` | `308` vers `/academie/construire-systeme-marketing-vente` | Ancien alias du modèle Marketing & Vente. |

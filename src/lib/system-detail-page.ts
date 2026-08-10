@@ -377,7 +377,7 @@ export function buildSystemPageMetadata(
 ): Metadata {
   const title = buildSystemPageTitle(data, solutionSections);
   const description = buildSystemPageDescription(data, solutionSections);
-  const url = `/kit-operationnel/${data.system.slug}`;
+  const url = `/systemes/${data.system.slug}`;
   const publishedResources = getPublishedSolutionResources(solutionSections);
   const scopedResources = getSystemResourcesForSystem(data.system.slug);
 
@@ -422,7 +422,7 @@ export function buildSystemPageJsonLd(
   solutionSections: SystemPageSolutionSections,
 ) {
   const origin = getCanonicalOrigin();
-  const url = `${origin}/kit-operationnel/${data.system.slug}`;
+  const url = `${origin}/systemes/${data.system.slug}`;
   const description = buildSystemPageDescription(data, solutionSections);
   const pageName = buildSystemPageTitle(data, solutionSections).replace(/ \| Demaa$/, "");
   const listedProcesses = (

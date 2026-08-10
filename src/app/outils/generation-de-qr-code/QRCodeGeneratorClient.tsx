@@ -8,7 +8,7 @@ import { Download, Upload, Trash2, Monitor, Share2 } from "lucide-react";
 import { toPng, toJpeg, toSvg } from "html-to-image";
 
 export default function QRCodeGenerator() {
-  const [url, setUrl] = useState("https://demaa.fr");
+  const [url, setUrl] = useState("https://demaa.co");
   const [title, setTitle] = useState("Scannez moi !");
   const [fgColor, setFgColor] = useState("#141414"); // Brand Blue
   const [bgColor, setBgColor] = useState("#FFFFFF");

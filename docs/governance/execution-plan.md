@@ -172,7 +172,7 @@ combiné.
   fallback, et conserver un seul encart commun d'aide à l'organisation.
 - Allowlist d'écriture :
   - `docs/system-solutions-ui-w6-integration-gate.md` ;
-  - `src/app/kit-operationnel/[slug]/page.tsx` ;
+  - `src/app/systemes/[slug]/page.tsx` ;
   - `src/components/SystemDetailContent.tsx` ;
   - `src/components/SystemSolutionsTab.tsx` ;
   - `src/lib/system-detail-tabs.ts` ;

@@ -20,7 +20,7 @@ import { toPng } from "html-to-image";
 
 export default function MenuQRCode() {
   const [restaurantName, setRestaurantName] = useState("Le Petit Bistro");
-  const [menuUrl, setMenuUrl] = useState("https://demaa.fr/menu-exemple");
+  const [menuUrl, setMenuUrl] = useState("https://demaa.co/menu-exemple");
   const [ctaText, setCtaText] = useState("Scannez pour la carte");
   const [color, setColor] = useState("#141414");
   const [icon, setIcon] = useState<"dish" | "wine" | "coffee">("dish");

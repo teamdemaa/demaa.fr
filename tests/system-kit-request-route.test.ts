@@ -132,7 +132,7 @@ describe("free operational system delivery route", () => {
     });
     mocks.hasEditableOperationalSystemAsset.mockReturnValue(true);
     mocks.resolveLeadContext.mockResolvedValue({
-      source: "Livraison du système opérationnel gratuit",
+      source: "Livraison du système métier gratuit",
       systemName: "Plomberie & chauffage",
       systemSlug: "plomberie-chauffage",
     });

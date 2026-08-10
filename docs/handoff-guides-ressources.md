@@ -4,7 +4,7 @@
 
 ## Objectif du chantier
 
-Sur les pages système (`/kit-operationnel/<slug>`), l'onglet "Ressources" est passé d'une seule liste plate à deux sections :
+Sur les pages système (`/systemes/<slug>`), l'onglet "Ressources" est passé d'une seule liste plate à deux sections :
 
 1. **Guides** (nouveau rail, format vidéo/YouTube-like avec vignette 16:9 + modale plein écran type diaporama)
 2. **Modèles et documents** (inchangé, existant)

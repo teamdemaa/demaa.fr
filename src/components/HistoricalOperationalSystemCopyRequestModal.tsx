@@ -268,13 +268,13 @@ export default function OperationalSystemCopyRequestModal({
 
             <div className="flex min-w-0 flex-col justify-center p-6 sm:p-8">
               <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-                Système opérationnel
+                Système métier
               </p>
               <h2
                 id="system-copy-modal-title"
                 className="mt-3 pr-10 text-2xl font-semibold leading-tight tracking-[-0.025em] text-brand-blue"
               >
-                Système opérationnel - {systemName}
+                Système métier - {systemName}
               </h2>
               <p
                 id="system-copy-modal-description"
@@ -354,7 +354,7 @@ export default function OperationalSystemCopyRequestModal({
               tabIndex={-1}
             >
               <p className="text-sm leading-relaxed text-dema-muted">
-                Votre demande pour le système opérationnel {systemName} a bien
+                Votre demande pour le système métier {systemName} a bien
                 été prise en compte.
               </p>
               <button
