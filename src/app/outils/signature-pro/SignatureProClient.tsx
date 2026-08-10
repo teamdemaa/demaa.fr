@@ -59,8 +59,8 @@ export default function SignaturePro() {
   const [title, setTitle] = useState("Directeur Commercial");
   const [company, setCompany] = useState("Demaa Plomberie");
   const [phone, setPhone] = useState("+33 6 12 34 56 78");
-  const [email, setEmail] = useState("jean.dupont@demaa.fr");
-  const [website, setWebsite] = useState("www.demaa.fr");
+  const [email, setEmail] = useState("jean.dupont@entreprise.fr");
+  const [website, setWebsite] = useState("www.entreprise.fr");
   const [address, setAddress] = useState("");
   const [linkedin, setLinkedin] = useState("");
   const [logo, setLogo] = useState<string | null>(null);

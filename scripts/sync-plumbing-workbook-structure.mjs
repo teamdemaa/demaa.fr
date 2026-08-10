@@ -231,7 +231,7 @@ function buildRequests(data) {
     {
       updateSpreadsheetProperties: {
         properties: {
-          title: "Système opérationnel - Plomberie & chauffage",
+          title: "Système métier - Plomberie & chauffage",
         },
         fields: "title",
       },
