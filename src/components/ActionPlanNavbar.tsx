@@ -7,7 +7,7 @@ import { createPortal } from "react-dom";
 export type ActionPlanView = "plan" | "system" | "academy" | "accompaniment";
 
 const tabClassName =
-  "inline-flex min-h-14 min-w-0 flex-col items-center justify-center gap-1 rounded-[1.1rem] px-1 text-[10px] font-medium leading-none transition lg:min-h-11 lg:flex-row lg:gap-0 lg:rounded-full lg:px-3 lg:text-sm";
+  "inline-flex min-h-14 min-w-0 flex-col items-center justify-center gap-1 rounded-[1.1rem] px-1 text-[10px] font-medium leading-none transition xl:min-h-11 xl:flex-row xl:gap-0 xl:rounded-full xl:px-3 xl:text-sm";
 
 const navigationItems = [
   { view: "plan", label: "Plan d’action", Icon: ListChecks },
@@ -49,7 +49,7 @@ export default function ActionPlanNavbar({
             onClick={() => onViewChange(view)}
             className={`${tabClassName} ${activeView === view ? "bg-dema-sage text-dema-forest" : "text-dema-muted hover:text-brand-blue"}`}
           >
-            <Icon className="h-4 w-4 shrink-0 lg:hidden" aria-hidden="true" />
+            <Icon className="h-4 w-4 shrink-0 xl:hidden" aria-hidden="true" />
             <span className="max-w-full truncate">{label}</span>
           </button>
         ))}

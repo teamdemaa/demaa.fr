@@ -68,7 +68,7 @@ export default function Navbar({
             </Link>
             <div
               id="action-plan-navbar-desktop"
-              className="absolute left-1/2 top-1/2 hidden w-[min(52vw,48rem)] -translate-x-1/2 -translate-y-1/2 empty:hidden lg:block"
+              className="absolute left-1/2 top-1/2 hidden w-[min(40vw,36rem)] -translate-x-1/2 -translate-y-1/2 empty:hidden xl:block"
             />
             {anonymousLanding ? (
               <div className="flex min-w-0 items-center gap-1.5 sm:gap-2">
@@ -90,7 +90,7 @@ export default function Navbar({
       </nav>
       <div
         id="action-plan-navbar-mobile"
-        className="fixed inset-x-0 bottom-0 z-50 border-t border-dema-line/70 bg-dema-cream/94 px-3 pb-[calc(0.5rem+env(safe-area-inset-bottom))] pt-2 shadow-[0_-10px_28px_rgba(23,35,29,0.06)] backdrop-blur-md empty:hidden lg:hidden"
+        className="fixed inset-x-0 bottom-0 z-50 border-t border-dema-line/70 bg-dema-cream/94 px-3 pb-[calc(0.5rem+env(safe-area-inset-bottom))] pt-2 shadow-[0_-10px_28px_rgba(23,35,29,0.06)] backdrop-blur-md empty:hidden xl:hidden"
       />
       {!anonymousLanding && !hideSectionSelector ? <div className="bg-dema-cream px-[0.84rem] pb-3 pt-3 md:px-[1.4rem] md:pb-4 md:pt-4 lg:px-[3.36rem]">
         <div

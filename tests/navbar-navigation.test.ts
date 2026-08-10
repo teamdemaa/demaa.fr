@@ -116,12 +116,16 @@ describe("conventional systems and Academy navbar", () => {
     expect(navbarSource).toContain('id="action-plan-navbar-desktop"');
     expect(navbarSource).toContain('id="action-plan-navbar-mobile"');
     expect(navbarSource).toContain("fixed inset-x-0 bottom-0");
+    expect(navbarSource).toContain("w-[min(40vw,36rem)]");
+    expect(navbarSource).toContain("empty:hidden xl:block");
+    expect(navbarSource).toContain("empty:hidden xl:hidden");
     expect(actionPlanNavSource).toContain("Plan d’action");
     expect(actionPlanNavSource).toContain("Système");
     expect(actionPlanNavSource).toContain("Académie");
     expect(actionPlanNavSource).toContain("Accompagnement");
     expect(actionPlanNavSource).toContain('{ view: "academy"');
     expect(actionPlanNavSource).toContain("onViewChange(view)");
+    expect(actionPlanNavSource).toContain("xl:min-h-11");
     expect(experienceSource).toContain("<ActionPlanNavbar");
     expect(experienceSource).toContain("<ActionPlanAcademyPanel");
     expect(experienceSource).not.toContain('aria-label="Votre résultat"');
