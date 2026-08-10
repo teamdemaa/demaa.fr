@@ -12,7 +12,7 @@ export default function ServicesLandingPage() {
         <header className="border-b border-dema-line/65 px-5 py-12 sm:py-16">
           <div className="mx-auto max-w-6xl text-center">
             <h1 className="mx-auto max-w-4xl text-balance text-4xl font-light tracking-[-0.045em] text-brand-blue sm:text-5xl lg:text-6xl">
-              Quatre services pour{" "}
+              Les services clés pour{" "}
               <span className="demaa-section-title text-dema-forest">
                 avancer avec les bons renforts.
               </span>

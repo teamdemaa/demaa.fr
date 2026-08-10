@@ -107,8 +107,9 @@ describe("service callback request route", () => {
     expect(response.status).toBe(202);
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
       fields: [
-        { label: "Service", value: "Marketing et prospection" },
+        { label: "Service", value: "Plan marketing et prospection" },
         { label: "Slug du service", value: "marketing-vente" },
+        { label: "Numéro WhatsApp", value: "+33 6 12 34 56 78" },
       ],
       requestType: "service_callback_request",
     }));
@@ -124,6 +125,7 @@ describe("service callback request route", () => {
       fields: [
         { label: "Service", value: "Automatisation des processus" },
         { label: "Slug du service", value: "automatisation-processus" },
+        { label: "Numéro WhatsApp", value: "+33 6 12 34 56 78" },
       ],
       requestType: "service_callback_request",
     }));
@@ -154,8 +156,25 @@ describe("service callback request route", () => {
       fields: [
         { label: "Service", value: "Expert-comptable" },
         { label: "Slug du service", value: "expert-comptable" },
+        { label: "Numéro WhatsApp", value: "+33 6 12 34 56 78" },
       ],
       idempotencyKey: "service:callback:12345678",
+      requestType: "service_callback_request",
+    }));
+  });
+
+  it.each([
+    "formalites-juridiques",
+    "sous-traitance-formalites-juridiques",
+  ])("accepts the WhatsApp callback journey for %s", async (serviceSlug) => {
+    const response = await POST(request(validBody({ serviceSlug })));
+
+    expect(response.status).toBe(202);
+    expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
+      fields: expect.arrayContaining([
+        { label: "Slug du service", value: serviceSlug },
+        { label: "Numéro WhatsApp", value: "+33 6 12 34 56 78" },
+      ]),
       requestType: "service_callback_request",
     }));
   });

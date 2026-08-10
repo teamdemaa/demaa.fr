@@ -6,6 +6,9 @@
 - Supersède : les passages incompatibles de l’ADR 0004 relatifs au nom, à
   l’ordre, aux prix et à la présentation des Services
 
+- Statut de la décision Services : `superseded` par l'ADR 0006. Les principes
+  de densité des modales restent une référence de présentation.
+
 ## Décision
 
 Les quatre Services restent composés depuis le catalogue canonique du code et

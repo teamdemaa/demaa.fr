@@ -39,7 +39,7 @@ export function validateCallbackFields(fields: CallbackFields): CallbackFieldErr
     errors.company = "Indiquez le nom de votre entreprise.";
   }
   if (!isValidCallbackPhone(fields.phone)) {
-    errors.phone = "Indiquez un numéro de téléphone valide.";
+    errors.phone = "Indiquez un numéro WhatsApp valide.";
   }
   return errors;
 }
@@ -168,19 +168,25 @@ export default function ServiceCallbackForm({
       </label>
 
       <label className="block text-sm font-semibold text-brand-blue">
-        Téléphone
+        Numéro WhatsApp
         <input
           name="phone"
           type="tel"
           inputMode="tel"
           autoComplete="tel"
+          placeholder="+33 6 12 34 56 78"
           maxLength={60}
           value={fields.phone}
           onChange={(event) => updateField("phone", event.target.value)}
           aria-invalid={Boolean(errors.phone)}
-          aria-describedby={errors.phone ? "callback-phone-error" : undefined}
+          aria-describedby={errors.phone
+            ? "callback-phone-help callback-phone-error"
+            : "callback-phone-help"}
           className={fieldClassName}
         />
+        <span id="callback-phone-help" className="mt-1.5 block text-xs font-normal leading-relaxed text-dema-muted">
+          Nous vous recontacterons sur WhatsApp, uniquement au sujet de cette demande.
+        </span>
         {errors.phone ? (
           <span id="callback-phone-error" className="mt-1.5 block text-xs font-medium text-red-700">
             {errors.phone}
@@ -205,11 +211,11 @@ export default function ServiceCallbackForm({
         aria-busy={status === "submitting"}
         className="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 disabled:cursor-wait disabled:opacity-60"
       >
-        {status === "submitting" ? "Envoi…" : "Être rappelé"}
+        {status === "submitting" ? "Envoi…" : "Envoyer ma demande"}
       </button>
 
       <p className="text-xs leading-relaxed text-dema-muted">
-        En envoyant cette demande, vous acceptez d’être contacté au sujet de {serviceName}.{" "}
+        En envoyant cette demande, vous acceptez que Demaa vous contacte sur WhatsApp au sujet de {serviceName}.{" "}
         <Link
           href="/politique-de-confidentialite"
           className="font-medium text-dema-forest underline underline-offset-2"
@@ -220,7 +226,7 @@ export default function ServiceCallbackForm({
 
       {status === "success" ? (
         <p role="status" className="text-sm font-medium text-dema-forest">
-          Demande reçue. Nous vous rappelons rapidement.
+          Demande reçue. Nous vous contacterons prochainement sur WhatsApp.
         </p>
       ) : null}
       {status === "error" ? (

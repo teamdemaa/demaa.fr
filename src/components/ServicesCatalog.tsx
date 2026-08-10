@@ -2,6 +2,8 @@ import Link from "next/link";
 import {
   ArrowUpRight,
   Calculator,
+  FileCheck2,
+  Files,
   Megaphone,
   ReceiptText,
   Workflow,
@@ -12,6 +14,8 @@ import type { CanonicalService } from "@/lib/canonical-service-catalog";
 const ICONS: Record<CanonicalService["slug"], LucideIcon> = {
   "automatisation-processus": Workflow,
   "expert-comptable": Calculator,
+  "formalites-juridiques": FileCheck2,
+  "sous-traitance-formalites-juridiques": Files,
   "marketing-vente": Megaphone,
   "assistance-facturation": ReceiptText,
 };
@@ -65,7 +69,7 @@ export default function ServicesCatalog({
       >
         Un périmètre lisible, sans catalogue à rallonge
       </h2>
-      <div className="mt-7 grid min-w-0 gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="mt-7 grid min-w-0 gap-4 md:grid-cols-2 xl:grid-cols-3">
         {services.map((service) => (
           <ServiceCard key={service.slug} service={service} />
         ))}

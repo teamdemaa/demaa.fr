@@ -20,10 +20,12 @@ async function readSource(path: string) {
 }
 
 describe("canonical Services SEO and redirects", () => {
-  it("publishes only the four canonical detail routes", async () => {
+  it("publishes only the six canonical detail routes", async () => {
     expect(generateStaticParams()).toEqual([
       { slug: "automatisation-processus" },
       { slug: "expert-comptable" },
+      { slug: "formalites-juridiques" },
+      { slug: "sous-traitance-formalites-juridiques" },
       { slug: "marketing-vente" },
       { slug: "assistance-facturation" },
     ]);
@@ -49,7 +51,9 @@ describe("canonical Services SEO and redirects", () => {
     const marketing = getCanonicalServiceBySlug("marketing-vente");
     const billing = getCanonicalServiceBySlug("assistance-facturation");
     const expert = getCanonicalServiceBySlug("expert-comptable");
-    if (!automation || !marketing || !billing || !expert) {
+    const legal = getCanonicalServiceBySlug("formalites-juridiques");
+    const legalSubcontracting = getCanonicalServiceBySlug("sous-traitance-formalites-juridiques");
+    if (!automation || !marketing || !billing || !expert || !legal || !legalSubcontracting) {
       throw new Error("missing canonical service fixture");
     }
 
@@ -65,16 +69,12 @@ describe("canonical Services SEO and redirects", () => {
 
     expect(buildServicePageJsonLd(marketing)[1]).toMatchObject({
       "@type": "Service",
-      name: "Marketing et prospection",
+      name: "Plan marketing et prospection",
       provider: { "@type": "Organization", name: "Demaa" },
       offers: {
         "@type": "Offer",
-        price: "950.00",
+        price: "550.00",
         priceCurrency: "EUR",
-        priceSpecification: {
-          valueAddedTaxIncluded: false,
-          unitText: "MONTH",
-        },
       },
     });
     expect(buildServicePageJsonLd(billing)[1]).toMatchObject({
@@ -88,6 +88,9 @@ describe("canonical Services SEO and redirects", () => {
       },
     });
     expect(JSON.stringify(buildServicePageJsonLd(expert))).not.toContain('"@type":"Offer"');
+    expect(JSON.stringify(buildServicePageJsonLd(expert))).not.toContain('"provider":{"@type":"Organization","name":"Demaa"}');
+    expect(JSON.stringify(buildServicePageJsonLd(legal))).not.toContain('"@type":"Offer"');
+    expect(JSON.stringify(buildServicePageJsonLd(legalSubcontracting))).not.toContain('"@type":"Offer"');
   });
 
   it("escapes embedded JSON-LD", () => {

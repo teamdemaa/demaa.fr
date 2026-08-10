@@ -11,7 +11,7 @@ section « État de clôture Production » de `docs/central-backlog.md`.
 
 - le code produit déployé est `3486703` ; le lot documentaire de clôture ne
   modifie aucun fichier runtime ;
-- les 115 Systèmes, les quatre Services canoniques, Firebase Solutions,
+- les 115 Systèmes, les Services canoniques, Firebase Solutions,
   Ressources et `/contenus/facturation-electronique` sont actifs ;
 - les Formations en direct et les Cas concrets restent volontairement masqués ;
 - les parcours de collecte et de livraison ont passé leurs tests Production ;
@@ -81,8 +81,8 @@ une date injectée en test.
 ### W3b — catalogue Services serveur (supersédé)
 
 Le catalogue V2 à sept offres et son formulaire ont été retirés. La source
-publique unique est désormais `src/lib/canonical-service-catalog.ts`, avec
-exactement quatre offres. Voir ADR 0004.
+publique unique est désormais `src/lib/canonical-service-catalog.ts`. La
+composition et les tarifs actifs sont définis par l'ADR 0006.
 
 ### W3c — registres Solutions serveur
 
@@ -190,7 +190,8 @@ combiné.
 ## W4 - Interface Services (supersédée puis remplacée)
 
 - Propriétaire : chantier Services produit/UX
-- Statut : ancienne marketplace retirée ; interface canonique à quatre offres active.
+- Statut : ancienne marketplace retirée ; interface canonique active selon
+  l'ADR 0006.
 - Objectif : créer les pages, cartes, fiches et le formulaire visible qui
   consomment exclusivement les sélecteurs publiés du registre W3b.
 - Allowlist d'écriture :
@@ -200,7 +201,7 @@ combiné.
   - `src/components/CanonicalServiceDetails.tsx` ;
   - `src/components/ServicesCatalog.tsx` ;
   - `tests/services-marketplace-ui.test.ts`.
-- Frontière : W4 possède les quatre champs visibles, les validations client,
+- Frontière : W4 possède les champs visibles, les validations client,
   les metadata et le canonical des pages `/services` et
   `/services/[slug]`. Il ne possède ni le transport, ni le stockage, ni
   l'e-mail, ni le sitemap global.

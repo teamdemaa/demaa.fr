@@ -30,8 +30,32 @@ export function buildServicePageJsonLd(serviceEntry: CanonicalService) {
   const origin = getCanonicalOrigin();
   const pageUrl = `${origin}/services/${serviceEntry.slug}`;
   const pricing = serviceEntry.pricing;
-  const isDirectDemaaOffer = pricing.mode !== "third-party-starting-monthly";
-  const unitText = pricing.mode === "fixed-daily" ? "DAY" : "MONTH";
+  const isDirectDemaaOffer = serviceEntry.delivery === "demaa";
+  const unitText = pricing.mode === "fixed-daily"
+    ? "DAY"
+    : pricing.mode === "fixed-monthly-hours"
+    ? "MONTH"
+    : null;
+  const directOffer = isDirectDemaaOffer && "amountMinor" in pricing
+    ? {
+        "@type": "Offer",
+        description: pricing.note,
+        price: (pricing.amountMinor / 100).toFixed(2),
+        priceCurrency: pricing.currency,
+        ...(unitText
+          ? {
+              priceSpecification: {
+                "@type": "UnitPriceSpecification",
+                price: (pricing.amountMinor / 100).toFixed(2),
+                priceCurrency: pricing.currency,
+                valueAddedTaxIncluded: false,
+                unitText,
+              },
+            }
+          : {}),
+        url: pageUrl,
+      }
+    : null;
   const service = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -39,28 +63,15 @@ export function buildServicePageJsonLd(serviceEntry: CanonicalService) {
     description: serviceEntry.summary,
     url: pageUrl,
     serviceType: serviceEntry.eyebrow,
-    provider: {
-      "@type": "Organization",
-      name: "Demaa",
-    },
-    ...(isDirectDemaaOffer
+    ...(serviceEntry.delivery === "demaa"
       ? {
-          offers: {
-            "@type": "Offer",
-            description: pricing.note,
-            price: (pricing.amountMinor / 100).toFixed(2),
-            priceCurrency: pricing.currency,
-            priceSpecification: {
-              "@type": "UnitPriceSpecification",
-              price: (pricing.amountMinor / 100).toFixed(2),
-              priceCurrency: pricing.currency,
-              valueAddedTaxIncluded: false,
-              unitText,
-            },
-            url: pageUrl,
+          provider: {
+            "@type": "Organization",
+            name: "Demaa",
           },
         }
       : {}),
+    ...(directOffer ? { offers: directOffer } : {}),
   };
 
   return [

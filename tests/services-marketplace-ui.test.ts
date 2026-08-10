@@ -24,14 +24,16 @@ async function readSource(path: string) {
 }
 
 describe("canonical Services marketplace", () => {
-  it("publishes exactly the four approved services from one immutable source", () => {
+  it("publishes exactly the six approved services from one immutable source", () => {
     const services = getCanonicalServices();
 
     expect(services.map((service) => service.slug)).toEqual(CANONICAL_SERVICE_SLUGS);
     expect(services.map((service) => service.name)).toEqual([
       "Automatisation des processus",
       "Expert-comptable",
-      "Marketing et prospection",
+      "Formalités juridiques",
+      "Sous-traitance de formalités juridiques",
+      "Plan marketing et prospection",
       "Assistance facturation",
     ]);
     expect(generateStaticParams()).toEqual(CANONICAL_SERVICE_SLUGS.map((slug) => ({ slug })));
@@ -44,22 +46,18 @@ describe("canonical Services marketplace", () => {
     const marketing = getCanonicalServiceBySlug("marketing-vente");
 
     expect(marketing?.pricing).toEqual({
-      amountMinor: 95000,
+      amountMinor: 55000,
       currency: "EUR",
-      heading: "Tarif",
-      label: "950 € HT / mois",
-      mode: "fixed-monthly",
-      note: "Engagement initial de trois mois, puis reconduction mensuelle.",
+      heading: "Forfait",
+      label: "550 € HT",
+      mode: "fixed-once",
+      note: "Paiement unique pour le cadrage, l’atelier et la restitution du plan.",
     });
-    expect(marketing?.conditions).toContain("Engagement initial de trois mois");
-    expect(marketing?.included).toContain("Rapport d’avancement chaque semaine");
-    expect(marketing?.included).toContain("Point de pilotage mensuel");
-    expect(marketing?.included).toContain(
-      "Espace d’échange dédié avec une réponse sous 24 à 48 heures",
-    );
+    expect(marketing?.included).toContain("Plan d’action sur 90 jours");
+    expect(marketing?.conditions).not.toContain("Engagement initial de trois mois");
     expect(marketing?.cta).toEqual({
       kind: "callback",
-      label: "Être rappelé",
+      label: "Être recontacté(e)",
     });
   });
 
@@ -74,7 +72,7 @@ describe("canonical Services marketplace", () => {
         label: "500 € HT / jour",
         mode: "fixed-daily",
       },
-      cta: { kind: "callback", label: "Être rappelé" },
+      cta: { kind: "callback", label: "Être recontacté(e)" },
     });
   });
 
@@ -94,16 +92,16 @@ describe("canonical Services marketplace", () => {
     });
   });
 
-  it("renders four linked cards without exposing retired catalog prices", () => {
+  it("renders six linked cards without exposing retired catalog prices", () => {
     const markup = renderToStaticMarkup(
       createElement(ServicesCatalog, { services: getCanonicalServices() }),
     );
 
-    expect(markup.match(/<article/g)).toHaveLength(4);
+    expect(markup.match(/<article/g)).toHaveLength(6);
     for (const slug of CANONICAL_SERVICE_SLUGS) {
       expect(markup).toContain(`/services/${slug}`);
     }
-    expect(markup).toContain("950 € HT / mois");
+    expect(markup).toContain("550 € HT");
     expect(markup).toContain("500 € HT / jour");
     expect(markup).toContain("À partir de 250 € HT / mois");
     expect(markup).not.toMatch(/750 €|350 €|600 €|490 €/);
@@ -117,7 +115,7 @@ describe("canonical Services marketplace", () => {
     })).toEqual({});
     expect(validateCallbackFields({ company: "", phone: "123", website: "" })).toEqual({
       company: "Indiquez le nom de votre entreprise.",
-      phone: "Indiquez un numéro de téléphone valide.",
+      phone: "Indiquez un numéro WhatsApp valide.",
     });
     expect(isValidCallbackPhone("+33 (0)6 12 34 56 78")).toBe(true);
     expect(isValidCallbackPhone("javascript:alert(1)")).toBe(false);
@@ -125,6 +123,8 @@ describe("canonical Services marketplace", () => {
     const formSource = await readSource("src/components/ServiceCallbackForm.tsx");
     expect(formSource).toContain('name="company"');
     expect(formSource).toContain('name="phone"');
+    expect(formSource).toContain("Numéro WhatsApp");
+    expect(formSource).toContain("uniquement au sujet de cette demande");
     expect(formSource).not.toContain('name="email"');
     expect(formSource).not.toContain('name="firstName"');
   });

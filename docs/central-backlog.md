@@ -21,7 +21,7 @@ de déploiement.
 - `https://demaa.co` est le domaine canonique ; `demaa.fr` redirige vers lui.
 - Les 115 Systèmes exposent `Process / Solutions / Ressources` et Firebase est
   la source distante active des Solutions.
-- Les quatre Services canoniques sont publiés et composés au rendu dans les
+- Les Services canoniques sont publiés et composés au rendu dans les
   Systèmes, sans duplication dans Firebase.
 - `/contenus/facturation-electronique` est publié comme article et diaporama ;
   les deux présentations universelles ne sont plus rendues dans les Ressources
@@ -41,22 +41,24 @@ de déploiement.
 
 ## Mise à jour canonique du 9 août 2026
 
-Cette section, l'ADR 0003, l'ADR 0004 et l'ADR 0005 remplacent les décisions
+Cette section, l'ADR 0003, l'ADR 0004 et l'ADR 0006 remplacent les décisions
 historiques incompatibles plus bas dans ce document. En cas de conflit sur les
-Services, l'ADR 0005 prévaut. Pour les Contenus, l'Académie et les Ressources,
+Services, l'ADR 0006 prévaut. Pour les Contenus, l'Académie et les Ressources,
 l'ADR 0004 prévaut.
 
 - `demaa.co` est le domaine canonique du lancement France, sans préfixe de
   locale. L'internationalisation reste différée.
 - La navigation principale contient uniquement `Système métier` et `Académie`.
 - Une fiche Système contient `Process`, `Solutions` et `Ressources`.
-- Quatre Services Demaa canoniques sont affichés dans Solutions, après Outils :
-  Automatisation des processus, Expert-comptable, Marketing et prospection et
-  Assistance facturation. Expert-comptable est absent de la fiche Cabinet
-  comptable.
-- Les quatre Services utilisent le même formulaire de rappel minimal
-  (entreprise et téléphone), avec attribution silencieuse du service et du
-  Système métier puis notification Slack.
+- Six Services canoniques existent : Automatisation des processus,
+  Expert-comptable, Formalités juridiques, Sous-traitance de formalités
+  juridiques, Plan marketing et prospection et Assistance facturation. La
+  sous-traitance est réservée aux professions qui traitent les dossiers de
+  leurs clients ; Expert-comptable est absent de la fiche Cabinet comptable.
+- Les Services utilisent le même formulaire de contact minimal (entreprise et
+  numéro WhatsApp), avec attribution silencieuse du service et du Système
+  métier, stockage sécurisé puis notification Slack. Le suivi WhatsApp reste
+  manuel : aucune API WhatsApp ni message automatique n'est promis.
 - Ressources contient les guides, modèles et documents contextualisés. Les
   contenus pédagogiques globaux restent dans l'Académie.
 - Firebase est la source distante autoritaire pour Solutions et le réseau de
@@ -70,12 +72,12 @@ l'ADR 0004 prévaut.
   `docs/legacy-route-retirement-matrix.md`.
 - Les endpoints, destinations privées et révisions historiques de livraison
   restent intacts pendant le retrait des pages publiques.
-- `/services` publie exactement les quatre offres canoniques. `/sur-mesure`
+- `/services` publie exactement les six offres canoniques. `/sur-mesure`
   reste une offre distincte, hors navigation principale.
 
 ### Lots restant réellement au backlog
 
-- [x] Conserver un catalogue Services canonique unique de quatre offres,
+- [x] Conserver un catalogue Services canonique unique de six offres,
   composé au rendu dans les 115 Systèmes.
 - [x] Créer `/contenus` et publier la fiche Facturation électronique comme
   article et diaporama avant la future vidéo.
