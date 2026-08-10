@@ -33,6 +33,10 @@ type SystemDetailContentProps = {
   embedded?: boolean;
   checkableProcess?: boolean;
   selectableSolutions?: boolean;
+  checkedProcessStepIds?: readonly string[];
+  onCheckedProcessStepIdsChange?: (stepIds: readonly string[]) => void;
+  selectedSolutionPlacementIds?: readonly string[];
+  onSelectedSolutionPlacementIdsChange?: (placementIds: readonly string[]) => void;
   headerActions?: ReactNode;
 };
 
@@ -58,6 +62,10 @@ export default function SystemDetailContent({
   embedded = false,
   checkableProcess = false,
   selectableSolutions = false,
+  checkedProcessStepIds,
+  onCheckedProcessStepIdsChange,
+  selectedSolutionPlacementIds,
+  onSelectedSolutionPlacementIdsChange,
   headerActions,
 }: SystemDetailContentProps) {
   const router = useRouter();
@@ -79,29 +87,33 @@ export default function SystemDetailContent({
       ? initialActiveTab
       : "process",
   );
-  const [checkedProcessSteps, setCheckedProcessSteps] = useState<Set<string>>(
+  const [localCheckedProcessSteps, setLocalCheckedProcessSteps] = useState<Set<string>>(
     () => new Set(),
   );
-  const [selectedSolutionIds, setSelectedSolutionIds] = useState<Set<string>>(
+  const [localSelectedSolutionIds, setLocalSelectedSolutionIds] = useState<Set<string>>(
     () => new Set(),
   );
+  const checkedProcessSteps = checkedProcessStepIds
+    ? new Set(checkedProcessStepIds)
+    : localCheckedProcessSteps;
+  const selectedSolutionIds = selectedSolutionPlacementIds
+    ? new Set(selectedSolutionPlacementIds)
+    : localSelectedSolutionIds;
 
   function toggleProcessStep(stepId: string) {
-    setCheckedProcessSteps((current) => {
-      const next = new Set(current);
-      if (next.has(stepId)) next.delete(stepId);
-      else next.add(stepId);
-      return next;
-    });
+    const next = new Set(checkedProcessSteps);
+    if (next.has(stepId)) next.delete(stepId);
+    else next.add(stepId);
+    if (onCheckedProcessStepIdsChange) onCheckedProcessStepIdsChange([...next]);
+    else setLocalCheckedProcessSteps(next);
   }
 
   function toggleSolution(placementId: string) {
-    setSelectedSolutionIds((current) => {
-      const next = new Set(current);
-      if (next.has(placementId)) next.delete(placementId);
-      else next.add(placementId);
-      return next;
-    });
+    const next = new Set(selectedSolutionIds);
+    if (next.has(placementId)) next.delete(placementId);
+    else next.add(placementId);
+    if (onSelectedSolutionPlacementIdsChange) onSelectedSolutionPlacementIdsChange([...next]);
+    else setLocalSelectedSolutionIds(next);
   }
   function selectTab(tab: SystemDetailTab) {
     setActiveTab(tab);

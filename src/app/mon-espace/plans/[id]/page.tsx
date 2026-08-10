@@ -52,6 +52,9 @@ export default async function SavedActionPlanPage({
           </h1>
           <SavedActionPlanDetail
             plan={stored.plan}
+            planId={stored.id}
+            initialRevision={stored.revision}
+            initialWorkspace={stored.workspaceState}
             systemOptions={actionPlanSystemOptions}
           />
         </div>

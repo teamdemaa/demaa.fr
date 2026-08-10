@@ -3,6 +3,11 @@ import "server-only";
 import { createHash, randomBytes } from "node:crypto";
 import type { ActionPlan } from "@/lib/action-plan-contract";
 import { actionPlanSchema } from "@/lib/action-plan-contract";
+import {
+  createActionPlanWorkspaceState,
+  normalizeActionPlanWorkspaceState,
+  type ActionPlanWorkspaceState,
+} from "@/lib/action-plan-workspace";
 import { normalizeEmail } from "@/lib/email";
 import { getAdminFirestore } from "@/lib/firebase-admin";
 import { getLeadRetentionExpiry } from "@/lib/operational-maintenance";
@@ -25,6 +30,7 @@ type ActionPlanDocument = {
   schema_version?: string | null;
   status?: ActionPlanStatus | null;
   plan?: unknown;
+  workspace_state?: unknown;
   source_text?: string | null;
   generation?: Partial<ActionPlanGenerationMetadata> | null;
   owner_email?: string | null;
@@ -42,6 +48,7 @@ type ActionPlanDocument = {
 export type StoredActionPlan = {
   id: string;
   plan: ActionPlan;
+  workspaceState: ActionPlanWorkspaceState;
   sourceText: string | null;
   generation: ActionPlanGenerationMetadata;
   revision: number;
@@ -51,6 +58,7 @@ export type StoredActionPlan = {
 
 export type ActionPlanWriteInput = {
   plan: ActionPlan;
+  workspaceState?: ActionPlanWorkspaceState;
   sourceText?: string | null;
   generation?: Partial<ActionPlanGenerationMetadata> | null;
 };
@@ -101,6 +109,8 @@ function getClaimExpiry(now = Date.now()) {
 function serializeWriteInput(input: ActionPlanWriteInput) {
   return {
     plan: input.plan,
+    workspace_state:
+      input.workspaceState ?? createActionPlanWorkspaceState(input.plan),
     source_text: normalizeSourceText(input.sourceText),
     generation: normalizeGenerationMetadata(input.generation),
   };
@@ -125,6 +135,10 @@ function parseStoredActionPlan(
   return {
     id,
     plan: parsedPlan.data,
+    workspaceState: normalizeActionPlanWorkspaceState(
+      parsedPlan.data,
+      document.workspace_state,
+    ),
     sourceText: normalizeSourceText(document.source_text),
     generation: normalizeGenerationMetadata(document.generation),
     revision,
@@ -224,4 +238,63 @@ export async function getOwnedActionPlan(email: string, id: string) {
   }
 
   return parseStoredActionPlan(document.id, data);
+}
+
+export class ActionPlanRevisionConflictError extends Error {
+  constructor() {
+    super("action_plan_revision_conflict");
+    this.name = "ActionPlanRevisionConflictError";
+  }
+}
+
+export async function updateOwnedActionPlanWorkspace(
+  email: string,
+  id: string,
+  expectedRevision: number,
+  workspaceState: ActionPlanWorkspaceState,
+) {
+  const database = getAdminFirestore();
+  const ownerEmail = normalizeEmail(email);
+  const reference = database.collection(ACTION_PLANS_COLLECTION).doc(id);
+
+  return database.runTransaction(async (transaction) => {
+    const snapshot = await transaction.get(reference);
+    const data = snapshot.data() as ActionPlanDocument | undefined;
+    if (
+      !snapshot.exists ||
+      data?.status !== "active" ||
+      normalizeEmail(data.owner_email || "") !== ownerEmail
+    ) {
+      return null;
+    }
+
+    const parsedPlan = actionPlanSchema.safeParse(data.plan);
+    if (!parsedPlan.success) return null;
+    const revision = Number(data.revision);
+    if (!Number.isInteger(revision) || revision !== expectedRevision) {
+      throw new ActionPlanRevisionConflictError();
+    }
+
+    const nextRevision = revision + 1;
+    const updatedAt = new Date().toISOString();
+    const normalizedWorkspace = normalizeActionPlanWorkspaceState(
+      parsedPlan.data,
+      workspaceState,
+    );
+    transaction.set(
+      reference,
+      {
+        workspace_state: normalizedWorkspace,
+        revision: nextRevision,
+        updated_at: updatedAt,
+      },
+      { merge: true },
+    );
+
+    return {
+      revision: nextRevision,
+      updatedAt,
+      workspaceState: normalizedWorkspace,
+    };
+  });
 }

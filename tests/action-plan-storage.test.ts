@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { ActionPlan } from "@/lib/action-plan-contract";
 import { actionPlanSystemOptions } from "@/lib/action-plan-system-catalog";
+import { createActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
 
 type StoredDocument = Record<string, unknown>;
 
@@ -92,9 +93,12 @@ vi.mock("@/lib/operational-maintenance", () => ({
 }));
 
 import {
+  ActionPlanRevisionConflictError,
+  createOwnedActionPlan,
   createPendingActionPlan,
   getOwnedActionPlans,
   hashActionPlanClaimSecret,
+  updateOwnedActionPlanWorkspace,
 } from "@/lib/action-plan-storage.server";
 import {
   consumeCustomerMagicLink,
@@ -223,6 +227,51 @@ describe("action plan Firebase persistence", () => {
 
     expect(attached).toBe(false);
     expect(firestore.documents.has("customer_magic_links/magic-token-hash")).toBe(false);
+  });
+
+  it("stores workspace progress in the same plan document", async () => {
+    const plan = actionPlan();
+    const created = await createOwnedActionPlan("dirigeant@example.com", {
+      plan,
+    });
+    const workspace = createActionPlanWorkspaceState(plan);
+    workspace.tasks["action-1"].status = "done";
+    workspace.tasks["action-1"].notes = "Résultat vérifié avec l’équipe.";
+
+    const updated = await updateOwnedActionPlanWorkspace(
+      "dirigeant@example.com",
+      created.id,
+      created.revision,
+      workspace,
+    );
+
+    expect(updated?.revision).toBe(2);
+    const plans = await getOwnedActionPlans("dirigeant@example.com");
+    expect(plans[0]?.workspaceState.tasks["action-1"]?.status).toBe("done");
+    expect(plans[0]?.workspaceState.tasks["action-1"]?.notes).toContain("équipe");
+    expect(plans[0]?.plan.summary).toBe(plan.summary);
+  });
+
+  it("rejects an outdated revision instead of overwriting newer changes", async () => {
+    const plan = actionPlan();
+    const created = await createOwnedActionPlan("dirigeant@example.com", { plan });
+    const workspace = createActionPlanWorkspaceState(plan);
+
+    await updateOwnedActionPlanWorkspace(
+      "dirigeant@example.com",
+      created.id,
+      1,
+      workspace,
+    );
+
+    await expect(
+      updateOwnedActionPlanWorkspace(
+        "dirigeant@example.com",
+        created.id,
+        1,
+        workspace,
+      ),
+    ).rejects.toBeInstanceOf(ActionPlanRevisionConflictError);
   });
 
 });

@@ -3,6 +3,7 @@
 import { CheckCircle2, LoaderCircle, Mail, Save } from "lucide-react";
 import { useState } from "react";
 import type { ActionPlan } from "@/lib/action-plan-contract";
+import type { ActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
 import { isValidEmail, normalizeEmail } from "@/lib/email";
 
 type PendingClaim = {
@@ -21,10 +22,12 @@ type SaveState =
 export default function ActionPlanSaveControl({
   plan,
   sourceText,
+  workspace,
   demoMode = false,
 }: {
   plan: ActionPlan;
   sourceText: string;
+  workspace: ActionPlanWorkspaceState;
   demoMode?: boolean;
 }) {
   const [state, setState] = useState<SaveState>("idle");
@@ -48,7 +51,7 @@ export default function ActionPlanSaveControl({
       const response = await fetch("/api/action-plans", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan, sourceText }),
+        body: JSON.stringify({ plan, sourceText, workspaceState: workspace }),
       });
       const body = (await response.json().catch(() => null)) as
         | {

@@ -14,6 +14,10 @@ import {
   ACTION_PLAN_DEMO_SITUATION,
 } from "@/lib/action-plan-demo";
 import type { ActionPlanSystemOption } from "@/lib/action-plan-system-catalog";
+import {
+  createActionPlanWorkspaceState,
+  type ActionPlanWorkspaceState,
+} from "@/lib/action-plan-workspace";
 
 const EXAMPLES = [
   "Je dirige un cabinet comptable de 6 personnes. Les dossiers avancent, mais tout remonte encore vers moi et les échéances sont suivies dans plusieurs fichiers.",
@@ -74,6 +78,7 @@ export default function ActionPlanExperience({
   const [exampleIndex, setExampleIndex] = useState(0);
   const [animatedPlaceholder, setAnimatedPlaceholder] = useState("");
   const [plan, setPlan] = useState<ActionPlan | null>(null);
+  const [workspace, setWorkspace] = useState<ActionPlanWorkspaceState | null>(null);
   const [selectedSystemId, setSelectedSystemId] = useState("");
   const [activeTab, setActiveTab] = useState<ActionPlanView>("plan");
   const [isGenerating, setIsGenerating] = useState(false);
@@ -133,6 +138,7 @@ export default function ActionPlanExperience({
     setIsDemoMode(true);
     setSituation(ACTION_PLAN_DEMO_SITUATION);
     setPlan(ACTION_PLAN_DEMO);
+    setWorkspace(createActionPlanWorkspaceState(ACTION_PLAN_DEMO));
     setSelectedSystemId(ACTION_PLAN_DEMO.systemId);
     setActiveTab("plan");
   }, []);
@@ -253,6 +259,7 @@ export default function ActionPlanExperience({
 
     if (isDemoMode) {
       setPlan(ACTION_PLAN_DEMO);
+      setWorkspace(createActionPlanWorkspaceState(ACTION_PLAN_DEMO));
       setSelectedSystemId(ACTION_PLAN_DEMO.systemId);
       setActiveTab("plan");
       setIsGenerating(false);
@@ -276,6 +283,7 @@ export default function ActionPlanExperience({
       }
 
       setPlan(body.plan);
+      setWorkspace(createActionPlanWorkspaceState(body.plan));
       setSelectedSystemId(body.plan.systemId);
       setActiveTab("plan");
       window.requestAnimationFrame(() => resultTitleRef.current?.focus());
@@ -382,6 +390,15 @@ export default function ActionPlanExperience({
     );
   }
 
+  if (!workspace) return null;
+
+  const updateWorkspace: React.Dispatch<React.SetStateAction<ActionPlanWorkspaceState>> = (update) => {
+    setWorkspace((current) => {
+      if (!current) return current;
+      return typeof update === "function" ? update(current) : update;
+    });
+  };
+
   return (
     <main className="min-h-screen bg-dema-cream px-4 pb-24 pt-8 sm:px-6 lg:px-8">
       <ActionPlanNavbar activeView={activeTab} onViewChange={setActiveTab} />
@@ -401,6 +418,7 @@ export default function ActionPlanExperience({
             <ActionPlanSaveControl
               plan={plan}
               sourceText={situation.trim()}
+              workspace={workspace}
               demoMode={isDemoMode}
             />
             <ActionPlanShareControl plan={plan} />
@@ -408,6 +426,7 @@ export default function ActionPlanExperience({
               type="button"
               onClick={() => {
                 setPlan(null);
+                setWorkspace(null);
                 setError(null);
               }}
               className="demaa-secondary-button min-h-11 shrink-0"
@@ -419,13 +438,22 @@ export default function ActionPlanExperience({
 
         <div className="pt-8">
           <div hidden={activeTab !== "plan"}>
-            <ActionPlanResult plan={plan} />
+            <ActionPlanResult
+              plan={plan}
+              workspace={workspace}
+              onWorkspaceChange={updateWorkspace}
+            />
           </div>
           <div hidden={activeTab !== "system"}>
             <ActionPlanSystemPanel
               options={systemOptions}
               selectedSystemId={selectedSystemId}
-              onSystemChange={setSelectedSystemId}
+              onSystemChange={(systemId) => {
+                setSelectedSystemId(systemId);
+                setWorkspace((current) => current ? { ...current, selectedSystemId: systemId } : current);
+              }}
+              workspace={workspace}
+              onWorkspaceChange={updateWorkspace}
             />
           </div>
           {activeTab === "academy" ? <ActionPlanAcademyPanel /> : null}

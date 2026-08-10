@@ -2,13 +2,14 @@
 
 import { ExternalLink, LoaderCircle, RotateCcw } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import ActionPlanSystemSelector from "@/components/ActionPlanSystemSelector";
 import SystemDetailContent from "@/components/SystemDetailContent";
 import type { ActionPlanSystemOption } from "@/lib/action-plan-system-catalog";
 import type { SystemeDetail } from "@/lib/systeme-catalog";
 import type { RenderableSolutionSectionDto } from "@/lib/system-solutions-ui-dto";
 import type { System } from "@/lib/types";
+import type { ActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
 
 type SystemPayload = {
   system: System;
@@ -21,10 +22,14 @@ export default function ActionPlanSystemPanel({
   options,
   selectedSystemId,
   onSystemChange,
+  workspace,
+  onWorkspaceChange,
 }: {
   options: readonly ActionPlanSystemOption[];
   selectedSystemId: string;
   onSystemChange: (systemId: string) => void;
+  workspace: ActionPlanWorkspaceState;
+  onWorkspaceChange: Dispatch<SetStateAction<ActionPlanWorkspaceState>>;
 }) {
   const [payload, setPayload] = useState<SystemPayload | null>(null);
   const [error, setError] = useState<{ slug: string; message: string } | null>(null);
@@ -122,6 +127,26 @@ export default function ActionPlanSystemPanel({
             solutionSections={currentPayload.solutionSections}
             system={currentPayload.system}
             systeme={currentPayload.systeme}
+            checkedProcessStepIds={
+              workspace.checkedProcessStepIdsBySystem[selectedSystemId] || []
+            }
+            onCheckedProcessStepIdsChange={(stepIds) => onWorkspaceChange((current) => ({
+              ...current,
+              checkedProcessStepIdsBySystem: {
+                ...current.checkedProcessStepIdsBySystem,
+                [selectedSystemId]: [...stepIds],
+              },
+            }))}
+            selectedSolutionPlacementIds={
+              workspace.selectedSolutionPlacementIdsBySystem[selectedSystemId] || []
+            }
+            onSelectedSolutionPlacementIdsChange={(placementIds) => onWorkspaceChange((current) => ({
+              ...current,
+              selectedSolutionPlacementIdsBySystem: {
+                ...current.selectedSolutionPlacementIdsBySystem,
+                [selectedSystemId]: [...placementIds],
+              },
+            }))}
           />
           <Link
             href={`/systemes/${currentPayload.system.slug}`}

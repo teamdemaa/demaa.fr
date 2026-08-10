@@ -11,6 +11,7 @@ describe("action plan experience architecture", () => {
     const experience = source("src/components/ActionPlanExperience.tsx");
     const saveControl = source("src/components/ActionPlanSaveControl.tsx");
     const shareControl = source("src/components/ActionPlanShareControl.tsx");
+    const result = source("src/components/ActionPlanResult.tsx");
 
     expect(experience).toContain("useState<ActionPlan | null>(null)");
     expect(experience).not.toMatch(/localStorage|sessionStorage/);
@@ -22,6 +23,10 @@ describe("action plan experience architecture", () => {
     expect(shareControl).toContain("navigator.clipboard.writeText");
     expect(experience).toContain('get("demo") !== "plan"');
     expect(experience).toContain("ACTION_PLAN_DEMO");
+    expect(result).toContain('type PlanSection = "tasks" | "strategy"');
+    expect(result).toContain('type TaskView = "list" | "kanban"');
+    expect(result).toContain("Notes personnelles");
+    expect(result).not.toContain("demaa-accordion");
   });
 
   it("changes the selected system deterministically without another AI call", () => {
@@ -38,6 +43,8 @@ describe("action plan experience architecture", () => {
     expect(systemSelector).toContain('role="combobox"');
     expect(systemPanel).toContain("<SystemDetailContent");
     expect(systemPanel).toContain("checkableProcess");
+    expect(systemPanel).toContain("checkedProcessStepIdsBySystem");
+    expect(systemPanel).toContain("selectedSolutionPlacementIdsBySystem");
     expect(source("src/components/SystemeTabContent.tsx")).toContain(
       'type="checkbox"',
     );

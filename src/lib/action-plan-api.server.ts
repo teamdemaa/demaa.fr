@@ -3,6 +3,7 @@ import "server-only";
 import { cookies } from "next/headers";
 import { z } from "zod";
 import { actionPlanSchema } from "@/lib/action-plan-contract";
+import { actionPlanWorkspaceStateSchema } from "@/lib/action-plan-workspace";
 import {
   CUSTOMER_SPACE_COOKIE,
   getEmailFromCustomerSessionToken,
@@ -13,6 +14,7 @@ const nullableTokenCount = z.number().int().nonnegative().nullable().optional();
 export const actionPlanWriteRequestSchema = z
   .object({
     plan: actionPlanSchema,
+    workspaceState: actionPlanWorkspaceStateSchema.optional(),
     sourceText: z.string().trim().max(12_000).nullable().optional(),
     generation: z
       .object({
@@ -24,6 +26,13 @@ export const actionPlanWriteRequestSchema = z
       .strict()
       .nullable()
       .optional(),
+  })
+  .strict();
+
+export const actionPlanUpdateRequestSchema = z
+  .object({
+    expectedRevision: z.number().int().min(1),
+    workspaceState: actionPlanWorkspaceStateSchema,
   })
   .strict();
 

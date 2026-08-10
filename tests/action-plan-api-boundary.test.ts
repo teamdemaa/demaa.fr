@@ -20,6 +20,10 @@ describe("action plan persistence boundaries", () => {
     expect(collectionRoute).toContain("enforceSameOrigin(request)");
     expect(apiContract).toContain("actionPlanSchema");
     expect(collectionRoute).toContain("noStoreHeaders()");
+    const updateRoute = source("src/app/api/action-plans/[id]/route.ts");
+    expect(updateRoute).toContain("enforceSameOrigin(request)");
+    expect(updateRoute).toContain("expectedRevision");
+    expect(updateRoute).toContain("revision_conflict");
   });
 
   it("binds pending plans to the verified magic-link identity", () => {
