@@ -56,6 +56,23 @@ describe("system Solutions UI", () => {
     expect(markup).not.toMatch(/bientôt|placeholder/i);
   });
 
+  it("shows saved cards first in a dedicated selection rail", () => {
+    const placement = publishedSolutionSectionsFixture[0]?.placements[0];
+    expect(placement).toBeDefined();
+
+    const markup = renderToStaticMarkup(
+      createElement(SystemSolutionsTab, {
+        sections: publishedSolutionSectionsFixture,
+        selectedPlacementIds: new Set([placement!.placementId]),
+        onToggleSelection: () => undefined,
+      }),
+    );
+
+    expect(markup).toContain("Votre sélection");
+    expect(markup).toContain(`aria-label="Retirer ${placement!.resource.name} de votre sélection"`);
+    expect(markup.indexOf("Votre sélection")).toBeLessThan(markup.indexOf("Outils"));
+  });
+
   it("keeps Resources out of Solutions and renders them in their own tab", () => {
     const solutionsMarkup = renderToStaticMarkup(
       createElement(SystemSolutionsTab, {

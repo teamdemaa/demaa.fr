@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import ActionPlanAcademyPanel from "@/components/ActionPlanAcademyPanel";
+import ActionPlanNavbar, { type ActionPlanView } from "@/components/ActionPlanNavbar";
 import ActionPlanResult from "@/components/ActionPlanResult";
 import ActionPlanSystemPanel from "@/components/ActionPlanSystemPanel";
 import type { ActionPlan } from "@/lib/action-plan-contract";
@@ -13,39 +15,33 @@ export default function SavedActionPlanDetail({
   plan: ActionPlan;
   systemOptions: readonly ActionPlanSystemOption[];
 }) {
-  const [activeTab, setActiveTab] = useState<"plan" | "system">("plan");
+  const [activeTab, setActiveTab] = useState<ActionPlanView>("plan");
   const [selectedSystemId, setSelectedSystemId] = useState(plan.systemId);
 
   return (
     <>
-      <div className="mt-7 grid max-w-md grid-cols-2 rounded-full border border-dema-line bg-dema-paper p-1" role="tablist" aria-label="Plan sauvegardé">
-        <button
-          type="button"
-          role="tab"
-          aria-selected={activeTab === "plan"}
-          onClick={() => setActiveTab("plan")}
-          className={`min-h-11 rounded-full px-4 text-sm transition ${activeTab === "plan" ? "bg-dema-sage font-semibold text-dema-forest" : "text-dema-muted"}`}
-        >
-          Plan d’action
-        </button>
-        <button
-          type="button"
-          role="tab"
-          aria-selected={activeTab === "system"}
-          onClick={() => setActiveTab("system")}
-          className={`min-h-11 rounded-full px-4 text-sm transition ${activeTab === "system" ? "bg-dema-sage font-semibold text-dema-forest" : "text-dema-muted"}`}
-        >
-          Système
-        </button>
-      </div>
-      <div className="mt-8" role="tabpanel">
-        {activeTab === "plan" ? <ActionPlanResult plan={plan} /> : null}
-        {activeTab === "system" ? (
+      <ActionPlanNavbar activeView={activeTab} onViewChange={setActiveTab} />
+      <div className="mt-8">
+        <div hidden={activeTab !== "plan"}>
+          <ActionPlanResult plan={plan} />
+        </div>
+        <div hidden={activeTab !== "system"}>
           <ActionPlanSystemPanel
             options={systemOptions}
             selectedSystemId={selectedSystemId}
             onSystemChange={setSelectedSystemId}
           />
+        </div>
+        {activeTab === "academy" ? <ActionPlanAcademyPanel /> : null}
+        {activeTab === "accompaniment" ? (
+          <section className="flex min-h-[46vh] flex-col items-center justify-center text-center">
+            <h2 className="text-4xl font-light tracking-[-0.04em] text-brand-blue sm:text-5xl">
+              Accompagnement
+            </h2>
+            <p className="mt-4 text-base font-light text-dema-muted">
+              Cet espace sera disponible prochainement.
+            </p>
+          </section>
         ) : null}
       </div>
     </>

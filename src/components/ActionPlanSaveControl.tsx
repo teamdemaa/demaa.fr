@@ -21,9 +21,11 @@ type SaveState =
 export default function ActionPlanSaveControl({
   plan,
   sourceText,
+  demoMode = false,
 }: {
   plan: ActionPlan;
   sourceText: string;
+  demoMode?: boolean;
 }) {
   const [state, setState] = useState<SaveState>("idle");
   const [pendingClaim, setPendingClaim] = useState<PendingClaim | null>(null);
@@ -33,6 +35,12 @@ export default function ActionPlanSaveControl({
 
   async function createSavedPlan() {
     if (state !== "idle") return;
+
+    if (demoMode) {
+      setState("saved");
+      return;
+    }
+
     setState("creating");
     setError(null);
 
@@ -190,7 +198,7 @@ export default function ActionPlanSaveControl({
         className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-dema-forest px-5 text-sm font-semibold text-white transition hover:bg-brand-blue disabled:opacity-60"
       >
         {state === "creating" ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : <Save className="h-4 w-4" aria-hidden="true" />}
-        {state === "creating" ? "Préparation…" : "Sauvegarder ce plan"}
+        {state === "creating" ? "Préparation…" : "Sauvegarder"}
       </button>
       {error ? <p className="mt-2 max-w-sm text-xs text-red-700">{error}</p> : null}
     </div>

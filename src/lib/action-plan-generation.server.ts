@@ -1,6 +1,6 @@
 import "server-only";
 
-import { generateText, Output } from "ai";
+import { gateway, generateText, Output } from "ai";
 import type { ActionPlan } from "@/lib/action-plan-contract";
 import { actionPlanSchema } from "@/lib/action-plan-contract";
 import { actionPlanSystemOptions } from "@/lib/action-plan-system-catalog";
@@ -50,7 +50,7 @@ export function buildActionPlanPrompt(situation: string) {
 export async function generateActionPlan(situation: string): Promise<ActionPlan> {
   const startedAt = Date.now();
   const { output, usage } = await generateText({
-    model: ACTION_PLAN_MODEL_ID,
+    model: gateway(ACTION_PLAN_MODEL_ID),
     instructions: ACTION_PLAN_INSTRUCTIONS,
     prompt: buildActionPlanPrompt(situation),
     output: Output.object({
@@ -59,6 +59,11 @@ export async function generateActionPlan(situation: string): Promise<ActionPlan>
         "Plan d'action hebdomadaire et strategie en quatre piliers pour un dirigeant de TPE.",
       schema: actionPlanSchema,
     }),
+    providerOptions: {
+      gateway: {
+        order: ["openai", "bedrock", "azure"],
+      },
+    },
     maxOutputTokens: 7_000,
     reasoning: "low",
     maxRetries: 1,

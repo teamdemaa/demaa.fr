@@ -84,6 +84,23 @@ describe("service request network security", () => {
     ).toBeNull();
   });
 
+  it("accepts equivalent localhost loopback origins only on the same development port", () => {
+    expect(
+      enforceSameOrigin(
+        request("http://localhost:3002/api/service-request", {
+          origin: "http://127.0.0.1:3002",
+        }),
+      ),
+    ).toBeNull();
+    expect(
+      enforceSameOrigin(
+        request("http://localhost:3002/api/service-request", {
+          origin: "http://127.0.0.1:3003",
+        }),
+      ),
+    ).toMatchObject({ status: 403 });
+  });
+
   it("requires a secret pepper, HMACs identity and enforces the durable limit", async () => {
     const store = database();
     const env = { ...process.env, VERCEL: "1", SERVICE_REQUEST_RATE_LIMIT_HMAC_SECRET: pepper };

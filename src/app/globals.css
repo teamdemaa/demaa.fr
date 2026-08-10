@@ -289,6 +289,49 @@
   }
 }
 
+@keyframes demaa-generation-quote-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.65rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes demaa-generation-dot-pulse {
+  0%,
+  70%,
+  100% {
+    opacity: 0.28;
+    transform: translateY(0);
+  }
+  35% {
+    opacity: 1;
+    transform: translateY(-0.15rem);
+  }
+}
+
+.demaa-generation-quote {
+  animation: demaa-generation-quote-in 620ms ease-out both;
+}
+
+.demaa-generation-dot {
+  animation: demaa-generation-dot-pulse 1.35s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .demaa-generation-quote {
+    animation: none;
+  }
+
+  .demaa-generation-dot {
+    animation: none;
+    opacity: 0.65;
+  }
+}
+
 body {
   background-color: var(--color-background);
   color: var(--color-foreground);

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
-import { type KeyboardEvent, useMemo, useState } from "react";
+import { type KeyboardEvent, type ReactNode, useMemo, useState } from "react";
 import SystemGuidesRail from "@/components/SystemGuidesRail";
 import SystemContextualCaseStudy from "@/components/SystemContextualCaseStudy";
 import SystemResourcesTab from "@/components/SystemResourcesTab";
@@ -31,6 +31,9 @@ type SystemDetailContentProps = {
   headingId?: string;
   solutionSections?: readonly RenderableSolutionSectionDto[];
   embedded?: boolean;
+  checkableProcess?: boolean;
+  selectableSolutions?: boolean;
+  headerActions?: ReactNode;
 };
 
 const systemTabDefinitions: ReadonlyArray<{
@@ -53,6 +56,9 @@ export default function SystemDetailContent({
   headingId,
   solutionSections = EMPTY_SOLUTION_SECTIONS,
   embedded = false,
+  checkableProcess = false,
+  selectableSolutions = false,
+  headerActions,
 }: SystemDetailContentProps) {
   const router = useRouter();
   const scopedResources = useMemo(
@@ -73,6 +79,30 @@ export default function SystemDetailContent({
       ? initialActiveTab
       : "process",
   );
+  const [checkedProcessSteps, setCheckedProcessSteps] = useState<Set<string>>(
+    () => new Set(),
+  );
+  const [selectedSolutionIds, setSelectedSolutionIds] = useState<Set<string>>(
+    () => new Set(),
+  );
+
+  function toggleProcessStep(stepId: string) {
+    setCheckedProcessSteps((current) => {
+      const next = new Set(current);
+      if (next.has(stepId)) next.delete(stepId);
+      else next.add(stepId);
+      return next;
+    });
+  }
+
+  function toggleSolution(placementId: string) {
+    setSelectedSolutionIds((current) => {
+      const next = new Set(current);
+      if (next.has(placementId)) next.delete(placementId);
+      else next.add(placementId);
+      return next;
+    });
+  }
   function selectTab(tab: SystemDetailTab) {
     setActiveTab(tab);
     if (embedded) return;
@@ -110,12 +140,15 @@ export default function SystemDetailContent({
       </Link> : null}
 
       <div className="max-w-4xl">
-        <Heading
-          id={headingId}
-          className="text-3xl font-semibold tracking-[-0.035em] text-brand-blue sm:text-4xl"
-        >
-          {system.name}
-        </Heading>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <Heading
+            id={headingId}
+            className="text-3xl font-semibold tracking-[-0.035em] text-brand-blue sm:text-4xl"
+          >
+            {system.name}
+          </Heading>
+          {headerActions ? <div className="w-full sm:max-w-xs">{headerActions}</div> : null}
+        </div>
         <p className="mt-4 max-w-3xl text-base leading-relaxed text-dema-muted">
           {intro}
         </p>
@@ -161,12 +194,16 @@ export default function SystemDetailContent({
           <SystemeTabContent
             systemName={system.name}
             systeme={systeme}
+            checkedStepIds={checkableProcess ? checkedProcessSteps : undefined}
+            onToggleStep={checkableProcess ? toggleProcessStep : undefined}
           />
         ) : null}
 
         {activeTab === "solutions" ? (
           <SystemSolutionsTab
             sections={solutionSections}
+            selectedPlacementIds={selectableSolutions ? selectedSolutionIds : undefined}
+            onToggleSelection={selectableSolutions ? toggleSolution : undefined}
           />
         ) : null}
 

@@ -1,20 +1,26 @@
 "use client";
 
-import { ChevronDown } from "lucide-react";
+import { Check, ChevronDown } from "lucide-react";
 import { useState } from "react";
 import type { SystemeDetail, SystemeRoutine } from "@/lib/systeme-catalog";
 
 type SystemeTabContentProps = {
   systemName: string;
   systeme: SystemeDetail | null | undefined;
+  checkedStepIds?: ReadonlySet<string>;
+  onToggleStep?: (stepId: string) => void;
 };
 
 function RoutineItem({
   index,
   routine,
+  checkedStepIds,
+  onToggleStep,
 }: {
   index: number;
   routine: SystemeRoutine;
+  checkedStepIds?: ReadonlySet<string>;
+  onToggleStep?: (stepId: string) => void;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const panelId = `system-routine-detail-${index}`;
@@ -57,14 +63,42 @@ function RoutineItem({
           className="mb-5 ml-5 border-l-2 border-dema-forest/35 pl-8 pr-1 sm:mb-6 sm:ml-5 sm:pl-10"
         >
           <ul className="space-y-2.5">
-            {routine.bullets.map((bullet, bulletIndex) => (
-              <li
-                key={`${routine.routineId}-${bulletIndex}`}
-                className="relative pl-4 text-[13px] leading-relaxed text-dema-muted before:absolute before:left-0 before:top-[0.7em] before:h-1 before:w-1 before:rounded-full before:bg-dema-forest/65 sm:text-sm"
-              >
-                {bullet}
-              </li>
-            ))}
+            {routine.bullets.map((bullet, bulletIndex) => {
+              const stepId = `${routine.routineId}:${bulletIndex}`;
+              const isChecked = checkedStepIds?.has(stepId) ?? false;
+
+              return (
+                <li key={stepId} className="text-[13px] leading-relaxed sm:text-sm">
+                  {onToggleStep ? (
+                    <label className="group flex cursor-pointer items-start gap-3 text-dema-muted">
+                      <input
+                        type="checkbox"
+                        checked={isChecked}
+                        onChange={() => onToggleStep(stepId)}
+                        className="sr-only"
+                      />
+                      <span
+                        className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md border transition ${
+                          isChecked
+                            ? "border-dema-forest bg-dema-forest text-white"
+                            : "border-dema-forest/25 bg-dema-paper text-transparent group-hover:border-dema-forest/45"
+                        }`}
+                        aria-hidden="true"
+                      >
+                        <Check className="h-3.5 w-3.5" />
+                      </span>
+                      <span className={isChecked ? "text-dema-muted/65 line-through" : ""}>
+                        {bullet}
+                      </span>
+                    </label>
+                  ) : (
+                    <span className="relative block pl-4 text-dema-muted before:absolute before:left-0 before:top-[0.7em] before:h-1 before:w-1 before:rounded-full before:bg-dema-forest/65">
+                      {bullet}
+                    </span>
+                  )}
+                </li>
+              );
+            })}
           </ul>
 
           {routine.support ? (
@@ -80,17 +114,28 @@ function RoutineItem({
 
 function OperationalRoutineAccordion({
   routines,
+  checkedStepIds,
+  onToggleStep,
 }: {
   routines: SystemeRoutine[];
+  checkedStepIds?: ReadonlySet<string>;
+  onToggleStep?: (stepId: string) => void;
 }) {
   return (
     <section aria-label="Routines du système">
+      {onToggleStep ? (
+        <p className="mb-3 text-xs text-dema-muted">
+          Cochez les éléments déjà en place dans votre entreprise.
+        </p>
+      ) : null}
       <div>
         {routines.map((routine, index) => (
           <RoutineItem
             key={routine.routineId}
             index={index}
             routine={routine}
+            checkedStepIds={checkedStepIds}
+            onToggleStep={onToggleStep}
           />
         ))}
       </div>
@@ -101,6 +146,8 @@ function OperationalRoutineAccordion({
 export default function SystemeTabContent({
   systemName,
   systeme,
+  checkedStepIds,
+  onToggleStep,
 }: SystemeTabContentProps) {
   if (!systeme?.cards.length) {
     return (
@@ -118,5 +165,11 @@ export default function SystemeTabContent({
     );
   }
 
-  return <OperationalRoutineAccordion routines={systeme.routines} />;
+  return (
+    <OperationalRoutineAccordion
+      routines={systeme.routines}
+      checkedStepIds={checkedStepIds}
+      onToggleStep={onToggleStep}
+    />
+  );
 }

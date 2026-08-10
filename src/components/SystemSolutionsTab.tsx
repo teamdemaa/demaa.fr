@@ -8,6 +8,8 @@ import {
   ChevronRight,
   ExternalLink,
   Gauge,
+  Bookmark,
+  BookmarkCheck,
   Wrench,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -212,8 +214,12 @@ function SolutionDialog({
 
 export default function SystemSolutionsTab({
   sections,
+  selectedPlacementIds,
+  onToggleSelection,
 }: {
   sections: readonly RenderableSolutionSectionDto[];
+  selectedPlacementIds?: ReadonlySet<string>;
+  onToggleSelection?: (placementId: string) => void;
 }) {
   const visibleSections = useMemo(
     () => SOLUTION_RAIL_DISPLAY_ORDER.flatMap((section) =>
@@ -226,6 +232,12 @@ export default function SystemSolutionsTab({
     buildInitialRailState(visibleSections),
   );
   const [selected, setSelected] = useState<RenderableSolutionPlacementDto | null>(null);
+  const selectedPlacements = useMemo(
+    () => visibleSections
+      .flatMap((group) => group.placements)
+      .filter((placement) => selectedPlacementIds?.has(placement.placementId)),
+    [selectedPlacementIds, visibleSections],
+  );
 
   const updateRailState = useCallback((group: RenderableSolutionSectionDto) => {
     const rail = railRefs.current[group.section];
@@ -271,6 +283,94 @@ export default function SystemSolutionsTab({
     rail.scrollBy({ behavior: "smooth", left: direction * step });
   }
 
+  function renderPlacementCard(placement: RenderableSolutionPlacementDto) {
+    const { resource } = placement;
+    const ResourceIcon = RESOURCE_ICONS[resource.resourceType];
+    const isSaved = selectedPlacementIds?.has(placement.placementId) ?? false;
+    const cardClassName = "group flex h-full w-full min-w-0 flex-col overflow-hidden rounded-[1.2rem] border border-dema-line bg-dema-paper p-5 text-left shadow-[0_10px_28px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/20 hover:shadow-[0_14px_32px_rgba(23,35,29,0.07)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:p-6";
+    const cardContent = (
+      <span className="flex h-full min-h-0 flex-col">
+        <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
+          <ResourceIcon className="h-5 w-5" aria-hidden="true" />
+        </span>
+        <span className="mt-4 block text-[10px] font-semibold uppercase tracking-[0.15em] text-dema-muted md:mt-5">
+          {resource.displayCategory ?? DEFAULT_RESOURCE_LABELS[resource.resourceType]}
+        </span>
+        <span className="mt-1.5 block text-lg font-semibold leading-snug text-brand-blue sm:text-xl md:mt-2">
+          {resource.name}
+        </span>
+        <span className="mt-2 text-[13px] leading-5 text-dema-muted md:mt-3 md:text-sm md:leading-relaxed">
+          {resource.description}
+        </span>
+      </span>
+    );
+    const openEvent = () => trackSystemSolutionEvent(
+      "system_solution_resource_opened",
+      {
+        rank: placement.rank,
+        resourceSlug: resource.resourceSlug,
+        resourceType: resource.resourceType,
+        section: placement.section,
+        systemSlug: placement.systemSlug,
+      },
+    );
+    const opensServicePage =
+      placement.section === "services" &&
+      resource.interaction.interactionMode === "detail" &&
+      resource.interaction.href.startsWith("/services/");
+
+    return (
+      <div
+        key={placement.placementId}
+        data-solution-resource-card
+        className="relative min-h-[248px] min-w-0 snap-start md:aspect-square md:min-h-0"
+      >
+        {opensServicePage ? (
+          <Link
+            href={resource.interaction.href}
+            onClick={openEvent}
+            className={cardClassName}
+            aria-label={`Ouvrir ${resource.name}`}
+          >
+            {cardContent}
+          </Link>
+        ) : (
+          <button
+            type="button"
+            onClick={() => {
+              if (resource.interaction.interactionMode === "system_delivery") return;
+              openEvent();
+              setSelected(placement);
+            }}
+            className={cardClassName}
+            aria-label={`Ouvrir ${resource.name}`}
+          >
+            {cardContent}
+          </button>
+        )}
+        {onToggleSelection ? (
+          <button
+            type="button"
+            onClick={() => onToggleSelection(placement.placementId)}
+            aria-pressed={isSaved}
+            aria-label={isSaved ? `Retirer ${resource.name} de votre sélection` : `Enregistrer ${resource.name}`}
+            className={`absolute right-4 top-4 inline-flex h-11 w-11 items-center justify-center rounded-full border transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 ${
+              isSaved
+                ? "border-dema-forest/20 bg-dema-forest text-white"
+                : "border-dema-line bg-dema-paper/95 text-dema-muted hover:border-dema-forest/25 hover:text-dema-forest"
+            }`}
+          >
+            {isSaved ? (
+              <BookmarkCheck className="h-4.5 w-4.5" aria-hidden="true" />
+            ) : (
+              <Bookmark className="h-4.5 w-4.5" aria-hidden="true" />
+            )}
+          </button>
+        ) : null}
+      </div>
+    );
+  }
+
   if (visibleSections.length === 0) {
     return (
       <p
@@ -285,6 +385,20 @@ export default function SystemSolutionsTab({
   return (
     <>
       <div className="max-w-full space-y-10 overflow-hidden">
+        {selectedPlacements.length > 0 ? (
+          <section aria-labelledby="solution-section-selection" className="min-w-0 max-w-full">
+            <h3
+              id="solution-section-selection"
+              className="text-xl font-semibold tracking-[-0.025em] text-brand-blue sm:text-2xl"
+            >
+              Votre sélection
+            </h3>
+            <div className="mt-4 grid max-w-full snap-x snap-mandatory grid-flow-col auto-cols-[82%] gap-4 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] md:auto-cols-[calc((100%_-_2rem)_/_3)] [&::-webkit-scrollbar]:hidden">
+              {selectedPlacements.map(renderPlacementCard)}
+            </div>
+          </section>
+        ) : null}
+
         {visibleSections.map((group) => {
           const label = SOLUTION_UI_WORKING_LABELS[
             group.section as VisibleSolutionSection
@@ -335,73 +449,7 @@ export default function SystemSolutionsTab({
                 onScroll={() => updateRailState(group)}
                 className="mt-4 grid max-w-full snap-x snap-mandatory grid-flow-col auto-cols-[82%] gap-4 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] md:auto-cols-[calc((100%_-_2rem)_/_3)] [&::-webkit-scrollbar]:hidden"
               >
-                {group.placements.map((placement) => {
-                  const { resource } = placement;
-                  const ResourceIcon = RESOURCE_ICONS[resource.resourceType];
-                  const cardClassName = "group min-h-[248px] min-w-0 snap-start overflow-hidden rounded-[1.2rem] border border-dema-line bg-dema-paper p-5 text-left shadow-[0_10px_28px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/20 hover:shadow-[0_14px_32px_rgba(23,35,29,0.07)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:p-6 md:aspect-square md:min-h-0";
-                  const cardContent = (
-                      <span className="flex h-full min-h-0 flex-col">
-                        <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
-                          <ResourceIcon className="h-5 w-5" aria-hidden="true" />
-                        </span>
-                        <span className="mt-4 block text-[10px] font-semibold uppercase tracking-[0.15em] text-dema-muted md:mt-5">
-                          {resource.displayCategory ?? DEFAULT_RESOURCE_LABELS[resource.resourceType]}
-                        </span>
-                        <span className="mt-1.5 block text-lg font-semibold leading-snug text-brand-blue sm:text-xl md:mt-2">
-                          {resource.name}
-                        </span>
-                        <span className="mt-2 text-[13px] leading-5 text-dema-muted md:mt-3 md:text-sm md:leading-relaxed">
-                          {resource.description}
-                        </span>
-                      </span>
-                  );
-                  const openEvent = () => trackSystemSolutionEvent(
-                    "system_solution_resource_opened",
-                    {
-                      rank: placement.rank,
-                      resourceSlug: resource.resourceSlug,
-                      resourceType: resource.resourceType,
-                      section: placement.section,
-                      systemSlug: placement.systemSlug,
-                    },
-                  );
-
-                  if (
-                    group.section === "services" &&
-                    resource.interaction.interactionMode === "detail" &&
-                    resource.interaction.href.startsWith("/services/")
-                  ) {
-                    return (
-                      <Link
-                        key={placement.placementId}
-                        href={resource.interaction.href}
-                        data-solution-resource-card
-                        onClick={openEvent}
-                        className={cardClassName}
-                        aria-label={`Ouvrir ${resource.name}`}
-                      >
-                        {cardContent}
-                      </Link>
-                    );
-                  }
-
-                  return (
-                    <button
-                      key={placement.placementId}
-                      type="button"
-                      data-solution-resource-card
-                      onClick={() => {
-                        if (resource.interaction.interactionMode === "system_delivery") return;
-                        openEvent();
-                        setSelected(placement);
-                      }}
-                      className={cardClassName}
-                      aria-label={`Ouvrir ${resource.name}`}
-                    >
-                      {cardContent}
-                    </button>
-                  );
-                })}
+                {group.placements.map(renderPlacementCard)}
               </div>
             </section>
           );

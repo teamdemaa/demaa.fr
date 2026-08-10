@@ -3,6 +3,7 @@
 import { ExternalLink, LoaderCircle, RotateCcw } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import ActionPlanSystemSelector from "@/components/ActionPlanSystemSelector";
 import SystemDetailContent from "@/components/SystemDetailContent";
 import type { ActionPlanSystemOption } from "@/lib/action-plan-system-catalog";
 import type { SystemeDetail } from "@/lib/systeme-catalog";
@@ -71,33 +72,15 @@ export default function ActionPlanSystemPanel({
 
   return (
     <section aria-labelledby="action-plan-system-title">
-      <div className="mb-7 flex flex-col gap-3 border-b border-dema-line pb-6 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <p className="text-xs font-medium uppercase tracking-[0.14em] text-dema-forest">
-            Système associé au plan
-          </p>
-          <h2
-            id="action-plan-system-title"
-            className="mt-2 text-2xl font-light tracking-[-0.03em] text-brand-blue sm:text-3xl"
-          >
-            Process, solutions et ressources
-          </h2>
-        </div>
-        <label className="w-full text-xs text-dema-muted sm:max-w-xs">
-          Changer de système
-          <select
+      {!currentPayload ? (
+        <div className="mb-5 flex justify-end">
+          <ActionPlanSystemSelector
+            options={options}
             value={selectedSystemId}
-            onChange={(event) => onSystemChange(event.target.value)}
-            className="mt-1.5 min-h-11 w-full rounded-xl border border-dema-line bg-dema-paper px-3 text-sm text-brand-blue outline-none transition focus:border-dema-forest/30"
-          >
-            {options.map((option) => (
-              <option key={option.id} value={option.id}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
+            onChange={onSystemChange}
+          />
+        </div>
+      ) : null}
 
       {!currentPayload && !currentError ? (
         <div className="flex min-h-48 items-center justify-center rounded-[1.25rem] border border-dema-line bg-dema-paper text-sm text-dema-muted">
@@ -124,7 +107,17 @@ export default function ActionPlanSystemPanel({
         <>
           <SystemDetailContent
             embedded
+            checkableProcess
+            selectableSolutions
             headingAs="h3"
+            headingId="action-plan-system-title"
+            headerActions={
+              <ActionPlanSystemSelector
+                options={options}
+                value={selectedSystemId}
+                onChange={onSystemChange}
+              />
+            }
             intro={currentPayload.intro}
             solutionSections={currentPayload.solutionSections}
             system={currentPayload.system}

@@ -94,4 +94,36 @@ describe("conventional systems and Academy navbar", () => {
       /source: '\/kits-operationnels',[\s\S]*?destination: '\/systemes',/,
     );
   });
+
+  it("keeps the anonymous member access minimal and intercepts it over the homepage", async () => {
+    const [memberSource, modalSource] = await Promise.all([
+      readFile(new URL("../src/app/mon-espace/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/@modal/(.)mon-espace/page.tsx", import.meta.url), "utf8"),
+    ]);
+
+    expect(memberSource).toContain("<Navbar hideSectionSelector minimal />");
+    expect(memberSource).toContain("<CustomerSpaceAccessForm returnTo=\"/mon-espace\" simple />");
+    expect(modalSource).toContain("<CustomerSpaceLoginDialog />");
+  });
+
+  it("centers generated-plan navigation on desktop and fixes it at the bottom on mobile", async () => {
+    const [navbarSource, actionPlanNavSource, experienceSource] = await Promise.all([
+      readFile(new URL("../src/components/Navbar.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/components/ActionPlanNavbar.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/components/ActionPlanExperience.tsx", import.meta.url), "utf8"),
+    ]);
+
+    expect(navbarSource).toContain('id="action-plan-navbar-desktop"');
+    expect(navbarSource).toContain('id="action-plan-navbar-mobile"');
+    expect(navbarSource).toContain("fixed inset-x-0 bottom-0");
+    expect(actionPlanNavSource).toContain("Plan d’action");
+    expect(actionPlanNavSource).toContain("Système");
+    expect(actionPlanNavSource).toContain("Académie");
+    expect(actionPlanNavSource).toContain("Accompagnement");
+    expect(actionPlanNavSource).toContain('{ view: "academy"');
+    expect(actionPlanNavSource).toContain("onViewChange(view)");
+    expect(experienceSource).toContain("<ActionPlanNavbar");
+    expect(experienceSource).toContain("<ActionPlanAcademyPanel");
+    expect(experienceSource).not.toContain('aria-label="Votre résultat"');
+  });
 });

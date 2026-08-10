@@ -1,11 +1,18 @@
 "use client";
 
-import { ArrowRight, LoaderCircle, Sparkles, Workflow } from "lucide-react";
+import { ArrowRight, LoaderCircle, Mic } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import ActionPlanAcademyPanel from "@/components/ActionPlanAcademyPanel";
+import ActionPlanNavbar, { type ActionPlanView } from "@/components/ActionPlanNavbar";
 import ActionPlanResult from "@/components/ActionPlanResult";
 import ActionPlanSaveControl from "@/components/ActionPlanSaveControl";
+import ActionPlanShareControl from "@/components/ActionPlanShareControl";
 import ActionPlanSystemPanel from "@/components/ActionPlanSystemPanel";
 import type { ActionPlan } from "@/lib/action-plan-contract";
+import {
+  ACTION_PLAN_DEMO,
+  ACTION_PLAN_DEMO_SITUATION,
+} from "@/lib/action-plan-demo";
 import type { ActionPlanSystemOption } from "@/lib/action-plan-system-catalog";
 
 const EXAMPLES = [
@@ -15,7 +22,48 @@ const EXAMPLES = [
   "Je suis consultante indépendante. J’ai des missions, mais mon offre manque de clarté et je veux trouver des clients de manière plus régulière sans démarchage de masse.",
 ];
 
-type ExperienceTab = "plan" | "system";
+const SYSTEM_QUOTES = [
+  {
+    quote: "Un mauvais système vaincra toujours une bonne personne.",
+    author: "W. Edwards Deming",
+  },
+  {
+    quote: "Les objectifs donnent une direction. Les systèmes permettent d’avancer.",
+    author: "James Clear",
+  },
+  {
+    quote: "Les problèmes d’aujourd’hui viennent des solutions d’hier.",
+    author: "Peter Senge",
+  },
+] as const;
+
+type BrowserSpeechRecognitionEvent = Event & {
+  results: SpeechRecognitionResultList;
+};
+
+type BrowserSpeechRecognitionErrorEvent = Event & {
+  error?: string;
+};
+
+type BrowserSpeechRecognition = {
+  continuous: boolean;
+  interimResults: boolean;
+  lang: string;
+  onend: (() => void) | null;
+  onerror: ((event: BrowserSpeechRecognitionErrorEvent) => void) | null;
+  onresult: ((event: BrowserSpeechRecognitionEvent) => void) | null;
+  start: () => void;
+  stop: () => void;
+};
+
+type BrowserSpeechRecognitionConstructor = new () => BrowserSpeechRecognition;
+
+declare global {
+  interface Window {
+    SpeechRecognition?: BrowserSpeechRecognitionConstructor;
+    webkitSpeechRecognition?: BrowserSpeechRecognitionConstructor;
+  }
+}
 
 export default function ActionPlanExperience({
   systemOptions,
@@ -24,23 +72,166 @@ export default function ActionPlanExperience({
 }) {
   const [situation, setSituation] = useState("");
   const [exampleIndex, setExampleIndex] = useState(0);
+  const [animatedPlaceholder, setAnimatedPlaceholder] = useState("");
   const [plan, setPlan] = useState<ActionPlan | null>(null);
   const [selectedSystemId, setSelectedSystemId] = useState("");
-  const [activeTab, setActiveTab] = useState<ExperienceTab>("plan");
+  const [activeTab, setActiveTab] = useState<ActionPlanView>("plan");
   const [isGenerating, setIsGenerating] = useState(false);
+  const [quoteIndex, setQuoteIndex] = useState(0);
+  const [isListening, setIsListening] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isDemoMode, setIsDemoMode] = useState(false);
   const resultTitleRef = useRef<HTMLHeadingElement | null>(null);
   const requestControllerRef = useRef<AbortController | null>(null);
+  const speechRecognitionRef = useRef<BrowserSpeechRecognition | null>(null);
 
   useEffect(() => {
     if (situation) return;
-    const interval = window.setInterval(() => {
-      setExampleIndex((current) => (current + 1) % EXAMPLES.length);
-    }, 5_500);
-    return () => window.clearInterval(interval);
-  }, [situation]);
 
-  useEffect(() => () => requestControllerRef.current?.abort(), []);
+    const example = EXAMPLES[exampleIndex];
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let timeout: number;
+
+    if (prefersReducedMotion) {
+      setAnimatedPlaceholder(example);
+      timeout = window.setTimeout(() => {
+        setExampleIndex((current) => (current + 1) % EXAMPLES.length);
+      }, 5_500);
+      return () => window.clearTimeout(timeout);
+    }
+
+    let cursor = 0;
+    setAnimatedPlaceholder("");
+
+    const typeNextCharacter = () => {
+      cursor += 1;
+      setAnimatedPlaceholder(example.slice(0, cursor));
+      timeout = window.setTimeout(
+        cursor < example.length
+          ? typeNextCharacter
+          : () => setExampleIndex((current) => (current + 1) % EXAMPLES.length),
+        cursor < example.length ? 34 : 2_600,
+      );
+    };
+
+    timeout = window.setTimeout(typeNextCharacter, 180);
+    return () => window.clearTimeout(timeout);
+  }, [exampleIndex, situation]);
+
+  useEffect(
+    () => () => {
+      requestControllerRef.current?.abort();
+      speechRecognitionRef.current?.stop();
+    },
+    [],
+  );
+
+  useEffect(() => {
+    if (process.env.NODE_ENV !== "development") return;
+    if (new URLSearchParams(window.location.search).get("demo") !== "plan") return;
+
+    setIsDemoMode(true);
+    setSituation(ACTION_PLAN_DEMO_SITUATION);
+    setPlan(ACTION_PLAN_DEMO);
+    setSelectedSystemId(ACTION_PLAN_DEMO.systemId);
+    setActiveTab("plan");
+  }, []);
+
+  useEffect(() => {
+    if (!isGenerating) return;
+
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousDocumentOverflow = document.documentElement.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+    setQuoteIndex(0);
+    const interval = window.setInterval(() => {
+      setQuoteIndex((current) => (current + 1) % SYSTEM_QUOTES.length);
+    }, 4_800);
+
+    return () => {
+      window.clearInterval(interval);
+      document.body.style.overflow = previousBodyOverflow;
+      document.documentElement.style.overflow = previousDocumentOverflow;
+    };
+  }, [isGenerating]);
+
+  async function handleDictation() {
+    if (isListening) {
+      speechRecognitionRef.current?.stop();
+      return;
+    }
+
+    const SpeechRecognition =
+      window.SpeechRecognition ?? window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+      setError("La dictée vocale n’est pas disponible ici. Essayez depuis Chrome ou Safari.");
+      return;
+    }
+
+    try {
+      const mediaStream = await window.navigator.mediaDevices?.getUserMedia({ audio: true });
+      mediaStream?.getTracks().forEach((track) => track.stop());
+    } catch (permissionError) {
+      setError(
+        permissionError instanceof DOMException && permissionError.name === "NotFoundError"
+          ? "Aucun microphone n’a été détecté sur cet appareil."
+          : "Autorisez l’accès au microphone dans votre navigateur pour utiliser la dictée.",
+      );
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = "fr-FR";
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.onresult = (event) => {
+      let transcript = "";
+      for (let resultIndex = 0; resultIndex < event.results.length; resultIndex += 1) {
+        transcript += event.results[resultIndex][0]?.transcript ?? "";
+      }
+
+      const normalizedTranscript = transcript.trim();
+      if (!normalizedTranscript) return;
+
+      setSituation((current) =>
+        `${current.trim()}${current.trim() ? " " : ""}${normalizedTranscript}`.slice(0, 4_000),
+      );
+      setError(null);
+    };
+    recognition.onerror = (event) => {
+      if (event.error === "aborted" || event.error === "no-speech") return;
+
+      if (event.error === "not-allowed" || event.error === "service-not-allowed") {
+        setError("Autorisez l’accès au microphone dans votre navigateur pour utiliser la dictée.");
+        return;
+      }
+
+      if (event.error === "audio-capture") {
+        setError("Aucun microphone disponible n’a pu être utilisé.");
+        return;
+      }
+
+      setError("La dictée vocale n’est pas disponible ici. Essayez depuis Chrome ou Safari.");
+    };
+    recognition.onend = () => {
+      speechRecognitionRef.current = null;
+      setIsListening(false);
+    };
+
+    speechRecognitionRef.current = recognition;
+    setError(null);
+    setIsListening(true);
+
+    try {
+      recognition.start();
+    } catch {
+      speechRecognitionRef.current = null;
+      setIsListening(false);
+      setError("La dictée vocale n’est pas disponible ici. Essayez depuis Chrome ou Safari.");
+    }
+  }
 
   async function handleGenerate(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -59,6 +250,15 @@ export default function ActionPlanExperience({
     requestControllerRef.current = controller;
     setIsGenerating(true);
     setError(null);
+
+    if (isDemoMode) {
+      setPlan(ACTION_PLAN_DEMO);
+      setSelectedSystemId(ACTION_PLAN_DEMO.systemId);
+      setActiveTab("plan");
+      setIsGenerating(false);
+      window.requestAnimationFrame(() => resultTitleRef.current?.focus());
+      return;
+    }
 
     try {
       const response = await fetch("/api/action-plan/generate", {
@@ -94,6 +294,35 @@ export default function ActionPlanExperience({
     }
   }
 
+  if (isGenerating && !plan) {
+    const currentQuote = SYSTEM_QUOTES[quoteIndex];
+
+    return (
+      <main className="fixed inset-0 z-[100] flex min-h-dvh flex-col overflow-hidden overscroll-contain bg-dema-forest px-6 py-8 text-dema-paper sm:px-10 sm:py-10 lg:px-14">
+        <p className="demaa-hero-title text-3xl text-dema-paper sm:text-4xl">Demaa</p>
+        <section className="mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center py-16 text-center">
+          <blockquote
+            key={quoteIndex}
+            className="demaa-generation-quote w-full text-balance text-[clamp(2.25rem,6.5vw,5.7rem)] font-light leading-[1.02] tracking-[-0.045em] text-dema-paper"
+          >
+            « {currentQuote.quote} »
+          </blockquote>
+          <p className="demaa-generation-quote mt-7 text-sm font-medium uppercase tracking-[0.16em] text-dema-paper/70 sm:mt-9">
+            {currentQuote.author}
+          </p>
+        </section>
+        <div className="flex items-center justify-center gap-2 text-sm text-dema-paper/70" role="status" aria-live="polite">
+          <span>Génération de votre plan d’action</span>
+          <span className="inline-flex items-center gap-1" aria-hidden="true">
+            <span className="demaa-generation-dot h-1 w-1 rounded-full bg-current" />
+            <span className="demaa-generation-dot h-1 w-1 rounded-full bg-current [animation-delay:180ms]" />
+            <span className="demaa-generation-dot h-1 w-1 rounded-full bg-current [animation-delay:360ms]" />
+          </span>
+        </div>
+      </main>
+    );
+  }
+
   if (!plan) {
     return (
       <main className="min-h-[calc(100dvh-73px)] bg-dema-cream px-4 pb-20 pt-14 sm:px-6 sm:pt-20 lg:px-8 lg:pt-24">
@@ -102,32 +331,43 @@ export default function ActionPlanExperience({
             Décrivez votre situation.
             <span className="demaa-hero-title mt-1 block text-dema-forest">Repartez avec un plan d’action concret.</span>
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-base font-light leading-relaxed text-dema-muted sm:text-lg">
-            Expliquez ce qui se passe dans votre entreprise, avec vos mots. Demaa organise la suite en actions concrètes et en choix clairs.
-          </p>
-
           <form onSubmit={handleGenerate} className="mx-auto mt-9 max-w-4xl text-left sm:mt-11">
             <div className="rounded-[1.7rem] border border-dema-line bg-dema-paper p-2 shadow-[0_18px_50px_rgba(23,35,29,0.055)] focus-within:border-dema-forest/20">
               <label htmlFor="business-situation" className="sr-only">Décrivez la situation de votre entreprise</label>
-              <textarea
-                id="business-situation"
-                value={situation}
-                onChange={(event) => setSituation(event.target.value)}
-                maxLength={4_000}
-                rows={7}
-                placeholder={EXAMPLES[exampleIndex]}
-                className="min-h-[13rem] w-full resize-none rounded-[1.25rem] bg-transparent px-5 py-5 text-base font-light leading-relaxed text-brand-blue outline-none placeholder:text-brand-blue/28 sm:min-h-[15rem] sm:px-6 sm:py-6 sm:text-lg"
-              />
-              <div className="flex flex-col gap-3 border-t border-dema-line px-3 pb-2 pt-3 sm:flex-row sm:items-center sm:justify-between sm:px-4">
-                <p className="text-xs leading-relaxed text-dema-muted">
-                  Vous pourrez relire le résultat avant de créer un compte.
-                </p>
+              <div className="relative">
+                {!situation ? (
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 px-5 py-5 text-base font-light leading-relaxed text-brand-blue/28 sm:px-6 sm:py-6 sm:text-lg"
+                  >
+                    {animatedPlaceholder}
+                  </div>
+                ) : null}
+                <textarea
+                  id="business-situation"
+                  value={situation}
+                  onChange={(event) => setSituation(event.target.value)}
+                  maxLength={4_000}
+                  rows={5}
+                  className="relative min-h-[9rem] w-full resize-none rounded-[1.25rem] bg-transparent px-5 py-5 text-base font-light leading-relaxed text-brand-blue outline-none sm:min-h-[10.5rem] sm:px-6 sm:py-6 sm:text-lg"
+                />
+              </div>
+              <div className="flex items-center justify-end gap-2 px-3 pb-2 sm:px-4">
+                <button
+                  type="button"
+                  aria-label={isListening ? "Arrêter la dictée" : "Dicter ma situation"}
+                  aria-pressed={isListening}
+                  onClick={handleDictation}
+                  className={`inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border transition ${isListening ? "border-dema-forest bg-dema-sage text-dema-forest" : "border-dema-line bg-dema-paper text-dema-muted hover:border-dema-forest/25 hover:text-dema-forest"}`}
+                >
+                  <Mic className="h-4 w-4" aria-hidden="true" />
+                </button>
                 <button
                   type="submit"
                   disabled={isGenerating || situation.trim().length < 20}
-                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-dema-forest px-6 text-sm font-semibold text-white transition hover:bg-brand-blue disabled:cursor-not-allowed disabled:opacity-45"
+                  className="inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-full bg-dema-forest px-6 text-sm font-semibold text-white transition hover:bg-brand-blue disabled:cursor-not-allowed disabled:opacity-45 sm:flex-none"
                 >
-                  {isGenerating ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : <Sparkles className="h-4 w-4" aria-hidden="true" />}
+                  {isGenerating ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
                   {isGenerating ? "Création du plan…" : "Créer mon plan d’action"}
                   {!isGenerating ? <ArrowRight className="h-4 w-4" aria-hidden="true" /> : null}
                 </button>
@@ -144,16 +384,26 @@ export default function ActionPlanExperience({
 
   return (
     <main className="min-h-screen bg-dema-cream px-4 pb-24 pt-8 sm:px-6 lg:px-8">
+      <ActionPlanNavbar activeView={activeTab} onViewChange={setActiveTab} />
       <div className="mx-auto max-w-[68rem]">
-        <div className="flex flex-col gap-5 border-b border-dema-line pb-6 lg:flex-row lg:items-end lg:justify-between">
-          <div>
-            <p className="text-xs font-medium uppercase tracking-[0.14em] text-dema-forest">Votre plan d’action</p>
-            <h1 ref={resultTitleRef} tabIndex={-1} className="mt-2 max-w-3xl text-3xl font-light tracking-[-0.04em] text-brand-blue outline-none sm:text-4xl">
-              Une prochaine étape claire, puis un système pour l’exécuter.
-            </h1>
+        <div className="flex flex-col gap-4 border-b border-dema-line pb-5 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-2">
+            <p ref={resultTitleRef} tabIndex={-1} className="text-xs font-medium uppercase tracking-[0.14em] text-dema-forest outline-none">
+              Votre plan d’action
+            </p>
+            {isDemoMode ? (
+              <span className="rounded-full bg-dema-sage px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.1em] text-dema-forest">
+                Démo · 0 crédit
+              </span>
+            ) : null}
           </div>
-          <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center">
-            <ActionPlanSaveControl plan={plan} sourceText={situation.trim()} />
+          <div className="flex flex-wrap items-center gap-2">
+            <ActionPlanSaveControl
+              plan={plan}
+              sourceText={situation.trim()}
+              demoMode={isDemoMode}
+            />
+            <ActionPlanShareControl plan={plan} />
             <button
               type="button"
               onClick={() => {
@@ -167,38 +417,27 @@ export default function ActionPlanExperience({
           </div>
         </div>
 
-        <div className="sticky top-[73px] z-30 -mx-4 border-b border-dema-line bg-dema-cream/95 px-4 py-3 backdrop-blur sm:mx-0 sm:px-0">
-          <div className="grid max-w-md grid-cols-2 rounded-full border border-dema-line bg-dema-paper p-1" role="tablist" aria-label="Votre résultat">
-            <button
-              type="button"
-              role="tab"
-              aria-selected={activeTab === "plan"}
-              onClick={() => setActiveTab("plan")}
-              className={`min-h-11 rounded-full px-4 text-sm transition ${activeTab === "plan" ? "bg-dema-sage font-semibold text-dema-forest" : "text-dema-muted hover:text-brand-blue"}`}
-            >
-              Plan d’action
-            </button>
-            <button
-              type="button"
-              role="tab"
-              aria-selected={activeTab === "system"}
-              onClick={() => setActiveTab("system")}
-              className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-4 text-sm transition ${activeTab === "system" ? "bg-dema-sage font-semibold text-dema-forest" : "text-dema-muted hover:text-brand-blue"}`}
-            >
-              <Workflow className="h-4 w-4" aria-hidden="true" />
-              Système
-            </button>
+        <div className="pt-8">
+          <div hidden={activeTab !== "plan"}>
+            <ActionPlanResult plan={plan} />
           </div>
-        </div>
-
-        <div className="pt-8" role="tabpanel">
-          {activeTab === "plan" ? <ActionPlanResult plan={plan} /> : null}
-          {activeTab === "system" ? (
+          <div hidden={activeTab !== "system"}>
             <ActionPlanSystemPanel
               options={systemOptions}
               selectedSystemId={selectedSystemId}
               onSystemChange={setSelectedSystemId}
             />
+          </div>
+          {activeTab === "academy" ? <ActionPlanAcademyPanel /> : null}
+          {activeTab === "accompaniment" ? (
+            <section className="flex min-h-[46vh] flex-col items-center justify-center text-center">
+              <h2 className="text-4xl font-light tracking-[-0.04em] text-brand-blue sm:text-5xl">
+                Accompagnement
+              </h2>
+              <p className="mt-4 text-base font-light text-dema-muted">
+                Cet espace sera disponible prochainement.
+              </p>
+            </section>
           ) : null}
         </div>
       </div>

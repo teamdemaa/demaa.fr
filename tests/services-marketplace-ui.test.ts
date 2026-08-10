@@ -180,7 +180,7 @@ describe("canonical Services marketplace", () => {
     expect(modalPage).toContain('variant="modal"');
     expect(routeDialog).toContain("router.back()");
     expect(routeDialog).toContain('maxWidthClassName="max-w-3xl"');
-    expect(systemSolutions).toContain('group.section === "services"');
+    expect(systemSolutions).toContain('placement.section === "services"');
     expect(systemSolutions).toContain('href={resource.interaction.href}');
   });
 });

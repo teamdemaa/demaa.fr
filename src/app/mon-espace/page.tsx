@@ -52,18 +52,14 @@ export default async function MonEspacePage({ searchParams }: MonEspacePageProps
   if (!email) {
     return (
       <div className="min-h-screen bg-dema-cream text-brand-blue">
-        <Navbar />
+        <Navbar hideSectionSelector minimal />
         <main className="px-4 py-12 md:px-8 md:py-20">
-          <section className="mx-auto max-w-xl rounded-[1.15rem] border border-dema-line bg-dema-paper p-6 text-center shadow-[0_12px_36px_rgba(23,35,29,0.04)] md:p-8">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-              Espace membre
-            </p>
-            <h1 className="mt-2 text-3xl font-semibold tracking-tight md:text-4xl">
-              Accéder à votre espace membre
+          <section className="mx-auto max-w-md rounded-[1.15rem] border border-dema-line bg-dema-paper p-6 text-center shadow-[0_12px_36px_rgba(23,35,29,0.04)] md:p-8">
+            <h1 className="text-3xl font-light tracking-[-0.04em] md:text-4xl">
+              Se connecter
             </h1>
-            <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-dema-muted">
-              Retrouvez vos demandes en cours et l&apos;accès aux annuaires utiles à votre
-              activité via Demaa. Entrez votre email pour recevoir un lien sécurisé.
+            <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-dema-muted">
+              Entrez votre adresse e-mail pour recevoir un lien sécurisé.
             </p>
             {error ? (
               <p className="mt-4 rounded-[0.9rem] border border-dema-forest/15 bg-dema-sage/70 px-4 py-3 text-sm text-dema-forest">
@@ -73,7 +69,7 @@ export default async function MonEspacePage({ searchParams }: MonEspacePageProps
               </p>
             ) : null}
             <div className="mt-6">
-              <CustomerSpaceAccessForm />
+              <CustomerSpaceAccessForm returnTo="/mon-espace" simple />
             </div>
           </section>
         </main>

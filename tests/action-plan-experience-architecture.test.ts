@@ -10,22 +10,37 @@ describe("action plan experience architecture", () => {
   it("keeps the guest result in page memory until the user explicitly saves", () => {
     const experience = source("src/components/ActionPlanExperience.tsx");
     const saveControl = source("src/components/ActionPlanSaveControl.tsx");
+    const shareControl = source("src/components/ActionPlanShareControl.tsx");
 
     expect(experience).toContain("useState<ActionPlan | null>(null)");
     expect(experience).not.toMatch(/localStorage|sessionStorage/);
     expect(saveControl).not.toMatch(/localStorage|sessionStorage/);
     expect(saveControl).toContain('fetch("/api/action-plans"');
+    expect(saveControl).toContain('"Sauvegarder"');
+    expect(saveControl).toContain("if (demoMode)");
+    expect(shareControl).toContain("navigator.share");
+    expect(shareControl).toContain("navigator.clipboard.writeText");
+    expect(experience).toContain('get("demo") !== "plan"');
+    expect(experience).toContain("ACTION_PLAN_DEMO");
   });
 
   it("changes the selected system deterministically without another AI call", () => {
     const experience = source("src/components/ActionPlanExperience.tsx");
     const systemPanel = source("src/components/ActionPlanSystemPanel.tsx");
+    const systemSelector = source("src/components/ActionPlanSystemSelector.tsx");
 
     expect(experience).toContain('fetch("/api/action-plan/generate"');
     expect(systemPanel).toContain("/api/action-plan/system/");
     expect(systemPanel).not.toContain("/api/action-plan/generate");
-    expect(systemPanel).toContain("onSystemChange(event.target.value)");
+    expect(systemPanel).toContain("<ActionPlanSystemSelector");
+    expect(systemPanel).toContain("onChange={onSystemChange}");
+    expect(systemSelector).toContain('role="listbox"');
+    expect(systemSelector).toContain('role="combobox"');
     expect(systemPanel).toContain("<SystemDetailContent");
+    expect(systemPanel).toContain("checkableProcess");
+    expect(source("src/components/SystemeTabContent.tsx")).toContain(
+      'type="checkbox"',
+    );
   });
 
   it("allows a saved plan return path without opening external redirects", () => {

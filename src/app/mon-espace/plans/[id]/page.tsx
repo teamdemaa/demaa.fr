@@ -37,7 +37,7 @@ export default async function SavedActionPlanPage({
 
   return (
     <div className="min-h-screen bg-dema-cream text-brand-blue">
-      <Navbar />
+      <Navbar hideSectionSelector />
       <main className="px-4 pb-24 pt-8 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-[68rem]">
           <Link href="/mon-espace" className="inline-flex min-h-11 items-center gap-2 text-sm text-dema-muted transition hover:text-dema-forest">

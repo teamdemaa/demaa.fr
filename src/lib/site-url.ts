@@ -121,6 +121,19 @@ export function isAllowedRequestOrigin(request: Request, origin: string) {
     return true;
   }
 
+  if (process.env.NODE_ENV !== "production") {
+    const localHostnames = new Set(["localhost", "127.0.0.1"]);
+    const isEquivalentLocalOrigin =
+      localHostnames.has(originUrl.hostname.toLowerCase()) &&
+      localHostnames.has(requestUrl.hostname.toLowerCase()) &&
+      originUrl.protocol === requestUrl.protocol &&
+      originUrl.port === requestUrl.port;
+
+    if (isEquivalentLocalOrigin) {
+      return true;
+    }
+  }
+
   const trustedProductionOrigins = new Set([
     getCanonicalOrigin(),
     ...LEGACY_SITE_ORIGINS,

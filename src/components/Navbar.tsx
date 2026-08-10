@@ -41,9 +41,11 @@ export function getNavbarActiveSection(pathname: string): NavbarSection {
 
 export default function Navbar({
   anonymousLanding = false,
+  hideSectionSelector = false,
   minimal = false,
 }: {
   anonymousLanding?: boolean;
+  hideSectionSelector?: boolean;
   minimal?: boolean;
 }) {
   const pathname = usePathname();
@@ -56,7 +58,7 @@ export default function Navbar({
         className="sticky top-0 z-40 border-b border-dema-line/70 bg-dema-cream/92 py-1 backdrop-blur-md"
       >
         <div className="mx-auto w-full px-6 md:px-10 lg:px-24">
-          <div className="flex items-center justify-between py-3 md:min-h-16 md:py-4">
+          <div className="relative flex items-center justify-between py-3 md:min-h-16 md:py-4">
             <Link
               href="/"
               aria-label="Retour à l'accueil"
@@ -64,6 +66,10 @@ export default function Navbar({
             >
               <DemaaWordmark className="text-[1.4rem] sm:text-[1.7rem]" />
             </Link>
+            <div
+              id="action-plan-navbar-desktop"
+              className="absolute left-1/2 top-1/2 hidden w-[min(52vw,48rem)] -translate-x-1/2 -translate-y-1/2 empty:hidden lg:block"
+            />
             {anonymousLanding ? (
               <Link
                 href="/mon-espace"
@@ -76,7 +82,11 @@ export default function Navbar({
           </div>
         </div>
       </nav>
-      {!anonymousLanding ? <div className="bg-dema-cream px-[0.84rem] pb-3 pt-3 md:px-[1.4rem] md:pb-4 md:pt-4 lg:px-[3.36rem]">
+      <div
+        id="action-plan-navbar-mobile"
+        className="fixed inset-x-0 bottom-0 z-50 border-t border-dema-line/70 bg-dema-cream/94 px-3 pb-[calc(0.5rem+env(safe-area-inset-bottom))] pt-2 shadow-[0_-10px_28px_rgba(23,35,29,0.06)] backdrop-blur-md empty:hidden lg:hidden"
+      />
+      {!anonymousLanding && !hideSectionSelector ? <div className="bg-dema-cream px-[0.84rem] pb-3 pt-3 md:px-[1.4rem] md:pb-4 md:pt-4 lg:px-[3.36rem]">
         <div
           aria-label="Navigation principale"
           data-navbar-section-selector
