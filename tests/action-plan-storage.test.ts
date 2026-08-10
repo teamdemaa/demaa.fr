@@ -229,6 +229,33 @@ describe("action plan Firebase persistence", () => {
     expect(firestore.documents.has("customer_magic_links/magic-token-hash")).toBe(false);
   });
 
+  it("does not attach a plan whose claim expired after the magic link was issued", async () => {
+    const pending = await createPendingActionPlan({ plan: actionPlan() });
+    const tokenHash = "expired-plan-claim-token";
+
+    const attached = await saveCustomerMagicLink({
+      email: "dirigeant@example.com",
+      expiresAt: new Date(Date.now() + 30_000).toISOString(),
+      tokenHash,
+      actionPlanClaim: {
+        actionPlanId: pending.id,
+        claimSecretHash: hashActionPlanClaimSecret(pending.claimSecret),
+      },
+    });
+
+    expect(attached).toBe(true);
+    await firestore.database.collection("action_plans").doc(pending.id).set(
+      { claim_expires_at: new Date(Date.now() - 1_000).toISOString() },
+      { merge: true },
+    );
+
+    await consumeCustomerMagicLink(tokenHash);
+
+    const plan = firestore.documents.get(`action_plans/${pending.id}`);
+    expect(plan?.status).toBe("pending_claim");
+    expect(plan?.owner_email).toBeNull();
+  });
+
   it("stores workspace progress in the same plan document", async () => {
     const plan = actionPlan();
     const created = await createOwnedActionPlan("dirigeant@example.com", {

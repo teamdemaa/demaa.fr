@@ -1,5 +1,5 @@
 import { createMagicLinkToken } from "@/lib/customer-space-auth";
-import { getCanonicalOrigin } from "@/lib/site-url";
+import { getTrustedRequestOrigin } from "@/lib/site-url";
 
 function renderMagicLinkEmail(input: { magicLink: string }) {
   return `
@@ -95,7 +95,10 @@ export async function sendCustomerMagicLinkEmail(input: {
   }
 
   const token = await createMagicLinkToken(input.email, input.actionPlanClaim);
-  const magicLinkUrl = new URL("/api/customer-space/consume", getCanonicalOrigin());
+  const magicLinkUrl = new URL(
+    "/api/customer-space/consume",
+    getTrustedRequestOrigin(input.request),
+  );
   magicLinkUrl.searchParams.set("token", token);
 
   if (input.returnTo) {

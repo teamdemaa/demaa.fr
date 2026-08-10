@@ -249,11 +249,16 @@ export async function consumeCustomerMagicLink(tokenHash: string) {
     transaction.set(linkRef, { consumed_at: now, updated_at: now }, { merge: true });
 
     const claimTokenHashes = actionPlan?.claim_link_token_hashes || [];
+    const actionPlanClaimExpiresAt = Date.parse(actionPlan?.claim_expires_at || "");
+    const claimStillValid =
+      Number.isFinite(actionPlanClaimExpiresAt) &&
+      actionPlanClaimExpiresAt >= Date.now();
     const canClaimActionPlan = Boolean(
       actionPlanRef &&
       actionPlanDoc?.exists &&
       actionPlan?.status === "pending_claim" &&
       email &&
+      claimStillValid &&
       normalizeEmail(actionPlan.pending_owner_email || "") === email &&
       claimTokenHashes.includes(tokenHash),
     );
