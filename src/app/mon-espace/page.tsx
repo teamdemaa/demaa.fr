@@ -4,17 +4,12 @@ import CustomerSpaceAccessForm from "@/components/CustomerSpaceAccessForm";
 import MemberSpaceTabs from "@/components/MemberSpaceTabs";
 import Navbar from "@/components/Navbar";
 import { CUSTOMER_SPACE_COOKIE, getEmailFromCustomerSessionToken } from "@/lib/customer-space-auth";
-import {
-  getAssistantDelegationRequestsByEmail,
-  getStripePaymentsByEmail,
-} from "@/lib/generations-db";
 import { getOwnedActionPlans } from "@/lib/action-plan-storage.server";
 import { actionPlanSystemOptions } from "@/lib/action-plan-system-catalog";
-import { getLiveSessionAccessForPurchaseSlug } from "@/lib/live-session-assets";
 
 export const metadata: Metadata = {
-  title: "Espace membre Demaa",
-  description: "Retrouvez le suivi de vos demandes Demaa et l'accès aux annuaires utiles.",
+  title: "Mon espace | Demaa",
+  description: "Retrouvez vos plans d’action Demaa.",
   alternates: {
     canonical: "/mon-espace",
   },
@@ -23,8 +18,8 @@ export const metadata: Metadata = {
     follow: false,
   },
   openGraph: {
-    title: "Espace membre Demaa",
-    description: "Retrouvez le suivi de vos demandes Demaa et l'accès aux annuaires utiles.",
+    title: "Mon espace | Demaa",
+    description: "Retrouvez vos plans d’action Demaa.",
     url: "/mon-espace",
     siteName: "Demaa",
     locale: "fr_FR",
@@ -77,33 +72,10 @@ export default async function MonEspacePage({ searchParams }: MonEspacePageProps
     );
   }
 
-  const [payments, requests, actionPlans] = await Promise.all([
-    getStripePaymentsByEmail(email),
-    getAssistantDelegationRequestsByEmail(email),
-    getOwnedActionPlans(email),
-  ]);
+  const actionPlans = await getOwnedActionPlans(email);
   const systemNames = new Map(
     actionPlanSystemOptions.map((system) => [system.id, system.label]),
   );
-  const requestsBySessionId = new Map(
-    requests.map((request) => [request.stripeSessionId, request])
-  );
-  const paymentsWithAccess = await Promise.all(
-    payments.map(async (payment) => {
-      const liveSessionAccesses = payment.serviceSlugs
-        .map((slug) => getLiveSessionAccessForPurchaseSlug(slug))
-        .filter((access): access is NonNullable<typeof access> => Boolean(access));
-
-      return {
-        ...payment,
-        liveSessionAccesses,
-      };
-    })
-  );
-  const requestCards = paymentsWithAccess.map((payment) => {
-    const request = requestsBySessionId.get(payment.stripeSessionId) ?? null;
-    return { payment, request };
-  });
 
   return (
     <div data-action-plan-workspace className="min-h-screen bg-dema-cream text-brand-blue">
@@ -113,7 +85,7 @@ export default async function MonEspacePage({ searchParams }: MonEspacePageProps
           <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div>
               <h1 className="text-4xl font-semibold tracking-tight md:text-5xl">
-                Espace membre
+                Mon espace
               </h1>
             </div>
             <p className="text-sm text-dema-muted">{email}</p>
@@ -127,7 +99,6 @@ export default async function MonEspacePage({ searchParams }: MonEspacePageProps
                 systemNames.get(actionPlan.plan.systemId) || actionPlan.plan.systemId,
               updatedAt: actionPlan.updatedAt,
             }))}
-            requestCards={requestCards}
           />
         </section>
       </main>

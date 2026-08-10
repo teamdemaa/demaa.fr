@@ -5,6 +5,7 @@ import ActionPlanAcademyPanel from "@/components/ActionPlanAcademyPanel";
 import ActionPlanNavbar, { type ActionPlanView } from "@/components/ActionPlanNavbar";
 import ActionPlanResult from "@/components/ActionPlanResult";
 import ActionPlanSystemPanel from "@/components/ActionPlanSystemPanel";
+import CoachingPanel from "@/components/CoachingPanel";
 import type { ActionPlan } from "@/lib/action-plan-contract";
 import type { ActionPlanSystemOption } from "@/lib/action-plan-system-catalog";
 import type { ActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
@@ -124,9 +125,9 @@ export default function SavedActionPlanDetail({
   return (
     <div className="contents">
       <ActionPlanNavbar activeView={activeTab} onViewChange={setActiveTab} />
-      <div className="mt-8">
+      <div className="pt-1">
         <div hidden={activeTab !== "plan"}>
-          <div className="mb-4 flex justify-end text-xs" role="status" aria-live="polite">
+          <div className="sr-only" role="status" aria-live="polite">
             <span className={saveState === "error" ? "text-red-700" : "text-dema-muted"}>
               {saveState === "saving" ? "Enregistrement…" : saveState === "error" ? saveError : "Modifications enregistrées"}
             </span>
@@ -143,16 +144,7 @@ export default function SavedActionPlanDetail({
           />
         </div>
         {activeTab === "academy" ? <ActionPlanAcademyPanel /> : null}
-        {activeTab === "coaching" ? (
-          <section className="flex min-h-[46vh] flex-col items-center justify-center text-center">
-            <h2 className="text-4xl font-light tracking-[-0.04em] text-brand-blue sm:text-5xl">
-              Coaching
-            </h2>
-            <p className="mt-4 text-base font-light text-dema-muted">
-              Cet espace sera disponible prochainement.
-            </p>
-          </section>
-        ) : null}
+        {activeTab === "coaching" ? <CoachingPanel /> : null}
       </div>
     </div>
   );

@@ -52,21 +52,18 @@ export default function CustomerMagicLinkConsumer({
   if (error) {
     return (
       <div className="text-center">
-        <p className="rounded-[0.9rem] border border-dema-forest/15 bg-dema-sage/70 px-4 py-3 text-sm text-dema-forest">
+        <p className="text-sm text-dema-paper">
           {error}
         </p>
-        <Link
-          href="/mon-espace"
-          className="mt-5 inline-flex min-h-11 items-center justify-center rounded-full bg-dema-forest px-6 text-sm font-medium text-dema-paper"
-        >
-          Recevoir un nouveau lien
+        <Link href="/" className="mt-5 inline-flex min-h-11 items-center justify-center rounded-full border border-dema-paper/30 px-6 text-sm font-medium text-dema-paper">
+          Retour à l’application
         </Link>
       </div>
     );
   }
 
   return (
-    <div className="flex items-center justify-center gap-2 text-sm text-dema-muted" role="status" aria-live="polite">
+    <div className="flex items-center justify-center gap-2 text-sm text-dema-paper/75" role="status" aria-live="polite">
       <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
       Connexion sécurisée en cours…
     </div>

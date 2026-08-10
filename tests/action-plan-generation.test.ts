@@ -20,8 +20,9 @@ describe("action plan generation prompt", () => {
   });
 
   it("keeps the weekly workload concise and realistic", () => {
-    expect(ACTION_PLAN_INSTRUCTIONS).toContain("3 ou 4 actions");
-    expect(ACTION_PLAN_INSTRUCTIONS).toContain("sept prochains jours");
+    expect(ACTION_PLAN_INSTRUCTIONS).toContain("3 ou 4 premieres actions");
+    expect(ACTION_PLAN_INSTRUCTIONS).toContain("a commencer cette semaine");
+    expect(ACTION_PLAN_INSTRUCTIONS).toContain("N'affirme jamais");
     expect(ACTION_PLAN_INSTRUCTIONS).toContain("3 a 5 etapes courtes");
     expect(ACTION_PLAN_INSTRUCTIONS).not.toMatch(
       /why|estimatedMinutes|livrables|criteres de reussite|garde-fous/,

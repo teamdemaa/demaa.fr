@@ -107,7 +107,7 @@ export default function ActionPlanSaveControl({
           throw new Error("Le plan est sauvegardé, mais son accès est indisponible.");
         }
         setState("saved");
-        router.push(`/mon-espace/plans/${encodeURIComponent(savedPlanId)}`);
+        router.push(`/plans/${encodeURIComponent(savedPlanId)}`);
         return;
       }
 
@@ -161,7 +161,7 @@ export default function ActionPlanSaveControl({
           email: normalizedEmail,
           actionPlanId: pendingClaim.actionPlanId,
           actionPlanClaimSecret: pendingClaim.actionPlanClaimSecret,
-          returnTo: `/mon-espace/plans/${encodeURIComponent(pendingClaim.actionPlanId)}`,
+          returnTo: `/plans/${encodeURIComponent(pendingClaim.actionPlanId)}`,
         }),
       });
       const body = (await response.json().catch(() => null)) as

@@ -19,7 +19,7 @@ describe("action plan experience architecture", () => {
     expect(experience).not.toMatch(/localStorage|sessionStorage/);
     expect(saveControl).not.toMatch(/localStorage|sessionStorage/);
     expect(saveControl).toContain('fetch("/api/action-plans"');
-    expect(saveControl).toContain("router.push(`/mon-espace/plans/");
+    expect(saveControl).toContain("router.push(`/plans/");
     expect(saveControl).toContain('"Sauvegarder"');
     expect(saveControl).toContain("if (demoMode)");
     expect(saveControl).toContain("Créer mon compte");

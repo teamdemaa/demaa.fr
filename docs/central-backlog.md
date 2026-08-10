@@ -85,7 +85,9 @@ l'ADR 0004 prévaut.
   Systèmes, puis sauvegarde Firebase. L'ADR 0008 et
   `docs/action-plan-generator-product-contract.md` sont les références ;
   `/systemes` et `/academie` publics restent inchangés.
-- [ ] Cadrer séparément Coaching après le MVP D-076 : phase gratuite,
+- [x] Livrer la première version Coaching dans l’application : Sessions,
+  Messages asynchrones, tarifs validés et demandes coordonnées manuellement.
+- [ ] Cadrer ensuite les évolutions Coaching : phase gratuite,
   phase payante, capacité humaine, délais, messagerie, confidentialité,
   conservation des échanges et prix. Aucun de ces éléments ne doit être promis
   ou simulé dans le générateur courant.

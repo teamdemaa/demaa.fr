@@ -7,6 +7,7 @@ import ActionPlanNavbar, { type ActionPlanView } from "@/components/ActionPlanNa
 import ActionPlanResult from "@/components/ActionPlanResult";
 import ActionPlanSystemPanel from "@/components/ActionPlanSystemPanel";
 import ActionPlanUtilityActions from "@/components/ActionPlanUtilityActions";
+import CoachingPanel from "@/components/CoachingPanel";
 import type { ActionPlan } from "@/lib/action-plan-contract";
 import {
   ACTION_PLAN_DEMO,
@@ -25,18 +26,18 @@ const EXAMPLES = [
   "Je suis consultante indépendante. J’ai des missions, mais mon offre manque de clarté et je veux trouver des clients de manière plus régulière sans démarchage de masse.",
 ];
 
-const SYSTEM_QUOTES = [
+const GENERATION_QUESTIONS = [
   {
-    quote: "Un mauvais système vaincra toujours une bonne personne.",
-    author: "W. Edwards Deming",
+    question: "Quelle décision devez-vous pouvoir prendre plus facilement ?",
   },
   {
-    quote: "Les objectifs donnent une direction. Les systèmes permettent d’avancer.",
-    author: "James Clear",
+    question: "Qu’est-ce qui vous fait perdre le plus de temps aujourd’hui ?",
   },
   {
-    quote: "Les problèmes d’aujourd’hui viennent des solutions d’hier.",
-    author: "Peter Senge",
+    question: "Quel signe concret montrerait que la situation s’améliore ?",
+  },
+  {
+    question: "Quelle action simple pouvez-vous réellement commencer cette semaine ?",
   },
 ] as const;
 
@@ -151,7 +152,7 @@ export default function ActionPlanExperience({
     document.documentElement.style.overflow = "hidden";
     setQuoteIndex(0);
     const interval = window.setInterval(() => {
-      setQuoteIndex((current) => (current + 1) % SYSTEM_QUOTES.length);
+      setQuoteIndex((current) => (current + 1) % GENERATION_QUESTIONS.length);
     }, 4_800);
 
     return () => {
@@ -302,20 +303,17 @@ export default function ActionPlanExperience({
   }
 
   if (isGenerating && !plan) {
-    const currentQuote = SYSTEM_QUOTES[quoteIndex];
+    const currentQuestion = GENERATION_QUESTIONS[quoteIndex];
 
     return (
       <main className="fixed inset-0 z-[100] flex min-h-dvh flex-col overflow-hidden overscroll-contain bg-dema-forest px-6 py-8 text-dema-paper sm:px-10 sm:py-10 lg:px-14">
         <p className="demaa-hero-title text-3xl text-dema-paper sm:text-4xl">Demaa</p>
         <section className="mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center py-16 text-center">
-          <blockquote
+          <p
             key={quoteIndex}
             className="demaa-generation-quote w-full text-balance text-[clamp(2.25rem,6.5vw,5.7rem)] font-light leading-[1.02] tracking-[-0.045em] text-dema-paper"
           >
-            « {currentQuote.quote} »
-          </blockquote>
-          <p className="demaa-generation-quote mt-7 text-sm font-medium uppercase tracking-[0.16em] text-dema-paper/70 sm:mt-9">
-            {currentQuote.author}
+            {currentQuestion.question}
           </p>
         </section>
         <div className="flex items-center justify-center gap-2 text-sm text-dema-paper/70" role="status" aria-live="polite">
@@ -440,16 +438,7 @@ export default function ActionPlanExperience({
             />
           </div>
           {activeTab === "academy" ? <ActionPlanAcademyPanel /> : null}
-          {activeTab === "coaching" ? (
-            <section className="flex min-h-[46vh] flex-col items-center justify-center text-center">
-              <h2 className="text-4xl font-light tracking-[-0.04em] text-brand-blue sm:text-5xl">
-                Coaching
-              </h2>
-              <p className="mt-4 text-base font-light text-dema-muted">
-                Cet espace sera disponible prochainement.
-              </p>
-            </section>
-          ) : null}
+          {activeTab === "coaching" ? <CoachingPanel /> : null}
         </div>
       </div>
     </main>
