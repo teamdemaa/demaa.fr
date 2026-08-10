@@ -272,7 +272,7 @@ function ActionDrawer({
                       }))}
                       className="mt-0.5 h-4 w-4 accent-[#2f664a]"
                     />
-                    <span className={checked ? "text-dema-muted line-through" : ""}>{step}</span>
+                    <span className={checked ? "text-dema-muted" : ""}>{step}</span>
                   </label>
                 );
               })}
@@ -473,7 +473,7 @@ export default function ActionPlanResult({
                     <TaskStatusButton status={taskState.status} onChange={(status) => updateStatus(action.id, status)} compact />
                     <button type="button" onClick={() => setSelectedActionId(action.id)} className="flex min-w-0 flex-1 items-center gap-3 text-left focus-visible:outline-none">
                       <span className="min-w-0 flex-1">
-                        <span className={`block text-sm font-medium leading-snug ${taskState.status === "done" ? "text-dema-muted line-through" : "text-brand-blue"}`}>{title}</span>
+                        <span className={`block text-sm font-medium leading-snug ${taskState.status === "done" ? "text-dema-muted" : "text-brand-blue"}`}>{title}</span>
                         <span className="mt-1 block truncate text-xs text-dema-muted">{formatDuration(minutes)} · {action.channelOrTool}{action.readyToUse ? ` · ${action.readyToUse.label}` : ""}</span>
                       </span>
                       <ChevronRight className="h-4 w-4 shrink-0 text-dema-muted" aria-hidden="true" />
