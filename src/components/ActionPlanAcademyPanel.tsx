@@ -90,7 +90,6 @@ export default function ActionPlanAcademyPanel() {
         contents={payload.contents}
         liveTrainings={payload.liveTrainings}
         embedded
-        embeddedToolbarId="action-plan-academy-toolbar"
       />
     </div>
   );

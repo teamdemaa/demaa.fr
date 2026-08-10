@@ -3,8 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown, ChevronUp, FileText, Search, SlidersHorizontal } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
-import { createPortal } from "react-dom";
+import { useMemo, useState } from "react";
 import type { AcademyContentDefinition } from "@/lib/academy-course-content";
 import SystemResourcePreviewModal from "@/components/SystemResourcePreviewModal";
 import { matchesSearchQuery } from "@/lib/search";
@@ -21,7 +20,6 @@ type AcademyIndexClientProps = {
   contents: AcademyContentDefinition[];
   liveTrainings: readonly PublicLiveTraining[];
   embedded?: boolean;
-  embeddedToolbarId?: string;
   backLink?: {
     href: string;
     label: string;
@@ -272,7 +270,6 @@ export default function AcademyIndexClient({
   contents,
   liveTrainings,
   embedded = false,
-  embeddedToolbarId,
   backLink,
 }: AcademyIndexClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
@@ -280,16 +277,6 @@ export default function AcademyIndexClient({
   const [activeCategory, setActiveCategory] = useState(ALL_ACADEMY_CATEGORIES);
   const [areCategoryTagsVisible, setAreCategoryTagsVisible] = useState(false);
   const [previewResource, setPreviewResource] = useState<SystemResource | null>(null);
-  const [embeddedToolbar, setEmbeddedToolbar] = useState<HTMLElement | null>(null);
-
-  useEffect(() => {
-    if (!embedded || !embeddedToolbarId) return;
-    const frame = window.requestAnimationFrame(() => {
-      setEmbeddedToolbar(document.getElementById(embeddedToolbarId));
-    });
-
-    return () => window.cancelAnimationFrame(frame);
-  }, [embedded, embeddedToolbarId]);
 
   const categories = useMemo(
     () => [
@@ -321,11 +308,11 @@ export default function AcademyIndexClient({
 
   const fundamentals = filteredContents.filter((content) => content.kind === "course");
   const isSearching = searchQuery.trim().length > 0;
-  const visibleFundamentals = isSearching || showAllFundamentals ? fundamentals : fundamentals.slice(0, 6);
-  const canToggleFundamentals = !isSearching && fundamentals.length > 6;
+  const visibleFundamentals = embedded || isSearching || showAllFundamentals ? fundamentals : fundamentals.slice(0, 6);
+  const canToggleFundamentals = !embedded && !isSearching && fundamentals.length > 6;
   const ContentContainer = embedded ? "div" : "main";
   const searchControl = (
-    <div className={`relative w-full ${embedded ? "max-w-xl" : "mx-auto mt-9 max-w-4xl md:mt-11"}`}>
+    <div className={`relative w-full ${embedded ? "max-w-md" : "mx-auto mt-9 max-w-4xl md:mt-11"}`}>
       <div className={`demaa-search-shell ${embedded ? "p-1" : "p-1.5"}`}>
         <div className="relative">
           <Search
@@ -341,7 +328,7 @@ export default function AcademyIndexClient({
               setActiveCategory(ALL_ACADEMY_CATEGORIES);
             }}
             placeholder="Rechercher un cours ou une question…"
-            className={`w-full rounded-full bg-dema-paper pl-12 pr-14 text-brand-blue outline-none transition placeholder:text-brand-blue/30 ${embedded ? "min-h-12 text-sm" : "py-4 text-base md:py-5 md:pl-16 md:pr-20 md:text-lg"}`}
+            className={`w-full rounded-full bg-dema-paper pl-11 pr-12 text-brand-blue outline-none transition placeholder:text-brand-blue/30 ${embedded ? "min-h-10 text-sm" : "py-4 text-base md:py-5 md:pl-16 md:pr-20 md:text-lg"}`}
           />
           <button
             type="button"
@@ -387,7 +374,11 @@ export default function AcademyIndexClient({
 
   return (
     <div className={`${embedded ? "min-h-[60vh]" : "min-h-[85vh]"} bg-[#FAFAFA]`}>
-      {embedded && embeddedToolbar ? createPortal(searchControl, embeddedToolbar) : null}
+      {embedded ? (
+        <div className="mx-auto max-w-7xl px-4 pb-6">
+          {searchControl}
+        </div>
+      ) : null}
       {!embedded ? (
       <header className="px-4 pb-12 pt-12 md:pb-16 md:pt-16">
         <div className="mx-auto max-w-7xl">

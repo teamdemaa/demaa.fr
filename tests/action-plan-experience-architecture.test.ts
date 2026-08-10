@@ -56,9 +56,9 @@ describe("action plan experience architecture", () => {
     const experience = source("src/components/ActionPlanExperience.tsx");
 
     expect(academyPanel).toContain("embedded");
-    expect(academyPanel).toContain('embeddedToolbarId="action-plan-academy-toolbar"');
-    expect(experience).toContain('id="action-plan-academy-toolbar"');
-    expect(academyIndex).toContain("createPortal(searchControl, embeddedToolbar)");
+    expect(experience).toContain("<ActionPlanUtilityActions");
+    expect(academyIndex).toContain("embedded || isSearching || showAllFundamentals");
+    expect(academyIndex).toContain('embedded ? "max-w-md"');
     expect(academyIndex).toContain('const ContentContainer = embedded ? "div" : "main"');
     expect(academyIndex).toContain("<ContentContainer");
   });

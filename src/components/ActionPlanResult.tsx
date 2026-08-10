@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import {
   type Dispatch,
+  type ReactNode,
   type SetStateAction,
   useMemo,
   useState,
@@ -414,10 +415,12 @@ export default function ActionPlanResult({
   plan,
   workspace,
   onWorkspaceChange,
+  headerActions,
 }: {
   plan: ActionPlan;
   workspace: ActionPlanWorkspaceState;
   onWorkspaceChange: Dispatch<SetStateAction<ActionPlanWorkspaceState>>;
+  headerActions?: ReactNode;
 }) {
   const [section, setSection] = useState<PlanSection>("tasks");
   const [view, setView] = useState<TaskView>("list");
@@ -444,9 +447,12 @@ export default function ActionPlanResult({
 
   return (
     <div>
-      <div className="mb-7 flex items-center gap-1 border-b border-dema-line" role="tablist" aria-label="Plan d’action">
-        <button type="button" role="tab" aria-selected={section === "tasks"} onClick={() => setSection("tasks")} className={`-mb-px min-h-12 border-b-2 px-4 text-sm font-medium ${section === "tasks" ? "border-dema-forest text-dema-forest" : "border-transparent text-dema-muted"}`}>À faire</button>
-        <button type="button" role="tab" aria-selected={section === "strategy"} onClick={() => setSection("strategy")} className={`-mb-px min-h-12 border-b-2 px-4 text-sm font-medium ${section === "strategy" ? "border-dema-forest text-dema-forest" : "border-transparent text-dema-muted"}`}>Stratégie</button>
+      <div className="mb-7 flex items-end justify-between gap-3 border-b border-dema-line">
+        <div className="flex items-center gap-1" role="tablist" aria-label="Plan d’action">
+          <button type="button" role="tab" aria-selected={section === "tasks"} onClick={() => setSection("tasks")} className={`-mb-px min-h-12 border-b-2 px-4 text-sm font-medium ${section === "tasks" ? "border-dema-forest text-dema-forest" : "border-transparent text-dema-muted"}`}>À faire</button>
+          <button type="button" role="tab" aria-selected={section === "strategy"} onClick={() => setSection("strategy")} className={`-mb-px min-h-12 border-b-2 px-4 text-sm font-medium ${section === "strategy" ? "border-dema-forest text-dema-forest" : "border-transparent text-dema-muted"}`}>Stratégie</button>
+        </div>
+        {headerActions}
       </div>
 
       {section === "tasks" ? (

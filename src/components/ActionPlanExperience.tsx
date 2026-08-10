@@ -5,10 +5,8 @@ import { useEffect, useRef, useState } from "react";
 import ActionPlanAcademyPanel from "@/components/ActionPlanAcademyPanel";
 import ActionPlanNavbar, { type ActionPlanView } from "@/components/ActionPlanNavbar";
 import ActionPlanResult from "@/components/ActionPlanResult";
-import ActionPlanSaveControl from "@/components/ActionPlanSaveControl";
-import ActionPlanShareControl from "@/components/ActionPlanShareControl";
 import ActionPlanSystemPanel from "@/components/ActionPlanSystemPanel";
-import ActionPlanSystemSelector from "@/components/ActionPlanSystemSelector";
+import ActionPlanUtilityActions from "@/components/ActionPlanUtilityActions";
 import type { ActionPlan } from "@/lib/action-plan-contract";
 import {
   ACTION_PLAN_DEMO,
@@ -404,67 +402,28 @@ export default function ActionPlanExperience({
     <main className="min-h-screen bg-dema-cream px-4 pb-24 pt-8 sm:px-6 lg:px-8">
       <ActionPlanNavbar activeView={activeTab} onViewChange={setActiveTab} />
       <div className="mx-auto max-w-[68rem]">
-        <div className="flex flex-col gap-4 border-b border-dema-line pb-5 sm:flex-row sm:items-end sm:justify-between">
-          <div className="flex min-w-0 flex-1 items-center gap-2">
-            {activeTab === "plan" ? (
-              <>
-                <p ref={resultTitleRef} tabIndex={-1} className="text-xs font-medium uppercase tracking-[0.14em] text-dema-forest outline-none">
-                  Votre plan d’action
-                </p>
-                {isDemoMode ? (
-                  <span className="rounded-full bg-dema-sage px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.1em] text-dema-forest">
-                    Démo · 0 crédit
-                  </span>
-                ) : null}
-              </>
-            ) : null}
-            {activeTab === "system" ? (
-              <ActionPlanSystemSelector
-                options={systemOptions}
-                value={selectedSystemId}
-                onChange={(systemId) => {
-                  setSelectedSystemId(systemId);
-                  setWorkspace((current) => current ? { ...current, selectedSystemId: systemId } : current);
-                }}
-              />
-            ) : null}
-            {activeTab === "academy" ? (
-              <div id="action-plan-academy-toolbar" className="min-h-12 w-full max-w-xl" />
-            ) : null}
-            {activeTab === "accompaniment" ? (
-              <p className="text-xs font-medium uppercase tracking-[0.14em] text-dema-forest">
-                Accompagnement
-              </p>
-            ) : null}
-          </div>
-          <div className="flex flex-wrap items-center gap-2">
-            <ActionPlanSaveControl
-              plan={plan}
-              sourceText={situation.trim()}
-              workspace={workspace}
-              demoMode={isDemoMode}
-            />
-            <ActionPlanShareControl plan={plan} />
-            <button
-              type="button"
-              onClick={() => {
-                setPlan(null);
-                setWorkspace(null);
-                setError(null);
-              }}
-              className="demaa-secondary-button min-h-11 shrink-0"
-            >
-              Nouvelle situation
-            </button>
-          </div>
-        </div>
-
-        <div className="pt-8">
+        <h1 ref={resultTitleRef} tabIndex={-1} className="sr-only outline-none">
+          Votre plan d’action
+        </h1>
+        <div className="pt-4 sm:pt-6">
           <div hidden={activeTab !== "plan"}>
             <ActionPlanResult
               plan={plan}
               workspace={workspace}
               onWorkspaceChange={updateWorkspace}
+              headerActions={(
+                <ActionPlanUtilityActions
+                  plan={plan}
+                  sourceText={situation.trim()}
+                  workspace={workspace}
+                  demoMode={isDemoMode}
+                  onReset={() => {
+                    setPlan(null);
+                    setWorkspace(null);
+                    setError(null);
+                  }}
+                />
+              )}
             />
           </div>
           <div hidden={activeTab !== "system"}>
@@ -475,7 +434,6 @@ export default function ActionPlanExperience({
                 setSelectedSystemId(systemId);
                 setWorkspace((current) => current ? { ...current, selectedSystemId: systemId } : current);
               }}
-              showSelector={false}
               workspace={workspace}
               onWorkspaceChange={updateWorkspace}
             />
