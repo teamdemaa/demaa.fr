@@ -30,9 +30,9 @@ describe("canonical Services marketplace", () => {
     expect(services.map((service) => service.slug)).toEqual(CANONICAL_SERVICE_SLUGS);
     expect(services.map((service) => service.name)).toEqual([
       "Automatisation des processus",
+      "Expert-comptable",
       "Marketing et prospection",
       "Assistance facturation",
-      "Expert-comptable",
     ]);
     expect(generateStaticParams()).toEqual(CANONICAL_SERVICE_SLUGS.map((slug) => ({ slug })));
     expect(Object.isFrozen(services)).toBe(true);

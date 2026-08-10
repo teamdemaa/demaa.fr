@@ -23,9 +23,9 @@ describe("canonical Services SEO and redirects", () => {
   it("publishes only the four canonical detail routes", async () => {
     expect(generateStaticParams()).toEqual([
       { slug: "automatisation-processus" },
+      { slug: "expert-comptable" },
       { slug: "marketing-vente" },
       { slug: "assistance-facturation" },
-      { slug: "expert-comptable" },
     ]);
     expect(servicesIndexMetadata.alternates).toEqual({ canonical: "/services" });
     await expect(generateMetadata({

@@ -12,11 +12,11 @@ Les quatre Services restent composés depuis le catalogue canonique du code et
 ne sont pas copiés dans Firebase. Leur ordre public est :
 
 1. Automatisation des processus ;
-2. Marketing et prospection ;
-3. Assistance facturation ;
-4. Expert-comptable.
+2. Expert-comptable ;
+3. Marketing et prospection ;
+4. Assistance facturation.
 
-Le slug historique et canonique du deuxième service reste
+Le slug historique et canonique du service Marketing et prospection reste
 `/services/marketing-vente`. Le système `cabinet-comptable` n’affiche pas le
 service Expert-comptable.
 

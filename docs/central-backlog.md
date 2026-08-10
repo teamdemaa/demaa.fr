@@ -51,8 +51,8 @@ l'ADR 0004 prévaut.
 - La navigation principale contient uniquement `Système métier` et `Académie`.
 - Une fiche Système contient `Process`, `Solutions` et `Ressources`.
 - Quatre Services Demaa canoniques sont affichés dans Solutions, après Outils :
-  Automatisation des processus, Marketing et prospection, Assistance
-  facturation et Expert-comptable. Ce dernier est absent de la fiche Cabinet
+  Automatisation des processus, Expert-comptable, Marketing et prospection et
+  Assistance facturation. Expert-comptable est absent de la fiche Cabinet
   comptable.
 - Les quatre Services utilisent le même formulaire de rappel minimal
   (entreprise et téléphone), avec attribution silencieuse du service et du

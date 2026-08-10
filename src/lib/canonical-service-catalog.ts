@@ -4,9 +4,9 @@ import { deepFreeze } from "@/lib/registry-contract-utils";
 
 export const CANONICAL_SERVICE_SLUGS = [
   "automatisation-processus",
+  "expert-comptable",
   "marketing-vente",
   "assistance-facturation",
-  "expert-comptable",
 ] as const;
 
 export type CanonicalServiceSlug = (typeof CANONICAL_SERVICE_SLUGS)[number];
@@ -66,7 +66,7 @@ export type CanonicalService = Readonly<{
   notIncluded: readonly string[];
 }>;
 
-const canonicalServices = deepFreeze([
+const canonicalServiceDefinitions = deepFreeze([
   {
     slug: "automatisation-processus",
     name: "Automatisation des processus",
@@ -224,6 +224,16 @@ const canonicalServices = deepFreeze([
     ],
   },
 ] satisfies readonly CanonicalService[]);
+
+const canonicalServices = deepFreeze(
+  CANONICAL_SERVICE_SLUGS.map((slug) => {
+    const service = canonicalServiceDefinitions.find(
+      (definition) => definition.slug === slug,
+    );
+    if (!service) throw new Error(`Missing canonical service definition: ${slug}`);
+    return service;
+  }),
+);
 
 export function getCanonicalServices(): readonly CanonicalService[] {
   return canonicalServices;
