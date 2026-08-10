@@ -22,12 +22,14 @@ export default function ActionPlanSystemPanel({
   options,
   selectedSystemId,
   onSystemChange,
+  showSelector = true,
   workspace,
   onWorkspaceChange,
 }: {
   options: readonly ActionPlanSystemOption[];
   selectedSystemId: string;
   onSystemChange: (systemId: string) => void;
+  showSelector?: boolean;
   workspace: ActionPlanWorkspaceState;
   onWorkspaceChange: Dispatch<SetStateAction<ActionPlanWorkspaceState>>;
 }) {
@@ -77,7 +79,7 @@ export default function ActionPlanSystemPanel({
 
   return (
     <section aria-labelledby="action-plan-system-title">
-      {!currentPayload ? (
+      {showSelector && !currentPayload ? (
         <div className="mb-5 flex justify-end">
           <ActionPlanSystemSelector
             options={options}
@@ -116,13 +118,13 @@ export default function ActionPlanSystemPanel({
             selectableSolutions
             headingAs="h3"
             headingId="action-plan-system-title"
-            headerActions={
+            headerActions={showSelector ? (
               <ActionPlanSystemSelector
                 options={options}
                 value={selectedSystemId}
                 onChange={onSystemChange}
               />
-            }
+            ) : undefined}
             intro={currentPayload.intro}
             solutionSections={currentPayload.solutionSections}
             system={currentPayload.system}

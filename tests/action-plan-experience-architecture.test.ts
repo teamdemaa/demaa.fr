@@ -53,8 +53,12 @@ describe("action plan experience architecture", () => {
   it("embeds the Academy without nesting a second main landmark", () => {
     const academyPanel = source("src/components/ActionPlanAcademyPanel.tsx");
     const academyIndex = source("src/components/AcademyIndexClient.tsx");
+    const experience = source("src/components/ActionPlanExperience.tsx");
 
     expect(academyPanel).toContain("embedded");
+    expect(academyPanel).toContain('embeddedToolbarId="action-plan-academy-toolbar"');
+    expect(experience).toContain('id="action-plan-academy-toolbar"');
+    expect(academyIndex).toContain("createPortal(searchControl, embeddedToolbar)");
     expect(academyIndex).toContain('const ContentContainer = embedded ? "div" : "main"');
     expect(academyIndex).toContain("<ContentContainer");
   });
