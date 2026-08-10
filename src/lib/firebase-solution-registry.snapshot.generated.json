@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "revisionId": "solutions-2026-08-10-professional-suppliers-published-v1",
+  "revisionId": "solutions-2026-08-10-prelaunch-closeout-published-v1",
   "revisionStatus": "published",
-  "createdAt": "2026-08-09T12:00:00.000Z",
-  "createdBy": "release://professional-suppliers-france-2026-08-10",
-  "sourceFingerprint": "2f8946b766e93f618d5c4d4ad68903f8a10882976297111ffe17d2050103d875",
+  "createdAt": "2026-08-10T08:00:00.000Z",
+  "createdBy": "release://prelaunch-closeout-france-2026-08-10",
+  "sourceFingerprint": "20d154fd2a50f2a539e9caec297a80af1c0204e58e54f52f7e633f4d5a19f7ed",
   "knownSystemSlugs": [
     "cabinet-comptable",
     "cabinet-davocat",
@@ -1882,6 +1882,34 @@
         "commercialRelationship": "unknown",
         "status": "draft",
         "resourceVersion": "firebase.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      }
+    },
+    {
+      "resource": {
+        "evidence": [
+          {
+            "evidenceId": "prelaunch-closeout-resource-investissement-entreprise-edda",
+            "sourceRef": "https://edda.co/",
+            "claim": "Edda présente officiellement une plateforme de gestion du dealflow et du portefeuille destinée aux équipes d’investissement.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-10T08:00:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-10T08:00:00.000Z",
+        "expiresAt": "2027-02-10T08:00:00.000Z",
+        "interactionMode": "external_link",
+        "href": "https://edda.co/",
+        "resourceSlug": "edda",
+        "resourceType": "software",
+        "name": "Edda",
+        "description": "Logiciel de dealflow, portefeuille et suivi d’investissement pour fonds, VC et équipes d’investissement.",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "resourceVersion": "prelaunch-closeout.v1",
         "publicationBlockers": [
           "commercial-relationship-unconfirmed"
         ]
@@ -12022,6 +12050,46 @@
         "hrefOverride": "https://www.cncgp.fr/",
         "ctaLabel": "Découvrir l’organisation",
         "descriptionOverride": "Un réseau de référence pour les conseillers en gestion de patrimoine."
+      }
+    },
+    {
+      "placement": {
+        "evidence": [
+          {
+            "evidenceId": "prelaunch-closeout-placement-investissement-entreprise-edda",
+            "sourceRef": "https://edda.co/",
+            "claim": "Edda réunit le suivi du dealflow, la due diligence, le portefeuille et le reporting nécessaires au pilotage d’une activité d’investissement.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-10T08:00:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-10T08:00:00.000Z",
+        "expiresAt": "2027-02-10T08:00:00.000Z",
+        "placementId": "investissement-entreprise:edda:software:1",
+        "systemSlug": "investissement-entreprise",
+        "resourceSlug": "edda",
+        "rank": 1,
+        "section": "software",
+        "usage": "Centraliser le dealflow, la due diligence, le portefeuille et le reporting d’investissement.",
+        "fitRationale": "La plateforme couvre le cycle d’investissement et donne une vue cohérente des opportunités, participations, performances et décisions.",
+        "fitConstraints": [
+          "Vérifier l’adéquation avec la taille du portefeuille, les besoins de reporting et les intégrations existantes."
+        ],
+        "editorialStatus": "selected",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "placementVersion": "prelaunch-closeout.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      },
+      "presentation": {
+        "displayCategory": "Gestion d’investissement",
+        "nameOverride": "Edda",
+        "hrefOverride": "https://edda.co/",
+        "ctaLabel": "Voir l’outil",
+        "descriptionOverride": "Logiciel de dealflow, portefeuille et suivi d’investissement pour fonds, VC et équipes d’investissement."
       }
     },
     {

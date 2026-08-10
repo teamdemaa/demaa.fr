@@ -7776,25 +7776,6 @@
       "scope": "business"
     },
     {
-      "slug": "patriom",
-      "name": "Patriom",
-      "url": "https://patriom.app/",
-      "category": "Outils métier",
-      "sectors": [
-        "Patrimoine"
-      ],
-      "description": "Logiciel CGP pour bilan patrimonial, cartographies, diversification, alertes et relation client.",
-      "tags": [
-        "Patrimoine",
-        "CGP",
-        "Bilan"
-      ],
-      "bestFor": "Produire des bilans patrimoniaux lisibles et des supports de conseil modernes.",
-      "pricingHint": "Payant",
-      "status": "active",
-      "scope": "business"
-    },
-    {
       "slug": "o2s",
       "name": "O2S",
       "url": "https://www.harvest.fr/solution/o2s/",

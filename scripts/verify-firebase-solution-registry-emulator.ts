@@ -12,6 +12,7 @@ import {
 import { buildFirebaseSolutionRegistryMigrationRevision } from "@/lib/firebase-solution-registry-migration.server";
 import { buildPublishedFranceSolutionsCleanupRevision } from "@/lib/firebase-solution-registry-france-cleanup.server";
 import { buildPublishedProfessionalSuppliersRevision } from "@/lib/firebase-solution-registry-professional-suppliers.server";
+import { buildPublishedPrelaunchCloseoutRevision } from "@/lib/firebase-solution-registry-prelaunch-closeout.server";
 import { buildFirestoreSolutionRegistryImportPlan } from "@/lib/firebase-solution-registry-firestore-plan";
 
 const EMULATOR_PROJECT_ID = "demo-demaa-solutions";
@@ -26,12 +27,14 @@ if (process.env.GCLOUD_PROJECT && process.env.GCLOUD_PROJECT !== EMULATOR_PROJEC
 
 const revisionSource = process.argv.find((argument) => argument.startsWith("--revision="))
   ?.slice("--revision=".length) ?? "migration";
-if (!["migration", "france-cleanup", "professional-suppliers"].includes(revisionSource)) {
+if (!["migration", "france-cleanup", "professional-suppliers", "prelaunch-closeout"].includes(revisionSource)) {
   throw new Error(
-    "Emulator revision must be migration, france-cleanup or professional-suppliers.",
+    "Emulator revision must be migration, france-cleanup, professional-suppliers or prelaunch-closeout.",
   );
 }
-const revision = revisionSource === "professional-suppliers"
+const revision = revisionSource === "prelaunch-closeout"
+  ? buildPublishedPrelaunchCloseoutRevision()
+  : revisionSource === "professional-suppliers"
   ? buildPublishedProfessionalSuppliersRevision()
   : revisionSource === "france-cleanup"
     ? buildPublishedFranceSolutionsCleanupRevision()
