@@ -88,14 +88,14 @@ export async function POST(request: Request) {
 
     if (!company || !isValidPhone(phone) || !idempotencyKey) {
       return NextResponse.json(
-        { error: "Indiquez une entreprise et un numéro de téléphone valides." },
+        { error: "Indiquez une entreprise et un numéro WhatsApp valides." },
         { status: 400 },
       );
     }
 
     if (!service || service.cta.kind !== "callback") {
       return NextResponse.json(
-        { error: "Ce service ne propose pas de demande de rappel." },
+        { error: "Ce service ne propose pas de demande de contact." },
         { status: 404 },
       );
     }
@@ -128,17 +128,18 @@ export async function POST(request: Request) {
       channels: { email: false, resend: false, slack: true },
       contact: { company, phone },
       context,
-      emoji: "☎️",
+      emoji: "💬",
       fields: [
         { label: "Service", value: service.name },
         { label: "Slug du service", value: service.slug },
+        { label: "Numéro WhatsApp", value: phone },
         ...(context.systemName
           ? [{ label: "Système métier", value: context.systemName }]
           : []),
       ],
       idempotencyKey,
       requestType: "service_callback_request",
-      title: `Demande de rappel - ${service.name}`,
+      title: `Demande de contact WhatsApp - ${service.name}`,
     });
 
     return success();

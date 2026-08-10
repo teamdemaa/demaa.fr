@@ -22,7 +22,7 @@ export default async function ServiceModalPage({ params }: ServiceModalPageProps
 
   return (
     <ServiceRouteDialog ariaLabel={`Détails de ${service.name}`}>
-      <CanonicalServiceDetails headingAs="h2" service={service} />
+      <CanonicalServiceDetails headingAs="h2" service={service} variant="modal" />
     </ServiceRouteDialog>
   );
 }

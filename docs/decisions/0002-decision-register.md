@@ -21,10 +21,11 @@ produit.
 | Académie cours 3 à 5 | `deferred` | Drafts éditoriaux et assets non publics | hors release Systèmes | Aucun draft ne devient public sans publication réelle et gate dédié. |
 | Vidéos | `deferred` | Production, casting et publication vidéo | chantier ultérieur | Les scripts, voix et assets locaux ne valent pas autorisation de publication. |
 | Tiimora D-049 à D-060 | `deferred` | Intégration Demaa-Tiimora et retargeting | backlog distinct | Ce chantier ne doit ni orienter ni ralentir la base Systèmes/Services. |
-| Services V1 | `superseded` | Marketplace de sept services | remplacée par l'ADR 0004 | `/services` publie exactement quatre offres canoniques, également composées dans les 115 Systèmes après Outils. |
+| Services V1 | `superseded` | Marketplace de sept services | remplacée par les ADR 0004 à 0006 | `/services` publie le catalogue canonique défini par l'ADR 0006, composé dans les Systèmes selon une matrice explicite. |
 | Solutions V1 | `validated` | Registre Firebase et interface par système | actif pour la France | Firebase est la source distante autoritaire ; les sections visibles restent conditionnelles à des placements pertinents. |
 | D-072 | `validated` | Architecture publique France et retrait legacy | ADR 0003 | `demaa.co` est canonique ; navigation `Système métier / Académie` ; fiches `Process / Solutions / Ressources` ; redirection si un successeur existe, 404 sinon. |
-| D-073 | `validated` | Services, Contenus, Académie et Ressources | ADR 0004 | Quatre Services canoniques, `/contenus`, Ressources réordonnées et six formations en direct ; l'ADR 0004 prévaut sur les anciens arbitrages incompatibles. |
+| D-073 | `validated` | Services, Contenus, Académie et Ressources | ADR 0004, tarification et éligibilité Services supersédées par ADR 0006 | `/contenus`, Ressources réordonnées et architecture Services canonique ; l'ADR 0006 prévaut pour le catalogue, les prix et le contact. |
+| D-075 | `validated` | Services clés France et contact WhatsApp | ADR 0006 | Six services canoniques, composition métier explicite, prix actuels et demande de contact WhatsApp manuelle. |
 | Mesure client Services/Solutions | `deferred` | Événements de parcours et conversion sans PII | chantier ultérieur après contrat de mesure | La branche ne contient que l'attribution consent-aware jointe aux demandes et des logs opérationnels serveur ; aucun dispositif client spécifique n'est déclaré actif. |
 | Boutique en ligne | `superseded` | Offre Services | retirée avant implémentation | Aucune carte V1. |
 | Site 1 350 EUR + cadeaux | `deferred` | Hypothèse d'offre enrichie D-071 | revue commerciale ultérieure | Elle ne modifie pas l'offre active à 950 EUR HT. |

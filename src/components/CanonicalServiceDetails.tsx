@@ -1,6 +1,5 @@
 import { Check, CircleAlert, ClipboardCheck } from "lucide-react";
 import { Suspense } from "react";
-import OrganisationSessionBookingButton from "@/components/OrganisationSessionBookingButton";
 import ServiceCallbackForm from "@/components/ServiceCallbackForm";
 import type { CanonicalService } from "@/lib/canonical-service-catalog";
 
@@ -32,13 +31,103 @@ function DetailList({
     </section>
   );
 }
+
+function ServiceCtaFallback({ label }: { label: string }) {
+  return (
+    <span className="mt-6 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-dema-forest px-5 py-3 text-center text-sm font-semibold text-white opacity-70">
+      {label}
+    </span>
+  );
+}
+
+function ServicePricingAndCta({
+  compact = false,
+  service,
+}: {
+  compact?: boolean;
+  service: CanonicalService;
+}) {
+  return (
+    <aside
+      className={compact
+        ? "h-fit rounded-[1.1rem] bg-dema-sage/45 p-5 sm:p-6"
+        : "h-fit rounded-[1.1rem] border border-dema-line bg-dema-paper p-5 sm:p-6"}
+    >
+      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-muted">
+        {service.pricing.heading}
+      </p>
+      <p className="mt-3 text-2xl font-medium tracking-[-0.025em] text-brand-blue">
+        {service.pricing.label}
+      </p>
+      <p className="mt-3 text-sm leading-relaxed text-dema-muted">
+        {service.pricing.note}
+      </p>
+
+      <Suspense fallback={<ServiceCtaFallback label={service.cta.label} />}>
+        <div className="mt-6 border-t border-dema-line/80 pt-1">
+          <ServiceCallbackForm
+            serviceName={service.name}
+            serviceSlug={service.slug}
+          />
+        </div>
+      </Suspense>
+    </aside>
+  );
+}
+
+function CompactServiceDetails({
+  Heading,
+  service,
+}: {
+  Heading: "h1" | "h2";
+  service: CanonicalService;
+}) {
+  return (
+    <div className="min-w-0 max-w-full">
+      <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
+        {service.eyebrow}
+      </p>
+      <Heading className="mt-3 text-3xl font-semibold tracking-[-0.035em] text-brand-blue sm:text-4xl">
+        {service.name}
+      </Heading>
+      <p className="mt-4 max-w-2xl text-base leading-7 text-dema-muted">
+        {service.result}
+      </p>
+
+      <div className="mt-7 grid min-w-0 gap-6 lg:grid-cols-[minmax(0,1fr)_18rem]">
+        <section className="min-w-0 border-t border-dema-line pt-5">
+          <h3 className="text-base font-semibold text-brand-blue">
+            Ce que Demaa prend en charge
+          </h3>
+          <ul className="mt-4 space-y-3">
+            {service.included.slice(0, 3).map((item) => (
+              <li key={item} className="flex items-start gap-3 text-sm leading-relaxed text-dema-muted">
+                <Check className="mt-0.5 h-4 w-4 shrink-0 text-dema-forest" aria-hidden="true" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <ServicePricingAndCta compact service={service} />
+      </div>
+    </div>
+  );
+}
+
 export default function CanonicalServiceDetails({
   headingAs: Heading = "h1",
   service,
+  variant = "page",
 }: {
   headingAs?: "h1" | "h2";
   service: CanonicalService;
+  variant?: "modal" | "page";
 }) {
+  if (variant === "modal") {
+    return <CompactServiceDetails Heading={Heading} service={service} />;
+  }
+
   return (
     <div className="min-w-0 max-w-full">
       <div className="grid min-w-0 gap-7 lg:grid-cols-[minmax(0,1fr)_20rem]">
@@ -65,44 +154,7 @@ export default function CanonicalServiceDetails({
           </div>
         </section>
 
-        <aside className="h-fit rounded-[1.1rem] border border-dema-line bg-dema-paper p-5 sm:p-6">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-muted">
-            Tarif
-          </p>
-          <p className="mt-3 text-2xl font-semibold tracking-[-0.025em] text-brand-blue">
-            {service.pricing.label}
-          </p>
-          {service.pricing.mode === "fixed-monthly" ? (
-            <p className="mt-3 text-sm leading-relaxed text-dema-muted">
-              Engagement initial de trois mois, puis reconduction mensuelle.
-            </p>
-          ) : null}
-
-          {service.cta.kind === "fillout" ? (
-            <Suspense
-              fallback={(
-                <span className="mt-6 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-dema-forest px-5 py-3 text-center text-sm font-semibold text-white opacity-70">
-                  {service.cta.label}
-                </span>
-              )}
-            >
-              <OrganisationSessionBookingButton
-                className="mt-6 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-dema-forest px-5 py-3 text-center text-sm font-semibold text-white transition hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
-                label={service.cta.label}
-                source="Service - Marketing externalisé"
-                sourceIsAuthoritative
-                requestType="marketing_strategy_booking"
-              />
-            </Suspense>
-          ) : (
-            <div className="mt-6 border-t border-dema-line pt-1">
-              <ServiceCallbackForm
-                serviceName={service.name}
-                serviceSlug={service.slug}
-              />
-            </div>
-          )}
-        </aside>
+        <ServicePricingAndCta service={service} />
       </div>
 
       <div className="mt-8 grid min-w-0 gap-4 md:grid-cols-3">

@@ -6,6 +6,10 @@
   Ressources des 115 systèmes
 - Supersède : les passages incompatibles des ADR 0001, 0002 et 0003
 
+> Les sections relatives au catalogue, aux prix, à l'éligibilité et au parcours
+> de contact des Services sont supersédées par l'ADR 0006. Les décisions
+> Contenus, Académie et Ressources de ce document restent actives.
+
 ## Décision
 
 ### Services Demaa

@@ -172,11 +172,23 @@ export async function loadFirebaseSolutionRegistryRevision(
   }
 }
 
-export const getActiveFirebaseSolutionRegistryRevision = unstable_cache(
-  async () => loadFirebaseSolutionRegistryRevision(),
-  ["solutions-registry-active-revision"],
+const getCachedFirebaseSolutionRegistryRevision = unstable_cache(
+  async (source: "local" | "remote", sourceFingerprint: string) => {
+    if (!sourceFingerprint) throw new Error("Solutions registry cache source is missing");
+    return loadFirebaseSolutionRegistryRevision({ forceLocal: source === "local" });
+  },
+  ["solutions-registry-active-revision-v2"],
   {
     tags: ["solutions-registry"],
     revalidate: 300,
   },
 );
+
+export async function getActiveFirebaseSolutionRegistryRevision() {
+  const useLocal =
+    process.env.DEMAA_FORCE_LOCAL_DATA === "true" || !hasFirebaseConfiguration();
+  return getCachedFirebaseSolutionRegistryRevision(
+    useLocal ? "local" : "remote",
+    useLocal ? PARSED_GENERATED_SNAPSHOT.sourceFingerprint : "firebase-active-pointer",
+  );
+}

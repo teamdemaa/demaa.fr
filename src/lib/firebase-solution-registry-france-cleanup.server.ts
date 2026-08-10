@@ -168,10 +168,18 @@ function buildFranceSolutionsRevision({
 }): FirebaseSolutionRegistryRevision {
   const activeRevision = parseFirebaseSolutionRegistryRevision(activeSnapshot);
   const resources = activeRevision.resources
-    .filter(({ resource }) => resource.resourceSlug !== "regate")
+    .filter(
+      ({ resource }) =>
+        resource.resourceSlug !== "regate" &&
+        resource.resourceVersion !== "professional-suppliers.v1",
+    )
     .map(updateResource);
   const placements = activeRevision.placements
-    .filter(({ placement }) => placement.resourceSlug !== "regate")
+    .filter(
+      ({ placement }) =>
+        placement.resourceSlug !== "regate" &&
+        placement.placementVersion !== "professional-suppliers.v1",
+    )
     .map(updatePlacement);
 
   const baseRevision = {

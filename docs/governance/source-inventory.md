@@ -86,7 +86,7 @@ recette.
 | `/services` | page W4 présente mais réécrite en 404/noindex par le proxy ; sélecteur à 0 offre publiée | ADR 0001 et implémentation W4 locale | activer seulement après promotion des offres, gates W5 et matrice navbar W6 |
 | `/services/[slug]` | pages W4 présentes mais préfixe réécrit en 404/noindex ; aucun paramètre draft généré | catalogue W3b et pages W4 | ne rendre publiques que les fiches explicitement publiées |
 | `/annuaire-services` | réécrite en 404/noindex ; cible produit `superseded` | aucune comme nouvelle marketplace | décider redirect ou maintien 404 |
-| `/annuaire-services/[slug]` | runtime retiré | redirects exacts vers les quatre offres canoniques | conserver et tester les redirects |
+| `/annuaire-services/[slug]` | runtime retiré | redirects exacts vers les offres canoniques utiles | conserver et tester les redirects |
 | modal interceptée `/annuaire-services/[slug]` | retirée | modale canonique `/services/[slug]` | aucune réactivation |
 | sitemap des fiches historiques | entrées toujours générées | SEO global W6 | retirer ou rediriger seulement après inventaire |
 

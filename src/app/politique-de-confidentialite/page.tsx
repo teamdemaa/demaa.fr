@@ -71,7 +71,7 @@ export default function PolitiqueConfidentialitePage() {
             <ul className="list-disc space-y-2 pl-5">
               <li><strong>Répondre à vos demandes, devis, audits et demandes d&apos;automatisation :</strong> exécution de mesures précontractuelles prises à votre demande.</li>
               <li><strong>Vous envoyer, à votre demande, une ressource ou le lien permettant de créer une copie personnelle :</strong> exécution du service demandé.</li>
-              <li><strong>Gérer les formulaires de contact, rappels et échanges commerciaux :</strong> intérêt légitime et, selon les cas, mesures précontractuelles.</li>
+              <li><strong>Gérer les formulaires de contact et vous répondre, notamment sur WhatsApp lorsque vous choisissez ce canal :</strong> intérêt légitime et, selon les cas, mesures précontractuelles.</li>
               <li><strong>Vous adresser des conseils et actualités par e-mail :</strong> uniquement lorsque vous y consentez séparément ; ce choix facultatif n&apos;est jamais nécessaire pour recevoir la ressource demandée.</li>
               <li><strong>Étudier une problématique proposée à la newsletter Structure :</strong> traitement de votre demande et consentement explicite avant toute présentation de votre entreprise, de votre site ou de votre situation ; l&apos;équipe vous contacte avant toute publication.</li>
               <li><strong>Fournir l&apos;assistant IA et enregistrer vos générations :</strong> exécution du service demandé et intérêt légitime d&apos;amélioration et de suivi.</li>
@@ -91,6 +91,7 @@ export default function PolitiqueConfidentialitePage() {
               <li><strong>Resend</strong> pour l&apos;envoi des emails demandés et la gestion des contacts concernés ;</li>
               <li><strong>Anthropic</strong> pour la génération des réponses de l&apos;assistant IA ;</li>
               <li><strong>Slack</strong> pour la réception interne de notifications liées à certaines demandes ;</li>
+              <li><strong>WhatsApp</strong> pour répondre aux demandes lorsque la personne fournit un numéro WhatsApp à cette fin ;</li>
               <li>les outils de messagerie, de contact ou de support effectivement utilisés par Demaa pour répondre à votre demande.</li>
             </ul>
             <p>

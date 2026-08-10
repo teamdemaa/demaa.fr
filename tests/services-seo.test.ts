@@ -20,10 +20,12 @@ async function readSource(path: string) {
 }
 
 describe("canonical Services SEO and redirects", () => {
-  it("publishes only the four canonical detail routes", async () => {
+  it("publishes only the six canonical detail routes", async () => {
     expect(generateStaticParams()).toEqual([
       { slug: "automatisation-processus" },
       { slug: "expert-comptable" },
+      { slug: "formalites-juridiques" },
+      { slug: "sous-traitance-formalites-juridiques" },
       { slug: "marketing-vente" },
       { slug: "assistance-facturation" },
     ]);
@@ -44,26 +46,51 @@ describe("canonical Services SEO and redirects", () => {
     });
   });
 
-  it("emits the fixed monthly Offer only for Marketing externalisé", () => {
+  it("emits direct Demaa offers without attributing third-party accounting fees to Demaa", () => {
+    const automation = getCanonicalServiceBySlug("automatisation-processus");
     const marketing = getCanonicalServiceBySlug("marketing-vente");
+    const billing = getCanonicalServiceBySlug("assistance-facturation");
     const expert = getCanonicalServiceBySlug("expert-comptable");
-    if (!marketing || !expert) throw new Error("missing canonical service fixture");
+    const legal = getCanonicalServiceBySlug("formalites-juridiques");
+    const legalSubcontracting = getCanonicalServiceBySlug("sous-traitance-formalites-juridiques");
+    if (!automation || !marketing || !billing || !expert || !legal || !legalSubcontracting) {
+      throw new Error("missing canonical service fixture");
+    }
+
+    expect(buildServicePageJsonLd(automation)[1]).toMatchObject({
+      offers: {
+        price: "500.00",
+        priceSpecification: {
+          unitText: "DAY",
+          valueAddedTaxIncluded: false,
+        },
+      },
+    });
 
     expect(buildServicePageJsonLd(marketing)[1]).toMatchObject({
       "@type": "Service",
-      name: "Marketing externalisé",
+      name: "Plan marketing et prospection",
       provider: { "@type": "Organization", name: "Demaa" },
       offers: {
         "@type": "Offer",
-        price: "950.00",
+        price: "550.00",
         priceCurrency: "EUR",
+      },
+    });
+    expect(buildServicePageJsonLd(billing)[1]).toMatchObject({
+      offers: {
+        description: "20 heures incluses, puis 25 € HT par heure supplémentaire.",
+        price: "500.00",
         priceSpecification: {
-          valueAddedTaxIncluded: false,
           unitText: "MONTH",
+          valueAddedTaxIncluded: false,
         },
       },
     });
     expect(JSON.stringify(buildServicePageJsonLd(expert))).not.toContain('"@type":"Offer"');
+    expect(JSON.stringify(buildServicePageJsonLd(expert))).not.toContain('"provider":{"@type":"Organization","name":"Demaa"}');
+    expect(JSON.stringify(buildServicePageJsonLd(legal))).not.toContain('"@type":"Offer"');
+    expect(JSON.stringify(buildServicePageJsonLd(legalSubcontracting))).not.toContain('"@type":"Offer"');
   });
 
   it("escapes embedded JSON-LD", () => {

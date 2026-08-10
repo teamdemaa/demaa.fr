@@ -19,7 +19,7 @@ export default function ServiceRouteDialog({
   return (
     <DirectoryDetailDialogShell
       ariaLabel={ariaLabel}
-      maxWidthClassName="max-w-6xl"
+      maxWidthClassName="max-w-3xl"
       onClose={closeDialog}
     >
       {children}

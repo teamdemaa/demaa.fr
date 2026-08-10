@@ -188,7 +188,7 @@ export const PILOT_SOLUTION_DRAFT_RESOURCES: readonly SolutionResource[] = [
     resourceType: "software",
     name: "Tiimora",
     description: "Application pour centraliser clients, demandes, documents, signatures et suivis du cabinet.",
-    officialSource: "https://app.tiimora.com/",
+    officialSource: "https://www.tiimora.com/",
     capturedAt: "2026-07-09T00:00:00.000Z",
     claim: "L’application officielle Tiimora est accessible ; son adéquation précise aux cabinets reste à valider avant publication.",
   }),

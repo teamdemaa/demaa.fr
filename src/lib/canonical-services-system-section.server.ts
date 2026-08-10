@@ -1,6 +1,9 @@
 import "server-only";
 
-import { getCanonicalServices } from "@/lib/canonical-service-catalog";
+import {
+  getCanonicalServices,
+  type CanonicalServiceSlug,
+} from "@/lib/canonical-service-catalog";
 import type { SolutionSection } from "@/lib/solution-registry-dto";
 import type {
   RenderableSolutionPlacementDto,
@@ -15,12 +18,37 @@ const SECTION_ORDER: readonly SolutionSection[] = [
   "networks",
 ];
 
+const LEGAL_SUBCONTRACTING_SYSTEM_SLUGS = new Set([
+  "cabinet-comptable",
+  "cabinet-davocat",
+  "notaire",
+]);
+
+export function getCanonicalServiceSlugsForSystem(
+  systemSlug: string,
+): readonly CanonicalServiceSlug[] {
+  return getCanonicalServices()
+    .filter((service) => {
+      if (systemSlug === "cabinet-comptable" && service.slug === "expert-comptable") {
+        return false;
+      }
+      if (
+        service.slug === "sous-traitance-formalites-juridiques" &&
+        !LEGAL_SUBCONTRACTING_SYSTEM_SLUGS.has(systemSlug)
+      ) {
+        return false;
+      }
+      return true;
+    })
+    .map((service) => service.slug);
+}
+
 function buildCanonicalServicePlacements(
   systemSlug: string,
 ): readonly RenderableSolutionPlacementDto[] {
-  const services = getCanonicalServices().filter(
-    (service) =>
-      !(systemSlug === "cabinet-comptable" && service.slug === "expert-comptable"),
+  const eligibleSlugs = new Set(getCanonicalServiceSlugsForSystem(systemSlug));
+  const services = getCanonicalServices().filter((service) =>
+    eligibleSlugs.has(service.slug),
   );
 
   return services.map((service, index) => ({
@@ -36,7 +64,7 @@ function buildCanonicalServicePlacements(
       resourceType: "provider",
       name: service.name,
       description: service.summary,
-      displayCategory: "Service Demaa",
+      displayCategory: service.eyebrow,
       ctaLabel: "Voir le service",
       indicativePricing: service.pricing.label,
       interaction: {
@@ -62,8 +90,12 @@ export function composeCanonicalServicesForSystem(
 
   for (const group of visibleSections) {
     if (group.section === "services") continue;
+    const publicPlacements = group.placements.filter(
+      ({ resource }) => resource.resourceSlug !== "juridi-consulting",
+    );
+    if (publicPlacements.length === 0) continue;
     const placements = placementsBySection.get(group.section) ?? [];
-    placements.push(...group.placements);
+    placements.push(...publicPlacements);
     placementsBySection.set(group.section, placements);
   }
   placementsBySection.set(

@@ -43,5 +43,7 @@ This project also exposes:
 
 If `next build` ever flakes locally because of a Turbopack temp-file issue, use `npm run build:stable`.
 The production `build` and `start` scripts both use the isolated `.next-build` directory.
+After a production build, use `npm run start:local-data` to inspect the committed
+local data candidate instead of the currently active remote Firebase revision.
 
 The application uses local Satoshi and Gambetta font files through `next/font/local`.

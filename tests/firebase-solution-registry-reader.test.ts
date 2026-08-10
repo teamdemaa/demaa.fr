@@ -56,13 +56,13 @@ describe("Firebase Solutions reader", () => {
 
     expect(fetchRemote).not.toHaveBeenCalled();
     expect(revision.knownSystemSlugs).toHaveLength(115);
-    expect(revision.placements).toHaveLength(599);
+    expect(revision.placements).toHaveLength(607);
     expect(
       revision.knownSystemSlugs.flatMap((systemSlug) =>
         modules.selectSections(revision, systemSlug)
           .flatMap(({ placements }) => placements),
       ),
-    ).toHaveLength(599);
+    ).toHaveLength(607);
     expect(
       revision.knownSystemSlugs.flatMap((systemSlug) =>
         modules.selectSections(revision, systemSlug, { publishedOnly: true })

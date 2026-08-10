@@ -321,7 +321,7 @@ function buildSystemPageTitle(
   const contentLabel = solutionSections.length > 0
     ? "Process, Solutions et Ressources"
     : "Process et Ressources";
-  return `Système opérationnel ${data.system.name} : ${contentLabel} | Demaa`;
+  return `Système métier ${data.system.name} : ${contentLabel} | Demaa`;
 }
 
 export function buildSystemPageIntro(data: SystemDetailPageData): string {
@@ -342,7 +342,7 @@ function buildSystemPageDescription(
   const sectorLabel = singularizeSectorLabel(data.detail.sectorLabel).toLowerCase();
   const processSummary = override
     ? override
-      .replace(/\bsysteme\b/gi, "système opérationnel")
+      .replace(/\bsysteme\b/gi, "système métier")
       .replace(/,\s*outils utiles[^.]*\./i, ".")
     : `${processCount} process opérationnels pour structurer une activité de ${sectorLabel}.`;
   const parts = [processSummary];
@@ -387,7 +387,7 @@ export function buildSystemPageMetadata(
     keywords:
       [
         data.system.name,
-        `système opérationnel ${data.system.name.toLowerCase()}`,
+        `système métier ${data.system.name.toLowerCase()}`,
         `process ${data.system.name.toLowerCase()}`,
         `modèle entreprise ${data.system.name.toLowerCase()}`,
         ...scopedResources.map((resource) => resource.title),
@@ -455,8 +455,8 @@ export function buildSystemPageJsonLd(
       "@context": "https://schema.org",
       "@type": "ItemList",
       name: listedSolutions.length > 0
-        ? `Process, Solutions et Ressources du système opérationnel ${data.system.name}`
-        : `Process et Ressources du système opérationnel ${data.system.name}`,
+        ? `Process, Solutions et Ressources du système métier ${data.system.name}`
+        : `Process et Ressources du système métier ${data.system.name}`,
       numberOfItems: listedProcesses.length + listedSolutions.length + listedResources.length,
       itemListElement: [
         ...listedProcesses.map((process, index) => ({

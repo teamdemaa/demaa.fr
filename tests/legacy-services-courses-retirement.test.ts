@@ -59,6 +59,7 @@ describe("legacy Services and Courses retirement", () => {
     expect(publicMarketing).not.toMatch(/750\s*€/);
     expect(publicMarketing).not.toMatch(/2\s*000\s*€/);
     expect(publicMarketing).not.toMatch(/service-catalog-v2|services-page-catalog/);
-    expect(publicMarketing).toContain("950 € HT / mois");
+    expect(publicMarketing).toContain("550 € HT");
+    expect(publicMarketing).not.toContain("950 € HT / mois");
   });
 });

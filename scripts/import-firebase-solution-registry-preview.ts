@@ -9,6 +9,7 @@ import {
 } from "@/lib/firebase-solution-registry-contract";
 import { buildFirebaseSolutionRegistryMigrationRevision } from "@/lib/firebase-solution-registry-migration.server";
 import { buildPublishedFranceSolutionsCleanupRevision } from "@/lib/firebase-solution-registry-france-cleanup.server";
+import { buildPublishedProfessionalSuppliersRevision } from "@/lib/firebase-solution-registry-professional-suppliers.server";
 import {
   buildFirestoreSolutionRegistryImportPlan,
   type FirestoreSolutionRegistryWrite,
@@ -117,12 +118,16 @@ const {
 });
 
 const revisionSource = commandArgument("--revision=") ?? "migration";
-if (revisionSource !== "migration" && revisionSource !== "france-cleanup") {
-  throw new Error("Remote import revision must be migration or france-cleanup.");
+if (!["migration", "france-cleanup", "professional-suppliers"].includes(revisionSource)) {
+  throw new Error(
+    "Remote import revision must be migration, france-cleanup or professional-suppliers.",
+  );
 }
-const revision = revisionSource === "france-cleanup"
-  ? buildPublishedFranceSolutionsCleanupRevision()
-  : buildFirebaseSolutionRegistryMigrationRevision();
+const revision = revisionSource === "professional-suppliers"
+  ? buildPublishedProfessionalSuppliersRevision()
+  : revisionSource === "france-cleanup"
+    ? buildPublishedFranceSolutionsCleanupRevision()
+    : buildFirebaseSolutionRegistryMigrationRevision();
 const plan = buildFirestoreSolutionRegistryImportPlan(revision);
 const confirmedPlanFingerprint = commandArgument("--confirm-plan=");
 if (confirmedPlanFingerprint !== plan.planFingerprint) {

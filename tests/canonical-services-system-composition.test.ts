@@ -2,8 +2,10 @@ import { describe, expect, it, vi } from "vitest";
 
 vi.mock("server-only", () => ({}));
 
-import { composeCanonicalServicesForSystem } from "@/lib/canonical-services-system-section.server";
-import { CANONICAL_SERVICE_SLUGS } from "@/lib/canonical-service-catalog";
+import {
+  composeCanonicalServicesForSystem,
+  getCanonicalServiceSlugsForSystem,
+} from "@/lib/canonical-services-system-section.server";
 import { enterpriseCatalog } from "@/lib/enterprise-annuaire";
 import type { RenderableSolutionSectionDto } from "@/lib/system-solutions-ui-dto";
 
@@ -48,35 +50,51 @@ const sectionsWithLegacyReferral = [
   },
   {
     section: "providers",
-    placements: [{
-      placementId: "firebase:test:provider",
-      systemSlug: "cabinet-comptable",
-      rank: 1,
-      section: "providers",
-      usage: "Fournir",
-      fitRationale: "Fournisseur sélectionné",
-      fitConstraints: [],
-      resource: {
-        resourceSlug: "provider-test",
-        resourceType: "provider",
-        name: "Fournisseur Test",
-        description: "Fournisseur.",
-        interaction: { interactionMode: "external_link", href: "https://example.com/" },
+    placements: [
+      {
+        placementId: "firebase:test:provider",
+        systemSlug: "cabinet-comptable",
+        rank: 1,
+        section: "providers",
+        usage: "Fournir",
+        fitRationale: "Fournisseur sélectionné",
+        fitConstraints: [],
+        resource: {
+          resourceSlug: "provider-test",
+          resourceType: "provider",
+          name: "Fournisseur Test",
+          description: "Fournisseur.",
+          interaction: { interactionMode: "external_link", href: "https://example.com/" },
+        },
       },
-    }],
+      {
+        placementId: "firebase:test:juridi",
+        systemSlug: "cabinet-comptable",
+        rank: 2,
+        section: "providers",
+        usage: "Déléguer les formalités juridiques",
+        fitRationale: "Ancienne carte fournisseur désormais remplacée par le service canonique.",
+        fitConstraints: [],
+        resource: {
+          resourceSlug: "juridi-consulting",
+          resourceType: "provider",
+          name: "JuridiConsulting",
+          description: "Formalités juridiques.",
+          interaction: { interactionMode: "external_link", href: "https://example.com/juridi" },
+        },
+      },
+    ],
   },
 ] as const satisfies readonly RenderableSolutionSectionDto[];
 
 describe("canonical Services composition in every system", () => {
-  it("composes the four canonical services, except Expert-comptable on Cabinet comptable", () => {
+  it("composes the eligible canonical services for all 115 systems", () => {
     expect(enterpriseCatalog).toHaveLength(115);
 
     for (const system of enterpriseCatalog) {
       const sections = composeCanonicalServicesForSystem(system.slug, []);
       const services = sections.find(({ section }) => section === "services");
-      const expectedSlugs = system.slug === "cabinet-comptable"
-        ? CANONICAL_SERVICE_SLUGS.filter((slug) => slug !== "expert-comptable")
-        : CANONICAL_SERVICE_SLUGS;
+      const expectedSlugs = getCanonicalServiceSlugsForSystem(system.slug);
 
       expect(services?.placements.map(({ resource }) => resource.resourceSlug))
         .toEqual(expectedSlugs);
@@ -89,7 +107,29 @@ describe("canonical Services composition in every system", () => {
         resource.interaction.href ===
           `/services/${resource.resourceSlug}?systemSlug=${system.slug}&source=solutions-systeme`
       )).toBe(true);
+      expect(services?.placements.every(({ resource }) =>
+        resource.displayCategory !== "Service Demaa"
+      )).toBe(true);
     }
+  });
+
+  it("applies the explicit eligibility matrix to regulated professions", () => {
+    expect(getCanonicalServiceSlugsForSystem("restaurant")).toEqual([
+      "automatisation-processus",
+      "expert-comptable",
+      "formalites-juridiques",
+      "marketing-vente",
+      "assistance-facturation",
+    ]);
+    expect(getCanonicalServiceSlugsForSystem("cabinet-comptable")).toEqual([
+      "automatisation-processus",
+      "formalites-juridiques",
+      "sous-traitance-formalites-juridiques",
+      "marketing-vente",
+      "assistance-facturation",
+    ]);
+    expect(getCanonicalServiceSlugsForSystem("cabinet-davocat")).toHaveLength(6);
+    expect(getCanonicalServiceSlugsForSystem("notaire")).toHaveLength(6);
   });
 
   it("places Services between Outils and Fournisseurs without mutating registry data", () => {
@@ -107,7 +147,7 @@ describe("canonical Services composition in every system", () => {
     expect(sectionsWithLegacyReferral).toEqual(inputSnapshot);
   });
 
-  it("replaces legacy service placements and removes the expert referral on Cabinet comptable", () => {
+  it("replaces legacy service placements and removes duplicate referrals on Cabinet comptable", () => {
     const sections = composeCanonicalServicesForSystem(
       "cabinet-comptable",
       sectionsWithLegacyReferral,
@@ -118,6 +158,8 @@ describe("canonical Services composition in every system", () => {
     expect(services?.placements.map(({ resource }) => resource.resourceSlug))
       .toEqual([
         "automatisation-processus",
+        "formalites-juridiques",
+        "sous-traitance-formalites-juridiques",
         "marketing-vente",
         "assistance-facturation",
       ]);
@@ -127,5 +169,7 @@ describe("canonical Services composition in every system", () => {
     expect(serialized).not.toContain("chartered-accountant");
     expect(serialized).not.toContain("referral_form");
     expect(serialized).not.toContain("firebase:test");
+    expect(sections.find(({ section }) => section === "providers")?.placements
+      .map(({ resource }) => resource.resourceSlug)).toEqual(["provider-test"]);
   });
 });

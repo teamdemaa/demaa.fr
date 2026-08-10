@@ -811,7 +811,7 @@
     {
       "slug": "tiimora",
       "name": "Tiimora",
-      "url": "https://app.tiimora.com/",
+      "url": "https://www.tiimora.com/",
       "category": "Outils métier",
       "sectors": [
         "Services & conseil"
@@ -838,7 +838,7 @@
         "Usages cabinet avec besoin de centraliser suivi client et production"
       ],
       "sources": [
-        "https://app.tiimora.com/"
+        "https://www.tiimora.com/"
       ],
       "lastReviewedAt": "2026-07-09",
       "status": "active",
