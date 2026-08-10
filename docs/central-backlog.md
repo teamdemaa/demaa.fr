@@ -1,6 +1,6 @@
 # Backlog central Demaa
 
-Dernière consolidation : 9 août 2026.
+Dernière consolidation : 10 août 2026.
 
 Backlog de pilotage :
 [Demaa — Backlog maître](https://docs.google.com/spreadsheets/d/19uwK54Pd2XiPzPM8OBvNkFSaSHYsJO_IHk8ZxzvvmQY/edit).
@@ -105,6 +105,63 @@ l'ADR 0004 prévaut.
   nouvelles routes publiques avant disponibilité réelle.
 - [ ] Activer le vocal de Structure uniquement avec stockage privé,
   transcription et politique de suppression validés.
+
+### Internationalisation — lot différé, à ouvrir avant le deuxième pays
+
+Ce chantier est volontairement au backlog. Le lancement France reste sans
+préfixe de locale sur `demaa.co` et aucune route publique n'est modifiée dans le
+lot de fermeture actuel.
+
+#### Contrat de données à préparer
+
+- [ ] Ajouter des identifiants stables et indépendants de la langue pour les
+  Systèmes, Services, ressources, fournisseurs et réseaux.
+- [ ] Ajouter explicitement `countryCode`, `localeCode` et `marketCode` aux
+  catalogues et placements localisables ; ne jamais déduire le pays uniquement
+  de la langue ou de l'adresse IP.
+- [ ] Séparer le noyau universel d'un Système (processus et structure) de ses
+  variantes locales : obligations, prix, fiscalité, acteurs, fournisseurs,
+  réseaux professionnels et preuves éditoriales.
+- [ ] Permettre une disponibilité et un classement des Solutions par marché :
+  un outil ou fournisseur français ne doit pas être affiché automatiquement en
+  Côte d'Ivoire ou aux États-Unis.
+- [ ] Prévoir prix, devise, taxe, date de vérification et expiration par marché,
+  sans réutiliser silencieusement une donnée française.
+
+#### Routes, SEO et navigation
+
+- [ ] Choisir et documenter le format d'URL international avant migration
+  (`/{locale-pays}/...` recommandé pour les nouveaux marchés), tout en
+  conservant les URL françaises actuelles jusqu'au plan de redirections.
+- [ ] Préparer canoniques, `hreflang`, sélecteur pays/langue, sitemaps par
+  locale et redirections permanentes sans créer de pages traduites vides.
+- [ ] Traduire les libellés de présentation, pas les identifiants internes :
+  `Systèmes métier` en français, `Business systems` en anglais.
+- [ ] Remplacer progressivement le segment historique `kit-operationnel`
+  seulement avec une matrice de redirections testée ; ne pas casser les URL
+  françaises existantes pour anticiper l'international.
+
+#### Contenu et gouvernance
+
+- [ ] Qualifier chaque contenu comme universel, traduit ou localisé. Les règles
+  juridiques et financières exigent une version locale sourcée et datée.
+- [ ] Définir un workflow traduction → relecture humaine → validation marché →
+  publication, avec fallback explicite plutôt qu'une traduction automatique
+  publique non relue.
+- [ ] Décliner YouTube d'abord en français et en anglais : même trame
+  pédagogique, métadonnées et voix localisées, sans dupliquer les pages SEO si
+  le contenu n'est pas réellement disponible.
+- [ ] Ouvrir un pays pilote seulement lorsque ses Systèmes prioritaires, ses
+  Solutions locales et ses obligations ont un propriétaire éditorial et une
+  couverture testée.
+
+#### Critères d'ouverture du chantier
+
+- France stable en Production et audits de couverture verts ;
+- choix du premier pays et de la langue cible validé ;
+- matrice des différences réglementaires et commerciales disponible ;
+- contrat de données et stratégie d'URL validés avant toute duplication de
+  contenu ou ajout de préfixe.
 
 ## Mise à jour canonique du 30 juillet 2026
 

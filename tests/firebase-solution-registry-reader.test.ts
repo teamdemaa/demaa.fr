@@ -12,7 +12,7 @@ type Modules = Readonly<{
 }>;
 
 let modules: Modules;
-const TEST_NOW = new Date("2026-08-09T15:30:00.000Z");
+const TEST_NOW = new Date("2026-08-10T09:00:00.000Z");
 
 beforeAll(async () => {
   const [reader, selection, contract] = await Promise.all([
@@ -56,13 +56,13 @@ describe("Firebase Solutions reader", () => {
 
     expect(fetchRemote).not.toHaveBeenCalled();
     expect(revision.knownSystemSlugs).toHaveLength(115);
-    expect(revision.placements).toHaveLength(607);
+    expect(revision.placements).toHaveLength(608);
     expect(
       revision.knownSystemSlugs.flatMap((systemSlug) =>
         modules.selectSections(revision, systemSlug)
           .flatMap(({ placements }) => placements),
       ),
-    ).toHaveLength(607);
+    ).toHaveLength(608);
     expect(
       revision.knownSystemSlugs.flatMap((systemSlug) =>
         modules.selectSections(revision, systemSlug, { publishedOnly: true })

@@ -16,7 +16,7 @@
     "generate:process-cadences": "vite-node --config vitest.config.ts scripts/generate-system-process-cadences.ts --write",
     "check:process-cadences": "vite-node --config vitest.config.ts scripts/generate-system-process-cadences.ts --check",
     "audit:academy:http": "node scripts/audit-academy-http.mjs",
-    "validate:data": "node scripts/validate-data.mjs && node scripts/validate-process-registry.mjs && npm run check:process-cadences && node scripts/validate-systeme-catalog.mjs && node scripts/validate-sector-taxonomy.mjs && node scripts/validate-seo-routes.mjs && node scripts/validate-sector-editorial-links.mjs && node scripts/validate-build-runtime.mjs && node scripts/audit-supplier-placeholders.mjs && node scripts/audit-system-recommendations.mjs && node scripts/audit-system-discovery-recommendations.mjs && node scripts/audit-finance-network-recommendations.mjs && node scripts/audit-aid-recommendations.mjs && node scripts/audit-system-kit-previews.mjs && node scripts/audit-private-operational-system-assets.mjs && node scripts/audit-public-wording.mjs",
+    "validate:data": "node scripts/validate-data.mjs && node scripts/validate-process-registry.mjs && npm run check:process-cadences && node scripts/validate-systeme-catalog.mjs && node scripts/validate-sector-taxonomy.mjs && node scripts/validate-seo-routes.mjs && node scripts/validate-sector-editorial-links.mjs && node scripts/validate-build-runtime.mjs && node scripts/audit-supplier-placeholders.mjs && node scripts/audit-system-recommendations.mjs && node scripts/audit-system-discovery-recommendations.mjs && node scripts/audit-finance-network-recommendations.mjs && node scripts/audit-aid-recommendations.mjs && node scripts/audit-system-kit-previews.mjs && node scripts/audit-private-operational-system-assets.mjs && node scripts/audit-public-wording.mjs && node scripts/audit-firebase-active-solution-coverage.mjs",
     "audit:btp-staging": "vite-node --config vitest.config.ts scripts/audit-btp-publication-staging.ts",
     "audit:agency-staging": "vite-node --config vitest.config.ts scripts/audit-agency-publication-staging.ts",
     "audit:commerce-staging": "vite-node --config vitest.config.ts scripts/audit-commerce-publication-staging.ts",
@@ -100,6 +100,7 @@
     "audit:operational-kits": "node scripts/audit-operational-kits.mjs",
     "audit:public-wording": "node scripts/audit-public-wording.mjs",
     "audit:external-links": "node scripts/audit-external-links.mjs",
+    "audit:firebase-solution-coverage": "node scripts/audit-firebase-active-solution-coverage.mjs",
     "audit:supplier-placeholders": "node scripts/audit-supplier-placeholders.mjs",
     "audit:finance-network-recommendations": "node scripts/audit-finance-network-recommendations.mjs",
     "audit:aid-recommendations": "node scripts/audit-aid-recommendations.mjs",
@@ -120,6 +121,8 @@
     "plan:firebase-solutions-france-cleanup:published": "vite-node --config vite.firebase-registry.config.ts scripts/plan-firebase-solutions-france-cleanup.ts --published",
     "plan:firebase-solutions-professional-suppliers": "vite-node --config vite.firebase-registry.config.ts scripts/build-firebase-solutions-professional-suppliers.ts",
     "generate:firebase-solutions-professional-suppliers": "vite-node --config vite.firebase-registry.config.ts scripts/build-firebase-solutions-professional-suppliers.ts --write",
+    "plan:firebase-solutions-prelaunch-closeout": "vite-node --config vite.firebase-registry.config.ts scripts/build-firebase-solutions-prelaunch-closeout.ts",
+    "generate:firebase-solutions-prelaunch-closeout": "vite-node --config vite.firebase-registry.config.ts scripts/build-firebase-solutions-prelaunch-closeout.ts --write",
     "import:firebase-solutions-france-cleanup": "vite-node --config vite.firebase-registry.config.ts scripts/import-firebase-solutions-france-cleanup.ts",
     "migrate:provider-placement-retirement": "vite-node --config vite.firebase-registry.config.ts scripts/migrate-provider-network-placement-retirement.ts",
     "plan:provider-network-import": "vite-node --config vite.firebase-registry.config.ts scripts/plan-provider-network-import.ts",
@@ -130,10 +133,13 @@
     "import:firebase-solutions-france-cleanup-production": "vite-node --config vite.firebase-registry.config.ts scripts/import-firebase-solution-registry-preview.ts --revision=france-cleanup --target=production",
     "import:firebase-solutions-professional-suppliers-preview": "vite-node --config vite.firebase-registry.config.ts scripts/import-firebase-solution-registry-preview.ts --revision=professional-suppliers",
     "import:firebase-solutions-professional-suppliers-production": "vite-node --config vite.firebase-registry.config.ts scripts/import-firebase-solution-registry-preview.ts --revision=professional-suppliers --target=production",
+    "import:firebase-solutions-prelaunch-closeout-preview": "vite-node --config vite.firebase-registry.config.ts scripts/import-firebase-solution-registry-preview.ts --revision=prelaunch-closeout",
+    "import:firebase-solutions-prelaunch-closeout-production": "vite-node --config vite.firebase-registry.config.ts scripts/import-firebase-solution-registry-preview.ts --revision=prelaunch-closeout --target=production",
     "verify:firebase-solutions-emulator": "npx --yes firebase-tools emulators:exec --only firestore --project demo-demaa-solutions --config firebase.solutions-emulator.json \"vite-node --config vite.firebase-registry.config.ts scripts/verify-firebase-solution-registry-emulator.ts\"",
     "verify:firebase-solutions-france-cleanup-published-emulator": "npx --yes firebase-tools emulators:exec --only firestore --project demo-demaa-solutions --config firebase.solutions-emulator.json \"vite-node --config vite.firebase-registry.config.ts scripts/verify-firebase-solution-registry-emulator.ts --revision=france-cleanup\"",
     "verify:firebase-solutions-france-cleanup-emulator": "npx --yes firebase-tools emulators:exec --only firestore --project demo-demaa-solutions --config firebase.solutions-emulator.json \"vite-node --config vite.firebase-registry.config.ts scripts/verify-firebase-solutions-france-cleanup-emulator.ts\"",
     "verify:firebase-solutions-professional-suppliers-emulator": "npx --yes firebase-tools emulators:exec --only firestore --project demo-demaa-solutions --config firebase.solutions-emulator.json \"vite-node --config vite.firebase-registry.config.ts scripts/verify-firebase-solution-registry-emulator.ts --revision=professional-suppliers\"",
+    "verify:firebase-solutions-prelaunch-closeout-emulator": "npx --yes firebase-tools emulators:exec --only firestore --project demo-demaa-solutions --config firebase.solutions-emulator.json \"vite-node --config vite.firebase-registry.config.ts scripts/verify-firebase-solution-registry-emulator.ts --revision=prelaunch-closeout\"",
     "register:operational-assets": "node scripts/register-operational-system-assets.mjs"
   },
   "dependencies": {
@@ -167,7 +173,14 @@
         "brace-expansion": "5.0.9"
       }
     },
-    "postcss": "^8.5.23",
+    "js-yaml": "4.3.1",
+    "minimatch@3.1.5": {
+      "brace-expansion": "1.1.18"
+    },
+    "minimatch@10.2.5": {
+      "brace-expansion": "5.0.9"
+    },
+    "postcss": "^8.5.26",
     "sharp": "^0.35.3",
     "uuid": "^11.1.1"
   }

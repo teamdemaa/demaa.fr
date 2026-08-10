@@ -238,7 +238,9 @@ export function buildPublishedProfessionalSuppliersRevision(): FirebaseSolutionR
 
   const resources = [
     ...activeRevision.resources.filter(
-      ({ resource }) => !addedResourceSlugs.has(resource.resourceSlug),
+      ({ resource }) =>
+        !addedResourceSlugs.has(resource.resourceSlug) &&
+        resource.resourceVersion !== "prelaunch-closeout.v1",
     ),
     ...addedResources,
   ].toSorted((left, right) =>
@@ -251,7 +253,8 @@ export function buildPublishedProfessionalSuppliersRevision(): FirebaseSolutionR
     ...activeRevision.placements.filter(
       ({ placement }) =>
         !(targetSystemSlugs.has(placement.systemSlug) && placement.section === "providers") &&
-        !addedResourceSlugs.has(placement.resourceSlug),
+        !addedResourceSlugs.has(placement.resourceSlug) &&
+        placement.placementVersion !== "prelaunch-closeout.v1",
     ),
     ...buildPlacementEntries(),
   ].toSorted((left, right) => {
