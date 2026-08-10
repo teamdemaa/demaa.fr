@@ -89,6 +89,7 @@ export default function ActionPlanAcademyPanel() {
       <AcademyIndexClient
         contents={payload.contents}
         liveTrainings={payload.liveTrainings}
+        embedded
       />
     </div>
   );

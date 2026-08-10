@@ -19,6 +19,7 @@ const ACADEMY_MODEL_RESOURCES = SYSTEM_RESOURCES
 type AcademyIndexClientProps = {
   contents: AcademyContentDefinition[];
   liveTrainings: readonly PublicLiveTraining[];
+  embedded?: boolean;
   backLink?: {
     href: string;
     label: string;
@@ -265,7 +266,12 @@ function AcademyCard({ content, eager = false }: { content: AcademyContentDefini
   );
 }
 
-export default function AcademyIndexClient({ contents, liveTrainings, backLink }: AcademyIndexClientProps) {
+export default function AcademyIndexClient({
+  contents,
+  liveTrainings,
+  embedded = false,
+  backLink,
+}: AcademyIndexClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [showAllFundamentals, setShowAllFundamentals] = useState(false);
   const [activeCategory, setActiveCategory] = useState(ALL_ACADEMY_CATEGORIES);
@@ -304,6 +310,7 @@ export default function AcademyIndexClient({ contents, liveTrainings, backLink }
   const isSearching = searchQuery.trim().length > 0;
   const visibleFundamentals = isSearching || showAllFundamentals ? fundamentals : fundamentals.slice(0, 6);
   const canToggleFundamentals = !isSearching && fundamentals.length > 6;
+  const ContentContainer = embedded ? "div" : "main";
 
   return (
     <div className="min-h-[85vh] bg-[#FAFAFA]">
@@ -388,7 +395,7 @@ export default function AcademyIndexClient({ contents, liveTrainings, backLink }
         </div>
       </header>
 
-      <main className="mx-auto max-w-7xl px-4 pb-16 md:pb-20">
+      <ContentContainer className="mx-auto max-w-7xl px-4 pb-16 md:pb-20">
         {fundamentals.length ? (
           <section aria-labelledby="fundamental-courses-title">
             <h2 id="fundamental-courses-title" className="text-2xl font-semibold text-brand-blue md:text-[2rem]">
@@ -498,7 +505,7 @@ export default function AcademyIndexClient({ contents, liveTrainings, backLink }
             onClose={() => setPreviewResource(null)}
           />
         ) : null}
-      </main>
+      </ContentContainer>
     </div>
   );
 }

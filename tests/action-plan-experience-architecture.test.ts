@@ -50,6 +50,15 @@ describe("action plan experience architecture", () => {
     );
   });
 
+  it("embeds the Academy without nesting a second main landmark", () => {
+    const academyPanel = source("src/components/ActionPlanAcademyPanel.tsx");
+    const academyIndex = source("src/components/AcademyIndexClient.tsx");
+
+    expect(academyPanel).toContain("embedded");
+    expect(academyIndex).toContain('const ContentContainer = embedded ? "div" : "main"');
+    expect(academyIndex).toContain("<ContentContainer");
+  });
+
   it("allows a saved plan return path without opening external redirects", () => {
     expect(getSafeCustomerReturnTo("/mon-espace/plans/abc_123")).toBe(
       "/mon-espace/plans/abc_123",
