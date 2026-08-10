@@ -42,7 +42,7 @@ catalogue, ni rendre privées les destinations publiques existantes.
    prospection ciblée et éthique demeure un levier possible lorsqu'elle est
    adaptée à la situation.
 10. Le pricing reste ouvert ; le prix de 5 EUR n'est pas une décision produit.
-11. Accompagnement, messagerie et gestion des phases gratuite/payante sont
+11. Coaching, messagerie et gestion des phases gratuite/payante sont
     différés dans un lot autonome.
 12. `/systemes` reste le hub public canonique des 115 Systèmes et `/academie`
     reste le hub public pédagogique. Leurs routes, métadonnées et contenus ne
@@ -65,9 +65,9 @@ catalogue, ni rendre privées les destinations publiques existantes.
 
 - étude de marché automatisée et recherche web ;
 - tarification et paiement ;
-- Accompagnement humain ;
+- Coaching humain ;
 - messagerie ;
-- phases gratuite et payante de l'Accompagnement ;
+- phases gratuite et payante du Coaching ;
 - internationalisation ;
 - remplacement des Process, Solutions ou Ressources existants par du contenu
   généré.
@@ -85,4 +85,4 @@ catalogue, ni rendre privées les destinations publiques existantes.
 8. les garde-fous de prospection sont testables et appliqués ;
 9. `/systemes`, `/academie` et `/systemes/[slug]` gardent leur comportement,
    leur canonical et leur indexabilité ;
-10. aucune offre Accompagnement ou prix non validé n'est exposé.
+10. aucune offre Coaching ou prix non validé n'est exposé.

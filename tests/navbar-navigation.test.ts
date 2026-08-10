@@ -78,7 +78,8 @@ describe("Demaa application navbar", () => {
     expect(actionPlanNavSource).toContain("Plan d’action");
     expect(actionPlanNavSource).toContain("Système");
     expect(actionPlanNavSource).toContain("Académie");
-    expect(actionPlanNavSource).toContain("Accompagnement");
+    expect(actionPlanNavSource).toContain("Coaching");
+    expect(actionPlanNavSource).not.toContain('label: "Accompagnement"');
     expect(actionPlanNavSource).toContain('{ view: "academy"');
     expect(actionPlanNavSource).toContain("onViewChange(view)");
     expect(actionPlanNavSource).toContain("xl:min-h-11");

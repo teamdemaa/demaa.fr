@@ -167,7 +167,7 @@ restent accessibles. L'ADR 0008 ne transforme pas ces routes en espace privé.
 ### Après connexion
 
 La navigation applicative affiche Plan d'action, Système, Académie et un repère
-Accompagnement. Ce dernier reste un espace annoncé : Accompagnement est exclu
+Coaching. Ce dernier reste un espace annoncé : le Coaching est exclu
 du MVP et aucune capacité, aucun délai ni aucun prix n'y est promis.
 
 ## Persistance
@@ -264,7 +264,7 @@ sont implémentés derrière des limites conservatrices réversibles.
 
 ## Backlog explicitement différé
 
-Accompagnement constitue un produit distinct et n'entre pas dans ce MVP. Son
+Le Coaching constitue un produit distinct et n'entre pas dans ce MVP. Son
 cadrage ultérieur doit couvrir ensemble :
 
 - phase gratuite et phase payante ;

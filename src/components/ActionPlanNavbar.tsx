@@ -4,7 +4,7 @@ import { BookOpen, Handshake, ListChecks, Workflow } from "lucide-react";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
-export type ActionPlanView = "plan" | "system" | "academy" | "accompaniment";
+export type ActionPlanView = "plan" | "system" | "academy" | "coaching";
 
 const tabClassName =
   "inline-flex min-h-14 min-w-0 flex-col items-center justify-center gap-1 rounded-[1.1rem] px-1 text-[10px] font-medium leading-none transition xl:min-h-11 xl:flex-row xl:gap-0 xl:rounded-full xl:px-3 xl:text-sm";
@@ -13,7 +13,7 @@ const navigationItems = [
   { view: "plan", label: "Plan d’action", Icon: ListChecks },
   { view: "system", label: "Système", Icon: Workflow },
   { view: "academy", label: "Académie", Icon: BookOpen },
-  { view: "accompaniment", label: "Accompagnement", Icon: Handshake },
+  { view: "coaching", label: "Coaching", Icon: Handshake },
 ] as const;
 
 export default function ActionPlanNavbar({

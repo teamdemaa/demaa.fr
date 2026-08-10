@@ -143,10 +143,10 @@ export default function SavedActionPlanDetail({
           />
         </div>
         {activeTab === "academy" ? <ActionPlanAcademyPanel /> : null}
-        {activeTab === "accompaniment" ? (
+        {activeTab === "coaching" ? (
           <section className="flex min-h-[46vh] flex-col items-center justify-center text-center">
             <h2 className="text-4xl font-light tracking-[-0.04em] text-brand-blue sm:text-5xl">
-              Accompagnement
+              Coaching
             </h2>
             <p className="mt-4 text-base font-light text-dema-muted">
               Cet espace sera disponible prochainement.

@@ -85,13 +85,13 @@ l'ADR 0004 prévaut.
   Systèmes, puis sauvegarde Firebase. L'ADR 0008 et
   `docs/action-plan-generator-product-contract.md` sont les références ;
   `/systemes` et `/academie` publics restent inchangés.
-- [ ] Cadrer séparément Accompagnement après le MVP D-076 : phase gratuite,
+- [ ] Cadrer séparément Coaching après le MVP D-076 : phase gratuite,
   phase payante, capacité humaine, délais, messagerie, confidentialité,
   conservation des échanges et prix. Aucun de ces éléments ne doit être promis
   ou simulé dans le générateur courant.
 - [ ] Finaliser la navigation authentifiée complète (`Accueil`, `Système`,
-  `Académie`, `Accompagnement`, profil), sans rendre privés les hubs publics.
-  Le repère Accompagnement peut rester visible comme espace annoncé, mais ne
+  `Académie`, `Coaching`, profil), sans rendre privés les hubs publics.
+  Le repère Coaching peut rester visible comme espace annoncé, mais ne
   doit simuler ni capacité, ni délai, ni prix tant que le produit n'est pas
   cadré.
 - [ ] Cadrer le partage sécurisé d'un plan sauvegardé : accès en lecture seule,
