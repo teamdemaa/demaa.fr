@@ -247,7 +247,7 @@ function buildRequests(demo) {
       updateSpreadsheetProperties: {
         properties: {
           title:
-            "Démonstration - Système opérationnel - Plomberie & chauffage",
+            "Démonstration - Système métier - Plomberie & chauffage",
         },
         fields: "title",
       },

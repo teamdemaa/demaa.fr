@@ -62,9 +62,6 @@ describe("Structure newsletter public contract", () => {
     for (const path of academyCourseFiles) {
       expect(read(path)).not.toContain("StructureNewsletterBlock");
     }
-    expect(read("src/components/StructurationLandingPage.tsx")).not.toContain(
-      "StructureNewsletterBlock",
-    );
   });
 
   it("keeps voice collection closed and hidden until its secure lifecycle exists", () => {

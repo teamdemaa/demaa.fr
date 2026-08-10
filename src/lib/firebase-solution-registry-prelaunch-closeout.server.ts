@@ -105,7 +105,9 @@ export function buildPublishedPrelaunchCloseoutRevision(): FirebaseSolutionRegis
   const eddaPlacement = buildEddaPlacement();
   const resources = [
     ...activeRevision.resources.filter(
-      ({ resource }) => resource.resourceSlug !== RESOURCE_SLUG,
+      ({ resource }) =>
+        resource.resourceSlug !== RESOURCE_SLUG &&
+        resource.resourceVersion !== "supplier-expansion.v1",
     ),
     eddaResource,
   ].toSorted((left, right) =>
@@ -117,6 +119,7 @@ export function buildPublishedPrelaunchCloseoutRevision(): FirebaseSolutionRegis
   const placements = [
     ...activeRevision.placements.filter(
       ({ placement }) =>
+        placement.placementVersion !== "supplier-expansion.v1" &&
         !(
           placement.systemSlug === TARGET_SYSTEM_SLUG &&
           placement.resourceSlug === RESOURCE_SLUG

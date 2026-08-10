@@ -178,7 +178,7 @@ function buildRequests(data) {
       updateSpreadsheetProperties: {
         properties: {
           title:
-            "Modèle vierge - Système opérationnel - Plomberie & chauffage",
+            "Modèle vierge - Système métier - Plomberie & chauffage",
         },
         fields: "title",
       },

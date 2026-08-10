@@ -172,7 +172,8 @@ function buildFranceSolutionsRevision({
       ({ resource }) =>
         resource.resourceSlug !== "regate" &&
         resource.resourceVersion !== "professional-suppliers.v1" &&
-        resource.resourceVersion !== "prelaunch-closeout.v1",
+        resource.resourceVersion !== "prelaunch-closeout.v1" &&
+        resource.resourceVersion !== "supplier-expansion.v1",
     )
     .map(updateResource);
   const placements = activeRevision.placements
@@ -180,7 +181,8 @@ function buildFranceSolutionsRevision({
       ({ placement }) =>
         placement.resourceSlug !== "regate" &&
         placement.placementVersion !== "professional-suppliers.v1" &&
-        placement.placementVersion !== "prelaunch-closeout.v1",
+        placement.placementVersion !== "prelaunch-closeout.v1" &&
+        placement.placementVersion !== "supplier-expansion.v1",
     )
     .map(updatePlacement);
 

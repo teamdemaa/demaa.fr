@@ -240,7 +240,8 @@ export function buildPublishedProfessionalSuppliersRevision(): FirebaseSolutionR
     ...activeRevision.resources.filter(
       ({ resource }) =>
         !addedResourceSlugs.has(resource.resourceSlug) &&
-        resource.resourceVersion !== "prelaunch-closeout.v1",
+        resource.resourceVersion !== "prelaunch-closeout.v1" &&
+        resource.resourceVersion !== "supplier-expansion.v1",
     ),
     ...addedResources,
   ].toSorted((left, right) =>
@@ -254,7 +255,8 @@ export function buildPublishedProfessionalSuppliersRevision(): FirebaseSolutionR
       ({ placement }) =>
         !(targetSystemSlugs.has(placement.systemSlug) && placement.section === "providers") &&
         !addedResourceSlugs.has(placement.resourceSlug) &&
-        placement.placementVersion !== "prelaunch-closeout.v1",
+        placement.placementVersion !== "prelaunch-closeout.v1" &&
+        placement.placementVersion !== "supplier-expansion.v1",
     ),
     ...buildPlacementEntries(),
   ].toSorted((left, right) => {

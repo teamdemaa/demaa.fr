@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "revisionId": "solutions-2026-08-10-prelaunch-closeout-published-v1",
+  "revisionId": "solutions-2026-08-10-supplier-expansion-published-v1",
   "revisionStatus": "published",
-  "createdAt": "2026-08-10T08:00:00.000Z",
-  "createdBy": "release://prelaunch-closeout-france-2026-08-10",
-  "sourceFingerprint": "20d154fd2a50f2a539e9caec297a80af1c0204e58e54f52f7e633f4d5a19f7ed",
+  "createdAt": "2026-08-10T08:30:00.000Z",
+  "createdBy": "release://supplier-expansion-france-2026-08-10",
+  "sourceFingerprint": "cb4ff37e878884058768e679222d96442f1fa8567fc90c108cb5c260d450df62",
   "knownSystemSlugs": [
     "cabinet-comptable",
     "cabinet-davocat",
@@ -799,6 +799,34 @@
       "resource": {
         "evidence": [
           {
+            "evidenceId": "supplier-expansion-resource-bernard",
+            "sourceRef": "https://www.bernard.fr/",
+            "claim": "Bernard présente un catalogue professionnel de produits d’hygiène, d’entretien, de consommables et de matériel de nettoyage.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-10T08:30:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-10T08:30:00.000Z",
+        "expiresAt": "2027-02-10T08:30:00.000Z",
+        "interactionMode": "external_link",
+        "href": "https://www.bernard.fr/",
+        "resourceSlug": "bernard",
+        "resourceType": "provider",
+        "name": "Bernard",
+        "description": "Produits d'hygiène, d'entretien et équipements pour les professionnels.",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "resourceVersion": "supplier-expansion.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      }
+    },
+    {
+      "resource": {
+        "evidence": [
+          {
             "evidenceId": "firebase-migration-resource-creche-bl-enfance",
             "sourceRef": "https://www.berger-levrault.com/fr/produit/bl-enfance/",
             "claim": "BL.enfance est une ressource actuellement affichée dans les Solutions Demaa.",
@@ -1350,6 +1378,34 @@
         "commercialRelationship": "unknown",
         "status": "draft",
         "resourceVersion": "firebase.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      }
+    },
+    {
+      "resource": {
+        "evidence": [
+          {
+            "evidenceId": "supplier-expansion-resource-codes-rousseau-pro",
+            "sourceRef": "https://pro.codesrousseau.fr/",
+            "claim": "Codes Rousseau Pro présente des supports pédagogiques et des solutions destinés aux écoles de conduite.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-10T08:30:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-10T08:30:00.000Z",
+        "expiresAt": "2027-02-10T08:30:00.000Z",
+        "interactionMode": "external_link",
+        "href": "https://pro.codesrousseau.fr/",
+        "resourceSlug": "codes-rousseau-pro",
+        "resourceType": "provider",
+        "name": "Codes Rousseau Pro",
+        "description": "Supports pédagogiques et services professionnels pour les auto-écoles.",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "resourceVersion": "supplier-expansion.v1",
         "publicationBlockers": [
           "commercial-relationship-unconfirmed"
         ]
@@ -5444,6 +5500,34 @@
       "resource": {
         "evidence": [
           {
+            "evidenceId": "supplier-expansion-resource-raja",
+            "sourceRef": "https://www.raja.fr/",
+            "claim": "RAJA présente des emballages, fournitures et équipements destinés notamment au commerce, à l’e-commerce et à l’expédition.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-10T08:30:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-10T08:30:00.000Z",
+        "expiresAt": "2027-02-10T08:30:00.000Z",
+        "interactionMode": "external_link",
+        "href": "https://www.raja.fr/",
+        "resourceSlug": "raja",
+        "resourceType": "provider",
+        "name": "RAJA",
+        "description": "Emballages, cartons et solutions d'expédition pour les professionnels.",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "resourceVersion": "supplier-expansion.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      }
+    },
+    {
+      "resource": {
+        "evidence": [
+          {
             "evidenceId": "firebase-migration-resource-agence-de-recrutement-recruitee",
             "sourceRef": "https://recruitee.com/fr/",
             "claim": "Recruitee est une ressource actuellement affichée dans les Solutions Demaa.",
@@ -6051,6 +6135,34 @@
         "commercialRelationship": "unknown",
         "status": "draft",
         "resourceVersion": "firebase.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      }
+    },
+    {
+      "resource": {
+        "evidence": [
+          {
+            "evidenceId": "supplier-expansion-resource-sumup",
+            "sourceRef": "https://www.sumup.com/fr-fr/terminal-de-paiement-terminal/",
+            "claim": "SumUp présente des solutions d’encaissement destinées notamment aux commerces, services et activités événementielles.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-10T08:30:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-10T08:30:00.000Z",
+        "expiresAt": "2027-02-10T08:30:00.000Z",
+        "interactionMode": "external_link",
+        "href": "https://www.sumup.com/fr-fr/terminal-de-paiement-terminal/",
+        "resourceSlug": "sumup",
+        "resourceType": "provider",
+        "name": "SumUp",
+        "description": "Terminaux de paiement et encaissement mobile pour professionnels.",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "resourceVersion": "supplier-expansion.v1",
         "publicationBlockers": [
           "commercial-relationship-unconfirmed"
         ]
@@ -10256,6 +10368,46 @@
       "placement": {
         "evidence": [
           {
+            "evidenceId": "supplier-expansion-placement-nettoyage-professionnel-bernard",
+            "sourceRef": "https://www.bernard.fr/",
+            "claim": "Les consommables et matériels de nettoyage sont au cœur de l’exécution quotidienne des prestations.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-10T08:30:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-10T08:30:00.000Z",
+        "expiresAt": "2027-02-10T08:30:00.000Z",
+        "placementId": "nettoyage-professionnel:bernard:providers:1",
+        "systemSlug": "nettoyage-professionnel",
+        "resourceSlug": "bernard",
+        "rank": 1,
+        "section": "providers",
+        "usage": "Approvisionner les équipes en produits d’entretien, consommables sanitaires, matériel et équipements de protection.",
+        "fitRationale": "Les consommables et matériels de nettoyage sont au cœur de l’exécution quotidienne des prestations.",
+        "fitConstraints": [
+          "Valider les fiches techniques, usages, protocoles, EPI et exigences environnementales de chaque chantier."
+        ],
+        "editorialStatus": "selected",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "placementVersion": "supplier-expansion.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      },
+      "presentation": {
+        "displayCategory": "Support",
+        "nameOverride": "Bernard",
+        "hrefOverride": "https://www.bernard.fr/",
+        "ctaLabel": "Voir le fournisseur",
+        "descriptionOverride": "Produits d'hygiène, d'entretien et équipements pour les professionnels."
+      }
+    },
+    {
+      "placement": {
+        "evidence": [
+          {
             "evidenceId": "firebase-migration-placement-nettoyage-professionnel-levier",
             "sourceRef": "decision://systems/levier-2026-08-03",
             "claim": "Levier fournit le socle de pilotage commun nécessaire pour exécuter ce système opérationnel.",
@@ -14383,6 +14535,86 @@
       "placement": {
         "evidence": [
           {
+            "evidenceId": "supplier-expansion-placement-commerce-de-detail-sumup",
+            "sourceRef": "https://www.sumup.com/fr-fr/terminal-de-paiement-terminal/",
+            "claim": "Une solution d’encaissement simple répond au besoin quotidien d’un commerce de détail.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-10T08:30:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-10T08:30:00.000Z",
+        "expiresAt": "2027-02-10T08:30:00.000Z",
+        "placementId": "commerce-de-detail:sumup:providers:1",
+        "systemSlug": "commerce-de-detail",
+        "resourceSlug": "sumup",
+        "rank": 1,
+        "section": "providers",
+        "usage": "Encaisser les paiements en magasin ou en mobilité et suivre les ventes courantes.",
+        "fitRationale": "Une solution d’encaissement simple répond au besoin quotidien d’un commerce de détail.",
+        "fitConstraints": [
+          "Comparer les frais, le matériel, les fonctions de caisse et les volumes d’encaissement."
+        ],
+        "editorialStatus": "selected",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "placementVersion": "supplier-expansion.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      },
+      "presentation": {
+        "displayCategory": "Paiement",
+        "nameOverride": "SumUp",
+        "hrefOverride": "https://www.sumup.com/fr-fr/terminal-de-paiement-terminal/",
+        "ctaLabel": "Voir le fournisseur",
+        "descriptionOverride": "Terminaux de paiement et encaissement mobile pour professionnels."
+      }
+    },
+    {
+      "placement": {
+        "evidence": [
+          {
+            "evidenceId": "supplier-expansion-placement-commerce-de-detail-raja",
+            "sourceRef": "https://www.raja.fr/",
+            "claim": "Les commerces qui emballent ou expédient des produits ont un besoin récurrent de consommables adaptés.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-10T08:30:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-10T08:30:00.000Z",
+        "expiresAt": "2027-02-10T08:30:00.000Z",
+        "placementId": "commerce-de-detail:raja:providers:2",
+        "systemSlug": "commerce-de-detail",
+        "resourceSlug": "raja",
+        "rank": 2,
+        "section": "providers",
+        "usage": "Acheter les sacs, emballages, étiquettes et fournitures nécessaires à la vente et aux expéditions.",
+        "fitRationale": "Les commerces qui emballent ou expédient des produits ont un besoin récurrent de consommables adaptés.",
+        "fitConstraints": [
+          "Sélectionner uniquement les références adaptées aux produits, volumes et exigences environnementales du commerce."
+        ],
+        "editorialStatus": "selected",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "placementVersion": "supplier-expansion.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      },
+      "presentation": {
+        "displayCategory": "Grossiste",
+        "nameOverride": "RAJA",
+        "hrefOverride": "https://www.raja.fr/",
+        "ctaLabel": "Voir le fournisseur",
+        "descriptionOverride": "Emballages, cartons et solutions d'expédition pour les professionnels."
+      }
+    },
+    {
+      "placement": {
+        "evidence": [
+          {
             "evidenceId": "firebase-migration-placement-commerce-de-detail-levier",
             "sourceRef": "decision://systems/levier-2026-08-03",
             "claim": "Levier fournit le socle de pilotage commun nécessaire pour exécuter ce système opérationnel.",
@@ -14536,6 +14768,46 @@
         "hrefOverride": "https://www.sendcloud.com/fr/",
         "ctaLabel": "Voir l’outil",
         "descriptionOverride": "Solution d’expédition e-commerce pour automatiser les envois, transporteurs et retours."
+      }
+    },
+    {
+      "placement": {
+        "evidence": [
+          {
+            "evidenceId": "supplier-expansion-placement-e-commerce-raja",
+            "sourceRef": "https://www.raja.fr/",
+            "claim": "L’emballage et l’expédition sont des opérations structurantes pour une activité e-commerce.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-10T08:30:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-10T08:30:00.000Z",
+        "expiresAt": "2027-02-10T08:30:00.000Z",
+        "placementId": "e-commerce:raja:providers:1",
+        "systemSlug": "e-commerce",
+        "resourceSlug": "raja",
+        "rank": 1,
+        "section": "providers",
+        "usage": "Approvisionner les cartons, protections, adhésifs et consommables nécessaires à la préparation des commandes.",
+        "fitRationale": "L’emballage et l’expédition sont des opérations structurantes pour une activité e-commerce.",
+        "fitConstraints": [
+          "Comparer les formats, quantités, coûts logistiques et objectifs de réduction des emballages."
+        ],
+        "editorialStatus": "selected",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "placementVersion": "supplier-expansion.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      },
+      "presentation": {
+        "displayCategory": "Grossiste",
+        "nameOverride": "RAJA",
+        "hrefOverride": "https://www.raja.fr/",
+        "ctaLabel": "Voir le fournisseur",
+        "descriptionOverride": "Emballages, cartons et solutions d'expédition pour les professionnels."
       }
     },
     {
@@ -16226,6 +16498,86 @@
         "hrefOverride": "https://www.odoo.com/fr_FR",
         "ctaLabel": "Voir l’outil",
         "descriptionOverride": "Suite modulaire pour CRM, ventes, stock, facturation, production et opérations."
+      }
+    },
+    {
+      "placement": {
+        "evidence": [
+          {
+            "evidenceId": "supplier-expansion-placement-production-industrie-wurth",
+            "sourceRef": "https://eshop.wurth.fr/",
+            "claim": "Les consommables et équipements techniques sont des achats récurrents en production et maintenance.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-10T08:30:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-10T08:30:00.000Z",
+        "expiresAt": "2027-02-10T08:30:00.000Z",
+        "placementId": "production-industrie:wurth:providers:1",
+        "systemSlug": "production-industrie",
+        "resourceSlug": "wurth",
+        "rank": 1,
+        "section": "providers",
+        "usage": "Approvisionner l’atelier en outillage, consommables, fixation et équipements de protection.",
+        "fitRationale": "Les consommables et équipements techniques sont des achats récurrents en production et maintenance.",
+        "fitConstraints": [
+          "Valider les normes, références et conditions d’achat adaptées aux risques et procédés du site."
+        ],
+        "editorialStatus": "selected",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "placementVersion": "supplier-expansion.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      },
+      "presentation": {
+        "displayCategory": "Équipement",
+        "nameOverride": "Würth",
+        "hrefOverride": "https://eshop.wurth.fr/",
+        "ctaLabel": "Voir le fournisseur",
+        "descriptionOverride": "Consommables, visserie, outillage et EPI."
+      }
+    },
+    {
+      "placement": {
+        "evidence": [
+          {
+            "evidenceId": "supplier-expansion-placement-production-industrie-kiloutou",
+            "sourceRef": "https://www.kiloutou.fr/",
+            "claim": "La location peut répondre à un besoin temporaire de matériel professionnel ou de capacité supplémentaire.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-10T08:30:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-10T08:30:00.000Z",
+        "expiresAt": "2027-02-10T08:30:00.000Z",
+        "placementId": "production-industrie:kiloutou:providers:2",
+        "systemSlug": "production-industrie",
+        "resourceSlug": "kiloutou",
+        "rank": 2,
+        "section": "providers",
+        "usage": "Louer ponctuellement du matériel de manutention, d’accès ou de chantier sans immobiliser un achat.",
+        "fitRationale": "La location peut répondre à un besoin temporaire de matériel professionnel ou de capacité supplémentaire.",
+        "fitConstraints": [
+          "Comparer disponibilité, habilitations, transport, assurance et coût total avec l’achat ou la location longue durée."
+        ],
+        "editorialStatus": "selected",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "placementVersion": "supplier-expansion.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      },
+      "presentation": {
+        "displayCategory": "Équipement",
+        "nameOverride": "Kiloutou",
+        "hrefOverride": "https://www.kiloutou.fr/",
+        "ctaLabel": "Voir le fournisseur",
+        "descriptionOverride": "Location de matériel professionnel."
       }
     },
     {
@@ -18852,6 +19204,166 @@
       "placement": {
         "evidence": [
           {
+            "evidenceId": "supplier-expansion-placement-commerce-alimentaire-transgourmet",
+            "sourceRef": "https://www.transgourmet.fr/",
+            "claim": "Un grossiste alimentaire peut sécuriser les commandes récurrentes d’un commerce de bouche.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-10T08:30:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-10T08:30:00.000Z",
+        "expiresAt": "2027-02-10T08:30:00.000Z",
+        "placementId": "commerce-alimentaire:transgourmet:providers:1",
+        "systemSlug": "commerce-alimentaire",
+        "resourceSlug": "transgourmet",
+        "rank": 1,
+        "section": "providers",
+        "usage": "Centraliser une partie des approvisionnements alimentaires et des livraisons professionnelles.",
+        "fitRationale": "Un grossiste alimentaire peut sécuriser les commandes récurrentes d’un commerce de bouche.",
+        "fitConstraints": [
+          "Vérifier l’éligibilité, la zone de livraison, les minimums de commande et la gamme réellement utile."
+        ],
+        "editorialStatus": "selected",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "placementVersion": "supplier-expansion.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      },
+      "presentation": {
+        "displayCategory": "Grossiste",
+        "nameOverride": "Transgourmet",
+        "hrefOverride": "https://www.transgourmet.fr/",
+        "ctaLabel": "Voir le fournisseur",
+        "descriptionOverride": "Grossiste food-service pour restaurateurs, boulangers et traiteurs."
+      }
+    },
+    {
+      "placement": {
+        "evidence": [
+          {
+            "evidenceId": "supplier-expansion-placement-commerce-alimentaire-metro-france",
+            "sourceRef": "https://www.metro.fr/metro/univers-metiers",
+            "claim": "L’offre professionnelle couvre plusieurs besoins d’exploitation d’un commerce alimentaire.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-10T08:30:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-10T08:30:00.000Z",
+        "expiresAt": "2027-02-10T08:30:00.000Z",
+        "placementId": "commerce-alimentaire:metro-france:providers:2",
+        "systemSlug": "commerce-alimentaire",
+        "resourceSlug": "metro-france",
+        "rank": 2,
+        "section": "providers",
+        "usage": "Acheter des produits alimentaires, emballages et équipements adaptés au commerce de bouche.",
+        "fitRationale": "L’offre professionnelle couvre plusieurs besoins d’exploitation d’un commerce alimentaire.",
+        "fitConstraints": [
+          "Vérifier les conditions d’accès professionnel, les prix et la disponibilité locale."
+        ],
+        "editorialStatus": "selected",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "placementVersion": "supplier-expansion.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      },
+      "presentation": {
+        "displayCategory": "Grossiste",
+        "nameOverride": "METRO France",
+        "hrefOverride": "https://www.metro.fr/metro/univers-metiers",
+        "ctaLabel": "Voir le fournisseur",
+        "descriptionOverride": "Grossiste pour la restauration, les cafés, les bars et les métiers de bouche."
+      }
+    },
+    {
+      "placement": {
+        "evidence": [
+          {
+            "evidenceId": "supplier-expansion-placement-commerce-alimentaire-sumup",
+            "sourceRef": "https://www.sumup.com/fr-fr/terminal-de-paiement-terminal/",
+            "claim": "Un terminal de paiement est pertinent pour un commerce alimentaire recevant du public.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-10T08:30:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-10T08:30:00.000Z",
+        "expiresAt": "2027-02-10T08:30:00.000Z",
+        "placementId": "commerce-alimentaire:sumup:providers:3",
+        "systemSlug": "commerce-alimentaire",
+        "resourceSlug": "sumup",
+        "rank": 3,
+        "section": "providers",
+        "usage": "Encaisser les paiements au comptoir ou en mobilité et suivre les ventes.",
+        "fitRationale": "Un terminal de paiement est pertinent pour un commerce alimentaire recevant du public.",
+        "fitConstraints": [
+          "Comparer les frais de transaction, le matériel et les fonctions de caisse nécessaires."
+        ],
+        "editorialStatus": "selected",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "placementVersion": "supplier-expansion.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      },
+      "presentation": {
+        "displayCategory": "Paiement",
+        "nameOverride": "SumUp",
+        "hrefOverride": "https://www.sumup.com/fr-fr/terminal-de-paiement-terminal/",
+        "ctaLabel": "Voir le fournisseur",
+        "descriptionOverride": "Terminaux de paiement et encaissement mobile pour professionnels."
+      }
+    },
+    {
+      "placement": {
+        "evidence": [
+          {
+            "evidenceId": "supplier-expansion-placement-commerce-alimentaire-raja",
+            "sourceRef": "https://www.raja.fr/",
+            "claim": "Les emballages et consommables sont récurrents dans de nombreux commerces alimentaires.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-10T08:30:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-10T08:30:00.000Z",
+        "expiresAt": "2027-02-10T08:30:00.000Z",
+        "placementId": "commerce-alimentaire:raja:providers:4",
+        "systemSlug": "commerce-alimentaire",
+        "resourceSlug": "raja",
+        "rank": 4,
+        "section": "providers",
+        "usage": "Commander des sacs, emballages alimentaires et consommables de vente à emporter.",
+        "fitRationale": "Les emballages et consommables sont récurrents dans de nombreux commerces alimentaires.",
+        "fitConstraints": [
+          "Vérifier l’aptitude au contact alimentaire et l’adéquation aux produits vendus."
+        ],
+        "editorialStatus": "selected",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "placementVersion": "supplier-expansion.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      },
+      "presentation": {
+        "displayCategory": "Grossiste",
+        "nameOverride": "RAJA",
+        "hrefOverride": "https://www.raja.fr/",
+        "ctaLabel": "Voir le fournisseur",
+        "descriptionOverride": "Emballages, cartons et solutions d'expédition pour les professionnels."
+      }
+    },
+    {
+      "placement": {
+        "evidence": [
+          {
             "evidenceId": "firebase-migration-placement-commerce-alimentaire-levier",
             "sourceRef": "decision://systems/levier-2026-08-03",
             "claim": "Levier fournit le socle de pilotage commun nécessaire pour exécuter ce système opérationnel.",
@@ -19046,6 +19558,86 @@
         "hrefOverride": "https://www.brevo.com/fr/",
         "ctaLabel": "Voir l’outil",
         "descriptionOverride": "Emailing, SMS, automatisation marketing et CRM pour relancer clients et prospects."
+      }
+    },
+    {
+      "placement": {
+        "evidence": [
+          {
+            "evidenceId": "supplier-expansion-placement-boutique-specialisee-sumup",
+            "sourceRef": "https://www.sumup.com/fr-fr/terminal-de-paiement-terminal/",
+            "claim": "Une solution d’encaissement flexible répond au fonctionnement d’une petite boutique spécialisée.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-10T08:30:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-10T08:30:00.000Z",
+        "expiresAt": "2027-02-10T08:30:00.000Z",
+        "placementId": "boutique-specialisee:sumup:providers:1",
+        "systemSlug": "boutique-specialisee",
+        "resourceSlug": "sumup",
+        "rank": 1,
+        "section": "providers",
+        "usage": "Encaisser les paiements en boutique ou lors de ventes ponctuelles hors magasin.",
+        "fitRationale": "Une solution d’encaissement flexible répond au fonctionnement d’une petite boutique spécialisée.",
+        "fitConstraints": [
+          "Comparer les frais, le matériel et les besoins de caisse ou de gestion des produits."
+        ],
+        "editorialStatus": "selected",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "placementVersion": "supplier-expansion.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      },
+      "presentation": {
+        "displayCategory": "Paiement",
+        "nameOverride": "SumUp",
+        "hrefOverride": "https://www.sumup.com/fr-fr/terminal-de-paiement-terminal/",
+        "ctaLabel": "Voir le fournisseur",
+        "descriptionOverride": "Terminaux de paiement et encaissement mobile pour professionnels."
+      }
+    },
+    {
+      "placement": {
+        "evidence": [
+          {
+            "evidenceId": "supplier-expansion-placement-boutique-specialisee-raja",
+            "sourceRef": "https://www.raja.fr/",
+            "claim": "Une boutique spécialisée utilise souvent des emballages de vente et parfois d’expédition.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-10T08:30:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-10T08:30:00.000Z",
+        "expiresAt": "2027-02-10T08:30:00.000Z",
+        "placementId": "boutique-specialisee:raja:providers:2",
+        "systemSlug": "boutique-specialisee",
+        "resourceSlug": "raja",
+        "rank": 2,
+        "section": "providers",
+        "usage": "Approvisionner les sacs, emballages cadeaux, étiquettes et cartons d’expédition.",
+        "fitRationale": "Une boutique spécialisée utilise souvent des emballages de vente et parfois d’expédition.",
+        "fitConstraints": [
+          "Adapter les formats et volumes au positionnement, aux produits et à la fréquence des commandes."
+        ],
+        "editorialStatus": "selected",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "placementVersion": "supplier-expansion.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      },
+      "presentation": {
+        "displayCategory": "Grossiste",
+        "nameOverride": "RAJA",
+        "hrefOverride": "https://www.raja.fr/",
+        "ctaLabel": "Voir le fournisseur",
+        "descriptionOverride": "Emballages, cartons et solutions d'expédition pour les professionnels."
       }
     },
     {
@@ -19687,6 +20279,126 @@
         "hrefOverride": "https://www.d-edge.com/",
         "ctaLabel": "Voir l’outil",
         "descriptionOverride": "Solutions de distribution hôtelière pour CRS, channel manager, moteur de réservation et marketing."
+      }
+    },
+    {
+      "placement": {
+        "evidence": [
+          {
+            "evidenceId": "supplier-expansion-placement-hotel-hebergement-independant-metro-france",
+            "sourceRef": "https://www.metro.fr/metro/univers-metiers",
+            "claim": "Un hôtel indépendant peut regrouper plusieurs achats d’exploitation auprès d’un grossiste CHR.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-10T08:30:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-10T08:30:00.000Z",
+        "expiresAt": "2027-02-10T08:30:00.000Z",
+        "placementId": "hotel-hebergement-independant:metro-france:providers:1",
+        "systemSlug": "hotel-hebergement-independant",
+        "resourceSlug": "metro-france",
+        "rank": 1,
+        "section": "providers",
+        "usage": "Approvisionner le petit-déjeuner, la restauration, l’hygiène et certains équipements de l’établissement.",
+        "fitRationale": "Un hôtel indépendant peut regrouper plusieurs achats d’exploitation auprès d’un grossiste CHR.",
+        "fitConstraints": [
+          "Pertinent surtout lorsque l’établissement propose du petit-déjeuner ou de la restauration ; comparer les prix et conditions d’accès."
+        ],
+        "editorialStatus": "selected",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "placementVersion": "supplier-expansion.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      },
+      "presentation": {
+        "displayCategory": "Grossiste",
+        "nameOverride": "METRO France",
+        "hrefOverride": "https://www.metro.fr/metro/univers-metiers",
+        "ctaLabel": "Voir le fournisseur",
+        "descriptionOverride": "Grossiste pour la restauration, les cafés, les bars et les métiers de bouche."
+      }
+    },
+    {
+      "placement": {
+        "evidence": [
+          {
+            "evidenceId": "supplier-expansion-placement-hotel-hebergement-independant-france-boissons",
+            "sourceRef": "https://www.france-boissons.fr/",
+            "claim": "La distribution CHR est pertinente pour les établissements ayant une activité boissons régulière.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-10T08:30:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-10T08:30:00.000Z",
+        "expiresAt": "2027-02-10T08:30:00.000Z",
+        "placementId": "hotel-hebergement-independant:france-boissons:providers:2",
+        "systemSlug": "hotel-hebergement-independant",
+        "resourceSlug": "france-boissons",
+        "rank": 2,
+        "section": "providers",
+        "usage": "Organiser l’approvisionnement en boissons du bar, du petit-déjeuner ou de la restauration.",
+        "fitRationale": "La distribution CHR est pertinente pour les établissements ayant une activité boissons régulière.",
+        "fitConstraints": [
+          "Pertinent uniquement si l’établissement exploite un service de boissons ; vérifier la couverture locale et les conditions commerciales."
+        ],
+        "editorialStatus": "selected",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "placementVersion": "supplier-expansion.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      },
+      "presentation": {
+        "displayCategory": "Grossiste",
+        "nameOverride": "France Boissons",
+        "hrefOverride": "https://www.france-boissons.fr/",
+        "ctaLabel": "Voir le fournisseur",
+        "descriptionOverride": "Distribution de boissons et services pour cafés, hôtels et restaurants."
+      }
+    },
+    {
+      "placement": {
+        "evidence": [
+          {
+            "evidenceId": "supplier-expansion-placement-hotel-hebergement-independant-sumup",
+            "sourceRef": "https://www.sumup.com/fr-fr/terminal-de-paiement-terminal/",
+            "claim": "Un dispositif d’encaissement flexible complète le parcours de paiement d’un petit établissement.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-10T08:30:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-10T08:30:00.000Z",
+        "expiresAt": "2027-02-10T08:30:00.000Z",
+        "placementId": "hotel-hebergement-independant:sumup:providers:3",
+        "systemSlug": "hotel-hebergement-independant",
+        "resourceSlug": "sumup",
+        "rank": 3,
+        "section": "providers",
+        "usage": "Encaisser les paiements sur place ou en mobilité pour les prestations de l’établissement.",
+        "fitRationale": "Un dispositif d’encaissement flexible complète le parcours de paiement d’un petit établissement.",
+        "fitConstraints": [
+          "Vérifier l’intégration au logiciel hôtelier, les frais et les besoins de préautorisation éventuels."
+        ],
+        "editorialStatus": "selected",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "placementVersion": "supplier-expansion.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      },
+      "presentation": {
+        "displayCategory": "Paiement",
+        "nameOverride": "SumUp",
+        "hrefOverride": "https://www.sumup.com/fr-fr/terminal-de-paiement-terminal/",
+        "ctaLabel": "Voir le fournisseur",
+        "descriptionOverride": "Terminaux de paiement et encaissement mobile pour professionnels."
       }
     },
     {
@@ -21498,6 +22210,46 @@
       "placement": {
         "evidence": [
           {
+            "evidenceId": "supplier-expansion-placement-auto-ecole-codes-rousseau-pro",
+            "sourceRef": "https://pro.codesrousseau.fr/",
+            "claim": "Un fournisseur spécialisé répond directement au besoin pédagogique d’une école de conduite.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-10T08:30:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-10T08:30:00.000Z",
+        "expiresAt": "2027-02-10T08:30:00.000Z",
+        "placementId": "auto-ecole:codes-rousseau-pro:providers:1",
+        "systemSlug": "auto-ecole",
+        "resourceSlug": "codes-rousseau-pro",
+        "rank": 1,
+        "section": "providers",
+        "usage": "Équiper les formations avec des supports pédagogiques et solutions numériques dédiés à l’apprentissage de la conduite.",
+        "fitRationale": "Un fournisseur spécialisé répond directement au besoin pédagogique d’une école de conduite.",
+        "fitConstraints": [
+          "Vérifier les contenus, licences, mises à jour réglementaires et compatibilités nécessaires aux formations proposées."
+        ],
+        "editorialStatus": "selected",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "placementVersion": "supplier-expansion.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      },
+      "presentation": {
+        "displayCategory": "Support",
+        "nameOverride": "Codes Rousseau Pro",
+        "hrefOverride": "https://pro.codesrousseau.fr/",
+        "ctaLabel": "Voir le fournisseur",
+        "descriptionOverride": "Supports pédagogiques et services professionnels pour les auto-écoles."
+      }
+    },
+    {
+      "placement": {
+        "evidence": [
+          {
             "evidenceId": "firebase-migration-placement-auto-ecole-levier",
             "sourceRef": "decision://systems/levier-2026-08-03",
             "claim": "Levier fournit le socle de pilotage commun nécessaire pour exécuter ce système opérationnel.",
@@ -21851,6 +22603,126 @@
         "hrefOverride": "https://livestorm.co/",
         "ctaLabel": "Voir l’outil",
         "descriptionOverride": "Plateforme française de webinaires, événements en ligne, démos produit et sessions de formation."
+      }
+    },
+    {
+      "placement": {
+        "evidence": [
+          {
+            "evidenceId": "supplier-expansion-placement-evenementiel-kiloutou",
+            "sourceRef": "https://www.kiloutou.fr/",
+            "claim": "La location évite d’acheter du matériel utilisé de façon intermittente.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-10T08:30:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-10T08:30:00.000Z",
+        "expiresAt": "2027-02-10T08:30:00.000Z",
+        "placementId": "evenementiel:kiloutou:providers:1",
+        "systemSlug": "evenementiel",
+        "resourceSlug": "kiloutou",
+        "rank": 1,
+        "section": "providers",
+        "usage": "Louer le matériel nécessaire aux installations, à la manutention ou aux besoins techniques ponctuels d’un événement.",
+        "fitRationale": "La location évite d’acheter du matériel utilisé de façon intermittente.",
+        "fitConstraints": [
+          "Vérifier disponibilité, transport, montage, habilitations, assurance et contraintes du lieu."
+        ],
+        "editorialStatus": "selected",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "placementVersion": "supplier-expansion.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      },
+      "presentation": {
+        "displayCategory": "Équipement",
+        "nameOverride": "Kiloutou",
+        "hrefOverride": "https://www.kiloutou.fr/",
+        "ctaLabel": "Voir le fournisseur",
+        "descriptionOverride": "Location de matériel professionnel."
+      }
+    },
+    {
+      "placement": {
+        "evidence": [
+          {
+            "evidenceId": "supplier-expansion-placement-evenementiel-france-boissons",
+            "sourceRef": "https://www.france-boissons.fr/",
+            "claim": "Un distributeur CHR peut simplifier l’approvisionnement lorsque les boissons font partie de la prestation.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-10T08:30:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-10T08:30:00.000Z",
+        "expiresAt": "2027-02-10T08:30:00.000Z",
+        "placementId": "evenementiel:france-boissons:providers:2",
+        "systemSlug": "evenementiel",
+        "resourceSlug": "france-boissons",
+        "rank": 2,
+        "section": "providers",
+        "usage": "Approvisionner les événements comprenant un service régulier de boissons.",
+        "fitRationale": "Un distributeur CHR peut simplifier l’approvisionnement lorsque les boissons font partie de la prestation.",
+        "fitConstraints": [
+          "Pertinent uniquement pour les événements concernés ; vérifier la zone, les volumes et les conditions de reprise éventuelles."
+        ],
+        "editorialStatus": "selected",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "placementVersion": "supplier-expansion.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      },
+      "presentation": {
+        "displayCategory": "Grossiste",
+        "nameOverride": "France Boissons",
+        "hrefOverride": "https://www.france-boissons.fr/",
+        "ctaLabel": "Voir le fournisseur",
+        "descriptionOverride": "Distribution de boissons et services pour cafés, hôtels et restaurants."
+      }
+    },
+    {
+      "placement": {
+        "evidence": [
+          {
+            "evidenceId": "supplier-expansion-placement-evenementiel-sumup",
+            "sourceRef": "https://www.sumup.com/fr-fr/terminal-de-paiement-terminal/",
+            "claim": "L’encaissement mobile est adapté aux événements, stands et lieux temporaires.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-10T08:30:00.000Z"
+          }
+        ],
+        "reviewer": "Solutions France - audit officiel",
+        "reviewedAt": "2026-08-10T08:30:00.000Z",
+        "expiresAt": "2027-02-10T08:30:00.000Z",
+        "placementId": "evenementiel:sumup:providers:3",
+        "systemSlug": "evenementiel",
+        "resourceSlug": "sumup",
+        "rank": 3,
+        "section": "providers",
+        "usage": "Encaisser les ventes ou prestations sur site avec un dispositif mobile.",
+        "fitRationale": "L’encaissement mobile est adapté aux événements, stands et lieux temporaires.",
+        "fitConstraints": [
+          "Vérifier la connectivité du site, l’autonomie du matériel et les frais de transaction."
+        ],
+        "editorialStatus": "selected",
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "placementVersion": "supplier-expansion.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
+      },
+      "presentation": {
+        "displayCategory": "Paiement",
+        "nameOverride": "SumUp",
+        "hrefOverride": "https://www.sumup.com/fr-fr/terminal-de-paiement-terminal/",
+        "ctaLabel": "Voir le fournisseur",
+        "descriptionOverride": "Terminaux de paiement et encaissement mobile pour professionnels."
       }
     },
     {

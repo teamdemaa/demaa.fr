@@ -273,7 +273,7 @@ function buildSlides(images) {
         <image href="${images.kit}" x="73" y="506" width="934" height="548" preserveAspectRatio="xMidYMid meet" />
         <rect x="72" y="1095" width="936" height="72" rx="36" fill="${colors.paper}" />
         <text x="540" y="1140" text-anchor="middle" fill="${colors.forest}" font-family="Satoshi" font-size="22" font-weight="700">Trouver le Kit de mon entreprise →</text>
-        ${stepFooter("demaa.fr", 5, true)}
+        ${stepFooter("demaa.co", 5, true)}
       `,
     }),
   ];
