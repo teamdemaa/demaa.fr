@@ -29,15 +29,36 @@ export function getCustomerCookieOptions(maxAge = CUSTOMER_SESSION_TTL_MS / 1000
   };
 }
 
-export async function createMagicLinkToken(email: string) {
+export class InvalidActionPlanClaimError extends Error {
+  constructor() {
+    super("The action plan claim is invalid or expired.");
+    this.name = "InvalidActionPlanClaimError";
+  }
+}
+
+export async function createMagicLinkToken(
+  email: string,
+  actionPlanClaim?: {
+    actionPlanId: string;
+    claimSecret: string;
+  } | null,
+) {
   const token = createRawToken();
   const expiresAt = new Date(Date.now() + MAGIC_LINK_TTL_MS).toISOString();
 
-  await saveCustomerMagicLink({
+  const saved = await saveCustomerMagicLink({
+    actionPlanClaim: actionPlanClaim
+      ? {
+          actionPlanId: actionPlanClaim.actionPlanId,
+          claimSecretHash: hashToken(actionPlanClaim.claimSecret),
+        }
+      : null,
     email: normalizeEmail(email),
     expiresAt,
     tokenHash: hashToken(token),
   });
+
+  if (!saved) throw new InvalidActionPlanClaimError();
 
   return token;
 }

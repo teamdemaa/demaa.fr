@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
-import { type KeyboardEvent, useMemo, useState } from "react";
+import { type KeyboardEvent, type ReactNode, useMemo, useState } from "react";
 import SystemGuidesRail from "@/components/SystemGuidesRail";
 import SystemContextualCaseStudy from "@/components/SystemContextualCaseStudy";
 import SystemResourcesTab from "@/components/SystemResourcesTab";
@@ -27,9 +27,17 @@ type SystemDetailContentProps = {
   systeme: SystemeDetail | null;
   intro: string;
   initialActiveTab?: string;
-  headingAs?: "h1" | "h2";
+  headingAs?: "h1" | "h2" | "h3";
   headingId?: string;
   solutionSections?: readonly RenderableSolutionSectionDto[];
+  embedded?: boolean;
+  checkableProcess?: boolean;
+  selectableSolutions?: boolean;
+  checkedProcessStepIds?: readonly string[];
+  onCheckedProcessStepIdsChange?: (stepIds: readonly string[]) => void;
+  selectedSolutionPlacementIds?: readonly string[];
+  onSelectedSolutionPlacementIdsChange?: (placementIds: readonly string[]) => void;
+  headerActions?: ReactNode;
 };
 
 const systemTabDefinitions: ReadonlyArray<{
@@ -51,6 +59,14 @@ export default function SystemDetailContent({
   headingAs: Heading = "h2",
   headingId,
   solutionSections = EMPTY_SOLUTION_SECTIONS,
+  embedded = false,
+  checkableProcess = false,
+  selectableSolutions = false,
+  checkedProcessStepIds,
+  onCheckedProcessStepIdsChange,
+  selectedSolutionPlacementIds,
+  onSelectedSolutionPlacementIdsChange,
+  headerActions,
 }: SystemDetailContentProps) {
   const router = useRouter();
   const scopedResources = useMemo(
@@ -71,8 +87,37 @@ export default function SystemDetailContent({
       ? initialActiveTab
       : "process",
   );
+  const [localCheckedProcessSteps, setLocalCheckedProcessSteps] = useState<Set<string>>(
+    () => new Set(),
+  );
+  const [localSelectedSolutionIds, setLocalSelectedSolutionIds] = useState<Set<string>>(
+    () => new Set(),
+  );
+  const checkedProcessSteps = checkedProcessStepIds
+    ? new Set(checkedProcessStepIds)
+    : localCheckedProcessSteps;
+  const selectedSolutionIds = selectedSolutionPlacementIds
+    ? new Set(selectedSolutionPlacementIds)
+    : localSelectedSolutionIds;
+
+  function toggleProcessStep(stepId: string) {
+    const next = new Set(checkedProcessSteps);
+    if (next.has(stepId)) next.delete(stepId);
+    else next.add(stepId);
+    if (onCheckedProcessStepIdsChange) onCheckedProcessStepIdsChange([...next]);
+    else setLocalCheckedProcessSteps(next);
+  }
+
+  function toggleSolution(placementId: string) {
+    const next = new Set(selectedSolutionIds);
+    if (next.has(placementId)) next.delete(placementId);
+    else next.add(placementId);
+    if (onSelectedSolutionPlacementIdsChange) onSelectedSolutionPlacementIdsChange([...next]);
+    else setLocalSelectedSolutionIds(next);
+  }
   function selectTab(tab: SystemDetailTab) {
     setActiveTab(tab);
+    if (embedded) return;
     const url = new URL(window.location.href);
     url.searchParams.set("tab", tab);
     url.searchParams.delete("service");
@@ -98,21 +143,26 @@ export default function SystemDetailContent({
 
   return (
     <article className="w-full max-w-[55.2rem]">
-      <Link
+      {!embedded ? <Link
         href="/systemes"
         className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-dema-muted transition hover:text-dema-forest"
       >
         <ArrowLeft className="h-4 w-4" aria-hidden="true" />
         Retour aux systèmes
-      </Link>
+      </Link> : null}
 
       <div className="max-w-4xl">
-        <Heading
-          id={headingId}
-          className="text-3xl font-semibold tracking-[-0.035em] text-brand-blue sm:text-4xl"
-        >
-          {system.name}
-        </Heading>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <Heading
+            id={headingId}
+            className={embedded
+              ? "sr-only"
+              : "text-3xl font-semibold tracking-[-0.035em] text-brand-blue sm:text-4xl"}
+          >
+            {system.name}
+          </Heading>
+          {headerActions ? <div className="w-full sm:max-w-xs">{headerActions}</div> : null}
+        </div>
         <p className="mt-4 max-w-3xl text-base leading-relaxed text-dema-muted">
           {intro}
         </p>
@@ -158,12 +208,16 @@ export default function SystemDetailContent({
           <SystemeTabContent
             systemName={system.name}
             systeme={systeme}
+            checkedStepIds={checkableProcess ? checkedProcessSteps : undefined}
+            onToggleStep={checkableProcess ? toggleProcessStep : undefined}
           />
         ) : null}
 
         {activeTab === "solutions" ? (
           <SystemSolutionsTab
             sections={solutionSections}
+            selectedPlacementIds={selectableSolutions ? selectedSolutionIds : undefined}
+            onToggleSelection={selectableSolutions ? toggleSolution : undefined}
           />
         ) : null}
 
@@ -180,7 +234,7 @@ export default function SystemDetailContent({
               resources={scopedResources.filter((resource) => resource.format === "guide")}
               systemSlug={system.slug}
             />
-            <StructureNewsletterBlock />
+            {!embedded ? <StructureNewsletterBlock /> : null}
           </div>
         ) : null}
       </section>

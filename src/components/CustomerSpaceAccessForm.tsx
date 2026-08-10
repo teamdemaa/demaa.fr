@@ -5,9 +5,18 @@ import { CheckCircle2, LoaderCircle, Mail } from "lucide-react";
 import { isValidEmail, normalizeEmail } from "@/lib/email";
 
 export default function CustomerSpaceAccessForm({
+  actionPlanClaim = null,
   compact = false,
+  returnTo,
+  simple = false,
 }: {
+  actionPlanClaim?: {
+    actionPlanId: string;
+    actionPlanClaimSecret: string;
+  } | null;
   compact?: boolean;
+  returnTo?: string;
+  simple?: boolean;
 }) {
   const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -33,7 +42,12 @@ export default function CustomerSpaceAccessForm({
       const response = await fetch("/api/customer-space/magic-link", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: normalizedEmail }),
+        body: JSON.stringify({
+          email: normalizedEmail,
+          returnTo,
+          actionPlanId: actionPlanClaim?.actionPlanId,
+          actionPlanClaimSecret: actionPlanClaim?.actionPlanClaimSecret,
+        }),
       });
       const payload = (await response.json().catch(() => null)) as
         | { devLink?: string | null; error?: string; sent?: boolean }
@@ -88,7 +102,7 @@ export default function CustomerSpaceAccessForm({
     <form className={compact ? "space-y-3" : "mx-auto max-w-md space-y-4"} onSubmit={handleSubmit}>
       <div className="text-left">
         <label className="text-xs font-medium text-brand-blue/70" htmlFor="customer-email">
-          Email utilisé pour votre paiement, votre demande ou votre accès
+          {simple ? "Adresse e-mail" : "Email utilisé pour votre paiement, votre demande ou votre accès"}
         </label>
         <div className="relative mt-1.5">
           <Mail className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-dema-forest/45" />

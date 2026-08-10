@@ -75,16 +75,14 @@ describe("system UX contract", () => {
     expect(pageSource).toContain("hasEditableOperationalSystemAsset");
   });
 
-  it("keeps Academy models aligned with the same preview journey", async () => {
+  it("keeps models out of Academy while they remain available in Systems", async () => {
     const academySource = await readSource(
       "src/components/AcademyIndexClient.tsx",
     );
 
-    expect(academySource).toContain("SystemResourcePreviewModal");
-    expect(academySource).toContain('href="/systemes"');
-    expect(academySource).toContain("Choisir un système");
-    expect(academySource).not.toContain("/api/systeme-kit/request");
-    expect(academySource).not.toContain("accessibles directement");
+    expect(academySource).not.toContain("Modèles et documents");
+    expect(academySource).not.toContain("SystemResourcePreviewModal");
+    expect(academySource).not.toContain("SYSTEM_RESOURCES");
   });
 
   it("provides a clear fallback when native printing is unavailable", async () => {

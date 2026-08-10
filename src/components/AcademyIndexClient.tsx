@@ -2,23 +2,19 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronDown, ChevronUp, FileText, Search, SlidersHorizontal } from "lucide-react";
+import { ChevronDown, ChevronUp, Search, SlidersHorizontal } from "lucide-react";
 import { useMemo, useState } from "react";
 import type { AcademyContentDefinition } from "@/lib/academy-course-content";
-import SystemResourcePreviewModal from "@/components/SystemResourcePreviewModal";
 import { matchesSearchQuery } from "@/lib/search";
-import { SYSTEM_RESOURCES, type SystemResource } from "@/lib/system-resource-catalog";
 import StructureNewsletterBlock from "@/components/StructureNewsletterBlock";
 import AcademyLiveTrainingSection from "@/components/AcademyLiveTrainingSection";
 import type { PublicLiveTraining } from "@/lib/live-session-catalog";
 
-const ACADEMY_MODEL_RESOURCES = SYSTEM_RESOURCES
-  .filter((resource) => resource.format === "template")
-  .sort((left, right) => left.rank - right.rank);
-
 type AcademyIndexClientProps = {
   contents: AcademyContentDefinition[];
   liveTrainings: readonly PublicLiveTraining[];
+  embedded?: boolean;
+  onOpenContent?: (content: AcademyContentDefinition) => void;
   backLink?: {
     href: string;
     label: string;
@@ -215,7 +211,15 @@ function CourseDiagram({ slug }: { slug: string }) {
   );
 }
 
-function AcademyCard({ content, eager = false }: { content: AcademyContentDefinition; eager?: boolean }) {
+function AcademyCard({
+  content,
+  eager = false,
+  onOpen,
+}: {
+  content: AcademyContentDefinition;
+  eager?: boolean;
+  onOpen?: (content: AcademyContentDefinition) => void;
+}) {
   const { identity, kind } = content;
   const isCaseStudy = kind === "case-study";
   const caseStudy = isCaseStudy ? CASE_STUDY_PRESENTATIONS[identity.slug] : undefined;
@@ -224,12 +228,7 @@ function AcademyCard({ content, eager = false }: { content: AcademyContentDefini
     ? `${caseStudy.sector} · ${identity.durationMinutes} min`
     : `${identity.durationMinutes} min`;
 
-  return (
-    <Link
-      href={`/academie/${identity.slug}`}
-      className="group block rounded-[1.25rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-4"
-      aria-label={`Ouvrir ${title}`}
-    >
+  const card = (
       <article className="transition-transform duration-200 ease-out group-hover:-translate-y-px motion-reduce:transform-none">
         <div
           className={`relative aspect-video overflow-hidden rounded-[1.25rem] transition-colors duration-200 ${
@@ -261,16 +260,46 @@ function AcademyCard({ content, eager = false }: { content: AcademyContentDefini
           <p className="mt-1.5 text-sm text-dema-muted">{meta}</p>
         </div>
       </article>
+  );
+
+  const className =
+    "group block w-full rounded-[1.25rem] text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-4";
+
+  if (onOpen) {
+    return (
+      <button
+        type="button"
+        onClick={() => onOpen(content)}
+        className={className}
+        aria-label={`Ouvrir ${title}`}
+      >
+        {card}
+      </button>
+    );
+  }
+
+  return (
+    <Link
+      href={`/academie/${identity.slug}`}
+      className={className}
+      aria-label={`Ouvrir ${title}`}
+    >
+      {card}
     </Link>
   );
 }
 
-export default function AcademyIndexClient({ contents, liveTrainings, backLink }: AcademyIndexClientProps) {
+export default function AcademyIndexClient({
+  contents,
+  liveTrainings,
+  embedded = false,
+  onOpenContent,
+  backLink,
+}: AcademyIndexClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [showAllFundamentals, setShowAllFundamentals] = useState(false);
   const [activeCategory, setActiveCategory] = useState(ALL_ACADEMY_CATEGORIES);
   const [areCategoryTagsVisible, setAreCategoryTagsVisible] = useState(false);
-  const [previewResource, setPreviewResource] = useState<SystemResource | null>(null);
 
   const categories = useMemo(
     () => [
@@ -302,11 +331,78 @@ export default function AcademyIndexClient({ contents, liveTrainings, backLink }
 
   const fundamentals = filteredContents.filter((content) => content.kind === "course");
   const isSearching = searchQuery.trim().length > 0;
-  const visibleFundamentals = isSearching || showAllFundamentals ? fundamentals : fundamentals.slice(0, 6);
-  const canToggleFundamentals = !isSearching && fundamentals.length > 6;
+  const visibleFundamentals = embedded || isSearching || showAllFundamentals ? fundamentals : fundamentals.slice(0, 6);
+  const canToggleFundamentals = !embedded && !isSearching && fundamentals.length > 6;
+  const ContentContainer = embedded ? "div" : "main";
+  const searchControl = (
+    <div className={`relative w-full ${embedded ? "max-w-md" : "mx-auto mt-9 max-w-4xl md:mt-11"}`}>
+      <div className={`demaa-search-shell ${embedded ? "p-1" : "p-1.5"}`}>
+        <div className="relative">
+          <Search
+            className={`pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-dema-forest/42 ${embedded ? "h-4 w-4" : "h-5 w-5"}`}
+            aria-hidden="true"
+          />
+          <input
+            type="search"
+            aria-label="Rechercher dans l’Académie"
+            value={searchQuery}
+            onChange={(event) => {
+              setSearchQuery(event.target.value);
+              setActiveCategory(ALL_ACADEMY_CATEGORIES);
+            }}
+            placeholder="Rechercher un cours ou une question…"
+            className={`w-full rounded-full bg-dema-paper pl-11 pr-12 text-brand-blue outline-none transition placeholder:text-brand-blue/30 ${embedded ? "min-h-10 text-sm" : "py-4 text-base md:py-5 md:pl-16 md:pr-20 md:text-lg"}`}
+          />
+          <button
+            type="button"
+            onClick={() => setAreCategoryTagsVisible((visible) => !visible)}
+            aria-expanded={areCategoryTagsVisible}
+            aria-label={areCategoryTagsVisible ? "Masquer les catégories" : "Afficher les catégories"}
+            className={`absolute right-2 top-1/2 inline-flex -translate-y-1/2 items-center justify-center rounded-full transition ${embedded ? "h-9 w-9" : "h-9 w-9 md:right-2.5 md:h-10 md:w-10"} ${
+              areCategoryTagsVisible || activeCategory !== ALL_ACADEMY_CATEGORIES
+                ? "bg-dema-sage text-dema-forest"
+                : "bg-dema-canvas text-dema-muted"
+            }`}
+          >
+            <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
+          </button>
+        </div>
+      </div>
+
+      {areCategoryTagsVisible ? (
+        <div className={`${embedded ? "absolute left-0 right-0 top-full z-40 mt-2 rounded-2xl border border-dema-line bg-dema-paper p-2 shadow-[0_18px_46px_rgba(23,35,29,0.12)]" : "mt-4 overflow-x-auto pb-1 text-left soft-scroll"}`} aria-label="Filtrer les cours par catégorie">
+          <div className={`flex gap-2 ${embedded ? "flex-wrap" : "min-w-max px-1"}`}>
+            {categories.map((category) => (
+              <button
+                key={category}
+                type="button"
+                aria-pressed={activeCategory === category}
+                onClick={() => {
+                  setActiveCategory(category);
+                  setSearchQuery("");
+                  if (embedded) setAreCategoryTagsVisible(false);
+                }}
+                className={`demaa-chip shrink-0 whitespace-nowrap ${
+                  activeCategory === category ? "demaa-chip-active" : ""
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        </div>
+      ) : null}
+    </div>
+  );
 
   return (
-    <div className="min-h-[85vh] bg-[#FAFAFA]">
+    <div className={`${embedded ? "min-h-[60vh]" : "min-h-[85vh]"} bg-[#FAFAFA]`}>
+      {embedded ? (
+        <div className="mx-auto max-w-7xl px-4 pb-6">
+          {searchControl}
+        </div>
+      ) : null}
+      {!embedded ? (
       <header className="px-4 pb-12 pt-12 md:pb-16 md:pt-16">
         <div className="mx-auto max-w-7xl">
           {backLink ? (
@@ -328,67 +424,12 @@ export default function AcademyIndexClient({ contents, liveTrainings, backLink }
             </h1>
           </div>
 
-          <div className="relative mx-auto mt-9 max-w-4xl md:mt-11">
-            <div className="demaa-search-shell p-1.5">
-              <div className="relative">
-                <Search
-                  className="pointer-events-none absolute left-5 top-1/2 h-5 w-5 -translate-y-1/2 text-dema-forest/42"
-                  aria-hidden="true"
-                />
-                <input
-                  type="search"
-                  aria-label="Rechercher dans l’Académie"
-                  value={searchQuery}
-                  onChange={(event) => {
-                    setSearchQuery(event.target.value);
-                    setActiveCategory(ALL_ACADEMY_CATEGORIES);
-                  }}
-                  placeholder="Rechercher un cours ou une question…"
-                  className="w-full rounded-full bg-dema-paper py-4 pl-14 pr-16 text-base text-brand-blue outline-none transition placeholder:text-brand-blue/30 md:py-5 md:pl-16 md:pr-20 md:text-lg"
-                />
-                <button
-                  type="button"
-                  onClick={() => setAreCategoryTagsVisible((visible) => !visible)}
-                  aria-expanded={areCategoryTagsVisible}
-                  aria-label={areCategoryTagsVisible ? "Masquer les catégories" : "Afficher les catégories"}
-                  className={`absolute right-2 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full transition md:right-2.5 md:h-10 md:w-10 ${
-                    areCategoryTagsVisible || activeCategory !== ALL_ACADEMY_CATEGORIES
-                      ? "bg-dema-sage text-dema-forest"
-                      : "bg-dema-canvas text-dema-muted"
-                  }`}
-                >
-                  <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
-                </button>
-              </div>
-            </div>
-
-            {areCategoryTagsVisible ? (
-              <div className="mt-4 overflow-x-auto pb-1 text-left soft-scroll" aria-label="Filtrer les cours par catégorie">
-                <div className="flex min-w-max gap-2 px-1">
-                  {categories.map((category) => (
-                    <button
-                      key={category}
-                      type="button"
-                      aria-pressed={activeCategory === category}
-                      onClick={() => {
-                        setActiveCategory(category);
-                        setSearchQuery("");
-                      }}
-                      className={`demaa-chip shrink-0 whitespace-nowrap ${
-                        activeCategory === category ? "demaa-chip-active" : ""
-                      }`}
-                    >
-                      {category}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ) : null}
-          </div>
+          {searchControl}
         </div>
       </header>
+      ) : null}
 
-      <main className="mx-auto max-w-7xl px-4 pb-16 md:pb-20">
+      <ContentContainer className={`mx-auto max-w-7xl px-4 pb-16 md:pb-20 ${embedded ? "pt-0" : ""}`}>
         {fundamentals.length ? (
           <section aria-labelledby="fundamental-courses-title">
             <h2 id="fundamental-courses-title" className="text-2xl font-semibold text-brand-blue md:text-[2rem]">
@@ -397,7 +438,12 @@ export default function AcademyIndexClient({ contents, liveTrainings, backLink }
 
             <div className="mt-7 grid grid-cols-1 gap-x-8 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
               {visibleFundamentals.map((content, index) => (
-                <AcademyCard key={content.identity.slug} content={content} eager={index < 3} />
+                <AcademyCard
+                  key={content.identity.slug}
+                  content={content}
+                  eager={index < 3}
+                  onOpen={onOpenContent}
+                />
               ))}
             </div>
 
@@ -423,63 +469,6 @@ export default function AcademyIndexClient({ contents, liveTrainings, backLink }
 
         <AcademyLiveTrainingSection trainings={liveTrainings} />
 
-        {ACADEMY_MODEL_RESOURCES.length ? (
-          <section className="mt-12 border-t border-dema-line/75 pt-9 md:mt-14 md:pt-10" aria-labelledby="academy-models-title">
-            <h2 id="academy-models-title" className="text-2xl font-semibold text-brand-blue md:text-[2rem]">
-              Modèles et documents
-            </h2>
-            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-dema-muted">
-              Les mêmes modèles que dans vos systèmes métier, avec un aperçu avant ouverture.
-            </p>
-
-            <div className="mt-7 grid grid-cols-1 gap-x-8 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
-              {ACADEMY_MODEL_RESOURCES.map((resource) => {
-                const className = "group block rounded-[1.25rem] border border-[#E7EBE8] bg-[#F1F3F0] p-6 text-left transition hover:border-dema-forest/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2";
-                const content = (
-                  <>
-                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-dema-forest">
-                    <FileText className="h-5 w-5" aria-hidden="true" />
-                  </span>
-                  <span className="mt-4 block text-[10px] font-semibold uppercase tracking-[0.15em] text-dema-muted">
-                    {resource.formatLabel}
-                  </span>
-                  <span className="mt-1.5 block text-lg font-semibold leading-snug text-brand-blue transition-colors group-hover:text-dema-forest">
-                    {resource.title}
-                  </span>
-                  <span className="mt-2 block text-sm leading-relaxed text-dema-muted">
-                    {resource.description}
-                  </span>
-                  </>
-                );
-
-                return resource.resourceSlug === "recapitulatif-systeme" ? (
-                  <Link
-                    key={resource.resourceSlug}
-                    href="/systemes"
-                    className={className}
-                    aria-label="Choisir un système pour voir son récapitulatif"
-                  >
-                    {content}
-                    <span className="mt-4 block text-sm font-medium text-dema-forest">
-                      Choisir un système
-                    </span>
-                  </Link>
-                ) : (
-                  <button
-                    key={resource.resourceSlug}
-                    type="button"
-                    onClick={() => setPreviewResource(resource)}
-                    className={className}
-                    aria-label={`Voir un aperçu de ${resource.title}`}
-                  >
-                    {content}
-                  </button>
-                );
-              })}
-            </div>
-          </section>
-        ) : null}
-
         {filteredContents.length === 0 ? (
           <section className="rounded-[1.25rem] border border-dashed border-dema-line bg-white px-6 py-14 text-center">
             <h2 className="text-xl font-semibold text-brand-blue">Aucun cours trouvé</h2>
@@ -487,18 +476,13 @@ export default function AcademyIndexClient({ contents, liveTrainings, backLink }
           </section>
         ) : null}
 
-        <div className="mt-12 md:mt-14">
-          <StructureNewsletterBlock />
-        </div>
-
-        {previewResource ? (
-          <SystemResourcePreviewModal
-            resource={previewResource}
-            trackingContext="academie"
-            onClose={() => setPreviewResource(null)}
-          />
+        {!embedded ? (
+          <div className="mt-12 md:mt-14">
+            <StructureNewsletterBlock />
+          </div>
         ) : null}
-      </main>
+
+      </ContentContainer>
     </div>
   );
 }

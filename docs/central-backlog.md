@@ -80,6 +80,24 @@ l'ADR 0004 prévaut.
 
 ### Lots restant réellement au backlog
 
+- [x] Livrer le MVP D-076 : grand champ libre, génération JSON
+  unique, Actions + quatre piliers, sélection déterministe parmi les 115
+  Systèmes, puis sauvegarde Firebase. L'ADR 0008 et
+  `docs/action-plan-generator-product-contract.md` sont les références ;
+  `/systemes` et `/academie` publics restent inchangés.
+- [ ] Cadrer séparément Coaching après le MVP D-076 : phase gratuite,
+  phase payante, capacité humaine, délais, messagerie, confidentialité,
+  conservation des échanges et prix. Aucun de ces éléments ne doit être promis
+  ou simulé dans le générateur courant.
+- [ ] Finaliser la navigation authentifiée complète (`Accueil`, `Système`,
+  `Académie`, `Coaching`, profil), sans rendre privés les hubs publics.
+  Le repère Coaching peut rester visible comme espace annoncé, mais ne
+  doit simuler ni capacité, ni délai, ni prix tant que le produit n'est pas
+  cadré.
+- [ ] Cadrer le partage sécurisé d'un plan sauvegardé : accès en lecture seule,
+  consentement, lien révocable, durée et protection contre l'indexation. Le MVP
+  permet déjà de sauvegarder et retrouver un plan, mais ne crée aucun lien
+  public tant que ces règles ne sont pas validées.
 - [x] Conserver un catalogue Services canonique unique de six offres,
   composé au rendu dans les 115 Systèmes.
 - [x] Créer `/contenus` et publier la fiche Facturation électronique comme

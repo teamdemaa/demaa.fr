@@ -1,0 +1,79 @@
+import { NextResponse } from "next/server";
+import { composeCanonicalServicesForSystem } from "@/lib/canonical-services-system-section.server";
+import {
+  getActiveRenderableSolutionSectionsForSystem,
+  getLocalRenderableSolutionSectionsForSystem,
+} from "@/lib/firebase-solution-registry-selection.server";
+import {
+  enrichEnterpriseBusinessModel,
+  enterpriseCatalogBySlug,
+  enterpriseToSystem,
+} from "@/lib/enterprise-annuaire";
+import { filterPublicSolutionSections } from "@/lib/public-solution-section-visibility";
+import {
+  buildOperationalSystemPageDetail,
+  buildSystemPageIntro,
+  getSystemDetailPageData,
+  type SystemDetailPageData,
+} from "@/lib/system-detail-page";
+import { mergeRenderableSolutionSections } from "@/lib/system-solutions-ui-dto";
+
+export const runtime = "nodejs";
+
+type RouteContext = {
+  params: Promise<{ slug: string }>;
+};
+
+function getLocalSystemDetailPageData(slug: string): SystemDetailPageData | null {
+  const fallback = enterpriseCatalogBySlug[slug];
+  if (!fallback) return null;
+
+  const enterprise = enrichEnterpriseBusinessModel(fallback);
+  const system = enterpriseToSystem(enterprise);
+  return {
+    enterprise,
+    system,
+    detail: buildOperationalSystemPageDetail(system, enterprise),
+  };
+}
+
+export async function GET(request: Request, { params }: RouteContext) {
+  const { slug } = await params;
+  const useLocalDemoData =
+    process.env.NODE_ENV !== "production" &&
+    new URL(request.url).searchParams.get("demo") === "1";
+  const [data, solutionSections] = await Promise.all([
+    useLocalDemoData
+      ? Promise.resolve(getLocalSystemDetailPageData(slug))
+      : getSystemDetailPageData(slug),
+    useLocalDemoData
+      ? getLocalRenderableSolutionSectionsForSystem(slug)
+      : getActiveRenderableSolutionSectionsForSystem(slug),
+  ]);
+
+  if (!data) {
+    return NextResponse.json(
+      { error: "Système métier introuvable." },
+      { status: 404 },
+    );
+  }
+
+  const visibleSolutionSections = composeCanonicalServicesForSystem(
+    slug,
+    filterPublicSolutionSections(mergeRenderableSolutionSections(solutionSections)),
+  );
+
+  return NextResponse.json(
+    {
+      system: data.system,
+      systeme: data.detail.systeme,
+      intro: buildSystemPageIntro(data),
+      solutionSections: visibleSolutionSections,
+    },
+    {
+      headers: {
+        "Cache-Control": "public, max-age=60, s-maxage=300, stale-while-revalidate=600",
+      },
+    },
+  );
+}

@@ -8,7 +8,9 @@
 
 > Mise à jour : les passages relatifs aux Services, à leur placement dans les
 > Systèmes, à l'Académie et aux Ressources sont supersédés par l'ADR 0004. La
-> route canonique des fiches Système est supersédée par l'ADR 0007.
+> route canonique des fiches Système est supersédée par l'ADR 0007. Le point 3
+> autorisant `/` à reproduire `/systemes` est supersédé par l'ADR 0008 ; le hub
+> public `/systemes` et le reste de cette ADR demeurent applicables.
 
 ## Contexte
 

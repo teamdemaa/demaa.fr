@@ -30,9 +30,19 @@ interface StripePaymentRow {
 }
 
 interface MagicLinkRow {
+  action_plan_id?: string | null;
   consumed_at?: string | null;
   email?: string | null;
   expires_at?: string | null;
+}
+
+interface PendingActionPlanRow {
+  claim_expires_at?: string | null;
+  claim_link_token_hashes?: string[] | null;
+  claim_secret_hash?: string | null;
+  pending_owner_email?: string | null;
+  revision?: number | null;
+  status?: string | null;
 }
 
 interface CustomerSessionRow {
@@ -134,18 +144,76 @@ export async function getStripePaymentsByEmail(email: string) {
 }
 
 export async function saveCustomerMagicLink(input: {
+  actionPlanClaim?: {
+    actionPlanId: string;
+    claimSecretHash: string;
+  } | null;
   email: string;
   expiresAt: string;
   tokenHash: string;
 }) {
   const database = getAdminFirestore();
   const now = new Date().toISOString();
+  const email = normalizeEmail(input.email);
+  const linkRef = database.collection("customer_magic_links").doc(input.tokenHash);
 
-  await database.collection("customer_magic_links").doc(input.tokenHash).set({
-    email: normalizeEmail(input.email),
-    expires_at: input.expiresAt,
-    created_at: now,
-    consumed_at: null,
+  if (!input.actionPlanClaim) {
+    await linkRef.set({
+      email,
+      expires_at: input.expiresAt,
+      created_at: now,
+      consumed_at: null,
+      action_plan_id: null,
+    });
+    return true;
+  }
+
+  const actionPlanClaim = input.actionPlanClaim;
+  const actionPlanRef = database
+    .collection("action_plans")
+    .doc(actionPlanClaim.actionPlanId);
+
+  return database.runTransaction(async (transaction) => {
+    const actionPlanDoc = await transaction.get(actionPlanRef);
+    const actionPlan = actionPlanDoc.data() as PendingActionPlanRow | undefined;
+    const claimExpiresAt = Date.parse(actionPlan?.claim_expires_at || "");
+    const samePendingOwner =
+      !actionPlan?.pending_owner_email ||
+      normalizeEmail(actionPlan.pending_owner_email) === email;
+
+    if (
+      !actionPlanDoc.exists ||
+      actionPlan?.status !== "pending_claim" ||
+      actionPlan.claim_secret_hash !== actionPlanClaim.claimSecretHash ||
+      !Number.isFinite(claimExpiresAt) ||
+      claimExpiresAt < Date.now() ||
+      !samePendingOwner
+    ) {
+      return false;
+    }
+
+    const tokenHashes = Array.from(
+      new Set([...(actionPlan.claim_link_token_hashes || []), input.tokenHash]),
+    ).slice(-3);
+
+    transaction.set(linkRef, {
+      email,
+      expires_at: input.expiresAt,
+      created_at: now,
+      consumed_at: null,
+      action_plan_id: actionPlanClaim.actionPlanId,
+    });
+    transaction.set(
+      actionPlanRef,
+      {
+        pending_owner_email: email,
+        claim_link_token_hashes: tokenHashes,
+        updated_at: now,
+      },
+      { merge: true },
+    );
+
+    return true;
   });
 }
 
@@ -170,7 +238,48 @@ export async function consumeCustomerMagicLink(tokenHash: string) {
     }
 
     email = normalizeEmail(link.email);
+    const actionPlanRef = link.action_plan_id
+      ? database.collection("action_plans").doc(link.action_plan_id)
+      : null;
+    const actionPlanDoc = actionPlanRef
+      ? await transaction.get(actionPlanRef)
+      : null;
+    const actionPlan = actionPlanDoc?.data() as PendingActionPlanRow | undefined;
+
     transaction.set(linkRef, { consumed_at: now, updated_at: now }, { merge: true });
+
+    const claimTokenHashes = actionPlan?.claim_link_token_hashes || [];
+    const actionPlanClaimExpiresAt = Date.parse(actionPlan?.claim_expires_at || "");
+    const claimStillValid =
+      Number.isFinite(actionPlanClaimExpiresAt) &&
+      actionPlanClaimExpiresAt >= Date.now();
+    const canClaimActionPlan = Boolean(
+      actionPlanRef &&
+      actionPlanDoc?.exists &&
+      actionPlan?.status === "pending_claim" &&
+      email &&
+      claimStillValid &&
+      normalizeEmail(actionPlan.pending_owner_email || "") === email &&
+      claimTokenHashes.includes(tokenHash),
+    );
+
+    if (canClaimActionPlan && actionPlanRef) {
+      transaction.set(
+        actionPlanRef,
+        {
+          status: "active",
+          owner_email: email,
+          pending_owner_email: null,
+          claim_secret_hash: null,
+          claim_link_token_hashes: [],
+          claim_expires_at: null,
+          claimed_at: now,
+          retention_expires_at: getLeadRetentionExpiry(),
+          updated_at: now,
+        },
+        { merge: true },
+      );
+    }
   });
 
   return email;

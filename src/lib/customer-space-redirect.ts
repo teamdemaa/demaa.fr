@@ -8,7 +8,10 @@ export function getSafeCustomerReturnTo(value?: string | null) {
   }
 
   const isAllowed = ALLOWED_CUSTOMER_RETURN_PATHS.some(
-    (path) => candidate === path || candidate.startsWith(`${path}?`),
+    (path) =>
+      candidate === path ||
+      candidate.startsWith(`${path}?`) ||
+      candidate.startsWith(`${path}/`),
   );
 
   return isAllowed ? candidate : "/mon-espace";

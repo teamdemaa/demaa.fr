@@ -13,6 +13,8 @@ import {
 
 type AcademyCoursePlayerProps = {
   content: AcademyContentDefinition;
+  embedded?: boolean;
+  onBack?: () => void;
 };
 
 type PlayerScreen =
@@ -92,7 +94,11 @@ function QuizScreen({
   );
 }
 
-export default function AcademyCoursePlayer({ content }: AcademyCoursePlayerProps) {
+export default function AcademyCoursePlayer({
+  content,
+  embedded = false,
+  onBack,
+}: AcademyCoursePlayerProps) {
   const [activeScreenIndex, setActiveScreenIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
 
@@ -133,17 +139,30 @@ export default function AcademyCoursePlayer({ content }: AcademyCoursePlayerProp
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
+  const CourseContainer = embedded ? "div" : "main";
+
   return (
-    <main className="min-h-[calc(100vh-72px)] bg-dema-cream">
+    <CourseContainer className={embedded ? "min-h-[60vh] bg-dema-cream" : "min-h-[calc(100vh-72px)] bg-dema-cream"}>
       <div className="border-b border-dema-line/70 px-4 py-4">
         <div className="mx-auto flex max-w-3xl items-center gap-4">
-          <Link
-            href="/academie"
-            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-dema-line text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
-            aria-label="Retour à l’Académie"
-          >
-            <ArrowLeft className="h-4 w-4" />
-          </Link>
+          {embedded && onBack ? (
+            <button
+              type="button"
+              onClick={onBack}
+              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-dema-line text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
+              aria-label="Retour à l’Académie"
+            >
+              <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+            </button>
+          ) : (
+            <Link
+              href="/academie"
+              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-dema-line text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
+              aria-label="Retour à l’Académie"
+            >
+              <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          )}
           <div className="min-w-0 flex-1">
             <div className="flex items-center justify-between gap-4">
               <p className="truncate text-sm font-semibold text-brand-blue">{content.identity.shortTitle}</p>
@@ -294,12 +313,22 @@ export default function AcademyCoursePlayer({ content }: AcademyCoursePlayerProp
                 </div>
               ) : null}
 
-              <Link
-                href="/academie"
-                className={`${content.action ? "demaa-secondary-button" : "demaa-primary-button"} mt-5 min-h-11`}
-              >
-                Retour à l’Académie
-              </Link>
+              {embedded && onBack ? (
+                <button
+                  type="button"
+                  onClick={onBack}
+                  className={`${content.action ? "demaa-secondary-button" : "demaa-primary-button"} mt-5 min-h-11`}
+                >
+                  Retour à l’Académie
+                </button>
+              ) : (
+                <Link
+                  href="/academie"
+                  className={`${content.action ? "demaa-secondary-button" : "demaa-primary-button"} mt-5 min-h-11`}
+                >
+                  Retour à l’Académie
+                </Link>
+              )}
             </section>
           ) : null}
         </div>
@@ -330,6 +359,6 @@ export default function AcademyCoursePlayer({ content }: AcademyCoursePlayerProp
           </nav>
         ) : null}
       </div>
-    </main>
+    </CourseContainer>
   );
 }

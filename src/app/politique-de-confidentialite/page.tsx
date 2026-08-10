@@ -58,12 +58,11 @@ export default function PolitiqueConfidentialitePage() {
               <li>contenu de votre demande, besoin métier, préférences outils et informations transmises dans les formulaires ;</li>
               <li>entreprise, site ou page professionnelle et problématique proposés à la newsletter Structure, ainsi que la preuve de votre accord de publication lorsque vous le donnez ;</li>
               <li>enregistrement vocal et transcription associés à une proposition Structure, uniquement lorsque cette option est disponible et que vous choisissez de l&apos;utiliser ;</li>
-              <li>contenu saisi dans l&apos;assistant IA et plans générés ;</li>
+              <li>contenu transmis à l&apos;assistant IA et plans générés ; lorsque vous choisissez de sauvegarder un plan, celui-ci est rattaché à l&apos;adresse email vérifiée par lien magique ;</li>
               <li>données techniques liées à la navigation et à la mesure d&apos;audience ;</li>
               <li>données agrégées d&apos;ouverture des systèmes : système concerné, date, page d&apos;origine et paramètres UTM éventuels, sans adresse email, adresse IP enregistrée ni identifiant visiteur ;</li>
               <li>données d&apos;attribution liées aux demandes : première et dernière source, paramètres UTM, campagne, page d&apos;entrée, référent, page de conversion et statut du consentement ;</li>
               <li>localisation approximative au niveau pays, région ou ville, ainsi que type d&apos;appareil, navigateur et système d&apos;exploitation, lorsque ces informations sont disponibles ;</li>
-              <li>données conservées localement dans votre navigateur pour l&apos;expérience assistant.</li>
             </ul>
       </PrivacySection>
 
@@ -74,7 +73,8 @@ export default function PolitiqueConfidentialitePage() {
               <li><strong>Gérer les formulaires de contact et vous répondre, notamment sur WhatsApp lorsque vous choisissez ce canal :</strong> intérêt légitime et, selon les cas, mesures précontractuelles.</li>
               <li><strong>Vous adresser des conseils et actualités par e-mail :</strong> uniquement lorsque vous y consentez séparément ; ce choix facultatif n&apos;est jamais nécessaire pour recevoir la ressource demandée.</li>
               <li><strong>Étudier une problématique proposée à la newsletter Structure :</strong> traitement de votre demande et consentement explicite avant toute présentation de votre entreprise, de votre site ou de votre situation ; l&apos;équipe vous contacte avant toute publication.</li>
-              <li><strong>Fournir l&apos;assistant IA et enregistrer vos générations :</strong> exécution du service demandé et intérêt légitime d&apos;amélioration et de suivi.</li>
+              <li><strong>Fournir l&apos;assistant IA :</strong> exécution du service demandé ; avant sauvegarde, le résultat reste uniquement dans la page ouverte.</li>
+              <li><strong>Sauvegarder et retrouver vos plans :</strong> exécution du service demandé lorsque vous cliquez sur « Sauvegarder » puis vérifiez votre adresse email par lien magique.</li>
               <li><strong>Gérer les listes d&apos;attente ou demandes d&apos;information sur un outil :</strong> consentement ou intérêt légitime selon le contexte de la demande.</li>
               <li><strong>Comprendre l&apos;origine d&apos;une demande et mesurer l&apos;efficacité des contenus et campagnes :</strong> intérêt légitime pour les informations rattachées à la demande, et consentement préalable pour les traceurs ou stockages optionnels.</li>
               <li><strong>Mesure d&apos;audience, sécurité et maintenance :</strong> intérêt légitime, et consentement si la réglementation l&apos;impose pour certains traceurs.</li>
@@ -87,9 +87,9 @@ export default function PolitiqueConfidentialitePage() {
               <li><strong>Vercel</strong> pour l&apos;hébergement et la mesure d&apos;audience ;</li>
               <li><strong>Google Analytics</strong> pour la mesure des parcours lorsque vous l&apos;autorisez ;</li>
               <li><strong>Meta Pixel</strong> pour la mesure publicitaire lorsque vous l&apos;autorisez ;</li>
-              <li><strong>Google Firebase / Firestore</strong> pour le stockage sécurisé des demandes, de leur contexte d&apos;attribution et des compteurs agrégés d&apos;ouverture des systèmes ;</li>
+              <li><strong>Google Firebase / Firestore</strong> pour le stockage sécurisé des demandes, des plans que vous choisissez de sauvegarder, de leur contexte d&apos;attribution et des compteurs agrégés d&apos;ouverture des systèmes ;</li>
               <li><strong>Resend</strong> pour l&apos;envoi des emails demandés et la gestion des contacts concernés ;</li>
-              <li><strong>Anthropic</strong> pour la génération des réponses de l&apos;assistant IA ;</li>
+              <li><strong>Vercel AI Gateway et le fournisseur de modèle sélectionné par Demaa, notamment OpenAI</strong>, pour la génération des réponses de l&apos;assistant IA ;</li>
               <li><strong>Slack</strong> pour la réception interne de notifications liées à certaines demandes ;</li>
               <li><strong>WhatsApp</strong> pour répondre aux demandes lorsque la personne fournit un numéro WhatsApp à cette fin ;</li>
               <li>les outils de messagerie, de contact ou de support effectivement utilisés par Demaa pour répondre à votre demande.</li>
@@ -107,8 +107,8 @@ export default function PolitiqueConfidentialitePage() {
               <li><strong>Données d&apos;attribution rattachées à une demande :</strong> même durée que la demande concernée, avec suppression ou anonymisation lors de sa suppression.</li>
               <li><strong>Attribution enregistrée dans le navigateur après consentement :</strong> 90 jours maximum.</li>
               <li><strong>Choix relatifs aux traceurs :</strong> 6 mois maximum avant une nouvelle demande de choix.</li>
-              <li><strong>Générations de l&apos;assistant IA et historique associé :</strong> pendant la durée nécessaire au service et au suivi commercial, puis suppression ou anonymisation.</li>
-              <li><strong>Données conservées localement dans votre navigateur :</strong> jusqu&apos;à suppression manuelle ou effacement par votre navigateur.</li>
+              <li><strong>Plan en attente de vérification de l&apos;email :</strong> une heure maximum lorsqu&apos;il n&apos;est pas rattaché à un compte.</li>
+              <li><strong>Plans sauvegardés dans votre espace :</strong> jusqu&apos;à 3 ans après leur dernière mise à jour, puis suppression ou anonymisation.</li>
               <li><strong>Données techniques de sécurité et journaux :</strong> pendant la durée nécessaire à l&apos;exploitation et à la sécurité du site.</li>
               <li><strong>Compteurs agrégés d&apos;ouverture des systèmes :</strong> pendant la durée d&apos;exploitation du service, ces compteurs ne contenant ni adresse email, ni adresse IP enregistrée, ni identifiant visiteur.</li>
             </ul>
@@ -141,7 +141,7 @@ export default function PolitiqueConfidentialitePage() {
 
       <PrivacySection title="8. Cookies, traceurs et stockage local">
             <p>
-              Le site utilise des outils de mesure d&apos;audience, des traceurs marketing et des mécanismes de stockage local pour améliorer l&apos;expérience utilisateur, mesurer l&apos;usage du site et mémoriser certaines informations liées à l&apos;assistant.
+              Le site utilise des outils de mesure d&apos;audience et des traceurs marketing selon vos choix. Le plan affiché avant sauvegarde reste dans la mémoire de la page ouverte : Demaa n&apos;utilise ni localStorage ni sessionStorage pour le conserver durablement.
             </p>
             <p>
               Lorsqu&apos;un traceur nécessite votre consentement, notamment pour la mesure d&apos;audience, l&apos;attribution persistante ou la publicité, Demaa recueille ce consentement avant chargement via son bandeau cookies. Les choix « mesure d&apos;audience » et « publicité » peuvent être modifiés séparément à tout moment depuis la politique de cookies.

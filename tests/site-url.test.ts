@@ -2,6 +2,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import {
   getCanonicalOrigin,
   getCanonicalSiteUrl,
+  getTrustedRequestOrigin,
   isAllowedRequestHost,
   isAllowedRequestOrigin,
   isVercelPreviewHost,
@@ -57,6 +58,11 @@ describe("Vercel preview hosts", () => {
     expect(
       isAllowedRequestHost(new Request("https://demaa-git-feature.vercel.app/api/test")),
     ).toBe(true);
+    expect(
+      getTrustedRequestOrigin(
+        new Request("https://demaa-git-feature.vercel.app/api/customer-space/magic-link"),
+      ),
+    ).toBe("https://demaa-git-feature.vercel.app");
   });
 
   it("does not allow a preview host in production", () => {
@@ -64,5 +70,10 @@ describe("Vercel preview hosts", () => {
     process.env.VERCEL_URL = "demaa-preview-123.vercel.app";
 
     expect(isVercelPreviewHost("demaa-preview-123.vercel.app")).toBe(false);
+    expect(
+      getTrustedRequestOrigin(
+        new Request("https://demaa-preview-123.vercel.app/api/customer-space/magic-link"),
+      ),
+    ).toBe("https://demaa.co");
   });
 });
