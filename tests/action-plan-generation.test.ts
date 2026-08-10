@@ -9,8 +9,8 @@ import {
 } from "@/lib/action-plan-generation.server";
 
 describe("action plan generation prompt", () => {
-  it("uses the current Terra model available through Vercel AI Gateway", () => {
-    expect(ACTION_PLAN_MODEL_ID).toBe("openai/gpt-5.6-terra");
+  it("uses the model available on the current Vercel AI Gateway plan", () => {
+    expect(ACTION_PLAN_MODEL_ID).toBe("openai/gpt-5-mini");
   });
 
   it("contains all 115 lightweight systems but no full process payload", () => {
