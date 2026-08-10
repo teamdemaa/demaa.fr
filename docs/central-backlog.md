@@ -9,16 +9,19 @@ Ce document remplace les listes d'actions dispersées dans les chats Demaa. Il
 distingue ce qui est déjà livré, ce qui est prêt mais non publié et ce qui reste
 à réaliser.
 
-## État de clôture Production — 9 août 2026
+## État de clôture Production — 10 août 2026
 
 Cette section est l'état exécutable courant. Toutes les sections historiques
 datées plus bas sont conservées comme journal et ne doivent plus servir de plan
 de déploiement.
 
-- Le code produit déployé est
-  `3486703917d20a0314c279f33c0e3751db9ebd40`. Le présent lot documentaire ne
-  modifie aucun fichier runtime.
+- La dernière release runtime vérifiée est le merge `3f42c66` de la PR #93.
+  Elle est alignée entre le local principal, `origin/main` et le déploiement
+  Production Vercel.
 - `https://demaa.co` est le domaine canonique ; `demaa.fr` redirige vers lui.
+- Les 115 fiches Système ont pour route canonique `/systemes/[slug]` ; les
+  anciens espaces `/kit-operationnel`, `/systemes-operationnels` et
+  `/kit-systeme` redirigent en permanent en conservant les paramètres.
 - Les 115 Systèmes exposent `Process / Solutions / Ressources` et Firebase est
   la source distante active des Solutions.
 - Les Services canoniques sont publiés et composés au rendu dans les
