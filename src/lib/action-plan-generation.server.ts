@@ -9,7 +9,9 @@ import { logOperationalEvent } from "@/lib/operational-log";
 export const ACTION_PLAN_MODEL_ID =
   process.env.DEMAA_AI_MODEL?.trim() || "openai/gpt-5.6-terra";
 
-const SYSTEM_CATALOG = JSON.stringify(actionPlanSystemOptions);
+const SYSTEM_CATALOG = JSON.stringify(
+  actionPlanSystemOptions.map(({ id, label, aliases }) => [id, label, aliases]),
+);
 
 export const ACTION_PLAN_INSTRUCTIONS = `
 Tu es le moteur de plan d'action de Demaa pour les dirigeants de TPE.
@@ -22,9 +24,10 @@ Regles de fond :
 - Utilise uniquement les faits fournis par le dirigeant et les donnees du catalogue. Tu n'effectues aucune recherche web et tu n'inventes ni etude de marche, ni chiffre, ni preuve, ni obligation legale.
 - Quand une information manque, formule une hypothese courte dans assumptions. Ne transforme jamais une hypothese en fait.
 - Selectionne exactement un systemId parmi les 115 identifiants fournis. Les aliases servent uniquement a la detection de l'activite.
-- Propose en general entre 3 et 5 actions prioritaires pour les sept prochains jours. Tu peux aller jusqu'a 7 seulement si chaque action est indispensable et reste realiste sur une semaine. Chaque action doit etre realisable et contenir un objectif, une raison, une duree, un canal ou outil, un livrable, des etapes precises, un critere de reussite et un garde-fou ethique.
+- Propose 3 ou 4 actions prioritaires pour les sept prochains jours, et 5 seulement si la situation l'exige vraiment. Le total doit representer environ 4 a 6 heures de travail. Chaque action poursuit un seul resultat precis.
+- Limite objective et why a une phrase chacun. Donne 3 a 5 etapes courtes. Reste concis dans les livrables, criteres de reussite et garde-fous.
 - Ajoute un modele ou message pret a l'emploi seulement quand il aide vraiment ; sinon readyToUse vaut null.
-- La strategie couvre toujours les quatre piliers : Alignement, Positionnement, Offre et Promotion. Reponds aux trois questions propres a chaque pilier, sans remplir artificiellement.
+- La strategie couvre toujours les quatre piliers : Alignement, Positionnement, Offre et Promotion. Reponds aux trois questions propres a chaque pilier en une ou deux phrases utiles, sans remplir artificiellement.
 - La prospection est autorisee lorsqu'elle est reellement pertinente. Elle doit etre ciblee et personnalisee, donner avant de demander, expliquer pourquoi la personne est contactee, respecter son canal et son refus, limiter strictement les relances puis s'arreter. Jamais d'envoi de masse, de harcelement ou de fausse urgence.
 - Si un autre levier est plus adapte (partenariat, recommandation, contenu, fidelisation ou simplification du parcours d'achat), privilegie-le.
 - Les identifiants des actions suivent action-1, action-2, etc., sans saut et sans doublon.
@@ -35,7 +38,7 @@ Questions traitees par les piliers :
 - Offre : quel resultat ; quel perimetre ; quel prix, engagement et risque faut-il clarifier ?
 - Promotion : comment attirer ; comment faciliter l'achat ; comment fideliser et renforcer la relation sans forcer ?
 
-Catalogue leger des systemes :
+Catalogue leger des systemes sous forme [id, libelle, aliases] :
 ${SYSTEM_CATALOG}
 `.trim();
 
@@ -47,7 +50,10 @@ export function buildActionPlanPrompt(situation: string) {
   ].join("\n");
 }
 
-export async function generateActionPlan(situation: string): Promise<ActionPlan> {
+export async function generateActionPlan(
+  situation: string,
+  abortSignal?: AbortSignal,
+): Promise<ActionPlan> {
   const startedAt = Date.now();
   const { output, usage } = await generateText({
     model: gateway(ACTION_PLAN_MODEL_ID),
@@ -64,10 +70,11 @@ export async function generateActionPlan(situation: string): Promise<ActionPlan>
         order: ["openai", "bedrock", "azure"],
       },
     },
-    maxOutputTokens: 7_000,
+    maxOutputTokens: 4_500,
     reasoning: "low",
     maxRetries: 1,
     timeout: { totalMs: 55_000 },
+    abortSignal,
   });
 
   logOperationalEvent("action_plan.generate.succeeded", {

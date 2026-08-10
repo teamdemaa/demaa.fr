@@ -56,7 +56,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const plan = await generateActionPlan(parsed.data.situation);
+    const plan = await generateActionPlan(parsed.data.situation, request.signal);
     return json({ plan });
   } catch {
     // Le texte du dirigeant et l'erreur fournisseur ne sont jamais journalises.

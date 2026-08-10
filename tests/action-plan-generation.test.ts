@@ -14,9 +14,15 @@ describe("action plan generation prompt", () => {
   });
 
   it("contains all 115 lightweight systems but no full process payload", () => {
-    expect(ACTION_PLAN_INSTRUCTIONS.match(/\"id\":/g)).toHaveLength(115);
+    expect(ACTION_PLAN_INSTRUCTIONS.match(/\[\"[^\"]+\",\"[^\"]+\",\[/g)).toHaveLength(115);
     expect(ACTION_PLAN_INSTRUCTIONS).not.toContain("processSteps");
     expect(ACTION_PLAN_INSTRUCTIONS).not.toContain("recommendedToolSlugs");
+  });
+
+  it("keeps the weekly workload concise and realistic", () => {
+    expect(ACTION_PLAN_INSTRUCTIONS).toContain("3 ou 4 actions");
+    expect(ACTION_PLAN_INSTRUCTIONS).toContain("4 a 6 heures");
+    expect(ACTION_PLAN_INSTRUCTIONS).toContain("3 a 5 etapes courtes");
   });
 
   it("forbids market research while allowing targeted ethical outreach", () => {

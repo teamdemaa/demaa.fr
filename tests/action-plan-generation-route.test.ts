@@ -108,7 +108,10 @@ describe("action plan generation route", () => {
         weeklyActions: [],
       },
     });
-    expect(mocks.generateActionPlan).toHaveBeenCalledWith(situation);
+    expect(mocks.generateActionPlan).toHaveBeenCalledWith(
+      situation,
+      expect.any(AbortSignal),
+    );
   });
 
   it("does not expose or log the submitted situation when generation fails", async () => {
