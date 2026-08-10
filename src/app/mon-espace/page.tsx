@@ -51,8 +51,8 @@ export default async function MonEspacePage({ searchParams }: MonEspacePageProps
 
   if (!email) {
     return (
-      <div className="min-h-screen bg-dema-cream text-brand-blue">
-        <Navbar hideSectionSelector minimal />
+      <div data-action-plan-workspace className="min-h-screen bg-dema-cream text-brand-blue">
+        <Navbar minimal />
         <main className="px-4 py-12 md:px-8 md:py-20">
           <section className="mx-auto max-w-md rounded-[1.15rem] border border-dema-line bg-dema-paper p-6 text-center shadow-[0_12px_36px_rgba(23,35,29,0.04)] md:p-8">
             <h1 className="text-3xl font-light tracking-[-0.04em] md:text-4xl">
@@ -64,8 +64,8 @@ export default async function MonEspacePage({ searchParams }: MonEspacePageProps
             {error ? (
               <p className="mt-4 rounded-[0.9rem] border border-dema-forest/15 bg-dema-sage/70 px-4 py-3 text-sm text-dema-forest">
                 {error === "lien-expire"
-                  ? "Le lien n&apos;est plus valide. Demandez un nouveau lien."
-                  : message || "Impossible de finaliser l&apos;accès. Demandez un nouveau lien."}
+                  ? "Le lien n’est plus valide. Demandez un nouveau lien."
+                  : message || "Impossible de finaliser l’accès. Demandez un nouveau lien."}
               </p>
             ) : null}
             <div className="mt-6">
@@ -106,7 +106,7 @@ export default async function MonEspacePage({ searchParams }: MonEspacePageProps
   });
 
   return (
-    <div className="min-h-screen bg-dema-cream text-brand-blue">
+    <div data-action-plan-workspace className="min-h-screen bg-dema-cream text-brand-blue">
       <Navbar />
       <main className="px-4 pb-20 pt-10 md:px-8 md:pb-28 md:pt-14">
         <section className="mx-auto max-w-6xl">

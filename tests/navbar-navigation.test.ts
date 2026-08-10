@@ -1,64 +1,19 @@
 import { readFile } from "node:fs/promises";
 import { describe, expect, it } from "vitest";
-import { getNavbarActiveSection } from "@/components/Navbar";
 
-describe("conventional systems and Academy navbar", () => {
-  it("marks system discovery pages as active", () => {
-    expect(getNavbarActiveSection("/systemes")).toBe("systems");
-    expect(getNavbarActiveSection("/kits-operationnels")).toBe("systems");
-    expect(getNavbarActiveSection("/systemes/batiment")).toBe(
-      "systems",
-    );
-  });
-
-  it("marks Academy and legacy course pages as active", () => {
-    expect(getNavbarActiveSection("/academie")).toBe("academy");
-    expect(
-      getNavbarActiveSection(
-        "/academie/difference-chiffre-affaires-benefice",
-      ),
-    ).toBe("academy");
-    expect(getNavbarActiveSection("/cours")).toBe("academy");
-    expect(getNavbarActiveSection("/cours/gestion-tresorerie")).toBe(
-      "academy",
-    );
-  });
-
-  it("does not mark a section active on neutral routes", () => {
-    expect(getNavbarActiveSection("/")).toBeNull();
-    expect(getNavbarActiveSection("/sur-mesure")).toBeNull();
-    expect(getNavbarActiveSection("/annuaire-services")).toBeNull();
-    expect(getNavbarActiveSection("/annuaire-outils")).toBeNull();
-  });
-
-  it("renders the historical centered two-column selector", async () => {
+describe("Demaa application navbar", () => {
+  it("removes the historical centered two-column selector everywhere", async () => {
     const source = await readFile(
       new URL("../src/components/Navbar.tsx", import.meta.url),
       "utf8",
     );
 
-    expect(source).toContain("Workflow");
-    expect(source).toContain("BookOpen");
-    expect(source).not.toContain("PencilRuler");
-    expect(source).toContain("Système métier");
-    expect(source).toContain("Académie");
-    expect(source).toContain('href="/systemes"');
-    expect(source).toContain('href="/academie"');
-    expect(source).toContain('aria-current={activeSection === "systems"');
-    expect(source).toContain('aria-current={activeSection === "academy"');
-    expect(source).not.toContain('aria-current={activeSection === "sur-mesure"');
-    expect(source).toContain("data-navbar-section-selector");
-    expect(source).toContain("max-w-[55.2rem] grid-cols-2");
-    expect(source).toContain(
-      "px-[0.84rem] pb-3 pt-3 md:px-[1.4rem] md:pb-4 md:pt-4 lg:px-[3.36rem]",
-    );
-    expect(source).toContain("bg-dema-sage text-dema-forest");
-    expect(source.indexOf("</nav>")).toBeLessThan(
-      source.indexOf("data-navbar-section-selector"),
-    );
-    expect(source).not.toContain("Voir les services");
-    expect(source).not.toContain("Trouver mon système");
-    expect(source).not.toContain("Sur mesure</span>");
+    expect(source).not.toContain("data-navbar-section-selector");
+    expect(source).not.toContain("Système métier</span>");
+    expect(source).not.toContain("Académie</span>");
+    expect(source).not.toContain("getNavbarActiveSection");
+    expect(source).toContain('id="action-plan-navbar-desktop"');
+    expect(source).toContain('id="action-plan-navbar-mobile"');
   });
 
   it("keeps the navbar on system detail and loading states", async () => {
@@ -101,8 +56,9 @@ describe("conventional systems and Academy navbar", () => {
       readFile(new URL("../src/app/@modal/(.)mon-espace/page.tsx", import.meta.url), "utf8"),
     ]);
 
-    expect(memberSource).toContain("<Navbar hideSectionSelector minimal />");
+    expect(memberSource).toContain("<Navbar minimal />");
     expect(memberSource).toContain("<CustomerSpaceAccessForm returnTo=\"/mon-espace\" simple />");
+    expect(memberSource).toContain("Le lien n’est plus valide.");
     expect(modalSource).toContain("<CustomerSpaceLoginDialog />");
   });
 

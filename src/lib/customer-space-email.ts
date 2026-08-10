@@ -96,7 +96,7 @@ export async function sendCustomerMagicLinkEmail(input: {
 
   const token = await createMagicLinkToken(input.email, input.actionPlanClaim);
   const magicLinkUrl = new URL(
-    "/api/customer-space/consume",
+    "/connexion",
     getTrustedRequestOrigin(input.request),
   );
   magicLinkUrl.searchParams.set("token", token);
