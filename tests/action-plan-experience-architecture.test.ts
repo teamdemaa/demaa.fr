@@ -22,7 +22,7 @@ describe("action plan experience architecture", () => {
     expect(saveControl).toContain('"Sauvegarder"');
     expect(saveControl).toContain("if (demoMode)");
     expect(saveControl).toContain("Créer mon compte");
-    expect(saveControl).toContain("actualités entrepreneuriales et tarifs négociés");
+    expect(saveControl).toContain("réponses aux problématiques de dirigeants, actualités entrepreneuriales et tarifs négociés");
     expect(saveControl).toContain('fetch("/api/newsletter-subscribe"');
     expect(saveControl).toContain("checked={subscribeToStructure}");
     expect(saveControl).toContain('if (state === "saved")');

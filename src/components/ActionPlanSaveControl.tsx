@@ -318,7 +318,7 @@ export default function ActionPlanSaveControl({
                     className="mt-0.5 h-4 w-4 shrink-0 accent-[#2f6748]"
                   />
                   <span>
-                    Recevoir <strong className="font-medium text-brand-blue">Structure</strong> : actualités entrepreneuriales et tarifs négociés.
+                    Recevoir <strong className="font-medium text-brand-blue">Structure</strong> : réponses aux problématiques de dirigeants, actualités entrepreneuriales et tarifs négociés.
                   </span>
                 </label>
                 <button
