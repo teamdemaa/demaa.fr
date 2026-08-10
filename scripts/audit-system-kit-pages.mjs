@@ -16,6 +16,19 @@ const publicSolutionVisibilityPath = resolve(
 const PUBLIC_SOLUTION_SECTION_VISIBILITY = readJson(publicSolutionVisibilityPath);
 const SOLUTION_SECTION_ORDER = ["software", "services", "providers", "networks"]
   .filter((section) => PUBLIC_SOLUTION_SECTION_VISIBILITY[section]);
+const CANONICAL_SERVICE_SLUGS = [
+  "automatisation-processus",
+  "expert-comptable",
+  "formalites-juridiques",
+  "sous-traitance-formalites-juridiques",
+  "marketing-vente",
+  "assistance-facturation",
+];
+const LEGAL_SUBCONTRACTING_SYSTEM_SLUGS = new Set([
+  "cabinet-comptable",
+  "cabinet-davocat",
+  "notaire",
+]);
 const FIREBASE_V2_REVISION_ID = "solutions-2026-08-08-active-v2";
 const TRANSVERSAL_PURCHASING_SECTORS = new Set([
   "Conseil & services aux entreprises",
@@ -29,7 +42,7 @@ const EXPECTED_TEMPLATE_TITLES = [
   "CRM - suivi commercial",
 ];
 
-const EXPECTED_AVAILABLE_GUIDE_TITLES = [
+const HIDDEN_UNIVERSAL_GUIDE_TITLES = [
   "La facturation électronique",
   "Maîtriser les obligations et les finances de son entreprise",
 ];
@@ -81,6 +94,20 @@ export function buildExpectedSolutionOrders(options = {}) {
         placement.resourceSlug !== "levier"
       ));
     const order = SOLUTION_SECTION_ORDER.flatMap((section) => {
+      if (section === "services") {
+        return CANONICAL_SERVICE_SLUGS.filter((serviceSlug) => {
+          if (enterprise.slug === "cabinet-comptable" && serviceSlug === "expert-comptable") {
+            return false;
+          }
+          if (
+            serviceSlug === "sous-traitance-formalites-juridiques" &&
+            !LEGAL_SUBCONTRACTING_SYSTEM_SLUGS.has(enterprise.slug)
+          ) {
+            return false;
+          }
+          return true;
+        });
+      }
       const sectionSlugs = selectedPlacements
         .filter((placement) => placement.section === section)
         .sort((left, right) => left.rank - right.rank)
@@ -358,17 +385,19 @@ export function inspectPage({ response, html, tab, expectedSolutionOrder }) {
       );
     }
     for (const resourceTitle of EXPECTED_TEMPLATE_TITLES) {
-      const action = resourceTitle === "Récapitulatif du système" ? "Recevoir" : "Ouvrir";
+      const action = resourceTitle === "Récapitulatif du système"
+        ? "Ouvrir"
+        : "Voir un aperçu de";
       if (!renderedHtml.includes(`aria-label="${action} ${resourceTitle}"`)) {
         errors.push(`missing template card: ${resourceTitle}`);
       }
     }
-    if (guideCardCount !== 4) {
-      errors.push(`expected 4 guide cards, found ${guideCardCount}`);
+    if (guideCardCount !== 2) {
+      errors.push(`expected 2 upcoming guide cards, found ${guideCardCount}`);
     }
-    for (const guideTitle of EXPECTED_AVAILABLE_GUIDE_TITLES) {
-      if (!renderedHtml.includes(`aria-label="Ouvrir ${guideTitle}"`)) {
-        errors.push(`missing available guide card: ${guideTitle}`);
+    for (const guideTitle of HIDDEN_UNIVERSAL_GUIDE_TITLES) {
+      if (renderedHtml.includes(guideTitle)) {
+        errors.push(`hidden universal guide is still visible: ${guideTitle}`);
       }
     }
     if (countOccurrences(renderedHtml, "Bientôt disponible") !== 2) {

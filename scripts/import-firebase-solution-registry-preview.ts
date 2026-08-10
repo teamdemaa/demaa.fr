@@ -11,6 +11,7 @@ import { buildFirebaseSolutionRegistryMigrationRevision } from "@/lib/firebase-s
 import { buildPublishedFranceSolutionsCleanupRevision } from "@/lib/firebase-solution-registry-france-cleanup.server";
 import { buildPublishedProfessionalSuppliersRevision } from "@/lib/firebase-solution-registry-professional-suppliers.server";
 import { buildPublishedPrelaunchCloseoutRevision } from "@/lib/firebase-solution-registry-prelaunch-closeout.server";
+import { buildPublishedSupplierExpansionRevision } from "@/lib/firebase-solution-registry-supplier-expansion.server";
 import {
   buildFirestoreSolutionRegistryImportPlan,
   type FirestoreSolutionRegistryWrite,
@@ -119,12 +120,14 @@ const {
 });
 
 const revisionSource = commandArgument("--revision=") ?? "migration";
-if (!["migration", "france-cleanup", "professional-suppliers", "prelaunch-closeout"].includes(revisionSource)) {
+if (!["migration", "france-cleanup", "professional-suppliers", "prelaunch-closeout", "supplier-expansion"].includes(revisionSource)) {
   throw new Error(
-    "Remote import revision must be migration, france-cleanup, professional-suppliers or prelaunch-closeout.",
+    "Remote import revision must be migration, france-cleanup, professional-suppliers, prelaunch-closeout or supplier-expansion.",
   );
 }
-const revision = revisionSource === "prelaunch-closeout"
+const revision = revisionSource === "supplier-expansion"
+  ? buildPublishedSupplierExpansionRevision()
+  : revisionSource === "prelaunch-closeout"
   ? buildPublishedPrelaunchCloseoutRevision()
   : revisionSource === "professional-suppliers"
   ? buildPublishedProfessionalSuppliersRevision()
