@@ -27,9 +27,10 @@ type SystemDetailContentProps = {
   systeme: SystemeDetail | null;
   intro: string;
   initialActiveTab?: string;
-  headingAs?: "h1" | "h2";
+  headingAs?: "h1" | "h2" | "h3";
   headingId?: string;
   solutionSections?: readonly RenderableSolutionSectionDto[];
+  embedded?: boolean;
 };
 
 const systemTabDefinitions: ReadonlyArray<{
@@ -51,6 +52,7 @@ export default function SystemDetailContent({
   headingAs: Heading = "h2",
   headingId,
   solutionSections = EMPTY_SOLUTION_SECTIONS,
+  embedded = false,
 }: SystemDetailContentProps) {
   const router = useRouter();
   const scopedResources = useMemo(
@@ -73,6 +75,7 @@ export default function SystemDetailContent({
   );
   function selectTab(tab: SystemDetailTab) {
     setActiveTab(tab);
+    if (embedded) return;
     const url = new URL(window.location.href);
     url.searchParams.set("tab", tab);
     url.searchParams.delete("service");
@@ -98,13 +101,13 @@ export default function SystemDetailContent({
 
   return (
     <article className="w-full max-w-[55.2rem]">
-      <Link
+      {!embedded ? <Link
         href="/systemes"
         className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-dema-muted transition hover:text-dema-forest"
       >
         <ArrowLeft className="h-4 w-4" aria-hidden="true" />
         Retour aux systèmes
-      </Link>
+      </Link> : null}
 
       <div className="max-w-4xl">
         <Heading

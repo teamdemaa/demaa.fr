@@ -73,16 +73,19 @@ describe("conventional systems and Academy navbar", () => {
     expect(loadingSource.indexOf("<Navbar minimal />")).toBeLessThan(loadingSource.indexOf("<main"));
   });
 
-  it("keeps one canonical URL for each main universe", async () => {
+  it("keeps a distinct canonical homepage and one URL for each public universe", async () => {
     const [homeSource, systemsSource, nextConfigSource] = await Promise.all([
       readFile(new URL("../src/app/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/app/systemes/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../next.config.ts", import.meta.url), "utf8"),
     ]);
 
-    expect(homeSource).toContain(
+    expect(homeSource).not.toContain(
       'export { default, metadata } from "@/app/systemes/page"',
     );
+    expect(homeSource).toContain('canonical: "/"');
+    expect(homeSource).toContain("<ActionPlanExperience");
+    expect(homeSource).toContain("<Navbar anonymousLanding minimal />");
     expect(systemsSource).toContain('canonical: "/systemes"');
     expect(nextConfigSource).not.toMatch(
       /source: '\/systemes',[\s\S]*?destination: '\/',/,

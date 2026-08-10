@@ -5,9 +5,16 @@ import { CheckCircle2, LoaderCircle, Mail } from "lucide-react";
 import { isValidEmail, normalizeEmail } from "@/lib/email";
 
 export default function CustomerSpaceAccessForm({
+  actionPlanClaim = null,
   compact = false,
+  returnTo,
 }: {
+  actionPlanClaim?: {
+    actionPlanId: string;
+    actionPlanClaimSecret: string;
+  } | null;
   compact?: boolean;
+  returnTo?: string;
 }) {
   const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -33,7 +40,12 @@ export default function CustomerSpaceAccessForm({
       const response = await fetch("/api/customer-space/magic-link", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: normalizedEmail }),
+        body: JSON.stringify({
+          email: normalizedEmail,
+          returnTo,
+          actionPlanId: actionPlanClaim?.actionPlanId,
+          actionPlanClaimSecret: actionPlanClaim?.actionPlanClaimSecret,
+        }),
       });
       const payload = (await response.json().catch(() => null)) as
         | { devLink?: string | null; error?: string; sent?: boolean }

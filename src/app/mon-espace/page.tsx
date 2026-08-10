@@ -8,6 +8,8 @@ import {
   getAssistantDelegationRequestsByEmail,
   getStripePaymentsByEmail,
 } from "@/lib/generations-db";
+import { getOwnedActionPlans } from "@/lib/action-plan-storage.server";
+import { actionPlanSystemOptions } from "@/lib/action-plan-system-catalog";
 import { getLiveSessionAccessForPurchaseSlug } from "@/lib/live-session-assets";
 
 export const metadata: Metadata = {
@@ -79,10 +81,14 @@ export default async function MonEspacePage({ searchParams }: MonEspacePageProps
     );
   }
 
-  const [payments, requests] = await Promise.all([
+  const [payments, requests, actionPlans] = await Promise.all([
     getStripePaymentsByEmail(email),
     getAssistantDelegationRequestsByEmail(email),
+    getOwnedActionPlans(email),
   ]);
+  const systemNames = new Map(
+    actionPlanSystemOptions.map((system) => [system.id, system.label]),
+  );
   const requestsBySessionId = new Map(
     requests.map((request) => [request.stripeSessionId, request])
   );
@@ -117,7 +123,16 @@ export default async function MonEspacePage({ searchParams }: MonEspacePageProps
             <p className="text-sm text-dema-muted">{email}</p>
           </div>
 
-          <MemberSpaceTabs requestCards={requestCards} />
+          <MemberSpaceTabs
+            actionPlans={actionPlans.map((actionPlan) => ({
+              id: actionPlan.id,
+              summary: actionPlan.plan.summary,
+              systemName:
+                systemNames.get(actionPlan.plan.systemId) || actionPlan.plan.systemId,
+              updatedAt: actionPlan.updatedAt,
+            }))}
+            requestCards={requestCards}
+          />
         </section>
       </main>
     </div>

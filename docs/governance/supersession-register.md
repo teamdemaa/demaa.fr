@@ -6,6 +6,7 @@ remplacé et la nouvelle référence à consulter.
 | Ancienne source ou décision | Statut | Nouvelle référence ou action |
 | --- | --- | --- |
 | Navigation web `Process / Outils / Écosystème` | `superseded` | `Process / Solutions / Ressources`, voir ADR 0001 |
+| ADR 0003, point 3 : `/` peut reproduire le hub `/systemes` | `superseded` | `/` devient l'entrée du générateur de plan ; `/systemes` reste le hub public intact, voir ADR 0008 et D-076 |
 | Ressources dans `Solutions > Modèles` ou « Ressources héritées » | `superseded` | onglet autonome `Ressources`, sans cours de l'Académie |
 | Écosystème D-012 à quatre groupes | `superseded` | inventaire vers Solutions dans W2c-W3 |
 | Outils comme onglet autonome | `superseded` | sous-section de Solutions, libellé exact non figé |

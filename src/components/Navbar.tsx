@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookOpen, Workflow } from "lucide-react";
+import { BookOpen, LogIn, Workflow } from "lucide-react";
 import DemaaWordmark from "@/components/DemaaWordmark";
 
 const navbarTabBaseClassName =
@@ -39,7 +39,13 @@ export function getNavbarActiveSection(pathname: string): NavbarSection {
   return null;
 }
 
-export default function Navbar({ minimal = false }: { minimal?: boolean }) {
+export default function Navbar({
+  anonymousLanding = false,
+  minimal = false,
+}: {
+  anonymousLanding?: boolean;
+  minimal?: boolean;
+}) {
   const pathname = usePathname();
   const activeSection = getNavbarActiveSection(pathname);
 
@@ -50,7 +56,7 @@ export default function Navbar({ minimal = false }: { minimal?: boolean }) {
         className="sticky top-0 z-40 border-b border-dema-line/70 bg-dema-cream/92 py-1 backdrop-blur-md"
       >
         <div className="mx-auto w-full px-6 md:px-10 lg:px-24">
-          <div className="flex items-center py-3 md:min-h-16 md:py-4">
+          <div className="flex items-center justify-between py-3 md:min-h-16 md:py-4">
             <Link
               href="/"
               aria-label="Retour à l'accueil"
@@ -58,10 +64,19 @@ export default function Navbar({ minimal = false }: { minimal?: boolean }) {
             >
               <DemaaWordmark className="text-[1.4rem] sm:text-[1.7rem]" />
             </Link>
+            {anonymousLanding ? (
+              <Link
+                href="/mon-espace"
+                className="inline-flex min-h-11 items-center gap-2 rounded-full border border-dema-forest/15 bg-dema-paper px-4 text-sm font-medium text-dema-forest transition hover:border-dema-forest/28 hover:bg-dema-sage/45"
+              >
+                <LogIn className="h-4 w-4" aria-hidden="true" />
+                <span>Se connecter</span>
+              </Link>
+            ) : null}
           </div>
         </div>
       </nav>
-      <div className="bg-dema-cream px-[0.84rem] pb-3 pt-3 md:px-[1.4rem] md:pb-4 md:pt-4 lg:px-[3.36rem]">
+      {!anonymousLanding ? <div className="bg-dema-cream px-[0.84rem] pb-3 pt-3 md:px-[1.4rem] md:pb-4 md:pt-4 lg:px-[3.36rem]">
         <div
           aria-label="Navigation principale"
           data-navbar-section-selector
@@ -92,7 +107,7 @@ export default function Navbar({ minimal = false }: { minimal?: boolean }) {
             <span>Académie</span>
           </Link>
         </div>
-      </div>
+      </div> : null}
     </>
   );
 }

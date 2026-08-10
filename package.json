@@ -152,6 +152,7 @@
     "@fillout/react": "^3.1.2",
     "@vercel/analytics": "^2.0.1",
     "@vercel/oidc": "^3.8.2",
+    "ai": "^7.0.58",
     "firebase-admin": "^14.2.0",
     "google-auth-library": "10.6.2",
     "html-to-image": "^1.11.13",
@@ -160,7 +161,8 @@
     "qrcode.react": "^4.2.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "react-markdown": "^10.1.0"
+    "react-markdown": "^10.1.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
