@@ -87,7 +87,7 @@ function RoutineItem({
                       >
                         <Check className="h-3.5 w-3.5" />
                       </span>
-                      <span className={isChecked ? "text-dema-muted/65 line-through" : ""}>
+                      <span className={isChecked ? "text-dema-muted/65" : ""}>
                         {bullet}
                       </span>
                     </label>

@@ -67,9 +67,9 @@ describe("action plan experience architecture", () => {
     expect(systemPanel).toContain("selectedSolutionPlacementIdsBySystem");
     expect(systemPanel).not.toContain("Ouvrir la fiche complète");
     expect(experience).toContain("demoMode={isDemoMode}");
-    expect(source("src/components/SystemeTabContent.tsx")).toContain(
-      'type="checkbox"',
-    );
+    const systemProcess = source("src/components/SystemeTabContent.tsx");
+    expect(systemProcess).toContain('type="checkbox"');
+    expect(systemProcess).not.toContain("line-through");
   });
 
   it("embeds the Academy without nesting a second main landmark", () => {
