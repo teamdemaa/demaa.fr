@@ -23,10 +23,12 @@ describe("unified app and coaching", () => {
 
   it("keeps the account area focused on plans instead of a parallel member portal", () => {
     const accountPage = read("src/app/mon-espace/page.tsx");
+    const accountAccessForm = read("src/components/CustomerSpaceAccessForm.tsx");
     const accountPlans = read("src/components/MemberSpaceTabs.tsx");
 
     expect(accountPage).toContain("Mon espace");
     expect(accountPage).not.toContain("Espace membre");
+    expect(accountAccessForm).not.toContain("espace membre");
     expect(accountPlans).toContain('title="Mes plans"');
     expect(accountPlans).not.toContain("Suivi des demandes");
   });

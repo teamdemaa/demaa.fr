@@ -107,7 +107,7 @@ export default function Footer() {
             <Link
               href="/mon-espace"
               className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-dema-line bg-dema-paper px-4 py-2 text-sm font-medium text-brand-blue/56 transition hover:border-dema-forest/24 hover:text-brand-blue/72"
-              aria-label="Espace membre"
+              aria-label="Mon espace"
             >
               <UserRound className="h-4 w-4 shrink-0" aria-hidden="true" />
               <span>Mon espace</span>

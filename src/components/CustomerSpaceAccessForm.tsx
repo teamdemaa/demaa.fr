@@ -84,7 +84,7 @@ export default function CustomerSpaceAccessForm({
           Lien envoyé.
         </h2>
         <p className="text-sm leading-relaxed text-dema-muted">
-          Vérifiez votre boîte mail pour accéder à votre espace membre Demaa.
+          Vérifiez votre boîte mail pour accéder à votre espace Demaa.
         </p>
         {devLink ? (
           <a
