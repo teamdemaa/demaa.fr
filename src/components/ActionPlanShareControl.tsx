@@ -52,7 +52,9 @@ export default function ActionPlanShareControl({ plan }: { plan: ActionPlan }) {
     <button
       type="button"
       onClick={() => void sharePlan()}
-      className="demaa-secondary-button min-h-11 shrink-0 gap-2"
+      className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-dema-muted transition hover:border-dema-forest/30 hover:text-dema-forest"
+      aria-label={copied ? "Plan copié" : "Partager le plan"}
+      title={copied ? "Plan copié" : "Partager le plan"}
       aria-live="polite"
     >
       {copied ? (
@@ -60,7 +62,7 @@ export default function ActionPlanShareControl({ plan }: { plan: ActionPlan }) {
       ) : (
         <Share2 className="h-4 w-4" aria-hidden="true" />
       )}
-      {copied ? "Copié" : "Partager"}
+      <span className="sr-only">{copied ? "Plan copié" : "Partager le plan"}</span>
     </button>
   );
 }

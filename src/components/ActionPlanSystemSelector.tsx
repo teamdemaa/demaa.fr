@@ -107,7 +107,7 @@ export default function ActionPlanSystemSelector({
         }}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
-        className={`flex min-h-12 w-full items-center justify-between gap-3 rounded-2xl border bg-dema-paper px-4 text-left text-sm text-brand-blue shadow-[0_10px_28px_rgba(23,35,29,0.035)] outline-none transition ${
+        className={`flex min-h-12 w-full items-center justify-between gap-3 rounded-full border bg-dema-paper px-4 text-left text-sm text-brand-blue shadow-[0_10px_28px_rgba(23,35,29,0.035)] outline-none transition ${
           isOpen
             ? "border-dema-forest/30 ring-4 ring-dema-sage/55"
             : "border-dema-line hover:border-dema-forest/20"

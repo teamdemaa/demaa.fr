@@ -33,6 +33,54 @@ describe("action plan workspace state", () => {
     expect(normalized.tasks["action-7"]).toBeUndefined();
   });
 
+  it("accepts a user-edited action title and expected result", () => {
+    const base = createActionPlanWorkspaceState(ACTION_PLAN_DEMO);
+    const parsed = actionPlanWorkspaceStateSchema.parse({
+      ...base,
+      tasks: {
+        ...base.tasks,
+        "action-1": {
+          ...base.tasks["action-1"],
+          overrides: {
+            title: "Vérifier le parcours de réservation",
+            objective: "Une personne trouve le bon créneau et réserve sans aide.",
+          },
+        },
+      },
+    });
+
+    expect(parsed.tasks["action-1"]?.overrides.objective).toBe(
+      "Une personne trouve le bon créneau et réserve sans aide.",
+    );
+  });
+
+  it("keeps legacy progress while dropping the retired duration override", () => {
+    const base = createActionPlanWorkspaceState(ACTION_PLAN_DEMO);
+    const normalized = normalizeActionPlanWorkspaceState(ACTION_PLAN_DEMO, {
+      ...base,
+      tasks: {
+        ...base.tasks,
+        "action-1": {
+          ...base.tasks["action-1"],
+          status: "done",
+          notes: "Conserver cette progression",
+          overrides: {
+            title: "Titre historique",
+            estimatedMinutes: 60,
+          },
+        },
+      },
+    });
+
+    expect(normalized.tasks["action-1"]?.status).toBe("done");
+    expect(normalized.tasks["action-1"]?.notes).toBe(
+      "Conserver cette progression",
+    );
+    expect(normalized.tasks["action-1"]?.overrides).toEqual({
+      title: "Titre historique",
+    });
+  });
+
   it("falls back to a clean workspace when persisted state is invalid", () => {
     const normalized = normalizeActionPlanWorkspaceState(ACTION_PLAN_DEMO, {
       version: "2",

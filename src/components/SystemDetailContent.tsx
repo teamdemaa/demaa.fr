@@ -155,7 +155,9 @@ export default function SystemDetailContent({
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <Heading
             id={headingId}
-            className="text-3xl font-semibold tracking-[-0.035em] text-brand-blue sm:text-4xl"
+            className={embedded
+              ? "sr-only"
+              : "text-3xl font-semibold tracking-[-0.035em] text-brand-blue sm:text-4xl"}
           >
             {system.name}
           </Heading>
@@ -232,7 +234,7 @@ export default function SystemDetailContent({
               resources={scopedResources.filter((resource) => resource.format === "guide")}
               systemSlug={system.slug}
             />
-            <StructureNewsletterBlock />
+            {!embedded ? <StructureNewsletterBlock /> : null}
           </div>
         ) : null}
       </section>

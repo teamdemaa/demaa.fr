@@ -31,7 +31,7 @@ export default function Footer() {
   const linkClass = "text-sm text-neutral-500 transition-colors hover:text-neutral-950";
 
   return (
-    <footer className="mt-auto border-t border-neutral-200 bg-white py-16 text-neutral-950">
+    <footer data-site-footer className="mt-auto border-t border-neutral-200 bg-white py-16 text-neutral-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-5">
           

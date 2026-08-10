@@ -2,6 +2,7 @@ import "server-only";
 
 import {
   getActiveFirebaseSolutionRegistryRevision,
+  loadFirebaseSolutionRegistryRevision,
 } from "@/lib/firebase-solution-registry.server";
 import { SOLUTION_SECTIONS } from "@/lib/solution-registry-contract";
 import type { FirebaseSolutionRegistryRevision } from "@/lib/firebase-solution-registry-contract";
@@ -104,6 +105,14 @@ export async function getActiveRenderableSolutionSectionsForSystem(
   now = new Date(),
 ) {
   const revision = await getActiveFirebaseSolutionRegistryRevision();
+  return selectRenderableSolutionSectionsFromRevision(revision, systemSlug, { now });
+}
+
+export async function getLocalRenderableSolutionSectionsForSystem(
+  systemSlug: unknown,
+  now = new Date(),
+) {
+  const revision = await loadFirebaseSolutionRegistryRevision({ forceLocal: true });
   return selectRenderableSolutionSectionsFromRevision(revision, systemSlug, { now });
 }
 

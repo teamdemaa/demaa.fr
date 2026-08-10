@@ -95,7 +95,7 @@ describe("Academy live sessions and contextual cases", () => {
       readFile(new URL("../src/app/academie/page.tsx", import.meta.url), "utf8"),
     ]);
     expect(clientSource.indexOf("Cours fondamentaux")).toBeLessThan(clientSource.indexOf("<AcademyLiveTrainingSection"));
-    expect(clientSource.indexOf("<AcademyLiveTrainingSection")).toBeLessThan(clientSource.indexOf("Modèles et documents"));
+    expect(clientSource).not.toContain("Modèles et documents");
     expect(clientSource).not.toContain("Cas concrets");
     expect(pageSource).toContain("getVisibleAcademyLiveTrainings()");
   });

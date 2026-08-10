@@ -16,7 +16,7 @@ const optionalText = (max: number) => z.string().trim().max(max).optional();
 const actionOverrideSchema = z
   .object({
     title: optionalText(140),
-    estimatedMinutes: z.number().int().min(5).max(480).optional(),
+    objective: optionalText(260),
     steps: z.array(z.string().trim().min(1).max(360)).min(1).max(7).optional(),
     readyToUse: z
       .object({
@@ -68,6 +68,39 @@ export const actionPlanWorkspaceStateSchema = z
   })
   .strict();
 
+function stripLegacyEstimatedMinutes(value: unknown) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return value;
+
+  const workspace = value as Record<string, unknown>;
+  if (!workspace.tasks || typeof workspace.tasks !== "object" || Array.isArray(workspace.tasks)) {
+    return value;
+  }
+
+  const tasks = Object.fromEntries(
+    Object.entries(workspace.tasks as Record<string, unknown>).map(([actionId, taskValue]) => {
+      if (!taskValue || typeof taskValue !== "object" || Array.isArray(taskValue)) {
+        return [actionId, taskValue];
+      }
+
+      const task = taskValue as Record<string, unknown>;
+      if (!task.overrides || typeof task.overrides !== "object" || Array.isArray(task.overrides)) {
+        return [actionId, taskValue];
+      }
+
+      const overrides = { ...(task.overrides as Record<string, unknown>) };
+      delete overrides.estimatedMinutes;
+      return [actionId, { ...task, overrides }];
+    }),
+  );
+
+  return { ...workspace, tasks };
+}
+
+export const compatibleActionPlanWorkspaceStateSchema = z.preprocess(
+  stripLegacyEstimatedMinutes,
+  actionPlanWorkspaceStateSchema,
+);
+
 export type ActionPlanTaskStatus = z.infer<typeof actionPlanTaskStatusSchema>;
 export type ActionPlanTaskState = z.infer<typeof actionPlanTaskStateSchema>;
 export type ActionPlanWorkspaceState = z.infer<
@@ -102,7 +135,7 @@ export function normalizeActionPlanWorkspaceState(
   plan: ActionPlan,
   value: unknown,
 ): ActionPlanWorkspaceState {
-  const parsed = actionPlanWorkspaceStateSchema.safeParse(value);
+  const parsed = compatibleActionPlanWorkspaceStateSchema.safeParse(value);
   const base = createActionPlanWorkspaceState(plan);
   if (!parsed.success) return base;
 

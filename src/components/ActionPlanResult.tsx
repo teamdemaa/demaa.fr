@@ -2,7 +2,6 @@
 
 import {
   CalendarDays,
-  Check,
   CheckCircle2,
   ChevronRight,
   Circle,
@@ -10,14 +9,12 @@ import {
   Columns3,
   Copy,
   LayoutList,
-  Pencil,
   X,
 } from "lucide-react";
 import {
   type Dispatch,
   type ReactNode,
   type SetStateAction,
-  useMemo,
   useState,
 } from "react";
 import type { ActionPlan, ActionPlanAction } from "@/lib/action-plan-contract";
@@ -81,13 +78,6 @@ const strategySections = [
   },
 ] as const;
 
-function formatDuration(minutes: number) {
-  if (minutes < 60) return `${minutes} min`;
-  const hours = Math.floor(minutes / 60);
-  const remaining = minutes % 60;
-  return remaining ? `${hours} h ${remaining}` : `${hours} h`;
-}
-
 function TaskStatusButton({
   status,
   onChange,
@@ -139,15 +129,14 @@ function ActionDrawer({
 }) {
   const taskState = workspace.tasks[action.id];
   const effectiveTitle = taskState?.overrides.title || action.title;
-  const effectiveMinutes = taskState?.overrides.estimatedMinutes || action.estimatedMinutes;
+  const effectiveObjective = taskState?.overrides.objective || action.objective;
   const effectiveSteps = taskState?.overrides.steps || action.steps;
   const effectiveSupport =
     taskState?.overrides.readyToUse === undefined
       ? action.readyToUse
       : taskState.overrides.readyToUse;
-  const [editing, setEditing] = useState(false);
   const [draftTitle, setDraftTitle] = useState(effectiveTitle);
-  const [draftMinutes, setDraftMinutes] = useState(String(effectiveMinutes));
+  const [draftObjective, setDraftObjective] = useState(effectiveObjective);
   const [draftSteps, setDraftSteps] = useState(effectiveSteps.join("\n"));
 
   function updateTask(
@@ -162,23 +151,54 @@ function ActionDrawer({
     }));
   }
 
-  function saveEdits() {
+  function saveTitle() {
+    const nextTitle = draftTitle.trim().slice(0, 140);
+    if (!nextTitle) {
+      setDraftTitle(effectiveTitle);
+      return;
+    }
+    updateTask((current) => ({
+      ...current,
+      overrides: {
+        ...current.overrides,
+        title: nextTitle,
+      },
+    }));
+  }
+
+  function saveObjective() {
+    const nextObjective = draftObjective.trim().slice(0, 260);
+    if (!nextObjective) {
+      setDraftObjective(effectiveObjective);
+      return;
+    }
+    updateTask((current) => ({
+      ...current,
+      overrides: {
+        ...current.overrides,
+        objective: nextObjective,
+      },
+    }));
+  }
+
+  function saveSteps() {
     const nextSteps = draftSteps
       .split("\n")
       .map((step) => step.trim())
       .filter(Boolean)
       .slice(0, 7);
-    const nextMinutes = Math.min(480, Math.max(5, Number(draftMinutes) || effectiveMinutes));
+    if (nextSteps.length === 0) {
+      setDraftSteps(effectiveSteps.join("\n"));
+      return;
+    }
     updateTask((current) => ({
       ...current,
       overrides: {
         ...current.overrides,
-        title: draftTitle.trim().slice(0, 140) || action.title,
-        estimatedMinutes: nextMinutes,
-        steps: nextSteps.length > 0 ? nextSteps : action.steps,
+        steps: nextSteps,
       },
     }));
-    setEditing(false);
+    setDraftSteps(nextSteps.join("\n"));
   }
 
   async function copySupport() {
@@ -196,11 +216,23 @@ function ActionDrawer({
         onMouseDown={(event) => event.stopPropagation()}
       >
         <header className="sticky top-0 z-10 flex items-start justify-between gap-4 border-b border-dema-line bg-dema-paper/95 px-5 py-5 backdrop-blur sm:px-7">
-          <div className="min-w-0">
+          <div className="min-w-0 flex-1">
             <p className="text-xs font-medium uppercase tracking-[0.14em] text-dema-forest">Action</p>
-            <h2 id="action-drawer-title" className="mt-1 text-xl font-medium leading-snug text-brand-blue">
-              {effectiveTitle}
-            </h2>
+            <textarea
+              id="action-drawer-title"
+              value={draftTitle}
+              onChange={(event) => setDraftTitle(event.target.value)}
+              onBlur={saveTitle}
+              onKeyDown={(event) => {
+                if (event.key === "Enter") {
+                  event.preventDefault();
+                  event.currentTarget.blur();
+                }
+              }}
+              rows={1}
+              aria-label="Titre de l’action"
+              className="mt-1 min-h-7 w-full resize-none overflow-hidden rounded-lg bg-transparent text-xl font-medium leading-snug text-brand-blue [field-sizing:content] outline-none transition focus:bg-dema-sage/35"
+            />
           </div>
           <button type="button" onClick={onClose} className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-dema-line" aria-label="Fermer">
             <X className="h-4 w-4" aria-hidden="true" />
@@ -223,42 +255,26 @@ function ActionDrawer({
                 aria-label="Échéance"
               />
             </label>
-            <button type="button" onClick={() => setEditing((value) => !value)} className="demaa-secondary-button min-h-10 gap-2 px-3 text-xs">
-              <Pencil className="h-3.5 w-3.5" aria-hidden="true" />
-              Modifier
-            </button>
           </div>
 
-          {editing ? (
-            <div className="space-y-4 rounded-[1.1rem] bg-dema-sage/55 p-4">
-              <label className="block text-xs font-medium text-dema-muted">
-                Titre
-                <input value={draftTitle} onChange={(event) => setDraftTitle(event.target.value)} className="mt-1.5 min-h-11 w-full rounded-xl border border-dema-line bg-dema-paper px-3 text-sm text-brand-blue outline-none" />
-              </label>
-              <label className="block text-xs font-medium text-dema-muted">
-                Durée en minutes
-                <input type="number" min={5} max={480} step={5} value={draftMinutes} onChange={(event) => setDraftMinutes(event.target.value)} className="mt-1.5 min-h-11 w-full rounded-xl border border-dema-line bg-dema-paper px-3 text-sm text-brand-blue outline-none" />
-              </label>
-              <label className="block text-xs font-medium text-dema-muted">
-                Étapes, une par ligne
-                <textarea value={draftSteps} onChange={(event) => setDraftSteps(event.target.value)} rows={6} className="mt-1.5 w-full resize-y rounded-xl border border-dema-line bg-dema-paper p-3 text-sm leading-relaxed text-brand-blue outline-none" />
-              </label>
-              <div className="flex justify-end gap-2">
-                <button type="button" onClick={() => setEditing(false)} className="demaa-secondary-button min-h-10 text-xs">Annuler</button>
-                <button type="button" onClick={saveEdits} className="min-h-10 rounded-full bg-dema-forest px-4 text-xs font-semibold text-white">Enregistrer</button>
-              </div>
-            </div>
-          ) : null}
-
           <div>
-            <p className="text-xs font-medium uppercase tracking-[0.12em] text-dema-muted">Résultat attendu</p>
-            <p className="mt-2 text-sm leading-relaxed text-brand-blue">{action.objective}</p>
+            <label htmlFor="action-drawer-objective" className="text-xs font-medium uppercase tracking-[0.12em] text-dema-muted">
+              Résultat attendu
+            </label>
+            <textarea
+              id="action-drawer-objective"
+              value={draftObjective}
+              onChange={(event) => setDraftObjective(event.target.value)}
+              onBlur={saveObjective}
+              rows={1}
+              className="-mx-1 mt-1.5 min-h-6 w-[calc(100%+0.5rem)] resize-none overflow-hidden rounded-lg bg-transparent px-1 text-sm leading-relaxed text-brand-blue [field-sizing:content] outline-none transition focus:bg-dema-sage/35"
+            />
           </div>
 
           <div>
             <p className="text-xs font-medium uppercase tracking-[0.12em] text-dema-forest">Étapes</p>
             <div className="mt-3 space-y-2">
-              {effectiveSteps.map((step, index) => {
+              {draftSteps.split("\n").map((step, index) => {
                 const checked = taskState.completedStepIndexes.includes(index);
                 return (
                   <label key={`${action.id}-${index}`} className="flex cursor-pointer gap-3 rounded-xl bg-dema-sage/45 px-3 py-3 text-sm leading-relaxed text-brand-blue">
@@ -273,7 +289,18 @@ function ActionDrawer({
                       }))}
                       className="mt-0.5 h-4 w-4 accent-[#2f664a]"
                     />
-                    <span className={checked ? "text-dema-muted" : ""}>{step}</span>
+                    <textarea
+                      value={step}
+                      onChange={(event) => {
+                        const nextSteps = draftSteps.split("\n");
+                        nextSteps[index] = event.target.value.replace(/\n/g, " ");
+                        setDraftSteps(nextSteps.join("\n"));
+                      }}
+                      onBlur={saveSteps}
+                      rows={1}
+                      aria-label={`Étape ${index + 1}`}
+                      className={`min-h-6 w-full resize-none overflow-hidden bg-transparent [field-sizing:content] outline-none transition focus:bg-dema-paper/70 ${checked ? "text-dema-muted" : ""}`}
+                    />
                   </label>
                 );
               })}
@@ -291,23 +318,6 @@ function ActionDrawer({
               <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-brand-blue">{effectiveSupport.content}</p>
             </div>
           ) : null}
-
-          <div className="grid gap-4 rounded-[1.1rem] border border-dema-line p-4 sm:grid-cols-2">
-            <div>
-              <p className="text-xs text-dema-muted">Livrable</p>
-              <p className="mt-1 text-sm text-brand-blue">{action.deliverable}</p>
-            </div>
-            <div>
-              <p className="text-xs text-dema-muted">Réussite</p>
-              <p className="mt-1 text-sm text-brand-blue">{action.successCriterion}</p>
-            </div>
-          </div>
-
-          <details className="rounded-[1.1rem] border border-dema-line px-4 py-3 text-sm">
-            <summary className="cursor-pointer font-medium text-brand-blue">À savoir</summary>
-            <p className="mt-3 leading-relaxed text-dema-muted">{action.why}</p>
-            <p className="mt-3 flex gap-2 leading-relaxed text-dema-muted"><Check className="mt-0.5 h-4 w-4 shrink-0 text-dema-forest" aria-hidden="true" />{action.ethicalGuardrail}</p>
-          </details>
 
           <label className="block text-xs font-medium text-dema-muted">
             Notes personnelles
@@ -334,73 +344,60 @@ function StrategyPanel({
   workspace: ActionPlanWorkspaceState;
   onWorkspaceChange: Dispatch<SetStateAction<ActionPlanWorkspaceState>>;
 }) {
-  const [editing, setEditing] = useState<string | null>(null);
-
   return (
     <div className="grid gap-4 md:grid-cols-2">
       {strategySections.map((section) => {
         const pillar = plan.strategy[section.key] as unknown as Readonly<Record<string, string>>;
         const overrides = workspace.strategyOverrides[section.overrideKey];
         const answers = section.fields.map(([, key], index) =>
-          overrides?.[`answer${["One", "Two", "Three"][index]}` as keyof typeof overrides] || pillar[key],
+          overrides?.[`answer${["One", "Two", "Three"][index]}` as keyof typeof overrides] ?? pillar[key],
         );
-        const headline = overrides?.headline || pillar.headline;
-        const isEditing = editing === section.key;
+        const headline = overrides?.headline ?? pillar.headline;
 
         return (
           <article key={section.key} className="rounded-[1.25rem] border border-dema-line bg-dema-paper p-5 shadow-[0_10px_30px_rgba(23,35,29,0.035)] sm:p-6">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="text-xs font-medium uppercase tracking-[0.14em] text-dema-forest">{section.label}</p>
-                {isEditing ? (
-                  <input
-                    value={headline}
-                    onChange={(event) => onWorkspaceChange((current) => ({
-                      ...current,
-                      strategyOverrides: {
-                        ...current.strategyOverrides,
-                        [section.overrideKey]: {
-                          ...current.strategyOverrides[section.overrideKey],
-                          headline: event.target.value,
-                        },
-                      },
-                    }))}
-                    className="mt-2 min-h-10 w-full rounded-lg border border-dema-line px-2 text-base font-medium text-brand-blue outline-none"
-                  />
-                ) : (
-                  <h3 className="mt-2 text-xl font-medium leading-snug text-brand-blue">{headline}</h3>
-                )}
-              </div>
-              <button type="button" onClick={() => setEditing(isEditing ? null : section.key)} className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-dema-line" aria-label={`Modifier ${section.label}`}>
-                {isEditing ? <Check className="h-4 w-4" aria-hidden="true" /> : <Pencil className="h-4 w-4" aria-hidden="true" />}
-              </button>
-            </div>
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-forest">{section.label}</p>
+            <textarea
+              value={headline}
+              onChange={(event) => onWorkspaceChange((current) => ({
+                ...current,
+                strategyOverrides: {
+                  ...current.strategyOverrides,
+                  [section.overrideKey]: {
+                    ...current.strategyOverrides[section.overrideKey],
+                    headline: event.target.value,
+                  },
+                },
+              }))}
+              rows={1}
+              maxLength={180}
+              aria-label={`Titre ${section.label}`}
+              className="-mx-1 mt-2 min-h-7 w-[calc(100%+0.5rem)] resize-none overflow-hidden rounded-lg bg-transparent px-1 text-xl font-medium leading-snug text-brand-blue [field-sizing:content] outline-none transition focus:bg-dema-sage/40"
+            />
             <div className="mt-5 space-y-4">
               {section.fields.map(([label], index) => (
                 <div key={label}>
-                  <p className="text-[11px] font-medium uppercase tracking-[0.1em] text-dema-muted">{label}</p>
-                  {isEditing ? (
-                    <textarea
-                      value={answers[index]}
-                      onChange={(event) => {
-                        const answerKey = `answer${["One", "Two", "Three"][index]}` as "answerOne" | "answerTwo" | "answerThree";
-                        onWorkspaceChange((current) => ({
-                          ...current,
-                          strategyOverrides: {
-                            ...current.strategyOverrides,
-                            [section.overrideKey]: {
-                              ...current.strategyOverrides[section.overrideKey],
-                              [answerKey]: event.target.value,
-                            },
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-brand-blue/70">{label}</p>
+                  <textarea
+                    value={answers[index]}
+                    onChange={(event) => {
+                      const answerKey = `answer${["One", "Two", "Three"][index]}` as "answerOne" | "answerTwo" | "answerThree";
+                      onWorkspaceChange((current) => ({
+                        ...current,
+                        strategyOverrides: {
+                          ...current.strategyOverrides,
+                          [section.overrideKey]: {
+                            ...current.strategyOverrides[section.overrideKey],
+                            [answerKey]: event.target.value,
                           },
-                        }));
-                      }}
-                      rows={3}
-                      className="mt-1.5 w-full resize-y rounded-lg border border-dema-line p-2 text-sm leading-relaxed text-brand-blue outline-none"
-                    />
-                  ) : (
-                    <p className="mt-1.5 text-sm leading-relaxed text-brand-blue">{answers[index]}</p>
-                  )}
+                        },
+                      }));
+                    }}
+                    rows={1}
+                    maxLength={500}
+                    aria-label={label}
+                    className="-mx-1 mt-1.5 min-h-6 w-[calc(100%+0.5rem)] resize-none overflow-hidden rounded-lg bg-transparent px-1 text-sm leading-relaxed text-brand-blue/75 [field-sizing:content] outline-none transition focus:bg-dema-sage/40 focus:text-brand-blue"
+                  />
                 </div>
               ))}
             </div>
@@ -426,14 +423,6 @@ export default function ActionPlanResult({
   const [view, setView] = useState<TaskView>("list");
   const [selectedActionId, setSelectedActionId] = useState<string | null>(null);
   const selectedAction = plan.weeklyActions.find((action) => action.id === selectedActionId) || null;
-  const completed = plan.weeklyActions.filter((action) => workspace.tasks[action.id]?.status === "done").length;
-  const totalMinutes = useMemo(
-    () => plan.weeklyActions.reduce(
-      (sum, action) => sum + (workspace.tasks[action.id]?.overrides.estimatedMinutes || action.estimatedMinutes),
-      0,
-    ),
-    [plan.weeklyActions, workspace.tasks],
-  );
 
   function updateStatus(actionId: string, status: ActionPlanTaskStatus) {
     onWorkspaceChange((current) => ({
@@ -460,7 +449,6 @@ export default function ActionPlanResult({
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <h2 id="tasks-title" className="text-3xl font-light tracking-[-0.04em] text-brand-blue sm:text-4xl">Cette semaine</h2>
-              <p className="mt-2 text-sm text-dema-muted">{completed}/{plan.weeklyActions.length} terminé · {formatDuration(totalMinutes)} prévues</p>
             </div>
             <div className="inline-flex w-fit rounded-full border border-dema-line bg-dema-paper p-1" aria-label="Vue des actions">
               <button type="button" onClick={() => setView("list")} aria-pressed={view === "list"} className={`inline-flex min-h-10 items-center gap-2 rounded-full px-3 text-xs font-medium ${view === "list" ? "bg-dema-sage text-dema-forest" : "text-dema-muted"}`}><LayoutList className="h-4 w-4" aria-hidden="true" /> Liste</button>
@@ -473,14 +461,13 @@ export default function ActionPlanResult({
               {plan.weeklyActions.map((action) => {
                 const taskState = workspace.tasks[action.id];
                 const title = taskState.overrides.title || action.title;
-                const minutes = taskState.overrides.estimatedMinutes || action.estimatedMinutes;
                 return (
                   <div key={action.id} className="flex items-center gap-3 border-b border-dema-line px-4 py-3 last:border-b-0 sm:px-5">
                     <TaskStatusButton status={taskState.status} onChange={(status) => updateStatus(action.id, status)} compact />
                     <button type="button" onClick={() => setSelectedActionId(action.id)} className="flex min-w-0 flex-1 items-center gap-3 text-left focus-visible:outline-none">
                       <span className="min-w-0 flex-1">
                         <span className={`block text-sm font-medium leading-snug ${taskState.status === "done" ? "text-dema-muted" : "text-brand-blue"}`}>{title}</span>
-                        <span className="mt-1 block truncate text-xs text-dema-muted">{formatDuration(minutes)} · {action.channelOrTool}{action.readyToUse ? ` · ${action.readyToUse.label}` : ""}</span>
+                        <span className="mt-1 block truncate text-xs text-dema-muted">{action.channelOrTool}{action.readyToUse ? ` · ${action.readyToUse.label}` : ""}</span>
                       </span>
                       <ChevronRight className="h-4 w-4 shrink-0 text-dema-muted" aria-hidden="true" />
                     </button>
@@ -498,7 +485,7 @@ export default function ActionPlanResult({
                       <article key={action.id} className="rounded-xl border border-dema-line bg-dema-paper p-4 shadow-[0_7px_18px_rgba(23,35,29,0.03)]">
                         <button type="button" onClick={() => setSelectedActionId(action.id)} className="w-full text-left">
                           <span className="block text-sm font-medium leading-snug text-brand-blue">{workspace.tasks[action.id].overrides.title || action.title}</span>
-                          <span className="mt-2 block text-xs text-dema-muted">{formatDuration(workspace.tasks[action.id].overrides.estimatedMinutes || action.estimatedMinutes)}</span>
+                          <span className="mt-2 block text-xs text-dema-muted">{action.channelOrTool}</span>
                         </button>
                         <div className="mt-3">
                           <TaskStatusButton status={status} onChange={(nextStatus) => updateStatus(action.id, nextStatus)} />
@@ -519,12 +506,6 @@ export default function ActionPlanResult({
             <p className="mt-2 max-w-2xl text-sm leading-relaxed text-dema-muted">Votre cap en quatre points. Modifiez-le directement pour qu’il reste fidèle à votre entreprise.</p>
           </div>
           <StrategyPanel plan={plan} workspace={workspace} onWorkspaceChange={onWorkspaceChange} />
-          {plan.assumptions.length > 0 ? (
-            <details className="mt-5 rounded-[1.1rem] border border-dema-line bg-dema-paper px-4 py-3 text-sm">
-              <summary className="cursor-pointer font-medium text-brand-blue">Hypothèses à vérifier</summary>
-              <ul className="mt-3 space-y-2 text-dema-muted">{plan.assumptions.map((assumption) => <li key={assumption}>• {assumption}</li>)}</ul>
-            </details>
-          ) : null}
         </section>
       )}
 

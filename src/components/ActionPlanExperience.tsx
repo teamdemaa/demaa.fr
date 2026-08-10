@@ -399,13 +399,13 @@ export default function ActionPlanExperience({
   };
 
   return (
-    <main className="min-h-screen bg-dema-cream px-4 pb-24 pt-8 sm:px-6 lg:px-8">
+    <main data-action-plan-workspace className="min-h-screen bg-dema-cream px-4 pb-24 pt-2 sm:px-6 lg:px-8">
       <ActionPlanNavbar activeView={activeTab} onViewChange={setActiveTab} />
       <div className="mx-auto max-w-[68rem]">
         <h1 ref={resultTitleRef} tabIndex={-1} className="sr-only outline-none">
           Votre plan d’action
         </h1>
-        <div className="pt-4 sm:pt-6">
+        <div className="pt-1">
           <div hidden={activeTab !== "plan"}>
             <ActionPlanResult
               plan={plan}
@@ -436,6 +436,7 @@ export default function ActionPlanExperience({
               }}
               workspace={workspace}
               onWorkspaceChange={updateWorkspace}
+              demoMode={isDemoMode}
             />
           </div>
           {activeTab === "academy" ? <ActionPlanAcademyPanel /> : null}

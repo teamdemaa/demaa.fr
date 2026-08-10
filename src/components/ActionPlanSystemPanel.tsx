@@ -1,7 +1,6 @@
 "use client";
 
-import { ExternalLink, LoaderCircle, RotateCcw } from "lucide-react";
-import Link from "next/link";
+import { LoaderCircle, RotateCcw } from "lucide-react";
 import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import ActionPlanSystemSelector from "@/components/ActionPlanSystemSelector";
 import SystemDetailContent from "@/components/SystemDetailContent";
@@ -18,27 +17,35 @@ type SystemPayload = {
   solutionSections: RenderableSolutionSectionDto[];
 };
 
+const systemPayloadCache = new Map<string, SystemPayload>();
+
 export default function ActionPlanSystemPanel({
   options,
   selectedSystemId,
   onSystemChange,
   workspace,
   onWorkspaceChange,
+  demoMode = false,
 }: {
   options: readonly ActionPlanSystemOption[];
   selectedSystemId: string;
   onSystemChange: (systemId: string) => void;
   workspace: ActionPlanWorkspaceState;
   onWorkspaceChange: Dispatch<SetStateAction<ActionPlanWorkspaceState>>;
+  demoMode?: boolean;
 }) {
   const [payload, setPayload] = useState<SystemPayload | null>(null);
   const [error, setError] = useState<{ slug: string; message: string } | null>(null);
   const [reloadKey, setReloadKey] = useState(0);
+  const cacheKey = `${demoMode ? "demo" : "live"}:${selectedSystemId}`;
 
   useEffect(() => {
-    const controller = new AbortController();
+    if (systemPayloadCache.has(cacheKey)) return;
 
-    void fetch(`/api/action-plan/system/${encodeURIComponent(selectedSystemId)}`, {
+    const controller = new AbortController();
+    const demoQuery = demoMode ? "?demo=1" : "";
+
+    void fetch(`/api/action-plan/system/${encodeURIComponent(selectedSystemId)}${demoQuery}`, {
       signal: controller.signal,
     })
       .then(async (response) => {
@@ -53,6 +60,7 @@ export default function ActionPlanSystemPanel({
               : "Impossible de charger ce système métier.",
           );
         }
+        systemPayloadCache.set(cacheKey, body);
         setPayload(body);
         setError(null);
       })
@@ -70,10 +78,16 @@ export default function ActionPlanSystemPanel({
       });
 
     return () => controller.abort();
-  }, [reloadKey, selectedSystemId]);
+  }, [cacheKey, demoMode, reloadKey, selectedSystemId]);
 
-  const currentPayload = payload?.system.slug === selectedSystemId ? payload : null;
-  const currentError = error?.slug === selectedSystemId ? error.message : null;
+  const currentPayload =
+    systemPayloadCache.get(cacheKey) ??
+    (payload?.system.slug === selectedSystemId ? payload : null);
+  const currentError = currentPayload
+    ? null
+    : error?.slug === selectedSystemId
+      ? error.message
+      : null;
 
   return (
     <section aria-labelledby="action-plan-system-title">
@@ -109,53 +123,44 @@ export default function ActionPlanSystemPanel({
       ) : null}
 
       {currentPayload ? (
-        <>
-          <SystemDetailContent
-            embedded
-            checkableProcess
-            selectableSolutions
-            headingAs="h3"
-            headingId="action-plan-system-title"
-            headerActions={(
-              <ActionPlanSystemSelector
-                options={options}
-                value={selectedSystemId}
-                onChange={onSystemChange}
-              />
-            )}
-            intro={currentPayload.intro}
-            solutionSections={currentPayload.solutionSections}
-            system={currentPayload.system}
-            systeme={currentPayload.systeme}
-            checkedProcessStepIds={
-              workspace.checkedProcessStepIdsBySystem[selectedSystemId] || []
-            }
-            onCheckedProcessStepIdsChange={(stepIds) => onWorkspaceChange((current) => ({
-              ...current,
-              checkedProcessStepIdsBySystem: {
-                ...current.checkedProcessStepIdsBySystem,
-                [selectedSystemId]: [...stepIds],
-              },
-            }))}
-            selectedSolutionPlacementIds={
-              workspace.selectedSolutionPlacementIdsBySystem[selectedSystemId] || []
-            }
-            onSelectedSolutionPlacementIdsChange={(placementIds) => onWorkspaceChange((current) => ({
-              ...current,
-              selectedSolutionPlacementIdsBySystem: {
-                ...current.selectedSolutionPlacementIdsBySystem,
-                [selectedSystemId]: [...placementIds],
-              },
-            }))}
-          />
-          <Link
-            href={`/systemes/${currentPayload.system.slug}`}
-            className="mt-8 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-dema-forest underline decoration-dema-forest/25 underline-offset-4"
-          >
-            Ouvrir la fiche complète
-            <ExternalLink className="h-4 w-4" aria-hidden="true" />
-          </Link>
-        </>
+        <SystemDetailContent
+          embedded
+          checkableProcess
+          selectableSolutions
+          headingAs="h3"
+          headingId="action-plan-system-title"
+          headerActions={(
+            <ActionPlanSystemSelector
+              options={options}
+              value={selectedSystemId}
+              onChange={onSystemChange}
+            />
+          )}
+          intro={currentPayload.intro}
+          solutionSections={currentPayload.solutionSections}
+          system={currentPayload.system}
+          systeme={currentPayload.systeme}
+          checkedProcessStepIds={
+            workspace.checkedProcessStepIdsBySystem[selectedSystemId] || []
+          }
+          onCheckedProcessStepIdsChange={(stepIds) => onWorkspaceChange((current) => ({
+            ...current,
+            checkedProcessStepIdsBySystem: {
+              ...current.checkedProcessStepIdsBySystem,
+              [selectedSystemId]: [...stepIds],
+            },
+          }))}
+          selectedSolutionPlacementIds={
+            workspace.selectedSolutionPlacementIdsBySystem[selectedSystemId] || []
+          }
+          onSelectedSolutionPlacementIdsChange={(placementIds) => onWorkspaceChange((current) => ({
+            ...current,
+            selectedSolutionPlacementIdsBySystem: {
+              ...current.selectedSolutionPlacementIdsBySystem,
+              [selectedSystemId]: [...placementIds],
+            },
+          }))}
+        />
       ) : null}
     </section>
   );

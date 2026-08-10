@@ -94,14 +94,9 @@ weeklyActions[]
   id
   title
   objective
-  why
-  estimatedMinutes
   channelOrTool
-  deliverable
   steps[]
   readyToUse
-  successCriterion
-  ethicalGuardrail
   strategyPillar
 strategy
   alignment
@@ -110,6 +105,11 @@ strategy
   promotion
 assumptions[]
 ```
+
+La V2 retire `why`, `estimatedMinutes`, `deliverable`, `successCriterion` et
+`ethicalGuardrail` du contrat généré. Le lecteur de persistance accepte les
+plans V1 déjà sauvegardés et les normalise en mémoire sans réécriture forcée du
+document Firebase.
 
 Chaque action contient les éléments nécessaires à son exécution. Le message ou
 modèle prêt à l'emploi reste facultatif. Le nombre est adapté à la situation,

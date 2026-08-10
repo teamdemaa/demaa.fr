@@ -2,7 +2,7 @@ import "server-only";
 
 import { createHash, randomBytes } from "node:crypto";
 import type { ActionPlan } from "@/lib/action-plan-contract";
-import { actionPlanSchema } from "@/lib/action-plan-contract";
+import { compatibleActionPlanSchema } from "@/lib/action-plan-contract";
 import {
   createActionPlanWorkspaceState,
   normalizeActionPlanWorkspaceState,
@@ -122,7 +122,7 @@ function parseStoredActionPlan(
 ): StoredActionPlan | null {
   if (!document || document.status !== "active") return null;
 
-  const parsedPlan = actionPlanSchema.safeParse(document.plan);
+  const parsedPlan = compatibleActionPlanSchema.safeParse(document.plan);
   if (!parsedPlan.success) return null;
 
   const revision = Number(document.revision);
@@ -156,7 +156,7 @@ export async function createPendingActionPlan(
   const now = new Date().toISOString();
 
   await database.collection(ACTION_PLANS_COLLECTION).doc(id).create({
-    schema_version: "1",
+    schema_version: "2",
     status: "pending_claim",
     ...serializeWriteInput(input),
     owner_email: null,
@@ -184,7 +184,7 @@ export async function createOwnedActionPlan(
   const ownerEmail = normalizeEmail(email);
 
   const document: ActionPlanDocument = {
-    schema_version: "1",
+    schema_version: "2",
     status: "active",
     ...serializeWriteInput(input),
     owner_email: ownerEmail,
@@ -268,7 +268,7 @@ export async function updateOwnedActionPlanWorkspace(
       return null;
     }
 
-    const parsedPlan = actionPlanSchema.safeParse(data.plan);
+    const parsedPlan = compatibleActionPlanSchema.safeParse(data.plan);
     if (!parsedPlan.success) return null;
     const revision = Number(data.revision);
     if (!Number.isInteger(revision) || revision !== expectedRevision) {

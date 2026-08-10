@@ -18,7 +18,8 @@ describe("action plan persistence boundaries", () => {
     const apiContract = source("src/lib/action-plan-api.server.ts");
 
     expect(collectionRoute).toContain("enforceSameOrigin(request)");
-    expect(apiContract).toContain("actionPlanSchema");
+    expect(apiContract).toContain("compatibleActionPlanSchema");
+    expect(apiContract).toContain("compatibleActionPlanWorkspaceStateSchema");
     expect(collectionRoute).toContain("noStoreHeaders()");
     const updateRoute = source("src/app/api/action-plans/[id]/route.ts");
     expect(updateRoute).toContain("enforceSameOrigin(request)");

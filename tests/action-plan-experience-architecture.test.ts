@@ -11,6 +11,8 @@ describe("action plan experience architecture", () => {
     const experience = source("src/components/ActionPlanExperience.tsx");
     const saveControl = source("src/components/ActionPlanSaveControl.tsx");
     const shareControl = source("src/components/ActionPlanShareControl.tsx");
+    const utilityActions = source("src/components/ActionPlanUtilityActions.tsx");
+    const navbar = source("src/components/Navbar.tsx");
     const result = source("src/components/ActionPlanResult.tsx");
 
     expect(experience).toContain("useState<ActionPlan | null>(null)");
@@ -19,8 +21,24 @@ describe("action plan experience architecture", () => {
     expect(saveControl).toContain('fetch("/api/action-plans"');
     expect(saveControl).toContain('"Sauvegarder"');
     expect(saveControl).toContain("if (demoMode)");
+    expect(saveControl).toContain("Créer mon compte");
+    expect(saveControl).toContain("actualités entrepreneuriales et tarifs négociés");
+    expect(saveControl).toContain('fetch("/api/newsletter-subscribe"');
+    expect(saveControl).toContain("checked={subscribeToStructure}");
+    expect(saveControl).toContain('if (state === "saved")');
+    expect(saveControl).toContain("return null");
+    expect(saveControl).toContain("Aucun e-mail n’a été envoyé");
+    expect(saveControl).not.toContain('if (demoMode) {\n      setState("saved")');
     expect(shareControl).toContain("navigator.share");
     expect(shareControl).toContain("navigator.clipboard.writeText");
+    expect(shareControl).toContain('aria-label={copied ? "Plan copié" : "Partager le plan"}');
+    expect(shareControl).toContain('className="sr-only"');
+    expect(navbar).toContain('id="action-plan-navbar-save"');
+    expect(utilityActions).toContain('createPortal(');
+    expect(utilityActions).toContain('document.getElementById("action-plan-navbar-save")');
+    expect(utilityActions).toContain("<ActionPlanShareControl plan={plan} />");
+    expect(utilityActions).toContain("Nouvelle situation");
+    expect(utilityActions.match(/<ActionPlanSaveControl/g)).toHaveLength(1);
     expect(experience).toContain('get("demo") !== "plan"');
     expect(experience).toContain("ACTION_PLAN_DEMO");
     expect(result).toContain('type PlanSection = "tasks" | "strategy"');
@@ -36,6 +54,8 @@ describe("action plan experience architecture", () => {
 
     expect(experience).toContain('fetch("/api/action-plan/generate"');
     expect(systemPanel).toContain("/api/action-plan/system/");
+    expect(systemPanel).toContain("systemPayloadCache");
+    expect(systemPanel).toContain('demoMode ? "?demo=1" : ""');
     expect(systemPanel).not.toContain("/api/action-plan/generate");
     expect(systemPanel).toContain("<ActionPlanSystemSelector");
     expect(systemPanel).toContain("onChange={onSystemChange}");
@@ -45,6 +65,8 @@ describe("action plan experience architecture", () => {
     expect(systemPanel).toContain("checkableProcess");
     expect(systemPanel).toContain("checkedProcessStepIdsBySystem");
     expect(systemPanel).toContain("selectedSolutionPlacementIdsBySystem");
+    expect(systemPanel).not.toContain("Ouvrir la fiche complète");
+    expect(experience).toContain("demoMode={isDemoMode}");
     expect(source("src/components/SystemeTabContent.tsx")).toContain(
       'type="checkbox"',
     );
@@ -53,14 +75,24 @@ describe("action plan experience architecture", () => {
   it("embeds the Academy without nesting a second main landmark", () => {
     const academyPanel = source("src/components/ActionPlanAcademyPanel.tsx");
     const academyIndex = source("src/components/AcademyIndexClient.tsx");
+    const coursePlayer = source("src/components/AcademyCoursePlayer.tsx");
     const experience = source("src/components/ActionPlanExperience.tsx");
 
     expect(academyPanel).toContain("embedded");
     expect(experience).toContain("<ActionPlanUtilityActions");
     expect(academyIndex).toContain("embedded || isSearching || showAllFundamentals");
+    expect(academyIndex).toContain("!embedded ? (");
     expect(academyIndex).toContain('embedded ? "max-w-md"');
     expect(academyIndex).toContain('const ContentContainer = embedded ? "div" : "main"');
     expect(academyIndex).toContain("<ContentContainer");
+    expect(academyPanel).toContain("onOpenContent={setSelectedContent}");
+    expect(academyPanel).toContain("<AcademyCoursePlayer");
+    expect(academyPanel).toContain("onBack={() => setSelectedContent(null)}");
+    expect(academyIndex).toContain("onOpen?: (content: AcademyContentDefinition) => void");
+    expect(coursePlayer).toContain('const CourseContainer = embedded ? "div" : "main"');
+    expect(source("src/components/SystemDetailContent.tsx")).toContain(
+      "!embedded ? <StructureNewsletterBlock /> : null",
+    );
   });
 
   it("allows a saved plan return path without opening external redirects", () => {

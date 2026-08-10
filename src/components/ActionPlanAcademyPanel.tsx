@@ -6,6 +6,18 @@ import { useEffect, useState } from "react";
 import type { AcademyContentDefinition } from "@/lib/academy-course-content";
 import type { PublicLiveTraining } from "@/lib/live-session-catalog";
 
+const AcademyCoursePlayer = dynamic(
+  () => import("@/components/AcademyCoursePlayer"),
+  {
+    loading: () => (
+      <div className="flex min-h-64 items-center justify-center text-sm text-dema-muted">
+        <LoaderCircle className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
+        Ouverture du cours…
+      </div>
+    ),
+  },
+);
+
 const AcademyIndexClient = dynamic(
   () => import("@/components/AcademyIndexClient"),
   {
@@ -25,6 +37,7 @@ type AcademyPayload = {
 
 export default function ActionPlanAcademyPanel() {
   const [payload, setPayload] = useState<AcademyPayload | null>(null);
+  const [selectedContent, setSelectedContent] = useState<AcademyContentDefinition | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [reloadKey, setReloadKey] = useState(0);
 
@@ -84,12 +97,26 @@ export default function ActionPlanAcademyPanel() {
     );
   }
 
+  if (selectedContent) {
+    return (
+      <div className="-mx-4 sm:-mx-6 lg:-mx-8">
+        <AcademyCoursePlayer
+          key={selectedContent.identity.slug}
+          content={selectedContent}
+          embedded
+          onBack={() => setSelectedContent(null)}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="-mx-4 sm:-mx-6 lg:-mx-8">
       <AcademyIndexClient
         contents={payload.contents}
         liveTrainings={payload.liveTrainings}
         embedded
+        onOpenContent={setSelectedContent}
       />
     </div>
   );

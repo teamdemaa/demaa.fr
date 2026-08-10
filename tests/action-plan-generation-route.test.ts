@@ -41,7 +41,7 @@ describe("action plan generation route", () => {
     vi.clearAllMocks();
     mocks.enforceRateLimit.mockResolvedValue(null);
     mocks.generateActionPlan.mockResolvedValue({
-      version: "1",
+      version: "2",
       systemId: "cabinet-comptable",
       weeklyActions: [],
     });
@@ -103,7 +103,7 @@ describe("action plan generation route", () => {
     );
     await expect(response.json()).resolves.toEqual({
       plan: {
-        version: "1",
+        version: "2",
         systemId: "cabinet-comptable",
         weeklyActions: [],
       },

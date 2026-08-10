@@ -2,24 +2,19 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronDown, ChevronUp, FileText, Search, SlidersHorizontal } from "lucide-react";
+import { ChevronDown, ChevronUp, Search, SlidersHorizontal } from "lucide-react";
 import { useMemo, useState } from "react";
 import type { AcademyContentDefinition } from "@/lib/academy-course-content";
-import SystemResourcePreviewModal from "@/components/SystemResourcePreviewModal";
 import { matchesSearchQuery } from "@/lib/search";
-import { SYSTEM_RESOURCES, type SystemResource } from "@/lib/system-resource-catalog";
 import StructureNewsletterBlock from "@/components/StructureNewsletterBlock";
 import AcademyLiveTrainingSection from "@/components/AcademyLiveTrainingSection";
 import type { PublicLiveTraining } from "@/lib/live-session-catalog";
-
-const ACADEMY_MODEL_RESOURCES = SYSTEM_RESOURCES
-  .filter((resource) => resource.format === "template")
-  .sort((left, right) => left.rank - right.rank);
 
 type AcademyIndexClientProps = {
   contents: AcademyContentDefinition[];
   liveTrainings: readonly PublicLiveTraining[];
   embedded?: boolean;
+  onOpenContent?: (content: AcademyContentDefinition) => void;
   backLink?: {
     href: string;
     label: string;
@@ -216,7 +211,15 @@ function CourseDiagram({ slug }: { slug: string }) {
   );
 }
 
-function AcademyCard({ content, eager = false }: { content: AcademyContentDefinition; eager?: boolean }) {
+function AcademyCard({
+  content,
+  eager = false,
+  onOpen,
+}: {
+  content: AcademyContentDefinition;
+  eager?: boolean;
+  onOpen?: (content: AcademyContentDefinition) => void;
+}) {
   const { identity, kind } = content;
   const isCaseStudy = kind === "case-study";
   const caseStudy = isCaseStudy ? CASE_STUDY_PRESENTATIONS[identity.slug] : undefined;
@@ -225,12 +228,7 @@ function AcademyCard({ content, eager = false }: { content: AcademyContentDefini
     ? `${caseStudy.sector} · ${identity.durationMinutes} min`
     : `${identity.durationMinutes} min`;
 
-  return (
-    <Link
-      href={`/academie/${identity.slug}`}
-      className="group block rounded-[1.25rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-4"
-      aria-label={`Ouvrir ${title}`}
-    >
+  const card = (
       <article className="transition-transform duration-200 ease-out group-hover:-translate-y-px motion-reduce:transform-none">
         <div
           className={`relative aspect-video overflow-hidden rounded-[1.25rem] transition-colors duration-200 ${
@@ -262,6 +260,31 @@ function AcademyCard({ content, eager = false }: { content: AcademyContentDefini
           <p className="mt-1.5 text-sm text-dema-muted">{meta}</p>
         </div>
       </article>
+  );
+
+  const className =
+    "group block w-full rounded-[1.25rem] text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-4";
+
+  if (onOpen) {
+    return (
+      <button
+        type="button"
+        onClick={() => onOpen(content)}
+        className={className}
+        aria-label={`Ouvrir ${title}`}
+      >
+        {card}
+      </button>
+    );
+  }
+
+  return (
+    <Link
+      href={`/academie/${identity.slug}`}
+      className={className}
+      aria-label={`Ouvrir ${title}`}
+    >
+      {card}
     </Link>
   );
 }
@@ -270,13 +293,13 @@ export default function AcademyIndexClient({
   contents,
   liveTrainings,
   embedded = false,
+  onOpenContent,
   backLink,
 }: AcademyIndexClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [showAllFundamentals, setShowAllFundamentals] = useState(false);
   const [activeCategory, setActiveCategory] = useState(ALL_ACADEMY_CATEGORIES);
   const [areCategoryTagsVisible, setAreCategoryTagsVisible] = useState(false);
-  const [previewResource, setPreviewResource] = useState<SystemResource | null>(null);
 
   const categories = useMemo(
     () => [
@@ -415,7 +438,12 @@ export default function AcademyIndexClient({
 
             <div className="mt-7 grid grid-cols-1 gap-x-8 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
               {visibleFundamentals.map((content, index) => (
-                <AcademyCard key={content.identity.slug} content={content} eager={index < 3} />
+                <AcademyCard
+                  key={content.identity.slug}
+                  content={content}
+                  eager={index < 3}
+                  onOpen={onOpenContent}
+                />
               ))}
             </div>
 
@@ -441,63 +469,6 @@ export default function AcademyIndexClient({
 
         <AcademyLiveTrainingSection trainings={liveTrainings} />
 
-        {ACADEMY_MODEL_RESOURCES.length ? (
-          <section className="mt-12 border-t border-dema-line/75 pt-9 md:mt-14 md:pt-10" aria-labelledby="academy-models-title">
-            <h2 id="academy-models-title" className="text-2xl font-semibold text-brand-blue md:text-[2rem]">
-              Modèles et documents
-            </h2>
-            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-dema-muted">
-              Les mêmes modèles que dans vos systèmes métier, avec un aperçu avant ouverture.
-            </p>
-
-            <div className="mt-7 grid grid-cols-1 gap-x-8 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
-              {ACADEMY_MODEL_RESOURCES.map((resource) => {
-                const className = "group block rounded-[1.25rem] border border-[#E7EBE8] bg-[#F1F3F0] p-6 text-left transition hover:border-dema-forest/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2";
-                const content = (
-                  <>
-                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-dema-forest">
-                    <FileText className="h-5 w-5" aria-hidden="true" />
-                  </span>
-                  <span className="mt-4 block text-[10px] font-semibold uppercase tracking-[0.15em] text-dema-muted">
-                    {resource.formatLabel}
-                  </span>
-                  <span className="mt-1.5 block text-lg font-semibold leading-snug text-brand-blue transition-colors group-hover:text-dema-forest">
-                    {resource.title}
-                  </span>
-                  <span className="mt-2 block text-sm leading-relaxed text-dema-muted">
-                    {resource.description}
-                  </span>
-                  </>
-                );
-
-                return resource.resourceSlug === "recapitulatif-systeme" ? (
-                  <Link
-                    key={resource.resourceSlug}
-                    href="/systemes"
-                    className={className}
-                    aria-label="Choisir un système pour voir son récapitulatif"
-                  >
-                    {content}
-                    <span className="mt-4 block text-sm font-medium text-dema-forest">
-                      Choisir un système
-                    </span>
-                  </Link>
-                ) : (
-                  <button
-                    key={resource.resourceSlug}
-                    type="button"
-                    onClick={() => setPreviewResource(resource)}
-                    className={className}
-                    aria-label={`Voir un aperçu de ${resource.title}`}
-                  >
-                    {content}
-                  </button>
-                );
-              })}
-            </div>
-          </section>
-        ) : null}
-
         {filteredContents.length === 0 ? (
           <section className="rounded-[1.25rem] border border-dashed border-dema-line bg-white px-6 py-14 text-center">
             <h2 className="text-xl font-semibold text-brand-blue">Aucun cours trouvé</h2>
@@ -505,17 +476,12 @@ export default function AcademyIndexClient({
           </section>
         ) : null}
 
-        <div className="mt-12 md:mt-14">
-          <StructureNewsletterBlock />
-        </div>
-
-        {previewResource ? (
-          <SystemResourcePreviewModal
-            resource={previewResource}
-            trackingContext="academie"
-            onClose={() => setPreviewResource(null)}
-          />
+        {!embedded ? (
+          <div className="mt-12 md:mt-14">
+            <StructureNewsletterBlock />
+          </div>
         ) : null}
+
       </ContentContainer>
     </div>
   );

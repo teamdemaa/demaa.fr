@@ -94,7 +94,7 @@ export default function SavedActionPlanDetail({
   }, [flushWorkspaceSave, workspace]);
 
   return (
-    <>
+    <div className="contents">
       <ActionPlanNavbar activeView={activeTab} onViewChange={setActiveTab} />
       <div className="mt-8">
         <div hidden={activeTab !== "plan"}>
@@ -126,6 +126,6 @@ export default function SavedActionPlanDetail({
           </section>
         ) : null}
       </div>
-    </>
+    </div>
   );
 }

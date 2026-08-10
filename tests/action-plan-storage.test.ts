@@ -113,19 +113,14 @@ function actionPlan(summary = "Un plan concret pour reprendre la main."): Action
     id: `action-${index}` as `action-${1 | 2 | 3 | 4 | 5}`,
     title: `Action ${index}`,
     objective: "Obtenir un résultat concret cette semaine.",
-    why: "Cette action traite directement le blocage décrit.",
-    estimatedMinutes: 30,
     channelOrTool: "Téléphone et document de suivi",
-    deliverable: "Une décision documentée",
     steps: ["Préparer les informations utiles.", "Réaliser puis noter le résultat."],
     readyToUse: null,
-    successCriterion: "La décision est prise et consignée.",
-    ethicalGuardrail: "Respecter le choix et le temps de chaque personne.",
     strategyPillar: "alignement" as const,
   }));
 
   return {
-    version: "1",
+    version: "2",
     summary,
     systemId,
     systemReason: "Ce système correspond à l'activité décrite.",
@@ -173,6 +168,7 @@ describe("action plan Firebase persistence", () => {
 
     const document = firestore.documents.get(`action_plans/${pending.id}`);
     expect(document?.status).toBe("pending_claim");
+    expect(document?.schema_version).toBe("2");
     expect(document?.owner_email).toBeNull();
     expect(document?.claim_secret_hash).toBe(
       hashActionPlanClaimSecret(pending.claimSecret),
@@ -277,6 +273,54 @@ describe("action plan Firebase persistence", () => {
     expect(plans[0]?.workspaceState.tasks["action-1"]?.status).toBe("done");
     expect(plans[0]?.workspaceState.tasks["action-1"]?.notes).toContain("équipe");
     expect(plans[0]?.plan.summary).toBe(plan.summary);
+  });
+
+  it("reads legacy V1 plans and workspace overrides without losing progress", async () => {
+    const currentPlan = actionPlan("Plan historique");
+    const legacyPlan = {
+      ...currentPlan,
+      version: "1",
+      weeklyActions: currentPlan.weeklyActions.map((action) => ({
+        ...action,
+        why: "Ancienne justification.",
+        estimatedMinutes: 60,
+        deliverable: "Ancien livrable.",
+        successCriterion: "Ancien critère.",
+        ethicalGuardrail: "Ancien garde-fou.",
+      })),
+    };
+    const legacyWorkspace = createActionPlanWorkspaceState(currentPlan);
+    legacyWorkspace.tasks["action-1"].status = "done";
+    legacyWorkspace.tasks["action-1"].notes = "Progression historique";
+    const legacyWorkspaceValue = structuredClone(legacyWorkspace) as unknown as {
+      tasks: Record<string, { overrides: Record<string, unknown> }>;
+    };
+    legacyWorkspaceValue.tasks["action-1"].overrides.estimatedMinutes = 60;
+
+    firestore.documents.set("action_plans/legacy-plan", {
+      schema_version: "1",
+      status: "active",
+      plan: legacyPlan,
+      workspace_state: legacyWorkspaceValue,
+      source_text: null,
+      generation: null,
+      owner_email: "dirigeant@example.com",
+      revision: 3,
+      created_at: "2026-08-01T10:00:00.000Z",
+      updated_at: "2026-08-02T10:00:00.000Z",
+    });
+
+    const [stored] = await getOwnedActionPlans("dirigeant@example.com");
+    expect(stored?.plan.version).toBe("2");
+    expect(stored?.plan.weeklyActions[0]).not.toHaveProperty("why");
+    expect(stored?.plan.weeklyActions[0]).not.toHaveProperty("estimatedMinutes");
+    expect(stored?.workspaceState.tasks["action-1"].status).toBe("done");
+    expect(stored?.workspaceState.tasks["action-1"].notes).toBe(
+      "Progression historique",
+    );
+    expect(stored?.workspaceState.tasks["action-1"].overrides).not.toHaveProperty(
+      "estimatedMinutes",
+    );
   });
 
   it("rejects an outdated revision instead of overwriting newer changes", async () => {

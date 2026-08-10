@@ -1,7 +1,8 @@
 "use client";
 
-import { CheckCircle2, LoaderCircle, Mail, Save } from "lucide-react";
-import { useState } from "react";
+import { CheckCircle2, LoaderCircle, Mail, Save, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import type { ActionPlan } from "@/lib/action-plan-contract";
 import type { ActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
 import { isValidEmail, normalizeEmail } from "@/lib/email";
@@ -35,12 +36,43 @@ export default function ActionPlanSaveControl({
   const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [devLink, setDevLink] = useState<string | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [subscribeToStructure, setSubscribeToStructure] = useState(false);
+  const [newsletterWarning, setNewsletterWarning] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!dialogOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    function closeOnEscape(event: KeyboardEvent) {
+      if (event.key === "Escape" && state !== "sending") {
+        setDialogOpen(false);
+      }
+    }
+
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [dialogOpen, state]);
 
   async function createSavedPlan() {
+    if (state === "email" || state === "sending" || state === "sent") {
+      setDialogOpen(true);
+      return;
+    }
     if (state !== "idle") return;
 
     if (demoMode) {
-      setState("saved");
+      setPendingClaim({
+        actionPlanId: "demo-action-plan",
+        actionPlanClaimSecret: "demo-claim",
+      });
+      setState("email");
+      setDialogOpen(true);
       return;
     }
 
@@ -84,6 +116,7 @@ export default function ActionPlanSaveControl({
         actionPlanClaimSecret: body.actionPlanClaimSecret,
       });
       setState("email");
+      setDialogOpen(true);
     } catch (saveError) {
       setError(
         saveError instanceof Error
@@ -105,6 +138,12 @@ export default function ActionPlanSaveControl({
 
     setState("sending");
     setError(null);
+    setNewsletterWarning(null);
+
+    if (demoMode) {
+      setState("sent");
+      return;
+    }
 
     try {
       const response = await fetch("/api/customer-space/magic-link", {
@@ -125,6 +164,28 @@ export default function ActionPlanSaveControl({
         throw new Error(body?.error || "Impossible d’envoyer le lien sécurisé.");
       }
 
+      if (subscribeToStructure) {
+        try {
+          const newsletterResponse = await fetch("/api/newsletter-subscribe", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: normalizedEmail, website: "" }),
+          });
+          const newsletterBody = (await newsletterResponse.json().catch(() => null)) as
+            | { ok?: boolean }
+            | null;
+          if (!newsletterResponse.ok || newsletterBody?.ok !== true) {
+            setNewsletterWarning(
+              "Le lien a bien été envoyé, mais l’inscription à Structure n’a pas pu être confirmée.",
+            );
+          }
+        } catch {
+          setNewsletterWarning(
+            "Le lien a bien été envoyé, mais l’inscription à Structure n’a pas pu être confirmée.",
+          );
+        }
+      }
+
       setDevLink(body.devLink || null);
       setState("sent");
     } catch (sendError) {
@@ -138,58 +199,7 @@ export default function ActionPlanSaveControl({
   }
 
   if (state === "saved") {
-    return (
-      <p className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-dema-forest" role="status">
-        <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
-        Plan sauvegardé
-      </p>
-    );
-  }
-
-  if (state === "sent") {
-    return (
-      <div className="max-w-sm text-sm" role="status">
-        <p className="inline-flex items-center gap-2 font-medium text-dema-forest">
-          <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
-          Lien envoyé. Votre plan sera rattaché après connexion.
-        </p>
-        {devLink ? (
-          <a href={devLink} className="mt-2 inline-flex text-xs text-dema-forest underline">
-            Ouvrir le lien de test
-          </a>
-        ) : null}
-      </div>
-    );
-  }
-
-  if (state === "email" || state === "sending") {
-    return (
-      <form onSubmit={sendMagicLink} className="w-full max-w-md rounded-2xl border border-dema-line bg-dema-paper p-3 sm:flex sm:items-end sm:gap-2">
-        <label className="block min-w-0 flex-1 text-xs text-dema-muted">
-          Votre e-mail pour retrouver ce plan
-          <span className="relative mt-1.5 block">
-            <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-dema-forest/45" aria-hidden="true" />
-            <input
-              type="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              placeholder="vous@entreprise.fr"
-              autoComplete="email"
-              className="min-h-11 w-full rounded-full border border-dema-line bg-dema-cream pl-9 pr-3 text-sm text-brand-blue outline-none focus:border-dema-forest/30"
-            />
-          </span>
-        </label>
-        <button
-          type="submit"
-          disabled={state === "sending"}
-          className="mt-2 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-dema-forest px-4 text-sm font-semibold text-white disabled:opacity-60 sm:mt-0 sm:w-auto"
-        >
-          {state === "sending" ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
-          Envoyer le lien
-        </button>
-        {error ? <p className="mt-2 text-xs text-red-700 sm:mt-0">{error}</p> : null}
-      </form>
-    );
+    return null;
   }
 
   return (
@@ -197,13 +207,136 @@ export default function ActionPlanSaveControl({
       <button
         type="button"
         onClick={() => void createSavedPlan()}
-        disabled={state === "creating"}
-        className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-dema-forest px-5 text-sm font-semibold text-white transition hover:bg-brand-blue disabled:opacity-60"
+        disabled={state === "creating" || state === "sending"}
+        className="inline-flex min-h-10 items-center justify-center gap-1.5 rounded-full bg-dema-forest px-3 text-xs font-semibold text-white transition hover:bg-brand-blue disabled:opacity-60 sm:min-h-11 sm:gap-2 sm:px-4 sm:text-sm"
       >
-        {state === "creating" ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : <Save className="h-4 w-4" aria-hidden="true" />}
-        {state === "creating" ? "Préparation…" : "Sauvegarder"}
+        {state === "creating" || state === "sending" ? (
+          <LoaderCircle className="h-3.5 w-3.5 animate-spin sm:h-4 sm:w-4" aria-hidden="true" />
+        ) : state === "sent" ? (
+          <CheckCircle2 className="hidden h-4 w-4 sm:block" aria-hidden="true" />
+        ) : (
+          <Save className="hidden h-4 w-4 sm:block" aria-hidden="true" />
+        )}
+        {state === "creating"
+          ? "Préparation…"
+          : state === "sending"
+            ? "Envoi…"
+            : state === "sent"
+              ? "Lien envoyé"
+              : "Sauvegarder"}
       </button>
       {error ? <p className="mt-2 max-w-sm text-xs text-red-700">{error}</p> : null}
+
+      {dialogOpen &&
+      (state === "email" || state === "sending" || state === "sent")
+        ? createPortal(
+        <div
+          className="fixed inset-0 z-[140] flex items-center justify-center overflow-y-auto overscroll-contain bg-brand-blue/20 p-3 backdrop-blur-sm sm:p-6"
+          role="presentation"
+          onMouseDown={() => {
+            if (state !== "sending") setDialogOpen(false);
+          }}
+        >
+          <section
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="save-account-title"
+            className="my-auto max-h-[calc(100dvh-1.5rem)] w-full max-w-md overflow-y-auto overscroll-contain rounded-[1.4rem] border border-dema-line bg-dema-paper p-5 shadow-2xl sm:max-h-[calc(100dvh-3rem)] sm:p-6"
+            onMouseDown={(event) => event.stopPropagation()}
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-xs font-medium uppercase tracking-[0.14em] text-dema-forest">Sauvegarde</p>
+                <h2 id="save-account-title" className="mt-1 text-2xl font-medium tracking-[-0.035em] text-brand-blue">
+                  Créer votre compte
+                </h2>
+              </div>
+              <button
+                type="button"
+                onClick={() => setDialogOpen(false)}
+                disabled={state === "sending"}
+                className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-dema-line text-dema-muted disabled:opacity-50"
+                aria-label="Fermer"
+              >
+                <X className="h-4 w-4" aria-hidden="true" />
+              </button>
+            </div>
+
+            {state === "sent" ? (
+              <div className="mt-6" role="status">
+                <p className="flex items-start gap-2 text-sm leading-relaxed text-dema-forest">
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+                  <span>
+                    {demoMode
+                      ? "Mode démo : le lien sécurisé créerait votre compte et sauvegarderait ce plan. Aucun e-mail n’a été envoyé."
+                      : "Lien envoyé. Ouvrez-le pour créer votre compte et sauvegarder ce plan."}
+                  </span>
+                </p>
+                {devLink ? (
+                  <a href={devLink} className="mt-4 inline-flex text-sm text-dema-forest underline">
+                    Ouvrir le lien de test
+                  </a>
+                ) : null}
+                {newsletterWarning ? (
+                  <p className="mt-3 text-xs leading-relaxed text-amber-800" role="alert">
+                    {newsletterWarning}
+                  </p>
+                ) : null}
+                <button
+                  type="button"
+                  onClick={() => setDialogOpen(false)}
+                  className="mt-6 inline-flex min-h-11 w-full items-center justify-center rounded-full border border-dema-line text-sm font-medium text-brand-blue"
+                >
+                  Fermer
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={sendMagicLink} className="mt-5">
+                <p className="text-sm leading-relaxed text-dema-muted">
+                  Indiquez votre adresse e-mail. Vous recevrez un lien sécurisé pour créer votre compte et retrouver ce plan.
+                </p>
+                <label className="mt-5 block text-xs font-medium text-dema-muted">
+                  Adresse e-mail
+                  <span className="relative mt-1.5 block">
+                    <Mail className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-dema-forest/45" aria-hidden="true" />
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(event) => setEmail(event.target.value)}
+                      placeholder="vous@entreprise.fr"
+                      autoComplete="email"
+                      autoFocus
+                      className="min-h-12 w-full rounded-full border border-dema-line bg-dema-cream pl-11 pr-4 text-sm text-brand-blue outline-none focus:border-dema-forest/30"
+                    />
+                  </span>
+                </label>
+                <label className="mt-4 flex cursor-pointer items-start gap-3 rounded-xl border border-dema-line/80 bg-dema-cream/55 p-3 text-sm leading-relaxed text-dema-muted">
+                  <input
+                    type="checkbox"
+                    checked={subscribeToStructure}
+                    onChange={(event) => setSubscribeToStructure(event.target.checked)}
+                    className="mt-0.5 h-4 w-4 shrink-0 accent-[#2f6748]"
+                  />
+                  <span>
+                    Recevoir <strong className="font-medium text-brand-blue">Structure</strong> : actualités entrepreneuriales et tarifs négociés.
+                  </span>
+                </label>
+                <button
+                  type="submit"
+                  disabled={state === "sending"}
+                  className="mt-4 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-dema-forest px-5 text-sm font-semibold text-white disabled:opacity-60"
+                >
+                  {state === "sending" ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
+                  Créer mon compte
+                </button>
+                {error ? <p className="mt-3 text-sm text-red-700">{error}</p> : null}
+              </form>
+            )}
+          </section>
+        </div>,
+        document.body,
+      )
+        : null}
     </div>
   );
 }

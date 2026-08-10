@@ -4,7 +4,7 @@ export const ACTION_PLAN_DEMO_SITUATION =
   "Je dirige un restaurant de quartier. Le midi fonctionne correctement, mais je manque de clients le soir et je veux mieux organiser les actions à mener chaque semaine.";
 
 export const ACTION_PLAN_DEMO: ActionPlan = {
-  version: "1",
+  version: "2",
   summary:
     "Cette semaine, clarifiez ce qui attire déjà vos meilleurs clients, rendez la réservation plus simple et testez une action locale mesurable pour le service du soir.",
   systemId: "restaurant",
@@ -16,11 +16,7 @@ export const ACTION_PLAN_DEMO: ActionPlan = {
       title: "Vérifier le parcours de réservation du soir",
       objective:
         "Permettre à une personne qui découvre le restaurant de comprendre l’offre et de réserver sans hésiter.",
-      why:
-        "Avant d’augmenter la visibilité, il faut vérifier que les personnes intéressées peuvent facilement passer à l’action.",
-      estimatedMinutes: 60,
       channelOrTool: "Google, site et téléphone",
-      deliverable: "Un parcours de réservation vérifié et corrigé",
       steps: [
         "Rechercher le restaurant sur Google depuis un téléphone comme le ferait un nouveau client.",
         "Vérifier les horaires, le menu, les prix, les photos et le moyen de réserver.",
@@ -28,10 +24,6 @@ export const ACTION_PLAN_DEMO: ActionPlan = {
         "Corriger les informations manquantes ou contradictoires.",
       ],
       readyToUse: null,
-      successCriterion:
-        "Une personne extérieure trouve l’information utile et réserve en moins de deux minutes.",
-      ethicalGuardrail:
-        "Conserver des informations exactes et ne pas créer de fausse disponibilité limitée.",
       strategyPillar: "promotion",
     },
     {
@@ -39,11 +31,7 @@ export const ACTION_PLAN_DEMO: ActionPlan = {
       title: "Interroger cinq clients réguliers",
       objective:
         "Comprendre ce qu’ils apprécient réellement et ce qui pourrait leur donner envie de venir le soir.",
-      why:
-        "Leurs réponses donnent des éléments concrets pour ajuster l’offre sans partir d’une simple intuition.",
-      estimatedMinutes: 90,
       channelOrTool: "Conversation sur place ou WhatsApp",
-      deliverable: "Une synthèse des réponses et trois enseignements prioritaires",
       steps: [
         "Choisir cinq clients qui connaissent déjà bien le restaurant.",
         "Leur demander pourquoi ils viennent, ce qu’ils recommanderaient et ce qui freine une visite le soir.",
@@ -55,10 +43,6 @@ export const ACTION_PLAN_DEMO: ActionPlan = {
         content:
           "Bonjour, j’améliore actuellement notre service du soir. Vous connaissez bien le restaurant : est-ce que je peux vous poser trois questions rapides ? Vos réponses m’aideront à travailler sur les bons sujets.",
       },
-      successCriterion:
-        "Cinq retours obtenus et au moins deux attentes ou freins récurrents identifiés.",
-      ethicalGuardrail:
-        "Demander l’accord, rester bref et ne pas offrir de contrepartie conditionnée à une réponse positive.",
       strategyPillar: "positionnement",
     },
     {
@@ -66,11 +50,7 @@ export const ACTION_PLAN_DEMO: ActionPlan = {
       title: "Tester une offre du soir simple",
       objective:
         "Vérifier si une proposition plus lisible peut augmenter les réservations sans dégrader la marge.",
-      why:
-        "Un test limité permet d’apprendre avant de modifier durablement la carte ou d’investir en publicité.",
-      estimatedMinutes: 120,
       channelOrTool: "Carte, équipe et communication locale",
-      deliverable: "Une offre test avec prix, période, capacité et indicateur de résultat",
       steps: [
         "Choisir une attente réellement observée dans les retours clients.",
         "Définir une offre courte, rentable et facile à expliquer par l’équipe.",
@@ -78,10 +58,6 @@ export const ACTION_PLAN_DEMO: ActionPlan = {
         "Noter les ventes, la marge et les retours avant de décider de poursuivre.",
       ],
       readyToUse: null,
-      successCriterion:
-        "Le test est lancé avec un objectif chiffré et une date de décision claire.",
-      ethicalGuardrail:
-        "Présenter honnêtement l’offre et ne pas utiliser de fausse urgence.",
       strategyPillar: "offre",
     },
   ],

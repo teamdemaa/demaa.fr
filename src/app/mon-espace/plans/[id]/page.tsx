@@ -36,7 +36,7 @@ export default async function SavedActionPlanPage({
   if (!stored) notFound();
 
   return (
-    <div className="min-h-screen bg-dema-cream text-brand-blue">
+    <div data-action-plan-workspace className="min-h-screen bg-dema-cream text-brand-blue">
       <Navbar hideSectionSelector />
       <main className="px-4 pb-24 pt-8 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-[68rem]">

@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { z } from "zod";
 import {
   actionPlanSchema,
+  compatibleActionPlanSchema,
   type ActionPlan,
 } from "@/lib/action-plan-contract";
 import {
@@ -14,21 +15,16 @@ function action(index: number): ActionPlan["weeklyActions"][number] {
     id: `action-${index}`,
     title: `Action ${index}`,
     objective: "Obtenir un resultat observable cette semaine.",
-    why: "Cette action traite directement le blocage decrit.",
-    estimatedMinutes: 45,
     channelOrTool: "Tableau de suivi",
-    deliverable: "Une decision datee et partagee.",
     steps: ["Preparer les informations utiles.", "Realiser puis consigner le resultat."],
     readyToUse: null,
-    successCriterion: "La decision est prise et la prochaine etape est datee.",
-    ethicalGuardrail: "Ne pas solliciter une personne sans motif explicite.",
     strategyPillar: "alignement",
   };
 }
 
 function validPlan(): ActionPlan {
   return {
-    version: "1",
+    version: "2",
     summary: "Le dirigeant doit clarifier sa priorite puis la traduire en actions simples.",
     systemId: "cabinet-comptable",
     systemReason: "La situation concerne le pilotage d'un cabinet comptable.",
@@ -89,6 +85,27 @@ describe("action plan contract", () => {
     expect(jsonSchema).toContain('"cabinet-comptable"');
     expect(jsonSchema).toContain('"additionalProperties":false');
     expect(jsonSchema.match(/cabinet-comptable/g)).toHaveLength(1);
+    expect(jsonSchema).not.toMatch(
+      /why|estimatedMinutes|deliverable|successCriterion|ethicalGuardrail/,
+    );
+  });
+
+  it("normalizes already-saved V1 plans without legacy action fields", () => {
+    const current = validPlan();
+    const legacy = {
+      ...current,
+      version: "1",
+      weeklyActions: current.weeklyActions.map((item) => ({
+        ...item,
+        why: "Ancienne justification.",
+        estimatedMinutes: 45,
+        deliverable: "Ancien livrable.",
+        successCriterion: "Ancien critere.",
+        ethicalGuardrail: "Ancien garde-fou.",
+      })),
+    };
+
+    expect(compatibleActionPlanSchema.parse(legacy)).toEqual(current);
   });
 
   it("rejects an unknown system, fewer than three actions and extra fields", () => {
