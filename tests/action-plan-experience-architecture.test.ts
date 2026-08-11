@@ -15,7 +15,8 @@ describe("action plan experience architecture", () => {
     const result = source("src/components/ActionPlanResult.tsx");
 
     expect(experience).toContain("useState<EditableActionPlan | null>(null)");
-    expect(experience).not.toMatch(/localStorage|sessionStorage/);
+    expect(experience).toContain("readGuestSelectedSystemId");
+    expect(experience).toContain("writeGuestSelectedSystemId");
     expect(saveControl).not.toMatch(/localStorage|sessionStorage/);
     expect(saveControl).toContain('fetch("/api/action-plans"');
     expect(saveControl).toContain("router.push(`/plans/");

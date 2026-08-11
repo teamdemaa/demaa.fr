@@ -14,6 +14,10 @@ import {
   ACTION_PLAN_DEMO,
   ACTION_PLAN_DEMO_SITUATION,
 } from "@/lib/action-plan-demo";
+import {
+  readGuestSelectedSystemId,
+  writeGuestSelectedSystemId,
+} from "@/lib/action-plan-guest-preferences";
 import type { ActionPlanSystemOption } from "@/lib/action-plan-system-catalog";
 import {
   addActionToManualPlan,
@@ -104,6 +108,32 @@ export default function ActionPlanExperience({
   const requestControllerRef = useRef<AbortController | null>(null);
   const speechRecognitionRef = useRef<BrowserSpeechRecognition | null>(null);
   const accessIntentHandledRef = useRef(false);
+  const guestSystemPreferenceHydratedRef = useRef(false);
+
+  useEffect(() => {
+    if (guestSystemPreferenceHydratedRef.current) return;
+    guestSystemPreferenceHydratedRef.current = true;
+
+    const storedSystemId = readGuestSelectedSystemId();
+    if (
+      !storedSystemId
+      || !systemOptions.some((option) => option.id === storedSystemId)
+    ) return;
+
+    setSelectedSystemId((current) => current || storedSystemId);
+    setPrePlanWorkspace((current) => current.selectedSystemId
+      ? current
+      : { ...current, selectedSystemId: storedSystemId });
+  }, [systemOptions]);
+
+  useEffect(() => {
+    if (
+      !selectedSystemId
+      || !systemOptions.some((option) => option.id === selectedSystemId)
+    ) return;
+
+    writeGuestSelectedSystemId(selectedSystemId);
+  }, [selectedSystemId, systemOptions]);
 
   useEffect(() => {
     if (accessIntentHandledRef.current) return;

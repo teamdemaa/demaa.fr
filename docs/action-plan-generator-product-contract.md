@@ -183,6 +183,9 @@ pas utilisés comme libellés humains.
 
 - Le plan vit dans l'état de la page ou de la session courante.
 - Aucun `localStorage` durable n'est une seconde source de vérité.
+- Seul le slug du Système choisi est mémorisé dans ce navigateur pour éviter
+  de redemander l'activité à chaque visite ; aucun contenu de plan, aucune
+  situation et aucune donnée métier détaillée n'y sont stockés.
 - Une actualisation ou une fermeture peut faire perdre le résultat.
 - Le résultat est visible avant connexion.
 
@@ -264,7 +267,7 @@ tokens.
 | Contenu complet des 115 Systèmes envoyé au modèle | Catalogue léger uniquement |
 | Changement de Système avec régénération | Chargement déterministe sans IA |
 | Analyse métier séparée du vocal | Transcription dans le champ |
-| Persistance invitée durable dans `localStorage` | Mémoire page/session |
+| Plan invité durable dans `localStorage` | Plan en mémoire page/session ; seul le slug du Système choisi est mémorisé localement |
 | Chaîne multi-agent par défaut | Une génération principale |
 
 ## Arbitrages ouverts
