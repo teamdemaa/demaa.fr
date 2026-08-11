@@ -1,6 +1,6 @@
 "use client";
 
-import { Handshake, X } from "lucide-react";
+import { X } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import CoachingPanel from "@/components/CoachingPanel";
@@ -65,11 +65,10 @@ export default function ActionPlanCoachingControl({
             if (initialEmail) setOpen(true);
             else setAccessOpen(true);
           }}
-          className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-dema-forest/15 bg-dema-paper px-3 text-xs font-medium text-dema-forest transition hover:border-dema-forest/28 hover:bg-dema-sage/45 sm:min-h-11 sm:px-4 sm:text-sm"
+          className="inline-flex min-h-10 items-center justify-center rounded-full border border-dema-forest/15 bg-dema-paper px-3 text-xs font-medium text-dema-forest transition hover:border-dema-forest/28 hover:bg-dema-sage/45 sm:min-h-11 sm:px-4 sm:text-sm"
           aria-label="Parler à un spécialiste"
           title="Parler à un spécialiste"
         >
-          <Handshake className="h-4 w-4" aria-hidden="true" />
           <span>Parler à un spécialiste</span>
         </button>,
         target,
