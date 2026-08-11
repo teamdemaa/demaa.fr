@@ -275,7 +275,8 @@ function ActionDrawer({
               onChange={(event) => setDraftObjective(event.target.value)}
               onBlur={saveObjective}
               rows={1}
-              className="-mx-1 mt-1.5 min-h-6 w-[calc(100%+0.5rem)] resize-none overflow-hidden rounded-lg bg-transparent px-1 text-sm leading-relaxed text-brand-blue [field-sizing:content] outline-none transition focus:bg-dema-sage/35"
+              placeholder="À compléter…"
+              className="mt-1.5 min-h-8 w-full resize-none overflow-hidden rounded-lg bg-brand-blue/[0.035] px-2 py-1 text-sm leading-relaxed text-brand-blue [field-sizing:content] outline-none transition placeholder:text-dema-muted/65 focus:bg-dema-sage/35"
             />
           </div>
 
@@ -380,7 +381,8 @@ function StrategyPanel({
               rows={1}
               maxLength={180}
               aria-label={`Titre ${section.label}`}
-              className="-mx-1 mt-2 min-h-7 w-[calc(100%+0.5rem)] resize-none overflow-hidden rounded-lg bg-transparent px-1 text-xl font-medium leading-snug text-brand-blue [field-sizing:content] outline-none transition focus:bg-dema-sage/40"
+              placeholder="Synthèse à compléter…"
+              className="mt-2 min-h-9 w-full resize-none overflow-hidden rounded-lg bg-brand-blue/[0.035] px-2 py-1 text-xl font-medium leading-snug text-brand-blue [field-sizing:content] outline-none transition placeholder:text-dema-muted/55 focus:bg-dema-sage/40"
             />
             <div className="mt-5 space-y-4">
               {section.fields.map(([label], index) => (
@@ -404,7 +406,8 @@ function StrategyPanel({
                     rows={1}
                     maxLength={500}
                     aria-label={label}
-                    className="-mx-1 mt-1.5 min-h-6 w-[calc(100%+0.5rem)] resize-none overflow-hidden rounded-lg bg-transparent px-1 text-sm leading-relaxed text-brand-blue/75 [field-sizing:content] outline-none transition focus:bg-dema-sage/40 focus:text-brand-blue"
+                    placeholder="À compléter…"
+                    className="mt-1.5 min-h-8 w-full resize-none overflow-hidden rounded-lg bg-brand-blue/[0.035] px-2 py-1 text-sm leading-relaxed text-brand-blue/75 [field-sizing:content] outline-none transition placeholder:text-dema-muted/60 focus:bg-dema-sage/40 focus:text-brand-blue"
                   />
                 </div>
               ))}
