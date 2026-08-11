@@ -1,6 +1,6 @@
 # Backlog central Demaa
 
-Dernière consolidation : 10 août 2026.
+Dernière consolidation : 12 août 2026.
 
 Backlog de pilotage :
 [Demaa — Backlog maître](https://docs.google.com/spreadsheets/d/19uwK54Pd2XiPzPM8OBvNkFSaSHYsJO_IHk8ZxzvvmQY/edit).
@@ -9,15 +9,16 @@ Ce document remplace les listes d'actions dispersées dans les chats Demaa. Il
 distingue ce qui est déjà livré, ce qui est prêt mais non publié et ce qui reste
 à réaliser.
 
-## État de clôture Production — 10 août 2026
+## État de clôture Production — 12 août 2026
 
 Cette section est l'état exécutable courant. Toutes les sections historiques
 datées plus bas sont conservées comme journal et ne doivent plus servir de plan
 de déploiement.
 
-- La dernière release runtime vérifiée est le merge `3f42c66` de la PR #93.
-  Elle est alignée entre le local principal, `origin/main` et le déploiement
-  Production Vercel.
+- La release runtime Production vérifiée est `cdcb415`. Le correctif isolé
+  `0919acf` sur `codex/global-audit-release` est prêt sur une Preview Vercel,
+  mais n'est pas encore fusionné dans `main`. Le checkout local principal
+  reste volontairement à réaligner après préservation de ses documents locaux.
 - `https://demaa.co` est le domaine canonique ; `demaa.fr` redirige vers lui.
 - Les 115 fiches Système ont pour route canonique `/systemes/[slug]` ; les
   anciens espaces `/kit-operationnel`, `/systemes-operationnels` et
@@ -33,7 +34,10 @@ de déploiement.
   opérationnelle. Les Formations en direct et les Cas concrets restent masqués
   par des bascules éditoriales explicites.
 - Les parcours guide, newsletter, Structure, Rejoindre Team Demaa, callback
-  Services et Levier ont été testés en Production avec `team@demaa.fr`.
+  Services, Levier, Opportunités, sauvegarde de plan et lien magique ont été
+  testés en Production. L'envoi direct à la boîte Gmail opérationnelle est
+  validé avec SPF, DKIM et DMARC ; le routage de l'alias `team@demaa.fr` vers
+  cette boîte doit encore être confirmé dans Google Workspace.
 - Le runtime Firebase Production utilise l'identité sans clé
   `demaa-prod-app@demaa-dde32.iam.gserviceaccount.com`, limitée à
   `roles/datastore.user` et empruntable uniquement par le projet Vercel Demaa.
@@ -51,7 +55,9 @@ l'ADR 0004 prévaut.
 
 - `demaa.co` est le domaine canonique du lancement France, sans préfixe de
   locale. L'internationalisation reste différée.
-- La navigation principale contient uniquement `Système métier` et `Académie`.
+- La navigation applicative contient `Plan d'action`, `Système`, `Académie` et
+  `Opportunités`. Le produit Coaching est accessible par l'action
+  `Parler à un spécialiste` et conserve les onglets Sessions et Messages.
 - Une fiche Système contient `Process`, `Solutions` et `Ressources`.
 - Six Services canoniques existent : Automatisation des processus,
   Expert-comptable, Formalités juridiques, Sous-traitance de formalités
@@ -66,9 +72,10 @@ l'ADR 0004 prévaut.
   contenus pédagogiques globaux restent dans l'Académie.
 - Firebase est la source distante autoritaire pour Solutions et le réseau de
   prestataires lorsque l'environnement est configuré.
-- `/opportunites` et `/rejoindre-team-demaa` sont les deux parcours publics du
-  réseau. Les anciennes URL correspondantes doivent rediriger, jamais devenir
-  des 404 lorsqu'un successeur exact existe.
+- Opportunités et Rejoindre Team Demaa sont intégrés à l'expérience
+  applicative unique. Les routes canoniques historiques restent disponibles
+  ou redirigent lorsqu'un successeur exact existe ; elles ne doivent pas
+  réintroduire un second shell applicatif.
 - Les anciennes pages globales Modèles/Ressources sont retirées. Une URL connue
   redirige vers son cours ou sa fiche Système ; seul un chemin sans successeur
   répond 404/noindex. La matrice canonique est
@@ -109,9 +116,8 @@ l'ADR 0004 prévaut.
   ni gestion d'équipe dans ce lot. Le nom d'entreprise reste facultatif et
   pourra être enrichi depuis le profil ; il ne bloque pas le lien magique ni
   l'ouverture du plan.
-- [ ] Ajouter ultérieurement, après décision éditoriale, un nom
-  d’organisation facultatif aux opportunités. Ne rien afficher lorsque cette
-  information n’est pas explicitement publiée.
+- [x] Permettre un nom d'organisation facultatif dans l'administration des
+  Opportunités et ne l'afficher que lorsqu'il est explicitement publié.
 - [ ] Cadrer ensuite les évolutions Coaching : phase gratuite,
   phase payante, capacité humaine, délais, messagerie, confidentialité,
   conservation des échanges et prix. Aucun de ces éléments ne doit être promis
