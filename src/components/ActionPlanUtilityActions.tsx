@@ -1,6 +1,6 @@
 "use client";
 
-import { MoreHorizontal } from "lucide-react";
+import { MoreVertical } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import ActionPlanSaveControl from "@/components/ActionPlanSaveControl";
 import ActionPlanShareControl from "@/components/ActionPlanShareControl";
@@ -51,7 +51,7 @@ export default function ActionPlanUtilityActions({
   }, [menuOpen]);
 
   return (
-    <div className="flex items-center justify-end gap-2">
+    <div className="flex shrink-0 items-center justify-end gap-1 sm:gap-2">
         <ActionPlanSaveControl
           plan={plan}
           sourceText={sourceText}
@@ -63,12 +63,12 @@ export default function ActionPlanUtilityActions({
             ref={menuButtonRef}
             type="button"
             onClick={() => setMenuOpen((current) => !current)}
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-dema-muted"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-dema-muted sm:h-11 sm:w-11"
             aria-label="Actions du plan"
             aria-expanded={menuOpen}
             aria-controls="action-plan-utility-menu"
           >
-            <MoreHorizontal className="h-5 w-5" aria-hidden="true" />
+            <MoreVertical className="h-5 w-5" aria-hidden="true" />
           </button>
           {menuOpen ? (
             <div id="action-plan-utility-menu" className="absolute right-0 top-full z-50 mt-2 rounded-2xl border border-dema-line bg-dema-paper px-2 py-1 shadow-[0_18px_46px_rgba(23,35,29,0.14)]">
