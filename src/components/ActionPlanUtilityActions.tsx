@@ -72,7 +72,7 @@ export default function ActionPlanUtilityActions({
           </button>
           {menuOpen ? (
             <div id="action-plan-utility-menu" className="absolute right-0 top-full z-50 mt-2 min-w-[11rem] rounded-2xl border border-dema-line bg-dema-paper p-2 shadow-[0_18px_46px_rgba(23,35,29,0.14)]">
-              <ActionPlanShareControl plan={plan} variant="menu" />
+              <ActionPlanShareControl plan={plan} workspace={workspace} variant="menu" />
               <button
                 type="button"
                 onClick={() => {

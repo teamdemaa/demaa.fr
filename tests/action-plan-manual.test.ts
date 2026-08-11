@@ -4,6 +4,7 @@ import {
   compatibleActionPlanSchema,
 } from "@/lib/action-plan-contract";
 import {
+  addActionToManualPlan,
   createManualAction,
   createManualActionPlan,
   createManualActionPlanWorkspaceState,
@@ -64,5 +65,32 @@ describe("manual action plan", () => {
       steps: [""],
     });
     expect(createManualAction(2).id).toBe("action-2");
+  });
+
+  it("reuses a deleted slot when a new manual action is added", () => {
+    const plan = {
+      ...createManualActionPlan(),
+      weeklyActions: [createManualAction(1), createManualAction(2)],
+    };
+    const workspace = {
+      ...createManualActionPlanWorkspaceState(),
+      deletedActionIds: ["action-1"],
+      tasks: {
+        "action-1": {
+          status: "done" as const,
+          dueDate: null,
+          completedStepIndexes: [0],
+          notes: "Ancienne action",
+          overrides: {},
+        },
+      },
+    };
+
+    const next = addActionToManualPlan(plan, workspace);
+
+    expect(next?.plan.weeklyActions).toHaveLength(2);
+    expect(next?.plan.weeklyActions[0]?.title).toBe("Nouvelle action");
+    expect(next?.workspace.deletedActionIds).toEqual([]);
+    expect(next?.workspace.tasks["action-1"]?.status).toBe("todo");
   });
 });

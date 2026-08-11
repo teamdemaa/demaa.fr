@@ -3,15 +3,25 @@
 import { Check, Share2 } from "lucide-react";
 import { useState } from "react";
 import type { PersistableActionPlan } from "@/lib/action-plan-contract";
+import type { ActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
 
-function buildShareText(plan: PersistableActionPlan) {
+function buildShareText(
+  plan: PersistableActionPlan,
+  workspace?: ActionPlanWorkspaceState,
+) {
+  const visibleActions = workspace
+    ? plan.weeklyActions.filter(
+        (action) => !workspace.deletedActionIds.includes(action.id),
+      )
+    : plan.weeklyActions;
+
   return [
     "Mon plan d’action Demaa",
     "",
     plan.summary,
     "",
     "À faire cette semaine",
-    ...plan.weeklyActions.map(
+    ...visibleActions.map(
       (action, index) => `${index + 1}. ${action.title}`,
     ),
   ].join("\n");
@@ -19,15 +29,17 @@ function buildShareText(plan: PersistableActionPlan) {
 
 export default function ActionPlanShareControl({
   plan,
+  workspace,
   variant = "icon",
 }: {
   plan: PersistableActionPlan;
+  workspace?: ActionPlanWorkspaceState;
   variant?: "icon" | "menu";
 }) {
   const [copied, setCopied] = useState(false);
 
   async function sharePlan() {
-    const text = buildShareText(plan);
+    const text = buildShareText(plan, workspace);
 
     try {
       if (navigator.share) {

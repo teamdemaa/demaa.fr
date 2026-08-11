@@ -16,7 +16,7 @@ import {
 } from "@/lib/action-plan-demo";
 import type { ActionPlanSystemOption } from "@/lib/action-plan-system-catalog";
 import {
-  createManualAction,
+  addActionToManualPlan,
   createManualActionPlan,
   createManualActionPlanWorkspaceState,
   type EditableActionPlan,
@@ -377,31 +377,20 @@ export default function ActionPlanExperience({
   }
 
   function handleAddManualAction() {
-    setPlan((current) => {
-      if (!current || !isManualActionPlan(current) || current.weeklyActions.length >= 7) {
-        return current;
-      }
+    if (!plan || !workspace || !isManualActionPlan(plan)) return;
+    const next = addActionToManualPlan(plan, workspace);
+    if (!next) return;
+    setPlan(next.plan);
+    setWorkspace(next.workspace);
+  }
 
-      const action = createManualAction(current.weeklyActions.length + 1);
-      setWorkspace((currentWorkspace) => currentWorkspace ? {
-        ...currentWorkspace,
-        tasks: {
-          ...currentWorkspace.tasks,
-          [action.id]: {
-            status: "todo",
-            dueDate: null,
-            completedStepIndexes: [],
-            notes: "",
-            overrides: {},
-          },
-        },
-      } : currentWorkspace);
-
-      return {
-        ...current,
-        weeklyActions: [...current.weeklyActions, action],
-      };
-    });
+  function handleDeleteAction(actionId: string) {
+    setWorkspace((current) => current ? {
+      ...current,
+      deletedActionIds: Array.from(
+        new Set([...current.deletedActionIds, actionId]),
+      ),
+    } : current);
   }
 
   if (isGenerating && !plan) {
@@ -554,6 +543,7 @@ export default function ActionPlanExperience({
               onWorkspaceChange={updateWorkspace}
               manualMode={isManualActionPlan(plan)}
               onAddAction={isManualActionPlan(plan) ? handleAddManualAction : undefined}
+              onDeleteAction={handleDeleteAction}
               onGenerateLater={isManualActionPlan(plan) ? () => {
                 setPlan(null);
                 setWorkspace(null);

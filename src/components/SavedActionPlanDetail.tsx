@@ -9,7 +9,7 @@ import ActionPlanSystemPanel from "@/components/ActionPlanSystemPanel";
 import OpportunitiesPanel from "@/components/OpportunitiesPanel";
 import type { PersistableActionPlan } from "@/lib/action-plan-contract";
 import {
-  createManualAction,
+  addActionToManualPlan,
   isManualActionPlan,
 } from "@/lib/action-plan-manual";
 import type { ActionPlanSystemOption } from "@/lib/action-plan-system-catalog";
@@ -135,28 +135,19 @@ export default function SavedActionPlanDetail({
   }, [flushWorkspaceSave]);
 
   function addManualAction() {
-    if (!isManualActionPlan(currentPlan) || currentPlan.weeklyActions.length >= 7) {
-      return;
-    }
+    if (!isManualActionPlan(currentPlan)) return;
+    const next = addActionToManualPlan(currentPlan, workspace);
+    if (!next) return;
+    setCurrentPlan(next.plan);
+    setWorkspace(next.workspace);
+  }
 
-    const action = createManualAction(currentPlan.weeklyActions.length + 1);
-    setCurrentPlan((current) =>
-      isManualActionPlan(current)
-        ? { ...current, weeklyActions: [...current.weeklyActions, action] }
-        : current,
-    );
+  function deleteAction(actionId: string) {
     setWorkspace((current) => ({
       ...current,
-      tasks: {
-        ...current.tasks,
-        [action.id]: {
-          status: "todo",
-          dueDate: null,
-          completedStepIndexes: [],
-          notes: "",
-          overrides: {},
-        },
-      },
+      deletedActionIds: Array.from(
+        new Set([...current.deletedActionIds, actionId]),
+      ),
     }));
   }
 
@@ -177,6 +168,7 @@ export default function SavedActionPlanDetail({
             onWorkspaceChange={setWorkspace}
             manualMode={isManualActionPlan(currentPlan)}
             onAddAction={isManualActionPlan(currentPlan) ? addManualAction : undefined}
+            onDeleteAction={deleteAction}
           />
         </div>
         <div hidden={activeTab !== "system"}>

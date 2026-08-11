@@ -52,6 +52,10 @@ export const actionPlanWorkspaceStateSchema = z
   .object({
     version: z.literal("1"),
     selectedSystemId: actionPlanSystemIdSchema.nullable(),
+    deletedActionIds: z
+      .array(z.string().regex(/^action-[1-7]$/))
+      .max(7)
+      .default([]),
     tasks: z.record(z.string().regex(/^action-[1-7]$/), actionPlanTaskStateSchema),
     strategyOverrides: z.partialRecord(
       actionPlanStrategyPillarSchema,
@@ -139,6 +143,7 @@ export function createActionPlanWorkspaceState(
   return {
     version: "1",
     selectedSystemId: plan.systemId,
+    deletedActionIds: [],
     tasks: Object.fromEntries(
       plan.weeklyActions.map((action) => [
         action.id,
@@ -174,6 +179,9 @@ export function normalizeActionPlanWorkspaceState(
 
   return {
     ...parsed.data,
+    deletedActionIds: parsed.data.deletedActionIds.filter((actionId) =>
+      plan.weeklyActions.some((action) => action.id === actionId),
+    ),
     tasks,
   };
 }

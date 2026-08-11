@@ -39,9 +39,9 @@ describe("action plan experience architecture", () => {
     expect(utilityActions).toContain("font-normal text-brand-blue");
     expect(utilityActions).not.toContain('createPortal(');
     expect(utilityActions).toContain("<ActionPlanSaveControl");
-    expect(utilityActions).toContain('<ActionPlanShareControl plan={plan} variant="menu" />');
+    expect(utilityActions).toContain('<ActionPlanShareControl plan={plan} workspace={workspace} variant="menu" />');
     expect(utilityActions).not.toContain('plan.version !== "manual"');
-    expect(utilityActions).toContain('<ActionPlanShareControl plan={plan} variant="menu" />');
+    expect(utilityActions).toContain('<ActionPlanShareControl plan={plan} workspace={workspace} variant="menu" />');
     expect(utilityActions).toContain("Nouvelle situation");
     expect(utilityActions.match(/<ActionPlanSaveControl/g)).toHaveLength(1);
     expect(experience).toContain('demo !== "plan"');
@@ -57,6 +57,10 @@ describe("action plan experience architecture", () => {
     expect(result).toContain("Notes personnelles");
     expect(result).not.toContain("demaa-accordion");
     expect(result).toContain("Ajouter une action");
+    expect(result).toContain("Supprimer cette action ?");
+    expect(result).toContain("Supprimer l’action");
+    expect(result).toContain("Supprimer la tâche");
+    expect(result).toContain("workspace.deletedActionIds.includes(action.id)");
     expect(result).toContain("Générer un plan à partir de ma situation");
   });
 

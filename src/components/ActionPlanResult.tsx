@@ -10,6 +10,7 @@ import {
   Copy,
   LayoutList,
   Plus,
+  Trash2,
   X,
 } from "lucide-react";
 import {
@@ -127,11 +128,13 @@ function ActionDrawer({
   workspace,
   onWorkspaceChange,
   onClose,
+  onDelete,
 }: {
   action: PersistableActionPlanAction;
   workspace: ActionPlanWorkspaceState;
   onWorkspaceChange: Dispatch<SetStateAction<ActionPlanWorkspaceState>>;
   onClose: () => void;
+  onDelete: () => void;
 }) {
   const taskState = workspace.tasks[action.id];
   const effectiveTitle = taskState?.overrides.title || action.title;
@@ -144,6 +147,7 @@ function ActionDrawer({
   const [draftTitle, setDraftTitle] = useState(effectiveTitle);
   const [draftObjective, setDraftObjective] = useState(effectiveObjective);
   const [draftSteps, setDraftSteps] = useState(effectiveSteps.join("\n"));
+  const [confirmingDelete, setConfirmingDelete] = useState(false);
   const skipNextTaskBlur = useRef(false);
 
   function updateTask(
@@ -235,6 +239,34 @@ function ActionDrawer({
     }, 0);
   }
 
+  function removeTask(index: number) {
+    const currentSteps = draftSteps.split("\n");
+    if (currentSteps.length <= 1) return;
+
+    const nextLines = currentSteps.filter((_, currentIndex) => currentIndex !== index);
+    const remappedCompletedIndexes = taskState.completedStepIndexes.flatMap(
+      (completedIndex) => {
+        if (completedIndex === index) return [];
+        return [completedIndex > index ? completedIndex - 1 : completedIndex];
+      },
+    );
+    const compacted = compactActionPlanSteps(
+      nextLines,
+      remappedCompletedIndexes,
+    );
+    if (compacted.steps.length === 0) return;
+
+    setDraftSteps(compacted.steps.join("\n"));
+    updateTask((current) => ({
+      ...current,
+      completedStepIndexes: compacted.completedStepIndexes,
+      overrides: {
+        ...current.overrides,
+        steps: compacted.steps,
+      },
+    }));
+  }
+
   async function copySupport() {
     if (!effectiveSupport) return;
     await navigator.clipboard.writeText(effectiveSupport.content);
@@ -311,7 +343,7 @@ function ActionDrawer({
               {draftSteps.split("\n").map((step, index) => {
                 const checked = taskState.completedStepIndexes.includes(index);
                 return (
-                  <label key={`${action.id}-${index}`} className="flex cursor-pointer gap-3 rounded-xl bg-dema-sage/45 px-3 py-3 text-sm leading-relaxed text-brand-blue">
+                  <div key={`${action.id}-${index}`} className="group flex items-start gap-3 rounded-xl bg-dema-sage/45 px-3 py-3 text-sm leading-relaxed text-brand-blue">
                     <input
                       type="checkbox"
                       checked={checked}
@@ -322,6 +354,7 @@ function ActionDrawer({
                           : [...current.completedStepIndexes, index].sort((left, right) => left - right),
                       }))}
                       className="mt-0.5 h-4 w-4 accent-[#2f664a]"
+                      aria-label={`Marquer la tâche ${index + 1} comme terminée`}
                     />
                     <textarea
                       value={step}
@@ -345,9 +378,20 @@ function ActionDrawer({
                       rows={1}
                       aria-label={`Tâche ${index + 1}`}
                       data-task-index={index}
-                      className={`min-h-6 w-full resize-none overflow-hidden bg-transparent [field-sizing:content] outline-none transition focus:bg-dema-paper/70 ${checked ? "text-dema-muted" : ""}`}
+                      className={`min-h-6 min-w-0 flex-1 resize-none overflow-hidden bg-transparent [field-sizing:content] outline-none transition focus:bg-dema-paper/70 ${checked ? "text-dema-muted" : ""}`}
                     />
-                  </label>
+                    {draftSteps.split("\n").length > 1 ? (
+                      <button
+                        type="button"
+                        onClick={() => removeTask(index)}
+                        className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-dema-muted/70 transition hover:bg-dema-paper hover:text-red-700 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25 sm:opacity-0 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100"
+                        aria-label={`Supprimer la tâche ${index + 1}`}
+                        title="Supprimer la tâche"
+                      >
+                        <Trash2 className="h-3.5 w-3.5" aria-hidden="true" />
+                      </button>
+                    ) : null}
+                  </div>
                 );
               })}
             </div>
@@ -375,6 +419,42 @@ function ActionDrawer({
               className="mt-2 w-full resize-y rounded-xl border border-dema-line bg-dema-cream p-3 text-sm leading-relaxed text-brand-blue outline-none focus:border-dema-forest/30"
             />
           </label>
+
+          <div className="border-t border-dema-line pt-5">
+            {confirmingDelete ? (
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between" role="alert">
+                <p className="text-sm text-brand-blue">Supprimer cette action ?</p>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setConfirmingDelete(false)}
+                    className="min-h-10 rounded-full px-4 text-sm text-dema-muted transition hover:text-brand-blue"
+                  >
+                    Annuler
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onDelete();
+                      onClose();
+                    }}
+                    className="min-h-10 rounded-full border border-red-200 px-4 text-sm text-red-700 transition hover:bg-red-50"
+                  >
+                    Supprimer
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setConfirmingDelete(true)}
+                className="inline-flex min-h-10 items-center gap-2 text-sm text-dema-muted transition hover:text-red-700"
+              >
+                <Trash2 className="h-4 w-4" aria-hidden="true" />
+                Supprimer l’action
+              </button>
+            )}
+          </div>
         </div>
       </section>
     </div>
@@ -443,6 +523,7 @@ export default function ActionPlanResult({
   headerActions,
   manualMode = false,
   onAddAction,
+  onDeleteAction,
   onGenerateLater,
 }: {
   plan: EditableActionPlan;
@@ -451,12 +532,16 @@ export default function ActionPlanResult({
   headerActions?: ReactNode;
   manualMode?: boolean;
   onAddAction?: () => void;
+  onDeleteAction: (actionId: string) => void;
   onGenerateLater?: () => void;
 }) {
   const [section, setSection] = useState<PlanSection>("tasks");
   const [view, setView] = useState<TaskView>("list");
   const [selectedActionId, setSelectedActionId] = useState<string | null>(null);
-  const selectedAction = plan.weeklyActions.find((action) => action.id === selectedActionId) || null;
+  const visibleActions = plan.weeklyActions.filter(
+    (action) => !workspace.deletedActionIds.includes(action.id),
+  );
+  const selectedAction = visibleActions.find((action) => action.id === selectedActionId) || null;
 
   function updateStatus(actionId: string, status: ActionPlanTaskStatus) {
     onWorkspaceChange((current) => ({
@@ -486,7 +571,7 @@ export default function ActionPlanResult({
             </div>
             <div className="flex flex-wrap items-center gap-2">
               {manualMode && onAddAction ? (
-                <button type="button" onClick={onAddAction} disabled={plan.weeklyActions.length >= 7} className="demaa-secondary-button min-h-10 gap-2 px-4 text-xs disabled:cursor-not-allowed disabled:opacity-45">
+                <button type="button" onClick={onAddAction} disabled={visibleActions.length >= 7} className="demaa-secondary-button min-h-10 gap-2 px-4 text-xs disabled:cursor-not-allowed disabled:opacity-45">
                   <Plus className="h-4 w-4" aria-hidden="true" /> Ajouter une action
                 </button>
               ) : null}
@@ -497,7 +582,7 @@ export default function ActionPlanResult({
             </div>
           </div>
 
-          {manualMode && plan.weeklyActions.length === 0 ? (
+          {manualMode && visibleActions.length === 0 ? (
             <div className="mt-6 rounded-[1.25rem] border border-dashed border-dema-line bg-dema-paper px-6 py-10 text-center">
               {onAddAction ? (
                 <button type="button" onClick={onAddAction} className="demaa-secondary-button min-h-11 gap-2 px-5">
@@ -512,9 +597,9 @@ export default function ActionPlanResult({
             </div>
           ) : null}
 
-          {plan.weeklyActions.length > 0 && view === "list" ? (
+          {visibleActions.length > 0 && view === "list" ? (
             <div className="mt-6 overflow-hidden rounded-[1.25rem] border border-dema-line bg-dema-paper">
-              {plan.weeklyActions.map((action) => {
+              {visibleActions.map((action) => {
                 const taskState = workspace.tasks[action.id];
                 const title = taskState.overrides.title || action.title;
                 return (
@@ -531,13 +616,13 @@ export default function ActionPlanResult({
                 );
               })}
             </div>
-          ) : plan.weeklyActions.length > 0 ? (
+          ) : visibleActions.length > 0 ? (
             <div className="mt-6 grid gap-4 lg:grid-cols-3">
               {(Object.keys(statusMeta) as ActionPlanTaskStatus[]).map((status) => (
                 <section key={status} className="rounded-[1.25rem] bg-dema-sage/45 p-3" aria-labelledby={`kanban-${status}`}>
                   <h3 id={`kanban-${status}`} className="px-1 py-2 text-xs font-medium uppercase tracking-[0.12em] text-dema-muted">{statusMeta[status].label}</h3>
                   <div className="space-y-2">
-                    {plan.weeklyActions.filter((action) => workspace.tasks[action.id].status === status).map((action) => (
+                    {visibleActions.filter((action) => workspace.tasks[action.id].status === status).map((action) => (
                       <article key={action.id} className="rounded-xl border border-dema-line bg-dema-paper p-4 shadow-[0_7px_18px_rgba(23,35,29,0.03)]">
                         <button type="button" onClick={() => setSelectedActionId(action.id)} className="w-full text-left">
                           <span className="block text-sm font-medium leading-snug text-brand-blue">{workspace.tasks[action.id].overrides.title || action.title}</span>
@@ -548,14 +633,14 @@ export default function ActionPlanResult({
                         </div>
                       </article>
                     ))}
-                    {plan.weeklyActions.every((action) => workspace.tasks[action.id].status !== status) ? <p className="px-2 py-4 text-xs text-dema-muted">Aucune action</p> : null}
+                    {visibleActions.every((action) => workspace.tasks[action.id].status !== status) ? <p className="px-2 py-4 text-xs text-dema-muted">Aucune action</p> : null}
                   </div>
                 </section>
               ))}
             </div>
           ) : null}
 
-          {manualMode && plan.weeklyActions.length > 0 && onGenerateLater ? (
+          {manualMode && visibleActions.length > 0 && onGenerateLater ? (
             <div className="mt-5 text-center">
               <button type="button" onClick={onGenerateLater} className="text-sm text-dema-muted underline decoration-dema-line underline-offset-4 transition hover:text-dema-forest">
                 Générer un plan à partir de ma situation
@@ -570,7 +655,13 @@ export default function ActionPlanResult({
       )}
 
       {selectedAction ? (
-        <ActionDrawer action={selectedAction} workspace={workspace} onWorkspaceChange={onWorkspaceChange} onClose={() => setSelectedActionId(null)} />
+        <ActionDrawer
+          action={selectedAction}
+          workspace={workspace}
+          onWorkspaceChange={onWorkspaceChange}
+          onClose={() => setSelectedActionId(null)}
+          onDelete={() => onDeleteAction(selectedAction.id)}
+        />
       ) : null}
     </div>
   );

@@ -66,9 +66,51 @@ export function createManualActionPlanWorkspaceState(): ActionPlanWorkspaceState
   return {
     version: "1",
     selectedSystemId: null,
+    deletedActionIds: [],
     tasks: {},
     strategyOverrides: {},
     checkedProcessStepIdsBySystem: {},
     selectedSolutionPlacementIdsBySystem: {},
+  };
+}
+
+export function addActionToManualPlan(
+  plan: ManualActionPlan,
+  workspace: ActionPlanWorkspaceState,
+) {
+  const reusableIndex = plan.weeklyActions.findIndex((action) =>
+    workspace.deletedActionIds.includes(action.id),
+  );
+  const nextIndex = reusableIndex >= 0
+    ? reusableIndex
+    : plan.weeklyActions.length;
+
+  if (nextIndex >= 7) return null;
+
+  const action = createManualAction(nextIndex + 1);
+  const weeklyActions = reusableIndex >= 0
+    ? plan.weeklyActions.map((current, index) =>
+        index === reusableIndex ? action : current,
+      )
+    : [...plan.weeklyActions, action];
+
+  return {
+    plan: { ...plan, weeklyActions },
+    workspace: {
+      ...workspace,
+      deletedActionIds: workspace.deletedActionIds.filter(
+        (actionId) => actionId !== action.id,
+      ),
+      tasks: {
+        ...workspace.tasks,
+        [action.id]: {
+          status: "todo" as const,
+          dueDate: null,
+          completedStepIndexes: [],
+          notes: "",
+          overrides: {},
+        },
+      },
+    },
   };
 }
