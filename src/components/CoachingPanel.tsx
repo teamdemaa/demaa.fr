@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Mic, Send, X } from "lucide-react";
+import { Check, Mic, Phone, Send, X } from "lucide-react";
 import { useRef, useState } from "react";
 import { getLeadAttributionPayload } from "@/lib/lead-attribution-client";
 import { clearLeadSubmissionKey, getLeadSubmissionKey } from "@/lib/lead-submission-client";
@@ -79,7 +79,8 @@ export default function CoachingPanel({
                   Faites connaissance, présentez votre blocage et vérifiez que le spécialiste est la bonne personne. Ce court échange ne remplace pas une session.
                 </p>
               </div>
-              <button type="button" onClick={() => onRequireAccess ? onRequireAccess() : setSelectedOffer("echange")} className="mt-5 inline-flex min-h-10 items-center justify-center self-start rounded-full border border-dema-forest/20 px-4 text-sm font-medium text-dema-forest transition hover:bg-dema-sage/45 md:mt-auto">
+              <button type="button" onClick={() => onRequireAccess ? onRequireAccess() : setSelectedOffer("echange")} className="mt-5 inline-flex min-h-10 items-center justify-center gap-2 self-start rounded-full bg-dema-forest px-4 text-sm font-medium text-white transition hover:bg-[#284f3a] md:mt-auto">
+                <Phone className="h-4 w-4" aria-hidden="true" />
                 Demander un échange
               </button>
             </div>
