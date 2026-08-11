@@ -48,6 +48,8 @@ describe("unified app and coaching", () => {
     expect(coaching).toContain("15 minutes offertes");
     expect(coaching).not.toContain("disponible prochainement");
     expect(coachingControl).toContain("Parler à un spécialiste");
+    expect(coachingControl).toContain("onClick={() => setOpen(true)}");
+    expect(coachingControl).toContain("onRequireAccess={initialEmail ? undefined");
     expect(appNavigation).toContain("Opportunités");
     expect(appNavigation).not.toContain('label: "Coaching"');
   });

@@ -61,10 +61,7 @@ export default function ActionPlanCoachingControl({
       {createPortal(
         <button
           type="button"
-          onClick={() => {
-            if (initialEmail) setOpen(true);
-            else setAccessOpen(true);
-          }}
+          onClick={() => setOpen(true)}
           className="inline-flex min-h-10 items-center justify-center rounded-full border border-dema-forest/15 bg-dema-paper px-3 text-xs font-medium text-dema-forest transition hover:border-dema-forest/28 hover:bg-dema-sage/45 sm:min-h-11 sm:px-4 sm:text-sm"
           aria-label="Parler à un spécialiste"
           title="Parler à un spécialiste"
@@ -93,7 +90,9 @@ export default function ActionPlanCoachingControl({
                   <X className="h-5 w-5" aria-hidden="true" />
                 </button>
               </div>
-              <CoachingPanel />
+              <CoachingPanel
+                onRequireAccess={initialEmail ? undefined : () => setAccessOpen(true)}
+              />
             </div>,
             document.body,
           )

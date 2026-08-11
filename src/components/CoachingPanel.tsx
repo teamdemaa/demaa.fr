@@ -38,7 +38,11 @@ async function submitCoachingRequest(payload: Record<string, unknown>) {
   if (response.status !== 202) throw new Error("request_failed");
 }
 
-export default function CoachingPanel() {
+export default function CoachingPanel({
+  onRequireAccess,
+}: {
+  onRequireAccess?: () => void;
+}) {
   const [tab, setTab] = useState<CoachingTab>("sessions");
   const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
 
@@ -77,7 +81,7 @@ export default function CoachingPanel() {
                   Faites connaissance, présentez votre blocage et vérifiez que le spécialiste est la bonne personne. Ce n’est pas une séance de coaching.
                 </p>
               </div>
-              <button type="button" onClick={() => setSelectedOffer("echange")} className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full bg-dema-forest px-5 text-sm font-semibold text-white">
+              <button type="button" onClick={() => onRequireAccess ? onRequireAccess() : setSelectedOffer("echange")} className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full bg-dema-forest px-5 text-sm font-semibold text-white">
                 <Phone className="h-4 w-4" aria-hidden="true" /> Demander un échange
               </button>
             </div>
@@ -94,7 +98,7 @@ export default function CoachingPanel() {
                 <div className="shrink-0 sm:text-right">
                   <p className="text-lg font-medium text-brand-blue">{offer.price}</p>
                   <p className="mt-0.5 max-w-52 text-xs leading-relaxed text-dema-muted">{offer.tax}</p>
-                  <button type="button" onClick={() => setSelectedOffer(offer.id)} className="mt-3 inline-flex min-h-10 items-center justify-center rounded-full border border-dema-forest/20 px-4 text-sm font-medium text-dema-forest transition hover:bg-dema-sage/45">
+                  <button type="button" onClick={() => onRequireAccess ? onRequireAccess() : setSelectedOffer(offer.id)} className="mt-3 inline-flex min-h-10 items-center justify-center rounded-full border border-dema-forest/20 px-4 text-sm font-medium text-dema-forest transition hover:bg-dema-sage/45">
                     {offer.cta}
                   </button>
                 </div>
@@ -103,7 +107,7 @@ export default function CoachingPanel() {
           ))}
         </div>
       ) : (
-        <CoachingMessageForm />
+        <CoachingMessageForm onRequireAccess={onRequireAccess} />
       )}
 
       {selectedOffer ? <CoachingRequestDialog offer={selectedOffer} onClose={() => setSelectedOffer(null)} /> : null}
@@ -159,7 +163,7 @@ function CoachingRequestDialog({ offer, onClose }: { offer: Offer; onClose: () =
   );
 }
 
-function CoachingMessageForm() {
+function CoachingMessageForm({ onRequireAccess }: { onRequireAccess?: () => void }) {
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const recognitionRef = useRef<{ stop(): void } | null>(null);
@@ -182,6 +186,10 @@ function CoachingMessageForm() {
 
   async function submit(event: React.FormEvent) {
     event.preventDefault();
+    if (onRequireAccess) {
+      onRequireAccess();
+      return;
+    }
     if (message.trim().length < 10) {
       setStatus("error"); return;
     }
