@@ -71,10 +71,10 @@ export default function ActionPlanShareControl({
       type="button"
       onClick={() => void sharePlan()}
       className={variant === "menu"
-        ? "block w-full whitespace-nowrap px-3 py-2 text-left text-sm font-normal text-brand-blue transition hover:text-dema-forest"
+        ? "block w-full appearance-none whitespace-nowrap border-0 bg-transparent px-2 py-1.5 text-left text-sm font-normal leading-6 text-brand-blue transition-colors hover:text-dema-forest focus-visible:outline-none focus-visible:underline"
         : "inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-dema-muted transition hover:border-dema-forest/30 hover:text-dema-forest"}
       aria-label={copied ? "Plan copié" : "Partager le plan"}
-      title={copied ? "Plan copié" : "Partager le plan"}
+      title={variant === "icon" ? (copied ? "Plan copié" : "Partager le plan") : undefined}
       aria-live="polite"
     >
       {variant === "icon" ? (
