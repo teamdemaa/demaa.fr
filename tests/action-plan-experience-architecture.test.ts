@@ -62,6 +62,8 @@ describe("action plan experience architecture", () => {
     expect(result).toContain("Ajouter une action");
     expect(result).toContain("Supprimer cette action ?");
     expect(result).toContain("Supprimer l’action");
+    expect(result).toContain("function saveDraftsAndClose()");
+    expect(result).toContain("onClick={saveDraftsAndClose}");
     expect(result).toContain("Supprimer la tâche");
     expect(result).toContain("workspace.deletedActionIds.includes(action.id)");
     expect(result).toContain("Générer un plan à partir de ma situation");

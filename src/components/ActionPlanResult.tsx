@@ -215,6 +215,13 @@ function ActionDrawer({
     setDraftSteps(nextSteps.join("\n"));
   }
 
+  function saveDraftsAndClose() {
+    saveTitle();
+    saveObjective();
+    saveSteps();
+    onClose();
+  }
+
   function addTaskAfter(
     index: number,
     source: HTMLTextAreaElement,
@@ -273,7 +280,7 @@ function ActionDrawer({
   }
 
   return (
-    <div className="fixed inset-0 z-[110] flex justify-end bg-brand-blue/18 backdrop-blur-[2px]" role="presentation" onMouseDown={onClose}>
+    <div className="fixed inset-0 z-[110] flex justify-end bg-brand-blue/18 backdrop-blur-[2px]" role="presentation" onMouseDown={saveDraftsAndClose}>
       <section
         role="dialog"
         aria-modal="true"
@@ -300,7 +307,7 @@ function ActionDrawer({
               className="mt-1 min-h-7 w-full resize-none overflow-hidden rounded-lg bg-transparent text-xl font-medium leading-snug text-brand-blue [field-sizing:content] outline-none transition focus:bg-dema-sage/35"
             />
           </div>
-          <button type="button" onClick={onClose} className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-dema-line" aria-label="Fermer">
+          <button type="button" onClick={saveDraftsAndClose} className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-dema-line" aria-label="Fermer">
             <X className="h-4 w-4" aria-hidden="true" />
           </button>
         </header>
