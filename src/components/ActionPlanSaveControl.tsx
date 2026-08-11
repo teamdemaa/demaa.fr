@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckCircle2, LoaderCircle, Mail, Save, X } from "lucide-react";
+import { CheckCircle2, LoaderCircle, Mail, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
@@ -211,13 +211,11 @@ export default function ActionPlanSaveControl({
           type="button"
           onClick={() => void createSavedPlan()}
           disabled={state === "creating" || state === "sending"}
-          className="inline-flex min-h-10 items-center justify-center gap-1.5 rounded-full bg-dema-forest px-3 text-xs font-semibold text-white transition hover:bg-brand-blue disabled:opacity-60 sm:min-h-11 sm:gap-2 sm:px-4 sm:text-sm"
+          className="inline-flex min-h-10 items-center justify-center rounded-full border border-dema-line bg-white/70 px-3 text-xs font-normal text-dema-forest transition hover:border-dema-forest/35 hover:bg-dema-soft disabled:opacity-60 sm:min-h-11 sm:px-4 sm:text-sm"
         >
           {state === "creating" || state === "sending" ? (
             <LoaderCircle className="h-3.5 w-3.5 animate-spin sm:h-4 sm:w-4" aria-hidden="true" />
-          ) : (
-            <Save className="hidden h-4 w-4 sm:block" aria-hidden="true" />
-          )}
+          ) : null}
           {state === "creating"
             ? "Préparation…"
             : state === "sending"
