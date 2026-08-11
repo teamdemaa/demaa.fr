@@ -41,10 +41,12 @@ describe("unified app and coaching", () => {
     const appNavigation = read("src/components/ActionPlanNavbar.tsx");
     expect(coaching).toContain("Sessions");
     expect(coaching).toContain("Messages");
+    expect(coaching).toContain("Parler à un spécialiste");
+    expect(coaching).toContain("l’expérience du terrain");
     expect(coaching).toContain("150 € HT");
-    expect(coaching).toContain("180 € TTC");
     expect(coaching).toContain("400 € HT");
-    expect(coaching).toContain("480 € TTC");
+    expect(coaching).not.toContain("180 € TTC");
+    expect(coaching).not.toContain("480 € TTC");
     expect(coaching).toContain("15 minutes offertes");
     expect(coaching).not.toContain("disponible prochainement");
     expect(coachingControl).toContain("Parler à un spécialiste");

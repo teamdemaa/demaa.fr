@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Mic, Phone, Send, X } from "lucide-react";
+import { Check, Mic, Send, X } from "lucide-react";
 import { useRef, useState } from "react";
 import { getLeadAttributionPayload } from "@/lib/lead-attribution-client";
 import { clearLeadSubmissionKey, getLeadSubmissionKey } from "@/lib/lead-submission-client";
@@ -14,7 +14,6 @@ const offers = [
     title: "Session de pilotage",
     meta: "60 minutes · par téléphone",
     price: "150 € HT",
-    tax: "180 € TTC si la TVA française à 20 % s’applique",
     text: "Un spécialiste analyse votre situation et vous aide à choisir la prochaine étape.",
     cta: "Réserver une session",
   },
@@ -23,7 +22,6 @@ const offers = [
     title: "Parcours de pilotage",
     meta: "3 sessions de 60 minutes · valables 3 mois",
     price: "400 € HT",
-    tax: "480 € TTC si la TVA française à 20 % s’applique",
     text: "Le même spécialiste vous aide à décider, agir et ajuster au fil des séances.",
     cta: "Choisir le parcours",
   },
@@ -49,13 +47,13 @@ export default function CoachingPanel({
   return (
     <section className="mx-auto max-w-[68rem] pb-16 pt-3 sm:pt-5">
       <header>
-        <h2 className="text-4xl font-light tracking-[-0.045em] text-brand-blue sm:text-5xl">Coaching</h2>
+        <h2 className="text-4xl font-light tracking-[-0.045em] text-brand-blue sm:text-5xl">Parler à un spécialiste</h2>
         <p className="mt-3 max-w-2xl text-base font-light leading-relaxed text-dema-muted sm:text-lg">
-          Débloquez une situation avec un spécialiste qui comprend votre quotidien.
+          Débloquez une situation avec un spécialiste qui comprend votre quotidien et s’appuie sur l’expérience du terrain.
         </p>
       </header>
 
-      <div className="mt-7 flex border-b border-dema-line" role="tablist" aria-label="Coaching">
+      <div className="mt-7 flex border-b border-dema-line" role="tablist" aria-label="Parler à un spécialiste">
         {(["sessions", "messages"] as const).map((value) => (
           <button
             key={value}
@@ -71,33 +69,32 @@ export default function CoachingPanel({
       </div>
 
       {tab === "sessions" ? (
-        <div className="mt-7 overflow-hidden rounded-[1.35rem] border border-dema-line bg-dema-paper">
-          <article className="p-5 sm:p-6">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-7 grid gap-4 md:grid-cols-3">
+          <article className="flex h-full flex-col rounded-[1.35rem] border border-dema-line bg-dema-paper p-5 sm:p-6">
+            <div className="flex h-full flex-col">
               <div>
                 <p className="text-xs text-dema-muted">15 minutes offertes · par téléphone</p>
                 <h3 className="mt-1 text-xl font-medium tracking-[-0.02em] text-brand-blue">Échange préalable</h3>
                 <p className="mt-2 max-w-2xl text-sm leading-relaxed text-dema-muted">
-                  Faites connaissance, présentez votre blocage et vérifiez que le spécialiste est la bonne personne. Ce n’est pas une séance de coaching.
+                  Faites connaissance, présentez votre blocage et vérifiez que le spécialiste est la bonne personne. Ce court échange ne remplace pas une session.
                 </p>
               </div>
-              <button type="button" onClick={() => onRequireAccess ? onRequireAccess() : setSelectedOffer("echange")} className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full bg-dema-forest px-5 text-sm font-semibold text-white">
-                <Phone className="h-4 w-4" aria-hidden="true" /> Demander un échange
+              <button type="button" onClick={() => onRequireAccess ? onRequireAccess() : setSelectedOffer("echange")} className="mt-5 inline-flex min-h-10 items-center justify-center self-start rounded-full border border-dema-forest/20 px-4 text-sm font-medium text-dema-forest transition hover:bg-dema-sage/45 md:mt-auto">
+                Demander un échange
               </button>
             </div>
           </article>
 
           {offers.map((offer) => (
-            <article key={offer.id} className="border-t border-dema-line p-5 sm:p-6">
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
+            <article key={offer.id} className="flex h-full flex-col rounded-[1.35rem] border border-dema-line bg-dema-paper p-5 sm:p-6">
+              <div className="flex h-full flex-col">
                 <div className="min-w-0">
                   <p className="text-xs text-dema-muted">{offer.meta}</p>
                   <h3 className="mt-1 text-xl font-medium tracking-[-0.02em] text-brand-blue">{offer.title}</h3>
                   <p className="mt-2 max-w-2xl text-sm leading-relaxed text-dema-muted">{offer.text}</p>
                 </div>
-                <div className="shrink-0 sm:text-right">
+                <div className="mt-5 shrink-0 md:mt-auto md:pt-5">
                   <p className="text-lg font-medium text-brand-blue">{offer.price}</p>
-                  <p className="mt-0.5 max-w-52 text-xs leading-relaxed text-dema-muted">{offer.tax}</p>
                   <button type="button" onClick={() => onRequireAccess ? onRequireAccess() : setSelectedOffer(offer.id)} className="mt-3 inline-flex min-h-10 items-center justify-center rounded-full border border-dema-forest/20 px-4 text-sm font-medium text-dema-forest transition hover:bg-dema-sage/45">
                     {offer.cta}
                   </button>

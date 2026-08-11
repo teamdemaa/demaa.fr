@@ -85,7 +85,7 @@ export default function ActionPlanCoachingControl({
                   type="button"
                   onClick={() => setOpen(false)}
                   className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue"
-                  aria-label="Fermer le Coaching"
+                  aria-label="Fermer la page spécialiste"
                 >
                   <X className="h-5 w-5" aria-hidden="true" />
                 </button>
