@@ -40,7 +40,10 @@ describe("Demaa application navbar", () => {
     );
     expect(homeSource).toContain('canonical: "/"');
     expect(homeSource).toContain("<ActionPlanExperience");
-    expect(homeSource).toContain("<Navbar anonymousLanding minimal />");
+    expect(homeSource).toContain(
+      "<Navbar anonymousLanding isAuthenticated={Boolean(email)} minimal />",
+    );
+    expect(homeSource).toContain("getEmailFromCustomerSessionToken(sessionToken)");
     expect(systemsSource).toContain('canonical: "/systemes"');
     expect(nextConfigSource).not.toMatch(
       /source: '\/systemes',[\s\S]*?destination: '\/',/,
@@ -48,6 +51,17 @@ describe("Demaa application navbar", () => {
     expect(nextConfigSource).toMatch(
       /source: '\/kits-operationnels',[\s\S]*?destination: '\/systemes',/,
     );
+  });
+
+  it("replaces the sign-in action with account access once a session is active", async () => {
+    const [navbarSource, savedPlanSource] = await Promise.all([
+      readFile(new URL("../src/components/Navbar.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/plans/[id]/page.tsx", import.meta.url), "utf8"),
+    ]);
+
+    expect(navbarSource).toContain('isAuthenticated ? "Mon espace" : "Se connecter"');
+    expect(navbarSource).toContain('aria-label={isAuthenticated ? "Ouvrir mon espace" : undefined}');
+    expect(savedPlanSource).toContain("<Navbar anonymousLanding isAuthenticated minimal />");
   });
 
   it("keeps the anonymous member access minimal and intercepts it over the homepage", async () => {

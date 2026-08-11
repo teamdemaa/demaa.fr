@@ -37,7 +37,7 @@ export default async function ActionPlanPage({
 
   return (
     <div data-action-plan-workspace className="min-h-screen bg-dema-cream text-brand-blue">
-      <Navbar />
+      <Navbar anonymousLanding isAuthenticated minimal />
       <main className="px-4 pb-24 pt-2 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-[68rem]">
           <h1 className="sr-only">Mon plan d’action</h1>
