@@ -46,6 +46,12 @@ describe("academy course content", () => {
       expect(item.lessons.length).toBeLessThanOrEqual(7);
       expect(item.recap.points).toHaveLength(4);
       expect(item.quiz.questions).toHaveLength(3);
+      if (item.kind === "course") {
+        expect(item.identity.card.meta).toBe(
+          `${item.identity.durationMinutes} min · Quiz de connaissances`,
+        );
+        expect(item.identity.card.meta).not.toContain("notions");
+      }
       expect(hasForbiddenVideoField(item)).toBe(false);
       if (item.identity.card.image) {
         expect(

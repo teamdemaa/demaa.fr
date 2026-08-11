@@ -143,6 +143,10 @@ describe("action plan experience architecture", () => {
     expect(academyPanel).toContain("onBack={() => setSelectedContent(null)}");
     expect(academyIndex).toContain("onOpen?: (content: AcademyContentDefinition) => void");
     expect(coursePlayer).toContain('const CourseContainer = embedded ? "div" : "main"');
+    expect(coursePlayer).toContain('if (activeScreen.type === "intro") return null');
+    expect(coursePlayer).toContain("Quiz de connaissances");
+    expect(coursePlayer).not.toContain("Cours fondamental");
+    expect(coursePlayer).not.toContain("content.lessons.length} notions");
     expect(source("src/components/SystemDetailContent.tsx")).toContain(
       "!embedded ? <StructureNewsletterBlock /> : null",
     );

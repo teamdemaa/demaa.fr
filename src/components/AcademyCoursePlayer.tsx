@@ -43,9 +43,9 @@ function QuizScreen({
       <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-forest">
         Question {questionIndex + 1} sur 3
       </p>
-      <h1 className="mt-3 text-3xl font-semibold leading-tight text-brand-blue sm:text-4xl">
+      <h2 className="mt-3 text-3xl font-semibold leading-tight text-brand-blue sm:text-4xl">
         {question.question}
-      </h1>
+      </h2>
 
       <div className="mt-8 grid gap-3">
         {question.choices.map((choice) => {
@@ -118,7 +118,7 @@ export default function AcademyCoursePlayer({
   const isLastScreen = activeScreenIndex === screens.length - 1;
   const progress = screens.length > 1 ? (activeScreenIndex / (screens.length - 1)) * 100 : 100;
   const screenLabel = (() => {
-    if (activeScreen.type === "intro") return "Présentation";
+    if (activeScreen.type === "intro") return null;
     if (activeScreen.type === "lesson") {
       if (content.kind === "case-study") {
         return activeScreen.lessonIndex === 0
@@ -165,8 +165,10 @@ export default function AcademyCoursePlayer({
           )}
           <div className="min-w-0 flex-1">
             <div className="flex items-center justify-between gap-4">
-              <p className="truncate text-sm font-semibold text-brand-blue">{content.identity.shortTitle}</p>
-              <p className="shrink-0 text-xs text-dema-muted">{screenLabel}</p>
+              <h1 className="truncate text-base font-medium text-brand-blue">{content.identity.shortTitle}</h1>
+              {screenLabel ? (
+                <p className="shrink-0 text-xs text-dema-muted">{screenLabel}</p>
+              ) : null}
             </div>
             <div className="mt-2 h-0.5 overflow-hidden rounded-full bg-dema-sage" aria-hidden="true">
               <div
@@ -178,29 +180,21 @@ export default function AcademyCoursePlayer({
         </div>
       </div>
 
-      <div className="mx-auto flex min-h-[calc(100vh-150px)] max-w-3xl flex-col px-5 py-10 sm:py-14">
+      <div className={`mx-auto flex min-h-[calc(100vh-150px)] max-w-3xl flex-col px-5 ${activeScreen.type === "intro" ? "py-6 sm:py-8" : "py-10 sm:py-14"}`}>
         <div className="flex-1">
           {activeScreen.type === "intro" ? (
             <section className="w-full">
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-forest">
-                Cours fondamental
-              </p>
-              <h1 className="mt-3 text-4xl font-semibold leading-[1.08] text-brand-blue sm:text-5xl">
-                {content.identity.shortTitle}
-              </h1>
-              <p className="mt-5 max-w-2xl text-base leading-8 text-dema-muted sm:text-lg">
+              <p className="max-w-2xl text-base leading-8 text-dema-muted sm:text-lg">
                 {content.identity.promise}
               </p>
 
-              <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm font-medium text-brand-blue">
+              <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm font-medium text-brand-blue">
                 <span>{content.identity.durationMinutes} min</span>
                 <span aria-hidden="true" className="text-dema-line">•</span>
-                <span>{content.lessons.length} notions</span>
-                <span aria-hidden="true" className="text-dema-line">•</span>
-                <span>{content.quiz.questions.length} questions</span>
+                <span>Quiz de connaissances</span>
               </div>
 
-              <div className="mt-9 rounded-[1.5rem] bg-[#E7EEE8] px-5 py-6 sm:px-7 sm:py-7">
+              <div className="mt-7 rounded-[1.5rem] bg-[#E7EEE8] px-5 py-6 sm:px-7 sm:py-7">
                 <p className="text-xs font-semibold uppercase tracking-[0.12em] text-dema-forest">
                   Contenu du cours
                 </p>
@@ -229,9 +223,9 @@ export default function AcademyCoursePlayer({
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-forest">
                 {content.lessons[activeScreen.lessonIndex].eyebrow}
               </p>
-              <h1 className="mt-3 text-3xl font-semibold leading-[1.12] text-brand-blue sm:text-4xl">
+              <h2 className="mt-3 text-3xl font-semibold leading-[1.12] text-brand-blue sm:text-4xl">
                 {content.lessons[activeScreen.lessonIndex].title}
-              </h1>
+              </h2>
               <p className="mt-5 text-base leading-8 text-dema-muted sm:text-lg">
                 {content.lessons[activeScreen.lessonIndex].body}
               </p>
@@ -262,7 +256,7 @@ export default function AcademyCoursePlayer({
           {activeScreen.type === "recap" ? (
             <section className="w-full">
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-forest">Récapitulatif</p>
-              <h1 className="mt-3 text-3xl font-semibold text-brand-blue sm:text-4xl">{content.recap.title}</h1>
+              <h2 className="mt-3 text-3xl font-semibold text-brand-blue sm:text-4xl">{content.recap.title}</h2>
               <div className="mt-8 divide-y divide-dema-line/70 border-y border-dema-line/70">
                 {content.recap.points.map((point, index) => (
                   <div key={point} className="grid gap-2 py-5 sm:grid-cols-[2rem_1fr] sm:gap-4">
@@ -294,7 +288,7 @@ export default function AcademyCoursePlayer({
                 <Check className="h-5 w-5" aria-hidden="true" />
               </span>
               <p className="mt-5 text-xs font-semibold uppercase tracking-[0.14em] text-dema-forest">Cours terminé</p>
-              <h1 className="mt-3 text-3xl font-semibold text-brand-blue sm:text-4xl">Vous avez l’essentiel.</h1>
+              <h2 className="mt-3 text-3xl font-semibold text-brand-blue sm:text-4xl">Vous avez l’essentiel.</h2>
               <p className="mx-auto mt-3 max-w-xl leading-relaxed text-dema-muted">
                 Vous pouvez revenir à l’Académie ou passer directement à l’action.
               </p>
