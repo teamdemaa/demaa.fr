@@ -31,7 +31,7 @@ export default function ActionPlanUtilityActions({
           <summary className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-full border border-dema-line bg-dema-paper text-dema-muted marker:content-none" aria-label="Actions du plan">
             <MoreHorizontal className="h-5 w-5" aria-hidden="true" />
           </summary>
-          <div className="absolute right-0 top-full z-50 mt-2 rounded-2xl border border-dema-line bg-dema-paper p-2 shadow-[0_18px_46px_rgba(23,35,29,0.14)]">
+          <div className="absolute right-0 top-full z-50 mt-2 rounded-2xl border border-dema-line bg-dema-paper px-2 py-1 shadow-[0_18px_46px_rgba(23,35,29,0.14)]">
             <ActionPlanShareControl plan={plan} variant="menu" />
             <button
               type="button"
