@@ -439,7 +439,6 @@ export default function ActionPlanExperience({
             <section className="mx-auto max-w-5xl pt-12 text-center sm:pt-16 lg:pt-20">
               <h1 className="text-balance text-[clamp(2.45rem,7vw,5.2rem)] font-light leading-[0.98] tracking-[-0.055em] text-brand-blue">
                 Qu’est-ce qui freine votre entreprise aujourd’hui&nbsp;?
-                <span className="demaa-hero-title mt-1 block text-dema-forest">Repartez avec un plan d’action concret.</span>
               </h1>
               <form onSubmit={handleGenerate} className="mx-auto mt-9 max-w-4xl text-left sm:mt-11">
                 <div className="rounded-[1.7rem] border border-dema-line bg-dema-paper p-2 shadow-[0_18px_50px_rgba(23,35,29,0.055)] focus-within:border-dema-forest/20">
