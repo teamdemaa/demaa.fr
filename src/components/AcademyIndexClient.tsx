@@ -254,7 +254,7 @@ function AcademyCard({
         </div>
 
         <div className="px-0.5 pb-1 pt-3.5">
-          <h3 className="text-[1.05rem] font-semibold leading-[1.3] text-brand-blue transition-colors group-hover:text-dema-forest sm:text-lg">
+          <h3 className="text-[1.05rem] font-normal leading-[1.3] text-brand-blue transition-colors group-hover:text-dema-forest sm:text-lg">
             {title}
           </h3>
           <p className="mt-1.5 text-sm text-dema-muted">{meta}</p>
