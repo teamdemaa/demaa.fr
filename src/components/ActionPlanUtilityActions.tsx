@@ -32,9 +32,7 @@ export default function ActionPlanUtilityActions({
             <MoreHorizontal className="h-5 w-5" aria-hidden="true" />
           </summary>
           <div className="absolute right-0 top-full z-50 mt-2 rounded-2xl border border-dema-line bg-dema-paper p-2 shadow-[0_18px_46px_rgba(23,35,29,0.14)]">
-            {plan.version !== "manual" ? (
-              <ActionPlanShareControl plan={plan} variant="menu" />
-            ) : null}
+            <ActionPlanShareControl plan={plan} variant="menu" />
             <button
               type="button"
               onClick={onReset}

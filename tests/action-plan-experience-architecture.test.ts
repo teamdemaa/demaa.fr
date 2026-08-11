@@ -38,6 +38,8 @@ describe("action plan experience architecture", () => {
     expect(utilityActions).not.toContain('createPortal(');
     expect(utilityActions).toContain("<ActionPlanSaveControl");
     expect(utilityActions).toContain('<ActionPlanShareControl plan={plan} variant="menu" />');
+    expect(utilityActions).not.toContain('plan.version !== "manual"');
+    expect(utilityActions).toContain('<ActionPlanShareControl plan={plan} variant="menu" />');
     expect(utilityActions).toContain("Nouvelle situation");
     expect(utilityActions.match(/<ActionPlanSaveControl/g)).toHaveLength(1);
     expect(experience).toContain('demo !== "plan"');
