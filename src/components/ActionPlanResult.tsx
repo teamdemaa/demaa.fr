@@ -461,9 +461,8 @@ export default function ActionPlanResult({
 
           {manualMode && plan.weeklyActions.length === 0 ? (
             <div className="mt-6 rounded-[1.25rem] border border-dashed border-dema-line bg-dema-paper px-6 py-10 text-center">
-              <p className="text-sm text-dema-muted">Votre plan est vide. Ajoutez votre première action quand vous êtes prêt.</p>
               {onAddAction ? (
-                <button type="button" onClick={onAddAction} className="demaa-secondary-button mt-5 min-h-11 gap-2 px-5">
+                <button type="button" onClick={onAddAction} className="demaa-secondary-button min-h-11 gap-2 px-5">
                   <Plus className="h-4 w-4" aria-hidden="true" /> Ajouter une action
                 </button>
               ) : null}
