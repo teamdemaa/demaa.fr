@@ -62,7 +62,7 @@ export default function ActionPlanCoachingControl({
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="inline-flex min-h-10 items-center justify-center rounded-full border border-dema-forest/15 bg-dema-paper px-3 text-xs font-medium text-dema-forest transition hover:border-dema-forest/28 hover:bg-dema-sage/45 sm:min-h-11 sm:px-4 sm:text-sm"
+          className="demaa-primary-button min-h-10 px-3 text-xs sm:min-h-11 sm:px-4 sm:text-sm"
           aria-label="Parler à un spécialiste"
           title="Parler à un spécialiste"
         >

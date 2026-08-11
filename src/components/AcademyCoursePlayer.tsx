@@ -180,36 +180,36 @@ export default function AcademyCoursePlayer({
         </div>
       </div>
 
-      <div className={`mx-auto flex min-h-[calc(100vh-150px)] max-w-3xl flex-col px-5 ${activeScreen.type === "intro" ? "py-6 sm:py-8" : "py-10 sm:py-14"}`}>
-        <div className="flex-1">
+      <div className={`mx-auto flex min-h-[calc(100dvh-150px)] max-w-3xl flex-col px-5 ${activeScreen.type === "intro" ? "py-4 sm:py-6" : "py-10 sm:py-14"}`}>
+        <div className={activeScreen.type === "intro" ? "" : "flex-1"}>
           {activeScreen.type === "intro" ? (
             <section className="w-full">
-              <p className="max-w-2xl text-base leading-8 text-dema-muted sm:text-lg">
+              <p className="max-w-2xl text-sm leading-6 text-dema-muted sm:text-base sm:leading-7">
                 {content.identity.promise}
               </p>
 
-              <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm font-medium text-brand-blue">
+              <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs font-medium text-brand-blue sm:text-sm">
                 <span>{content.identity.durationMinutes} min</span>
                 <span aria-hidden="true" className="text-dema-line">•</span>
                 <span>Quiz de connaissances</span>
               </div>
 
-              <div className="mt-7 rounded-[1.5rem] bg-[#E7EEE8] px-5 py-6 sm:px-7 sm:py-7">
-                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-dema-forest">
+              <div className="mt-4 rounded-[1.25rem] bg-[#E7EEE8] px-4 py-4 sm:px-6 sm:py-5">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-dema-forest sm:text-xs">
                   Contenu du cours
                 </p>
-                <div className="mt-4 divide-y divide-dema-forest/10">
+                <div className="mt-2 divide-y divide-dema-forest/10">
                   {(content.outline ?? content.lessons.slice(0, 3).map((lesson) => ({
                     title: lesson.title,
                     description: lesson.takeaway,
                   }))).map((item, index) => (
-                    <div key={item.title} className="grid grid-cols-[1.75rem_1fr] gap-3 py-4 first:pt-1 last:pb-1">
-                      <span className="pt-0.5 text-sm font-semibold text-dema-forest">
+                    <div key={item.title} className="grid grid-cols-[1.5rem_1fr] gap-2.5 py-2.5 first:pt-1 last:pb-1">
+                      <span className="pt-0.5 text-xs font-semibold text-dema-forest sm:text-sm">
                         {index + 1}
                       </span>
                       <div>
-                        <h2 className="font-semibold text-brand-blue">{item.title}</h2>
-                        <p className="mt-1 text-sm leading-relaxed text-dema-muted">{item.description}</p>
+                        <h2 className="text-sm font-semibold text-brand-blue sm:text-base">{item.title}</h2>
+                        <p className="mt-0.5 text-xs leading-5 text-dema-muted sm:text-sm sm:leading-relaxed">{item.description}</p>
                       </div>
                     </div>
                   ))}
@@ -328,7 +328,7 @@ export default function AcademyCoursePlayer({
         </div>
 
         {!isLastScreen ? (
-          <nav className="mt-10 flex items-center justify-between gap-3 border-t border-dema-line/70 pt-5" aria-label="Navigation du cours">
+          <nav className={`${activeScreen.type === "intro" ? "mt-4 pt-4" : "mt-10 pt-5"} flex items-center justify-between gap-3 border-t border-dema-line/70`} aria-label="Navigation du cours">
             <button
               type="button"
               disabled={isFirstScreen}

@@ -84,9 +84,11 @@ declare global {
 export default function ActionPlanExperience({
   systemOptions,
   initialEmail = "",
+  initialView = "plan",
 }: {
   systemOptions: readonly ActionPlanSystemOption[];
   initialEmail?: string;
+  initialView?: ActionPlanView;
 }) {
   const [situation, setSituation] = useState("");
   const [exampleIndex, setExampleIndex] = useState(0);
@@ -98,7 +100,7 @@ export default function ActionPlanExperience({
   );
   const [selectedSystemId, setSelectedSystemId] = useState("");
   const [pendingSolutionResourceSlug, setPendingSolutionResourceSlug] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<ActionPlanView>("plan");
+  const [activeTab, setActiveTab] = useState<ActionPlanView>(initialView);
   const [isGenerating, setIsGenerating] = useState(false);
   const [quoteIndex, setQuoteIndex] = useState(0);
   const [isListening, setIsListening] = useState(false);
@@ -460,8 +462,8 @@ export default function ActionPlanExperience({
                 Qu’est-ce qui{" "}
                 <span className="demaa-hero-title text-dema-forest">
                   freine votre entreprise
-                </span>{" "}
-                aujourd’hui&nbsp;?
+                </span>
+                &nbsp;?
               </h1>
               <form onSubmit={handleGenerate} className="mx-auto mt-9 max-w-4xl text-left sm:mt-11">
                 <div className="rounded-[1.7rem] border border-dema-line bg-dema-paper p-2 shadow-[0_18px_50px_rgba(23,35,29,0.055)] focus-within:border-dema-forest/20">

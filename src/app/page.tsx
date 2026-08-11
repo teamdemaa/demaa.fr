@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import ActionPlanExperience from "@/components/ActionPlanExperience";
+import type { ActionPlanView } from "@/components/ActionPlanNavbar";
 import Navbar from "@/components/Navbar";
 import { actionPlanSystemOptions } from "@/lib/action-plan-system-catalog";
 import {
@@ -27,8 +28,26 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", title, description },
 };
 
-export default async function HomePage() {
-  const cookieStore = await cookies();
+const APP_VIEWS = new Set<ActionPlanView>([
+  "plan",
+  "system",
+  "academy",
+  "opportunities",
+]);
+
+function getInitialView(value: string | string[] | undefined): ActionPlanView {
+  const view = Array.isArray(value) ? value[0] : value;
+  return view && APP_VIEWS.has(view as ActionPlanView)
+    ? (view as ActionPlanView)
+    : "plan";
+}
+
+export default async function HomePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ view?: string | string[] }>;
+}) {
+  const [cookieStore, query] = await Promise.all([cookies(), searchParams]);
   const sessionToken = cookieStore.get(CUSTOMER_SPACE_COOKIE)?.value || null;
   const email = await getEmailFromCustomerSessionToken(sessionToken);
 
@@ -37,6 +56,7 @@ export default async function HomePage() {
       <Navbar anonymousLanding isAuthenticated={Boolean(email)} minimal />
       <ActionPlanExperience
         initialEmail={email || ""}
+        initialView={getInitialView(query.view)}
         systemOptions={actionPlanSystemOptions}
       />
     </>

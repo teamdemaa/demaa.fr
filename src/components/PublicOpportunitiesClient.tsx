@@ -239,12 +239,9 @@ export default function PublicOpportunitiesClient({
                 {[
                   OPPORTUNITY_TYPE_LABELS[opportunity.opportunityType],
                   opportunity.category,
-                  opportunity.workMode
-                    ? OPPORTUNITY_WORK_MODE_LABELS[opportunity.workMode]
-                    : opportunity.geography,
                 ].filter(Boolean).join(" · ")}
               </p>
-              <h2 className="mt-2 text-xl font-medium tracking-[-0.02em] text-brand-blue">
+              <h2 className="mt-2 text-lg font-normal tracking-[-0.015em] text-brand-blue sm:text-xl">
                 {opportunity.title}
               </h2>
               <p className="mt-3 max-w-2xl text-sm leading-relaxed text-dema-muted">

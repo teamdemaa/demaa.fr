@@ -29,7 +29,7 @@ catalogue, ni rendre privées les destinations publiques existantes.
 ## Décision
 
 1. `/` devient l'entrée canonique du générateur de plan d'action. Sa promesse
-   exacte est : « Qu’est-ce qui freine votre entreprise aujourd’hui ? »
+   exacte est : « Qu’est-ce qui freine votre entreprise ? »
 2. Avant connexion, cette entrée affiche Demaa, `Se connecter` et un grand
    champ libre. Aucun questionnaire structuré ne précède la génération.
 3. Une seule génération principale produit un JSON strict comprenant le plan,

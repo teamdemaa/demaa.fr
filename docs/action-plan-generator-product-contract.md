@@ -22,7 +22,7 @@ Les choix non validés restent indiqués `open` ou `deferred` et ne doivent pas
 
 ### Promesse
 
-> Qu’est-ce qui freine votre entreprise aujourd’hui ?
+> Qu’est-ce qui freine votre entreprise ?
 
 Le produit aide un dirigeant à clarifier une situation réelle et à savoir quoi
 faire ensuite. Il ne doit devenir ni un questionnaire préalable, ni une étude
