@@ -24,7 +24,7 @@ function isSafeId(value: string | null, maxLength = 120) {
 
 function normalizeLegacyCustomerPath(candidate: string) {
   if (candidate === "/mon-espace" || candidate.startsWith("/mon-espace?")) {
-    return "/";
+    return "/plans";
   }
 
   if (candidate.startsWith("/mon-espace/plans/")) {
@@ -125,6 +125,7 @@ export function getSafeCustomerReturnTo(value?: string | null) {
   }
 
   if (candidate === "/" || candidate.startsWith("/?")) return candidate;
+  if (candidate === "/plans") return candidate;
   if (SAVED_PLAN_PATH_PATTERN.test(candidate)) return candidate;
 
   return "/";

@@ -1,9 +1,10 @@
 "use client";
 
-import { Check, Mic, Phone, Send, X } from "lucide-react";
-import { useRef, useState } from "react";
+import { Check, LoaderCircle, Mic, Phone, Send, X } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { getLeadAttributionPayload } from "@/lib/lead-attribution-client";
 import { clearLeadSubmissionKey, getLeadSubmissionKey } from "@/lib/lead-submission-client";
+import type { CoachingMessage } from "@/lib/coaching-conversation";
 
 type CoachingTab = "sessions" | "messages";
 type Offer = "session" | "parcours" | "echange";
@@ -27,6 +28,13 @@ const offers = [
   },
 ] as const;
 
+const coachingMessageDateFormatter = new Intl.DateTimeFormat("fr-FR", {
+  day: "2-digit",
+  hour: "2-digit",
+  minute: "2-digit",
+  month: "short",
+});
+
 async function submitCoachingRequest(payload: Record<string, unknown>) {
   const response = await fetch("/api/coaching-request", {
     method: "POST",
@@ -34,6 +42,10 @@ async function submitCoachingRequest(payload: Record<string, unknown>) {
     body: JSON.stringify(payload),
   });
   if (response.status !== 202) throw new Error("request_failed");
+  return response.json().catch(() => null) as Promise<{
+    message?: CoachingMessage;
+    ok?: boolean;
+  } | null>;
 }
 
 export default function CoachingPanel({
@@ -163,8 +175,58 @@ function CoachingRequestDialog({ offer, onClose }: { offer: Offer; onClose: () =
 
 function CoachingMessageForm({ onRequireAccess }: { onRequireAccess?: () => void }) {
   const [message, setMessage] = useState("");
-  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [messages, setMessages] = useState<CoachingMessage[]>([]);
+  const [status, setStatus] = useState<"idle" | "loading" | "sending" | "error">(
+    onRequireAccess ? "idle" : "loading",
+  );
   const recognitionRef = useRef<{ stop(): void } | null>(null);
+  const historyRef = useRef<HTMLDivElement>(null);
+
+  const loadMessages = useCallback(async (quiet = false) => {
+    if (onRequireAccess) return;
+    if (!quiet) setStatus("loading");
+    try {
+      const response = await fetch("/api/coaching-request", {
+        cache: "no-store",
+        credentials: "same-origin",
+      });
+      if (!response.ok) throw new Error("history_failed");
+      const payload = await response.json() as { messages?: CoachingMessage[] };
+      setMessages(Array.isArray(payload.messages) ? payload.messages : []);
+      setStatus((current) => current === "sending" ? current : "idle");
+    } catch {
+      if (!quiet) setStatus("error");
+    }
+  }, [onRequireAccess]);
+
+  useEffect(() => {
+    const draft = window.sessionStorage.getItem("demaa_coaching_message_draft");
+    if (draft) setMessage(draft);
+    void loadMessages();
+
+    if (onRequireAccess) return;
+    const interval = window.setInterval(() => {
+      if (document.visibilityState === "visible") void loadMessages(true);
+    }, 30_000);
+    return () => window.clearInterval(interval);
+  }, [loadMessages, onRequireAccess]);
+
+  useEffect(() => {
+    if (message) {
+      window.sessionStorage.setItem("demaa_coaching_message_draft", message);
+    } else {
+      window.sessionStorage.removeItem("demaa_coaching_message_draft");
+    }
+  }, [message]);
+
+  useEffect(() => {
+    const history = historyRef.current;
+    if (!history) return;
+    history.scrollTo({
+      behavior: messages.length > 1 ? "smooth" : "auto",
+      top: history.scrollHeight,
+    });
+  }, [messages]);
 
   function dictate() {
     const SpeechRecognition = (window as Window & { webkitSpeechRecognition?: new () => { lang: string; continuous: boolean; interimResults: boolean; start(): void; stop(): void; onresult: ((event: { results: ArrayLike<{ 0?: { transcript?: string } }> }) => void) | null; onend: (() => void) | null } }).webkitSpeechRecognition;
@@ -188,25 +250,82 @@ function CoachingMessageForm({ onRequireAccess }: { onRequireAccess?: () => void
       onRequireAccess();
       return;
     }
-    if (message.trim().length < 10) {
+    if (message.trim().length < 2) {
       setStatus("error"); return;
     }
     setStatus("sending");
     const flowKey = "coaching:message";
     try {
-      await submitCoachingRequest({ attribution: getLeadAttributionPayload(), message, requestKind: "message", website: "", idempotencyKey: getLeadSubmissionKey(flowKey) });
-      clearLeadSubmissionKey(flowKey); setMessage(""); setStatus("sent");
+      const payload = await submitCoachingRequest({ attribution: getLeadAttributionPayload(), message, requestKind: "message", website: "", idempotencyKey: getLeadSubmissionKey(flowKey) });
+      clearLeadSubmissionKey(flowKey);
+      if (payload?.message) {
+        setMessages((current) => current.some((entry) => entry.id === payload.message?.id)
+          ? current
+          : [...current, payload.message as CoachingMessage]);
+      } else {
+        await loadMessages(true);
+      }
+      setMessage("");
+      setStatus("idle");
     } catch { setStatus("error"); }
   }
 
   return (
-    <form onSubmit={submit} className="mt-7 max-w-2xl rounded-[1.35rem] border border-dema-line bg-dema-paper p-6 sm:p-7">
-      <h3 className="text-2xl font-semibold text-brand-blue">Écrire à un spécialiste</h3>
-      <p className="mt-2 text-sm leading-relaxed text-dema-muted">Envoyez une question ou dictez-la. Un spécialiste vous répond sous 24 à 48 h.</p>
-      <label className="mt-6 block text-sm font-medium">Message<textarea value={message} onChange={(event) => setMessage(event.target.value)} rows={5} className="mt-2 w-full rounded-xl border border-dema-line px-4 py-3 outline-none focus:border-dema-forest" /></label>
-      <div className="mt-4 flex items-center gap-3"><button type="button" onClick={dictate} className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-dema-line" aria-label="Dicter le message"><Mic className="h-4 w-4" /></button><button disabled={status === "sending"} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-dema-forest px-5 text-sm font-semibold text-white"><Send className="h-4 w-4" />{status === "sending" ? "Envoi…" : "Envoyer"}</button></div>
-      {status === "sent" ? <p className="mt-4 text-sm font-medium text-dema-forest">Message envoyé.</p> : null}
-      {status === "error" ? <p className="mt-4 text-sm font-medium text-red-700">Vérifiez votre message puis réessayez.</p> : null}
-    </form>
+    <section className="mt-7 max-w-3xl overflow-hidden rounded-[1.35rem] border border-dema-line bg-dema-paper">
+      <div className="border-b border-dema-line px-5 py-4 sm:px-6">
+        <h3 className="text-xl font-medium text-brand-blue">Écrire à un spécialiste</h3>
+        <p className="mt-1 text-sm leading-relaxed text-dema-muted">
+          Envoyez une question ou dictez-la. Un spécialiste vous répond sous 24 à 48 h.
+        </p>
+      </div>
+
+      <div
+        ref={historyRef}
+        className="flex min-h-72 max-h-[32rem] flex-col gap-3 overflow-y-auto bg-dema-sage/20 px-4 py-5 sm:px-6"
+        aria-live="polite"
+        aria-label="Historique de la conversation"
+      >
+        {status === "loading" ? (
+          <div className="m-auto flex items-center gap-2 text-sm text-dema-muted">
+            <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
+            Chargement de la conversation…
+          </div>
+        ) : null}
+        {status !== "loading" && messages.length === 0 ? (
+          <p className="m-auto max-w-sm text-center text-sm leading-relaxed text-dema-muted">
+            Posez votre première question. Vos échanges resteront visibles ici.
+          </p>
+        ) : null}
+        {messages.map((entry) => (
+          <article
+            key={entry.id}
+            className={`max-w-[85%] rounded-[1.1rem] px-4 py-3 text-sm leading-relaxed shadow-sm ${entry.author === "customer" ? "ml-auto bg-dema-forest text-white" : "mr-auto border border-dema-line bg-white text-brand-blue"}`}
+          >
+            <p className="whitespace-pre-wrap break-words">{entry.body}</p>
+            <p className={`mt-1.5 text-[0.68rem] ${entry.author === "customer" ? "text-white/70" : "text-dema-muted"}`}>
+              {entry.author === "customer" ? "Vous" : "Spécialiste"} · {coachingMessageDateFormatter.format(new Date(entry.createdAt))}
+            </p>
+          </article>
+        ))}
+      </div>
+
+      <form onSubmit={submit} className="border-t border-dema-line p-3 sm:p-4">
+        <div className="flex items-end gap-2 rounded-[1.15rem] border border-dema-line bg-white p-2 focus-within:border-dema-forest">
+          <textarea
+            aria-label="Votre message"
+            value={message}
+            onChange={(event) => setMessage(event.target.value)}
+            rows={2}
+            placeholder="Écrivez votre message…"
+            className="max-h-32 min-h-12 flex-1 resize-none bg-transparent px-2 py-2 text-sm outline-none"
+          />
+          <button type="button" onClick={dictate} className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-dema-forest transition hover:bg-dema-sage/50" aria-label="Dicter le message"><Mic className="h-4 w-4" /></button>
+          <button disabled={status === "sending" || message.trim().length < 2} className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-dema-forest text-white transition hover:bg-[#284f3a] disabled:opacity-40" aria-label="Envoyer le message">
+            {status === "sending" ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : <Send className="h-4 w-4" aria-hidden="true" />}
+          </button>
+        </div>
+        {status === "error" ? <p className="mt-2 px-2 text-xs font-medium text-red-700">Le message n’a pas pu être envoyé. Réessayez.</p> : null}
+      </form>
+    </section>
   );
 }

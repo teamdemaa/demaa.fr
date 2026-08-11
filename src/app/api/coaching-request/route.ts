@@ -11,6 +11,10 @@ import { logOperationalError } from "@/lib/operational-log";
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
 import { enforceServiceRequestRateLimit } from "@/lib/service-request-security.server";
 import { requireCurrentCustomerEmail } from "@/lib/customer-space-session.server";
+import {
+  appendCustomerCoachingMessage,
+  getCustomerCoachingMessages,
+} from "@/lib/coaching-conversation.server";
 
 export const runtime = "nodejs";
 
@@ -29,6 +33,34 @@ const OFFERS = new Set(["session", "parcours", "echange"]);
 
 function isValidPhone(value: string) {
   return /^\+?[0-9\s().-]+$/.test(value) && value.replace(/\D/g, "").length >= 8;
+}
+
+const PRIVATE_NO_STORE_HEADERS = {
+  "Cache-Control": "private, no-store, max-age=0",
+  Pragma: "no-cache",
+  Vary: "Cookie",
+} as const;
+
+export async function GET(request: Request) {
+  try {
+    const blockedHost = enforceAllowedHost(request);
+    if (blockedHost) return blockedHost;
+
+    const customer = await requireCurrentCustomerEmail();
+    if (customer.response) return customer.response;
+
+    const messages = await getCustomerCoachingMessages(customer.email);
+    return NextResponse.json(
+      { messages },
+      { headers: PRIVATE_NO_STORE_HEADERS },
+    );
+  } catch (error) {
+    logOperationalError("coaching_conversation.read_failed", error);
+    return NextResponse.json(
+      { error: "La conversation n’a pas pu être chargée." },
+      { status: 500, headers: PRIVATE_NO_STORE_HEADERS },
+    );
+  }
 }
 
 export async function POST(request: Request) {
@@ -58,13 +90,13 @@ export async function POST(request: Request) {
     const requestKind = normalizeText(data?.requestKind, 20);
     const company = normalizeText(data?.company, 160);
     const phone = normalizeText(data?.phone, 60);
-    const message = normalizeText(data?.message, 2_000);
+    const message = normalizeText(data?.message, 2_000, { multiline: true });
     const offer = normalizeText(data?.offer, 30);
     const idempotencyKey = normalizeIdempotencyKey(data?.idempotencyKey);
 
     const isMessage = requestKind === "message";
     const valid = isMessage
-      ? message.length >= 10
+      ? message.length >= 2
       : Boolean(company && isValidPhone(phone) && OFFERS.has(offer));
 
     if (!valid || !idempotencyKey) {
@@ -81,6 +113,14 @@ export async function POST(request: Request) {
     if (!context) {
       return NextResponse.json({ error: "Contexte invalide." }, { status: 400 });
     }
+
+    const conversationMessage = isMessage
+      ? await appendCustomerCoachingMessage({
+          body: message,
+          email,
+          idempotencyKey,
+        })
+      : null;
 
     await submitLeadRequest({
       attribution: resolveLeadAttribution(request, data?.attribution),
@@ -103,7 +143,13 @@ export async function POST(request: Request) {
       title: isMessage ? "Nouveau message Coaching" : "Nouvelle demande Coaching",
     });
 
-    return NextResponse.json({ ok: true }, { status: 202 });
+    return NextResponse.json(
+      {
+        ok: true,
+        ...(conversationMessage ? { message: conversationMessage.message } : {}),
+      },
+      { status: 202, headers: PRIVATE_NO_STORE_HEADERS },
+    );
   } catch (error) {
     logOperationalError("coaching_request.failed", error);
     return NextResponse.json(

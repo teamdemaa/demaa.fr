@@ -22,5 +22,5 @@ export default async function LatestActionPlanPage() {
   if (!email) redirect("/connexion?returnTo=%2Fplans");
 
   const [latestPlan] = await getOwnedActionPlans(email);
-  redirect(latestPlan ? `/plans/${latestPlan.id}` : "/");
+  redirect(latestPlan ? `/plans/${latestPlan.id}` : "/?new=1");
 }

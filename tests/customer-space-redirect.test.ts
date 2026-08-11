@@ -44,9 +44,9 @@ describe("customer-space safe return intents", () => {
   });
 
   it("keeps legacy plan links compatible", () => {
-    expect(getSafeCustomerReturnTo("/mon-espace")).toBe("/");
+    expect(getSafeCustomerReturnTo("/mon-espace")).toBe("/plans");
     expect(getSafeCustomerReturnTo("/mon-espace/plans/plan-123")).toBe("/plans/plan-123");
-    expect(getSafeCustomerReturnTo("/plans")).toBe("/");
+    expect(getSafeCustomerReturnTo("/plans")).toBe("/plans");
   });
 
   it("canonicalizes legacy public intents back into the single app", () => {

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import ActionPlanExperience from "@/components/ActionPlanExperience";
 import type { ActionPlanView } from "@/components/ActionPlanNavbar";
 import Navbar from "@/components/Navbar";
@@ -45,18 +46,34 @@ function getInitialView(value: string | string[] | undefined): ActionPlanView {
 export default async function HomePage({
   searchParams,
 }: {
-  searchParams: Promise<{ view?: string | string[] }>;
+  searchParams: Promise<{
+    intent?: string | string[];
+    new?: string | string[];
+    view?: string | string[];
+  }>;
 }) {
   const [cookieStore, query] = await Promise.all([cookies(), searchParams]);
   const sessionToken = cookieStore.get(CUSTOMER_SPACE_COOKIE)?.value || null;
   const email = await getEmailFromCustomerSessionToken(sessionToken);
+  const initialView = getInitialView(query.view);
+  const requestedIntent = Array.isArray(query.intent) ? query.intent[0] : query.intent;
+  const requestedNewPlan = Array.isArray(query.new) ? query.new[0] : query.new;
+
+  if (
+    email
+    && initialView === "plan"
+    && !requestedIntent
+    && requestedNewPlan !== "1"
+  ) {
+    redirect("/plans");
+  }
 
   return (
     <>
       <Navbar anonymousLanding isAuthenticated={Boolean(email)} minimal />
       <ActionPlanExperience
         initialEmail={email || ""}
-        initialView={getInitialView(query.view)}
+        initialView={initialView}
         systemOptions={actionPlanSystemOptions}
       />
     </>

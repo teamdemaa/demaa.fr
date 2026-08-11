@@ -153,6 +153,7 @@ describe("action plan experience architecture", () => {
   });
 
   it("allows a saved plan return path without opening external redirects", () => {
+    expect(getSafeCustomerReturnTo("/plans")).toBe("/plans");
     expect(getSafeCustomerReturnTo("/mon-espace/plans/abc_123")).toBe(
       "/plans/abc_123",
     );

@@ -91,12 +91,16 @@ l'ADR 0004 prévaut.
   `Plan d’action / Système / Académie / Opportunités`, Coaching accessible par
   `Parler à un spécialiste`, Opportunités au sens large et sauvegarde invitée
   sans secret exposé au JavaScript. L’ADR 0010 est la référence.
-- [ ] Unifier l'identité e-mail des parcours applicatifs : le lien magique est
+- [x] Unifier l'identité e-mail des parcours applicatifs : le lien magique est
   le seul point de saisie et de vérification ; une session connectée alimente
   côté serveur les guides métier, Opportunités, Coaching, inscriptions et
   demandes sans redemander l'adresse. Après connexion, reprendre directement
   l'intention autorisée dans l'application, sans page `Mon espace` ou
   `Mes plans`.
+- [x] Restaurer le dernier plan sauvegardé après connexion, depuis le profil et
+  à l'ouverture normale de l'application. `/plans` résout le plan courant et
+  `/?new=1` reste réservé à une nouvelle situation volontaire ; l'absence de
+  plan ouvre ce mode vierge sans boucle de redirection.
 - [ ] Cadrer D-078, multi-tenant simple : un compte peut posséder plusieurs
   entreprises ; chaque plan et progression Système appartient à une entreprise
   vérifiée côté serveur. Prévoir `accounts`, `companies` et un état Système par

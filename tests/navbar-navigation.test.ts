@@ -60,12 +60,11 @@ describe("Demaa application navbar", () => {
     ]);
 
     expect(navbarSource).toContain('aria-label="Ouvrir l’application"');
-    expect(navbarSource).toContain('window.location.assign("/")');
-    expect(navbarSource).toContain("onClick={openAuthenticatedAccount}");
-    expect(navbarSource).toContain("prefetch={false}");
+    expect(navbarSource).not.toContain('window.location.assign("/")');
+    expect(navbarSource).not.toContain("openAuthenticatedAccount");
     expect(navbarSource).not.toContain("<span>Mon espace</span>");
-    expect(navbarSource).not.toContain('href="/plans"');
-    expect(navbarSource).toContain('href="/connexion"');
+    expect(navbarSource).toContain('href="/plans"');
+    expect(navbarSource).toContain('href="/connexion?returnTo=%2Fplans"');
     expect(navbarSource).toContain("<span>Se connecter</span>");
     expect(savedPlanSource).toContain("<Navbar anonymousLanding isAuthenticated minimal />");
   });
@@ -77,13 +76,26 @@ describe("Demaa application navbar", () => {
       readFile(new URL("../src/app/@modal/(.)connexion/page.tsx", import.meta.url), "utf8"),
     ]);
 
-    expect(legacySource).toContain('redirect("/")');
+    expect(legacySource).toContain('redirect("/plans")');
     expect(loginSource).toContain("<Navbar minimal />");
     expect(loginSource).toContain("<CustomerSpaceAccessForm returnTo={returnTo} simple />");
     expect(loginSource).toContain("Se connecter");
     expect(loginSource).not.toContain("Mes plans");
     expect(loginSource).not.toContain("Mon espace");
     expect(modalSource).toContain("<CustomerSpaceLoginDialog />");
+  });
+
+  it("restores the latest saved plan unless a new situation is explicitly requested", async () => {
+    const [homeSource, plansSource, loginDialogSource] = await Promise.all([
+      readFile(new URL("../src/app/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/plans/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/components/CustomerSpaceLoginDialog.tsx", import.meta.url), "utf8"),
+    ]);
+
+    expect(homeSource).toContain('redirect("/plans")');
+    expect(homeSource).toContain('requestedNewPlan !== "1"');
+    expect(plansSource).toContain('redirect(latestPlan ? `/plans/${latestPlan.id}` : "/?new=1")');
+    expect(loginDialogSource).toContain('<CustomerSpaceAccessForm returnTo="/plans" simple />');
   });
 
   it("shows application navigation before generation and fixes it at the bottom on mobile", async () => {

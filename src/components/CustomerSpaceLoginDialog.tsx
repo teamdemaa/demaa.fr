@@ -45,7 +45,7 @@ export default function CustomerSpaceLoginDialog() {
         </div>
 
         <div className="mt-6">
-          <CustomerSpaceAccessForm returnTo="/" simple />
+          <CustomerSpaceAccessForm returnTo="/plans" simple />
         </div>
       </section>
     </div>

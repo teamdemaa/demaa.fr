@@ -29,7 +29,7 @@ export default async function ConnexionPage({ searchParams }: ConnexionPageProps
   const rawReturnTo = Array.isArray(params.returnTo) ? params.returnTo[0] : params.returnTo;
   const rawMessage = Array.isArray(params.message) ? params.message[0] : params.message;
   const token = rawToken?.trim().slice(0, 80) || "";
-  const returnTo = getSafeCustomerReturnTo(rawReturnTo);
+  const returnTo = getSafeCustomerReturnTo(rawReturnTo || "/plans");
 
   if (!token) {
     const cookieStore = await cookies();

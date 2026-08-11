@@ -206,6 +206,12 @@ ouvre sa page persistée. Les modifications y sont enregistrées avec révision
 optimiste et prolongent la durée de conservation depuis la dernière mise à
 jour.
 
+Lorsqu'une session connectée revient dans l'application sans demander une
+nouvelle situation, `/plans` restaure le dernier plan sauvegardé. S'il n'en
+existe aucun, l'application ouvre explicitement `/?new=1`. Le paramètre
+`new=1` est donc réservé à la création volontaire d'un plan vierge et ne doit
+jamais remplacer silencieusement un plan déjà enregistré.
+
 Le lien magique est l'unique point d'établissement de l'identité e-mail dans
 l'application. Une fois la session créée, les formulaires fonctionnels
 (guides métier, Opportunités, Coaching, inscription et demandes) réutilisent

@@ -15,7 +15,10 @@ ne doit pas introduire une présentation concurrente « Espace membre ».
 
 Il n’existe pas de second écran public `Mon espace` ou `Mes plans`. Après
 connexion, `/plans` redirige vers le dernier plan sauvegardé dans l’application,
-ou vers l’accueil lorsqu’aucun plan n’existe. L’ancienne route `/mon-espace`
+ou vers une nouvelle situation vierge explicitement identifiée lorsqu’aucun
+plan n’existe. Une session connectée qui ouvre la racine sans intention
+explicite passe par `/plans` ; `/?new=1` reste l’entrée volontaire pour repartir
+avec un plan vierge. L’ancienne route `/mon-espace`
 est uniquement conservée comme redirection de compatibilité vers `/plans`.
 Les historiques restent conservés dans les données sans créer de portail
 concurrent.
@@ -39,7 +42,11 @@ emploient `spécialiste`, notamment `Parler à un spécialiste` et
 Les demandes sont coordonnées manuellement. Aucun paiement, agenda automatique
 ou promesse de disponibilité n’est ajouté sans une décision ultérieure.
 Messages est asynchrone. La dictée transforme la voix en texte relisible avant
-envoi ; aucun enregistrement audio n’est conservé dans cette version.
+envoi ; aucun enregistrement audio n’est conservé dans cette version. L’onglet
+Messages est une conversation simple : les messages du dirigeant et les
+réponses du spécialiste restent visibles dans un historique chronologique lié
+à l’adresse e-mail vérifiée. Slack reste une alerte opérationnelle et ne devient
+pas une seconde source de vérité de la conversation.
 
 ## Sécurité du lien magique
 

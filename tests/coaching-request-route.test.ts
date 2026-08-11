@@ -9,6 +9,8 @@ const mocks = vi.hoisted(() => ({
   requireCurrentCustomerEmail: vi.fn(),
   resolveLeadAttribution: vi.fn(),
   resolveLeadContext: vi.fn(),
+  appendCustomerCoachingMessage: vi.fn(),
+  getCustomerCoachingMessages: vi.fn(),
   submitLeadRequest: vi.fn(),
 }));
 
@@ -25,6 +27,10 @@ vi.mock("@/lib/api-security", () => ({
 vi.mock("@/lib/customer-space-session.server", () => ({
   requireCurrentCustomerEmail: mocks.requireCurrentCustomerEmail,
 }));
+vi.mock("@/lib/coaching-conversation.server", () => ({
+  appendCustomerCoachingMessage: mocks.appendCustomerCoachingMessage,
+  getCustomerCoachingMessages: mocks.getCustomerCoachingMessages,
+}));
 vi.mock("@/lib/lead-attribution-server", () => ({
   resolveLeadAttribution: mocks.resolveLeadAttribution,
 }));
@@ -39,7 +45,7 @@ vi.mock("@/lib/service-request-security.server", () => ({
   enforceServiceRequestRateLimit: mocks.enforceServiceRequestRateLimit,
 }));
 
-import { POST } from "@/app/api/coaching-request/route";
+import { GET, POST } from "@/app/api/coaching-request/route";
 
 function request(overrides: Record<string, unknown> = {}) {
   return new Request("https://demaa.co/api/coaching-request", {
@@ -77,6 +83,16 @@ describe("coaching request route", () => {
       sourceUrl: "https://demaa.co/",
     });
     mocks.submitLeadRequest.mockResolvedValue({ duplicate: false, leadId: "lead-1" });
+    mocks.appendCustomerCoachingMessage.mockResolvedValue({
+      created: true,
+      message: {
+        author: "customer",
+        body: "Je souhaite clarifier ma prochaine décision opérationnelle.",
+        createdAt: "2026-08-11T08:00:00.000Z",
+        id: "message-1",
+      },
+    });
+    mocks.getCustomerCoachingMessages.mockResolvedValue([]);
   });
 
   it("uses the authenticated session email and ignores a body email", async () => {
@@ -87,6 +103,11 @@ describe("coaching request route", () => {
       contact: expect.objectContaining({ email: "owner@example.com" }),
       requestType: "coaching_message",
     }));
+    expect(mocks.appendCustomerCoachingMessage).toHaveBeenCalledWith({
+      body: "Je souhaite clarifier ma prochaine décision opérationnelle.",
+      email: "owner@example.com",
+      idempotencyKey: "coaching:12345678",
+    });
   });
 
   it("refuses a coaching request without an authenticated session", async () => {
@@ -99,5 +120,22 @@ describe("coaching request route", () => {
 
     expect(response.status).toBe(401);
     expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
+  });
+
+  it("returns only the authenticated customer's conversation without caching", async () => {
+    mocks.getCustomerCoachingMessages.mockResolvedValue([{
+      author: "specialist",
+      body: "Voici la prochaine étape.",
+      createdAt: "2026-08-11T09:00:00.000Z",
+      id: "reply-1",
+    }]);
+
+    const response = await GET(request());
+    const payload = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(response.headers.get("cache-control")).toContain("no-store");
+    expect(mocks.getCustomerCoachingMessages).toHaveBeenCalledWith("owner@example.com");
+    expect(payload.messages).toHaveLength(1);
   });
 });
