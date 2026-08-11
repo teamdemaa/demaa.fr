@@ -17,6 +17,19 @@ export default function ActionPlanCoachingControl({
   const [accessOpen, setAccessOpen] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const closeAccessDialog = useCallback(() => setAccessOpen(false), []);
+  const closePanel = useCallback(() => {
+    setOpen(false);
+
+    const url = new URL(window.location.href);
+    if (url.searchParams.get("intent") !== "coaching") return;
+
+    url.searchParams.delete("intent");
+    window.history.replaceState(
+      window.history.state,
+      "",
+      `${url.pathname}${url.search}${url.hash}`,
+    );
+  }, []);
   const accessDialogRef = useAccessibleDialog({
     isOpen: accessOpen,
     onClose: closeAccessDialog,
@@ -44,7 +57,7 @@ export default function ActionPlanCoachingControl({
     closeButtonRef.current?.focus();
 
     function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") setOpen(false);
+      if (event.key === "Escape") closePanel();
     }
 
     window.addEventListener("keydown", onKeyDown);
@@ -52,7 +65,7 @@ export default function ActionPlanCoachingControl({
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [open]);
+  }, [closePanel, open]);
 
   if (!target) return null;
 
@@ -83,7 +96,7 @@ export default function ActionPlanCoachingControl({
                 <button
                   ref={closeButtonRef}
                   type="button"
-                  onClick={() => setOpen(false)}
+                  onClick={closePanel}
                   className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue"
                   aria-label="Fermer la page spécialiste"
                 >

@@ -51,6 +51,8 @@ describe("unified app and coaching", () => {
     expect(coaching).not.toContain("disponible prochainement");
     expect(coachingControl).toContain("Parler à un spécialiste");
     expect(coachingControl).toContain("onClick={() => setOpen(true)}");
+    expect(coachingControl).toContain('url.searchParams.delete("intent")');
+    expect(coachingControl).toContain("window.history.replaceState");
     expect(coachingControl).toContain("onRequireAccess={initialEmail ? undefined");
     expect(appNavigation).toContain("Opportunités");
     expect(appNavigation).not.toContain('label: "Coaching"');
