@@ -9,8 +9,10 @@ const mocks = vi.hoisted(() => ({
   enforceSameOrigin: vi.fn(),
   getAllOpportunities: vi.fn(),
   getExpertiseById: vi.fn(),
+  getOpportunityById: vi.fn(),
   logOperationalError: vi.fn(),
   revalidateTag: vi.fn(),
+  updateOpportunity: vi.fn(),
   updateOpportunityStatus: vi.fn(),
 }));
 
@@ -36,6 +38,8 @@ vi.mock("@/lib/provider-network.server", () => ({
   createOpportunity: mocks.createOpportunity,
   getAllOpportunities: mocks.getAllOpportunities,
   getExpertiseById: mocks.getExpertiseById,
+  getOpportunityById: mocks.getOpportunityById,
+  updateOpportunity: mocks.updateOpportunity,
   updateOpportunityStatus: mocks.updateOpportunityStatus,
 }));
 vi.mock("@/lib/request-guard", () => ({
@@ -69,6 +73,26 @@ describe("opportunity admin route", () => {
     mocks.getAllOpportunities.mockResolvedValue([]);
     mocks.getExpertiseById.mockResolvedValue({ expertiseId: "google-ads" });
     mocks.createOpportunity.mockImplementation(async (input) => input);
+    mocks.getOpportunityById.mockResolvedValue({
+      cadence: null,
+      category: "Acquisition",
+      companyName: null,
+      compensation: null,
+      createdAt: "2026-08-10T00:00:00.000Z",
+      expertiseId: "google-ads",
+      expiresAt: null,
+      expectations: [],
+      geography: "France",
+      opportunityId: "campagne-google",
+      opportunityType: "partenariat",
+      publishedAt: "2026-08-10T00:00:00.000Z",
+      startTiming: null,
+      status: "open",
+      summary: "Piloter une campagne Google Ads pour obtenir des demandes qualifiées.",
+      title: "Campagne Google Ads",
+      workMode: null,
+    });
+    mocks.updateOpportunity.mockResolvedValue(true);
     mocks.updateOpportunityStatus.mockResolvedValue(true);
   });
 
@@ -79,16 +103,32 @@ describe("opportunity admin route", () => {
   it("creates an open Firebase opportunity and invalidates the public cache", async () => {
     const response = await POST(request("POST", {
       category: "Acquisition",
+      cadence: "Deux jours par mois",
+      companyName: "Entreprise Exemple",
+      compensation: "Budget défini après cadrage",
       expertiseId: "google-ads",
+      expectations: "Cadrer la campagne\nCréer les annonces\nSuivre les demandes",
       geography: "France",
       opportunityType: "partenariat",
+      startTiming: "Septembre 2026",
       summary: "Piloter une campagne Google Ads pour une entreprise qui souhaite obtenir des demandes qualifiées.",
       title: "Campagne Google Ads",
+      workMode: "hybrid",
     }));
     expect(response.status).toBe(201);
     expect(mocks.createOpportunity).toHaveBeenCalledWith(expect.objectContaining({
       expertiseId: "google-ads",
       opportunityType: "partenariat",
+      workMode: "hybrid",
+      cadence: "Deux jours par mois",
+      startTiming: "Septembre 2026",
+      companyName: "Entreprise Exemple",
+      compensation: "Budget défini après cadrage",
+      expectations: [
+        "Cadrer la campagne",
+        "Créer les annonces",
+        "Suivre les demandes",
+      ],
       status: "open",
       title: "Campagne Google Ads",
     }));
@@ -124,5 +164,35 @@ describe("opportunity admin route", () => {
       "campagne-google",
       "closed",
     );
+  });
+
+  it("updates the optional public details of an existing opportunity", async () => {
+    const response = await PATCH(request("PATCH", {
+      category: "Acquisition",
+      cadence: "Mission récurrente",
+      companyName: "",
+      compensation: "",
+      expertiseId: "google-ads",
+      expectations: "Cadrer le besoin\nPiloter la campagne",
+      geography: "France",
+      opportunityId: "campagne-google",
+      opportunityType: "partenariat",
+      startTiming: "Dès que possible",
+      summary: "Piloter une campagne Google Ads pour une entreprise qui souhaite obtenir des demandes qualifiées.",
+      title: "Campagne Google Ads",
+      workMode: "remote",
+    }));
+
+    expect(response.status).toBe(200);
+    expect(mocks.updateOpportunity).toHaveBeenCalledWith(expect.objectContaining({
+      cadence: "Mission récurrente",
+      companyName: null,
+      compensation: null,
+      expectations: ["Cadrer le besoin", "Piloter la campagne"],
+      opportunityId: "campagne-google",
+      startTiming: "Dès que possible",
+      workMode: "remote",
+    }));
+    expect(mocks.updateOpportunityStatus).not.toHaveBeenCalled();
   });
 });

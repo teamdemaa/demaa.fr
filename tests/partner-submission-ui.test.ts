@@ -73,6 +73,9 @@ describe("solution proposal UI contract", () => {
     expect(catalog).not.toContain("Voir l’opportunité");
     expect(catalog).toContain("OpportunityDetailsDialog");
     expect(catalog).toContain("Intéressé(e)");
+    expect(catalog).toContain("Modalité");
+    expect(catalog).toContain("Rythme / durée");
+    expect(catalog).toContain("Ce qui est attendu");
     expect(catalog).toContain('aria-label={`Ouvrir l’opportunité : ${opportunity.title}`}');
     expect(catalog).toContain('role="dialog"');
     expect(catalog).toContain("setApplicationOpportunity(selected)");
@@ -89,5 +92,28 @@ describe("solution proposal UI contract", () => {
     expect([page, catalog, modal, panel].join("\n")).not.toMatch(
       /freelance|Demaa recruteur/i,
     );
+  });
+
+  it("keeps every optional opportunity detail manageable from the admin", async () => {
+    const [admin, route] = await Promise.all([
+      readSource("src/components/OpportunityAdminClient.tsx"),
+      readSource("src/app/api/admin/opportunities/route.ts"),
+    ]);
+
+    for (const field of [
+      "workMode",
+      "geography",
+      "cadence",
+      "startTiming",
+      "expectations",
+      "compensation",
+      "companyName",
+    ]) {
+      expect(admin).toContain(`name="${field}"`);
+      expect(route).toContain(field);
+    }
+    expect(admin).toContain("Modifier l’opportunité");
+    expect(admin).toContain("Enregistrer les modifications");
+    expect(route).toContain("updateOpportunity");
   });
 });

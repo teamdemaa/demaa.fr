@@ -31,6 +31,12 @@ describe("provider network contract", () => {
     );
     expect(entries).toHaveLength(3);
     expect(entries.every((entry) => entry.opportunityType === "mission")).toBe(true);
+    expect(entries.every((entry) => entry.expectations.length === 3)).toBe(true);
+    expect(entries.map((entry) => entry.workMode)).toEqual([
+      "hybrid",
+      "remote",
+      "remote",
+    ]);
     expect(entries.every((entry) =>
       isPublicOpenOpportunity(entry, new Date("2026-08-08T12:00:00.000Z"))
     )).toBe(true);
@@ -53,6 +59,8 @@ describe("provider network contract", () => {
       });
       expect(entry.expertiseId).toBeNull();
       expect(entry.opportunityType).toBe(opportunityType);
+      expect(entry.workMode).toBeNull();
+      expect(entry.expectations).toEqual([]);
     }
   });
 

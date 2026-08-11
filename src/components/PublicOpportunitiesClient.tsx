@@ -8,6 +8,7 @@ import { useAccessibleDialog } from "@/components/useAccessibleDialog";
 import type { ExpertiseCatalogEntry } from "@/lib/expertise-catalog-contract";
 import {
   OPPORTUNITY_TYPE_LABELS,
+  OPPORTUNITY_WORK_MODE_LABELS,
   type PublicOpportunity,
 } from "@/lib/opportunity-contract";
 import { matchesSearchQuery } from "@/lib/search";
@@ -25,8 +26,37 @@ function OpportunityDetailsDialog({
   const metadata = [
     OPPORTUNITY_TYPE_LABELS[opportunity.opportunityType],
     opportunity.category,
-    opportunity.geography,
+    opportunity.workMode
+      ? OPPORTUNITY_WORK_MODE_LABELS[opportunity.workMode]
+      : opportunity.geography,
   ].filter(Boolean).join(" · ");
+  const frameLabel = opportunity.opportunityType === "mission"
+    ? "Mission indépendante"
+    : OPPORTUNITY_TYPE_LABELS[opportunity.opportunityType];
+  const details: [string, string][] = [];
+  if (opportunity.workMode) {
+    details.push([
+      "Modalité",
+      OPPORTUNITY_WORK_MODE_LABELS[opportunity.workMode],
+    ]);
+  }
+  if (opportunity.geography) details.push(["Zone", opportunity.geography]);
+  details.push([
+    "Cadre",
+    frameLabel,
+  ]);
+  if (opportunity.cadence) {
+    details.push(["Rythme / durée", opportunity.cadence]);
+  }
+  if (opportunity.startTiming) {
+    details.push(["Démarrage", opportunity.startTiming]);
+  }
+  if (opportunity.compensation) {
+    details.push(["Budget / rémunération", opportunity.compensation]);
+  }
+  if (opportunity.companyName) {
+    details.push(["Entreprise", opportunity.companyName]);
+  }
 
   return (
     <div className="fixed inset-0 z-[100] flex items-end justify-center bg-brand-blue/35 p-0 backdrop-blur-[2px] sm:items-center sm:p-5">
@@ -36,7 +66,7 @@ function OpportunityDetailsDialog({
         aria-modal="true"
         aria-labelledby="opportunity-details-title"
         tabIndex={-1}
-        className="relative w-full max-w-xl rounded-t-[1.5rem] bg-white p-5 shadow-2xl sm:rounded-[1.5rem] sm:p-8"
+        className="relative max-h-[calc(100dvh-1rem)] w-full max-w-xl overflow-y-auto rounded-t-[1.5rem] bg-white p-5 shadow-2xl sm:max-h-[calc(100dvh-2.5rem)] sm:rounded-[1.5rem] sm:p-8"
       >
         <button
           type="button"
@@ -60,6 +90,35 @@ function OpportunityDetailsDialog({
         <p className="mt-4 text-sm leading-relaxed text-dema-muted sm:text-base">
           {opportunity.summary}
         </p>
+        {details.length > 0 ? (
+          <dl className="mt-6 grid gap-x-6 gap-y-4 rounded-[1rem] bg-dema-paper p-4 sm:grid-cols-2">
+            {details.map(([label, value]) => (
+              <div key={label}>
+                <dt className="text-[0.68rem] font-medium uppercase tracking-[0.12em] text-dema-muted">
+                  {label}
+                </dt>
+                <dd className="mt-1 text-sm leading-relaxed text-brand-blue">
+                  {value}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        ) : null}
+        {opportunity.expectations.length > 0 ? (
+          <div className="mt-6">
+            <h3 className="text-sm font-medium text-brand-blue">
+              Ce qui est attendu
+            </h3>
+            <ul className="mt-3 space-y-2 text-sm leading-relaxed text-dema-muted">
+              {opportunity.expectations.map((expectation) => (
+                <li key={expectation} className="flex gap-3">
+                  <span className="mt-[0.55rem] h-1 w-1 shrink-0 rounded-full bg-dema-forest" aria-hidden="true" />
+                  <span>{expectation}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
         <button
           type="button"
           onClick={onApply}
@@ -96,7 +155,15 @@ export default function PublicOpportunitiesClient({
       opportunity.summary,
       opportunity.category,
       OPPORTUNITY_TYPE_LABELS[opportunity.opportunityType],
+      opportunity.workMode
+        ? OPPORTUNITY_WORK_MODE_LABELS[opportunity.workMode]
+        : "",
       opportunity.geography ?? "",
+      opportunity.cadence ?? "",
+      opportunity.startTiming ?? "",
+      opportunity.compensation ?? "",
+      opportunity.companyName ?? "",
+      ...opportunity.expectations,
     ])),
     [opportunities, query],
   );
@@ -144,7 +211,9 @@ export default function PublicOpportunitiesClient({
                 {[
                   OPPORTUNITY_TYPE_LABELS[opportunity.opportunityType],
                   opportunity.category,
-                  opportunity.geography,
+                  opportunity.workMode
+                    ? OPPORTUNITY_WORK_MODE_LABELS[opportunity.workMode]
+                    : opportunity.geography,
                 ].filter(Boolean).join(" · ")}
               </p>
               <h2 className="mt-2 text-xl font-medium tracking-[-0.02em] text-brand-blue">
