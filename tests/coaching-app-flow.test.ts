@@ -37,6 +37,8 @@ describe("unified app and coaching", () => {
 
   it("publishes the validated coaching offer and tabs", () => {
     const coaching = read("src/components/CoachingPanel.tsx");
+    const coachingControl = read("src/components/ActionPlanCoachingControl.tsx");
+    const appNavigation = read("src/components/ActionPlanNavbar.tsx");
     expect(coaching).toContain("Sessions");
     expect(coaching).toContain("Messages");
     expect(coaching).toContain("150 € HT");
@@ -45,6 +47,9 @@ describe("unified app and coaching", () => {
     expect(coaching).toContain("480 € TTC");
     expect(coaching).toContain("15 minutes offertes");
     expect(coaching).not.toContain("disponible prochainement");
+    expect(coachingControl).toContain("Parler à un spécialiste");
+    expect(appNavigation).toContain("Opportunités");
+    expect(appNavigation).not.toContain('label: "Coaching"');
   });
 
   it("keeps magic-link consumption on POST", () => {

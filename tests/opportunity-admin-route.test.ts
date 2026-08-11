@@ -81,12 +81,14 @@ describe("opportunity admin route", () => {
       category: "Acquisition",
       expertiseId: "google-ads",
       geography: "France",
+      opportunityType: "partenariat",
       summary: "Piloter une campagne Google Ads pour une entreprise qui souhaite obtenir des demandes qualifiées.",
       title: "Campagne Google Ads",
     }));
     expect(response.status).toBe(201);
     expect(mocks.createOpportunity).toHaveBeenCalledWith(expect.objectContaining({
       expertiseId: "google-ads",
+      opportunityType: "partenariat",
       status: "open",
       title: "Campagne Google Ads",
     }));
@@ -94,6 +96,22 @@ describe("opportunity admin route", () => {
       "provider-network-opportunities",
       { expire: 0 },
     );
+  });
+
+  it("creates a broad opportunity without an expertise", async () => {
+    const response = await POST(request("POST", {
+      category: "Transmission",
+      expertiseId: "",
+      opportunityType: "reprise-transmission",
+      summary: "Étudier une possibilité de reprise ou de transmission avec les personnes intéressées.",
+      title: "Reprise d’une activité",
+    }));
+    expect(response.status).toBe(201);
+    expect(mocks.getExpertiseById).not.toHaveBeenCalled();
+    expect(mocks.createOpportunity).toHaveBeenCalledWith(expect.objectContaining({
+      expertiseId: null,
+      opportunityType: "reprise-transmission",
+    }));
   });
 
   it("closes an existing opportunity", async () => {

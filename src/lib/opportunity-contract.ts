@@ -1,13 +1,33 @@
 export const OPPORTUNITY_STATUSES = ["draft", "open", "closed"] as const;
 export type OpportunityStatus = (typeof OPPORTUNITY_STATUSES)[number];
 
+export const OPPORTUNITY_TYPES = [
+  "mission",
+  "sous-traitance",
+  "partenariat",
+  "reprise-transmission",
+  "collaboration",
+  "autre",
+] as const;
+export type OpportunityType = (typeof OPPORTUNITY_TYPES)[number];
+
+export const OPPORTUNITY_TYPE_LABELS: Readonly<Record<OpportunityType, string>> = {
+  mission: "Mission",
+  "sous-traitance": "Sous-traitance",
+  partenariat: "Partenariat",
+  "reprise-transmission": "Reprise ou transmission",
+  collaboration: "Collaboration",
+  autre: "Autre",
+};
+
 export type PublicOpportunity = Readonly<{
   category: string;
   createdAt: string;
-  expertiseId: string;
+  expertiseId: string | null;
   expiresAt: string | null;
   geography: string | null;
   opportunityId: string;
+  opportunityType: OpportunityType;
   publishedAt: string | null;
   status: OpportunityStatus;
   summary: string;
@@ -30,13 +50,17 @@ export function parseOpportunity(
     : string(key) || null;
   const status = string("status");
   const opportunityId = string("opportunityId");
-  const expertiseId = string("expertiseId");
+  const expertiseId = nullableString("expertiseId");
+  const opportunityType = string("opportunityType") || "mission";
 
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(opportunityId)) {
     throw new TypeError(`${path}.opportunityId is invalid`);
   }
-  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(expertiseId)) {
+  if (expertiseId && !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(expertiseId)) {
     throw new TypeError(`${path}.expertiseId is invalid`);
+  }
+  if (!(OPPORTUNITY_TYPES as readonly string[]).includes(opportunityType)) {
+    throw new TypeError(`${path}.opportunityType is invalid`);
   }
   if (!(OPPORTUNITY_STATUSES as readonly string[]).includes(status)) {
     throw new TypeError(`${path}.status is invalid`);
@@ -55,6 +79,7 @@ export function parseOpportunity(
     expiresAt: nullableString("expiresAt"),
     geography: nullableString("geography"),
     opportunityId,
+    opportunityType: opportunityType as OpportunityType,
     publishedAt: nullableString("publishedAt"),
     status: status as OpportunityStatus,
     summary: string("summary"),

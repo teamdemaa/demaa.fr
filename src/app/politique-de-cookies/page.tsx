@@ -96,6 +96,9 @@ export default function PolitiqueCookiesPage() {
             <p>
               Le contexte d&apos;attribution conservé dans le navigateur expire après 90 jours. Le choix de consentement expire après 6 mois.
             </p>
+            <p>
+              Lorsque vous choisissez d&apos;enregistrer un plan, un cookie essentiel, sécurisé et inaccessible au JavaScript, permet d&apos;ouvrir uniquement ce plan pendant 30 jours au maximum. Il est remplacé par la session vérifiée après ouverture du lien magique.
+            </p>
       </CookieSection>
 
       <CookieSection title="7. Gérer vos choix">

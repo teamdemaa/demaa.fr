@@ -11,10 +11,14 @@ import {
   getLeadSubmissionKey,
 } from "@/lib/lead-submission-client";
 import type { ExpertiseCatalogEntry } from "@/lib/expertise-catalog-contract";
-import type { PublicOpportunity } from "@/lib/opportunity-contract";
+import {
+  OPPORTUNITY_TYPE_LABELS,
+  type PublicOpportunity,
+} from "@/lib/opportunity-contract";
 
 type ProviderProfileModalProps = {
   expertises: readonly ExpertiseCatalogEntry[];
+  initialEmail?: string;
   initialExpertiseId?: string | null;
   onClose: () => void;
   opportunity?: PublicOpportunity | null;
@@ -30,11 +34,12 @@ function responseError(response: Response, payload: ResponsePayload) {
   if (response.status === 429) {
     return "Vous avez effectué trop de demandes. Réessayez un peu plus tard.";
   }
-  return "Votre profil n’a pas pu être envoyé. Réessayez dans quelques instants.";
+  return "Votre demande n’a pas pu être envoyée. Réessayez dans quelques instants.";
 }
 
 export default function ProviderProfileModal({
   expertises,
+  initialEmail = "",
   initialExpertiseId,
   onClose,
   opportunity = null,
@@ -42,7 +47,7 @@ export default function ProviderProfileModal({
   const dialogRef = useRef<HTMLElement>(null);
   const firstFieldRef = useRef<HTMLInputElement>(null);
   const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(initialEmail);
   const [company, setCompany] = useState("");
   const [profileUrl, setProfileUrl] = useState("");
   const [countries, setCountries] = useState("");
@@ -53,10 +58,9 @@ export default function ProviderProfileModal({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const lockedExpertiseId = opportunity?.expertiseId ?? null;
-  const defaultExpertiseId = lockedExpertiseId
-    ?? initialExpertiseId
-    ?? expertises[0]?.expertiseId
-    ?? "";
+  const defaultExpertiseId = opportunity
+    ? (lockedExpertiseId ?? "")
+    : (initialExpertiseId ?? expertises[0]?.expertiseId ?? "");
   const [expertiseIds, setExpertiseIds] = useState<string[]>(
     defaultExpertiseId ? [defaultExpertiseId] : [],
   );
@@ -125,7 +129,7 @@ export default function ProviderProfileModal({
     setError(null);
     setIsSubmitting(true);
     const submissionKey = getLeadSubmissionKey(
-      opportunity ? "opportunity-application" : "provider-profile",
+      opportunity ? "opportunity-interest" : "provider-profile",
     );
     try {
       const response = await fetch("/api/provider-profile-submission", {
@@ -149,11 +153,11 @@ export default function ProviderProfileModal({
       const payload = await response.json().catch(() => null) as ResponsePayload;
       if (!response.ok) throw new Error(responseError(response, payload));
       clearLeadSubmissionKey(
-        opportunity ? "opportunity-application" : "provider-profile",
+        opportunity ? "opportunity-interest" : "provider-profile",
       );
       trackLeadConversion({
         requestType: opportunity
-          ? "opportunity_application"
+          ? "opportunity_interest"
           : "provider_profile_submission",
       });
       setIsSuccess(true);
@@ -161,7 +165,7 @@ export default function ProviderProfileModal({
       setError(
         submissionError instanceof Error
           ? submissionError.message
-          : "Votre profil n’a pas pu être envoyé.",
+          : "Votre demande n’a pas pu être envoyée.",
       );
     } finally {
       setIsSubmitting(false);
@@ -193,10 +197,14 @@ export default function ProviderProfileModal({
               <Check className="h-6 w-6" aria-hidden="true" />
             </span>
             <h2 id="provider-profile-title" className="mt-5 text-2xl font-medium text-brand-blue">
-              Votre profil a bien été envoyé
+              {opportunity
+                ? "Votre intérêt a bien été transmis"
+                : "Votre profil a bien été envoyé"}
             </h2>
             <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-dema-muted">
-              Demaa vous contactera lorsqu’un besoin correspondra à votre expertise.
+              {opportunity
+                ? "Nous reviendrons vers vous si une suite peut être donnée à votre demande."
+                : "Demaa vous contactera lorsqu’un besoin correspondra à votre expertise."}
             </p>
             <button
               type="button"
@@ -209,7 +217,9 @@ export default function ProviderProfileModal({
         ) : (
           <>
             <p className="pr-12 text-xs font-medium uppercase tracking-[0.14em] text-dema-forest">
-              {opportunity ? "Candidater" : "Rejoindre Team Demaa"}
+              {opportunity
+                ? OPPORTUNITY_TYPE_LABELS[opportunity.opportunityType]
+                : "Rejoindre Team Demaa"}
             </p>
             <h2 id="provider-profile-title" className="mt-2 pr-12 text-2xl font-medium tracking-[-0.025em] text-brand-blue sm:text-3xl">
               {opportunity?.title ?? selectedLabels[0] ?? "Présenter votre profil"}
@@ -218,6 +228,12 @@ export default function ProviderProfileModal({
               {opportunity?.summary
                 ?? "Présentez simplement votre activité. Nous vous contacterons lorsqu’un besoin correspondra à votre profil."}
             </p>
+
+            {lockedExpertiseId && selectedLabels[0] ? (
+              <p className="mt-3 text-xs font-medium uppercase tracking-[0.12em] text-dema-forest">
+                {selectedLabels[0]}
+              </p>
+            ) : null}
 
             <form onSubmit={submit} className="mt-7 space-y-5">
               <div className="grid gap-4 sm:grid-cols-2">
@@ -230,7 +246,7 @@ export default function ProviderProfileModal({
                   <input type="email" required value={email} onChange={(event) => setEmail(event.target.value)} className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
                 </label>
                 <label className="space-y-2 text-sm text-brand-blue">
-                  <span>Entreprise</span>
+                  <span>{opportunity ? "Entreprise ou activité" : "Entreprise"}</span>
                   <input required value={company} onChange={(event) => setCompany(event.target.value)} className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
                 </label>
                 <label className="space-y-2 text-sm text-brand-blue">
@@ -239,7 +255,7 @@ export default function ProviderProfileModal({
                 </label>
               </div>
 
-              {!lockedExpertiseId ? (
+              {!opportunity ? (
                 <fieldset>
                   <legend className="text-sm text-brand-blue">Vos expertises <span className="text-dema-muted">(3 maximum)</span></legend>
                   <div className="mt-3 flex max-h-44 flex-wrap gap-2 overflow-y-auto rounded-xl border border-dema-line p-3">
@@ -261,13 +277,15 @@ export default function ProviderProfileModal({
                 </fieldset>
               ) : null}
 
-              <label className="block space-y-2 text-sm text-brand-blue">
-                <span>Pays ou zones couverts</span>
-                <input required value={countries} onChange={(event) => setCountries(event.target.value)} placeholder="Ex. France, Côte d’Ivoire, à distance…" className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
-              </label>
+              {!opportunity ? (
+                <label className="block space-y-2 text-sm text-brand-blue">
+                  <span>Pays ou zones couverts</span>
+                  <input required value={countries} onChange={(event) => setCountries(event.target.value)} placeholder="Ex. France, Côte d’Ivoire, à distance…" className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
+                </label>
+              ) : null}
 
               <label className="block space-y-2 text-sm text-brand-blue">
-                <span>Présentez brièvement votre expérience</span>
+                <span>{opportunity ? "Votre message" : "Présentez brièvement votre expérience"}</span>
                 <textarea required minLength={20} rows={4} value={message} onChange={(event) => setMessage(event.target.value)} className="w-full resize-y rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
               </label>
 
@@ -278,18 +296,22 @@ export default function ProviderProfileModal({
 
               <label className="flex items-start gap-3 text-xs leading-relaxed text-dema-muted">
                 <input type="checkbox" required checked={consent} onChange={(event) => setConsent(event.target.checked)} className="mt-0.5 h-4 w-4 rounded border-dema-line accent-dema-forest" />
-                <span>J’accepte que Demaa conserve ces informations afin de me contacter lorsqu’un besoin correspond à mon profil.</span>
+                <span>
+                  {opportunity
+                    ? "J’accepte que Demaa conserve ces informations afin de me recontacter au sujet de cette opportunité."
+                    : "J’accepte que Demaa conserve ces informations afin de me contacter lorsqu’un besoin correspond à mon profil."}
+                </span>
               </label>
 
               {error ? <p role="alert" className="text-sm text-red-700">{error}</p> : null}
 
               <button
                 type="submit"
-                disabled={isSubmitting || expertiseIds.length === 0}
+                disabled={isSubmitting || (!opportunity && expertiseIds.length === 0)}
                 className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-dema-forest px-6 text-sm font-medium text-white transition hover:bg-brand-blue disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {isSubmitting ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
-                {opportunity ? "Proposer mon profil" : "Envoyer mon profil"}
+                {opportunity ? "Manifester mon intérêt" : "Envoyer mon profil"}
               </button>
             </form>
           </>

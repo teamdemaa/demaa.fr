@@ -29,6 +29,8 @@ candidat exact W7/W8.
 - [Architecture cible](../decisions/0001-systems-services-architecture.md)
 - [Registre des décisions](../decisions/0002-decision-register.md)
 - [ADR 0008 — Générateur de plan d'action](../decisions/0008-action-plan-generator-homepage.md)
+- [ADR 0009 — Coaching et accès unifié](../decisions/0009-coaching-and-unified-app-access.md)
+- [ADR 0010 — Plan vierge, Opportunités et navigation](../decisions/0010-blank-plan-opportunities-and-app-navigation.md)
 - [Contrat produit D-076](../action-plan-generator-product-contract.md)
 - [Catalogue Services V1](../services-v1-catalog.md)
 - [Inventaire des sources](./source-inventory.md)
@@ -50,6 +52,7 @@ candidat exact W7/W8.
 | Classeurs D-061 et révisions | Master Demaa | chantier Workbooks | audit de révision et rollback |
 | Académie et vidéos | utilisatrice + Master Demaa | chantiers dédiés, actuellement différés | QA média indépendante |
 | Générateur de plan, sélection Système et persistance | utilisatrice + Master Demaa | chantier Action Plan | QA schéma, sécurité, coût et parcours |
+| Opportunités, Team Demaa et navigation applicative | utilisatrice + Master Demaa | chantier Application | QA données, consentement, Slack et parcours public/connecté |
 
 Une modification qui traverse plusieurs domaines doit être découpée en lots.
 Les fichiers exclusifs de chaque lot sont indiqués dans le plan d'exécution.

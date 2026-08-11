@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { ActionPlan } from "@/lib/action-plan-contract";
 import { actionPlanSystemOptions } from "@/lib/action-plan-system-catalog";
 import { createActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
+import { createManualAction, createManualActionPlan } from "@/lib/action-plan-manual";
 
 type StoredDocument = Record<string, unknown>;
 
@@ -94,11 +95,16 @@ vi.mock("@/lib/operational-maintenance", () => ({
 
 import {
   ActionPlanRevisionConflictError,
+  InvalidActionPlanMutationError,
   createOwnedActionPlan,
   createPendingActionPlan,
+  getActionPlanForAccess,
+  getActionPlanAccessCookieOptions,
   getOwnedActionPlans,
+  hashActionPlanAccessToken,
   hashActionPlanClaimSecret,
   updateOwnedActionPlanWorkspace,
+  updateActionPlanWorkspaceForAccess,
 } from "@/lib/action-plan-storage.server";
 import {
   consumeCustomerMagicLink,
@@ -160,7 +166,7 @@ describe("action plan Firebase persistence", () => {
     firestore.documents.clear();
   });
 
-  it("creates an expiring pending plan without storing the raw claim secret", async () => {
+  it("creates a 30-day pending plan without storing the raw access token", async () => {
     const pending = await createPendingActionPlan({
       plan: actionPlan(),
       sourceText: "Je veux mieux organiser mon activité.",
@@ -170,11 +176,58 @@ describe("action plan Firebase persistence", () => {
     expect(document?.status).toBe("pending_claim");
     expect(document?.schema_version).toBe("2");
     expect(document?.owner_email).toBeNull();
-    expect(document?.claim_secret_hash).toBe(
-      hashActionPlanClaimSecret(pending.claimSecret),
+    expect(document?.claim_secret_hash).toBeNull();
+    expect(document?.temporary_access_token_hash).toBe(
+      hashActionPlanAccessToken(pending.temporaryAccessToken),
     );
-    expect(document?.claim_secret_hash).not.toBe(pending.claimSecret);
+    expect(document?.temporary_access_token_hash).not.toBe(
+      pending.temporaryAccessToken,
+    );
+    expect(
+      Date.parse(String(document?.temporary_access_expires_at)) - Date.now(),
+    ).toBeGreaterThan(29 * 24 * 60 * 60 * 1000);
     expect(Date.parse(String(document?.retention_expires_at))).toBeGreaterThan(Date.now());
+  });
+
+  it("opens only the pending plan authorized by the opaque temporary token", async () => {
+    const pending = await createPendingActionPlan({ plan: actionPlan() });
+
+    expect(
+      await getActionPlanForAccess({
+        id: pending.id,
+        temporaryAccessToken: pending.temporaryAccessToken,
+      }),
+    ).toMatchObject({ id: pending.id, revision: 1 });
+    expect(
+      await getActionPlanForAccess({
+        id: pending.id,
+        temporaryAccessToken: "another-opaque-token",
+      }),
+    ).toBeNull();
+
+    await firestore.database.collection("action_plans").doc(pending.id).set(
+      { temporary_access_expires_at: new Date(Date.now() - 1_000).toISOString() },
+      { merge: true },
+    );
+    expect(
+      await getActionPlanForAccess({
+        id: pending.id,
+        temporaryAccessToken: pending.temporaryAccessToken,
+      }),
+    ).toBeNull();
+  });
+
+  it("configures the temporary credential as a 30-day HttpOnly preview cookie", () => {
+    vi.stubEnv("NODE_ENV", "development");
+    vi.stubEnv("VERCEL_ENV", "preview");
+    expect(getActionPlanAccessCookieOptions()).toMatchObject({
+      httpOnly: true,
+      maxAge: 30 * 24 * 60 * 60,
+      path: "/",
+      sameSite: "lax",
+      secure: true,
+    });
+    vi.unstubAllEnvs();
   });
 
   it("claims the pending plan only after consuming the email magic link", async () => {
@@ -187,7 +240,9 @@ describe("action plan Firebase persistence", () => {
       tokenHash,
       actionPlanClaim: {
         actionPlanId: pending.id,
-        claimSecretHash: hashActionPlanClaimSecret(pending.claimSecret),
+        temporaryAccessTokenHash: hashActionPlanAccessToken(
+          pending.temporaryAccessToken,
+        ),
       },
     });
 
@@ -197,11 +252,13 @@ describe("action plan Firebase persistence", () => {
     ).toBeNull();
 
     await consumeCustomerMagicLink(tokenHash);
+    expect(await consumeCustomerMagicLink(tokenHash)).toBeNull();
 
     const claimed = firestore.documents.get(`action_plans/${pending.id}`);
     expect(claimed?.status).toBe("active");
     expect(claimed?.owner_email).toBe("dirigeant@example.com");
     expect(claimed?.claim_secret_hash).toBeNull();
+    expect(claimed?.temporary_access_token_hash).toBeNull();
     expect(claimed?.retention_expires_at).toBe("2029-08-10T00:00:00.000Z");
 
     const plans = await getOwnedActionPlans("dirigeant@example.com");
@@ -209,7 +266,7 @@ describe("action plan Firebase persistence", () => {
     expect(plans[0]?.id).toBe(pending.id);
   });
 
-  it("rejects a wrong claim secret and leaves the plan unattached", async () => {
+  it("rejects a wrong temporary token and leaves the plan unattached", async () => {
     const pending = await createPendingActionPlan({ plan: actionPlan() });
     const attached = await saveCustomerMagicLink({
       email: "dirigeant@example.com",
@@ -217,7 +274,7 @@ describe("action plan Firebase persistence", () => {
       tokenHash: "magic-token-hash",
       actionPlanClaim: {
         actionPlanId: pending.id,
-        claimSecretHash: hashActionPlanClaimSecret("wrong-secret"),
+        temporaryAccessTokenHash: hashActionPlanAccessToken("wrong-token"),
       },
     });
 
@@ -235,7 +292,9 @@ describe("action plan Firebase persistence", () => {
       tokenHash,
       actionPlanClaim: {
         actionPlanId: pending.id,
-        claimSecretHash: hashActionPlanClaimSecret(pending.claimSecret),
+        temporaryAccessTokenHash: hashActionPlanAccessToken(
+          pending.temporaryAccessToken,
+        ),
       },
     });
 
@@ -250,6 +309,84 @@ describe("action plan Firebase persistence", () => {
     const plan = firestore.documents.get(`action_plans/${pending.id}`);
     expect(plan?.status).toBe("pending_claim");
     expect(plan?.owner_email).toBeNull();
+  });
+
+  it("retries email delivery without creating another pending plan", async () => {
+    const pending = await createPendingActionPlan({ plan: actionPlan() });
+    const actionPlanClaim = {
+      actionPlanId: pending.id,
+      temporaryAccessTokenHash: hashActionPlanAccessToken(
+        pending.temporaryAccessToken,
+      ),
+    };
+
+    expect(await saveCustomerMagicLink({
+      email: "dirigeant@example.com",
+      expiresAt: new Date(Date.now() + 30_000).toISOString(),
+      tokenHash: "first-link",
+      actionPlanClaim,
+    })).toBe(true);
+    expect(await saveCustomerMagicLink({
+      email: "dirigeant@example.com",
+      expiresAt: new Date(Date.now() + 30_000).toISOString(),
+      tokenHash: "retry-link",
+      actionPlanClaim,
+    })).toBe(true);
+
+    expect(
+      [...firestore.documents.keys()].filter((key) => key.startsWith("action_plans/")),
+    ).toEqual([`action_plans/${pending.id}`]);
+    expect(
+      firestore.documents.get(`action_plans/${pending.id}`)?.claim_link_token_hashes,
+    ).toEqual(["first-link", "retry-link"]);
+  });
+
+  it("keeps an earlier unconsumed retry link valid after newer retries", async () => {
+    const pending = await createPendingActionPlan({ plan: actionPlan() });
+    const actionPlanClaim = {
+      actionPlanId: pending.id,
+      temporaryAccessTokenHash: hashActionPlanAccessToken(
+        pending.temporaryAccessToken,
+      ),
+    };
+    for (const tokenHash of ["link-1", "link-2", "link-3", "link-4"]) {
+      expect(await saveCustomerMagicLink({
+        email: "dirigeant@example.com",
+        expiresAt: new Date(Date.now() + 30_000).toISOString(),
+        tokenHash,
+        actionPlanClaim,
+      })).toBe(true);
+    }
+
+    expect(await consumeCustomerMagicLink("link-1")).toBe(
+      "dirigeant@example.com",
+    );
+    expect(
+      firestore.documents.get(`action_plans/${pending.id}`)?.status,
+    ).toBe("active");
+  });
+
+  it("keeps legacy claim secrets compatible during the migration", async () => {
+    const pending = await createPendingActionPlan({ plan: actionPlan() });
+    const legacySecret = "legacy-claim-secret-with-enough-entropy";
+    await firestore.database.collection("action_plans").doc(pending.id).set(
+      {
+        claim_secret_hash: hashActionPlanClaimSecret(legacySecret),
+        temporary_access_token_hash: null,
+        temporary_access_expires_at: null,
+      },
+      { merge: true },
+    );
+
+    expect(await saveCustomerMagicLink({
+      email: "dirigeant@example.com",
+      expiresAt: new Date(Date.now() + 30_000).toISOString(),
+      tokenHash: "legacy-link",
+      actionPlanClaim: {
+        actionPlanId: pending.id,
+        claimSecretHash: hashActionPlanClaimSecret(legacySecret),
+      },
+    })).toBe(true);
   });
 
   it("stores workspace progress in the same plan document", async () => {
@@ -276,6 +413,48 @@ describe("action plan Firebase persistence", () => {
     expect(
       firestore.documents.get(`action_plans/${created.id}`)?.retention_expires_at,
     ).toBe("2029-08-10T00:00:00.000Z");
+  });
+
+  it("persists newly added actions when a saved manual plan is reopened", async () => {
+    const initialPlan = createManualActionPlan();
+    const created = await createOwnedActionPlan("dirigeant@example.com", {
+      plan: initialPlan,
+    });
+    const nextPlan = {
+      ...initialPlan,
+      weeklyActions: [createManualAction(1)],
+    };
+    const nextWorkspace = createActionPlanWorkspaceState(nextPlan);
+
+    await updateActionPlanWorkspaceForAccess({
+      email: "dirigeant@example.com",
+      id: created.id,
+      expectedRevision: created.revision,
+      plan: nextPlan,
+      workspaceState: nextWorkspace,
+    });
+
+    const [reopened] = await getOwnedActionPlans("dirigeant@example.com");
+    expect(reopened?.plan.version).toBe("manual");
+    expect(reopened?.plan.weeklyActions).toHaveLength(1);
+    expect(reopened?.workspaceState.tasks["action-1"]?.status).toBe("todo");
+  });
+
+  it("does not allow the generated plan body to be replaced through PATCH", async () => {
+    const generated = actionPlan();
+    const created = await createOwnedActionPlan("dirigeant@example.com", {
+      plan: generated,
+    });
+
+    await expect(
+      updateActionPlanWorkspaceForAccess({
+        email: "dirigeant@example.com",
+        id: created.id,
+        expectedRevision: created.revision,
+        plan: generated,
+        workspaceState: createActionPlanWorkspaceState(generated),
+      }),
+    ).rejects.toBeInstanceOf(InvalidActionPlanMutationError);
   });
 
   it("reads legacy V1 plans and workspace overrides without losing progress", async () => {

@@ -34,6 +34,7 @@ export const actionPlanWriteRequestSchema = z
 export const actionPlanUpdateRequestSchema = z
   .object({
     expectedRevision: z.number().int().min(1),
+    plan: compatibleActionPlanSchema.optional(),
     workspaceState: compatibleActionPlanWorkspaceStateSchema,
   })
   .strict();

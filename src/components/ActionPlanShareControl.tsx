@@ -2,9 +2,9 @@
 
 import { Check, Share2 } from "lucide-react";
 import { useState } from "react";
-import type { ActionPlan } from "@/lib/action-plan-contract";
+import type { PersistableActionPlan } from "@/lib/action-plan-contract";
 
-function buildShareText(plan: ActionPlan) {
+function buildShareText(plan: PersistableActionPlan) {
   return [
     "Mon plan d’action Demaa",
     "",
@@ -17,7 +17,7 @@ function buildShareText(plan: ActionPlan) {
   ].join("\n");
 }
 
-export default function ActionPlanShareControl({ plan }: { plan: ActionPlan }) {
+export default function ActionPlanShareControl({ plan }: { plan: PersistableActionPlan }) {
   const [copied, setCopied] = useState(false);
 
   async function sharePlan() {

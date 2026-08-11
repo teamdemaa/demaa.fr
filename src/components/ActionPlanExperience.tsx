@@ -3,17 +3,25 @@
 import { ArrowRight, LoaderCircle, Mic } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import ActionPlanAcademyPanel from "@/components/ActionPlanAcademyPanel";
+import ActionPlanCoachingControl from "@/components/ActionPlanCoachingControl";
 import ActionPlanNavbar, { type ActionPlanView } from "@/components/ActionPlanNavbar";
 import ActionPlanResult from "@/components/ActionPlanResult";
 import ActionPlanSystemPanel from "@/components/ActionPlanSystemPanel";
 import ActionPlanUtilityActions from "@/components/ActionPlanUtilityActions";
-import CoachingPanel from "@/components/CoachingPanel";
+import OpportunitiesPanel from "@/components/OpportunitiesPanel";
 import type { ActionPlan } from "@/lib/action-plan-contract";
 import {
   ACTION_PLAN_DEMO,
   ACTION_PLAN_DEMO_SITUATION,
 } from "@/lib/action-plan-demo";
 import type { ActionPlanSystemOption } from "@/lib/action-plan-system-catalog";
+import {
+  createManualAction,
+  createManualActionPlan,
+  createManualActionPlanWorkspaceState,
+  type EditableActionPlan,
+  isManualActionPlan,
+} from "@/lib/action-plan-manual";
 import {
   createActionPlanWorkspaceState,
   type ActionPlanWorkspaceState,
@@ -71,13 +79,15 @@ declare global {
 
 export default function ActionPlanExperience({
   systemOptions,
+  initialEmail = "",
 }: {
   systemOptions: readonly ActionPlanSystemOption[];
+  initialEmail?: string;
 }) {
   const [situation, setSituation] = useState("");
   const [exampleIndex, setExampleIndex] = useState(0);
   const [animatedPlaceholder, setAnimatedPlaceholder] = useState("");
-  const [plan, setPlan] = useState<ActionPlan | null>(null);
+  const [plan, setPlan] = useState<EditableActionPlan | null>(null);
   const [workspace, setWorkspace] = useState<ActionPlanWorkspaceState | null>(null);
   const [selectedSystemId, setSelectedSystemId] = useState("");
   const [activeTab, setActiveTab] = useState<ActionPlanView>("plan");
@@ -133,7 +143,19 @@ export default function ActionPlanExperience({
 
   useEffect(() => {
     if (process.env.NODE_ENV !== "development") return;
-    if (new URLSearchParams(window.location.search).get("demo") !== "plan") return;
+    const demo = new URLSearchParams(window.location.search).get("demo");
+
+    if (demo === "blank") {
+      setIsDemoMode(true);
+      setSituation("");
+      setPlan(createManualActionPlan());
+      setWorkspace(createManualActionPlanWorkspaceState());
+      setSelectedSystemId("");
+      setActiveTab("plan");
+      return;
+    }
+
+    if (demo !== "plan") return;
 
     setIsDemoMode(true);
     setSituation(ACTION_PLAN_DEMO_SITUATION);
@@ -302,6 +324,45 @@ export default function ActionPlanExperience({
     }
   }
 
+  function handleStartBlankPlan() {
+    requestControllerRef.current?.abort();
+    setSituation("");
+    setPlan(createManualActionPlan());
+    setWorkspace(createManualActionPlanWorkspaceState());
+    setSelectedSystemId("");
+    setActiveTab("plan");
+    setError(null);
+    window.requestAnimationFrame(() => resultTitleRef.current?.focus());
+  }
+
+  function handleAddManualAction() {
+    setPlan((current) => {
+      if (!current || !isManualActionPlan(current) || current.weeklyActions.length >= 7) {
+        return current;
+      }
+
+      const action = createManualAction(current.weeklyActions.length + 1);
+      setWorkspace((currentWorkspace) => currentWorkspace ? {
+        ...currentWorkspace,
+        tasks: {
+          ...currentWorkspace.tasks,
+          [action.id]: {
+            status: "todo",
+            dueDate: null,
+            completedStepIndexes: [],
+            notes: "",
+            overrides: {},
+          },
+        },
+      } : currentWorkspace);
+
+      return {
+        ...current,
+        weeklyActions: [...current.weeklyActions, action],
+      };
+    });
+  }
+
   if (isGenerating && !plan) {
     const currentQuestion = GENERATION_QUESTIONS[quoteIndex];
 
@@ -381,6 +442,15 @@ export default function ActionPlanExperience({
             <div aria-live="polite" className="min-h-7 px-3 pt-3 text-center text-sm text-dema-forest">
               {error}
             </div>
+            <div className="mt-1 text-center">
+              <button
+                type="button"
+                onClick={handleStartBlankPlan}
+                className="text-sm font-medium text-dema-muted underline decoration-dema-line underline-offset-4 transition hover:text-dema-forest"
+              >
+                Commencer avec un plan vierge
+              </button>
+            </div>
           </form>
         </section>
       </main>
@@ -399,6 +469,7 @@ export default function ActionPlanExperience({
   return (
     <main data-action-plan-workspace className="min-h-screen bg-dema-cream px-4 pb-24 pt-2 sm:px-6 lg:px-8">
       <ActionPlanNavbar activeView={activeTab} onViewChange={setActiveTab} />
+      <ActionPlanCoachingControl />
       <div className="mx-auto max-w-[68rem]">
         <h1 ref={resultTitleRef} tabIndex={-1} className="sr-only outline-none">
           Votre plan d’action
@@ -409,6 +480,14 @@ export default function ActionPlanExperience({
               plan={plan}
               workspace={workspace}
               onWorkspaceChange={updateWorkspace}
+              manualMode={isManualActionPlan(plan)}
+              onAddAction={isManualActionPlan(plan) ? handleAddManualAction : undefined}
+              onGenerateLater={isManualActionPlan(plan) ? () => {
+                setPlan(null);
+                setWorkspace(null);
+                setSelectedSystemId("");
+                setActiveTab("plan");
+              } : undefined}
               headerActions={(
                 <ActionPlanUtilityActions
                   plan={plan}
@@ -438,7 +517,9 @@ export default function ActionPlanExperience({
             />
           </div>
           {activeTab === "academy" ? <ActionPlanAcademyPanel /> : null}
-          {activeTab === "coaching" ? <CoachingPanel /> : null}
+          {activeTab === "opportunities" ? (
+            <OpportunitiesPanel initialEmail={initialEmail} />
+          ) : null}
         </div>
       </div>
     </main>

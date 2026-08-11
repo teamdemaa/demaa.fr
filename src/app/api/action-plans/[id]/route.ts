@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 import {
   actionPlanUpdateRequestSchema,
   getCurrentCustomerEmail,
@@ -6,8 +7,10 @@ import {
   withNoStore,
 } from "@/lib/action-plan-api.server";
 import {
+  ACTION_PLAN_ACCESS_COOKIE,
   ActionPlanRevisionConflictError,
-  updateOwnedActionPlanWorkspace,
+  InvalidActionPlanMutationError,
+  updateActionPlanWorkspaceForAccess,
 } from "@/lib/action-plan-storage.server";
 import { enforceRateLimit, readJsonBody } from "@/lib/api-security";
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
@@ -32,12 +35,9 @@ export async function PATCH(
   if (limited) return withNoStore(limited);
 
   const email = await getCurrentCustomerEmail();
-  if (!email) {
-    return NextResponse.json(
-      { error: "Authentification requise." },
-      { status: 401, headers: noStoreHeaders() },
-    );
-  }
+  const cookieStore = await cookies();
+  const temporaryAccessToken =
+    cookieStore.get(ACTION_PLAN_ACCESS_COOKIE)?.value || null;
 
   const { id } = await params;
   if (!/^[A-Za-z0-9_-]{12,64}$/.test(id)) {
@@ -58,12 +58,14 @@ export async function PATCH(
   }
 
   try {
-    const updated = await updateOwnedActionPlanWorkspace(
+    const updated = await updateActionPlanWorkspaceForAccess({
       email,
       id,
-      parsed.data.expectedRevision,
-      parsed.data.workspaceState,
-    );
+      expectedRevision: parsed.data.expectedRevision,
+      plan: parsed.data.plan,
+      temporaryAccessToken,
+      workspaceState: parsed.data.workspaceState,
+    });
     if (!updated) {
       return NextResponse.json(
         { error: "Plan introuvable." },
@@ -76,6 +78,12 @@ export async function PATCH(
       { headers: noStoreHeaders() },
     );
   } catch (error) {
+    if (error instanceof InvalidActionPlanMutationError) {
+      return NextResponse.json(
+        { error: "Seul un plan vierge peut recevoir de nouvelles actions." },
+        { status: 400, headers: noStoreHeaders() },
+      );
+    }
     if (error instanceof ActionPlanRevisionConflictError) {
       return NextResponse.json(
         {

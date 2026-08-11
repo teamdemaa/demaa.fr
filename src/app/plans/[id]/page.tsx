@@ -3,7 +3,10 @@ import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import SavedActionPlanDetail from "@/components/SavedActionPlanDetail";
-import { getOwnedActionPlan } from "@/lib/action-plan-storage.server";
+import {
+  ACTION_PLAN_ACCESS_COOKIE,
+  getActionPlanForAccess,
+} from "@/lib/action-plan-storage.server";
 import { actionPlanSystemOptions } from "@/lib/action-plan-system-catalog";
 import {
   CUSTOMER_SPACE_COOKIE,
@@ -24,15 +27,21 @@ export default async function ActionPlanPage({
 }) {
   const [{ id }, cookieStore] = await Promise.all([params, cookies()]);
   const sessionToken = cookieStore.get(CUSTOMER_SPACE_COOKIE)?.value || null;
+  const temporaryAccessToken =
+    cookieStore.get(ACTION_PLAN_ACCESS_COOKIE)?.value || null;
   const email = await getEmailFromCustomerSessionToken(sessionToken);
 
-  if (!email) {
+  if (!email && !temporaryAccessToken) {
     redirect(
       `/connexion?message=${encodeURIComponent("Connectez-vous pour ouvrir ce plan.")}&returnTo=${encodeURIComponent(`/plans/${id}`)}`,
     );
   }
 
-  const stored = await getOwnedActionPlan(email, id);
+  const stored = await getActionPlanForAccess({
+    email,
+    id,
+    temporaryAccessToken,
+  });
   if (!stored) notFound();
 
   return (
@@ -42,6 +51,7 @@ export default async function ActionPlanPage({
         <div className="mx-auto max-w-[68rem]">
           <h1 className="sr-only">Mon plan d’action</h1>
           <SavedActionPlanDetail
+            initialEmail={email || ""}
             plan={stored.plan}
             planId={stored.id}
             initialRevision={stored.revision}

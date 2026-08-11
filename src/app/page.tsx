@@ -35,7 +35,10 @@ export default async function HomePage() {
   return (
     <>
       <Navbar anonymousLanding isAuthenticated={Boolean(email)} minimal />
-      <ActionPlanExperience systemOptions={actionPlanSystemOptions} />
+      <ActionPlanExperience
+        initialEmail={email || ""}
+        systemOptions={actionPlanSystemOptions}
+      />
     </>
   );
 }

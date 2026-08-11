@@ -81,7 +81,8 @@ function renderMagicLinkText(input: { magicLink: string }) {
 export async function sendCustomerMagicLinkEmail(input: {
   actionPlanClaim?: {
     actionPlanId: string;
-    claimSecret: string;
+    claimSecret?: string | null;
+    temporaryAccessToken?: string | null;
   } | null;
   email: string;
   request?: Request;

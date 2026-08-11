@@ -1,5 +1,5 @@
 import { z } from "zod";
-import type { ActionPlan } from "@/lib/action-plan-contract";
+import type { PersistableActionPlan } from "@/lib/action-plan-contract";
 import {
   actionPlanStrategyPillarSchema,
   actionPlanSystemIdSchema,
@@ -51,7 +51,7 @@ const strategyOverrideSchema = z
 export const actionPlanWorkspaceStateSchema = z
   .object({
     version: z.literal("1"),
-    selectedSystemId: actionPlanSystemIdSchema,
+    selectedSystemId: actionPlanSystemIdSchema.nullable(),
     tasks: z.record(z.string().regex(/^action-[1-7]$/), actionPlanTaskStateSchema),
     strategyOverrides: z.partialRecord(
       actionPlanStrategyPillarSchema,
@@ -134,7 +134,7 @@ export function compactActionPlanSteps(
 }
 
 export function createActionPlanWorkspaceState(
-  plan: ActionPlan,
+  plan: PersistableActionPlan,
 ): ActionPlanWorkspaceState {
   return {
     version: "1",
@@ -158,7 +158,7 @@ export function createActionPlanWorkspaceState(
 }
 
 export function normalizeActionPlanWorkspaceState(
-  plan: ActionPlan,
+  plan: PersistableActionPlan,
   value: unknown,
 ): ActionPlanWorkspaceState {
   const parsed = compatibleActionPlanWorkspaceStateSchema.safeParse(value);

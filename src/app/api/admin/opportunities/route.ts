@@ -13,7 +13,12 @@ import {
   getExpertiseById,
   updateOpportunityStatus,
 } from "@/lib/provider-network.server";
-import type { OpportunityStatus, PublicOpportunity } from "@/lib/opportunity-contract";
+import {
+  OPPORTUNITY_TYPES,
+  type OpportunityStatus,
+  type OpportunityType,
+  type PublicOpportunity,
+} from "@/lib/opportunity-contract";
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
 
 export const runtime = "nodejs";
@@ -23,6 +28,7 @@ type CreateBody = {
   expertiseId?: unknown;
   expiresAt?: unknown;
   geography?: unknown;
+  opportunityType?: unknown;
   summary?: unknown;
   title?: unknown;
 };
@@ -93,7 +99,10 @@ export async function POST(request: Request) {
     const title = normalizeText(body?.title, 140);
     const summary = normalizeText(body?.summary, 700, { multiline: true });
     const category = normalizeText(body?.category, 100);
-    const expertiseId = normalizeText(body?.expertiseId, 100);
+    const expertiseId = normalizeText(body?.expertiseId, 100) || null;
+    const opportunityType = (
+      normalizeText(body?.opportunityType, 40) || "mission"
+    ) as OpportunityType;
     const geography = normalizeText(body?.geography, 100) || null;
     const expiresAtRaw = normalizeText(body?.expiresAt, 40);
     const expiresAt = expiresAtRaw
@@ -103,9 +112,9 @@ export async function POST(request: Request) {
       !title
       || summary.length < 30
       || !category
-      || !expertiseId
+      || !OPPORTUNITY_TYPES.includes(opportunityType)
       || (expiresAtRaw && !Number.isFinite(Date.parse(expiresAt ?? "")))
-      || !(await getExpertiseById(expertiseId))
+      || (expertiseId && !(await getExpertiseById(expertiseId)))
     ) {
       return NextResponse.json({ error: "Les informations de l’opportunité sont incomplètes." }, { status: 400 });
     }
@@ -118,6 +127,7 @@ export async function POST(request: Request) {
       expiresAt,
       geography,
       opportunityId: buildOpportunityId(title),
+      opportunityType,
       publishedAt: now,
       status: "open",
       summary,

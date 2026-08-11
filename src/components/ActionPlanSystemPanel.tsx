@@ -40,6 +40,10 @@ export default function ActionPlanSystemPanel({
   const cacheKey = `${demoMode ? "demo" : "live"}:${selectedSystemId}`;
 
   useEffect(() => {
+    if (!selectedSystemId) {
+      return;
+    }
+
     if (systemPayloadCache.has(cacheKey)) return;
 
     const controller = new AbortController();
@@ -101,7 +105,18 @@ export default function ActionPlanSystemPanel({
         </div>
       ) : null}
 
-      {!currentPayload && !currentError ? (
+      {!selectedSystemId ? (
+        <div className="rounded-[1.25rem] border border-dema-line bg-dema-paper px-6 py-12 text-center">
+          <h2 id="action-plan-system-title" className="text-2xl font-light tracking-[-0.03em] text-brand-blue">
+            Choisissez votre système métier
+          </h2>
+          <p className="mx-auto mt-2 max-w-lg text-sm leading-relaxed text-dema-muted">
+            Sélectionnez votre activité parmi les 115 systèmes pour afficher ses processus, ses solutions et ses ressources.
+          </p>
+        </div>
+      ) : null}
+
+      {selectedSystemId && !currentPayload && !currentError ? (
         <div className="flex min-h-48 items-center justify-center rounded-[1.25rem] border border-dema-line bg-dema-paper text-sm text-dema-muted">
           <LoaderCircle className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
           Chargement du système métier…

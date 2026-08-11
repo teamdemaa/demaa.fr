@@ -3,7 +3,11 @@
 import { LoaderCircle } from "lucide-react";
 import { type FormEvent, useState } from "react";
 import type { ExpertiseCatalogEntry } from "@/lib/expertise-catalog-contract";
-import type { PublicOpportunity } from "@/lib/opportunity-contract";
+import {
+  OPPORTUNITY_TYPE_LABELS,
+  OPPORTUNITY_TYPES,
+  type PublicOpportunity,
+} from "@/lib/opportunity-contract";
 
 export default function OpportunityAdminClient({
   expertises,
@@ -104,9 +108,14 @@ export default function OpportunityAdminClient({
       <form onSubmit={create} className="space-y-4 rounded-[1.2rem] border border-dema-line bg-white p-6">
         <h2 className="text-xl font-medium text-brand-blue">Nouvelle opportunité</h2>
         <input name="title" required placeholder="Titre" className="w-full rounded-xl border border-dema-line px-4 py-3 text-sm outline-none focus:border-dema-forest" />
-        <textarea name="summary" minLength={30} required rows={5} placeholder="Besoin concret, sans révéler le client" className="w-full rounded-xl border border-dema-line px-4 py-3 text-sm outline-none focus:border-dema-forest" />
-        <select name="expertiseId" required defaultValue="" className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 text-sm outline-none focus:border-dema-forest">
-          <option value="" disabled>Expertise recherchée</option>
+        <textarea name="summary" minLength={30} required rows={5} placeholder="Décrivez l’opportunité de manière claire, sans information confidentielle" className="w-full rounded-xl border border-dema-line px-4 py-3 text-sm outline-none focus:border-dema-forest" />
+        <select name="opportunityType" required defaultValue="mission" className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 text-sm outline-none focus:border-dema-forest">
+          {OPPORTUNITY_TYPES.map((type) => (
+            <option key={type} value={type}>{OPPORTUNITY_TYPE_LABELS[type]}</option>
+          ))}
+        </select>
+        <select name="expertiseId" defaultValue="" className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 text-sm outline-none focus:border-dema-forest">
+          <option value="">Expertise associée (facultatif)</option>
           {expertises.map((entry) => <option key={entry.expertiseId} value={entry.expertiseId}>{entry.label}</option>)}
         </select>
         <input name="category" required placeholder="Catégorie affichée" className="w-full rounded-xl border border-dema-line px-4 py-3 text-sm outline-none focus:border-dema-forest" />
@@ -129,7 +138,9 @@ export default function OpportunityAdminClient({
             <article key={opportunity.opportunityId} className="rounded-[1rem] border border-dema-line bg-white p-5">
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <p className="text-xs uppercase tracking-[0.12em] text-dema-forest">{opportunity.status}</p>
+                  <p className="text-xs uppercase tracking-[0.12em] text-dema-forest">
+                    {OPPORTUNITY_TYPE_LABELS[opportunity.opportunityType]} · {opportunity.status}
+                  </p>
                   <h3 className="mt-1 font-medium text-brand-blue">{opportunity.title}</h3>
                 </div>
                 <button type="button" disabled={isLoading} onClick={() => changeStatus(opportunity.opportunityId, opportunity.status === "open" ? "closed" : "open")} className="shrink-0 rounded-full border border-dema-line px-3 py-2 text-xs font-medium text-dema-forest">

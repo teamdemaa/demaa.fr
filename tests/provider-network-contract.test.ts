@@ -5,7 +5,11 @@ import {
   EXPERTISE_FAMILIES,
   parseExpertiseCatalogEntry,
 } from "@/lib/expertise-catalog-contract";
-import { isPublicOpenOpportunity, parseOpportunity } from "@/lib/opportunity-contract";
+import {
+  isPublicOpenOpportunity,
+  OPPORTUNITY_TYPES,
+  parseOpportunity,
+} from "@/lib/opportunity-contract";
 import { resolveProviderNetworkSource } from "@/lib/provider-network-source";
 
 describe("provider network contract", () => {
@@ -26,9 +30,30 @@ describe("provider network contract", () => {
       parseOpportunity(entry, `opportunity[${index}]`)
     );
     expect(entries).toHaveLength(3);
+    expect(entries.every((entry) => entry.opportunityType === "mission")).toBe(true);
     expect(entries.every((entry) =>
       isPublicOpenOpportunity(entry, new Date("2026-08-08T12:00:00.000Z"))
     )).toBe(true);
+  });
+
+  it("accepts every opportunity type and keeps expertise optional", () => {
+    for (const opportunityType of OPPORTUNITY_TYPES) {
+      const entry = parseOpportunity({
+        category: "Développement",
+        createdAt: "2026-08-10T00:00:00.000Z",
+        expertiseId: null,
+        expiresAt: null,
+        geography: null,
+        opportunityId: `opportunite-${opportunityType}`,
+        opportunityType,
+        publishedAt: "2026-08-10T00:00:00.000Z",
+        status: "open",
+        summary: "Une opportunité formulée de manière claire et directement exploitable.",
+        title: "Nouvelle opportunité",
+      });
+      expect(entry.expertiseId).toBeNull();
+      expect(entry.opportunityType).toBe(opportunityType);
+    }
   });
 
   it("uses snapshots only outside deployed environments", () => {

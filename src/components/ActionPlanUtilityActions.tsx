@@ -1,11 +1,9 @@
 "use client";
 
 import { MoreHorizontal } from "lucide-react";
-import { useEffect, useState } from "react";
-import { createPortal } from "react-dom";
 import ActionPlanSaveControl from "@/components/ActionPlanSaveControl";
 import ActionPlanShareControl from "@/components/ActionPlanShareControl";
-import type { ActionPlan } from "@/lib/action-plan-contract";
+import type { PersistableActionPlan } from "@/lib/action-plan-contract";
 import type { ActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
 
 export default function ActionPlanUtilityActions({
@@ -15,37 +13,20 @@ export default function ActionPlanUtilityActions({
   demoMode,
   onReset,
 }: {
-  plan: ActionPlan;
+  plan: PersistableActionPlan;
   sourceText: string;
   workspace: ActionPlanWorkspaceState;
   demoMode: boolean;
   onReset: () => void;
 }) {
-  const [saveTarget, setSaveTarget] = useState<HTMLElement | null>(null);
-
-  useEffect(() => {
-    const frame = window.requestAnimationFrame(() => {
-      setSaveTarget(document.getElementById("action-plan-navbar-save"));
-    });
-
-    return () => window.cancelAnimationFrame(frame);
-  }, []);
-
   return (
-    <>
-      {saveTarget
-        ? createPortal(
-            <ActionPlanSaveControl
-              plan={plan}
-              sourceText={sourceText}
-              workspace={workspace}
-              demoMode={demoMode}
-            />,
-            saveTarget,
-          )
-        : null}
-
-      <div className="flex items-center justify-end gap-2">
+    <div className="flex items-center justify-end gap-2">
+        <ActionPlanSaveControl
+          plan={plan}
+          sourceText={sourceText}
+          workspace={workspace}
+          demoMode={demoMode}
+        />
         <ActionPlanShareControl plan={plan} />
         <details className="relative pb-1">
           <summary className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-full border border-dema-line bg-dema-paper text-dema-muted marker:content-none" aria-label="Actions du plan">
@@ -61,7 +42,6 @@ export default function ActionPlanUtilityActions({
             </button>
           </div>
         </details>
-      </div>
-    </>
+    </div>
   );
 }

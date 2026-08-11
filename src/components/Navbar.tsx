@@ -43,7 +43,7 @@ export default function Navbar({
             {anonymousLanding ? (
               <div className="flex min-w-0 items-center gap-1.5 sm:gap-2">
                 <div
-                  id="action-plan-navbar-save"
+                  id="action-plan-navbar-specialist"
                   className="shrink-0 empty:hidden"
                 />
                 {isAuthenticated ? (

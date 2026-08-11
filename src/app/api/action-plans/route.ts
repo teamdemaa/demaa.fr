@@ -6,8 +6,10 @@ import {
   withNoStore,
 } from "@/lib/action-plan-api.server";
 import {
+  ACTION_PLAN_ACCESS_COOKIE,
   createOwnedActionPlan,
   createPendingActionPlan,
+  getActionPlanAccessCookieOptions,
   getOwnedActionPlans,
 } from "@/lib/action-plan-storage.server";
 import { enforceRateLimit, readJsonBody } from "@/lib/api-security";
@@ -59,20 +61,27 @@ export async function POST(request: Request) {
   const email = await getCurrentCustomerEmail();
   if (email) {
     const actionPlan = await createOwnedActionPlan(email, parsed.data);
-    return NextResponse.json(
+    const result = NextResponse.json(
       { status: "saved", actionPlan },
       { status: 201, headers: noStoreHeaders() },
     );
+    result.cookies.delete(ACTION_PLAN_ACCESS_COOKIE);
+    return result;
   }
 
   const pending = await createPendingActionPlan(parsed.data);
-  return NextResponse.json(
+  const result = NextResponse.json(
     {
       status: "pending_claim",
       actionPlanId: pending.id,
-      actionPlanClaimSecret: pending.claimSecret,
       revision: pending.revision,
     },
     { status: 201, headers: noStoreHeaders() },
   );
+  result.cookies.set(
+    ACTION_PLAN_ACCESS_COOKIE,
+    pending.temporaryAccessToken,
+    getActionPlanAccessCookieOptions(),
+  );
+  return result;
 }

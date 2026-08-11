@@ -102,13 +102,16 @@ describe("Demaa application navbar", () => {
     expect(actionPlanNavSource).toContain("Plan d’action");
     expect(actionPlanNavSource).toContain("Système");
     expect(actionPlanNavSource).toContain("Académie");
-    expect(actionPlanNavSource).toContain("Coaching");
+    expect(actionPlanNavSource).toContain("Opportunités");
     expect(actionPlanNavSource).not.toContain('label: "Accompagnement"');
+    expect(actionPlanNavSource).not.toContain('label: "Coaching"');
     expect(actionPlanNavSource).toContain('{ view: "academy"');
     expect(actionPlanNavSource).toContain("onViewChange(view)");
     expect(actionPlanNavSource).toContain("xl:min-h-11");
     expect(experienceSource).toContain("<ActionPlanNavbar");
     expect(experienceSource).toContain("<ActionPlanAcademyPanel");
+    expect(experienceSource).toContain("<ActionPlanCoachingControl");
+    expect(experienceSource).toContain("<OpportunitiesPanel");
     expect(experienceSource).not.toContain('aria-label="Votre résultat"');
   });
 });

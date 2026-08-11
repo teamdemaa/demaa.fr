@@ -1,17 +1,23 @@
 "use client";
 
 import { Search } from "lucide-react";
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import ProviderProfileModal from "@/components/ProviderProfileModal";
 import type { ExpertiseCatalogEntry } from "@/lib/expertise-catalog-contract";
-import type { PublicOpportunity } from "@/lib/opportunity-contract";
+import {
+  OPPORTUNITY_TYPE_LABELS,
+  type PublicOpportunity,
+} from "@/lib/opportunity-contract";
 import { matchesSearchQuery } from "@/lib/search";
 
 export default function PublicOpportunitiesClient({
   expertises,
+  initialEmail = "",
   opportunities,
 }: {
   expertises: readonly ExpertiseCatalogEntry[];
+  initialEmail?: string;
   opportunities: readonly PublicOpportunity[];
 }) {
   const [query, setQuery] = useState("");
@@ -21,6 +27,7 @@ export default function PublicOpportunitiesClient({
       opportunity.title,
       opportunity.summary,
       opportunity.category,
+      OPPORTUNITY_TYPE_LABELS[opportunity.opportunityType],
       opportunity.geography ?? "",
     ])),
     [opportunities, query],
@@ -44,7 +51,11 @@ export default function PublicOpportunitiesClient({
         {filtered.map((opportunity) => (
           <article key={opportunity.opportunityId} className="rounded-[1.2rem] border border-dema-line bg-white p-5 shadow-[0_8px_24px_rgba(23,35,29,0.035)] sm:p-6">
             <p className="text-xs font-medium uppercase tracking-[0.12em] text-dema-forest">
-              {[opportunity.category, opportunity.geography].filter(Boolean).join(" · ")}
+              {[
+                OPPORTUNITY_TYPE_LABELS[opportunity.opportunityType],
+                opportunity.category,
+                opportunity.geography,
+              ].filter(Boolean).join(" · ")}
             </p>
             <h2 className="mt-2 text-xl font-medium tracking-[-0.02em] text-brand-blue">
               {opportunity.title}
@@ -57,7 +68,7 @@ export default function PublicOpportunitiesClient({
               onClick={() => setSelected(opportunity)}
               className="mt-6 inline-flex min-h-11 items-center justify-center rounded-full border border-dema-forest/20 bg-white px-5 text-sm font-medium text-dema-forest transition hover:bg-dema-sage"
             >
-              Proposer mon profil
+              Voir l’opportunité
             </button>
           </article>
         ))}
@@ -69,9 +80,27 @@ export default function PublicOpportunitiesClient({
         </p>
       ) : null}
 
+      <aside className="mt-12 rounded-[1.2rem] border border-dema-line bg-dema-paper px-5 py-6 sm:flex sm:items-center sm:justify-between sm:gap-8 sm:px-6">
+        <div>
+          <p className="text-xs font-medium uppercase tracking-[0.12em] text-dema-forest">
+            Rejoindre Team Demaa
+          </p>
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-dema-muted">
+            Présentez votre profil une seule fois et soyez contacté lorsqu’un besoin correspond à votre expertise.
+          </p>
+        </div>
+        <Link
+          href="/rejoindre-team-demaa"
+          className="mt-5 inline-flex min-h-11 shrink-0 items-center justify-center rounded-full border border-dema-forest/20 bg-white px-5 text-sm font-medium text-dema-forest transition hover:bg-dema-sage sm:mt-0"
+        >
+          Présenter mon profil
+        </Link>
+      </aside>
+
       {selected ? (
         <ProviderProfileModal
           expertises={expertises}
+          initialEmail={initialEmail}
           opportunity={selected}
           onClose={() => setSelected(null)}
         />

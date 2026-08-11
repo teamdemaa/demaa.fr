@@ -74,7 +74,7 @@ export default function PolitiqueConfidentialitePage() {
               <li><strong>Vous adresser des conseils et actualités par e-mail :</strong> uniquement lorsque vous y consentez séparément ; ce choix facultatif n&apos;est jamais nécessaire pour recevoir la ressource demandée.</li>
               <li><strong>Étudier une problématique proposée à la newsletter Structure :</strong> traitement de votre demande et consentement explicite avant toute présentation de votre entreprise, de votre site ou de votre situation ; l&apos;équipe vous contacte avant toute publication.</li>
               <li><strong>Fournir l&apos;assistant IA :</strong> exécution du service demandé ; avant sauvegarde, le résultat reste uniquement dans la page ouverte.</li>
-              <li><strong>Sauvegarder et retrouver vos plans :</strong> exécution du service demandé lorsque vous cliquez sur « Sauvegarder » puis vérifiez votre adresse email par lien magique.</li>
+              <li><strong>Enregistrer et retrouver vos plans :</strong> exécution du service demandé lorsque vous cliquez sur « Enregistrer ». Un accès temporaire strictement limité à ce plan est alors protégé par un cookie essentiel ; le lien magique vérifie ensuite votre adresse e-mail.</li>
               <li><strong>Gérer les listes d&apos;attente ou demandes d&apos;information sur un outil :</strong> consentement ou intérêt légitime selon le contexte de la demande.</li>
               <li><strong>Comprendre l&apos;origine d&apos;une demande et mesurer l&apos;efficacité des contenus et campagnes :</strong> intérêt légitime pour les informations rattachées à la demande, et consentement préalable pour les traceurs ou stockages optionnels.</li>
               <li><strong>Mesure d&apos;audience, sécurité et maintenance :</strong> intérêt légitime, et consentement si la réglementation l&apos;impose pour certains traceurs.</li>
@@ -107,8 +107,8 @@ export default function PolitiqueConfidentialitePage() {
               <li><strong>Données d&apos;attribution rattachées à une demande :</strong> même durée que la demande concernée, avec suppression ou anonymisation lors de sa suppression.</li>
               <li><strong>Attribution enregistrée dans le navigateur après consentement :</strong> 90 jours maximum.</li>
               <li><strong>Choix relatifs aux traceurs :</strong> 6 mois maximum avant une nouvelle demande de choix.</li>
-              <li><strong>Plan en attente de vérification de l&apos;email :</strong> une heure maximum lorsqu&apos;il n&apos;est pas rattaché à un compte.</li>
-              <li><strong>Plans sauvegardés dans votre espace :</strong> jusqu&apos;à 3 ans après leur dernière mise à jour, puis suppression ou anonymisation.</li>
+              <li><strong>Plan en attente de vérification de l&apos;email :</strong> 30 jours maximum. Le jeton d&apos;accès temporaire est conservé uniquement sous forme hachée et ne donne accès qu&apos;au plan concerné.</li>
+              <li><strong>Plans rattachés à une adresse e-mail vérifiée :</strong> jusqu&apos;à 3 ans après leur dernière mise à jour, puis suppression ou anonymisation.</li>
               <li><strong>Données techniques de sécurité et journaux :</strong> pendant la durée nécessaire à l&apos;exploitation et à la sécurité du site.</li>
               <li><strong>Compteurs agrégés d&apos;ouverture des systèmes :</strong> pendant la durée d&apos;exploitation du service, ces compteurs ne contenant ni adresse email, ni adresse IP enregistrée, ni identifiant visiteur.</li>
             </ul>

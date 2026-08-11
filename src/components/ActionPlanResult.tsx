@@ -9,6 +9,7 @@ import {
   Columns3,
   Copy,
   LayoutList,
+  Plus,
   X,
 } from "lucide-react";
 import {
@@ -17,7 +18,10 @@ import {
   type SetStateAction,
   useState,
 } from "react";
-import type { ActionPlan, ActionPlanAction } from "@/lib/action-plan-contract";
+import type {
+  PersistableActionPlanAction,
+} from "@/lib/action-plan-contract";
+import type { EditableActionPlan } from "@/lib/action-plan-manual";
 import {
   compactActionPlanSteps,
   type ActionPlanTaskStatus,
@@ -123,7 +127,7 @@ function ActionDrawer({
   onWorkspaceChange,
   onClose,
 }: {
-  action: ActionPlanAction;
+  action: PersistableActionPlanAction;
   workspace: ActionPlanWorkspaceState;
   onWorkspaceChange: Dispatch<SetStateAction<ActionPlanWorkspaceState>>;
   onClose: () => void;
@@ -344,7 +348,7 @@ function StrategyPanel({
   workspace,
   onWorkspaceChange,
 }: {
-  plan: ActionPlan;
+  plan: EditableActionPlan;
   workspace: ActionPlanWorkspaceState;
   onWorkspaceChange: Dispatch<SetStateAction<ActionPlanWorkspaceState>>;
 }) {
@@ -417,11 +421,17 @@ export default function ActionPlanResult({
   workspace,
   onWorkspaceChange,
   headerActions,
+  manualMode = false,
+  onAddAction,
+  onGenerateLater,
 }: {
-  plan: ActionPlan;
+  plan: EditableActionPlan;
   workspace: ActionPlanWorkspaceState;
   onWorkspaceChange: Dispatch<SetStateAction<ActionPlanWorkspaceState>>;
   headerActions?: ReactNode;
+  manualMode?: boolean;
+  onAddAction?: () => void;
+  onGenerateLater?: () => void;
 }) {
   const [section, setSection] = useState<PlanSection>("tasks");
   const [view, setView] = useState<TaskView>("list");
@@ -454,13 +464,36 @@ export default function ActionPlanResult({
             <div>
               <h2 id="tasks-title" className="text-3xl font-light tracking-[-0.04em] text-brand-blue sm:text-4xl">Cette semaine</h2>
             </div>
-            <div className="inline-flex w-fit rounded-full border border-dema-line bg-dema-paper p-1" aria-label="Vue des actions">
-              <button type="button" onClick={() => setView("list")} aria-pressed={view === "list"} className={`inline-flex min-h-10 items-center gap-2 rounded-full px-3 text-xs font-medium ${view === "list" ? "bg-dema-sage text-dema-forest" : "text-dema-muted"}`}><LayoutList className="h-4 w-4" aria-hidden="true" /> Liste</button>
-              <button type="button" onClick={() => setView("kanban")} aria-pressed={view === "kanban"} className={`inline-flex min-h-10 items-center gap-2 rounded-full px-3 text-xs font-medium ${view === "kanban" ? "bg-dema-sage text-dema-forest" : "text-dema-muted"}`}><Columns3 className="h-4 w-4" aria-hidden="true" /> Kanban</button>
+            <div className="flex flex-wrap items-center gap-2">
+              {manualMode && onAddAction ? (
+                <button type="button" onClick={onAddAction} disabled={plan.weeklyActions.length >= 7} className="demaa-secondary-button min-h-10 gap-2 px-4 text-xs disabled:cursor-not-allowed disabled:opacity-45">
+                  <Plus className="h-4 w-4" aria-hidden="true" /> Ajouter une action
+                </button>
+              ) : null}
+              <div className="inline-flex w-fit rounded-full border border-dema-line bg-dema-paper p-1" aria-label="Vue des actions">
+                <button type="button" onClick={() => setView("list")} aria-pressed={view === "list"} className={`inline-flex min-h-10 items-center gap-2 rounded-full px-3 text-xs font-medium ${view === "list" ? "bg-dema-sage text-dema-forest" : "text-dema-muted"}`}><LayoutList className="h-4 w-4" aria-hidden="true" /> Liste</button>
+                <button type="button" onClick={() => setView("kanban")} aria-pressed={view === "kanban"} className={`inline-flex min-h-10 items-center gap-2 rounded-full px-3 text-xs font-medium ${view === "kanban" ? "bg-dema-sage text-dema-forest" : "text-dema-muted"}`}><Columns3 className="h-4 w-4" aria-hidden="true" /> Kanban</button>
+              </div>
             </div>
           </div>
 
-          {view === "list" ? (
+          {manualMode && plan.weeklyActions.length === 0 ? (
+            <div className="mt-6 rounded-[1.25rem] border border-dashed border-dema-line bg-dema-paper px-6 py-10 text-center">
+              <p className="text-sm text-dema-muted">Votre plan est vide. Ajoutez votre première action quand vous êtes prêt.</p>
+              {onAddAction ? (
+                <button type="button" onClick={onAddAction} className="demaa-secondary-button mt-5 min-h-11 gap-2 px-5">
+                  <Plus className="h-4 w-4" aria-hidden="true" /> Ajouter une action
+                </button>
+              ) : null}
+              {onGenerateLater ? (
+                <button type="button" onClick={onGenerateLater} className="mx-auto mt-4 block text-sm text-dema-muted underline decoration-dema-line underline-offset-4 transition hover:text-dema-forest">
+                  Générer un plan à partir de ma situation
+                </button>
+              ) : null}
+            </div>
+          ) : null}
+
+          {plan.weeklyActions.length > 0 && view === "list" ? (
             <div className="mt-6 overflow-hidden rounded-[1.25rem] border border-dema-line bg-dema-paper">
               {plan.weeklyActions.map((action) => {
                 const taskState = workspace.tasks[action.id];
@@ -479,7 +512,7 @@ export default function ActionPlanResult({
                 );
               })}
             </div>
-          ) : (
+          ) : plan.weeklyActions.length > 0 ? (
             <div className="mt-6 grid gap-4 lg:grid-cols-3">
               {(Object.keys(statusMeta) as ActionPlanTaskStatus[]).map((status) => (
                 <section key={status} className="rounded-[1.25rem] bg-dema-sage/45 p-3" aria-labelledby={`kanban-${status}`}>
@@ -501,7 +534,15 @@ export default function ActionPlanResult({
                 </section>
               ))}
             </div>
-          )}
+          ) : null}
+
+          {manualMode && plan.weeklyActions.length > 0 && onGenerateLater ? (
+            <div className="mt-5 text-center">
+              <button type="button" onClick={onGenerateLater} className="text-sm text-dema-muted underline decoration-dema-line underline-offset-4 transition hover:text-dema-forest">
+                Générer un plan à partir de ma situation
+              </button>
+            </div>
+          ) : null}
         </section>
       ) : (
         <section aria-labelledby="strategy-title">

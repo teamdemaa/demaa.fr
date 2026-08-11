@@ -87,6 +87,13 @@ l'ADR 0004 prévaut.
   `/systemes` et `/academie` publics restent inchangés.
 - [x] Livrer la première version Coaching dans l’application : Sessions,
   Messages asynchrones, tarifs validés et demandes coordonnées manuellement.
+- [ ] Livrer D-077 : entrée `Commencer avec un plan vierge`, navigation
+  `Plan d’action / Système / Académie / Opportunités`, Coaching accessible par
+  `Parler à un spécialiste`, Opportunités au sens large et sauvegarde invitée
+  sans secret exposé au JavaScript. L’ADR 0010 est la référence.
+- [ ] Ajouter ultérieurement, après décision éditoriale, un nom
+  d’organisation facultatif aux opportunités. Ne rien afficher lorsque cette
+  information n’est pas explicitement publiée.
 - [ ] Cadrer ensuite les évolutions Coaching : phase gratuite,
   phase payante, capacité humaine, délais, messagerie, confidentialité,
   conservation des échanges et prix. Aucun de ces éléments ne doit être promis

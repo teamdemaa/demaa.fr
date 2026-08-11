@@ -13,6 +13,7 @@ import {
 import { consumeCustomerMagicLink } from "@/lib/generations-db";
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
 import { getSafeCustomerReturnTo } from "@/lib/customer-space-redirect";
+import { ACTION_PLAN_ACCESS_COOKIE } from "@/lib/action-plan-storage.server";
 
 export const runtime = "nodejs";
 
@@ -75,6 +76,7 @@ export async function POST(request: Request) {
     sessionToken,
     getCustomerCookieOptions()
   );
+  response.cookies.delete(ACTION_PLAN_ACCESS_COOKIE);
 
   return response;
 }
