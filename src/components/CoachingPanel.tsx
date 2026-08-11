@@ -202,7 +202,7 @@ function CoachingMessageForm({ onRequireAccess }: { onRequireAccess?: () => void
   return (
     <form onSubmit={submit} className="mt-7 max-w-2xl rounded-[1.35rem] border border-dema-line bg-dema-paper p-6 sm:p-7">
       <h3 className="text-2xl font-semibold text-brand-blue">Écrire à un spécialiste</h3>
-      <p className="mt-2 text-sm leading-relaxed text-dema-muted">Envoyez une question ou dictez-la. Un spécialiste vous répond de manière asynchrone.</p>
+      <p className="mt-2 text-sm leading-relaxed text-dema-muted">Envoyez une question ou dictez-la. Un spécialiste vous répond sous 24 à 48 h.</p>
       <label className="mt-6 block text-sm font-medium">Message<textarea value={message} onChange={(event) => setMessage(event.target.value)} rows={5} className="mt-2 w-full rounded-xl border border-dema-line px-4 py-3 outline-none focus:border-dema-forest" /></label>
       <div className="mt-4 flex items-center gap-3"><button type="button" onClick={dictate} className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-dema-line" aria-label="Dicter le message"><Mic className="h-4 w-4" /></button><button disabled={status === "sending"} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-dema-forest px-5 text-sm font-semibold text-white"><Send className="h-4 w-4" />{status === "sending" ? "Envoi…" : "Envoyer"}</button></div>
       {status === "sent" ? <p className="mt-4 text-sm font-medium text-dema-forest">Message envoyé.</p> : null}
