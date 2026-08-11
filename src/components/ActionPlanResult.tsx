@@ -274,9 +274,8 @@ function ActionDrawer({
               value={draftObjective}
               onChange={(event) => setDraftObjective(event.target.value)}
               onBlur={saveObjective}
-              rows={1}
-              placeholder="À compléter…"
-              className="mt-1.5 min-h-8 w-full resize-none overflow-hidden rounded-lg bg-brand-blue/[0.035] px-2 py-1 text-sm leading-relaxed text-brand-blue [field-sizing:content] outline-none transition placeholder:text-dema-muted/65 focus:bg-dema-sage/35"
+              rows={2}
+              className="mt-1.5 min-h-[3.75rem] w-full resize-none overflow-hidden rounded-lg bg-brand-blue/[0.035] px-2 py-1.5 text-sm leading-relaxed text-brand-blue [field-sizing:content] outline-none transition focus:bg-dema-sage/35"
             />
           </div>
 
@@ -361,30 +360,11 @@ function StrategyPanel({
         const answers = section.fields.map(([, key], index) =>
           overrides?.[`answer${["One", "Two", "Three"][index]}` as keyof typeof overrides] ?? pillar[key],
         );
-        const headline = overrides?.headline ?? pillar.headline;
 
         return (
           <article key={section.key} className="rounded-[1.25rem] border border-dema-line bg-dema-paper p-5 shadow-[0_10px_30px_rgba(23,35,29,0.035)] sm:p-6">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-forest">{section.label}</p>
-            <textarea
-              value={headline}
-              onChange={(event) => onWorkspaceChange((current) => ({
-                ...current,
-                strategyOverrides: {
-                  ...current.strategyOverrides,
-                  [section.overrideKey]: {
-                    ...current.strategyOverrides[section.overrideKey],
-                    headline: event.target.value,
-                  },
-                },
-              }))}
-              rows={1}
-              maxLength={180}
-              aria-label={`Titre ${section.label}`}
-              placeholder="Synthèse à compléter…"
-              className="mt-2 min-h-9 w-full resize-none overflow-hidden rounded-lg bg-brand-blue/[0.035] px-2 py-1 text-xl font-medium leading-snug text-brand-blue [field-sizing:content] outline-none transition placeholder:text-dema-muted/55 focus:bg-dema-sage/40"
-            />
-            <div className="mt-5 space-y-4">
+            <div className="mt-4 space-y-4">
               {section.fields.map(([label], index) => (
                 <div key={label}>
                   <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-brand-blue/70">{label}</p>
@@ -403,11 +383,10 @@ function StrategyPanel({
                         },
                       }));
                     }}
-                    rows={1}
+                    rows={2}
                     maxLength={500}
                     aria-label={label}
-                    placeholder="À compléter…"
-                    className="mt-1.5 min-h-8 w-full resize-none overflow-hidden rounded-lg bg-brand-blue/[0.035] px-2 py-1 text-sm leading-relaxed text-brand-blue/75 [field-sizing:content] outline-none transition placeholder:text-dema-muted/60 focus:bg-dema-sage/40 focus:text-brand-blue"
+                    className="mt-1.5 min-h-[3.75rem] w-full resize-none overflow-hidden rounded-lg bg-brand-blue/[0.035] px-2 py-1.5 text-sm leading-relaxed text-brand-blue/75 [field-sizing:content] outline-none transition focus:bg-dema-sage/40 focus:text-brand-blue"
                   />
                 </div>
               ))}
