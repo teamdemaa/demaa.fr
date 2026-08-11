@@ -49,14 +49,9 @@ export default function OpportunitiesPanel({
 
   return (
     <section aria-labelledby="opportunities-panel-title">
-      <header>
-        <h2 id="opportunities-panel-title" className="text-3xl font-light tracking-[-0.035em] text-brand-blue">
-          Opportunités
-        </h2>
-        <p className="mt-3 text-sm font-light leading-relaxed text-dema-muted">
-          Découvrez les opportunités actuellement disponibles.
-        </p>
-      </header>
+      <h2 id="opportunities-panel-title" className="sr-only">
+        Opportunités
+      </h2>
 
       {!payload && !error ? (
         <div className="mt-8 flex min-h-32 items-center justify-center rounded-[1.2rem] border border-dema-line bg-white text-dema-muted" aria-live="polite">
