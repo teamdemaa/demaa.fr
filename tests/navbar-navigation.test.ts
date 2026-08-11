@@ -86,7 +86,7 @@ describe("Demaa application navbar", () => {
     expect(modalSource).toContain("<CustomerSpaceLoginDialog />");
   });
 
-  it("centers generated-plan navigation on desktop and fixes it at the bottom on mobile", async () => {
+  it("shows application navigation before generation and fixes it at the bottom on mobile", async () => {
     const [navbarSource, actionPlanNavSource, experienceSource] = await Promise.all([
       readFile(new URL("../src/components/Navbar.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/ActionPlanNavbar.tsx", import.meta.url), "utf8"),
@@ -109,6 +109,8 @@ describe("Demaa application navbar", () => {
     expect(actionPlanNavSource).toContain("onViewChange(view)");
     expect(actionPlanNavSource).toContain("xl:min-h-11");
     expect(experienceSource).toContain("<ActionPlanNavbar");
+    expect(experienceSource).toContain("workspace={prePlanWorkspace}");
+    expect(experienceSource).toContain('activeTab === "opportunities"');
     expect(experienceSource).toContain("<ActionPlanAcademyPanel");
     expect(experienceSource).toContain("<ActionPlanCoachingControl");
     expect(experienceSource).toContain("<OpportunitiesPanel");

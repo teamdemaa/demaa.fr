@@ -87,10 +87,18 @@ l'ADR 0004 prévaut.
   `/systemes` et `/academie` publics restent inchangés.
 - [x] Livrer la première version Coaching dans l’application : Sessions,
   Messages asynchrones, tarifs validés et demandes coordonnées manuellement.
-- [ ] Livrer D-077 : entrée `Commencer avec un plan vierge`, navigation
+- [x] Livrer D-077 : entrée `Commencer avec un plan vierge`, navigation
   `Plan d’action / Système / Académie / Opportunités`, Coaching accessible par
   `Parler à un spécialiste`, Opportunités au sens large et sauvegarde invitée
   sans secret exposé au JavaScript. L’ADR 0010 est la référence.
+- [ ] Cadrer D-078, multi-tenant simple : un compte peut posséder plusieurs
+  entreprises ; chaque plan et progression Système appartient à une entreprise
+  vérifiée côté serveur. Prévoir `accounts`, `companies` et un état Système par
+  entreprise, une migration progressive de `owner_email`, un sélecteur compact
+  et des tests d'isolation inter-entreprises. Ne créer ni rôles, ni invitations,
+  ni gestion d'équipe dans ce lot. Le nom d'entreprise reste facultatif et
+  pourra être enrichi depuis le profil ; il ne bloque pas le lien magique ni
+  l'ouverture du plan.
 - [ ] Ajouter ultérieurement, après décision éditoriale, un nom
   d’organisation facultatif aux opportunités. Ne rien afficher lorsque cette
   information n’est pas explicitement publiée.

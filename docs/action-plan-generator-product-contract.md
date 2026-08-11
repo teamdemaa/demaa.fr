@@ -157,18 +157,20 @@ contenu canonique existant chargé à partir du `systemId` courant.
 
 ### Avant connexion
 
-La homepage du générateur affiche seulement la marque Demaa et
-`Se connecter` avant le résultat. Les onglets applicatifs ne sont pas affichés
-sur cette entrée anonyme.
+La homepage conserve le grand champ comme entrée principale, mais la navigation
+`Plan d’action / Système / Académie / Opportunités` est visible et utilisable
+dès l'arrivée. Le visiteur peut donc consulter un Système, l'Académie ou les
+Opportunités sans générer de plan et sans créer de compte. Ses choix Système
+restent en mémoire de page jusqu'à une sauvegarde volontaire.
 
 Les univers publics `/systemes` et `/academie`, leur navigation et leur SEO
 restent accessibles. L'ADR 0008 ne transforme pas ces routes en espace privé.
 
 ### Après connexion
 
-La navigation applicative affiche Plan d'action, Système, Académie et un repère
-Coaching. Ce dernier reste un espace annoncé : le Coaching est exclu
-du MVP et aucune capacité, aucun délai ni aucun prix n'y est promis.
+La même navigation applicative est conservée. Coaching reste accessible depuis
+l'action compacte `Parler à un spécialiste`, conformément aux ADR 0009 et
+0010, sans devenir un cinquième onglet.
 
 ## Persistance
 
@@ -188,12 +190,13 @@ du MVP et aucune capacité, aucun délai ni aucun prix n'y est promis.
 - Aucun miroir local durable concurrent n'est maintenu.
 
 Pour un invité, la sauvegarde crée un plan temporaire `pending_claim` avec un
-TTL d'une heure et un secret non stocké en clair. Le lien magique associe le
-jeton, l'e-mail normalisé et ce plan ; sa consommation rattache atomiquement le
-plan à l'adresse vérifiée. Pour une personne déjà connectée, la sauvegarde crée
-directement le plan actif puis ouvre sa page persistée. Les modifications y
-sont enregistrées avec révision optimiste et prolongent la durée de
-conservation depuis la dernière mise à jour.
+accès limité à trente jours par cookie HttpOnly et un secret non stocké en
+clair. Le lien magique associe le jeton, l'e-mail normalisé et ce plan ; sa
+consommation rattache atomiquement le plan à l'adresse vérifiée. Pour une
+personne déjà connectée, la sauvegarde crée directement le plan actif puis
+ouvre sa page persistée. Les modifications y sont enregistrées avec révision
+optimiste et prolongent la durée de conservation depuis la dernière mise à
+jour.
 
 ## Marketing et prospection éthiques
 

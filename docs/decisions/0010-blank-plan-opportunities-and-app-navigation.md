@@ -9,6 +9,11 @@
 
 L’application conserve une seule navigation : `Plan d’action`, `Système`,
 `Académie`, `Opportunités`. Sur mobile, cette navigation reste fixée en bas.
+Cette navigation est visible et utilisable dès la première arrivée, avant toute
+génération et sans compte. `Plan d’action` affiche alors le grand champ libre ;
+`Système`, `Académie` et `Opportunités` restent consultables immédiatement.
+Les choix effectués dans `Système` restent uniquement en mémoire tant qu'aucun
+plan n'est volontairement enregistré.
 Coaching demeure dans la même application, mais s’ouvre depuis l’action
 compacte `Parler à un spécialiste` du header. Le panneau, les offres, les
 messages et les règles de l’ADR 0009 sont conservés sans seconde
@@ -56,4 +61,6 @@ l’application. Les anciens liens restent compatibles pendant leur validité.
 - paiement ou agenda automatique du Coaching ;
 - place de marché et publication automatique de profils ;
 - glisser-déposer Kanban, notifications ou collaboration multi-utilisateur ;
+- comptes possédant plusieurs entreprises, sélecteur d'entreprise et
+  progression partagée à l'échelle d'une entreprise ;
 - recherche web ou étude de marché automatique.

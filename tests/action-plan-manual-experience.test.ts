@@ -13,6 +13,8 @@ describe("manual action plan experience", () => {
     expect(experience).toContain("Commencer avec un plan vierge");
     expect(experience).toContain("createManualActionPlan()");
     expect(experience).toContain("createManualActionPlanWorkspaceState()");
+    expect(experience).toContain("systemId: prePlanWorkspace.selectedSystemId");
+    expect(experience).toContain("setWorkspace(prePlanWorkspace)");
     expect(experience).toContain('demo === "blank"');
     expect(systemPanel).toContain("Choisissez votre système métier");
     expect(systemPanel).toContain("if (!selectedSystemId)");

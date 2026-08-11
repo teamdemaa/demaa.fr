@@ -89,6 +89,9 @@ export default function ActionPlanExperience({
   const [animatedPlaceholder, setAnimatedPlaceholder] = useState("");
   const [plan, setPlan] = useState<EditableActionPlan | null>(null);
   const [workspace, setWorkspace] = useState<ActionPlanWorkspaceState | null>(null);
+  const [prePlanWorkspace, setPrePlanWorkspace] = useState<ActionPlanWorkspaceState>(
+    () => createManualActionPlanWorkspaceState(),
+  );
   const [selectedSystemId, setSelectedSystemId] = useState("");
   const [activeTab, setActiveTab] = useState<ActionPlanView>("plan");
   const [isGenerating, setIsGenerating] = useState(false);
@@ -304,9 +307,19 @@ export default function ActionPlanExperience({
         throw new Error(body?.error || "Impossible de générer le plan pour le moment.");
       }
 
+      const generatedWorkspace = createActionPlanWorkspaceState(body.plan);
+      const nextSelectedSystemId =
+        prePlanWorkspace.selectedSystemId || body.plan.systemId;
       setPlan(body.plan);
-      setWorkspace(createActionPlanWorkspaceState(body.plan));
-      setSelectedSystemId(body.plan.systemId);
+      setWorkspace({
+        ...generatedWorkspace,
+        selectedSystemId: nextSelectedSystemId,
+        checkedProcessStepIdsBySystem:
+          prePlanWorkspace.checkedProcessStepIdsBySystem,
+        selectedSolutionPlacementIdsBySystem:
+          prePlanWorkspace.selectedSolutionPlacementIdsBySystem,
+      });
+      setSelectedSystemId(nextSelectedSystemId);
       setActiveTab("plan");
       window.requestAnimationFrame(() => resultTitleRef.current?.focus());
     } catch (submitError) {
@@ -327,9 +340,12 @@ export default function ActionPlanExperience({
   function handleStartBlankPlan() {
     requestControllerRef.current?.abort();
     setSituation("");
-    setPlan(createManualActionPlan());
-    setWorkspace(createManualActionPlanWorkspaceState());
-    setSelectedSystemId("");
+    setPlan({
+      ...createManualActionPlan(),
+      systemId: prePlanWorkspace.selectedSystemId,
+    });
+    setWorkspace(prePlanWorkspace);
+    setSelectedSystemId(prePlanWorkspace.selectedSystemId || "");
     setActiveTab("plan");
     setError(null);
     window.requestAnimationFrame(() => resultTitleRef.current?.focus());
@@ -391,68 +407,93 @@ export default function ActionPlanExperience({
 
   if (!plan) {
     return (
-      <main className="min-h-[calc(100dvh-73px)] bg-dema-cream px-4 pb-20 pt-14 sm:px-6 sm:pt-20 lg:px-8 lg:pt-24">
-        <section className="mx-auto max-w-5xl text-center">
-          <h1 className="text-balance text-[clamp(2.45rem,7vw,5.2rem)] font-light leading-[0.98] tracking-[-0.055em] text-brand-blue">
-            Décrivez votre situation.
-            <span className="demaa-hero-title mt-1 block text-dema-forest">Repartez avec un plan d’action concret.</span>
-          </h1>
-          <form onSubmit={handleGenerate} className="mx-auto mt-9 max-w-4xl text-left sm:mt-11">
-            <div className="rounded-[1.7rem] border border-dema-line bg-dema-paper p-2 shadow-[0_18px_50px_rgba(23,35,29,0.055)] focus-within:border-dema-forest/20">
-              <label htmlFor="business-situation" className="sr-only">Décrivez la situation de votre entreprise</label>
-              <div className="relative">
-                {!situation ? (
-                  <div
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-0 px-5 py-5 text-base font-light leading-relaxed text-brand-blue/28 sm:px-6 sm:py-6 sm:text-lg"
-                  >
-                    {animatedPlaceholder}
+      <main data-action-plan-workspace className="min-h-screen bg-dema-cream px-4 pb-24 pt-2 sm:px-6 lg:px-8">
+        <ActionPlanNavbar activeView={activeTab} onViewChange={setActiveTab} />
+        <div className="mx-auto max-w-[68rem] pt-1">
+          {activeTab === "plan" ? (
+            <section className="mx-auto max-w-5xl pt-12 text-center sm:pt-16 lg:pt-20">
+              <h1 className="text-balance text-[clamp(2.45rem,7vw,5.2rem)] font-light leading-[0.98] tracking-[-0.055em] text-brand-blue">
+                Décrivez votre situation.
+                <span className="demaa-hero-title mt-1 block text-dema-forest">Repartez avec un plan d’action concret.</span>
+              </h1>
+              <form onSubmit={handleGenerate} className="mx-auto mt-9 max-w-4xl text-left sm:mt-11">
+                <div className="rounded-[1.7rem] border border-dema-line bg-dema-paper p-2 shadow-[0_18px_50px_rgba(23,35,29,0.055)] focus-within:border-dema-forest/20">
+                  <label htmlFor="business-situation" className="sr-only">Décrivez la situation de votre entreprise</label>
+                  <div className="relative">
+                    {!situation ? (
+                      <div
+                        aria-hidden="true"
+                        className="pointer-events-none absolute inset-0 px-5 py-5 text-base font-light leading-relaxed text-brand-blue/28 sm:px-6 sm:py-6 sm:text-lg"
+                      >
+                        {animatedPlaceholder}
+                      </div>
+                    ) : null}
+                    <textarea
+                      id="business-situation"
+                      value={situation}
+                      onChange={(event) => setSituation(event.target.value)}
+                      maxLength={4_000}
+                      rows={5}
+                      className="relative min-h-[9rem] w-full resize-none rounded-[1.25rem] bg-transparent px-5 py-5 text-base font-light leading-relaxed text-brand-blue outline-none sm:min-h-[10.5rem] sm:px-6 sm:py-6 sm:text-lg"
+                    />
                   </div>
-                ) : null}
-                <textarea
-                  id="business-situation"
-                  value={situation}
-                  onChange={(event) => setSituation(event.target.value)}
-                  maxLength={4_000}
-                  rows={5}
-                  className="relative min-h-[9rem] w-full resize-none rounded-[1.25rem] bg-transparent px-5 py-5 text-base font-light leading-relaxed text-brand-blue outline-none sm:min-h-[10.5rem] sm:px-6 sm:py-6 sm:text-lg"
-                />
-              </div>
-              <div className="flex items-center justify-end gap-2 px-3 pb-2 sm:px-4">
-                <button
-                  type="button"
-                  aria-label={isListening ? "Arrêter la dictée" : "Dicter ma situation"}
-                  aria-pressed={isListening}
-                  onClick={handleDictation}
-                  className={`inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border transition ${isListening ? "border-dema-forest bg-dema-sage text-dema-forest" : "border-dema-line bg-dema-paper text-dema-muted hover:border-dema-forest/25 hover:text-dema-forest"}`}
-                >
-                  <Mic className="h-4 w-4" aria-hidden="true" />
-                </button>
-                <button
-                  type="submit"
-                  disabled={isGenerating || situation.trim().length < 20}
-                  className="inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-full bg-dema-forest px-6 text-sm font-semibold text-white transition hover:bg-brand-blue disabled:cursor-not-allowed disabled:opacity-45 sm:flex-none"
-                >
-                  {isGenerating ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
-                  {isGenerating ? "Création du plan…" : "Créer mon plan d’action"}
-                  {!isGenerating ? <ArrowRight className="h-4 w-4" aria-hidden="true" /> : null}
-                </button>
-              </div>
-            </div>
-            <div aria-live="polite" className="min-h-7 px-3 pt-3 text-center text-sm text-dema-forest">
-              {error}
-            </div>
-            <div className="mt-1 text-center">
-              <button
-                type="button"
-                onClick={handleStartBlankPlan}
-                className="text-sm font-medium text-dema-muted underline decoration-dema-line underline-offset-4 transition hover:text-dema-forest"
-              >
-                Commencer avec un plan vierge
-              </button>
-            </div>
-          </form>
-        </section>
+                  <div className="flex items-center justify-end gap-2 px-3 pb-2 sm:px-4">
+                    <button
+                      type="button"
+                      aria-label={isListening ? "Arrêter la dictée" : "Dicter ma situation"}
+                      aria-pressed={isListening}
+                      onClick={handleDictation}
+                      className={`inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border transition ${isListening ? "border-dema-forest bg-dema-sage text-dema-forest" : "border-dema-line bg-dema-paper text-dema-muted hover:border-dema-forest/25 hover:text-dema-forest"}`}
+                    >
+                      <Mic className="h-4 w-4" aria-hidden="true" />
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={isGenerating || situation.trim().length < 20}
+                      className="inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-full bg-dema-forest px-6 text-sm font-semibold text-white transition hover:bg-brand-blue disabled:cursor-not-allowed disabled:opacity-45 sm:flex-none"
+                    >
+                      {isGenerating ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
+                      {isGenerating ? "Création du plan…" : "Créer mon plan d’action"}
+                      {!isGenerating ? <ArrowRight className="h-4 w-4" aria-hidden="true" /> : null}
+                    </button>
+                  </div>
+                </div>
+                <div aria-live="polite" className="min-h-7 px-3 pt-3 text-center text-sm text-dema-forest">
+                  {error}
+                </div>
+                <div className="mt-1 text-center">
+                  <button
+                    type="button"
+                    onClick={handleStartBlankPlan}
+                    className="text-sm font-medium text-dema-muted underline decoration-dema-line underline-offset-4 transition hover:text-dema-forest"
+                  >
+                    Commencer avec un plan vierge
+                  </button>
+                </div>
+              </form>
+            </section>
+          ) : null}
+          {activeTab === "system" ? (
+            <ActionPlanSystemPanel
+              options={systemOptions}
+              selectedSystemId={selectedSystemId}
+              onSystemChange={(systemId) => {
+                setSelectedSystemId(systemId);
+                setPrePlanWorkspace((current) => ({
+                  ...current,
+                  selectedSystemId: systemId,
+                }));
+              }}
+              workspace={prePlanWorkspace}
+              onWorkspaceChange={setPrePlanWorkspace}
+              demoMode={isDemoMode}
+            />
+          ) : null}
+          {activeTab === "academy" ? <ActionPlanAcademyPanel /> : null}
+          {activeTab === "opportunities" ? (
+            <OpportunitiesPanel initialEmail={initialEmail} />
+          ) : null}
+        </div>
       </main>
     );
   }

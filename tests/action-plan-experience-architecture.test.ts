@@ -93,6 +93,23 @@ describe("action plan experience architecture", () => {
     expect(systemProcess).not.toContain("line-through");
   });
 
+  it("keeps the application navigation usable before generation", () => {
+    const experience = source("src/components/ActionPlanExperience.tsx");
+    const guestExperience = experience.slice(
+      experience.indexOf("if (!plan)"),
+      experience.indexOf("if (!workspace)"),
+    );
+
+    expect(guestExperience).toContain("<ActionPlanNavbar");
+    expect(guestExperience).toContain('activeTab === "plan"');
+    expect(guestExperience).toContain('activeTab === "system"');
+    expect(guestExperience).toContain('activeTab === "academy"');
+    expect(guestExperience).toContain('activeTab === "opportunities"');
+    expect(guestExperience).toContain("workspace={prePlanWorkspace}");
+    expect(guestExperience).toContain("onWorkspaceChange={setPrePlanWorkspace}");
+    expect(guestExperience).not.toContain("<ActionPlanSaveControl");
+  });
+
   it("embeds the Academy without nesting a second main landmark", () => {
     const academyPanel = source("src/components/ActionPlanAcademyPanel.tsx");
     const academyIndex = source("src/components/AcademyIndexClient.tsx");

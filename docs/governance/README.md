@@ -63,6 +63,11 @@ Les fichiers exclusifs de chaque lot sont indiqués dans le plan d'exécution.
   le produit.
 - Une décision `working` ou marquée **non figée** ne doit pas être codée comme constante
   produit sans validation explicite.
+- Un agent peut recommander une option, en exposer les risques et proposer un
+  ordre d'exécution ; il ne transforme jamais cet avis en décision produit à la
+  place de l'utilisatrice. Une décision explicitement donnée par l'utilisatrice
+  prévaut sur la recommandation, sous réserve des contraintes de sécurité et de
+  légalité qui doivent alors être signalées clairement.
 - Aucun identifiant Drive privé, secret, e-mail, donnée personnelle ou URL de
   copie modifiable ne doit apparaître dans ces documents.
 - Une release doit référencer des commits et des empreintes, jamais des valeurs
