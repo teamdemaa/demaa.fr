@@ -34,7 +34,9 @@ describe("action plan experience architecture", () => {
     expect(shareControl).toContain("navigator.share");
     expect(shareControl).toContain("navigator.clipboard.writeText");
     expect(shareControl).toContain('aria-label={copied ? "Plan copié" : "Partager le plan"}');
-    expect(shareControl).toContain('variant === "menu" ? "" : "sr-only"');
+    expect(shareControl).toContain('variant === "menu" ? undefined : "sr-only"');
+    expect(shareControl).toContain('variant === "icon" ? (');
+    expect(utilityActions).toContain("font-normal text-brand-blue");
     expect(utilityActions).not.toContain('createPortal(');
     expect(utilityActions).toContain("<ActionPlanSaveControl");
     expect(utilityActions).toContain('<ActionPlanShareControl plan={plan} variant="menu" />');

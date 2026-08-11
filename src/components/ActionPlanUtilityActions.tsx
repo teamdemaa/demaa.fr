@@ -58,7 +58,7 @@ export default function ActionPlanUtilityActions({
           workspace={workspace}
           demoMode={demoMode}
         />
-        <div ref={menuContainerRef} className="relative pb-1">
+        <div ref={menuContainerRef} className="relative">
           <button
             ref={menuButtonRef}
             type="button"
@@ -71,7 +71,7 @@ export default function ActionPlanUtilityActions({
             <MoreVertical className="h-5 w-5" aria-hidden="true" />
           </button>
           {menuOpen ? (
-            <div id="action-plan-utility-menu" className="absolute right-0 top-full z-50 mt-2 rounded-2xl border border-dema-line bg-dema-paper px-2 py-1 shadow-[0_18px_46px_rgba(23,35,29,0.14)]">
+            <div id="action-plan-utility-menu" className="absolute right-0 top-full z-50 mt-2 min-w-[11rem] rounded-2xl border border-dema-line bg-dema-paper p-2 shadow-[0_18px_46px_rgba(23,35,29,0.14)]">
               <ActionPlanShareControl plan={plan} variant="menu" />
               <button
                 type="button"
@@ -79,7 +79,7 @@ export default function ActionPlanUtilityActions({
                   setMenuOpen(false);
                   onReset();
                 }}
-                className="inline-flex min-h-11 whitespace-nowrap rounded-full px-4 text-sm font-medium text-brand-blue transition hover:bg-dema-sage/55"
+                className="block w-full whitespace-nowrap px-3 py-2 text-left text-sm font-normal text-brand-blue transition hover:text-dema-forest"
               >
                 Nouvelle situation
               </button>

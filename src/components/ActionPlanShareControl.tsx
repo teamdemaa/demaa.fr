@@ -59,18 +59,20 @@ export default function ActionPlanShareControl({
       type="button"
       onClick={() => void sharePlan()}
       className={variant === "menu"
-        ? "flex min-h-11 w-full items-center gap-2 whitespace-nowrap rounded-full px-4 text-left text-sm font-medium text-brand-blue transition hover:bg-dema-sage/55"
+        ? "block w-full whitespace-nowrap px-3 py-2 text-left text-sm font-normal text-brand-blue transition hover:text-dema-forest"
         : "inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-dema-muted transition hover:border-dema-forest/30 hover:text-dema-forest"}
       aria-label={copied ? "Plan copié" : "Partager le plan"}
       title={copied ? "Plan copié" : "Partager le plan"}
       aria-live="polite"
     >
-      {copied ? (
-        <Check className="h-4 w-4" aria-hidden="true" />
-      ) : (
-        <Share2 className="h-4 w-4" aria-hidden="true" />
-      )}
-      <span className={variant === "menu" ? "" : "sr-only"}>
+      {variant === "icon" ? (
+        copied ? (
+          <Check className="h-4 w-4" aria-hidden="true" />
+        ) : (
+          <Share2 className="h-4 w-4" aria-hidden="true" />
+        )
+      ) : null}
+      <span className={variant === "menu" ? undefined : "sr-only"}>
         {copied ? "Plan copié" : "Partager"}
       </span>
     </button>
