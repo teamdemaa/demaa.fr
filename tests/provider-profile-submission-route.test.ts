@@ -6,6 +6,7 @@ const mocks = vi.hoisted(() => ({
   enforceAllowedHost: vi.fn(),
   enforceRateLimit: vi.fn(),
   enforceSameOrigin: vi.fn(),
+  requireCurrentCustomerEmail: vi.fn(),
   getExpertiseById: vi.fn(),
   getOpportunityById: vi.fn(),
   logOperationalError: vi.fn(),
@@ -33,6 +34,9 @@ vi.mock("@/lib/api-security", () => ({
 vi.mock("@/lib/email", () => ({
   isValidEmail: (value: string) => value.includes("@"),
   normalizeEmail: (value: string) => value.trim().toLowerCase(),
+}));
+vi.mock("@/lib/customer-space-session.server", () => ({
+  requireCurrentCustomerEmail: mocks.requireCurrentCustomerEmail,
 }));
 vi.mock("@/lib/lead-attribution-server", () => ({
   resolveLeadAttribution: mocks.resolveLeadAttribution,
@@ -69,7 +73,7 @@ function request(overrides: Record<string, unknown> = {}) {
       company: "Studio Calme",
       consent: true,
       countries: "France et à distance",
-      email: "maya@example.com",
+      email: "spoofed@example.net",
       expertiseIds: ["google-ads"],
       fullName: "Maya Martin",
       idempotencyKey: "web:provider:12345678",
@@ -87,6 +91,10 @@ describe("provider profile submission route", () => {
     mocks.enforceAllowedHost.mockReturnValue(null);
     mocks.enforceSameOrigin.mockReturnValue(null);
     mocks.enforceRateLimit.mockResolvedValue(null);
+    mocks.requireCurrentCustomerEmail.mockResolvedValue({
+      email: "maya@example.com",
+      response: null,
+    });
     mocks.getExpertiseById.mockResolvedValue({
       expertiseId: "google-ads",
       label: "Spécialiste Google Ads",
@@ -114,6 +122,18 @@ describe("provider profile submission route", () => {
       requestType: "provider_profile_submission",
       title: "Nouveau profil - Spécialiste Google Ads",
     }));
+  });
+
+  it("refuses guests before accepting a provider profile", async () => {
+    mocks.requireCurrentCustomerEmail.mockResolvedValue({
+      email: null,
+      response: Response.json({ error: "authentication_required" }, { status: 401 }),
+    });
+
+    const response = await POST(request());
+
+    expect(response.status).toBe(401);
+    expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
   });
 
   it("links an interest only to an open opportunity", async () => {

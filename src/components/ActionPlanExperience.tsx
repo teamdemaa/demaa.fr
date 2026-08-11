@@ -93,6 +93,7 @@ export default function ActionPlanExperience({
     () => createManualActionPlanWorkspaceState(),
   );
   const [selectedSystemId, setSelectedSystemId] = useState("");
+  const [pendingSolutionResourceSlug, setPendingSolutionResourceSlug] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<ActionPlanView>("plan");
   const [isGenerating, setIsGenerating] = useState(false);
   const [quoteIndex, setQuoteIndex] = useState(0);
@@ -102,6 +103,30 @@ export default function ActionPlanExperience({
   const resultTitleRef = useRef<HTMLHeadingElement | null>(null);
   const requestControllerRef = useRef<AbortController | null>(null);
   const speechRecognitionRef = useRef<BrowserSpeechRecognition | null>(null);
+  const accessIntentHandledRef = useRef(false);
+
+  useEffect(() => {
+    if (accessIntentHandledRef.current) return;
+    accessIntentHandledRef.current = true;
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("intent") !== "solution-referral") return;
+    const systemSlug = params.get("systemSlug");
+    const resourceSlug = params.get("resourceSlug");
+    if (
+      !systemSlug
+      || !resourceSlug
+      || !systemOptions.some((option) => option.id === systemSlug)
+    ) return;
+
+    const timeout = window.setTimeout(() => {
+      setSelectedSystemId(systemSlug);
+      setPendingSolutionResourceSlug(resourceSlug);
+      setPrePlanWorkspace((current) => ({ ...current, selectedSystemId: systemSlug }));
+      setActiveTab("system");
+    }, 0);
+    return () => window.clearTimeout(timeout);
+  }, [systemOptions]);
 
   useEffect(() => {
     if (situation) return;
@@ -413,7 +438,7 @@ export default function ActionPlanExperience({
           {activeTab === "plan" ? (
             <section className="mx-auto max-w-5xl pt-12 text-center sm:pt-16 lg:pt-20">
               <h1 className="text-balance text-[clamp(2.45rem,7vw,5.2rem)] font-light leading-[0.98] tracking-[-0.055em] text-brand-blue">
-                Décrivez votre situation.
+                Qu’est-ce qui freine votre entreprise aujourd’hui&nbsp;?
                 <span className="demaa-hero-title mt-1 block text-dema-forest">Repartez avec un plan d’action concret.</span>
               </h1>
               <form onSubmit={handleGenerate} className="mx-auto mt-9 max-w-4xl text-left sm:mt-11">
@@ -479,6 +504,7 @@ export default function ActionPlanExperience({
               selectedSystemId={selectedSystemId}
               onSystemChange={(systemId) => {
                 setSelectedSystemId(systemId);
+                setPendingSolutionResourceSlug(null);
                 setPrePlanWorkspace((current) => ({
                   ...current,
                   selectedSystemId: systemId,
@@ -487,6 +513,8 @@ export default function ActionPlanExperience({
               workspace={prePlanWorkspace}
               onWorkspaceChange={setPrePlanWorkspace}
               demoMode={isDemoMode}
+              initialActiveTab={pendingSolutionResourceSlug ? "solutions" : undefined}
+              initialResourceSlug={pendingSolutionResourceSlug ?? undefined}
             />
           ) : null}
           {activeTab === "academy" ? <ActionPlanAcademyPanel /> : null}
@@ -510,7 +538,7 @@ export default function ActionPlanExperience({
   return (
     <main data-action-plan-workspace className="min-h-screen bg-dema-cream px-4 pb-24 pt-2 sm:px-6 lg:px-8">
       <ActionPlanNavbar activeView={activeTab} onViewChange={setActiveTab} />
-      <ActionPlanCoachingControl />
+      <ActionPlanCoachingControl initialEmail={initialEmail} />
       <div className="mx-auto max-w-[68rem]">
         <h1 ref={resultTitleRef} tabIndex={-1} className="sr-only outline-none">
           Votre plan d’action
@@ -550,11 +578,14 @@ export default function ActionPlanExperience({
               selectedSystemId={selectedSystemId}
               onSystemChange={(systemId) => {
                 setSelectedSystemId(systemId);
+                setPendingSolutionResourceSlug(null);
                 setWorkspace((current) => current ? { ...current, selectedSystemId: systemId } : current);
               }}
               workspace={workspace}
               onWorkspaceChange={updateWorkspace}
               demoMode={isDemoMode}
+              initialActiveTab={pendingSolutionResourceSlug ? "solutions" : undefined}
+              initialResourceSlug={pendingSolutionResourceSlug ?? undefined}
             />
           </div>
           {activeTab === "academy" ? <ActionPlanAcademyPanel /> : null}

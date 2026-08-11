@@ -10,13 +10,13 @@ import { submitLeadRequest } from "@/lib/lead-notifications";
 import { logOperationalError } from "@/lib/operational-log";
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
 import { enforceServiceRequestRateLimit } from "@/lib/service-request-security.server";
+import { requireCurrentCustomerEmail } from "@/lib/customer-space-session.server";
 
 export const runtime = "nodejs";
 
 type CoachingRequestBody = {
   attribution?: unknown;
   company?: unknown;
-  email?: unknown;
   idempotencyKey?: unknown;
   message?: unknown;
   offer?: unknown;
@@ -29,10 +29,6 @@ const OFFERS = new Set(["session", "parcours", "echange"]);
 
 function isValidPhone(value: string) {
   return /^\+?[0-9\s().-]+$/.test(value) && value.replace(/\D/g, "").length >= 8;
-}
-
-function isValidEmail(value: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
 export async function POST(request: Request) {
@@ -49,6 +45,10 @@ export async function POST(request: Request) {
     });
     if (limited) return limited;
 
+    const customer = await requireCurrentCustomerEmail();
+    if (customer.response) return customer.response;
+    const email = customer.email;
+
     const { data, response } = await readJsonBody<CoachingRequestBody>(request, 12 * 1024);
     if (response) return response;
 
@@ -57,7 +57,6 @@ export async function POST(request: Request) {
 
     const requestKind = normalizeText(data?.requestKind, 20);
     const company = normalizeText(data?.company, 160);
-    const email = normalizeText(data?.email, 200).toLowerCase();
     const phone = normalizeText(data?.phone, 60);
     const message = normalizeText(data?.message, 2_000);
     const offer = normalizeText(data?.offer, 30);
@@ -65,7 +64,7 @@ export async function POST(request: Request) {
 
     const isMessage = requestKind === "message";
     const valid = isMessage
-      ? isValidEmail(email) && message.length >= 10
+      ? message.length >= 10
       : Boolean(company && isValidPhone(phone) && OFFERS.has(offer));
 
     if (!valid || !idempotencyKey) {

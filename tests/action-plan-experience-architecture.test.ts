@@ -34,10 +34,10 @@ describe("action plan experience architecture", () => {
     expect(shareControl).toContain("navigator.share");
     expect(shareControl).toContain("navigator.clipboard.writeText");
     expect(shareControl).toContain('aria-label={copied ? "Plan copié" : "Partager le plan"}');
-    expect(shareControl).toContain('className="sr-only"');
+    expect(shareControl).toContain('variant === "menu" ? "" : "sr-only"');
     expect(utilityActions).not.toContain('createPortal(');
     expect(utilityActions).toContain("<ActionPlanSaveControl");
-    expect(utilityActions).toContain("<ActionPlanShareControl plan={plan} />");
+    expect(utilityActions).toContain('<ActionPlanShareControl plan={plan} variant="menu" />');
     expect(utilityActions).toContain("Nouvelle situation");
     expect(utilityActions.match(/<ActionPlanSaveControl/g)).toHaveLength(1);
     expect(experience).toContain('demo !== "plan"');
@@ -138,10 +138,10 @@ describe("action plan experience architecture", () => {
       "/plans/abc_123",
     );
     expect(getSafeCustomerReturnTo("//example.com/mon-espace")).toBe(
-      "/plans",
+      "/",
     );
     expect(getSafeCustomerReturnTo("https://example.com/mon-espace")).toBe(
-      "/plans",
+      "/",
     );
   });
 });

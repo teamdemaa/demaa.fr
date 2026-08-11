@@ -70,7 +70,18 @@ describe("solution proposal UI contract", () => {
     ]);
 
     expect(page).toContain("Découvrez les opportunités actuellement disponibles.");
-    expect(catalog).toContain("Voir l’opportunité");
+    expect(catalog).not.toContain("Voir l’opportunité");
+    expect(catalog).toContain("OpportunityDetailsDialog");
+    expect(catalog).toContain("Intéressé(e)");
+    expect(catalog).toContain('aria-label={`Ouvrir l’opportunité : ${opportunity.title}`}');
+    expect(catalog).toContain('role="dialog"');
+    expect(catalog).toContain("setApplicationOpportunity(selected)");
+    expect(catalog).toContain("setSelected(null)");
+    expect(catalog).toContain("onApply={openApplication}");
+    expect(catalog).toContain("opportunity={applicationOpportunity}");
+    expect(catalog.indexOf("OpportunityDetailsDialog")).toBeLessThan(
+      catalog.indexOf("<ProviderProfileModal"),
+    );
     expect(catalog).toContain("Rejoindre Team Demaa");
     expect(modal).toContain("Manifester mon intérêt");
     expect(modal).toContain("initialEmail");

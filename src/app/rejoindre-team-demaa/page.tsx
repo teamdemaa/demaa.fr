@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
 import { connection } from "next/server";
+import { cookies } from "next/headers";
 import ExpertiseCatalogClient from "@/components/ExpertiseCatalogClient";
 import Navbar from "@/components/Navbar";
 import { getPublicExpertises } from "@/lib/provider-network.server";
+import {
+  CUSTOMER_SPACE_COOKIE,
+  getEmailFromCustomerSessionToken,
+} from "@/lib/customer-space-auth";
 
 const title = "Rejoindre Team Demaa | Demaa";
 const description =
@@ -24,7 +29,13 @@ export const metadata: Metadata = {
 
 export default async function JoinTeamDemaaPage() {
   await connection();
-  const expertises = await getPublicExpertises();
+  const cookieStore = await cookies();
+  const [expertises, email] = await Promise.all([
+    getPublicExpertises(),
+    getEmailFromCustomerSessionToken(
+      cookieStore.get(CUSTOMER_SPACE_COOKIE)?.value ?? null,
+    ),
+  ]);
 
   return (
     <>
@@ -39,7 +50,7 @@ export default async function JoinTeamDemaaPage() {
               Demaa constitue un réseau de professionnels de confiance. Présentez votre profil et nous vous contacterons lorsqu’un besoin correspond à votre expertise.
             </p>
           </header>
-          <ExpertiseCatalogClient expertises={expertises} />
+          <ExpertiseCatalogClient expertises={expertises} initialEmail={email ?? ""} />
         </div>
       </main>
     </>

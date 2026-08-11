@@ -3,6 +3,7 @@
 import { Check, LoaderCircle, X } from "lucide-react";
 import Link from "next/link";
 import { type FormEvent, useEffect, useRef, useState } from "react";
+import CustomerSpaceAccessForm from "@/components/CustomerSpaceAccessForm";
 import {
   getLeadAttributionPayload,
   trackLeadConversion,
@@ -11,9 +12,9 @@ import {
   clearLeadSubmissionKey,
   getLeadSubmissionKey,
 } from "@/lib/lead-submission-client";
-import { isValidEmail } from "@/lib/email";
 import { trackSystemJourneyEvent } from "@/lib/kit-analytics-client";
 import type { SystemResource } from "@/lib/system-resource-catalog";
+import { useCustomerIdentity } from "@/lib/use-customer-identity";
 
 type GuideNotifyModalProps = {
   onClose: () => void;
@@ -38,10 +39,10 @@ export default function GuideNotifyModal({
   systemSlug,
 }: GuideNotifyModalProps) {
   const dialogRef = useRef<HTMLElement>(null);
-  const emailInputRef = useRef<HTMLInputElement>(null);
   const successRef = useRef<HTMLDivElement>(null);
   const trackedOpenRef = useRef(false);
-  const [email, setEmail] = useState("");
+  const { email, loading: identityLoading } = useCustomerIdentity();
+  const [returnTo, setReturnTo] = useState("/");
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -88,7 +89,7 @@ export default function GuideNotifyModal({
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     document.addEventListener("keydown", handleKeyDown);
-    emailInputRef.current?.focus();
+    dialog?.focus();
 
     return () => {
       document.body.style.overflow = previousOverflow;
@@ -96,6 +97,14 @@ export default function GuideNotifyModal({
       previouslyFocused?.focus();
     };
   }, [onClose]);
+
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    url.searchParams.set("intent", "guide-notify");
+    url.searchParams.set("systemSlug", systemSlug);
+    url.searchParams.set("resourceSlug", resource.resourceSlug);
+    setReturnTo(`${url.pathname}${url.search}`);
+  }, [resource.resourceSlug, systemSlug]);
 
   useEffect(() => {
     if (!trackedOpenRef.current) {
@@ -115,15 +124,7 @@ export default function GuideNotifyModal({
     event.preventDefault();
     if (isSubmitting) return;
 
-    const normalizedEmail = email.trim();
-    if (!normalizedEmail) {
-      setError("Merci de renseigner votre adresse e-mail.");
-      return;
-    }
-    if (!isValidEmail(normalizedEmail)) {
-      setError("Merci d’indiquer une adresse e-mail valide.");
-      return;
-    }
+    if (!email) return;
 
     setError(null);
     setIsSubmitting(true);
@@ -140,7 +141,6 @@ export default function GuideNotifyModal({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           attribution: getLeadAttributionPayload(),
-          email: normalizedEmail,
           idempotencyKey: getLeadSubmissionKey(flowKey),
           resourceSlug: resource.resourceSlug,
           systemSlug,
@@ -243,30 +243,18 @@ export default function GuideNotifyModal({
                 Nous vous préviendrons par e-mail dès la publication de ce guide.
               </p>
 
-              <form
+              {!identityLoading && !email ? (
+                <div className="mt-6">
+                  <CustomerSpaceAccessForm compact returnTo={returnTo} simple />
+                </div>
+              ) : null}
+
+              {email ? <form
                 className="mt-6 space-y-3"
                 onSubmit={handleSubmit}
                 aria-busy={isSubmitting}
                 noValidate
               >
-                <label
-                  className="block text-sm font-medium text-brand-blue"
-                  htmlFor="guide-waitlist-email"
-                >
-                  Adresse e-mail
-                </label>
-                <input
-                  ref={emailInputRef}
-                  id="guide-waitlist-email"
-                  name="email"
-                  className="demaa-input"
-                  type="email"
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                  autoComplete="email"
-                  required
-                />
-
                 <div
                   className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden"
                   aria-hidden="true"
@@ -309,7 +297,7 @@ export default function GuideNotifyModal({
                   </Link>
                   .
                 </p>
-              </form>
+              </form> : null}
             </>
           )}
         </div>

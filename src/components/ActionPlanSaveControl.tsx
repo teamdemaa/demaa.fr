@@ -305,7 +305,7 @@ export default function ActionPlanSaveControl({
             ) : (
               <form onSubmit={sendMagicLink} className="mt-5">
                 <p className="text-sm leading-relaxed text-dema-muted">
-                  Votre plan est enregistré sur cet appareil. Indiquez votre adresse e-mail pour le retrouver ailleurs.
+                  Indiquez votre adresse e-mail pour sécuriser votre plan et le retrouver sur vos appareils.
                 </p>
                 <label className="mt-5 block text-xs font-medium text-dema-muted">
                   Adresse e-mail

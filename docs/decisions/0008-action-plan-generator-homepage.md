@@ -11,6 +11,11 @@
 > `/systemes`, `/academie`, leur navigation publique, les 115 fiches et toutes
 > les autres décisions des ADR 0003, 0004, 0006 et 0007 restent applicables.
 
+> **Mise à jour :** les points 2 et 11 ainsi que les lignes Coaching du hors
+> périmètre sont supersédés par les ADR 0009 et 0010. La navigation
+> `Plan d’action / Système / Académie / Opportunités` est désormais visible dès
+> l'arrivée ; la première version Coaching existe via `Parler à un spécialiste`.
+
 ## Contexte
 
 La homepage publique reproduit actuellement le hub des Systèmes. Demaa veut y
@@ -23,7 +28,9 @@ catalogue, ni rendre privées les destinations publiques existantes.
 
 ## Décision
 
-1. `/` devient l'entrée canonique du générateur de plan d'action.
+1. `/` devient l'entrée canonique du générateur de plan d'action. Sa promesse
+   exacte est : « Qu’est-ce qui freine votre entreprise aujourd’hui ?
+   Repartez avec un plan d’action concret. »
 2. Avant connexion, cette entrée affiche Demaa, `Se connecter` et un grand
    champ libre. Aucun questionnaire structuré ne précède la génération.
 3. Une seule génération principale produit un JSON strict comprenant le plan,

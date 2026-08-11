@@ -1,7 +1,7 @@
 "use client";
 
 import { Search } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ProviderProfileModal from "@/components/ProviderProfileModal";
 import {
   EXPERTISE_FAMILIES,
@@ -12,8 +12,10 @@ import { matchesSearchQuery } from "@/lib/search";
 
 export default function ExpertiseCatalogClient({
   expertises,
+  initialEmail = "",
 }: {
   expertises: readonly ExpertiseCatalogEntry[];
+  initialEmail?: string;
 }) {
   const [query, setQuery] = useState("");
   const [selectedExpertiseId, setSelectedExpertiseId] = useState<string | null>(null);
@@ -26,6 +28,17 @@ export default function ExpertiseCatalogClient({
     ])),
     [expertises, query],
   );
+
+  useEffect(() => {
+    if (!initialEmail) return;
+    const searchParams = new URLSearchParams(window.location.search);
+    if (searchParams.get("intent") !== "team-demaa-profile") return;
+    const expertiseId = searchParams.get("expertiseId");
+    if (expertiseId && expertises.some((entry) => entry.expertiseId === expertiseId)) {
+      const timeout = window.setTimeout(() => setSelectedExpertiseId(expertiseId), 0);
+      return () => window.clearTimeout(timeout);
+    }
+  }, [expertises, initialEmail]);
 
   return (
     <>
@@ -84,6 +97,7 @@ export default function ExpertiseCatalogClient({
       {selectedExpertiseId ? (
         <ProviderProfileModal
           expertises={expertises}
+          initialEmail={initialEmail}
           initialExpertiseId={selectedExpertiseId}
           onClose={() => setSelectedExpertiseId(null)}
         />

@@ -27,6 +27,7 @@ type SystemDetailContentProps = {
   systeme: SystemeDetail | null;
   intro: string;
   initialActiveTab?: string;
+  initialResourceSlug?: string;
   headingAs?: "h1" | "h2" | "h3";
   headingId?: string;
   solutionSections?: readonly RenderableSolutionSectionDto[];
@@ -56,6 +57,7 @@ export default function SystemDetailContent({
   systeme,
   intro,
   initialActiveTab,
+  initialResourceSlug,
   headingAs: Heading = "h2",
   headingId,
   solutionSections = EMPTY_SOLUTION_SECTIONS,
@@ -216,6 +218,7 @@ export default function SystemDetailContent({
         {activeTab === "solutions" ? (
           <SystemSolutionsTab
             sections={solutionSections}
+            initialResourceSlug={initialResourceSlug}
             selectedPlacementIds={selectableSolutions ? selectedSolutionIds : undefined}
             onToggleSelection={selectableSolutions ? toggleSolution : undefined}
           />

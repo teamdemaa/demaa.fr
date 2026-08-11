@@ -8,6 +8,7 @@ const mocks = vi.hoisted(() => ({
   enforceSameOrigin: vi.fn(),
   getEnterpriseBySlug: vi.fn(),
   getSystemResource: vi.fn(),
+  requireCurrentCustomerEmail: vi.fn(),
   resolveLeadAttribution: vi.fn(),
   resolveLeadContext: vi.fn(),
   submitLeadRequest: vi.fn(),
@@ -23,6 +24,9 @@ vi.mock("@/lib/api-security", () => ({
 vi.mock("@/lib/email", () => ({
   isValidEmail: (value: string) => value.includes("@"),
   normalizeEmail: (value: string) => value.toLowerCase(),
+}));
+vi.mock("@/lib/customer-space-session.server", () => ({
+  requireCurrentCustomerEmail: mocks.requireCurrentCustomerEmail,
 }));
 vi.mock("@/lib/enterprise-annuaire", () => ({
   enterpriseToSystem: (enterprise: { name: string }) => enterprise,
@@ -51,7 +55,7 @@ function request(overrides: Record<string, unknown> = {}) {
     method: "POST",
     headers: { "Content-Type": "application/json", Origin: "https://demaa.fr" },
     body: JSON.stringify({
-      email: "maya@example.com",
+      email: "spoofed@example.net",
       idempotencyKey: "guide:12345678",
       marketingConsent: false,
       resourceSlug: "guide-cabinet-comptable-lancer",
@@ -68,6 +72,10 @@ describe("system guide waitlist route", () => {
     mocks.enforceAllowedHost.mockReturnValue(null);
     mocks.enforceSameOrigin.mockReturnValue(null);
     mocks.enforceRateLimit.mockResolvedValue(null);
+    mocks.requireCurrentCustomerEmail.mockResolvedValue({
+      email: "maya@example.com",
+      response: null,
+    });
     mocks.getEnterpriseBySlug.mockResolvedValue({ name: "Cabinet comptable" });
     mocks.getSystemResource.mockReturnValue({
       availability: "coming-soon",
@@ -110,6 +118,18 @@ describe("system guide waitlist route", () => {
     const response = await POST(request({ systemSlug: "cabinet-davocat" }));
 
     expect(response.status).toBe(404);
+    expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
+  });
+
+  it("requires an authenticated customer session", async () => {
+    mocks.requireCurrentCustomerEmail.mockResolvedValue({
+      email: null,
+      response: Response.json({ error: "authentication_required" }, { status: 401 }),
+    });
+
+    const response = await POST(request());
+
+    expect(response.status).toBe(401);
     expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
   });
 });

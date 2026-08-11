@@ -6,7 +6,7 @@ import {
   normalizeText,
   readJsonBody,
 } from "@/lib/api-security";
-import { isValidEmail, normalizeEmail } from "@/lib/email";
+import { requireCurrentCustomerEmail } from "@/lib/customer-space-session.server";
 import { resolveLeadAttribution } from "@/lib/lead-attribution-server";
 import { resolveLeadContext } from "@/lib/lead-context";
 import { submitLeadRequest } from "@/lib/lead-notifications";
@@ -35,7 +35,6 @@ type ProviderProfileSubmissionBody = {
   company?: unknown;
   consent?: unknown;
   countries?: unknown;
-  email?: unknown;
   expertiseIds?: unknown;
   fullName?: unknown;
   idempotencyKey?: unknown;
@@ -101,6 +100,10 @@ async function handlePost(request: Request) {
   });
   if (limitedByIp) return limitedByIp;
 
+  const customer = await requireCurrentCustomerEmail();
+  if (customer.response) return customer.response;
+  const email = customer.email;
+
   const { data: body, response } = await readJsonBody<ProviderProfileSubmissionBody>(
     request,
     16 * 1024,
@@ -110,7 +113,6 @@ async function handlePost(request: Request) {
   if (normalizeText(body?.website, 200)) return successResponse();
 
   const fullName = normalizeText(body?.fullName, 140);
-  const email = normalizeEmail(normalizeText(body?.email, 160));
   const company = normalizeText(body?.company, 160);
   const countries = normalizeText(body?.countries, 300);
   const message = normalizeText(body?.message, 1600, { multiline: true });
@@ -128,12 +130,6 @@ async function handlePost(request: Request) {
   ) {
     return NextResponse.json(
       { error: "Merci de compléter vos coordonnées et votre message." },
-      { status: 400 },
-    );
-  }
-  if (!isValidEmail(email)) {
-    return NextResponse.json(
-      { error: "Merci de renseigner une adresse e-mail valide." },
       { status: 400 },
     );
   }

@@ -5,7 +5,7 @@ import {
   normalizeText,
   readJsonBody,
 } from "@/lib/api-security";
-import { isValidEmail, normalizeEmail } from "@/lib/email";
+import { requireCurrentCustomerEmail } from "@/lib/customer-space-session.server";
 import { resolveLeadAttribution } from "@/lib/lead-attribution-server";
 import { resolveLeadContext } from "@/lib/lead-context";
 import { submitLeadRequest } from "@/lib/lead-notifications";
@@ -59,6 +59,9 @@ export async function POST(request: Request) {
     const blockedOrigin = enforceSameOrigin(request);
     if (blockedOrigin) return blockedOrigin;
 
+    const customer = await requireCurrentCustomerEmail();
+    if (customer.response) return customer.response;
+
     const limited = await enforceRateLimit(request, {
       keyPrefix: "structure-problem",
       limit: 5,
@@ -76,7 +79,7 @@ export async function POST(request: Request) {
     if (honeypot) return successResponse();
 
     const companyActivity = normalizeText(body?.companyActivity, 160);
-    const email = normalizeEmail(normalizeText(body?.email, 160));
+    const email = customer.email;
     const idempotencyKey = normalizeIdempotencyKey(body?.idempotencyKey);
     const problem = normalizeText(body?.problem, 4000, { multiline: true });
     const professionalPage = normalizeProfessionalPage(body?.professionalPage);
@@ -84,25 +87,18 @@ export async function POST(request: Request) {
 
     if (
       !companyActivity ||
-      !email ||
       !idempotencyKey ||
       !problem ||
       !professionalPage
     ) {
       return NextResponse.json(
-        { error: "Merci de renseigner votre entreprise, votre site, votre problématique et votre adresse e-mail." },
+        { error: "Merci de renseigner votre entreprise, votre site et votre problématique." },
         { status: 400 },
       );
     }
     if (problem.length < 20) {
       return NextResponse.json(
         { error: "Merci de décrire votre problématique en quelques phrases." },
-        { status: 400 },
-      );
-    }
-    if (!isValidEmail(email)) {
-      return NextResponse.json(
-        { error: "Merci de renseigner une adresse e-mail valide." },
         { status: 400 },
       );
     }

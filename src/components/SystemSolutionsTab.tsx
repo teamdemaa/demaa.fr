@@ -214,10 +214,12 @@ function SolutionDialog({
 
 export default function SystemSolutionsTab({
   sections,
+  initialResourceSlug,
   selectedPlacementIds,
   onToggleSelection,
 }: {
   sections: readonly RenderableSolutionSectionDto[];
+  initialResourceSlug?: string;
   selectedPlacementIds?: ReadonlySet<string>;
   onToggleSelection?: (placementId: string) => void;
 }) {
@@ -231,7 +233,13 @@ export default function SystemSolutionsTab({
   const [railStates, setRailStates] = useState(() =>
     buildInitialRailState(visibleSections),
   );
-  const [selected, setSelected] = useState<RenderableSolutionPlacementDto | null>(null);
+  const [selected, setSelected] = useState<RenderableSolutionPlacementDto | null>(() =>
+    initialResourceSlug
+      ? visibleSections
+          .flatMap((group) => group.placements)
+          .find((placement) => placement.resource.resourceSlug === initialResourceSlug) ?? null
+      : null,
+  );
   const selectedPlacements = useMemo(
     () => visibleSections
       .flatMap((group) => group.placements)

@@ -68,6 +68,9 @@ Les fichiers exclusifs de chaque lot sont indiqués dans le plan d'exécution.
   place de l'utilisatrice. Une décision explicitement donnée par l'utilisatrice
   prévaut sur la recommandation, sous réserve des contraintes de sécurité et de
   légalité qui doivent alors être signalées clairement.
+- Cette règle s'applique aussi au Master et aux agents délégués : une
+  recommandation, une convention technique ou un mockup ne peut passer à
+  `validated` sans validation explicite de l'utilisatrice.
 - Aucun identifiant Drive privé, secret, e-mail, donnée personnelle ou URL de
   copie modifiable ne doit apparaître dans ces documents.
 - Une release doit référencer des commits et des empreintes, jamais des valeurs

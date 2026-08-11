@@ -18,7 +18,7 @@ export default function Navbar({
     "inline-flex min-h-10 shrink-0 items-center gap-1.5 rounded-full border border-dema-forest/15 bg-dema-paper px-3 text-xs font-medium text-dema-forest transition hover:border-dema-forest/28 hover:bg-dema-sage/45 sm:min-h-11 sm:gap-2 sm:px-4 sm:text-sm";
   function openAuthenticatedAccount(event: MouseEvent<HTMLAnchorElement>) {
     event.preventDefault();
-    window.location.assign("/plans");
+    window.location.assign("/");
   }
 
   return (
@@ -48,12 +48,12 @@ export default function Navbar({
                 />
                 {isAuthenticated ? (
                   <Link
-                    href="/plans"
-                    aria-label="Ouvrir mon plan"
+                    href="/"
+                    aria-label="Ouvrir l’application"
                     className={accountAccessClassName}
                     onClick={openAuthenticatedAccount}
                     prefetch={false}
-                    title="Ouvrir mon plan"
+                    title="Ouvrir l’application"
                   >
                     <CircleUserRound
                       className="h-4 w-4"

@@ -17,7 +17,13 @@ function buildShareText(plan: PersistableActionPlan) {
   ].join("\n");
 }
 
-export default function ActionPlanShareControl({ plan }: { plan: PersistableActionPlan }) {
+export default function ActionPlanShareControl({
+  plan,
+  variant = "icon",
+}: {
+  plan: PersistableActionPlan;
+  variant?: "icon" | "menu";
+}) {
   const [copied, setCopied] = useState(false);
 
   async function sharePlan() {
@@ -52,7 +58,9 @@ export default function ActionPlanShareControl({ plan }: { plan: PersistableActi
     <button
       type="button"
       onClick={() => void sharePlan()}
-      className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-dema-muted transition hover:border-dema-forest/30 hover:text-dema-forest"
+      className={variant === "menu"
+        ? "flex min-h-11 w-full items-center gap-2 whitespace-nowrap rounded-full px-4 text-left text-sm font-medium text-brand-blue transition hover:bg-dema-sage/55"
+        : "inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-dema-muted transition hover:border-dema-forest/30 hover:text-dema-forest"}
       aria-label={copied ? "Plan copié" : "Partager le plan"}
       title={copied ? "Plan copié" : "Partager le plan"}
       aria-live="polite"
@@ -62,7 +70,9 @@ export default function ActionPlanShareControl({ plan }: { plan: PersistableActi
       ) : (
         <Share2 className="h-4 w-4" aria-hidden="true" />
       )}
-      <span className="sr-only">{copied ? "Plan copié" : "Partager le plan"}</span>
+      <span className={variant === "menu" ? "" : "sr-only"}>
+        {copied ? "Plan copié" : "Partager"}
+      </span>
     </button>
   );
 }

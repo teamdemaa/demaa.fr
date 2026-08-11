@@ -26,7 +26,7 @@ describe("unified app and coaching", () => {
     const plansPage = read("src/app/plans/page.tsx");
     const accountAccessForm = read("src/components/CustomerSpaceAccessForm.tsx");
 
-    expect(legacyAccountPage).toContain('redirect("/plans")');
+    expect(legacyAccountPage).toContain('redirect("/")');
     expect(plansPage).toContain('redirect(latestPlan ? `/plans/${latestPlan.id}` : "/")');
     expect(legacyAccountPage).not.toContain("Mon espace");
     expect(plansPage).not.toContain("Mes plans");

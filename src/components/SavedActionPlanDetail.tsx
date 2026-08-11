@@ -163,7 +163,7 @@ export default function SavedActionPlanDetail({
   return (
     <div className="contents">
       <ActionPlanNavbar activeView={activeTab} onViewChange={setActiveTab} />
-      <ActionPlanCoachingControl />
+      <ActionPlanCoachingControl initialEmail={initialEmail} />
       <div className="pt-1">
         <div hidden={activeTab !== "plan"}>
           <div className="sr-only" role="status" aria-live="polite">

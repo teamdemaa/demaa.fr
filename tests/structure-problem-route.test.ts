@@ -9,6 +9,7 @@ const mocks = vi.hoisted(() => ({
   logOperationalError: vi.fn(),
   resolveLeadAttribution: vi.fn(),
   resolveLeadContext: vi.fn(),
+  requireCurrentCustomerEmail: vi.fn(),
   submitLeadRequest: vi.fn(),
 }));
 
@@ -32,9 +33,8 @@ vi.mock("@/lib/api-security", () => ({
     response: null,
   }),
 }));
-vi.mock("@/lib/email", () => ({
-  isValidEmail: (value: string) => value.includes("@"),
-  normalizeEmail: (value: string) => value.toLowerCase(),
+vi.mock("@/lib/customer-space-session.server", () => ({
+  requireCurrentCustomerEmail: mocks.requireCurrentCustomerEmail,
 }));
 vi.mock("@/lib/lead-attribution-server", () => ({
   resolveLeadAttribution: mocks.resolveLeadAttribution,
@@ -84,6 +84,10 @@ describe("Structure problem submission route", () => {
     mocks.enforceSameOrigin.mockReturnValue(null);
     mocks.enforceRateLimit.mockResolvedValue(null);
     mocks.resolveLeadAttribution.mockReturnValue({ conversion: {} });
+    mocks.requireCurrentCustomerEmail.mockResolvedValue({
+      email: "owner@example.com",
+      response: null,
+    });
     mocks.resolveLeadContext.mockResolvedValue({
       source: "Newsletter Structure - Proposition de problématique",
       sourceUrl: "https://demaa.fr/academie",
@@ -100,7 +104,7 @@ describe("Structure problem submission route", () => {
       channels: { email: false, resend: false, slack: true },
       contact: {
         company: "Atelier Horizon — architecture intérieure",
-        email: "maya@example.com",
+        email: "owner@example.com",
       },
       requestType: "structure_problem_submission",
       title: "Proposition de problématique - Structure",
@@ -121,7 +125,6 @@ describe("Structure problem submission route", () => {
   it("rejects incomplete, invalid, unconsented or voice submissions", async () => {
     const cases = [
       { companyActivity: "" },
-      { email: "maya.example.com" },
       { problem: "Trop court" },
       { professionalPage: "javascript:alert(1)" },
       { consent: false },
@@ -132,6 +135,15 @@ describe("Structure problem submission route", () => {
       const response = await POST(request(invalidCase));
       expect(response.status).toBe(400);
     }
+    expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
+  });
+
+  it("requires an authenticated session and ignores a body email", async () => {
+    mocks.requireCurrentCustomerEmail.mockResolvedValueOnce({
+      email: null,
+      response: Response.json({ error: "authentication_required" }, { status: 401 }),
+    });
+    expect((await POST(request({ email: "spoofed@example.net" }))).status).toBe(401);
     expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
   });
 

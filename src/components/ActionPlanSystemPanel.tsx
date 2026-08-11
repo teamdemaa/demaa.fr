@@ -9,6 +9,7 @@ import type { SystemeDetail } from "@/lib/systeme-catalog";
 import type { RenderableSolutionSectionDto } from "@/lib/system-solutions-ui-dto";
 import type { System } from "@/lib/types";
 import type { ActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
+import type { SystemDetailTab } from "@/lib/system-detail-tabs";
 
 type SystemPayload = {
   system: System;
@@ -26,6 +27,8 @@ export default function ActionPlanSystemPanel({
   workspace,
   onWorkspaceChange,
   demoMode = false,
+  initialActiveTab,
+  initialResourceSlug,
 }: {
   options: readonly ActionPlanSystemOption[];
   selectedSystemId: string;
@@ -33,6 +36,8 @@ export default function ActionPlanSystemPanel({
   workspace: ActionPlanWorkspaceState;
   onWorkspaceChange: Dispatch<SetStateAction<ActionPlanWorkspaceState>>;
   demoMode?: boolean;
+  initialActiveTab?: SystemDetailTab;
+  initialResourceSlug?: string;
 }) {
   const [payload, setPayload] = useState<SystemPayload | null>(null);
   const [error, setError] = useState<{ slug: string; message: string } | null>(null);
@@ -152,6 +157,8 @@ export default function ActionPlanSystemPanel({
             />
           )}
           intro={currentPayload.intro}
+          initialActiveTab={initialActiveTab}
+          initialResourceSlug={initialResourceSlug}
           solutionSections={currentPayload.solutionSections}
           system={currentPayload.system}
           systeme={currentPayload.systeme}

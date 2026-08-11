@@ -1,6 +1,6 @@
 # ADR 0010 — Plan vierge, Opportunités et navigation de l’application
 
-- Statut : accepted
+- Statut : `validated`
 - Date : 2026-08-11
 - Supersède : la composition de navigation de l’ADR 0009 et les passages de
   l’ADR 0008 qui imposaient un résultat IA avant l’accès à l’application
@@ -23,6 +23,14 @@ La sauvegarde est une action contextuelle du Plan d’action et n’encombre pas
 header global. `Enregistrer` apparaît avec `Partager` et le menu contenant
 `Nouvelle situation`. Pour une personne connectée, les modifications sont
 persistées sans redemander son e-mail.
+
+Cette règle s'applique à toutes les actions fonctionnelles de l'application :
+une personne connectée ne ressaisit pas son adresse dans un guide métier, une
+Opportunité, Coaching, une inscription ou une demande. L'API déduit l'e-mail
+de la session vérifiée. Pour une personne non connectée, l'action ouvre le
+parcours de lien magique puis reprend l'intention exacte dans l'application.
+Le lien magique ne mène jamais vers un portail distinct `Mon espace` ou
+`Mes plans`.
 
 Sous le champ principal, `Commencer avec un plan vierge` permet d’entrer dans
 l’application sans appel IA. Le plan manuel accepte temporairement zéro action,

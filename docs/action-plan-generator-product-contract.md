@@ -22,7 +22,9 @@ Les choix non validés restent indiqués `open` ou `deferred` et ne doivent pas
 
 ### Promesse
 
-> Décrivez votre situation. Repartez avec un plan d'action concret.
+> Qu’est-ce qui freine votre entreprise aujourd’hui ?
+>
+> Repartez avec un plan d’action concret.
 
 Le produit aide un dirigeant à clarifier une situation réelle et à savoir quoi
 faire ensuite. Il ne doit devenir ni un questionnaire préalable, ni une étude
@@ -172,6 +174,11 @@ La même navigation applicative est conservée. Coaching reste accessible depuis
 l'action compacte `Parler à un spécialiste`, conformément aux ADR 0009 et
 0010, sans devenir un cinquième onglet.
 
+`Coaching` désigne le produit. Dans l'interface, la personne qui accompagne est
+toujours désignée comme un `spécialiste` : l'action de messagerie porte le
+libellé `Écrire à un spécialiste`. Les termes `coach` et `votre coach` ne sont
+pas utilisés comme libellés humains.
+
 ## Persistance
 
 ### Invité
@@ -197,6 +204,14 @@ personne déjà connectée, la sauvegarde crée directement le plan actif puis
 ouvre sa page persistée. Les modifications y sont enregistrées avec révision
 optimiste et prolongent la durée de conservation depuis la dernière mise à
 jour.
+
+Le lien magique est l'unique point d'établissement de l'identité e-mail dans
+l'application. Une fois la session créée, les formulaires fonctionnels
+(guides métier, Opportunités, Coaching, inscription et demandes) réutilisent
+l'e-mail vérifié côté serveur et ne le redemandent pas. Un visiteur non
+connecté qui déclenche l'une de ces actions passe d'abord par le lien magique,
+puis revient directement à son intention dans l'application. Il n'existe pas
+d'expérience publique distincte `Mon espace` ou `Mes plans`.
 
 ## Marketing et prospection éthiques
 
@@ -265,17 +280,19 @@ tokens.
 Ces arbitrages ne bloquent pas le prototype et le moteur Preview lorsqu'ils
 sont implémentés derrière des limites conservatrices réversibles.
 
-## Backlog explicitement différé
+## Extensions explicitement différées
 
-Le Coaching constitue un produit distinct et n'entre pas dans ce MVP. Son
-cadrage ultérieur doit couvrir ensemble :
+La première version de Coaching fait partie de l'application conformément à
+l'ADR 0009 : Sessions, Messages et demandes coordonnées manuellement. Restent
+au backlog, sans modifier cette première version :
 
-- phase gratuite et phase payante ;
-- capacité humaine réelle et promesse de délai ;
-- messagerie ;
-- appels ou autres canaux ;
-- droits, confidentialité et conservation des échanges ;
-- tarification et limites de service.
+- une nouvelle frontière entre phase gratuite et phase payante ;
+- les évolutions de capacité humaine et de promesse de délai ;
+- les nouveaux canaux ou formats de messagerie ;
+- les évolutions de droits, confidentialité et conservation des échanges ;
+- les évolutions de tarification et de limites de service ;
+- le multi-tenant et le sélecteur d'entreprise ;
+- l'enrichissement facultatif du profil entreprise.
 
 ## Critères d'acceptation MVP
 

@@ -15,6 +15,7 @@ const mocks = vi.hoisted(() => ({
   logOperationalEvent: vi.fn(),
   RequestIdempotencyConflictError: class extends Error {},
   resolveLeadAttribution: vi.fn(),
+  requireCurrentCustomerEmail: vi.fn(),
   scheduleServiceSolutionDeliveries: vi.fn(),
 }));
 
@@ -23,6 +24,9 @@ vi.mock("@/lib/enterprise-annuaire-server", () => ({
 }));
 vi.mock("@/lib/lead-attribution-server", () => ({
   resolveLeadAttribution: mocks.resolveLeadAttribution,
+}));
+vi.mock("@/lib/customer-space-session.server", () => ({
+  requireCurrentCustomerEmail: mocks.requireCurrentCustomerEmail,
 }));
 vi.mock("@/lib/operational-log", () => ({
   logOperationalError: mocks.logOperationalError,
@@ -107,6 +111,10 @@ describe("solution referral request route", () => {
     mocks.getExpertiseReferralDisclosure.mockReturnValue(null);
     mocks.getSolutionPlacements.mockReturnValue([]);
     mocks.resolveLeadAttribution.mockReturnValue({ conversion: {} });
+    mocks.requireCurrentCustomerEmail.mockResolvedValue({
+      email: "owner@cabinet-martin.fr",
+      response: null,
+    });
     mocks.createSolutionReferral.mockImplementation(async (input) => ({
       created: true,
       id: "solution-referral-id",
@@ -164,6 +172,7 @@ describe("solution referral request route", () => {
 
     expect(response.status).toBe(202);
     expect(mocks.createSolutionReferral).toHaveBeenCalledWith(expect.objectContaining({
+      email: "owner@cabinet-martin.fr",
       marketingConsent: null,
       solution: expect.objectContaining({
         billing_party: "Juridique Services SAS",
@@ -176,6 +185,15 @@ describe("solution referral request route", () => {
       }),
     }));
     expect(mocks.scheduleServiceSolutionDeliveries).toHaveBeenCalledOnce();
+  });
+
+  it("requires a session and ignores the email sent in the request body", async () => {
+    mocks.requireCurrentCustomerEmail.mockResolvedValueOnce({
+      email: null,
+      response: Response.json({ error: "authentication_required" }, { status: 401 }),
+    });
+    expect((await submitSolution(request("/api/solution-referral", solutionBody()))).status).toBe(401);
+    expect(mocks.createSolutionReferral).not.toHaveBeenCalled();
   });
 
   it("stores a canonical expertise request without inventing a partner relationship", async () => {

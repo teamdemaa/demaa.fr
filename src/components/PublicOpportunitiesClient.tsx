@@ -1,15 +1,76 @@
 "use client";
 
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import ProviderProfileModal from "@/components/ProviderProfileModal";
+import { useAccessibleDialog } from "@/components/useAccessibleDialog";
 import type { ExpertiseCatalogEntry } from "@/lib/expertise-catalog-contract";
 import {
   OPPORTUNITY_TYPE_LABELS,
   type PublicOpportunity,
 } from "@/lib/opportunity-contract";
 import { matchesSearchQuery } from "@/lib/search";
+
+function OpportunityDetailsDialog({
+  onApply,
+  onClose,
+  opportunity,
+}: {
+  onApply: () => void;
+  onClose: () => void;
+  opportunity: PublicOpportunity;
+}) {
+  const dialogRef = useAccessibleDialog({ onClose });
+  const metadata = [
+    OPPORTUNITY_TYPE_LABELS[opportunity.opportunityType],
+    opportunity.category,
+    opportunity.geography,
+  ].filter(Boolean).join(" · ");
+
+  return (
+    <div className="fixed inset-0 z-[100] flex items-end justify-center bg-brand-blue/35 p-0 backdrop-blur-[2px] sm:items-center sm:p-5">
+      <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="opportunity-details-title"
+        tabIndex={-1}
+        className="relative w-full max-w-xl rounded-t-[1.5rem] bg-white p-5 shadow-2xl sm:rounded-[1.5rem] sm:p-8"
+      >
+        <button
+          type="button"
+          onClick={onClose}
+          data-dialog-initial-focus
+          className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full text-brand-blue transition hover:bg-dema-sage focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dema-forest"
+          aria-label="Fermer"
+        >
+          <X className="h-5 w-5" aria-hidden="true" />
+        </button>
+
+        <p className="pr-12 text-xs font-medium uppercase tracking-[0.14em] text-dema-forest">
+          {metadata}
+        </p>
+        <h2
+          id="opportunity-details-title"
+          className="mt-2 pr-12 text-2xl font-medium tracking-[-0.025em] text-brand-blue sm:text-3xl"
+        >
+          {opportunity.title}
+        </h2>
+        <p className="mt-4 text-sm leading-relaxed text-dema-muted sm:text-base">
+          {opportunity.summary}
+        </p>
+        <button
+          type="button"
+          onClick={onApply}
+          className="mt-7 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-dema-forest px-6 text-sm font-medium text-white transition hover:bg-brand-blue focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dema-forest"
+        >
+          Intéressé(e)
+        </button>
+      </div>
+    </div>
+  );
+}
 
 export default function PublicOpportunitiesClient({
   expertises,
@@ -22,6 +83,13 @@ export default function PublicOpportunitiesClient({
 }) {
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<PublicOpportunity | null>(null);
+  const [applicationOpportunity, setApplicationOpportunity] =
+    useState<PublicOpportunity | null>(null);
+  const closeDetails = useCallback(() => setSelected(null), []);
+  const openApplication = useCallback(() => {
+    setApplicationOpportunity(selected);
+    setSelected(null);
+  }, [selected]);
   const filtered = useMemo(
     () => opportunities.filter((opportunity) => matchesSearchQuery(query, [
       opportunity.title,
@@ -32,6 +100,22 @@ export default function PublicOpportunitiesClient({
     ])),
     [opportunities, query],
   );
+
+  useEffect(() => {
+    if (!initialEmail) return;
+    const searchParams = new URLSearchParams(window.location.search);
+    if (searchParams.get("intent") !== "opportunity") return;
+    const opportunityId = searchParams.get("opportunityId");
+    const opportunity = opportunities.find(
+      (entry) => entry.opportunityId === opportunityId,
+    );
+    if (!opportunity) return;
+    const timeout = window.setTimeout(
+      () => setApplicationOpportunity(opportunity),
+      0,
+    );
+    return () => window.clearTimeout(timeout);
+  }, [initialEmail, opportunities]);
 
   return (
     <>
@@ -49,26 +133,26 @@ export default function PublicOpportunitiesClient({
 
       <div className="mt-10 space-y-4">
         {filtered.map((opportunity) => (
-          <article key={opportunity.opportunityId} className="rounded-[1.2rem] border border-dema-line bg-white p-5 shadow-[0_8px_24px_rgba(23,35,29,0.035)] sm:p-6">
-            <p className="text-xs font-medium uppercase tracking-[0.12em] text-dema-forest">
-              {[
-                OPPORTUNITY_TYPE_LABELS[opportunity.opportunityType],
-                opportunity.category,
-                opportunity.geography,
-              ].filter(Boolean).join(" · ")}
-            </p>
-            <h2 className="mt-2 text-xl font-medium tracking-[-0.02em] text-brand-blue">
-              {opportunity.title}
-            </h2>
-            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-dema-muted">
-              {opportunity.summary}
-            </p>
+          <article key={opportunity.opportunityId}>
             <button
               type="button"
               onClick={() => setSelected(opportunity)}
-              className="mt-6 inline-flex min-h-11 items-center justify-center rounded-full border border-dema-forest/20 bg-white px-5 text-sm font-medium text-dema-forest transition hover:bg-dema-sage"
+              aria-label={`Ouvrir l’opportunité : ${opportunity.title}`}
+              className="group block w-full rounded-[1.2rem] border border-dema-line bg-white p-5 text-left shadow-[0_8px_24px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/25 hover:bg-dema-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dema-forest sm:p-6"
             >
-              Voir l’opportunité
+              <p className="text-xs font-medium uppercase tracking-[0.12em] text-dema-forest">
+                {[
+                  OPPORTUNITY_TYPE_LABELS[opportunity.opportunityType],
+                  opportunity.category,
+                  opportunity.geography,
+                ].filter(Boolean).join(" · ")}
+              </p>
+              <h2 className="mt-2 text-xl font-medium tracking-[-0.02em] text-brand-blue">
+                {opportunity.title}
+              </h2>
+              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-dema-muted">
+                {opportunity.summary}
+              </p>
             </button>
           </article>
         ))}
@@ -98,11 +182,19 @@ export default function PublicOpportunitiesClient({
       </aside>
 
       {selected ? (
+        <OpportunityDetailsDialog
+          onApply={openApplication}
+          onClose={closeDetails}
+          opportunity={selected}
+        />
+      ) : null}
+
+      {applicationOpportunity ? (
         <ProviderProfileModal
           expertises={expertises}
           initialEmail={initialEmail}
-          opportunity={selected}
-          onClose={() => setSelected(null)}
+          opportunity={applicationOpportunity}
+          onClose={() => setApplicationOpportunity(null)}
         />
       ) : null}
     </>
