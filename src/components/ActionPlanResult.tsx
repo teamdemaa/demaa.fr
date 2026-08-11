@@ -16,6 +16,7 @@ import {
   type Dispatch,
   type ReactNode,
   type SetStateAction,
+  useRef,
   useState,
 } from "react";
 import type {
@@ -143,6 +144,7 @@ function ActionDrawer({
   const [draftTitle, setDraftTitle] = useState(effectiveTitle);
   const [draftObjective, setDraftObjective] = useState(effectiveObjective);
   const [draftSteps, setDraftSteps] = useState(effectiveSteps.join("\n"));
+  const skipNextTaskBlur = useRef(false);
 
   function updateTask(
     updater: (current: NonNullable<typeof taskState>) => NonNullable<typeof taskState>,
@@ -207,6 +209,30 @@ function ActionDrawer({
       },
     }));
     setDraftSteps(nextSteps.join("\n"));
+  }
+
+  function addTaskAfter(
+    index: number,
+    source: HTMLTextAreaElement,
+  ) {
+    const tasks = draftSteps.split("\n");
+    if (tasks.length >= 7) return;
+
+    const nextTasks = [
+      ...tasks.slice(0, index + 1),
+      "",
+      ...tasks.slice(index + 1),
+    ];
+    const dialog = source.closest('[role="dialog"]');
+    skipNextTaskBlur.current = true;
+    setDraftSteps(nextTasks.join("\n"));
+
+    window.setTimeout(() => {
+      const nextInput = dialog?.querySelector<HTMLTextAreaElement>(
+        `[data-task-index="${index + 1}"]`,
+      );
+      nextInput?.focus();
+    }, 0);
   }
 
   async function copySupport() {
@@ -280,7 +306,7 @@ function ActionDrawer({
           </div>
 
           <div>
-            <p className="text-xs font-medium uppercase tracking-[0.12em] text-dema-forest">Étapes</p>
+            <p className="text-xs font-medium uppercase tracking-[0.12em] text-dema-forest">Tâches</p>
             <div className="mt-3 space-y-2">
               {draftSteps.split("\n").map((step, index) => {
                 const checked = taskState.completedStepIndexes.includes(index);
@@ -304,9 +330,21 @@ function ActionDrawer({
                         nextSteps[index] = event.target.value.replace(/\n/g, " ");
                         setDraftSteps(nextSteps.join("\n"));
                       }}
-                      onBlur={saveSteps}
+                      onBlur={() => {
+                        if (skipNextTaskBlur.current) {
+                          skipNextTaskBlur.current = false;
+                          return;
+                        }
+                        saveSteps();
+                      }}
+                      onKeyDown={(event) => {
+                        if (event.key !== "Enter") return;
+                        event.preventDefault();
+                        addTaskAfter(index, event.currentTarget);
+                      }}
                       rows={1}
-                      aria-label={`Étape ${index + 1}`}
+                      aria-label={`Tâche ${index + 1}`}
+                      data-task-index={index}
                       className={`min-h-6 w-full resize-none overflow-hidden bg-transparent [field-sizing:content] outline-none transition focus:bg-dema-paper/70 ${checked ? "text-dema-muted" : ""}`}
                     />
                   </label>
