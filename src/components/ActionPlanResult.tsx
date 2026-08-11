@@ -564,11 +564,7 @@ export default function ActionPlanResult({
           ) : null}
         </section>
       ) : (
-        <section aria-labelledby="strategy-title">
-          <div className="mb-6">
-            <h2 id="strategy-title" className="text-3xl font-light tracking-[-0.04em] text-brand-blue sm:text-4xl">Stratégie</h2>
-            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-dema-muted">Votre cap en quatre points. Modifiez-le directement pour qu’il reste fidèle à votre entreprise.</p>
-          </div>
+        <section aria-label="Stratégie">
           <StrategyPanel plan={plan} workspace={workspace} onWorkspaceChange={onWorkspaceChange} />
         </section>
       )}
