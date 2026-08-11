@@ -1,15 +1,20 @@
 import type { Metadata } from "next";
 import { connection } from "next/server";
+import { cookies } from "next/headers";
 import Navbar from "@/components/Navbar";
 import PublicOpportunitiesClient from "@/components/PublicOpportunitiesClient";
 import {
   getPublicExpertises,
   getPublicOpenOpportunities,
 } from "@/lib/provider-network.server";
+import {
+  CUSTOMER_SPACE_COOKIE,
+  getEmailFromCustomerSessionToken,
+} from "@/lib/customer-space-auth";
 
 const title = "Opportunités | Demaa";
 const description =
-  "Consultez les besoins actuellement ouverts et proposez votre profil à Demaa.";
+  "Découvrez les opportunités actuellement disponibles.";
 
 export const metadata: Metadata = {
   title,
@@ -27,9 +32,13 @@ export const metadata: Metadata = {
 
 export default async function OpportunitiesPage() {
   await connection();
-  const [expertises, opportunities] = await Promise.all([
+  const cookieStore = await cookies();
+  const [expertises, opportunities, email] = await Promise.all([
     getPublicExpertises(),
     getPublicOpenOpportunities(),
+    getEmailFromCustomerSessionToken(
+      cookieStore.get(CUSTOMER_SPACE_COOKIE)?.value ?? null,
+    ),
   ]);
 
   return (
@@ -42,11 +51,12 @@ export default async function OpportunitiesPage() {
               Opportunités
             </h1>
             <p className="mx-auto mt-5 max-w-2xl text-balance text-base font-light leading-7 text-dema-muted sm:text-lg">
-              Des entreprises ont un besoin concret maintenant. Consultez les opportunités ouvertes et proposez votre profil.
+              Découvrez les opportunités actuellement disponibles.
             </p>
           </header>
           <PublicOpportunitiesClient
             expertises={expertises}
+            initialEmail={email ?? ""}
             opportunities={opportunities}
           />
         </div>

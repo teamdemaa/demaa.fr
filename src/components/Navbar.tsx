@@ -1,16 +1,26 @@
 "use client";
 
 import Link from "next/link";
-import { LogIn } from "lucide-react";
+import { CircleUserRound, LogIn } from "lucide-react";
+import type { MouseEvent } from "react";
 import DemaaWordmark from "@/components/DemaaWordmark";
 
 export default function Navbar({
   anonymousLanding = false,
+  isAuthenticated = false,
   minimal = false,
 }: {
   anonymousLanding?: boolean;
+  isAuthenticated?: boolean;
   minimal?: boolean;
 }) {
+  const accountAccessClassName =
+    "inline-flex min-h-10 shrink-0 items-center gap-1.5 rounded-full border border-dema-forest/15 bg-dema-paper px-3 text-xs font-medium text-dema-forest transition hover:border-dema-forest/28 hover:bg-dema-sage/45 sm:min-h-11 sm:gap-2 sm:px-4 sm:text-sm";
+  function openAuthenticatedAccount(event: MouseEvent<HTMLAnchorElement>) {
+    event.preventDefault();
+    window.location.assign("/");
+  }
+
   return (
     <>
       <nav
@@ -33,16 +43,32 @@ export default function Navbar({
             {anonymousLanding ? (
               <div className="flex min-w-0 items-center gap-1.5 sm:gap-2">
                 <div
-                  id="action-plan-navbar-save"
+                  id="action-plan-navbar-specialist"
                   className="shrink-0 empty:hidden"
                 />
-                <Link
-                  href="/mon-espace"
-                  className="inline-flex min-h-10 shrink-0 items-center gap-1.5 rounded-full border border-dema-forest/15 bg-dema-paper px-3 text-xs font-medium text-dema-forest transition hover:border-dema-forest/28 hover:bg-dema-sage/45 sm:min-h-11 sm:gap-2 sm:px-4 sm:text-sm"
-                >
-                  <LogIn className="hidden h-4 w-4 sm:block" aria-hidden="true" />
-                  <span>Se connecter</span>
-                </Link>
+                {isAuthenticated ? (
+                  <Link
+                    href="/"
+                    aria-label="Ouvrir l’application"
+                    className={accountAccessClassName}
+                    onClick={openAuthenticatedAccount}
+                    prefetch={false}
+                    title="Ouvrir l’application"
+                  >
+                    <CircleUserRound
+                      className="h-4 w-4"
+                      aria-hidden="true"
+                    />
+                  </Link>
+                ) : (
+                  <Link
+                    href="/connexion"
+                    className={accountAccessClassName}
+                  >
+                    <LogIn className="hidden h-4 w-4 sm:block" aria-hidden="true" />
+                    <span>Se connecter</span>
+                  </Link>
+                )}
               </div>
             ) : null}
           </div>

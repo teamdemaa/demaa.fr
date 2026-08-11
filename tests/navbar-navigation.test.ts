@@ -40,7 +40,10 @@ describe("Demaa application navbar", () => {
     );
     expect(homeSource).toContain('canonical: "/"');
     expect(homeSource).toContain("<ActionPlanExperience");
-    expect(homeSource).toContain("<Navbar anonymousLanding minimal />");
+    expect(homeSource).toContain(
+      "<Navbar anonymousLanding isAuthenticated={Boolean(email)} minimal />",
+    );
+    expect(homeSource).toContain("getEmailFromCustomerSessionToken(sessionToken)");
     expect(systemsSource).toContain('canonical: "/systemes"');
     expect(nextConfigSource).not.toMatch(
       /source: '\/systemes',[\s\S]*?destination: '\/',/,
@@ -50,19 +53,40 @@ describe("Demaa application navbar", () => {
     );
   });
 
-  it("keeps the anonymous member access minimal and intercepts it over the homepage", async () => {
-    const [memberSource, modalSource] = await Promise.all([
-      readFile(new URL("../src/app/mon-espace/page.tsx", import.meta.url), "utf8"),
-      readFile(new URL("../src/app/@modal/(.)mon-espace/page.tsx", import.meta.url), "utf8"),
+  it("replaces the sign-in action with account access once a session is active", async () => {
+    const [navbarSource, savedPlanSource] = await Promise.all([
+      readFile(new URL("../src/components/Navbar.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/plans/[id]/page.tsx", import.meta.url), "utf8"),
     ]);
 
-    expect(memberSource).toContain("<Navbar minimal />");
-    expect(memberSource).toContain("<CustomerSpaceAccessForm returnTo=\"/mon-espace\" simple />");
-    expect(memberSource).toContain("Le lien n’est plus valide.");
+    expect(navbarSource).toContain('aria-label="Ouvrir l’application"');
+    expect(navbarSource).toContain('window.location.assign("/")');
+    expect(navbarSource).toContain("onClick={openAuthenticatedAccount}");
+    expect(navbarSource).toContain("prefetch={false}");
+    expect(navbarSource).not.toContain("<span>Mon espace</span>");
+    expect(navbarSource).not.toContain('href="/plans"');
+    expect(navbarSource).toContain('href="/connexion"');
+    expect(navbarSource).toContain("<span>Se connecter</span>");
+    expect(savedPlanSource).toContain("<Navbar anonymousLanding isAuthenticated minimal />");
+  });
+
+  it("keeps sign-in minimal and intercepts it over the homepage", async () => {
+    const [legacySource, loginSource, modalSource] = await Promise.all([
+      readFile(new URL("../src/app/mon-espace/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/connexion/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/@modal/(.)connexion/page.tsx", import.meta.url), "utf8"),
+    ]);
+
+    expect(legacySource).toContain('redirect("/")');
+    expect(loginSource).toContain("<Navbar minimal />");
+    expect(loginSource).toContain("<CustomerSpaceAccessForm returnTo={returnTo} simple />");
+    expect(loginSource).toContain("Se connecter");
+    expect(loginSource).not.toContain("Mes plans");
+    expect(loginSource).not.toContain("Mon espace");
     expect(modalSource).toContain("<CustomerSpaceLoginDialog />");
   });
 
-  it("centers generated-plan navigation on desktop and fixes it at the bottom on mobile", async () => {
+  it("shows application navigation before generation and fixes it at the bottom on mobile", async () => {
     const [navbarSource, actionPlanNavSource, experienceSource] = await Promise.all([
       readFile(new URL("../src/components/Navbar.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/ActionPlanNavbar.tsx", import.meta.url), "utf8"),
@@ -78,13 +102,18 @@ describe("Demaa application navbar", () => {
     expect(actionPlanNavSource).toContain("Plan d’action");
     expect(actionPlanNavSource).toContain("Système");
     expect(actionPlanNavSource).toContain("Académie");
-    expect(actionPlanNavSource).toContain("Coaching");
+    expect(actionPlanNavSource).toContain("Opportunités");
     expect(actionPlanNavSource).not.toContain('label: "Accompagnement"');
+    expect(actionPlanNavSource).not.toContain('label: "Coaching"');
     expect(actionPlanNavSource).toContain('{ view: "academy"');
     expect(actionPlanNavSource).toContain("onViewChange(view)");
     expect(actionPlanNavSource).toContain("xl:min-h-11");
     expect(experienceSource).toContain("<ActionPlanNavbar");
+    expect(experienceSource).toContain("workspace={prePlanWorkspace}");
+    expect(experienceSource).toContain('activeTab === "opportunities"');
     expect(experienceSource).toContain("<ActionPlanAcademyPanel");
+    expect(experienceSource).toContain("<ActionPlanCoachingControl");
+    expect(experienceSource).toContain("<OpportunitiesPanel");
     expect(experienceSource).not.toContain('aria-label="Votre résultat"');
   });
 });

@@ -1,16 +1,15 @@
 "use client";
 
-import { CheckCircle2, LoaderCircle, Mail, Save, X } from "lucide-react";
+import { CheckCircle2, LoaderCircle, Mail, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import type { ActionPlan } from "@/lib/action-plan-contract";
+import type { PersistableActionPlan } from "@/lib/action-plan-contract";
 import type { ActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
 import { isValidEmail, normalizeEmail } from "@/lib/email";
 
 type PendingClaim = {
   actionPlanId: string;
-  actionPlanClaimSecret: string;
 };
 
 type SaveState =
@@ -27,7 +26,7 @@ export default function ActionPlanSaveControl({
   workspace,
   demoMode = false,
 }: {
-  plan: ActionPlan;
+  plan: PersistableActionPlan;
   sourceText: string;
   workspace: ActionPlanWorkspaceState;
   demoMode?: boolean;
@@ -71,7 +70,6 @@ export default function ActionPlanSaveControl({
     if (demoMode) {
       setPendingClaim({
         actionPlanId: "demo-action-plan",
-        actionPlanClaimSecret: "demo-claim",
       });
       setState("email");
       setDialogOpen(true);
@@ -92,7 +90,6 @@ export default function ActionPlanSaveControl({
             status?: "saved" | "pending_claim";
             actionPlan?: { id?: string };
             actionPlanId?: string;
-            actionPlanClaimSecret?: string;
             error?: string;
           }
         | null;
@@ -107,21 +104,19 @@ export default function ActionPlanSaveControl({
           throw new Error("Le plan est sauvegardé, mais son accès est indisponible.");
         }
         setState("saved");
-        router.push(`/mon-espace/plans/${encodeURIComponent(savedPlanId)}`);
+        router.push(`/plans/${encodeURIComponent(savedPlanId)}`);
         return;
       }
 
       if (
         body?.status !== "pending_claim" ||
-        !body.actionPlanId ||
-        !body.actionPlanClaimSecret
+        !body.actionPlanId
       ) {
         throw new Error("Impossible de préparer la sauvegarde.");
       }
 
       setPendingClaim({
         actionPlanId: body.actionPlanId,
-        actionPlanClaimSecret: body.actionPlanClaimSecret,
       });
       setState("email");
       setDialogOpen(true);
@@ -160,8 +155,7 @@ export default function ActionPlanSaveControl({
         body: JSON.stringify({
           email: normalizedEmail,
           actionPlanId: pendingClaim.actionPlanId,
-          actionPlanClaimSecret: pendingClaim.actionPlanClaimSecret,
-          returnTo: `/mon-espace/plans/${encodeURIComponent(pendingClaim.actionPlanId)}`,
+          returnTo: `/plans/${encodeURIComponent(pendingClaim.actionPlanId)}`,
         }),
       });
       const body = (await response.json().catch(() => null)) as
@@ -212,27 +206,23 @@ export default function ActionPlanSaveControl({
 
   return (
     <div>
-      <button
-        type="button"
-        onClick={() => void createSavedPlan()}
-        disabled={state === "creating" || state === "sending"}
-        className="inline-flex min-h-10 items-center justify-center gap-1.5 rounded-full bg-dema-forest px-3 text-xs font-semibold text-white transition hover:bg-brand-blue disabled:opacity-60 sm:min-h-11 sm:gap-2 sm:px-4 sm:text-sm"
-      >
-        {state === "creating" || state === "sending" ? (
-          <LoaderCircle className="h-3.5 w-3.5 animate-spin sm:h-4 sm:w-4" aria-hidden="true" />
-        ) : state === "sent" ? (
-          <CheckCircle2 className="hidden h-4 w-4 sm:block" aria-hidden="true" />
-        ) : (
-          <Save className="hidden h-4 w-4 sm:block" aria-hidden="true" />
-        )}
-        {state === "creating"
-          ? "Préparation…"
-          : state === "sending"
-            ? "Envoi…"
-            : state === "sent"
-              ? "Lien envoyé"
-              : "Sauvegarder"}
-      </button>
+      {state !== "sent" ? (
+        <button
+          type="button"
+          onClick={() => void createSavedPlan()}
+          disabled={state === "creating" || state === "sending"}
+          className="inline-flex min-h-10 items-center justify-center rounded-full border border-dema-line bg-white/70 px-3 text-xs font-normal text-dema-forest transition hover:border-dema-forest/35 hover:bg-dema-soft disabled:opacity-60 sm:min-h-11 sm:px-4 sm:text-sm"
+        >
+          {state === "creating" || state === "sending" ? (
+            <LoaderCircle className="h-3.5 w-3.5 animate-spin sm:h-4 sm:w-4" aria-hidden="true" />
+          ) : null}
+          {state === "creating"
+            ? "Préparation…"
+            : state === "sending"
+              ? "Envoi…"
+              : "Enregistrer"}
+        </button>
+      ) : null}
       {error ? <p className="mt-2 max-w-sm text-xs text-red-700">{error}</p> : null}
 
       {dialogOpen &&
@@ -248,15 +238,15 @@ export default function ActionPlanSaveControl({
           <section
             role="dialog"
             aria-modal="true"
-            aria-labelledby="save-account-title"
+            aria-labelledby="save-plan-title"
             className="my-auto max-h-[calc(100dvh-1.5rem)] w-full max-w-md overflow-y-auto overscroll-contain rounded-[1.4rem] border border-dema-line bg-dema-paper p-5 shadow-2xl sm:max-h-[calc(100dvh-3rem)] sm:p-6"
             onMouseDown={(event) => event.stopPropagation()}
           >
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="text-xs font-medium uppercase tracking-[0.14em] text-dema-forest">Sauvegarde</p>
-                <h2 id="save-account-title" className="mt-1 text-2xl font-medium tracking-[-0.035em] text-brand-blue">
-                  Créer votre compte
+                <h2 id="save-plan-title" className="mt-1 text-2xl font-medium tracking-[-0.035em] text-brand-blue">
+                  Enregistrer mon plan
                 </h2>
               </div>
               <button
@@ -276,8 +266,8 @@ export default function ActionPlanSaveControl({
                   <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
                   <span>
                     {demoMode
-                      ? "Mode démo : le lien sécurisé créerait votre compte et sauvegarderait ce plan. Aucun e-mail n’a été envoyé."
-                      : "Lien envoyé. Ouvrez-le pour créer votre compte et sauvegarder ce plan."}
+                      ? "Mode démo : le lien sécurisé permettrait de retrouver ce plan. Aucun e-mail n’a été envoyé."
+                      : "Lien envoyé. Ouvrez-le pour retrouver ce plan sur vos autres appareils."}
                   </span>
                 </p>
                 {devLink ? (
@@ -292,6 +282,16 @@ export default function ActionPlanSaveControl({
                 ) : null}
                 <button
                   type="button"
+                  onClick={() => {
+                    setError(null);
+                    setState("email");
+                  }}
+                  className="mt-4 inline-flex w-full items-center justify-center text-sm text-dema-forest underline"
+                >
+                  Renvoyer le lien
+                </button>
+                <button
+                  type="button"
                   onClick={() => setDialogOpen(false)}
                   className="mt-6 inline-flex min-h-11 w-full items-center justify-center rounded-full border border-dema-line text-sm font-medium text-brand-blue"
                 >
@@ -301,7 +301,7 @@ export default function ActionPlanSaveControl({
             ) : (
               <form onSubmit={sendMagicLink} className="mt-5">
                 <p className="text-sm leading-relaxed text-dema-muted">
-                  Indiquez votre adresse e-mail. Vous recevrez un lien sécurisé pour créer votre compte et retrouver ce plan.
+                  Indiquez votre adresse e-mail pour sécuriser votre plan et le retrouver sur vos appareils.
                 </p>
                 <label className="mt-5 block text-xs font-medium text-dema-muted">
                   Adresse e-mail
@@ -335,7 +335,7 @@ export default function ActionPlanSaveControl({
                   className="mt-4 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-dema-forest px-5 text-sm font-semibold text-white disabled:opacity-60"
                 >
                   {state === "sending" ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
-                  Créer mon compte
+                  M’envoyer le lien
                 </button>
                 {error ? <p className="mt-3 text-sm text-red-700">{error}</p> : null}
               </form>

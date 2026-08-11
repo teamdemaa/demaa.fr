@@ -43,6 +43,8 @@ interface PendingActionPlanRow {
   pending_owner_email?: string | null;
   revision?: number | null;
   status?: string | null;
+  temporary_access_expires_at?: string | null;
+  temporary_access_token_hash?: string | null;
 }
 
 interface CustomerSessionRow {
@@ -146,7 +148,8 @@ export async function getStripePaymentsByEmail(email: string) {
 export async function saveCustomerMagicLink(input: {
   actionPlanClaim?: {
     actionPlanId: string;
-    claimSecretHash: string;
+    claimSecretHash?: string | null;
+    temporaryAccessTokenHash?: string | null;
   } | null;
   email: string;
   expiresAt: string;
@@ -169,22 +172,37 @@ export async function saveCustomerMagicLink(input: {
   }
 
   const actionPlanClaim = input.actionPlanClaim;
+  const actionPlanId = actionPlanClaim.actionPlanId;
   const actionPlanRef = database
     .collection("action_plans")
-    .doc(actionPlanClaim.actionPlanId);
+    .doc(actionPlanId);
 
   return database.runTransaction(async (transaction) => {
     const actionPlanDoc = await transaction.get(actionPlanRef);
     const actionPlan = actionPlanDoc.data() as PendingActionPlanRow | undefined;
     const claimExpiresAt = Date.parse(actionPlan?.claim_expires_at || "");
+    const temporaryAccessExpiresAt = Date.parse(
+      actionPlan?.temporary_access_expires_at || "",
+    );
     const samePendingOwner =
       !actionPlan?.pending_owner_email ||
       normalizeEmail(actionPlan.pending_owner_email) === email;
+    const validLegacyClaim = Boolean(
+      actionPlanClaim.claimSecretHash &&
+        actionPlan?.claim_secret_hash === actionPlanClaim.claimSecretHash,
+    );
+    const validTemporaryAccess = Boolean(
+      actionPlanClaim.temporaryAccessTokenHash &&
+        actionPlan?.temporary_access_token_hash ===
+          actionPlanClaim.temporaryAccessTokenHash &&
+        Number.isFinite(temporaryAccessExpiresAt) &&
+        temporaryAccessExpiresAt >= Date.now(),
+    );
 
     if (
       !actionPlanDoc.exists ||
       actionPlan?.status !== "pending_claim" ||
-      actionPlan.claim_secret_hash !== actionPlanClaim.claimSecretHash ||
+      (!validLegacyClaim && !validTemporaryAccess) ||
       !Number.isFinite(claimExpiresAt) ||
       claimExpiresAt < Date.now() ||
       !samePendingOwner
@@ -201,7 +219,7 @@ export async function saveCustomerMagicLink(input: {
       expires_at: input.expiresAt,
       created_at: now,
       consumed_at: null,
-      action_plan_id: actionPlanClaim.actionPlanId,
+      action_plan_id: actionPlanId,
     });
     transaction.set(
       actionPlanRef,
@@ -248,7 +266,6 @@ export async function consumeCustomerMagicLink(tokenHash: string) {
 
     transaction.set(linkRef, { consumed_at: now, updated_at: now }, { merge: true });
 
-    const claimTokenHashes = actionPlan?.claim_link_token_hashes || [];
     const actionPlanClaimExpiresAt = Date.parse(actionPlan?.claim_expires_at || "");
     const claimStillValid =
       Number.isFinite(actionPlanClaimExpiresAt) &&
@@ -259,8 +276,7 @@ export async function consumeCustomerMagicLink(tokenHash: string) {
       actionPlan?.status === "pending_claim" &&
       email &&
       claimStillValid &&
-      normalizeEmail(actionPlan.pending_owner_email || "") === email &&
-      claimTokenHashes.includes(tokenHash),
+      normalizeEmail(actionPlan.pending_owner_email || "") === email,
     );
 
     if (canClaimActionPlan && actionPlanRef) {
@@ -273,6 +289,8 @@ export async function consumeCustomerMagicLink(tokenHash: string) {
           claim_secret_hash: null,
           claim_link_token_hashes: [],
           claim_expires_at: null,
+          temporary_access_token_hash: null,
+          temporary_access_expires_at: null,
           claimed_at: now,
           retention_expires_at: getLeadRetentionExpiry(),
           updated_at: now,

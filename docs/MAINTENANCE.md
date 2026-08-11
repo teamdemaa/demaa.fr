@@ -74,14 +74,14 @@ Routes critiques:
 
 - `/api/systeme-kit/request`: livraison active et idempotente des ressources et des anciennes copies de systemes ; ne renvoie jamais la destination au navigateur.
 - `/api/cron/system-kit-followups`: clôt les anciennes séquences gratuites et exécute la maintenance opérationnelle.
-- `/api/customer-space/*`: acces securise a Mon espace.
+- `/api/customer-space/*`: acces securise aux plans sauvegardes.
 - `/api/service-introduction-request`: demande de mise en relation avec un service.
 - `/api/system-setup-request`: ancien endpoint conserve en garde-fou et retourne `410 Gone`.
 
 Helpers utiles:
 
 - `src/lib/firebase-admin.ts`: initialisation Firebase unique.
-- `src/lib/generations-db.ts`: acces Firestore pour les suivis de kits, l'authentification et la lecture des historiques de Mon espace.
+- `src/lib/generations-db.ts`: acces Firestore pour les suivis de kits, l'authentification et la lecture des historiques sauvegardes.
 - `src/lib/slack.ts`: envoi Slack commun.
 
 ## Checklist avant livraison

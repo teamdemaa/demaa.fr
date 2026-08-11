@@ -2,6 +2,7 @@
 
 import { Check, LoaderCircle } from "lucide-react";
 import { type FormEvent, useState } from "react";
+import CustomerSpaceAccessForm from "@/components/CustomerSpaceAccessForm";
 import DirectoryDetailDialogShell from "@/components/DirectoryDetailDialogShell";
 import {
   getLeadAttributionPayload,
@@ -16,13 +17,13 @@ import {
   STRUCTURE_NEWSLETTER_PROMISE,
   STRUCTURE_PUBLICATION_CONSENT,
 } from "@/lib/structure-newsletter-contract";
+import { useCustomerIdentity } from "@/lib/use-customer-identity";
 
 type ApiResponse = { error?: string; ok?: boolean } | null;
 
 type ProblemForm = {
   companyActivity: string;
   consent: boolean;
-  email: string;
   faxNumber: string;
   problem: string;
   professionalPage: string;
@@ -31,7 +32,6 @@ type ProblemForm = {
 const EMPTY_PROBLEM_FORM: ProblemForm = {
   companyActivity: "",
   consent: false,
-  email: "",
   faxNumber: "",
   problem: "",
   professionalPage: "",
@@ -46,7 +46,7 @@ function responseError(response: Response, payload: ApiResponse, fallback: strin
 }
 
 export default function StructureNewsletterBlock() {
-  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const { email, loading: identityLoading } = useCustomerIdentity();
   const [newsletterHoneypot, setNewsletterHoneypot] = useState("");
   const [newsletterSubmitting, setNewsletterSubmitting] = useState(false);
   const [newsletterError, setNewsletterError] = useState<string | null>(null);
@@ -68,7 +68,7 @@ export default function StructureNewsletterBlock() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email: newsletterEmail,
+          email,
           website: newsletterHoneypot,
         }),
       });
@@ -82,7 +82,6 @@ export default function StructureNewsletterBlock() {
         return;
       }
 
-      setNewsletterEmail("");
       setIsSubscribed(true);
     } catch {
       setNewsletterError(
@@ -116,7 +115,7 @@ export default function StructureNewsletterBlock() {
           attribution: getLeadAttributionPayload(),
           companyActivity: problemForm.companyActivity,
           consent: problemForm.consent,
-          email: problemForm.email,
+          email,
           faxNumber: problemForm.faxNumber,
           idempotencyKey: getLeadSubmissionKey(flowKey),
           problem: problemForm.problem,
@@ -181,7 +180,7 @@ export default function StructureNewsletterBlock() {
               >
                 Merci, votre inscription à Structure est confirmée.
               </div>
-            ) : (
+            ) : email ? (
               <form onSubmit={subscribe} aria-busy={newsletterSubmitting}>
                 <div className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
                   <label htmlFor="structure-newsletter-website">Site internet</label>
@@ -194,27 +193,11 @@ export default function StructureNewsletterBlock() {
                     onChange={(event) => setNewsletterHoneypot(event.target.value)}
                   />
                 </div>
-                <div className="grid overflow-hidden rounded-xl border border-dema-line bg-dema-paper focus-within:border-dema-forest/35 focus-within:ring-2 focus-within:ring-dema-forest/10 sm:grid-cols-[minmax(0,1fr)_auto]">
-                  <label className="sr-only" htmlFor="structure-newsletter-email">
-                    Votre adresse e-mail
-                  </label>
-                  <input
-                    id="structure-newsletter-email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    inputMode="email"
-                    required
-                    value={newsletterEmail}
-                    onChange={(event) => setNewsletterEmail(event.target.value)}
-                    placeholder="Votre adresse e-mail"
-                    className="min-h-13 min-w-0 bg-dema-paper px-4 text-sm text-brand-blue outline-none placeholder:text-dema-muted/65"
-                    aria-describedby={newsletterError ? "structure-newsletter-error" : undefined}
-                  />
+                <div className="overflow-hidden rounded-xl border border-dema-line bg-dema-paper">
                   <button
                     type="submit"
                     disabled={newsletterSubmitting}
-                    className="inline-flex min-h-13 items-center justify-center gap-2 border-t border-dema-forest/15 bg-dema-forest px-5 text-sm font-medium text-dema-paper transition hover:bg-[#284f3a] disabled:cursor-wait disabled:opacity-65 sm:border-l sm:border-t-0"
+                    className="inline-flex min-h-13 w-full items-center justify-center gap-2 bg-dema-forest px-5 text-sm font-medium text-dema-paper transition hover:bg-[#284f3a] disabled:cursor-wait disabled:opacity-65"
                   >
                     {newsletterSubmitting ? (
                       <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
@@ -228,7 +211,11 @@ export default function StructureNewsletterBlock() {
                   </p>
                 ) : null}
               </form>
-            )}
+            ) : !identityLoading ? (
+              <div className="rounded-xl border border-dema-line bg-dema-paper p-4">
+                <CustomerSpaceAccessForm compact returnTo="/academie?intent=structure" simple />
+              </div>
+            ) : null}
 
             <p className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-dema-muted">
               <span>5 min de lecture · Désinscription en un clic</span>
@@ -289,7 +276,16 @@ export default function StructureNewsletterBlock() {
                 toute publication.
               </p>
 
-              <form className="mt-6 space-y-4" onSubmit={submitProblem} aria-busy={problemSubmitting}>
+              {!identityLoading && !email ? (
+                <div className="mt-6 rounded-xl border border-dema-line bg-dema-cream/55 p-4">
+                  <p className="mb-4 text-sm leading-relaxed text-dema-muted">
+                    Entrez votre adresse e-mail pour recevoir un lien sécurisé et continuer.
+                  </p>
+                  <CustomerSpaceAccessForm compact returnTo="/academie?intent=structure-problem" simple />
+                </div>
+              ) : null}
+
+              {email ? <form className="mt-6 space-y-4" onSubmit={submitProblem} aria-busy={problemSubmitting}>
                 <div>
                   <label className="block text-sm font-medium text-brand-blue" htmlFor="structure-company-activity">
                     Votre entreprise ou activité
@@ -341,24 +337,6 @@ export default function StructureNewsletterBlock() {
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-brand-blue" htmlFor="structure-contact-email">
-                    Votre adresse e-mail
-                  </label>
-                  <input
-                    id="structure-contact-email"
-                    className="demaa-input mt-2"
-                    type="email"
-                    value={problemForm.email}
-                    onChange={(event) => updateProblemField("email", event.target.value)}
-                    autoComplete="email"
-                    inputMode="email"
-                    required
-                    maxLength={160}
-                    placeholder="vous@entreprise.fr"
-                  />
-                </div>
-
                 <label className="flex items-start gap-3 text-xs leading-relaxed text-dema-muted" htmlFor="structure-publication-consent">
                   <input
                     id="structure-publication-consent"
@@ -399,7 +377,7 @@ export default function StructureNewsletterBlock() {
                   ) : null}
                   {problemSubmitting ? "Envoi…" : "Envoyer ma problématique"}
                 </button>
-              </form>
+              </form> : null}
             </>
           )}
         </DirectoryDetailDialogShell>

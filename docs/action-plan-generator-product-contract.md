@@ -22,7 +22,7 @@ Les choix non validés restent indiqués `open` ou `deferred` et ne doivent pas
 
 ### Promesse
 
-> Décrivez votre situation. Repartez avec un plan d'action concret.
+> Qu’est-ce qui freine votre entreprise ?
 
 Le produit aide un dirigeant à clarifier une situation réelle et à savoir quoi
 faire ensuite. Il ne doit devenir ni un questionnaire préalable, ni une étude
@@ -157,18 +157,25 @@ contenu canonique existant chargé à partir du `systemId` courant.
 
 ### Avant connexion
 
-La homepage du générateur affiche seulement la marque Demaa et
-`Se connecter` avant le résultat. Les onglets applicatifs ne sont pas affichés
-sur cette entrée anonyme.
+La homepage conserve le grand champ comme entrée principale, mais la navigation
+`Plan d’action / Système / Académie / Opportunités` est visible et utilisable
+dès l'arrivée. Le visiteur peut donc consulter un Système, l'Académie ou les
+Opportunités sans générer de plan et sans créer de compte. Ses choix Système
+restent en mémoire de page jusqu'à une sauvegarde volontaire.
 
 Les univers publics `/systemes` et `/academie`, leur navigation et leur SEO
 restent accessibles. L'ADR 0008 ne transforme pas ces routes en espace privé.
 
 ### Après connexion
 
-La navigation applicative affiche Plan d'action, Système, Académie et un repère
-Coaching. Ce dernier reste un espace annoncé : le Coaching est exclu
-du MVP et aucune capacité, aucun délai ni aucun prix n'y est promis.
+La même navigation applicative est conservée. Coaching reste accessible depuis
+l'action compacte `Parler à un spécialiste`, conformément aux ADR 0009 et
+0010, sans devenir un cinquième onglet.
+
+`Coaching` désigne le produit. Dans l'interface, la personne qui accompagne est
+toujours désignée comme un `spécialiste` : l'action de messagerie porte le
+libellé `Écrire à un spécialiste`. Les termes `coach` et `votre coach` ne sont
+pas utilisés comme libellés humains.
 
 ## Persistance
 
@@ -176,6 +183,9 @@ du MVP et aucune capacité, aucun délai ni aucun prix n'y est promis.
 
 - Le plan vit dans l'état de la page ou de la session courante.
 - Aucun `localStorage` durable n'est une seconde source de vérité.
+- Seul le slug du Système choisi est mémorisé dans ce navigateur pour éviter
+  de redemander l'activité à chaque visite ; aucun contenu de plan, aucune
+  situation et aucune donnée métier détaillée n'y sont stockés.
 - Une actualisation ou une fermeture peut faire perdre le résultat.
 - Le résultat est visible avant connexion.
 
@@ -188,12 +198,21 @@ du MVP et aucune capacité, aucun délai ni aucun prix n'y est promis.
 - Aucun miroir local durable concurrent n'est maintenu.
 
 Pour un invité, la sauvegarde crée un plan temporaire `pending_claim` avec un
-TTL d'une heure et un secret non stocké en clair. Le lien magique associe le
-jeton, l'e-mail normalisé et ce plan ; sa consommation rattache atomiquement le
-plan à l'adresse vérifiée. Pour une personne déjà connectée, la sauvegarde crée
-directement le plan actif puis ouvre sa page persistée. Les modifications y
-sont enregistrées avec révision optimiste et prolongent la durée de
-conservation depuis la dernière mise à jour.
+accès limité à trente jours par cookie HttpOnly et un secret non stocké en
+clair. Le lien magique associe le jeton, l'e-mail normalisé et ce plan ; sa
+consommation rattache atomiquement le plan à l'adresse vérifiée. Pour une
+personne déjà connectée, la sauvegarde crée directement le plan actif puis
+ouvre sa page persistée. Les modifications y sont enregistrées avec révision
+optimiste et prolongent la durée de conservation depuis la dernière mise à
+jour.
+
+Le lien magique est l'unique point d'établissement de l'identité e-mail dans
+l'application. Une fois la session créée, les formulaires fonctionnels
+(guides métier, Opportunités, Coaching, inscription et demandes) réutilisent
+l'e-mail vérifié côté serveur et ne le redemandent pas. Un visiteur non
+connecté qui déclenche l'une de ces actions passe d'abord par le lien magique,
+puis revient directement à son intention dans l'application. Il n'existe pas
+d'expérience publique distincte `Mon espace` ou `Mes plans`.
 
 ## Marketing et prospection éthiques
 
@@ -248,7 +267,7 @@ tokens.
 | Contenu complet des 115 Systèmes envoyé au modèle | Catalogue léger uniquement |
 | Changement de Système avec régénération | Chargement déterministe sans IA |
 | Analyse métier séparée du vocal | Transcription dans le champ |
-| Persistance invitée durable dans `localStorage` | Mémoire page/session |
+| Plan invité durable dans `localStorage` | Plan en mémoire page/session ; seul le slug du Système choisi est mémorisé localement |
 | Chaîne multi-agent par défaut | Une génération principale |
 
 ## Arbitrages ouverts
@@ -262,17 +281,19 @@ tokens.
 Ces arbitrages ne bloquent pas le prototype et le moteur Preview lorsqu'ils
 sont implémentés derrière des limites conservatrices réversibles.
 
-## Backlog explicitement différé
+## Extensions explicitement différées
 
-Le Coaching constitue un produit distinct et n'entre pas dans ce MVP. Son
-cadrage ultérieur doit couvrir ensemble :
+La première version de Coaching fait partie de l'application conformément à
+l'ADR 0009 : Sessions, Messages et demandes coordonnées manuellement. Restent
+au backlog, sans modifier cette première version :
 
-- phase gratuite et phase payante ;
-- capacité humaine réelle et promesse de délai ;
-- messagerie ;
-- appels ou autres canaux ;
-- droits, confidentialité et conservation des échanges ;
-- tarification et limites de service.
+- une nouvelle frontière entre phase gratuite et phase payante ;
+- les évolutions de capacité humaine et de promesse de délai ;
+- les nouveaux canaux ou formats de messagerie ;
+- les évolutions de droits, confidentialité et conservation des échanges ;
+- les évolutions de tarification et de limites de service ;
+- le multi-tenant et le sélecteur d'entreprise ;
+- l'enrichissement facultatif du profil entreprise.
 
 ## Critères d'acceptation MVP
 

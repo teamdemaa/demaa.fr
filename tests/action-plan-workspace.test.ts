@@ -16,6 +16,7 @@ describe("action plan workspace state", () => {
       ACTION_PLAN_DEMO.weeklyActions.map(({ id }) => id),
     );
     expect(workspace.tasks["action-1"]?.status).toBe("todo");
+    expect(workspace.deletedActionIds).toEqual([]);
     expect(ACTION_PLAN_DEMO.weeklyActions[0]?.title).toBeTruthy();
   });
 
@@ -101,5 +102,15 @@ describe("action plan workspace state", () => {
       steps: ["Première étape", "Troisième étape", "Quatrième étape"],
       completedStepIndexes: [0, 1, 2],
     });
+  });
+
+  it("keeps deleted actions compatible while dropping unknown identifiers", () => {
+    const base = createActionPlanWorkspaceState(ACTION_PLAN_DEMO);
+    const normalized = normalizeActionPlanWorkspaceState(ACTION_PLAN_DEMO, {
+      ...base,
+      deletedActionIds: ["action-1", "action-7"],
+    });
+
+    expect(normalized.deletedActionIds).toEqual(["action-1"]);
   });
 });

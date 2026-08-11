@@ -27,7 +27,7 @@ export default function ConditionsUtilisationPage() {
   return (
     <LegalPageLayout
       title="Conditions d’utilisation"
-      description="Ces conditions encadrent l’accès et l’usage du site Demaa.fr, de ses contenus, de ses outils et de son espace membre."
+      description="Ces conditions encadrent l’accès et l’usage du site Demaa.fr, de ses contenus, de ses outils et de l’espace personnel."
     >
       <UsageSection title="1. Périmètre">
             <p>
@@ -49,7 +49,7 @@ export default function ConditionsUtilisationPage() {
 
       <UsageSection title="3. Services concernés">
             <p>
-              Demaa peut proposer des contenus éditoriaux, annuaires, outils gratuits, formulaires, demandes d&apos;audit, prestations de service, espace membre et fonctionnalités d&apos;assistant.
+              Demaa peut proposer des contenus éditoriaux, annuaires, outils gratuits, formulaires, demandes d&apos;audit, prestations de service, espace personnel et fonctionnalités d&apos;assistant.
             </p>
             <p>
               Sauf mention expresse contraire, les contenus et outils accessibles sur le site sont fournis à titre informatif, opérationnel ou préparatoire.
@@ -62,7 +62,7 @@ export default function ConditionsUtilisationPage() {
               <li>ne pas porter atteinte au bon fonctionnement du site ou de ses services ;</li>
               <li>ne pas transmettre de contenus illicites, trompeurs, malveillants ou frauduleux ;</li>
               <li>ne pas tenter d&apos;accéder à des espaces, données ou comptes non autorisés ;</li>
-              <li>ne pas détourner les formulaires, l&apos;assistant, l&apos;espace membre ou les outils à des fins abusives.</li>
+              <li>ne pas détourner les formulaires, l&apos;assistant, l&apos;espace personnel ou les outils à des fins abusives.</li>
             </ul>
       </UsageSection>
 
@@ -76,9 +76,9 @@ export default function ConditionsUtilisationPage() {
             </ul>
       </UsageSection>
 
-      <UsageSection title="6. Espace membre et accès personnels">
+      <UsageSection title="6. Espace personnel et accès sécurisés">
             <p>
-              Certaines fonctionnalités peuvent nécessiter un accès personnel, notamment via un lien sécurisé ou un espace membre.
+              Certaines fonctionnalités peuvent nécessiter un accès personnel, notamment via un lien sécurisé ou un espace personnel.
             </p>
             <p>
               Vous êtes responsable de la confidentialité de vos accès, de l&apos;usage fait depuis votre adresse email et de l&apos;exactitude des informations transmises à Demaa.

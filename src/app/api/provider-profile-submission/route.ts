@@ -6,7 +6,7 @@ import {
   normalizeText,
   readJsonBody,
 } from "@/lib/api-security";
-import { isValidEmail, normalizeEmail } from "@/lib/email";
+import { requireCurrentCustomerEmail } from "@/lib/customer-space-session.server";
 import { resolveLeadAttribution } from "@/lib/lead-attribution-server";
 import { resolveLeadContext } from "@/lib/lead-context";
 import { submitLeadRequest } from "@/lib/lead-notifications";
@@ -15,7 +15,10 @@ import {
   getExpertiseById,
   getOpportunityById,
 } from "@/lib/provider-network.server";
-import { isPublicOpenOpportunity } from "@/lib/opportunity-contract";
+import {
+  isPublicOpenOpportunity,
+  OPPORTUNITY_TYPE_LABELS,
+} from "@/lib/opportunity-contract";
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
 
 export const runtime = "nodejs";
@@ -23,13 +26,15 @@ export const runtime = "nodejs";
 const PROVIDER_CONSENT_VERSION = "provider-network-v1";
 const PROVIDER_CONSENT_TEXT =
   "J’accepte que Demaa conserve ces informations afin de me contacter lorsqu’un besoin correspond à mon profil.";
+const OPPORTUNITY_CONSENT_VERSION = "opportunity-interest-v1";
+const OPPORTUNITY_CONSENT_TEXT =
+  "J’accepte que Demaa conserve ces informations afin de me recontacter au sujet de cette opportunité.";
 
 type ProviderProfileSubmissionBody = {
   attribution?: unknown;
   company?: unknown;
   consent?: unknown;
   countries?: unknown;
-  email?: unknown;
   expertiseIds?: unknown;
   fullName?: unknown;
   idempotencyKey?: unknown;
@@ -79,7 +84,7 @@ function buildIdempotencyKey(input: {
   const digest = createHash("sha256")
     .update(`${scope}:${input.email}:${clientKey}`)
     .digest("hex");
-  return `provider-profile:${digest}`;
+  return `${input.opportunityId ? "opportunity-interest" : "provider-profile"}:${digest}`;
 }
 
 async function handlePost(request: Request) {
@@ -95,6 +100,10 @@ async function handlePost(request: Request) {
   });
   if (limitedByIp) return limitedByIp;
 
+  const customer = await requireCurrentCustomerEmail();
+  if (customer.response) return customer.response;
+  const email = customer.email;
+
   const { data: body, response } = await readJsonBody<ProviderProfileSubmissionBody>(
     request,
     16 * 1024,
@@ -104,46 +113,29 @@ async function handlePost(request: Request) {
   if (normalizeText(body?.website, 200)) return successResponse();
 
   const fullName = normalizeText(body?.fullName, 140);
-  const email = normalizeEmail(normalizeText(body?.email, 160));
   const company = normalizeText(body?.company, 160);
   const countries = normalizeText(body?.countries, 300);
   const message = normalizeText(body?.message, 1600, { multiline: true });
   const profileUrlRaw = normalizeText(body?.profileUrl, 500);
   const profileUrl = normalizeOptionalUrl(profileUrlRaw);
-  const expertiseIds = normalizeExpertiseIds(body?.expertiseIds);
+  const submittedExpertiseIds = normalizeExpertiseIds(body?.expertiseIds);
   const opportunityId = normalizeText(body?.opportunityId, 120) || null;
 
   if (
     !fullName
     || !email
     || !company
-    || !countries
     || message.length < 20
-    || !expertiseIds
     || body?.consent !== true
   ) {
     return NextResponse.json(
-      { error: "Merci de compléter vos coordonnées, vos expertises et votre présentation." },
-      { status: 400 },
-    );
-  }
-  if (!isValidEmail(email)) {
-    return NextResponse.json(
-      { error: "Merci de renseigner une adresse e-mail valide." },
+      { error: "Merci de compléter vos coordonnées et votre message." },
       { status: 400 },
     );
   }
   if (profileUrlRaw && !profileUrl) {
     return NextResponse.json(
       { error: "Merci d’indiquer un lien professionnel valide." },
-      { status: 400 },
-    );
-  }
-
-  const expertises = await Promise.all(expertiseIds.map(getExpertiseById));
-  if (expertises.some((expertise) => !expertise || expertise.visibility !== "public")) {
-    return NextResponse.json(
-      { error: "Une expertise sélectionnée est introuvable." },
       { status: 400 },
     );
   }
@@ -156,12 +148,29 @@ async function handlePost(request: Request) {
     && (
       !opportunity
       || !isPublicOpenOpportunity(opportunity)
-      || !expertiseIds.includes(opportunity.expertiseId)
     )
   ) {
     return NextResponse.json(
       { error: "Cette opportunité n’est plus disponible." },
       { status: 404 },
+    );
+  }
+
+  if (!opportunity && (!countries || !submittedExpertiseIds)) {
+    return NextResponse.json(
+      { error: "Merci de compléter vos expertises, vos zones couvertes et votre présentation." },
+      { status: 400 },
+    );
+  }
+
+  const expertiseIds = opportunity
+    ? (opportunity.expertiseId ? [opportunity.expertiseId] : [])
+    : (submittedExpertiseIds ?? []);
+  const expertises = await Promise.all(expertiseIds.map(getExpertiseById));
+  if (expertises.some((expertise) => !expertise || expertise.visibility !== "public")) {
+    return NextResponse.json(
+      { error: "Une expertise sélectionnée est introuvable." },
+      { status: 400 },
     );
   }
 
@@ -193,6 +202,10 @@ async function handlePost(request: Request) {
     .filter((entry): entry is NonNullable<typeof entry> => Boolean(entry))
     .map((entry) => entry.label);
   const consentCapturedAt = new Date().toISOString();
+  const consentText = opportunity ? OPPORTUNITY_CONSENT_TEXT : PROVIDER_CONSENT_TEXT;
+  const consentVersion = opportunity
+    ? OPPORTUNITY_CONSENT_VERSION
+    : PROVIDER_CONSENT_VERSION;
 
   await submitLeadRequest({
     attribution: resolveLeadAttribution(request, body?.attribution),
@@ -201,14 +214,25 @@ async function handlePost(request: Request) {
     context,
     emoji: opportunity ? "🎯" : "🤝",
     fields: [
-      { label: "Expertises", value: expertiseLabels.join(", ") },
-      { label: "Pays couverts", value: countries },
-      { label: "Présentation", value: message },
+      ...(expertiseLabels.length > 0
+        ? [{ label: "Expertise", value: expertiseLabels.join(", ") }]
+        : []),
+      ...(countries ? [{ label: "Pays couverts", value: countries }] : []),
+      { label: opportunity ? "Message" : "Présentation", value: message },
       ...(profileUrl ? [{ label: "Profil ou site", value: profileUrl }] : []),
-      ...(opportunity ? [{ label: "Opportunité", value: opportunity.title }] : []),
+      ...(opportunity
+        ? [
+            { label: "Opportunité", value: opportunity.title },
+            { label: "Identifiant opportunité", value: opportunity.opportunityId },
+            {
+              label: "Type d’opportunité",
+              value: OPPORTUNITY_TYPE_LABELS[opportunity.opportunityType],
+            },
+          ]
+        : []),
       { label: "Consentement", value: `Accepté le ${consentCapturedAt}` },
-      { label: "Version du consentement", value: PROVIDER_CONSENT_VERSION },
-      { label: "Texte du consentement", value: PROVIDER_CONSENT_TEXT },
+      { label: "Version du consentement", value: consentVersion },
+      { label: "Texte du consentement", value: consentText },
     ],
     idempotencyKey: buildIdempotencyKey({
       clientKey: normalizeIdempotencyKey(body?.idempotencyKey),
@@ -216,10 +240,10 @@ async function handlePost(request: Request) {
       opportunityId,
     }),
     requestType: opportunity
-      ? "opportunity_application"
+      ? "opportunity_interest"
       : "provider_profile_submission",
     title: opportunity
-      ? `Candidature opportunité - ${opportunity.title}`
+      ? `Intérêt pour une opportunité - ${opportunity.title}`
       : `Nouveau profil - ${expertiseLabels.join(", ")}`,
   });
 

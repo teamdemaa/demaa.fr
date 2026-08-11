@@ -18,7 +18,7 @@ function renderMagicLinkEmail(input: { magicLink: string }) {
                 <tr>
                   <td style="border:1px solid #e7ece6;border-radius:28px;background-color:#ffffff;padding:36px 32px;font-family:Arial,sans-serif;color:#17231d;">
                     <div style="font-size:11px;line-height:1.4;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#315f46;">
-                      Espace membre
+                      Demaa
                     </div>
                     <h1 style="margin:14px 0 14px;font-size:30px;line-height:1.15;font-weight:700;letter-spacing:-0.03em;color:#17231d;">
                       Votre lien sécurisé est prêt
@@ -27,7 +27,7 @@ function renderMagicLinkEmail(input: { magicLink: string }) {
                       Bonjour,
                     </p>
                     <p style="margin:0 0 14px;font-size:16px;line-height:1.7;color:#52606d;">
-                      Voici votre accès pour retrouver vos demandes en cours, vos suivis et les éléments liés à votre espace membre Demaa.
+                      Votre plan est enregistré. Ouvrez-le pour le retrouver, le modifier et suivre vos actions.
                     </p>
                     <p style="margin:0 0 24px;font-size:16px;line-height:1.7;color:#52606d;">
                       Ce lien est personnel et expire dans <strong style="color:#17231d;">30 minutes</strong>.
@@ -36,7 +36,7 @@ function renderMagicLinkEmail(input: { magicLink: string }) {
                       <tr>
                         <td align="center" bgcolor="#315f46" style="border-radius:999px;">
                           <a href="${input.magicLink}" style="display:inline-block;padding:14px 22px;font-family:Arial,sans-serif;font-size:15px;line-height:1.2;font-weight:700;color:#ffffff;text-decoration:none;">
-                            Accéder à mon espace Demaa
+                            Ouvrir mon plan
                           </a>
                         </td>
                       </tr>
@@ -69,7 +69,7 @@ function renderMagicLinkText(input: { magicLink: string }) {
   return [
     "Bonjour,",
     "",
-    "Voici votre lien sécurisé pour accéder à votre espace membre Demaa :",
+    "Voici votre lien sécurisé pour ouvrir votre plan Demaa :",
     input.magicLink,
     "",
     "Ce lien expire dans 30 minutes.",
@@ -81,7 +81,8 @@ function renderMagicLinkText(input: { magicLink: string }) {
 export async function sendCustomerMagicLinkEmail(input: {
   actionPlanClaim?: {
     actionPlanId: string;
-    claimSecret: string;
+    claimSecret?: string | null;
+    temporaryAccessToken?: string | null;
   } | null;
   email: string;
   request?: Request;
@@ -116,7 +117,7 @@ export async function sendCustomerMagicLinkEmail(input: {
     body: JSON.stringify({
       from,
       to: input.email,
-      subject: "Votre lien d'accès à l'espace membre Demaa",
+      subject: "Ouvrez votre plan Demaa",
       html: renderMagicLinkEmail({ magicLink }),
       text: renderMagicLinkText({ magicLink }),
     }),

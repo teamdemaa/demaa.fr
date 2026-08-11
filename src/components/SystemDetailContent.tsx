@@ -27,6 +27,7 @@ type SystemDetailContentProps = {
   systeme: SystemeDetail | null;
   intro: string;
   initialActiveTab?: string;
+  initialResourceSlug?: string;
   headingAs?: "h1" | "h2" | "h3";
   headingId?: string;
   solutionSections?: readonly RenderableSolutionSectionDto[];
@@ -56,6 +57,7 @@ export default function SystemDetailContent({
   systeme,
   intro,
   initialActiveTab,
+  initialResourceSlug,
   headingAs: Heading = "h2",
   headingId,
   solutionSections = EMPTY_SOLUTION_SECTIONS,
@@ -142,7 +144,7 @@ export default function SystemDetailContent({
   }
 
   return (
-    <article className="w-full max-w-[55.2rem]">
+    <article className={`w-full max-w-[55.2rem] ${embedded ? "mx-auto" : ""}`}>
       {!embedded ? <Link
         href="/systemes"
         className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-dema-muted transition hover:text-dema-forest"
@@ -216,6 +218,7 @@ export default function SystemDetailContent({
         {activeTab === "solutions" ? (
           <SystemSolutionsTab
             sections={solutionSections}
+            initialResourceSlug={initialResourceSlug}
             selectedPlacementIds={selectableSolutions ? selectedSolutionIds : undefined}
             onToggleSelection={selectableSolutions ? toggleSolution : undefined}
           />

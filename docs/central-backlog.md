@@ -85,15 +85,38 @@ l'ADR 0004 prévaut.
   Systèmes, puis sauvegarde Firebase. L'ADR 0008 et
   `docs/action-plan-generator-product-contract.md` sont les références ;
   `/systemes` et `/academie` publics restent inchangés.
-- [ ] Cadrer séparément Coaching après le MVP D-076 : phase gratuite,
+- [x] Livrer la première version Coaching dans l’application : Sessions,
+  Messages asynchrones, tarifs validés et demandes coordonnées manuellement.
+- [x] Livrer D-077 : entrée `Commencer avec un plan vierge`, navigation
+  `Plan d’action / Système / Académie / Opportunités`, Coaching accessible par
+  `Parler à un spécialiste`, Opportunités au sens large et sauvegarde invitée
+  sans secret exposé au JavaScript. L’ADR 0010 est la référence.
+- [ ] Unifier l'identité e-mail des parcours applicatifs : le lien magique est
+  le seul point de saisie et de vérification ; une session connectée alimente
+  côté serveur les guides métier, Opportunités, Coaching, inscriptions et
+  demandes sans redemander l'adresse. Après connexion, reprendre directement
+  l'intention autorisée dans l'application, sans page `Mon espace` ou
+  `Mes plans`.
+- [ ] Cadrer D-078, multi-tenant simple : un compte peut posséder plusieurs
+  entreprises ; chaque plan et progression Système appartient à une entreprise
+  vérifiée côté serveur. Prévoir `accounts`, `companies` et un état Système par
+  entreprise, une migration progressive de `owner_email`, un sélecteur compact
+  et des tests d'isolation inter-entreprises. Ne créer ni rôles, ni invitations,
+  ni gestion d'équipe dans ce lot. Le nom d'entreprise reste facultatif et
+  pourra être enrichi depuis le profil ; il ne bloque pas le lien magique ni
+  l'ouverture du plan.
+- [ ] Ajouter ultérieurement, après décision éditoriale, un nom
+  d’organisation facultatif aux opportunités. Ne rien afficher lorsque cette
+  information n’est pas explicitement publiée.
+- [ ] Cadrer ensuite les évolutions Coaching : phase gratuite,
   phase payante, capacité humaine, délais, messagerie, confidentialité,
   conservation des échanges et prix. Aucun de ces éléments ne doit être promis
   ou simulé dans le générateur courant.
-- [ ] Finaliser la navigation authentifiée complète (`Accueil`, `Système`,
-  `Académie`, `Coaching`, profil), sans rendre privés les hubs publics.
-  Le repère Coaching peut rester visible comme espace annoncé, mais ne
-  doit simuler ni capacité, ni délai, ni prix tant que le produit n'est pas
-  cadré.
+- [x] Conserver avant et après connexion la navigation applicative unique
+  `Plan d’action / Système / Académie / Opportunités`. Coaching reste le
+  produit accessible par `Parler à un spécialiste`; les libellés humains
+  emploient `spécialiste`, notamment `Écrire à un spécialiste`. Aucun onglet
+  `Accueil`, portail `Mon espace`/`Mes plans` ou profil obligatoire n'est créé.
 - [ ] Cadrer le partage sécurisé d'un plan sauvegardé : accès en lecture seule,
   consentement, lien révocable, durée et protection contre l'indexation. Le MVP
   permet déjà de sauvegarder et retrouver un plan, mais ne crée aucun lien

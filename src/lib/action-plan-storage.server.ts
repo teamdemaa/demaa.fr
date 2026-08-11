@@ -1,7 +1,7 @@
 import "server-only";
 
-import { createHash, randomBytes } from "node:crypto";
-import type { ActionPlan } from "@/lib/action-plan-contract";
+import { createHash, randomBytes, timingSafeEqual } from "node:crypto";
+import type { PersistableActionPlan } from "@/lib/action-plan-contract";
 import { compatibleActionPlanSchema } from "@/lib/action-plan-contract";
 import {
   createActionPlanWorkspaceState,
@@ -13,8 +13,9 @@ import { getAdminFirestore } from "@/lib/firebase-admin";
 import { getLeadRetentionExpiry } from "@/lib/operational-maintenance";
 
 export const ACTION_PLANS_COLLECTION = "action_plans";
+export const ACTION_PLAN_ACCESS_COOKIE = "demaa_action_plan_access";
 
-const PENDING_CLAIM_TTL_MS = 60 * 60 * 1000;
+const PENDING_CLAIM_TTL_MS = 30 * 24 * 60 * 60 * 1000;
 const MAX_SOURCE_TEXT_LENGTH = 12_000;
 
 type ActionPlanStatus = "pending_claim" | "active";
@@ -38,6 +39,8 @@ type ActionPlanDocument = {
   claim_secret_hash?: string | null;
   claim_link_token_hashes?: string[] | null;
   claim_expires_at?: string | null;
+  temporary_access_token_hash?: string | null;
+  temporary_access_expires_at?: string | null;
   revision?: number | null;
   created_at?: string | null;
   updated_at?: string | null;
@@ -47,7 +50,7 @@ type ActionPlanDocument = {
 
 export type StoredActionPlan = {
   id: string;
-  plan: ActionPlan;
+  plan: PersistableActionPlan;
   workspaceState: ActionPlanWorkspaceState;
   sourceText: string | null;
   generation: ActionPlanGenerationMetadata;
@@ -57,7 +60,7 @@ export type StoredActionPlan = {
 };
 
 export type ActionPlanWriteInput = {
-  plan: ActionPlan;
+  plan: PersistableActionPlan;
   workspaceState?: ActionPlanWorkspaceState;
   sourceText?: string | null;
   generation?: Partial<ActionPlanGenerationMetadata> | null;
@@ -65,12 +68,27 @@ export type ActionPlanWriteInput = {
 
 export type PendingActionPlan = {
   id: string;
-  claimSecret: string;
+  temporaryAccessToken: string;
   revision: number;
 };
 
 export function hashActionPlanClaimSecret(secret: string) {
   return createHash("sha256").update(secret).digest("hex");
+}
+
+export const hashActionPlanAccessToken = hashActionPlanClaimSecret;
+
+export function getActionPlanAccessCookieOptions() {
+  return {
+    httpOnly: true,
+    maxAge: PENDING_CLAIM_TTL_MS / 1000,
+    path: "/",
+    sameSite: "lax" as const,
+    secure:
+      process.env.NODE_ENV === "production" ||
+      process.env.VERCEL_ENV === "preview" ||
+      process.env.VERCEL_ENV === "production",
+  };
 }
 
 function createOpaqueValue(bytes: number) {
@@ -106,6 +124,30 @@ function getClaimExpiry(now = Date.now()) {
   return new Date(now + PENDING_CLAIM_TTL_MS).toISOString();
 }
 
+function safeHashEquals(left: string | null | undefined, right: string) {
+  if (!left || left.length !== right.length) return false;
+  return timingSafeEqual(Buffer.from(left), Buffer.from(right));
+}
+
+function hasValidTemporaryAccess(
+  document: ActionPlanDocument | undefined,
+  temporaryAccessToken?: string | null,
+) {
+  if (!document || document.status !== "pending_claim" || !temporaryAccessToken) {
+    return false;
+  }
+
+  const expiresAt = Date.parse(document.temporary_access_expires_at || "");
+  return (
+    Number.isFinite(expiresAt) &&
+    expiresAt >= Date.now() &&
+    safeHashEquals(
+      document.temporary_access_token_hash,
+      hashActionPlanAccessToken(temporaryAccessToken),
+    )
+  );
+}
+
 function serializeWriteInput(input: ActionPlanWriteInput) {
   return {
     plan: input.plan,
@@ -119,8 +161,9 @@ function serializeWriteInput(input: ActionPlanWriteInput) {
 function parseStoredActionPlan(
   id: string,
   document: ActionPlanDocument | undefined,
+  allowedStatus: ActionPlanStatus = "active",
 ): StoredActionPlan | null {
-  if (!document || document.status !== "active") return null;
+  if (!document || document.status !== allowedStatus) return null;
 
   const parsedPlan = compatibleActionPlanSchema.safeParse(document.plan);
   if (!parsedPlan.success) return null;
@@ -152,8 +195,9 @@ export async function createPendingActionPlan(
 ): Promise<PendingActionPlan> {
   const database = getAdminFirestore();
   const id = createOpaqueValue(18);
-  const claimSecret = createOpaqueValue(32);
+  const temporaryAccessToken = createOpaqueValue(32);
   const now = new Date().toISOString();
+  const temporaryAccessExpiresAt = getClaimExpiry();
 
   await database.collection(ACTION_PLANS_COLLECTION).doc(id).create({
     schema_version: "2",
@@ -161,17 +205,19 @@ export async function createPendingActionPlan(
     ...serializeWriteInput(input),
     owner_email: null,
     pending_owner_email: null,
-    claim_secret_hash: hashActionPlanClaimSecret(claimSecret),
+    claim_secret_hash: null,
     claim_link_token_hashes: [],
-    claim_expires_at: getClaimExpiry(),
+    claim_expires_at: temporaryAccessExpiresAt,
+    temporary_access_token_hash: hashActionPlanAccessToken(temporaryAccessToken),
+    temporary_access_expires_at: temporaryAccessExpiresAt,
     revision: 1,
     created_at: now,
     updated_at: now,
     claimed_at: null,
-    retention_expires_at: getClaimExpiry(),
+    retention_expires_at: temporaryAccessExpiresAt,
   });
 
-  return { id, claimSecret, revision: 1 };
+  return { id, temporaryAccessToken, revision: 1 };
 }
 
 export async function createOwnedActionPlan(
@@ -192,6 +238,8 @@ export async function createOwnedActionPlan(
     claim_secret_hash: null,
     claim_link_token_hashes: [],
     claim_expires_at: null,
+    temporary_access_token_hash: null,
+    temporary_access_expires_at: null,
     revision: 1,
     created_at: now,
     updated_at: now,
@@ -240,10 +288,45 @@ export async function getOwnedActionPlan(email: string, id: string) {
   return parseStoredActionPlan(document.id, data);
 }
 
+export async function getActionPlanForAccess(input: {
+  email?: string | null;
+  id: string;
+  temporaryAccessToken?: string | null;
+}) {
+  const database = getAdminFirestore();
+  const snapshot = await database
+    .collection(ACTION_PLANS_COLLECTION)
+    .doc(input.id)
+    .get();
+  const data = snapshot.data() as ActionPlanDocument | undefined;
+  if (!snapshot.exists || !data) return null;
+
+  if (
+    data.status === "active" &&
+    input.email &&
+    normalizeEmail(data.owner_email || "") === normalizeEmail(input.email)
+  ) {
+    return parseStoredActionPlan(snapshot.id, data);
+  }
+
+  if (hasValidTemporaryAccess(data, input.temporaryAccessToken)) {
+    return parseStoredActionPlan(snapshot.id, data, "pending_claim");
+  }
+
+  return null;
+}
+
 export class ActionPlanRevisionConflictError extends Error {
   constructor() {
     super("action_plan_revision_conflict");
     this.name = "ActionPlanRevisionConflictError";
+  }
+}
+
+export class InvalidActionPlanMutationError extends Error {
+  constructor() {
+    super("invalid_action_plan_mutation");
+    this.name = "InvalidActionPlanMutationError";
   }
 }
 
@@ -253,41 +336,73 @@ export async function updateOwnedActionPlanWorkspace(
   expectedRevision: number,
   workspaceState: ActionPlanWorkspaceState,
 ) {
+  return updateActionPlanWorkspaceForAccess({
+    email,
+    id,
+    expectedRevision,
+    workspaceState,
+  });
+}
+
+export async function updateActionPlanWorkspaceForAccess(input: {
+  email?: string | null;
+  id: string;
+  expectedRevision: number;
+  plan?: PersistableActionPlan;
+  temporaryAccessToken?: string | null;
+  workspaceState: ActionPlanWorkspaceState;
+}) {
   const database = getAdminFirestore();
-  const ownerEmail = normalizeEmail(email);
-  const reference = database.collection(ACTION_PLANS_COLLECTION).doc(id);
+  const ownerEmail = normalizeEmail(input.email || "");
+  const reference = database.collection(ACTION_PLANS_COLLECTION).doc(input.id);
 
   return database.runTransaction(async (transaction) => {
     const snapshot = await transaction.get(reference);
     const data = snapshot.data() as ActionPlanDocument | undefined;
-    if (
-      !snapshot.exists ||
-      data?.status !== "active" ||
-      normalizeEmail(data.owner_email || "") !== ownerEmail
-    ) {
+    const hasOwnedAccess = Boolean(
+      snapshot.exists &&
+        data?.status === "active" &&
+        ownerEmail &&
+        normalizeEmail(data.owner_email || "") === ownerEmail,
+    );
+    const hasTemporaryAccess =
+      snapshot.exists &&
+      hasValidTemporaryAccess(data, input.temporaryAccessToken);
+    if (!hasOwnedAccess && !hasTemporaryAccess) {
       return null;
     }
+    if (!data) return null;
 
     const parsedPlan = compatibleActionPlanSchema.safeParse(data.plan);
     if (!parsedPlan.success) return null;
+    const nextPlan = input.plan ?? parsedPlan.data;
+    if (
+      input.plan &&
+      (parsedPlan.data.version !== "manual" || input.plan.version !== "manual")
+    ) {
+      throw new InvalidActionPlanMutationError();
+    }
     const revision = Number(data.revision);
-    if (!Number.isInteger(revision) || revision !== expectedRevision) {
+    if (!Number.isInteger(revision) || revision !== input.expectedRevision) {
       throw new ActionPlanRevisionConflictError();
     }
 
     const nextRevision = revision + 1;
     const updatedAt = new Date().toISOString();
     const normalizedWorkspace = normalizeActionPlanWorkspaceState(
-      parsedPlan.data,
-      workspaceState,
+      nextPlan,
+      input.workspaceState,
     );
     transaction.set(
       reference,
       {
+        ...(input.plan ? { plan: nextPlan } : {}),
         workspace_state: normalizedWorkspace,
         revision: nextRevision,
         updated_at: updatedAt,
-        retention_expires_at: getLeadRetentionExpiry(),
+        ...(hasOwnedAccess
+          ? { retention_expires_at: getLeadRetentionExpiry() }
+          : {}),
       },
       { merge: true },
     );

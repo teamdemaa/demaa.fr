@@ -6,7 +6,7 @@ import {
   normalizeText,
   readJsonBody,
 } from "@/lib/api-security";
-import { isValidEmail, normalizeEmail } from "@/lib/email";
+import { requireCurrentCustomerEmail } from "@/lib/customer-space-session.server";
 import { enterpriseToSystem } from "@/lib/enterprise-annuaire";
 import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 import { resolveLeadAttribution } from "@/lib/lead-attribution-server";
@@ -24,7 +24,6 @@ const MARKETING_CONSENT_VERSION = "guide-waitlist-v1";
 
 type GuideNotifyRequestBody = {
   attribution?: unknown;
-  email?: unknown;
   idempotencyKey?: unknown;
   marketingConsent?: unknown;
   resourceSlug?: unknown;
@@ -80,6 +79,10 @@ async function handlePost(request: Request) {
   });
   if (limitedByIp) return limitedByIp;
 
+  const customer = await requireCurrentCustomerEmail();
+  if (customer.response) return customer.response;
+  const email = customer.email;
+
   const { data: body, response } = await readJsonBody<GuideNotifyRequestBody>(
     request,
     4 * 1024,
@@ -92,13 +95,12 @@ async function handlePost(request: Request) {
   }
 
   const systemSlug = normalizeText(body?.systemSlug, 120);
-  const email = normalizeEmail(normalizeText(body?.email, 160));
   const marketingConsent = body?.marketingConsent === true;
   const resourceSlug = normalizeText(body?.resourceSlug, 120);
 
-  if (!systemSlug || !email || !resourceSlug) {
+  if (!systemSlug || !resourceSlug) {
     return NextResponse.json(
-      { error: "Merci de renseigner votre adresse e-mail." },
+      { error: "La demande est incomplète." },
       { status: 400 },
     );
   }
@@ -106,13 +108,6 @@ async function handlePost(request: Request) {
   if (!isValidSectorSlug(systemSlug)) {
     return NextResponse.json(
       { error: "Le métier sélectionné est invalide." },
-      { status: 400 },
-    );
-  }
-
-  if (!isValidEmail(email)) {
-    return NextResponse.json(
-      { error: "Merci de renseigner une adresse e-mail valide." },
       { status: 400 },
     );
   }

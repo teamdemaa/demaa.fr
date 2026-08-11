@@ -160,6 +160,20 @@ export async function createOpportunity(input: PublicOpportunity) {
   return opportunity;
 }
 
+export async function updateOpportunity(input: PublicOpportunity) {
+  const opportunity = parseOpportunity(input);
+  const reference = getAdminFirestore()
+    .collection(OPPORTUNITIES_COLLECTION)
+    .doc(opportunity.opportunityId);
+  const snapshot = await reference.get();
+  if (!snapshot.exists) return false;
+  await reference.set({
+    ...opportunity,
+    updatedAt: new Date().toISOString(),
+  });
+  return true;
+}
+
 export async function updateOpportunityStatus(
   opportunityId: string,
   status: PublicOpportunity["status"],

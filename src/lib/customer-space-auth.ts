@@ -25,7 +25,10 @@ export function getCustomerCookieOptions(maxAge = CUSTOMER_SESSION_TTL_MS / 1000
     maxAge,
     path: "/",
     sameSite: "lax" as const,
-    secure: process.env.NODE_ENV === "production",
+    secure:
+      process.env.NODE_ENV === "production" ||
+      process.env.VERCEL_ENV === "preview" ||
+      process.env.VERCEL_ENV === "production",
   };
 }
 
@@ -40,7 +43,8 @@ export async function createMagicLinkToken(
   email: string,
   actionPlanClaim?: {
     actionPlanId: string;
-    claimSecret: string;
+    claimSecret?: string | null;
+    temporaryAccessToken?: string | null;
   } | null,
 ) {
   const token = createRawToken();
@@ -50,7 +54,12 @@ export async function createMagicLinkToken(
     actionPlanClaim: actionPlanClaim
       ? {
           actionPlanId: actionPlanClaim.actionPlanId,
-          claimSecretHash: hashToken(actionPlanClaim.claimSecret),
+          claimSecretHash: actionPlanClaim.claimSecret
+            ? hashToken(actionPlanClaim.claimSecret)
+            : null,
+          temporaryAccessTokenHash: actionPlanClaim.temporaryAccessToken
+            ? hashToken(actionPlanClaim.temporaryAccessToken)
+            : null,
         }
       : null,
     email: normalizeEmail(email),

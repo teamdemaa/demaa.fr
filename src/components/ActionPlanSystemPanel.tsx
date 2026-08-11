@@ -9,6 +9,7 @@ import type { SystemeDetail } from "@/lib/systeme-catalog";
 import type { RenderableSolutionSectionDto } from "@/lib/system-solutions-ui-dto";
 import type { System } from "@/lib/types";
 import type { ActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
+import type { SystemDetailTab } from "@/lib/system-detail-tabs";
 
 type SystemPayload = {
   system: System;
@@ -26,6 +27,8 @@ export default function ActionPlanSystemPanel({
   workspace,
   onWorkspaceChange,
   demoMode = false,
+  initialActiveTab,
+  initialResourceSlug,
 }: {
   options: readonly ActionPlanSystemOption[];
   selectedSystemId: string;
@@ -33,6 +36,8 @@ export default function ActionPlanSystemPanel({
   workspace: ActionPlanWorkspaceState;
   onWorkspaceChange: Dispatch<SetStateAction<ActionPlanWorkspaceState>>;
   demoMode?: boolean;
+  initialActiveTab?: SystemDetailTab;
+  initialResourceSlug?: string;
 }) {
   const [payload, setPayload] = useState<SystemPayload | null>(null);
   const [error, setError] = useState<{ slug: string; message: string } | null>(null);
@@ -40,6 +45,10 @@ export default function ActionPlanSystemPanel({
   const cacheKey = `${demoMode ? "demo" : "live"}:${selectedSystemId}`;
 
   useEffect(() => {
+    if (!selectedSystemId) {
+      return;
+    }
+
     if (systemPayloadCache.has(cacheKey)) return;
 
     const controller = new AbortController();
@@ -90,18 +99,27 @@ export default function ActionPlanSystemPanel({
       : null;
 
   return (
-    <section aria-labelledby="action-plan-system-title">
-      {!currentPayload ? (
-        <div className="mb-5 flex justify-end">
-          <ActionPlanSystemSelector
-            options={options}
-            value={selectedSystemId}
-            onChange={onSystemChange}
-          />
+    <section aria-label="Système" className="pt-3">
+      <div className="mx-auto mb-6 w-full max-w-xl xl:w-[min(40vw,36rem)]">
+        <ActionPlanSystemSelector
+          options={options}
+          value={selectedSystemId}
+          onChange={onSystemChange}
+        />
+      </div>
+
+      {!selectedSystemId ? (
+        <div className="rounded-[1.25rem] border border-dema-line bg-dema-paper px-6 py-12 text-center">
+          <h2 id="action-plan-system-title" className="text-2xl font-light tracking-[-0.03em] text-brand-blue">
+            Choisissez votre système métier
+          </h2>
+          <p className="mx-auto mt-2 max-w-lg text-sm leading-relaxed text-dema-muted">
+            Sélectionnez votre activité parmi les 115 systèmes pour afficher ses processus, ses solutions et ses ressources.
+          </p>
         </div>
       ) : null}
 
-      {!currentPayload && !currentError ? (
+      {selectedSystemId && !currentPayload && !currentError ? (
         <div className="flex min-h-48 items-center justify-center rounded-[1.25rem] border border-dema-line bg-dema-paper text-sm text-dema-muted">
           <LoaderCircle className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
           Chargement du système métier…
@@ -129,14 +147,9 @@ export default function ActionPlanSystemPanel({
           selectableSolutions
           headingAs="h3"
           headingId="action-plan-system-title"
-          headerActions={(
-            <ActionPlanSystemSelector
-              options={options}
-              value={selectedSystemId}
-              onChange={onSystemChange}
-            />
-          )}
           intro={currentPayload.intro}
+          initialActiveTab={initialActiveTab}
+          initialResourceSlug={initialResourceSlug}
           solutionSections={currentPayload.solutionSections}
           system={currentPayload.system}
           systeme={currentPayload.systeme}

@@ -123,11 +123,6 @@ function OperationalRoutineAccordion({
 }) {
   return (
     <section aria-label="Routines du système">
-      {onToggleStep ? (
-        <p className="mb-3 text-xs text-dema-muted">
-          Cochez les éléments déjà en place dans votre entreprise.
-        </p>
-      ) : null}
       <div>
         {routines.map((routine, index) => (
           <RoutineItem

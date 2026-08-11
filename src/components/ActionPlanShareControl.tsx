@@ -2,26 +2,44 @@
 
 import { Check, Share2 } from "lucide-react";
 import { useState } from "react";
-import type { ActionPlan } from "@/lib/action-plan-contract";
+import type { PersistableActionPlan } from "@/lib/action-plan-contract";
+import type { ActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
 
-function buildShareText(plan: ActionPlan) {
+function buildShareText(
+  plan: PersistableActionPlan,
+  workspace?: ActionPlanWorkspaceState,
+) {
+  const visibleActions = workspace
+    ? plan.weeklyActions.filter(
+        (action) => !workspace.deletedActionIds.includes(action.id),
+      )
+    : plan.weeklyActions;
+
   return [
     "Mon plan d’action Demaa",
     "",
     plan.summary,
     "",
     "À faire cette semaine",
-    ...plan.weeklyActions.map(
+    ...visibleActions.map(
       (action, index) => `${index + 1}. ${action.title}`,
     ),
   ].join("\n");
 }
 
-export default function ActionPlanShareControl({ plan }: { plan: ActionPlan }) {
+export default function ActionPlanShareControl({
+  plan,
+  workspace,
+  variant = "icon",
+}: {
+  plan: PersistableActionPlan;
+  workspace?: ActionPlanWorkspaceState;
+  variant?: "icon" | "menu";
+}) {
   const [copied, setCopied] = useState(false);
 
   async function sharePlan() {
-    const text = buildShareText(plan);
+    const text = buildShareText(plan, workspace);
 
     try {
       if (navigator.share) {
@@ -52,17 +70,23 @@ export default function ActionPlanShareControl({ plan }: { plan: ActionPlan }) {
     <button
       type="button"
       onClick={() => void sharePlan()}
-      className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-dema-muted transition hover:border-dema-forest/30 hover:text-dema-forest"
+      className={variant === "menu"
+        ? "block w-full appearance-none whitespace-nowrap border-0 bg-transparent px-2 py-1.5 text-left text-sm font-normal leading-6 text-brand-blue transition-colors hover:text-dema-forest focus-visible:outline-none focus-visible:underline"
+        : "inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-dema-muted transition hover:border-dema-forest/30 hover:text-dema-forest"}
       aria-label={copied ? "Plan copié" : "Partager le plan"}
-      title={copied ? "Plan copié" : "Partager le plan"}
+      title={variant === "icon" ? (copied ? "Plan copié" : "Partager le plan") : undefined}
       aria-live="polite"
     >
-      {copied ? (
-        <Check className="h-4 w-4" aria-hidden="true" />
-      ) : (
-        <Share2 className="h-4 w-4" aria-hidden="true" />
-      )}
-      <span className="sr-only">{copied ? "Plan copié" : "Partager le plan"}</span>
+      {variant === "icon" ? (
+        copied ? (
+          <Check className="h-4 w-4" aria-hidden="true" />
+        ) : (
+          <Share2 className="h-4 w-4" aria-hidden="true" />
+        )
+      ) : null}
+      <span className={variant === "menu" ? undefined : "sr-only"}>
+        {copied ? "Plan copié" : "Partager"}
+      </span>
     </button>
   );
 }

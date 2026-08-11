@@ -1,7 +1,7 @@
 "use client";
 
 import { Search } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ProviderProfileModal from "@/components/ProviderProfileModal";
 import {
   EXPERTISE_FAMILIES,
@@ -12,8 +12,12 @@ import { matchesSearchQuery } from "@/lib/search";
 
 export default function ExpertiseCatalogClient({
   expertises,
+  initialEmail = "",
+  compact = false,
 }: {
   expertises: readonly ExpertiseCatalogEntry[];
+  initialEmail?: string;
+  compact?: boolean;
 }) {
   const [query, setQuery] = useState("");
   const [selectedExpertiseId, setSelectedExpertiseId] = useState<string | null>(null);
@@ -27,9 +31,20 @@ export default function ExpertiseCatalogClient({
     [expertises, query],
   );
 
+  useEffect(() => {
+    if (!initialEmail) return;
+    const searchParams = new URLSearchParams(window.location.search);
+    if (searchParams.get("intent") !== "team-demaa-profile") return;
+    const expertiseId = searchParams.get("expertiseId");
+    if (expertiseId && expertises.some((entry) => entry.expertiseId === expertiseId)) {
+      const timeout = window.setTimeout(() => setSelectedExpertiseId(expertiseId), 0);
+      return () => window.clearTimeout(timeout);
+    }
+  }, [expertises, initialEmail]);
+
   return (
     <>
-      <label className="demaa-search-shell relative mx-auto mt-8 block max-w-xl">
+      <label className={`demaa-search-shell relative mx-auto block max-w-xl ${compact ? "mt-4" : "mt-8"}`}>
         <span className="sr-only">Rechercher une expertise</span>
         <Search className="pointer-events-none absolute left-5 top-1/2 h-4 w-4 -translate-y-1/2 text-dema-muted" aria-hidden="true" />
         <input
@@ -41,7 +56,7 @@ export default function ExpertiseCatalogClient({
         />
       </label>
 
-      <div className="mt-12 space-y-12">
+      <div className={`${compact ? "mt-8 space-y-10" : "mt-12 space-y-12"}`}>
         {EXPERTISE_FAMILIES.map((family) => {
           const entries = filtered.filter((entry) => entry.family === family);
           if (entries.length === 0) return null;
@@ -84,6 +99,7 @@ export default function ExpertiseCatalogClient({
       {selectedExpertiseId ? (
         <ProviderProfileModal
           expertises={expertises}
+          initialEmail={initialEmail}
           initialExpertiseId={selectedExpertiseId}
           onClose={() => setSelectedExpertiseId(null)}
         />

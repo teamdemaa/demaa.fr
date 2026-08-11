@@ -9,15 +9,21 @@ import {
   Columns3,
   Copy,
   LayoutList,
+  Plus,
+  Trash2,
   X,
 } from "lucide-react";
 import {
   type Dispatch,
   type ReactNode,
   type SetStateAction,
+  useRef,
   useState,
 } from "react";
-import type { ActionPlan, ActionPlanAction } from "@/lib/action-plan-contract";
+import type {
+  PersistableActionPlanAction,
+} from "@/lib/action-plan-contract";
+import type { EditableActionPlan } from "@/lib/action-plan-manual";
 import {
   compactActionPlanSteps,
   type ActionPlanTaskStatus,
@@ -122,11 +128,13 @@ function ActionDrawer({
   workspace,
   onWorkspaceChange,
   onClose,
+  onDelete,
 }: {
-  action: ActionPlanAction;
+  action: PersistableActionPlanAction;
   workspace: ActionPlanWorkspaceState;
   onWorkspaceChange: Dispatch<SetStateAction<ActionPlanWorkspaceState>>;
   onClose: () => void;
+  onDelete: () => void;
 }) {
   const taskState = workspace.tasks[action.id];
   const effectiveTitle = taskState?.overrides.title || action.title;
@@ -139,6 +147,8 @@ function ActionDrawer({
   const [draftTitle, setDraftTitle] = useState(effectiveTitle);
   const [draftObjective, setDraftObjective] = useState(effectiveObjective);
   const [draftSteps, setDraftSteps] = useState(effectiveSteps.join("\n"));
+  const [confirmingDelete, setConfirmingDelete] = useState(false);
+  const skipNextTaskBlur = useRef(false);
 
   function updateTask(
     updater: (current: NonNullable<typeof taskState>) => NonNullable<typeof taskState>,
@@ -203,6 +213,58 @@ function ActionDrawer({
       },
     }));
     setDraftSteps(nextSteps.join("\n"));
+  }
+
+  function addTaskAfter(
+    index: number,
+    source: HTMLTextAreaElement,
+  ) {
+    const tasks = draftSteps.split("\n");
+    if (tasks.length >= 7) return;
+
+    const nextTasks = [
+      ...tasks.slice(0, index + 1),
+      "",
+      ...tasks.slice(index + 1),
+    ];
+    const dialog = source.closest('[role="dialog"]');
+    skipNextTaskBlur.current = true;
+    setDraftSteps(nextTasks.join("\n"));
+
+    window.setTimeout(() => {
+      const nextInput = dialog?.querySelector<HTMLTextAreaElement>(
+        `[data-task-index="${index + 1}"]`,
+      );
+      nextInput?.focus();
+    }, 0);
+  }
+
+  function removeTask(index: number) {
+    const currentSteps = draftSteps.split("\n");
+    if (currentSteps.length <= 1) return;
+
+    const nextLines = currentSteps.filter((_, currentIndex) => currentIndex !== index);
+    const remappedCompletedIndexes = taskState.completedStepIndexes.flatMap(
+      (completedIndex) => {
+        if (completedIndex === index) return [];
+        return [completedIndex > index ? completedIndex - 1 : completedIndex];
+      },
+    );
+    const compacted = compactActionPlanSteps(
+      nextLines,
+      remappedCompletedIndexes,
+    );
+    if (compacted.steps.length === 0) return;
+
+    setDraftSteps(compacted.steps.join("\n"));
+    updateTask((current) => ({
+      ...current,
+      completedStepIndexes: compacted.completedStepIndexes,
+      overrides: {
+        ...current.overrides,
+        steps: compacted.steps,
+      },
+    }));
   }
 
   async function copySupport() {
@@ -270,18 +332,18 @@ function ActionDrawer({
               value={draftObjective}
               onChange={(event) => setDraftObjective(event.target.value)}
               onBlur={saveObjective}
-              rows={1}
-              className="-mx-1 mt-1.5 min-h-6 w-[calc(100%+0.5rem)] resize-none overflow-hidden rounded-lg bg-transparent px-1 text-sm leading-relaxed text-brand-blue [field-sizing:content] outline-none transition focus:bg-dema-sage/35"
+              rows={2}
+              className="mt-1.5 min-h-[3.75rem] w-full resize-none overflow-hidden rounded-lg bg-brand-blue/[0.035] px-2 py-1.5 text-sm leading-relaxed text-brand-blue [field-sizing:content] outline-none transition focus:bg-dema-sage/35"
             />
           </div>
 
           <div>
-            <p className="text-xs font-medium uppercase tracking-[0.12em] text-dema-forest">Étapes</p>
+            <p className="text-xs font-medium uppercase tracking-[0.12em] text-dema-forest">Tâches</p>
             <div className="mt-3 space-y-2">
               {draftSteps.split("\n").map((step, index) => {
                 const checked = taskState.completedStepIndexes.includes(index);
                 return (
-                  <label key={`${action.id}-${index}`} className="flex cursor-pointer gap-3 rounded-xl bg-dema-sage/45 px-3 py-3 text-sm leading-relaxed text-brand-blue">
+                  <div key={`${action.id}-${index}`} className="group flex items-start gap-3 rounded-xl bg-dema-sage/45 px-3 py-3 text-sm leading-relaxed text-brand-blue">
                     <input
                       type="checkbox"
                       checked={checked}
@@ -292,6 +354,7 @@ function ActionDrawer({
                           : [...current.completedStepIndexes, index].sort((left, right) => left - right),
                       }))}
                       className="mt-0.5 h-4 w-4 accent-[#2f664a]"
+                      aria-label={`Marquer la tâche ${index + 1} comme terminée`}
                     />
                     <textarea
                       value={step}
@@ -300,12 +363,35 @@ function ActionDrawer({
                         nextSteps[index] = event.target.value.replace(/\n/g, " ");
                         setDraftSteps(nextSteps.join("\n"));
                       }}
-                      onBlur={saveSteps}
+                      onBlur={() => {
+                        if (skipNextTaskBlur.current) {
+                          skipNextTaskBlur.current = false;
+                          return;
+                        }
+                        saveSteps();
+                      }}
+                      onKeyDown={(event) => {
+                        if (event.key !== "Enter") return;
+                        event.preventDefault();
+                        addTaskAfter(index, event.currentTarget);
+                      }}
                       rows={1}
-                      aria-label={`Étape ${index + 1}`}
-                      className={`min-h-6 w-full resize-none overflow-hidden bg-transparent [field-sizing:content] outline-none transition focus:bg-dema-paper/70 ${checked ? "text-dema-muted" : ""}`}
+                      aria-label={`Tâche ${index + 1}`}
+                      data-task-index={index}
+                      className={`min-h-6 min-w-0 flex-1 resize-none overflow-hidden bg-transparent [field-sizing:content] outline-none transition focus:bg-dema-paper/70 ${checked ? "text-dema-muted" : ""}`}
                     />
-                  </label>
+                    {draftSteps.split("\n").length > 1 ? (
+                      <button
+                        type="button"
+                        onClick={() => removeTask(index)}
+                        className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-dema-muted/70 transition hover:bg-dema-paper hover:text-red-700 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25 sm:opacity-0 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100"
+                        aria-label={`Supprimer la tâche ${index + 1}`}
+                        title="Supprimer la tâche"
+                      >
+                        <Trash2 className="h-3.5 w-3.5" aria-hidden="true" />
+                      </button>
+                    ) : null}
+                  </div>
                 );
               })}
             </div>
@@ -333,6 +419,42 @@ function ActionDrawer({
               className="mt-2 w-full resize-y rounded-xl border border-dema-line bg-dema-cream p-3 text-sm leading-relaxed text-brand-blue outline-none focus:border-dema-forest/30"
             />
           </label>
+
+          <div className="border-t border-dema-line pt-5">
+            {confirmingDelete ? (
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between" role="alert">
+                <p className="text-sm text-brand-blue">Supprimer cette action ?</p>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setConfirmingDelete(false)}
+                    className="min-h-10 rounded-full px-4 text-sm text-dema-muted transition hover:text-brand-blue"
+                  >
+                    Annuler
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onDelete();
+                      onClose();
+                    }}
+                    className="min-h-10 rounded-full border border-red-200 px-4 text-sm text-red-700 transition hover:bg-red-50"
+                  >
+                    Supprimer
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setConfirmingDelete(true)}
+                className="inline-flex min-h-10 items-center gap-2 text-sm text-dema-muted transition hover:text-red-700"
+              >
+                <Trash2 className="h-4 w-4" aria-hidden="true" />
+                Supprimer l’action
+              </button>
+            )}
+          </div>
         </div>
       </section>
     </div>
@@ -344,7 +466,7 @@ function StrategyPanel({
   workspace,
   onWorkspaceChange,
 }: {
-  plan: ActionPlan;
+  plan: EditableActionPlan;
   workspace: ActionPlanWorkspaceState;
   onWorkspaceChange: Dispatch<SetStateAction<ActionPlanWorkspaceState>>;
 }) {
@@ -356,29 +478,11 @@ function StrategyPanel({
         const answers = section.fields.map(([, key], index) =>
           overrides?.[`answer${["One", "Two", "Three"][index]}` as keyof typeof overrides] ?? pillar[key],
         );
-        const headline = overrides?.headline ?? pillar.headline;
 
         return (
           <article key={section.key} className="rounded-[1.25rem] border border-dema-line bg-dema-paper p-5 shadow-[0_10px_30px_rgba(23,35,29,0.035)] sm:p-6">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-forest">{section.label}</p>
-            <textarea
-              value={headline}
-              onChange={(event) => onWorkspaceChange((current) => ({
-                ...current,
-                strategyOverrides: {
-                  ...current.strategyOverrides,
-                  [section.overrideKey]: {
-                    ...current.strategyOverrides[section.overrideKey],
-                    headline: event.target.value,
-                  },
-                },
-              }))}
-              rows={1}
-              maxLength={180}
-              aria-label={`Titre ${section.label}`}
-              className="-mx-1 mt-2 min-h-7 w-[calc(100%+0.5rem)] resize-none overflow-hidden rounded-lg bg-transparent px-1 text-xl font-medium leading-snug text-brand-blue [field-sizing:content] outline-none transition focus:bg-dema-sage/40"
-            />
-            <div className="mt-5 space-y-4">
+            <div className="mt-4 space-y-4">
               {section.fields.map(([label], index) => (
                 <div key={label}>
                   <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-brand-blue/70">{label}</p>
@@ -397,10 +501,10 @@ function StrategyPanel({
                         },
                       }));
                     }}
-                    rows={1}
+                    rows={2}
                     maxLength={500}
                     aria-label={label}
-                    className="-mx-1 mt-1.5 min-h-6 w-[calc(100%+0.5rem)] resize-none overflow-hidden rounded-lg bg-transparent px-1 text-sm leading-relaxed text-brand-blue/75 [field-sizing:content] outline-none transition focus:bg-dema-sage/40 focus:text-brand-blue"
+                    className="mt-1.5 min-h-[3.75rem] w-full resize-none overflow-hidden rounded-lg bg-brand-blue/[0.035] px-2 py-1.5 text-sm leading-relaxed text-brand-blue/75 [field-sizing:content] outline-none transition focus:bg-dema-sage/40 focus:text-brand-blue"
                   />
                 </div>
               ))}
@@ -417,16 +521,27 @@ export default function ActionPlanResult({
   workspace,
   onWorkspaceChange,
   headerActions,
+  manualMode = false,
+  onAddAction,
+  onDeleteAction,
+  onGenerateLater,
 }: {
-  plan: ActionPlan;
+  plan: EditableActionPlan;
   workspace: ActionPlanWorkspaceState;
   onWorkspaceChange: Dispatch<SetStateAction<ActionPlanWorkspaceState>>;
   headerActions?: ReactNode;
+  manualMode?: boolean;
+  onAddAction?: () => void;
+  onDeleteAction: (actionId: string) => void;
+  onGenerateLater?: () => void;
 }) {
   const [section, setSection] = useState<PlanSection>("tasks");
   const [view, setView] = useState<TaskView>("list");
   const [selectedActionId, setSelectedActionId] = useState<string | null>(null);
-  const selectedAction = plan.weeklyActions.find((action) => action.id === selectedActionId) || null;
+  const visibleActions = plan.weeklyActions.filter(
+    (action) => !workspace.deletedActionIds.includes(action.id),
+  );
+  const selectedAction = visibleActions.find((action) => action.id === selectedActionId) || null;
 
   function updateStatus(actionId: string, status: ActionPlanTaskStatus) {
     onWorkspaceChange((current) => ({
@@ -440,10 +555,10 @@ export default function ActionPlanResult({
 
   return (
     <div>
-      <div className="mb-7 flex items-end justify-between gap-3 border-b border-dema-line">
+      <div className="mb-7 flex items-end justify-between gap-1 border-b border-dema-line sm:gap-3">
         <div className="flex items-center gap-1" role="tablist" aria-label="Plan d’action">
-          <button type="button" role="tab" aria-selected={section === "tasks"} onClick={() => setSection("tasks")} className={`-mb-px min-h-12 border-b-2 px-4 text-sm font-medium ${section === "tasks" ? "border-dema-forest text-dema-forest" : "border-transparent text-dema-muted"}`}>À faire</button>
-          <button type="button" role="tab" aria-selected={section === "strategy"} onClick={() => setSection("strategy")} className={`-mb-px min-h-12 border-b-2 px-4 text-sm font-medium ${section === "strategy" ? "border-dema-forest text-dema-forest" : "border-transparent text-dema-muted"}`}>Stratégie</button>
+          <button type="button" role="tab" aria-selected={section === "tasks"} onClick={() => setSection("tasks")} className={`-mb-px min-h-12 border-b-2 px-2.5 text-xs font-medium sm:px-4 sm:text-sm ${section === "tasks" ? "border-dema-forest text-dema-forest" : "border-transparent text-dema-muted"}`}>À faire</button>
+          <button type="button" role="tab" aria-selected={section === "strategy"} onClick={() => setSection("strategy")} className={`-mb-px min-h-12 border-b-2 px-2.5 text-xs font-medium sm:px-4 sm:text-sm ${section === "strategy" ? "border-dema-forest text-dema-forest" : "border-transparent text-dema-muted"}`}>Stratégie</button>
         </div>
         {headerActions}
       </div>
@@ -454,15 +569,37 @@ export default function ActionPlanResult({
             <div>
               <h2 id="tasks-title" className="text-3xl font-light tracking-[-0.04em] text-brand-blue sm:text-4xl">Cette semaine</h2>
             </div>
-            <div className="inline-flex w-fit rounded-full border border-dema-line bg-dema-paper p-1" aria-label="Vue des actions">
-              <button type="button" onClick={() => setView("list")} aria-pressed={view === "list"} className={`inline-flex min-h-10 items-center gap-2 rounded-full px-3 text-xs font-medium ${view === "list" ? "bg-dema-sage text-dema-forest" : "text-dema-muted"}`}><LayoutList className="h-4 w-4" aria-hidden="true" /> Liste</button>
-              <button type="button" onClick={() => setView("kanban")} aria-pressed={view === "kanban"} className={`inline-flex min-h-10 items-center gap-2 rounded-full px-3 text-xs font-medium ${view === "kanban" ? "bg-dema-sage text-dema-forest" : "text-dema-muted"}`}><Columns3 className="h-4 w-4" aria-hidden="true" /> Kanban</button>
+            <div className="flex flex-wrap items-center gap-2">
+              {manualMode && onAddAction ? (
+                <button type="button" onClick={onAddAction} disabled={visibleActions.length >= 7} className="demaa-secondary-button min-h-10 gap-2 px-4 text-xs disabled:cursor-not-allowed disabled:opacity-45">
+                  <Plus className="h-4 w-4" aria-hidden="true" /> Ajouter une action
+                </button>
+              ) : null}
+              <div className="inline-flex w-fit rounded-full border border-dema-line bg-dema-paper p-1" aria-label="Vue des actions">
+                <button type="button" onClick={() => setView("list")} aria-pressed={view === "list"} className={`inline-flex min-h-10 items-center gap-2 rounded-full px-3 text-xs font-medium ${view === "list" ? "bg-dema-sage text-dema-forest" : "text-dema-muted"}`}><LayoutList className="h-4 w-4" aria-hidden="true" /> Liste</button>
+                <button type="button" onClick={() => setView("kanban")} aria-pressed={view === "kanban"} className={`inline-flex min-h-10 items-center gap-2 rounded-full px-3 text-xs font-medium ${view === "kanban" ? "bg-dema-sage text-dema-forest" : "text-dema-muted"}`}><Columns3 className="h-4 w-4" aria-hidden="true" /> Kanban</button>
+              </div>
             </div>
           </div>
 
-          {view === "list" ? (
+          {manualMode && visibleActions.length === 0 ? (
+            <div className="mt-6 rounded-[1.25rem] border border-dashed border-dema-line bg-dema-paper px-6 py-10 text-center">
+              {onAddAction ? (
+                <button type="button" onClick={onAddAction} className="demaa-secondary-button min-h-11 gap-2 px-5">
+                  <Plus className="h-4 w-4" aria-hidden="true" /> Ajouter une action
+                </button>
+              ) : null}
+              {onGenerateLater ? (
+                <button type="button" onClick={onGenerateLater} className="mx-auto mt-4 block text-sm text-dema-muted underline decoration-dema-line underline-offset-4 transition hover:text-dema-forest">
+                  Générer un plan à partir de ma situation
+                </button>
+              ) : null}
+            </div>
+          ) : null}
+
+          {visibleActions.length > 0 && view === "list" ? (
             <div className="mt-6 overflow-hidden rounded-[1.25rem] border border-dema-line bg-dema-paper">
-              {plan.weeklyActions.map((action) => {
+              {visibleActions.map((action) => {
                 const taskState = workspace.tasks[action.id];
                 const title = taskState.overrides.title || action.title;
                 return (
@@ -479,13 +616,13 @@ export default function ActionPlanResult({
                 );
               })}
             </div>
-          ) : (
+          ) : visibleActions.length > 0 ? (
             <div className="mt-6 grid gap-4 lg:grid-cols-3">
               {(Object.keys(statusMeta) as ActionPlanTaskStatus[]).map((status) => (
                 <section key={status} className="rounded-[1.25rem] bg-dema-sage/45 p-3" aria-labelledby={`kanban-${status}`}>
                   <h3 id={`kanban-${status}`} className="px-1 py-2 text-xs font-medium uppercase tracking-[0.12em] text-dema-muted">{statusMeta[status].label}</h3>
                   <div className="space-y-2">
-                    {plan.weeklyActions.filter((action) => workspace.tasks[action.id].status === status).map((action) => (
+                    {visibleActions.filter((action) => workspace.tasks[action.id].status === status).map((action) => (
                       <article key={action.id} className="rounded-xl border border-dema-line bg-dema-paper p-4 shadow-[0_7px_18px_rgba(23,35,29,0.03)]">
                         <button type="button" onClick={() => setSelectedActionId(action.id)} className="w-full text-left">
                           <span className="block text-sm font-medium leading-snug text-brand-blue">{workspace.tasks[action.id].overrides.title || action.title}</span>
@@ -496,25 +633,35 @@ export default function ActionPlanResult({
                         </div>
                       </article>
                     ))}
-                    {plan.weeklyActions.every((action) => workspace.tasks[action.id].status !== status) ? <p className="px-2 py-4 text-xs text-dema-muted">Aucune action</p> : null}
+                    {visibleActions.every((action) => workspace.tasks[action.id].status !== status) ? <p className="px-2 py-4 text-xs text-dema-muted">Aucune action</p> : null}
                   </div>
                 </section>
               ))}
             </div>
-          )}
+          ) : null}
+
+          {manualMode && visibleActions.length > 0 && onGenerateLater ? (
+            <div className="mt-5 text-center">
+              <button type="button" onClick={onGenerateLater} className="text-sm text-dema-muted underline decoration-dema-line underline-offset-4 transition hover:text-dema-forest">
+                Générer un plan à partir de ma situation
+              </button>
+            </div>
+          ) : null}
         </section>
       ) : (
-        <section aria-labelledby="strategy-title">
-          <div className="mb-6">
-            <h2 id="strategy-title" className="text-3xl font-light tracking-[-0.04em] text-brand-blue sm:text-4xl">Stratégie</h2>
-            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-dema-muted">Votre cap en quatre points. Modifiez-le directement pour qu’il reste fidèle à votre entreprise.</p>
-          </div>
+        <section aria-label="Stratégie">
           <StrategyPanel plan={plan} workspace={workspace} onWorkspaceChange={onWorkspaceChange} />
         </section>
       )}
 
       {selectedAction ? (
-        <ActionDrawer action={selectedAction} workspace={workspace} onWorkspaceChange={onWorkspaceChange} onClose={() => setSelectedActionId(null)} />
+        <ActionDrawer
+          action={selectedAction}
+          workspace={workspace}
+          onWorkspaceChange={onWorkspaceChange}
+          onClose={() => setSelectedActionId(null)}
+          onDelete={() => onDeleteAction(selectedAction.id)}
+        />
       ) : null}
     </div>
   );

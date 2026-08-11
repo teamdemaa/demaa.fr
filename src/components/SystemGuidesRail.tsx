@@ -49,6 +49,21 @@ export default function SystemGuidesRail({
     return () => window.removeEventListener("resize", updateRailState);
   }, [orderedResources.length, updateRailState]);
 
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    if (searchParams.get("intent") !== "guide-notify") return;
+    if (searchParams.get("systemSlug") !== systemSlug) return;
+    const resourceSlug = searchParams.get("resourceSlug");
+    const resource = orderedResources.find(
+      (entry) =>
+        entry.resourceSlug === resourceSlug &&
+        entry.availability === "coming-soon",
+    );
+    if (!resource) return;
+    const timeout = window.setTimeout(() => setNotifyResource(resource), 0);
+    return () => window.clearTimeout(timeout);
+  }, [orderedResources, systemSlug]);
+
   function navigateRail(direction: -1 | 1) {
     const rail = railRef.current;
     const firstCard = rail?.querySelector<HTMLElement>("[data-guide-resource-card]");

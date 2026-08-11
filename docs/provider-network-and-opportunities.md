@@ -7,9 +7,14 @@ Firebase est la seule source de vérité en environnement configuré :
 - `expertise_catalog/{expertiseId}` contient les 23 expertises publiques ;
 - `expertise_placements/{placementId}` contient les 115 placements éditoriaux
   vers les systèmes métier ;
-- `opportunities/{opportunityId}` contient les besoins ouverts, fermés ou en brouillon ;
-- `lead_requests/{leadId}` reçoit les profils généraux et les candidatures ;
-- chaque profil ou candidature programme une notification Slack.
+- `opportunities/{opportunityId}` contient les opportunités ouvertes, fermées ou en brouillon ;
+- `lead_requests/{leadId}` reçoit les profils généraux et les manifestations d'intérêt ;
+- chaque profil ou manifestation d'intérêt programme une notification Slack.
+
+Le contrat des opportunités accepte six types : `mission`,
+`sous-traitance`, `partenariat`, `reprise-transmission`, `collaboration` et
+`autre`. `expertiseId` est facultatif. Les trois enregistrements historiques
+sans type restent valides et sont lus comme des missions.
 
 Les fichiers `*.snapshot.generated.json` sont des paquets d’amorçage versionnés pour les tests, le build local et la récupération contrôlée. Ils ne remplacent jamais silencieusement Firebase lorsque Firebase est configuré.
 
@@ -18,12 +23,19 @@ Les pages publiques attendent une requête avant de charger leurs données. En e
 ## Deux parcours publics
 
 - `/rejoindre-team-demaa` : inscription permanente d’un professionnel sur une à trois expertises ;
-- `/opportunites` : besoins concrets et actuellement ouverts.
+- `/opportunites` : opportunités actuellement disponibles, avec une fiche et
+  un formulaire de manifestation d'intérêt ;
+- le panneau embarquable charge les données publiques à son ouverture depuis
+  `/api/opportunities` et conserve un bloc distinct vers
+  `Rejoindre Team Demaa`.
 
 Les anciennes routes `/rejoindre-le-reseau`, `/partenaires` et `/opportunites-b2b` redirigent définitivement vers ces routes.
 L’ancien dossier public `/opportunites/0034` redirige également vers le catalogue dynamique.
 
-Les deux parcours utilisent le même formulaire et la même route d’enregistrement : `/api/provider-profile-submission`.
+Les deux parcours réutilisent la même route sécurisée
+`/api/provider-profile-submission`. Une manifestation d'intérêt est stockée
+avec `requestType: opportunity_interest` et son `opportunityId`; un profil
+permanent conserve `requestType: provider_profile_submission`.
 
 ## Gestion quotidienne
 

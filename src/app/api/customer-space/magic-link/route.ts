@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 import {
   enforceRateLimit,
   normalizeText,
@@ -12,6 +13,7 @@ import { InvalidActionPlanClaimError } from "@/lib/customer-space-auth";
 import { isValidEmail, normalizeEmail } from "@/lib/email";
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
 import { getSafeCustomerReturnTo } from "@/lib/customer-space-redirect";
+import { ACTION_PLAN_ACCESS_COOKIE } from "@/lib/action-plan-storage.server";
 
 export const runtime = "nodejs";
 
@@ -41,12 +43,19 @@ export async function POST(request: Request) {
   const returnTo = getSafeCustomerReturnTo(normalizeText(body?.returnTo, 200));
   const actionPlanId = normalizeText(body?.actionPlanId, 40);
   const actionPlanClaimSecret = normalizeText(body?.actionPlanClaimSecret, 80);
-  const hasPartialActionPlanClaim = Boolean(actionPlanId || actionPlanClaimSecret);
+  const cookieStore = await cookies();
+  const temporaryAccessToken = normalizeText(
+    cookieStore.get(ACTION_PLAN_ACCESS_COOKIE)?.value,
+    80,
+  );
+  const hasActionPlanClaim = Boolean(actionPlanId);
 
   if (
-    hasPartialActionPlanClaim &&
-    (!/^[A-Za-z0-9_-]{12,40}$/.test(actionPlanId) ||
-      !/^[A-Za-z0-9_-]{32,80}$/.test(actionPlanClaimSecret))
+    (actionPlanClaimSecret && !actionPlanId) ||
+    (hasActionPlanClaim &&
+      (!/^[A-Za-z0-9_-]{12,40}$/.test(actionPlanId) ||
+        (!temporaryAccessToken &&
+          !/^[A-Za-z0-9_-]{32,80}$/.test(actionPlanClaimSecret))))
   ) {
     return noStore(NextResponse.json(
       { error: "La demande de sauvegarde n'est plus valide." },
@@ -76,8 +85,12 @@ export async function POST(request: Request) {
 
   try {
     emailResult = await sendCustomerMagicLinkEmail({
-      actionPlanClaim: hasPartialActionPlanClaim
-        ? { actionPlanId, claimSecret: actionPlanClaimSecret }
+      actionPlanClaim: hasActionPlanClaim
+        ? {
+            actionPlanId,
+            claimSecret: actionPlanClaimSecret || null,
+            temporaryAccessToken: temporaryAccessToken || null,
+          }
         : null,
       email,
       request,

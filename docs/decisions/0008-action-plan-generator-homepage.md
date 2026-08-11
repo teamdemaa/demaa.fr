@@ -11,6 +11,11 @@
 > `/systemes`, `/academie`, leur navigation publique, les 115 fiches et toutes
 > les autres décisions des ADR 0003, 0004, 0006 et 0007 restent applicables.
 
+> **Mise à jour :** les points 2 et 11 ainsi que les lignes Coaching du hors
+> périmètre sont supersédés par les ADR 0009 et 0010. La navigation
+> `Plan d’action / Système / Académie / Opportunités` est désormais visible dès
+> l'arrivée ; la première version Coaching existe via `Parler à un spécialiste`.
+
 ## Contexte
 
 La homepage publique reproduit actuellement le hub des Systèmes. Demaa veut y
@@ -23,7 +28,8 @@ catalogue, ni rendre privées les destinations publiques existantes.
 
 ## Décision
 
-1. `/` devient l'entrée canonique du générateur de plan d'action.
+1. `/` devient l'entrée canonique du générateur de plan d'action. Sa promesse
+   exacte est : « Qu’est-ce qui freine votre entreprise ? »
 2. Avant connexion, cette entrée affiche Demaa, `Se connecter` et un grand
    champ libre. Aucun questionnaire structuré ne précède la génération.
 3. Une seule génération principale produit un JSON strict comprenant le plan,
@@ -36,7 +42,8 @@ catalogue, ni rendre privées les destinations publiques existantes.
    Système sélectionné. Une dropdown permet de choisir l'un des 115 Systèmes
    sans appel IA et sans réécriture de la stratégie.
 7. Pour un visiteur, le résultat reste dans l'état de la page ou de la session
-   courante. Aucun `localStorage` durable n'est utilisé comme source de vérité.
+   courante. Aucun `localStorage` durable n'est utilisé comme source de vérité
+   du plan. Seul le slug du Système choisi est mémorisé dans le navigateur.
 8. Après sauvegarde, Firebase/cloud est l'unique source persistante.
 9. Le MVP ne lance aucune étude de marché ni recherche web automatique. La
    prospection ciblée et éthique demeure un levier possible lorsqu'elle est
@@ -57,7 +64,8 @@ catalogue, ni rendre privées les destinations publiques existantes.
   déterministe et gouverné par ses catalogues actuels.
 - Le changement de Système n'invalide pas le plan déjà généré.
 - La persistance invitée et la persistance connectée ont une frontière nette :
-  mémoire éphémère d'un côté, Firebase de l'autre.
+  plan en mémoire éphémère et préférence locale du Système d'un côté, Firebase
+  comme source du plan enregistré de l'autre.
 - La navigation connectée et l'espace de sauvegarde peuvent être livrés par
   lots, sans modifier la disponibilité des univers publics.
 
@@ -80,6 +88,7 @@ catalogue, ni rendre privées les destinations publiques existantes.
 3. Actions et quatre piliers sont présents dans le résultat ;
 4. le changement de Système ne déclenche aucun appel IA ;
 5. le résultat invité n'est pas dupliqué dans une persistance locale durable ;
+   seul le slug valide du Système choisi peut être restauré localement ;
 6. Firebase est l'unique source persistante après sauvegarde ;
 7. aucune recherche web automatique n'est exécutée ;
 8. les garde-fous de prospection sont testables et appliqués ;

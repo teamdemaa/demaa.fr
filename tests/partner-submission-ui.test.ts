@@ -60,4 +60,62 @@ describe("solution proposal UI contract", () => {
       expect(source).toContain("await connection()");
     }
   });
+
+  it("separates immediate opportunities from the permanent Team Demaa profile", async () => {
+    const [page, catalog, modal, panel] = await Promise.all([
+      readSource("src/app/opportunites/page.tsx"),
+      readSource("src/components/PublicOpportunitiesClient.tsx"),
+      readSource("src/components/ProviderProfileModal.tsx"),
+      readSource("src/components/OpportunitiesPanel.tsx"),
+    ]);
+
+    expect(page).toContain("Découvrez les opportunités actuellement disponibles.");
+    expect(catalog).not.toContain("Voir l’opportunité");
+    expect(catalog).toContain("OpportunityDetailsDialog");
+    expect(catalog).toContain("Intéressé(e)");
+    expect(catalog).toContain("Modalité");
+    expect(catalog).toContain("Rythme / durée");
+    expect(catalog).toContain("Ce qui est attendu");
+    expect(catalog).toContain("<AppLibrarySearch");
+    expect(catalog).toContain("ALL_OPPORTUNITY_CATEGORIES");
+    expect(catalog).toContain('aria-label={`Ouvrir l’opportunité : ${opportunity.title}`}');
+    expect(catalog).toContain('role="dialog"');
+    expect(catalog).toContain("setApplicationOpportunity(selected)");
+    expect(catalog).toContain("setSelected(null)");
+    expect(catalog).toContain("onApply={openApplication}");
+    expect(catalog).toContain("opportunity={applicationOpportunity}");
+    expect(catalog.indexOf("OpportunityDetailsDialog")).toBeLessThan(
+      catalog.indexOf("<ProviderProfileModal"),
+    );
+    expect(catalog).toContain("Rejoindre Team Demaa");
+    expect(modal).toContain("Manifester mon intérêt");
+    expect(modal).toContain("initialEmail");
+    expect(panel).toContain('fetch("/api/opportunities"');
+    expect([page, catalog, modal, panel].join("\n")).not.toMatch(
+      /freelance|Demaa recruteur/i,
+    );
+  });
+
+  it("keeps every optional opportunity detail manageable from the admin", async () => {
+    const [admin, route] = await Promise.all([
+      readSource("src/components/OpportunityAdminClient.tsx"),
+      readSource("src/app/api/admin/opportunities/route.ts"),
+    ]);
+
+    for (const field of [
+      "workMode",
+      "geography",
+      "cadence",
+      "startTiming",
+      "expectations",
+      "compensation",
+      "companyName",
+    ]) {
+      expect(admin).toContain(`name="${field}"`);
+      expect(route).toContain(field);
+    }
+    expect(admin).toContain("Modifier l’opportunité");
+    expect(admin).toContain("Enregistrer les modifications");
+    expect(route).toContain("updateOpportunity");
+  });
 });

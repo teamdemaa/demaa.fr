@@ -3,16 +3,29 @@
 import { ArrowRight, LoaderCircle, Mic } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import ActionPlanAcademyPanel from "@/components/ActionPlanAcademyPanel";
+import ActionPlanCoachingControl from "@/components/ActionPlanCoachingControl";
 import ActionPlanNavbar, { type ActionPlanView } from "@/components/ActionPlanNavbar";
 import ActionPlanResult from "@/components/ActionPlanResult";
 import ActionPlanSystemPanel from "@/components/ActionPlanSystemPanel";
 import ActionPlanUtilityActions from "@/components/ActionPlanUtilityActions";
+import OpportunitiesPanel from "@/components/OpportunitiesPanel";
 import type { ActionPlan } from "@/lib/action-plan-contract";
 import {
   ACTION_PLAN_DEMO,
   ACTION_PLAN_DEMO_SITUATION,
 } from "@/lib/action-plan-demo";
+import {
+  readGuestSelectedSystemId,
+  writeGuestSelectedSystemId,
+} from "@/lib/action-plan-guest-preferences";
 import type { ActionPlanSystemOption } from "@/lib/action-plan-system-catalog";
+import {
+  addActionToManualPlan,
+  createManualActionPlan,
+  createManualActionPlanWorkspaceState,
+  type EditableActionPlan,
+  isManualActionPlan,
+} from "@/lib/action-plan-manual";
 import {
   createActionPlanWorkspaceState,
   type ActionPlanWorkspaceState,
@@ -25,18 +38,18 @@ const EXAMPLES = [
   "Je suis consultante indépendante. J’ai des missions, mais mon offre manque de clarté et je veux trouver des clients de manière plus régulière sans démarchage de masse.",
 ];
 
-const SYSTEM_QUOTES = [
+const GENERATION_QUESTIONS = [
   {
-    quote: "Un mauvais système vaincra toujours une bonne personne.",
-    author: "W. Edwards Deming",
+    question: "Quelle décision devez-vous pouvoir prendre plus facilement ?",
   },
   {
-    quote: "Les objectifs donnent une direction. Les systèmes permettent d’avancer.",
-    author: "James Clear",
+    question: "Qu’est-ce qui vous fait perdre le plus de temps aujourd’hui ?",
   },
   {
-    quote: "Les problèmes d’aujourd’hui viennent des solutions d’hier.",
-    author: "Peter Senge",
+    question: "Quel signe concret montrerait que la situation s’améliore ?",
+  },
+  {
+    question: "Quelle action simple pouvez-vous réellement commencer cette semaine ?",
   },
 ] as const;
 
@@ -70,16 +83,24 @@ declare global {
 
 export default function ActionPlanExperience({
   systemOptions,
+  initialEmail = "",
+  initialView = "plan",
 }: {
   systemOptions: readonly ActionPlanSystemOption[];
+  initialEmail?: string;
+  initialView?: ActionPlanView;
 }) {
   const [situation, setSituation] = useState("");
   const [exampleIndex, setExampleIndex] = useState(0);
   const [animatedPlaceholder, setAnimatedPlaceholder] = useState("");
-  const [plan, setPlan] = useState<ActionPlan | null>(null);
+  const [plan, setPlan] = useState<EditableActionPlan | null>(null);
   const [workspace, setWorkspace] = useState<ActionPlanWorkspaceState | null>(null);
+  const [prePlanWorkspace, setPrePlanWorkspace] = useState<ActionPlanWorkspaceState>(
+    () => createManualActionPlanWorkspaceState(),
+  );
   const [selectedSystemId, setSelectedSystemId] = useState("");
-  const [activeTab, setActiveTab] = useState<ActionPlanView>("plan");
+  const [pendingSolutionResourceSlug, setPendingSolutionResourceSlug] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<ActionPlanView>(initialView);
   const [isGenerating, setIsGenerating] = useState(false);
   const [quoteIndex, setQuoteIndex] = useState(0);
   const [isListening, setIsListening] = useState(false);
@@ -88,6 +109,56 @@ export default function ActionPlanExperience({
   const resultTitleRef = useRef<HTMLHeadingElement | null>(null);
   const requestControllerRef = useRef<AbortController | null>(null);
   const speechRecognitionRef = useRef<BrowserSpeechRecognition | null>(null);
+  const accessIntentHandledRef = useRef(false);
+  const guestSystemPreferenceHydratedRef = useRef(false);
+
+  useEffect(() => {
+    if (guestSystemPreferenceHydratedRef.current) return;
+    guestSystemPreferenceHydratedRef.current = true;
+
+    const storedSystemId = readGuestSelectedSystemId();
+    if (
+      !storedSystemId
+      || !systemOptions.some((option) => option.id === storedSystemId)
+    ) return;
+
+    setSelectedSystemId((current) => current || storedSystemId);
+    setPrePlanWorkspace((current) => current.selectedSystemId
+      ? current
+      : { ...current, selectedSystemId: storedSystemId });
+  }, [systemOptions]);
+
+  useEffect(() => {
+    if (
+      !selectedSystemId
+      || !systemOptions.some((option) => option.id === selectedSystemId)
+    ) return;
+
+    writeGuestSelectedSystemId(selectedSystemId);
+  }, [selectedSystemId, systemOptions]);
+
+  useEffect(() => {
+    if (accessIntentHandledRef.current) return;
+    accessIntentHandledRef.current = true;
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("intent") !== "solution-referral") return;
+    const systemSlug = params.get("systemSlug");
+    const resourceSlug = params.get("resourceSlug");
+    if (
+      !systemSlug
+      || !resourceSlug
+      || !systemOptions.some((option) => option.id === systemSlug)
+    ) return;
+
+    const timeout = window.setTimeout(() => {
+      setSelectedSystemId(systemSlug);
+      setPendingSolutionResourceSlug(resourceSlug);
+      setPrePlanWorkspace((current) => ({ ...current, selectedSystemId: systemSlug }));
+      setActiveTab("system");
+    }, 0);
+    return () => window.clearTimeout(timeout);
+  }, [systemOptions]);
 
   useEffect(() => {
     if (situation) return;
@@ -132,7 +203,19 @@ export default function ActionPlanExperience({
 
   useEffect(() => {
     if (process.env.NODE_ENV !== "development") return;
-    if (new URLSearchParams(window.location.search).get("demo") !== "plan") return;
+    const demo = new URLSearchParams(window.location.search).get("demo");
+
+    if (demo === "blank") {
+      setIsDemoMode(true);
+      setSituation("");
+      setPlan(createManualActionPlan());
+      setWorkspace(createManualActionPlanWorkspaceState());
+      setSelectedSystemId("");
+      setActiveTab("plan");
+      return;
+    }
+
+    if (demo !== "plan") return;
 
     setIsDemoMode(true);
     setSituation(ACTION_PLAN_DEMO_SITUATION);
@@ -151,7 +234,7 @@ export default function ActionPlanExperience({
     document.documentElement.style.overflow = "hidden";
     setQuoteIndex(0);
     const interval = window.setInterval(() => {
-      setQuoteIndex((current) => (current + 1) % SYSTEM_QUOTES.length);
+      setQuoteIndex((current) => (current + 1) % GENERATION_QUESTIONS.length);
     }, 4_800);
 
     return () => {
@@ -281,9 +364,19 @@ export default function ActionPlanExperience({
         throw new Error(body?.error || "Impossible de générer le plan pour le moment.");
       }
 
+      const generatedWorkspace = createActionPlanWorkspaceState(body.plan);
+      const nextSelectedSystemId =
+        prePlanWorkspace.selectedSystemId || body.plan.systemId;
       setPlan(body.plan);
-      setWorkspace(createActionPlanWorkspaceState(body.plan));
-      setSelectedSystemId(body.plan.systemId);
+      setWorkspace({
+        ...generatedWorkspace,
+        selectedSystemId: nextSelectedSystemId,
+        checkedProcessStepIdsBySystem:
+          prePlanWorkspace.checkedProcessStepIdsBySystem,
+        selectedSolutionPlacementIdsBySystem:
+          prePlanWorkspace.selectedSolutionPlacementIdsBySystem,
+      });
+      setSelectedSystemId(nextSelectedSystemId);
       setActiveTab("plan");
       window.requestAnimationFrame(() => resultTitleRef.current?.focus());
     } catch (submitError) {
@@ -301,21 +394,49 @@ export default function ActionPlanExperience({
     }
   }
 
+  function handleStartBlankPlan() {
+    requestControllerRef.current?.abort();
+    setSituation("");
+    setPlan({
+      ...createManualActionPlan(),
+      systemId: prePlanWorkspace.selectedSystemId,
+    });
+    setWorkspace(prePlanWorkspace);
+    setSelectedSystemId(prePlanWorkspace.selectedSystemId || "");
+    setActiveTab("plan");
+    setError(null);
+    window.requestAnimationFrame(() => resultTitleRef.current?.focus());
+  }
+
+  function handleAddManualAction() {
+    if (!plan || !workspace || !isManualActionPlan(plan)) return;
+    const next = addActionToManualPlan(plan, workspace);
+    if (!next) return;
+    setPlan(next.plan);
+    setWorkspace(next.workspace);
+  }
+
+  function handleDeleteAction(actionId: string) {
+    setWorkspace((current) => current ? {
+      ...current,
+      deletedActionIds: Array.from(
+        new Set([...current.deletedActionIds, actionId]),
+      ),
+    } : current);
+  }
+
   if (isGenerating && !plan) {
-    const currentQuote = SYSTEM_QUOTES[quoteIndex];
+    const currentQuestion = GENERATION_QUESTIONS[quoteIndex];
 
     return (
       <main className="fixed inset-0 z-[100] flex min-h-dvh flex-col overflow-hidden overscroll-contain bg-dema-forest px-6 py-8 text-dema-paper sm:px-10 sm:py-10 lg:px-14">
         <p className="demaa-hero-title text-3xl text-dema-paper sm:text-4xl">Demaa</p>
         <section className="mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center py-16 text-center">
-          <blockquote
+          <p
             key={quoteIndex}
             className="demaa-generation-quote w-full text-balance text-[clamp(2.25rem,6.5vw,5.7rem)] font-light leading-[1.02] tracking-[-0.045em] text-dema-paper"
           >
-            « {currentQuote.quote} »
-          </blockquote>
-          <p className="demaa-generation-quote mt-7 text-sm font-medium uppercase tracking-[0.16em] text-dema-paper/70 sm:mt-9">
-            {currentQuote.author}
+            {currentQuestion.question}
           </p>
         </section>
         <div className="flex items-center justify-center gap-2 text-sm text-dema-paper/70" role="status" aria-live="polite">
@@ -332,59 +453,99 @@ export default function ActionPlanExperience({
 
   if (!plan) {
     return (
-      <main className="min-h-[calc(100dvh-73px)] bg-dema-cream px-4 pb-20 pt-14 sm:px-6 sm:pt-20 lg:px-8 lg:pt-24">
-        <section className="mx-auto max-w-5xl text-center">
-          <h1 className="text-balance text-[clamp(2.45rem,7vw,5.2rem)] font-light leading-[0.98] tracking-[-0.055em] text-brand-blue">
-            Décrivez votre situation.
-            <span className="demaa-hero-title mt-1 block text-dema-forest">Repartez avec un plan d’action concret.</span>
-          </h1>
-          <form onSubmit={handleGenerate} className="mx-auto mt-9 max-w-4xl text-left sm:mt-11">
-            <div className="rounded-[1.7rem] border border-dema-line bg-dema-paper p-2 shadow-[0_18px_50px_rgba(23,35,29,0.055)] focus-within:border-dema-forest/20">
-              <label htmlFor="business-situation" className="sr-only">Décrivez la situation de votre entreprise</label>
-              <div className="relative">
-                {!situation ? (
-                  <div
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-0 px-5 py-5 text-base font-light leading-relaxed text-brand-blue/28 sm:px-6 sm:py-6 sm:text-lg"
-                  >
-                    {animatedPlaceholder}
+      <main data-action-plan-workspace className="min-h-screen bg-dema-cream px-4 pb-24 pt-2 sm:px-6 lg:px-8">
+        <ActionPlanNavbar activeView={activeTab} onViewChange={setActiveTab} />
+        <div className="mx-auto max-w-[68rem] pt-1">
+          {activeTab === "plan" ? (
+            <section className="mx-auto max-w-5xl pt-12 text-center sm:pt-16 lg:pt-20">
+              <h1 className="text-balance text-[clamp(2.45rem,7vw,5.2rem)] font-light leading-[0.98] tracking-[-0.055em] text-brand-blue/62">
+                Qu’est-ce qui{" "}
+                <span className="demaa-hero-title text-dema-forest">
+                  freine votre entreprise
+                </span>
+                &nbsp;?
+              </h1>
+              <form onSubmit={handleGenerate} className="mx-auto mt-9 max-w-4xl text-left sm:mt-11">
+                <div className="rounded-[1.7rem] border border-dema-line bg-dema-paper p-2 shadow-[0_18px_50px_rgba(23,35,29,0.055)] focus-within:border-dema-forest/20">
+                  <label htmlFor="business-situation" className="sr-only">Décrivez la situation de votre entreprise</label>
+                  <div className="relative">
+                    {!situation ? (
+                      <div
+                        aria-hidden="true"
+                        className="pointer-events-none absolute inset-0 px-5 py-5 text-base font-light leading-relaxed text-brand-blue/28 sm:px-6 sm:py-6 sm:text-lg"
+                      >
+                        {animatedPlaceholder}
+                      </div>
+                    ) : null}
+                    <textarea
+                      id="business-situation"
+                      value={situation}
+                      onChange={(event) => setSituation(event.target.value)}
+                      maxLength={4_000}
+                      rows={5}
+                      className="relative min-h-[9rem] w-full resize-none rounded-[1.25rem] bg-transparent px-5 py-5 text-base font-light leading-relaxed text-brand-blue outline-none sm:min-h-[10.5rem] sm:px-6 sm:py-6 sm:text-lg"
+                    />
                   </div>
-                ) : null}
-                <textarea
-                  id="business-situation"
-                  value={situation}
-                  onChange={(event) => setSituation(event.target.value)}
-                  maxLength={4_000}
-                  rows={5}
-                  className="relative min-h-[9rem] w-full resize-none rounded-[1.25rem] bg-transparent px-5 py-5 text-base font-light leading-relaxed text-brand-blue outline-none sm:min-h-[10.5rem] sm:px-6 sm:py-6 sm:text-lg"
-                />
-              </div>
-              <div className="flex items-center justify-end gap-2 px-3 pb-2 sm:px-4">
-                <button
-                  type="button"
-                  aria-label={isListening ? "Arrêter la dictée" : "Dicter ma situation"}
-                  aria-pressed={isListening}
-                  onClick={handleDictation}
-                  className={`inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border transition ${isListening ? "border-dema-forest bg-dema-sage text-dema-forest" : "border-dema-line bg-dema-paper text-dema-muted hover:border-dema-forest/25 hover:text-dema-forest"}`}
-                >
-                  <Mic className="h-4 w-4" aria-hidden="true" />
-                </button>
-                <button
-                  type="submit"
-                  disabled={isGenerating || situation.trim().length < 20}
-                  className="inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-full bg-dema-forest px-6 text-sm font-semibold text-white transition hover:bg-brand-blue disabled:cursor-not-allowed disabled:opacity-45 sm:flex-none"
-                >
-                  {isGenerating ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
-                  {isGenerating ? "Création du plan…" : "Créer mon plan d’action"}
-                  {!isGenerating ? <ArrowRight className="h-4 w-4" aria-hidden="true" /> : null}
-                </button>
-              </div>
-            </div>
-            <div aria-live="polite" className="min-h-7 px-3 pt-3 text-center text-sm text-dema-forest">
-              {error}
-            </div>
-          </form>
-        </section>
+                  <div className="flex items-center justify-end gap-2 px-3 pb-2 sm:px-4">
+                    <button
+                      type="button"
+                      aria-label={isListening ? "Arrêter la dictée" : "Dicter ma situation"}
+                      aria-pressed={isListening}
+                      onClick={handleDictation}
+                      className={`inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border transition ${isListening ? "border-dema-forest bg-dema-sage text-dema-forest" : "border-dema-line bg-dema-paper text-dema-muted hover:border-dema-forest/25 hover:text-dema-forest"}`}
+                    >
+                      <Mic className="h-4 w-4" aria-hidden="true" />
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={isGenerating || situation.trim().length < 20}
+                      className="inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-full bg-dema-forest px-6 text-sm font-semibold text-white transition hover:bg-brand-blue disabled:cursor-not-allowed disabled:opacity-45 sm:flex-none"
+                    >
+                      {isGenerating ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
+                      {isGenerating ? "Création du plan…" : "Créer mon plan d’action"}
+                      {!isGenerating ? <ArrowRight className="h-4 w-4" aria-hidden="true" /> : null}
+                    </button>
+                  </div>
+                </div>
+                <div aria-live="polite" className="min-h-7 px-3 pt-3 text-center text-sm text-dema-forest">
+                  {error}
+                </div>
+                <div className="mt-1 text-center">
+                  <button
+                    type="button"
+                    onClick={handleStartBlankPlan}
+                    className="text-sm font-medium text-dema-muted underline decoration-dema-line underline-offset-4 transition hover:text-dema-forest"
+                  >
+                    Commencer avec un plan vierge
+                  </button>
+                </div>
+              </form>
+            </section>
+          ) : null}
+          {activeTab === "system" ? (
+            <ActionPlanSystemPanel
+              options={systemOptions}
+              selectedSystemId={selectedSystemId}
+              onSystemChange={(systemId) => {
+                setSelectedSystemId(systemId);
+                setPendingSolutionResourceSlug(null);
+                setPrePlanWorkspace((current) => ({
+                  ...current,
+                  selectedSystemId: systemId,
+                }));
+              }}
+              workspace={prePlanWorkspace}
+              onWorkspaceChange={setPrePlanWorkspace}
+              demoMode={isDemoMode}
+              initialActiveTab={pendingSolutionResourceSlug ? "solutions" : undefined}
+              initialResourceSlug={pendingSolutionResourceSlug ?? undefined}
+            />
+          ) : null}
+          {activeTab === "academy" ? <ActionPlanAcademyPanel /> : null}
+          {activeTab === "opportunities" ? (
+            <OpportunitiesPanel initialEmail={initialEmail} />
+          ) : null}
+        </div>
       </main>
     );
   }
@@ -401,6 +562,7 @@ export default function ActionPlanExperience({
   return (
     <main data-action-plan-workspace className="min-h-screen bg-dema-cream px-4 pb-24 pt-2 sm:px-6 lg:px-8">
       <ActionPlanNavbar activeView={activeTab} onViewChange={setActiveTab} />
+      <ActionPlanCoachingControl initialEmail={initialEmail} />
       <div className="mx-auto max-w-[68rem]">
         <h1 ref={resultTitleRef} tabIndex={-1} className="sr-only outline-none">
           Votre plan d’action
@@ -411,6 +573,15 @@ export default function ActionPlanExperience({
               plan={plan}
               workspace={workspace}
               onWorkspaceChange={updateWorkspace}
+              manualMode={isManualActionPlan(plan)}
+              onAddAction={isManualActionPlan(plan) ? handleAddManualAction : undefined}
+              onDeleteAction={handleDeleteAction}
+              onGenerateLater={isManualActionPlan(plan) ? () => {
+                setPlan(null);
+                setWorkspace(null);
+                setSelectedSystemId("");
+                setActiveTab("plan");
+              } : undefined}
               headerActions={(
                 <ActionPlanUtilityActions
                   plan={plan}
@@ -432,23 +603,19 @@ export default function ActionPlanExperience({
               selectedSystemId={selectedSystemId}
               onSystemChange={(systemId) => {
                 setSelectedSystemId(systemId);
+                setPendingSolutionResourceSlug(null);
                 setWorkspace((current) => current ? { ...current, selectedSystemId: systemId } : current);
               }}
               workspace={workspace}
               onWorkspaceChange={updateWorkspace}
               demoMode={isDemoMode}
+              initialActiveTab={pendingSolutionResourceSlug ? "solutions" : undefined}
+              initialResourceSlug={pendingSolutionResourceSlug ?? undefined}
             />
           </div>
           {activeTab === "academy" ? <ActionPlanAcademyPanel /> : null}
-          {activeTab === "coaching" ? (
-            <section className="flex min-h-[46vh] flex-col items-center justify-center text-center">
-              <h2 className="text-4xl font-light tracking-[-0.04em] text-brand-blue sm:text-5xl">
-                Coaching
-              </h2>
-              <p className="mt-4 text-base font-light text-dema-muted">
-                Cet espace sera disponible prochainement.
-              </p>
-            </section>
+          {activeTab === "opportunities" ? (
+            <OpportunitiesPanel initialEmail={initialEmail} />
           ) : null}
         </div>
       </div>

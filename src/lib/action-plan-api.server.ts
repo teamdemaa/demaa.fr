@@ -1,15 +1,11 @@
 import "server-only";
 
-import { cookies } from "next/headers";
 import { z } from "zod";
 import { compatibleActionPlanSchema } from "@/lib/action-plan-contract";
 import {
   compatibleActionPlanWorkspaceStateSchema,
 } from "@/lib/action-plan-workspace";
-import {
-  CUSTOMER_SPACE_COOKIE,
-  getEmailFromCustomerSessionToken,
-} from "@/lib/customer-space-auth";
+import { getCurrentCustomerEmailFromSession } from "@/lib/customer-space-session.server";
 
 const nullableTokenCount = z.number().int().nonnegative().nullable().optional();
 
@@ -34,14 +30,13 @@ export const actionPlanWriteRequestSchema = z
 export const actionPlanUpdateRequestSchema = z
   .object({
     expectedRevision: z.number().int().min(1),
+    plan: compatibleActionPlanSchema.optional(),
     workspaceState: compatibleActionPlanWorkspaceStateSchema,
   })
   .strict();
 
 export async function getCurrentCustomerEmail() {
-  const cookieStore = await cookies();
-  const token = cookieStore.get(CUSTOMER_SPACE_COOKIE)?.value || null;
-  return getEmailFromCustomerSessionToken(token);
+  return getCurrentCustomerEmailFromSession();
 }
 
 export function noStoreHeaders() {

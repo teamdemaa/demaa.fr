@@ -6,6 +6,7 @@ const mocks = vi.hoisted(() => ({
   enforceAllowedHost: vi.fn(),
   enforceRateLimit: vi.fn(),
   enforceSameOrigin: vi.fn(),
+  requireCurrentCustomerEmail: vi.fn(),
   getExpertiseById: vi.fn(),
   getOpportunityById: vi.fn(),
   logOperationalError: vi.fn(),
@@ -33,6 +34,9 @@ vi.mock("@/lib/api-security", () => ({
 vi.mock("@/lib/email", () => ({
   isValidEmail: (value: string) => value.includes("@"),
   normalizeEmail: (value: string) => value.trim().toLowerCase(),
+}));
+vi.mock("@/lib/customer-space-session.server", () => ({
+  requireCurrentCustomerEmail: mocks.requireCurrentCustomerEmail,
 }));
 vi.mock("@/lib/lead-attribution-server", () => ({
   resolveLeadAttribution: mocks.resolveLeadAttribution,
@@ -69,7 +73,7 @@ function request(overrides: Record<string, unknown> = {}) {
       company: "Studio Calme",
       consent: true,
       countries: "France et à distance",
-      email: "maya@example.com",
+      email: "spoofed@example.net",
       expertiseIds: ["google-ads"],
       fullName: "Maya Martin",
       idempotencyKey: "web:provider:12345678",
@@ -87,6 +91,10 @@ describe("provider profile submission route", () => {
     mocks.enforceAllowedHost.mockReturnValue(null);
     mocks.enforceSameOrigin.mockReturnValue(null);
     mocks.enforceRateLimit.mockResolvedValue(null);
+    mocks.requireCurrentCustomerEmail.mockResolvedValue({
+      email: "maya@example.com",
+      response: null,
+    });
     mocks.getExpertiseById.mockResolvedValue({
       expertiseId: "google-ads",
       label: "Spécialiste Google Ads",
@@ -116,7 +124,19 @@ describe("provider profile submission route", () => {
     }));
   });
 
-  it("links an application only to an open matching opportunity", async () => {
+  it("refuses guests before accepting a provider profile", async () => {
+    mocks.requireCurrentCustomerEmail.mockResolvedValue({
+      email: null,
+      response: Response.json({ error: "authentication_required" }, { status: 401 }),
+    });
+
+    const response = await POST(request());
+
+    expect(response.status).toBe(401);
+    expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
+  });
+
+  it("links an interest only to an open opportunity", async () => {
     mocks.getOpportunityById.mockResolvedValue({
       category: "Acquisition",
       createdAt: "2026-08-08T00:00:00.000Z",
@@ -124,6 +144,7 @@ describe("provider profile submission route", () => {
       expiresAt: null,
       geography: "France",
       opportunityId: "campagne-google",
+      opportunityType: "mission",
       publishedAt: "2026-08-08T00:00:00.000Z",
       status: "open",
       summary: "Piloter une campagne Google Ads pour une entreprise de services.",
@@ -132,8 +153,39 @@ describe("provider profile submission route", () => {
     const response = await POST(request({ opportunityId: "campagne-google" }));
     expect(response.status).toBe(202);
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
-      requestType: "opportunity_application",
-      title: "Candidature opportunité - Campagne Google Ads",
+      fields: expect.arrayContaining([
+        { label: "Identifiant opportunité", value: "campagne-google" },
+        { label: "Type d’opportunité", value: "Mission" },
+      ]),
+      requestType: "opportunity_interest",
+      title: "Intérêt pour une opportunité - Campagne Google Ads",
+    }));
+  });
+
+  it("accepts interest in an opportunity without expertise or coverage fields", async () => {
+    mocks.getOpportunityById.mockResolvedValue({
+      category: "Transmission",
+      createdAt: "2026-08-10T00:00:00.000Z",
+      expertiseId: null,
+      expiresAt: null,
+      geography: null,
+      opportunityId: "reprise-activite",
+      opportunityType: "reprise-transmission",
+      publishedAt: "2026-08-10T00:00:00.000Z",
+      status: "open",
+      summary: "Étudier une possibilité de reprise ou de transmission d’une activité existante.",
+      title: "Reprise d’une activité",
+    });
+    const response = await POST(request({
+      countries: "",
+      expertiseIds: [],
+      opportunityId: "reprise-activite",
+    }));
+    expect(response.status).toBe(202);
+    expect(mocks.getExpertiseById).not.toHaveBeenCalled();
+    expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
+      requestType: "opportunity_interest",
+      title: "Intérêt pour une opportunité - Reprise d’une activité",
     }));
   });
 
