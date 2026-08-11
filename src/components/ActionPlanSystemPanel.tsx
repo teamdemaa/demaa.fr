@@ -99,16 +99,14 @@ export default function ActionPlanSystemPanel({
       : null;
 
   return (
-    <section aria-labelledby="action-plan-system-title">
-      {!currentPayload ? (
-        <div className="mb-5 flex justify-end">
-          <ActionPlanSystemSelector
-            options={options}
-            value={selectedSystemId}
-            onChange={onSystemChange}
-          />
-        </div>
-      ) : null}
+    <section aria-label="Système" className="pt-3">
+      <div className="mx-auto mb-6 w-full max-w-xl xl:w-[min(40vw,36rem)]">
+        <ActionPlanSystemSelector
+          options={options}
+          value={selectedSystemId}
+          onChange={onSystemChange}
+        />
+      </div>
 
       {!selectedSystemId ? (
         <div className="rounded-[1.25rem] border border-dema-line bg-dema-paper px-6 py-12 text-center">
@@ -149,13 +147,6 @@ export default function ActionPlanSystemPanel({
           selectableSolutions
           headingAs="h3"
           headingId="action-plan-system-title"
-          headerActions={(
-            <ActionPlanSystemSelector
-              options={options}
-              value={selectedSystemId}
-              onChange={onSystemChange}
-            />
-          )}
           intro={currentPayload.intro}
           initialActiveTab={initialActiveTab}
           initialResourceSlug={initialResourceSlug}

@@ -98,7 +98,7 @@ export default function ActionPlanSystemSelector({
   }
 
   return (
-    <div ref={containerRef} className="relative w-full sm:max-w-xs">
+    <div ref={containerRef} className="relative w-full">
       <button
         type="button"
         onClick={() => {

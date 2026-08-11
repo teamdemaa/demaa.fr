@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown, ChevronUp, Search, SlidersHorizontal } from "lucide-react";
 import { useMemo, useState } from "react";
+import AppLibrarySearch from "@/components/AppLibrarySearch";
 import type { AcademyContentDefinition } from "@/lib/academy-course-content";
 import { matchesSearchQuery } from "@/lib/search";
 import StructureNewsletterBlock from "@/components/StructureNewsletterBlock";
@@ -334,12 +335,30 @@ export default function AcademyIndexClient({
   const visibleFundamentals = embedded || isSearching || showAllFundamentals ? fundamentals : fundamentals.slice(0, 6);
   const canToggleFundamentals = !embedded && !isSearching && fundamentals.length > 6;
   const ContentContainer = embedded ? "div" : "main";
-  const searchControl = (
-    <div className={`relative w-full ${embedded ? "max-w-md" : "mx-auto mt-9 max-w-4xl md:mt-11"}`}>
-      <div className={`demaa-search-shell ${embedded ? "p-1" : "p-1.5"}`}>
+  const searchControl = embedded ? (
+    <AppLibrarySearch
+      activeFilter={activeCategory}
+      filters={categories}
+      isFilterOpen={areCategoryTagsVisible}
+      onFilterSelect={(category) => {
+        setActiveCategory(category);
+        setSearchQuery("");
+        setAreCategoryTagsVisible(false);
+      }}
+      onFilterToggle={() => setAreCategoryTagsVisible((visible) => !visible)}
+      onQueryChange={(value) => {
+        setSearchQuery(value);
+        setActiveCategory(ALL_ACADEMY_CATEGORIES);
+      }}
+      placeholder="Rechercher un cours ou une question…"
+      query={searchQuery}
+    />
+  ) : (
+    <div className="relative mx-auto mt-9 w-full max-w-4xl md:mt-11">
+      <div className="demaa-search-shell p-1.5">
         <div className="relative">
           <Search
-            className={`pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-dema-forest/42 ${embedded ? "h-4 w-4" : "h-5 w-5"}`}
+            className="pointer-events-none absolute left-5 top-1/2 h-5 w-5 -translate-y-1/2 text-dema-forest/42"
             aria-hidden="true"
           />
           <input
@@ -351,14 +370,14 @@ export default function AcademyIndexClient({
               setActiveCategory(ALL_ACADEMY_CATEGORIES);
             }}
             placeholder="Rechercher un cours ou une question…"
-            className={`w-full rounded-full bg-dema-paper pl-11 pr-12 text-brand-blue outline-none transition placeholder:text-brand-blue/30 ${embedded ? "min-h-10 text-sm" : "py-4 text-base md:py-5 md:pl-16 md:pr-20 md:text-lg"}`}
+            className="w-full rounded-full bg-dema-paper py-4 pl-11 pr-12 text-base text-brand-blue outline-none transition placeholder:text-brand-blue/30 md:py-5 md:pl-16 md:pr-20 md:text-lg"
           />
           <button
             type="button"
             onClick={() => setAreCategoryTagsVisible((visible) => !visible)}
             aria-expanded={areCategoryTagsVisible}
             aria-label={areCategoryTagsVisible ? "Masquer les catégories" : "Afficher les catégories"}
-            className={`absolute right-2 top-1/2 inline-flex -translate-y-1/2 items-center justify-center rounded-full transition ${embedded ? "h-9 w-9" : "h-9 w-9 md:right-2.5 md:h-10 md:w-10"} ${
+            className={`absolute right-2 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full transition md:right-2.5 md:h-10 md:w-10 ${
               areCategoryTagsVisible || activeCategory !== ALL_ACADEMY_CATEGORIES
                 ? "bg-dema-sage text-dema-forest"
                 : "bg-dema-canvas text-dema-muted"
@@ -370,8 +389,8 @@ export default function AcademyIndexClient({
       </div>
 
       {areCategoryTagsVisible ? (
-        <div className={`${embedded ? "absolute left-0 right-0 top-full z-40 mt-2 rounded-2xl border border-dema-line bg-dema-paper p-2 shadow-[0_18px_46px_rgba(23,35,29,0.12)]" : "mt-4 overflow-x-auto pb-1 text-left soft-scroll"}`} aria-label="Filtrer les cours par catégorie">
-          <div className={`flex gap-2 ${embedded ? "flex-wrap" : "min-w-max px-1"}`}>
+        <div className="mt-4 overflow-x-auto pb-1 text-left soft-scroll" aria-label="Filtrer les cours par catégorie">
+          <div className="flex min-w-max gap-2 px-1">
             {categories.map((category) => (
               <button
                 key={category}
@@ -380,7 +399,6 @@ export default function AcademyIndexClient({
                 onClick={() => {
                   setActiveCategory(category);
                   setSearchQuery("");
-                  if (embedded) setAreCategoryTagsVisible(false);
                 }}
                 className={`demaa-chip shrink-0 whitespace-nowrap ${
                   activeCategory === category ? "demaa-chip-active" : ""
@@ -398,7 +416,7 @@ export default function AcademyIndexClient({
   return (
     <div className={`${embedded ? "min-h-[60vh]" : "min-h-[85vh]"} bg-[#FAFAFA]`}>
       {embedded ? (
-        <div className="mx-auto max-w-7xl px-4 pb-6">
+        <div className="mx-auto max-w-7xl px-4 pb-6 pt-3">
           {searchControl}
         </div>
       ) : null}

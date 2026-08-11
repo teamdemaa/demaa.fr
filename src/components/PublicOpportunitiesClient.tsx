@@ -1,8 +1,9 @@
 "use client";
 
-import { Search, X } from "lucide-react";
+import { X } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import AppLibrarySearch from "@/components/AppLibrarySearch";
 import ProviderProfileModal from "@/components/ProviderProfileModal";
 import { useAccessibleDialog } from "@/components/useAccessibleDialog";
 import type { ExpertiseCatalogEntry } from "@/lib/expertise-catalog-contract";
@@ -12,6 +13,8 @@ import {
   type PublicOpportunity,
 } from "@/lib/opportunity-contract";
 import { matchesSearchQuery } from "@/lib/search";
+
+const ALL_OPPORTUNITY_CATEGORIES = "Toutes";
 
 function OpportunityDetailsDialog({
   onApply,
@@ -141,6 +144,10 @@ export default function PublicOpportunitiesClient({
   opportunities: readonly PublicOpportunity[];
 }) {
   const [query, setQuery] = useState("");
+  const [activeCategory, setActiveCategory] = useState(
+    ALL_OPPORTUNITY_CATEGORIES,
+  );
+  const [areCategoryTagsVisible, setAreCategoryTagsVisible] = useState(false);
   const [selected, setSelected] = useState<PublicOpportunity | null>(null);
   const [applicationOpportunity, setApplicationOpportunity] =
     useState<PublicOpportunity | null>(null);
@@ -149,23 +156,36 @@ export default function PublicOpportunitiesClient({
     setApplicationOpportunity(selected);
     setSelected(null);
   }, [selected]);
+  const categories = useMemo(
+    () => [
+      ALL_OPPORTUNITY_CATEGORIES,
+      ...Array.from(new Set(opportunities.map((opportunity) => opportunity.category))),
+    ],
+    [opportunities],
+  );
   const filtered = useMemo(
-    () => opportunities.filter((opportunity) => matchesSearchQuery(query, [
-      opportunity.title,
-      opportunity.summary,
-      opportunity.category,
-      OPPORTUNITY_TYPE_LABELS[opportunity.opportunityType],
-      opportunity.workMode
-        ? OPPORTUNITY_WORK_MODE_LABELS[opportunity.workMode]
-        : "",
-      opportunity.geography ?? "",
-      opportunity.cadence ?? "",
-      opportunity.startTiming ?? "",
-      opportunity.compensation ?? "",
-      opportunity.companyName ?? "",
-      ...opportunity.expectations,
-    ])),
-    [opportunities, query],
+    () => opportunities.filter((opportunity) => {
+      const matchesCategory =
+        activeCategory === ALL_OPPORTUNITY_CATEGORIES
+        || opportunity.category === activeCategory;
+      const matchesQuery = matchesSearchQuery(query, [
+        opportunity.title,
+        opportunity.summary,
+        opportunity.category,
+        OPPORTUNITY_TYPE_LABELS[opportunity.opportunityType],
+        opportunity.workMode
+          ? OPPORTUNITY_WORK_MODE_LABELS[opportunity.workMode]
+          : "",
+        opportunity.geography ?? "",
+        opportunity.cadence ?? "",
+        opportunity.startTiming ?? "",
+        opportunity.compensation ?? "",
+        opportunity.companyName ?? "",
+        ...opportunity.expectations,
+      ]);
+      return matchesCategory && matchesQuery;
+    }),
+    [activeCategory, opportunities, query],
   );
 
   useEffect(() => {
@@ -186,19 +206,27 @@ export default function PublicOpportunitiesClient({
 
   return (
     <>
-      <label className="demaa-search-shell relative mx-auto mt-8 block max-w-xl">
-        <span className="sr-only">Rechercher une opportunité</span>
-        <Search className="pointer-events-none absolute left-5 top-1/2 h-4 w-4 -translate-y-1/2 text-dema-muted" aria-hidden="true" />
-        <input
-          type="search"
-          value={query}
-          onChange={(event) => setQuery(event.target.value)}
+      <div className="pt-3">
+        <AppLibrarySearch
+          activeFilter={activeCategory}
+          filters={categories}
+          isFilterOpen={areCategoryTagsVisible}
+          onFilterSelect={(category) => {
+            setActiveCategory(category);
+            setQuery("");
+            setAreCategoryTagsVisible(false);
+          }}
+          onFilterToggle={() => setAreCategoryTagsVisible((visible) => !visible)}
+          onQueryChange={(value) => {
+            setQuery(value);
+            setActiveCategory(ALL_OPPORTUNITY_CATEGORIES);
+          }}
           placeholder="Rechercher un besoin ou une expertise…"
-          className="w-full rounded-full bg-dema-paper py-3 pl-12 pr-5 text-sm text-brand-blue outline-none placeholder:text-brand-blue/36"
+          query={query}
         />
-      </label>
+      </div>
 
-      <div className="mt-10 space-y-4">
+      <div className="mt-6 space-y-4">
         {filtered.map((opportunity) => (
           <article key={opportunity.opportunityId}>
             <button

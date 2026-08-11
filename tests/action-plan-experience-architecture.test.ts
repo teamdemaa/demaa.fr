@@ -117,12 +117,16 @@ describe("action plan experience architecture", () => {
     const academyIndex = source("src/components/AcademyIndexClient.tsx");
     const coursePlayer = source("src/components/AcademyCoursePlayer.tsx");
     const experience = source("src/components/ActionPlanExperience.tsx");
+    const systemPanel = source("src/components/ActionPlanSystemPanel.tsx");
 
     expect(academyPanel).toContain("embedded");
     expect(experience).toContain("<ActionPlanUtilityActions");
     expect(academyIndex).toContain("embedded || isSearching || showAllFundamentals");
     expect(academyIndex).toContain("!embedded ? (");
-    expect(academyIndex).toContain('embedded ? "max-w-md"');
+    expect(academyIndex).toContain("<AppLibrarySearch");
+    expect(systemPanel).toContain(
+      'className="mx-auto mb-6 w-full max-w-xl xl:w-[min(40vw,36rem)]"',
+    );
     expect(academyIndex).toContain('const ContentContainer = embedded ? "div" : "main"');
     expect(academyIndex).toContain("<ContentContainer");
     expect(academyPanel).toContain("onOpenContent={setSelectedContent}");

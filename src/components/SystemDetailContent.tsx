@@ -144,7 +144,7 @@ export default function SystemDetailContent({
   }
 
   return (
-    <article className="w-full max-w-[55.2rem]">
+    <article className={`w-full max-w-[55.2rem] ${embedded ? "mx-auto" : ""}`}>
       {!embedded ? <Link
         href="/systemes"
         className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-dema-muted transition hover:text-dema-forest"

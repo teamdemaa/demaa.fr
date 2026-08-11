@@ -54,14 +54,14 @@ export default function OpportunitiesPanel({
       </h2>
 
       {!payload && !error ? (
-        <div className="mt-8 flex min-h-32 items-center justify-center rounded-[1.2rem] border border-dema-line bg-white text-dema-muted" aria-live="polite">
+        <div className="mt-3 flex min-h-32 items-center justify-center rounded-[1.2rem] border border-dema-line bg-white text-dema-muted" aria-live="polite">
           <LoaderCircle className="h-5 w-5 animate-spin" aria-hidden="true" />
           <span className="ml-3 text-sm">Chargement des opportunités…</span>
         </div>
       ) : null}
 
       {error ? (
-        <p role="alert" className="mt-8 rounded-[1.2rem] border border-dema-line bg-white px-5 py-7 text-sm text-dema-muted">
+        <p role="alert" className="mt-3 rounded-[1.2rem] border border-dema-line bg-white px-5 py-7 text-sm text-dema-muted">
           {error}
         </p>
       ) : null}
