@@ -59,11 +59,11 @@ describe("Demaa application navbar", () => {
       readFile(new URL("../src/app/plans/[id]/page.tsx", import.meta.url), "utf8"),
     ]);
 
-    expect(navbarSource).toContain('aria-label="Ouvrir mon espace"');
+    expect(navbarSource).toContain('aria-label="Ouvrir mon plan"');
     expect(navbarSource).toContain('window.location.assign("/mon-espace")');
     expect(navbarSource).toContain("onClick={openAuthenticatedAccount}");
     expect(navbarSource).toContain("prefetch={false}");
-    expect(navbarSource).toContain("<span>Mon espace</span>");
+    expect(navbarSource).not.toContain("<span>Mon espace</span>");
     expect(navbarSource).toContain('<Link\n                    href="/mon-espace"');
     expect(navbarSource).toContain("<span>Se connecter</span>");
     expect(savedPlanSource).toContain("<Navbar anonymousLanding isAuthenticated minimal />");
@@ -78,6 +78,9 @@ describe("Demaa application navbar", () => {
     expect(memberSource).toContain("<Navbar minimal />");
     expect(memberSource).toContain("<CustomerSpaceAccessForm returnTo=\"/mon-espace\" simple />");
     expect(memberSource).toContain("Le lien n’est plus valide.");
+    expect(memberSource).toContain('redirect(latestPlan ? `/plans/${latestPlan.id}` : "/")');
+    expect(memberSource).not.toContain("Mes plans");
+    expect(memberSource).not.toContain("Mon espace");
     expect(modalSource).toContain("<CustomerSpaceLoginDialog />");
   });
 

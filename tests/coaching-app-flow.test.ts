@@ -21,16 +21,15 @@ describe("unified app and coaching", () => {
     expect(canonicalPage).toContain("SavedActionPlanDetail");
   });
 
-  it("keeps the account area focused on plans instead of a parallel member portal", () => {
+  it("returns authenticated access directly to the app instead of a parallel portal", () => {
     const accountPage = read("src/app/mon-espace/page.tsx");
     const accountAccessForm = read("src/components/CustomerSpaceAccessForm.tsx");
-    const accountPlans = read("src/components/MemberSpaceTabs.tsx");
 
-    expect(accountPage).toContain("Mon espace");
+    expect(accountPage).toContain('redirect(latestPlan ? `/plans/${latestPlan.id}` : "/")');
+    expect(accountPage).not.toContain("Mon espace");
+    expect(accountPage).not.toContain("Mes plans");
     expect(accountPage).not.toContain("Espace membre");
     expect(accountAccessForm).not.toContain("espace membre");
-    expect(accountPlans).toContain('title="Mes plans"');
-    expect(accountPlans).not.toContain("Suivi des demandes");
   });
 
   it("publishes the validated coaching offer and tabs", () => {

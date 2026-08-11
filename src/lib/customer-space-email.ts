@@ -18,7 +18,7 @@ function renderMagicLinkEmail(input: { magicLink: string }) {
                 <tr>
                   <td style="border:1px solid #e7ece6;border-radius:28px;background-color:#ffffff;padding:36px 32px;font-family:Arial,sans-serif;color:#17231d;">
                     <div style="font-size:11px;line-height:1.4;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#315f46;">
-                      Mon espace
+                      Demaa
                     </div>
                     <h1 style="margin:14px 0 14px;font-size:30px;line-height:1.15;font-weight:700;letter-spacing:-0.03em;color:#17231d;">
                       Votre lien sécurisé est prêt

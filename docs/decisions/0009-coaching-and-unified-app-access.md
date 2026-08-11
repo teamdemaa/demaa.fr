@@ -11,9 +11,11 @@ L’expérience connectée conserve une seule navigation : `Plan d’action`,
 plan demandé après consommation sécurisée du lien à usage unique. Il ne doit
 pas introduire une présentation concurrente « Espace membre ».
 
-La route de compte est présentée comme `Mon espace` et se concentre sur
-`Mes plans`. Les historiques de paiement restent conservés dans les données,
-mais ne créent plus un second portail public concurrent de l’application.
+Il n’existe pas de second écran public `Mon espace` ou `Mes plans`. Après
+connexion, la route technique de compte redirige vers le dernier plan sauvegardé
+dans l’application, ou vers l’accueil de l’application lorsqu’aucun plan
+n’existe. Les historiques restent conservés dans les données sans créer de
+portail concurrent.
 
 Coaching contient deux onglets : `Sessions` et `Messages`.
 

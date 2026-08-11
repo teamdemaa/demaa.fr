@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import CustomerSpaceAccessForm from "@/components/CustomerSpaceAccessForm";
-import MemberSpaceTabs from "@/components/MemberSpaceTabs";
 import Navbar from "@/components/Navbar";
 import { CUSTOMER_SPACE_COOKIE, getEmailFromCustomerSessionToken } from "@/lib/customer-space-auth";
 import { getOwnedActionPlans } from "@/lib/action-plan-storage.server";
-import { actionPlanSystemOptions } from "@/lib/action-plan-system-catalog";
 
 export const metadata: Metadata = {
-  title: "Mon espace | Demaa",
-  description: "Retrouvez vos plans d’action Demaa.",
+  title: "Se connecter | Demaa",
+  description: "Connectez-vous pour retrouver votre plan d’action Demaa.",
   alternates: {
     canonical: "/mon-espace",
   },
@@ -18,8 +17,8 @@ export const metadata: Metadata = {
     follow: false,
   },
   openGraph: {
-    title: "Mon espace | Demaa",
-    description: "Retrouvez vos plans d’action Demaa.",
+    title: "Se connecter | Demaa",
+    description: "Connectez-vous pour retrouver votre plan d’action Demaa.",
     url: "/mon-espace",
     siteName: "Demaa",
     locale: "fr_FR",
@@ -72,36 +71,6 @@ export default async function MonEspacePage({ searchParams }: MonEspacePageProps
     );
   }
 
-  const actionPlans = await getOwnedActionPlans(email);
-  const systemNames = new Map(
-    actionPlanSystemOptions.map((system) => [system.id, system.label]),
-  );
-
-  return (
-    <div data-action-plan-workspace className="min-h-screen bg-dema-cream text-brand-blue">
-      <Navbar />
-      <main className="px-4 pb-20 pt-10 md:px-8 md:pb-28 md:pt-14">
-        <section className="mx-auto max-w-6xl">
-          <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-            <div>
-              <h1 className="text-4xl font-semibold tracking-tight md:text-5xl">
-                Mon espace
-              </h1>
-            </div>
-            <p className="text-sm text-dema-muted">{email}</p>
-          </div>
-
-          <MemberSpaceTabs
-            actionPlans={actionPlans.map((actionPlan) => ({
-              id: actionPlan.id,
-              summary: actionPlan.plan.summary,
-              systemName:
-                systemNames.get(actionPlan.plan.systemId) || actionPlan.plan.systemId,
-              updatedAt: actionPlan.updatedAt,
-            }))}
-          />
-        </section>
-      </main>
-    </div>
-  );
+  const [latestPlan] = await getOwnedActionPlans(email);
+  redirect(latestPlan ? `/plans/${latestPlan.id}` : "/");
 }

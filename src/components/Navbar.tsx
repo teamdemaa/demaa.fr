@@ -49,16 +49,16 @@ export default function Navbar({
                 {isAuthenticated ? (
                   <Link
                     href="/mon-espace"
-                    aria-label="Ouvrir mon espace"
+                    aria-label="Ouvrir mon plan"
                     className={accountAccessClassName}
                     onClick={openAuthenticatedAccount}
                     prefetch={false}
+                    title="Ouvrir mon plan"
                   >
                     <CircleUserRound
-                      className="hidden h-4 w-4 sm:block"
+                      className="h-4 w-4"
                       aria-hidden="true"
                     />
-                    <span>Mon espace</span>
                   </Link>
                 ) : (
                   <Link
