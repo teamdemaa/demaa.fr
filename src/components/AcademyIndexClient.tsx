@@ -432,11 +432,14 @@ export default function AcademyIndexClient({
       <ContentContainer className={`mx-auto max-w-7xl px-4 pb-16 md:pb-20 ${embedded ? "pt-0" : ""}`}>
         {fundamentals.length ? (
           <section aria-labelledby="fundamental-courses-title">
-            <h2 id="fundamental-courses-title" className="text-2xl font-semibold text-brand-blue md:text-[2rem]">
+            <h2
+              id="fundamental-courses-title"
+              className={embedded ? "sr-only" : "text-2xl font-semibold text-brand-blue md:text-[2rem]"}
+            >
               Cours fondamentaux
             </h2>
 
-            <div className="mt-7 grid grid-cols-1 gap-x-8 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
+            <div className={`${embedded ? "" : "mt-7"} grid grid-cols-1 gap-x-8 gap-y-9 md:grid-cols-2 lg:grid-cols-3`}>
               {visibleFundamentals.map((content, index) => (
                 <AcademyCard
                   key={content.identity.slug}
