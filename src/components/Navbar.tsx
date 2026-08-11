@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { CircleUserRound, LogIn } from "lucide-react";
+import type { MouseEvent } from "react";
 import DemaaWordmark from "@/components/DemaaWordmark";
 
 export default function Navbar({
@@ -13,6 +14,13 @@ export default function Navbar({
   isAuthenticated?: boolean;
   minimal?: boolean;
 }) {
+  const accountAccessClassName =
+    "inline-flex min-h-10 shrink-0 items-center gap-1.5 rounded-full border border-dema-forest/15 bg-dema-paper px-3 text-xs font-medium text-dema-forest transition hover:border-dema-forest/28 hover:bg-dema-sage/45 sm:min-h-11 sm:gap-2 sm:px-4 sm:text-sm";
+  function openAuthenticatedAccount(event: MouseEvent<HTMLAnchorElement>) {
+    event.preventDefault();
+    window.location.assign("/mon-espace");
+  }
+
   return (
     <>
       <nav
@@ -38,21 +46,29 @@ export default function Navbar({
                   id="action-plan-navbar-save"
                   className="shrink-0 empty:hidden"
                 />
-                <Link
-                  href="/mon-espace"
-                  aria-label={isAuthenticated ? "Ouvrir mon espace" : undefined}
-                  className="inline-flex min-h-10 shrink-0 items-center gap-1.5 rounded-full border border-dema-forest/15 bg-dema-paper px-3 text-xs font-medium text-dema-forest transition hover:border-dema-forest/28 hover:bg-dema-sage/45 sm:min-h-11 sm:gap-2 sm:px-4 sm:text-sm"
-                >
-                  {isAuthenticated ? (
+                {isAuthenticated ? (
+                  <Link
+                    href="/mon-espace"
+                    aria-label="Ouvrir mon espace"
+                    className={accountAccessClassName}
+                    onClick={openAuthenticatedAccount}
+                    prefetch={false}
+                  >
                     <CircleUserRound
                       className="hidden h-4 w-4 sm:block"
                       aria-hidden="true"
                     />
-                  ) : (
+                    <span>Mon espace</span>
+                  </Link>
+                ) : (
+                  <Link
+                    href="/mon-espace"
+                    className={accountAccessClassName}
+                  >
                     <LogIn className="hidden h-4 w-4 sm:block" aria-hidden="true" />
-                  )}
-                  <span>{isAuthenticated ? "Mon espace" : "Se connecter"}</span>
-                </Link>
+                    <span>Se connecter</span>
+                  </Link>
+                )}
               </div>
             ) : null}
           </div>

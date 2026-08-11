@@ -59,8 +59,13 @@ describe("Demaa application navbar", () => {
       readFile(new URL("../src/app/plans/[id]/page.tsx", import.meta.url), "utf8"),
     ]);
 
-    expect(navbarSource).toContain('isAuthenticated ? "Mon espace" : "Se connecter"');
-    expect(navbarSource).toContain('aria-label={isAuthenticated ? "Ouvrir mon espace" : undefined}');
+    expect(navbarSource).toContain('aria-label="Ouvrir mon espace"');
+    expect(navbarSource).toContain('window.location.assign("/mon-espace")');
+    expect(navbarSource).toContain("onClick={openAuthenticatedAccount}");
+    expect(navbarSource).toContain("prefetch={false}");
+    expect(navbarSource).toContain("<span>Mon espace</span>");
+    expect(navbarSource).toContain('<Link\n                    href="/mon-espace"');
+    expect(navbarSource).toContain("<span>Se connecter</span>");
     expect(savedPlanSource).toContain("<Navbar anonymousLanding isAuthenticated minimal />");
   });
 
