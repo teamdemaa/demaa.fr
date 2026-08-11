@@ -22,14 +22,17 @@ describe("unified app and coaching", () => {
   });
 
   it("returns authenticated access directly to the app instead of a parallel portal", () => {
-    const accountPage = read("src/app/mon-espace/page.tsx");
+    const legacyAccountPage = read("src/app/mon-espace/page.tsx");
+    const plansPage = read("src/app/plans/page.tsx");
     const accountAccessForm = read("src/components/CustomerSpaceAccessForm.tsx");
 
-    expect(accountPage).toContain('redirect(latestPlan ? `/plans/${latestPlan.id}` : "/")');
-    expect(accountPage).not.toContain("Mon espace");
-    expect(accountPage).not.toContain("Mes plans");
-    expect(accountPage).not.toContain("Espace membre");
+    expect(legacyAccountPage).toContain('redirect("/plans")');
+    expect(plansPage).toContain('redirect(latestPlan ? `/plans/${latestPlan.id}` : "/")');
+    expect(legacyAccountPage).not.toContain("Mon espace");
+    expect(plansPage).not.toContain("Mes plans");
+    expect(plansPage).not.toContain("Espace membre");
     expect(accountAccessForm).not.toContain("espace membre");
+    expect(accountAccessForm).not.toContain("votre espace Demaa");
   });
 
   it("publishes the validated coaching offer and tabs", () => {

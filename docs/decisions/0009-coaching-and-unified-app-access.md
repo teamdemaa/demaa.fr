@@ -12,10 +12,11 @@ plan demandé après consommation sécurisée du lien à usage unique. Il ne doi
 pas introduire une présentation concurrente « Espace membre ».
 
 Il n’existe pas de second écran public `Mon espace` ou `Mes plans`. Après
-connexion, la route technique de compte redirige vers le dernier plan sauvegardé
-dans l’application, ou vers l’accueil de l’application lorsqu’aucun plan
-n’existe. Les historiques restent conservés dans les données sans créer de
-portail concurrent.
+connexion, `/plans` redirige vers le dernier plan sauvegardé dans l’application,
+ou vers l’accueil lorsqu’aucun plan n’existe. L’ancienne route `/mon-espace`
+est uniquement conservée comme redirection de compatibilité vers `/plans`.
+Les historiques restent conservés dans les données sans créer de portail
+concurrent.
 
 Coaching contient deux onglets : `Sessions` et `Messages`.
 

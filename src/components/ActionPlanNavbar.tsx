@@ -39,7 +39,7 @@ export default function ActionPlanNavbar({
     return (
       <div
         className="grid w-full grid-cols-4 gap-1 rounded-[1.45rem] border border-dema-line bg-dema-paper p-1 shadow-[0_8px_24px_rgba(23,35,29,0.06)] lg:rounded-full"
-        aria-label="Navigation de votre espace"
+        aria-label="Navigation principale"
       >
         {navigationItems.map(({ view, label, Icon }) => (
           <button

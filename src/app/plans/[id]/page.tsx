@@ -28,7 +28,7 @@ export default async function ActionPlanPage({
 
   if (!email) {
     redirect(
-      `/mon-espace?message=${encodeURIComponent("Connectez-vous pour ouvrir ce plan.")}`,
+      `/connexion?message=${encodeURIComponent("Connectez-vous pour ouvrir ce plan.")}&returnTo=${encodeURIComponent(`/plans/${id}`)}`,
     );
   }
 

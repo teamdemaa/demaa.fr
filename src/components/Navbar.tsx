@@ -18,7 +18,7 @@ export default function Navbar({
     "inline-flex min-h-10 shrink-0 items-center gap-1.5 rounded-full border border-dema-forest/15 bg-dema-paper px-3 text-xs font-medium text-dema-forest transition hover:border-dema-forest/28 hover:bg-dema-sage/45 sm:min-h-11 sm:gap-2 sm:px-4 sm:text-sm";
   function openAuthenticatedAccount(event: MouseEvent<HTMLAnchorElement>) {
     event.preventDefault();
-    window.location.assign("/mon-espace");
+    window.location.assign("/plans");
   }
 
   return (
@@ -48,7 +48,7 @@ export default function Navbar({
                 />
                 {isAuthenticated ? (
                   <Link
-                    href="/mon-espace"
+                    href="/plans"
                     aria-label="Ouvrir mon plan"
                     className={accountAccessClassName}
                     onClick={openAuthenticatedAccount}
@@ -62,7 +62,7 @@ export default function Navbar({
                   </Link>
                 ) : (
                   <Link
-                    href="/mon-espace"
+                    href="/connexion"
                     className={accountAccessClassName}
                   >
                     <LogIn className="hidden h-4 w-4 sm:block" aria-hidden="true" />

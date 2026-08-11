@@ -105,7 +105,7 @@ export default function Footer() {
         <div className="mt-16 border-t border-neutral-200 pt-8">
           <div className="flex justify-center">
             <Link
-              href="/mon-espace"
+              href="/connexion"
               className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-dema-line bg-dema-paper px-4 py-2 text-sm font-medium text-brand-blue/56 transition hover:border-dema-forest/24 hover:text-brand-blue/72"
               aria-label="Se connecter"
             >

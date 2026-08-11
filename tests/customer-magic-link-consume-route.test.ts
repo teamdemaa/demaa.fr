@@ -47,7 +47,7 @@ describe("customer magic-link consumption route", () => {
 
     expect(response.status).toBe(307);
     expect(response.headers.get("location")).toBe(
-      "https://demaa.co/connexion?token=raw-token&returnTo=%2Fmon-espace%2Fplans%2Fplan-123",
+      "https://demaa.co/connexion?token=raw-token&returnTo=%2Fplans%2Fplan-123",
     );
     expect(mocks.consumeCustomerMagicLink).not.toHaveBeenCalled();
   });
@@ -71,7 +71,7 @@ describe("customer magic-link consumption route", () => {
 
     expect(response.status).toBe(200);
     await expect(response.json()).resolves.toEqual({
-      redirectTo: "/mon-espace/plans/plan-123",
+      redirectTo: "/plans/plan-123",
     });
     expect(mocks.consumeCustomerMagicLink).toHaveBeenCalledWith("hash:raw-token");
     expect(mocks.createCustomerSession).toHaveBeenCalledWith("dirigeant@example.com");

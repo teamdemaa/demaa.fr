@@ -107,13 +107,13 @@ describe("action plan experience architecture", () => {
 
   it("allows a saved plan return path without opening external redirects", () => {
     expect(getSafeCustomerReturnTo("/mon-espace/plans/abc_123")).toBe(
-      "/mon-espace/plans/abc_123",
+      "/plans/abc_123",
     );
     expect(getSafeCustomerReturnTo("//example.com/mon-espace")).toBe(
-      "/mon-espace",
+      "/plans",
     );
     expect(getSafeCustomerReturnTo("https://example.com/mon-espace")).toBe(
-      "/mon-espace",
+      "/plans",
     );
   });
 });

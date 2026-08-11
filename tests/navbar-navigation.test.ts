@@ -60,27 +60,29 @@ describe("Demaa application navbar", () => {
     ]);
 
     expect(navbarSource).toContain('aria-label="Ouvrir mon plan"');
-    expect(navbarSource).toContain('window.location.assign("/mon-espace")');
+    expect(navbarSource).toContain('window.location.assign("/plans")');
     expect(navbarSource).toContain("onClick={openAuthenticatedAccount}");
     expect(navbarSource).toContain("prefetch={false}");
     expect(navbarSource).not.toContain("<span>Mon espace</span>");
-    expect(navbarSource).toContain('<Link\n                    href="/mon-espace"');
+    expect(navbarSource).toContain('<Link\n                    href="/plans"');
+    expect(navbarSource).toContain('href="/connexion"');
     expect(navbarSource).toContain("<span>Se connecter</span>");
     expect(savedPlanSource).toContain("<Navbar anonymousLanding isAuthenticated minimal />");
   });
 
-  it("keeps the anonymous member access minimal and intercepts it over the homepage", async () => {
-    const [memberSource, modalSource] = await Promise.all([
+  it("keeps sign-in minimal and intercepts it over the homepage", async () => {
+    const [legacySource, loginSource, modalSource] = await Promise.all([
       readFile(new URL("../src/app/mon-espace/page.tsx", import.meta.url), "utf8"),
-      readFile(new URL("../src/app/@modal/(.)mon-espace/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/connexion/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/@modal/(.)connexion/page.tsx", import.meta.url), "utf8"),
     ]);
 
-    expect(memberSource).toContain("<Navbar minimal />");
-    expect(memberSource).toContain("<CustomerSpaceAccessForm returnTo=\"/mon-espace\" simple />");
-    expect(memberSource).toContain("Le lien n’est plus valide.");
-    expect(memberSource).toContain('redirect(latestPlan ? `/plans/${latestPlan.id}` : "/")');
-    expect(memberSource).not.toContain("Mes plans");
-    expect(memberSource).not.toContain("Mon espace");
+    expect(legacySource).toContain('redirect("/plans")');
+    expect(loginSource).toContain("<Navbar minimal />");
+    expect(loginSource).toContain("<CustomerSpaceAccessForm returnTo={returnTo} simple />");
+    expect(loginSource).toContain("Se connecter");
+    expect(loginSource).not.toContain("Mes plans");
+    expect(loginSource).not.toContain("Mon espace");
     expect(modalSource).toContain("<CustomerSpaceLoginDialog />");
   });
 
