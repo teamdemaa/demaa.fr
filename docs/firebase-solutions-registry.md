@@ -3,11 +3,13 @@
 ## Décision
 
 Firebase est l’unique source éditable des recommandations affichées dans les
-pages Systèmes. Les anciens fichiers ne sont plus lus par le runtime et restent
-uniquement des archives de migration. Le fichier
-`firebase-solution-registry.snapshot.generated.json` est une sortie générée de
-secours exportée depuis la révision Firebase active : il ne doit jamais être
-édité manuellement ni régénéré depuis les anciens fichiers.
+pages Systèmes. Les anciens fichiers ne sont plus lus directement par le
+runtime et restent des archives de migration. Le fallback runtime courant est
+`firebase-solution-registry.catalog-enrichment.snapshot.generated.json`. Il
+est généré et scellé depuis le catalogue consolidé ; il ne doit jamais être
+édité manuellement. Le fichier historique
+`firebase-solution-registry.snapshot.generated.json` reste figé afin que les
+anciennes migrations et leurs tests puissent être rejoués à l'identique.
 
 ## Structure Firestore
 
@@ -54,7 +56,31 @@ la limite d’un document Firestore.
 - Toute tarification visible porte une source, une date de capture et une date
   d’expiration. Une tarification expirée est masquée.
 
-## Migration actuelle
+## État courant — 12 août 2026
+
+La révision enrichie
+`solutions-2026-08-12-catalog-enrichment-published-v1` couvre :
+
+- 115 métiers ;
+- 267 ressources ;
+- 722 placements ;
+- 392 placements Outils couvrant les 115 métiers ;
+- 125 placements Fournisseurs couvrant 78 métiers ;
+- 90 placements Réseaux couvrant 77 métiers ;
+- 115 placements Levier.
+
+Elle est active uniquement dans le projet isolé Firebase Preview
+`demaa-preview-2026`. L'import a créé et relu les 990 documents attendus, puis
+une seconde exécution idempotente a confirmé zéro écriture et aucun changement
+du pointeur. Son empreinte source est
+`31789715b771c6464677a418e0d72d3c29a202b17ab0cb1c3ed99211f3b92739` et
+l'empreinte du plan est
+`9e2fba66924844944ac2daf8850356f3f63167457afb2258ccb84f5dec691b1f`.
+
+Cette activation Preview ne constitue pas une activation Production. Aucun
+pointeur ni document Production n'a été modifié par ce lot.
+
+## Migration historique
 
 La révision active `solutions-2026-08-05-active-v1` couvre :
 
@@ -118,6 +144,10 @@ recommandation forcée.
 npm run export:firebase-solutions-snapshot
 npm run plan:firebase-solutions-import
 npm run verify:firebase-solutions-emulator
+npm run plan:firebase-solutions-catalog-enrichment
+npm run generate:firebase-solutions-catalog-enrichment
+npm run verify:firebase-solutions-catalog-enrichment-emulator
+npm run import:firebase-solutions-catalog-enrichment-preview
 ```
 
 La première commande exporte la révision Firebase active vers le snapshot de
@@ -133,6 +163,12 @@ revalide les deux empreintes et vérifie le pointeur actif. Le
 script refuse de démarrer sans `FIRESTORE_EMULATOR_HOST` et utilise uniquement
 le projet de démonstration `demo-demaa-solutions`, qui ne peut pas atteindre un
 service Firebase distant.
+
+Les quatre commandes `catalog-enrichment` construisent la révision courante,
+écrivent son fallback dédié, vérifient ses 990 documents dans l'émulateur, puis
+permettent son import Preview. L'import Preview exige toujours le projet isolé,
+les empreintes exactes du plan et de l'activation, la confirmation du pointeur
+courant et un jeton utilisateur éphémère.
 
 ## Révision V2 préparée localement — non activée
 

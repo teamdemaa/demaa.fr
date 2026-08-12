@@ -319,8 +319,8 @@ function buildSystemPageTitle(
   solutionSections: SystemPageSolutionSections,
 ): string {
   const contentLabel = solutionSections.length > 0
-    ? "Process, Solutions et Ressources"
-    : "Process et Ressources";
+    ? "Organisation, Solutions et Ressources"
+    : "Organisation et Ressources";
   return `Système métier ${data.system.name} : ${contentLabel} | Demaa`;
 }
 
@@ -455,8 +455,8 @@ export function buildSystemPageJsonLd(
       "@context": "https://schema.org",
       "@type": "ItemList",
       name: listedSolutions.length > 0
-        ? `Process, Solutions et Ressources du système métier ${data.system.name}`
-        : `Process et Ressources du système métier ${data.system.name}`,
+        ? `Organisation, Solutions et Ressources du système métier ${data.system.name}`
+        : `Organisation et Ressources du système métier ${data.system.name}`,
       numberOfItems: listedProcesses.length + listedSolutions.length + listedResources.length,
       itemListElement: [
         ...listedProcesses.map((process, index) => ({

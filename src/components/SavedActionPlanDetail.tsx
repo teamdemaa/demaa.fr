@@ -13,6 +13,8 @@ import {
 } from "@/components/SavedActionPlanControls";
 import ActionPlanSystemPanel from "@/components/ActionPlanSystemPanel";
 import OpportunitiesPanel from "@/components/OpportunitiesPanel";
+import { useActionPlanAppContext } from "@/hooks/useActionPlanAppContext";
+import type { ActionPlanAppContext } from "@/lib/action-plan-app-context";
 import type { ActionPlan, PersistableActionPlan } from "@/lib/action-plan-contract";
 import type { AiGenerationMetadata } from "@/lib/ai-generation-metadata";
 import { toPersistedAiGenerationMetadata } from "@/lib/ai-generation-metadata";
@@ -34,6 +36,7 @@ export default function SavedActionPlanDetail({
   initialTitle,
   initialRevision,
   initialWorkspace,
+  initialAppContext,
   systemOptions,
   availablePlans,
   initialEmail = "",
@@ -43,12 +46,15 @@ export default function SavedActionPlanDetail({
   initialTitle: string;
   initialRevision: number;
   initialWorkspace: ActionPlanWorkspaceState;
+  initialAppContext: ActionPlanAppContext;
   systemOptions: readonly ActionPlanSystemOption[];
   availablePlans: readonly SavedActionPlanOption[];
   initialEmail?: string;
 }) {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<ActionPlanView>("plan");
+  const { context: appContext, navigate: navigateAppContext } =
+    useActionPlanAppContext(initialAppContext);
+  const activeTab = appContext.view;
   const [currentPlan, setCurrentPlan] = useState(plan);
   const [planTitle, setPlanTitle] = useState(initialTitle);
   const [workspace, setWorkspace] = useState(initialWorkspace);
@@ -68,6 +74,10 @@ export default function SavedActionPlanDetail({
   const savePromiseRef = useRef<Promise<boolean> | null>(null);
   const saveTimeoutRef = useRef<number | null>(null);
   const mountedRef = useRef(true);
+
+  function selectAppView(view: ActionPlanView) {
+    navigateAppContext({ ...appContext, view });
+  }
 
   const flushWorkspaceSave = useCallback(() => {
     if (savePromiseRef.current) return savePromiseRef.current;
@@ -307,7 +317,7 @@ export default function SavedActionPlanDetail({
 
   return (
     <div className="contents">
-      <ActionPlanNavbar activeView={activeTab} onViewChange={setActiveTab} />
+      <ActionPlanNavbar activeView={activeTab} onViewChange={selectAppView} />
       <ActionPlanCoachingControl
         existingPlanId={planId}
         initialEmail={initialEmail}
@@ -359,15 +369,58 @@ export default function SavedActionPlanDetail({
         <div hidden={activeTab !== "system"}>
           <ActionPlanSystemPanel
             options={systemOptions}
-            selectedSystemId={workspace.selectedSystemId || ""}
-            onSystemChange={(systemId) => setWorkspace((current) => ({ ...current, selectedSystemId: systemId }))}
+            selectedSystemId={appContext.systemId || workspace.selectedSystemId || ""}
+            onSystemChange={(systemId) => {
+              setWorkspace((current) => ({ ...current, selectedSystemId: systemId }));
+              navigateAppContext({
+                ...appContext,
+                view: "system",
+                systemId,
+                solutionResourceSlug: undefined,
+              });
+            }}
             workspace={workspace}
             onWorkspaceChange={setWorkspace}
+            activeTab={appContext.systemTab ?? "process"}
+            initialResourceSlug={appContext.solutionResourceSlug}
+            onActiveTabChange={(systemTab) => navigateAppContext({
+              ...appContext,
+              view: "system",
+              systemId: appContext.systemId || workspace.selectedSystemId || undefined,
+              systemTab,
+              solutionResourceSlug: systemTab === "solutions"
+                ? appContext.solutionResourceSlug
+                : undefined,
+            })}
+            onResourceSlugChange={(solutionResourceSlug) => navigateAppContext({
+              ...appContext,
+              view: "system",
+              systemId: appContext.systemId || workspace.selectedSystemId || undefined,
+              systemTab: "solutions",
+              solutionResourceSlug,
+            })}
           />
         </div>
-        {activeTab === "academy" ? <ActionPlanAcademyPanel /> : null}
+        {activeTab === "academy" ? (
+          <ActionPlanAcademyPanel
+            initialContentSlug={appContext.academyContentSlug}
+            onContentChange={(academyContentSlug) => navigateAppContext({
+              ...appContext,
+              view: "academy",
+              academyContentSlug,
+            })}
+          />
+        ) : null}
         {activeTab === "opportunities" ? (
-          <OpportunitiesPanel initialEmail={initialEmail} />
+          <OpportunitiesPanel
+            initialEmail={initialEmail}
+            initialOpportunityId={appContext.opportunityId}
+            onOpportunityChange={(opportunityId) => navigateAppContext({
+              ...appContext,
+              view: "opportunities",
+              opportunityId,
+            })}
+          />
         ) : null}
       </div>
     </div>

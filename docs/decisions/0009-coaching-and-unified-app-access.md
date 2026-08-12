@@ -23,7 +23,8 @@ est uniquement conservée comme redirection de compatibilité vers `/plans`.
 Les historiques restent conservés dans les données sans créer de portail
 concurrent.
 
-Coaching contient deux onglets : `Messages` puis `Sessions`. `Messages` est
+Le produit accessible par `Parler à un spécialiste` contient deux onglets :
+`Messages` puis `Formules`. `Messages` est
 l'onglet ouvert par défaut afin de privilégier l'échange écrit ou dicté.
 
 `Coaching` est le nom du produit. Tous les libellés qui désignent la personne
@@ -31,17 +32,22 @@ emploient `spécialiste`, notamment `Parler à un spécialiste` et
 `Écrire à un spécialiste`. L'interface ne parle pas de `coach` ni de
 `votre coach`.
 
-- Session de pilotage : 60 minutes par téléphone, 150 EUR HT, soit 180 EUR TTC
-  si la TVA française à 20 % s’applique.
-- Parcours de pilotage : trois sessions de 60 minutes, valables trois mois,
-  avec le même spécialiste, 400 EUR HT, soit 480 EUR TTC si la TVA française à
-  20 % s’applique.
+- `Échanges avec Demaa` : 149 EUR HT par mois, conversation écrite ou vocale
+  avec l'équipe Demaa, réponse sous 24 à 48 heures ouvrées et jusqu'à deux
+  chantiers actifs à la fois.
+- `Pilotage mensuel` : une seule carte avec un sélecteur interne. Une session
+  individuelle de 60 minutes par mois coûte 350 EUR HT par mois ; deux sessions
+  individuelles de 60 minutes par mois coûtent 550 EUR HT par mois. La même
+  carte, son prix, ses bénéfices et son CTA changent avec le sélecteur.
 
-L'ancien échange préalable gratuit de 15 minutes est retiré. Le parcours
-Sessions ne publie que les deux offres payantes ci-dessus.
+Il n'existe ni carte distincte `Pilotage rapproché`, ni session ponctuelle à
+150 EUR, ni parcours historique à 400 EUR. Les montants TTC ne sont pas affichés
+dans cette interface.
 
-Les demandes sont coordonnées manuellement. Aucun paiement, agenda automatique
-ou promesse de disponibilité n’est ajouté sans une décision ultérieure.
+Les CTA recueillent une intention et les demandes sont coordonnées manuellement.
+Aucun abonnement, paiement ou agenda automatique n'est déclenché dans cette
+version. L'activation d'un paiement récurrent exige une décision et une recette
+distinctes.
 Messages est asynchrone. La dictée transforme la voix en texte relisible avant
 envoi et affiche la transcription intermédiaire directement dans le champ ;
 aucun enregistrement audio n’est conservé dans cette version. L’onglet

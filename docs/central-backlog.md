@@ -23,16 +23,17 @@ de déploiement.
 - Les 115 fiches Système ont pour route canonique `/systemes/[slug]` ; les
   anciens espaces `/kit-operationnel`, `/systemes-operationnels` et
   `/kit-systeme` redirigent en permanent en conservant les paramètres.
-- Les 115 Systèmes exposent `Process / Solutions / Ressources` et Firebase est
+- Les 115 Systèmes exposent `Organisation / Solutions / Ressources` ; le slug
+  interne historique de l'onglet Organisation reste `process`. Firebase est
   la source distante active des Solutions.
 - Les Services canoniques sont publiés et composés au rendu dans les
   Systèmes, sans duplication dans Firebase.
 - `/contenus/facturation-electronique` est publié comme article et diaporama ;
   les deux présentations universelles ne sont plus rendues dans les Ressources
   des Systèmes.
-- Les guides métier annoncés restent visibles et leur liste d'attente est
-  opérationnelle. Les Formations en direct et les Cas concrets restent masqués
-  par des bascules éditoriales explicites.
+- Les guides métier sont retirés de Ressources pour simplifier l'application ;
+  leurs données historiques restent conservées. Académie présente désormais
+  `Décryptages / Cours / En direct` en réutilisant les contenus existants.
 - Les parcours guide, newsletter, Structure, Rejoindre Team Demaa, callback
   Services, Levier, Opportunités, sauvegarde de plan et lien magique ont été
   testés en Production. L'envoi direct à la boîte Gmail opérationnelle est
@@ -58,8 +59,8 @@ l'ADR 0004 prévaut.
   locale. L'internationalisation reste différée.
 - La navigation applicative contient `Plan d'action`, `Système`, `Académie` et
   `Opportunités`. Le produit Coaching est accessible par l'action
-  `Parler à un spécialiste` et conserve les onglets Messages puis Sessions.
-- Une fiche Système contient `Process`, `Solutions` et `Ressources`.
+  `Parler à un spécialiste` et conserve les onglets Messages puis Formules.
+- Une fiche Système contient `Organisation`, `Solutions` et `Ressources`.
 - Six Services canoniques existent : Automatisation des processus,
   Expert-comptable, Formalités juridiques, Sous-traitance de formalités
   juridiques, Plan marketing et prospection et Assistance facturation. La
@@ -69,8 +70,9 @@ l'ADR 0004 prévaut.
   numéro WhatsApp), avec attribution silencieuse du service et du Système
   métier, stockage sécurisé puis notification Slack. Le suivi WhatsApp reste
   manuel : aucune API WhatsApp ni message automatique n'est promis.
-- Ressources contient les guides, modèles et documents contextualisés. Les
-  contenus pédagogiques globaux restent dans l'Académie.
+- Ressources contient les modèles et documents contextualisés en grille
+  verticale. Les contenus pédagogiques et éditoriaux globaux restent dans
+  l'Académie.
 - Firebase est la source distante autoritaire pour Solutions et le réseau de
   prestataires lorsque l'environnement est configuré.
 - Opportunités et Rejoindre Team Demaa sont intégrés à l'expérience
@@ -93,10 +95,12 @@ l'ADR 0004 prévaut.
   Systèmes, puis sauvegarde Firebase. L'ADR 0008 et
   `docs/action-plan-generator-product-contract.md` sont les références ;
   `/systemes` et `/academie` publics restent inchangés.
-- [x] Livrer la première version Coaching dans l’application : Messages
-  asynchrones ouverts par défaut, Sessions à 150 EUR HT et parcours à
-  400 EUR HT, historique persistant et demandes coordonnées manuellement.
-  L'ancien échange préalable gratuit de 15 minutes est retiré.
+- [x] Livrer la première version de `Parler à un spécialiste` : Messages
+  asynchrones ouverts par défaut, historique persistant, puis Formules avec
+  `Échanges avec Demaa` à 149 EUR HT/mois et une carte `Pilotage mensuel` dont
+  le sélecteur passe de 1 session à 350 EUR à 2 sessions à 550 EUR HT/mois.
+  Les CTA transmettent une intention ; aucun abonnement ou paiement n'est
+  déclenché dans cette version.
 - [x] Livrer D-077 : entrée `Commencer avec un plan vierge`, navigation
   `Plan d’action / Système / Académie / Opportunités`, Coaching accessible par
   `Parler à un spécialiste`, Opportunités au sens large et sauvegarde invitée
@@ -107,6 +111,16 @@ l'ADR 0004 prévaut.
   demandes sans redemander l'adresse. Après connexion, reprendre directement
   l'intention autorisée dans l'application, sans page `Mon espace` ou
   `Mes plans`.
+- [ ] Recetter puis activer D-080 : connexion Google progressive via Firebase
+  Auth, même session Demaa et même identité e-mail que le lien magique. Le
+  bouton reste masqué tant que les quatre variables Web publiques, le
+  fournisseur Google et les domaines autorisés ne sont pas configurés. Le lien
+  magique reste disponible ; aucun compte mot de passe ou stockage parallèle
+  n'est introduit.
+- [ ] Recetter puis promouvoir D-081 : manifeste PWA, icônes 192/512/maskable,
+  lancement `standalone`, thème blanc et invitation d'installation uniquement
+  après un résultat. Garder `/sw.js` et `/offline` en 404 : aucun cache d'API,
+  plan hors ligne ou deuxième source persistante dans ce lot.
 - [x] Restaurer le dernier plan sauvegardé après connexion, depuis le profil et
   à l'ouverture normale de l'application. `/plans` résout le plan courant et
   `/?new=1` reste réservé à une nouvelle situation volontaire ; l'absence de
@@ -121,14 +135,23 @@ l'ADR 0004 prévaut.
   l'ouverture du plan.
 - [x] Permettre un nom d'organisation facultatif dans l'administration des
   Opportunités et ne l'afficher que lorsqu'il est explicitement publié.
+- [ ] Synchroniser de manière contrôlée les champs facultatifs enrichis des
+  Opportunités déjà présentes dans Firebase (`cadence`, `startTiming` et
+  `expectations`). La Preview du 12 août 2026 expose encore les anciens
+  documents pour les trois Opportunités publiées, alors que le snapshot local
+  contient leurs détails complets. Préparer un plan de migration idempotent,
+  afficher le diff par document et exiger la confirmation du projet et de
+  l'empreinte avant écriture ; ne jamais écraser une modification éditoriale
+  plus récente effectuée depuis l'administration.
 - [ ] Cadrer ensuite les évolutions Coaching : capacité humaine, notifications
   de réponse, paiement/réservation, confidentialité, durée de conservation et
   limites du service. L'historique Messages, sa persistance et la réponse sous
   24 à 48 h appartiennent déjà à la première version.
-- [ ] Ouvrir un chantier séparé « Abonnements spécialiste » sans modifier
-  l'offre active avant validation complète. Étudier trois niveaux mensuels :
-  `Échanges continus` à `149 EUR HT`, `Pilotage mensuel` à `350 EUR HT` et
-  `Pilotage rapproché` à `550 EUR HT`.
+- [ ] Ouvrir un chantier séparé « Paiement des formules spécialiste » sans
+  modifier l'interface validée. Le contrat visible comporte `Échanges avec
+  Demaa` à 149 EUR HT/mois et une carte `Pilotage mensuel` avec sélecteur
+  1 session à 350 EUR ou 2 sessions à 550 EUR HT/mois ; il n'existe pas de
+  troisième carte `Pilotage rapproché`.
   - Définir précisément ce qui est inclus, les délais de réponse, le rythme des
     échanges, les limites raisonnables d'usage et les règles de report.
   - Auditer la soutenabilité de l'hypothèse interne `50 % Demaa / 50 %
@@ -154,7 +177,7 @@ l'ADR 0004 prévaut.
 - [ ] Recetter le multi-plans dans l'application unique : titre, sélecteur,
   nouveau plan, renommage, suppression révisionnée et retour au dernier plan.
 - [ ] Recetter les Systèmes sauvegardés par plan : liste sans doublon, Système
-  actif, coches Process et sélections Solutions isolées par Système, sans appel
+  actif, coches d'Organisation et sélections Solutions isolées par Système, sans appel
   IA lors du changement.
 - [ ] Recetter l'adaptateur microphone centralisé sur les champs concernés,
   avec erreurs accessibles, retour clavier et absence de conservation audio.
@@ -174,7 +197,10 @@ l'ADR 0004 prévaut.
   composé au rendu dans les 115 Systèmes.
 - [x] Créer `/contenus` et publier la fiche Facturation électronique comme
   article et diaporama avant la future vidéo.
-- [x] Réordonner les Ressources et conserver les guides métier annoncés.
+- [x] Simplifier Ressources : retirer les guides métier de la surface active et
+  afficher les modèles et documents en grille verticale responsive.
+- [x] Structurer Académie en `Décryptages / Cours / En direct`, avec
+  Décryptages ouvert par défaut, recherche partagée et navigation clavier.
 - [ ] Réactiver la section « Formations en direct » de l'Académie seulement
   après validation des créneaux, recette desktop/mobile et bascule explicite de
   `academyLiveTrainings` dans `src/lib/public-editorial-visibility.ts`.
@@ -187,6 +213,14 @@ l'ADR 0004 prévaut.
   `unknown`, avec conditions d'éligibilité explicites.
 - [ ] Étendre les Fournisseurs aux autres familles de métiers après validation
   du premier lot ; aucun acteur universel par défaut.
+- [ ] Poursuivre l'enrichissement éditorial du catalogue Solutions sans réduire
+  artificiellement les choix : conserver toutes les recommandations placées
+  et pertinentes, afficher uniquement les détails réellement renseignés dans
+  la modale, et compléter progressivement description, usage, justification,
+  contraintes, tarif et interaction. Ne jamais inventer un champ manquant ni
+  masquer une recommandation utile uniquement parce que sa fiche riche reste
+  à compléter. Formation, expert-comptable et recrutement restent exclus des
+  ajouts transverses conformément à l'arbitrage produit.
 - [ ] Préparer l'internationalisation seulement après stabilisation France :
   locales, pays, contenu, Solutions et SEO. Conserver `Systèmes` comme libellé
   court de navigation en français et `Systèmes métier` comme nom développé ;

@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { type KeyboardEvent, type ReactNode, useMemo, useState } from "react";
-import SystemGuidesRail from "@/components/SystemGuidesRail";
 import SystemContextualCaseStudy from "@/components/SystemContextualCaseStudy";
 import SystemResourcesTab from "@/components/SystemResourcesTab";
 import StructureNewsletterBlock from "@/components/StructureNewsletterBlock";
@@ -26,6 +25,7 @@ type SystemDetailContentProps = {
   system: System;
   systeme: SystemeDetail | null;
   intro: string;
+  activeTab?: SystemDetailTab;
   initialActiveTab?: string;
   initialResourceSlug?: string;
   headingAs?: "h1" | "h2" | "h3";
@@ -38,6 +38,8 @@ type SystemDetailContentProps = {
   onCheckedProcessStepIdsChange?: (stepIds: readonly string[]) => void;
   selectedSolutionPlacementIds?: readonly string[];
   onSelectedSolutionPlacementIdsChange?: (placementIds: readonly string[]) => void;
+  onActiveTabChange?: (tab: SystemDetailTab) => void;
+  onResourceSlugChange?: (resourceSlug: string | undefined) => void;
   headerActions?: ReactNode;
 };
 
@@ -45,7 +47,7 @@ const systemTabDefinitions: ReadonlyArray<{
   slug: SystemDetailTab;
   label: string;
 }> = [
-  { slug: "process", label: "Process" },
+  { slug: "process", label: "Organisation" },
   { slug: "solutions", label: "Solutions" },
   { slug: "resources", label: "Ressources" },
 ];
@@ -56,6 +58,7 @@ export default function SystemDetailContent({
   system,
   systeme,
   intro,
+  activeTab: controlledActiveTab,
   initialActiveTab,
   initialResourceSlug,
   headingAs: Heading = "h2",
@@ -68,6 +71,8 @@ export default function SystemDetailContent({
   onCheckedProcessStepIdsChange,
   selectedSolutionPlacementIds,
   onSelectedSolutionPlacementIdsChange,
+  onActiveTabChange,
+  onResourceSlugChange,
   headerActions,
 }: SystemDetailContentProps) {
   const router = useRouter();
@@ -83,12 +88,15 @@ export default function SystemDetailContent({
   const tabs = systemTabDefinitions.filter((tab) =>
     visibleTabSlugs.includes(tab.slug),
   );
-  const [activeTab, setActiveTab] = useState<SystemDetailTab>(
+  const [localActiveTab, setLocalActiveTab] = useState<SystemDetailTab>(
     isVisibleSystemDetailTab(initialActiveTab) &&
       tabs.some((tab) => tab.slug === initialActiveTab)
       ? initialActiveTab
       : "process",
   );
+  const activeTab = controlledActiveTab && tabs.some((tab) => tab.slug === controlledActiveTab)
+    ? controlledActiveTab
+    : localActiveTab;
   const [localCheckedProcessSteps, setLocalCheckedProcessSteps] = useState<Set<string>>(
     () => new Set(),
   );
@@ -118,7 +126,8 @@ export default function SystemDetailContent({
     else setLocalSelectedSolutionIds(next);
   }
   function selectTab(tab: SystemDetailTab) {
-    setActiveTab(tab);
+    if (!controlledActiveTab) setLocalActiveTab(tab);
+    onActiveTabChange?.(tab);
     if (embedded) return;
     const url = new URL(window.location.href);
     url.searchParams.set("tab", tab);
@@ -221,6 +230,7 @@ export default function SystemDetailContent({
           <SystemSolutionsTab
             sections={solutionSections}
             initialResourceSlug={initialResourceSlug}
+            onResourceSlugChange={onResourceSlugChange}
             selectedPlacementIds={selectableSolutions ? selectedSolutionIds : undefined}
             onToggleSelection={selectableSolutions ? toggleSolution : undefined}
           />
@@ -235,10 +245,6 @@ export default function SystemDetailContent({
             {contextualCaseStudy ? (
               <SystemContextualCaseStudy content={contextualCaseStudy} />
             ) : null}
-            <SystemGuidesRail
-              resources={scopedResources.filter((resource) => resource.format === "guide")}
-              systemSlug={system.slug}
-            />
             {!embedded ? <StructureNewsletterBlock /> : null}
           </div>
         ) : null}

@@ -11,13 +11,22 @@ import {
 } from "@/lib/firebase-solution-registry-contract";
 import { buildFirebaseSolutionRegistryMigrationRevision } from "@/lib/firebase-solution-registry-migration.server";
 import { buildPublishedFranceSolutionsCleanupRevision } from "@/lib/firebase-solution-registry-france-cleanup.server";
+import { buildPublishedCatalogEnrichmentRevision } from "@/lib/firebase-solution-registry-catalog-enrichment.server";
 import { buildPublishedProfessionalSuppliersRevision } from "@/lib/firebase-solution-registry-professional-suppliers.server";
 import { buildPublishedPrelaunchCloseoutRevision } from "@/lib/firebase-solution-registry-prelaunch-closeout.server";
 import { buildPublishedSupplierExpansionRevision } from "@/lib/firebase-solution-registry-supplier-expansion.server";
 import { buildFirestoreSolutionRegistryImportPlan } from "@/lib/firebase-solution-registry-firestore-plan";
 
 const EMULATOR_PROJECT_ID = "demo-demaa-solutions";
-const SOLUTION_SECTIONS = ["software", "services", "providers", "models", "networks"] as const;
+const SOLUTION_SECTIONS = [
+  "software",
+  "services",
+  "providers",
+  "financing",
+  "aids",
+  "models",
+  "networks",
+] as const;
 
 if (!process.env.FIRESTORE_EMULATOR_HOST) {
   throw new Error("FIRESTORE_EMULATOR_HOST is required; remote Firestore is forbidden.");
@@ -28,9 +37,9 @@ if (process.env.GCLOUD_PROJECT && process.env.GCLOUD_PROJECT !== EMULATOR_PROJEC
 
 const revisionSource = process.argv.find((argument) => argument.startsWith("--revision="))
   ?.slice("--revision=".length) ?? "migration";
-if (!["migration", "france-cleanup", "professional-suppliers", "prelaunch-closeout", "supplier-expansion"].includes(revisionSource)) {
+if (!["migration", "catalog-enrichment", "france-cleanup", "professional-suppliers", "prelaunch-closeout", "supplier-expansion"].includes(revisionSource)) {
   throw new Error(
-    "Emulator revision must be migration, france-cleanup, professional-suppliers, prelaunch-closeout or supplier-expansion.",
+    "Emulator revision must be migration, catalog-enrichment, france-cleanup, professional-suppliers, prelaunch-closeout or supplier-expansion.",
   );
 }
 const revision = revisionSource === "supplier-expansion"
@@ -39,6 +48,8 @@ const revision = revisionSource === "supplier-expansion"
   ? buildPublishedPrelaunchCloseoutRevision()
   : revisionSource === "professional-suppliers"
   ? buildPublishedProfessionalSuppliersRevision()
+  : revisionSource === "catalog-enrichment"
+  ? buildPublishedCatalogEnrichmentRevision()
   : revisionSource === "france-cleanup"
     ? buildPublishedFranceSolutionsCleanupRevision()
     : buildFirebaseSolutionRegistryMigrationRevision();

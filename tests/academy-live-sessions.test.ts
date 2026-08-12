@@ -96,6 +96,10 @@ describe("Academy live sessions and contextual cases", () => {
     ]);
     expect(clientSource).not.toContain("Cours fondamentaux");
     expect(clientSource).toContain("<AcademyLiveTrainingSection");
+    expect(clientSource).toContain('{ id: "decryptions", label: "Décryptages" }');
+    expect(clientSource).toContain('{ id: "courses", label: "Cours" }');
+    expect(clientSource).toContain('{ id: "live", label: "En direct" }');
+    expect(clientSource).toContain('content.kind === "case-study"');
     expect(clientSource).not.toContain("Modèles et documents");
     expect(clientSource).not.toContain("Cas concrets");
     expect(pageSource).toContain("getVisibleAcademyLiveTrainings()");

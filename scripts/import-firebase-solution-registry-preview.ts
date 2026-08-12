@@ -9,6 +9,7 @@ import {
 } from "@/lib/firebase-solution-registry-contract";
 import { buildFirebaseSolutionRegistryMigrationRevision } from "@/lib/firebase-solution-registry-migration.server";
 import { buildPublishedFranceSolutionsCleanupRevision } from "@/lib/firebase-solution-registry-france-cleanup.server";
+import { buildPublishedCatalogEnrichmentRevision } from "@/lib/firebase-solution-registry-catalog-enrichment.server";
 import { buildPublishedProfessionalSuppliersRevision } from "@/lib/firebase-solution-registry-professional-suppliers.server";
 import { buildPublishedPrelaunchCloseoutRevision } from "@/lib/firebase-solution-registry-prelaunch-closeout.server";
 import { buildPublishedSupplierExpansionRevision } from "@/lib/firebase-solution-registry-supplier-expansion.server";
@@ -18,7 +19,15 @@ import {
 } from "@/lib/firebase-solution-registry-firestore-plan";
 import { resolveFirebaseSolutionRegistryImportTarget } from "@/lib/firebase-solution-registry-import-gate";
 
-const SOLUTION_SECTIONS = ["software", "services", "providers", "models", "networks"] as const;
+const SOLUTION_SECTIONS = [
+  "software",
+  "services",
+  "providers",
+  "financing",
+  "aids",
+  "models",
+  "networks",
+] as const;
 
 type FirestoreValue =
   | { nullValue: null }
@@ -120,9 +129,9 @@ const {
 });
 
 const revisionSource = commandArgument("--revision=") ?? "migration";
-if (!["migration", "france-cleanup", "professional-suppliers", "prelaunch-closeout", "supplier-expansion"].includes(revisionSource)) {
+if (!["migration", "catalog-enrichment", "france-cleanup", "professional-suppliers", "prelaunch-closeout", "supplier-expansion"].includes(revisionSource)) {
   throw new Error(
-    "Remote import revision must be migration, france-cleanup, professional-suppliers, prelaunch-closeout or supplier-expansion.",
+    "Remote import revision must be migration, catalog-enrichment, france-cleanup, professional-suppliers, prelaunch-closeout or supplier-expansion.",
   );
 }
 const revision = revisionSource === "supplier-expansion"
@@ -131,6 +140,8 @@ const revision = revisionSource === "supplier-expansion"
   ? buildPublishedPrelaunchCloseoutRevision()
   : revisionSource === "professional-suppliers"
   ? buildPublishedProfessionalSuppliersRevision()
+  : revisionSource === "catalog-enrichment"
+  ? buildPublishedCatalogEnrichmentRevision()
   : revisionSource === "france-cleanup"
     ? buildPublishedFranceSolutionsCleanupRevision()
     : buildFirebaseSolutionRegistryMigrationRevision();

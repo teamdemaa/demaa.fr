@@ -4,6 +4,7 @@ import { CheckCircle2, LoaderCircle, Mail, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import GoogleCustomerSignInButton from "@/components/GoogleCustomerSignInButton";
 import type { PersistableActionPlan } from "@/lib/action-plan-contract";
 import type { ActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
 import {
@@ -11,6 +12,7 @@ import {
   type AiGenerationMetadata,
 } from "@/lib/ai-generation-metadata";
 import { isValidEmail, normalizeEmail } from "@/lib/email";
+import { hasFirebaseGoogleAuthConfiguration } from "@/lib/firebase-client-auth";
 
 type PendingClaim = {
   actionPlanId: string;
@@ -46,6 +48,7 @@ export default function ActionPlanSaveControl({
   const [dialogOpen, setDialogOpen] = useState(false);
   const [subscribeToStructure, setSubscribeToStructure] = useState(false);
   const [newsletterWarning, setNewsletterWarning] = useState<string | null>(null);
+  const googleEnabled = !demoMode && hasFirebaseGoogleAuthConfiguration();
 
   useEffect(() => {
     if (!dialogOpen) return;
@@ -211,6 +214,20 @@ export default function ActionPlanSaveControl({
     }
   }
 
+  async function subscribeWithGoogle(emailAddress: string) {
+    if (!subscribeToStructure) return;
+
+    try {
+      await fetch("/api/newsletter-subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: normalizeEmail(emailAddress), website: "" }),
+      });
+    } catch {
+      // La connexion et la récupération du plan restent prioritaires.
+    }
+  }
+
   if (state === "saved") {
     return null;
   }
@@ -310,10 +327,26 @@ export default function ActionPlanSaveControl({
                 </button>
               </div>
             ) : (
-              <form onSubmit={sendMagicLink} className="mt-5">
+              <div className="mt-5">
                 <p className="text-sm leading-relaxed text-dema-muted">
                   Indiquez votre adresse e-mail pour sécuriser votre plan et le retrouver sur vos appareils.
                 </p>
+                {googleEnabled && pendingClaim ? (
+                  <div className="mt-5 space-y-4">
+                    <GoogleCustomerSignInButton
+                      actionPlanId={pendingClaim.actionPlanId}
+                      onAuthenticated={subscribeWithGoogle}
+                      onError={setError}
+                      returnTo={`/plans/${encodeURIComponent(pendingClaim.actionPlanId)}`}
+                    />
+                    <div className="flex items-center gap-3" aria-hidden="true">
+                      <span className="h-px flex-1 bg-dema-line" />
+                      <span className="text-xs text-dema-muted">ou par e-mail</span>
+                      <span className="h-px flex-1 bg-dema-line" />
+                    </div>
+                  </div>
+                ) : null}
+                <form onSubmit={sendMagicLink}>
                 <label className="mt-5 block text-xs font-medium text-dema-muted">
                   Adresse e-mail
                   <span className="relative mt-1.5 block">
@@ -349,7 +382,8 @@ export default function ActionPlanSaveControl({
                   M’envoyer le lien
                 </button>
                 {error ? <p className="mt-3 text-sm text-red-700">{error}</p> : null}
-              </form>
+                </form>
+              </div>
             )}
           </section>
         </div>,

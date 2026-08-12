@@ -2,31 +2,31 @@
 
 import { Check, LoaderCircle, Mic, Send, X } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useAccessibleDialog } from "@/components/useAccessibleDialog";
 import { useSpeechDictation } from "@/hooks/useSpeechDictation";
 import { getLeadAttributionPayload } from "@/lib/lead-attribution-client";
 import { clearLeadSubmissionKey, getLeadSubmissionKey } from "@/lib/lead-submission-client";
 import type { CoachingMessage } from "@/lib/coaching-conversation";
 
-type CoachingTab = "messages" | "sessions";
-type Offer = "session" | "parcours";
+export type CoachingTab = "messages" | "formules";
+export type SpecialistOffer = "echanges" | "pilotage_1" | "pilotage_2";
+export type SpecialistAccessIntent = {
+  offer?: SpecialistOffer;
+  tab: CoachingTab;
+};
+type PilotageRhythm = 1 | 2;
 
-const offers = [
-  {
-    id: "session" as const,
-    title: "Session de pilotage",
-    meta: "60 minutes · par téléphone",
-    price: "150 € HT",
-    text: "Un spécialiste analyse votre situation et vous aide à choisir la prochaine étape.",
-    cta: "Réserver une session",
-  },
-  {
-    id: "parcours" as const,
-    title: "Parcours de pilotage",
-    meta: "3 sessions de 60 minutes · valables 3 mois",
-    price: "400 € HT",
-    text: "Le même spécialiste vous aide à décider, agir et ajuster au fil des séances.",
-    cta: "Choisir le parcours",
-  },
+const FORMULA_DETAILS: Record<SpecialistOffer, { price: string; title: string }> = {
+  echanges: { price: "149 € HT / mois", title: "Échanges avec Demaa" },
+  pilotage_1: { price: "350 € HT / mois", title: "Pilotage mensuel · 1 session / mois" },
+  pilotage_2: { price: "550 € HT / mois", title: "Pilotage mensuel · 2 sessions / mois" },
+};
+
+const COMMON_BENEFITS = [
+  "Toute l’équipe Demaa mobilisable selon le besoin : structuration, développement commercial, marketing, finance et opérations",
+  "Mises en relation facilitées si votre profil correspond",
+  "Jusqu’à –15 % sur une sélection de services et d’outils partenaires",
+  "Accès anticipé aux opportunités pertinentes",
 ] as const;
 
 const coachingMessageDateFormatter = new Intl.DateTimeFormat("fr-FR", {
@@ -50,87 +50,195 @@ async function submitCoachingRequest(payload: Record<string, unknown>) {
 }
 
 export default function CoachingPanel({
+  initialOffer,
+  initialTab = "messages",
   onRequireAccess,
 }: {
-  onRequireAccess?: () => void;
+  initialOffer?: SpecialistOffer;
+  initialTab?: CoachingTab;
+  onRequireAccess?: (intent: SpecialistAccessIntent) => void;
 }) {
-  const [tab, setTab] = useState<CoachingTab>("messages");
-  const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
+  const [tab, setTab] = useState<CoachingTab>(initialTab);
+  const [selectedOffer, setSelectedOffer] = useState<SpecialistOffer | null>(initialOffer ?? null);
+  const [pilotageRhythm, setPilotageRhythm] = useState<PilotageRhythm>(1);
+
+  const pilotageOffer: SpecialistOffer = pilotageRhythm === 2 ? "pilotage_2" : "pilotage_1";
+  const pilotagePrice = pilotageRhythm === 2 ? "550 €" : "350 €";
+  const closeFormulaDialog = useCallback(() => setSelectedOffer(null), []);
 
   return (
     <section className="mx-auto max-w-[68rem] pb-16 pt-3 sm:pt-5">
-      <header>
+      <header className="mx-auto mb-8 max-w-[42.5rem] text-center">
         <h2 className="text-4xl font-light tracking-[-0.045em] text-brand-blue sm:text-5xl">Parler à un spécialiste</h2>
-        <p className="mt-3 max-w-2xl text-base font-light leading-relaxed text-dema-muted sm:text-lg">
-          Débloquez une situation avec un spécialiste qui comprend votre quotidien et s’appuie sur l’expérience du terrain.
+        <p className="mx-auto mt-4 max-w-[35.625rem] text-base font-light leading-relaxed text-dema-muted sm:text-lg">
+          Débloquez une situation avec un premier échange offert par l’équipe Demaa. Choisissez ensuite un abonnement seulement si vous souhaitez être accompagné dans la durée.
         </p>
       </header>
 
-      <div className="mt-7 flex border-b border-dema-line" role="tablist" aria-label="Parler à un spécialiste">
-        {(["messages", "sessions"] as const).map((value) => (
+      <div className="mx-auto flex gap-8 border-b border-dema-line" role="tablist" aria-label="Parler à un spécialiste">
+        {(["messages", "formules"] as const).map((value) => (
           <button
             key={value}
             type="button"
             role="tab"
             aria-selected={tab === value}
             onClick={() => setTab(value)}
-            className={`min-h-12 border-b-2 px-5 text-sm font-medium transition ${tab === value ? "border-dema-forest text-dema-forest" : "border-transparent text-dema-muted"}`}
+            className={`-mb-px min-h-12 border-b-2 px-1 text-sm font-medium transition ${tab === value ? "border-dema-forest text-dema-forest" : "border-transparent text-dema-muted"}`}
           >
-            {value === "messages" ? "Messages" : "Sessions"}
+            {value === "messages" ? "Messages" : "Formules"}
           </button>
         ))}
       </div>
 
-      {tab === "sessions" ? (
-        <div className="mt-7 grid gap-4 md:grid-cols-2">
-          {offers.map((offer) => (
-            <article key={offer.id} className="flex h-full flex-col rounded-[1.35rem] border border-dema-line bg-dema-paper p-5 sm:p-6">
-              <div className="flex h-full flex-col">
-                <div className="min-w-0">
-                  <p className="text-xs text-dema-muted">{offer.meta}</p>
-                  <h3 className="mt-1 text-xl font-medium tracking-[-0.02em] text-brand-blue">{offer.title}</h3>
-                  <p className="mt-2 max-w-2xl text-sm leading-relaxed text-dema-muted">{offer.text}</p>
+      {tab === "formules" ? (
+        <section className="mx-auto mt-7 max-w-[67.5rem]" aria-label="Abonnements avec un spécialiste">
+          <div>
+            <h3 className="text-2xl font-medium tracking-[-0.03em] text-brand-blue">Être accompagné chaque mois</h3>
+            <p className="mt-1.5 text-sm leading-relaxed text-dema-muted">Choisissez simplement le niveau de contact humain dont vous avez besoin.</p>
+          </div>
+
+          <div className="mt-5 rounded-[1.1rem] bg-dema-sage/65 p-4 sm:px-5 sm:py-[1.125rem]">
+            <strong className="block text-sm font-medium text-dema-forest">Avantages inclus dans les abonnements</strong>
+            <div className="mt-3 grid gap-2.5 text-sm leading-snug text-dema-muted sm:grid-cols-2 sm:gap-x-6">
+              {COMMON_BENEFITS.map((benefit) => (
+                <span key={benefit} className="flex gap-2 before:shrink-0 before:text-dema-forest before:content-['✓']">{benefit}</span>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-5 grid gap-4 md:grid-cols-2">
+            <FormulaCard
+              note="Sans appel"
+              title="Échanges avec Demaa"
+              audience="Pour être aidé au fil du mois par l’équipe Demaa."
+              price="149 €"
+              benefits={[
+                "Conversation écrite ou vocale avec l’équipe Demaa",
+                "Réponse sous 24 à 48 h ouvrées",
+                "Aide à décider, structurer et avancer",
+                "Jusqu’à deux chantiers actifs à la fois",
+              ]}
+              cta="Choisir les échanges"
+              onSelect={() => onRequireAccess ? onRequireAccess({ offer: "echanges", tab: "formules" }) : setSelectedOffer("echanges")}
+            />
+
+            <FormulaCard
+              recommended
+              note="Avec un spécialiste dédié"
+              title="Pilotage mensuel"
+              audience="Pour décider, agir et ajuster avec la même personne."
+              price={pilotagePrice}
+              selector={(
+                <div className="grid grid-cols-2 gap-1 rounded-full border border-dema-line bg-dema-sage/35 p-1" role="group" aria-label="Nombre de sessions mensuelles">
+                  {([1, 2] as const).map((rhythm) => (
+                    <button
+                      key={rhythm}
+                      type="button"
+                      aria-pressed={pilotageRhythm === rhythm}
+                      onClick={() => setPilotageRhythm(rhythm)}
+                      className={`min-h-10 min-w-0 rounded-full px-1.5 text-[0.72rem] leading-tight transition min-[360px]:text-xs sm:px-3 sm:text-sm ${pilotageRhythm === rhythm ? "bg-white text-dema-forest shadow-sm" : "text-dema-muted hover:text-dema-forest"}`}
+                    >
+                      {rhythm} session{rhythm === 2 ? "s" : ""} / mois
+                    </button>
+                  ))}
                 </div>
-                <div className="mt-5 shrink-0 md:mt-auto md:pt-5">
-                  <p className="text-lg font-medium text-brand-blue">{offer.price}</p>
-                  <button type="button" onClick={() => onRequireAccess ? onRequireAccess() : setSelectedOffer(offer.id)} className="mt-3 inline-flex min-h-10 items-center justify-center rounded-full border border-dema-forest/20 px-4 text-sm font-medium text-dema-forest transition hover:bg-dema-sage/45">
-                    {offer.cta}
-                  </button>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
+              )}
+              benefits={[
+                `${pilotageRhythm} session${pilotageRhythm === 2 ? "s individuelles" : " individuelle"} de 60 min / mois`,
+                "Échanges écrits ou vocaux avec votre spécialiste",
+                "Préparation et revue raisonnable de documents",
+                "Ajustement de votre plan d’action",
+                "Appui de l’équipe Demaa selon le besoin",
+              ]}
+              cta={`Choisir avec ${pilotageRhythm} session${pilotageRhythm === 2 ? "s" : ""}`}
+              onSelect={() => onRequireAccess ? onRequireAccess({ offer: pilotageOffer, tab: "formules" }) : setSelectedOffer(pilotageOffer)}
+            />
+          </div>
+        </section>
       ) : (
         onRequireAccess ? (
-          <section className="mt-7 max-w-3xl rounded-[1.35rem] border border-dema-line bg-dema-paper p-5 sm:p-6">
-            <h3 className="text-xl font-medium text-brand-blue">Écrire à un spécialiste</h3>
-            <p className="mt-2 max-w-xl text-sm leading-relaxed text-dema-muted">
-              Identifiez-vous d’abord pour conserver la conversation et retrouver les réponses du spécialiste.
-            </p>
-            <button
-              type="button"
-              onClick={onRequireAccess}
-              className="mt-5 inline-flex min-h-11 items-center justify-center rounded-full bg-dema-forest px-5 text-sm font-medium text-white transition hover:bg-[#284f3a]"
-            >
-              Continuer par e-mail
-            </button>
+          <section className="mx-auto mt-7 max-w-[51.25rem] overflow-hidden rounded-[1.5rem] border border-dema-line bg-dema-paper">
+            <div className="flex min-h-[3.875rem] items-center justify-between gap-4 border-b border-dema-line px-5 py-3.5">
+              <h3 className="text-base font-medium text-brand-blue">Votre conversation</h3>
+              <span className="shrink-0 rounded-full bg-dema-sage px-3 py-1.5 text-xs font-medium text-dema-forest">Premier échange offert</span>
+            </div>
+            <div className="flex min-h-[14.375rem] items-center justify-center bg-dema-sage/30 p-6 text-center">
+              <div className="max-w-md">
+                <p className="text-sm leading-relaxed text-dema-muted">
+                  Identifiez-vous pour écrire votre message, conserver la conversation et retrouver la réponse du spécialiste.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => onRequireAccess({ tab: "messages" })}
+                  className="mt-5 inline-flex min-h-11 items-center justify-center rounded-full bg-dema-forest px-5 text-sm font-medium text-white transition hover:bg-[#284f3a]"
+                >
+                  Continuer par e-mail
+                </button>
+              </div>
+            </div>
           </section>
         ) : (
           <CoachingMessageForm />
         )
       )}
 
-      {selectedOffer ? <CoachingRequestDialog offer={selectedOffer} onClose={() => setSelectedOffer(null)} /> : null}
+      {selectedOffer ? <CoachingRequestDialog offer={selectedOffer} onClose={closeFormulaDialog} /> : null}
     </section>
   );
 }
 
-function CoachingRequestDialog({ offer, onClose }: { offer: Offer; onClose: () => void }) {
+function FormulaCard({
+  audience,
+  benefits,
+  cta,
+  note,
+  onSelect,
+  price,
+  recommended = false,
+  selector,
+  title,
+}: {
+  audience: string;
+  benefits: readonly string[];
+  cta: string;
+  note: string;
+  onSelect: () => void;
+  price: string;
+  recommended?: boolean;
+  selector?: React.ReactNode;
+  title: string;
+}) {
+  return (
+    <article className={`flex min-w-0 flex-col rounded-[1.35rem] border bg-dema-paper p-5 sm:p-6 ${recommended ? "border-dema-forest/55 shadow-[0_12px_34px_rgba(47,104,76,0.10)]" : "border-dema-line"}`}>
+      <span className="text-xs font-medium uppercase tracking-[0.08em] text-dema-forest">{note}</span>
+      <h4 className="mt-3 text-2xl font-medium tracking-[-0.025em] text-brand-blue">{title}</h4>
+      <p className="mt-1 min-h-[2.9rem] text-sm leading-relaxed text-dema-muted md:min-h-[3.8rem]">{audience}</p>
+      {selector ? <div className="mt-4">{selector}</div> : null}
+      <p className="mb-4 mt-5 text-[2rem] font-medium tracking-[-0.04em] text-brand-blue">
+        {price} <small className="text-sm font-normal tracking-normal text-dema-muted">HT / mois</small>
+      </p>
+      <ul className="mb-6 grid gap-2.5 text-sm leading-snug text-dema-muted">
+        {benefits.map((benefit) => (
+          <li key={benefit} className="flex gap-2 before:shrink-0 before:text-dema-forest before:content-['✓']">{benefit}</li>
+        ))}
+      </ul>
+      <button
+        type="button"
+        onClick={onSelect}
+        className={`mt-auto inline-flex min-h-11 w-full items-center justify-center rounded-full border px-4 text-sm font-medium transition ${recommended ? "border-dema-forest bg-dema-forest text-white hover:bg-[#284f3a]" : "border-dema-forest/30 text-dema-forest hover:bg-dema-sage/45"}`}
+      >
+        {cta}
+      </button>
+    </article>
+  );
+}
+
+function CoachingRequestDialog({ offer, onClose }: { offer: SpecialistOffer; onClose: () => void }) {
   const [company, setCompany] = useState("");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const dialogRef = useAccessibleDialog({ onClose });
 
   async function submit(event: React.FormEvent) {
     event.preventDefault();
@@ -143,7 +251,7 @@ function CoachingRequestDialog({ offer, onClose }: { offer: Offer; onClose: () =
     try {
       await submitCoachingRequest({
         attribution: getLeadAttributionPayload(), company, phone, message, offer,
-        requestKind: "session", website: "", idempotencyKey: getLeadSubmissionKey(flowKey),
+        requestKind: "formula", website: "", idempotencyKey: getLeadSubmissionKey(flowKey),
       });
       clearLeadSubmissionKey(flowKey);
       setStatus("sent");
@@ -153,15 +261,16 @@ function CoachingRequestDialog({ offer, onClose }: { offer: Offer; onClose: () =
   }
 
   return (
-    <div className="fixed inset-0 z-[120] flex items-end justify-center bg-brand-blue/30 p-0 backdrop-blur-sm sm:items-center sm:p-6" role="dialog" aria-modal="true" aria-labelledby="coaching-dialog-title">
-      <div className="relative max-h-dvh w-full max-w-lg overflow-y-auto rounded-t-[1.5rem] bg-dema-paper p-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] shadow-2xl sm:max-h-[calc(100dvh-3rem)] sm:rounded-[1.5rem] sm:p-8">
-        <button type="button" onClick={onClose} aria-label="Fermer" className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line"><X className="h-4 w-4" /></button>
+    <div className="fixed inset-0 z-[120] flex items-end justify-center bg-brand-blue/30 p-0 backdrop-blur-sm sm:items-center sm:p-6">
+      <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="coaching-dialog-title" tabIndex={-1} className="relative max-h-dvh w-full max-w-lg overflow-y-auto rounded-t-[1.5rem] bg-dema-paper p-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] shadow-2xl sm:max-h-[calc(100dvh-3rem)] sm:rounded-[1.5rem] sm:p-8">
+        <button type="button" onClick={onClose} data-dialog-initial-focus aria-label="Fermer" className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line"><X className="h-4 w-4" /></button>
         {status === "sent" ? (
           <div className="py-8 text-center"><Check className="mx-auto h-8 w-8 text-dema-forest" /><h3 id="coaching-dialog-title" className="mt-4 text-2xl font-semibold">Demande reçue</h3><p className="mt-2 text-sm text-dema-muted">Nous vous recontacterons par téléphone pour organiser la suite.</p></div>
         ) : (
           <form onSubmit={submit}>
-            <h3 id="coaching-dialog-title" className="pr-12 text-2xl font-semibold text-brand-blue">Organiser l’échange</h3>
-            <p className="mt-2 text-sm text-dema-muted">Indiquez simplement comment vous joindre. Aucun paiement n’est demandé maintenant.</p>
+            <h3 id="coaching-dialog-title" className="pr-12 text-2xl font-semibold text-brand-blue">Choisir cette formule</h3>
+            <p className="mt-2 text-sm text-dema-muted">{FORMULA_DETAILS[offer].title} · {FORMULA_DETAILS[offer].price}</p>
+            <p className="mt-1 text-sm text-dema-muted">Indiquez simplement comment vous joindre. Aucun abonnement ni paiement n’est déclenché maintenant.</p>
             <label className="mt-6 block text-sm font-medium">Entreprise<input value={company} onChange={(event) => setCompany(event.target.value)} className="mt-2 min-h-12 w-full rounded-xl border border-dema-line px-4 outline-none focus:border-dema-forest" /></label>
             <label className="mt-4 block text-sm font-medium">Téléphone<input type="tel" value={phone} onChange={(event) => setPhone(event.target.value)} placeholder="+33 6 12 34 56 78" className="mt-2 min-h-12 w-full rounded-xl border border-dema-line px-4 outline-none focus:border-dema-forest" /></label>
             <label className="mt-4 block text-sm font-medium">Votre situation <span className="font-normal text-dema-muted">(facultatif)</span><textarea value={message} onChange={(event) => setMessage(event.target.value)} rows={3} className="mt-2 w-full rounded-xl border border-dema-line px-4 py-3 outline-none focus:border-dema-forest" /></label>
@@ -254,17 +363,15 @@ function CoachingMessageForm() {
   }
 
   return (
-    <section className="mt-7 max-w-3xl overflow-hidden rounded-[1.35rem] border border-dema-line bg-dema-paper">
-      <div className="border-b border-dema-line px-5 py-4 sm:px-6">
-        <h3 className="text-xl font-medium text-brand-blue">Écrire à un spécialiste</h3>
-        <p className="mt-1 text-sm leading-relaxed text-dema-muted">
-          Envoyez une question ou dictez-la. Un spécialiste vous répond sous 24 à 48 h.
-        </p>
+    <section className="mx-auto mt-7 max-w-[51.25rem] overflow-hidden rounded-[1.5rem] border border-dema-line bg-dema-paper">
+      <div className="flex min-h-[3.875rem] items-center justify-between gap-4 border-b border-dema-line px-5 py-3.5 sm:px-6">
+        <h3 className="text-base font-medium text-brand-blue">Votre conversation</h3>
+        <span className="shrink-0 rounded-full bg-dema-sage px-3 py-1.5 text-xs font-medium text-dema-forest">Premier échange offert</span>
       </div>
 
       <div
         ref={historyRef}
-        className="flex min-h-72 max-h-[32rem] flex-col gap-3 overflow-y-auto bg-dema-sage/20 px-4 py-5 sm:px-6"
+        className="flex min-h-[14.375rem] max-h-[32rem] flex-col gap-3 overflow-y-auto bg-dema-sage/30 px-4 py-5 sm:px-6"
         aria-live="polite"
         aria-label="Historique de la conversation"
       >

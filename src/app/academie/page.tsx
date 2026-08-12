@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import AcademyIndexClient from "@/components/AcademyIndexClient";
-import { getAcademyFundamentals } from "@/lib/academy-course-content";
+import { getAllAcademyContent } from "@/lib/academy-course-content";
 import { getVisibleAcademyLiveTrainings } from "@/lib/live-session-catalog";
 
 const title = "Apprendre à entreprendre | Académie Demaa";
@@ -51,7 +51,7 @@ export default async function AcademyIndexPage({ searchParams }: AcademyIndexPag
     <>
       <Navbar />
       <AcademyIndexClient
-        contents={getAcademyFundamentals()}
+        contents={getAllAcademyContent()}
         liveTrainings={getVisibleAcademyLiveTrainings()}
         backLink={backLink}
       />

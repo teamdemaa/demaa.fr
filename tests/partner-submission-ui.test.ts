@@ -81,7 +81,7 @@ describe("solution proposal UI contract", () => {
     expect(catalog).toContain('aria-label={`Ouvrir l’opportunité : ${opportunity.title}`}');
     expect(catalog).toContain('role="dialog"');
     expect(catalog).toContain("setApplicationOpportunity(selected)");
-    expect(catalog).toContain("setSelected(null)");
+    expect(catalog).toContain("setLocalSelected(null)");
     expect(catalog).toContain("onApply={openApplication}");
     expect(catalog).toContain("opportunity={applicationOpportunity}");
     expect(catalog.indexOf("OpportunityDetailsDialog")).toBeLessThan(

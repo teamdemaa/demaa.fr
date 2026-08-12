@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import SavedActionPlanDetail from "@/components/SavedActionPlanDetail";
+import { parseActionPlanAppContext } from "@/lib/action-plan-app-context";
 import {
   ACTION_PLAN_ACCESS_COOKIE,
   getActionPlanForAccess,
@@ -23,10 +24,17 @@ export const metadata: Metadata = {
 
 export default async function ActionPlanPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const [{ id }, cookieStore] = await Promise.all([params, cookies()]);
+  const [{ id }, query, cookieStore] = await Promise.all([
+    params,
+    searchParams,
+    cookies(),
+  ]);
+  const initialAppContext = parseActionPlanAppContext(query);
   const sessionToken = cookieStore.get(CUSTOMER_SPACE_COOKIE)?.value || null;
   const temporaryAccessToken =
     cookieStore.get(ACTION_PLAN_ACCESS_COOKIE)?.value || null;
@@ -62,6 +70,7 @@ export default async function ActionPlanPage({
           <SavedActionPlanDetail
             key={stored.id}
             initialEmail={email || ""}
+            initialAppContext={initialAppContext}
             plan={stored.plan}
             planId={stored.id}
             initialTitle={stored.title}

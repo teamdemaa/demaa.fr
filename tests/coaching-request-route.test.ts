@@ -122,6 +122,38 @@ describe("coaching request route", () => {
     expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
   });
 
+  it("accepts only the current subscription formulas and records their displayed price", async () => {
+    const response = await POST(request({
+      company: "Entreprise test",
+      message: "",
+      offer: "pilotage_2",
+      phone: "+33 6 12 34 56 78",
+      requestKind: "formula",
+    }));
+
+    expect(response.status).toBe(202);
+    expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
+      fields: expect.arrayContaining([
+        { label: "Formule", value: "Pilotage mensuel · 2 sessions / mois" },
+        { label: "Tarif affiché", value: "550 € HT / mois" },
+      ]),
+      requestType: "specialist_formula_interest",
+    }));
+  });
+
+  it("rejects the retired one-off coaching offers", async () => {
+    const response = await POST(request({
+      company: "Entreprise test",
+      message: "",
+      offer: "session",
+      phone: "+33 6 12 34 56 78",
+      requestKind: "formula",
+    }));
+
+    expect(response.status).toBe(400);
+    expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
+  });
+
   it("returns only the authenticated customer's conversation without caching", async () => {
     mocks.getCustomerCoachingMessages.mockResolvedValue([{
       author: "specialist",

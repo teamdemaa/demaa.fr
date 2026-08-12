@@ -97,6 +97,7 @@ vi.mock("@/lib/operational-maintenance", () => ({
 import {
   ActionPlanRevisionConflictError,
   InvalidActionPlanMutationError,
+  claimPendingActionPlanWithAccessToken,
   createOwnedActionPlan,
   createPendingActionPlan,
   deleteActionPlanForAccess,
@@ -217,6 +218,41 @@ describe("action plan Firebase persistence", () => {
         temporaryAccessToken: pending.temporaryAccessToken,
       }),
     ).toBeNull();
+  });
+
+  it("claims a pending plan atomically with its opaque access token", async () => {
+    const pending = await createPendingActionPlan({ plan: actionPlan() });
+
+    await expect(
+      claimPendingActionPlanWithAccessToken({
+        email: "dirigeant@example.com",
+        id: pending.id,
+        temporaryAccessToken: "invalid-token",
+      }),
+    ).resolves.toBe(false);
+
+    await expect(
+      claimPendingActionPlanWithAccessToken({
+        email: "Dirigeant@Example.com",
+        id: pending.id,
+        temporaryAccessToken: pending.temporaryAccessToken,
+      }),
+    ).resolves.toBe(true);
+
+    const document = firestore.documents.get(`action_plans/${pending.id}`);
+    expect(document).toMatchObject({
+      owner_email: "dirigeant@example.com",
+      pending_owner_email: null,
+      status: "active",
+      temporary_access_token_hash: null,
+    });
+    await expect(
+      claimPendingActionPlanWithAccessToken({
+        email: "dirigeant@example.com",
+        id: pending.id,
+        temporaryAccessToken: pending.temporaryAccessToken,
+      }),
+    ).resolves.toBe(false);
   });
 
   it("stores a distinct plan title and lets its owner rename it", async () => {

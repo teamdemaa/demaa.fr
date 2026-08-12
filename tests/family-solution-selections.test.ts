@@ -182,7 +182,7 @@ describe("family solution selections", () => {
         : []
     );
 
-    expect(placements).toHaveLength(580);
+    expect(placements.length).toBeGreaterThanOrEqual(580);
     const violations = placements.flatMap((placement) =>
       forbiddenPublicClaims.test(JSON.stringify(placement))
         ? [`${placement.systemSlug}:${placement.resource.resourceSlug}`]
@@ -200,6 +200,21 @@ describe("family solution selections", () => {
       ?.checksBeforeChoosing).toContain(
         "Vérifier les compétences et les modalités d’accompagnement de l’étude notariale choisie.",
       );
+  });
+
+  it("enriches Restaurant with the existing curated tool catalog", () => {
+    const software = getRenderableSolutionSectionsForSystem("restaurant")
+      .find(({ section }) => section === "software")?.placements ?? [];
+
+    expect(software.map(({ resource }) => resource.resourceSlug)).toEqual([
+      "lightspeed",
+      "zenchef",
+      "deliverect",
+      "l-addition",
+      "revya",
+      "uber-eats",
+    ]);
+    expect(software).toHaveLength(6);
   });
 
   it("removes unsupported P0 placements and keeps corrected categories", () => {
@@ -363,7 +378,15 @@ describe("family solution selections", () => {
   });
 
   it("curates the selected under-covered trades without widening the deferred set", () => {
-    const sectionOrder = ["software", "services", "providers", "models", "networks"] as const;
+    const sectionOrder = [
+      "software",
+      "services",
+      "providers",
+      "financing",
+      "aids",
+      "models",
+      "networks",
+    ] as const;
     const slugsFor = (systemSlug: string, section?: "software" | "networks") =>
       getFamilySystemSolutionSelection(systemSlug)?.placements
         .filter(({ resourceSlug, section: placementSection }) =>

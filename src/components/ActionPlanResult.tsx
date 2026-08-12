@@ -24,6 +24,7 @@ import {
   useState,
 } from "react";
 import ActionPlanCommandBar from "@/components/ActionPlanCommandBar";
+import PwaInstallPrompt from "@/components/PwaInstallPrompt";
 import { isBlankManualActionPlan } from "@/lib/action-plan-manual";
 import type {
   PersistableActionPlan,
@@ -788,6 +789,8 @@ export default function ActionPlanResult({
           <StrategyPanel plan={plan} workspace={workspace} onWorkspaceChange={onWorkspaceChange} />
         </section>
       )}
+
+      <PwaInstallPrompt />
 
       <ActionPlanCommandBar
         plan={plan}

@@ -3,7 +3,10 @@
 import { LoaderCircle, X } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import CoachingPanel from "@/components/CoachingPanel";
+import CoachingPanel, {
+  type SpecialistAccessIntent,
+  type SpecialistOffer,
+} from "@/components/CoachingPanel";
 import CustomerSpaceAccessForm from "@/components/CustomerSpaceAccessForm";
 import { useAccessibleDialog } from "@/components/useAccessibleDialog";
 import type { PersistableActionPlan } from "@/lib/action-plan-contract";
@@ -34,6 +37,7 @@ export default function ActionPlanCoachingControl({
   const [target, setTarget] = useState<HTMLElement | null>(null);
   const [open, setOpen] = useState(false);
   const [accessOpen, setAccessOpen] = useState(false);
+  const [accessIntent, setAccessIntent] = useState<SpecialistAccessIntent>({ tab: "messages" });
   const [accessPlanId, setAccessPlanId] = useState(existingPlanId || "");
   const [accessPreparing, setAccessPreparing] = useState(false);
   const [accessError, setAccessError] = useState<string | null>(null);
@@ -46,6 +50,8 @@ export default function ActionPlanCoachingControl({
     if (url.searchParams.get("intent") !== "coaching") return;
 
     url.searchParams.delete("intent");
+    url.searchParams.delete("offer");
+    url.searchParams.delete("tab");
     window.history.replaceState(
       window.history.state,
       "",
@@ -57,8 +63,9 @@ export default function ActionPlanCoachingControl({
     onClose: closeAccessDialog,
   });
 
-  const prepareAccess = useCallback(async () => {
+  const prepareAccess = useCallback(async (intent: SpecialistAccessIntent) => {
     if (initialEmail) return;
+    setAccessIntent(intent);
     setAccessError(null);
 
     if (existingPlanId) {
@@ -104,8 +111,10 @@ export default function ActionPlanCoachingControl({
       }
 
       if (body?.status === "saved") {
+        const params = new URLSearchParams({ intent: "coaching", tab: intent.tab });
+        if (intent.offer) params.set("offer", intent.offer);
         window.location.assign(
-          `/plans/${encodeURIComponent(actionPlanId)}?intent=coaching&tab=messages`,
+          `/plans/${encodeURIComponent(actionPlanId)}?${params.toString()}`,
         );
         return;
       }
@@ -134,7 +143,18 @@ export default function ActionPlanCoachingControl({
     if (!initialEmail) return;
     const intent = new URLSearchParams(window.location.search).get("intent");
     if (intent !== "coaching") return;
-    const timeout = window.setTimeout(() => setOpen(true), 0);
+    const search = new URLSearchParams(window.location.search);
+    const requestedTab = search.get("tab") === "formules" ? "formules" : "messages";
+    const requestedOffer = search.get("offer");
+    const validOffer: SpecialistOffer | undefined = requestedOffer === "echanges"
+      || requestedOffer === "pilotage_1"
+      || requestedOffer === "pilotage_2"
+      ? requestedOffer
+      : undefined;
+    const timeout = window.setTimeout(() => {
+      setAccessIntent({ offer: validOffer, tab: requestedTab });
+      setOpen(true);
+    }, 0);
     return () => window.clearTimeout(timeout);
   }, [initialEmail]);
 
@@ -192,7 +212,9 @@ export default function ActionPlanCoachingControl({
                 </button>
               </div>
               <CoachingPanel
-                onRequireAccess={initialEmail ? undefined : () => void prepareAccess()}
+                initialOffer={initialEmail ? accessIntent.offer : undefined}
+                initialTab={accessIntent.tab}
+                onRequireAccess={initialEmail ? undefined : (intent) => void prepareAccess(intent)}
               />
               {accessPreparing ? (
                 <div className="fixed inset-x-0 bottom-8 z-[135] mx-auto flex w-fit items-center gap-2 rounded-full bg-dema-paper px-4 py-2 text-sm text-dema-forest shadow-lg" role="status">
@@ -244,9 +266,13 @@ export default function ActionPlanCoachingControl({
                 <div className="mt-6">
                   <CustomerSpaceAccessForm
                     actionPlanClaim={accessPlanId ? { actionPlanId: accessPlanId } : null}
-                    returnTo={accessPlanId
-                      ? `/plans/${encodeURIComponent(accessPlanId)}?intent=coaching&tab=messages`
-                      : "/?intent=coaching"}
+                    returnTo={(() => {
+                      const params = new URLSearchParams({ intent: "coaching", tab: accessIntent.tab });
+                      if (accessIntent.offer) params.set("offer", accessIntent.offer);
+                      return accessPlanId
+                        ? `/plans/${encodeURIComponent(accessPlanId)}?${params.toString()}`
+                        : `/?${params.toString()}`;
+                    })()}
                     compact
                     simple
                   />

@@ -3,11 +3,13 @@
 import Link from "next/link";
 import {
   BriefcaseBusiness,
+  BadgeEuro,
   Building2,
   ChevronLeft,
   ChevronRight,
   ExternalLink,
   Gauge,
+  Landmark,
   Bookmark,
   BookmarkCheck,
   Wrench,
@@ -38,6 +40,8 @@ export const SOLUTION_UI_WORKING_LABELS: Readonly<
   software: "Outils",
   services: "Services clés",
   providers: "Fournisseurs",
+  financing: "Financement",
+  aids: "Aides et subventions",
   networks: "Réseaux professionnels",
 };
 
@@ -45,6 +49,8 @@ export const SOLUTION_RAIL_DISPLAY_ORDER: readonly VisibleSolutionSection[] = [
   "software",
   "services",
   "providers",
+  "financing",
+  "aids",
   "networks",
 ];
 
@@ -54,6 +60,8 @@ const RESOURCE_ICONS = {
   provider: BriefcaseBusiness,
   directory: Building2,
   expertise: BriefcaseBusiness,
+  financing: BadgeEuro,
+  aid: Landmark,
 } as const;
 
 const DEFAULT_RESOURCE_LABELS: Readonly<
@@ -64,6 +72,8 @@ const DEFAULT_RESOURCE_LABELS: Readonly<
   provider: "Fournisseur",
   directory: "Organisation professionnelle",
   expertise: "Prestation",
+  financing: "Financement",
+  aid: "Aide publique",
 };
 
 function buildInitialRailState(sections: readonly RenderableSolutionSectionDto[]) {
@@ -215,11 +225,13 @@ function SolutionDialog({
 export default function SystemSolutionsTab({
   sections,
   initialResourceSlug,
+  onResourceSlugChange,
   selectedPlacementIds,
   onToggleSelection,
 }: {
   sections: readonly RenderableSolutionSectionDto[];
   initialResourceSlug?: string;
+  onResourceSlugChange?: (resourceSlug: string | undefined) => void;
   selectedPlacementIds?: ReadonlySet<string>;
   onToggleSelection?: (placementId: string) => void;
 }) {
@@ -233,13 +245,18 @@ export default function SystemSolutionsTab({
   const [railStates, setRailStates] = useState(() =>
     buildInitialRailState(visibleSections),
   );
-  const [selected, setSelected] = useState<RenderableSolutionPlacementDto | null>(() =>
+  const [localSelected, setLocalSelected] = useState<RenderableSolutionPlacementDto | null>(() =>
     initialResourceSlug
       ? visibleSections
           .flatMap((group) => group.placements)
           .find((placement) => placement.resource.resourceSlug === initialResourceSlug) ?? null
       : null,
   );
+  const selected = onResourceSlugChange
+    ? visibleSections
+        .flatMap((group) => group.placements)
+        .find((placement) => placement.resource.resourceSlug === initialResourceSlug) ?? null
+    : localSelected;
   const selectedPlacements = useMemo(
     () => visibleSections
       .flatMap((group) => group.placements)
@@ -278,8 +295,9 @@ export default function SystemSolutionsTab({
   }, [updateRailState, visibleSections]);
 
   const closeSolution = useCallback(() => {
-    setSelected(null);
-  }, []);
+    if (onResourceSlugChange) onResourceSlugChange(undefined);
+    else setLocalSelected(null);
+  }, [onResourceSlugChange]);
 
   function navigateRail(group: RenderableSolutionSectionDto, direction: -1 | 1) {
     const rail = railRefs.current[group.section];
@@ -348,7 +366,11 @@ export default function SystemSolutionsTab({
             onClick={() => {
               if (resource.interaction.interactionMode === "system_delivery") return;
               openEvent();
-              setSelected(placement);
+              if (onResourceSlugChange) {
+                onResourceSlugChange(resource.resourceSlug);
+              } else {
+                setLocalSelected(placement);
+              }
             }}
             className={cardClassName}
             aria-label={`Ouvrir ${resource.name}`}

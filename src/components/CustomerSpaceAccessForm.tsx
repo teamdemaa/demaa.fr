@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import { CheckCircle2, LoaderCircle, Mail } from "lucide-react";
+import GoogleCustomerSignInButton from "@/components/GoogleCustomerSignInButton";
 import { isValidEmail, normalizeEmail } from "@/lib/email";
+import { hasFirebaseGoogleAuthConfiguration } from "@/lib/firebase-client-auth";
 
 export default function CustomerSpaceAccessForm({
   actionPlanClaim = null,
@@ -23,6 +25,7 @@ export default function CustomerSpaceAccessForm({
   const [isSending, setIsSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [devLink, setDevLink] = useState<string | null>(null);
+  const googleEnabled = hasFirebaseGoogleAuthConfiguration();
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -99,7 +102,22 @@ export default function CustomerSpaceAccessForm({
   }
 
   return (
-    <form className={compact ? "space-y-3" : "mx-auto max-w-md space-y-4"} onSubmit={handleSubmit}>
+    <div className={compact ? "space-y-3" : "mx-auto max-w-md space-y-4"}>
+      {googleEnabled ? (
+        <>
+          <GoogleCustomerSignInButton
+            actionPlanId={actionPlanClaim?.actionPlanId}
+            onError={setError}
+            returnTo={returnTo}
+          />
+          <div className="flex items-center gap-3" aria-hidden="true">
+            <span className="h-px flex-1 bg-dema-line" />
+            <span className="text-xs text-dema-muted">ou par e-mail</span>
+            <span className="h-px flex-1 bg-dema-line" />
+          </div>
+        </>
+      ) : null}
+      <form className="space-y-3" onSubmit={handleSubmit}>
       <div className="text-left">
         <label className="text-xs font-medium text-brand-blue/70" htmlFor="customer-email">
           {simple ? "Adresse e-mail" : "Email utilisé pour votre paiement, votre demande ou votre accès"}
@@ -127,6 +145,7 @@ export default function CustomerSpaceAccessForm({
         {isSending ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : null}
         {isSending ? "Envoi du lien..." : "Recevoir mon lien sécurisé"}
       </button>
-    </form>
+      </form>
+    </div>
   );
 }

@@ -28,7 +28,15 @@ import type {
   SolutionInteractionDto,
 } from "@/lib/solution-registry-dto";
 
-export const SOLUTION_RESOURCE_TYPES = ["tool", "software", "provider", "directory", "expertise"] as const;
+export const SOLUTION_RESOURCE_TYPES = [
+  "tool",
+  "software",
+  "provider",
+  "directory",
+  "expertise",
+  "financing",
+  "aid",
+] as const;
 export const SOLUTION_INTERACTION_MODES = [
   "external_link",
   "detail",
@@ -39,6 +47,8 @@ export const SOLUTION_SECTIONS = [
   "software",
   "services",
   "providers",
+  "financing",
+  "aids",
   "models",
   "networks",
 ] as const;
@@ -68,7 +78,9 @@ export type SolutionResource =
   | (BaseSolutionResource & Readonly<{ resourceType: "software" }>)
   | (BaseSolutionResource & Readonly<{ resourceType: "provider" }>)
   | (BaseSolutionResource & Readonly<{ resourceType: "directory" }>)
-  | (BaseSolutionResource & Readonly<{ resourceType: "expertise" }>);
+  | (BaseSolutionResource & Readonly<{ resourceType: "expertise" }>)
+  | (BaseSolutionResource & Readonly<{ resourceType: "financing" }>)
+  | (BaseSolutionResource & Readonly<{ resourceType: "aid" }>);
 
 export type SolutionPlacement = ReviewMetadata & Readonly<{
   placementId: string;

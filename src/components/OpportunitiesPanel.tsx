@@ -10,9 +10,13 @@ import {
 export default function OpportunitiesPanel({
   initialEmail = "",
   demoMode = false,
+  initialOpportunityId,
+  onOpportunityChange,
 }: {
   initialEmail?: string;
   demoMode?: boolean;
+  initialOpportunityId?: string;
+  onOpportunityChange?: (opportunityId?: string) => void;
 }) {
   const [payload, setPayload] = useState<PublicOpportunitiesPayload>(
     publicOpportunitiesSnapshot,
@@ -60,6 +64,8 @@ export default function OpportunitiesPanel({
       <PublicOpportunitiesClient
         expertises={payload.expertises}
         initialEmail={initialEmail}
+        initialOpportunityId={initialOpportunityId}
+        onOpportunityChange={onOpportunityChange}
         opportunities={payload.opportunities}
       />
     </section>

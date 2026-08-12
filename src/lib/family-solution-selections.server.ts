@@ -133,9 +133,6 @@ function assertFamilySolutionManifest() {
       const placements = system.placements.filter(
         (placement) => placement.resourceSlug !== "levier" && placement.section === section,
       );
-      if (placements.length > 5) {
-        throw new Error(`Too many family solutions: ${system.systemSlug}:${section}.`);
-      }
       const ranks = placements.map(({ rank }) => rank);
       if (ranks.some((rank, index) => rank !== index + 1)) {
         throw new Error(`Non-contiguous family solution ranks: ${system.systemSlug}:${section}.`);

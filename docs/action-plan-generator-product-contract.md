@@ -73,7 +73,8 @@ Le modèle reçoit le catalogue des 115 activités sous une forme légère :
 - alias validés utiles à la détection.
 
 La source actuelle est `src/lib/enterprise-annuaire.json`, exposée par
-`src/lib/enterprise-annuaire.ts`. Les Process, Solutions et Ressources complets
+`src/lib/enterprise-annuaire.ts`. Les contenus complets d'Organisation,
+Solutions et Ressources
 des 115 Systèmes ne sont jamais envoyés ensemble au modèle.
 
 La réponse contient un `systemId` dont la valeur est l'un des slugs canoniques
@@ -187,7 +188,10 @@ réintroduisent ni page publique `Mon espace`, ni page publique `Mes plans`.
 
 - Le Système détecté est sélectionné par défaut.
 - Une dropdown discrète permet de choisir l'un des 115 Systèmes.
-- Le changement charge ses Process, Solutions et Ressources existants.
+- Le changement charge son Organisation, ses Solutions et ses Ressources
+  existantes. `Organisation` est le libellé public de l'onglet ; le slug
+  technique historique `process` reste stable pour préserver les données et
+  les anciennes URLs.
 - Il ne déclenche aucun appel IA.
 - Il ne réécrit pas la stratégie générée.
 
@@ -196,7 +200,7 @@ contenu canonique existant chargé à partir du `systemId` courant.
 
 Un plan sauvegardé peut mémoriser plusieurs Systèmes consultés. L'espace de
 travail conserve leur liste sans doublon, le Système actif, ainsi que les
-coches Process et sélections Solutions séparément pour chaque Système. Ajouter
+coches d'Organisation et sélections Solutions séparément pour chaque Système. Ajouter
 ou sélectionner un Système ne déclenche pas d'appel IA et ne modifie pas la
 Stratégie.
 
@@ -221,6 +225,16 @@ restent en mémoire de page jusqu'à une sauvegarde volontaire.
 
 Les univers publics `/systemes` et `/academie`, leur navigation et leur SEO
 restent accessibles. L'ADR 0008 ne transforme pas ces routes en espace privé.
+Une fiche publique Système propose une entrée explicite `Ouvrir dans Demaa`.
+Dans l'application, la vue, le Système, l'onglet, la ressource ouverte, le
+contenu Académie ou l'Opportunité sélectionnée sont encodés dans une URL
+partageable et restaurés par navigation arrière. L'URL publique canonique
+reste indexable ; l'URL applicative conserve le contexte de travail.
+
+Le lien magique conserve le même `returnTo` sûr mais adapte son contenu au
+parcours : plan, spécialiste, Opportunité ou accès générique. Il ne prétend
+plus qu'un plan a été sauvegardé lorsque la personne cherchait uniquement à
+continuer un autre parcours.
 
 ### Après connexion
 
@@ -268,12 +282,16 @@ existe aucun, l'application ouvre explicitement `/?new=1`. Le paramètre
 `new=1` est donc réservé à la création volontaire d'un plan vierge et ne doit
 jamais remplacer silencieusement un plan déjà enregistré.
 
-Le lien magique est l'unique point d'établissement de l'identité e-mail dans
-l'application. Une fois la session créée, les formulaires fonctionnels
+L'identité e-mail est établie par un fournisseur vérifié puis matérialisée dans
+la session Demaa. Le lien magique reste le parcours universel. Google via
+Firebase Auth peut être proposé comme raccourci progressif, avec le même e-mail
+et la même session, uniquement lorsque sa configuration et ses domaines sont
+validés ; il reste sinon entièrement masqué. Aucun mot de passe, second compte
+ou portail parallèle n'est créé. Une fois la session créée, les formulaires fonctionnels
 (guides métier, Opportunités, Coaching, inscription et demandes) réutilisent
 l'e-mail vérifié côté serveur et ne le redemandent pas. Un visiteur non
-connecté qui déclenche l'une de ces actions passe d'abord par le lien magique,
-puis revient directement à son intention dans l'application. Il n'existe pas
+connecté qui déclenche l'une de ces actions passe d'abord par l'un de ces
+parcours vérifiés, puis revient directement à son intention dans l'application. Il n'existe pas
 d'expérience publique distincte `Mon espace` ou `Mes plans`.
 
 ## Marketing et prospection éthiques
@@ -339,7 +357,8 @@ de l'enveloppe minimale suivante à Vercel AI Gateway et à son fournisseur :
 - les réponses actuellement visibles des quatre piliers de Stratégie.
 
 Sont exclus de cette enveloppe : notes, e-mail, identité de compte ou de
-session, situation source, historique, Systèmes sélectionnés, coches Process,
+session, situation source, historique, Systèmes sélectionnés, coches
+d'Organisation,
 sélections Solutions et catalogue des 115 activités. Les opérations retournées
 sont validées et appliquées déterministiquement ; le mode démo n'effectue aucun
 appel externe. Le ledger conserve uniquement les métriques techniques.
@@ -377,9 +396,12 @@ sont implémentés derrière des limites conservatrices réversibles.
 
 ## Extensions explicitement différées
 
-La première version de Coaching fait partie de l'application conformément à
-l'ADR 0009 : Messages ouverts par défaut, Sessions et demandes coordonnées
-manuellement. Restent
+La première version de l'accès à un spécialiste fait partie de l'application
+conformément à l'ADR 0009 : Messages ouverts par défaut, puis Formules. Les
+formules visibles sont Échanges avec Demaa à 149 EUR HT/mois et une seule carte
+Pilotage mensuel dont le sélecteur affiche 1 session à 350 EUR ou 2 sessions à
+550 EUR HT/mois. Les CTA transmettent une intention sans déclencher de paiement.
+Restent
 au backlog, sans modifier cette première version :
 
 - une nouvelle frontière entre phase gratuite et phase payante ;

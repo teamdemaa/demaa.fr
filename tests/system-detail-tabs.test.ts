@@ -7,7 +7,7 @@ import {
 } from "@/lib/system-detail-tabs";
 
 describe("operational system tabs", () => {
-  it("keeps Process, Solutions and Resources in the validated order", () => {
+  it("keeps Organisation, Solutions and Resources on the stable internal slugs", () => {
     expect(SYSTEM_DETAIL_TABS).toEqual(["process", "solutions", "resources"]);
   });
 

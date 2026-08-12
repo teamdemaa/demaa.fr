@@ -270,6 +270,56 @@ export async function createOwnedActionPlan(
   return stored;
 }
 
+export async function claimPendingActionPlanWithAccessToken(input: {
+  email: string;
+  id: string;
+  temporaryAccessToken: string;
+}) {
+  const database = getAdminFirestore();
+  const reference = database.collection(ACTION_PLANS_COLLECTION).doc(input.id);
+  const ownerEmail = normalizeEmail(input.email);
+
+  if (!ownerEmail || !input.temporaryAccessToken) return false;
+
+  return database.runTransaction(async (transaction) => {
+    const snapshot = await transaction.get(reference);
+    const document = snapshot.data() as ActionPlanDocument | undefined;
+
+    if (!snapshot.exists || !hasValidTemporaryAccess(document, input.temporaryAccessToken)) {
+      return false;
+    }
+
+    const pendingOwner = normalizeEmail(document?.pending_owner_email || "");
+    if (pendingOwner && pendingOwner !== ownerEmail) return false;
+
+    const claimExpiresAt = Date.parse(document?.claim_expires_at || "");
+    if (!Number.isFinite(claimExpiresAt) || claimExpiresAt < Date.now()) {
+      return false;
+    }
+
+    const now = new Date().toISOString();
+    transaction.set(
+      reference,
+      {
+        status: "active",
+        owner_email: ownerEmail,
+        pending_owner_email: null,
+        claim_secret_hash: null,
+        claim_link_token_hashes: [],
+        claim_expires_at: null,
+        temporary_access_token_hash: null,
+        temporary_access_expires_at: null,
+        claimed_at: now,
+        retention_expires_at: getLeadRetentionExpiry(),
+        updated_at: now,
+      },
+      { merge: true },
+    );
+
+    return true;
+  });
+}
+
 export async function getOwnedActionPlans(email: string) {
   const database = getAdminFirestore();
   const ownerEmail = normalizeEmail(email);

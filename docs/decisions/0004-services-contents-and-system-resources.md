@@ -38,25 +38,37 @@ sont pas copiées 460 fois dans Firebase.
 1. Outils ;
 2. Services ;
 3. Fournisseurs ;
-4. Réseaux professionnels.
+4. Financement ;
+5. Aides et subventions ;
+6. Réseaux professionnels.
 
 Les sections Fournisseurs et Réseaux restent conditionnelles à des placements
 Firebase réellement pertinents. Aucun fournisseur transversal n'est injecté
 aux 115 systèmes par défaut.
 
+Les catalogues canoniques Financement et Aides sont composés au rendu dans le
+même contrat Solutions et restent sélectionnables avec les autres placements ;
+ils ne créent ni seconde base de données ni copie par Système. L'interface ne
+limite pas arbitrairement le nombre de recommandations visibles ou sélectionnées.
+La pertinence éditoriale reste toutefois contrôlée : aucun acteur non relu n'est
+injecté universellement.
+
+Formation, annuaire de recrutement et prestation Expert-comptable ne sont pas
+ajoutés à ces recommandations Solutions. Le service Expert-comptable conserve
+sa route publique lorsqu'elle est applicable, mais n'est pas composé dans les
+fiches Système.
+
 ### Ressources des Systèmes
 
-1. Modèles et documents ;
-2. cas concret contextuel, lorsqu'il existe ;
-3. Guides métier.
+Ressources affiche les modèles et documents contextualisés les uns après les
+autres, dans une grille verticale responsive. Les guides métier sont retirés
+de cette surface pour simplifier l'application ; leurs données et anciennes
+routes ne sont pas supprimées. Un cas concret contextuel peut être réactivé
+ultérieurement lorsqu'il existe et a été validé éditorialement.
 
 Les deux présentations universelles « Maîtriser les obligations et les finances
 de son entreprise » et « La facturation électronique » sont masquées dans les
 115 systèmes, sans supprimer leurs assets ni les anciennes livraisons.
-
-Les deux guides métier contextualisés « Bientôt disponible » restent visibles
-dans chacun des 115 systèmes. Leur CTA « Être informé(e) » et leur pipeline
-sécurisé sont conservés.
 
 ### Contenus
 
@@ -67,18 +79,21 @@ la même URL sans créer de doublon SEO.
 
 ### Académie
 
-L'ordre public est :
+La recherche est suivie de trois onglets applicatifs :
 
-1. Cours fondamentaux ;
-2. Formations en direct ;
-3. Modèles et documents.
+1. `Décryptages`, ouvert par défaut et alimenté par les cas éditoriaux publiés ;
+2. `Cours`, qui reprend le catalogue pédagogique existant ;
+3. `En direct`, qui expose les rendez-vous publiés ou un état vide explicite.
+
+Les modèles et documents restent rattachés aux Systèmes et ne sont pas
+dupliqués dans l'Académie.
 
 Les six formations en direct durent deux heures et coûtent 250 EUR HT. Les
 dates sont explicitement validées avant publication et aucune restauration de
 Stripe n'est prévue.
 
-L'index global « Cas concrets » disparaît de l'Académie, mais ses routes restent
-canoniques et les cas sont rattachés aux Systèmes concernés.
+Les anciennes routes des cas restent canoniques. Leur réutilisation dans
+`Décryptages` n'ajoute ni copie de contenu ni nouveau stockage.
 
 ### Dérogation temporaire de lancement
 

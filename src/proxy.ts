@@ -9,7 +9,6 @@ const RETIRED_EXACT_PATHS = new Set([
   "/annuaire-services",
   "/cockpit-preview",
   "/logo-preview",
-  "/manifest.webmanifest",
   "/miniature-preview",
   "/modeles-de-documents",
   "/offline",
@@ -64,7 +63,7 @@ export function proxy(request: NextRequest) {
     RETIRED_PATH_PREFIXES.some((prefix) => pathname.startsWith(prefix))
   ) {
     return withContentSecurityPolicy(
-      NextResponse.rewrite(new URL("/_not-found", request.url), {
+      new NextResponse(null, {
         status: 404,
         headers: {
           "X-Robots-Tag": "noindex, nofollow",

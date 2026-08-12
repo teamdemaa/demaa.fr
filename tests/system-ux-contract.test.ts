@@ -39,7 +39,7 @@ describe("system UX contract", () => {
     expect(detailSource).not.toContain("allez dans Académie");
     expect(detailSource).not.toContain("deliveryAvailable");
     expect(detailSource).not.toContain("hasLevierSolution");
-    expect(detailSource).toContain("<SystemGuidesRail");
+    expect(detailSource).not.toContain("<SystemGuidesRail");
     expect(detailSource).toContain("<SystemResourcesTab");
     expect(detailSource).not.toContain("OperationalSystemCopyRequestModal");
     expect(detailSource).not.toContain("HistoricalOperationalSystemCopyRequestModal");
@@ -120,7 +120,7 @@ describe("system UX contract", () => {
     );
   });
 
-  it("keeps Process, Solutions and Resources as lightweight balanced tabs", async () => {
+  it("keeps Organisation, Solutions and Resources as lightweight balanced tabs", async () => {
     const detailSource = await readSource(
       "src/components/SystemDetailContent.tsx",
     );

@@ -10,6 +10,8 @@ import ActionPlanSystemPanel from "@/components/ActionPlanSystemPanel";
 import ActionPlanUtilityActions from "@/components/ActionPlanUtilityActions";
 import OpportunitiesPanel from "@/components/OpportunitiesPanel";
 import { useSpeechDictation } from "@/hooks/useSpeechDictation";
+import { useActionPlanAppContext } from "@/hooks/useActionPlanAppContext";
+import type { ActionPlanAppContext } from "@/lib/action-plan-app-context";
 import type { ActionPlan } from "@/lib/action-plan-contract";
 import type { AiGenerationMetadata } from "@/lib/ai-generation-metadata";
 import {
@@ -64,11 +66,11 @@ const GENERATION_QUESTIONS = [
 export default function ActionPlanExperience({
   systemOptions,
   initialEmail = "",
-  initialView = "plan",
+  initialAppContext = { view: "plan" },
 }: {
   systemOptions: readonly ActionPlanSystemOption[];
   initialEmail?: string;
-  initialView?: ActionPlanView;
+  initialAppContext?: ActionPlanAppContext;
 }) {
   const [situation, setSituation] = useState("");
   const [exampleIndex, setExampleIndex] = useState(0);
@@ -77,11 +79,20 @@ export default function ActionPlanExperience({
   const [generation, setGeneration] = useState<AiGenerationMetadata | null>(null);
   const [workspace, setWorkspace] = useState<ActionPlanWorkspaceState | null>(null);
   const [prePlanWorkspace, setPrePlanWorkspace] = useState<ActionPlanWorkspaceState>(
-    () => createManualActionPlanWorkspaceState(),
+    () => ({
+      ...createManualActionPlanWorkspaceState(),
+      selectedSystemId: initialAppContext.systemId ?? "",
+      savedSystemIds: initialAppContext.systemId
+        ? [initialAppContext.systemId]
+        : [],
+    }),
   );
-  const [selectedSystemId, setSelectedSystemId] = useState("");
-  const [pendingSolutionResourceSlug, setPendingSolutionResourceSlug] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<ActionPlanView>(initialView);
+  const [selectedSystemId, setSelectedSystemId] = useState(
+    initialAppContext.systemId ?? "",
+  );
+  const { context: appContext, navigate: navigateAppContext } =
+    useActionPlanAppContext(initialAppContext);
+  const activeTab = appContext.view;
   const [isGenerating, setIsGenerating] = useState(false);
   const [quoteIndex, setQuoteIndex] = useState(0);
   const [error, setError] = useState<string | null>(null);
@@ -97,6 +108,19 @@ export default function ActionPlanExperience({
     interimResults: true,
     maxLength: 4_000,
   });
+
+  function selectAppView(view: ActionPlanView) {
+    navigateAppContext({ ...appContext, view });
+  }
+
+  function selectAppSystem(systemId: string) {
+    navigateAppContext({
+      ...appContext,
+      view: "system",
+      systemId,
+      solutionResourceSlug: undefined,
+    });
+  }
 
   useEffect(() => {
     if (guestSystemPreferenceHydratedRef.current) return;
@@ -124,6 +148,26 @@ export default function ActionPlanExperience({
   }, [selectedSystemId, systemOptions]);
 
   useEffect(() => {
+    const systemId = appContext.systemId;
+    if (!systemId || !systemOptions.some((option) => option.id === systemId)) return;
+    setSelectedSystemId(systemId);
+    setPrePlanWorkspace((current) => ({
+      ...current,
+      selectedSystemId: systemId,
+      savedSystemIds: current.savedSystemIds.includes(systemId)
+        ? current.savedSystemIds
+        : [...current.savedSystemIds, systemId],
+    }));
+    setWorkspace((current) => current ? {
+      ...current,
+      selectedSystemId: systemId,
+      savedSystemIds: current.savedSystemIds.includes(systemId)
+        ? current.savedSystemIds
+        : [...current.savedSystemIds, systemId],
+    } : current);
+  }, [appContext.systemId, systemOptions]);
+
+  useEffect(() => {
     if (accessIntentHandledRef.current) return;
     accessIntentHandledRef.current = true;
 
@@ -139,12 +183,17 @@ export default function ActionPlanExperience({
 
     const timeout = window.setTimeout(() => {
       setSelectedSystemId(systemSlug);
-      setPendingSolutionResourceSlug(resourceSlug);
       setPrePlanWorkspace((current) => ({ ...current, selectedSystemId: systemSlug }));
-      setActiveTab("system");
+      navigateAppContext({
+        ...appContext,
+        view: "system",
+        systemId: systemSlug,
+        systemTab: "solutions",
+        solutionResourceSlug: resourceSlug,
+      }, "replace");
     }, 0);
     return () => window.clearTimeout(timeout);
-  }, [systemOptions]);
+  }, [appContext, navigateAppContext, systemOptions]);
 
   useEffect(() => {
     if (situation) return;
@@ -202,7 +251,7 @@ export default function ActionPlanExperience({
         savedSystemIds: storedSystemId ? [storedSystemId] : [],
       });
       setSelectedSystemId(storedSystemId);
-      setActiveTab("plan");
+      navigateAppContext({ view: "plan" }, "replace");
       return;
     }
 
@@ -214,8 +263,8 @@ export default function ActionPlanExperience({
     setGeneration(null);
     setWorkspace(createActionPlanWorkspaceState(ACTION_PLAN_DEMO));
     setSelectedSystemId(ACTION_PLAN_DEMO.systemId);
-    setActiveTab("plan");
-  }, []);
+    navigateAppContext({ view: "plan" }, "replace");
+  }, [navigateAppContext]);
 
   useEffect(() => {
     if (!isGenerating) return;
@@ -270,7 +319,7 @@ export default function ActionPlanExperience({
       setGeneration(null);
       setWorkspace(nextWorkspace);
       setSelectedSystemId(nextWorkspace.selectedSystemId || ACTION_PLAN_DEMO.systemId);
-      setActiveTab("plan");
+      navigateAppContext({ view: "plan" }, "replace");
       setIsGenerating(false);
       window.requestAnimationFrame(() => resultTitleRef.current?.focus());
       return;
@@ -305,7 +354,7 @@ export default function ActionPlanExperience({
       setGeneration(body.generation ?? null);
       setWorkspace(generatedWorkspace);
       setSelectedSystemId(nextSelectedSystemId);
-      setActiveTab("plan");
+      navigateAppContext({ view: "plan" }, "replace");
       window.requestAnimationFrame(() => resultTitleRef.current?.focus());
     } catch (submitError) {
       if (submitError instanceof DOMException && submitError.name === "AbortError") return;
@@ -342,7 +391,7 @@ export default function ActionPlanExperience({
     setGeneration(null);
     setWorkspace(prePlanWorkspace);
     setSelectedSystemId(prePlanWorkspace.selectedSystemId || "");
-    setActiveTab("plan");
+    navigateAppContext({ view: "plan" }, "replace");
     setError(null);
     window.requestAnimationFrame(() => resultTitleRef.current?.focus());
   }
@@ -404,7 +453,7 @@ export default function ActionPlanExperience({
   if (!plan) {
     return (
       <main data-action-plan-workspace className="min-h-screen bg-dema-cream px-4 pb-24 pt-2 sm:px-6 lg:px-8">
-        <ActionPlanNavbar activeView={activeTab} onViewChange={setActiveTab} />
+        <ActionPlanNavbar activeView={activeTab} onViewChange={selectAppView} />
         <div className="mx-auto max-w-[68rem] pt-1">
           {activeTab === "plan" ? (
             <section className="mx-auto max-w-5xl pt-12 text-center sm:pt-16 lg:pt-20">
@@ -478,7 +527,7 @@ export default function ActionPlanExperience({
               selectedSystemId={selectedSystemId}
               onSystemChange={(systemId) => {
                 setSelectedSystemId(systemId);
-                setPendingSolutionResourceSlug(null);
+                selectAppSystem(systemId);
                 setPrePlanWorkspace((current) => ({
                   ...current,
                   selectedSystemId: systemId,
@@ -487,13 +536,47 @@ export default function ActionPlanExperience({
               workspace={prePlanWorkspace}
               onWorkspaceChange={setPrePlanWorkspace}
               demoMode={isDemoMode}
-              initialActiveTab={pendingSolutionResourceSlug ? "solutions" : undefined}
-              initialResourceSlug={pendingSolutionResourceSlug ?? undefined}
+              activeTab={appContext.systemTab ?? "process"}
+              initialResourceSlug={appContext.solutionResourceSlug}
+              onActiveTabChange={(systemTab) => navigateAppContext({
+                ...appContext,
+                view: "system",
+                systemId: selectedSystemId || appContext.systemId,
+                systemTab,
+                solutionResourceSlug: systemTab === "solutions"
+                  ? appContext.solutionResourceSlug
+                  : undefined,
+              })}
+              onResourceSlugChange={(solutionResourceSlug) => navigateAppContext({
+                ...appContext,
+                view: "system",
+                systemId: selectedSystemId || appContext.systemId,
+                systemTab: "solutions",
+                solutionResourceSlug,
+              })}
             />
           ) : null}
-          {activeTab === "academy" ? <ActionPlanAcademyPanel /> : null}
+          {activeTab === "academy" ? (
+            <ActionPlanAcademyPanel
+              initialContentSlug={appContext.academyContentSlug}
+              onContentChange={(academyContentSlug) => navigateAppContext({
+                ...appContext,
+                view: "academy",
+                academyContentSlug,
+              })}
+            />
+          ) : null}
           {activeTab === "opportunities" ? (
-            <OpportunitiesPanel initialEmail={initialEmail} demoMode={isDemoMode} />
+            <OpportunitiesPanel
+              initialEmail={initialEmail}
+              demoMode={isDemoMode}
+              initialOpportunityId={appContext.opportunityId}
+              onOpportunityChange={(opportunityId) => navigateAppContext({
+                ...appContext,
+                view: "opportunities",
+                opportunityId,
+              })}
+            />
           ) : null}
         </div>
       </main>
@@ -511,7 +594,7 @@ export default function ActionPlanExperience({
 
   return (
     <main data-action-plan-workspace className="min-h-screen bg-dema-cream px-4 pb-24 pt-2 sm:px-6 lg:px-8">
-      <ActionPlanNavbar activeView={activeTab} onViewChange={setActiveTab} />
+      <ActionPlanNavbar activeView={activeTab} onViewChange={selectAppView} />
       <ActionPlanCoachingControl
         accessPlan={{
           plan,
@@ -562,19 +645,53 @@ export default function ActionPlanExperience({
               selectedSystemId={selectedSystemId}
               onSystemChange={(systemId) => {
                 setSelectedSystemId(systemId);
-                setPendingSolutionResourceSlug(null);
+                selectAppSystem(systemId);
                 setWorkspace((current) => current ? { ...current, selectedSystemId: systemId } : current);
               }}
               workspace={workspace}
               onWorkspaceChange={updateWorkspace}
               demoMode={isDemoMode}
-              initialActiveTab={pendingSolutionResourceSlug ? "solutions" : undefined}
-              initialResourceSlug={pendingSolutionResourceSlug ?? undefined}
+              activeTab={appContext.systemTab ?? "process"}
+              initialResourceSlug={appContext.solutionResourceSlug}
+              onActiveTabChange={(systemTab) => navigateAppContext({
+                ...appContext,
+                view: "system",
+                systemId: selectedSystemId || appContext.systemId,
+                systemTab,
+                solutionResourceSlug: systemTab === "solutions"
+                  ? appContext.solutionResourceSlug
+                  : undefined,
+              })}
+              onResourceSlugChange={(solutionResourceSlug) => navigateAppContext({
+                ...appContext,
+                view: "system",
+                systemId: selectedSystemId || appContext.systemId,
+                systemTab: "solutions",
+                solutionResourceSlug,
+              })}
             />
           </div>
-          {activeTab === "academy" ? <ActionPlanAcademyPanel /> : null}
+          {activeTab === "academy" ? (
+            <ActionPlanAcademyPanel
+              initialContentSlug={appContext.academyContentSlug}
+              onContentChange={(academyContentSlug) => navigateAppContext({
+                ...appContext,
+                view: "academy",
+                academyContentSlug,
+              })}
+            />
+          ) : null}
           {activeTab === "opportunities" ? (
-            <OpportunitiesPanel initialEmail={initialEmail} demoMode={isDemoMode} />
+            <OpportunitiesPanel
+              initialEmail={initialEmail}
+              demoMode={isDemoMode}
+              initialOpportunityId={appContext.opportunityId}
+              onOpportunityChange={(opportunityId) => navigateAppContext({
+                ...appContext,
+                view: "opportunities",
+                opportunityId,
+              })}
+            />
           ) : null}
         </div>
       </div>

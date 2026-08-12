@@ -343,8 +343,8 @@ export function validateFirebaseSolutionRegistryRevision(
       const inSection = systemPlacements
         .filter(({ placement }) => placement.section === section)
         .sort((left, right) => left.placement.rank - right.placement.rank);
-      if (inSection.length > 5) {
-        errors.push(`${systemSlug}:${section} must not exceed five placements`);
+      if (inSection.length > 10) {
+        errors.push(`${systemSlug}:${section} must not exceed ten placements`);
       }
       if (inSection.some(({ placement }, index) => placement.rank !== index + 1)) {
         errors.push(`${systemSlug}:${section} ranks must be contiguous`);

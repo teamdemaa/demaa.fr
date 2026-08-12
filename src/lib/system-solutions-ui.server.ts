@@ -15,6 +15,7 @@ import {
 } from "@/lib/solution-registry.server";
 import {
   SOLUTION_SECTIONS,
+  isSafeInteractionHref,
   validateSolutionPlacement,
   validateSolutionResource,
   type SolutionPlacement,
@@ -32,6 +33,12 @@ import type {
   RenderableSolutionPlacementDto,
   RenderableSolutionSectionDto,
 } from "@/lib/system-solutions-ui-dto";
+import { getCuratedToolRecommendationsForSystem } from "@/lib/system-tool-recommendations";
+import {
+  getFreshToolPricingNote,
+  getToolDirectoryItemBySlug,
+  getToolDirectorySlug,
+} from "@/lib/tool-directory";
 
 function getRenderableSection(
   section: SolutionSection,
@@ -194,6 +201,55 @@ function toRenderableFamilyPlacement(
   };
 }
 
+function getSupplementaryToolPlacements(
+  systemSlug: string,
+  existingPlacements: readonly RenderableSolutionPlacementDto[],
+  now: Date,
+): RenderableSolutionPlacementDto[] {
+  const existingSlugs = new Set(
+    existingPlacements.map(({ resource }) => resource.resourceSlug),
+  );
+  const curatedSlugs = getCuratedToolRecommendationsForSystem(systemSlug) ?? [];
+  const firstAvailableRank = existingPlacements
+    .filter(({ section }) => section === "software")
+    .reduce((highest, { rank }) => Math.max(highest, rank), 0) + 1;
+  const availableSlots = Math.max(0, 10 - (firstAvailableRank - 1));
+  const supplementary: RenderableSolutionPlacementDto[] = [];
+
+  for (const requestedSlug of curatedSlugs) {
+    if (supplementary.length >= availableSlots) break;
+    const tool = getToolDirectoryItemBySlug(requestedSlug);
+    if (!tool || !isSafeInteractionHref(tool.url, "external_link")) continue;
+    const resourceSlug = getToolDirectorySlug(tool);
+    if (existingSlugs.has(resourceSlug) || existingSlugs.has(requestedSlug)) continue;
+    existingSlugs.add(resourceSlug);
+
+    supplementary.push({
+      placementId: `catalog:${systemSlug}:software:${resourceSlug}`,
+      systemSlug,
+      rank: firstAvailableRank + supplementary.length,
+      section: "software" as const,
+      usage: tool.bestFor,
+      fitRationale: tool.description,
+      fitConstraints: [
+        "Comparer les fonctions, les intégrations, le coût total et les conditions avant de choisir.",
+      ],
+      resource: {
+        resourceSlug,
+        resourceType: "software" as const,
+        name: tool.name,
+        description: tool.description,
+        displayCategory: tool.category,
+        ctaLabel: "Voir l’outil",
+        indicativePricing: getFreshToolPricingNote(tool, now) ?? undefined,
+        interaction: { interactionMode: "external_link" as const, href: tool.url },
+      },
+    });
+  }
+
+  return supplementary;
+}
+
 function getRenderableFamilySolutionSections(systemSlug: string, now: Date) {
   const system = getFamilySystemSolutionSelection(systemSlug);
   if (!system) return [];
@@ -207,8 +263,14 @@ function getRenderableFamilySolutionSections(systemSlug: string, now: Date) {
       return rendered ? [rendered] : [];
     });
   const canonicalPlacements = publishedSections.flatMap(({ placements }) => placements);
+  const allExistingPlacements = [...familyPlacements, ...canonicalPlacements];
+  const supplementaryTools = getSupplementaryToolPlacements(
+    systemSlug,
+    allExistingPlacements,
+    now,
+  );
   return SOLUTION_SECTIONS.flatMap((section) => {
-    const placements = [...familyPlacements, ...canonicalPlacements]
+    const placements = [...allExistingPlacements, ...supplementaryTools]
       .filter((placement) => placement.section === section)
       .sort((left, right) => left.rank - right.rank);
     return placements.length > 0 ? [{ section, placements }] : [];

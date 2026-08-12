@@ -13,6 +13,8 @@ describe("public Solution section visibility", () => {
       { section: "software", value: "Outils" },
       { section: "services", value: "Prestations" },
       { section: "providers", value: "Fournisseurs" },
+      { section: "financing", value: "Financement" },
+      { section: "aids", value: "Aides et subventions" },
       { section: "networks", value: "Réseaux professionnels" },
       { section: "models", value: "Anciens modèles" },
     ] as const satisfies readonly Readonly<{
@@ -26,6 +28,8 @@ describe("public Solution section visibility", () => {
       "software",
       "services",
       "providers",
+      "financing",
+      "aids",
       "networks",
     ]);
     expect(sections.map(({ section }) => section)).toContain("services");

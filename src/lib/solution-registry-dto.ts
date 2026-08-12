@@ -1,8 +1,17 @@
-export type SolutionResourceType = "tool" | "software" | "provider" | "directory" | "expertise";
+export type SolutionResourceType =
+  | "tool"
+  | "software"
+  | "provider"
+  | "directory"
+  | "expertise"
+  | "financing"
+  | "aid";
 export type SolutionSection =
   | "software"
   | "services"
   | "providers"
+  | "financing"
+  | "aids"
   | "models"
   | "networks";
 export type SolutionInteractionDto =

@@ -7,7 +7,7 @@ import { type Firestore } from "firebase-admin/firestore";
 
 import { getAdminFirestore } from "@/lib/firebase-admin";
 import { hasFirebaseVercelWorkloadIdentityConfiguration } from "@/lib/firebase-vercel-oidc-credential.server";
-import snapshot from "@/lib/firebase-solution-registry.snapshot.generated.json";
+import snapshot from "@/lib/firebase-solution-registry.catalog-enrichment.snapshot.generated.json";
 import {
   SOLUTION_SECTIONS,
 } from "@/lib/solution-registry-contract";

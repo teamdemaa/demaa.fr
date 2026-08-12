@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown, ChevronUp, Search, SlidersHorizontal } from "lucide-react";
-import { useMemo, useState } from "react";
+import { type KeyboardEvent, useMemo, useState } from "react";
 import AppLibrarySearch from "@/components/AppLibrarySearch";
 import type { AcademyContentDefinition } from "@/lib/academy-course-content";
 import { matchesSearchQuery } from "@/lib/search";
@@ -74,6 +74,32 @@ const COURSE_TITLES: Record<string, string> = {
 };
 
 const ALL_ACADEMY_CATEGORIES = "Tous";
+
+type AcademySection = "decryptions" | "courses" | "live";
+
+const ACADEMY_SECTIONS: ReadonlyArray<{
+  id: AcademySection;
+  label: string;
+}> = [
+  { id: "decryptions", label: "Décryptages" },
+  { id: "courses", label: "Cours" },
+  { id: "live", label: "En direct" },
+];
+
+function getNextAcademySection(
+  current: AcademySection,
+  key: string,
+): AcademySection | null {
+  const currentIndex = ACADEMY_SECTIONS.findIndex((section) => section.id === current);
+  if (currentIndex < 0) return null;
+  if (key === "Home") return ACADEMY_SECTIONS[0].id;
+  if (key === "End") return ACADEMY_SECTIONS[ACADEMY_SECTIONS.length - 1].id;
+  if (key !== "ArrowLeft" && key !== "ArrowRight") return null;
+  const offset = key === "ArrowRight" ? 1 : -1;
+  return ACADEMY_SECTIONS[
+    (currentIndex + offset + ACADEMY_SECTIONS.length) % ACADEMY_SECTIONS.length
+  ].id;
+}
 
 function CourseDiagram({ slug }: { slug: string }) {
   if (slug === "piloter-sa-tresorerie") {
@@ -299,19 +325,31 @@ export default function AcademyIndexClient({
 }: AcademyIndexClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [showAllFundamentals, setShowAllFundamentals] = useState(false);
+  const [activeSection, setActiveSection] = useState<AcademySection>("decryptions");
   const [activeCategory, setActiveCategory] = useState(ALL_ACADEMY_CATEGORIES);
   const [areCategoryTagsVisible, setAreCategoryTagsVisible] = useState(false);
+
+  const activeSectionContents = useMemo(
+    () => contents.filter((content) =>
+      activeSection === "decryptions"
+        ? content.kind === "case-study"
+        : activeSection === "courses"
+          ? content.kind === "course"
+          : false,
+    ),
+    [activeSection, contents],
+  );
 
   const categories = useMemo(
     () => [
       ALL_ACADEMY_CATEGORIES,
-      ...Array.from(new Set(contents.map((content) => content.identity.category))),
+      ...Array.from(new Set(activeSectionContents.map((content) => content.identity.category))),
     ],
-    [contents],
+    [activeSectionContents],
   );
 
   const filteredContents = useMemo(() => {
-    return contents.filter((content) => {
+    return activeSectionContents.filter((content) => {
       const matchesCategory =
         activeCategory === ALL_ACADEMY_CATEGORIES ||
         content.identity.category === activeCategory;
@@ -328,13 +366,33 @@ export default function AcademyIndexClient({
 
       return matchesCategory && matchesQuery;
     });
-  }, [activeCategory, contents, searchQuery]);
+  }, [activeCategory, activeSectionContents, searchQuery]);
 
+  const decryptions = filteredContents.filter((content) => content.kind === "case-study");
   const fundamentals = filteredContents.filter((content) => content.kind === "course");
   const isSearching = searchQuery.trim().length > 0;
   const visibleFundamentals = embedded || isSearching || showAllFundamentals ? fundamentals : fundamentals.slice(0, 6);
   const canToggleFundamentals = !embedded && !isSearching && fundamentals.length > 6;
   const ContentContainer = embedded ? "div" : "main";
+  function selectSection(section: AcademySection) {
+    setActiveSection(section);
+    setActiveCategory(ALL_ACADEMY_CATEGORIES);
+    setAreCategoryTagsVisible(false);
+  }
+
+  function handleSectionKeyDown(
+    event: KeyboardEvent<HTMLButtonElement>,
+    currentSection: AcademySection,
+  ) {
+    const nextSection = getNextAcademySection(currentSection, event.key);
+    if (!nextSection) return;
+    event.preventDefault();
+    selectSection(nextSection);
+    requestAnimationFrame(() => {
+      document.getElementById(`academy-section-${nextSection}`)?.focus();
+    });
+  }
+
   const searchControl = embedded ? (
     <AppLibrarySearch
       activeFilter={activeCategory}
@@ -448,7 +506,53 @@ export default function AcademyIndexClient({
       ) : null}
 
       <ContentContainer className={`mx-auto max-w-7xl px-4 pb-16 md:pb-20 ${embedded ? "pt-0" : ""}`}>
-        {fundamentals.length ? (
+        <div
+          className="mb-8 grid w-full grid-cols-3 border-b border-dema-line md:mb-10"
+          role="tablist"
+          aria-label="Contenus de l’Académie"
+        >
+          {ACADEMY_SECTIONS.map((section) => (
+            <button
+              key={section.id}
+              id={`academy-section-${section.id}`}
+              type="button"
+              role="tab"
+              aria-selected={activeSection === section.id}
+              aria-controls={`academy-panel-${section.id}`}
+              tabIndex={activeSection === section.id ? 0 : -1}
+              onClick={() => selectSection(section.id)}
+              onKeyDown={(event) => handleSectionKeyDown(event, section.id)}
+              className={`-mb-px min-h-11 border-b-2 px-2 py-2.5 text-[13px] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:px-4 sm:text-sm ${
+                activeSection === section.id
+                  ? "border-dema-forest font-semibold text-dema-forest"
+                  : "border-transparent font-medium text-dema-muted hover:border-dema-forest/25 hover:text-brand-blue"
+              }`}
+            >
+              {section.label}
+            </button>
+          ))}
+        </div>
+
+        {activeSection === "decryptions" && decryptions.length ? (
+          <section
+            id="academy-panel-decryptions"
+            role="tabpanel"
+            aria-labelledby="academy-section-decryptions"
+          >
+            <div className="grid grid-cols-1 gap-x-8 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
+              {decryptions.map((content, index) => (
+                <AcademyCard
+                  key={content.identity.slug}
+                  content={content}
+                  eager={index < 3}
+                  onOpen={onOpenContent}
+                />
+              ))}
+            </div>
+          </section>
+        ) : null}
+
+        {activeSection === "courses" && fundamentals.length ? (
           <section aria-label="Cours">
             <div className="grid grid-cols-1 gap-x-8 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
               {visibleFundamentals.map((content, index) => (
@@ -481,11 +585,25 @@ export default function AcademyIndexClient({
           </section>
         ) : null}
 
-        <AcademyLiveTrainingSection trainings={liveTrainings} />
+        {activeSection === "live" ? (
+          <div
+            id="academy-panel-live"
+            role="tabpanel"
+            aria-labelledby="academy-section-live"
+          >
+            {liveTrainings.length ? (
+              <AcademyLiveTrainingSection trainings={liveTrainings} />
+            ) : (
+              <section className="rounded-[1.25rem] border border-dashed border-dema-line bg-white px-6 py-12 text-center">
+                <p className="text-sm text-dema-muted">Aucun direct n’est programmé pour le moment.</p>
+              </section>
+            )}
+          </div>
+        ) : null}
 
-        {filteredContents.length === 0 ? (
+        {activeSection !== "live" && filteredContents.length === 0 ? (
           <section className="rounded-[1.25rem] border border-dashed border-dema-line bg-white px-6 py-14 text-center">
-            <h2 className="text-xl font-semibold text-brand-blue">Aucun cours trouvé</h2>
+            <h2 className="text-xl font-semibold text-brand-blue">Aucun contenu trouvé</h2>
             <p className="mt-2 text-sm text-dema-muted">Essayez un mot plus simple ou un autre sujet.</p>
           </section>
         ) : null}

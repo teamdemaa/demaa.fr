@@ -3,6 +3,7 @@
 import { LoaderCircle, RotateCcw } from "lucide-react";
 import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import ActionPlanSystemSelector from "@/components/ActionPlanSystemSelector";
+import SystemShareControl from "@/components/SystemShareControl";
 import SystemDetailContent from "@/components/SystemDetailContent";
 import type { ActionPlanSystemOption } from "@/lib/action-plan-system-catalog";
 import type { SystemeDetail } from "@/lib/systeme-catalog";
@@ -27,8 +28,11 @@ export default function ActionPlanSystemPanel({
   workspace,
   onWorkspaceChange,
   demoMode = false,
+  activeTab,
   initialActiveTab,
   initialResourceSlug,
+  onActiveTabChange,
+  onResourceSlugChange,
 }: {
   options: readonly ActionPlanSystemOption[];
   selectedSystemId: string;
@@ -36,8 +40,11 @@ export default function ActionPlanSystemPanel({
   workspace: ActionPlanWorkspaceState;
   onWorkspaceChange: Dispatch<SetStateAction<ActionPlanWorkspaceState>>;
   demoMode?: boolean;
+  activeTab?: SystemDetailTab;
   initialActiveTab?: SystemDetailTab;
   initialResourceSlug?: string;
+  onActiveTabChange?: (tab: SystemDetailTab) => void;
+  onResourceSlugChange?: (resourceSlug: string | undefined) => void;
 }) {
   const [payload, setPayload] = useState<SystemPayload | null>(null);
   const [error, setError] = useState<{ slug: string; message: string } | null>(null);
@@ -115,11 +122,18 @@ export default function ActionPlanSystemPanel({
   return (
     <section aria-label="Système" className="pt-3">
       <div className="mx-auto mb-6 w-full max-w-xl xl:w-[min(40vw,36rem)]">
-        <ActionPlanSystemSelector
-          options={options}
-          value={selectedSystemId}
-          onChange={selectSystem}
-        />
+        <div className="flex items-center gap-2">
+          <div className="min-w-0 flex-1">
+            <ActionPlanSystemSelector
+              options={options}
+              value={selectedSystemId}
+              onChange={selectSystem}
+            />
+          </div>
+          {currentPayload ? (
+            <SystemShareControl systemName={currentPayload.system.name} />
+          ) : null}
+        </div>
         {savedSystems.length > 1 ? (
           <div className="mt-2 flex flex-wrap justify-center gap-1.5" aria-label="Systèmes enregistrés">
             {savedSystems.map((system) => (
@@ -143,7 +157,7 @@ export default function ActionPlanSystemPanel({
             Choisissez votre système métier
           </h2>
           <p className="mx-auto mt-2 max-w-lg text-sm leading-relaxed text-dema-muted">
-            Sélectionnez votre activité parmi les 115 systèmes pour afficher ses processus, ses solutions et ses ressources.
+            Sélectionnez votre activité parmi les 115 systèmes pour afficher son organisation, ses solutions et ses ressources.
           </p>
         </div>
       ) : null}
@@ -177,8 +191,11 @@ export default function ActionPlanSystemPanel({
           headingAs="h3"
           headingId="action-plan-system-title"
           intro={currentPayload.intro}
+          activeTab={activeTab}
           initialActiveTab={initialActiveTab}
           initialResourceSlug={initialResourceSlug}
+          onActiveTabChange={onActiveTabChange}
+          onResourceSlugChange={onResourceSlugChange}
           solutionSections={currentPayload.solutionSections}
           system={currentPayload.system}
           systeme={currentPayload.systeme}
