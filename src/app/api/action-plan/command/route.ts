@@ -1,17 +1,29 @@
 import { createHash } from "node:crypto";
 import { NextResponse } from "next/server";
 import { compatibleActionPlanSchema } from "@/lib/action-plan-contract";
-import { actionPlanCommandRequestSchema } from "@/lib/action-plan-command-contract";
-import { ACTION_PLAN_COMMAND_EXTERNAL_GENERATION_ENABLED } from "@/lib/action-plan-command.server";
+import {
+  actionPlanCommandRequestSchema,
+  applyActionPlanCommandOperations,
+} from "@/lib/action-plan-command-contract";
+import {
+  ACTION_PLAN_COMMAND_EXTERNAL_GENERATION_ENABLED,
+  generateActionPlanCommand,
+} from "@/lib/action-plan-command.server";
 import {
   compatibleActionPlanWorkspaceStateSchema,
   normalizeActionPlanWorkspaceState,
 } from "@/lib/action-plan-workspace";
 import { enforceRateLimit, readJsonBody } from "@/lib/api-security";
+import {
+  getAiUsageSubjectHash,
+  recordAiUsage,
+} from "@/lib/ai-usage-ledger.server";
 import { getCurrentCustomerEmailFromSession } from "@/lib/customer-space-session.server";
+import { logOperationalError } from "@/lib/operational-log";
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
 
 export const runtime = "nodejs";
+export const maxDuration = 35;
 
 function noStore<T extends Response>(response: T) {
   response.headers.set("Cache-Control", "private, no-store, max-age=0");
@@ -85,7 +97,10 @@ export async function POST(request: Request) {
   // Normalize in memory now so the future implementation cannot target stale
   // action IDs. No plan or workspace data leaves this process in the disabled
   // state.
-  normalizeActionPlanWorkspaceState(planResult.data, workspaceResult.data);
+  const workspace = normalizeActionPlanWorkspaceState(
+    planResult.data,
+    workspaceResult.data,
+  );
 
   if (!ACTION_PLAN_COMMAND_EXTERNAL_GENERATION_ENABLED) {
     return json(
@@ -98,7 +113,54 @@ export async function POST(request: Request) {
     );
   }
 
-  // This branch is intentionally unreachable until explicit consent is
-  // recorded and the external generation adapter is reviewed.
-  return json({ error: "feature_not_enabled" }, 503);
+  try {
+    const { operations, generation } = await generateActionPlanCommand(
+      requestResult.data.command,
+      planResult.data,
+      workspace,
+      { abortSignal: request.signal },
+    );
+
+    // A model response is never trusted directly. Applying it here verifies
+    // every target ID and every allowlisted mutation before it reaches the UI.
+    applyActionPlanCommandOperations(planResult.data, workspace, operations);
+
+    try {
+      const accountEmail = await getCurrentCustomerEmailFromSession();
+      await recordAiUsage({
+        operation: "action_plan_command",
+        subjectHash: getAiUsageSubjectHash(request, accountEmail),
+        ...generation,
+      });
+    } catch {
+      logOperationalError(
+        "ai_usage.record.failed",
+        new Error("ai_usage_ledger_unavailable"),
+        { operation: "action_plan_command" },
+      );
+    }
+
+    return json({ operations, generation });
+  } catch (error) {
+    // Neither the command nor plan content is logged.
+    logOperationalError(
+      "action_plan.command.failed",
+      new Error("action_plan_command_failed"),
+      {
+        requestType: "action_plan_command",
+        failureType: error instanceof Error ? error.name : "unknown",
+        failureMessage:
+          process.env.NODE_ENV === "development" && error instanceof Error
+            ? error.message
+            : undefined,
+      },
+    );
+    return json(
+      {
+        error:
+          "La modification n’a pas pu être appliquée. Réessayez dans quelques instants.",
+      },
+      502,
+    );
+  }
 }

@@ -144,10 +144,11 @@ l'ADR 0004 prévaut.
 - [ ] Vérifier le ledger d'usage IA : métriques techniques et sujet
   pseudonymisé uniquement ; aucun prompt, situation, commande, plan, support,
   note ou e-mail en clair.
-- [ ] Garder la commande IA hard-disabled. Son schéma et son application locale
-  déterministe peuvent être testés, mais aucun envoi externe ne doit être
-  activé avant une autorisation explicite distincte couvrant la commande et la
-  vue minimale du plan envoyées à AI Gateway et au fournisseur.
+- [ ] Recetter la commande IA désormais autorisée : enveloppe limitée à la
+  commande, aux actions visibles et aux quatre piliers visibles ; validation
+  déterministe, annulation, limites compte/IP, mode démo sans crédit et ledger
+  sans contenu. Notes, identité, situation source, historique et Systèmes
+  restent exclus.
 - [ ] Cadrer le partage sécurisé d'un plan sauvegardé : accès en lecture seule,
   consentement, lien révocable, durée et protection contre l'indexation. Le MVP
   permet déjà de sauvegarder et retrouver un plan, mais ne crée aucun lien

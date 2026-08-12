@@ -142,6 +142,25 @@ export type ActionPlanCommandOperations = z.infer<
   typeof actionPlanCommandOperationsSchema
 >;
 
+export function finalizeActionPlanCommandDraft(
+  draft: ActionPlanCommandDraft,
+  createId: () => string = () => crypto.randomUUID(),
+): ActionPlanCommandOperations {
+  return actionPlanCommandOperationsSchema.parse(
+    draft.operations.map((operation) => {
+      if (operation.type !== "addAction") return operation;
+
+      return {
+        ...operation,
+        action: {
+          ...operation.action,
+          id: `custom-${createId().replace(/[^A-Za-z0-9_-]/g, "").slice(0, 64)}`,
+        },
+      };
+    }),
+  );
+}
+
 function emptyTaskState() {
   return {
     status: "todo" as const,

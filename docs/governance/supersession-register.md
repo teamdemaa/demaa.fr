@@ -13,7 +13,7 @@ remplacé et la nouvelle référence à consulter.
 | Adresse e-mail redemandée dans chaque formulaire applicatif | `superseded` | saisie/vérification au lien magique uniquement, puis e-mail de session récupéré côté serveur |
 | Nouveau plan réécrit au format historique V1/V2 | `superseded` | génération V3 ; V1 est normalisé en V2 à la lecture, V2 et `manual` restent inchangés, voir ADR 0011 |
 | Support générique non typé pour les nouveaux plans | `superseded` | support V3 typé avec choix déterministe par nature d'action, voir ADR 0011 |
-| Commande IA considérée active parce que son contrat existe | `superseded` | préparation technique seulement ; export vers AI Gateway hard-disabled jusqu'à autorisation explicite |
+| Commande IA considérée active parce que son contrat existe | `superseded` | activation seulement après l'autorisation explicite du 12 août 2026 ; enveloppe minimale et exclusions gouvernées par ADR 0011 |
 | Ressources dans `Solutions > Modèles` ou « Ressources héritées » | `superseded` | onglet autonome `Ressources`, sans cours de l'Académie |
 | Écosystème D-012 à quatre groupes | `superseded` | inventaire vers Solutions dans W2c-W3 |
 | Outils comme onglet autonome | `superseded` | sous-section de Solutions, libellé exact non figé |

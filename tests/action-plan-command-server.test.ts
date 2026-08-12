@@ -1,3 +1,4 @@
+import { MockLanguageModelV4 } from "ai/test";
 import { describe, expect, it, vi } from "vitest";
 import type { ActionPlan } from "@/lib/action-plan-contract";
 import { actionPlanSystemOptions } from "@/lib/action-plan-system-catalog";
@@ -8,6 +9,7 @@ vi.mock("server-only", () => ({}));
 import {
   ACTION_PLAN_COMMAND_EXTERNAL_GENERATION_ENABLED,
   buildActionPlanCommandMinimalEnvelope,
+  generateActionPlanCommand,
 } from "@/lib/action-plan-command.server";
 
 const systemId = actionPlanSystemOptions[0]?.id;
@@ -53,8 +55,8 @@ function plan(): ActionPlan {
 }
 
 describe("action plan command external envelope", () => {
-  it("stays hard-disabled before explicit data-transfer consent", () => {
-    expect(ACTION_PLAN_COMMAND_EXTERNAL_GENERATION_ENABLED).toBe(false);
+  it("is enabled after explicit minimal data-transfer consent", () => {
+    expect(ACTION_PLAN_COMMAND_EXTERNAL_GENERATION_ENABLED).toBe(true);
   });
 
   it("contains only the command and effective visible plan fields", () => {
@@ -82,5 +84,89 @@ describe("action plan command external envelope", () => {
     expect(serialized).not.toContain("placement-secret");
     expect(serialized).not.toContain(systemId);
     expect(serialized).not.toMatch(/email|owner|session|notes/i);
+  });
+
+  it("generates allowlisted operations and assigns local custom IDs", async () => {
+    const generated = {
+      operations: [
+        {
+          type: "addAction",
+          actionId: null,
+          action: {
+            title: "Verifier le prochain besoin",
+            objective: "Obtenir un fait avant de decider.",
+            channelOrTool: "Entretien client",
+            steps: ["Choisir un client.", "Noter sa reponse."],
+            support: null,
+            strategyPillar: "positionnement",
+          },
+          changes: null,
+          pillar: null,
+          answer: null,
+          value: null,
+        },
+        {
+          type: "updateAction",
+          actionId: "action-1",
+          action: null,
+          changes: {
+            title: "Clarifier la priorite",
+            objective: null,
+            steps: null,
+            supportMode: "keep",
+            support: null,
+          },
+          pillar: null,
+          answer: null,
+          value: null,
+        },
+      ],
+    };
+    const model = new MockLanguageModelV4({
+      doGenerate: {
+        content: [{ type: "text", text: JSON.stringify(generated) }],
+        finishReason: { unified: "stop", raw: undefined },
+        usage: {
+          inputTokens: {
+            total: 120,
+            noCache: 120,
+            cacheRead: undefined,
+            cacheWrite: undefined,
+          },
+          outputTokens: { total: 40, text: 40, reasoning: undefined },
+        },
+        warnings: [],
+      },
+    });
+    const currentPlan = plan();
+    const result = await generateActionPlanCommand(
+      "Ajoute une verification et clarifie la premiere action",
+      currentPlan,
+      createActionPlanWorkspaceState(currentPlan),
+      {
+        model,
+        modelId: "mock/command",
+        createId: () => "command-test",
+      },
+    );
+
+    expect(result.operations).toEqual([
+      expect.objectContaining({
+        type: "addAction",
+        action: expect.objectContaining({ id: "custom-command-test" }),
+      }),
+      {
+        type: "updateAction",
+        actionId: "action-1",
+        changes: { title: "Clarifier la priorite" },
+      },
+    ]);
+    expect(result.generation).toMatchObject({
+      model: "mock/command",
+      inputTokens: 120,
+      outputTokens: 40,
+      totalTokens: 160,
+      requestCount: 1,
+    });
   });
 });

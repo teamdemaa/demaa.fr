@@ -327,16 +327,12 @@ supports, les notes, l'adresse e-mail en clair ni l'identité de session. Une
 indisponibilité du ledger est signalée opérationnellement mais ne transforme
 pas le contenu utilisateur en log de secours.
 
-## Commande IA sur un plan existant — préparée, non activée
+## Commande IA sur un plan existant — activée sous enveloppe minimale
 
 Le contrat de commande et l'application déterministe des opérations sont
 préparés pour ajouter, modifier ou supprimer une action et modifier une réponse
-de Stratégie. Cette fonctionnalité est toutefois **hard-disabled** : aucune
-commande et aucune vue du plan ne sont envoyées à AI Gateway ou à un
-fournisseur.
-
-Son activation exige une autorisation explicite de l'utilisatrice pour exporter
-exactement l'enveloppe minimale suivante :
+de Stratégie. L'utilisatrice a explicitement autorisé le 12 août 2026 l'envoi
+de l'enveloppe minimale suivante à Vercel AI Gateway et à son fournisseur :
 
 - la commande rédigée par la personne ;
 - les actions actuellement visibles et leurs modifications effectives ;
@@ -344,9 +340,9 @@ exactement l'enveloppe minimale suivante :
 
 Sont exclus de cette enveloppe : notes, e-mail, identité de compte ou de
 session, situation source, historique, Systèmes sélectionnés, coches Process,
-sélections Solutions et catalogue des 115 activités. Tant que cette
-autorisation d'export n'est pas validée et enregistrée, l'endpoint renvoie une
-indisponibilité contrôlée et la branche externe reste inatteignable.
+sélections Solutions et catalogue des 115 activités. Les opérations retournées
+sont validées et appliquées déterministiquement ; le mode démo n'effectue aucun
+appel externe. Le ledger conserve uniquement les métriques techniques.
 
 Si la commande est ultérieurement activée, le ledger n'enregistrera que ses
 métriques d'usage ; jamais le texte de commande, le prompt ou le contenu du
@@ -413,6 +409,6 @@ au backlog, sans modifier cette première version :
   leurs états.
 - La dictée utilise l'adaptateur microphone partagé et ne conserve aucun audio.
 - Le ledger ne contient aucun prompt, commande ou contenu de plan.
-- La commande IA reste hard-disabled jusqu'à autorisation explicite de
-  l'enveloppe externe minimale.
+- La commande IA n'envoie que l'enveloppe externe minimale explicitement
+  autorisée ; elle reste inactive en mode démo.
 - `/systemes`, `/academie` et les fiches publiques existantes restent intactes.

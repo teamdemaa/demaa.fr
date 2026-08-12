@@ -13,6 +13,7 @@ describe("action plan experience architecture", () => {
     const shareControl = source("src/components/ActionPlanShareControl.tsx");
     const utilityActions = source("src/components/ActionPlanUtilityActions.tsx");
     const result = source("src/components/ActionPlanResult.tsx");
+    const commandBar = source("src/components/ActionPlanCommandBar.tsx");
 
     expect(experience).toContain("useState<EditableActionPlan | null>(null)");
     expect(experience).toContain("readGuestSelectedSystemId");
@@ -67,6 +68,11 @@ describe("action plan experience architecture", () => {
     expect(result).toContain("Supprimer la tâche");
     expect(result).toContain("workspace.deletedActionIds.includes(action.id)");
     expect(result).toContain("Générer un plan à partir de ma situation");
+    expect(result).toContain("<ActionPlanCommandBar");
+    expect(commandBar).toContain('fetch("/api/action-plan/command"');
+    expect(commandBar).toContain("applyActionPlanCommandOperations");
+    expect(commandBar).toContain("Commande IA désactivée dans la démo");
+    expect(commandBar).toContain("Annuler");
   });
 
   it("keeps the latest authenticated edit when the user leaves quickly", () => {

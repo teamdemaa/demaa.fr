@@ -20,6 +20,7 @@ import {
   useRef,
   useState,
 } from "react";
+import ActionPlanCommandBar from "@/components/ActionPlanCommandBar";
 import type {
   PersistableActionPlan,
 } from "@/lib/action-plan-contract";
@@ -538,6 +539,7 @@ export default function ActionPlanResult({
   onAddAction,
   onDeleteAction,
   onGenerateLater,
+  commandDemoMode = false,
 }: {
   plan: PersistableActionPlan;
   workspace: ActionPlanWorkspaceState;
@@ -547,6 +549,7 @@ export default function ActionPlanResult({
   onAddAction?: () => void;
   onDeleteAction: (actionId: string) => void;
   onGenerateLater?: () => void;
+  commandDemoMode?: boolean;
 }) {
   const [section, setSection] = useState<PlanSection>("tasks");
   const [view, setView] = useState<TaskView>("list");
@@ -693,6 +696,13 @@ export default function ActionPlanResult({
           <StrategyPanel plan={plan} workspace={workspace} onWorkspaceChange={onWorkspaceChange} />
         </section>
       )}
+
+      <ActionPlanCommandBar
+        plan={plan}
+        workspace={workspace}
+        onWorkspaceChange={onWorkspaceChange}
+        demoMode={commandDemoMode}
+      />
 
       {selectedAction ? (
         <ActionDrawer

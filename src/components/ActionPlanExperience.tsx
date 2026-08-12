@@ -518,6 +518,7 @@ export default function ActionPlanExperience({
                 setSelectedSystemId("");
                 setActiveTab("plan");
               } : undefined}
+              commandDemoMode={isDemoMode}
               headerActions={(
                 <ActionPlanUtilityActions
                   plan={plan}

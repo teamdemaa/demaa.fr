@@ -28,27 +28,22 @@ pseudonymisé : opération, modèle, durée, tokens, requêtes, réparations et 
 Il ne stocke jamais prompt, situation, commande, plan, support, note ou e-mail
 en clair.
 
-## Gate bloquant de la commande IA
+## Activation de la commande IA
 
 Le schéma de commande, les opérations déterministes, les limites et
-l'enveloppe externe minimale sont préparés. L'appel externe demeure cependant
-**hard-disabled**.
-
-L'activation nécessite une autorisation explicite séparée pour transmettre à
-AI Gateway et à son fournisseur :
+l'enveloppe externe minimale sont préparés. L'utilisatrice a explicitement
+autorisé le 12 août 2026 la transmission à AI Gateway et à son fournisseur de :
 
 1. la commande de la personne ;
 2. les actions visibles effectives ;
 3. la vue visible minimale des quatre piliers de Stratégie.
 
 Notes, identité, e-mail, situation source, historique, Systèmes, Process,
-Solutions et catalogue des 115 activités restent exclus. Le GO de ce lot ne
-vaut pas autorisation de cet export. Tant que le gate n'est pas levé, aucune
-donnée de commande ou de plan ne quitte le serveur vers un modèle externe et
-aucun contenu n'entre dans le ledger.
+Solutions et catalogue des 115 activités restent exclus. Les opérations du
+modèle sont validées puis appliquées déterministiquement ; le mode démo reste
+sans appel externe et aucun contenu n'entre dans le ledger.
 
 ## Statut `working`
 
-L'ADR reste `working` jusqu'à la recette complète du candidat V3. Ce statut ne
-rend pas la commande externe active : cette activation restera soumise à une
-décision explicite distincte, même après validation du reste du lot.
+L'ADR reste `working` jusqu'à la recette complète du candidat V3, y compris la
+commande, son annulation, ses limites d'usage, le mode démo et la persistance.

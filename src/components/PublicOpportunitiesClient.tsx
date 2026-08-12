@@ -93,20 +93,6 @@ function OpportunityDetailsDialog({
         <p className="mt-4 text-sm leading-relaxed text-dema-muted sm:text-base">
           {opportunity.summary}
         </p>
-        {details.length > 0 ? (
-          <dl className="mt-6 grid gap-x-6 gap-y-4 rounded-[1rem] bg-dema-paper p-4 sm:grid-cols-2">
-            {details.map(([label, value]) => (
-              <div key={label}>
-                <dt className="text-[0.68rem] font-medium uppercase tracking-[0.12em] text-dema-muted">
-                  {label}
-                </dt>
-                <dd className="mt-1 text-sm leading-relaxed text-brand-blue">
-                  {value}
-                </dd>
-              </div>
-            ))}
-          </dl>
-        ) : null}
         {opportunity.expectations.length > 0 ? (
           <div className="mt-6">
             <h3 className="text-sm font-medium text-brand-blue">
@@ -121,6 +107,20 @@ function OpportunityDetailsDialog({
               ))}
             </ul>
           </div>
+        ) : null}
+        {details.length > 0 ? (
+          <dl className="mt-6 grid grid-cols-2 gap-x-5 gap-y-4 rounded-[1rem] bg-dema-paper p-4 sm:gap-x-8">
+            {details.map(([label, value]) => (
+              <div key={label} className="min-w-0">
+                <dt className="text-[0.68rem] font-medium uppercase tracking-[0.12em] text-dema-muted">
+                  {label}
+                </dt>
+                <dd className="mt-1 break-words text-sm leading-relaxed text-brand-blue">
+                  {value}
+                </dd>
+              </div>
+            ))}
+          </dl>
         ) : null}
         <button
           type="button"

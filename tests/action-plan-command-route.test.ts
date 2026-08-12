@@ -8,6 +8,8 @@ vi.mock("server-only", () => ({}));
 const mocks = vi.hoisted(() => ({
   email: null as string | null,
   enforceRateLimit: vi.fn(),
+  generateCommand: vi.fn(),
+  recordUsage: vi.fn(),
 }));
 
 vi.mock("@/lib/api-security", async (importOriginal) => ({
@@ -16,6 +18,17 @@ vi.mock("@/lib/api-security", async (importOriginal) => ({
 }));
 vi.mock("@/lib/customer-space-session.server", () => ({
   getCurrentCustomerEmailFromSession: vi.fn(async () => mocks.email),
+}));
+vi.mock("@/lib/action-plan-command.server", () => ({
+  ACTION_PLAN_COMMAND_EXTERNAL_GENERATION_ENABLED: true,
+  generateActionPlanCommand: mocks.generateCommand,
+}));
+vi.mock("@/lib/ai-usage-ledger.server", () => ({
+  getAiUsageSubjectHash: vi.fn(() => "subject-hash"),
+  recordAiUsage: mocks.recordUsage,
+}));
+vi.mock("@/lib/operational-log", () => ({
+  logOperationalError: vi.fn(),
 }));
 
 import { POST } from "@/app/api/action-plan/command/route";
@@ -91,6 +104,25 @@ describe("action plan command route", () => {
     vi.clearAllMocks();
     mocks.email = null;
     mocks.enforceRateLimit.mockResolvedValue(null);
+    mocks.generateCommand.mockResolvedValue({
+      operations: [
+        {
+          type: "updateAction",
+          actionId: "action-1",
+          changes: { title: "Action clarifiée" },
+        },
+      ],
+      generation: {
+        model: "openai/gpt-5-mini",
+        durationMs: 120,
+        inputTokens: 100,
+        outputTokens: 30,
+        totalTokens: 130,
+        requestCount: 1,
+        repairCount: 0,
+      },
+    });
+    mocks.recordUsage.mockResolvedValue(undefined);
   });
 
   it("rejects another origin before reading identity or payload", async () => {
@@ -100,12 +132,17 @@ describe("action plan command route", () => {
     expect(mocks.enforceRateLimit).not.toHaveBeenCalled();
   });
 
-  it("uses a separate guest IP limit and remains disabled without consent", async () => {
+  it("uses a separate guest IP limit and returns validated operations", async () => {
     const response = await POST(request(validBody()));
 
-    expect(response.status).toBe(503);
+    expect(response.status).toBe(200);
     await expect(response.json()).resolves.toMatchObject({
-      error: "feature_not_enabled",
+      operations: [
+        {
+          type: "updateAction",
+          actionId: "action-1",
+        },
+      ],
     });
     expect(mocks.enforceRateLimit).toHaveBeenCalledTimes(1);
     expect(mocks.enforceRateLimit).toHaveBeenCalledWith(expect.any(Request), {
@@ -121,7 +158,7 @@ describe("action plan command route", () => {
 
     const response = await POST(request(validBody()));
 
-    expect(response.status).toBe(503);
+    expect(response.status).toBe(200);
     expect(mocks.enforceRateLimit).toHaveBeenCalledTimes(2);
     expect(mocks.enforceRateLimit).toHaveBeenNthCalledWith(
       1,
@@ -141,6 +178,12 @@ describe("action plan command route", () => {
         limit: 60,
         windowMs: 10 * 60 * 1_000,
       },
+    );
+    expect(mocks.recordUsage).toHaveBeenCalledWith(
+      expect.objectContaining({
+        operation: "action_plan_command",
+        subjectHash: "subject-hash",
+      }),
     );
   });
 
