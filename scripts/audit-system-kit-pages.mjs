@@ -6,7 +6,7 @@ const currentDir = dirname(fileURLToPath(import.meta.url));
 const enterpriseCatalogPath = resolve(currentDir, "../src/lib/enterprise-annuaire.json");
 const firebaseSolutionSnapshotPath = resolve(
   currentDir,
-  "../src/lib/firebase-solution-registry.snapshot.generated.json",
+  "../src/lib/firebase-solution-registry.catalog-enrichment.snapshot.generated.json",
 );
 const publicSolutionVisibilityPath = resolve(
   currentDir,

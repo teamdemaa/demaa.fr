@@ -2,7 +2,13 @@ import { readFile } from "node:fs/promises";
 
 const root = new URL("../", import.meta.url);
 const [snapshot, enterprisePayload] = await Promise.all([
-  readFile(new URL("src/lib/firebase-solution-registry.snapshot.generated.json", root), "utf8").then(JSON.parse),
+  readFile(
+    new URL(
+      "src/lib/firebase-solution-registry.catalog-enrichment.snapshot.generated.json",
+      root,
+    ),
+    "utf8",
+  ).then(JSON.parse),
   readFile(new URL("src/lib/enterprise-annuaire.json", root), "utf8").then(JSON.parse),
 ]);
 
@@ -13,6 +19,7 @@ const knownSet = new Set(knownSystemSlugs);
 const resourceSlugs = new Set(snapshot.resources.map(({ resource }) => resource.resourceSlug));
 const placementIds = new Set();
 const placementSlots = new Set();
+const KNOWN_NON_COMMERCIAL_RESOURCES = new Set(["juridi-consulting", "levier"]);
 const coverage = new Map(systemSlugs.map((slug) => [slug, {
   software: 0,
   providers: 0,
@@ -39,7 +46,7 @@ for (const { resource } of snapshot.resources) {
   if (!Number.isFinite(expiresAt)) errors.push(`Resource ${resource.resourceSlug} has no valid expiry.`);
   else if (expiresAt <= now) errors.push(`Resource ${resource.resourceSlug} review has expired.`);
   if (
-    resource.resourceSlug !== "levier" &&
+    !KNOWN_NON_COMMERCIAL_RESOURCES.has(resource.resourceSlug) &&
     resource.commercialRelationship !== "unknown"
   ) {
     errors.push(`Third-party resource ${resource.resourceSlug} is not relationship=unknown.`);
@@ -62,7 +69,7 @@ for (const { placement } of snapshot.placements) {
   if (!Number.isFinite(expiresAt)) errors.push(`Placement ${placement.placementId} has no valid expiry.`);
   else if (expiresAt <= now) errors.push(`Placement ${placement.placementId} review has expired.`);
   if (
-    placement.resourceSlug !== "levier" &&
+    !KNOWN_NON_COMMERCIAL_RESOURCES.has(placement.resourceSlug) &&
     placement.commercialRelationship !== "unknown"
   ) {
     errors.push(`Third-party placement ${placement.placementId} is not relationship=unknown.`);

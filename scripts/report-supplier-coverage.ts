@@ -1,5 +1,5 @@
 import { enterpriseCatalog } from "../src/lib/enterprise-annuaire";
-import activeSnapshot from "../src/lib/firebase-solution-registry.snapshot.generated.json";
+import activeSnapshot from "../src/lib/firebase-solution-registry.catalog-enrichment.snapshot.generated.json";
 import { getRecommendedSuppliersForSystem } from "../src/lib/supplier-recommendations";
 
 const systemsWithPublishedProviders = new Set(
