@@ -13,7 +13,7 @@ export default function AcademyLiveTrainingSection({
   return (
     <section className="mt-12 border-t border-dema-line/75 pt-9 md:mt-14 md:pt-10" aria-labelledby="academy-live-title">
       <h2 id="academy-live-title" className="text-2xl font-semibold text-brand-blue md:text-[2rem]">
-        Formations en direct
+        Webinaires
       </h2>
       <p className="mt-2 max-w-2xl text-sm leading-relaxed text-dema-muted">
         Des sessions de 2 h en petit groupe, à 250 € HT. Les créneaux seront publiés après leur validation par Demaa.

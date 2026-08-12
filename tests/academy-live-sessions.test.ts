@@ -86,7 +86,7 @@ describe("Academy live sessions and contextual cases", () => {
     }
   });
 
-  it("keeps the dormant Academy section wired while the server provides no visible training", async () => {
+  it("shows Courses then Cas concrets while keeping Webinars dormant", async () => {
     const [clientSource, pageSource] = await Promise.all([
       readFile(
         new URL("../src/components/AcademyIndexClient.tsx", import.meta.url),
@@ -96,13 +96,28 @@ describe("Academy live sessions and contextual cases", () => {
     ]);
     expect(clientSource).not.toContain("Cours fondamentaux");
     expect(clientSource).toContain("<AcademyLiveTrainingSection");
-    expect(clientSource).toContain('{ id: "decryptions", label: "Décryptages" }');
     expect(clientSource).toContain('{ id: "courses", label: "Cours" }');
-    expect(clientSource).toContain('{ id: "live", label: "En direct" }');
+    expect(clientSource).toContain('{ id: "decryptions", label: "Cas concrets" }');
+    expect(clientSource).toContain('label: "Webinaires"');
+    expect(clientSource).toContain("liveTrainings.length > 0");
+    expect(clientSource).toContain('useState<AcademySection>("courses")');
     expect(clientSource).toContain('content.kind === "case-study"');
     expect(clientSource).not.toContain("Modèles et documents");
-    expect(clientSource).not.toContain("Cas concrets");
     expect(pageSource).toContain("getVisibleAcademyLiveTrainings()");
+  });
+
+  it("does not present published case studies as fictitious", () => {
+    for (const content of [
+      "cabinet-conseil-acquisition",
+      "formation-b2b-acquisition",
+      "maintenance-informatique-acquisition",
+      "bureau-etudes-acquisition",
+      "nettoyage-professionnel-acquisition",
+      "cabinet-recrutement-acquisition",
+    ].map((slug) => getAcademyContentBySlug(slug))) {
+      expect(content).not.toBeNull();
+      expect(JSON.stringify(content)).not.toMatch(/fictif|fictive/i);
+    }
   });
 
   it("does not restore the retired public course catalog", async () => {

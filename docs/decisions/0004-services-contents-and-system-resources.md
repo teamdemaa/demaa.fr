@@ -79,11 +79,17 @@ la même URL sans créer de doublon SEO.
 
 ### Académie
 
-La recherche est suivie de trois onglets applicatifs :
+La recherche est suivie de deux onglets applicatifs visibles :
 
-1. `Décryptages`, ouvert par défaut et alimenté par les cas éditoriaux publiés ;
-2. `Cours`, qui reprend le catalogue pédagogique existant ;
-3. `En direct`, qui expose les rendez-vous publiés ou un état vide explicite.
+1. `Cours`, ouvert par défaut et alimenté par le catalogue pédagogique existant ;
+2. `Cas concrets`, qui reprend les études de cas éditoriales publiées sans les
+   présenter comme fictives.
+
+Le troisième onglet validé est `Webinaires`. Il rassemble les événements à
+venir et leurs éventuels replays, mais reste temporairement masqué tant que les
+créneaux et contenus publiés ne sont pas prêts. Les identifiants techniques
+historiques `decryptions` et `live` sont conservés pour éviter une migration
+sans valeur produit.
 
 Les modèles et documents restent rattachés aux Systèmes et ne sont pas
 dupliqués dans l'Académie.
@@ -93,11 +99,11 @@ dates sont explicitement validées avant publication et aucune restauration de
 Stripe n'est prévue.
 
 Les anciennes routes des cas restent canoniques. Leur réutilisation dans
-`Décryptages` n'ajoute ni copie de contenu ni nouveau stockage.
+`Cas concrets` n'ajoute ni copie de contenu ni nouveau stockage.
 
 ### Dérogation temporaire de lancement
 
-Pour le lancement France, les surfaces « Formations en direct » de l'Académie
+Pour le lancement France, l'onglet `Webinaires` de l'Académie
 et « Cas concret » des Ressources Système sont masquées par les indicateurs
 centralisés de `src/lib/public-editorial-visibility.ts`.
 

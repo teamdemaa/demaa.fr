@@ -13,7 +13,7 @@ section « État de clôture Production » de `docs/central-backlog.md`.
   modifie aucun fichier runtime ;
 - les 115 Systèmes, les Services canoniques, Firebase Solutions,
   Ressources et `/contenus/facturation-electronique` sont actifs ;
-- les Formations en direct et les Cas concrets restent volontairement masqués ;
+- les Webinaires et les Cas concrets contextuels des Systèmes restent volontairement masqués ;
 - les parcours de collecte et de livraison ont passé leurs tests Production ;
 - les futures activations doivent repartir d'un `origin/main` à jour, dans une
   branche et une Preview dédiées, jamais d'un ancien checkpoint W2-W8.

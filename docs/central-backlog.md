@@ -33,7 +33,8 @@ de déploiement.
   des Systèmes.
 - Les guides métier sont retirés de Ressources pour simplifier l'application ;
   leurs données historiques restent conservées. Académie présente désormais
-  `Décryptages / Cours / En direct` en réutilisant les contenus existants.
+  `Cours / Cas concrets` ; `Webinaires` est conservé mais masqué jusqu'à la
+  publication d'événements ou de replays validés.
 - Les parcours guide, newsletter, Structure, Rejoindre Team Demaa, callback
   Services, Levier, Opportunités, sauvegarde de plan et lien magique ont été
   testés en Production. L'envoi direct à la boîte Gmail opérationnelle est
@@ -199,9 +200,10 @@ l'ADR 0004 prévaut.
   article et diaporama avant la future vidéo.
 - [x] Simplifier Ressources : retirer les guides métier de la surface active et
   afficher les modèles et documents en grille verticale responsive.
-- [x] Structurer Académie en `Décryptages / Cours / En direct`, avec
-  Décryptages ouvert par défaut, recherche partagée et navigation clavier.
-- [ ] Réactiver la section « Formations en direct » de l'Académie seulement
+- [x] Structurer Académie en `Cours / Cas concrets`, avec Cours ouvert par
+  défaut, recherche partagée et navigation clavier. Conserver le futur onglet
+  `Webinaires` masqué tant qu'aucun événement ou replay n'est publié.
+- [ ] Réactiver l'onglet `Webinaires` de l'Académie seulement
   après validation des créneaux, recette desktop/mobile et bascule explicite de
   `academyLiveTrainings` dans `src/lib/public-editorial-visibility.ts`.
 - [ ] Réactiver les « Cas concrets » dans les Ressources des six Systèmes

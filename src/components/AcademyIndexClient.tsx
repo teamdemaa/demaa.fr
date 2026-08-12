@@ -77,27 +77,32 @@ const ALL_ACADEMY_CATEGORIES = "Tous";
 
 type AcademySection = "decryptions" | "courses" | "live";
 
-const ACADEMY_SECTIONS: ReadonlyArray<{
+const CORE_ACADEMY_SECTIONS: ReadonlyArray<{
   id: AcademySection;
   label: string;
 }> = [
-  { id: "decryptions", label: "Décryptages" },
   { id: "courses", label: "Cours" },
-  { id: "live", label: "En direct" },
+  { id: "decryptions", label: "Cas concrets" },
 ];
 
+const WEBINARS_ACADEMY_SECTION = {
+  id: "live",
+  label: "Webinaires",
+} as const satisfies { id: AcademySection; label: string };
+
 function getNextAcademySection(
+  sections: ReadonlyArray<{ id: AcademySection }>,
   current: AcademySection,
   key: string,
 ): AcademySection | null {
-  const currentIndex = ACADEMY_SECTIONS.findIndex((section) => section.id === current);
+  const currentIndex = sections.findIndex((section) => section.id === current);
   if (currentIndex < 0) return null;
-  if (key === "Home") return ACADEMY_SECTIONS[0].id;
-  if (key === "End") return ACADEMY_SECTIONS[ACADEMY_SECTIONS.length - 1].id;
+  if (key === "Home") return sections[0].id;
+  if (key === "End") return sections[sections.length - 1].id;
   if (key !== "ArrowLeft" && key !== "ArrowRight") return null;
   const offset = key === "ArrowRight" ? 1 : -1;
-  return ACADEMY_SECTIONS[
-    (currentIndex + offset + ACADEMY_SECTIONS.length) % ACADEMY_SECTIONS.length
+  return sections[
+    (currentIndex + offset + sections.length) % sections.length
   ].id;
 }
 
@@ -325,9 +330,16 @@ export default function AcademyIndexClient({
 }: AcademyIndexClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [showAllFundamentals, setShowAllFundamentals] = useState(false);
-  const [activeSection, setActiveSection] = useState<AcademySection>("decryptions");
+  const [activeSection, setActiveSection] = useState<AcademySection>("courses");
   const [activeCategory, setActiveCategory] = useState(ALL_ACADEMY_CATEGORIES);
   const [areCategoryTagsVisible, setAreCategoryTagsVisible] = useState(false);
+
+  const academySections = useMemo(
+    () => liveTrainings.length > 0
+      ? [...CORE_ACADEMY_SECTIONS, WEBINARS_ACADEMY_SECTION]
+      : CORE_ACADEMY_SECTIONS,
+    [liveTrainings.length],
+  );
 
   const activeSectionContents = useMemo(
     () => contents.filter((content) =>
@@ -384,7 +396,7 @@ export default function AcademyIndexClient({
     event: KeyboardEvent<HTMLButtonElement>,
     currentSection: AcademySection,
   ) {
-    const nextSection = getNextAcademySection(currentSection, event.key);
+    const nextSection = getNextAcademySection(academySections, currentSection, event.key);
     if (!nextSection) return;
     event.preventDefault();
     selectSection(nextSection);
@@ -507,11 +519,13 @@ export default function AcademyIndexClient({
 
       <ContentContainer className={`mx-auto max-w-7xl px-4 pb-16 md:pb-20 ${embedded ? "pt-0" : ""}`}>
         <div
-          className="mb-8 grid w-full grid-cols-3 border-b border-dema-line md:mb-10"
+          className={`mb-8 grid w-full border-b border-dema-line md:mb-10 ${
+            academySections.length === 3 ? "grid-cols-3" : "grid-cols-2"
+          }`}
           role="tablist"
           aria-label="Contenus de l’Académie"
         >
-          {ACADEMY_SECTIONS.map((section) => (
+          {academySections.map((section) => (
             <button
               key={section.id}
               id={`academy-section-${section.id}`}
@@ -553,7 +567,11 @@ export default function AcademyIndexClient({
         ) : null}
 
         {activeSection === "courses" && fundamentals.length ? (
-          <section aria-label="Cours">
+          <section
+            id="academy-panel-courses"
+            role="tabpanel"
+            aria-labelledby="academy-section-courses"
+          >
             <div className="grid grid-cols-1 gap-x-8 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
               {visibleFundamentals.map((content, index) => (
                 <AcademyCard
