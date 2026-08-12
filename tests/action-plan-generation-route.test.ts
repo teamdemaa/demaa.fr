@@ -4,8 +4,11 @@ vi.mock("server-only", () => ({}));
 
 const mocks = vi.hoisted(() => ({
   enforceRateLimit: vi.fn(),
-  generateActionPlan: vi.fn(),
+  generateActionPlanWithMetadata: vi.fn(),
+  getAiUsageSubjectHash: vi.fn(),
+  getCurrentCustomerEmailFromSession: vi.fn(),
   logOperationalError: vi.fn(),
+  recordAiUsage: vi.fn(),
 }));
 
 vi.mock("@/lib/api-security", async (importOriginal) => ({
@@ -13,7 +16,15 @@ vi.mock("@/lib/api-security", async (importOriginal) => ({
   enforceRateLimit: mocks.enforceRateLimit,
 }));
 vi.mock("@/lib/action-plan-generation.server", () => ({
-  generateActionPlan: mocks.generateActionPlan,
+  generateActionPlanWithMetadata: mocks.generateActionPlanWithMetadata,
+}));
+vi.mock("@/lib/ai-usage-ledger.server", () => ({
+  getAiUsageSubjectHash: mocks.getAiUsageSubjectHash,
+  recordAiUsage: mocks.recordAiUsage,
+}));
+vi.mock("@/lib/customer-space-session.server", () => ({
+  getCurrentCustomerEmailFromSession:
+    mocks.getCurrentCustomerEmailFromSession,
 }));
 vi.mock("@/lib/operational-log", () => ({
   logOperationalError: mocks.logOperationalError,
@@ -40,10 +51,26 @@ describe("action plan generation route", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mocks.enforceRateLimit.mockResolvedValue(null);
-    mocks.generateActionPlan.mockResolvedValue({
-      version: "2",
-      systemId: "cabinet-comptable",
-      weeklyActions: [],
+    mocks.getCurrentCustomerEmailFromSession.mockResolvedValue(null);
+    mocks.getAiUsageSubjectHash.mockReturnValue("subject-hash");
+    mocks.recordAiUsage.mockResolvedValue(undefined);
+    mocks.generateActionPlanWithMetadata.mockResolvedValue({
+      plan: {
+        version: "3",
+        systemId: "cabinet-comptable",
+        summary: "Un plan fiable.",
+        actions: [],
+        strategy: {},
+      },
+      generation: {
+        model: "openai/gpt-5-mini",
+        durationMs: 845,
+        inputTokens: 1_200,
+        outputTokens: 800,
+        totalTokens: 2_000,
+        requestCount: 1,
+        repairCount: 0,
+      },
     });
   });
 
@@ -57,7 +84,7 @@ describe("action plan generation route", () => {
 
     expect(response.status).toBe(403);
     expect(mocks.enforceRateLimit).not.toHaveBeenCalled();
-    expect(mocks.generateActionPlan).not.toHaveBeenCalled();
+    expect(mocks.generateActionPlanWithMetadata).not.toHaveBeenCalled();
   });
 
   it("enforces the durable generation rate limit before parsing the body", async () => {
@@ -74,7 +101,7 @@ describe("action plan generation route", () => {
       limit: 6,
       windowMs: 10 * 60 * 1_000,
     });
-    expect(mocks.generateActionPlan).not.toHaveBeenCalled();
+    expect(mocks.generateActionPlanWithMetadata).not.toHaveBeenCalled();
   });
 
   it.each([
@@ -89,7 +116,7 @@ describe("action plan generation route", () => {
 
     expect(response.status).toBe(400);
     expect(response.headers.get("cache-control")).toContain("no-store");
-    expect(mocks.generateActionPlan).not.toHaveBeenCalled();
+    expect(mocks.generateActionPlanWithMetadata).not.toHaveBeenCalled();
   });
 
   it("returns a no-store structured plan without persisting the input", async () => {
@@ -103,21 +130,113 @@ describe("action plan generation route", () => {
     );
     await expect(response.json()).resolves.toEqual({
       plan: {
-        version: "2",
+        version: "3",
         systemId: "cabinet-comptable",
-        weeklyActions: [],
+        summary: "Un plan fiable.",
+        actions: [],
+        strategy: {},
+      },
+      generation: {
+        model: "openai/gpt-5-mini",
+        durationMs: 845,
+        inputTokens: 1_200,
+        outputTokens: 800,
+        totalTokens: 2_000,
+        requestCount: 1,
+        repairCount: 0,
       },
     });
-    expect(mocks.generateActionPlan).toHaveBeenCalledWith(
+    expect(mocks.generateActionPlanWithMetadata).toHaveBeenCalledWith(
       situation,
-      expect.any(AbortSignal),
+      { abortSignal: expect.any(AbortSignal) },
+    );
+    expect(mocks.getAiUsageSubjectHash).toHaveBeenCalledWith(
+      expect.any(Request),
+      null,
+    );
+    expect(mocks.recordAiUsage).toHaveBeenCalledWith({
+      operation: "action_plan_generation",
+      subjectHash: "subject-hash",
+      model: "openai/gpt-5-mini",
+      durationMs: 845,
+      inputTokens: 1_200,
+      outputTokens: 800,
+      totalTokens: 2_000,
+      requestCount: 1,
+      repairCount: 0,
+    });
+  });
+
+  it("pseudonymizes a connected account instead of relying on its network", async () => {
+    mocks.getCurrentCustomerEmailFromSession.mockResolvedValue(
+      "dirigeant@example.com",
+    );
+
+    const generatedRequest = request({
+      situation:
+        "Je dirige un cabinet comptable et je veux fiabiliser le suivi des dossiers.",
+    });
+    const response = await POST(generatedRequest);
+
+    expect(response.status).toBe(200);
+    expect(mocks.getAiUsageSubjectHash).toHaveBeenCalledWith(
+      generatedRequest,
+      "dirigeant@example.com",
+    );
+  });
+
+  it("keeps generation successful when the usage ledger is unavailable", async () => {
+    mocks.recordAiUsage.mockRejectedValue(new Error("firestore unavailable"));
+
+    const response = await POST(
+      request({
+        situation:
+          "Je dirige une entreprise de services et je veux structurer mes priorites.",
+      }),
+    );
+
+    expect(response.status).toBe(200);
+    expect(mocks.logOperationalError).toHaveBeenCalledWith(
+      "ai_usage.record.failed",
+      expect.any(Error),
+      {
+        operation: "action_plan_generation",
+        providerErrorName: "Error",
+      },
+    );
+    expect(JSON.stringify(mocks.logOperationalError.mock.calls)).not.toContain(
+      "structurer mes priorites",
+    );
+  });
+
+  it("keeps generation successful when session identity cannot be read", async () => {
+    mocks.getCurrentCustomerEmailFromSession.mockRejectedValue(
+      new Error("session unavailable"),
+    );
+
+    const response = await POST(
+      request({
+        situation:
+          "Je dirige un commerce et je veux prioriser les actions de la semaine.",
+      }),
+    );
+
+    expect(response.status).toBe(200);
+    expect(mocks.recordAiUsage).not.toHaveBeenCalled();
+    expect(mocks.logOperationalError).toHaveBeenCalledWith(
+      "ai_usage.record.failed",
+      expect.any(Error),
+      {
+        operation: "action_plan_generation",
+        providerErrorName: "Error",
+      },
     );
   });
 
   it("does not expose or log the submitted situation when generation fails", async () => {
     const sensitiveSituation =
       "Je dirige une entreprise avec une information strictement confidentielle.";
-    mocks.generateActionPlan.mockRejectedValue(
+    mocks.generateActionPlanWithMetadata.mockRejectedValue(
       new Error(`provider failure: ${sensitiveSituation}`),
     );
 

@@ -1,7 +1,12 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { enforceRateLimit, readJsonBody } from "@/lib/api-security";
-import { generateActionPlan } from "@/lib/action-plan-generation.server";
+import { generateActionPlanWithMetadata } from "@/lib/action-plan-generation.server";
+import {
+  getAiUsageSubjectHash,
+  recordAiUsage,
+} from "@/lib/ai-usage-ledger.server";
+import { getCurrentCustomerEmailFromSession } from "@/lib/customer-space-session.server";
 import { logOperationalError } from "@/lib/operational-log";
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
 
@@ -72,8 +77,31 @@ export async function POST(request: Request) {
   }
 
   try {
-    const plan = await generateActionPlan(parsed.data.situation, request.signal);
-    return json({ plan });
+    const { plan, generation } = await generateActionPlanWithMetadata(
+      parsed.data.situation,
+      { abortSignal: request.signal },
+    );
+
+    try {
+      const accountEmail = await getCurrentCustomerEmailFromSession();
+      const subjectHash = getAiUsageSubjectHash(request, accountEmail);
+      await recordAiUsage({
+        operation: "action_plan_generation",
+        subjectHash,
+        ...generation,
+      });
+    } catch (ledgerError) {
+      logOperationalError(
+        "ai_usage.record.failed",
+        new Error("ai_usage_ledger_unavailable"),
+        {
+          operation: "action_plan_generation",
+          providerErrorName: getGenerationErrorMetadata(ledgerError).providerErrorName,
+        },
+      );
+    }
+
+    return json({ plan, generation });
   } catch (error) {
     // Le texte du dirigeant et l'erreur fournisseur ne sont jamais journalises.
     logOperationalError(

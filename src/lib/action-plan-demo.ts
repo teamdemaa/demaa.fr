@@ -4,13 +4,11 @@ export const ACTION_PLAN_DEMO_SITUATION =
   "Je dirige un restaurant de quartier. Le midi fonctionne correctement, mais je manque de clients le soir et je veux mieux organiser les actions à mener chaque semaine.";
 
 export const ACTION_PLAN_DEMO: ActionPlan = {
-  version: "2",
+  version: "3",
   summary:
     "Cette semaine, clarifiez ce qui attire déjà vos meilleurs clients, rendez la réservation plus simple et testez une action locale mesurable pour le service du soir.",
   systemId: "restaurant",
-  systemReason:
-    "Le système Restaurant rassemble les processus, solutions et ressources adaptés au pilotage quotidien de cette activité.",
-  weeklyActions: [
+  actions: [
     {
       id: "action-1",
       title: "Vérifier le parcours de réservation du soir",
@@ -23,7 +21,12 @@ export const ACTION_PLAN_DEMO: ActionPlan = {
         "Tester réellement le bouton ou le numéro de réservation.",
         "Corriger les informations manquantes ou contradictoires.",
       ],
-      readyToUse: null,
+      support: {
+        type: "checklist",
+        label: "Checklist du parcours de réservation",
+        content:
+          "□ Horaires exacts\n□ Menu et prix lisibles\n□ Photos récentes\n□ Bouton ou numéro testé\n□ Confirmation reçue après réservation",
+      },
       strategyPillar: "promotion",
     },
     {
@@ -38,7 +41,8 @@ export const ACTION_PLAN_DEMO: ActionPlan = {
         "Noter leurs mots exacts sans essayer de défendre l’offre actuelle.",
         "Regrouper les réponses récurrentes en trois enseignements.",
       ],
-      readyToUse: {
+      support: {
+        type: "message",
         label: "Message prêt à envoyer",
         content:
           "Bonjour, j’améliore actuellement notre service du soir. Vous connaissez bien le restaurant : est-ce que je peux vous poser trois questions rapides ? Vos réponses m’aideront à travailler sur les bons sujets.",
@@ -57,22 +61,25 @@ export const ACTION_PLAN_DEMO: ActionPlan = {
         "Fixer une période de test et le nombre de réservations attendu.",
         "Noter les ventes, la marge et les retours avant de décider de poursuivre.",
       ],
-      readyToUse: null,
+      support: {
+        type: "template",
+        label: "Fiche de test de l’offre",
+        content:
+          "Offre testée :\nPériode :\nPrix et marge prévue :\nRéservations attendues :\nRésultat observé :\nDécision : arrêter / ajuster / poursuivre",
+      },
       strategyPillar: "offre",
     },
   ],
   strategy: {
     alignment: {
-      headline: "Construire un restaurant de quartier stable et reconnu.",
-      desiredCompany:
+      direction:
         "Un établissement rentable, régulier et apprécié pour une expérience simple et constante.",
-      boundariesAndValues:
-        "Préserver la qualité, la transparence des prix et une charge de travail soutenable pour l’équipe.",
-      prioritiesAndTradeoffs:
-        "Améliorer d’abord la fréquentation du soir sans multiplier les offres ni complexifier les opérations.",
+      startingPoint:
+        "Le midi fonctionne déjà ; le point à comprendre est ce qui freine la fréquentation du soir et la réservation.",
+      decisionRules:
+        "Tester une seule amélioration à la fois, préserver la marge et la qualité, puis décider à partir des réservations et des retours observés.",
     },
     positioning: {
-      headline: "Donner une raison précise de choisir ce restaurant le soir.",
       preciseCustomer:
         "Les habitants et actifs proches qui cherchent un dîner fiable, accessible et simple à réserver.",
       importantProblem:
@@ -81,7 +88,6 @@ export const ACTION_PLAN_DEMO: ActionPlan = {
         "Les retours des clients, les réservations et les ventes permettront de distinguer une attente réelle d’une intuition.",
     },
     offer: {
-      headline: "Rendre l’offre du soir immédiatement compréhensible.",
       promisedOutcome:
         "Un dîner de qualité, sans mauvaise surprise et adapté au temps disponible du client.",
       scope:
@@ -90,7 +96,6 @@ export const ACTION_PLAN_DEMO: ActionPlan = {
         "Vérifier la marge de chaque test et éviter les remises permanentes qui habituent les clients à attendre une promotion.",
     },
     promotion: {
-      headline: "Faire connaître l’offre localement sans communication dispersée.",
       attract:
         "Commencer par Google, les clients existants et les relais locaux déjà proches de la clientèle recherchée.",
       facilitatePurchase:
@@ -99,8 +104,4 @@ export const ACTION_PLAN_DEMO: ActionPlan = {
         "Recueillir les retours après la visite et donner une raison utile de revenir, sans relances excessives.",
     },
   },
-  assumptions: [
-    "Le restaurant dispose déjà d’une fiche Google et d’un moyen de réservation ou de contact.",
-    "La priorité actuelle est d’améliorer le service du soir plutôt que d’ouvrir un nouveau canal de vente.",
-  ],
 };

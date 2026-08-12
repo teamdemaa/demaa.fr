@@ -64,8 +64,10 @@ export function createManualAction(index: number): ManualActionPlanAction {
 
 export function createManualActionPlanWorkspaceState(): ActionPlanWorkspaceState {
   return {
-    version: "1",
+    version: "2",
     selectedSystemId: null,
+    savedSystemIds: [],
+    addedActions: [],
     deletedActionIds: [],
     tasks: {},
     strategyOverrides: {},

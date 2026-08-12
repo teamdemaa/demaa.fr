@@ -2,8 +2,13 @@ import { z } from "zod";
 import type { PersistableActionPlan } from "@/lib/action-plan-contract";
 import {
   actionPlanStrategyPillarSchema,
+  actionPlanSupportTypeSchema,
   actionPlanSystemIdSchema,
 } from "@/lib/action-plan-contract";
+import {
+  getActionPlanActions,
+  getAllActionPlanActionIds,
+} from "@/lib/action-plan-view-model";
 
 export const actionPlanTaskStatusSchema = z.enum([
   "todo",
@@ -12,20 +17,28 @@ export const actionPlanTaskStatusSchema = z.enum([
 ]);
 
 const optionalText = (max: number) => z.string().trim().max(max).optional();
+const baseActionIdSchema = z.string().regex(/^action-[1-7]$/);
+const customActionIdSchema = z.string().regex(/^custom-[A-Za-z0-9_-]{1,64}$/);
+export const actionPlanWorkspaceActionIdSchema = z.union([
+  baseActionIdSchema,
+  customActionIdSchema,
+]);
+
+const editableSupportSchema = z
+  .object({
+    type: actionPlanSupportTypeSchema.nullable(),
+    label: z.string().trim().min(1).max(100),
+    content: z.string().trim().min(1).max(2_000),
+  })
+  .strict()
+  .nullable();
 
 const actionOverrideSchema = z
   .object({
     title: optionalText(140),
     objective: optionalText(260),
     steps: z.array(z.string().trim().min(1).max(360)).min(1).max(7).optional(),
-    readyToUse: z
-      .object({
-        label: z.string().trim().min(1).max(100),
-        content: z.string().trim().min(1).max(2_000),
-      })
-      .strict()
-      .nullable()
-      .optional(),
+    support: editableSupportSchema.optional(),
   })
   .strict();
 
@@ -39,6 +52,18 @@ export const actionPlanTaskStateSchema = z
   })
   .strict();
 
+const addedActionSchema = z
+  .object({
+    id: customActionIdSchema,
+    title: z.string().trim().min(1).max(140),
+    objective: z.string().trim().max(260),
+    channelOrTool: z.string().trim().max(180),
+    steps: z.array(z.string().trim().min(1).max(360)).max(7),
+    support: editableSupportSchema,
+    strategyPillar: actionPlanStrategyPillarSchema,
+  })
+  .strict();
+
 const strategyOverrideSchema = z
   .object({
     headline: optionalText(180),
@@ -48,68 +73,176 @@ const strategyOverrideSchema = z
   })
   .strict();
 
+const processChecksSchema = z.partialRecord(
+  actionPlanSystemIdSchema,
+  z.array(z.string().trim().min(1).max(180)).max(200),
+);
+
+const solutionSelectionsSchema = z.partialRecord(
+  actionPlanSystemIdSchema,
+  z.array(z.string().trim().min(1).max(240)).max(120),
+);
+
 export const actionPlanWorkspaceStateSchema = z
   .object({
-    version: z.literal("1"),
+    version: z.literal("2"),
     selectedSystemId: actionPlanSystemIdSchema.nullable(),
-    deletedActionIds: z
-      .array(z.string().regex(/^action-[1-7]$/))
-      .max(7)
-      .default([]),
-    tasks: z.record(z.string().regex(/^action-[1-7]$/), actionPlanTaskStateSchema),
+    savedSystemIds: z.array(actionPlanSystemIdSchema).max(115),
+    addedActions: z.array(addedActionSchema).max(50),
+    deletedActionIds: z.array(actionPlanWorkspaceActionIdSchema).max(50),
+    tasks: z.record(actionPlanWorkspaceActionIdSchema, actionPlanTaskStateSchema),
     strategyOverrides: z.partialRecord(
       actionPlanStrategyPillarSchema,
       strategyOverrideSchema,
     ),
-    checkedProcessStepIdsBySystem: z.partialRecord(
-      actionPlanSystemIdSchema,
-      z.array(z.string().trim().min(1).max(180)).max(200),
+    checkedProcessStepIdsBySystem: processChecksSchema,
+    selectedSolutionPlacementIdsBySystem: solutionSelectionsSchema,
+  })
+  .strict()
+  .superRefine((workspace, context) => {
+    if (new Set(workspace.savedSystemIds).size !== workspace.savedSystemIds.length) {
+      context.addIssue({
+        code: "custom",
+        message: "Les systemes sauvegardes doivent etre uniques.",
+        path: ["savedSystemIds"],
+      });
+    }
+    const addedIds = workspace.addedActions.map(({ id }) => id);
+    if (new Set(addedIds).size !== addedIds.length) {
+      context.addIssue({
+        code: "custom",
+        message: "Les identifiants des actions ajoutees doivent etre uniques.",
+        path: ["addedActions"],
+      });
+    }
+  });
+
+const legacyActionOverrideSchema = z
+  .object({
+    title: optionalText(140),
+    objective: optionalText(260),
+    steps: z.array(z.string().trim().min(1).max(360)).min(1).max(7).optional(),
+    readyToUse: z
+      .object({
+        label: z.string().trim().min(1).max(100),
+        content: z.string().trim().min(1).max(2_000),
+      })
+      .strict()
+      .nullable()
+      .optional(),
+  })
+  .passthrough();
+
+const legacyTaskSchema = actionPlanTaskStateSchema
+  .omit({ overrides: true })
+  .extend({ overrides: legacyActionOverrideSchema })
+  .strict();
+
+const legacyWorkspaceSchema = z
+  .object({
+    version: z.literal("1"),
+    selectedSystemId: actionPlanSystemIdSchema.nullable(),
+    deletedActionIds: z.array(baseActionIdSchema).max(7).default([]),
+    tasks: z.record(baseActionIdSchema, legacyTaskSchema),
+    strategyOverrides: z.partialRecord(
+      actionPlanStrategyPillarSchema,
+      strategyOverrideSchema,
     ),
-    selectedSolutionPlacementIdsBySystem: z.partialRecord(
-      actionPlanSystemIdSchema,
-      z.array(z.string().trim().min(1).max(240)).max(120),
-    ),
+    checkedProcessStepIdsBySystem: processChecksSchema,
+    selectedSolutionPlacementIdsBySystem: solutionSelectionsSchema,
   })
   .strict();
 
-function stripLegacyEstimatedMinutes(value: unknown) {
-  if (!value || typeof value !== "object" || Array.isArray(value)) return value;
+function migrateLegacyWorkspace(value: z.infer<typeof legacyWorkspaceSchema>) {
+  return actionPlanWorkspaceStateSchema.parse({
+    version: "2",
+    selectedSystemId: value.selectedSystemId,
+    savedSystemIds: value.selectedSystemId ? [value.selectedSystemId] : [],
+    addedActions: [],
+    deletedActionIds: value.deletedActionIds,
+    tasks: Object.fromEntries(
+      Object.entries(value.tasks).map(([id, task]) => {
+        const { readyToUse, ...legacyOverrides } = task.overrides;
+        const overrides = { ...legacyOverrides } as Record<string, unknown>;
+        delete overrides.estimatedMinutes;
+        if (readyToUse !== undefined) {
+          overrides.support = readyToUse
+            ? { type: null, label: readyToUse.label, content: readyToUse.content }
+            : null;
+        }
+        return [id, { ...task, overrides }];
+      }),
+    ),
+    strategyOverrides: value.strategyOverrides,
+    checkedProcessStepIdsBySystem: value.checkedProcessStepIdsBySystem,
+    selectedSolutionPlacementIdsBySystem: value.selectedSolutionPlacementIdsBySystem,
+  });
+}
 
+function stripRetiredEstimatedMinutes(value: unknown) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return value;
   const workspace = value as Record<string, unknown>;
   if (!workspace.tasks || typeof workspace.tasks !== "object" || Array.isArray(workspace.tasks)) {
     return value;
   }
-
   const tasks = Object.fromEntries(
-    Object.entries(workspace.tasks as Record<string, unknown>).map(([actionId, taskValue]) => {
+    Object.entries(workspace.tasks as Record<string, unknown>).map(([id, taskValue]) => {
       if (!taskValue || typeof taskValue !== "object" || Array.isArray(taskValue)) {
-        return [actionId, taskValue];
+        return [id, taskValue];
       }
-
       const task = taskValue as Record<string, unknown>;
       if (!task.overrides || typeof task.overrides !== "object" || Array.isArray(task.overrides)) {
-        return [actionId, taskValue];
+        return [id, taskValue];
       }
-
       const overrides = { ...(task.overrides as Record<string, unknown>) };
       delete overrides.estimatedMinutes;
-      return [actionId, { ...task, overrides }];
+      return [id, { ...task, overrides }];
     }),
   );
-
   return { ...workspace, tasks };
 }
 
 export const compatibleActionPlanWorkspaceStateSchema = z.preprocess(
-  stripLegacyEstimatedMinutes,
-  actionPlanWorkspaceStateSchema,
+  stripRetiredEstimatedMinutes,
+  z.union([actionPlanWorkspaceStateSchema, legacyWorkspaceSchema])
+    .transform((workspace) =>
+      workspace.version === "1" ? migrateLegacyWorkspace(workspace) : workspace,
+    ),
 );
 
 export type ActionPlanTaskStatus = z.infer<typeof actionPlanTaskStatusSchema>;
 export type ActionPlanTaskState = z.infer<typeof actionPlanTaskStateSchema>;
+export type AddedActionPlanAction = z.infer<typeof addedActionSchema>;
 export type ActionPlanWorkspaceState = z.infer<
   typeof actionPlanWorkspaceStateSchema
 >;
+
+export function addActionPlanWorkspaceAction(
+  workspace: ActionPlanWorkspaceState,
+  input: Partial<Omit<AddedActionPlanAction, "id">> = {},
+): ActionPlanWorkspaceState {
+  if (workspace.addedActions.length >= 50) return workspace;
+
+  const id = `custom-${crypto.randomUUID()}`;
+  const action: AddedActionPlanAction = {
+    id,
+    title: input.title?.trim().slice(0, 140) || "Nouvelle action",
+    objective: input.objective?.trim().slice(0, 260) || "",
+    channelOrTool: input.channelOrTool?.trim().slice(0, 180) || "",
+    steps: input.steps?.slice(0, 7) || [],
+    support: input.support ?? null,
+    strategyPillar: input.strategyPillar || "alignement",
+  };
+
+  return {
+    ...workspace,
+    addedActions: [...workspace.addedActions, action],
+    tasks: {
+      ...workspace.tasks,
+      [id]: createEmptyTaskState(),
+    },
+  };
+}
 
 export function compactActionPlanSteps(
   lines: readonly string[],
@@ -131,9 +264,16 @@ export function compactActionPlanSteps(
     }
   }
 
+  return { steps, completedStepIndexes: remappedCompletedStepIndexes };
+}
+
+function createEmptyTaskState(): ActionPlanTaskState {
   return {
-    steps,
-    completedStepIndexes: remappedCompletedStepIndexes,
+    status: "todo",
+    dueDate: null,
+    completedStepIndexes: [],
+    notes: "",
+    overrides: {},
   };
 }
 
@@ -141,20 +281,13 @@ export function createActionPlanWorkspaceState(
   plan: PersistableActionPlan,
 ): ActionPlanWorkspaceState {
   return {
-    version: "1",
+    version: "2",
     selectedSystemId: plan.systemId,
+    savedSystemIds: plan.systemId ? [plan.systemId] : [],
+    addedActions: [],
     deletedActionIds: [],
     tasks: Object.fromEntries(
-      plan.weeklyActions.map((action) => [
-        action.id,
-        {
-          status: "todo" as const,
-          dueDate: null,
-          completedStepIndexes: [],
-          notes: "",
-          overrides: {},
-        },
-      ]),
+      getActionPlanActions(plan).map(({ id }) => [id, createEmptyTaskState()]),
     ),
     strategyOverrides: {},
     checkedProcessStepIdsBySystem: {},
@@ -170,18 +303,20 @@ export function normalizeActionPlanWorkspaceState(
   const base = createActionPlanWorkspaceState(plan);
   if (!parsed.success) return base;
 
+  const allActionIds = getAllActionPlanActionIds(plan, parsed.data.addedActions);
+  const allowedIds = new Set(allActionIds);
   const tasks = Object.fromEntries(
-    plan.weeklyActions.map((action) => [
-      action.id,
-      parsed.data.tasks[action.id] ?? base.tasks[action.id],
-    ]),
+    allActionIds.map((id) => [id, parsed.data.tasks[id] ?? createEmptyTaskState()]),
   );
+  const savedSystemIds = [...new Set([
+    ...parsed.data.savedSystemIds,
+    ...(parsed.data.selectedSystemId ? [parsed.data.selectedSystemId] : []),
+  ])];
 
   return {
     ...parsed.data,
-    deletedActionIds: parsed.data.deletedActionIds.filter((actionId) =>
-      plan.weeklyActions.some((action) => action.id === actionId),
-    ),
+    savedSystemIds,
+    deletedActionIds: parsed.data.deletedActionIds.filter((id) => allowedIds.has(id)),
     tasks,
   };
 }
