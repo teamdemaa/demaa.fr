@@ -1,13 +1,17 @@
 "use client";
 
-import { Check, LoaderCircle, Mic, Phone, Send, X } from "lucide-react";
+import { Check, LoaderCircle, Mic, Send, X } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { getLeadAttributionPayload } from "@/lib/lead-attribution-client";
 import { clearLeadSubmissionKey, getLeadSubmissionKey } from "@/lib/lead-submission-client";
 import type { CoachingMessage } from "@/lib/coaching-conversation";
 
-type CoachingTab = "sessions" | "messages";
-type Offer = "session" | "parcours" | "echange";
+type CoachingTab = "messages" | "sessions";
+type Offer = "session" | "parcours";
+
+type SpeechRecognitionInstance = InstanceType<
+  NonNullable<Window["SpeechRecognition"]>
+>;
 
 const offers = [
   {
@@ -53,7 +57,7 @@ export default function CoachingPanel({
 }: {
   onRequireAccess?: () => void;
 }) {
-  const [tab, setTab] = useState<CoachingTab>("sessions");
+  const [tab, setTab] = useState<CoachingTab>("messages");
   const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
 
   return (
@@ -66,7 +70,7 @@ export default function CoachingPanel({
       </header>
 
       <div className="mt-7 flex border-b border-dema-line" role="tablist" aria-label="Parler à un spécialiste">
-        {(["sessions", "messages"] as const).map((value) => (
+        {(["messages", "sessions"] as const).map((value) => (
           <button
             key={value}
             type="button"
@@ -75,29 +79,13 @@ export default function CoachingPanel({
             onClick={() => setTab(value)}
             className={`min-h-12 border-b-2 px-5 text-sm font-medium transition ${tab === value ? "border-dema-forest text-dema-forest" : "border-transparent text-dema-muted"}`}
           >
-            {value === "sessions" ? "Sessions" : "Messages"}
+            {value === "messages" ? "Messages" : "Sessions"}
           </button>
         ))}
       </div>
 
       {tab === "sessions" ? (
-        <div className="mt-7 grid gap-4 md:grid-cols-3">
-          <article className="flex h-full flex-col rounded-[1.35rem] border border-dema-line bg-dema-paper p-5 sm:p-6">
-            <div className="flex h-full flex-col">
-              <div>
-                <p className="text-xs text-dema-muted">15 minutes offertes · par téléphone</p>
-                <h3 className="mt-1 text-xl font-medium tracking-[-0.02em] text-brand-blue">Échange préalable</h3>
-                <p className="mt-2 max-w-2xl text-sm leading-relaxed text-dema-muted">
-                  Faites connaissance, présentez votre blocage et vérifiez que le spécialiste est la bonne personne. Ce court échange ne remplace pas une session.
-                </p>
-              </div>
-              <button type="button" onClick={() => onRequireAccess ? onRequireAccess() : setSelectedOffer("echange")} className="mt-5 inline-flex min-h-10 items-center justify-center gap-2 self-start rounded-full bg-dema-forest px-4 text-sm font-medium text-white transition hover:bg-[#284f3a] md:mt-auto">
-                <Phone className="h-4 w-4" aria-hidden="true" />
-                Demander un échange
-              </button>
-            </div>
-          </article>
-
+        <div className="mt-7 grid gap-4 md:grid-cols-2">
           {offers.map((offer) => (
             <article key={offer.id} className="flex h-full flex-col rounded-[1.35rem] border border-dema-line bg-dema-paper p-5 sm:p-6">
               <div className="flex h-full flex-col">
@@ -117,7 +105,23 @@ export default function CoachingPanel({
           ))}
         </div>
       ) : (
-        <CoachingMessageForm onRequireAccess={onRequireAccess} />
+        onRequireAccess ? (
+          <section className="mt-7 max-w-3xl rounded-[1.35rem] border border-dema-line bg-dema-paper p-5 sm:p-6">
+            <h3 className="text-xl font-medium text-brand-blue">Écrire à un spécialiste</h3>
+            <p className="mt-2 max-w-xl text-sm leading-relaxed text-dema-muted">
+              Identifiez-vous d’abord pour conserver la conversation et retrouver les réponses du spécialiste.
+            </p>
+            <button
+              type="button"
+              onClick={onRequireAccess}
+              className="mt-5 inline-flex min-h-11 items-center justify-center rounded-full bg-dema-forest px-5 text-sm font-medium text-white transition hover:bg-[#284f3a]"
+            >
+              Continuer par e-mail
+            </button>
+          </section>
+        ) : (
+          <CoachingMessageForm />
+        )
       )}
 
       {selectedOffer ? <CoachingRequestDialog offer={selectedOffer} onClose={() => setSelectedOffer(null)} /> : null}
@@ -173,17 +177,17 @@ function CoachingRequestDialog({ offer, onClose }: { offer: Offer; onClose: () =
   );
 }
 
-function CoachingMessageForm({ onRequireAccess }: { onRequireAccess?: () => void }) {
+function CoachingMessageForm() {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<CoachingMessage[]>([]);
-  const [status, setStatus] = useState<"idle" | "loading" | "sending" | "error">(
-    onRequireAccess ? "idle" : "loading",
-  );
-  const recognitionRef = useRef<{ stop(): void } | null>(null);
+  const [status, setStatus] = useState<"idle" | "loading" | "sending" | "error">("loading");
+  const [isListening, setIsListening] = useState(false);
+  const [dictationError, setDictationError] = useState<string | null>(null);
+  const recognitionRef = useRef<SpeechRecognitionInstance | null>(null);
+  const dictationBaseRef = useRef("");
   const historyRef = useRef<HTMLDivElement>(null);
 
   const loadMessages = useCallback(async (quiet = false) => {
-    if (onRequireAccess) return;
     if (!quiet) setStatus("loading");
     try {
       const response = await fetch("/api/coaching-request", {
@@ -197,19 +201,18 @@ function CoachingMessageForm({ onRequireAccess }: { onRequireAccess?: () => void
     } catch {
       if (!quiet) setStatus("error");
     }
-  }, [onRequireAccess]);
+  }, []);
 
   useEffect(() => {
     const draft = window.sessionStorage.getItem("demaa_coaching_message_draft");
     if (draft) setMessage(draft);
     void loadMessages();
 
-    if (onRequireAccess) return;
     const interval = window.setInterval(() => {
       if (document.visibilityState === "visible") void loadMessages(true);
     }, 30_000);
     return () => window.clearInterval(interval);
-  }, [loadMessages, onRequireAccess]);
+  }, [loadMessages]);
 
   useEffect(() => {
     if (message) {
@@ -228,28 +231,62 @@ function CoachingMessageForm({ onRequireAccess }: { onRequireAccess?: () => void
     });
   }, [messages]);
 
+  useEffect(() => () => {
+    recognitionRef.current?.stop();
+  }, []);
+
   function dictate() {
-    const SpeechRecognition = (window as Window & { webkitSpeechRecognition?: new () => { lang: string; continuous: boolean; interimResults: boolean; start(): void; stop(): void; onresult: ((event: { results: ArrayLike<{ 0?: { transcript?: string } }> }) => void) | null; onend: (() => void) | null } }).webkitSpeechRecognition;
-    if (!SpeechRecognition) return;
+    if (recognitionRef.current) {
+      recognitionRef.current.stop();
+      return;
+    }
+
+    const SpeechRecognition =
+      window.SpeechRecognition ?? window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      setDictationError("La dictée n’est pas disponible dans ce navigateur.");
+      return;
+    }
+
     const recognition = new SpeechRecognition();
     recognition.lang = "fr-FR";
-    recognition.continuous = false;
-    recognition.interimResults = false;
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    dictationBaseRef.current = message.trim();
+    setDictationError(null);
+    setIsListening(true);
     recognition.onresult = (event) => {
-      const transcript = event.results[0]?.[0]?.transcript?.trim() || "";
-      if (transcript) setMessage((current) => `${current}${current ? " " : ""}${transcript}`);
+      let transcript = "";
+      for (let index = 0; index < event.results.length; index += 1) {
+        transcript += event.results[index]?.[0]?.transcript || "";
+      }
+      const spokenText = transcript.trim();
+      if (!spokenText) return;
+      setMessage(
+        `${dictationBaseRef.current}${dictationBaseRef.current ? " " : ""}${spokenText}`,
+      );
     };
-    recognition.onend = () => { recognitionRef.current = null; };
+    recognition.onerror = (event) => {
+      if (event.error !== "aborted" && event.error !== "no-speech") {
+        setDictationError("La dictée s’est interrompue. Vous pouvez continuer au clavier.");
+      }
+    };
+    recognition.onend = () => {
+      recognitionRef.current = null;
+      setIsListening(false);
+    };
     recognitionRef.current = recognition;
-    recognition.start();
+    try {
+      recognition.start();
+    } catch {
+      recognitionRef.current = null;
+      setIsListening(false);
+      setDictationError("La dictée n’a pas pu démarrer. Vous pouvez continuer au clavier.");
+    }
   }
 
   async function submit(event: React.FormEvent) {
     event.preventDefault();
-    if (onRequireAccess) {
-      onRequireAccess();
-      return;
-    }
     if (message.trim().length < 2) {
       setStatus("error"); return;
     }
@@ -319,11 +356,21 @@ function CoachingMessageForm({ onRequireAccess }: { onRequireAccess?: () => void
             placeholder="Écrivez votre message…"
             className="max-h-32 min-h-12 flex-1 resize-none bg-transparent px-2 py-2 text-sm outline-none"
           />
-          <button type="button" onClick={dictate} className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-dema-forest transition hover:bg-dema-sage/50" aria-label="Dicter le message"><Mic className="h-4 w-4" /></button>
+          <button
+            type="button"
+            onClick={dictate}
+            className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-dema-forest transition hover:bg-dema-sage/50 ${isListening ? "bg-dema-sage ring-1 ring-dema-forest/30" : ""}`}
+            aria-label={isListening ? "Arrêter la dictée" : "Dicter le message"}
+            aria-pressed={isListening}
+          >
+            <Mic className="h-4 w-4" />
+          </button>
           <button disabled={status === "sending" || message.trim().length < 2} className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-dema-forest text-white transition hover:bg-[#284f3a] disabled:opacity-40" aria-label="Envoyer le message">
             {status === "sending" ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : <Send className="h-4 w-4" aria-hidden="true" />}
           </button>
         </div>
+        {isListening ? <p className="mt-2 px-2 text-xs text-dema-forest" role="status">Dictée en cours… le texte apparaît dans le message.</p> : null}
+        {dictationError ? <p className="mt-2 px-2 text-xs text-amber-800" role="alert">{dictationError}</p> : null}
         {status === "error" ? <p className="mt-2 px-2 text-xs font-medium text-red-700">Le message n’a pas pu être envoyé. Réessayez.</p> : null}
       </form>
     </section>

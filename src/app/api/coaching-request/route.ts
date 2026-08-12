@@ -29,7 +29,7 @@ type CoachingRequestBody = {
   website?: unknown;
 };
 
-const OFFERS = new Set(["session", "parcours", "echange"]);
+const OFFERS = new Set(["session", "parcours"]);
 
 function isValidPhone(value: string) {
   return /^\+?[0-9\s().-]+$/.test(value) && value.replace(/\D/g, "").length >= 8;

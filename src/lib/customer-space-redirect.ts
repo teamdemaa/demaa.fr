@@ -2,7 +2,7 @@ const INTENT_PARAM = "intent";
 const SAFE_ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const SAVED_PLAN_PATH_PATTERN = /^\/plans\/[A-Za-z0-9_-]{1,80}(?:\?[^\r\n]*)?$/;
 
-const COACHING_OFFERS = ["echange", "session", "parcours", "message"] as const;
+const COACHING_OFFERS = ["session", "parcours", "message"] as const;
 type CoachingOffer = (typeof COACHING_OFFERS)[number];
 
 export type CustomerAccessIntent =
@@ -118,6 +118,7 @@ export function getSafeCustomerReturnTo(value?: string | null) {
   }
 
   const candidate = normalizeLegacyCustomerPath(rawCandidate);
+  if (SAVED_PLAN_PATH_PATTERN.test(candidate)) return candidate;
   const parsedIntent = parseCustomerAccessIntent(candidate);
 
   if (candidate.includes(`${INTENT_PARAM}=`)) {
@@ -126,7 +127,5 @@ export function getSafeCustomerReturnTo(value?: string | null) {
 
   if (candidate === "/" || candidate.startsWith("/?")) return candidate;
   if (candidate === "/plans") return candidate;
-  if (SAVED_PLAN_PATH_PATTERN.test(candidate)) return candidate;
-
   return "/";
 }

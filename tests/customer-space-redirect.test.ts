@@ -47,6 +47,11 @@ describe("customer-space safe return intents", () => {
     expect(getSafeCustomerReturnTo("/mon-espace")).toBe("/plans");
     expect(getSafeCustomerReturnTo("/mon-espace/plans/plan-123")).toBe("/plans/plan-123");
     expect(getSafeCustomerReturnTo("/plans")).toBe("/plans");
+    expect(
+      getSafeCustomerReturnTo(
+        "/plans/abc_123?intent=coaching&tab=messages",
+      ),
+    ).toBe("/plans/abc_123?intent=coaching&tab=messages");
   });
 
   it("canonicalizes legacy public intents back into the single app", () => {

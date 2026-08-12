@@ -45,7 +45,10 @@ const redirectCases = [
     [`/cours/${legacySlug}`, `/academie/${canonicalSlug}`],
     [`/academie/${legacySlug}`, `/academie/${canonicalSlug}`],
   ]),
-  ["/cours/facture-electronique", "/systemes"],
+  [
+    "/cours/facture-electronique",
+    "/contenus/facturation-electronique",
+  ],
   ["/cours/obligations-finances-entreprise", "/systemes"],
   [
     "/cours/organisation-marketing-vente",

@@ -23,7 +23,8 @@ est uniquement conservée comme redirection de compatibilité vers `/plans`.
 Les historiques restent conservés dans les données sans créer de portail
 concurrent.
 
-Coaching contient deux onglets : `Sessions` et `Messages`.
+Coaching contient deux onglets : `Messages` puis `Sessions`. `Messages` est
+l'onglet ouvert par défaut afin de privilégier l'échange écrit ou dicté.
 
 `Coaching` est le nom du produit. Tous les libellés qui désignent la personne
 emploient `spécialiste`, notamment `Parler à un spécialiste` et
@@ -35,14 +36,15 @@ emploient `spécialiste`, notamment `Parler à un spécialiste` et
 - Parcours de pilotage : trois sessions de 60 minutes, valables trois mois,
   avec le même spécialiste, 400 EUR HT, soit 480 EUR TTC si la TVA française à
   20 % s’applique.
-- Échange préalable : 15 minutes offertes par téléphone. Il sert à faire
-  connaissance et vérifier l’adéquation ; il ne constitue pas une séance de
-  coaching.
+
+L'ancien échange préalable gratuit de 15 minutes est retiré. Le parcours
+Sessions ne publie que les deux offres payantes ci-dessus.
 
 Les demandes sont coordonnées manuellement. Aucun paiement, agenda automatique
 ou promesse de disponibilité n’est ajouté sans une décision ultérieure.
 Messages est asynchrone. La dictée transforme la voix en texte relisible avant
-envoi ; aucun enregistrement audio n’est conservé dans cette version. L’onglet
+envoi et affiche la transcription intermédiaire directement dans le champ ;
+aucun enregistrement audio n’est conservé dans cette version. L’onglet
 Messages est une conversation simple : les messages du dirigeant et les
 réponses du spécialiste restent visibles dans un historique chronologique lié
 à l’adresse e-mail vérifiée. Slack reste une alerte opérationnelle et ne devient
@@ -61,3 +63,7 @@ formulaires de l'application la récupèrent côté serveur et ne la redemandent
 pas. Si une action nécessitant une identité est déclenchée sans session, le
 parcours de lien magique conserve une intention autorisée et ramène directement
 à cette action après connexion, sans écran `Mon espace` ou `Mes plans`.
+Lorsqu'un plan existe seulement dans la page, l'ouverture de Messages prépare
+d'abord sa sauvegarde temporaire et le lien revient sur l'URL canonique de ce
+plan, avec l'intention Coaching. Le plan ne doit jamais être remplacé par un
+écran vierge au retour du lien.

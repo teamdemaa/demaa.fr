@@ -1,6 +1,6 @@
 # Backlog central Demaa
 
-Dernière consolidation : 10 août 2026.
+Dernière consolidation : 12 août 2026.
 
 Backlog de pilotage :
 [Demaa — Backlog maître](https://docs.google.com/spreadsheets/d/19uwK54Pd2XiPzPM8OBvNkFSaSHYsJO_IHk8ZxzvvmQY/edit).
@@ -9,15 +9,16 @@ Ce document remplace les listes d'actions dispersées dans les chats Demaa. Il
 distingue ce qui est déjà livré, ce qui est prêt mais non publié et ce qui reste
 à réaliser.
 
-## État de clôture Production — 10 août 2026
+## État de clôture Production — 12 août 2026
 
 Cette section est l'état exécutable courant. Toutes les sections historiques
 datées plus bas sont conservées comme journal et ne doivent plus servir de plan
 de déploiement.
 
-- La dernière release runtime vérifiée est le merge `3f42c66` de la PR #93.
-  Elle est alignée entre le local principal, `origin/main` et le déploiement
-  Production Vercel.
+- La release runtime Production vérifiée est `cdcb415`. Le correctif isolé
+  `0919acf` sur `codex/global-audit-release` est prêt sur une Preview Vercel,
+  mais n'est pas encore fusionné dans `main`. Le checkout local principal
+  reste volontairement à réaligner après préservation de ses documents locaux.
 - `https://demaa.co` est le domaine canonique ; `demaa.fr` redirige vers lui.
 - Les 115 fiches Système ont pour route canonique `/systemes/[slug]` ; les
   anciens espaces `/kit-operationnel`, `/systemes-operationnels` et
@@ -33,7 +34,11 @@ de déploiement.
   opérationnelle. Les Formations en direct et les Cas concrets restent masqués
   par des bascules éditoriales explicites.
 - Les parcours guide, newsletter, Structure, Rejoindre Team Demaa, callback
-  Services et Levier ont été testés en Production avec `team@demaa.fr`.
+  Services, Levier, Opportunités, sauvegarde de plan et lien magique ont été
+  testés en Production. L'envoi direct à la boîte Gmail opérationnelle est
+  validé avec SPF, DKIM et DMARC. `team@demaa.fr` est une boîte distincte, pas
+  un alias ; sa réception opérationnelle doit être vérifiée séparément dans
+  Google Workspace.
 - Le runtime Firebase Production utilise l'identité sans clé
   `demaa-prod-app@demaa-dde32.iam.gserviceaccount.com`, limitée à
   `roles/datastore.user` et empruntable uniquement par le projet Vercel Demaa.
@@ -51,7 +56,9 @@ l'ADR 0004 prévaut.
 
 - `demaa.co` est le domaine canonique du lancement France, sans préfixe de
   locale. L'internationalisation reste différée.
-- La navigation principale contient uniquement `Système métier` et `Académie`.
+- La navigation applicative contient `Plan d'action`, `Système`, `Académie` et
+  `Opportunités`. Le produit Coaching est accessible par l'action
+  `Parler à un spécialiste` et conserve les onglets Messages puis Sessions.
 - Une fiche Système contient `Process`, `Solutions` et `Ressources`.
 - Six Services canoniques existent : Automatisation des processus,
   Expert-comptable, Formalités juridiques, Sous-traitance de formalités
@@ -66,9 +73,10 @@ l'ADR 0004 prévaut.
   contenus pédagogiques globaux restent dans l'Académie.
 - Firebase est la source distante autoritaire pour Solutions et le réseau de
   prestataires lorsque l'environnement est configuré.
-- `/opportunites` et `/rejoindre-team-demaa` sont les deux parcours publics du
-  réseau. Les anciennes URL correspondantes doivent rediriger, jamais devenir
-  des 404 lorsqu'un successeur exact existe.
+- Opportunités et Rejoindre Team Demaa sont intégrés à l'expérience
+  applicative unique. Les routes canoniques historiques restent disponibles
+  ou redirigent lorsqu'un successeur exact existe ; elles ne doivent pas
+  réintroduire un second shell applicatif.
 - Les anciennes pages globales Modèles/Ressources sont retirées. Une URL connue
   redirige vers son cours ou sa fiche Système ; seul un chemin sans successeur
   répond 404/noindex. La matrice canonique est
@@ -85,8 +93,10 @@ l'ADR 0004 prévaut.
   Systèmes, puis sauvegarde Firebase. L'ADR 0008 et
   `docs/action-plan-generator-product-contract.md` sont les références ;
   `/systemes` et `/academie` publics restent inchangés.
-- [x] Livrer la première version Coaching dans l’application : Sessions,
-  Messages asynchrones, tarifs validés et demandes coordonnées manuellement.
+- [x] Livrer la première version Coaching dans l’application : Messages
+  asynchrones ouverts par défaut, Sessions à 150 EUR HT et parcours à
+  400 EUR HT, historique persistant et demandes coordonnées manuellement.
+  L'ancien échange préalable gratuit de 15 minutes est retiré.
 - [x] Livrer D-077 : entrée `Commencer avec un plan vierge`, navigation
   `Plan d’action / Système / Académie / Opportunités`, Coaching accessible par
   `Parler à un spécialiste`, Opportunités au sens large et sauvegarde invitée
@@ -109,13 +119,12 @@ l'ADR 0004 prévaut.
   ni gestion d'équipe dans ce lot. Le nom d'entreprise reste facultatif et
   pourra être enrichi depuis le profil ; il ne bloque pas le lien magique ni
   l'ouverture du plan.
-- [ ] Ajouter ultérieurement, après décision éditoriale, un nom
-  d’organisation facultatif aux opportunités. Ne rien afficher lorsque cette
-  information n’est pas explicitement publiée.
-- [ ] Cadrer ensuite les évolutions Coaching : phase gratuite,
-  phase payante, capacité humaine, délais, messagerie, confidentialité,
-  conservation des échanges et prix. Aucun de ces éléments ne doit être promis
-  ou simulé dans le générateur courant.
+- [x] Permettre un nom d'organisation facultatif dans l'administration des
+  Opportunités et ne l'afficher que lorsqu'il est explicitement publié.
+- [ ] Cadrer ensuite les évolutions Coaching : capacité humaine, notifications
+  de réponse, paiement/réservation, confidentialité, durée de conservation et
+  limites du service. L'historique Messages, sa persistance et la réponse sous
+  24 à 48 h appartiennent déjà à la première version.
 - [x] Conserver avant et après connexion la navigation applicative unique
   `Plan d’action / Système / Académie / Opportunités`. Coaching reste le
   produit accessible par `Parler à un spécialiste`; les libellés humains

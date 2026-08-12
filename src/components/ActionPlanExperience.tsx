@@ -455,7 +455,6 @@ export default function ActionPlanExperience({
     return (
       <main data-action-plan-workspace className="min-h-screen bg-dema-cream px-4 pb-24 pt-2 sm:px-6 lg:px-8">
         <ActionPlanNavbar activeView={activeTab} onViewChange={setActiveTab} />
-        <ActionPlanCoachingControl initialEmail={initialEmail} />
         <div className="mx-auto max-w-[68rem] pt-1">
           {activeTab === "plan" ? (
             <section className="mx-auto max-w-5xl pt-12 text-center sm:pt-16 lg:pt-20">
@@ -563,7 +562,11 @@ export default function ActionPlanExperience({
   return (
     <main data-action-plan-workspace className="min-h-screen bg-dema-cream px-4 pb-24 pt-2 sm:px-6 lg:px-8">
       <ActionPlanNavbar activeView={activeTab} onViewChange={setActiveTab} />
-      <ActionPlanCoachingControl initialEmail={initialEmail} />
+      <ActionPlanCoachingControl
+        accessPlan={{ plan, sourceText: situation.trim(), workspace }}
+        demoMode={isDemoMode}
+        initialEmail={initialEmail}
+      />
       <div className="mx-auto max-w-[68rem]">
         <h1 ref={resultTitleRef} tabIndex={-1} className="sr-only outline-none">
           Votre plan d’action
